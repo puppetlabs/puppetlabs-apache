@@ -16,7 +16,7 @@ class apache {
   include apache::params
   package { 'httpd': 
     name   => $apache::params::apache_name,
-    ensure => present,
+    ensure => installed,
   }
   service { 'httpd':
     name      => $apache::params::apache_name,
