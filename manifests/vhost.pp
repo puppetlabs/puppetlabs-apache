@@ -41,12 +41,43 @@ define apache::vhost(
 
   include apache
 
-  file {"${apache::params::vdir}/${priority}-${name}":
-    content => template($template),
-    owner => 'root',
-    group => 'root',
-    mode => '777',
-    require => Package['httpd'],
-    notify => Service['httpd'],
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
+
+  if $ssl == true {
+    include apache::ssl
+  }
+
+  # Since the template will use auth, redirect to https requires mod_rewrite
+  if $redirect_ssl == true {
+    case $operatingsystem {
+      'debian','ubuntu': {
+        A2mod <| title == 'rewrite' |>
+      }
+      default: { }
+    }
+  }
+
+  file {
+    "${apache::params::vdir}/${priority}-${name}.conf":
+      content => template($template),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+      require => Package['httpd'],
+      notify  => Service['httpd'],
+  }
+
+  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+    @firewall {
+      "0100-INPUT ACCEPT $port":
+        jump  => 'ACCEPT',
+        dport => "$port",
+        proto => 'tcp'
+    }
   }
 }
+
