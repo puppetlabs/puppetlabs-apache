@@ -9,6 +9,8 @@
 # - The $template option specifies whether to use the default template or override
 # - The $priority of the site
 # - The $serveraliases of the site
+# - The $options for the given vhost
+# - The $vhost_name for name based virtualhosting, defaulting to *
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -23,16 +25,59 @@
 #    docroot => '/path/to/docroot',
 #  }
 #
-define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '' ) {
+define apache::vhost(
+    $port,
+    $docroot,
+    $ssl           = $apache::params::ssl,
+    $template      = $apache::params::template,
+    $priority      = $apache::params::priority,
+    $servername    = $apache::params::servername,
+    $serveraliases = $apache::params::serveraliases,
+    $auth          = $apache::params::auth,
+    $redirect_ssl  = $apache::params::redirect_ssl,
+    $options       = $apache::params::options,
+    $vhost_name    = $apache::params::vhost_name
+  ) {
 
   include apache
 
-  file {"${apache::params::vdir}/${priority}-${name}":
-    content => template($template),
-    owner => 'root',
-    group => 'root',
-    mode => '777',
-    require => Package['httpd'],
-    notify => Service['httpd'],
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
+
+  if $ssl == true {
+    include apache::ssl
+  }
+
+  # Since the template will use auth, redirect to https requires mod_rewrite
+  if $redirect_ssl == true {
+    case $operatingsystem {
+      'debian','ubuntu': {
+        A2mod <| title == 'rewrite' |>
+      }
+      default: { }
+    }
+  }
+
+  file {
+    "${apache::params::vdir}/${priority}-${name}.conf":
+      content => template($template),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '755',
+      require => Package['httpd'],
+      notify  => Service['httpd'],
+  }
+
+  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+    @firewall {
+      "0100-INPUT ACCEPT $port":
+        jump  => 'ACCEPT',
+        dport => "$port",
+        proto => 'tcp'
+    }
   }
 }
+
