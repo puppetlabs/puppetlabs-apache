@@ -24,14 +24,19 @@ class apache {
     enable    => true,
     subscribe => Package['httpd'],
   }
-  #
+
   # May want to purge all none realize modules using the resources resource type.
   #
   A2mod { require => Package['httpd'], notify => Service['httpd']}
-  @a2mod {
-   'rewrite' : ensure => present;
-   'headers' : ensure => present;
-   'expires' : ensure => present;
+  case $operatingsystem {
+    'debian','ubuntu': {
+      @a2mod {
+       'rewrite' : ensure => present;
+       'headers' : ensure => present;
+       'expires' : ensure => present;
+      }
+    }
+    default: { }
   }
   
   
