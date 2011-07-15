@@ -9,6 +9,8 @@
 # - The $template option specifies whether to use the default template or override
 # - The $priority of the site
 # - The $serveraliases of the site
+# - The $options for the given vhost
+# - The $vhost_name for name based virtualhosting, defaulting to *
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -23,7 +25,19 @@
 #    docroot => '/path/to/docroot',
 #  }
 #
-define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '' ) {
+define apache::vhost(
+    $port,
+    $docroot,
+    $ssl           = $apache::params::ssl,
+    $template      = $apache::params::template,
+    $priority      = $apache::params::priority,
+    $servername    = $apache::params::servername,
+    $serveraliases = $apache::params::serveraliases,
+    $auth          = $apache::params::auth,
+    $redirect_ssl  = $apache::params::redirect_ssl,
+    $options       = $apache::params::options,
+    $vhost_name    = $apache::params::vhost_name
+  ) {
 
   include apache
 
