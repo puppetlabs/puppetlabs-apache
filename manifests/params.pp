@@ -18,9 +18,18 @@
 #
 class apache::params {
 
-  $user  = 'www-data'
-  $group = 'www-data'
-  
+  $user          = 'www-data'
+  $group         = 'www-data'
+  $ssl           = 'true'
+  $template      = 'apache/vhost-default.conf.erb'
+  $priority      = '25'
+  $servername    = ''
+  $serveraliases = ''
+  $auth          = false
+  $redirect_ssl  = false
+  $options       = 'Indexes FollowSymLinks MultiViews'
+  $vhost_name    = '*'
+
   case $operatingsystem {
     'centos', 'redhat', 'fedora': {
        $apache_name = 'httpd'
@@ -32,7 +41,6 @@ class apache::params {
     'ubuntu', 'debian': {
        $apache_name = 'apache2'
        $php_package = 'libapache2-mod-php5'
-       $python_package = 'libapache2-mod-python'
        $ssl_package = 'apache-ssl'
        $apache_dev  = [ 'libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev' ]
        $vdir = '/etc/apache2/sites-enabled/'
