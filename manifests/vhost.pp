@@ -70,6 +70,8 @@ define apache::vhost(
       mode    => '755',
       require => Package['httpd'],
       notify  => Service['httpd'];
+    "${vdir}/vhosts":
+      ensure => directory;
     "${vdir}/vhosts/${priority}-${name}":
       ensure => directory;
   }
