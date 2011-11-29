@@ -74,7 +74,7 @@ define apache::vhost(
   if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
     @firewall {
       "0100-INPUT ACCEPT $port":
-        jump  => 'ACCEPT',
+        action => 'accept',
         dport => "$port",
         proto => 'tcp'
     }
