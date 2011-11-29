@@ -22,5 +22,6 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   LogLevel warn
   CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
   ServerSignature Off
+  include <%= vdir %>/vhosts/<%= priority %>-<%= name %>/*.conf
 </VirtualHost>
 
