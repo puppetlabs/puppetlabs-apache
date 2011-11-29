@@ -36,7 +36,8 @@ define apache::vhost(
     $auth          = $apache::params::auth,
     $redirect_ssl  = $apache::params::redirect_ssl,
     $options       = $apache::params::options,
-    $vhost_name    = $apache::params::vhost_name
+    $vhost_name    = $apache::params::vhost_name,
+    $vdir          = $apache::params::vdir,
   ) {
 
   include apache
@@ -62,13 +63,15 @@ define apache::vhost(
   }
 
   file {
-    "${apache::params::vdir}/${priority}-${name}.conf":
+    "${vdir}/${priority}-${name}.conf":
       content => template($template),
       owner   => 'root',
       group   => 'root',
       mode    => '755',
       require => Package['httpd'],
-      notify  => Service['httpd'],
+      notify  => Service['httpd'];
+    "${vdir}/vhosts/${priority}-${name}":
+      ensure => directory;
   }
 
   if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
