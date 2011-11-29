@@ -43,8 +43,6 @@ class apache {
   file {
     $apache::params::vdir:
       ensure => directory,
-      recurse => true,
-      purge => true,
       notify => Service['httpd'];
     "${apache::params::vdir}/vhosts":
       ensure => directory,
