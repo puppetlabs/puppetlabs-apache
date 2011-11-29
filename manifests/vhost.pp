@@ -36,6 +36,7 @@ define apache::vhost(
     $auth          = $apache::params::auth,
     $redirect_ssl  = $apache::params::redirect_ssl,
     $options       = $apache::params::options,
+    $apache_name   = $apache::params::apache_name,
     $vhost_name    = $apache::params::vhost_name
   ) {
 
