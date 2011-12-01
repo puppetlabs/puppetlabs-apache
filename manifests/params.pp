@@ -31,7 +31,7 @@ class apache::params {
   $vhost_name    = '*'
 
   case $operatingsystem {
-    'centos', 'redhat', 'fedora': {
+    'centos', 'redhat', 'fedora', 'scientific': {
        $apache_name = 'httpd'
        $php_package = 'php'
        $ssl_package = 'mod_ssl'
