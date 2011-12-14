@@ -80,5 +80,12 @@ define apache::vhost(
         proto => 'tcp'
     }
   }
+
+  file {
+    "${apache::params::apache_temp_dir}/ports.d/${name}-ports.conf":
+      content => template('apache/ports.conf.erb'),
+      notify => Exec['rebuild-apache-ports'],
+      before => Service['httpd']
+  }
 }
 
