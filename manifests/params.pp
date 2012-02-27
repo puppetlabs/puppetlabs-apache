@@ -30,7 +30,7 @@ class apache::params {
   $options       = 'Indexes FollowSymLinks MultiViews'
   $vhost_name    = '*'
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'centos', 'redhat', 'fedora', 'scientific': {
        $apache_name = 'httpd'
        $php_package = 'php'
