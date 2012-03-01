@@ -15,7 +15,8 @@
 class apache::php {
   include apache::params
 
-  package { $apache::params::php_package:
+  package { "apache_php_package":
+    name   => $apache::params::php_package,
     ensure => present,
   }
 }

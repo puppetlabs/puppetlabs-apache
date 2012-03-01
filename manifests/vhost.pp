@@ -65,8 +65,8 @@ define apache::vhost(
     }
   }
 
-  file {
-    "${apache::params::vdir}/${priority}-${name}.conf":
+  file { "${priority}-${name}.conf":
+      name    => "${apache::params::vdir}/${priority}-${name}.conf",
       content => template($template),
       owner   => 'root',
       group   => 'root',
