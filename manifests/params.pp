@@ -20,7 +20,7 @@ class apache::params {
 
   $user          = 'www-data'
   $group         = 'www-data'
-  $ssl           = 'true'
+  $ssl           = true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
