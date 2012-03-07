@@ -2,8 +2,11 @@ class apache::mod::wsgi {
   include apache
 
   package { "wsgi":
-      'centos', 'fedora', 'redhat', 'scientific' => "mod_wsgi",
     name => $::operatingsystem ? {
+      'centos' => "mod_wsgi",
+      'fedora' => "mod_wsgi",
+      'redhat' => "mod_wsgi",
+      'scientific' => "mod_wsgi",
       default => "libapache2-mod-wsgi",
     },
     ensure  => installed,
