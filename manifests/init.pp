@@ -14,10 +14,12 @@
 #
 class apache {
   include apache::params
-  package { 'httpd': 
+
+  package { 'httpd':
     name   => $apache::params::apache_name,
     ensure => installed,
   }
+
   service { 'httpd':
     name      => $apache::params::apache_name,
     ensure    => running,
@@ -28,7 +30,7 @@ class apache {
   # May want to purge all none realize modules using the resources resource type.
   #
   A2mod { require => Package['httpd'], notify => Service['httpd']}
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian','ubuntu': {
       @a2mod {
        'rewrite' : ensure => present;
@@ -38,12 +40,12 @@ class apache {
     }
     default: { }
   }
-  
-  
+
+
   file { $apache::params::vdir:
     ensure => directory,
     recurse => true,
     purge => true,
     notify => Service['httpd'],
-  } 
+  }
 }

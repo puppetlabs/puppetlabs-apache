@@ -2,8 +2,8 @@ class apache::mod::python {
   include apache
 
   package { "python":
-    name => $operatingsystem ? {
       'centos', 'fedora', 'redhat', 'scientific' => "mod_python",
+    name => $::operatingsystem ? {
       default => "libapache2-mod-python",
     },
     ensure  => installed,
