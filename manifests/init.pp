@@ -31,7 +31,7 @@ class apache {
   #
   A2mod { require => Package['httpd'], notify => Service['httpd']}
   case $::operatingsystem {
-    'debian','ubuntu': {
+    /(Ubuntu|Debian)/: {
       @a2mod {
        'rewrite' : ensure => present;
        'headers' : ensure => present;

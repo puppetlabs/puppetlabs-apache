@@ -52,14 +52,11 @@ define apache::vhost(
     include apache::ssl
   }
 
-  # Since the template will use auth, redirect to https requires mod_rewrite
-  if $redirect_ssl == true {
-    case $::operatingsystem {
-      'debian','ubuntu': {
-        A2mod <| title == 'rewrite' |>
-      }
-      default: { }
+  case $::operatingsystem {
+    'debian','ubuntu': {
+      A2mod <| title == 'rewrite' |>
     }
+    default: { }
   }
 
   file {
