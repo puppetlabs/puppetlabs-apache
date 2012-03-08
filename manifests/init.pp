@@ -38,7 +38,7 @@ class apache {
        'expires' : ensure => present;
       }
     }
-    default: { }
+    default: { err "operating system not supported by apache module" }
   }
 
 
