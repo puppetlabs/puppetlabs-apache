@@ -37,7 +37,7 @@ class apache {
   }
 
   file { 'ports.conf':
-    ensure  => directory,
+    ensure  => file,
     path    => $apache::params::ports_conf,
     notify  => Service['httpd'],
     require => Package['httpd'],

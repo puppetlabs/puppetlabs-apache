@@ -85,5 +85,14 @@ define apache::vhost(
       }
     }
   }
-}
+# If we haven't yet created a listen directive for the port
+  # used by this vhost, add it to our ports.conf via file_line
+  if ! defined(File_line["Listen ${port}"]) {
+    file_line { "Listen ${port}":
+      path    => $apache::params::ports_conf,
+      line    => "Listen ${port}",
+      require => File['ports.conf'],
+    }
+  }
 
+}
