@@ -1,11 +1,8 @@
 class apache::mod::wsgi {
   include apache
 
-  package { "wsgi":
-    name => $operatingsystem ? {
-      'centos', 'fedora', 'redhat', 'scientific' => "mod_wsgi",
-      default => "libapache2-mod-wsgi",
-    },
+  package { "mod_wsgi_package":
+    name    => $apache::params::mod_wsgi_package,
     ensure  => installed,
     require => Package["httpd"];
   }
