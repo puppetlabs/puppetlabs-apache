@@ -35,4 +35,12 @@ class apache {
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
+
+  file { 'ports.conf':
+    ensure  => directory,
+    path    => $apache::params::ports_conf,
+    notify  => Service['httpd'],
+    require => Package['httpd'],
+  }
+
 }
