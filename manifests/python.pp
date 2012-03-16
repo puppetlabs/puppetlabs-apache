@@ -16,7 +16,8 @@ class apache::python {
 	include apache::params
 	include apache
 
-  package { $apache::params::python_package:
+  package { "apache_python_package":
+    name   => $apache::params::python_package,
     ensure => present,
   }
 	a2mod { "python": ensure => present, }

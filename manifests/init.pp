@@ -14,7 +14,7 @@
 #
 class apache {
   include apache::params
-  package { 'httpd': 
+  package { 'httpd':
     name   => $apache::params::apache_name,
     ensure => installed,
   }
@@ -25,7 +25,8 @@ class apache {
     subscribe => Package['httpd'],
   }
 
-  file { $apache::params::vdir:
+  file { "httpd_vdir":
+    name => $apache::params::vdir,
     ensure  => directory,
     recurse => true,
     purge   => true,
