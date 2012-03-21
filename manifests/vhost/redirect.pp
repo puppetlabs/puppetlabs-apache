@@ -29,7 +29,8 @@ define apache::vhost::redirect (
 
   $srvname = $name
 
-  file {"${apache::params::vdir}/${priority}-${name}":
+  file { "${priority}-${name}":
+    name    => "${apache::params::vdir}/${priority}-${name}",
     content => template($template),
     owner   => 'root',
     group   => 'root',
