@@ -24,6 +24,7 @@ define apache::vhost::redirect (
     $servername         = '',
     $serveraliases      = '',
     $template           = "apache/vhost-redirect.conf.erb",
+    $content            = '',
     $vhost_name         = '*'
   ) {
 
@@ -35,9 +36,15 @@ define apache::vhost::redirect (
     $srvname = $servername
   }
 
+  if $content == '' {
+    $real_content = template($template)
+  } else {
+    $real_content = $content
+  }
+
   file { "${priority}-${name}":
     name    => "${apache::params::vdir}/${priority}-${name}",
-    content => template($template),
+    content => $real_content,
     owner   => 'root',
     group   => 'root',
     mode    => '755',

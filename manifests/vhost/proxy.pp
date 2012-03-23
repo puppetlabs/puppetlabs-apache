@@ -24,6 +24,7 @@ define apache::vhost::proxy (
     $configure_firewall = true,
     $priority           = '10',
     $template           = "apache/vhost-proxy.conf.erb",
+    $content            = '',
     $servername         = '',
     $serveraliases      = '',
     $ssl                = false,
@@ -41,13 +42,19 @@ define apache::vhost::proxy (
     $srvname = $servername
   }
 
+  if $content == '' {
+    $real_content = template($template)
+  } else {
+    $real_content = $content
+  }
+
   if $ssl == true {
     include apache::ssl
   }
 
   file { "${priority}-${name}":
     name    => "${apache::params::vdir}/${priority}-${name}",
-    content => template($template),
+    content => $real_content,
     owner   => 'root',
     group   => 'root',
     mode    => '755',
