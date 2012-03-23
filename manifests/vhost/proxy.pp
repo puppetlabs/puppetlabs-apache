@@ -24,6 +24,7 @@ define apache::vhost::proxy (
     $configure_firewall = true,
     $priority           = '10',
     $template           = "apache/vhost-proxy.conf.erb",
+    $custom             = '',
     $servername         = '',
     $serveraliases      = '',
     $ssl                = false,

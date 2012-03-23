@@ -12,5 +12,6 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   Redirect / <%= dest %>/
+  <%= custom %>
 </VirtualHost>
 

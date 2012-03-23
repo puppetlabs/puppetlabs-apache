@@ -24,10 +24,10 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
    ProxyPass        / <%= dest %>/
    ProxyPassReverse / <%= dest %>/
    ProxyPreserveHost On 
+   <%= custom %>
 
    ErrorLog /var/log/<%= apache_name %>/<%= name %>_error.log
    LogLevel warn
    CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
-
 </VirtualHost>
 

@@ -5,11 +5,13 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
+# - The $custom allows to add custom configuration part
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
 # - The $template option specifies whether to use the default template or override
 # - The $priority of the site
+# - The $servername of the site
 # - The $serveraliases of the site
 # - The $options for the given vhost
 # - The $vhost_name for name based virtualhosting, defaulting to *
@@ -30,13 +32,13 @@
 define apache::vhost(
     $port,
     $docroot,
+    $custom             = '',
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
     $serveraliases      = $apache::params::serveraliases,
-    $auth               = $apache::params::auth,
     $redirect_ssl       = $apache::params::redirect_ssl,
     $options            = $apache::params::options,
     $apache_name        = $apache::params::apache_name,

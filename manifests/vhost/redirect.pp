@@ -24,6 +24,7 @@ define apache::vhost::redirect (
     $servername         = '',
     $serveraliases      = '',
     $template           = "apache/vhost-redirect.conf.erb",
+    $custom             = '',
     $vhost_name         = '*'
   ) {
 
