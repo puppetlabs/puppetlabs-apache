@@ -31,7 +31,6 @@ define apache::vhost(
     $port,
     $docroot,
     $configure_firewall = true,
-    $content            = '',
     $ssl                = $apache::params::ssl,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
@@ -52,12 +51,6 @@ define apache::vhost(
     $srvname = $servername
   }
 
-  if $content == '' {
-    $real_content = template($template)
-  } else {
-    $real_content = $content
-  }
-
   if $ssl == true {
     include apache::ssl
   }
@@ -74,7 +67,7 @@ define apache::vhost(
 
   file { "${priority}-${name}.conf":
       name    => "${apache::params::vdir}/${priority}-${name}.conf",
-      content => $real_content,
+      content => template($template),
       owner   => 'root',
       group   => 'root',
       mode    => '755',
