@@ -20,6 +20,7 @@ define apache::vhost::redirect (
     $port,
     $dest,
     $priority      = '10',
+    $servername    = '',
     $serveraliases = '',
     $template      = "apache/vhost-redirect.conf.erb",
     $vhost_name    = '*'
@@ -27,7 +28,11 @@ define apache::vhost::redirect (
 
   include apache
 
-  $srvname = $name
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
 
   file { "${priority}-${name}":
     name    => "${apache::params::vdir}/${priority}-${name}",
