@@ -19,11 +19,12 @@
 define apache::vhost::redirect (
     $port,
     $dest,
-    $priority      = '10',
-    $servername    = '',
-    $serveraliases = '',
-    $template      = "apache/vhost-redirect.conf.erb",
-    $vhost_name    = '*'
+    $configure_firewall = true,
+    $priority           = '10',
+    $servername         = '',
+    $serveraliases      = '',
+    $template           = "apache/vhost-redirect.conf.erb",
+    $vhost_name         = '*'
   ) {
 
   include apache
@@ -44,12 +45,14 @@ define apache::vhost::redirect (
     notify  => Service['httpd'],
   }
 
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-    @firewall {
-      "0100-INPUT ACCEPT $port":
-        jump  => 'ACCEPT',
-        dport => "$port",
-        proto => 'tcp'
+  if $configure_firewall {
+    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+      @firewall {
+        "0100-INPUT ACCEPT $port":
+          action => 'accept',
+          dport => "$port",
+          proto => 'tcp'
+      }
     }
   }
 }
