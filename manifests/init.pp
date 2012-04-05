@@ -16,20 +16,20 @@ class apache {
   include apache::params
 
   package { 'httpd':
-    name   => $apache::params::apache_name,
     ensure => installed,
+    name   => $apache::params::apache_name,
   }
 
   service { 'httpd':
-    name      => $apache::params::apache_name,
     ensure    => running,
+    name      => $apache::params::apache_name,
     enable    => true,
     subscribe => Package['httpd'],
   }
 
-  file { "httpd_vdir":
-    path => $apache::params::vdir,
+  file { 'httpd_vdir':
     ensure  => directory,
+    path    => $apache::params::vdir,
     recurse => true,
     purge   => true,
     notify  => Service['httpd'],
