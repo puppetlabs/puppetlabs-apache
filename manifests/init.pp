@@ -14,15 +14,31 @@
 #
 class apache {
   include apache::params
+
   package { 'httpd':
     name   => $apache::params::apache_name,
     ensure => installed,
   }
+
   service { 'httpd':
     name      => $apache::params::apache_name,
     ensure    => running,
     enable    => true,
     subscribe => Package['httpd'],
+  }
+
+  # May want to purge all none realize modules using the resources resource type.
+  #
+  A2mod { require => Package['httpd'], notify => Service['httpd']}
+  case $::operatingsystem {
+    /(Ubuntu|Debian)/: {
+      @a2mod {
+       'rewrite' : ensure => present;
+       'headers' : ensure => present;
+       'expires' : ensure => present;
+      }
+    }
+    default: { err "operating system not supported by apache module" }
   }
 
   file { "httpd_vdir":
