@@ -41,11 +41,12 @@ class apache {
     default: { err "operating system not supported by apache module" }
   }
 
-
-  file { $apache::params::vdir:
-    ensure => directory,
+  file { "httpd_vdir":
+    name => $apache::params::vdir,
+    ensure  => directory,
     recurse => true,
-    purge => true,
-    notify => Service['httpd'],
+    purge   => true,
+    notify  => Service['httpd'],
+    require => Package['httpd'],
   }
 }
