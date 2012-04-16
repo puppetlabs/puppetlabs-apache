@@ -14,10 +14,12 @@
 #
 class apache {
   include apache::params
+
   package { 'httpd':
     name   => $apache::params::apache_name,
     ensure => installed,
   }
+
   service { 'httpd':
     name      => $apache::params::apache_name,
     ensure    => running,
@@ -26,7 +28,7 @@ class apache {
   }
 
   file { "httpd_vdir":
-    name => $apache::params::vdir,
+    path => $apache::params::vdir,
     ensure  => directory,
     recurse => true,
     purge   => true,
