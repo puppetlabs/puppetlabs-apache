@@ -40,7 +40,7 @@ define apache::vhost::proxy (
   }
 
   file { "${priority}-${name}":
-    name    => "${apache::params::vdir}/${priority}-${name}",
+    path    => "${apache::params::vdir}/${priority}-${name}",
     content => template($template),
     owner   => 'root',
     group   => 'root',

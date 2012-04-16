@@ -4,8 +4,8 @@
 NameVirtualHost *:80
 <VirtualHost *:80>
   ServerName testvhost
-  DocumentRoot /tmp/testvhost
-  <Directory /tmp/testvhost> 
+  DocumentRoot <%= docroot %>
+  <Directory <%= docroot %>> 
     Options Indexes FollowSymLinks MultiViews
     AllowOverride None
     Order allow,deny
