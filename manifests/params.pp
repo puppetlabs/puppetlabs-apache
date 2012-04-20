@@ -39,6 +39,7 @@ class apache::params {
        $ssl_package = 'mod_ssl'
        $apache_dev  = 'httpd-devel'
        $vdir = '/etc/httpd/conf.d/'
+       $ports_conf = '/etc/httpd/conf.d/ports.conf'
     }
     'ubuntu', 'debian': {
        $apache_name = 'apache2'
@@ -48,6 +49,7 @@ class apache::params {
        $ssl_package = 'apache-ssl'
        $apache_dev  = [ 'libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev' ]
        $vdir = '/etc/apache2/sites-enabled/'
+       $ports_conf = '/etc/apache2/ports.conf'
     }
     default: {
        $apache_name = 'apache2'
@@ -57,6 +59,7 @@ class apache::params {
        $ssl_package = 'apache-ssl'
        $apache_dev  = 'apache-dev'
        $vdir = '/etc/apache2/sites-enabled/'
+       $ports_conf = '/etc/apache2/ports.conf'
     }
   }
 }
