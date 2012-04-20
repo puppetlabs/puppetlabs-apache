@@ -19,15 +19,22 @@
 define apache::vhost::redirect (
     $port,
     $dest,
-    $priority      = '10',
-    $serveraliases = '',
-    $template      = "apache/vhost-redirect.conf.erb",
-    $vhost_name    = '*'
+    $configure_firewall = true,
+    $priority           = '10',
+    $servername         = '',
+    $serveraliases      = '',
+    $template           = "apache/vhost-redirect.conf.erb",
+    $custom             = '',
+    $vhost_name         = '*'
   ) {
 
   include apache
 
-  $srvname = $name
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
 
   file { "${priority}-${name}":
     path    => "${apache::params::vdir}/${priority}-${name}",
@@ -39,12 +46,14 @@ define apache::vhost::redirect (
     notify  => Service['httpd'],
   }
 
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-    @firewall {
-      "0100-INPUT ACCEPT $port":
-        jump  => 'ACCEPT',
-        dport => "$port",
-        proto => 'tcp'
+  if $configure_firewall {
+    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+      @firewall {
+        "0100-INPUT ACCEPT $port":
+          action => 'accept',
+          dport => "$port",
+          proto => 'tcp'
+      }
     }
   }
 }

@@ -1,16 +1,21 @@
+# ************************************
+# Default proxy template in module puppetlabs-apache
+# Managed by Puppet
+# ************************************
+
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   <% if ssl == true %>
   SSLEngine on
-  SSLCertificateFile <%= ssl_path %>/certs/pl.cert
-  SSLCertificateKeyFile <%= ssl_path %>/private/pl.key
+  SSLCertificateFile <%= ssl_path %>/certs/<%= srvname %>.cert
+  SSLCertificateKeyFile <%= ssl_path %>/private/<%= srvname %>.key
   <% end %>
   ServerName <%= srvname %>
-<% if serveraliases.is_a? Array %>
-<% serveraliases.each do |name| %><%= "  ServerAlias #{name}\n" %><% end %>
-<% elsif serveraliases != '' %>
+<% if serveraliases.is_a? Array -%>
+<% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
+<% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
-<% end %>
+<% end -%>
    ProxyRequests Off
    <Proxy *>
      Order deny,allow
@@ -19,10 +24,10 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
    ProxyPass        / <%= dest %>/
    ProxyPassReverse / <%= dest %>/
    ProxyPreserveHost On 
+   <%= custom %>
 
    ErrorLog /var/log/<%= apache_name %>/<%= name %>_error.log
    LogLevel warn
    CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
-
 </VirtualHost>
 

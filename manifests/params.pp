@@ -29,6 +29,7 @@ class apache::params {
   $redirect_ssl  = false
   $options       = 'Indexes FollowSymLinks MultiViews'
   $vhost_name    = '*'
+  $ssl_path      = '/etc/ssl'
 
   case $::operatingsystem {
     'centos', 'redhat', 'fedora', 'scientific': {

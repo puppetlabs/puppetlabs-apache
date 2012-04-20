@@ -21,19 +21,26 @@
 define apache::vhost::proxy (
     $port,
     $dest,
-    $priority      = '10',
-    $template      = "apache/vhost-proxy.conf.erb",
-    $servername    = '',
-    $serveraliases = '',
-    $ssl           = false,
-    $vhost_name    = '*'
+    $configure_firewall = true,
+    $priority           = '10',
+    $template           = "apache/vhost-proxy.conf.erb",
+    $custom             = '',
+    $servername         = '',
+    $serveraliases      = '',
+    $ssl                = false,
+    $vhost_name         = '*'
   ) {
 
   include apache
 
   $apache_name = $apache::params::apache_name
   $ssl_path = $apache::params::ssl_path
-  $srvname = $name
+
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
 
   if $ssl == true {
     include apache::ssl
@@ -49,5 +56,14 @@ define apache::vhost::proxy (
     notify  => Service['httpd'],
   }
 
-
+  if $configure_firewall {
+    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+      @firewall {
+        "0100-INPUT ACCEPT $port":
+          action => 'accept',
+          dport => "$port",
+          proto => 'tcp'
+      }
+    }
+  }
 }

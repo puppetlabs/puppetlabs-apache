@@ -9,7 +9,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% if serveraliases.is_a? Array -%>
 <% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
 <% elsif serveraliases != '' -%>
-<%= "  ServerAlias #{serveraliases}" -%>
+<%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
@@ -22,5 +22,6 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   LogLevel warn
   CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
   ServerSignature Off
+  <%= custom %>
 </VirtualHost>
 
