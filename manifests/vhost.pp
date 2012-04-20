@@ -89,6 +89,7 @@ define apache::vhost(
   # used by this vhost, add it to our ports.conf via file_line
   if ! defined(File_line["Listen ${port}"]) {
     file_line { "Listen ${port}":
+      ensure  => present,
       path    => $apache::params::ports_conf,
       line    => "Listen ${port}",
       require => File['ports.conf'],
