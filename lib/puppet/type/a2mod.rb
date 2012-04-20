@@ -1,16 +1,14 @@
 Puppet::Type.newtype(:a2mod) do
-    @doc = "Manage Apache 2 modules on Debian and Ubuntu"
+  @doc = "Manage Apache 2 modules on Debian and Ubuntu"
 
-    ensurable
+  ensurable
 
-    newparam(:name) do
-       desc "The name of the module to be managed"
+  newparam(:name) do
+     desc "The name of the module to be managed"
 
-       isnamevar
+     isnamevar
 
-    end
+  end
 
-    autorequire(:package) { catalog.resource(:package, 'httpd')}
-
-    end
+  autorequire(:package) { catalog.resource(:package, 'httpd') }
 end
