@@ -10,7 +10,5 @@ Puppet::Type.newtype(:a2mod) do
 
     end
 
-    autorequire(:package) { catalog.resource(:package, 'httpd')}
-
-    end
-end
+    autorequire(:package) { catalog.resource(:package, 'httpd') }
+  end
