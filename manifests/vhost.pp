@@ -8,7 +8,8 @@
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
-# - The $template option specifies whether to use the default template or override
+# - The $template option specifies whether to use the default template or
+#   override
 # - The $priority of the site
 # - The $serveraliases of the site
 # - The $options for the given vhost
@@ -70,7 +71,7 @@ define apache::vhost(
       content => template($template),
       owner   => 'root',
       group   => 'root',
-      mode    => '755',
+      mode    => '0755',
       require => Package['httpd'],
       notify  => Service['httpd'],
   }
@@ -80,8 +81,8 @@ define apache::vhost(
       @firewall {
         "0100-INPUT ACCEPT $port":
           action => 'accept',
-          dport => "$port",
-          proto => 'tcp'
+          dport  => '$port',
+          proto  => 'tcp'
       }
     }
   }

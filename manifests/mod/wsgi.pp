@@ -1,13 +1,13 @@
 class apache::mod::wsgi {
   include apache
 
-  package { "mod_wsgi_package":
-    name    => $apache::params::mod_wsgi_package,
+  package { 'mod_wsgi_package':
     ensure  => installed,
-    require => Package["httpd"];
+    name    => $apache::params::mod_wsgi_package,
+    require => Package['httpd'];
   }
 
-  a2mod { "wsgi": ensure => present; }
+  a2mod { 'wsgi': ensure => present; }
 
 }
 
