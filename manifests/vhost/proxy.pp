@@ -22,7 +22,7 @@ define apache::vhost::proxy (
     $port,
     $dest,
     $priority      = '10',
-    $template      = "apache/vhost-proxy.conf.erb",
+    $template      = 'apache/vhost-proxy.conf.erb',
     $servername    = '',
     $serveraliases = '',
     $ssl           = false,
@@ -44,7 +44,7 @@ define apache::vhost::proxy (
     content => template($template),
     owner   => 'root',
     group   => 'root',
-    mode    => '755',
+    mode    => '0755',
     require => Package['httpd'],
     notify  => Service['httpd'],
   }
