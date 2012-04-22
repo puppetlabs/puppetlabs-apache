@@ -38,7 +38,7 @@ describe 'apache::vhost::redirect', :type => :define do
       it { should contain_file("#{param_hash[:priority]}-#{title}").with({
           'owner'     => 'root',
           'group'     => 'root',
-          'mode'      => '755',
+          'mode'      => '0755',
           'require'   => 'Package[httpd]',
           'notify'    => 'Service[httpd]'
         })
