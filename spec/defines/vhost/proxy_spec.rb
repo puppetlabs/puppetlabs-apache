@@ -6,6 +6,9 @@ describe 'apache::vhost::proxy', :type => :define do
     'my_proxy_vhost'
   end
 
+  let :facts do
+    { :operatingsystem => 'redhat' }
+  end
 
   let :default_params do
     {
@@ -51,7 +54,7 @@ describe 'apache::vhost::proxy', :type => :define do
       it { should contain_file("#{param_hash[:priority]}-#{title}").with({
           'owner'     => 'root',
           'group'     => 'root',
-          'mode'      => '755',
+          'mode'      => '0755',
           'require'   => 'Package[httpd]',
           'notify'    => 'Service[httpd]'
         })

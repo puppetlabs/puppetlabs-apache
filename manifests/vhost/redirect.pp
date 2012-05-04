@@ -1,6 +1,7 @@
 # Define: apache::vhost::redirect
 #
-# This class will create a vhost that does nothing more than redirect to a given location
+# This class will create a vhost that does nothing more than redirect to a
+# given location
 #
 # Parameters:
 #   $port:
@@ -21,7 +22,7 @@ define apache::vhost::redirect (
     $dest,
     $priority      = '10',
     $serveraliases = '',
-    $template      = "apache/vhost-redirect.conf.erb",
+    $template      = 'apache/vhost-redirect.conf.erb',
     $vhost_name    = '*'
   ) {
 
@@ -30,11 +31,11 @@ define apache::vhost::redirect (
   $srvname = $name
 
   file { "${priority}-${name}":
-    name    => "${apache::params::vdir}/${priority}-${name}",
+    path    => "${apache::params::vdir}/${priority}-${name}",
     content => template($template),
     owner   => 'root',
     group   => 'root',
-    mode    => '755',
+    mode    => '0755',
     require => Package['httpd'],
     notify  => Service['httpd'],
   }
@@ -43,7 +44,7 @@ define apache::vhost::redirect (
     @firewall {
       "0100-INPUT ACCEPT $port":
         jump  => 'ACCEPT',
-        dport => "$port",
+        dport => '$port',
         proto => 'tcp'
     }
   }

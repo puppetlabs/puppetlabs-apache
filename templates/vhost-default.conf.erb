@@ -3,7 +3,6 @@
 # Managed by Puppet
 # ************************************
 
-NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
 <% if serveraliases.is_a? Array -%>
@@ -14,13 +13,13 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>
-    AllowOverride None
+    AllowOverride All
     Order allow,deny
     allow from all
   </Directory>
-  ErrorLog /var/log/<%= apache_name %>/<%= name %>_error.log
+  ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog /var/log/<%= apache_name %>/<%= name %>_access.log combined
+  CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
   ServerSignature Off
 </VirtualHost>
 
