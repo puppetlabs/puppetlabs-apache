@@ -1,5 +1,9 @@
 class apache::mod::passenger {
 
+  include apache::params
+
+  include apache
+
   case $::operatingsystem {
     'debian': { $passenger_package = 'libapache2-mod-passenger' }
     default:  { notice "passenger package for ${::operatingsystem} undefined"}
