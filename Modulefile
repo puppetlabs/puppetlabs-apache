@@ -8,4 +8,4 @@ description 'Module for Apache configuration'
 project_page 'https://github.com/puppetlabs/puppetlabs-apache'
 
 ## Add dependencies, if any:
-dependency 'puppetlabs-firewall', '>= 0.0.4'
+dependency 'puppetlabs/firewall', '>= 0.0.4'

@@ -1,4 +1,4 @@
-Ryan Coleman - ryan@puppetlabs.com - May 8 2012 - v0.0.4
+2012-05-08 Puppet Labs <info@puppetlabs.com> - 0.0.4
 e62e362 Fix broken tests for ssl, vhost, vhost::*
 42c6363 Changes to match style guide and pass puppet-lint without error
 42bc8ba changed name => path for file resources in order to name namevar by it's name
