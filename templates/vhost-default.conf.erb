@@ -17,7 +17,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>
-    AllowOverride None
+    AllowOverride <%= Array(override).join(' ') %>
     Order allow,deny
     allow from all
   </Directory>

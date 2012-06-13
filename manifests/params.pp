@@ -29,6 +29,7 @@ class apache::params {
   $auth          = false
   $redirect_ssl  = false
   $options       = 'Indexes FollowSymLinks MultiViews'
+  $override      = 'None'
   $vhost_name    = '*'
 
   case $::operatingsystem {
