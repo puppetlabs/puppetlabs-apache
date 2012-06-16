@@ -5,15 +5,18 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
-# - The $ssl option is set true or false to enable SSL for this Virtual Host
+# - The $serveradmin will specify an email address for Apache that it will display when it renders one of it's error pages
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
+# - The $ssl option is set true or false to enable SSL for this Virtual Host
 # - The $template option specifies whether to use the default template or
 #   override
 # - The $priority of the site
+# - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
 # - The $options for the given vhost
 # - The $vhost_name for name based virtualhosting, defaulting to *
+# - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
 #
 # Actions:
 # - Install Apache Virtual Hosts
