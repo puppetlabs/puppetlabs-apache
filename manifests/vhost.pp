@@ -42,7 +42,8 @@ define apache::vhost(
     $redirect_ssl       = $apache::params::redirect_ssl,
     $options            = $apache::params::options,
     $apache_name        = $apache::params::apache_name,
-    $vhost_name         = $apache::params::vhost_name
+    $vhost_name         = $apache::params::vhost_name,
+    $logroot            = "/var/log/" + $apache::params::apache_name
   ) {
 
   include apache
@@ -67,13 +68,27 @@ define apache::vhost(
     }
   }
 
+  file {"${apache::params::vdir}/${priority}-${name}-$docroot":
+    path => $docroot,
+    ensure => directory,
+  }
+
+  file {"${apache::params::vdir}/${priority}-${name}-$logroot":
+    path => $logroot,
+    ensure => directory,
+  }
+
   file { "${priority}-${name}.conf":
       path    => "${apache::params::vdir}/${priority}-${name}.conf",
       content => template($template),
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      require => Package['httpd'],
+      require => [
+          Package['httpd'],
+          File["${apache::params::vdir}/${priority}-${name}-$docroot"],
+          File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+      ]
       notify  => Service['httpd'],
   }
 
