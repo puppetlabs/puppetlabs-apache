@@ -67,6 +67,16 @@ define apache::vhost(
     }
   }
 
+  file {"${apache::params::vdir}/${priority}-${name}-$docroot":
+    path => $docroot,
+    ensure => directory,
+  }
+
+  file {"${apache::params::vdir}/${priority}-${name}-$logroot":
+    path => $logroot,
+    ensure => directory,
+  }
+
   file { "${priority}-${name}.conf":
       path    => "${apache::params::vdir}/${priority}-${name}.conf",
       content => template($template),
