@@ -83,7 +83,11 @@ define apache::vhost(
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      require => Package['httpd'],
+      require => [
+          Package['httpd'],
+          File["${apache::params::vdir}/${priority}-${name}-$docroot"],
+          File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+      ]
       notify  => Service['httpd'],
   }
 
