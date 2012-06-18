@@ -2,7 +2,7 @@ Puppetlabs module for Apache
 ============================
 
 Apache is widely-used web server and this module will allow to configure
-various modules and setup virtual hosts with minimal effort
+various modules and setup virtual hosts with minimal effort.
 
 Basic usage
 -----------
@@ -27,8 +27,8 @@ example is:
         port            => '80',
     }
 
-A slightly more complicated example, which move the docroot and
-logfile to alternate location, might be:
+A slightly more complicated example, which moves the docroot and
+logfile to an alternate location, might be:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
