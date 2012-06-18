@@ -20,9 +20,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
    ProxyPassReverse / <%= dest %>/
    ProxyPreserveHost On 
 
-   ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
+   ErrorLog <%= logroot %>/<%= srvname %>_error.log
    LogLevel warn
-   CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
+   CustomLog <%= logroot %>/<%= srvname %>_access.log combined
 
 </VirtualHost>
 
