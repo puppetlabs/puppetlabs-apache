@@ -82,6 +82,7 @@ Contributors
 ------------
 
  * A cast of hundreds, hopefully you too soon
+ * [Anand Kumria](https://github.com/akumria) ([@akumria](https://twitter.com/akumria))
 
 Copyright and License
 ---------------------
