@@ -5,7 +5,8 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
-# - The $serveradmin will specify an email address for Apache that it will display when it renders one of it's error pages
+# - The $serveradmin will specify an email address for Apache that it will
+#   display when it renders one of it's error pages
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
@@ -16,7 +17,8 @@
 # - The $serveraliases of the site
 # - The $options for the given vhost
 # - The $vhost_name for name based virtualhosting, defaulting to *
-# - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
+# - The $logroot specifies the location of the virtual hosts logfiles,
+#   default to /var/log/<apache log location>/
 # - The $ensure_dirs parameters makes sure that both $docroot and $logroot exist
 #
 # Actions:
@@ -75,20 +77,20 @@ define apache::vhost(
 
   if $ensure_dirs == true {
     file {"${apache::params::vdir}/${priority}-${name}-$docroot":
-      path => $docroot,
       ensure => directory,
+      path   => $docroot,
     }
 
     file {"${apache::params::vdir}/${priority}-${name}-$logroot":
-      path => $logroot,
       ensure => directory,
+      path   => $logroot,
     }
 
     $ensure_dirs_required = [
       File["${apache::params::vdir}/${priority}-${name}-$docroot"],
       File["${apache::params::vdir}/${priority}-${name}-$logroot"],
     ]
-    
+
   } else {
     $ensure_dirs_required = []
   }
