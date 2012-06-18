@@ -21,9 +21,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     Order allow,deny
     allow from all
   </Directory>
-  ErrorLog <%= logroot %>/<%= name %>_error.log
+  ErrorLog <%= logroot %>/<%= srvname %>_error.log
   LogLevel warn
-  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  CustomLog <%= logroot %>/<%= srvname %>_access.log combined
   ServerSignature Off
 </VirtualHost>
 
