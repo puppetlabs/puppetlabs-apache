@@ -23,7 +23,7 @@ example is:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
+        vhost_name      => '192.0.2.1',
         port            => '80',
     }
 
@@ -32,7 +32,7 @@ logfile to an alternate location, might be:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
+        vhost_name      => '192.0.2.1',
         port            => '80',
         docroot         => '/home/www.example.com/docroot/',
         logroot         => '/srv/www.example.com/logroot/',
