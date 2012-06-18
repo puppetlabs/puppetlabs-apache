@@ -75,7 +75,8 @@ the first virtual host definition.
 Notes
 -----
 
-Nothing of note.
+ * The name of the resource should not contain a space, as it may be
+   used in various file paths.
 
 Contributors
 ------------
