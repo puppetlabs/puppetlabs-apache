@@ -14,19 +14,19 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end %>
-   ProxyRequests Off
-   <Proxy *>
-     Order deny,allow
-     Allow from all
-   </Proxy>
-   ProxyPass        / <%= dest %>/
-   ProxyPassReverse / <%= dest %>/
-   ProxyPreserveHost On 
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+  ProxyPass        / <%= dest %>/
+  ProxyPassReverse / <%= dest %>/
+  ProxyPreserveHost On 
 
-   ErrorLog <%= logroot %>/<%= srvname %>_error.log
-   LogLevel warn
-   CustomLog <%= logroot %>/<%= srvname %>_access.log combined
+  ErrorLog <%= logroot %>/<%= srvname %>_error.log
+  LogLevel warn
+  CustomLog <%= logroot %>/<%= srvname %>_access.log combined
 
-   ServerSignature Off
+  ServerSignature Off
 </VirtualHost>
 
