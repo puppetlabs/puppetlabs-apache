@@ -91,7 +91,7 @@ define apache::vhost(
           Package['httpd'],
           File["${apache::params::vdir}/${priority}-${name}-$docroot"],
           File["${apache::params::vdir}/${priority}-${name}-$logroot"],
-      ]
+      ],
       notify  => Service['httpd'],
   }
 
