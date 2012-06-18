@@ -17,6 +17,7 @@
 # - The $options for the given vhost
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
+# - The $ensure_dirs parameters makes sure that both $docroot and $logroot exist
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -36,6 +37,7 @@ define apache::vhost(
     $docroot,
     $serveradmin,
     $configure_firewall = true,
+    $ensure_dirs        = true,
     $ssl                = $apache::params::ssl,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
@@ -71,14 +73,24 @@ define apache::vhost(
     }
   }
 
-  file {"${apache::params::vdir}/${priority}-${name}-$docroot":
-    path => $docroot,
-    ensure => directory,
-  }
+  if $ensure_dirs == true {
+    file {"${apache::params::vdir}/${priority}-${name}-$docroot":
+      path => $docroot,
+      ensure => directory,
+    }
 
-  file {"${apache::params::vdir}/${priority}-${name}-$logroot":
-    path => $logroot,
-    ensure => directory,
+    file {"${apache::params::vdir}/${priority}-${name}-$logroot":
+      path => $logroot,
+      ensure => directory,
+    }
+
+    $ensure_dirs_required = [
+      File["${apache::params::vdir}/${priority}-${name}-$docroot"],
+      File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+    ]
+    
+  } else {
+    $ensure_dirs_required = []
   }
 
   file { "${priority}-${name}.conf":
@@ -89,8 +101,7 @@ define apache::vhost(
       mode    => '0755',
       require => [
           Package['httpd'],
-          File["${apache::params::vdir}/${priority}-${name}-$docroot"],
-          File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+          $ensure_dirs_required,
       ],
       notify  => Service['httpd'],
   }
@@ -106,4 +117,3 @@ define apache::vhost(
     }
   }
 }
-
