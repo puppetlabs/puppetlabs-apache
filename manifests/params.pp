@@ -49,6 +49,8 @@ class apache::params {
       $ssl_package = 'apache-ssl'
       $apache_dev  = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
       $vdir = '/etc/apache2/sites-enabled/'
+      $fcgi_scriptsdir = '/var/www/php-fcgi-scripts'
+      $fcgi_package_name = 'libapache2-mod-fcgid'
     }
     default: {
       $apache_name = 'apache2'
