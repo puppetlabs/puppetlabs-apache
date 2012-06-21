@@ -28,6 +28,7 @@ describe 'apache::vhost', :type => :define do
       :docroot       => 'path/to/docroot',
       :port          => '80',
       :priority      => '25',
+      :serveradmin   => 'serveradmin@puppet',
       :ssl           => false,
       :template      => 'apache/vhost-default.conf.erb',
    },
@@ -58,7 +59,6 @@ describe 'apache::vhost', :type => :define do
           'owner'     => 'root',
           'group'     => 'root',
           'mode'      => '0755',
-          'require'   => 'Package[httpd]',
           'notify'    => 'Service[httpd]'
         })
       }
