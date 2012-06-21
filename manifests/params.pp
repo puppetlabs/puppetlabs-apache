@@ -31,8 +31,8 @@ class apache::params {
   $options       = 'Indexes FollowSymLinks MultiViews'
   $vhost_name    = '*'
 
-  case $::operatingsystem {
-    'centos', 'redhat', 'fedora', 'scientific': {
+  case $::osfamily {
+    'redhat': {
       $apache_name = 'httpd'
       $php_package = 'php'
       $mod_python_package = 'mod_python'
@@ -41,7 +41,7 @@ class apache::params {
       $apache_dev  = 'httpd-devel'
       $vdir = '/etc/httpd/conf.d/'
     }
-    'ubuntu', 'debian': {
+    'debian': {
       $apache_name = 'apache2'
       $php_package = 'libapache2-mod-php5'
       $mod_python_package = 'libapache2-mod-python'
