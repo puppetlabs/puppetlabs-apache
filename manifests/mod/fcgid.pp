@@ -4,6 +4,8 @@ class apache::mod::fcgid {
 
   include apache
 
+  include apache::mod::suexec
+
   if ($::operatingsystem != 'Ubuntu' and
      $::operatingsystem != 'Debian') {
     fail "apache::mod::fcgid not implemented for ${::operatingsystem}"
