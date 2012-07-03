@@ -49,6 +49,7 @@ class apache::params {
       $ssl_package = 'apache-ssl'
       $apache_dev  = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
       $vdir = '/etc/apache2/sites-enabled/'
+      $proxy_modules  = ['proxy', 'proxy_http']
     }
     default: {
       $apache_name = 'apache2'
@@ -58,6 +59,7 @@ class apache::params {
       $ssl_package = 'apache-ssl'
       $apache_dev  = 'apache-dev'
       $vdir = '/etc/apache2/sites-enabled/'
+      $proxy_modules  = ['proxy', 'proxy_http']
     }
   }
 }
