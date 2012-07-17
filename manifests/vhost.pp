@@ -17,6 +17,7 @@
 # - The $options for the given vhost
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
+# - The $vhost_ensure specifies if vhost file is present or absent.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -46,9 +47,14 @@ define apache::vhost(
     $options            = $apache::params::options,
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
-    $logroot            = "/var/log/$apache::params::apache_name"
+    $logroot            = "/var/log/$apache::params::apache_name",
+    $vhost_ensure       = 'present'
   ) {
 
+  validate_re($vhost_ensure, [ '^present$', '^absent$' ],
+  "${vhost_ensure} is not supported for vhost_ensure.
+  Allowed values are 'enabled' and 'disabled'.")
+  
   include apache
 
   if $servername == '' {
@@ -82,19 +88,20 @@ define apache::vhost(
   }
 
   file { "${priority}-${name}.conf":
-      path    => "${apache::params::vdir}/${priority}-${name}.conf",
-      content => template($template),
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      require => [
-          Package['httpd'],
-          File["${apache::params::vdir}/${priority}-${name}-$docroot"],
-          File["${apache::params::vdir}/${priority}-${name}-$logroot"],
-      ],
-      notify  => Service['httpd'],
+    ensure  => $vhost_ensure,
+    path    => "${apache::params::vdir}/${priority}-${name}.conf",
+    content => template($template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+                Package['httpd'],
+                File["${apache::params::vdir}/${priority}-${name}-$docroot"],
+                File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+                ],
+    notify  => Service['httpd'],
   }
-
+  
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
