@@ -32,7 +32,7 @@ class apache::params {
   $vhost_name    = '*'
 
   case $::operatingsystem {
-    'centos', 'redhat', 'fedora', 'scientific': {
+    'centos', 'redhat', 'fedora', 'scientific', 'amazon': {
       $apache_name = 'httpd'
       $php_package = 'php'
       $mod_python_package = 'mod_python'
