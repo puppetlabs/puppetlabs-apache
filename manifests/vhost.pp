@@ -53,7 +53,7 @@ define apache::vhost(
 
   validate_re($vhost_ensure, [ '^present$', '^absent$' ],
   "${vhost_ensure} is not supported for vhost_ensure.
-  Allowed values are 'enabled' and 'disabled'.")
+  Allowed values are 'present' and 'absent'.")
   
   include apache
 
