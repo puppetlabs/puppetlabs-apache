@@ -20,7 +20,7 @@ describe 'apache::vhost', :type => :define do
     :ssl           => true,
     :template      => 'apache/vhost-default.conf.erb',
     :vhost_name    => '*',
-    :vhost_ensure  => 'present'
+    :ensure        => 'present'
     }
   end
 
