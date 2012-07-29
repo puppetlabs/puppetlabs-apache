@@ -32,6 +32,8 @@ class apache {
     path    => $apache::params::vdir,
     recurse => true,
     purge   => true,
+    owner   => 'root',
+    group   => 'root',
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
