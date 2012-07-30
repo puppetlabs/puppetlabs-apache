@@ -23,8 +23,9 @@ example is:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
         port            => '80',
+        docroot         => '/home/www.example.com/docroot/',
+        serveradmin     => 'webmaster@example.com',
     }
 
 A slightly more complicated example, which move the docroot and
@@ -32,7 +33,6 @@ logfile to alternate location, might be:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
         port            => '80',
         docroot         => '/home/www.example.com/docroot/',
         logroot         => '/srv/www.example.com/logroot/',
@@ -40,10 +40,35 @@ logfile to alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
+SSL can be enabled for the site. 
+
+    apache::vhost { 'www.example.com-ssl':
+      priority    => '10',
+      port        => '443',
+      docroot     => '/home/www.example.com/docroot',
+      serveradmin => 'webmaster@example.com',
+      ssl         => true,
+      ssl_cert    => '/etc/ssl/certs/example.com.crt',
+      ssl_key     => '/etc/ssl/private/example.com.key',
+    }
+
+Basic authentication can be configured for a site:
+
+    apache::vhost { 'www.example.com':
+      priority    => '10',
+      docroot     => '/home/www.example.com/docroot',
+      serveradmin => 'webmaster@example.com',
+      auth        => '/home/www.example.com/.htaccess',
+    }
+
+You can either create the .htaccess file by hand or by using [James's httpauth module](https://github.com/jamtur01/puppet-httpauth)
+
+
 Notes
 -----
 
-Nothing of note.
+At the moment, if you have sites listening on non-standard ports, you will need
+to ensure the apache config has the proper "Listen" statement.
 
 Contributors
 ------------

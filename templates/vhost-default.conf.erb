@@ -10,7 +10,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   ServerAdmin <%= serveradmin %>
 <% end %>
 <% if serveraliases.is_a? Array -%>
+<% if serveraliases -%>
 <% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
+<% end -%>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" -%>
 <% end -%>
@@ -21,9 +23,23 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     Order allow,deny
     allow from all
   </Directory>
-  ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog <%= logroot %>/<%= name %>_access.log combined
+  ErrorLog <%= logroot %>/<%= name %>/<%= name %>_error.log
+  CustomLog <%= logroot %>/<%= name %>/<%= name %>_access.log combined
   ServerSignature Off
+<% if ssl -%>
+  SSLEngine on
+  SSLCertificateFile    <%= ssl_cert %>
+  SSLCertificateKeyFile <%= ssl_key %>
+<% end -%>
+<% if auth -%>
+  <Location />
+    AuthType basic
+    AuthName "Restricted Site"
+    Require valid-user
+    AuthBasicProvider file
+    AuthUserFile <%= auth %>
+  </Location>
+<% end -%>
 </VirtualHost>
 
