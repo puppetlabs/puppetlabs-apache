@@ -77,12 +77,13 @@ define apache::vhost(
     }
   }
 
-  file {"${apache::params::vdir}/${priority}-${name}-$docroot":
+  # The title of the file resources below must be unique in each vhost instance
+  file {"${name}-${port}-${apache::params::vdir}-${docroot}":
     path => $docroot,
     ensure => directory,
   }
 
-  file {"${apache::params::vdir}/${priority}-${name}-$logroot":
+  file {"${name}-${port}-${apache::params::vdir}-${logroot}":
     path => $logroot,
     ensure => directory,
   }
@@ -96,8 +97,8 @@ define apache::vhost(
     mode    => '0755',
     require => [
                 Package['httpd'],
-                File["${apache::params::vdir}/${priority}-${name}-$docroot"],
-                File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+                File["${name}-${port}-${apache::params::vdir}-${docroot}"],
+                File["${name}-${port}-${apache::params::vdir}-${logroot}"],
                 ],
     notify  => Service['httpd'],
   }
