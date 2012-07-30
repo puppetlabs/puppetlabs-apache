@@ -23,7 +23,6 @@ example is:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
         port            => '80',
     }
 
@@ -32,7 +31,6 @@ logfile to alternate location, might be:
 
     apache::vhost { 'www.example.com':
         priority        => '10',
-        ipaddr          => '192.0.2.1',
         port            => '80',
         docroot         => '/home/www.example.com/docroot/',
         logroot         => '/srv/www.example.com/logroot/',
@@ -43,7 +41,9 @@ logfile to alternate location, might be:
 Notes
 -----
 
-Nothing of note.
+Since Puppet cannot ensure that all parent directories exist you need to
+manage these yourself. In the more advanced example above, you need to ensure 
+that '/home/www.example.com' and '/srv/www.example.com' directories exist.
 
 Contributors
 ------------
