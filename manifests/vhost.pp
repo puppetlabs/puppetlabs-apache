@@ -71,15 +71,12 @@ define apache::vhost(
     }
   }
 
-  file {"${apache::params::vdir}/${priority}-${name}-$docroot":
-    path => $docroot,
-    ensure => directory,
-  }
+  # This ensures that the docroot exists
+  # But enables it to be specified across multiple vhost resources
+  ensure_resource('file', $docroot, {'ensure' => 'directory'})
 
-  file {"${apache::params::vdir}/${priority}-${name}-$logroot":
-    path => $logroot,
-    ensure => directory,
-  }
+  # This does the same thing, but for the logroot dir
+  ensure_resource('file', $logroot, {'ensure' => 'directory'})
 
   file { "${priority}-${name}.conf":
       path    => "${apache::params::vdir}/${priority}-${name}.conf",
@@ -89,8 +86,8 @@ define apache::vhost(
       mode    => '0755',
       require => [
           Package['httpd'],
-          File["${apache::params::vdir}/${priority}-${name}-$docroot"],
-          File["${apache::params::vdir}/${priority}-${name}-$logroot"],
+          File[$docroot],
+          File[$logroot],
       ],
       notify  => Service['httpd'],
   }
