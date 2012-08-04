@@ -41,7 +41,6 @@ define apache::vhost(
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
     $serveraliases      = $apache::params::serveraliases,
-    $auth               = $apache::params::auth,
     $redirect_ssl       = $apache::params::redirect_ssl,
     $options            = $apache::params::options,
     $apache_name        = $apache::params::apache_name,

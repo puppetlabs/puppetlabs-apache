@@ -3,7 +3,6 @@
 # Managed by Puppet
 # ************************************
 
-NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
 <% if serveradmin %>
@@ -17,7 +16,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>
-    AllowOverride None
+    AllowOverride All
     Order allow,deny
     allow from all
   </Directory>
