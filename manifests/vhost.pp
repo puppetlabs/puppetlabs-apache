@@ -99,7 +99,7 @@ define apache::vhost(
       @firewall {
         "0100-INPUT ACCEPT $port":
           action => 'accept',
-          dport  => '$port',
+          dport  => $port,
           proto  => 'tcp'
       }
     }
