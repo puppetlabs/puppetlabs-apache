@@ -34,7 +34,7 @@
 define apache::vhost(
     $port,
     $docroot,
-    $serveradmin,
+    $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
     $template           = $apache::params::template,
