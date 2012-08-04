@@ -18,7 +18,7 @@ class apache::python {
 
   package { 'apache_python_package':
     ensure => present,
-    name   => $apache::params::python_package,
+    name   => $apache::params::mod_python_package,
   }
   a2mod { 'python': ensure => present, }
 

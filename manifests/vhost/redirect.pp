@@ -40,9 +40,9 @@ define apache::vhost::redirect (
     notify  => Service['httpd'],
   }
 
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+  if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
     @firewall {
-      "0100-INPUT ACCEPT $port":
+      "0100-INPUT ACCEPT ${port}":
         jump  => 'ACCEPT',
         dport => '$port',
         proto => 'tcp'
