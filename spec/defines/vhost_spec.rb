@@ -12,6 +12,7 @@ describe 'apache::vhost', :type => :define do
     :auth          => false,
     :docroot       => 'path/to/docroot',
     :options       => 'Indexes FollowSymLinks MultiViews',
+    :override      => 'None',
     :port          => '80',
     :priority      => '25',
     :redirect_ssl  => false,
@@ -26,6 +27,7 @@ describe 'apache::vhost', :type => :define do
   [{
       :apache_name   => 'httpd',
       :docroot       => 'path/to/docroot',
+      :override      => ['Options', 'FileInfo'],
       :port          => '80',
       :priority      => '25',
       :serveradmin   => 'serveradmin@puppet',
