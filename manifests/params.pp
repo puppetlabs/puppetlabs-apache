@@ -38,6 +38,7 @@ class apache::params {
       $php_package = 'php'
       $mod_python_package = 'mod_python'
       $mod_wsgi_package = 'mod_wsgi'
+      $mod_auth_kerb_package = 'mod_auth_kerb'
       $ssl_package = 'mod_ssl'
       $apache_dev  = 'httpd-devel'
       $vdir = '/etc/httpd/conf.d/'
@@ -47,6 +48,7 @@ class apache::params {
       $php_package = 'libapache2-mod-php5'
       $mod_python_package = 'libapache2-mod-python'
       $mod_wsgi_package = 'libapache2-mod-wsgi'
+      $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
       $ssl_package = 'apache-ssl'
       $apache_dev  = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
       $vdir = '/etc/apache2/sites-enabled/'
@@ -56,6 +58,7 @@ class apache::params {
       $php_package = 'libapache2-mod-php5'
       $mod_python_package = 'libapache2-mod-python'
       $mod_wsgi_package = 'libapache2-mod-wsgi'
+      $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
       $ssl_package = 'apache-ssl'
       $apache_dev  = 'apache-dev'
       $vdir = '/etc/apache2/sites-enabled/'
