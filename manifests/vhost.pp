@@ -15,6 +15,7 @@
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
 # - The $options for the given vhost
+# - The $override for the given vhost (array of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
 #
@@ -44,6 +45,7 @@ define apache::vhost(
     $auth               = $apache::params::auth,
     $redirect_ssl       = $apache::params::redirect_ssl,
     $options            = $apache::params::options,
+    $override           = $apache::params::override,
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name"
