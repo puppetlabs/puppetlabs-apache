@@ -6,23 +6,27 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   SSLCertificateKeyFile <%= ssl_path %>/private/pl.key
   <% end %>
   ServerName <%= srvname %>
+<% if serveradmin %>
+  ServerAdmin <%= serveradmin %>
+<% end %>
 <% if serveraliases.is_a? Array %>
 <% serveraliases.each do |name| %><%= "  ServerAlias #{name}\n" %><% end %>
 <% elsif serveraliases != '' %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end %>
-   ProxyRequests Off
-   <Proxy *>
-     Order deny,allow
-     Allow from all
-   </Proxy>
-   ProxyPass        / <%= dest %>/
-   ProxyPassReverse / <%= dest %>/
-   ProxyPreserveHost On 
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+  ProxyPass        / <%= dest %>/
+  ProxyPassReverse / <%= dest %>/
+  ProxyPreserveHost On 
 
-   ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
-   LogLevel warn
-   CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
+  ErrorLog <%= logroot %>/<%= srvname %>_error.log
+  LogLevel warn
+  CustomLog <%= logroot %>/<%= srvname %>_access.log combined
 
+  ServerSignature Off
 </VirtualHost>
 

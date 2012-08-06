@@ -40,15 +40,49 @@ logfile to an alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
+Configure an IPv4 and IPv6 host
+-------------------------------
+
+Typically you will want to serve the same content to IPv4 and IPv6
+users. And you are likely to want to have the logfile contain entries
+from both virtual hosts.
+
+
+    apache::vhost { 'www.example.com':
+        priority        => '10',
+        vhost_name      => '192.0.2.1',
+        port            => '80',
+    }
+
+    apache::vhost { 'www.example.com-IPv6':
+        servername      => 'www.example.com',
+        priority        => '10',
+        vhost_name      => '2001:db8::2:1',
+        port            => '80',
+        ensure_dirs     => false,
+    }
+
+
+By default, the variable `servername` is used to construct the path to
+logfiles. In the first case, with no explicit configuration, the
+`servername` is set to the name of the resource (i.e. www.example.com).
+
+In the second case, we specifiy it explicitly. We also disable ensuring
+that the `docroot` and `logroot` exist, since they will be handled by
+the first virtual host definition.
+
+
 Notes
 -----
 
-Nothing of note.
+ * The name of the resource should not contain a space, as it may be
+   used in various file paths.
 
 Contributors
 ------------
 
  * A cast of hundreds, hopefully you too soon
+ * [Anand Kumria](https://github.com/akumria) ([@akumria](https://twitter.com/akumria))
 
 Copyright and License
 ---------------------
