@@ -21,6 +21,7 @@ class apache::params {
 
   $user          = 'www-data'
   $group         = 'www-data'
+  $serveradmin   = "webmaster@${::fqdn}"
   $ssl           = true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'

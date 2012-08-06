@@ -35,8 +35,8 @@
 define apache::vhost(
     $port,
     $docroot,
-    $serveradmin,
     $configure_firewall = true,
+    $serveradmin        = $apache::params::serveradmin,
     $ssl                = $apache::params::ssl,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
