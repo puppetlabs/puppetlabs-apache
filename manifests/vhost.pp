@@ -18,6 +18,7 @@
 # - The $override for the given vhost (array of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
+# - The $ensure specifies if vhost file is present or absent.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -48,9 +49,14 @@ define apache::vhost(
     $override           = $apache::params::override,
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
-    $logroot            = "/var/log/$apache::params::apache_name"
+    $logroot            = "/var/log/$apache::params::apache_name",
+    $ensure             = 'present'
   ) {
 
+  validate_re($ensure, [ '^present$', '^absent$' ],
+  "${ensure} is not supported for ensure.
+  Allowed values are 'present' and 'absent'.")
+  
   include apache
 
   if $servername == '' {
@@ -89,19 +95,20 @@ define apache::vhost(
   }
 
   file { "${priority}-${name}.conf":
-      path    => "${apache::params::vdir}/${priority}-${name}.conf",
-      content => template($template),
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      require => [
-          Package['httpd'],
-          File[$docroot],
-          File[$logroot],
-      ],
-      notify  => Service['httpd'],
+    ensure  => $ensure,
+    path    => "${apache::params::vdir}/${priority}-${name}.conf",
+    content => template($template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+      Package['httpd'],
+      File[$docroot],
+      File[$logroot],
+    ],
+    notify  => Service['httpd'],
   }
-
+  
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
