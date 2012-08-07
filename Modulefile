@@ -9,4 +9,3 @@ project_page 'https://github.com/puppetlabs/puppetlabs-apache'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/firewall', '>= 0.0.4'
-dependency 'bodepd/puppet-ensure_resource', '>= 0'

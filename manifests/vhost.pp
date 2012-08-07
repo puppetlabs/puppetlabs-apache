@@ -73,10 +73,18 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  ensure_resource('file', $docroot, {'ensure' => 'directory'})
+  if ! defined(File[$docroot]) {
+    file { $docroot:
+      ensure => directory,
+    }
+  }
 
-  # This does the same thing, but for the logroot dir
-  ensure_resource('file', $logroot, {'ensure' => 'directory'})
+  # Same as above, but for logroot
+  if ! defined(File[$logroot]) {
+    file { $logroot:
+      ensure => directory,
+    }
+  }
 
   file { "${priority}-${name}.conf":
       path    => "${apache::params::vdir}/${priority}-${name}.conf",
