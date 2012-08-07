@@ -5,7 +5,8 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
-# - The $serveradmin will specify an email address for Apache that it will display when it renders one of it's error pages
+# - The $serveradmin will specify an email address for Apache that it will
+#   display when it renders one of it's error pages
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
@@ -17,7 +18,8 @@
 # - The $options for the given vhost
 # - The $override for the given vhost (array of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
-# - The $logroot specifies the location of the virtual hosts logfiles, default to /var/log/<apache log location>/
+# - The $logroot specifies the location of the virtual hosts logfiles, default
+#   to /var/log/<apache log location>/
 # - The $ensure specifies if vhost file is present or absent.
 #
 # Actions:
@@ -56,7 +58,7 @@ define apache::vhost(
   validate_re($ensure, [ '^present$', '^absent$' ],
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
-  
+
   include apache
 
   if $servername == '' {
@@ -108,7 +110,7 @@ define apache::vhost(
     ],
     notify  => Service['httpd'],
   }
-  
+
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
