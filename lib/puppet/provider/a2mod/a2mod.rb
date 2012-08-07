@@ -18,4 +18,9 @@ Puppet::Type.type(:a2mod).provide(:a2mod) do
         mod= "/etc/apache2/mods-enabled/" + resource[:name] + ".load"
         File.exists?(mod)
     end
+
+    def self.instances
+      # Empty hash to allow `puppet resource` to work
+      {}
+    end
 end
