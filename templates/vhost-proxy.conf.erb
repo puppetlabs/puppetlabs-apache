@@ -16,6 +16,10 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
      Order deny,allow
      Allow from all
    </Proxy>
+
+<% for uri in no_proxy_uris %>
+   ProxyPass        <%= uri %> !
+<% end %>
    ProxyPass        / <%= dest %>/
    ProxyPassReverse / <%= dest %>/
    ProxyPreserveHost On 
