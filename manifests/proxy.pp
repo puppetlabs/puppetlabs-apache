@@ -13,9 +13,10 @@ class apache::proxy {
   include apache::params
   include apache
 
-  a2mod { $apache::params::proxy_modules:
-    ensure => present,
-    before => Service[httpd]
+  if $::osfamily == 'debian' {
+    a2mod { $apache::params::proxy_modules:
+      ensure => present,
+      before => Service[httpd]
+    }
   }
-
 }
