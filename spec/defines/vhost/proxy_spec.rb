@@ -7,7 +7,10 @@ describe 'apache::vhost::proxy', :type => :define do
   end
 
   let :facts do
-    { :operatingsystem => 'redhat' }
+    {
+      :operatingsystem => 'redhat',
+      :osfamily        => 'redhat'
+    }
   end
 
   let :default_params do

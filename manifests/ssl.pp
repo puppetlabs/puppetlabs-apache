@@ -16,19 +16,15 @@ class apache::ssl {
 
   include apache
 
-  case $::operatingsystem {
-    'centos', 'fedora', 'redhat', 'scientific', 'amazon': {
-      package { 'apache_ssl_package':
-        ensure  => installed,
-        name    => $apache::params::ssl_package,
-        require => Package['httpd'],
-      }
+  if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
+    package { 'apache_ssl_package':
+      ensure  => installed,
+      name    => $apache::params::ssl_package,
+      require => Package['httpd'],
     }
-    'ubuntu', 'debian': {
-      a2mod { 'ssl': ensure => present, }
-    }
-    default: {
-      fail( "${::operatingsystem} not defined in apache::ssl.")
-    }
+  } elsif $::osfamily == 'debian' {
+    a2mod { 'ssl': ensure => present, }
+  } else {
+    fail( "${::operatingsystem} not defined in apache::ssl.")
   }
 }
