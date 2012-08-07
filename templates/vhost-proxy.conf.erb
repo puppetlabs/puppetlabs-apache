@@ -11,22 +11,21 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end %>
-   ProxyRequests Off
-   <Proxy *>
-     Order deny,allow
-     Allow from all
-   </Proxy>
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
 
 <% for uri in no_proxy_uris %>
-   ProxyPass        <%= uri %> !
+  ProxyPass        <%= uri %> !
 <% end %>
-   ProxyPass        / <%= dest %>/
-   ProxyPassReverse / <%= dest %>/
-   ProxyPreserveHost On 
+  ProxyPass        / <%= dest %>/
+  ProxyPassReverse / <%= dest %>/
+  ProxyPreserveHost On 
 
-   ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
-   LogLevel warn
-   CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
-
+  ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
+  LogLevel warn
+  CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
 </VirtualHost>
 
