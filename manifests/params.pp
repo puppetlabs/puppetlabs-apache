@@ -42,8 +42,18 @@ class apache::params {
     $apache_dev            = 'httpd-devel'
     $httpd_dir             = '/etc/httpd'
     $conf_dir              = "${httpd_dir}/conf"
+    $mod_dir               = "${httpd_dir}/mod.d"
     $vdir                  = "${httpd_dir}/conf.d"
     $conf_file             = 'httpd.conf'
+    $mod_packages          = {
+      'dev'    => 'httpd-devel',
+      'fcgid'  => 'mod_fcgid',
+      'perl'   => 'mod_perl',
+      'php'    => 'php',
+      'python' => 'mod_python',
+      'ssl'    => 'mod_ssl',
+      'wsgi'   => 'mod_wsgi',
+    }
   } elsif $::osfamily == 'debian' {
     $user                  = 'www-data'
     $group                 = 'www-data'
@@ -56,6 +66,15 @@ class apache::params {
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
+    $mod_packages          = {
+      'dev'    => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
+      'fcgid'  => 'libapache2-mod-fcgid',
+      'perl'   => 'libapache2-mod-perl2',
+      'php'    => 'libapache2-mod-php5',
+      'python' => 'libapache2-mod-python',
+      'ssl'    => 'apache-ssl',
+      'wsgi'   => 'libapache2-mod-wsgi',
+    }
   } else {
     $user                  = 'www-data'
     $group                 = 'www-data'
