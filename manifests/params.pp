@@ -19,8 +19,6 @@
 #
 class apache::params {
 
-  $user          = 'www-data'
-  $group         = 'www-data'
   $ssl           = true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
@@ -33,6 +31,8 @@ class apache::params {
   $vhost_name    = '*'
 
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
+    $user                  = 'apache'
+    $group                 = 'apache'
     $apache_name           = 'httpd'
     $php_package           = 'php'
     $mod_python_package    = 'mod_python'
@@ -40,8 +40,13 @@ class apache::params {
     $mod_auth_kerb_package = 'mod_auth_kerb'
     $ssl_package           = 'mod_ssl'
     $apache_dev            = 'httpd-devel'
-    $vdir                  = '/etc/httpd/conf.d/'
+    $httpd_dir             = '/etc/httpd'
+    $conf_dir              = "${httpd_dir}/conf"
+    $vdir                  = "${httpd_dir}/conf.d"
+    $conf_file             = 'httpd.conf'
   } elsif $::osfamily == 'debian' {
+    $user                  = 'www-data'
+    $group                 = 'www-data'
     $apache_name           = 'apache2'
     $php_package           = 'libapache2-mod-php5'
     $mod_python_package    = 'libapache2-mod-python'
@@ -52,6 +57,8 @@ class apache::params {
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
   } else {
+    $user                  = 'www-data'
+    $group                 = 'www-data'
     $apache_name           = 'apache2'
     $php_package           = 'libapache2-mod-php5'
     $mod_python_package    = 'libapache2-mod-python'

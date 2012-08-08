@@ -12,7 +12,9 @@
 #
 # Sample Usage:
 #
-class apache {
+class apache (
+  $default_mods = true
+) {
   include apache::params
 
   package { 'httpd':
@@ -34,5 +36,21 @@ class apache {
     purge   => true,
     notify  => Service['httpd'],
     require => Package['httpd'],
+  }
+
+  if $apache::params::conf_dir and $apache::params::conf_file {
+    # Template uses:
+    # - $apache::params::user
+    # - $apache::params::group
+    # - $apache::params::conf_dir
+    file { "${apache::params::conf_dir}/${apache::params::conf_file}":
+      ensure  => present,
+      content => template("apache/${apache::params::conf_file}.erb"),
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
+    if $default_mods == true {
+      include apache::mod::default
+    }
   }
 }
