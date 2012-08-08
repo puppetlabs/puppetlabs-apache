@@ -4,6 +4,7 @@ Puppet::Type.type(:a2mod).provide(:a2mod) do
     optional_commands :encmd => "a2enmod"
     optional_commands :discmd => "a2dismod"
 
+    confine :osfamily => :debian
     defaultfor :operatingsystem => [:debian, :ubuntu]
 
     def create
