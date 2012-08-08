@@ -4,6 +4,7 @@ Puppet::Type.type(:a2mod).provide(:a2mod) do
     optional_commands :encmd => "a2enmod"
     optional_commands :discmd => "a2dismod"
 
+    confine :osfamily => :debian
     defaultfor :operatingsystem => [:debian, :ubuntu]
 
     def create
@@ -17,10 +18,5 @@ Puppet::Type.type(:a2mod).provide(:a2mod) do
     def exists?
         mod= "/etc/apache2/mods-enabled/" + resource[:name] + ".load"
         File.exists?(mod)
-    end
-
-    def self.instances
-      # Empty hash to allow `puppet resource` to work
-      {}
     end
 end
