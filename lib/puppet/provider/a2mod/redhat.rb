@@ -4,9 +4,15 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
   confine :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
+  attr_accessor :modfile
   class << self
-    attr_accessor :modfile
+    attr_accessor :modpath
+    def preinit
+      @modpath = "/etc/httpd/mod.d"
+    end
   end
+
+  self.preinit
 
   def create
     File.open(modfile,'w') do |f|
@@ -22,15 +28,13 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
     File.exists?(modfile)
   end
 
-  def modfile
-    @modfile ||= "/etc/httpd/conf.d/mod_" + resource[:name] + ".load"
-  end
-
   def self.instances
     modules = []
-    Dir.glob("/etc/httpd/conf.d/mod_*.load").each do |file|
-      m = file.match(/mod_(\w+)\.load$/)
-      modules << m[1] if m
+    Dir.glob("#{modpath}/*.load").each do |file|
+      File.readlines(file).each do |line|
+        m = line.match(/^LoadModule (\w+)_module /)
+        modules << m[1] if m
+      end
     end
 
     modules.map  do |mod|
@@ -40,5 +44,9 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
         :provider => :redhat
       )
     end
+  end
+
+  def modfile
+    modfile ||= "#{self.class.modpath}/#{resource[:name]}.load"
   end
 end
