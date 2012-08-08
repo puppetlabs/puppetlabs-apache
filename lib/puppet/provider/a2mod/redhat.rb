@@ -31,10 +31,8 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
   def self.instances
     modules = []
     Dir.glob("#{modpath}/*.load").each do |file|
-      File.readlines(file).each do |line|
-        m = line.match(/^LoadModule (\w+)_module /)
-        modules << m[1] if m
-      end
+      m = file.match(/(\w+)\.load$/)
+      modules << m[1] if m
     end
 
     modules.map  do |mod|
