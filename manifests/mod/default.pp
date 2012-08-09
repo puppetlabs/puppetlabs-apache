@@ -47,7 +47,6 @@ class apache::mod::default {
   apache::mod { 'speling': }
   apache::mod { 'status': }
   apache::mod { 'suexec': }
-  apache::mod { 'userdir': }
   apache::mod { 'usertrack': }
   apache::mod { 'version': }
   apache::mod { 'vhost_alias': }
