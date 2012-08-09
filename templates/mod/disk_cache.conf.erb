@@ -1,0 +1,8 @@
+<IfModule mod_proxy.c>
+  # To enable a cache of proxied content, uncomment the following lines.
+  # See http://httpd.apache.org/docs/2.2/mod/mod_cache.html for more details.
+  <IfModule mod_disk_cache.c>
+     CacheEnable disk /
+     CacheRoot "<%= cache_root %>"
+  </IfModule>
+</IfModule>
