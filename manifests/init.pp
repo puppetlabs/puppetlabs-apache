@@ -53,4 +53,12 @@ class apache (
       include apache::mod::default
     }
   }
+  if $apache::params::mod_dir {
+    file { $apache::params::mod_dir:
+      ensure  => directory,
+    } -> A2mod <| |>
+    resources { 'a2mod':
+      purge => true,
+    }
+  }
 }
