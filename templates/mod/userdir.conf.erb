@@ -1,0 +1,29 @@
+#
+# UserDir: The name of the directory that is appended onto a user's home
+# directory if a ~user request is received.
+#
+# The path to the end user account 'public_html' directory must be
+# accessible to the webserver userid.  This usually means that ~userid
+# must have permissions of 711, ~userid/public_html must have permissions
+# of 755, and documents contained therein must be world-readable.
+# Otherwise, the client will only receive a "403 Forbidden" message.
+#
+# See also: http://httpd.apache.org/docs/misc/FAQ.html#forbidden
+#
+<IfModule mod_userdir.c>
+    #
+    # UserDir is disabled by default since it can confirm the presence
+    # of a username on the system (depending on home directory
+    # permissions).
+    #
+    #UserDir disable
+
+    #
+    # To enable requests to /~user/ to serve the user's public_html
+    # directory, remove the "UserDir disable" line above, and uncomment
+    # the following line instead:
+    # 
+    #UserDir public_html
+
+    UserDir <%= dir %>
+</IfModule>
