@@ -13,7 +13,8 @@
 # Sample Usage:
 #
 class apache (
-  $default_mods = true
+  $default_mods = true,
+  $server_admin = 'root@localhost'
 ) {
   include apache::params
 
@@ -43,6 +44,7 @@ class apache (
     # - $apache::params::user
     # - $apache::params::group
     # - $apache::params::conf_dir
+    # - $server_admin
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => present,
       content => template("apache/${apache::params::conf_file}.erb"),
