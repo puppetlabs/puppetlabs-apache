@@ -17,7 +17,7 @@ class apache::mod::default {
   apache::mod { 'authz_user': }
   apache::mod { 'autoindex': }
   apache::mod { 'cache': }
-  apache::mod { 'cgi': }
+  include apache::mod::cgi
   include apache::mod::dav
   include apache::mod::dav_fs
   apache::mod { 'deflate': }
