@@ -18,8 +18,8 @@ class apache::mod::default {
   apache::mod { 'autoindex': }
   apache::mod { 'cache': }
   apache::mod { 'cgi': }
-  apache::mod { 'dav': }
-  apache::mod { 'dav_fs': }
+  include apache::mod::dav
+  include apache::mod::dav_fs
   apache::mod { 'deflate': }
   apache::mod { 'dir': }
   apache::mod { 'disk_cache': }
