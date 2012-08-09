@@ -10,6 +10,12 @@ Puppet::Type.newtype(:a2mod) do
 
     end
 
+    newparam(:lib) do
+      desc "The name of the .so library to be loaded"
+
+      defaultto { "mod_#{@resource[:name]}.so" }
+    end
+
     autorequire(:package) { catalog.resource(:package, 'httpd')}
 
 end

@@ -16,7 +16,7 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
 
   def create
     File.open(modfile,'w') do |f|
-      f.puts "LoadModule #{resource[:name]}_module modules/mod_#{resource[:name]}.so"
+      f.puts "LoadModule #{resource[:name]}_module modules/#{resource[:lib]}"
     end
   end
 
@@ -25,7 +25,7 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
   end
 
   def exists?
-    File.exists?(modfile)
+    File.exists?(modfile) and File.read(modfile).match(resource[:lib])
   end
 
   def self.instances

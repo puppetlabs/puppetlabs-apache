@@ -9,6 +9,11 @@ define apache::mod (
   } elsif $mod_packages[$module] {
     $package_REAL = $mod_packages[$module]
   }
+  $mod_libs = $apache::params::mod_libs
+  if $mod_libs {
+    $lib = $mod_libs[$module]
+  }
+
   if $package_REAL {
     package { $package_REAL:
       ensure  => present,
@@ -18,6 +23,7 @@ define apache::mod (
 
   a2mod { $module:
     ensure  => present,
+    lib     => $lib,
     require => Package['httpd'],
     notify  => Service['httpd']
   }

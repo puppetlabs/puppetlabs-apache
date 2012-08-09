@@ -49,10 +49,13 @@ class apache::params {
       'dev'    => 'httpd-devel',
       'fcgid'  => 'mod_fcgid',
       'perl'   => 'mod_perl',
-      'php'    => 'php',
+      'php5'   => 'php',
       'python' => 'mod_python',
       'ssl'    => 'mod_ssl',
       'wsgi'   => 'mod_wsgi',
+    }
+    $mod_libs              = {
+      'php5' => 'libphp5.so',
     }
   } elsif $::osfamily == 'debian' {
     $user                  = 'www-data'
@@ -70,7 +73,7 @@ class apache::params {
       'dev'    => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
       'fcgid'  => 'libapache2-mod-fcgid',
       'perl'   => 'libapache2-mod-perl2',
-      'php'    => 'libapache2-mod-php5',
+      'php5'   => 'libapache2-mod-php5',
       'python' => 'libapache2-mod-python',
       'ssl'    => 'apache-ssl',
       'wsgi'   => 'libapache2-mod-wsgi',
