@@ -46,13 +46,14 @@ class apache::params {
     $vdir                  = "${httpd_dir}/conf.d"
     $conf_file             = 'httpd.conf'
     $mod_packages          = {
-      'dev'    => 'httpd-devel',
-      'fcgid'  => 'mod_fcgid',
-      'perl'   => 'mod_perl',
-      'php5'   => 'php',
-      'python' => 'mod_python',
-      'ssl'    => 'mod_ssl',
-      'wsgi'   => 'mod_wsgi',
+      'dev'        => 'httpd-devel',
+      'fcgid'      => 'mod_fcgid',
+      'perl'       => 'mod_perl',
+      'php5'       => 'php',
+      'proxy_html' => 'mod_proxy_html',
+      'python'     => 'mod_python',
+      'ssl'        => 'mod_ssl',
+      'wsgi'       => 'mod_wsgi',
     }
     $mod_libs              = {
       'php5' => 'libphp5.so',
