@@ -11,7 +11,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% end %>
 <% if serveraliases.is_a? Array -%>
 <% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
-<% elsif serveraliases != '' -%>
+<% elsif serveraliases -%>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
@@ -25,5 +25,22 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   LogLevel warn
   CustomLog <%= logroot %>/<%= name %>_access.log combined
   ServerSignature Off
+<% if ssl -%>
+  SSLEngine on
+  SSLCertificateFile    <%= ssl_cert %>
+  SSLCertificateKeyFile <%= ssl_key %>
+<% if ssl_intermediate -%>
+  SSLCACertificateFile <%= ssl_intermediate %>
+<% end -%>
+<% end -%>
+<% if auth -%>
+  <Location />
+    AuthType basic
+    AuthName "Restricted Site"
+    Require valid-user
+    AuthBasicProvider file
+    AuthUserFile <%= auth %>
+  </Location>
+<% end -%>
 </VirtualHost>
 
