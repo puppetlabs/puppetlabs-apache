@@ -24,7 +24,7 @@ define apache::mod (
   a2mod { $module:
     ensure  => present,
     lib     => $lib,
-    require => Package['httpd'],
+    require => [Package['httpd'], Package[$package_REAL]],
     notify  => Service['httpd']
   }
 }
