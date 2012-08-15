@@ -18,13 +18,14 @@ define apache::mod (
     package { $package_REAL:
       ensure  => present,
       require => Package['httpd'],
+      before  => A2mod[$module],
     }
   }
 
   a2mod { $module:
     ensure  => present,
     lib     => $lib,
-    require => [Package['httpd'], Package[$package_REAL]],
+    require => Package['httpd'],
     notify  => Service['httpd']
   }
 }
