@@ -18,6 +18,7 @@ define apache::mod (
     package { $package_REAL:
       ensure  => present,
       require => Package['httpd'],
+      before  => A2mod[$module],
     }
   }
 
