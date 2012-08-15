@@ -25,7 +25,6 @@ class apache::mod::default {
   apache::mod { 'env': }
   apache::mod { 'expires': }
   apache::mod { 'ext_filter': }
-  apache::mod { 'file_cache': }
   apache::mod { 'headers': }
   apache::mod { 'include': }
   apache::mod { 'info': }
