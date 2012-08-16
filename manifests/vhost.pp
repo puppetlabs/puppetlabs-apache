@@ -38,6 +38,8 @@
 define apache::vhost(
     $port,
     $docroot,
+    $docroot_user       = 'root',
+    $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
@@ -97,8 +99,8 @@ define apache::vhost(
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
     content => template($template),
-    owner   => 'root',
-    group   => 'root',
+    owner   => $docroot_user,
+    group   => $docroot_group,
     mode    => '0755',
     require => [
       Package['httpd'],
