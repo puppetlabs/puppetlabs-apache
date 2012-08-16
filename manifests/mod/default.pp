@@ -31,7 +31,6 @@ class apache::mod::default {
   apache::mod { 'ldap': }
   apache::mod { 'log_config': }
   apache::mod { 'logio': }
-  apache::mod { 'mem_cache': }
   apache::mod { 'mime': }
   apache::mod { 'mime_magic': }
   apache::mod { 'negotiation': }
