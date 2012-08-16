@@ -85,6 +85,8 @@ define apache::vhost(
   if ! defined(File[$docroot]) {
     file { $docroot:
       ensure => directory,
+      owner  => $docroot_user,
+      group  => $docroot_group,
     }
   }
 
@@ -99,8 +101,8 @@ define apache::vhost(
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
     content => template($template),
-    owner   => $docroot_user,
-    group   => $docroot_group,
+    owner   => 'root',
+    group   => 'root',
     mode    => '0755',
     require => [
       Package['httpd'],
