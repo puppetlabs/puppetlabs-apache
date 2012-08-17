@@ -38,7 +38,7 @@ define apache::vhost::proxy (
   $srvname = $name
 
   if $ssl == true {
-    include apache::ssl
+    include apache::mod::ssl
   }
 
   file { "${priority}-${name}":
