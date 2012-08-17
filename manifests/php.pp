@@ -13,10 +13,6 @@
 # Sample Usage:
 #
 class apache::php {
-  include apache::params
-
-  package { 'apache_php_package':
-    ensure => present,
-    name   => $apache::params::php_package,
-  }
+  warning('apache::php is deprecated; please use apache::mod::php')
+  include apache::mod::php
 }

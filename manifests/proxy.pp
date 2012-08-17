@@ -10,13 +10,6 @@
 # Sample Usage:
 #
 class apache::proxy {
-  include apache::params
-  include apache
-
-  if $::osfamily == 'debian' {
-    a2mod { $apache::params::proxy_modules:
-      ensure => present,
-      before => Service[httpd]
-    }
-  }
+  warning('apache::proxy is deprecated; please use apache::mod::proxy')
+  include apache::mod::proxy
 }

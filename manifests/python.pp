@@ -13,13 +13,6 @@
 # Sample Usage:
 #
 class apache::python {
-  include apache::params
-  include apache
-
-  package { 'apache_python_package':
-    ensure => present,
-    name   => $apache::params::mod_python_package,
-  }
-  a2mod { 'python': ensure => present, }
-
+  warning('apache::python is deprecated; please use apache::mod::python')
+  include apache::mod::python
 }
