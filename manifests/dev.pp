@@ -12,10 +12,6 @@
 # Sample Usage:
 #
 class apache::dev {
-  include apache::params
-
-  package { 'apache_dev_package':
-    ensure => installed,
-    name   => $apache::params::apache_dev,
-  }
+  warning('apache::dev is deprecated; please use apache::mod::dev')
+  include apache::mod::dev
 }
