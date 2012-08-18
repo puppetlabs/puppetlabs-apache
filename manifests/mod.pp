@@ -26,6 +26,6 @@ define apache::mod (
     ensure  => present,
     lib     => $lib,
     require => Package['httpd'],
-    notify  => Service['httpd']
+    notify  => Service['httpd'],
   }
 }
