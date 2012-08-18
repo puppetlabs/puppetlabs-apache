@@ -38,6 +38,8 @@
 define apache::vhost(
     $port,
     $docroot,
+    $docroot_owner      = 'root',
+    $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
@@ -83,6 +85,8 @@ define apache::vhost(
   if ! defined(File[$docroot]) {
     file { $docroot:
       ensure => directory,
+      owner  => $docroot_owner,
+      group  => $docroot_group,
     }
   }
 
