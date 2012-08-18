@@ -68,7 +68,7 @@ define apache::vhost(
   }
 
   if $ssl == true {
-    include apache::ssl
+    include apache::mod::ssl
   }
 
   # Since the template will use auth, redirect to https requires mod_rewrite
