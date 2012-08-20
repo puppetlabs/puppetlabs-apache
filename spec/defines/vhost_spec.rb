@@ -1,80 +1,84 @@
 require 'spec_helper'
 
 describe 'apache::vhost', :type => :define do
+  context "On a Debian OS" do
+    let :facts do
+      { :osfamily => 'RedHat' }
+    end
+    let :title do
+      'my_vhost'
+    end
 
-  let :title do
-    'my_vhost'
-  end
-
-  let :default_params do
-    {
-    :apache_name   => 'apache2',
-    :auth          => false,
-    :docroot       => 'path/to/docroot',
-    :options       => 'Indexes FollowSymLinks MultiViews',
-    :override      => 'None',
-    :port          => '80',
-    :priority      => '25',
-    :redirect_ssl  => false,
-    :serveraliases => '',
-    :servername    => '',
-    :ssl           => true,
-    :template      => 'apache/vhost-default.conf.erb',
-    :vhost_name    => '*',
-    :ensure        => 'present'
-    }
-  end
-
-  [{
-      :apache_name   => 'httpd',
+    let :default_params do
+      {
+      :apache_name   => 'apache2',
+      :auth          => false,
       :docroot       => 'path/to/docroot',
-      :override      => ['Options', 'FileInfo'],
+      :options       => 'Indexes FollowSymLinks MultiViews',
+      :override      => 'None',
       :port          => '80',
       :priority      => '25',
-      :serveradmin   => 'serveradmin@puppet',
-      :ssl           => false,
+      :redirect_ssl  => false,
+      :serveraliases => '',
+      :servername    => '',
+      :ssl           => true,
       :template      => 'apache/vhost-default.conf.erb',
-   },
-  ].each do |param_set|
+      :vhost_name    => '*',
+      :ensure        => 'present'
+      }
+    end
 
-    describe "when #{param_set == {} ? "using default" : "specifying"} class parameters" do
+    [{
+        :apache_name   => 'httpd',
+        :docroot       => 'path/to/docroot',
+        :override      => ['Options', 'FileInfo'],
+        :port          => '80',
+        :priority      => '25',
+        :serveradmin   => 'serveradmin@puppet',
+        :ssl           => false,
+        :template      => 'apache/vhost-default.conf.erb',
+     },
+    ].each do |param_set|
 
-      let :param_hash do
-        default_params.merge(param_set)
-      end
+      describe "when #{param_set == {} ? "using default" : "specifying"} class parameters" do
 
-      let :params do
-        param_set
-      end
-
-      it { should include_class("apache") }
-      it { should contain_apache__params }
-
-      it {
-        if param_hash[:ssl]
-          should contain_apache__ssl
-        else
-          should_not contain_apache__ssl
+        let :param_hash do
+          default_params.merge(param_set)
         end
-      }
 
-      it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
-          'owner'     => 'root',
-          'group'     => 'root',
-          'mode'      => '0755',
-          'notify'    => 'Service[httpd]'
-        })
-      }
+        let :params do
+          param_set
+        end
 
-      # FIXME: Firewall is not actually realized anywhere
-      #it { should contain_firewall("0100-INPUT ACCEPT #{param_hash[:port]}").with( {
-      #    'action' => 'accept',
-      #    'dport'  => "#{param_hash[:port]}",
-      #    'proto'  => 'tcp'
-      #  })
-      #}
+        it { should include_class("apache") }
+        it { should contain_apache__params }
+
+        it {
+          if param_hash[:ssl]
+            should contain_apache__ssl
+          else
+            should_not contain_apache__ssl
+          end
+        }
+
+        it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
+            'owner'     => 'root',
+            'group'     => 'root',
+            'mode'      => '0755',
+            'notify'    => 'Service[httpd]'
+          })
+        }
+
+        # FIXME: Firewall is not actually realized anywhere
+        #it { should contain_firewall("0100-INPUT ACCEPT #{param_hash[:port]}").with( {
+        #    'action' => 'accept',
+        #    'dport'  => "#{param_hash[:port]}",
+        #    'proto'  => 'tcp'
+        #  })
+        #}
 
 
+      end
     end
   end
 end
