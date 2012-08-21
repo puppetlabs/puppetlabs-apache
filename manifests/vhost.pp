@@ -47,7 +47,7 @@ define apache::vhost(
     $ssl                = $apache::params::ssl,
     $ssl_cert           = $apache::params::ssl_cert,
     $ssl_key            = $apache::params::ssl_key,
-    $ssl_intermediate   = undef,
+    $ssl_intermediate   = false,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
