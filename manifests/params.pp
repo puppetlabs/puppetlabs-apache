@@ -23,7 +23,7 @@ class apache::params {
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
-  $serveraliases = ''
+  $serveraliases = false
   $auth          = false
   $redirect_ssl  = false
   $options       = 'Indexes FollowSymLinks MultiViews'
