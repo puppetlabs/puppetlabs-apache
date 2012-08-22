@@ -1,5 +1,5 @@
 name 'puppetlabs-apache'
-version '0.2.2'
+version '0.3.0'
 source 'git://github.com/puppetlabs/puppetlabs-apache.git'
 author 'puppetlabs'
 license 'Apache 2.0'
