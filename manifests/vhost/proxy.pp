@@ -41,8 +41,8 @@ define apache::vhost::proxy (
     include apache::mod::ssl
   }
 
-  file { "${priority}-${name}":
-    path    => "${apache::params::vdir}/${priority}-${name}",
+  file { "${priority}-${name}.conf":
+    path    => "${apache::params::vdir}/${priority}-${name}.conf",
     content => template($template),
     owner   => 'root',
     group   => 'root',
