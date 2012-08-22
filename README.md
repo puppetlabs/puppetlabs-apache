@@ -13,7 +13,7 @@ To install Apache
 
 To install the Apache PHP module
 
-    class {'apache::php': }
+    class {'apache::mod::php': }
 
 Configure a virtual host
 ------------------------
