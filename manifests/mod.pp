@@ -15,7 +15,7 @@ define apache::mod (
   }
 
   if $package_REAL {
-    package { "$package_REAL":
+    package { "${package_REAL}":
       ensure  => present,
       require => Package['httpd'],
       before  => A2mod[$module],
