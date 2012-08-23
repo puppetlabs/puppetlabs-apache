@@ -31,7 +31,7 @@ describe 'apache::vhost::redirect', :type => :define do
         end
         it { should include_class("apache") }
         it { should contain_apache__params }
-        it { should contain_file("#{param_hash[:priority]}-#{title}").with({
+        it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
             'owner'     => 'root',
             'group'     => 'root',
             'mode'      => '0755',
