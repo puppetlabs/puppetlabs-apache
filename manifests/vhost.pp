@@ -15,12 +15,16 @@
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
+# - If the site should use http authentication, $auth should be set to the htpasswd file
 # - The $options for the given vhost
 # - The $override for the given vhost (array of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
 # - The $ensure specifies if vhost file is present or absent.
+# - The $ssl_cert points to your SSL cert. Defaults to Debian's snakeoil
+# - The $ssl_key points to your SSL key. Defaults to Debian's snakeoil
+# - The $ssl_intermedaite points to an intermediate / bundle cert.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -43,6 +47,9 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
+    $ssl_cert           = $apache::params::ssl_cert,
+    $ssl_key            = $apache::params::ssl_key,
+    $ssl_intermediate   = false,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
