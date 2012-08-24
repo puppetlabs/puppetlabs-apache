@@ -77,6 +77,7 @@ class apache::params {
       'python' => 'libapache2-mod-python',
       'wsgi'   => 'libapache2-mod-wsgi',
     }
+    $mod_libs              = {}
   } else {
     fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
   }
