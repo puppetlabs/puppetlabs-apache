@@ -48,13 +48,13 @@ describe 'apache::vhost::proxy', :type => :define do
 
       it {
         if param_hash[:ssl]
-          should contain_apache__ssl
+          should contain_apache__mod__ssl
         else
-          should_not contain_apache__ssl
+          should_not contain_apache__mod__ssl
         end
       }
 
-      it { should contain_file("#{param_hash[:priority]}-#{title}").with({
+      it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
           'owner'     => 'root',
           'group'     => 'root',
           'mode'      => '0755',
