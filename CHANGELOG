@@ -1,3 +1,12 @@
+2012-08-24 Release 0.4.0
+Changes:
+- `include apache` is now required when using apache::mod::*
+
+Bugfixes:
+- Fix syntax for validate_re
+- Fix formatting in vhost template
+- Fix spec tests such that they pass
+
 2012-05-08 Puppet Labs <info@puppetlabs.com> - 0.0.4
 e62e362 Fix broken tests for ssl, vhost, vhost::*
 42c6363 Changes to match style guide and pass puppet-lint without error
