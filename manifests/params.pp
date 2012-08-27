@@ -19,7 +19,6 @@
 #
 class apache::params {
 
-  $ssl           = true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
@@ -31,6 +30,7 @@ class apache::params {
   $vhost_name    = '*'
 
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
+    $ssl                   = true
     $user                  = 'apache'
     $group                 = 'apache'
     $apache_name           = 'httpd'
@@ -59,6 +59,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
   } elsif $::osfamily == 'debian' {
+    $ssl                   = false
     $user                  = 'www-data'
     $group                 = 'www-data'
     $apache_name           = 'apache2'
