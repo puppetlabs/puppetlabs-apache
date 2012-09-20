@@ -9,8 +9,6 @@ class apache::mod::shib(
 		Ubuntu	=> 'shib2',
 	}
 
-	require apache
-
 	apache::mod {$mod_shib: }
 
 	file{$shib_conf_dir:
