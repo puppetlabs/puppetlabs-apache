@@ -5,9 +5,7 @@ class apache::mod::shib(
 ){
 
 	$shib_conf = "${shib_conf_dir}/${shib_conf_file}"
-	$mod_shib	 = $operatingsystem ? {
-		Ubuntu	=> 'shib2',
-	}
+	$mod_shib = 'shib2'
 
 	apache::mod {$mod_shib: }
 

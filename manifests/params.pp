@@ -76,6 +76,7 @@ class apache::params {
       'php5'   => 'libapache2-mod-php5',
       'python' => 'libapache2-mod-python',
       'wsgi'   => 'libapache2-mod-wsgi',
+      'shib2'   => 'libapache2-mod-shib2',
     }
     $mod_libs              = {}
   } else {
