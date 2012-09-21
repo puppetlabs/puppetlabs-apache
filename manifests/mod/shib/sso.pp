@@ -20,8 +20,8 @@ define apache::mod::shib::sso(
 
 		augeas{"shib_SPconfig_sso_entityID":
 			lens		=> 'Xml.lns',
-			incl		=> $shib_conf,
-			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
+			incl		=> $apache::mod::shib::shib_conf,
+			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
 			changes => [$entityID_aug,],
 			notify	=> Service['httpd'],
 		}
@@ -34,16 +34,16 @@ define apache::mod::shib::sso(
 
 		augeas{"shib_SPconfig_sso_discoveryURL":
 			lens		=> 'Xml.lns',
-			incl		=> $shib_conf,
-			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
+			incl		=> $apache::mod::shib::shib_conf,
+			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
 			changes => [$discoveryURL_aug,],
 			notify	=> Service['httpd'],
 		}
 
 		augeas{"shib_SPconfig_sso_discoveryProtocol":
 			lens		=> 'Xml.lns',
-			incl		=> $shib_conf,
-			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
+			incl		=> $apache::mod::shib::shib_conf,
+			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
 			changes => ["set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",],
 			notify	=> Service['httpd'],
 		}
