@@ -6,8 +6,6 @@ define apache::mod::shib::sso(
 
 	require apache::mod::shib
 
-	info("The shibboleth configuration file is ${apache::mod::shib::shib_conf}")
-
 	if $discoveryURL and $idpURL {
 		err("apache::mod::shib::sso must have one of discoveryURL or idpURL set, not both.")
 	} elsif !$discoveryURL and !$idpURL {
@@ -20,9 +18,7 @@ define apache::mod::shib::sso(
 			$entityID_aug = "rm SSO/#attribute/entityID"
 		}
 
-		info("The entityID augaes change is ${entityID_aug}")
-
-		augeas{"shib_SPconfig_sso_entityID":
+		augeas{"shib_sso_${name}_entityID":
 			lens		=> 'Xml.lns',
 			incl		=> $apache::mod::shib::shib_conf,
 			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
@@ -36,9 +32,7 @@ define apache::mod::shib::sso(
 			$discoveryURL_aug = "rm SSO/#attribute/discoveryURL"
 		}
 
-		info("The discoveryURL augeas change is ${discoveryURL_aug}")
-
-		augeas{"shib_SPconfig_sso_discoveryURL":
+		augeas{"shib_sso_${name}_discoveryURL":
 			lens		=> 'Xml.lns',
 			incl		=> $apache::mod::shib::shib_conf,
 			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
@@ -46,7 +40,7 @@ define apache::mod::shib::sso(
 			notify	=> Service['httpd'],
 		}
 
-		augeas{"shib_SPconfig_sso_discoveryProtocol":
+		augeas{"shib_sso_${name}_discoveryProtocol":
 			lens		=> 'Xml.lns',
 			incl		=> $apache::mod::shib::shib_conf,
 			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
