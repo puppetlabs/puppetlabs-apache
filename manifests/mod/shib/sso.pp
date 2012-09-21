@@ -1,5 +1,5 @@
 define apache::mod::shib::sso(
-	$directoryURL				= undef,
+	$discoveryURL				= undef,
 	$idpURL							= undef,
 	$discoveryProtocol	= "SAMLDS"
 ){
@@ -38,7 +38,7 @@ define apache::mod::shib::sso(
 			lens		=> 'Xml.lns',
 			incl		=> $shib_conf,
 			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
-			changes => ["set SSO/#attribute/discoveryURL ${discoveryURL}",],
+			changes => ["set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",],
 			notify	=> Service['httpd'],
 		}
 	}
