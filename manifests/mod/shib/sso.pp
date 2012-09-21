@@ -6,8 +6,6 @@ define apache::mod::shib::sso(
 
 	require apache::mod::shib
 
-	info("The shibboleth configuration file is ${apache::mod::shib::shib_conf}")
-
 	if $discoveryURL and $idpURL {
 		err("apache::mod::shib::sso must have one of discoveryURL or idpURL set, not both.")
 	} elsif !$discoveryURL and !$idpURL {
@@ -19,8 +17,6 @@ define apache::mod::shib::sso(
 		} else {
 			$entityID_aug = "rm SSO/#attribute/entityID"
 		}
-
-		info("The entityID augaes change is ${entityID_aug}")
 
 		augeas{"shib_SPconfig_sso_entityID":
 			lens		=> 'Xml.lns',
@@ -35,8 +31,6 @@ define apache::mod::shib::sso(
 		} else {
 			$discoveryURL_aug = "rm SSO/#attribute/discoveryURL"
 		}
-
-		info("The discoveryURL augeas change is ${discoveryURL_aug}")
 
 		augeas{"shib_SPconfig_sso_discoveryURL":
 			lens		=> 'Xml.lns',
