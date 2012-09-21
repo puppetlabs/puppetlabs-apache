@@ -12,25 +12,31 @@ define apache::mod::shib::sso(
 		err("apache::mod::shib::sso must have one of discoveryURL or idpURL set, not neither.")
 	} else {
 
+		if $idpURL {
+			$entityID_aug = "set SSO/#attribute/entityID ${idpURL}"
+		} else {
+			$entityID_aug = "rm SSO/#attribute/entityID"
+		}
+
 		augeas{"shib_SPconfig_sso_entityID":
 			lens		=> 'Xml.lns',
 			incl		=> $shib_conf,
 			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
-			changes => $idpURL ?{
-				false 		=> ["rm SSO/#attribute/entityID",],
-				default 	=> ["set SSO/#attribute/entityID ${idpURL}",],
-			},
+			changes => [$entityID_aug,],
 			notify	=> Service['httpd'],
+		}
+
+		if $discoveryURL {
+			$discoveryURL_aug = "set SSO/#attribute/discoveryURL ${discoveryURL}"
+		} else {
+			$discoveryURL_aug = "rm SSO/#attribute/discoveryURL"
 		}
 
 		augeas{"shib_SPconfig_sso_discoveryURL":
 			lens		=> 'Xml.lns',
 			incl		=> $shib_conf,
 			context => "/files${shib_conf}/ApplicationDefaults/Sessions",
-			changes => $discoveryURL ?{
-				false 		=> ["rm SSO/#attribute/discoveryURL",],
-				default 	=> ["set SSO/#attribute/discoveryURL ${discoveryURL}",],
-			},
+			changes => [$discoveryURL_aug,],
 			notify	=> Service['httpd'],
 		}
 
