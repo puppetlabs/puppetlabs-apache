@@ -22,13 +22,13 @@ define apache::mod::shib::sso(
 
 		info("The entityID augaes change is ${entityID_aug}")
 
-		augeas{"shib_SPconfig_sso_entityID":
-			lens		=> 'Xml.lns',
-			incl		=> $apache::mod::shib::shib_conf,
-			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
-			changes => [$entityID_aug,],
-			notify	=> Service['httpd'],
-		}
+		# augeas{"shib_SPconfig_sso_entityID":
+		# 	lens		=> 'Xml.lns',
+		# 	incl		=> $apache::mod::shib::shib_conf,
+		# 	context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
+		# 	changes => [$entityID_aug,],
+		# 	notify	=> Service['httpd'],
+		# }
 
 		if $discoveryURL {
 			$discoveryURL_aug = "set SSO/#attribute/discoveryURL ${discoveryURL}"
@@ -38,20 +38,20 @@ define apache::mod::shib::sso(
 
 		info("The discoveryURL augeas change is ${discoveryURL_aug}")
 
-		augeas{"shib_SPconfig_sso_discoveryURL":
-			lens		=> 'Xml.lns',
-			incl		=> $apache::mod::shib::shib_conf,
-			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
-			changes => [$discoveryURL_aug,],
-			notify	=> Service['httpd'],
-		}
+		# augeas{"shib_SPconfig_sso_discoveryURL":
+		# 	lens		=> 'Xml.lns',
+		# 	incl		=> $apache::mod::shib::shib_conf,
+		# 	context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
+		# 	changes => [$discoveryURL_aug,],
+		# 	notify	=> Service['httpd'],
+		# }
 
-		augeas{"shib_SPconfig_sso_discoveryProtocol":
-			lens		=> 'Xml.lns',
-			incl		=> $apache::mod::shib::shib_conf,
-			context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
-			changes => ["set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",],
-			notify	=> Service['httpd'],
-		}
+		# augeas{"shib_SPconfig_sso_discoveryProtocol":
+		# 	lens		=> 'Xml.lns',
+		# 	incl		=> $apache::mod::shib::shib_conf,
+		# 	context => "/files${apache::mod::shib::shib_conf}/ApplicationDefaults/Sessions",
+		# 	changes => ["set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",],
+		# 	notify	=> Service['httpd'],
+		# }
 	}
 }
