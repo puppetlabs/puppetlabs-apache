@@ -1,7 +1,8 @@
 define apache::mod::shib::sso(
 	$discoveryURL				= undef,
 	$idpURL							= undef,
-	$discoveryProtocol	= "SAMLDS"
+	$discoveryProtocol	= "SAMLDS",
+	$ECP_support				= false
 ){
 
 	require apache::mod::shib
@@ -18,33 +19,22 @@ define apache::mod::shib::sso(
 			$entityID_aug = "rm SSO/#attribute/entityID"
 		}
 
-		augeas{"shib_sso_${name}_entityID":
-			lens		=> 'Xml.lns',
-			incl		=> $apache::mod::shib::shib_conf,
-			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
-			changes => [$entityID_aug,],
-			notify	=> Service['httpd'],
-		}
-
 		if $discoveryURL {
 			$discoveryURL_aug = "set SSO/#attribute/discoveryURL ${discoveryURL}"
 		} else {
 			$discoveryURL_aug = "rm SSO/#attribute/discoveryURL"
 		}
 
-		augeas{"shib_sso_${name}_discoveryURL":
+		augeas{"shib_sso_${name}_attributes":
 			lens		=> 'Xml.lns',
 			incl		=> $apache::mod::shib::shib_conf,
 			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
-			changes => [$discoveryURL_aug,],
-			notify	=> Service['httpd'],
-		}
-
-		augeas{"shib_sso_${name}_discoveryProtocol":
-			lens		=> 'Xml.lns',
-			incl		=> $apache::mod::shib::shib_conf,
-			context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults/Sessions",
-			changes => ["set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",],
+			changes => [
+				$entityID_aug,
+				$discoveryURL_aug,
+				"set SSO/#attribute/discoveryProtocol ${discoveryProtocol}",
+				"set SSO/#attribute/ECP ${ECP_support}",
+			],
 			notify	=> Service['httpd'],
 		}
 	}
