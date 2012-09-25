@@ -17,6 +17,7 @@ define apache::mod::shib::metadata(
 	$backing_file = "${backing_file_dir}/${backing_file_name}"
 	$cert_file		= "${cert_dir}/${cert_file_name}"
 
+	# Get the Metadata signing certificate
 	exec{'get_${name}_metadata_cert':
 		path	=> ['/usr/bin'],
 		command => "wget ${cert_uri} -O ${cert_file}",
@@ -24,6 +25,7 @@ define apache::mod::shib::metadata(
 		notify	=> Service['httpd'],
 	}
 
+	# This puts the MetadataProvider entry in the 'right' place
 	augeas{"shib_${name}_create_metadata_provider":
 		lens		=> 'Xml.lns',
 		incl		=> $apache::mod::shib::shib_conf,
@@ -36,6 +38,7 @@ define apache::mod::shib::metadata(
 		require => Exec['get_${name}_metadata_cert'],
 	}
 
+	# This will update the attributes and child nodes if they change
 	augeas{"shib_${name}_metadata_provider":
 		lens		=> 'Xml.lns',
 		incl		=> $apache::mod::shib::shib_conf,
