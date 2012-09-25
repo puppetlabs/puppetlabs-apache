@@ -34,10 +34,10 @@ define apache::mod::shib::metadata(
 			"set MetadataProvider/#attribute/uri ${provider_uri}",
 			"set MetadataProvider/#attribute/backingFilePath ${backing_file}",
 			"set MetadataProvider/#attribute/reloadInterva ${provide_reload_interval}",
-			"ins MetadataProvide/MetadataFilter[1]"
+			"ins MetadataProvide/MetadataFilter[1]",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/maxValidityInterval ${metadata_filter_max_validity_interval}",
-			"ins MetadataProvide/MetadataFilter[2]"
+			"ins MetadataProvide/MetadataFilter[2]",
 			"set MetadataProvider/MetadataFilter[2]/#attribute/type Signature",
 			"set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
 		],
