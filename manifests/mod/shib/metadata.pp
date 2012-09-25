@@ -24,25 +24,34 @@ define apache::mod::shib::metadata(
 		notify	=> Service['httpd'],
 	}
 
-	augeas{"shib_${name}_metadata_provider":
+	augeas{"shib_${name}_create_metadata_provider":
 		lens		=> 'Xml.lns',
 		incl		=> $apache::mod::shib::shib_conf,
 		context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults",
 		changes => [
 			"ins MetadataProvider after Errors",
-			"set MetadataProvider/#attribute/type ${provider_type} ",
+		],
+		onlyif	=> 'match MetadataProvider/#attribute/uri size == 0',
+		notify	=> Service['httpd'],
+		require => Exec['get_${name}_metadata_cert'],
+	}
+
+	augeas{"shib_${name}_metadata_provider":
+		lens		=> 'Xml.lns',
+		incl		=> $apache::mod::shib::shib_conf,
+		context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults",
+		changes => [
+			"set MetadataProvider/#attribute/type ${provider_type}",
 			"set MetadataProvider/#attribute/uri ${provider_uri}",
 			"set MetadataProvider/#attribute/backingFilePath ${backing_file}",
-			"set MetadataProvider/#attribute/reloadInterva ${provide_reload_interval}",
-			"ins MetadataProvide/MetadataFilter[1]",
+			"set MetadataProvider/#attribute/reloadInterva ${provider_reload_interval}",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/maxValidityInterval ${metadata_filter_max_validity_interval}",
-			"ins MetadataProvide/MetadataFilter[2]",
 			"set MetadataProvider/MetadataFilter[2]/#attribute/type Signature",
 			"set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
 		],
 		notify	=> Service['httpd'],
-		require => Exec['get_${name}_metadata_cert'],
+		require => [Exec['get_${name}_metadata_cert'],Augeas["shib_${name}_create_metadata_provider"]],
 	}
 
 }
