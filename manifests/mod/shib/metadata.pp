@@ -1,3 +1,5 @@
+# Currently this can only create a _single_ metadata provider
+# it will need to be modified to permit multiple metadata providers
 define apache::mod::shib::metadata(
 	$provider_uri,
 	$cert_uri,
@@ -27,17 +29,17 @@ define apache::mod::shib::metadata(
 		incl		=> $apache::mod::shib::shib_conf,
 		context => "/files${apache::mod::shib::shib_conf}/SPConfig/ApplicationDefaults",
 		changes => [
-			"ins MetadataProvider[last()+1] after Errors",
-			"set MetadataProvider[last()]/#attribute/type ${provider_type} ",
-			"set MetadataProvider[last()]/#attribute/uri ${provider_uri}",
-			"set MetadataProvider[last()]/#attribute/backingFilePath ${backing_file}",
-			"set MetadataProvider[last()]/#attribute/reloadInterva ${provide_reload_interval}",
-			"ins MetadataProvide[last()]/MetadataFilter[last()+1]"
-			"set MetadataProvider[last()]/MetadataFilter[last()]/#attribute/type RequireValidUntil",
-			"set MetadataProvider[last()]/MetadataFilter[last()]/#attribute/maxValidityInterval ${metadata_filter_max_validity_interval}",
-			"ins MetadataProvide[last()]/MetadataFilter[last()+1]"
-			"set MetadataProvider[last()]/MetadataFilter[last()]/#attribute/type Signature",
-			"set MetadataProvider[last()]/MetadataFilter[last()]/#attribute/certificate ${cert_file}",
+			"ins MetadataProvider after Errors",
+			"set MetadataProvider/#attribute/type ${provider_type} ",
+			"set MetadataProvider/#attribute/uri ${provider_uri}",
+			"set MetadataProvider/#attribute/backingFilePath ${backing_file}",
+			"set MetadataProvider/#attribute/reloadInterva ${provide_reload_interval}",
+			"ins MetadataProvide/MetadataFilter[1]"
+			"set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil",
+			"set MetadataProvider/MetadataFilter[1]/#attribute/maxValidityInterval ${metadata_filter_max_validity_interval}",
+			"ins MetadataProvide/MetadataFilter[2]"
+			"set MetadataProvider/MetadataFilter[2]/#attribute/type Signature",
+			"set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
 		],
 		notify	=> Service['httpd'],
 		require => Exec['get_${name}_metadata_cert'],
