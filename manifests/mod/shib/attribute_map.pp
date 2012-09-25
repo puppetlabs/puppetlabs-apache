@@ -10,7 +10,7 @@ define apache::mod::shib::attribute_map(
 	$attribute_map = "${attribute_map_dir}/${attribute_map_name}"
 
 	# Download the attribute map
-	exec{'get_${name}_attribute_map':
+	exec{"get_${name}_attribute_map":
 		path	=> ['/usr/bin'],
 		command => "wget ${attribute_map_uri} -O ${attribute_map}",
 		unless	=> "test `find ${attribute_map} -mtime +${max_age}`",
@@ -26,7 +26,7 @@ define apache::mod::shib::attribute_map(
 			"set AttributeExtractor/#attribute/path ${attribute_map_name}",
 		],
 		notify	=> Service['httpd'],
-		require => Exec['get_${name}_attribute_map'],
+		require => Exec["get_${name}_attribute_map"],
 	}
 
 }

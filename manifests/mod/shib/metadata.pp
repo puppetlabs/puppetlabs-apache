@@ -18,7 +18,7 @@ define apache::mod::shib::metadata(
 	$cert_file		= "${cert_dir}/${cert_file_name}"
 
 	# Get the Metadata signing certificate
-	exec{'get_${name}_metadata_cert':
+	exec{"get_${name}_metadata_cert":
 		path	=> ['/usr/bin'],
 		command => "wget ${cert_uri} -O ${cert_file}",
 		creates => $cert_file,
@@ -35,7 +35,7 @@ define apache::mod::shib::metadata(
 		],
 		onlyif	=> 'match MetadataProvider/#attribute/uri size == 0',
 		notify	=> Service['httpd'],
-		require => Exec['get_${name}_metadata_cert'],
+		require => Exec["get_${name}_metadata_cert"],
 	}
 
 	# This will update the attributes and child nodes if they change
@@ -54,7 +54,7 @@ define apache::mod::shib::metadata(
 			"set MetadataProvider/MetadataFilter[2]/#attribute/certificate ${cert_file}",
 		],
 		notify	=> Service['httpd'],
-		require => [Exec['get_${name}_metadata_cert'],Augeas["shib_${name}_create_metadata_provider"]],
+		require => [Exec["get_${name}_metadata_cert"],Augeas["shib_${name}_create_metadata_provider"]],
 	}
 
 }
