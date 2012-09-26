@@ -1,4 +1,4 @@
-define apache::mod::shib::backend_cert(
+class apache::mod::shib::backend_cert(
 	$hostname		= $fqdn
 ){
 
@@ -8,7 +8,7 @@ define apache::mod::shib::backend_cert(
 	# the correct hostname in it
 	exec{"shib_keygen_${hostname}":
 		path 		=> $apache::mod::shib::shib_bin_dir,
-		command	=> "shib_keygen -h ${hostname} -e https://${hostname}/shibbloeth",
+		command	=> "shib-keygen -h ${hostname} -e https://${hostname}/shibbloeth",
 		creates => "${apache::mod::shib::shib_conf_dir}/${apache::mod::shib::shib_sp_cert}",
 	}
 }
