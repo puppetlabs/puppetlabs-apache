@@ -5,6 +5,8 @@ class apache::mod::shib(
 	$styleSheet			= "/shibboleth-sp/main.css",
 	$shib_conf_dir	= '/etc/shibboleth',
 	$shib_conf_file	= 'shibboleth2.xml',
+	$shib_sp_cert		= 'sp-cert.pem',
+	$shib_bin_dir		= '/usr/sbin',
 	$handlerSSL			= 'true'
 ){
 
