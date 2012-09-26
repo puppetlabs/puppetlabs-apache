@@ -9,7 +9,7 @@ define apache::mod::shib::attribute_map(
 
 	$attribute_map = "${attribute_map_dir}/${attribute_map_name}"
 
-	# Download the attribute map
+	# Download the attribute map, refresh after $max_age days
 	exec{"get_${name}_attribute_map":
 		path	=> ['/usr/bin'],
 		command => "wget ${attribute_map_uri} -O ${attribute_map}",
