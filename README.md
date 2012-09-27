@@ -47,6 +47,8 @@ Since Puppet cannot ensure that all parent directories exist you need to
 manage these yourself. In the more advanced example above, you need to ensure 
 that `/home/www.example.com` and `/srv/www.example.com` directories exist.
 
+For details on using the Shibboleth module (a.k.a. `mod_shib`) see README.mod_shib.md
+
 Contributors
 ------------
 
