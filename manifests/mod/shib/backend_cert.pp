@@ -1,5 +1,5 @@
 class apache::mod::shib::backend_cert(
-	$sp_hostname		= $fqdn
+	$sp_hostname		= $apache::mod::shib::shib_hostname
 ){
 
 	require apache::mod::shib

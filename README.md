@@ -113,6 +113,8 @@ A slightly more complicated example, changes the docroot owner/group from the de
       docroot_group => 'third',
     }
 ```
+For details on using the Shibboleth module (a.k.a. `mod_shib`) see [the Shibboleth README](README.mod_shib.md)
+
 
 To set up a virtual host with SSL and default SSL certificates
 
