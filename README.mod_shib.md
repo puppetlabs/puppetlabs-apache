@@ -171,7 +171,7 @@ The `apache::mod::shib` module provides the following classes and resource defin
 
 # Registration
 
-Manual resgistration of the Service Provider is still required. By default, the file `/etc/shibboleth/sp-key.pem` contains the public key of the back-end certificate used for secure comminucation within the Shibboleth Federation.
+Manual resgistration of the Service Provider is still required. By default, the file `/etc/shibboleth/sp-cert.pem` contains the public key of the back-end certificate used for secure comminucation within the Shibboleth Federation.
 
 # Attribution
 
