@@ -8,7 +8,7 @@ class apache::mod::shib::backend_cert(
 
 	exec{"shib_keygen_${sp_hostname}":
 		path 		=> [$apache::mod::shib::shib_bin_dir,'/usr/bin','/bin'],
-		command	=> "shib-keygen -h ${sp_hostname} -e https://${sp_hostname}/shibbloeth",
+		command	=> "shib-keygen -f -h ${sp_hostname} -e https://${sp_hostname}/shibbloeth",
 		unless	=> "openssl x509 -noout -in ${sp_cert} -issuer|grep ${sp_hostname}",
 	}
 }
