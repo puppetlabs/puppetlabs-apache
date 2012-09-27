@@ -1,14 +1,14 @@
 class apache::mod::shib::backend_cert(
-	$hostname		= $fqdn
+	$sp_hostname		= $fqdn
 ){
 
 	require apache::mod::shib
 
-	# The test should not be that the file exists, but that the file has
-	# the correct hostname in it
-	exec{"shib_keygen_${hostname}":
+	$sp_cert = "${apache::mod::shib::shib_conf_dir}/${apache::mod::shib::shib_sp_cert}"
+
+	exec{"shib_keygen_${sp_hostname}":
 		path 		=> [$apache::mod::shib::shib_bin_dir,'/usr/bin','/bin'],
-		command	=> "shib-keygen -h ${hostname} -e https://${hostname}/shibbloeth",
-		creates => "${apache::mod::shib::shib_conf_dir}/${apache::mod::shib::shib_sp_cert}",
+		command	=> "shib-keygen -h ${sp_hostname} -e https://${sp_hostname}/shibbloeth",
+		unless	=> "openssl x509 -noout -in ${sp_cert} -issuer|grep ${sp_hostname}",
 	}
 }
