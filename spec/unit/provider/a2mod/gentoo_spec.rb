@@ -21,22 +21,22 @@ describe provider_class do
     end
 
     it "should return a sorted array of the defined parameters" do
-      @filetype.should_receive(:read) { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
-      provider_class.should_receive(:filetype) { @filetype }
+      @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n})
+      provider_class.expects(:filetype).returns(@filetype)
 
       provider_class.modules.should == %w{bar baz foo}
     end
 
     it "should cache the module list" do
-      @filetype.should_receive(:read).once { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
-      provider_class.should_receive(:filetype).once { @filetype }
+      @filetype.expects(:read).once.returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n})
+      provider_class.expects(:filetype).once.returns(@filetype)
 
       2.times { provider_class.modules.should == %w{bar baz foo} }
     end
 
     it "should normalize parameters" do
-      @filetype.should_receive(:read) { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n} }
-      provider_class.should_receive(:filetype) { @filetype }
+      @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n})
+      provider_class.expects(:filetype).returns(@filetype)
 
       provider_class.modules.should == %w{bar foo}
     end
@@ -46,9 +46,9 @@ describe provider_class do
     it "should match providers to resources" do
       provider = mock("ssl_provider", :name => "ssl")
       resource = mock("ssl_resource")
-      resource.should_receive(:provider=).with(provider)
+      resource.expects(:provider=).with(provider)
 
-      provider_class.should_receive(:instances) { [provider] }
+      provider_class.expects(:instances).returns([provider])
       provider_class.prefetch("ssl" => resource)
     end
   end
@@ -56,128 +56,128 @@ describe provider_class do
   describe "when flushing" do
     before :each do
       @filetype = mock()
-      @filetype.stub(:backup)
-      provider_class.should_receive(:filetype).at_least(:once) { @filetype }
+      @filetype.stubs(:backup)
+      provider_class.expects(:filetype).at_least_once.returns(@filetype)
 
-      @info = stub()
-      @info.stub(:[]).with(:name) { "info" }
-      @info.stub(:provider=)
+      @info = mock()
+      @info.stubs(:[]).with(:name).returns("info")
+      @info.stubs(:provider=)
 
-      @mpm = stub()
-      @mpm.stub(:[]).with(:name) { "mpm" }
-      @mpm.stub(:provider=)
+      @mpm = mock()
+      @mpm.stubs(:[]).with(:name).returns("mpm")
+      @mpm.stubs(:provider=)
 
-      @ssl = stub()
-      @ssl.stub(:[]).with(:name) { "ssl" }
-      @ssl.stub(:provider=)
+      @ssl = mock()
+      @ssl.stubs(:[]).with(:name).returns("ssl")
+      @ssl.stubs(:provider=)
     end
 
     it "should add modules whose ensure is present" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      @filetype.should_receive(:write).with(%Q{APACHE2_OPTS="-D INFO"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS=""})
+      @filetype.expects(:write).with(%Q{APACHE2_OPTS="-D INFO"})
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
 
       provider_class.flush
     end
 
     it "should remove modules whose ensure is present" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO"} }
-      @filetype.should_receive(:write).with(%Q{APACHE2_OPTS=""})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS="-D INFO"})
+      @filetype.expects(:write).with(%Q{APACHE2_OPTS=""})
 
-      @info.stub(:should).with(:ensure) { :absent }
-      @info.stub(:provider=)
+      @info.stubs(:should).with(:ensure).returns(:absent)
+      @info.stubs(:provider=)
       provider_class.prefetch("info" => @info)
 
       provider_class.flush
     end
 
     it "should not modify providers without resources" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO -D MPM"} }
-      @filetype.should_receive(:write).with(%Q{APACHE2_OPTS="-D MPM -D SSL"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS="-D INFO -D MPM"})
+      @filetype.expects(:write).with(%Q{APACHE2_OPTS="-D MPM -D SSL"})
 
-      @info.stub(:should).with(:ensure) { :absent }
+      @info.stubs(:should).with(:ensure).returns(:absent)
       provider_class.prefetch("info" => @info)
 
-      @ssl.stub(:should).with(:ensure) { :present }
+      @ssl.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("ssl" => @ssl)
 
       provider_class.flush
     end
 
     it "should write the modules in sorted order" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      @filetype.should_receive(:write).with(%Q{APACHE2_OPTS="-D INFO -D MPM -D SSL"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS=""})
+      @filetype.expects(:write).with(%Q{APACHE2_OPTS="-D INFO -D MPM -D SSL"})
 
-      @mpm.stub(:should).with(:ensure) { :present }
+      @mpm.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("mpm" => @mpm)
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
-      @ssl.stub(:should).with(:ensure) { :present }
+      @ssl.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("ssl" => @ssl)
 
       provider_class.flush
     end
 
     it "should write the records back once" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      @filetype.should_receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS=""})
+      @filetype.expects(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
 
-      @ssl.stub(:should).with(:ensure) { :present }
+      @ssl.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("ssl" => @ssl)
 
       provider_class.flush
     end
 
     it "should only modify the line containing APACHE2_OPTS" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{# Comment\nAPACHE2_OPTS=""\n# Another comment} }
-      @filetype.should_receive(:write).once.with(%Q{# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment})
+      @filetype.expects(:read).at_least_once.returns(%Q{# Comment\nAPACHE2_OPTS=""\n# Another comment})
+      @filetype.expects(:write).once.with(%Q{# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment})
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
       provider_class.flush
     end
 
     it "should restore any arbitrary arguments" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-Y -D MPM -X"} }
-      @filetype.should_receive(:write).once.with(%Q{APACHE2_OPTS="-Y -X -D INFO -D MPM"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS="-Y -D MPM -X"})
+      @filetype.expects(:write).once.with(%Q{APACHE2_OPTS="-Y -X -D INFO -D MPM"})
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
       provider_class.flush
     end
 
     it "should backup the file once if changes were made" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      @filetype.should_receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS=""})
+      @filetype.expects(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
 
-      @ssl.stub(:should).with(:ensure) { :present }
+      @ssl.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("ssl" => @ssl)
 
       @filetype.unstub(:backup)
-      @filetype.should_receive(:backup)
+      @filetype.expects(:backup)
       provider_class.flush
     end
 
     it "should not write the file or run backups if no changes were made" do
-      @filetype.should_receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-X -D INFO -D SSL -Y"} }
-      @filetype.should_receive(:write).never
+      @filetype.expects(:read).at_least_once.returns(%Q{APACHE2_OPTS="-X -D INFO -D SSL -Y"})
+      @filetype.expects(:write).never
 
-      @info.stub(:should).with(:ensure) { :present }
+      @info.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("info" => @info)
 
-      @ssl.stub(:should).with(:ensure) { :present }
+      @ssl.stubs(:should).with(:ensure).returns(:present)
       provider_class.prefetch("ssl" => @ssl)
 
       @filetype.unstub(:backup)
-      @filetype.should_receive(:backup).never
+      @filetype.expects(:backup).never
       provider_class.flush
     end
   end
