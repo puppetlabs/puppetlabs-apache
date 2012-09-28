@@ -16,7 +16,7 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
 
   def create
     File.open(modfile,'w') do |f|
-      f.puts "LoadModule #{resource[:name]}_module modules/#{resource[:lib]}"
+      f.puts "LoadModule #{resource[:identifier]} modules/#{resource[:lib]}"
     end
   end
 
