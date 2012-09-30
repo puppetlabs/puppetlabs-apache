@@ -40,6 +40,14 @@ logfile to an alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
+Dependencies
+------------
+
+Some functionality is dependent on other modules:
+
+- [stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
+- [firewall](https://github.com/puppetlabs/puppetlabs-firewall)
+
 Notes
 -----
 
