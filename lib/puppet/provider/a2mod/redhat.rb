@@ -4,6 +4,8 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
   confine :osfamily => :redhat
   defaultfor :osfamily => :redhat
 
+  require 'pathname'
+
   # modpath: Path to default apache modules directory /etc/httpd/mod.d
   # modfile: Path to module load configuration file; Default: resides under modpath directory
   # libfile: Path to actual apache module library. Added in modfile LoadModule
@@ -52,9 +54,8 @@ Puppet::Type.type(:a2mod).provide(:redhat) do
     modfile ||= "#{self.class.modpath}/#{resource[:name]}.load"
   end
 
-  # Set libfile path: If absolute path is passed then maintain it, else make it default 'modules/module-name'
+  # Set libfile path: If absolute path is passed, then maintain it. Else, make it default from 'modules' dir.
   def libfile
-    abs_path_regex = /^\/.*/
-    abs_path_regex.match(resource[:lib]) ? resource[:lib] : "modules/#{resource[:lib]}"
+    libfile = Pathname.new(resource[:lib]).absolute? ? resource[:lib] : "modules/#{resource[:lib]}"
   end
 end
