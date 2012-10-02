@@ -17,18 +17,25 @@ define apache::mod (
     $lib = $mod_lib
   }
 
+  $mod_identifiers = $apache::params::mod_identifiers
+  $mod_identifier = $mod_identifiers[$mod]
+  if "${mod_identifier}" {
+    $identifier = $mod_identifier
+  }
+
   if $package_REAL {
     package { $package_REAL:
-      ensure  => present,
-      require => Package['httpd'],
-      before  => A2mod[$mod],
+      ensure   => present,
+      require  => Package['httpd'],
+      before   => A2mod[$mod],
     }
   }
 
   a2mod { $mod:
-    ensure  => present,
-    lib     => $lib,
-    require => Package['httpd'],
-    notify  => Service['httpd'],
+    ensure     => present,
+    lib        => $lib,
+    identifier => $identifier,
+    require    => Package['httpd'],
+    notify     => Service['httpd'],
   }
 }
