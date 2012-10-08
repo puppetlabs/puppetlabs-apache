@@ -27,9 +27,10 @@ describe 'apache::vhost::proxy', :type => :define do
   end
 
   [{
-      :dest          => 'example2.com',
-      :port          => '80',
-      :ssl           => true
+      :dest       => 'example2.com',
+      :servername => 'example3.com',
+      :port       => '80',
+      :ssl        => true
    },
   ].each do |param_set|
 
@@ -62,6 +63,12 @@ describe 'apache::vhost::proxy', :type => :define do
           'notify'    => 'Service[httpd]'
         })
       }
+
+      it 'should accept $servername' do
+        verify_contents(subject, "#{param_hash[:priority]}-#{title}.conf", [
+          '  ServerName example3.com'
+        ] )
+      end
     end
   end
 end
