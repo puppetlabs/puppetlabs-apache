@@ -54,9 +54,13 @@ class apache::params {
       'python'     => 'mod_python',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
+      'shibboleth' => 'shibboleth',
     }
     $mod_libs              = {
       'php5' => 'libphp5.so',
+    }
+    $mod_identifiers       = {
+      'shibboleth' => 'mod_shib',
     }
   } elsif $::osfamily == 'debian' {
     $user                  = 'www-data'
@@ -78,6 +82,7 @@ class apache::params {
       'wsgi'   => 'libapache2-mod-wsgi',
     }
     $mod_libs              = {}
+    $mod_identifiers       = {}
   } else {
     fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
   }
