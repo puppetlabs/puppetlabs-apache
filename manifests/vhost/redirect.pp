@@ -23,12 +23,17 @@ define apache::vhost::redirect (
     $priority      = '10',
     $serveraliases = '',
     $template      = 'apache/vhost-redirect.conf.erb',
+    $servername    = $apache::params::servername,
     $vhost_name    = '*'
   ) {
 
   include apache
 
-  $srvname = $name
+  if $servername == '' {
+    $srvname = $name
+  } else {
+    $srvname = $servername
+  }
 
   file { "${priority}-${name}.conf":
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
