@@ -361,7 +361,9 @@ HostnameLookups Off
 # filesystems.  Please see
 # http://httpd.apache.org/docs/2.2/mod/core.html#enablesendfile
 #
-#EnableSendfile off
+<% if sendfile %>
+EnableSendfile <%= sendfile %>
+<% end %>
 
 #
 # ErrorLog: The location of the error log file.
