@@ -15,7 +15,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
-<% if ssl %>
+<% if @ssl %>
   SSLEngine on
   SSLCertificateFile <%= ssl_cert_file %>
   SSLCertificateKeyFile <%= ssl_cert_key_file %>
