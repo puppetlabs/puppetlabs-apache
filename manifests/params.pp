@@ -26,10 +26,11 @@ class apache::params {
   $serveraliases = ''
   $auth          = false
   $redirect_ssl  = false
+  $ssl_path      = '/etc/ssl'
   $options       = 'Indexes FollowSymLinks MultiViews'
   $override      = 'None'
   $vhost_name    = '*'
-
+  
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
     $user                  = 'apache'
     $group                 = 'apache'
@@ -74,12 +75,13 @@ class apache::params {
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
     $mod_packages          = {
-      'dev'    => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
-      'fcgid'  => 'libapache2-mod-fcgid',
-      'perl'   => 'libapache2-mod-perl2',
-      'php5'   => 'libapache2-mod-php5',
-      'python' => 'libapache2-mod-python',
-      'wsgi'   => 'libapache2-mod-wsgi',
+      'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
+      'fcgid'      => 'libapache2-mod-fcgid',
+      'perl'       => 'libapache2-mod-perl2',
+      'php5'       => 'libapache2-mod-php5',
+      'proxy_html' => 'libapache2-mod-proxy-html',
+      'python'     => 'libapache2-mod-python',
+      'wsgi'       => 'libapache2-mod-wsgi',
     }
     $mod_libs              = {}
     $mod_identifiers       = {}
