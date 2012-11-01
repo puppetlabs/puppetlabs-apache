@@ -178,7 +178,7 @@ Group <%= scope.lookupvar('apache::params::group') %>
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin <%= serveradmin %>
+ServerAdmin <%= @serveradmin %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -362,7 +362,7 @@ HostnameLookups Off
 # http://httpd.apache.org/docs/2.2/mod/core.html#enablesendfile
 #
 <% if sendfile %>
-EnableSendfile <%= sendfile %>
+EnableSendfile <%= @sendfile %>
 <% end %>
 
 #

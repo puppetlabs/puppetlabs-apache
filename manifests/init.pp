@@ -14,8 +14,8 @@
 #
 class apache (
   $default_mods = true,
-  $serveradmin	= 'root@localhost',
-  $sendfile = false,
+  $serveradmin  = 'root@localhost',
+  $sendfile     = false
 ) {
   include apache::params
 
