@@ -14,6 +14,7 @@
 #
 class apache (
   $default_mods = true,
+  $service_enable = true,
   $serveradmin  = 'root@localhost',
   $sendfile     = false
 ) {
@@ -24,10 +25,18 @@ class apache (
     name   => $apache::params::apache_name,
   }
 
+  validate_bool($service_enable)
+  if $service_enable {
+    $service_ensure = 'running'
+  }
+  else {
+    $service_ensure = 'stopped'
+  }
+
   service { 'httpd':
-    ensure    => running,
+    ensure    => $service_ensure,
     name      => $apache::params::apache_name,
-    enable    => true,
+    enable    => $service_enable,
     subscribe => Package['httpd'],
   }
 
