@@ -25,16 +25,11 @@ class apache (
     name   => $apache::params::apache_name,
   }
 
+  # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
-  if $service_enable {
-    $service_ensure = 'running'
-  }
-  else {
-    $service_ensure = 'stopped'
-  }
 
   service { 'httpd':
-    ensure    => $service_ensure,
+    ensure    => $service_enable,
     name      => $apache::params::apache_name,
     enable    => $service_enable,
     subscribe => Package['httpd'],
