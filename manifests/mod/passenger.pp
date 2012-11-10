@@ -5,11 +5,11 @@ class apache::mod::passenger {
   package { 'mod_passenger_package':
     ensure  => installed,
     name    => $apache::params::mod_passenger_package,
-    require => Package['httpd'];
+    require => Package['httpd'],
   }
 
-  a2mod { 'passenger': ensure => present; }
-
-  #apache::mod { 'passenger': }
-  #Package['mod_passenger_package'] -> Apache::Mod['passenger']
+  a2mod { 'passenger':
+    ensure  => present,
+    require => Package['mod_passenger_package'],
+  }
 }
