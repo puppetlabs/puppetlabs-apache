@@ -11,5 +11,6 @@ class apache::mod::passenger {
   a2mod { 'passenger':
     ensure  => present,
     require => Package['mod_passenger_package'],
+    notify  => Service['httpd'],
   }
 }
