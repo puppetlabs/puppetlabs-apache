@@ -14,6 +14,7 @@
 #
 class apache (
   $default_mods = true,
+  $service_enable = true,
   $serveradmin  = 'root@localhost',
   $sendfile     = false
 ) {
@@ -24,10 +25,13 @@ class apache (
     name   => $apache::params::apache_name,
   }
 
+  # true/false is sufficient for both ensure and enable
+  validate_bool($service_enable)
+
   service { 'httpd':
-    ensure    => running,
+    ensure    => $service_enable,
     name      => $apache::params::apache_name,
-    enable    => true,
+    enable    => $service_enable,
     subscribe => Package['httpd'],
   }
 
