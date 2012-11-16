@@ -77,7 +77,7 @@ class apache::params {
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $vdir                  = '/etc/apache2/sites-enabled/'
     $conf_dir              = '/etc/apache2/conf.d/'
-    $mods_available_dir    = '/etc/apache2/mods-available/'
+    $mods_dir              = '/etc/apache2/mods-available/'
     $proxy_modules         = ['proxy', 'proxy_http']
     $mod_packages          = {
       'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
