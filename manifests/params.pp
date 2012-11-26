@@ -40,6 +40,7 @@ class apache::params {
     $mod_python_package    = 'mod_python'
     $mod_wsgi_package      = 'mod_wsgi'
     $mod_auth_kerb_package = 'mod_auth_kerb'
+    $mod_dav_svn_package   = 'mod_dav_svn'
     $ssl_package           = 'mod_ssl'
     $apache_dev            = 'httpd-devel'
     $httpd_dir             = '/etc/httpd'
@@ -58,6 +59,7 @@ class apache::params {
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
       'shibboleth' => 'shibboleth',
+      'dav_svn' => 'mod_dav_svn',
     }
     $mod_libs              = {
       'php5' => 'libphp5.so',
@@ -74,6 +76,7 @@ class apache::params {
     $mod_python_package    = 'libapache2-mod-python'
     $mod_wsgi_package      = 'libapache2-mod-wsgi'
     $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
+    $mod_dav_svn           = 'libapache2-svn'
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
@@ -86,6 +89,7 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
+      'dav_svn'       => 'libapache2-svn',
     }
     $mod_libs              = {}
     $mod_identifiers       = {}
