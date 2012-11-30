@@ -1,25 +1,57 @@
-Puppetlabs module for Apache
-============================
+apache
+=======
 
-Apache is widely-used web server and this module will allow to configure
-various modules and setup virtual hosts with minimal effort.
+Module Description
+-------------------
 
-Basic usage
------------
+Apache is a widely-used web server that this module helps you configure. Using this 
+module, you can set up virtual hosts and manage your web services with minimal effort.
+
+Usage
+------
+
+## Classes
+
+### apache::apache
 
 To install Apache
 
     class {'apache':  }
 
+### apache::mod::php
+
 To install the Apache PHP module
 
     class {'apache::mod::php': }
+    
+### apache::mod::dev
 
-Configure a virtual host
-------------------------
+This class installs Apache development libraries
 
-You can easily configure many parameters of a virtual host. A minimal
-example is:
+	class {'apache::mod::dev': }
+### apache::mod::proxy
+
+Enable the proxy module for Apache
+
+	class {'apache::mod::proxy': }
+	
+### apache::mod::python
+
+To install Python for Apache
+
+	class {'apache::mod::python': }
+	
+### apache::mod::ssl
+
+Install Apache SSL capabilities
+
+	class {'apache::mod::ssl': }
+		
+## Defined Types
+
+### apache::vhost
+
+To configure a virtual host
 
     apache::vhost { 'www.example.com':
         priority        => '10',
@@ -28,7 +60,7 @@ example is:
     }
 
 A slightly more complicated example, which moves the docroot and
-logfile to an alternate location, might be:
+logfile to an alternate location
 
     apache::vhost { 'www.example.com':
         priority        => '10',
@@ -40,32 +72,56 @@ logfile to an alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
-Dependencies
+You must to ensure that all needed parent directories exist. In the more complicated 
+example above, you need to ensure that the `/home/www.example.com` and `/srv/www.example.com`
+directories exist.
+
+### apache::mod
+
+To enable installation of multiple apache modules
+
+	define apache::mod (
+  		$package = undef
+	) {
+  		$mod = $name
+  		include apache::params
+  		#include apache #This creates duplicate resources in rspec-puppet
+	  	$mod_packages = $apache::params::mod_packages
+  		$mod_package = $mod_packages[$mod] # 2.6 compatibility hack
+  		if $package {
+    		$package_REAL = $package
+  		} elsif "$mod_package" {
+    		$package_REAL = $mod_package
+  		}
+  		$mod_libs = $apache::params::mod_libs
+  		$mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
+  		if "${mod_lib}" {
+    		$lib = $mod_lib
+  		}
+
+Implementation
+---------------
+
+## Native Resource Types
+
+	Puppet::Type.newtype(:a2mod) do
+    	@doc = "Manage Apache 2 modules"
+
+Limitations
 ------------
 
-Some functionality is dependent on other modules:
+There are some known bugs and issues with this module. Please see [our issue tracker](https://github.com/puppetlabs/puppetlabs-apache/issues)
+to keep up to date. 
 
-- [stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
-- [firewall](https://github.com/puppetlabs/puppetlabs-firewall)
+Please log tickets and issues at our [Report issues page](https://projects.puppetlabs.com/projects/modules).
 
-Notes
------
-
-Since Puppet cannot ensure that all parent directories exist you need to
-manage these yourself. In the more advanced example above, you need to ensure 
-that `/home/www.example.com` and `/srv/www.example.com` directories exist.
-
-Contributors
+Development
 ------------
 
- * A cast of hundreds, hopefully you too soon
 
-Copyright and License
----------------------
 
-Copyright (C) 2012 [Puppet Labs](https://www.puppetlabs.com/) Inc
-
-Puppet Labs can be contacted at: info@puppetlabs.com
+Disclaimer
+-----------
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
