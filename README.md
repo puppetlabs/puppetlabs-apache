@@ -49,69 +49,63 @@ Install Apache SSL capabilities
 		
 ## Defined Types
 
+Each of these will require that you also declare the 'apache' class.
+
 ### apache::vhost
 
 To configure a virtual host
 
     apache::vhost { 'www.example.com':
-        priority        => '10',
-        vhost_name      => '192.0.2.1',
-        port            => '80',
+      priority   => '10',
+      vhost_name => '192.0.2.1',
+      port       => '80',
+      docroot    => '/var/www/html',
     }
 
-A slightly more complicated example, which moves the docroot and
-logfile to an alternate location
+A slightly more complicated example, which logfile to an alternate location
+and manages some additional properties.
 
     apache::vhost { 'www.example.com':
-        priority        => '10',
-        vhost_name      => '192.0.2.1',
-        port            => '80',
-        docroot         => '/home/www.example.com/docroot/',
-        logroot         => '/srv/www.example.com/logroot/',
-        serveradmin     => 'webmaster@example.com',
-        serveraliases   => ['example.com',],
+      priority      => '10',
+      vhost_name    => '192.0.2.1',
+      port          => '80',
+      docroot       => '/home/www.example.com/docroot',
+      logroot       => '/srv/www.example.com/logroot',
+      serveradmin   => 'webmaster@example.com',
+      serveraliases => ['example.com',],
     }
 
-You must to ensure that all needed parent directories exist. In the more complicated 
-example above, you need to ensure that the `/home/www.example.com` and `/srv/www.example.com`
-directories exist.
+You must ensure that all needed parent directories exist. In the more complicated
+example above, you need to ensure that the `/home/www.example.com` and `/srv/www.example.com` directories exist.
 
 ### apache::mod
 
-To enable installation of multiple apache modules
+To enable installation of arbitary Apache modules, when you know the module
+name and the package name for your package provider.
 
-	define apache::mod (
-  		$package = undef
-	) {
-  		$mod = $name
-  		include apache::params
-  		#include apache #This creates duplicate resources in rspec-puppet
-	  	$mod_packages = $apache::params::mod_packages
-  		$mod_package = $mod_packages[$mod] # 2.6 compatibility hack
-  		if $package {
-    		$package_REAL = $package
-  		} elsif "$mod_package" {
-    		$package_REAL = $mod_package
-  		}
-  		$mod_libs = $apache::params::mod_libs
-  		$mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
-  		if "${mod_lib}" {
-    		$lib = $mod_lib
-  		}
+    # Package from EPEL
+    apache::mod { 'passenger':
+      package => 'mod_passenger',
+    }
 
 Implementation
 ---------------
 
 ## Native Resource Types
 
-	Puppet::Type.newtype(:a2mod) do
-    	@doc = "Manage Apache 2 modules"
+a2mod: Type to enable or disable Apache modules. It is used by the apache::mod
+defined resource type.
+
+  a2mod { 'passenger':
+    ensure => present,
+    lib    => 'mod_passenger.so',
+  }
 
 Limitations
 ------------
 
 There are some known bugs and issues with this module. Please see [our issue tracker](https://github.com/puppetlabs/puppetlabs-apache/issues)
-to keep up to date. 
+to keep up to date.
 
 Please log tickets and issues at our [Report issues page](https://projects.puppetlabs.com/projects/modules).
 
