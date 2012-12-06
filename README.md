@@ -10,50 +10,51 @@ module, you can set up virtual hosts and manage your web services with minimal e
 Usage
 ------
 
-## Classes
+### Classes
 
-### apache::apache
+**apache::apache**
 
-To install Apache
+Install Apache
 
     class {'apache':  }
 
-### apache::mod::php
+**apache::mod::php**
 
-To install the Apache PHP module
+Install the Apache PHP module
 
     class {'apache::mod::php': }
     
-### apache::mod::dev
+**apache::mod::dev**
 
-This class installs Apache development libraries
+Install Apache development libraries
 
 	class {'apache::mod::dev': }
-### apache::mod::proxy
+	
+**apache::mod::proxy**
 
 Enable the proxy module for Apache
 
 	class {'apache::mod::proxy': }
 	
-### apache::mod::python
+**apache::mod::python**
 
-To install Python for Apache
+Install Python for Apache
 
 	class {'apache::mod::python': }
 	
-### apache::mod::ssl
+**apache::mod::ssl**
 
 Install Apache SSL capabilities
 
 	class {'apache::mod::ssl': }
 		
-## Defined Types
+### Defined Types
 
-Each of these will require that you also declare the 'apache' class.
+Each of these will require that you also declare the apache class.
 
-### apache::vhost
+**apache::vhost**
 
-To configure a virtual host
+Configure a virtual host
 
     apache::vhost { 'www.example.com':
       priority   => '10',
@@ -62,8 +63,8 @@ To configure a virtual host
       docroot    => '/var/www/html',
     }
 
-A slightly more complicated example, which logfile to an alternate location
-and manages some additional properties.
+As a slightly more complicated example, this is what moving the docroot and logfile to an
+alternate location might look like
 
     apache::vhost { 'www.example.com':
       priority      => '10',
@@ -76,12 +77,13 @@ and manages some additional properties.
     }
 
 You must ensure that all needed parent directories exist. In the more complicated
-example above, you need to ensure that the `/home/www.example.com` and `/srv/www.example.com` directories exist.
+example above, you need to ensure that the `/home/www.example.com` and `/srv/www.example.com` 
+directories exist.
 
-### apache::mod
+**apache::mod**
 
-To enable installation of arbitary Apache modules, when you know the module
-name and the package name for your package provider.
+To enable installation of arbitary Apache modules, when you know the module name and the 
+package name for your package provider
 
     # Package from EPEL
     apache::mod { 'passenger':
@@ -91,15 +93,17 @@ name and the package name for your package provider.
 Implementation
 ---------------
 
-## Native Resource Types
+### Native Resource Types
 
-a2mod: Type to enable or disable Apache modules. It is used by the apache::mod
+**a2mod** 
+
+Type to enable or disable Apache modules. It is used by the `apache::mod`
 defined resource type.
 
-  a2mod { 'passenger':
-    ensure => present,
-    lib    => 'mod_passenger.so',
-  }
+	a2mod { 'passenger':
+      ensure => present,
+      lib    => 'mod_passenger.so',
+	}
 
 Limitations
 ------------
