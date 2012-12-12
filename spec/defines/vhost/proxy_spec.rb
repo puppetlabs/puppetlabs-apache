@@ -30,7 +30,8 @@ describe 'apache::vhost::proxy', :type => :define do
       :dest       => 'example2.com',
       :servername => 'example3.com',
       :port       => '80',
-      :ssl        => true
+      :ssl        => true,
+      :access_log => false,
    },
   ].each do |param_set|
 
@@ -68,6 +69,19 @@ describe 'apache::vhost::proxy', :type => :define do
         verify_contents(subject, "#{param_hash[:priority]}-#{title}.conf", [
           '  ServerName example3.com'
         ] )
+      end
+    end
+
+    [true,false].each do |value|
+      describe "when access_log is #{value}" do
+        let :params do
+          default_params.merge({:access_log => value})
+        end
+
+        it "#{value ? "should" : "should not"} contain access logs" do
+          lines = subject.resource('file', "#{params[:priority]}-#{title}.conf").send(:parameters)[:content].split("\n")
+          !!lines.grep('_access.log combined').should == value
+        end
       end
     end
   end
