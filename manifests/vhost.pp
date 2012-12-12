@@ -98,6 +98,18 @@ define apache::vhost(
     }
   }
 
+  # Template uses:
+  # - $vhost_name
+  # - $port
+  # - $srvname
+  # - $serveradmin
+  # - $serveraliases
+  # - $docroot
+  # - $options
+  # - $override
+  # - $logroot
+  # - $access_log
+  # - $name
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
