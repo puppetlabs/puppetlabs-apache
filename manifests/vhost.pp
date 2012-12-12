@@ -20,6 +20,7 @@
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
+# - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
 #
 # Actions:
