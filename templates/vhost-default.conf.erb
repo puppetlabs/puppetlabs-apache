@@ -23,7 +23,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   </Directory>
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
+<% if access_log %>
   CustomLog <%= logroot %>/<%= name %>_access.log combined
+<% end %>
   ServerSignature Off
 </VirtualHost>
 
