@@ -26,6 +26,8 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 
   ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
   LogLevel warn
+<% if access_log -%>
   CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
+<% end -%>
 </VirtualHost>
 
