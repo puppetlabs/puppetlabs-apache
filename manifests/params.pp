@@ -59,7 +59,7 @@ class apache::params {
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
       'shibboleth' => 'shibboleth',
-      'dav_svn' => 'mod_dav_svn',
+      'dav_svn'    => 'mod_dav_svn',
     }
     $mod_libs              = {
       'php5' => 'libphp5.so',
@@ -89,7 +89,7 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
-      'dav_svn'       => 'libapache2-svn',
+      'dav_svn'    => 'libapache2-svn',
     }
     $mod_libs              = {}
     $mod_identifiers       = {}
