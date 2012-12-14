@@ -54,7 +54,7 @@ define apache::vhost(
     $override           = $apache::params::override,
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
-    $logroot            = "/var/log/$apache::params::apache_name",
+    $logroot            = "/var/log/${apache::params::apache_name}",
     $access_log         = true,
     $ensure             = 'present'
   ) {
@@ -127,9 +127,9 @@ define apache::vhost(
   }
 
   if $configure_firewall {
-    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+    if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
       @firewall {
-        "0100-INPUT ACCEPT $port":
+        "0100-INPUT ACCEPT ${port}":
           action => 'accept',
           dport  => $port,
           proto  => 'tcp'
