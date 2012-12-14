@@ -30,7 +30,7 @@ class apache::params {
   $options       = 'Indexes FollowSymLinks MultiViews'
   $override      = 'None'
   $vhost_name    = '*'
-  
+
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
     $user                  = 'apache'
     $group                 = 'apache'
@@ -90,6 +90,6 @@ class apache::params {
     $mod_libs              = {}
     $mod_identifiers       = {}
   } else {
-    fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
+    fail("Class['apache::params']: Unsupported operatingsystem: ${operatingsystem}")
   }
 }

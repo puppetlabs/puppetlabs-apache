@@ -1,5 +1,5 @@
 class apache::mod::proxy (
-  $proxy_requests = "Off"
+  $proxy_requests = 'Off'
 ) {
   apache::mod { 'proxy': }
   # Template uses $proxy_requests
