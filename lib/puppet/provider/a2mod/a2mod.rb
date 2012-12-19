@@ -1,9 +1,11 @@
-Puppet::Type.type(:a2mod).provide(:a2mod) do
+require 'puppet/provider/a2mod'
+
+Puppet::Type.type(:a2mod).provide(:a2mod, :parent => Puppet::Provider::A2mod) do
     desc "Manage Apache 2 modules on Debian and Ubuntu"
 
     optional_commands :encmd => "a2enmod"
     optional_commands :discmd => "a2dismod"
-    optional_commands :apache2ctl => "apache2ctl"
+    commands :apache2ctl => "apache2ctl"
 
     confine :osfamily => :debian
     defaultfor :operatingsystem => [:debian, :ubuntu]
@@ -29,9 +31,5 @@ Puppet::Type.type(:a2mod).provide(:a2mod) do
 
     def destroy
         discmd resource[:name]
-    end
-
-    def exists?
-      @property_hash[:ensure] != :absent
     end
 end
