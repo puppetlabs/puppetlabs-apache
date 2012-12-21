@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe 'apache', :type => :class do
-  context "On a Debian OS" do
+  context "on a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily       => 'Debian',
+        :concat_basedir => '/dne',
+      }
     end
     it { should include_class("apache::params") }
     it { should contain_package("httpd") }
@@ -13,7 +16,7 @@ describe 'apache', :type => :class do
       'subscribe' => 'Package[httpd]'
       )
     }
-    it { should contain_file("httpd_vdir").with(
+    it { should contain_file("/etc/apache2/sites-enabled").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
@@ -22,9 +25,12 @@ describe 'apache', :type => :class do
       )
     }
   end
-  context "On a RedHat OS" do
+  context "on a RedHat OS" do
     let :facts do
-      { :osfamily => 'RedHat' }
+      {
+        :osfamily       => 'RedHat',
+        :concat_basedir => '/dne',
+      }
     end
     it { should include_class("apache::params") }
     it { should contain_package("httpd") }
@@ -34,7 +40,7 @@ describe 'apache', :type => :class do
       'subscribe' => 'Package[httpd]'
       )
     }
-    it { should contain_file("httpd_vdir").with(
+    it { should contain_file("/etc/httpd/site.d").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',

@@ -30,10 +30,23 @@
 # - The apache class
 #
 # Sample Usage:
+#
+#  # Simple vhost definition:
 #  apache::vhost { 'site.name.fqdn':
-#    priority => '20',
 #    port => '80',
 #    docroot => '/path/to/docroot',
+#  }
+#
+#  # SSL vhost with non-SSL rewrite:
+#  apache::vhost { 'site.name.fqdn':
+#    port    => '443',
+#    ssl     => true,
+#    docroot => '/path/to/docroot',
+#  }
+#  apache::vhost { 'site.name.fqdn':
+#    port          => '80',
+#    rewrite_cond => '%{HTTPS} off',
+#    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
 #  }
 #
 define apache::vhost(
@@ -43,42 +56,56 @@ define apache::vhost(
     $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
-    $ssl                = $apache::params::ssl,
-    $template           = $apache::params::template,
-    $priority           = $apache::params::priority,
-    $servername         = $apache::params::servername,
-    $serveraliases      = $apache::params::serveraliases,
-    $auth               = $apache::params::auth,
-    $redirect_ssl       = $apache::params::redirect_ssl,
-    $options            = $apache::params::options,
-    $override           = $apache::params::override,
-    $apache_name        = $apache::params::apache_name,
-    $vhost_name         = $apache::params::vhost_name,
+    $ssl                = false,
+    $ssl_cert           = $apache::default_ssl_cert,
+    $ssl_key            = $apache::default_ssl_key,
+    $ssl_chain          = $apache::default_ssl_chain,
+    $ssl_ca             = $apache::default_ssl_ca,
+    $ssl_crl_path       = $apache::default_ssl_crl_path,
+    $ssl_crl            = $apache::default_ssl_crl,
+    $priority           = '25',
+    $servername         = undef,
+    $serveraliases      = [],
+    $redirect_ssl       = false,
+    $options            = ['Indexes','FollowSymLinks','MultiViews'],
+    $override           = ['None'],
+    $vhost_name         = '*',
     $logroot            = "/var/log/$apache::params::apache_name",
     $access_log         = true,
+    $access_log_file    = "${name}_access.log",
+    $scriptalias        = undef,
+    $proxy_dest         = undef,
+    $no_proxy_uris      = [],
+    $redirect_source    = '/',
+    $redirect_dest      = undef,
+    $redirect_status    = undef,
+    $rack_base_uris     = undef,
+    $block              = [],
     $ensure             = 'present'
   ) {
-
-  validate_re($ensure, '^(present|absent)$',
-  "${ensure} is not supported for ensure.
-  Allowed values are 'present' and 'absent'.")
-
   include apache
+  $apache_name = $apache::params::apache_name
 
-  if $servername == '' {
+  if ! $servername or $servername == '' {
     $srvname = $name
   } else {
     $srvname = $servername
   }
 
-  if $ssl == true {
+  validate_re($ensure, '^(present|absent)$',
+  "${ensure} is not supported for ensure.
+  Allowed values are 'present' and 'absent'.")
+  validate_bool($configure_firewall)
+  validate_bool($access_log)
+  validate_bool($ssl)
+
+  if $ssl {
     include apache::mod::ssl
   }
-
   # Since the template will use auth, redirect to https requires mod_rewrite
-  if $redirect_ssl == true {
-    if $::osfamily == 'debian' {
-      A2mod <| title == 'rewrite' |>
+  if $redirect_ssl {
+    if ! defined(Apache::Mod['rewrite']) {
+      apache::mod { 'rewrite': }
     }
   }
 
@@ -99,33 +126,15 @@ define apache::vhost(
     }
   }
 
-  # Template uses:
-  # - $vhost_name
-  # - $port
-  # - $srvname
-  # - $serveradmin
-  # - $serveraliases
-  # - $docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $access_log
-  # - $name
-  file { "${priority}-${name}.conf":
-    ensure  => $ensure,
-    path    => "${apache::params::vdir}/${priority}-${name}.conf",
-    content => template($template),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    require => [
-      Package['httpd'],
-      File[$docroot],
-      File[$logroot],
-    ],
-    notify  => Service['httpd'],
+  # Open listening ports if they are not already
+  if ! defined(Apache::Listen[$port]) {
+    apache::listen { $port: }
+  }
+  if ! defined(Apache::Namevirtualhost["${vhost_name}:${port}"]) {
+    apache::namevirtualhost { "${vhost_name}:${port}": }
   }
 
+  # Configure firewall rules
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
@@ -135,6 +144,61 @@ define apache::vhost(
           proto  => 'tcp'
       }
     }
+  }
+
+  # Template uses:
+  # - $vhost_name
+  # - $port
+  # - $srvname
+  # - $serveradmin
+  # - $docroot
+  # - $options
+  # - $override
+  # - $logroot
+  # - $name
+  # - $access_log
+  # - $access_log_file
+  # block fragment:
+  #   - $block
+  # proxy fragment:
+  #   - $proxy_dest
+  #   - $no_proxy_uris
+  # rack fragment:
+  #   - $rack_base_uris
+  # redirect fragment:
+  #   - $redirect_source
+  #   - $redirect_dest
+  #   - $redirect_status
+  # rewrite fragment:
+  #   - $rewrite_rule
+  #   - $rewrite_base
+  #   - $rewrite_cond
+  # scriptalias fragment:
+  #   - $scriptalias
+  #   - $ssl
+  # serveralias fragment:
+  #   - $serveraliases
+  # ssl fragment:
+  #   - $ssl
+  #   - $ssl_cert
+  #   - $ssl_key
+  #   - $ssl_chain
+  #   - $ssl_ca
+  #   - $ssl_crl
+  #   - $ssl_crl_path
+  file { "${priority}-${name}.conf":
+    ensure  => $ensure,
+    path    => "${apache::params::vhost_dir}/${priority}-${name}.conf",
+    content => template('apache/vhost.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+      Package['httpd'],
+      File[$docroot],
+      File[$logroot],
+    ],
+    notify  => Service['httpd'],
   }
 }
 

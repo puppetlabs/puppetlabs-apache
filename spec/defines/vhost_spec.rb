@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'apache::vhost', :type => :define do
   context "On a Debian OS" do
     let :facts do
-      { :osfamily => 'RedHat' }
+      {
+        :osfamily       => 'Debian',
+        :concat_basedir => '/dne',
+      }
     end
     let :title do
       'my_vhost'
@@ -11,8 +14,6 @@ describe 'apache::vhost', :type => :define do
 
     let :default_params do
       {
-      :apache_name   => 'apache2',
-      :auth          => false,
       :docroot       => 'path/to/docroot',
       :options       => 'Indexes FollowSymLinks MultiViews',
       :override      => 'None',
@@ -22,14 +23,12 @@ describe 'apache::vhost', :type => :define do
       :serveraliases => '',
       :servername    => '',
       :ssl           => true,
-      :template      => 'apache/vhost-default.conf.erb',
       :vhost_name    => '*',
       :ensure        => 'present'
       }
     end
 
     [{
-        :apache_name => 'httpd',
         :docroot     => 'path/to/docroot',
         :override    => ['Options', 'FileInfo'],
         :port        => '80',
@@ -37,7 +36,6 @@ describe 'apache::vhost', :type => :define do
         :serveradmin => 'serveradmin@puppet',
         :ssl         => false,
         :access_log  => false,
-        :template    => 'apache/vhost-default.conf.erb',
      },
     ].each do |param_set|
 

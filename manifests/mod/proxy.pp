@@ -3,7 +3,7 @@ class apache::mod::proxy (
 ) {
   apache::mod { 'proxy': }
   # Template uses $proxy_requests
-  file { "${apache::params::vdir}/proxy.conf":
+  file { "${apache::params::mod_dir}/proxy.conf":
     ensure  => present,
     content => template('apache/mod/proxy.conf.erb'),
   }

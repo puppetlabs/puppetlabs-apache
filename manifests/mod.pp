@@ -1,41 +1,49 @@
 define apache::mod (
-  $package = undef
+  $package = undef,
+  $lib = undef
 ) {
   $mod = $name
   include apache::params
   #include apache #This creates duplicate resources in rspec-puppet
+  $lib_path = $apache::params::lib_path
+  $mod_dir = $apache::params::mod_dir
+
+  # Determine if we have special lib
+  $mod_libs = $apache::params::mod_libs
+  $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
+  if $lib {
+    $lib_REAL = $lib
+  } elsif $mod_lib {
+    $lib_REAL = $mod_lib
+  } else {
+    $lib_REAL = "mod_${mod}.so"
+  }
+
+  # Determine if we have a package
   $mod_packages = $apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
     $package_REAL = $package
-  } elsif "$mod_package" {
+  } elsif "${mod_package}" {
     $package_REAL = $mod_package
   }
-  $mod_libs = $apache::params::mod_libs
-  $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
-  if "${mod_lib}" {
-    $lib = $mod_lib
-  }
-
-  $mod_identifiers = $apache::params::mod_identifiers
-  $mod_identifier = $mod_identifiers[$mod]
-  if "${mod_identifier}" {
-    $identifier = $mod_identifier
-  }
-
   if $package_REAL {
+    # $package_REAL may be an array
     package { $package_REAL:
-      ensure   => present,
-      require  => Package['httpd'],
-      before   => A2mod[$mod],
+      ensure  => present,
+      require => Package['httpd'],
+      before  => File["${mod_dir}/${mod}.load"],
     }
   }
 
-  a2mod { $mod:
-    ensure     => present,
-    lib        => $lib,
-    identifier => $identifier,
-    require    => Package['httpd'],
-    notify     => Service['httpd'],
+  file { "${mod}.load":
+    path    => "${mod_dir}/${mod}.load",
+    ensure  => present,
+    owner   => $apache::params::user,
+    group   => $apache::params::group,
+    mode    => '0644',
+    content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
+    require => Package['httpd'],
+    notify  => Service['httpd'],
   }
 }
