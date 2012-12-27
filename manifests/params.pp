@@ -41,7 +41,7 @@ class apache::params {
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
-      'php5'       => 'php',
+      'php5'       => 'php53',
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
       'shibboleth' => 'shibboleth',
