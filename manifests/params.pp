@@ -33,6 +33,7 @@ class apache::params {
     $dev_packages     = 'httpd-devel'
     $default_ssl_cert = '/etc/pki/tls/certs/localhost.crt'
     $default_ssl_key  = '/etc/pki/tls/private/localhost.key'
+    $ssl_certs_dir    = '/etc/pki/tls/certs'
     $passenger_root   = '/usr/share/rubygems/gems/passenger-3.0.17'
     $passenger_ruby   = '/usr/bin/ruby'
     $mod_packages     = {
@@ -65,6 +66,7 @@ class apache::params {
     $dev_packages     = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $default_ssl_cert = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key  = '/etc/ssl/private/ssl-cert-snakeoil.key'
+    $ssl_certs_dir    = '/etc/ssl/certs'
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
     $mod_packages     = {

@@ -63,6 +63,7 @@ define apache::vhost(
     $ssl_ca             = $apache::default_ssl_ca,
     $ssl_crl_path       = $apache::default_ssl_crl_path,
     $ssl_crl            = $apache::default_ssl_crl,
+    $ssl_certs_dir      = $apache::params::ssl_certs_dir,
     $priority           = '25',
     $servername         = undef,
     $serveraliases      = [],
