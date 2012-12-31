@@ -13,8 +13,9 @@ describe 'apache::vhost', :type => :define do
   end
   let :default_facts do
     {
-      :concat_basedir => '/dne',
-      :osfamily       => 'RedHat',
+      :osfamily               => 'RedHat',
+      :operatingsystemrelease => '6',
+      :concat_basedir         => '/dne',
     }
   end
 

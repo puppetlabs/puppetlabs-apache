@@ -8,8 +8,9 @@ describe 'apache::mod::proxy_html', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
-        :osfamily       => 'Debian',
-        :concat_basedir => '/dne',
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
     it { should include_class("apache::params") }
@@ -19,8 +20,9 @@ describe 'apache::mod::proxy_html', :type => :class do
   context "on a RedHat OS" do
     let :facts do
       {
-        :osfamily       => 'RedHat',
-        :concat_basedir => '/dne',
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
     it { should include_class("apache::params") }

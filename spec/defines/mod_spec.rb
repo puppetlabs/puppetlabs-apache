@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'apache::mod', :type => :define do
   context "on a RedHat osfamily" do
     let :facts do
-      { :osfamily => 'RedHat' }
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+      }
     end
 
     describe "for non-special modules" do
@@ -34,7 +37,10 @@ describe 'apache::mod', :type => :define do
 
   context "on a Debian osfamily" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+      }
     end
 
     describe "for non-special modules" do

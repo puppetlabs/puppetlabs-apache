@@ -18,37 +18,50 @@
 # Sample Usage:
 #
 class apache::params {
+  # This will be 5 or 6 on RedHat, 6 or wheezy on Debian, 12 or quantal on Ubuntu, etc.
+  $osr_array = split($::operatingsystemrelease,'[\/\.]')
+  $distrelease = $osr_array[0]
+  if ! $distrelease {
+    fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
+  }
+
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
-    $user             = 'apache'
-    $group            = 'apache'
-    $apache_name      = 'httpd'
-    $httpd_dir        = '/etc/httpd'
-    $conf_dir         = "${httpd_dir}/conf"
-    $confd_dir        = "${httpd_dir}/conf.d"
-    $mod_dir          = "${httpd_dir}/mod.d"
-    $vhost_dir        = "${httpd_dir}/site.d"
-    $conf_file        = 'httpd.conf'
-    $ports_file       = "${conf_dir}/ports.conf"
-    $lib_path         = 'modules'
-    $dev_packages     = 'httpd-devel'
-    $default_ssl_cert = '/etc/pki/tls/certs/localhost.crt'
-    $default_ssl_key  = '/etc/pki/tls/private/localhost.key'
-    $ssl_certs_dir    = '/etc/pki/tls/certs'
-    $passenger_root   = '/usr/share/rubygems/gems/passenger-3.0.17'
-    $passenger_ruby   = '/usr/bin/ruby'
-    $mod_packages     = {
+    $user                 = 'apache'
+    $group                = 'apache'
+    $apache_name          = 'httpd'
+    $httpd_dir            = '/etc/httpd'
+    $conf_dir             = "${httpd_dir}/conf"
+    $confd_dir            = "${httpd_dir}/conf.d"
+    $mod_dir              = "${httpd_dir}/mod.d"
+    $vhost_dir            = "${httpd_dir}/site.d"
+    $conf_file            = 'httpd.conf'
+    $ports_file           = "${conf_dir}/ports.conf"
+    $lib_path             = 'modules'
+    $dev_packages         = 'httpd-devel'
+    $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
+    $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
+    $ssl_certs_dir        = $distrelease ? {
+      '5' => '/etc/pki/tls/certs',
+      '6' => '/etc/ssl/certs',
+    }
+    $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
+    $passenger_ruby       = '/usr/bin/ruby'
+    $mod_packages         = {
       'auth_kerb'  => 'mod_auth_kerb',
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
-      'php5'       => 'php53',
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
       'shibboleth' => 'shibboleth',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
     }
-    $mod_libs         = {
+    $mod_packages['php5'] = $distrelease ? {
+      '5' => 'php53',
+      '6' => 'php',
+    }
+    $mod_libs             = {
       'php5' => 'libphp5.so',
     }
   } elsif $::osfamily == 'Debian' {

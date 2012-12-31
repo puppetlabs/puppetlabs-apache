@@ -2,8 +2,9 @@ describe 'apache::mod::ssl', :type => :class do
   context 'on an unsupported OS' do
     let :facts do
       {
-        :osfamily       => 'Magic',
-        :concat_basedir => '/dne',
+        :osfamily               => 'Magic',
+        :operatingsystemrelease => '0',
+        :concat_basedir         => '/dne',
       }
     end
     it { expect { should raise_error(Puppet::Error, "Unsupported operatingsystem:") } }
@@ -12,8 +13,9 @@ describe 'apache::mod::ssl', :type => :class do
   context 'on a RedHat OS' do
     let :facts do
       {
-        :osfamily       => 'RedHat',
-        :concat_basedir => '/dne',
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
     it { should include_class('apache::params') }
@@ -24,8 +26,9 @@ describe 'apache::mod::ssl', :type => :class do
   context 'on a Debian OS' do
     let :facts do
       {
-        :osfamily       => 'Debian',
-        :concat_basedir => '/dne',
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
     it { should include_class('apache::params') }
