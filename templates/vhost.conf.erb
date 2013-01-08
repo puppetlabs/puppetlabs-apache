@@ -3,8 +3,8 @@
 # Managed by Puppet
 # ************************************
 
-<VirtualHost <%= @vhost_name %>:<%= @port %>>
-  ServerName <%= @srvname %>
+<VirtualHost <%= @nvh_addr_port %>>
+  ServerName <%= @servername_real %>
 <% if @serveradmin -%>
   ServerAdmin <%= @serveradmin %>
 <% end -%>

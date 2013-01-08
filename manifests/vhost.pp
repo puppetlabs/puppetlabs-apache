@@ -50,8 +50,11 @@
 #  }
 #
 define apache::vhost(
-    $port,
     $docroot,
+    $port               = undef,
+    $ip                 = undef,
+    $ip_based           = false,
+    $add_listen         = true,
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
@@ -87,15 +90,10 @@ define apache::vhost(
   include apache
   $apache_name = $apache::params::apache_name
 
-  if ! $servername or $servername == '' {
-    $srvname = $name
-  } else {
-    $srvname = $servername
-  }
-
   validate_re($ensure, '^(present|absent)$',
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
+  validate_bool($ip_based)
   validate_bool($configure_firewall)
   validate_bool($access_log)
   validate_bool($ssl)
@@ -128,11 +126,46 @@ define apache::vhost(
   }
 
   # Open listening ports if they are not already
-  if ! defined(Apache::Listen[$port]) {
-    apache::listen { $port: }
+  if $servername {
+    $servername_real = $servername
+  } else {
+    $servername_real = $name
   }
-  if ! defined(Apache::Namevirtualhost["${vhost_name}:${port}"]) {
-    apache::namevirtualhost { "${vhost_name}:${port}": }
+
+  if $ip {
+    if $port {
+      $listen_addr_port = "${ip}:${port}"
+      $nvh_addr_port = "${ip}:${port}"
+    } else {
+      $listen_addr_port = $ip
+      $nvh_addr_port = $ip
+      if ! $servername {
+        fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
+      }
+    }
+  } else {
+    if $port {
+      $listen_addr_port = $port
+      $nvh_addr_port = "${vhost_name}:${port}"
+    } else {
+      $nvh_addr_port = $name
+      if ! $servername {
+        fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
+      }
+    }
+  }
+  if $add_listen {
+    if $ip and defined(Apache::Listen[$port]) {
+      fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
+    }
+    if ! defined(Apache::Listen[$listen_addr_port]) {
+      apache::listen { $listen_addr_port: }
+    }
+  }
+  if ! $ip_based {
+    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) {
+      apache::namevirtualhost { $nvh_addr_port: }
+    }
   }
 
   # Configure firewall rules
@@ -148,9 +181,8 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $vhost_name
-  # - $port
-  # - $srvname
+  # - $nvh_addr_port
+  # - $servername_real
   # - $serveradmin
   # - $docroot
   # - $options

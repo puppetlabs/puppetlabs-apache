@@ -1,12 +1,10 @@
 include apache
-apache::vhost {
-  'test.vhost':
-    port     => 80,
-    docroot  => '/tmp/testvhost',
-    template => 'apache/test.vhost.erb';
-  'test.vhost-override':
-    port     => 80,
-    docroot  => '/tmp/testvhost',
-    override => ['Options', 'FileInfo'],
-    template => 'apache/test.vhost.erb';
+# Simple name-based vhosts
+apache::vhost { 'one.example.com':
+  port       => '80',
+  docroot    => '/var/www/one',
+}
+apache::vhost { 'two.example.com':
+  port       => '80',
+  docroot    => '/var/www/two',
 }

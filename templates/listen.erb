@@ -1,1 +1,6 @@
-Listen <%= listen_port %>
+<%# Listen should always be one of:
+  - <port>
+  - <ipv4>:<port>
+  - [<ipv6]:<port>
+-%>
+Listen <%= @listen_addr_port %>

@@ -1,9 +1,9 @@
 define apache::namevirtualhost {
-  $vhost_name_port = $name
+  $addr_port = $name
   include apache::params
 
-  # Template uses: $vhost_name_port
-  concat::fragment { "NameVirtualHost ${vhost_name_port}":
+  # Template uses: $addr_port
+  concat::fragment { "NameVirtualHost ${addr_port}":
     target  => $apache::params::ports_file,
     content => template('apache/namevirtualhost.erb'),
   }
