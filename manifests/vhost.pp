@@ -21,6 +21,9 @@
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
 # - The $ensure specifies if vhost file is present or absent.
+# - The $wsgi_python_home for the wsgi app (optional)
+# - The $wsgi_script for the wsgi script alias (optional)
+# - The $wsgi_url for the wsgi script alias, defaulting to /
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -58,7 +61,10 @@ define apache::vhost(
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
     $access_log         = true,
-    $ensure             = 'present'
+    $ensure             = 'present',
+    $wsgi_python_home   = false,
+    $wsgi_script_url    = '/',
+    $wsgi_script        = false
   ) {
 
   validate_re($ensure, '^(present|absent)$',
