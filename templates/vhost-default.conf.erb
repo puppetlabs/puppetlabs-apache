@@ -4,6 +4,9 @@
 # ************************************
 
 NameVirtualHost <%= vhost_name %>:<%= port %>
+<% if wsgi_python_home %>
+  WSGIPythonHome <%= wsgi_python_home %>
+<% end %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
 <% if serveradmin %>
@@ -15,6 +18,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
+  <% if wsgi_script %>
+    WSGIScriptAlias <%= wsgi_script_url %> <%= wsgi_script %>
+  <% end %>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
