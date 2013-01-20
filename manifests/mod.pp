@@ -14,7 +14,7 @@ define apache::mod (
   $mod_libs = $apache::params::mod_libs
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if "${mod_lib}" {
-    $lib = $mod_lib
+    $lib_dir = $mod_lib
   }
 
   $mod_identifiers = $apache::params::mod_identifiers
@@ -33,7 +33,7 @@ define apache::mod (
 
   a2mod { $mod:
     ensure     => present,
-    lib        => $lib,
+    lib        => $lib_dir,
     identifier => $identifier,
     require    => Package['httpd'],
     notify     => Service['httpd'],
