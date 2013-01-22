@@ -9,6 +9,7 @@
 #     URI that the requests will be proxied for
 # - $priority
 # - $template -- the template to use for the vhost
+# - $access_log - specifies if *_access.log directives should be configured.
 # - $vhost_name - the name to use for the vhost, defaults to '*'
 #
 # Actions:
@@ -27,6 +28,7 @@ define apache::vhost::proxy (
     $serveraliases = '',
     $ssl           = false,
     $vhost_name    = '*',
+    $access_log    = true,
     $no_proxy_uris = []
   ) {
 
@@ -45,6 +47,18 @@ define apache::vhost::proxy (
     include apache::mod::ssl
   }
 
+  # Template uses:
+  # - $vhost_name
+  # - $port
+  # - $ssl
+  # - $ssl_path
+  # - $srvname
+  # - $serveraliases
+  # - $no_proxy_uris
+  # - $dest
+  # - $apache::params::apache_name
+  # - $access_log
+  # - $name
   file { "${priority}-${name}.conf":
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
     content => template($template),
