@@ -1,94 +1,293 @@
 require 'spec_helper'
 
 describe 'apache::vhost', :type => :define do
+  let :pre_condition do
+    'class { "apache": default_vhost => false, default_ssl_vhost => false, }'
+  end
   let :title do
-    'my_vhost'
+    'rspec.example.com'
   end
   let :default_params do
     {
-      :docroot  => '/path/to/docroot',
-      :port     => '80',
-      :priority => '25',
+      :docroot => '/rspec/docroot',
+      :port    => '84',
     }
   end
-  let :default_facts do
-    {
-      :osfamily               => 'RedHat',
-      :operatingsystemrelease => '6',
-      :concat_basedir         => '/dne',
-    }
-  end
-
   describe 'os-dependent items' do
-    context "on a Debian OS" do
-      let :facts do
-        default_facts.merge({ :osfamily => 'Debian', })
+    context "on RedHat based systems" do
+      let :default_facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '6',
+          :concat_basedir         => '/dne',
+        }
       end
-      [{
-          :docroot     => 'path/to/docroot',
-          :override    => ['Options', 'FileInfo'],
-          :port        => '443',
-          :priority    => '29',
-          :serveradmin => 'serveradmin@puppetlabs.com',
-          :ssl         => true,
-          :access_log  => false,
-       },
-      ].each do |param_set|
+      let :params do default_params end
+      let :facts do default_facts end
+      it { should include_class("apache") }
+      it { should include_class("apache::params") }
+    end
+    context "on Debian based systems" do
+      let :default_facts do
+        {
+          :osfamily               => 'Debian',
+          :operatingsystemrelease => '6',
+          :concat_basedir         => '/dne',
+        }
+      end
+      let :params do default_params end
+      let :facts do default_facts end
+      it { should include_class("apache") }
+      it { should include_class("apache::params") }
+    end
+  end
+  describe 'os-idenpendent items' do
+    let :facts do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    describe 'basic assumptions' do
+      let :params do default_params end
+      it { should include_class("apache") }
+      it { should include_class("apache::params") }
+      it { should contain_apache__listen(params[:port]) }
+      it { should contain_apache__namevirtualhost("*:#{params[:port]}") }
+    end
 
-        describe "when #{param_set == {} ? "using default" : "specifying"} class parameters" do
+    context ".conf content" do
+      [
+        {
+          :title => 'should contain docroot',
+          :attr  => 'docroot',
+          :value => '/not/default',
+          :match => ['  DocumentRoot /not/default','  <Directory /not/default>'],
+        },
+        {
+          :title => 'should set a port',
+          :attr  => 'port',
+          :value => '8080',
+          :match => '<VirtualHost *:8080>',
+        },
+        {
+          :title => 'should set an ip',
+          :attr  => 'ip',
+          :value => '10.0.0.1',
+          :match => '<VirtualHost 10.0.0.1:84>',
+        },
+        {
+          :title => 'should set a serveradmin',
+          :attr  => 'serveradmin',
+          :value => 'test@test.com',
+          :match => '  ServerAdmin test@test.com'
+        },
+        {
+          :title => 'should enable ssl',
+          :attr  => 'ssl',
+          :value => true,
+          :match => '  SSLEngine on',
+        },
+        {
+          :title => 'should set a servername',
+          :attr  => 'servername',
+          :value => 'param.test',
+          :match => '  ServerName param.test',
+        },
+        {
+          :title => 'should accept server aliases',
+          :attr  => 'serveraliases',
+          :value => ['one.com','two.com'],
+          :match => ['  ServerAlias one.com','  ServerAlias two.com'],
+        },
+        {
+          :title => 'should accept options',
+          :attr  => 'options',
+          :value => ['Fake','Options'],
+          :match => '    Options Fake Options',
+        },
+        {
+          :title => 'should accept overrides',
+          :attr  => 'override',
+          :value => ['Fake', 'Override'],
+          :match => '    AllowOverride Fake Override',
+        },
+        {
+          :title => 'should accept logroot',
+          :attr  => 'logroot',
+          :value => '/fake/log',
+          :match => [/CustomLog \/fake\/log\//,/ErrorLog \/fake\/log\//],
+        },
+        {
+          :title => 'should contain access logs',
+          :attr  => 'access_log',
+          :value => true,
+          :match => /CustomLog \/var\/log\/.+_access\.log combined$/,
+        },
+        {
+          :title    => 'should not contain access logs',
+          :attr     => 'access_log',
+          :value    => false,
+          :notmatch => /CustomLog \/var\/log\/.+_access\.log combined$/,
+        },
+        {
+          :title => 'should accept scriptaliases',
+          :attr  => 'scriptalias',
+          :value => '/usr/scripts',
+          :match => '  ScriptAlias /cgi-bin/ "/usr/scripts/"',
+        },
+        {
+          :title    => 'should accept proxy destinations',
+          :attr     => 'proxy_dest',
+          :value    => 'http://fake.com',
+          :match    => [
+            '  ProxyPass        / http://fake.com/',
+            '  ProxyPassReverse / http://fake.com/',
+          ],
+          :notmatch => /ProxyPass .+!$/,
+        },
+        {
+          :title => 'should enable rack',
+          :attr  => 'rack_base_uris',
+          :value => ['/rack1','/rack2'],
+          :match => ['  RackBaseURI /rack1','  RackBaseURI /rack2'],
+        },
+        {
+          :title => 'should accept rewrite rules',
+          :attr  => 'rewrite_rule',
+          :value => 'not a real rule',
+          :match => '  RewriteRule not a real rule',
+        },
+        {
+          :title => 'should block scm',
+          :attr  => 'block',
+          :value => 'scm',
+          :match => '  <DirectoryMatch .*\.(svn|git|bzr)/.*>',
+        },
+      ].each do |param|
+        describe "when #{param[:attr]} is #{param[:value]}" do
+          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
 
-          let :param_hash do
-            default_params.merge(param_set)
+          it param[:title] do
+            lines = subject.resource('file', "25-#{title}.conf").send(:parameters)[:content].split("\n")
+            (Array(param[:match]).collect { |x| lines.grep x }.flatten.length).should == Array(param[:match]).length
+            (Array(param[:notmatch]).collect { |x| lines.grep x }.flatten).should be_empty
           end
-
-          let :params do
-            param_set
-          end
-
-          it { should include_class("apache") }
-          it { should contain_apache__params }
-
-          it {
-            if param_hash[:ssl]
-              should contain_apache__mod__ssl
-            else
-              should_not contain_apache__mod__ssl
-            end
-          }
-
-          it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
-              'owner'     => 'root',
-              'group'     => 'root',
-              'mode'      => '0755',
-              'notify'    => 'Service[httpd]'
-            })
-          }
-
-          # FIXME: Firewall is not actually realized anywhere
-          #it { should contain_firewall("0100-INPUT ACCEPT #{param_hash[:port]}").with( {
-          #    'action' => 'accept',
-          #    'dport'  => "#{param_hash[:port]}",
-          #    'proto'  => 'tcp'
-          #  })
-          #}
-
-
         end
       end
     end
 
-    [true,false].each do |value|
-      describe "when access_log is #{value}" do
-        let :params do
-          default_params.merge({:access_log => value})
+    context 'attribute resources' do
+      describe 'when docroot owner is specified' do
+        let :params do default_params.merge({
+          :docroot_owner => 'testuser',
+          :docroot_group => 'testgroup',
+        }) end
+        it 'should set vhost ownership' do
+          should contain_file(params[:docroot]).with({
+            :ensure => :directory,
+            :owner  => 'testuser',
+            :group  => 'testgroup',
+          })
         end
-        let :facts do
-          default_facts
+      end
+
+      describe 'various ip/port combos' do
+        describe 'when ip_based is true' do
+          let :params do default_params.merge({ :ip_based => true }) end
+          it 'should not specify a NameVirtualHost' do
+            should contain_apache__listen(params[:port])
+            should_not contain_apache__namevirtualhost("*:#{params[:port]}")
+          end
         end
 
-        it "#{value ? "should" : "should not"} contain access logs" do
-          lines = subject.resource('file', "#{params[:priority]}-#{title}.conf").send(:parameters)[:content].split("\n")
-          !!lines.grep('_access.log combined').should == value
+        describe 'when ip_based is default' do
+          let :params do default_params end
+          it 'should specify a NameVirtualHost' do
+            should contain_apache__listen(params[:port])
+            should contain_apache__namevirtualhost("*:#{params[:port]}")
+          end
+        end
+
+        describe 'when an ip is set' do
+          let :params do default_params.merge({ :ip => '10.0.0.1' }) end
+          it 'should specify a NameVirtualHost for the ip' do
+            should_not contain_apache__listen(params[:port])
+            should contain_apache__listen("10.0.0.1:#{params[:port]}")
+            should contain_apache__namevirtualhost("10.0.0.1:#{params[:port]}")
+          end
+        end
+
+        describe 'an ip_based vhost without a port' do
+          let :params do
+            {
+              :docroot  => '/fake',
+              :ip       => '10.0.0.1',
+              :ip_based => true,
+            }
+          end
+          it 'should specify a NameVirtualHost for the ip' do
+            should_not contain_apache__listen(params[:ip])
+            should_not contain_apache__namevirtualhost(params[:ip])
+            should contain_file("25-#{title}.conf").with_content %r{<VirtualHost 10\.0\.0\.1>}
+          end
+        end
+      end
+
+      describe 'redirect rules' do
+        describe 'without lockstep arrays' do
+          let :params do
+            default_params.merge({
+              :redirect_source => [
+                '/login',
+                '/logout',
+              ],
+              :redirect_dest   => [
+                'http://10.0.0.10/login',
+                'http://10.0.0.10/logout',
+              ],
+              :redirect_status   => [
+                'permanent',
+                '',
+              ],
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/login} }
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
+        end
+        describe 'without a status' do
+          let :params do
+            default_params.merge({
+              :redirect_source => [
+                '/login',
+                '/logout',
+              ],
+              :redirect_dest   => [
+                'http://10.0.0.10/login',
+                'http://10.0.0.10/logout',
+              ],
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /login http://10\.0\.0\.10/login} }
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
+        end
+        describe 'with a single status and dest' do
+          let :params do
+            default_params.merge({
+              :redirect_source => [
+                '/login',
+                '/logout',
+              ],
+              :redirect_dest   => 'http://10.0.0.10/test',
+              :redirect_status => 'permanent',
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/test} }
+          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /logout http://10\.0\.0\.10/test} }
         end
       end
     end

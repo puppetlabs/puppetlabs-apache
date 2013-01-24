@@ -19,11 +19,13 @@
   </Directory>
 
   ## Logging
-  ErrorLog <%= @logroot %>/<%= @name %>_error.log
+<% if @error_log -%>
+  ErrorLog <%= @logroot %>/<%= @error_log_file_real %>
+<% end -%>
   LogLevel warn
   ServerSignature Off
 <% if @access_log -%>
-  CustomLog <%= @logroot %>/<%= @access_log_file %> combined
+  CustomLog <%= @logroot %>/<%= @access_log_file_real %> combined
 <% end -%>
 <%= scope.function_template(['apache/vhost/_block.erb']) -%>
 <%= scope.function_template(['apache/vhost/_proxy.erb']) -%>

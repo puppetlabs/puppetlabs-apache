@@ -70,13 +70,14 @@ define apache::vhost(
     $priority           = '25',
     $servername         = undef,
     $serveraliases      = [],
-    $redirect_ssl       = false,
     $options            = ['Indexes','FollowSymLinks','MultiViews'],
     $override           = ['None'],
     $vhost_name         = '*',
-    $logroot            = "/var/log/$apache::params::apache_name",
+    $logroot            = "/var/log/${apache::params::apache_name}",
     $access_log         = true,
-    $access_log_file    = "${name}_access.log",
+    $access_log_file    = undef,
+    $error_log          = true,
+    $error_log_file     = undef,
     $scriptalias        = undef,
     $proxy_dest         = undef,
     $no_proxy_uris      = [],
@@ -84,6 +85,9 @@ define apache::vhost(
     $redirect_dest      = undef,
     $redirect_status    = undef,
     $rack_base_uris     = undef,
+    $rewrite_rule       = undef,
+    $rewrite_base       = undef,
+    $rewrite_cond       = undef,
     $block              = [],
     $ensure             = 'present'
   ) {
@@ -100,12 +104,6 @@ define apache::vhost(
 
   if $ssl {
     include apache::mod::ssl
-  }
-  # Since the template will use auth, redirect to https requires mod_rewrite
-  if $redirect_ssl {
-    if ! defined(Apache::Mod['rewrite']) {
-      apache::mod { 'rewrite': }
-    }
   }
 
   # This ensures that the docroot exists
@@ -132,14 +130,33 @@ define apache::vhost(
     $servername_real = $name
   }
 
+  # Define log file names
+  if ! $access_log_file {
+    if $ssl {
+      $access_log_file_real = "${servername_real}_access_ssl.log"
+    } else {
+      $access_log_file_real = "${servername_real}_access.log"
+    }
+  } else {
+    $access_log_file_real = $access_log_file
+  }
+  if ! $error_log_file {
+    if $ssl {
+      $error_log_file_real = "${servername_real}_error_ssl.log"
+    } else {
+      $error_log_file_real = "${servername_real}_error.log"
+    }
+  } else {
+    $error_log_file_real = $error_log_file
+  }
+
   if $ip {
     if $port {
       $listen_addr_port = "${ip}:${port}"
       $nvh_addr_port = "${ip}:${port}"
     } else {
-      $listen_addr_port = $ip
       $nvh_addr_port = $ip
-      if ! $servername {
+      if ! $servername and ! $ip_based {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
       }
     }
@@ -158,13 +175,41 @@ define apache::vhost(
     if $ip and defined(Apache::Listen[$port]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
-    if ! defined(Apache::Listen[$listen_addr_port]) {
+    if ! defined(Apache::Listen[$listen_addr_port]) and $listen_addr_port {
       apache::listen { $listen_addr_port: }
     }
   }
   if ! $ip_based {
     if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) {
       apache::namevirtualhost { $nvh_addr_port: }
+    }
+  }
+
+  # Load mod_rewrite if needed and not yet loaded
+  if $rewrite_rule {
+    if ! defined(Apache::Mod['rewrite']) {
+      apache::mod { 'rewrite': }
+    }
+  }
+
+  # Load mod_alias if needed and not yet loaded
+  if $scriptalias or ($redirect_source and $redirect_dest) {
+    if ! defined(Class['apache::mod::alias']) {
+      include apache::mod::alias
+    }
+  }
+
+  # Load mod_proxy if needed and not yet loaded
+  if $proxy_dest {
+    if ! defined(Class['apache::mod::proxy']) {
+      include apache::mod::proxy
+    }
+  }
+
+  # Load mod_passenger if needed and not yet loaded
+  if $rack_base_uris {
+    if ! defined(Class['apache::mod::passenger']) {
+      include apache::mod::passenger
     }
   }
 
@@ -190,7 +235,9 @@ define apache::vhost(
   # - $logroot
   # - $name
   # - $access_log
-  # - $access_log_file
+  # - $access_log_file_real
+  # - $error_log
+  # - $error_log_file_real
   # block fragment:
   #   - $block
   # proxy fragment:
@@ -216,6 +263,7 @@ define apache::vhost(
   #   - $ssl_cert
   #   - $ssl_key
   #   - $ssl_chain
+  #   - $ssl_certs_dir
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
