@@ -29,14 +29,15 @@ describe 'apache::vhost', :type => :define do
     end
 
     [{
-        :apache_name   => 'httpd',
-        :docroot       => 'path/to/docroot',
-        :override      => ['Options', 'FileInfo'],
-        :port          => '80',
-        :priority      => '25',
-        :serveradmin   => 'serveradmin@puppet',
-        :ssl           => false,
-        :template      => 'apache/vhost-default.conf.erb',
+        :apache_name => 'httpd',
+        :docroot     => 'path/to/docroot',
+        :override    => ['Options', 'FileInfo'],
+        :port        => '80',
+        :priority    => '25',
+        :serveradmin => 'serveradmin@puppet',
+        :ssl         => false,
+        :access_log  => false,
+        :template    => 'apache/vhost-default.conf.erb',
      },
     ].each do |param_set|
 
@@ -78,6 +79,19 @@ describe 'apache::vhost', :type => :define do
         #}
 
 
+      end
+    end
+
+    [true,false].each do |value|
+      describe "when access_log is #{value}" do
+        let :params do
+          default_params.merge({:access_log => value})
+        end
+
+        it "#{value ? "should" : "should not"} contain access logs" do
+          lines = subject.resource('file', "#{params[:priority]}-#{title}.conf").send(:parameters)[:content].split("\n")
+          !!lines.grep('_access.log combined').should == value
+        end
       end
     end
   end

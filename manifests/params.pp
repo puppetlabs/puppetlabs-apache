@@ -26,15 +26,17 @@ class apache::params {
   $serveraliases = ''
   $auth          = false
   $redirect_ssl  = false
+  $ssl_path      = '/etc/ssl'
   $options       = 'Indexes FollowSymLinks MultiViews'
   $override      = 'None'
   $vhost_name    = '*'
-
+  
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
     $user                  = 'apache'
     $group                 = 'apache'
     $apache_name           = 'httpd'
     $php_package           = 'php'
+    $mod_passenger_package = 'mod_passenger'
     $mod_python_package    = 'mod_python'
     $mod_wsgi_package      = 'mod_wsgi'
     $mod_auth_kerb_package = 'mod_auth_kerb'
@@ -48,21 +50,27 @@ class apache::params {
     $mod_packages          = {
       'dev'        => 'httpd-devel',
       'fcgid'      => 'mod_fcgid',
+      'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
       'php5'       => 'php',
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
+      'shibboleth' => 'shibboleth',
     }
     $mod_libs              = {
       'php5' => 'libphp5.so',
+    }
+    $mod_identifiers       = {
+      'shibboleth' => 'mod_shib',
     }
   } elsif $::osfamily == 'debian' {
     $user                  = 'www-data'
     $group                 = 'www-data'
     $apache_name           = 'apache2'
     $php_package           = 'libapache2-mod-php5'
+    $mod_passenger_package = 'libapache2-mod-passenger'
     $mod_python_package    = 'libapache2-mod-python'
     $mod_wsgi_package      = 'libapache2-mod-wsgi'
     $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
@@ -70,15 +78,18 @@ class apache::params {
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
     $mod_packages          = {
-      'dev'    => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
-      'fcgid'  => 'libapache2-mod-fcgid',
-      'perl'   => 'libapache2-mod-perl2',
-      'php5'   => 'libapache2-mod-php5',
-      'python' => 'libapache2-mod-python',
-      'wsgi'   => 'libapache2-mod-wsgi',
+      'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
+      'fcgid'      => 'libapache2-mod-fcgid',
+      'passenger'  => 'libapache2-mod-passenger',
+      'perl'       => 'libapache2-mod-perl2',
+      'php5'       => 'libapache2-mod-php5',
+      'proxy_html' => 'libapache2-mod-proxy-html',
+      'python'     => 'libapache2-mod-python',
+      'wsgi'       => 'libapache2-mod-wsgi',
       'shib2'   => 'libapache2-mod-shib2',
     }
     $mod_libs              = {}
+    $mod_identifiers       = {}
   } else {
     fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
   }
