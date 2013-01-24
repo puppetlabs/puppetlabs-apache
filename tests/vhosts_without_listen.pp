@@ -1,54 +1,54 @@
+## Declare ip-based and name-based vhosts
 # Mixing Name-based vhost with IP-specific vhosts requires `add_listen =>
-# 'false'` on non-IP vhosts
+# 'false'` on the non-IP vhosts
 
+# Base class. Turn off the default vhosts; we will be declaring
+# all vhosts below.
 class { 'apache':
   default_vhost     => false,
   default_ssl_vhost => false,
 }
 
-# Simple name-based vhost that doesn't declare conflicting "Listen 80"
-apache::vhost { 'one.example.com':
-  port       => '80',
-  add_listen => false,
-  docroot    => '/var/www/one',
-}
-# Second vhost with the same port
-apache::vhost { 'two.example.com':
-  port       => '80',
-  add_listen => false,
-  docroot    => '/var/www/two',
-}
 
-# Name-based vhost with IP
-apache::vhost { 'three.example.com':
-  port    => '80',
-  ip      => '10.0.0.10',
-  docroot => '/var/www/three',
-}
-# Name-based vhost with the same IP
-apache::vhost { 'four.example.com':
-  port    => '80',
-  ip      => '10.0.0.10',
-  docroot => '/var/www/four',
-}
-# Name-based vhost with servername parameter instead of ip/port
-apache::vhost { '10.0.0.10:80':
-  servername => 'five.example.com',
-  docroot    => '/var/www/five',
-}
-
-# IP-based vhost
-apache::vhost { '10.0.0.20:80':
-  servername => 'six.example.com',
+# Add two an IP-based vhost on 10.0.0.10, ssl and non-ssl
+apache::vhost { 'The first IP-based vhost, non-ssl':
+  servername => 'first.example.com',
+  ip         => '10.0.0.10',
+  port       => '80',
   ip_based   => true,
-  docroot    => '/var/www/six',
+  docroot    => '/var/www/first',
+}
+apache::vhost { 'The first IP-based vhost, ssl':
+  servername => 'first.example.com',
+  ip         => '10.0.0.10',
+  port       => '443',
+  ip_based   => true,
+  docroot    => '/var/www/first-ssl',
+  ssl        => true,
 }
 
-# Same IP-based SSL vhost on a different port
-apache::vhost { 'seven.example.com':
-  ip       => '10.0.0.20',
-  port     => '443',
-  ip_based => true,
-  docroot  => '/var/www/seven',
-  ssl      => true,
+# Two name-based vhost listening on 10.0.0.20
+apache::vhost { 'second.example.com':
+  ip      => '10.0.0.20',
+  port    => '80',
+  docroot => '/var/www/second',
+}
+apache::vhost { 'third.example.com':
+  ip      => '10.0.0.20',
+  port    => '80',
+  docroot => '/var/www/third',
+}
+
+# Two name-based vhosts without IPs specified, so that they will answer on either 10.0.0.10 or 10.0.0.20 . It is requried to declare
+# `add_listen => 'false'` to disable declaring "Listen 80" which will conflict
+# with the IP-based preceeding vhosts.
+apache::vhost { 'fourth.example.com':
+  port       => '80',
+  docroot    => '/var/www/fourth',
+  add_listen => false,
+}
+apache::vhost { 'fifth.example.com':
+  port       => '80',
+  docroot    => '/var/www/fifth',
+  add_listen => false,
 }
