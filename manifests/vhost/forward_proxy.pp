@@ -23,7 +23,7 @@
 #
 define apache::vhost::forward_proxy (
     $port,
-    $allowednet
+    $allowednet,
     $priority      = '10',
     $template      = 'apache/vhost-forward-proxy.conf.erb',
     $servername    = '',
