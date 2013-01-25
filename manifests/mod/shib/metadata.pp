@@ -47,7 +47,7 @@ define apache::mod::shib::metadata(
 			"set MetadataProvider/#attribute/type ${provider_type}",
 			"set MetadataProvider/#attribute/uri ${provider_uri}",
 			"set MetadataProvider/#attribute/backingFilePath ${backing_file}",
-			"set MetadataProvider/#attribute/reloadInterva ${provider_reload_interval}",
+			"set MetadataProvider/#attribute/reloadInterval ${provider_reload_interval}",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/type RequireValidUntil",
 			"set MetadataProvider/MetadataFilter[1]/#attribute/maxValidityInterval ${metadata_filter_max_validity_interval}",
 			"set MetadataProvider/MetadataFilter[2]/#attribute/type Signature",
