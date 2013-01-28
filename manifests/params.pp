@@ -47,6 +47,8 @@ class apache::params {
     $mod_dir               = "${httpd_dir}/mod.d"
     $vdir                  = "${httpd_dir}/conf.d"
     $conf_file             = 'httpd.conf'
+    $ssl_cert_file         = '/etc/pki/tls/certs/localhost.crt'
+    $ssl_cert_key_file     = '/etc/pki/tls/private/localhost.key'
     $mod_packages          = {
       'dev'        => 'httpd-devel',
       'fcgid'      => 'mod_fcgid',
@@ -77,6 +79,8 @@ class apache::params {
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
+    $ssl_cert_file         = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+    $ssl_cert_key_file     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $mod_packages          = {
       'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
       'fcgid'      => 'libapache2-mod-fcgid',

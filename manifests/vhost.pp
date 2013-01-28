@@ -10,6 +10,8 @@
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
+# - The $ssl_cert_file option specifies which cert to use for this virtual host
+# - The $ssl_cert_key_file option specifies which cert key to use for this virtual host
 # - The $template option specifies whether to use the default template or
 #   override
 # - The $priority of the site
@@ -44,6 +46,8 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
+    $ssl_cert_file      = $apache::params::ssl_cert_file,
+    $ssl_cert_key_file  = $apache::params::ssl_cert_key_file,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
