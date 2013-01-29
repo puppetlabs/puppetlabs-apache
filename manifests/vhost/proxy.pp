@@ -1,6 +1,8 @@
 # Define: apache::vhost::proxy
 #
-# Configures an apache vhost that will only proxy requests
+# Configures an apache vhost that will act as an reverse proxy and
+# forward all request to a another server. See apache::vhost::forward_proxy
+# for a forward proxy.
 #
 # Parameters:
 # * $port:
