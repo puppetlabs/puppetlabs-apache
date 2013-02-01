@@ -36,7 +36,7 @@ define apache::vhost::proxy (
   include apache::proxy
 
   $apache_name = $apache::params::apache_name
-  $ssl_path = $apache::params::ssl_path
+  $ssl_path = $apache::params::ssl_cert_destdir
   if $servername == '' {
     $srvname = $name
   } else {
