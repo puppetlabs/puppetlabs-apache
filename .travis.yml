@@ -3,9 +3,6 @@ rvm:
   - 1.8.7
   - 1.9.3
 script: "rake spec"
-branches:
-  only:
-    - master
 env:
   - PUPPET_VERSION=2.6.17
   - PUPPET_VERSION=2.7.19
