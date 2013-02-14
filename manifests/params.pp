@@ -20,6 +20,11 @@
 class apache::params {
 
   $ssl           = true
+  $sslprotcol    = 'all'
+  $ssloptions    = false
+  $sslciphersuite     = 'ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP'
+  $sslverifyclient    = 'none'
+  $sslverifydepth     = 1
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''

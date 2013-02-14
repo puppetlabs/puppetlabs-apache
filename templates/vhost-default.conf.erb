@@ -14,6 +14,24 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
+<% if ssl -%>
+  SSLEngine on
+  <% if sslprotocol != 'all' -%>
+  SSLProtocol <%= sslprotocol %>
+  <% end -%>
+  <% if ssloptions -%>
+  SSLOptions <%= ssloptions %>
+  <% end -%>
+  <% if sslciphersuite != 'ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP' -%>
+  SSLCipherSuite <%= sslciphersuite %>
+  <% end -%>
+  <% if sslverifyclient != 'none' %>
+  SSLVerifyClient <%= sslverifyclient %>
+  <% end -%>
+  <% if sslverifydepth != 1 %>
+  SSLVerifyDepth <%= sslverifydepth %>
+  <% end -%>
+<% end -%>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>

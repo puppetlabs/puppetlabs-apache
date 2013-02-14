@@ -44,6 +44,11 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
+    $sslprotocol        = $apache::params::sslprotocol,
+    $ssloptions         = $apache::params::ssloptions,
+    $sslciphersuite     = $apache::params::sslciphersuite,
+    $sslverifyclient    = $apache::params::sslverifyclient,
+    $sslverifydepth     = $apache::params::sslverifydepth,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
@@ -111,6 +116,9 @@ define apache::vhost(
   # - $logroot
   # - $access_log
   # - $name
+  # - $ssl
+  # - $sslprotocol
+  # - $ssloptions
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
