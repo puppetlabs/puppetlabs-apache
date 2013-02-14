@@ -20,5 +20,6 @@ class apache::mod::passenger (
   	ensure 	=> file,
   	content	=> template('apache/mod/passenger.conf.erb'),
   	notify 	=> Service['httpd'],
+  	require	=> Apache::Mod['passenger'],
 	}
 }
