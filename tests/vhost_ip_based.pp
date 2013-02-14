@@ -4,8 +4,7 @@
 # Base class. Turn off the default vhosts; we will be declaring
 # all vhosts below.
 class { 'apache':
-  default_vhost     => false,
-  default_ssl_vhost => false,
+  default_vhost => false,
 }
 
 # Listen on port 80 and 81; required because the following vhosts

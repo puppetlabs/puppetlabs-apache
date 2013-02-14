@@ -15,7 +15,7 @@
 class apache (
   $default_mods         = true,
   $default_vhost        = true,
-  $default_ssl_vhost    = true,
+  $default_ssl_vhost    = false,
   $default_ssl_cert     = $apache::params::default_ssl_cert,
   $default_ssl_key      = $apache::params::default_ssl_key,
   $default_ssl_chain    = undef,
