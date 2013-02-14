@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'apache::vhost', :type => :define do
   let :pre_condition do
-    'class { "apache": default_vhost => false, default_ssl_vhost => false, }'
+    'class { "apache": default_vhost => false, }'
   end
   let :title do
     'rspec.example.com'

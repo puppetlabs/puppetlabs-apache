@@ -62,11 +62,11 @@ LogFormat "%{User-agent}i" agent
 Include <%= @confd_dir %>/*.conf
 Include <%= @vhost_dir %>/*.conf
 
-<% if @error_pages -%>
+<% if @error_documents -%>
 # /usr/share/apache2/error on debian
-Alias /error/ "<%= @error_pages_path %>/"
+Alias /error/ "<%= @error_documents_path %>/"
 
-<Directory "<%= @error_pages_path %>">
+<Directory "<%= @error_documents_path %>">
   AllowOverride None
   Options IncludesNoExec
   AddOutputFilter Includes html

@@ -25,7 +25,7 @@ class apache (
   $service_enable       = true,
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
-  $error_pages          = false
+  $error_documents      = false
 ) inherits apache::params {
 
   package { 'httpd':
@@ -89,20 +89,20 @@ class apache (
   if $apache::params::conf_dir and $apache::params::conf_file {
     case $::osfamily {
       'debian': {
-        $docroot          = '/var/www'
-        $pidfile          = '${APACHE_PID_FILE}'
-        $error_log        = 'error.log'
-        $error_pages_path = '/usr/share/apache2/error'
-        $scriptalias      = '/usr/lib/cgi-bin'
-        $access_log_file  = 'access.log'
+        $docroot              = '/var/www'
+        $pidfile              = '${APACHE_PID_FILE}'
+        $error_log            = 'error.log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/usr/lib/cgi-bin'
+        $access_log_file      = 'access.log'
       }
       'redhat': {
-        $docroot          = '/var/www/html'
-        $pidfile          = 'run/httpd.pid'
-        $error_log        = 'error_log'
-        $error_pages_path = '/var/www/error'
-        $scriptalias      = '/var/www/cgi-bin'
-        $access_log_file  = 'access_log'
+        $docroot              = '/var/www/html'
+        $pidfile              = 'run/httpd.pid'
+        $error_log            = 'error_log'
+        $error_documents_path = '/var/www/error'
+        $scriptalias          = '/var/www/cgi-bin'
+        $access_log_file      = 'access_log'
       }
     }
     # Template uses:
@@ -117,8 +117,8 @@ class apache (
     # - $ports_file
     # - $confd_dir
     # - $vhost_dir
-    # - $error_pages
-    # - $error_pages_path
+    # - $error_documents
+    # - $error_documents_path
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => present,
       content => template("apache/httpd.conf.erb"),
