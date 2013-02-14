@@ -20,7 +20,7 @@
 class apache::params {
 
   $ssl           = true
-  $sslprotcol    = 'all'
+  $sslprotocol    = 'all'
   $ssloptions    = false
   $sslciphersuite     = 'ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP'
   $sslverifyclient    = 'none'
