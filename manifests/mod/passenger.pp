@@ -11,6 +11,7 @@ class apache::mod::passenger (
 
   # Could do some sanity checking of the parameters here.
 
+  # you could just do this, but no options would be configured!
   apache::mod { 'passenger': }
 
   # The default passenger.conf file will run Passenger with the default
