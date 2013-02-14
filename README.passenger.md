@@ -17,6 +17,8 @@ class {'apache::mod::passenger':
 
 The general form is using the all lowercase version of the declaration.
 
+If you pass a default value to `apache::mod::passenger` it will be ignored and not passed through to the configuration file.
+
 ## PassengerHighPerformance
 
 Default is `off`, when turned `on` Passenger runs in a higher performance mode that can be less compatible with other Apache modules.
