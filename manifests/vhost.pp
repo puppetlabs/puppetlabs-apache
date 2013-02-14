@@ -160,6 +160,24 @@ define apache::vhost(
     }
   }
 
+
+  # Is apache::mod::passenger enabled (or apache::mod['passenger'])
+  $passenger_enabled = defined(Apache::Mod['passenger'])
+
+  # Template uses:
+  # - $vhost_name
+  # - $port
+  # - $srvname
+  # - $serveradmin
+  # - $serveraliases
+  # - $docroot
+  # - $options
+  # - $override
+  # - $logroot
+  # - $access_log
+  # - $name
+  # - $passenger_enabled
+  # - $rackbaseuri
   # Open listening ports if they are not already
   if $servername {
     $servername_real = $servername
