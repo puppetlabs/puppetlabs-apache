@@ -4,6 +4,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   SSLEngine on
   SSLCertificateFile <%= ssl_path %>/certs/pl.cert
   SSLCertificateKeyFile <%= ssl_path %>/private/pl.key
+  <% if ssl_chain == true %>SSLCertificateChainFile <%= ssl_path %>/private/pl.chain<% end %>
   <% end %>
   ServerName <%= srvname %>
 <% if serveraliases.is_a? Array %>
