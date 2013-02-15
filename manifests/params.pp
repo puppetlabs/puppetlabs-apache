@@ -36,6 +36,7 @@ class apache::params {
     $vhost_dir            = "${httpd_dir}/site.d"
     $conf_file            = 'httpd.conf'
     $ports_file           = "${conf_dir}/ports.conf"
+    $logroot              = '/var/log/httpd'
     $lib_path             = 'modules'
     $dev_packages         = 'httpd-devel'
     $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
@@ -75,6 +76,7 @@ class apache::params {
     $vhost_dir        = "${httpd_dir}/sites-enabled"
     $conf_file        = 'apache2.conf'
     $ports_file       = "${conf_dir}/ports.conf"
+    $logroot          = '/var/log/apache2'
     $lib_path         = '/usr/lib/apache2/modules'
     $dev_packages     = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $default_ssl_cert = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
