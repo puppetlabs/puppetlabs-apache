@@ -31,6 +31,8 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   <% if sslverifydepth != 1 %>
   SSLVerifyDepth <%= sslverifydepth %>
   <% end -%>
+  SSLCertificateFile <%= ssl_public_cert_path %>
+  SSLCertificateKeyFile <%= ssl_private_key_path %>
 <% end -%>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>

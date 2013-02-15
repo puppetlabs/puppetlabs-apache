@@ -39,29 +39,34 @@
 define apache::vhost(
     $port,
     $docroot,
-    $docroot_owner      = 'root',
-    $docroot_group      = 'root',
-    $serveradmin        = false,
-    $configure_firewall = true,
-    $ssl                = $apache::params::ssl,
-    $sslprotocol        = $apache::params::sslprotocol,
-    $ssloptions         = $apache::params::ssloptions,
-    $sslciphersuite     = $apache::params::sslciphersuite,
-    $sslverifyclient    = $apache::params::sslverifyclient,
-    $sslverifydepth     = $apache::params::sslverifydepth,
-    $template           = $apache::params::template,
-    $priority           = $apache::params::priority,
-    $servername         = $apache::params::servername,
-    $serveraliases      = $apache::params::serveraliases,
-    $auth               = $apache::params::auth,
-    $redirect_ssl       = $apache::params::redirect_ssl,
-    $options            = $apache::params::options,
-    $override           = $apache::params::override,
-    $apache_name        = $apache::params::apache_name,
-    $vhost_name         = $apache::params::vhost_name,
-    $logroot            = "/var/log/$apache::params::apache_name",
-    $access_log         = true,
-    $ensure             = 'present'
+    $docroot_owner        = 'root',
+    $docroot_group        = 'root',
+    $serveradmin          = false,
+    $configure_firewall   = true,
+    $ssl                  = $apache::params::ssl,
+    $ssl_dir              = $apache::params::ssl_dir,
+    $ssl_public_cert_dir  = $apache::params::ssl_public_cert_dir,
+    $ssl_private_key_dir  = $apache::params::ssl_private_key_dir,
+    $ssl_public_cert      = false,
+    $ssl_private_key      = false,
+    $sslprotocol          = $apache::params::sslprotocol,
+    $ssloptions           = $apache::params::ssloptions,
+    $sslciphersuite       = $apache::params::sslciphersuite,
+    $sslverifyclient      = $apache::params::sslverifyclient,
+    $sslverifydepth       = $apache::params::sslverifydepth,
+    $template             = $apache::params::template,
+    $priority             = $apache::params::priority,
+    $servername           = $apache::params::servername,
+    $serveraliases        = $apache::params::serveraliases,
+    $auth                 = $apache::params::auth,
+    $redirect_ssl         = $apache::params::redirect_ssl,
+    $options              = $apache::params::options,
+    $override             = $apache::params::override,
+    $apache_name          = $apache::params::apache_name,
+    $vhost_name           = $apache::params::vhost_name,
+    $logroot              = "/var/log/$apache::params::apache_name",
+    $access_log           = true,
+    $ensure               = 'present'
   ) {
 
   validate_re($ensure, '^(present|absent)$',
@@ -78,6 +83,53 @@ define apache::vhost(
 
   if $ssl == true {
     include apache::mod::ssl
+    # define the ssl directories if they do not exist
+    # They may be defined elsewhere when certificates were uploaded
+    # or may be installed by some software package and not
+    # yet defined as a puppet resource
+    if ! defined(File[$ssl_dir]){
+      file {$ssl_dir:
+        ensure => directory,
+      }
+    }
+
+    # Do not require $ssl_dir, it might not be the parent
+    if ! defined(File[$ssl_public_cert_dir]){
+      file {$ssl_public_cert_dir:
+        ensure => directory,
+      }
+    }
+
+    # Do not require $ssl_dir, it might not be the parent
+    if ! defined(File[$ssl_private_key_dir]){
+      file {$ssl_private_key_dir:
+        ensure => directory,
+      }
+    }
+
+    if ! $ssl_public_cert {
+      fail("A public certicate must be specified when enabling ssl with apache::vhost on ${::fqdn}")
+    }
+    $ssl_public_cert_path = "${ssl_public_cert_dir}/${ssl_public_cert}"
+    if ! defined(File[$ssl_public_cert_path]){
+      file {$ssl_public_cert_path:
+        ensure  => file,
+        require => File[$ssl_public_cert_dir],
+      }
+    }
+
+    if ! $ssl_private_key {
+      fail("A private key must be specified when enabling ssl with apache::vhost on ${::fqdn}")
+    }
+    $ssl_private_key_path = "${ssl_private_key_dir}/${ssl_private_key}"
+    if ! defined(File[$ssl_private_key_path]){
+      file {$ssl_private_key_path:
+        ensure  => file,
+        require => File[$ssl_private_key_dir],
+      }
+    }
+
+
   }
 
   # Since the template will use auth, redirect to https requires mod_rewrite
@@ -117,8 +169,11 @@ define apache::vhost(
   # - $access_log
   # - $name
   # - $ssl
+  # The template uses the folloiwing only if $ssl is true
   # - $sslprotocol
   # - $ssloptions
+  # - $ssl_public_cert_path
+  # - $ssl_private_key_path
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
