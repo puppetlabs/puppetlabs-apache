@@ -49,6 +49,8 @@ define apache::vhost(
     $ssl_private_key_dir  = $apache::params::ssl_private_key_dir,
     $ssl_public_cert      = false,
     $ssl_private_key      = false,
+    $ssl_ca_chain_cert    = false,
+    $ssl_ca_cert          = false,
     $sslprotocol          = $apache::params::sslprotocol,
     $ssloptions           = $apache::params::ssloptions,
     $sslciphersuite       = $apache::params::sslciphersuite,
@@ -129,6 +131,26 @@ define apache::vhost(
       }
     }
 
+    # We assume all the public certificates are in the same place
+    if $ssl_ca_cert {
+      $ssl_ca_cert_path = "${ssl_public_cert_dir}/${ssl_ca_cert}"
+      if ! defined(File[$ssl_ca_cert_path]){
+        file {$ssl_ca_cert_path:
+          ensure  => file,
+          require => File[$ssl_public_cert_dir],
+        }
+      }
+    }
+
+    if $ssl_ca_chain_cert {
+      $ssl_ca_chain_cert_path = "${ssl_public_cert_dir}/${ssl_ca_chain_cert}"
+      if ! defined(File[$ssl_ca_chain_cert_path]){
+        file {$ssl_ca_chain_cert_path:
+          ensure  => file,
+          require => File[$ssl_public_cert_dir],
+        }
+      }
+    }
 
   }
 
