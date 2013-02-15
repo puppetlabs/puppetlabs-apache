@@ -27,6 +27,7 @@ define apache::vhost::proxy (
     $servername    = '',
     $serveraliases = '',
     $ssl           = false,
+    $ssl_chain     = false,
     $vhost_name    = '*',
     $access_log    = true,
     $no_proxy_uris = []
