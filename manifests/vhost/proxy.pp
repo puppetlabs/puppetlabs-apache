@@ -8,9 +8,10 @@
 # * $dest:
 #     URI that the requests will be proxied for
 # - $priority
-# - $template -- the template to use for the vhost
+# - $template - the template to use for the vhost
 # - $access_log - specifies if *_access.log directives should be configured.
 # - $vhost_name - the name to use for the vhost, defaults to '*'
+# - ssl_chain - (boolean) when set to true includes pl.chain
 # - $ssl_path - path to the certificate files
 #
 # Actions:
