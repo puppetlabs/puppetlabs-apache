@@ -26,6 +26,7 @@ define apache::vhost::proxy (
     $template      = 'apache/vhost-proxy.conf.erb',
     $servername    = '',
     $serveraliases = '',
+    $allowips      = '',
     $ssl           = false,
     $vhost_name    = '*',
     $access_log    = true,
