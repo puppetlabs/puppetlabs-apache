@@ -147,11 +147,20 @@ define apache::vhost(
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => [
-      Package['httpd'],
-      File[$docroot],
-      File[$logroot],
-    ],
+    require => $ssl ? {
+      false => [
+          Package['httpd'],
+          File[$docroot],
+          File[$logroot]
+        ],
+      true  => [
+          Package['httpd'],
+          File[$docroot],
+          File[$logroot],
+          File["${ssl_cert_destdir}/${srvname}.crt"],
+          File["${ssl_cert_destdir}/${srvname}.key"]
+        ],
+    },
     notify  => Service['httpd'],
   }
 
