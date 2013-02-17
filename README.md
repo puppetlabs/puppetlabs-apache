@@ -45,7 +45,7 @@ Configuring SSL
 
 The following parameters can be passed to `apache::vhost` to set up SSL. It is recommended that `apache::mod::ssl` is installed before hand, and that any certificates are installed prior to setting up the virtual host.
 
-This assumes that all public certificates (host and CA certs) are all stored in the one directory defined with the `ssl_public_cert_dir`
+This assumes that all public certificates (host and CA certs) are all stored in the one directory defined with the `ssl_public_cert_dir`. Once SSL is enabled, a path to a public certificate and a private key must be supplied.
 
 For each declaration, the default value (as per http://httpd.apache.org/docs/2.2/mod/mod_ssl.html) has been used. If a default value is passed as a parameter it will be omitted.
 

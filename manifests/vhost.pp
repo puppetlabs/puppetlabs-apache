@@ -110,7 +110,7 @@ define apache::vhost(
     }
 
     if ! $ssl_public_cert {
-      fail("A public certicate must be specified when enabling ssl with apache::vhost on ${::fqdn}")
+      warning("A public certicate must be specified when enabling ssl with apache::vhost on ${::fqdn}")
     }
     $ssl_public_cert_path = "${ssl_public_cert_dir}/${ssl_public_cert}"
     if ! defined(File[$ssl_public_cert_path]){
@@ -121,7 +121,7 @@ define apache::vhost(
     }
 
     if ! $ssl_private_key {
-      fail("A private key must be specified when enabling ssl with apache::vhost on ${::fqdn}")
+      warning("A private key must be specified when enabling ssl with apache::vhost on ${::fqdn}")
     }
     $ssl_private_key_path = "${ssl_private_key_dir}/${ssl_private_key}"
     if ! defined(File[$ssl_private_key_path]){
