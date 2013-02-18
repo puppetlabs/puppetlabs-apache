@@ -65,8 +65,10 @@ class apache (
       ensure  => directory,
       require => Package['httpd'],
     } -> A2mod <| |>
-    resources { 'a2mod':
-      purge => true,
+    if $::osfamily != 'debian' {
+      resources { 'a2mod':
+        purge => true,
+      }
     }
   }
 }

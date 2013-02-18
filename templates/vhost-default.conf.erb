@@ -15,6 +15,9 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
+  <% if passenger_enabled -%>
+  RackBaseURI <%= rackbaseuri %>
+  <% end -%>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
