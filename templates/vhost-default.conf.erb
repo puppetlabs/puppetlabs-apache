@@ -14,6 +14,15 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
+<% if requestheader -%>
+<% if requestheader.isa? Array -%>
+<% requestheader.each do |request_statement| -%>
+  RequestHeader <%= request_statement %>
+<% end -%>
+<% elsif requestheader != '' -%>
+  RequestHeader <%= requestheader %> 
+<% end -%>
+<% end -%>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>
