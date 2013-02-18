@@ -39,6 +39,25 @@
 define apache::vhost(
     $port,
     $docroot,
+    $docroot_owner      = 'root',
+    $docroot_group      = 'root',
+    $serveradmin        = false,
+    $configure_firewall = true,
+    $ssl                = $apache::params::ssl,
+    $template           = $apache::params::template,
+    $priority           = $apache::params::priority,
+    $servername         = $apache::params::servername,
+    $serveraliases      = $apache::params::serveraliases,
+    $auth               = $apache::params::auth,
+    $redirect_ssl       = $apache::params::redirect_ssl,
+    $options            = $apache::params::options,
+    $override           = $apache::params::override,
+    $apache_name        = $apache::params::apache_name,
+    $vhost_name         = $apache::params::vhost_name,
+    $logroot            = "/var/log/$apache::params::apache_name",
+    $access_log         = true,
+    $ensure             = 'present',
+    $requestheader      = false
     $docroot_owner        = 'root',
     $docroot_group        = 'root',
     $serveradmin          = false,
@@ -190,6 +209,7 @@ define apache::vhost(
   # - $logroot
   # - $access_log
   # - $name
+  # - $requestheader
   # - $ssl
   # The template uses the folloiwing only if $ssl is true
   # - $sslprotocol

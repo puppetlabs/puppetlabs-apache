@@ -6,13 +6,26 @@
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
-<% if serveradmin %>
+
+<% if serveradmin -%>
   ServerAdmin <%= serveradmin %>
 <% end %>
 <% if serveraliases.is_a? Array -%>
 <% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
+
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
+
+<% end -%>
+<% if requestheader -%>
+<% if requestheader.is_a? Array -%>
+<% requestheader.each do |request_statement| -%>
+  RequestHeader <%= request_statement %>
+<% end -%>
+<% elsif requestheader != '' -%>
+  RequestHeader <%= requestheader %> 
+<% end -%>
+
 <% end -%>
 <% if ssl -%>
 
