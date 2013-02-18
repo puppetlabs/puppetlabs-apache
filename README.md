@@ -40,6 +40,38 @@ logfile to an alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
+RequestHeader statements
+------------------------
+
+The `requestheader` parameter passes either a single `RequestHeader` statement as a string or an array of `RequestHeader` statment strings. See http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader for more details.
+
+Configuring SSL
+---------------
+
+The following parameters can be passed to `apache::vhost` to set up SSL. It is recommended that `apache::mod::ssl` is installed before hand, and that any certificates are installed prior to setting up the virtual host.
+
+This assumes that all public certificates (host and CA certs) are all stored in the one directory defined with the `ssl_public_cert_dir`. Once SSL is enabled, a path to a public certificate and a private key must be supplied.
+
+For each declaration, the default value (as per http://httpd.apache.org/docs/2.2/mod/mod_ssl.html) has been used. If a default value is passed as a parameter it will be omitted.
+
+Note: Only the SSL declarations required to make puppetmaster go have been addressed.
+
+* *ssl* Setting this to `true` enables SSL. Default is `false`. This enables multiple Apache SSL directives.
+* *ssl_dir* This sets the root directory under which all the SSL files are stored. The default is `/etc/apache2/ssl` for Ubuntu.
+* *ssl_public_cert_dir* This sets the directory where the _public_ certificates are stored. The default is `/etc/apache2/ssl/public_certs`.
+* *ssl_private_key_dir* This sets the directory where the _private_ keys are stored. The default is `/etc/apache2/ssl/private_keys`
+* *ssl_public_cert* This is the file name for the public certificate. The default is `${::fqdn}.pem`
+* *ssl_private_key* This is the file name for the private key. The default is `${::fqdn}.pem`
+* *ssl_ca_chain_cert* This is the file name for the Certificate Authority (CA) chain certificate, which is assumed to be in `ssl_public_cert_dir`. The default is `ca.pem`
+* *ssl_ca_cert* This is the file name fot the Certificate Authority (CA) public certificate, which is assumed to be in `ssl_public_cert_dir`. The default is `ca.pem` 
+* *sslprotocol* This sets the SSL protocol directive (`SSLProtocol`) to the string passed as a parameter. Defaults to `all`. 
+* *ssloptions* This sets the SSL Options deirective (`SSLOptions`) to the string passed as a parameter. Defaults to `false` which omits the `SSLOptions` declaration from the virtual host configuration file.
+* *sslciphersuite* This sets the SSL Cipher suite (`SSLCipherSuite`) to the string passed as a parameter. The default is `ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP`
+* *sslverifyclient* This sets the SSL client verification declaration (`SSLVerifyClient`) to the string passed as a parameter. Defaults to `none`
+* *sslverifydepth* This sets the SSL verification depth declaration (`SSLVerifyDepth`) to the value passed as a parameter. The default value is `1`
+
+How the directories are handled could be better. The defaults should change for different OS and distributions, but this has only been tested on Ubuntu.
+
 Dependencies
 ------------
 
@@ -54,6 +86,8 @@ Notes
 Since Puppet cannot ensure that all parent directories exist you need to
 manage these yourself. In the more advanced example above, you need to ensure 
 that `/home/www.example.com` and `/srv/www.example.com` directories exist.
+
+For details on using the Shibboleth module (a.k.a. `mod_shib`) see README.mod_shib.md
 
 Contributors
 ------------

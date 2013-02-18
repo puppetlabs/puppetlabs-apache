@@ -6,15 +6,60 @@
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
-<% if serveradmin %>
+
+<% if serveradmin -%>
   ServerAdmin <%= serveradmin %>
 <% end %>
 <% if serveraliases.is_a? Array -%>
 <% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
+
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
+
+<% end -%>
+<% if requestheader -%>
+<% if requestheader.is_a? Array -%>
+<% requestheader.each do |request_statement| -%>
+  RequestHeader <%= request_statement %>
+<% end -%>
+<% elsif requestheader != '' -%>
+  RequestHeader <%= requestheader %> 
+<% end -%>
+
+<% end -%>
+<% if ssl -%>
+
+  # This block configures SSL and is managed by Puppet
+  SSLEngine on
+  <% if sslprotocol != 'all' -%>
+  SSLProtocol <%= sslprotocol %>
+  <% end -%>
+  <% if ssloptions -%>
+  SSLOptions <%= ssloptions %>
+  <% end -%>
+  <% if sslciphersuite != 'ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP' -%>
+  SSLCipherSuite <%= sslciphersuite %>
+  <% end -%>
+  <% if sslverifyclient != 'none' %>
+  SSLVerifyClient <%= sslverifyclient %>
+  <% end -%>
+  <% if sslverifydepth != 1 %>
+  SSLVerifyDepth <%= sslverifydepth %>
+  <% end -%>
+  SSLCertificateFile <%= ssl_public_cert_path %>
+  SSLCertificateKeyFile <%= ssl_private_key_path %>
+  <% if ssl_ca_cert -%>
+  SSLCACertificateFile <%= ssl_ca_cert_path %>
+  <% end -%>
+  <% if ssl_ca_chain_cert -%>
+  SSLCertificateChainFile <%= ssl_ca_chain_cert_path %>
+  <% end -%>
+  
 <% end -%>
   DocumentRoot <%= docroot %>
+  <% if passenger_enabled -%>
+  RackBaseURI <%= rackbaseuri %>
+  <% end -%>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
