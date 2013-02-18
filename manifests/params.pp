@@ -20,6 +20,11 @@
 class apache::params {
 
   $ssl           = true
+  $sslprotocol    = 'all'
+  $ssloptions    = false
+  $sslciphersuite     = 'ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP'
+  $sslverifyclient    = 'none'
+  $sslverifydepth     = 1
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
@@ -47,6 +52,7 @@ class apache::params {
     $conf_dir              = "${httpd_dir}/conf"
     $mod_dir               = "${httpd_dir}/mod.d"
     $vdir                  = "${httpd_dir}/conf.d"
+    $ssl_dir               = "${httpd_dir}/ssl"
     $conf_file             = 'httpd.conf'
     $mod_packages          = {
       'dev'        => 'httpd-devel',
@@ -77,6 +83,11 @@ class apache::params {
     $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $mod_dir               = '/etc/apache2/mods-available'
+    $ssl_dir               = "${httpd_dir}/ssl"
+    # being very explicit with the variable names about
+    # where the public certificates and the private keys go
+    $ssl_public_cert_dir   = "${ssl_dir}/public_certs"
+    $ssl_private_key_dir   = "${ssl_dir}/private_keys"
     $vdir                  = '/etc/apache2/sites-enabled/'
     $proxy_modules         = ['proxy', 'proxy_http']
     $mod_packages          = {
