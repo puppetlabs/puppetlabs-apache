@@ -40,6 +40,11 @@ logfile to an alternate location, might be:
         serveraliases   => ['example.com',],
     }
 
+RequestHeader statements
+------------------------
+
+The `requestheader` parameter passes either a single `RequestHeader` statement as a string or an array of `RequestHeader` statment strings. See http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader for more details.
+
 Dependencies
 ------------
 
