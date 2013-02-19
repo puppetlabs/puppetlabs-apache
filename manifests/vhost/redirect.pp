@@ -24,7 +24,10 @@ define apache::vhost::redirect (
     $serveraliases = '',
     $template      = 'apache/vhost-redirect.conf.erb',
     $servername    = $apache::params::servername,
-    $vhost_name    = '*'
+    $vhost_name    = '*',
+    $ssl           = false,
+    $ssl_chain     = false,
+    $ssl_path      = $apache::params::ssl_path,
   ) {
 
   include apache
@@ -33,6 +36,10 @@ define apache::vhost::redirect (
     $srvname = $name
   } else {
     $srvname = $servername
+  }
+
+  if $ssl == true {
+    include apache::mod::ssl
   }
 
   file { "${priority}-${name}.conf":
