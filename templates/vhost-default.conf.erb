@@ -3,6 +3,10 @@
 # Managed by Puppet
 # ************************************
 
+<% if port != 80 -%>
+Listen <%= port %>
+<% end -%>
+
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   ServerName <%= srvname %>
