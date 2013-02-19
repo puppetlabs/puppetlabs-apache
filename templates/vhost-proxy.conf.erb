@@ -13,9 +13,18 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end %>
   ProxyRequests Off
+
   <Proxy *>
+<% if allowips.is_a? Array %>
+<% allowips.each do |allowip| %><%= "    Allow from #{allowip}\n" %><% end %>
+    Deny from all
+<% elsif allowips != '' %>
+<%= "    Allow from #{allowips}" %>
+    Deny from all
+<% else %>
     Order deny,allow
     Allow from all
+<% end %>
   </Proxy>
 
 <% for uri in no_proxy_uris %>
