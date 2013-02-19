@@ -6,6 +6,11 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end %>
+  <% if ssl == true %>
+  SSLEngine on
+  SSLCertificateFile <%= ssl_path %>/pl.cert
+  SSLCertificateKeyFile <%= ssl_path %>/pl.key
+  <% if ssl_chain == true %>SSLCertificateChainFile <%= ssl_path %>/pl.chain<% end %>
+  <% end %>
   Redirect / <%= dest %>/
 </VirtualHost>
-
