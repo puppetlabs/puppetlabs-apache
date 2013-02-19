@@ -49,6 +49,14 @@ class apache (
   $ports_file = $apache::params::ports_file
   $logroot    = $apache::params::logroot
 
+  #declare the web server user
+  user { $apache::params::user:
+    ensure  => present,
+    groups  => [$apache::params::group],
+    require => Package['httpd'],
+    before  => Service['httpd'],
+  }
+
   service { 'httpd':
     ensure    => $service_enable,
     name      => $apache::params::apache_name,
