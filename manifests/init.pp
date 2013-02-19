@@ -25,6 +25,14 @@ class apache (
     name   => $apache::params::apache_name,
   }
 
+  #declare the web server user
+  user { $apache::params::user:
+    ensure  => present,
+    groups  => [$apache::params::group],
+    require => Package['httpd'],
+    before  => Service['httpd'],
+  }
+
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
 
