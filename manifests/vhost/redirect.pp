@@ -46,7 +46,7 @@ define apache::vhost::redirect (
   }
 
   if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-    @firewall {
+    firewall {
       "0100-INPUT ACCEPT $port":
         action  => 'accept',
         dport   => '$port',
