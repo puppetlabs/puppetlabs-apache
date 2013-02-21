@@ -94,7 +94,9 @@ define apache::vhost(
     $block              = [],
     $ensure             = 'present'
   ) {
-  include apache
+  if ! defined(Class['apache']) {
+    fail("You must include the apache base class before using any apache defined resources")
+  }
   $apache_name = $apache::params::apache_name
 
   validate_re($ensure, '^(present|absent)$',
@@ -285,7 +287,7 @@ define apache::vhost(
   #   - $ssl_crl_path
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
-    path    => "${apache::params::vhost_dir}/${priority_real}-${name}.conf",
+    path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",
     content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => 'root',
