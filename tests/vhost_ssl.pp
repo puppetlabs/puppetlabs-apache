@@ -17,7 +17,7 @@ apache::vhost { 'first.example.com non-ssl':
 # SSL vhost at the same domain
 apache::vhost { 'first.example.com ssl':
   servername => 'first.example.com',
-  port    => '443',
-  docroot => '/var/www/second',
-  ssl     => true,
+  port       => '443',
+  docroot    => '/var/www/second',
+  ssl        => true,
 }
