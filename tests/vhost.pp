@@ -140,19 +140,19 @@ apache::vhost { 'fifteenth.example.com':
   rack_base_uris => ['/rackapp1', '/rackapp2'],
 }
 
-# Vhost to rewrite non-ssl to ssl
+# Vhost to redirect non-ssl to ssl
 apache::vhost { 'sixteenth.example.com non-ssl':
-  servername => 'sixteenth.example.com',
-  port       => '443',
-  docroot    => '/var/www/sixteenth',
-  ssl        => true,
-}
-apache::vhost { 'sixteenth.example.com ssl':
   servername   => 'sixteenth.example.com',
   port         => '80',
   docroot      => '/var/www/sixteenth',
   rewrite_cond => '%{HTTPS} off',
   rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+}
+apache::vhost { 'sixteenth.example.com ssl':
+  servername => 'sixteenth.example.com',
+  port       => '443',
+  docroot    => '/var/www/sixteenth',
+  ssl        => true,
 }
 
 # Vhost to block repository files
