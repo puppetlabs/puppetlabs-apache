@@ -128,13 +128,14 @@ class apache (
     if $default_mods {
       include apache::mod::default
     }
-    if $default_vhost == true {
+    if $default_vhost {
       apache::vhost { 'default':
         port            => 80,
         docroot         => $docroot,
         scriptalias     => $scriptalias,
         serveradmin     => $serveradmin,
         access_log_file => $access_log_file,
+        priority        => '15',
       }
     }
     if $default_ssl_vhost {
