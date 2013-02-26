@@ -89,6 +89,7 @@ define apache::vhost(
       owner   => 'root',
       group   => 'root',
       mode    => '0400',
+      notify  => Service['httpd'],
       require => File[$ssl_cert_destdir]
     }
     file { "${ssl_cert_destdir}/${srvname}.key":
@@ -96,6 +97,7 @@ define apache::vhost(
       owner   => 'root',
       group   => 'root',
       mode    => '0400',
+      notify  => Service['httpd'],
       require => File[$ssl_cert_destdir]
     }
   }
