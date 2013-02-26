@@ -67,7 +67,8 @@ define apache::vhost(
     $ssl_crl_path       = $apache::default_ssl_crl_path,
     $ssl_crl            = $apache::default_ssl_crl,
     $ssl_certs_dir      = $apache::params::ssl_certs_dir,
-    $priority           = '25',
+    $priority           = undef,
+    $default_vhost      = false,
     $servername         = undef,
     $serveraliases      = [],
     $options            = ['Indexes','FollowSymLinks','MultiViews'],
@@ -101,6 +102,7 @@ define apache::vhost(
   validate_bool($configure_firewall)
   validate_bool($access_log)
   validate_bool($ssl)
+  validate_bool($default_vhost)
 
   if $ssl {
     include apache::mod::ssl
@@ -213,6 +215,15 @@ define apache::vhost(
     }
   }
 
+  # Configure the defaultness of a vhost
+  if $priority {
+    $priority_real = $priority
+  } elsif $default_vhost {
+    $priority_real = '10'
+  } else {
+    $priority_real = '25'
+  }
+
   # Configure firewall rules
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
@@ -267,7 +278,7 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
-  file { "${priority}-${name}.conf":
+  file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vhost_dir}/${priority}-${name}.conf",
     content => template('apache/vhost.conf.erb'),
