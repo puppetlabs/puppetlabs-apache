@@ -1,5 +1,5 @@
-apache
-======
+#apache
+
 
 ####Table of Contents
 
@@ -18,18 +18,16 @@ apache
 13. [Development - Guide for contributing to the module](#development)
 14. [Release Notes - Notes on the most recent updates to the module](#release-notes)
 
-Overview
----------
+##Overview
 
 The Apache module allows you to set up virtual hosts and manage web services with minimal effort. 
 
-Module Description
-------------------
+##Module Description
+
 
 Apache is a widely-used web server, and this module provides a simplified way of creating configurations to manage your infrastructure. This includes the ability to configure and manage a range of different virtual host setups, as well as a streamlined way to install and configure Apache modules.
 
-Setup
------
+##Setup
 
 **What Apache affects:**
 
@@ -97,8 +95,7 @@ To set up a virtual host with SSL and specific SSL certificates
     
 To see a list of all virtual host parameters, [please go here](#vhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
 
-Usage
------
+##Usage
 
 ###apache
 
@@ -189,7 +186,7 @@ Controls which ports Apache binds to for listening
     
 Declaring this class will create `listen.erb` file.  Listen should always be either: `<port>`, `<ipv4>:<port>`, or `[<ipv6]:<port>` 
 
-Listen directives must be added for every port.  **?? DOES PUPPET DO THIS AUTOMATICALLY?** 
+Listen directives must be added for every port. If you use  **?? DOES PUPPET DO THIS AUTOMATICALLY?** 
 
 ####`apache::mod`
 
@@ -259,7 +256,7 @@ Enables named-based hosting of a virtual host
     
 Declaring this class will create a `namevirtualhost.erb` template. NameVirtualHost should always be either: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
-###vhost
+###apache::vhost
 
 The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters. 
 
@@ -287,13 +284,17 @@ Determines whether the vhost creates a listen statement. The default value is 't
 
 Setting `add_listen` to 'false' stops the vhost from creating a listen statement, and this is important when you combine vhosts that are not passed an `ip` parameter with vhosts that *are* passed the `ip` parameter. 
 
-####`block` <-- ??
+####`block` 
 
-[],
+Specifies the list of things Apache will block access to. The default is an empty set, '[]'. Currently, the only option is 'scm', which blocks web access to .svn, .git and .bzr directories. To add to this, please see the [Development](#development) section.
 
 ####`configure_firewall`
 
 Specifies whether a firewall should be configured. Valid values are 'true' or 'false'.
+
+####`default_vhost`
+
+Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
 
 ####`docroot` 
 
@@ -331,9 +332,9 @@ Enables an IP-based vhost. This parameter inhibits the creation of a NameVirtual
 
 Specifies the location of the virtual host's logfiles. Defaults to `/var/log/<apache log location>/`.
 
-####`no_proxy_uris`<-- ?? (https://github.com/hunner/puppetlabs-apache/blob/refactor_module/tests/vhost.pp#L105)
+####`no_proxy_uris`
 
-
+Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with `proxy_dest`.
 
 ####`options` 
 
@@ -352,45 +353,80 @@ Sets the overrides for the given virtual host. Accepts an array of AllowOverride
 
 Sets the port the host is configured on.
 
-####`priority` <- Double Check
+####`priority`
 
-Sets the priority of the site. Defaults to '15'. 
+Sets the relative load-order for Apache httpd VirtualHost configuration files. Defaults to '25'.
 
 If nothing matches the priority, the first name-based vhost will be used. Likewise, passing a higher priority will cause the alphabetically first name-based vhost to be used if no other names match.
+
+*Note*: You should not need to use this parameter. However, if you do use it, be aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'. 
 
 ####`proxy_dest`
 
 Specifies the destination address of a proxypass configuration. Defaults to 'undef'.
 
-####`rack_base_uris`<-- ?
+####`rack_base_uris`
 
-Specifies the resource identifiers for a rack configuration. Defaults to 'undef'.
+Specifies the resource identifiers for a rack configuration. The file paths specified will be listed as rack application roots for passenger/rack in the `_rack.erb` template. Defaults to 'undef'.
 
 ####`redirect_dest`
 
 Specifies the address to redirect to. Defaults to 'undef'.
 
-####`redirect_source`<-- ?
+####`redirect_source`
 
-/
-
-####`redirect_status` <-- ?
-
-undef
-
-####`rewrite_base` <-- ?
-
-undef
-
-####`rewrite_cond` <-- ? 
-
-undef    
+Specifies the source items? that will redirect to the destination specified in `redirect_dest`. If more than one item for redirect is supplied, the source and destination must be the same length, and the items are order-dependent.
     
-####`rewrite_rule` <-- ?
+    apache::vhost { 'site.name.fdqn':
+      …
+      redirect_source => ['/images','/downloads'],
+      redirect_dest => ['http://img.example.com/','http://downloads.example.com/'],
+    }
 
-undef,
+####`redirect_status`
+
+Specifies the status to append to the redirect. Defaults to 'undef'. 
+
+    apache::vhost { 'site.name.fdqn':
+      …
+      redirect_status => ['temp','permanent'],
+    }
+
+####`rewrite_base` 
+
+Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'. 
+
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrite_rule => '^index\.html$ welcome.html',
+      rewrite_base => '/blog/',
+    }
+
+The above example would limit the index.html -> welcome.html rewrite to only something inside of http://example.com/blog/.
+
+####`rewrite_cond`
+
+Rewrites a URL via `rewrite_rule` based on the truth of specified conditions. For example
+
+    apache::vhost { 'site.name.fdqn':
+      … 
+      rewrite_cond => '%{HTTP_USER_AGENT} ^MSIE',
+    } 
+ 
+will rewrite URLs only if the visitor is using IE. Defaults to 'undef'.
+
+*Note*: At the moment, each vhost is limited to a single list of rewrite conditions. In the future, you will be able to specify multiple `rewrite_cond` and `rewrite_rules` per vhost, so that different conditions get different rewrites.
+
+####`rewrite_rule`
+
+Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html. 
+
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrite_rule => '^index\.html$ welcome.html',
+    }
     
-####`scriptalias`<-- double check
+####`scriptalias`
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin'
 
@@ -444,7 +480,7 @@ This parameter is for use with name-based virtual hosting. Defaults to '*'.
 
 ###Virtual Host Examples
 
-The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the (Tests section)[https://github.com/hunner/puppetlabs-apache/tree/refactor_module/tests] **<- NOT THE RIGHT LINK** for even more examples.
+The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the [Tests section](https://github.com/hunner/puppetlabs-apache/tree/refactor_module/tests) **<- NOT THE RIGHT LINK** for even more examples.
 
 Configure a vhost with a server administrator
 
@@ -453,6 +489,8 @@ Configure a vhost with a server administrator
       docroot     => '/var/www/third',
       serveradmin => 'admin@example.com',
     }
+    
+- - - 
 
 Set up a vhost with aliased servers
 
@@ -464,6 +502,8 @@ Set up a vhost with aliased servers
       port          => '80',
       docroot       => '/var/www/fifth',
     }
+    
+- - -
 
 Configure a vhost with a cgi-bin
 
@@ -472,6 +512,8 @@ Configure a vhost with a cgi-bin
       docroot     => '/var/www/eleventh',
       scriptalias => '/usr/lib/cgi-bin',
     }
+    
+- - - 
 
 Set up a vhost with a rack configuration
 
@@ -480,7 +522,8 @@ Set up a vhost with a rack configuration
       docroot        => '/var/www/fifteenth',
       rack_base_uris => ['/rackapp1', '/rackapp2'],
     }
-    
+- - -      
+
 Set up a mix of SSL and non-SSL vhosts at the same domain
 
     #The non-ssl vhost
@@ -494,9 +537,11 @@ Set up a mix of SSL and non-SSL vhosts at the same domain
     apache::vhost { 'first.example.com ssl':
       servername => 'first.example.com',
       port       => '443',
-      docroot    => '/var/www/second',
+      docroot    => '/var/www/first',
       ssl        => true,
     }
+
+- - - 
     
 Configure a vhost to redirect non-SSL connections to SSL
 
@@ -513,6 +558,8 @@ Configure a vhost to redirect non-SSL connections to SSL
       docroot    => '/var/www/sixteenth',
       ssl        => true,
     }
+
+- - -
     
 Set up IP-based vhosts on any listen port and have them respond to requests on specific IP addresses. In this example, we will set listening on ports 80 and 81. This is required because the example vhosts are not declared with a port parameter.
 
@@ -532,7 +579,9 @@ Then we will set up the IP-based vhosts
       ip_based => true,
     }
 
-**CHECK WITH HUNTER** Configure a mix of name-based and IP-based vhosts. First, we will add two IP-based vhosts on 10.0.0.10, one SSL and one non-SSL
+- - -
+
+Configure a mix of name-based and IP-based vhosts. First, we will add two IP-based vhosts on 10.0.0.10, one SSL and one non-SSL
 
     apache::vhost { 'The first IP-based vhost, non-ssl':
       servername => 'first.example.com',
@@ -578,12 +627,6 @@ If you want to add two name-based vhosts so that they will answer on either 10.0
 
 Implementation
 --------------
-
-**Native Resource Types**
-
-`a2mod` 
-
-A type that works within `apache::mod` to enable or disable Apache modules.
 
 **Templates**
 
