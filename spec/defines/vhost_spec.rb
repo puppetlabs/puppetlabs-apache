@@ -193,6 +193,36 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'priority/default settings' do
+        describe 'when neither priority/default is specified' do
+          let :params do default_params end
+          it { should contain_file("25-#{title}.conf") }
+        end
+        describe 'when both priority/default_vhost is specified' do
+          let :params do
+            default_params.merge({
+              :priority      => 15,
+              :default_vhost => true,
+            })
+          end
+          it {
+            require'ruby-debug';debugger;1
+            should contain_file("15-#{title}.conf") }
+        end
+        describe 'when only priority is specified' do
+          let :params do
+            default_params.merge({ :priority => 14, })
+          end
+          it { should contain_file("14-#{title}.conf") }
+        end
+        describe 'when only default is specified' do
+          let :params do
+            default_params.merge({ :default_vhost => true, })
+          end
+          it { should contain_file("10-#{title}.conf") }
+        end
+      end
+
       describe 'various ip/port combos' do
         describe 'when ip_based is true' do
           let :params do default_params.merge({ :ip_based => true }) end
