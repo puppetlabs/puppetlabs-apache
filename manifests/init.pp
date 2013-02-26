@@ -127,7 +127,7 @@ class apache (
       require => Package['httpd'],
     }
     if $default_mods {
-      include apache::mod::default
+      include apache::default_mods
     }
     if $default_vhost {
       apache::vhost { 'default':

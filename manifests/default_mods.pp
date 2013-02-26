@@ -1,4 +1,4 @@
-class apache::mod::default {
+class apache::default_mods {
   case $::osfamily {
     'debian': {
       include apache::mod::cgid # Debian uses mpm_worker
