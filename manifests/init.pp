@@ -23,6 +23,7 @@ class apache (
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
   $service_enable       = true,
+  $purge_configs        = true,
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
   $error_documents      = false
@@ -54,7 +55,7 @@ class apache (
   file { $apache::params::confd_dir:
     ensure  => directory,
     recurse => true,
-    purge   => true,
+    purge   => $purge_configs,
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
@@ -62,7 +63,7 @@ class apache (
   file { $apache::params::mod_dir:
     ensure  => directory,
     recurse => true,
-    purge   => true,
+    purge   => $purge_configs,
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
@@ -70,7 +71,7 @@ class apache (
   file { $apache::params::vhost_dir:
     ensure  => directory,
     recurse => true,
-    purge   => true,
+    purge   => $purge_configs,
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
