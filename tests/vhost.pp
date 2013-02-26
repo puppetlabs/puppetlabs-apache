@@ -161,3 +161,15 @@ apache::vhost { 'seventeenth.example.com':
   docroot => '/var/www/seventeenth',
   block   => 'scm',
 }
+
+# Vhost with special environment variables
+apache::vhost { 'eighteenth.example.com':
+  port    => '80',
+  docroot => '/var/www/eighteenth',
+  setenv  => ['SPECIAL_PATH /foo/bin','KILROY was_here'],
+}
+apache::vhost { 'nineteenth.example.com':
+  port     => '80',
+  docroot  => '/var/www/nineteenth',
+  setenvif => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
+}

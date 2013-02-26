@@ -89,6 +89,8 @@ define apache::vhost(
     $rewrite_rule       = undef,
     $rewrite_base       = undef,
     $rewrite_cond       = undef,
+    $setenv             = [],
+    $setenvif           = [],
     $block              = [],
     $ensure             = 'present'
   ) {
@@ -269,6 +271,9 @@ define apache::vhost(
   #   - $ssl
   # serveralias fragment:
   #   - $serveraliases
+  # setenv fragment:
+  #   - $setenv
+  #   - $setenvif
   # ssl fragment:
   #   - $ssl
   #   - $ssl_cert

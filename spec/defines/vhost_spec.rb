@@ -102,6 +102,21 @@ describe 'apache::vhost', :type => :define do
           :match => ['  ServerAlias one.com','  ServerAlias two.com'],
         },
         {
+          :title => 'should accept setenv',
+          :attr  => 'setenv',
+          :value => ['TEST1 one','TEST2 two'],
+          :match => ['  SetEnv TEST1 one','  SetEnv TEST2 two'],
+        },
+        {
+          :title => 'should accept setenvif',
+          :attr  => 'setenvif',
+          ## These are bugged in rspec-puppet; the $1 is droped
+          #:value => ['Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1'],
+          #:match => ['  SetEnvIf Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1'],
+          :value => ['Host "^test\.com$" VHOST_ACCESS=test'],
+          :match => ['  SetEnvIf Host "^test\.com$" VHOST_ACCESS=test'],
+        },
+        {
           :title => 'should accept options',
           :attr  => 'options',
           :value => ['Fake','Options'],
