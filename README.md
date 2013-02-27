@@ -172,6 +172,12 @@ Enables custom error documents. Defaults to 'false'.
 
 The Apache module offers many classes and defined types, in addition to `apache`, that enable various functionality within Apache. 
 
+####Class: `apache::default_mods`
+
+Installs default Apache modules based on what OS you are running
+
+    class { 'apache::default_mods': } 
+
 ####Class: `apache::dev`
 
 Installs Apache development libraries
@@ -234,12 +240,6 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 
 The `apache::mod::[name]` classes does one of two things. **Not sure what I was talking bout here. Maybe…**
 Some Apache modules will have templates accompanying them to guide behavior, and including them will cause template files to be dropped along with the mod install. Any mod without a template will install package but drop no  files. 
-
-####Class: `apache::mod::default`
-
-Installs default Apache modules based on what OS you are running
-
-    class { 'apache::mod::default': } 
 	
 ####Class: `apache::mod::ssl`
 
