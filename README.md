@@ -180,13 +180,14 @@ Installs Apache development libraries
 
 ####Defined Type: `apache::listen`
 
-Controls which ports Apache binds to for listening
+Controls which ports Apache binds to for listening based on the title:
 
-    class { 'apache::listen':  }
+    apache::listen { '80': }
+    apache::listen { '443': }
 
-Declaring this class will create `listen.erb` file.  Listen should always be either: `<port>`, `<ipv4>:<port>`, or `[<ipv6]:<port>` 
+Declaring this defined type will add all `Listen` directives to the `ports.conf` file in the Apache httpd configuration directory.  `apache::listen` titles should always take the form of: `<port>`, `<ipv4>:<port>`, or `[<ipv6>]:<port>` 
 
-Listen directives must be added for every port. If you use  **?? DOES PUPPET DO THIS AUTOMATICALLY?** 
+Apache httpd requires that `Listen` directives must be added for every port. The `apache::vhost` defined type will automatically add `Listen` directives unless the `apache::vhost` is passed `add_listen => false`.
 
 ####Defined Type: `apache::mod`
 
