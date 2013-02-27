@@ -211,7 +211,9 @@ describe 'apache::vhost', :type => :define do
       describe 'priority/default settings' do
         describe 'when neither priority/default is specified' do
           let :params do default_params end
-          it { should contain_file("25-#{title}.conf") }
+          it { should contain_file("25-#{title}.conf").with_path(
+            /25-#{title}.conf/
+          ) }
         end
         describe 'when both priority/default_vhost is specified' do
           let :params do
@@ -220,21 +222,25 @@ describe 'apache::vhost', :type => :define do
               :default_vhost => true,
             })
           end
-          it {
-            require'ruby-debug';debugger;1
-            should contain_file("15-#{title}.conf") }
+          it { should contain_file("15-#{title}.conf").with_path(
+            /15-#{title}.conf/
+          ) }
         end
         describe 'when only priority is specified' do
           let :params do
             default_params.merge({ :priority => 14, })
           end
-          it { should contain_file("14-#{title}.conf") }
+          it { should contain_file("14-#{title}.conf").with_path(
+            /14-#{title}.conf/
+          ) }
         end
         describe 'when only default is specified' do
           let :params do
             default_params.merge({ :default_vhost => true, })
           end
-          it { should contain_file("10-#{title}.conf") }
+          it { should contain_file("10-#{title}.conf").with_path(
+            /10-#{title}.conf/
+          ) }
         end
       end
 
