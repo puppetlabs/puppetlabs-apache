@@ -25,7 +25,6 @@ class apache::default_mods {
       apache::mod { 'authz_owner': }
       apache::mod { 'expires': }
       apache::mod { 'ext_filter': }
-      apache::mod { 'headers': }
       apache::mod { 'include': }
       apache::mod { 'log_config': }
       apache::mod { 'logio': }
@@ -60,4 +59,5 @@ class apache::default_mods {
   apache::mod { 'authz_host': }
   apache::mod { 'authz_user': }
   apache::mod { 'env': }
+  apache::mod { 'headers': }
 }
