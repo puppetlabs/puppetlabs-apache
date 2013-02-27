@@ -190,12 +190,10 @@ Listen directives must be added for every port. If you use  **?? DOES PUPPET DO 
 
 ####Defined Type: `apache::mod`
 
-Enables installation of arbitrary Apache modules, when you know the module name and the package name for your package provider
-    
-    # Package from EPEL    
-    apache::mod { 'passenger':
-      package => 'mod_passenger',
-    }
+Used to enable arbitrary Apache httpd modules for which there is no specific `apache::mod::[name]` class. The `apache::mod` defined type will also install the required packages to enable the module, if any.
+
+    apache::mod { 'rewrite': }
+    apache::mod { 'ldap': }
 
 
 ####Classes: `apache::mod::[name]`
