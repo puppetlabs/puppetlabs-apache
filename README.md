@@ -107,7 +107,7 @@ It is possible to temporarily disable full Puppet management by setting the `pur
 
 The Apache module's primary class, `apache`, guides the basic setup of Apache on your system. 
 
-This is the class in which you will want to specify defaults, including default SSL information, for the majority of your virtual hosts. These defaults can be overridden for specific virtual hosts using a declaration of the `vhost` type. 
+You may establish a default vhost in this class, the `vhost` class, or both. You may add additional vhost configurations for specific virtual hosts using a declaration of the `vhost` type. 
 
 **Parameters within `apache`:**
 
@@ -238,7 +238,9 @@ To *use* SSL with a virtual host, you must either set the`default_ssl_vost` para
 
 The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters. 
 
-The base `apache` class is the best place to set your default values for your virtual hosts. The `vhost` defined type allows you to have specialized configurations for virtual hosts that have requirements outside of the defaults. If you have a series of specific configurations and *no* general defaults, make sure to set the base class default host to 'false'.
+The `vhost` defined type allows you to have specialized configurations for virtual hosts that have requirements outside of the defaults. You can set up a default vhost within the base `apache` class as well as set a customized vhost setup as default. Your customized vhost (priority 10) will be privileged over the base class vhost (15). 
+
+If you have a series of specific configurations and do not want a base `apache` class default vhost, make sure to set the base class default host to 'false'.
 
     class { 'apache':
       default_vhost => false,
