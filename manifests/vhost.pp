@@ -285,7 +285,7 @@ define apache::vhost(
   #   - $ssl_crl_path
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
-    path    => "${apache::params::vhost_dir}/${priority}-${name}.conf",
+    path    => "${apache::params::vhost_dir}/${priority_real}-${name}.conf",
     content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => 'root',
