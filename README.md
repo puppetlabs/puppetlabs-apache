@@ -97,7 +97,7 @@ To see a list of all virtual host parameters, [please go here](#vhost). To see a
 
 ##Usage
 
-###apache
+###Class: `apache`
 
 The Apache module's primary class, `apache`, guides the basic setup of Apache on your system. 
 
@@ -172,32 +172,33 @@ Enables custom error documents. Defaults to 'false'.
 
 The Apache module offers many classes and defined types, in addition to `apache`, that enable various functionality within Apache. 
 
-####`apache::dev`
+####Class: `apache::dev`
 
 Installs Apache development libraries
 
-	class { 'apache::dev': }
-	
-####`apache::listen`
+    class { 'apache::dev': }
 
-Controls which ports Apache binds to for listening
+####Defined Type: `apache::listen`
 
-    class { 'apache::listen':  }
-    
-Declaring this class will create `listen.erb` file.  Listen should always be either: `<port>`, `<ipv4>:<port>`, or `[<ipv6]:<port>` 
+Controls which ports Apache binds to for listening based on the title:
 
-Listen directives must be added for every port. If you use  **?? DOES PUPPET DO THIS AUTOMATICALLY?** 
+    apache::listen { '80': }
+    apache::listen { '443': }
 
-####`apache::mod`
+Declaring this defined type will add all `Listen` directives to the `ports.conf` file in the Apache httpd configuration directory.  `apache::listen` titles should always take the form of: `<port>`, `<ipv4>:<port>`, or `[<ipv6>]:<port>` 
 
-Enables installation of arbitrary Apache modules, when you know the module name and the package name for your package provider
-    
-    # Package from EPEL    
-    apache::mod { 'passenger':
-      package => 'mod_passenger',
-    }
+Apache httpd requires that `Listen` directives must be added for every port. The `apache::vhost` defined type will automatically add `Listen` directives unless the `apache::vhost` is passed `add_listen => false`.
 
-There are many `apache::mod::[name]` defined types within this module that can be declared using `include`: 
+####Defined Type: `apache::mod`
+
+Used to enable arbitrary Apache httpd modules for which there is no specific `apache::mod::[name]` class. The `apache::mod` defined type will also install the required packages to enable the module, if any.
+
+    apache::mod { 'rewrite': }
+    apache::mod { 'ldap': }
+
+
+####Classes: `apache::mod::[name]`
+There are many `apache::mod::[name]` classes within this module that can be declared using `include`: 
 
 * `alias`
 * `auth_basic`
@@ -231,16 +232,16 @@ There are many `apache::mod::[name]` defined types within this module that can b
 * `userdir`
 * `wsgi`
 
-The `apache::mod::[name]` defined type does one of two things. **Not sure what I was talking bout here. Maybe…**
+The `apache::mod::[name]` classes does one of two things. **Not sure what I was talking bout here. Maybe…**
 Some Apache modules will have templates accompanying them to guide behavior, and including them will cause template files to be dropped along with the mod install. Any mod without a template will install package but drop no  files. 
 
-####`apache::mod::default`
+####Class: `apache::mod::default`
 
 Installs default Apache modules based on what OS you are running
 
     class { 'apache::mod::default': } 
 	
-####`apache::mod::ssl`
+####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 
@@ -248,7 +249,7 @@ Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 	
 To *use* SSL with a virtual host, you must either set the`default_ssl_vost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.    
 
-####`apache::namevirtualhost`
+####Defined Type: `apache::namevirtualhost`
 
 Enables named-based hosting of a virtual host
 
@@ -256,7 +257,7 @@ Enables named-based hosting of a virtual host
     
 Declaring this class will create a `namevirtualhost.erb` template. NameVirtualHost should always be either: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
-###apache::vhost
+###Defined Type: `apache::vhost`
 
 The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters. 
 
@@ -266,7 +267,7 @@ The base `apache` class is the best place to set your default values for your vi
       default_vhost => false,
     }
 
-**Parameters within `vhost`:**
+**Parameters within `apache::vhost`:**
 
 The default values for each parameter will vary based on operating system and type of virtual host. 
 
