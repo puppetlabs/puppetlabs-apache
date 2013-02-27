@@ -97,7 +97,7 @@ To see a list of all virtual host parameters, [please go here](#vhost). To see a
 
 ##Usage
 
-###apache
+###Class: `apache`
 
 The Apache module's primary class, `apache`, guides the basic setup of Apache on your system. 
 
@@ -172,23 +172,23 @@ Enables custom error documents. Defaults to 'false'.
 
 The Apache module offers many classes and defined types, in addition to `apache`, that enable various functionality within Apache. 
 
-####`apache::dev`
+####Class: `apache::dev`
 
 Installs Apache development libraries
 
-	class { 'apache::dev': }
-	
-####`apache::listen`
+    class { 'apache::dev': }
+
+####Defined Type: `apache::listen`
 
 Controls which ports Apache binds to for listening
 
     class { 'apache::listen':  }
-    
+
 Declaring this class will create `listen.erb` file.  Listen should always be either: `<port>`, `<ipv4>:<port>`, or `[<ipv6]:<port>` 
 
 Listen directives must be added for every port. If you use  **?? DOES PUPPET DO THIS AUTOMATICALLY?** 
 
-####`apache::mod`
+####Defined Type: `apache::mod`
 
 Enables installation of arbitrary Apache modules, when you know the module name and the package name for your package provider
     
@@ -197,7 +197,9 @@ Enables installation of arbitrary Apache modules, when you know the module name 
       package => 'mod_passenger',
     }
 
-There are many `apache::mod::[name]` defined types within this module that can be declared using `include`: 
+
+####Classes: `apache::mod::[name]`
+There are many `apache::mod::[name]` classes within this module that can be declared using `include`: 
 
 * `alias`
 * `auth_basic`
@@ -231,16 +233,16 @@ There are many `apache::mod::[name]` defined types within this module that can b
 * `userdir`
 * `wsgi`
 
-The `apache::mod::[name]` defined type does one of two things. **Not sure what I was talking bout here. Maybe…**
+The `apache::mod::[name]` classes does one of two things. **Not sure what I was talking bout here. Maybe…**
 Some Apache modules will have templates accompanying them to guide behavior, and including them will cause template files to be dropped along with the mod install. Any mod without a template will install package but drop no  files. 
 
-####`apache::mod::default`
+####Class: `apache::mod::default`
 
 Installs default Apache modules based on what OS you are running
 
     class { 'apache::mod::default': } 
 	
-####`apache::mod::ssl`
+####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 
@@ -248,7 +250,7 @@ Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 	
 To *use* SSL with a virtual host, you must either set the`default_ssl_vost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.    
 
-####`apache::namevirtualhost`
+####Defined Type: `apache::namevirtualhost`
 
 Enables named-based hosting of a virtual host
 
@@ -256,7 +258,7 @@ Enables named-based hosting of a virtual host
     
 Declaring this class will create a `namevirtualhost.erb` template. NameVirtualHost should always be either: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
-###apache::vhost
+###Defined Type: `apache::vhost`
 
 The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters. 
 
