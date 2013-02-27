@@ -31,12 +31,12 @@ Apache is a widely-used web server, and this module provides a simplified way of
 
 **What Apache affects:**
 
+* configuration files and directories (created and written to)
+    * **NOTE**: Configurations that are *not* managed by Puppet will be purged. 
 * package/service/configuration files for Apache
 * Apache modules 
 * virtual hosts
-* listened-to ports
-* configuration directories (created and written to) 
-* 
+* listened-to ports 
 
 ###Beginning with Apache 
 
@@ -98,6 +98,10 @@ To see a list of all virtual host parameters, [please go here](#vhost). To see a
 ##Usage
 
 ###Classes and Defined Types
+
+This module modifies Apache configuration files and directories and will purge any configuration not managed by Puppet. Configuration of Apache should be managed by Puppet, as non-puppet configuration files can cause unexpected failures.
+
+It is possible to temporarily disable full Puppet management by setting the `purge_configs` parameter within the base `apache` class to 'false'. This option should only be used as a temporary means of saving and relocating customized configurations.
 
 ####Class: `apache`
 
