@@ -268,7 +268,7 @@ The base `apache` class is the best place to set your default values for your vi
       default_vhost => false,
     }
 
-**Parameters within `vhost`:**
+**Parameters within `apache::vhost`:**
 
 The default values for each parameter will vary based on operating system and type of virtual host. 
 
