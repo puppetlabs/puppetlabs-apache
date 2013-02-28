@@ -22,6 +22,7 @@
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
+# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -289,6 +290,8 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  # requestheader fragment:
+  #   - $request_headers
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",
