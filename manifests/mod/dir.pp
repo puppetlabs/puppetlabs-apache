@@ -4,8 +4,9 @@ class apache::mod::dir (
   apache::mod { 'dir': }
 
   # Template uses no variables
-  file { "${apache::params::mod_dir}/dir.conf":
+  file { 'dir.conf':
     ensure  => present,
+    path    => "${apache::mod_dir}/dir.conf",
     content => template('apache/mod/dir.conf.erb'),
   }
 }

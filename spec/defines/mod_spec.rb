@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 describe 'apache::mod', :type => :define do
+  let :pre_condition do
+    'include apache'
+  end
   context "on a RedHat osfamily" do
     let :facts do
       {
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
 
@@ -40,6 +44,7 @@ describe 'apache::mod', :type => :define do
       {
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
       }
     end
 

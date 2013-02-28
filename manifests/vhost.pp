@@ -94,6 +94,7 @@ define apache::vhost(
     $block              = [],
     $ensure             = 'present'
   ) {
+  # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
     fail("You must include the apache base class before using any apache defined resources")
   }

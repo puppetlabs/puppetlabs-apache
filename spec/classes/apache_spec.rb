@@ -66,6 +66,46 @@ describe 'apache', :type => :class do
         'notify'  => 'Service[httpd]',
         'require' => 'Package[httpd]'
       ) }
+
+      # Assert that load files are placed for these mods, but no conf file.
+      [
+        'auth_basic',
+        'authn_file',
+        'authz_default',
+        'authz_groupfile',
+        'authz_host',
+        'authz_user',
+        'dav',
+        'env',
+      ].each do |modname|
+        it { should contain_file("#{modname}.load").with_path(
+          "/etc/httpd/conf.d/#{modname}.load"
+        ) }
+        it { should_not contain_file("#{modname}.conf").with_path(
+          "/etc/httpd/conf.d/#{modname}.conf"
+        ) }
+      end
+
+      # Assert that both load files and conf files are placed for these mods
+      [
+        'alias',
+        'autoindex',
+        'dav_fs',
+        'deflate',
+        'dir',
+        'mime',
+        'negotiation',
+        'setenvif',
+        'status',
+      ].each do |modname|
+        it { should contain_file("#{modname}.load").with_path(
+          "/etc/httpd/conf.d/#{modname}.load"
+        ) }
+        it { should contain_file("#{modname}.conf").with_path(
+          "/etc/httpd/conf.d/#{modname}.conf"
+        ) }
+      end
+
       it { should_not contain_file("/etc/httpd/site.d") }
       it { should_not contain_file("/etc/httpd/mod.d") }
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include /etc/httpd/conf\.d/\*\.conf$} }
