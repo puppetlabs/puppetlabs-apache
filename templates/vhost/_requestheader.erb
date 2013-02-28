@@ -1,12 +1,12 @@
-<% if @request_header -%>
+<% if @request_headers -%>
 # Request header statements manage by Puppet
 # as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
-  <% if @request_header.is_a? Array -%>
-  <% @request_header.each do |request_statement| -%>
+  <% if @request_headers.is_a? Array -%>
+  <% @request_headers.each do |request_statement| -%>
   RequestHeader <%= request_statement %>
   <% end -%>
-  <% elsif @request_header != '' -%>
-  RequestHeader <%= @request_header %>
+  <% elsif @request_headers != '' -%>
+  RequestHeader <%= @request_headers %>
   <% end -%>
 
 <% end -%>
