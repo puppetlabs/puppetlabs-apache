@@ -62,5 +62,20 @@ define apache::mod (
       require => File["${mod}.load"],
       notify  => Service['httpd'],
     }
+    # Each module may have a .conf file as well, which should be
+    # defined in the class apache::mod::module
+    # Some modules do not require this file.
+    if defined(File["${mod}.conf"]) {
+      file{ "enable.${mod}.conf":
+        path    => "${enable_dir}/${mod}.conf",
+        ensure  => link,
+        target  => "${mod_dir}/${mod}.conf",
+        owner   => $apache::params::user,
+        group   => $apache::params::group,
+        mode    => '0644',
+        require => File["${mod}.conf"],
+        notify  => Service['httpd'],
+      }
+    }
   }
 }
