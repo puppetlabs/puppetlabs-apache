@@ -10,6 +10,9 @@
     5. [Configure a Virtual Host - Basic options for getting started](#configure-a-virtual-host)
 6. [Usage - The classes, defined types, and their parameters available for configuration](#usage)
     7. [Classes and Defined Types](#classes-and-defined-types)
+        8. [Class: apache](#class-apache)
+        9. [Class: apache::mod::*]([#classes-apachemodname)
+        10. [Defined Type: apache::vhost](#defined-type-apachevhost)
     11. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
 12. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
     10. [Classes and Defined Types](#classes-and-defined-types)
@@ -93,7 +96,7 @@ To set up a virtual host with SSL and specific SSL certificates
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
     
-To see a list of all virtual host parameters, [please go here](#defined-type:-`apache::vhost`). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
+To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
 
 ##Usage
 
