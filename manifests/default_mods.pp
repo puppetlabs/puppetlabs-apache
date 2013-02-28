@@ -59,5 +59,4 @@ class apache::default_mods {
   apache::mod { 'authz_host': }
   apache::mod { 'authz_user': }
   apache::mod { 'env': }
-  apache::mod { 'headers': }
 }

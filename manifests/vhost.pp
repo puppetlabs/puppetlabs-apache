@@ -245,6 +245,13 @@ define apache::vhost(
     }
   }
 
+  # Check if mod_headers is required to process $request_headers
+  if $request_headers {
+    if ! defined(Class['apache::mod::headers']) {
+      include apache::mod::headers
+    }
+  }
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
