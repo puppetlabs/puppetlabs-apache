@@ -7,11 +7,11 @@
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with Apache](#setup)
     4. [Beginning with Apache - Installation](#beginning-with-apache)
-    5. [Configuring a Virtual Host - Basic options for getting started](#configuring-a-virtual-host)
+    5. [Configure a Virtual Host - Basic options for getting started](#configure-a-virtual-host)
 6. [Usage - The classes, defined types, and their parameters available for configuration](#usage)
     7. [Classes and Defined Types](#classes-and-defined-types)
-    8. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
-9. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
+    11. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
+12. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
     10. [Classes and Defined Types](#classes-and-defined-types)
     11. [Templates](#templates)
 12. [Limitations - OS compatibility, etc.](#limitations)
@@ -93,7 +93,7 @@ To set up a virtual host with SSL and specific SSL certificates
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
     
-To see a list of all virtual host parameters, [please go here](#defined-type:-apache::vhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
+To see a list of all virtual host parameters, [please go here](#defined-type:-`apache::vhost`). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
 
 ##Usage
 
@@ -219,7 +219,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `python`
 * `reqtimeout`
 * `setenvif`
-* `ssl`* (see [apache::mod::ssl](#class:-apache::mod::ssl) below)
+* `ssl`* (see [apache::mod::ssl](#class:-`apache::mod::ssl`) below)
 * `status`
 * `userdir`*
 * `wsgi`
@@ -470,7 +470,7 @@ This parameter is for use with name-based virtual hosting. Defaults to '*'.
 
 ###Virtual Host Examples
 
-The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the [Tests section](https://github.com/hunner/puppetlabs-apache/tree/refactor_module/tests) **<- NOT THE RIGHT LINK** for even more examples.
+The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the [Tests section](https://github.com/puppetlabs/puppetlabs-apache/tree/master/tests) for even more examples.
 
 Configure a vhost with a server administrator
 
