@@ -72,7 +72,8 @@ class apache::params {
     $httpd_dir        = '/etc/apache2'
     $conf_dir         = "${httpd_dir}"
     $confd_dir        = "${httpd_dir}/conf.d"
-    $mod_dir          = "${httpd_dir}/mods-enabled"
+    $mod_dir          = "${httpd_dir}/mods-available"
+    $mod_enable_dir   = "${httpd_dir}/mods-enabled"
     $vhost_dir        = "${httpd_dir}/sites-enabled"
     $conf_file        = 'apache2.conf'
     $ports_file       = "${conf_dir}/ports.conf"

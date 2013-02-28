@@ -49,4 +49,18 @@ define apache::mod (
     require => Package['httpd'],
     notify  => Service['httpd'],
   }
+
+  if $::osfamily == 'Debian' {
+    $enable_dir = $apache::params::mod_enable_dir
+    file{ "enable.${mod}.load":
+      path    => "${enable_dir}/${mod}.load",
+      ensure  => link,
+      target  => "${mod_dir}/${mod}.load",
+      owner   => $apache::params::user,
+      group   => $apache::params::group,
+      mode    => '0644',
+      require => File["${mod}.load"],
+      notify  => Service['httpd'],
+    }
+  }
 }
