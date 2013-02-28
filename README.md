@@ -219,7 +219,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `python`
 * `reqtimeout`
 * `setenvif`
-* `ssl`* (see [apache::mod::ssl](#class:-`apache::mod::ssl`) below)
+* `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
 * `status`
 * `userdir`*
 * `wsgi`
