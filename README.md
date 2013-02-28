@@ -64,7 +64,7 @@ To configure a very basic, name-based virtual host
       docroot => '/var/www/first',
     }
 
-*Note:* The default `priority` is 15. If nothing matches this priority, the alphabetically first name-based vhost will be used. This is also true if you pass a higher priority and no names match anything else.
+*Note:* The default priority is 15. If nothing matches this priority, the alphabetically first name-based vhost will be used. This is also true if you pass a higher priority and no names match anything else.
 
 A slightly more complicated example, which moves the docroot owner/group
 
@@ -93,7 +93,7 @@ To set up a virtual host with SSL and specific SSL certificates
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
     
-To see a list of all virtual host parameters, [please go here](#vhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
+To see a list of all virtual host parameters, [please go here](#defined-type:-apache::vhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
 
 ##Usage
 
@@ -254,7 +254,7 @@ The default values for each parameter will vary based on operating system and ty
 
 #####`access_log` 
 
-Specifies whether `*_access.log` directives should be configured. Valid values are 'true' and 'false'. 
+Specifies whether `*_access.log` directives should be configured. Valid values are 'true' and 'false'. Defaults to 'true'.
 
 #####`access_log_file`
 
@@ -423,6 +423,14 @@ Sets the server aliases of the site.
 #####`servername`
 
 Sets the primary name of the virtual host.
+
+#####`setenv`
+
+Used by HTTPD to set environment variables for vhosts. Defaults to '[]'.
+
+#####`setenvif`
+
+Used by HTTPD to conditionally set environment variables for vhosts. Defaults to '[]'.
 
 #####`ssl`
 
