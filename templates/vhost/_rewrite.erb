@@ -7,7 +7,7 @@
 <% end -%>
 <% if @rewrite_cond -%>
 <% Array(@rewrite_cond).each do |cond| -%>
-  RewriteCond <%= @cond %>
+  RewriteCond <%= cond %>
 <% end -%>
 <% end -%>
   RewriteRule <%= @rewrite_rule %>
