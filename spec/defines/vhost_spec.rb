@@ -208,6 +208,18 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when rewrite_rule and rewrite_cond are specified' do
+        let :params do default_params.merge({
+          :rewrite_cond => '%{HTTPS} off',
+          :rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+        }) end
+        it 'should set RewriteCond' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond %{HTTPS} off$/
+          )
+        end
+      end
+
       describe 'priority/default settings' do
         describe 'when neither priority/default is specified' do
           let :params do default_params end
