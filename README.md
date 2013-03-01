@@ -646,7 +646,7 @@ Enables named-based hosting of a virtual host
 
     class { 'apache::namevirtualhost`: }
     
-Declaring this class will create a `namevirtualhost.erb` template. NameVirtualHost should always be either: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
+Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
 ###Templates
 
@@ -655,7 +655,7 @@ The Apache module relies heavily on templates to enable the `vhost` and `apache:
 Limitations
 -----------
 
-????
+This has been tested on Ubuntu Precise, Debian Wheezy, and CentOS 5.8.
 
 Development
 -----------
