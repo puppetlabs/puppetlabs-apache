@@ -10,7 +10,7 @@
 6. [Usage - The classes, defined types, and their parameters available for configuration](#usage)
     7. [Classes and Defined Types](#classes-and-defined-types)
         8. [Class: apache](#class-apache)
-        9. [Class: apache::mod::*]([#classes-apachemod[name])
+        9. [Class: apache::mod::*]([#classes:-apachemodname)
         10. [Defined Type: apache::vhost](#defined-type-apachevhost)
     11. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
 12. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
