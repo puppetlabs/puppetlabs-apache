@@ -1,14 +1,14 @@
-# Define: apache::vhost::proxy
+# Define: apache::vhost::forward_proxy
 #
-# Configures an apache vhost that will act as an reverse proxy and
-# forward all request to a another server. See apache::vhost::forward_proxy
-# for a forward proxy.
+# Configures an apache vhost that will act as a forward proxy and
+# forward all request to the server indicated by the request. 
+# See apache::vhost::proxy for a reverse proxy that only proxies for
+# a single server.
 #
 # Parameters:
 # * $port:
 #     The port on which the vhost will respond
-# * $dest:
-#     URI that the requests will be proxied for
+#   $allowednet: the networks/hosts that are allowed to acces the proxy
 # - $priority
 # - $template -- the template to use for the vhost
 # - $access_log - specifies if *_access.log directives should be configured.
@@ -21,11 +21,11 @@
 #
 # Sample Usage:
 #
-define apache::vhost::proxy (
+define apache::vhost::forward_proxy (
     $port,
-    $dest,
+    $allowednet,
     $priority      = '10',
-    $template      = 'apache/vhost-proxy.conf.erb',
+    $template      = 'apache/vhost-forward-proxy.conf.erb',
     $servername    = '',
     $serveraliases = '',
     $ssl           = false,
@@ -35,7 +35,8 @@ define apache::vhost::proxy (
   ) {
 
   include apache
-  include apache::proxy
+  apache::mod { 'proxy': }
+  apache::mod { 'proxy_http': }
 
   $apache_name = $apache::params::apache_name
   $ssl_path = $apache::params::ssl_path
@@ -52,12 +53,12 @@ define apache::vhost::proxy (
   # Template uses:
   # - $vhost_name
   # - $port
+  # - $allowednet
   # - $ssl
   # - $ssl_path
   # - $srvname
   # - $serveraliases
   # - $no_proxy_uris
-  # - $dest
   # - $apache::params::apache_name
   # - $access_log
   # - $name

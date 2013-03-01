@@ -1,0 +1,29 @@
+NameVirtualHost <%= vhost_name %>:<%= port %>
+<VirtualHost <%= vhost_name %>:<%= port %>>
+  <% if ssl == true %>
+  SSLEngine on
+  SSLCertificateFile <%= ssl_path %>/certs/pl.cert
+  SSLCertificateKeyFile <%= ssl_path %>/private/pl.key
+  <% end %>
+  ServerName <%= srvname %>
+<% if serveraliases.is_a? Array %>
+<% serveraliases.each do |name| %><%= "  ServerAlias #{name}\n" %><% end %>
+<% elsif serveraliases != '' %>
+<%= "  ServerAlias #{serveraliases}" %>
+<% end %>
+  ProxyRequests On
+  ProxyVia On
+
+  <Proxy *>
+    Order deny,allow
+    Deny from all
+    Allow from <%= allowednet %>
+  </Proxy>
+
+  ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
+  LogLevel warn
+<% if access_log -%>
+  CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
+<% end -%>
+</VirtualHost>
+
