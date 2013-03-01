@@ -41,7 +41,7 @@ define apache::mod (
 
   file { "${mod}.load":
     path    => "${mod_dir}/${mod}.load",
-    ensure  => present,
+    ensure  => file,
     owner   => $apache::params::user,
     group   => $apache::params::group,
     mode    => '0644',

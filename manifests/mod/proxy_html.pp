@@ -15,7 +15,7 @@ class apache::mod::proxy_html {
   }
   # Template uses $icons_path
   file { 'proxy_html.conf':
-    ensure  => present,
+    ensure  => file,
     path    => "${apache::mod_dir}/proxy_html.conf",
     content => template('apache/mod/proxy_html.conf.erb'),
   }

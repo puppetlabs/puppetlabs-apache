@@ -139,7 +139,7 @@ class apache (
     # - $error_documents
     # - $error_documents_path
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
-      ensure  => present,
+      ensure  => file,
       content => template("apache/httpd.conf.erb"),
       notify  => Service['httpd'],
       require => Package['httpd'],

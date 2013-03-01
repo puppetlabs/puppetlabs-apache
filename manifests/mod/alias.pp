@@ -6,7 +6,7 @@ class apache::mod::alias {
   apache::mod { 'alias': }
   # Template uses $icons_path
   file { 'alias.conf':
-    ensure  => present,
+    ensure  => file,
     path    => "${apache::mod_dir}/alias.conf",
     content => template('apache/mod/alias.conf.erb'),
   }
