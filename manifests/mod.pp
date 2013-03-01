@@ -51,8 +51,8 @@ define apache::mod (
   }
 
   if $::osfamily == 'Debian' {
-    $enable_dir = $apache::params::mod_enable_dir
-    file{ "enable.${mod}.load":
+    $enable_dir = $apache::mod_enable_dir
+    file{ "${mod}.load symlink":
       path    => "${enable_dir}/${mod}.load",
       ensure  => link,
       target  => "${mod_dir}/${mod}.load",
@@ -66,7 +66,7 @@ define apache::mod (
     # defined in the class apache::mod::module
     # Some modules do not require this file.
     if defined(File["${mod}.conf"]) {
-      file{ "enable.${mod}.conf":
+      file{ "${mod}.conf symlink":
         path    => "${enable_dir}/${mod}.conf",
         ensure  => link,
         target  => "${mod_dir}/${mod}.conf",
