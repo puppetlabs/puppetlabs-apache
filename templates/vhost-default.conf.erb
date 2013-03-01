@@ -14,6 +14,12 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
+<% if ssl %>
+  SSLEngine On
+  SSLCipherSuite HIGH:MEDIUM
+  SSLCertificateFile    <%= ssl_cert_destdir %>/<%= srvname %>.crt
+  SSLCertificateKeyFile <%= ssl_cert_destdir %>/<%= srvname %>.key
+<% end %>
   DocumentRoot <%= docroot %>
   <Directory <%= docroot %>>
     Options <%= options %>

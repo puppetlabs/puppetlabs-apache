@@ -44,6 +44,8 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
+    $ssl_cert_srcdir    = $apache::params::ssl_cert_srcdir,
+    $ssl_cert_destdir   = $apache::params::ssl_cert_destdir,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
@@ -73,6 +75,31 @@ define apache::vhost(
 
   if $ssl == true {
     include apache::mod::ssl
+    if (!defined(File[$ssl_cert_destdir])) {
+      file { $ssl_cert_destdir:
+        ensure => directory,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0700',
+        require => Package['httpd']
+      }
+    }
+    file { "${ssl_cert_destdir}/${srvname}.crt":
+      source  => "${ssl_cert_srcdir}/${srvname}.crt",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0400',
+      notify  => Service['httpd'],
+      require => File[$ssl_cert_destdir]
+    }
+    file { "${ssl_cert_destdir}/${srvname}.key":
+      source  => "${ssl_cert_srcdir}/${srvname}.key",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0400',
+      notify  => Service['httpd'],
+      require => File[$ssl_cert_destdir]
+    }
   }
 
   # Since the template will use auth, redirect to https requires mod_rewrite
@@ -84,11 +111,14 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
+  # Dependency to httpd package avoids issues if docroot is subfolder of a directory
+  # which is created by the Apache package.
   if ! defined(File[$docroot]) {
     file { $docroot:
-      ensure => directory,
-      owner  => $docroot_owner,
-      group  => $docroot_group,
+      ensure  => directory,
+      owner   => $docroot_owner,
+      group   => $docroot_group,
+      require => Package['httpd']
     }
   }
 
@@ -96,6 +126,7 @@ define apache::vhost(
   if ! defined(File[$logroot]) {
     file { $logroot:
       ensure => directory,
+      require => Package['httpd']
     }
   }
 
@@ -118,11 +149,20 @@ define apache::vhost(
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => [
-      Package['httpd'],
-      File[$docroot],
-      File[$logroot],
-    ],
+    require => $ssl ? {
+      false => [
+          Package['httpd'],
+          File[$docroot],
+          File[$logroot]
+        ],
+      true  => [
+          Package['httpd'],
+          File[$docroot],
+          File[$logroot],
+          File["${ssl_cert_destdir}/${srvname}.crt"],
+          File["${ssl_cert_destdir}/${srvname}.key"]
+        ],
+    },
     notify  => Service['httpd'],
   }
 
