@@ -1,6 +1,5 @@
 #apache
 
-
 ####Table of Contents
 
 1. [Overview - What is the Apache module?](#overview)
@@ -11,7 +10,7 @@
 6. [Usage - The classes, defined types, and their parameters available for configuration](#usage)
     7. [Classes and Defined Types](#classes-and-defined-types)
         8. [Class: apache](#class-apache)
-        9. [Class: apache::mod::*]([#classes-apachemod-name)
+        9. [Class: apache::mod::*]([#classes-apachemod[name])
         10. [Defined Type: apache::vhost](#defined-type-apachevhost)
     11. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
 12. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
@@ -618,8 +617,7 @@ If you want to add two name-based vhosts so that they will answer on either 10.0
       add_listen => false,
     }
 
-Implementation
---------------
+##Implementation
 
 ###Classes and Defined Types
 
@@ -652,13 +650,11 @@ Declaring this defined type will add all `NameVirtualHost` directives to the `po
 
 The Apache module relies heavily on templates to enable the `vhost` and `apache::mod` defined types. These templates are built based on Facter facts around your operating system. Unless explicitly called out, most templates are not meant for configuration. 
 
-Limitations
------------
+##Limitations
 
 This has been tested on Ubuntu Precise, Debian Wheezy, and CentOS 5.8.
 
-Development
------------
+##Development
 
 Puppet Labs modules on the Puppet Forge are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad of hardware, software, and deployment configurations that Puppet is intended to serve.
 
@@ -666,8 +662,7 @@ We want to keep it as easy as possible to contribute changes so that our modules
 
 You can read the complete module contribution guide [on the Puppet Labs wiki.](http://projects.puppetlabs.com/projects/module-site/wiki/Module_contributing)
 
-Copyright and License
----------------------
+##Copyright and License
 
 Copyright (C) 2012 [Puppet Labs](https://www.puppetlabs.com/) Inc
 
@@ -684,6 +679,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-Release Notes
--------------
