@@ -174,6 +174,18 @@ Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 
 #####`error_documents` 
 
 Enables custom error documents. Defaults to 'false'. 
+
+#####`confd_dir`XXX
+
+Changes the location of the configuration directory your custom configuration files are placed in. Default is based on your OS.            
+
+#####`vhost_dir`XXX
+
+Changes the location of the configuration directory your virtual host configuration files are placed in. Default is based on your OS.
+
+#####`mod_dir`XXX
+
+Changes the location of the configuration directory your Apache modules configuration files are placed in. Default is based on your OS. 
           
 ####Class: `apache::default_mods`
 
