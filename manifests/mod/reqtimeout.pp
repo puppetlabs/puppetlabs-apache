@@ -1,8 +1,9 @@
 class apache::mod::reqtimeout {
   apache::mod { 'reqtimeout': }
   # Template uses no variables
-  file { "${apache::params::mod_dir}/reqtimeout.conf":
+  file { 'reqtimeout.conf':
     ensure  => present,
+    path    => "${apache::mod_dir}/reqtimeout.conf",
     content => template('apache/mod/reqtimeout.conf.erb'),
   }
 }

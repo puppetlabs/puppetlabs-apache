@@ -1,8 +1,9 @@
 class apache::mod::mime {
   apache::mod { 'mime': }
   # Template uses no variables
-  file { "${apache::params::mod_dir}/mime.conf":
+  file { 'mime.conf':
     ensure  => present,
+    path    => "${apache::mod_dir}/mime.conf",
     content => template('apache/mod/mime.conf.erb'),
   }
 }

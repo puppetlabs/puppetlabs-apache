@@ -26,7 +26,10 @@ class apache (
   $purge_configs        = true,
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
-  $error_documents      = false
+  $error_documents      = false,
+  $confd_dir            = $apache::params::confd_dir,
+  $vhost_dir            = $apache::params::vhost_dir,
+  $mod_dir              = $apache::params::mod_dir
 ) inherits apache::params {
 
   package { 'httpd':
@@ -52,7 +55,7 @@ class apache (
     subscribe => Package['httpd'],
   }
 
-  file { $apache::params::confd_dir:
+  file { $apache::confd_dir:
     ensure  => directory,
     recurse => true,
     purge   => $purge_configs,
@@ -60,20 +63,24 @@ class apache (
     require => Package['httpd'],
   }
 
-  file { $apache::params::mod_dir:
-    ensure  => directory,
-    recurse => true,
-    purge   => $purge_configs,
-    notify  => Service['httpd'],
-    require => Package['httpd'],
+  if ! defined(File[$apache::mod_dir]) {
+    file { $apache::mod_dir:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_configs,
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
   }
 
-  file { $apache::params::vhost_dir:
-    ensure  => directory,
-    recurse => true,
-    purge   => $purge_configs,
-    notify  => Service['httpd'],
-    require => Package['httpd'],
+  if ! defined(File[$apache::vhost_dir]) {
+    file { $apache::vhost_dir:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_configs,
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
   }
 
   concat { $ports_file:

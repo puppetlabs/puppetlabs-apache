@@ -1,4 +1,7 @@
 describe 'apache::mod::ssl', :type => :class do
+  let :pre_condition do
+    'include apache'
+  end
   context 'on an unsupported OS' do
     let :facts do
       {

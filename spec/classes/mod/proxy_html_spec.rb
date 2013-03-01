@@ -1,6 +1,7 @@
 describe 'apache::mod::proxy_html', :type => :class do
   let :pre_condition do
     [
+      'include apache',
       'include apache::mod::proxy',
       'include apache::mod::proxy_http',
     ]

@@ -1,7 +1,8 @@
 class apache::mod::mpm_event {
   # Template uses no variables
-  file { "${apache::params::mod_dir}/mpm_event.conf":
+  file { 'mpm_event.conf':
     ensure  => present,
+    path    => "${apache::mod_dir}/mpm_event.conf",
     content => template('apache/mod/mpm_event.conf.erb'),
   }
 }
