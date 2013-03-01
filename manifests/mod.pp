@@ -1,4 +1,5 @@
 define apache::mod (
+  $ensure  = 'present',
   $package = undef
 ) {
   $mod = $name
@@ -25,14 +26,14 @@ define apache::mod (
 
   if $package_REAL {
     package { $package_REAL:
-      ensure   => present,
+      ensure   => $ensure,
       require  => Package['httpd'],
       before   => A2mod[$mod],
     }
   }
 
   a2mod { $mod:
-    ensure     => present,
+    ensure     => $ensure,
     lib        => $lib,
     identifier => $identifier,
     require    => Package['httpd'],
