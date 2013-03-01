@@ -10,7 +10,7 @@
 6. [Usage - The classes, defined types, and their parameters available for configuration](#usage)
     7. [Classes and Defined Types](#classes-and-defined-types)
         8. [Class: apache](#class-apache)
-        9. [Class: apache::mod::*]([#classes:-apachemodname)
+        9. [Classes: apache::mod::*](#classes-apachemodname)
         10. [Defined Type: apache::vhost](#defined-type-apachevhost)
     11. [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
 12. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
@@ -25,7 +25,6 @@
 The Apache module allows you to set up virtual hosts and manage web services with minimal effort. 
 
 ##Module Description
-
 
 Apache is a widely-used web server, and this module provides a simplified way of creating configurations to manage your infrastructure. This includes the ability to configure and manage a range of different virtual host setups, as well as a streamlined way to install and configure Apache modules.
 
