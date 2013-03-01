@@ -89,6 +89,31 @@ class apache::params {
     }
     $mod_libs              = {}
     $mod_identifiers       = {}
+  } elsif $::osfamily == 'Suse' {
+    $user                  = 'wwwrun'
+    $group                 = 'www'
+    $apache_name           = 'apache2'
+    $php_package           = 'apache2-mod_php5'
+    $mod_passenger_package = 'apache2-mod_passenger'
+    $mod_python_package    = 'apache2-mod_python'
+    $mod_wsgi_package      = 'apache2-mod_wsgi'
+    $mod_auth_kerb_package = 'apache2-mod_auth_kerb'
+    $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-devel']
+    $vdir                  = '/etc/apache2/vhosts.d/'
+    $conf_dir              = "/etc/apache2/conf.d"
+    $proxy_modules         = ['proxy', 'proxy_http']
+    $mod_packages          = {
+      'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-devel'],
+      'fcgid'      => 'apache2-mod_fcgid',
+      'passenger'  => 'apache2-mod_passenger',
+      'perl'       => 'apache2-mod_perl2',
+      'php5'       => 'apache2-mod_php5',
+      'proxy_html' => 'apache2-mod_proxy_html',
+      'python'     => 'apache2-mod_python',
+      'wsgi'       => 'apache2-mod_wsgi',
+    }
+    $mod_libs              = {}
+    $mod_identifiers       = {}
   } else {
     fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
   }
