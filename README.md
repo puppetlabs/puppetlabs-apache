@@ -25,6 +25,7 @@ example is:
         priority        => '10',
         vhost_name      => '192.0.2.1',
         port            => '80',
+        docroot         => '/var/www/html',
     }
 
 A slightly more complicated example, which moves the docroot and
