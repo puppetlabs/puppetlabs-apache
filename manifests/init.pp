@@ -25,6 +25,20 @@ class apache (
     name   => $apache::params::apache_name,
   }
 
+  # declare the web server user and group
+  # Note: requiring the package means the package ought to create them and not puppet
+  group { $apache::params::group:
+    ensure  => present,
+    require => Package['httpd']
+  }
+
+  user { $apache::params::user:
+    ensure  => present,
+    gid     => $apache::params::group,
+    require => Package['httpd'],
+    before  => Service['httpd'],
+  }
+
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
 
