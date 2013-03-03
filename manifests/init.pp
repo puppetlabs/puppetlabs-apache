@@ -49,10 +49,16 @@ class apache (
   $ports_file = $apache::params::ports_file
   $logroot    = $apache::params::logroot
 
-  #declare the web server user
+  # declare the web server user and group
+  # Note: requiring the package means the package ought to create them and not puppet
+  group { $apache::params::group:
+    ensure  => present,
+    require => Package['httpd']
+  }
+
   user { $apache::params::user:
     ensure  => present,
-    groups  => [$apache::params::group],
+    gid     => $apache::params::group,
     require => Package['httpd'],
     before  => Service['httpd'],
   }
