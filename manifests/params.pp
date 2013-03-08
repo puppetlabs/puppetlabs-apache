@@ -65,7 +65,7 @@ class apache::params {
     $mod_identifiers       = {
       'shibboleth' => 'mod_shib',
     }
-  } elsif $::osfamily == 'debian' {
+  } elsif $::osfamily == 'debian' or $::operatingsystem == 'Debian' {
     $user                  = 'www-data'
     $group                 = 'www-data'
     $apache_name           = 'apache2'
