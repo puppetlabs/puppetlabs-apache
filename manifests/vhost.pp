@@ -117,16 +117,18 @@ define apache::vhost(
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
     file { $docroot:
-      ensure => directory,
-      owner  => $docroot_owner,
-      group  => $docroot_group,
+      ensure  => directory,
+      owner   => $docroot_owner,
+      group   => $docroot_group,
+      require => Package['httpd'],
     }
   }
 
   # Same as above, but for logroot
   if ! defined(File[$logroot]) {
     file { $logroot:
-      ensure => directory,
+      ensure  => directory,
+      require => Package['httpd'],
     }
   }
 
