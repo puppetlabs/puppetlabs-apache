@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apache::mod', :type => :define do
   context "On a Red Hat OS with shibboleth module and package param passed" do
     let :facts do
-      { :osfamily => 'redhat' }
+      { :osfamily => 'RedHat' }
     end
     # name/title for the apache::mod define
     let :title do
