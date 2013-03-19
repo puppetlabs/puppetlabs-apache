@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'apache::vhost', :type => :define do
-  context "On a Debian OS" do
+  context "On a RedHat OS" do
     let :facts do
       { :osfamily => 'RedHat' }
     end
