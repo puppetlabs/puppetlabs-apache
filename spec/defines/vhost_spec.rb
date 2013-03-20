@@ -65,7 +65,7 @@ describe 'apache::vhost', :type => :define do
         it { should contain_file("#{param_hash[:priority]}-#{title}.conf").with({
             'owner'     => 'root',
             'group'     => 'root',
-            'mode'      => '0755',
+            'mode'      => '0644',
             'notify'    => 'Service[httpd]'
           })
         }

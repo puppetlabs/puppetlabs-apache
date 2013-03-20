@@ -117,7 +117,7 @@ define apache::vhost(
     content => template($template),
     owner   => 'root',
     group   => 'root',
-    mode    => '0755',
+    mode    => '0644',
     require => [
       Package['httpd'],
       File[$docroot],
