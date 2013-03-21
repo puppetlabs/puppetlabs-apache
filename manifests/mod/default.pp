@@ -41,7 +41,7 @@ class apache::mod::default {
   apache::mod { 'rewrite': }
   apache::mod { 'setenvif': }
   apache::mod { 'speling': }
-  apache::mod { 'status': }
+  include apache::mod::status
   apache::mod { 'suexec': }
   apache::mod { 'usertrack': }
   apache::mod { 'version': }
