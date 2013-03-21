@@ -20,7 +20,6 @@
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
-# - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
 #
 # Actions:
@@ -44,6 +43,8 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = $apache::params::ssl,
+    $cert_path          = $apache::params::cert_path,
+    $cert_key_path      = $apache::params::cert_key_path,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
@@ -55,7 +56,6 @@ define apache::vhost(
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
-    $access_log         = true,
     $ensure             = 'present'
   ) {
 
@@ -99,18 +99,6 @@ define apache::vhost(
     }
   }
 
-  # Template uses:
-  # - $vhost_name
-  # - $port
-  # - $srvname
-  # - $serveradmin
-  # - $serveraliases
-  # - $docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $access_log
-  # - $name
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
@@ -137,4 +125,3 @@ define apache::vhost(
     }
   }
 }
-
