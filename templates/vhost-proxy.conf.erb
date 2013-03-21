@@ -1,3 +1,6 @@
+<% if port.to_s != '80' %>
+Listen <%= vhost_name %>:<%= port %>
+<% end %>
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
   <% if ssl == true %>
