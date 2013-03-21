@@ -5,6 +5,11 @@
 
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
+  <% if ssl == true %>
+  SSLEngine on
+  SSLCertificateFile <%= cert_path %>
+  SSLCertificateKeyFile <%= cert_key_path %>
+  <% end %>
   ServerName <%= srvname %>
 <% if serveradmin %>
   ServerAdmin <%= serveradmin %>
