@@ -63,7 +63,7 @@ define apache::vhost(
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
 
-  include apache
+  require apache
 
   if $servername == '' {
     $srvname = $name
