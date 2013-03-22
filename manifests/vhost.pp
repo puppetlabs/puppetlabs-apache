@@ -49,6 +49,11 @@
 #    rewrite_cond => '%{HTTPS} off',
 #    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
 #  }
+#  apache::vhost { 'site.name.fqdn':
+#    port            => '80',
+#    docroot         => '/path/to/other_docroot',
+#    custom_fragment => "${module_name}/my_fragment.erb",
+#  }
 #
 define apache::vhost(
     $docroot,
@@ -94,7 +99,8 @@ define apache::vhost(
     $setenv             = [],
     $setenvif           = [],
     $block              = [],
-    $ensure             = 'present'
+    $ensure             = 'present',
+    $custom_fragment    = undef
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -265,6 +271,7 @@ define apache::vhost(
   # - $access_log_file_real
   # - $error_log
   # - $error_log_file_real
+  # - $custom_fragement
   # block fragment:
   #   - $block
   # proxy fragment:

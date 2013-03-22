@@ -37,4 +37,9 @@
 <%= scope.function_template(['apache/vhost/_setenv.erb']) -%>
 <%= scope.function_template(['apache/vhost/_ssl.erb']) -%>
 <%= scope.function_template(['apache/vhost/_requestheader.erb']) -%>
-</VirtualHost>
+<% if @custom_fragment -%>
+<% Array(@custom_fragment).each do |fragment| -%>
+<%= scope.function_template(['apache/vhost/_custom_fragment_header.erb',fragment]) %>
+<% end -%>
+<% end -%>
+<%= scope.function_template(['apache/vhost/_vhost_end.erb']) -%>
