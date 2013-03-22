@@ -291,6 +291,10 @@ Specifies whether a firewall should be configured. Valid values are 'true' or 'f
 
 Pass a template of custom configuration to be placed at the bottom of the vhost configuration.
 
+#####`custom_fragment_params`
+
+Pass a hash of paramters for the custom fragment to use. The custom fragment template running in the scope of apache::vhost which makes this important since Puppet 3.x and up no longer support dynamic variable lookup.
+
 #####`default_vhost`
 
 Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
