@@ -42,6 +42,7 @@ define apache::vhost(
     $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
+    $ensure_docroot     = $apache::params::ensure_docroot,
     $ssl                = $apache::params::ssl,
     $cert_path          = $apache::params::cert_path,
     $cert_key_path      = $apache::params::cert_key_path,
@@ -89,6 +90,7 @@ define apache::vhost(
       ensure => directory,
       owner  => $docroot_owner,
       group  => $docroot_group,
+      unless => ($ensure_docroot == false)
     }
   }
 
@@ -108,7 +110,7 @@ define apache::vhost(
     mode    => '0755',
     require => [
       Package['httpd'],
-      File[$docroot],
+      #File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],

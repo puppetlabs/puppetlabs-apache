@@ -18,8 +18,9 @@
 # Sample Usage:
 #
 class apache::params {
-
+  
   $ssl           = true
+  $ensure_docroot= true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
