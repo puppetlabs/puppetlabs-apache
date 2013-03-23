@@ -57,6 +57,7 @@ define apache::vhost(
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
+    $access_log         = true,
     $ensure             = 'present'
   ) {
 
@@ -90,7 +91,7 @@ define apache::vhost(
       ensure => directory,
       owner  => $docroot_owner,
       group  => $docroot_group,
-      unless => ($ensure_docroot == false)
+      unless => ($ensure_docroot == false),
     }
   }
 
@@ -110,7 +111,7 @@ define apache::vhost(
     mode    => '0755',
     require => [
       Package['httpd'],
-      #File[$docroot],
+      File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],
