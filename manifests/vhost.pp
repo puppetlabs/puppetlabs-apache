@@ -84,14 +84,18 @@ define apache::vhost(
     }
   }
 
+  # Added $ensure_docroot (defaults to true) for integrating with capistrano
+  # deployments where 'current' is not currently exist at provision time.
+  #
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
-    file { $docroot:
-      ensure => directory,
-      owner  => $docroot_owner,
-      group  => $docroot_group,
-      unless => ($ensure_docroot == false),
+  if($ensure_docroot == false) {
+    if ! defined(File[$docroot]) {
+      file { $docroot:
+        ensure => directory,
+        owner  => $docroot_owner,
+        group  => $docroot_group,  
+      }
     }
   }
 
@@ -111,7 +115,6 @@ define apache::vhost(
     mode    => '0755',
     require => [
       Package['httpd'],
-      File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],
