@@ -24,3 +24,11 @@ matrix:
       env: PUPPET_GEM_VERSION="~> 2.6.0"
 notifications:
   email: false
+language: java
+script:
+- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
+- .forge-releng/publish
+env:
+ global:
+ - PUBLISHER_LOGIN=rcoleman
+  - secure: "g2IiwsXB/FNJ6jPTxhUGiK4/zjmzN3Gv2jc65wfJumxIi3yBabi8nN/PZjzt\ntqHnhtVBH5TpJ2GADCGtcVWO0Yb1/pS2l4+oHmr93/5tG/OZsUT+tFvp2FAL\nU2yK6Nhw1zreQ5TtV8xu0CMGw+45kblqz3R7mViLS44dKLQ3whM="
