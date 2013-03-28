@@ -24,6 +24,8 @@
 # - The $wsgi_python_home for the wsgi app (optional)
 # - The $wsgi_script for the wsgi script alias (optional)
 # - The $wsgi_url for the wsgi script alias, defaulting to /
+# - The $alias_target for alias directive target
+# - The $alias_url for the alias directive url (optional)
 #
 # Actions:
 # - Install Apache Virtual Hosts
