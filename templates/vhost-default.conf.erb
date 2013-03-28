@@ -33,15 +33,14 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
     Order allow,deny
-    allow from all
+    Allow from all
   </Directory>
-
   <% if alias_target %>
   <Directory <%= alias_target %>>
-    Require all granted
+    Satisfy Any
+    Allow from all 
   </Directory>
   <% end %>
-
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
 <% if access_log -%>
