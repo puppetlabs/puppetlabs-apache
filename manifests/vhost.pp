@@ -64,7 +64,9 @@ define apache::vhost(
     $ensure             = 'present',
     $wsgi_python_home   = false,
     $wsgi_script_url    = '/',
-    $wsgi_script        = false
+    $wsgi_script        = false,
+    $alias_url          = '/',
+    $alias_target       = false
   ) {
 
   validate_re($ensure, '^(present|absent)$',

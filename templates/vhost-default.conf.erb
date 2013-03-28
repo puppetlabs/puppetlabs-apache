@@ -24,7 +24,10 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% end -%>
   DocumentRoot <%= docroot %>
   <% if wsgi_script %>
-    WSGIScriptAlias <%= wsgi_script_url %> <%= wsgi_script %>
+  WSGIScriptAlias <%= wsgi_script_url %> <%= wsgi_script %>
+  <% end %>
+  <% if alias_target %>
+  Alias <%= alias_url %> <%= alias_target %>
   <% end %>
   <Directory <%= docroot %>>
     Options <%= options %>
@@ -32,6 +35,13 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     Order allow,deny
     allow from all
   </Directory>
+
+  <% if alias_target %>
+  <Directory <%= alias_target %>>
+    Require all granted
+  </Directory>
+  <% end %>
+
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
 <% if access_log -%>
