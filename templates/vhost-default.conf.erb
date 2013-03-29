@@ -42,6 +42,21 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     <% end %>
   </Directory>
   <% end %>
+  <% if required and auth_name and auth_type and auth_user_file %>
+  <Directory <%= auth_dir %>>
+    AuthType <%= auth_type %>
+    AuthName "<%= auth_name %>"
+    AuthUserFile <%= auth_user_file %>
+    <% if auth_group_file %>
+    AuthGroupFile <%= auth_group_file %>
+    Require group <%= groups %>
+    <% elsif userids %>
+    Require user <%= userids %>
+    <% else %>
+    Require valid-user
+    <% end %>
+  </Directory>
+  <% end %>
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
 <% if access_log -%>
