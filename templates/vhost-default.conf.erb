@@ -35,10 +35,11 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     Order allow,deny
     Allow from all
   </Directory>
-  <% if alias_target %>
+  <% if alias_target and alias_dir_options.length > 0 %>
   <Directory <%= alias_target %>>
-    Satisfy Any
-    Allow from all 
+    <% alias_dir_options.each do | directive, param | %>
+    <%= directive %> <%= param %>
+    <% end %>
   </Directory>
   <% end %>
   ErrorLog <%= logroot %>/<%= name %>_error.log

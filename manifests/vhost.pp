@@ -68,7 +68,9 @@ define apache::vhost(
     $wsgi_script_url    = '/',
     $wsgi_script        = false,
     $alias_url          = '/',
-    $alias_target       = false
+    $alias_target       = false,
+    # alias_dir_options is a hash of directive => param settings for the alias Directory directive
+    $alias_dir_options  = {}
   ) {
 
   validate_re($ensure, '^(present|absent)$',
