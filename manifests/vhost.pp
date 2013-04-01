@@ -71,14 +71,13 @@ define apache::vhost(
     $alias_target       = false,
     # alias_dir_options is a hash of directive => param settings for the alias Directory directive
     $alias_dir_options  = {},
-    $auth_dir           = false,
-    $required            = false,
+    $auth_dir           = '/',
     $auth_type          = "Basic",
     $auth_name          = "Project",
     $auth_user_file     = false,
     $auth_group_file    = false,
-    $userids            = false,
-    $groups             = false,
+    $auth_userids       = false,
+    $auth_groups        = false,
   ) {
 
   validate_re($ensure, '^(present|absent)$',
