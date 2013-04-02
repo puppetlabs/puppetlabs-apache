@@ -51,7 +51,7 @@
 #  }
 #
 define apache::vhost(
-    $docroot,
+    $docroot            = undef,
     $port               = undef,
     $ip                 = undef,
     $ip_based           = false,
@@ -115,25 +115,6 @@ define apache::vhost(
 
   if $ssl {
     include apache::mod::ssl
-  }
-
-  # This ensures that the docroot exists
-  # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
-    file { $docroot:
-      ensure  => directory,
-      owner   => $docroot_owner,
-      group   => $docroot_group,
-      require => Package['httpd'],
-    }
-  }
-
-  # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
-    file { $logroot:
-      ensure  => directory,
-      require => Package['httpd'],
-    }
   }
 
   # Open listening ports if they are not already
@@ -233,6 +214,28 @@ define apache::vhost(
     $priority_real = '10'
   } else {
     $priority_real = '25'
+  }
+
+  if $docroot {
+    # This ensures that the docroot exists
+    # But enables it to be specified across multiple vhost resources
+    if ! defined(File[$docroot]) {
+      file { $docroot:
+        ensure  => directory,
+        owner   => $docroot_owner,
+        group   => $docroot_group,
+        require => Package['httpd'],
+        before  => File["${priority_real}-${name}.conf"],
+      }
+    }
+  }
+
+  # Same as above, but for logroot
+  if ! defined(File[$logroot]) {
+    file { $logroot:
+      ensure  => directory,
+      require => Package['httpd'],
+    }
   }
 
   # Configure firewall rules
