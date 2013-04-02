@@ -276,6 +276,8 @@ define apache::vhost(
   #   - $redirect_source
   #   - $redirect_dest
   #   - $redirect_status
+  # requestheader fragment:
+  #   - $request_headers
   # rewrite fragment:
   #   - $rewrite_rule
   #   - $rewrite_base
@@ -297,8 +299,6 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
-  # requestheader fragment:
-  #   - $request_headers
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",

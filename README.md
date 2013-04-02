@@ -387,6 +387,18 @@ Specifies the status to append to the redirect. Defaults to 'undef'.
       redirect_status => ['temp','permanent'],
     }
 
+#####`request_headers`
+
+Specifies additional request headers.
+
+    apache::vhost { 'site.name.fdqn':
+      …
+      request_headers => [
+        'append MirrorID "mirror 12"',
+        'unset MirrorID',
+      ],
+    }
+
 #####`rewrite_base` 
 
 Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'. 
