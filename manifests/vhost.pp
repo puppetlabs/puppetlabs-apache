@@ -94,6 +94,7 @@ define apache::vhost(
     $setenv             = [],
     $setenvif           = [],
     $block              = [],
+    $content            = '',
     $ensure             = 'present'
   ) {
   # The base class must be included first because it is used by parameter defaults
@@ -110,6 +111,7 @@ define apache::vhost(
   validate_bool($access_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
+  validate_string($content)
 
   if $ssl {
     include apache::mod::ssl
@@ -299,10 +301,16 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  if $content {
+    $vhost_content = $content
+  } else {
+    $vhost_content = template('apache/vhost.conf.erb')
+  }
+
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",
-    content => template('apache/vhost.conf.erb'),
+    content => $vhost_content,
     owner   => 'root',
     group   => 'root',
     mode    => '0755',

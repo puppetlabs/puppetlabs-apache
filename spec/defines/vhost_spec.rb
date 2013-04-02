@@ -184,6 +184,13 @@ describe 'apache::vhost', :type => :define do
           :match => '  RewriteRule not a real rule',
         },
         {
+          :title    => 'should accept custom content',
+          :attr     => 'content',
+          :value    => 'not a real vhost config',
+          :match    => 'not a real vhost config',
+          :notmatch => '</VirtualHost>',
+        },
+        {
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
