@@ -29,7 +29,7 @@
 # - The $vhost_rewrite_rule is an Array of Hashes which describes a set of 
 #       rewrite rules using the :pattern, :substitution, and :flags as keys.
 #       For example:
-#       $vhost_rewrite_rule = [{:pattern => '/foo?', :substitution => '/bar$1', flags => 'B, nocase'
+#       $vhost_rewrite_rule = [{:pattern => '/foo?', :substitution => '/bar$1', :flags => 'B, nocase'
 #
 # Actions:
 # - Install Apache Virtual Hosts
