@@ -26,6 +26,10 @@
 # - The $wsgi_url for the wsgi script alias, defaulting to /
 # - The $alias_target for alias directive target
 # - The $alias_url for the alias directive url (optional)
+# - The $vhost_rewrite_rule is an Array of Hashes which describes a set of 
+#       rewrite rules using the :pattern, :substitution, and :flags as keys.
+#       For example:
+#       $vhost_rewrite_rule = [{:pattern => '/foo?', :substitution => '/bar$1', flags => 'B, nocase'
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -78,6 +82,7 @@ define apache::vhost(
     $auth_group_file    = false,
     $auth_userids       = false,
     $auth_groups        = false,
+    $vhost_rewrite_rule = false
   ) {
 
   validate_re($ensure, '^(present|absent)$',

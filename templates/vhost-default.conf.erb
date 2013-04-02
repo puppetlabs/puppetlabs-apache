@@ -57,6 +57,11 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     <% end %>
   </Directory>
   <% end %>
+<% if vhost_rewrite_rule -%>
+  <% vhost_rewrite_rule.each do | rule | %>
+  RewriteRule <%= rule[:pattern] %> <%= rule[:substitution] %> [<%= rule[:flags] %>]
+  <% end %>
+<% end -%>
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
 <% if access_log -%>
