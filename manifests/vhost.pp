@@ -56,7 +56,8 @@ define apache::vhost(
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
     $access_log         = true,
-    $ensure             = 'present'
+    $ensure             = 'present',
+    $vhost_rewrite_rule = false
   ) {
 
   validate_re($ensure, '^(present|absent)$',
