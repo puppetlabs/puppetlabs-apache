@@ -58,6 +58,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   </Directory>
   <% end %>
 <% if vhost_rewrite_rule -%>
+  RewriteEngine on
   <% vhost_rewrite_rule.each do | rule | %>
   RewriteRule <%= rule[:pattern] %> <%= rule[:substitution] %> [<%= rule[:flags] %>]
   <% end %>
