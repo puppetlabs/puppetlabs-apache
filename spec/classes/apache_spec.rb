@@ -25,6 +25,77 @@ describe 'apache', :type => :class do
       'require' => 'Package[httpd]'
       )
     }
+    it { should contain_file("/etc/apache2/mods-enabled").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Service[httpd]',
+      'require' => 'Package[httpd]'
+      )
+    }
+    it { should contain_file("/etc/apache2/mods-available").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Service[httpd]',
+      'require' => 'Package[httpd]'
+      )
+    }
+    # Assert that load files are placed and symlinked for these mods, but no conf file.
+    [
+      'auth_basic',
+      'authn_file',
+      'authz_default',
+      'authz_groupfile',
+      'authz_host',
+      'authz_user',
+      'dav',
+      'env',
+    ].each do |modname|
+      it { should contain_file("#{modname}.load").with(
+        'path'   => "/etc/apache2/mods-available/#{modname}.load",
+        'ensure' => 'file',
+      ) }
+      it { should contain_file("#{modname}.load symlink").with(
+        'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
+        'ensure' => 'link',
+        'target' => "/etc/apache2/mods-available/#{modname}.load"
+      ) }
+      it { should_not contain_file("#{modname}.conf") }
+      it { should_not contain_file("#{modname}.conf symlink") }
+    end
+
+    # Assert that both load files and conf files are placed and symlinked for these mods
+    [
+      'alias',
+      'autoindex',
+      'dav_fs',
+      'deflate',
+      'dir',
+      'mime',
+      'negotiation',
+      'setenvif',
+      'status',
+    ].each do |modname|
+      it { should contain_file("#{modname}.load").with(
+        'path'   => "/etc/apache2/mods-available/#{modname}.load",
+        'ensure' => 'file',
+      ) }
+      it { should contain_file("#{modname}.load symlink").with(
+        'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
+        'ensure' => 'link',
+        'target' => "/etc/apache2/mods-available/#{modname}.load"
+      ) }
+      it { should contain_file("#{modname}.conf").with(
+        'path'   => "/etc/apache2/mods-available/#{modname}.conf",
+        'ensure' => 'file',
+      ) }
+      it { should contain_file("#{modname}.conf symlink").with(
+        'path'   => "/etc/apache2/mods-enabled/#{modname}.conf",
+        'ensure' => 'link',
+        'target' => "/etc/apache2/mods-available/#{modname}.conf"
+      ) }
+    end
   end
   context "on a RedHat 5 OS" do
     let :facts do

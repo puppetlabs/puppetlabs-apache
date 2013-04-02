@@ -9,7 +9,7 @@ class apache::mod::disk_cache {
   apache::mod { 'disk_cache': }
   # Template uses $cache_proxy
   file { 'disk_cache.conf':
-    ensure  => present,
+    ensure  => file,
     path    => "${apache::mod_dir}/disk_cache.conf",
     content => template('apache/mod/disk_cache.conf.erb'),
   }

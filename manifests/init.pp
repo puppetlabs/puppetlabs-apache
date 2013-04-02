@@ -29,7 +29,8 @@ class apache (
   $error_documents      = false,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
-  $mod_dir              = $apache::params::mod_dir
+  $mod_dir              = $apache::params::mod_dir,
+  $mod_enable_dir       = $apache::params::mod_enable_dir
 ) inherits apache::params {
 
   package { 'httpd':
@@ -65,6 +66,16 @@ class apache (
 
   if ! defined(File[$apache::mod_dir]) {
     file { $apache::mod_dir:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_configs,
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
+  }
+
+  if $apache::mod_enable_dir and ! defined(File[$apache::mod_enable_dir]) {
+    file { $apache::mod_enable_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
@@ -128,7 +139,7 @@ class apache (
     # - $error_documents
     # - $error_documents_path
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
-      ensure  => present,
+      ensure  => file,
       content => template("apache/httpd.conf.erb"),
       notify  => Service['httpd'],
       require => Package['httpd'],

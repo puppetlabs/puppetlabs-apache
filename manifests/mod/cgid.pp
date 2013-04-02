@@ -5,7 +5,7 @@ class apache::mod::cgid {
   apache::mod { 'cgid': }
   # Template uses $cgisock_path
   file { 'cgid.conf':
-    ensure  => present,
+    ensure  => file,
     path    => "${apache::mod_dir}/cgid.conf",
     content => template('apache/mod/cgid.conf.erb'),
   }

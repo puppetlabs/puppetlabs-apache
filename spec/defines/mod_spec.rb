@@ -55,8 +55,14 @@ describe 'apache::mod', :type => :define do
       it { should include_class("apache::params") }
       it "should manage the module load file" do
         should contain_file('spec_m.load').with({
-          :path    => '/etc/apache2/mods-enabled/spec_m.load',
+          :path    => '/etc/apache2/mods-available/spec_m.load',
           :content => "LoadModule spec_m_module /usr/lib/apache2/modules/mod_spec_m.so\n"
+        } )
+      end
+      it "should link the module load file" do
+        should contain_file('spec_m.load symlink').with({
+          :path   => '/etc/apache2/mods-enabled/spec_m.load',
+          :target => '/etc/apache2/mods-available/spec_m.load',
         } )
       end
     end

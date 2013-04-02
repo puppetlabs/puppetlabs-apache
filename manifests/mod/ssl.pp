@@ -13,7 +13,7 @@ class apache::mod::ssl (
 
   # Template uses $ssl_compression, $session_cache, $ssl_mutex
   file { 'ssl.conf':
-    ensure  => present,
+    ensure  => file,
     path    => "${apache::mod_dir}/ssl.conf",
     content => template('apache/mod/ssl.conf.erb'),
   }
