@@ -60,7 +60,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% if vhost_rewrite_rule -%>
   RewriteEngine on
   <% vhost_rewrite_rule.each do | rule | %>
-  RewriteRule <%= rule[:pattern] %> <%= rule[:substitution] %> [<%= rule[:flags] %>]
+  RewriteRule <%= rule["pattern"] %> <%= rule["substitution"] %> [<%= rule["flags"] %>]
   <% end %>
 <% end -%>
   ErrorLog <%= logroot %>/<%= name %>_error.log
