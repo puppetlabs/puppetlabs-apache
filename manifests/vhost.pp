@@ -22,6 +22,7 @@
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
+# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -86,6 +87,7 @@ define apache::vhost(
     $redirect_dest      = undef,
     $redirect_status    = undef,
     $rack_base_uris     = undef,
+    $request_headers    = undef,
     $rewrite_rule       = undef,
     $rewrite_base       = undef,
     $rewrite_cond       = undef,
@@ -243,6 +245,13 @@ define apache::vhost(
     }
   }
 
+  # Check if mod_headers is required to process $request_headers
+  if $request_headers {
+    if ! defined(Class['apache::mod::headers']) {
+      include apache::mod::headers
+    }
+  }
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
@@ -267,6 +276,8 @@ define apache::vhost(
   #   - $redirect_source
   #   - $redirect_dest
   #   - $redirect_status
+  # requestheader fragment:
+  #   - $request_headers
   # rewrite fragment:
   #   - $rewrite_rule
   #   - $rewrite_base

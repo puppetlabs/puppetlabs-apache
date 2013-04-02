@@ -169,6 +169,15 @@ describe 'apache::vhost', :type => :define do
           :match => ['  RackBaseURI /rack1','  RackBaseURI /rack2'],
         },
         {
+          :title => 'should accept request headers',
+          :attr  => 'request_headers',
+          :value => ['append something', 'unset something_else'],
+          :match => [
+            '  RequestHeader append something',
+            '  RequestHeader unset something_else',
+          ],
+        },
+        {
           :title => 'should accept rewrite rules',
           :attr  => 'rewrite_rule',
           :value => 'not a real rule',
