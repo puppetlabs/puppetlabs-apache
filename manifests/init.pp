@@ -51,14 +51,14 @@ class apache (
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
-  group { $apache::params::group:
+  group { $group:
     ensure  => present,
     require => Package['httpd']
   }
 
-  user { $apache::params::user:
+  user { $user:
     ensure  => present,
-    gid     => $apache::params::group,
+    gid     => $group,
     require => Package['httpd'],
     before  => Service['httpd'],
   }

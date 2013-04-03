@@ -11,6 +11,8 @@ describe 'apache', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_package("httpd") }
+    it { should contain_user("www-data") }
+    it { should contain_group("www-data") }
     it { should contain_service("httpd").with(
       'ensure'    => 'true',
       'enable'    => 'true',
@@ -107,6 +109,8 @@ describe 'apache', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_package("httpd") }
+    it { should contain_user("apache") }
+    it { should contain_group("apache") }
     it { should contain_service("httpd").with(
       'ensure'    => 'true',
       'enable'    => 'true',
