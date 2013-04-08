@@ -5,6 +5,7 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
+# - The $virtual_docroot provides VirtualDocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
 # - The $configure_firewall option is set to true or false to specify if
@@ -39,6 +40,7 @@
 define apache::vhost(
     $port,
     $docroot,
+    $virtual_docroot    = false,
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
@@ -106,6 +108,7 @@ define apache::vhost(
   # - $serveradmin
   # - $serveraliases
   # - $docroot
+  # - $virtual_docroot
   # - $options
   # - $override
   # - $logroot

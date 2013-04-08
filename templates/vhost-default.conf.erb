@@ -14,7 +14,11 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
+<% if virtual_docroot %>
+  VirtualDocumentRoot <%= virtual_docroot %>
+<% else %>
   DocumentRoot <%= docroot %>
+<% end %>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
