@@ -18,8 +18,9 @@
 # Sample Usage:
 #
 class apache::params {
-
-  $ssl           = true
+  
+  $ssl           = false
+  $ensure_docroot= true
   $template      = 'apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
@@ -27,6 +28,8 @@ class apache::params {
   $auth          = false
   $redirect_ssl  = false
   $ssl_path      = '/etc/ssl'
+  $cert_path     = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+  $cert_key_path = '/etc/ssl/private/ssl-cert-snakeoil.key'
   $options       = 'Indexes FollowSymLinks MultiViews'
   $override      = 'None'
   $vhost_name    = '*'
