@@ -24,6 +24,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% end -%>
   DocumentRoot <%= docroot %>
   <% if wsgi_script %>
+  WSGIPassAuthorization On
   WSGIScriptAlias <%= wsgi_script_url %> <%= wsgi_script %>
   <% end %>
   <% if alias_target %>
