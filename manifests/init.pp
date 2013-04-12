@@ -109,8 +109,8 @@ class apache (
   }
 
   concat { $ports_file:
-    owner  => $user,
-    group  => $group,
+    owner  => 'root',
+    group  => 'root',
     mode   => '0644',
     notify => Service[$apache::params::apache_name],
   }

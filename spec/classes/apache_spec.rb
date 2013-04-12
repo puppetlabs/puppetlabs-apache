@@ -43,6 +43,13 @@ describe 'apache', :type => :class do
       'require' => 'Package[httpd]'
       )
     }
+    it { should contain_file("/etc/apache2/ports.conf").with(
+      'owner'   => 'root',
+      'group'   => 'root',
+      'mode'    => '0644',
+      'notify'  => 'Service[apache2]',
+      )
+    }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
     [
       'auth_basic',
@@ -123,6 +130,13 @@ describe 'apache', :type => :class do
       'purge'   => 'true',
       'notify'  => 'Service[httpd]',
       'require' => 'Package[httpd]'
+      )
+    }
+    it { should contain_file("/etc/httpd/conf/ports.conf").with(
+      'owner'   => 'root',
+      'group'   => 'root',
+      'mode'    => '0644',
+      'notify'  => 'Service[httpd]'
       )
     }
     describe "Alternate confd/mod/vhosts directory" do
