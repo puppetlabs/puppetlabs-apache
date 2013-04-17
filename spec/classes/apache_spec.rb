@@ -47,7 +47,7 @@ describe 'apache', :type => :class do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
-      'notify'  => 'Service[apache2]',
+      'notify'  => 'Service[httpd]',
       )
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
