@@ -20,6 +20,8 @@ class apache (
   $purge_vdir   = true
 ) {
   include apache::params
+  ## include this here so non default fedora setups still work
+  include apache::mod::mpm
 
   package { 'httpd':
     ensure => installed,
