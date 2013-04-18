@@ -1,9 +1,9 @@
 #
 # This is the main Apache server configuration file.  It contains the
 # configuration directives that give the server its instructions.
-# See <URL:http://httpd.apache.org/docs/2.2/> for detailed information.
+# See <URL:http://httpd.apache.org/docs/<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>2.2<% else %>2.4<% end %>/> for detailed information.
 # In particular, see
-# <URL:http://httpd.apache.org/docs/2.2/mod/directives.html>
+# <URL:http://httpd.apache.org/docs/<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>2.2<% else %>2.4<% end %>/mod/directives.html>
 # for a discussion of each configuration directive.
 #
 #
@@ -259,8 +259,12 @@ DocumentRoot "/var/www/html"
 #
 # Controls who can get stuff from this server.
 #
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
     Order allow,deny
     Allow from all
+<% else -%>
+    Require all granted
+<% end -%>
 
 </Directory>
 
@@ -303,8 +307,12 @@ AccessFileName .htaccess
 # viewed by Web clients. 
 #
 <Files ~ "^\.ht">
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
     Order allow,deny
     Deny from all
+<% else -%>
+    Require all denied
+<% end -%>
 </Files>
 
 #
@@ -322,7 +330,7 @@ TypesConfig /etc/mime.types
 # keep browsers from trying to display binary files as though they are
 # text.
 #
-DefaultType text/plain
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 %> DefaultType text/plain<% end %>
 
 #
 # The mod_mime_magic module allows the server to use various hints from the
@@ -444,8 +452,12 @@ Alias /icons/ "/var/www/icons/"
 <Directory "/var/www/icons">
     Options Indexes MultiViews
     AllowOverride None
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
     Order allow,deny
     Allow from all
+<% else -%>
+    Require all granted
+<% end -%>
 </Directory>
 
 #
@@ -473,8 +485,12 @@ ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
 <Directory "/var/www/cgi-bin">
     AllowOverride None
     Options None
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
     Order allow,deny
     Allow from all
+<% else -%>
+    Require all granted
+<% end -%>
 </Directory>
 
 #
@@ -746,8 +762,12 @@ Alias /error/ "/var/www/error/"
         Options IncludesNoExec
         AddOutputFilter Includes html
         AddHandler type-map var
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
         Order allow,deny
         Allow from all
+<% else -%>
+        Require all granted
+<% end -%>
         LanguagePriority en es de fr
         ForceLanguagePriority Prefer Fallback
     </Directory>

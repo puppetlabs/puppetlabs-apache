@@ -18,8 +18,12 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
     Order allow,deny
-    allow from all
+    Allow from all
+<% else -%>
+    Require all granted
+<% end -%>
   </Directory>
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn

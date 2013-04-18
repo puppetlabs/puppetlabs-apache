@@ -13,8 +13,12 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% end %>
   ProxyRequests Off
   <Proxy *>
-    Order deny,allow
+<% if scope.function_versioncmp([apache_version,'2.4']) < 0 -%>
+    Order allow,deny
     Allow from all
+<% else -%>
+    Require all granted
+<% end -%>
   </Proxy>
 
 <% for uri in no_proxy_uris %>

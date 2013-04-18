@@ -3,8 +3,8 @@ class apache::mod::default {
   apache::mod { 'alias': }
   apache::mod { 'auth_basic': }
   apache::mod { 'auth_digest': }
-  if $apache_version =~ /^2\.4/ {
-    if $operatingsystem == fedora {
+  if (versioncmp($::apache_version, '2.4') >= 0) {
+    if $::operatingsystem == fedora {
       apache::mod { 'systemd': }
     }
     apache::mod { 'access_compat': }
@@ -13,8 +13,20 @@ class apache::mod::default {
     apache::mod { 'authz_core': }
     apache::mod { 'authn_dbd': }
     apache::mod { 'authz_dbd': }
-    apache::mod { 'authn_cocache': }
+    apache::mod { 'authn_socache': }
     apache::mod { 'unixd': }
+    apache::mod { 'data': }
+    apache::mod { 'dbd': }
+    apache::mod { 'filter': }
+    apache::mod { 'dumpio': }
+    apache::mod { 'remoteip': }
+    apache::mod { 'reqtimeout': }
+    apache::mod { 'slotmem_plain': }
+    apache::mod { 'socache_dbm': }
+    apache::mod { 'socache_memcache': }
+    apache::mod { 'slotmem_shm': }
+    apache::mod { 'socache_shmcb': }
+    apache::mod { 'substitute': }
   } else {
     apache::mod { 'authn_alias': }
     apache::mod { 'authn_default': }
@@ -50,6 +62,13 @@ class apache::mod::default {
   apache::mod { 'negotiation': }
   include apache::mod::proxy
   apache::mod { 'proxy_balancer': }
+  if (versioncmp($::apache_version, '2.4') >= 0) {
+    ## need these for proxy_balancer in apache 2.4.x
+    apache::mod { 'lbmethod_bybusyness': }
+    apache::mod { 'lbmethod_byrequests': }
+    apache::mod { 'lbmethod_bytraffic': }
+    apache::mod { 'lbmethod_heartbeat': }
+  }
   apache::mod { 'proxy_connect': }
   apache::mod { 'proxy_ftp': }
   apache::mod { 'rewrite': }

@@ -17,7 +17,9 @@
 #
 # Sample Usage:
 #
-class apache::params {
+class apache::params (
+  $mpm = 'prefork'
+){
 
   $ssl           = true
   $template      = 'apache/vhost-default.conf.erb'
@@ -59,8 +61,15 @@ class apache::params {
       'wsgi'       => 'mod_wsgi',
       'shibboleth' => 'shibboleth',
     }
-    $mod_libs              = {
-      'php5' => 'libphp5.so',
+    if $::operatingsystem == 'Fedora' {
+      # this needs testing on other platforms
+      $mod_libs              = {
+        'php5' => $mpm ? { default =>'libphp5.so', 'worker' => 'libphp5-zts.so' },
+      }
+    } else {
+      $mod_libs              = {
+        'php5' => 'libphp5.so',
+      }
     }
     $mod_identifiers       = {
       'shibboleth' => 'mod_shib',
