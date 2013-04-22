@@ -12,7 +12,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   SSLEngine on
   SSLCertificateFile <%= cert_path %>
   SSLCertificateKeyFile <%= cert_key_path %>
-  <% if cert_chain_file != '' %>
+  <% if cert_chain_file %>
   SSLCertificateChainFile <%= cert_chain_file %>
   <% end %>
   <% end %>
