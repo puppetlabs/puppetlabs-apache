@@ -20,8 +20,16 @@
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
-# - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
+# - The $wsgi_python_home for the wsgi app (optional)
+# - The $wsgi_script for the wsgi script alias (optional)
+# - The $wsgi_url for the wsgi script alias, defaulting to /
+# - The $alias_target for alias directive target
+# - The $alias_url for the alias directive url (optional)
+# - The $vhost_rewrite_rule is an Array of Hashes which describes a set of 
+#       rewrite rules using the :pattern, :substitution, and :flags as keys.
+#       For example:
+#       vhost_rewrite_rule => [{"pattern" => '/foo?', "substitution" => '/bar$1', "flags" => 'B, nocase'
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -43,7 +51,11 @@ define apache::vhost(
     $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
+    $ensure_docroot     = $apache::params::ensure_docroot,
     $ssl                = $apache::params::ssl,
+    $cert_path          = $apache::params::cert_path,
+    $cert_key_path      = $apache::params::cert_key_path,
+    $cert_chain_file    = $apache::parame::cert_chain_file,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
@@ -56,7 +68,22 @@ define apache::vhost(
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
     $access_log         = true,
-    $ensure             = 'present'
+    $ensure             = 'present',
+    $wsgi_python_home   = false,
+    $wsgi_script_url    = '/',
+    $wsgi_script        = false,
+    $alias_url          = '/',
+    $alias_target       = false,
+    # alias_dir_options is a hash of directive => param settings for the alias Directory directive
+    $alias_dir_options  = {},
+    $auth_dir           = '/',
+    $auth_type          = "Basic",
+    $auth_name          = "Project",
+    $auth_user_file     = false,
+    $auth_group_file    = false,
+    $auth_userids       = false,
+    $auth_groups        = false,
+    $vhost_rewrite_rule = false
   ) {
 
   validate_re($ensure, '^(present|absent)$',
@@ -82,13 +109,18 @@ define apache::vhost(
     }
   }
 
+  # Added $ensure_docroot (defaults to true) for integrating with capistrano
+  # deployments where 'current' is not currently exist at provision time.
+  #
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
-    file { $docroot:
-      ensure => directory,
-      owner  => $docroot_owner,
-      group  => $docroot_group,
+  if($ensure_docroot == false) {
+    if ! defined(File[$docroot]) {
+      file { $docroot:
+        ensure => directory,
+        owner  => $docroot_owner,
+        group  => $docroot_group,  
+      }
     }
   }
 
@@ -99,18 +131,6 @@ define apache::vhost(
     }
   }
 
-  # Template uses:
-  # - $vhost_name
-  # - $port
-  # - $srvname
-  # - $serveradmin
-  # - $serveraliases
-  # - $docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $access_log
-  # - $name
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
@@ -120,7 +140,6 @@ define apache::vhost(
     mode    => '0755',
     require => [
       Package['httpd'],
-      File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],
@@ -137,4 +156,3 @@ define apache::vhost(
     }
   }
 }
-

@@ -4,7 +4,18 @@
 # ************************************
 
 NameVirtualHost <%= vhost_name %>:<%= port %>
+<% if wsgi_python_home %>
+  WSGIPythonHome <%= wsgi_python_home %>
+<% end %>
 <VirtualHost <%= vhost_name %>:<%= port %>>
+  <% if ssl == true %>
+  SSLEngine on
+  SSLCertificateFile <%= cert_path %>
+  SSLCertificateKeyFile <%= cert_key_path %>
+  <% if cert_chain_file %>
+  SSLCertificateChainFile <%= cert_chain_file %>
+  <% end %>
+  <% end %>
   ServerName <%= srvname %>
 <% if serveradmin %>
   ServerAdmin <%= serveradmin %>
@@ -15,12 +26,47 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <%= "  ServerAlias #{serveraliases}" %>
 <% end -%>
   DocumentRoot <%= docroot %>
+  <% if wsgi_script %>
+  WSGIPassAuthorization On
+  WSGIScriptAlias <%= wsgi_script_url %> <%= wsgi_script %>
+  <% end %>
+  <% if alias_target %>
+  Alias <%= alias_url %> <%= alias_target %>
+  <% end %>
   <Directory <%= docroot %>>
     Options <%= options %>
     AllowOverride <%= Array(override).join(' ') %>
     Order allow,deny
-    allow from all
+    Allow from all
   </Directory>
+  <% if alias_target and alias_dir_options.length > 0 %>
+  <Directory <%= alias_target %>>
+    <% alias_dir_options.each do | directive, param | %>
+    <%= directive %> <%= param %>
+    <% end %>
+  </Directory>
+  <% end %>
+  <% if auth_user_file %>
+  <Directory <%= auth_dir %>>
+    AuthType <%= auth_type %>
+    AuthName "<%= auth_name %>"
+    AuthUserFile <%= auth_user_file %>
+    <% if auth_group_file %>
+    AuthGroupFile <%= auth_group_file %>
+    Require group <%= auth_groups %>
+    <% elsif auth_userids %>
+    Require user <%= auth_userids %>
+    <% else %>
+    Require valid-user
+    <% end %>
+  </Directory>
+  <% end %>
+<% if vhost_rewrite_rule -%>
+  RewriteEngine on
+  <% vhost_rewrite_rule.each do | rule | %>
+  RewriteRule <%= rule %>
+  <% end %>
+<% end -%>
   ErrorLog <%= logroot %>/<%= name %>_error.log
   LogLevel warn
 <% if access_log -%>
