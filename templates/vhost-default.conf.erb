@@ -47,7 +47,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   </Directory>
   <% end %>
   <% if auth_user_file %>
-  <Directory <%= auth_dir %>>
+  <Location <%= auth_dir %>>
     AuthType <%= auth_type %>
     AuthName "<%= auth_name %>"
     AuthUserFile <%= auth_user_file %>
@@ -59,7 +59,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
     <% else %>
     Require valid-user
     <% end %>
-  </Directory>
+  </Location>
   <% end %>
 <% if vhost_rewrite_rule -%>
   RewriteEngine on
