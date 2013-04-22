@@ -30,6 +30,7 @@ class apache::params {
   $ssl_path      = '/etc/ssl'
   $cert_path     = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
   $cert_key_path = '/etc/ssl/private/ssl-cert-snakeoil.key'
+  $cert_chain_file = ''
   $options       = 'Indexes FollowSymLinks MultiViews'
   $override      = 'None'
   $vhost_name    = '*'
