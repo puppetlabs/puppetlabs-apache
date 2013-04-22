@@ -55,6 +55,7 @@ define apache::vhost(
     $ssl                = $apache::params::ssl,
     $cert_path          = $apache::params::cert_path,
     $cert_key_path      = $apache::params::cert_key_path,
+    $cert_chain_file    = $apache::parame::cert_chain_file,
     $template           = $apache::params::template,
     $priority           = $apache::params::priority,
     $servername         = $apache::params::servername,
