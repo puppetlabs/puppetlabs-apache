@@ -18,14 +18,7 @@ KeepAliveTimeout 15
   MaxClients       256
   MaxRequestsPerChild  4000
 </IfModule>
-<IfModule mpm_worker_module>
-  StartServers         2
-  MaxClients         150
-  MinSpareThreads     25
-  MaxSpareThreads     75
-  ThreadsPerChild     25
-  MaxRequestsPerChild  0
-</IfModule>
+
 User <%= @user %>
 Group <%= @group %>
 
