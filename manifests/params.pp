@@ -19,21 +19,21 @@
 #
 class apache::params {
   
-  $ssl           = false
-  $ensure_docroot= true
-  $template      = 'apache/vhost-default.conf.erb'
-  $priority      = '25'
-  $servername    = ''
-  $serveraliases = ''
-  $auth          = false
-  $redirect_ssl  = false
-  $ssl_path      = '/etc/ssl'
-  $cert_path     = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-  $cert_key_path = '/etc/ssl/private/ssl-cert-snakeoil.key'
-  $cert_chain_file = ''
-  $options       = 'Indexes FollowSymLinks MultiViews'
-  $override      = 'None'
-  $vhost_name    = '*'
+  $ssl             = false
+  $ensure_docroot  = true
+  $template        = 'apache/vhost-default.conf.erb'
+  $priority        = '25'
+  $servername      = ''
+  $serveraliases   = ''
+  $auth            = false
+  $redirect_ssl    = false
+  $ssl_path        = '/etc/ssl'
+  $cert_path       = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+  $cert_key_path   = '/etc/ssl/private/ssl-cert-snakeoil.key'
+  $cert_chain_file = false
+  $options         = 'Indexes FollowSymLinks MultiViews'
+  $override        = 'None'
+  $vhost_name      = '*'
   
   if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
     $user                  = 'apache'
