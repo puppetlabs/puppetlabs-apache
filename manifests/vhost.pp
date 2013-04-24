@@ -51,7 +51,7 @@
 #  }
 #
 define apache::vhost(
-    $docroot            = undef,
+    $docroot,
     $port               = undef,
     $ip                 = undef,
     $ip_based           = false,
@@ -94,7 +94,6 @@ define apache::vhost(
     $setenv             = [],
     $setenvif           = [],
     $block              = [],
-    $content            = '',
     $ensure             = 'present'
   ) {
   # The base class must be included first because it is used by parameter defaults
@@ -111,10 +110,28 @@ define apache::vhost(
   validate_bool($access_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
-  validate_string($content)
 
   if $ssl {
     include apache::mod::ssl
+  }
+
+  # This ensures that the docroot exists
+  # But enables it to be specified across multiple vhost resources
+  if ! defined(File[$docroot]) {
+    file { $docroot:
+      ensure  => directory,
+      owner   => $docroot_owner,
+      group   => $docroot_group,
+      require => Package['httpd'],
+    }
+  }
+
+  # Same as above, but for logroot
+  if ! defined(File[$logroot]) {
+    file { $logroot:
+      ensure  => directory,
+      require => Package['httpd'],
+    }
   }
 
   # Open listening ports if they are not already
@@ -216,28 +233,6 @@ define apache::vhost(
     $priority_real = '25'
   }
 
-  if $docroot {
-    # This ensures that the docroot exists
-    # But enables it to be specified across multiple vhost resources
-    if ! defined(File[$docroot]) {
-      file { $docroot:
-        ensure  => directory,
-        owner   => $docroot_owner,
-        group   => $docroot_group,
-        require => Package['httpd'],
-        before  => File["${priority_real}-${name}.conf"],
-      }
-    }
-  }
-
-  # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
-    file { $logroot:
-      ensure  => directory,
-      require => Package['httpd'],
-    }
-  }
-
   # Configure firewall rules
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
@@ -304,16 +299,10 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
-  if $content {
-    $vhost_content = $content
-  } else {
-    $vhost_content = template('apache/vhost.conf.erb')
-  }
-
   file { "${priority_real}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",
-    content => $vhost_content,
+    content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => 'root',
     mode    => '0755',

@@ -9,6 +9,7 @@ describe 'apache::vhost', :type => :define do
   end
   let :default_params do
     {
+      :docroot => '/rspec/docroot',
       :port    => '84',
     }
   end
@@ -183,13 +184,6 @@ describe 'apache::vhost', :type => :define do
           :match => '  RewriteRule not a real rule',
         },
         {
-          :title    => 'should accept custom content',
-          :attr     => 'content',
-          :value    => 'not a real vhost config',
-          :match    => 'not a real vhost config',
-          :notmatch => '</VirtualHost>',
-        },
-        {
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
@@ -211,7 +205,6 @@ describe 'apache::vhost', :type => :define do
     context 'attribute resources' do
       describe 'when docroot owner is specified' do
         let :params do default_params.merge({
-          :docroot       => '/rspec/docroot',
           :docroot_owner => 'testuser',
           :docroot_group => 'testgroup',
         }) end
