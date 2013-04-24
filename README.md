@@ -287,10 +287,6 @@ Specifies the list of things Apache will block access to. The default is an empt
 
 Specifies whether a firewall should be configured. Valid values are 'true' or 'false'.
 
-#####`content`
-
-Specifies alternative vhost configuration content. Valid values are strings.
-
 #####`default_vhost`
 
 Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
