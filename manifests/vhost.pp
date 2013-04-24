@@ -50,62 +50,57 @@
 #    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
 #  }
 #  apache::vhost { 'site.name.fqdn':
-#    port                   => '80',
-#    docroot                => '/path/to/other_docroot',
-#    custom_fragment        => "${module_name}/my_fragment.erb",
-#    custom_fragment_params => {
-#      'param_foo' => 'value',
-#      'param_bar' => 'value',
-#    },
+#    port            => '80',
+#    docroot         => '/path/to/other_docroot',
+#    custom_fragment => template("${module_name}/my_fragment.erb"),
 #  }
 #
 define apache::vhost(
     $docroot,
-    $port                   = undef,
-    $ip                     = undef,
-    $ip_based               = false,
-    $add_listen             = true,
-    $docroot_owner          = 'root',
-    $docroot_group          = 'root',
-    $serveradmin            = false,
-    $configure_firewall     = true,
-    $ssl                    = false,
-    $ssl_cert               = $apache::default_ssl_cert,
-    $ssl_key                = $apache::default_ssl_key,
-    $ssl_chain              = $apache::default_ssl_chain,
-    $ssl_ca                 = $apache::default_ssl_ca,
-    $ssl_crl_path           = $apache::default_ssl_crl_path,
-    $ssl_crl                = $apache::default_ssl_crl,
-    $ssl_certs_dir          = $apache::params::ssl_certs_dir,
-    $priority               = undef,
-    $default_vhost          = false,
-    $servername             = undef,
-    $serveraliases          = [],
-    $options                = ['Indexes','FollowSymLinks','MultiViews'],
-    $override               = ['None'],
-    $vhost_name             = '*',
-    $logroot                = "/var/log/${apache::params::apache_name}",
-    $access_log             = true,
-    $access_log_file        = undef,
-    $error_log              = true,
-    $error_log_file         = undef,
-    $scriptalias            = undef,
-    $proxy_dest             = undef,
-    $no_proxy_uris          = [],
-    $redirect_source        = '/',
-    $redirect_dest          = undef,
-    $redirect_status        = undef,
-    $rack_base_uris         = undef,
-    $request_headers        = undef,
-    $rewrite_rule           = undef,
-    $rewrite_base           = undef,
-    $rewrite_cond           = undef,
-    $setenv                 = [],
-    $setenvif               = [],
-    $block                  = [],
-    $ensure                 = 'present',
-    $custom_fragment        = undef,
-    $custom_fragment_params = {}
+    $port               = undef,
+    $ip                 = undef,
+    $ip_based           = false,
+    $add_listen         = true,
+    $docroot_owner      = 'root',
+    $docroot_group      = 'root',
+    $serveradmin        = false,
+    $configure_firewall = true,
+    $ssl                = false,
+    $ssl_cert           = $apache::default_ssl_cert,
+    $ssl_key            = $apache::default_ssl_key,
+    $ssl_chain          = $apache::default_ssl_chain,
+    $ssl_ca             = $apache::default_ssl_ca,
+    $ssl_crl_path       = $apache::default_ssl_crl_path,
+    $ssl_crl            = $apache::default_ssl_crl,
+    $ssl_certs_dir      = $apache::params::ssl_certs_dir,
+    $priority           = undef,
+    $default_vhost      = false,
+    $servername         = undef,
+    $serveraliases      = [],
+    $options            = ['Indexes','FollowSymLinks','MultiViews'],
+    $override           = ['None'],
+    $vhost_name         = '*',
+    $logroot            = "/var/log/${apache::params::apache_name}",
+    $access_log         = true,
+    $access_log_file    = undef,
+    $error_log          = true,
+    $error_log_file     = undef,
+    $scriptalias        = undef,
+    $proxy_dest         = undef,
+    $no_proxy_uris      = [],
+    $redirect_source    = '/',
+    $redirect_dest      = undef,
+    $redirect_status    = undef,
+    $rack_base_uris     = undef,
+    $request_headers    = undef,
+    $rewrite_rule       = undef,
+    $rewrite_base       = undef,
+    $rewrite_cond       = undef,
+    $setenv             = [],
+    $setenvif           = [],
+    $block              = [],
+    $ensure             = 'present',
+    $custom_fragment    = undef
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -121,7 +116,6 @@ define apache::vhost(
   validate_bool($access_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
-  validate_hash($custom_fragment_params)
 
   if $ssl {
     include apache::mod::ssl
@@ -278,7 +272,6 @@ define apache::vhost(
   # - $error_log
   # - $error_log_file_real
   # - $custom_fragment
-  # - $custom_fragment_params
   # block fragment:
   #   - $block
   # proxy fragment:
