@@ -83,8 +83,11 @@ define apache::vhost(
     $logroot            = "/var/log/${apache::params::apache_name}",
     $access_log         = true,
     $access_log_file    = undef,
+    $access_log_pipe    = undef,
+    $access_log_format  = undef,
     $error_log          = true,
     $error_log_file     = undef,
+    $error_log_pipe     = undef,
     $scriptalias        = undef,
     $proxy_dest         = undef,
     $no_proxy_uris      = [],
@@ -117,6 +120,14 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
 
+  if $access_log_file and $access_log_pipe {
+    fail("Apache::Vhost[${name}]: 'access_log_file' and 'access_log_pipe' cannot be defined at the same time")
+  }
+
+  if $error_log_file and $error_log_pipe {
+    fail("Apache::Vhost[${name}]: 'error_log_file' and 'error_log_pipe' cannot be defined at the same time")
+  }
+
   if $ssl {
     include apache::mod::ssl
   }
@@ -148,24 +159,44 @@ define apache::vhost(
   }
 
   # Define log file names
-  if ! $access_log_file {
+  if ! $access_log_file and ! $access_log_pipe {
     if $ssl {
       $access_log_file_real = "${servername_real}_access_ssl.log"
     } else {
       $access_log_file_real = "${servername_real}_access.log"
     }
-  } else {
+  } elsif $access_log_file {
     $access_log_file_real = $access_log_file
   }
-  if ! $error_log_file {
+  if ! $error_log_file and ! $error_log_pipe {
     if $ssl {
       $error_log_file_real = "${servername_real}_error_ssl.log"
     } else {
       $error_log_file_real = "${servername_real}_error.log"
     }
-  } else {
+  } elsif $error_log_file {
     $error_log_file_real = $error_log_file
   }
+
+  # Set log destinations
+  if $access_log_pipe {
+    $access_log_destination = "\"${access_log_pipe}\""
+  } else {
+    $access_log_destination = "${logroot}/${access_log_file_real}"
+  }
+  if $error_log_pipe {
+    $error_log_destination = "\"${error_log_pipe}\""
+  } else {
+    $error_log_destination = "${logroot}/${error_log_file_real}"
+  }
+
+  # Set access log format
+  if $access_log_format {
+    $_access_log_format = "\"${access_log_format}\""
+  } else {
+    $_access_log_format = 'combined'
+  }
+
 
   if $ip {
     if $port {
