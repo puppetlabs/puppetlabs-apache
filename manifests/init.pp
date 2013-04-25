@@ -18,11 +18,12 @@ class apache (
   $serveradmin  = 'root@localhost',
   $sendfile     = false,
   $purge_vdir   = true
+  $package_ensure = 'installed'
 ) {
   include apache::params
 
   package { 'httpd':
-    ensure => installed,
+    ensure => $package_ensure,
     name   => $apache::params::apache_name,
   }
 
