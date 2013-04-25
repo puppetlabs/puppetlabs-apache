@@ -194,9 +194,9 @@ describe 'apache::vhost', :type => :define do
           :attr  => 'custom_fragment',
           :value => "  Some custom fragment line\n  That spans multiple lines",
           :match => [
-            '<VirtualHost>',
             '  Some custom fragment line',
             '  That spans multiple lines',
+            '</VirtualHost>',
           ],
         },
       ].each do |param|
