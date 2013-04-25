@@ -189,6 +189,16 @@ describe 'apache::vhost', :type => :define do
           :value => 'scm',
           :match => '  <DirectoryMatch .*\.(svn|git|bzr)/.*>',
         },
+        {
+          :title => 'should accept a custom fragment',
+          :attr  => 'custom_fragment',
+          :value => "  Some custom fragment line\n  That spans multiple lines",
+          :match => [
+            '<VirtualHost>',
+            '  Some custom fragment line',
+            '  That spans multiple lines',
+          ],
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
