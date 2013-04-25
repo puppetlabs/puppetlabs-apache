@@ -6,7 +6,10 @@ describe 'apache', :type => :class do
       { :osfamily => 'Debian' }
     end
     it { should include_class("apache::params") }
-    it { should contain_package("httpd") }
+    it { should contain_package("httpd").with(
+      'ensure' => 'installed'
+      )
+    }
     it { should contain_service("httpd").with(
       'ensure'    => 'true',
       'enable'    => 'true',
@@ -27,7 +30,10 @@ describe 'apache', :type => :class do
       { :osfamily => 'RedHat' }
     end
     it { should include_class("apache::params") }
-    it { should contain_package("httpd") }
+    it { should contain_package("httpd").with(
+      'ensure' => 'installed'
+      )
+    }
     it { should contain_service("httpd").with(
       'ensure'    => 'true',
       'enable'    => 'true',

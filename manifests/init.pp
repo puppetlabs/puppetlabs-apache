@@ -16,12 +16,13 @@ class apache (
   $default_mods = true,
   $service_enable = true,
   $serveradmin  = 'root@localhost',
-  $sendfile     = false
+  $sendfile     = false,
+  $package_ensure = 'installed'
 ) {
   include apache::params
 
   package { 'httpd':
-    ensure => installed,
+    ensure => $package_ensure,
     name   => $apache::params::apache_name,
   }
 
