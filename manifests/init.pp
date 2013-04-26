@@ -30,7 +30,8 @@ class apache (
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
   $mod_dir              = $apache::params::mod_dir,
-  $mod_enable_dir       = $apache::params::mod_enable_dir
+  $mod_enable_dir       = $apache::params::mod_enable_dir,
+  $mpm_module           = $apache::params::mpm_module,
 ) inherits apache::params {
 
   package { 'httpd':
@@ -42,6 +43,9 @@ class apache (
   validate_bool($default_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
+  if $mpm_prefork {
+    validate_re($mpm_prefork, '(prefork|worker)')
+  }
 
   $user       = $apache::params::user
   $group      = $apache::params::group
@@ -160,6 +164,9 @@ class apache (
     }
     if $default_mods {
       include apache::default_mods
+    }
+    if $mpm_module {
+      class { "apache::mod::${mpm_module}": }
     }
     if $default_vhost {
       apache::vhost { 'default':
