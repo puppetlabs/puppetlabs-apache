@@ -215,5 +215,37 @@ describe 'apache', :type => :class do
       ) }
       it { should_not contain_file("/etc/httpd/conf.d") }
     end
+
+    describe "Alternate mpm_modules" do
+      context "when declaring mpm_module is false" do
+        let :params do
+          { :mpm_module => false }
+        end
+        it 'should not declare mpm modules' do
+          should_not contain_class('apache::mod::prefork')
+          should_not contain_class('apache::mod::worker')
+        end
+      end
+      context "when declaring mpm_module => prefork" do
+        let :params do
+          { :mpm_module => 'prefork' }
+        end
+        it { should contain_class('apache::mod::prefork') }
+        it { should_not contain_class('apache::mod::worker') }
+      end
+      context "when declaring mpm_module => worker" do
+        let :params do
+          { :mpm_module => 'worker' }
+        end
+        it { should contain_class('apache::mod::worker') }
+        it { should_not contain_class('apache::mod::prefork') }
+      end
+      context "when declaring mpm_module => breakme" do
+        let :params do
+          { :mpm_module => 'breakme' }
+        end
+        it { expect { should contain_class('apache::params') }.to raise_error Puppet::Error, /does not match/ }
+      end
+    end
   end
 end

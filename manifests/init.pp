@@ -43,8 +43,8 @@ class apache (
   validate_bool($default_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
-  if $mpm_prefork {
-    validate_re($mpm_prefork, '(prefork|worker)')
+  if $mpm_module {
+    validate_re($mpm_module, '(prefork|worker)')
   }
 
   $user       = $apache::params::user
