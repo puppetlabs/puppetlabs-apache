@@ -47,7 +47,7 @@ describe 'apache', :type => :class do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
-      'notify'  => 'Service[httpd]',
+      'notify'  => 'Service[httpd]'
       )
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
@@ -59,11 +59,11 @@ describe 'apache', :type => :class do
       'authz_host',
       'authz_user',
       'dav',
-      'env',
+      'env'
     ].each do |modname|
       it { should contain_file("#{modname}.load").with(
         'path'   => "/etc/apache2/mods-available/#{modname}.load",
-        'ensure' => 'file',
+        'ensure' => 'file'
       ) }
       it { should contain_file("#{modname}.load symlink").with(
         'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
@@ -88,7 +88,7 @@ describe 'apache', :type => :class do
     ].each do |modname|
       it { should contain_file("#{modname}.load").with(
         'path'   => "/etc/apache2/mods-available/#{modname}.load",
-        'ensure' => 'file',
+        'ensure' => 'file'
       ) }
       it { should contain_file("#{modname}.load symlink").with(
         'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
@@ -97,7 +97,7 @@ describe 'apache', :type => :class do
       ) }
       it { should contain_file("#{modname}.conf").with(
         'path'   => "/etc/apache2/mods-available/#{modname}.conf",
-        'ensure' => 'file',
+        'ensure' => 'file'
       ) }
       it { should contain_file("#{modname}.conf symlink").with(
         'path'   => "/etc/apache2/mods-enabled/#{modname}.conf",

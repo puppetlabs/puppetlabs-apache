@@ -24,6 +24,7 @@ class apache (
   $default_ssl_crl      = undef,
   $service_enable       = true,
   $purge_configs        = true,
+  $purge_vdir           = true,
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
   $error_documents      = false,
@@ -74,10 +75,18 @@ class apache (
     subscribe => Package['httpd'],
   }
 
+  # Deprecated backwards-compatibility
+  if $purge_vdir {
+    warning("Class['apache'] parameter purge_vdir is deprecated in favor of purge_configs")
+    $purge_confd = $purge_vdir
+  } else {
+    $purge_confd = $purge_configs
+  }
+
   file { $apache::confd_dir:
     ensure  => directory,
     recurse => true,
-    purge   => $purge_configs,
+    purge   => $purge_confd,
     notify  => Service['httpd'],
     require => Package['httpd'],
   }
