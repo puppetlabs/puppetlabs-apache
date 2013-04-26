@@ -312,7 +312,7 @@ define apache::vhost(
     content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => 'root',
-    mode    => '0755',
+    mode    => '0644',
     require => [
       Package['httpd'],
       File[$docroot],
