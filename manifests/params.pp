@@ -32,8 +32,8 @@ class apache::params {
     $httpd_dir            = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
-    $mod_dir              = "${httpd_dir}/mod.d"
-    $vhost_dir            = "${httpd_dir}/site.d"
+    $mod_dir              = "${httpd_dir}/conf.d"
+    $vhost_dir            = "${httpd_dir}/conf.d"
     $conf_file            = 'httpd.conf'
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'
