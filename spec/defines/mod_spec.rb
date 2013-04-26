@@ -20,7 +20,7 @@ describe 'apache::mod', :type => :define do
       it { should include_class("apache::params") }
       it "should manage the module load file" do
         should contain_file('spec_m.load').with({
-          :path    => '/etc/httpd/mod.d/spec_m.load',
+          :path    => '/etc/httpd/conf.d/spec_m.load',
           :content => "LoadModule spec_m_module modules/mod_spec_m.so\n",
           :owner   => 'root',
           :group   => 'root',

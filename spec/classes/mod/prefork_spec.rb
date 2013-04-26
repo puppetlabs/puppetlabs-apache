@@ -26,7 +26,7 @@ describe 'apache::mod::prefork', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should_not contain_apache__mod('prefork') }
-    it { should contain_file("/etc/httpd/mod.d/prefork.conf").with_ensure('file') }
+    it { should contain_file("/etc/httpd/conf.d/prefork.conf").with_ensure('file') }
     it { should contain_file_line("/etc/sysconfig/httpd prefork enable") }
   end
 end

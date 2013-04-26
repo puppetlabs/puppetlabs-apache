@@ -35,7 +35,9 @@ EnableSendfile <%= @sendfile %>
 
 #Listen 80
 Include <%= @mod_dir %>/*.load
+<% if @mod_dir != @confd_dir and @mod_dir != @vhost_dir -%>
 Include <%= @mod_dir %>/*.conf
+<% end -%>
 Include <%= @ports_file %>
 
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
@@ -44,7 +46,9 @@ LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 
 Include <%= @confd_dir %>/*.conf
+<% if @vhost_dir != @confd_dir -%>
 Include <%= @vhost_dir %>/*.conf
+<% end -%>
 
 <% if @error_documents -%>
 # /usr/share/apache2/error on debian
