@@ -258,6 +258,9 @@ define apache::vhost(
     }
   }
 
+  ## Apache include does not always work with spaces in the filename
+  $filename = regsubst($name, ' ', '_', 'G')
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
@@ -306,9 +309,9 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
-  file { "${priority_real}-${name}.conf":
+  file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
-    path    => "${apache::vhost_dir}/${priority_real}-${name}.conf",
+    path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
     content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => 'root',
