@@ -22,6 +22,7 @@
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
+# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -30,102 +31,215 @@
 # - The apache class
 #
 # Sample Usage:
+#
+#  # Simple vhost definition:
 #  apache::vhost { 'site.name.fqdn':
-#    priority => '20',
 #    port => '80',
 #    docroot => '/path/to/docroot',
 #  }
 #
+#  # SSL vhost with non-SSL rewrite:
+#  apache::vhost { 'site.name.fqdn':
+#    port    => '443',
+#    ssl     => true,
+#    docroot => '/path/to/docroot',
+#  }
+#  apache::vhost { 'site.name.fqdn':
+#    port          => '80',
+#    rewrite_cond => '%{HTTPS} off',
+#    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+#  }
+#  apache::vhost { 'site.name.fqdn':
+#    port            => '80',
+#    docroot         => '/path/to/other_docroot',
+#    custom_fragment => template("${module_name}/my_fragment.erb"),
+#  }
+#
 define apache::vhost(
-    $port,
     $docroot,
+    $port               = undef,
+    $ip                 = undef,
+    $ip_based           = false,
+    $add_listen         = true,
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
     $configure_firewall = true,
-    $ssl                = $apache::params::ssl,
-    $template           = $apache::params::template,
-    $priority           = $apache::params::priority,
-    $servername         = $apache::params::servername,
-    $serveraliases      = $apache::params::serveraliases,
-    $auth               = $apache::params::auth,
-    $redirect_ssl       = $apache::params::redirect_ssl,
-    $options            = $apache::params::options,
-    $override           = $apache::params::override,
-    $apache_name        = $apache::params::apache_name,
-    $vhost_name         = $apache::params::vhost_name,
-    $logroot            = "/var/log/$apache::params::apache_name",
+    $ssl                = false,
+    $ssl_cert           = $apache::default_ssl_cert,
+    $ssl_key            = $apache::default_ssl_key,
+    $ssl_chain          = $apache::default_ssl_chain,
+    $ssl_ca             = $apache::default_ssl_ca,
+    $ssl_crl_path       = $apache::default_ssl_crl_path,
+    $ssl_crl            = $apache::default_ssl_crl,
+    $ssl_certs_dir      = $apache::params::ssl_certs_dir,
+    $priority           = undef,
+    $default_vhost      = false,
+    $servername         = undef,
+    $serveraliases      = [],
+    $options            = ['Indexes','FollowSymLinks','MultiViews'],
+    $override           = ['None'],
+    $vhost_name         = '*',
+    $logroot            = "/var/log/${apache::params::apache_name}",
     $access_log         = true,
-    $ensure             = 'present'
+    $access_log_file    = undef,
+    $error_log          = true,
+    $error_log_file     = undef,
+    $scriptalias        = undef,
+    $proxy_dest         = undef,
+    $no_proxy_uris      = [],
+    $redirect_source    = '/',
+    $redirect_dest      = undef,
+    $redirect_status    = undef,
+    $rack_base_uris     = undef,
+    $request_headers    = undef,
+    $rewrite_rule       = undef,
+    $rewrite_base       = undef,
+    $rewrite_cond       = undef,
+    $setenv             = [],
+    $setenvif           = [],
+    $block              = [],
+    $ensure             = 'present',
+    $custom_fragment    = undef
   ) {
+  # The base class must be included first because it is used by parameter defaults
+  if ! defined(Class['apache']) {
+    fail("You must include the apache base class before using any apache defined resources")
+  }
+  $apache_name = $apache::params::apache_name
 
   validate_re($ensure, '^(present|absent)$',
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
+  validate_bool($ip_based)
+  validate_bool($configure_firewall)
+  validate_bool($access_log)
+  validate_bool($ssl)
+  validate_bool($default_vhost)
 
-  include apache
-
-  if $servername == '' {
-    $srvname = $name
-  } else {
-    $srvname = $servername
-  }
-
-  if $ssl == true {
+  if $ssl {
     include apache::mod::ssl
-  }
-
-  # Since the template will use auth, redirect to https requires mod_rewrite
-  if $redirect_ssl == true {
-    if $::osfamily == 'debian' {
-      A2mod <| title == 'rewrite' |>
-    }
   }
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
     file { $docroot:
-      ensure => directory,
-      owner  => $docroot_owner,
-      group  => $docroot_group,
+      ensure  => directory,
+      owner   => $docroot_owner,
+      group   => $docroot_group,
+      require => Package['httpd'],
     }
   }
 
   # Same as above, but for logroot
   if ! defined(File[$logroot]) {
     file { $logroot:
-      ensure => directory,
+      ensure  => directory,
+      require => Package['httpd'],
     }
   }
 
-  # Template uses:
-  # - $vhost_name
-  # - $port
-  # - $srvname
-  # - $serveradmin
-  # - $serveraliases
-  # - $docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $access_log
-  # - $name
-  file { "${priority}-${name}.conf":
-    ensure  => $ensure,
-    path    => "${apache::params::vdir}/${priority}-${name}.conf",
-    content => template($template),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    require => [
-      Package['httpd'],
-      File[$docroot],
-      File[$logroot],
-    ],
-    notify  => Service['httpd'],
+  # Open listening ports if they are not already
+  if $servername {
+    $servername_real = $servername
+  } else {
+    $servername_real = $name
   }
 
+  # Define log file names
+  if ! $access_log_file {
+    if $ssl {
+      $access_log_file_real = "${servername_real}_access_ssl.log"
+    } else {
+      $access_log_file_real = "${servername_real}_access.log"
+    }
+  } else {
+    $access_log_file_real = $access_log_file
+  }
+  if ! $error_log_file {
+    if $ssl {
+      $error_log_file_real = "${servername_real}_error_ssl.log"
+    } else {
+      $error_log_file_real = "${servername_real}_error.log"
+    }
+  } else {
+    $error_log_file_real = $error_log_file
+  }
+
+  if $ip {
+    if $port {
+      $listen_addr_port = "${ip}:${port}"
+      $nvh_addr_port = "${ip}:${port}"
+    } else {
+      $nvh_addr_port = $ip
+      if ! $servername and ! $ip_based {
+        fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
+      }
+    }
+  } else {
+    if $port {
+      $listen_addr_port = $port
+      $nvh_addr_port = "${vhost_name}:${port}"
+    } else {
+      $nvh_addr_port = $name
+      if ! $servername {
+        fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
+      }
+    }
+  }
+  if $add_listen {
+    if $ip and defined(Apache::Listen[$port]) {
+      fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
+    }
+    if ! defined(Apache::Listen[$listen_addr_port]) and $listen_addr_port {
+      apache::listen { $listen_addr_port: }
+    }
+  }
+  if ! $ip_based {
+    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) {
+      apache::namevirtualhost { $nvh_addr_port: }
+    }
+  }
+
+  # Load mod_rewrite if needed and not yet loaded
+  if $rewrite_rule {
+    if ! defined(Apache::Mod['rewrite']) {
+      apache::mod { 'rewrite': }
+    }
+  }
+
+  # Load mod_alias if needed and not yet loaded
+  if $scriptalias or ($redirect_source and $redirect_dest) {
+    if ! defined(Class['apache::mod::alias']) {
+      include apache::mod::alias
+    }
+  }
+
+  # Load mod_proxy if needed and not yet loaded
+  if $proxy_dest {
+    if ! defined(Class['apache::mod::proxy']) {
+      include apache::mod::proxy
+    }
+  }
+
+  # Load mod_passenger if needed and not yet loaded
+  if $rack_base_uris {
+    if ! defined(Class['apache::mod::passenger']) {
+      include apache::mod::passenger
+    }
+  }
+
+  # Configure the defaultness of a vhost
+  if $priority {
+    $priority_real = $priority
+  } elsif $default_vhost {
+    $priority_real = '10'
+  } else {
+    $priority_real = '25'
+  }
+
+  # Configure firewall rules
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
@@ -135,6 +249,79 @@ define apache::vhost(
           proto  => 'tcp'
       }
     }
+  }
+
+  # Check if mod_headers is required to process $request_headers
+  if $request_headers {
+    if ! defined(Class['apache::mod::headers']) {
+      include apache::mod::headers
+    }
+  }
+
+  ## Apache include does not always work with spaces in the filename
+  $filename = regsubst($name, ' ', '_', 'G')
+
+  # Template uses:
+  # - $nvh_addr_port
+  # - $servername_real
+  # - $serveradmin
+  # - $docroot
+  # - $options
+  # - $override
+  # - $logroot
+  # - $name
+  # - $access_log
+  # - $access_log_file_real
+  # - $error_log
+  # - $error_log_file_real
+  # - $custom_fragment
+  # block fragment:
+  #   - $block
+  # proxy fragment:
+  #   - $proxy_dest
+  #   - $no_proxy_uris
+  # rack fragment:
+  #   - $rack_base_uris
+  # redirect fragment:
+  #   - $redirect_source
+  #   - $redirect_dest
+  #   - $redirect_status
+  # requestheader fragment:
+  #   - $request_headers
+  # rewrite fragment:
+  #   - $rewrite_rule
+  #   - $rewrite_base
+  #   - $rewrite_cond
+  # scriptalias fragment:
+  #   - $scriptalias
+  #   - $ssl
+  # serveralias fragment:
+  #   - $serveraliases
+  # setenv fragment:
+  #   - $setenv
+  #   - $setenvif
+  # ssl fragment:
+  #   - $ssl
+  #   - $ssl_cert
+  #   - $ssl_key
+  #   - $ssl_chain
+  #   - $ssl_certs_dir
+  #   - $ssl_ca
+  #   - $ssl_crl
+  #   - $ssl_crl_path
+  file { "${priority_real}-${filename}.conf":
+    ensure  => $ensure,
+    path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
+    content => template('apache/vhost.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => [
+      Package['httpd'],
+      File[$docroot],
+      File[$logroot],
+    ],
+    notify  => Service['httpd'],
   }
 }
 

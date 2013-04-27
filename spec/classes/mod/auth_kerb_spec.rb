@@ -1,18 +1,29 @@
-require 'spec_helper'
-
 describe 'apache::mod::auth_kerb', :type => :class do
-  context "On a Debian OS" do
+  let :pre_condition do
+    'include apache'
+  end
+  context "on a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
     end
-    it { should include_class("apache") }
-    it { should contain_package("mod_auth_kerb_package").with(
-     'require' => 'Package[httpd]'
-      )
-    }
-    it { should contain_a2mod("auth_kerb").with(
-     'ensure'  => 'present'
-      )
-    }
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod("auth_kerb") }
+    it { should contain_package("libapache2-mod-auth-kerb") }
+  end
+  context "on a RedHat OS" do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod("auth_kerb") }
+    it { should contain_package("mod_auth_kerb") }
   end
 end

@@ -3,7 +3,11 @@ require 'spec_helper'
 describe 'apache::params', :type => :class do
   context "On a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
     end
     it { should contain_apache__params }
 

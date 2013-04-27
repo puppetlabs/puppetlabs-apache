@@ -1,0 +1,41 @@
+# ************************************
+# Vhost template in module puppetlabs-apache
+# Managed by Puppet
+# ************************************
+
+<VirtualHost <%= @nvh_addr_port %>>
+  ServerName <%= @servername_real %>
+<% if @serveradmin -%>
+  ServerAdmin <%= @serveradmin %>
+<% end -%>
+
+  ## Vhost docroot
+  DocumentRoot <%= @docroot %>
+  <Directory <%= @docroot %>>
+    Options <%= Array(@options).join(' ') %>
+    AllowOverride <%= Array(@override).join(' ') %>
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  ## Logging
+<% if @error_log -%>
+  ErrorLog <%= @logroot %>/<%= @error_log_file_real %>
+<% end -%>
+  LogLevel warn
+  ServerSignature Off
+<% if @access_log -%>
+  CustomLog <%= @logroot %>/<%= @access_log_file_real %> combined
+<% end -%>
+<%= scope.function_template(['apache/vhost/_block.erb']) -%>
+<%= scope.function_template(['apache/vhost/_proxy.erb']) -%>
+<%= scope.function_template(['apache/vhost/_rack.erb']) -%>
+<%= scope.function_template(['apache/vhost/_redirect.erb']) -%>
+<%= scope.function_template(['apache/vhost/_rewrite.erb']) -%>
+<%= scope.function_template(['apache/vhost/_scriptalias.erb']) -%>
+<%= scope.function_template(['apache/vhost/_serveralias.erb']) -%>
+<%= scope.function_template(['apache/vhost/_setenv.erb']) -%>
+<%= scope.function_template(['apache/vhost/_ssl.erb']) -%>
+<%= scope.function_template(['apache/vhost/_requestheader.erb']) -%>
+<%= scope.function_template(['apache/vhost/_custom_fragment.erb']) -%>
+</VirtualHost>

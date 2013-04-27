@@ -1,17 +1,29 @@
-require 'spec_helper'
-
 describe 'apache::mod::wsgi', :type => :class do
-  context "On a Debian OS" do
+  let :pre_condition do
+    'include apache'
+  end
+  context "on a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
     end
-    it { should include_class("apache") }
-    it { should contain_package("mod_wsgi_package").with(
-     'require' => 'Package[httpd]'
-    ) }
-    it { should contain_a2mod("wsgi").with(
-     'ensure'  => 'present'
-      )
-    }
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod('wsgi') }
+    it { should contain_package("libapache2-mod-wsgi") }
+  end
+  context "on a RedHat OS" do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod('wsgi') }
+    it { should contain_package("mod_wsgi") }
   end
 end
