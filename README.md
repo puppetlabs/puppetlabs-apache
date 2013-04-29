@@ -279,6 +279,14 @@ Specifies whether `*_access.log` directives should be configured. Valid values a
 
 Points to the `*_access.log` file. Defaults to 'undef'.
 
+#####`access_log_pipe`
+
+Specifies a pipe to send access log messages to. Defaults to 'undef'.
+
+#####`access_log_format`
+
+Specifies either a LogFormat nickname or custom format string for access log. Defaults to 'undef'.
+
 #####`add_listen`
 
 Determines whether the vhost creates a listen statement. The default value is 'true'. 
@@ -320,6 +328,10 @@ Specifies whether `*_error.log` directives should be configured. Defaults to 'tr
 #####`error_log_file`
 
 Points to the `*_error.log` file. Defaults to 'undef'.
+
+#####`error_log_pipe`
+
+Specifies a pipe to send error log messages to. Defaults to 'undef'.
 
 #####`ensure`
 
