@@ -159,35 +159,28 @@ define apache::vhost(
   }
 
   # Define log file names
-  if ! $access_log_file and ! $access_log_pipe {
-    if $ssl {
-      $access_log_file_real = "${servername_real}_access_ssl.log"
-    } else {
-      $access_log_file_real = "${servername_real}_access.log"
-    }
-  } elsif $access_log_file {
-    $access_log_file_real = $access_log_file
-  }
-  if ! $error_log_file and ! $error_log_pipe {
-    if $ssl {
-      $error_log_file_real = "${servername_real}_error_ssl.log"
-    } else {
-      $error_log_file_real = "${servername_real}_error.log"
-    }
-  } elsif $error_log_file {
-    $error_log_file_real = $error_log_file
-  }
-
-  # Set log destinations
-  if $access_log_pipe {
+  if $access_log_file {
+    $access_log_destination = "${logroot}/${access_log_file}"
+  } elsif $access_log_pipe {
     $access_log_destination = "\"${access_log_pipe}\""
   } else {
-    $access_log_destination = "${logroot}/${access_log_file_real}"
+    if $ssl {
+      $access_log_destination = "${logroot}/${servername_real}_access_ssl.log"
+    } else {
+      $access_log_destination = "${logroot}/${servername_real}_access.log"
+    }
   }
-  if $error_log_pipe {
+
+  if $error_log_file {
+    $error_log_destination = "${logroot}/${error_log_file}"
+  } elsif $error_log_pipe {
     $error_log_destination = "\"${error_log_pipe}\""
   } else {
-    $error_log_destination = "${logroot}/${error_log_file_real}"
+    if $ssl {
+      $error_log_destination = "${logroot}/${servername_real}_error_ssl.log"
+    } else {
+      $error_log_destination = "${logroot}/${servername_real}_error.log"
+    }
   }
 
   # Set access log format
