@@ -135,6 +135,24 @@ describe 'apache::vhost', :type => :define do
           :match => [/CustomLog \/fake\/log\//,/ErrorLog \/fake\/log\//],
         },
         {
+          :title => 'should accept pipe destination for access log',
+          :attr  => 'access_log_pipe',
+          :value => '| /bin/fake/logging',
+          :match => /CustomLog "| \/bin\/fake\/logging" combined$/,
+        },
+        {
+          :title => 'should accept pipe destination for error log',
+          :attr  => 'error_log_pipe',
+          :value => '| /bin/fake/logging',
+          :match => /ErrorLog "| \/bin\/fake\/logging" combined$/,
+        },
+        {
+          :title => 'should accept custom format for access logs',
+          :attr  => 'access_log_format',
+          :value => '%h %{X-Forwarded-For}i %l %u %t \"%r\" %s %b  \"%{Referer}i\" \"%{User-agent}i\" \"Host: %{Host}i\" %T %D',
+          :match => /CustomLog \/var\/log\/.+_access\.log "%h %\{X-Forwarded-For\}i %l %u %t \\"%r\\" %s %b  \\"%\{Referer\}i\\" \\"%\{User-agent\}i\\" \\"Host: %\{Host\}i\\" %T %D"$/,
+        },
+        {
           :title => 'should contain access logs',
           :attr  => 'access_log',
           :value => true,
@@ -214,6 +232,24 @@ describe 'apache::vhost', :type => :define do
     end
 
     context 'attribute resources' do
+      describe 'when access_log_file and access_log_pipe are specified' do
+        let :params do default_params.merge({
+          :access_log_file => 'fake.log',
+          :access_log_pipe => '| /bin/fake',
+        }) end
+        it 'should cause a failure' do
+          expect {should raise_error(Puppet::Error, 'Apache::Vhost[${name}]: \'access_log_file\' and \'access_log_pipe\' cannot be defined at the same time') }
+        end
+      end
+      describe 'when error_log_file and error_log_pipe are specified' do
+        let :params do default_params.merge({
+          :error_log_file => 'fake.log',
+          :error_log_pipe => '| /bin/fake',
+        }) end
+        it 'should cause a failure' do
+          expect { should raise_error(Puppet::Error, 'Apache::Vhost[${name}]: \'error_log_file\' and \'error_log_pipe\' cannot be defined at the same time') }
+        end
+      end
       describe 'when docroot owner is specified' do
         let :params do default_params.merge({
           :docroot_owner => 'testuser',
