@@ -235,7 +235,7 @@ describe 'apache::vhost', :type => :define do
         }) end
         it 'should set RewriteCond' do
           should contain_file("25-#{title}.conf").with_content(
-            /^  RewriteCond %{HTTPS} off$/
+            /^  RewriteCond %\{HTTPS\} off$/
           )
         end
       end
