@@ -302,9 +302,10 @@ define apache::vhost(
   # - $logroot
   # - $name
   # - $access_log
-  # - $access_log_file_real
+  # - $access_log_destination
+  # - $_access_log_format
   # - $error_log
-  # - $error_log_file_real
+  # - $error_log_destination
   # - $custom_fragment
   # block fragment:
   #   - $block
