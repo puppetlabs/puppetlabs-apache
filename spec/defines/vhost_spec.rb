@@ -165,6 +165,18 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /CustomLog \/var\/log\/.+_access\.log combined$/,
         },
         {
+          :title => 'should contain error logs',
+          :attr  => 'error_log',
+          :value => true,
+          :match => /ErrorLog.+$/,
+        },
+        {
+          :title    => 'should not contain error logs',
+          :attr     => 'error_log',
+          :value    => false,
+          :notmatch => /ErrorLog.+$/,
+        },
+        {
           :title => 'should accept scriptaliases',
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
