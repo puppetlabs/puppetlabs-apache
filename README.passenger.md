@@ -2,9 +2,9 @@
 
 Just enabling the Passenger module is insufficient for the use of Passenger in production. Passenger should be tunable to better fit the environment in which it is run while being aware of the resources it required.
 
-To this end the Apache passenger module has been modified to apply system wide Passenger tuning declarations to `passenger.conf`. Declarations specific to a virtual host should be passed through when defining a `vhost`.
+To this end the Apache passenger module has been modified to apply system wide Passenger tuning declarations to `passenger.conf`. Declarations specific to a virtual host should be passed through when defining a `vhost` (e.g. `rack_base_uris' parameter on the `apache::vhost` class, check `README.md`).
 
-# Supported Declarations
+# Parameters for `apache::mod::passenger`
 
 The following declarations are supported and can be passed to `apache::mod::passenger` as parameters, for example:
 
