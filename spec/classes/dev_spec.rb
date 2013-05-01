@@ -1,24 +1,26 @@
 require 'spec_helper'
 
 describe 'apache::dev', :type => :class do
-  context "On a Debian OS" do
+  context "on a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+      }
     end
-    it {
-      should include_class("apache::params")
-      should contain_package("libaprutil1-dev")
-      should contain_package("libapr1-dev")
-      should contain_package("apache2-prefork-dev")
-    }
+    it { should include_class("apache::params") }
+    it { should contain_package("libaprutil1-dev") }
+    it { should contain_package("libapr1-dev") }
+    it { should contain_package("apache2-prefork-dev") }
   end
-  context "On a RedHat OS" do
+  context "on a RedHat OS" do
     let :facts do
-      { :osfamily => 'RedHat' }
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+      }
     end
-    it {
-      should include_class("apache::params")
-      should contain_package("httpd-devel")
-    }
+    it { should include_class("apache::params") }
+    it { should contain_package("httpd-devel") }
   end
 end

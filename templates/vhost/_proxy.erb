@@ -1,0 +1,15 @@
+<% if @proxy_dest -%>
+
+  ## Proxy rules
+  ProxyRequests Off
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+<% Array(@no_proxy_uris).each do |uri| %>
+  ProxyPass        <%= uri %> !
+<% end %>
+  ProxyPass        / <%= @proxy_dest %>/
+  ProxyPassReverse / <%= @proxy_dest %>/
+  ProxyPreserveHost On
+<% end -%>
