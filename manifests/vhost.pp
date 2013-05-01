@@ -117,6 +117,7 @@ define apache::vhost(
   validate_bool($ip_based)
   validate_bool($configure_firewall)
   validate_bool($access_log)
+  validate_bool($error_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
 
