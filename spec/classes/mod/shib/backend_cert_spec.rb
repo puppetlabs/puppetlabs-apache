@@ -1,6 +1,7 @@
 describe 'apache::mod::shib::backend_cert', :type => :class do
   let :pre_condition do
     'include apache'
+    'include apache::mod::shib'
   end
   context "on a Debian OS" do
     let :facts do
