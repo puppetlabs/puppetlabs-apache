@@ -14,7 +14,7 @@ describe 'apache::mod::shib::sso', :type => :define do
     let(:params){ { :discoveryURL => 'http://example.org/DS/' } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
-    it { should contain_augeas("shib_metadata_name_create_metadata_provider") }
+    it { should contain_augeas("shib_sso_sso_name_attributes") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -28,6 +28,6 @@ describe 'apache::mod::shib::sso', :type => :define do
     let(:params){ { :discoveryURL => 'http://example.org/DS/' } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
-    it { should contain_augeas("shib_sso_metadata_name_attributes") }
+    it { should contain_augeas("shib_sso_sso_name_attributes") }
   end
 end
