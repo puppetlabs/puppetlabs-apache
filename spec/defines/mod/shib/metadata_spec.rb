@@ -11,7 +11,10 @@ describe 'apache::mod::shib::metadata', :type => :define do
       }
     end
     let(:title){ 'metadata_name' }
-    let(:params){ { :attribute_map_uri => 'http://example.org/attribute_map.xml' } }
+    let(:params){ {
+      :provider_uri => 'http://example.org/provider',
+      :cert_uri     => 'http://example.org/cert.crt'
+    } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
     it { should contain_exec("get_metadata_name_metadata_cert")}
@@ -27,7 +30,10 @@ describe 'apache::mod::shib::metadata', :type => :define do
       }
     end
     let(:title){ 'metadata_name' }
-    let(:params){ { :attribute_map_uri => 'http://example.org/attribute_map.xml' } }
+    let(:params){ {
+      :provider_uri => 'http://example.org/provider',
+      :cert_uri     => 'http://example.org/cert.crt'
+    } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
     it { should contain_exec("get_metadata_name_metadata_cert") }
