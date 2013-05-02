@@ -11,7 +11,7 @@ describe 'apache::mod::shib::attribute_map', :type => :define do
       }
     end
     let(:title){ 'map_name' }
-    let(:params){ { :attribute_uri => 'http://example.org/attribute_map.xml' } }
+    let(:params){ { :attribute_map_uri => 'http://example.org/attribute_map.xml' } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
     it { should contain_exec("get_map_name_attribute_map")}
@@ -26,7 +26,7 @@ describe 'apache::mod::shib::attribute_map', :type => :define do
       }
     end
     let(:title){ 'map_name' }
-    let(:params){ { :attribute_uri => 'http://example.org/attribute_map.xml' } }
+    let(:params){ { :attribute_map_uri => 'http://example.org/attribute_map.xml' } }
     it { should include_class("apache::params") }
     it { should include_class("apache::mod::shib") }
     it { should contain_exec("get_map_name_attribute_map") }
