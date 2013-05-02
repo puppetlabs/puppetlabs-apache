@@ -1,6 +1,6 @@
 class apache::mod::shib(
   $shib_admin     = $apache::serveradmin,
-  $shib_hostname  = $fqdn,
+  $shib_hostname  = $::fqdn,
   $logoLocation   = "/shibboleth-sp/logo.jpg",
   $styleSheet     = "/shibboleth-sp/main.css",
   $shib_conf_dir  = '/etc/shibboleth',
@@ -15,17 +15,22 @@ class apache::mod::shib(
 
   apache::mod {$mod_shib: }
 
+  # by requiring the Apache::Mod, this should wait for the package
+  # to create the directory and not need to manage it
   file{$shib_conf_dir:
     ensure  => directory,
     require => Apache::Mod[$mod_shib]
   }
 
+  # by requiring the Apache::Mod, this will just define the file
+  # created when installing the package.
   file{$shib_conf:
     ensure  => file,
     replace => false,
     require => [Apache::Mod[$mod_shib],File[$shib_conf_dir]],
   }
 
+  # augeas should auto-require the file $shib_conf
   augeas{"shib_SPconfig_errors":
     lens    => 'Xml.lns',
     incl    => $shib_conf,

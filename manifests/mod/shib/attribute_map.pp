@@ -1,3 +1,5 @@
+# parameter setup allows an attribute_map to bedownloaded with one name
+# and saved locally by another.
 define apache::mod::shib::attribute_map(
   $attribute_map_uri,
   $attribute_map_dir  = $apache::mod::shib::shib_conf_dir,
