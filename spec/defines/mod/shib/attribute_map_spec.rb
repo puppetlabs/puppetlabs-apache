@@ -1,4 +1,4 @@
-describe 'apache::mod::shib', :type => :class do
+describe 'apache::mod::shib::attribute_map', :type => :define do
   let :pre_condition do
     'include apache'
   end
@@ -10,10 +10,11 @@ describe 'apache::mod::shib', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
+    let(:title){ 'map_name' }
     it { should include_class("apache::params") }
-    it { should contain_apache__mod('shib2') }
-    it { should contain_package('libapache2-mod-shib2')}
-
+    it { should include_class("apache::mod::shib") }
+    it { should contain_exec("get_map_name_attribute_map")}
+    it { should contain_augeas("shib_map_name_attribute_map") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -23,12 +24,10 @@ describe 'apache::mod::shib', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
+    let(:title){ 'map_name' }
     it { should include_class("apache::params") }
-    # Missing tests for apache__mod and package
-    it { should contain_file("/etc/shibboleth") }
-    it { should contain_file("/etc/shibboleth/shibboleth2.xml") }
-    it { should contain_augeas("shib_SPconfig_errors") }
-    it { should contain_augeas("shib_SPconfig_hostname") }
-    it { should contain_augeas("shib_SPconfig_handlerSSL") }
+    it { should include_class("apache::mod::shib") }
+    it { should contain_exec("get_map_name_attribute_map") }
+    it { should contain_augeas("shib_map_name_attribute_map") }
   end
 end
