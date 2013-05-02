@@ -1,4 +1,4 @@
-describe 'apache::mod::shib', :type => :class do
+describe 'apache::mod::shib::backend_cert', :type => :class do
   let :pre_condition do
     'include apache'
   end
@@ -12,6 +12,7 @@ describe 'apache::mod::shib', :type => :class do
       }
     end
     it { should include_class("apache::params") }
+    it { should include_class("apache::mod::shib") }
     it { should contain_exec("shib_keygen_test.example.org")}
   end
   context "on a RedHat OS" do
@@ -24,6 +25,7 @@ describe 'apache::mod::shib', :type => :class do
       }
     end
     it { should include_class("apache::params") }
+    it { should include_class("apache::mod::shib") }
     it { should contain_exec("shib_keygen_test.example.org")}
   end
 end
