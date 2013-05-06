@@ -89,6 +89,7 @@ define apache::vhost(
     $error_log_file     = undef,
     $error_log_pipe     = undef,
     $scriptalias        = undef,
+    $scriptlocation     = '/cgi-bin/',
     $proxy_dest         = undef,
     $no_proxy_uris      = [],
     $redirect_source    = '/',
