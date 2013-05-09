@@ -16,13 +16,15 @@
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
 # - The $options for the given vhost
-# - The $override for the given vhost (array of AllowOverride arguments)
+# - The $override for the given vhost (list of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
-# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
+#   each statement is in the form of a key-value has { alias => '/alias', path => '/real/path/to/directory' }
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -85,6 +87,7 @@ define apache::vhost(
     $access_log_file    = undef,
     $access_log_pipe    = undef,
     $access_log_format  = undef,
+    $aliases            = undef,
     $error_log          = true,
     $error_log_file     = undef,
     $error_log_pipe     = undef,

@@ -22,7 +22,7 @@
 
 ##Overview
 
-The Apache module allows you to set up virtual hosts and manage web services with minimal effort. 
+The Apache module allows you to set up virtual hosts and manage web services with minimal effort.
 
 ##Module Description
 
@@ -33,18 +33,18 @@ Apache is a widely-used web server, and this module provides a simplified way of
 **What Apache affects:**
 
 * configuration files and directories (created and written to)
-    * **NOTE**: Configurations that are *not* managed by Puppet will be purged. 
+    * **NOTE**: Configurations that are *not* managed by Puppet will be purged.
 * package/service/configuration files for Apache
-* Apache modules 
+* Apache modules
 * virtual hosts
-* listened-to ports 
+* listened-to ports
 
-###Beginning with Apache 
+###Beginning with Apache
 
 To install Apache with the default parameters
 
     class { 'apache':  }
-    
+
 The defaults are determined by your operating system (e.g. Debian systems have one set of defaults, RedHat systems have another). These defaults will work well in a testing environment, but are not suggested for production. To establish customized parameters
 
     class { 'apache':
@@ -57,7 +57,7 @@ The defaults are determined by your operating system (e.g. Debian systems have o
 Declaring the `apache` class will create a default virtual host by setting up a vhost on port 80, listening on all interfaces and serving `$apache::docroot`.
 
     class { 'apache': }
-    
+
 To configure a very basic, name-based virtual host
 
     apache::vhost { 'first.example.com':
@@ -93,8 +93,8 @@ To set up a virtual host with SSL and specific SSL certificates
       ssl_cert => '/etc/ssl/fourth.example.com.cert',
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
-    
-To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples). 
+
+To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples).
 
 ##Usage
 
@@ -106,16 +106,16 @@ It is possible to temporarily disable full Puppet management by setting the `pur
 
 ####Class: `apache`
 
-The Apache module's primary class, `apache`, guides the basic setup of Apache on your system. 
+The Apache module's primary class, `apache`, guides the basic setup of Apache on your system.
 
-You may establish a default vhost in this class, the `vhost` class, or both. You may add additional vhost configurations for specific virtual hosts using a declaration of the `vhost` type. 
+You may establish a default vhost in this class, the `vhost` class, or both. You may add additional vhost configurations for specific virtual hosts using a declaration of the `vhost` type.
 
 **Parameters within `apache`:**
 
 #####`default_mods`
 
 Sets up Apache with default settings based on your OS. Defaults to 'true', set to 'false' for customized configuration.
- 
+
 #####`default_vhost`
 
 Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
@@ -133,7 +133,7 @@ Sets up a default SSL virtual host. Defaults to 'false'.
       access_log_file => "ssl_${access_log_file}",
       }
 
-SSL vhosts only respond to HTTPS queries. 
+SSL vhosts only respond to HTTPS queries.
 
 #####`default_ssl_cert`
 
@@ -169,15 +169,15 @@ Sets the server administrator. Defaults to 'root@localhost'.
 
 #####`sendfile`
 
-Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'false'. 
+Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'false'.
 
-#####`error_documents` 
+#####`error_documents`
 
-Enables custom error documents. Defaults to 'false'. 
+Enables custom error documents. Defaults to 'false'.
 
 #####`confd_dir`
 
-Changes the location of the configuration directory your custom configuration files are placed in. Default is based on your OS.            
+Changes the location of the configuration directory your custom configuration files are placed in. Default is based on your OS.
 
 #####`vhost_dir`
 
@@ -185,8 +185,8 @@ Changes the location of the configuration directory your virtual host configurat
 
 #####`mod_dir`
 
-Changes the location of the configuration directory your Apache modules configuration files are placed in. Default is based on your OS. 
-          
+Changes the location of the configuration directory your Apache modules configuration files are placed in. Default is based on your OS.
+
 #####`mpm_module`
 
 Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork` and `apache::mod::worker` classes. Must be set to `false` to explicitly declare `apache::mod::worker` or `apache::mod::prefork` classes with parameters. Valid values are `worker`, `prefork`, or the boolean `false`. Defaults to `prefork` on RedHat and `worker` on Debian.
@@ -195,7 +195,7 @@ Configures which mpm module is loaded and configured for the httpd process by th
 
 Installs default Apache modules based on what OS you are running
 
-    class { 'apache::default_mods': } 
+    class { 'apache::default_mods': }
 
 ####Defined Type: `apache::mod`
 
@@ -206,7 +206,7 @@ Used to enable arbitrary Apache httpd modules for which there is no specific `ap
 
 ####Classes: `apache::mod::[name]`
 
-There are many `apache::mod::[name]` classes within this module that can be declared using `include`: 
+There are many `apache::mod::[name]` classes within this module that can be declared using `include`:
 
 * `alias`
 * `auth_basic`
@@ -243,23 +243,23 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `worker`*
 * `wsgi`
 
-Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention. 
+Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention.
 
-The modules mentioned above, and other Apache modules that have templates, will cause template files to be dropped along with the mod install, and the module will not work without the template. Any mod without a template will install package but drop no files. 
-	
+The modules mentioned above, and other Apache modules that have templates, will cause template files to be dropped along with the mod install, and the module will not work without the template. Any mod without a template will install package but drop no files.
+
 ####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 
 	class { 'apache::mod::ssl': }
-	
-To *use* SSL with a virtual host, you must either set the`default_ssl_vost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.    
+
+To *use* SSL with a virtual host, you must either set the`default_ssl_vost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
 
 ####Defined Type: `apache::vhost`
 
-The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters. 
+The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters.
 
-The `vhost` defined type allows you to have specialized configurations for virtual hosts that have requirements outside of the defaults. You can set up a default vhost within the base `apache` class as well as set a customized vhost setup as default. Your customized vhost (priority 10) will be privileged over the base class vhost (15). 
+The `vhost` defined type allows you to have specialized configurations for virtual hosts that have requirements outside of the defaults. You can set up a default vhost within the base `apache` class as well as set a customized vhost setup as default. Your customized vhost (priority 10) will be privileged over the base class vhost (15).
 
 If you have a series of specific configurations and do not want a base `apache` class default vhost, make sure to set the base class default host to 'false'.
 
@@ -269,9 +269,9 @@ If you have a series of specific configurations and do not want a base `apache` 
 
 **Parameters within `apache::vhost`:**
 
-The default values for each parameter will vary based on operating system and type of virtual host. 
+The default values for each parameter will vary based on operating system and type of virtual host.
 
-#####`access_log` 
+#####`access_log`
 
 Specifies whether `*_access.log` directives should be configured. Valid values are 'true' and 'false'. Defaults to 'true'.
 
@@ -289,11 +289,23 @@ Specifies either a LogFormat nickname or custom format string for access log. De
 
 #####`add_listen`
 
-Determines whether the vhost creates a listen statement. The default value is 'true'. 
+Determines whether the vhost creates a listen statement. The default value is 'true'.
 
-Setting `add_listen` to 'false' stops the vhost from creating a listen statement, and this is important when you combine vhosts that are not passed an `ip` parameter with vhosts that *are* passed the `ip` parameter. 
+Setting `add_listen` to 'false' stops the vhost from creating a listen statement, and this is important when you combine vhosts that are not passed an `ip` parameter with vhosts that *are* passed the `ip` parameter.
 
-#####`block` 
+#####`aliases`
+
+Passes a list of hashes to the vhost to create `Alias` statements as per the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). Each hash is expected to be of the form:
+
+```ruby
+aliases => [ { alias => '/alias', path => '/path/to/directory' } ],
+```
+
+For `Alias` to work, each will need a corresponding `<Directory /path/to/directory>` or `<Location /path/to/directory>` block.
+
+**Note:** If `apache::mod::passenger` is loaded and `PassengerHighPerformance true` is set, then `Alias` may have issues honouring the `PassengerEnabled off` statement. See [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
+
+#####`block`
 
 Specifies the list of things Apache will block access to. The default is an empty set, '[]'. Currently, the only option is 'scm', which blocks web access to .svn, .git and .bzr directories. To add to this, please see the [Development](#development) section.
 
@@ -309,7 +321,7 @@ Pass a string of custom configuration directives to be placed at the end of the 
 
 Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
 
-#####`docroot` 
+#####`docroot`
 
 Provides the DocumentRoot directive, identifying the directory Apache serves files from.
 
@@ -323,7 +335,7 @@ Sets individual user access to the docroot directory. Defaults to 'root'.
 
 #####`error_log`
 
-Specifies whether `*_error.log` directives should be configured. Defaults to 'true'. 
+Specifies whether `*_error.log` directives should be configured. Defaults to 'true'.
 
 #####`error_log_file`
 
@@ -339,8 +351,8 @@ Specifies if the vhost file is present or absent.
 
 #####`ip`
 
-The IP address the vhost listens on. Defaults to 'undef'. 
-  
+The IP address the vhost listens on. Defaults to 'undef'.
+
 #####`ip_based`
 
 Enables an IP-based vhost. This parameter inhibits the creation of a NameVirtualHost directive, since those are used to funnel requests to name-based vhosts. Defaults to 'false'.
@@ -353,7 +365,7 @@ Specifies the location of the virtual host's logfiles. Defaults to `/var/log/<ap
 
 Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with `proxy_dest`.
 
-#####`options` 
+#####`options`
 
 Lists the options for the given virtual host
 
@@ -364,7 +376,7 @@ Lists the options for the given virtual host
 
 #####`override`
 
-Sets the overrides for the given virtual host. Accepts an array of AllowOverride arguments. 
+Sets the overrides for the given virtual host. Accepts an array of AllowOverride arguments.
 
 #####`port`
 
@@ -376,7 +388,7 @@ Sets the relative load-order for Apache httpd VirtualHost configuration files. D
 
 If nothing matches the priority, the first name-based vhost will be used. Likewise, passing a higher priority will cause the alphabetically first name-based vhost to be used if no other names match.
 
-*Note*: You should not need to use this parameter. However, if you do use it, be aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'. 
+*Note*: You should not need to use this parameter. However, if you do use it, be aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'.
 
 #####`proxy_dest`
 
@@ -393,7 +405,7 @@ Specifies the address to redirect to. Defaults to 'undef'.
 #####`redirect_source`
 
 Specifies the source items? that will redirect to the destination specified in `redirect_dest`. If more than one item for redirect is supplied, the source and destination must be the same length, and the items are order-dependent.
-    
+
     apache::vhost { 'site.name.fdqn':
       …
       redirect_source => ['/images','/downloads'],
@@ -402,7 +414,7 @@ Specifies the source items? that will redirect to the destination specified in `
 
 #####`redirect_status`
 
-Specifies the status to append to the redirect. Defaults to 'undef'. 
+Specifies the status to append to the redirect. Defaults to 'undef'.
 
     apache::vhost { 'site.name.fdqn':
       …
@@ -421,9 +433,9 @@ Specifies additional request headers.
       ],
     }
 
-#####`rewrite_base` 
+#####`rewrite_base`
 
-Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'. 
+Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'.
 
     apache::vhost { 'site.name.fdqn':
       …
@@ -438,23 +450,23 @@ The above example would limit the index.html -> welcome.html rewrite to only som
 Rewrites a URL via `rewrite_rule` based on the truth of specified conditions. For example
 
     apache::vhost { 'site.name.fdqn':
-      … 
+      …
       rewrite_cond => '%{HTTP_USER_AGENT} ^MSIE',
-    } 
- 
+    }
+
 will rewrite URLs only if the visitor is using IE. Defaults to 'undef'.
 
 *Note*: At the moment, each vhost is limited to a single list of rewrite conditions. In the future, you will be able to specify multiple `rewrite_cond` and `rewrite_rules` per vhost, so that different conditions get different rewrites.
 
 #####`rewrite_rule`
 
-Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html. 
+Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html.
 
     apache::vhost { 'site.name.fdqn':
       …
       rewrite_rule => '^index\.html$ welcome.html',
     }
-    
+
 #####`scriptalias`
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin'
@@ -485,11 +497,11 @@ Enables SSL for the virtual host. SSL vhosts only respond to HTTPS queries. Vali
 
 #####`ssl_ca`
 
-Specifies the certificate authority. 
+Specifies the certificate authority.
 
 #####`ssl_cert`
 
-Specifies the SSL certification. 
+Specifies the SSL certification.
 
 #####`ssl_certs_dir`
 
@@ -506,10 +518,10 @@ Specifies the certificate revocation list to use.
 #####`ssl_crl_path`
 
 Specifies the location of the certificate revocation list.
- 
+
 #####`ssl_key`
 
-Specifies the SSL key. 
+Specifies the SSL key.
 
 #####`vhost_name`
 
@@ -526,8 +538,8 @@ Configure a vhost with a server administrator
       docroot     => '/var/www/third',
       serveradmin => 'admin@example.com',
     }
-    
-- - - 
+
+- - -
 
 Set up a vhost with aliased servers
 
@@ -539,7 +551,7 @@ Set up a vhost with aliased servers
       port          => '80',
       docroot       => '/var/www/fifth',
     }
-    
+
 - - -
 
 Configure a vhost with a cgi-bin
@@ -549,8 +561,8 @@ Configure a vhost with a cgi-bin
       docroot     => '/var/www/eleventh',
       scriptalias => '/usr/lib/cgi-bin',
     }
-    
-- - - 
+
+- - -
 
 Set up a vhost with a rack configuration
 
@@ -559,7 +571,7 @@ Set up a vhost with a rack configuration
       docroot        => '/var/www/fifteenth',
       rack_base_uris => ['/rackapp1', '/rackapp2'],
     }
-- - -      
+- - -
 
 Set up a mix of SSL and non-SSL vhosts at the same domain
 
@@ -578,8 +590,8 @@ Set up a mix of SSL and non-SSL vhosts at the same domain
       ssl        => true,
     }
 
-- - - 
-    
+- - -
+
 Configure a vhost to redirect non-SSL connections to SSL
 
     apache::vhost { 'sixteenth.example.com non-ssl':
@@ -597,7 +609,7 @@ Configure a vhost to redirect non-SSL connections to SSL
     }
 
 - - -
-    
+
 Set up IP-based vhosts on any listen port and have them respond to requests on specific IP addresses. In this example, we will set listening on ports 80 and 81. This is required because the example vhosts are not declared with a port parameter.
 
     apache::listen { '80': }
@@ -679,7 +691,7 @@ Controls which ports Apache binds to for listening based on the title:
     apache::listen { '80': }
     apache::listen { '443': }
 
-Declaring this defined type will add all `Listen` directives to the `ports.conf` file in the Apache httpd configuration directory.  `apache::listen` titles should always take the form of: `<port>`, `<ipv4>:<port>`, or `[<ipv6>]:<port>` 
+Declaring this defined type will add all `Listen` directives to the `ports.conf` file in the Apache httpd configuration directory.  `apache::listen` titles should always take the form of: `<port>`, `<ipv4>:<port>`, or `[<ipv6>]:<port>`
 
 Apache httpd requires that `Listen` directives must be added for every port. The `apache::vhost` defined type will automatically add `Listen` directives unless the `apache::vhost` is passed `add_listen => false`.
 
@@ -688,12 +700,12 @@ Apache httpd requires that `Listen` directives must be added for every port. The
 Enables named-based hosting of a virtual host
 
     class { 'apache::namevirtualhost`: }
-    
+
 Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
 ###Templates
 
-The Apache module relies heavily on templates to enable the `vhost` and `apache::mod` defined types. These templates are built based on Facter facts around your operating system. Unless explicitly called out, most templates are not meant for configuration. 
+The Apache module relies heavily on templates to enable the `vhost` and `apache::mod` defined types. These templates are built based on Facter facts around your operating system. Unless explicitly called out, most templates are not meant for configuration.
 
 ##Limitations
 
