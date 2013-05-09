@@ -11,6 +11,7 @@
 
   ## Vhost docroot
   DocumentRoot <%= @docroot %>
+<%= scope.function_template(['apache/vhost/_aliases.erb']) -%>
   <Directory <%= @docroot %>>
     Options <%= Array(@options).join(' ') %>
     AllowOverride <%= Array(@override).join(' ') %>
