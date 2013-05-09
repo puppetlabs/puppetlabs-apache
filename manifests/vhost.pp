@@ -24,7 +24,10 @@
 # - The $ensure specifies if vhost file is present or absent.
 # - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 # - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
-#   each statement is in the form of a key-value has { alias => '/alias', path => '/real/path/to/directory' }
+#   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
+# - $directories is a lost of hashes for creating <Directory> statements as per http://httpd.apache.org/docs/2.2/mod/core.html#directory
+#   each statement is a hash in the form of { path => '/path/to/directory', <directive> => <value>}
+#   see README.md for list of supported directives.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -88,6 +91,7 @@ define apache::vhost(
     $access_log_pipe    = undef,
     $access_log_format  = undef,
     $aliases            = undef,
+    $directories        = undef,
     $error_log          = true,
     $error_log_file     = undef,
     $error_log_pipe     = undef,

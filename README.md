@@ -321,6 +321,57 @@ Pass a string of custom configuration directives to be placed at the end of the 
 
 Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
 
+#####`directories`
+
+Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory). Each hash should be of the form of:
+
+```ruby
+directory [ { path => '/path/to/directory', <directive> => <value> } ],
+```
+
+The directives will be embedded within the `Directory` directive block, missing directives should be undefined and not be added, resulting in their default vaules in Apache. Currently this is the list of supported directives:
+
+######`Allow`
+
+Sets an `Allow` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow). An example:
+
+```ruby
+directory [ { path => '/path/to/directory', Allow => 'from example.org' } ],
+```
+
+######`AllowOverride`
+
+Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). An example:
+
+```ruby
+directory [ { path => '/path/to/directory', AllowOverride => 'AuthConfig Indexes' } ],
+```
+
+######`Deny`
+
+Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny). An example:
+
+```ruby
+directory [ { path => '/path/to/directory', Deny => 'from example.org' } ],
+```
+
+######`Order`
+Sets the order of processing `Allow` and `Deny` statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). An example:
+
+```ruby
+directory [ { path => '/path/to/directory', Order => 'Allow, Deny' } ],
+```
+
+######`PassengerEnabled`
+
+Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the [Passenger documentation](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled).
+
+**Note:** This directive requires `apache::mod::passenger` to be active, Apache may not start with an unrecognised directive without it.
+
+**Note:** Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the `PassengerEnabled` directive with the `PassengerHighPerformance` directive.
+
+######`UserDir`
+
 #####`docroot`
 
 Provides the DocumentRoot directive, identifying the directory Apache serves files from.
