@@ -1,7 +1,7 @@
 <% if @directories and ! @directories.empty? -%>
 
   ## Directory declarations for resources outside the DocumentRoot
-  <%- Array(@directories).each do |alias_statement| -%>
+  <%- Array(@directories).each do |directory| -%>
     <%- if directory["path"] and directory["path"] != ''-%>
 
   <Directory <%= directory["path"] %> >
