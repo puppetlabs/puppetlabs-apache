@@ -8,11 +8,11 @@
     <%- if directory["order"] and directory["order"] != '' -%>
     Order <%= directory["order"] %>
     <%- end -%>
-    <%- if directory["daaeny"] and directory["daaeny"] != '' -%>
-    Deny <%= directory["daaeny"] %>
+    <%- if directory["deny"] and directory["deny"] != '' -%>
+    Deny <%= directory["deny"] %>
     <%- end -%>
-    <%- if directory["aallow"] and directory["aallow"] != '' -%>
-    Allow <%= directory["aallow"] %>
+    <%- if directory["allow"] and directory["allow"] != '' -%>
+    Allow <%= directory["allow"] %>
     <%- end -%>
     <%- if directory["allowOverride"] and directory["allowOverride"] != '' -%>
     AllowOverride <%= directory["allowOverride"] %>
