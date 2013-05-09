@@ -5,20 +5,20 @@
     <%- if directory["path"] and directory["path"] != ''-%>
 
   <Directory <%= directory["path"] %> >
-    <%- if directory["Order"] and directory["Order"] != '' -%>
-    Order <%= directory["Order"] %>
+    <%- if directory["order"] and directory["order"] != '' -%>
+    Order <%= directory["order"] %>
     <%- end -%>
-    <%- if directory["Deny"] and directory["Deny"] != '' -%>
-    Deny <%= directory["Deny"] %>
+    <%- if directory["daaeny"] and directory["daaeny"] != '' -%>
+    Deny <%= directory["daaeny"] %>
     <%- end -%>
-    <%- if directory["Allow"] and directory["Allow"] != '' -%>
-    Allow <%= directory["Allow"] %>
+    <%- if directory["aallow"] and directory["aallow"] != '' -%>
+    Allow <%= directory["aallow"] %>
     <%- end -%>
-    <%- if directory["AllowOverride"] and directory["AllowOverride"] != '' -%>
-    AllowOverride <%= directory["AllowOverride"] %>
+    <%- if directory["allowOverride"] and directory["allowOverride"] != '' -%>
+    AllowOverride <%= directory["allowOverride"] %>
     <%- end -%>
-    <%- if directory["PassengerEnabled"] and directory["PassengerEnabled"] != '' -%>
-    PassengerEnabled <%= directory["PassengerEnabled"] %>
+    <%- if directory["passengerEnabled"] and directory["passengerEnabled"] != '' -%>
+    PassengerEnabled <%= directory["passengerEnabled"] %>
     <%- end -%>
   </Directory>
     <%- end -%>
