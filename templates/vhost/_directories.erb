@@ -2,7 +2,7 @@
 
   ## Directory declarations for resources outside the DocumentRoot
   <%- Array(@directories).each do |alias_statement| -%>
-    <%- if directory["alias"] != '' and directory["path"] != ''-%>
+    <%- if directory["path"] and directory["path"] != ''-%>
 
   <Directory <%= directory["path"] %> >
     <%- if directory["Order"] and directory["Order"] != '' -%>
