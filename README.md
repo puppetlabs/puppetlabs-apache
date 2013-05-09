@@ -326,7 +326,7 @@ Sets a given `apache::vhost` as the default to serve requests that do not match 
 Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory). Each hash should be of the form of:
 
 ```ruby
-directory [ { path => '/path/to/directory', <directive> => <value> } ],
+directory => [ { path => '/path/to/directory', <directive> => <value> } ],
 ```
 
 The directives will be embedded within the `Directory` directive block, missing directives should be undefined and not be added, resulting in their default vaules in Apache. Currently this is the list of supported directives:
@@ -336,7 +336,7 @@ The directives will be embedded within the `Directory` directive block, missing 
 Sets an `Allow` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow). An example:
 
 ```ruby
-directory [ { path => '/path/to/directory', Allow => 'from example.org' } ],
+directory => [ { path => '/path/to/directory', Allow => 'from example.org' } ],
 ```
 
 ######`AllowOverride`
@@ -344,7 +344,7 @@ directory [ { path => '/path/to/directory', Allow => 'from example.org' } ],
 Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). An example:
 
 ```ruby
-directory [ { path => '/path/to/directory', AllowOverride => 'AuthConfig Indexes' } ],
+directory => [ { path => '/path/to/directory', AllowOverride => 'AuthConfig Indexes' } ],
 ```
 
 ######`Deny`
@@ -352,19 +352,23 @@ directory [ { path => '/path/to/directory', AllowOverride => 'AuthConfig Indexes
 Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny). An example:
 
 ```ruby
-directory [ { path => '/path/to/directory', Deny => 'from example.org' } ],
+directory => [ { path => '/path/to/directory', Deny => 'from example.org' } ],
 ```
 
 ######`Order`
 Sets the order of processing `Allow` and `Deny` statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). An example:
 
 ```ruby
-directory [ { path => '/path/to/directory', Order => 'Allow, Deny' } ],
+directory => [ { path => '/path/to/directory', Order => 'Allow, Deny' } ],
 ```
 
 ######`PassengerEnabled`
 
 Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the [Passenger documentation](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled).
+
+```ruby
+directory => [ { path => '/path/to/directory', PassengerEnabled => 'off' } ],
+```
 
 **Note:** This directive requires `apache::mod::passenger` to be active, Apache may not start with an unrecognised directive without it.
 
