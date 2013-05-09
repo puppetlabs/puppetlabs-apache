@@ -1,0 +1,26 @@
+<% if @directories and ! @directories.empty? -%>
+
+  ## Directory declarations for resources outside the DocumentRoot
+  <%- Array(@directories).each do |alias_statement| -%>
+    <%- if directory["alias"] != '' and directory["path"] != ''-%>
+
+  <Directory <%= directory["path"] %> >
+    <%- if directory["Order"] and directory["Order"] != '' -%>
+    Order <%= directory["Order"] %>
+    <%- end -%>
+    <%- if directory["Deny"] and directory["Deny"] != '' -%>
+    Deny <%= directory["Deny"] %>
+    <%- end -%>
+    <%- if directory["Allow"] and directory["Allow"] != '' -%>
+    Allow <%= directory["Allow"] %>
+    <%- end -%>
+    <%- if directory["AllowOverride"] and directory["AllowOverride"] != '' -%>
+    AllowOverride <%= directory["AllowOverride"] %>
+    <%- end -%>
+    <%- if directory["PassengerEnabled"] and directory["PassengerEnabled"] != '' -%>
+    PassengerEnabled <%= directory["PassengerEnabled"] %>
+    <%- end -%>
+  </Directory>
+    <%- end -%>
+  <%- end -%>
+<% end -%>

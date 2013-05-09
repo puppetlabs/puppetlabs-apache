@@ -18,6 +18,7 @@
     Order allow,deny
     allow from all
   </Directory>
+<%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 
   ## Logging
 <% if @error_log -%>
