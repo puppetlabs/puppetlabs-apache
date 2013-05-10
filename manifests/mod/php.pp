@@ -1,4 +1,5 @@
 class apache::mod::php {
+  require apache::mod::prefork
   apache::mod { 'php5': }
   file { 'php.conf':
     ensure  => file,
