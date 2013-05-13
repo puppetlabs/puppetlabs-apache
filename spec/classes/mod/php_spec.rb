@@ -1,6 +1,6 @@
 describe 'apache::mod::php', :type => :class do
   let :pre_condition do
-    'include apache'
+    'class{"apache": mpm_module => "prefork"}'
   end
   context "on a Debian OS" do
     let :facts do
