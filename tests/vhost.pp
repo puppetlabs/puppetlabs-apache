@@ -173,3 +173,13 @@ apache::vhost { 'nineteenth.example.com':
   docroot  => '/var/www/nineteenth',
   setenvif => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
 }
+
+# Vhost with alias for subdomain mapped to same named directory 
+# http://example.com.loc => /var/www/example.com
+apache::vhost { 'subdomain.loc':
+  vhost_name      => '*',
+  port            => '80',
+  virtual_docroot => '/var/www/%-2+',
+  docroot         => '/var/www',
+  serveraliases   => ['*.loc',],
+}
