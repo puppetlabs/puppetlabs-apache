@@ -30,11 +30,12 @@ class apache::mod::prefork (
   case $::osfamily {
     'redhat': {
       file_line { '/etc/sysconfig/httpd prefork enable':
-        ensure => present,
-        path   => '/etc/sysconfig/httpd',
-        line   => '#HTTPD=/usr/sbin/httpd.prefork',
-        match  => '#?HTTPD=',
-        notify => Service['httpd'],
+        ensure  => present,
+        path    => '/etc/sysconfig/httpd',
+        line    => '#HTTPD=/usr/sbin/httpd.prefork',
+        match   => '#?HTTPD=',
+        require => Package['httpd'],
+        notify  => Service['httpd'],
       }
     }
     'debian': {
