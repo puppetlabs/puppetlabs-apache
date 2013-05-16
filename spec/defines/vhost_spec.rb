@@ -193,6 +193,21 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /ProxyPass .+!$/,
         },
         {
+          :title    => 'should accept proxy_pass array of hash',
+          :attr     => 'proxy_pass',
+          :value    => [
+            { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
+            { 'path' => '/path-b', 'url' => 'http://fake.com/b/' },
+          ],
+          :match    => [
+            '  ProxyPass        /path-a http://fake.com/a/',
+            '  ProxyPassReverse /path-a http://fake.com/a/',
+            '  ProxyPass        /path-b http://fake.com/b/',
+            '  ProxyPassReverse /path-b http://fake.com/b/',
+          ],
+          :notmatch => /ProxyPass .+!$/,
+        },
+        {
           :title => 'should enable rack',
           :attr  => 'rack_base_uris',
           :value => ['/rack1','/rack2'],
