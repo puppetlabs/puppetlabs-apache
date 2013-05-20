@@ -244,6 +244,14 @@ describe 'apache::vhost', :type => :define do
             '</VirtualHost>',
           ],
         },
+        {
+          :title => 'should contain virtual_docroot',
+          :attr  => 'virtual_docroot',
+          :value => '/not/default',
+          :match => [
+            '  VirtualDocumentRoot /not/default',
+          ],
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
