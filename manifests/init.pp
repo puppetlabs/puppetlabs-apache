@@ -171,8 +171,8 @@ class apache (
       notify  => Service['httpd'],
       require => Package['httpd'],
     }
-    if $default_mods {
-      include apache::default_mods
+    class { 'apache::default_mods':
+      all => $default_mods
     }
     if $mpm_module {
       class { "apache::mod::${mpm_module}": }
