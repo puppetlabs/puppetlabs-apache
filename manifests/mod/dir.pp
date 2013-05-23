@@ -1,5 +1,5 @@
 class apache::mod::dir (
-  $dir = 'public_html',
+  $dir = 'public_html'
 ) {
   apache::mod { 'dir': }
 

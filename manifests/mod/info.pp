@@ -1,5 +1,5 @@
 class apache::mod::info (
-  $allow_from = ['127.0.0.1','::1'],
+  $allow_from = ['127.0.0.1','::1']
 ){
   apache::mod { 'info': }
   # Template uses $allow_from
