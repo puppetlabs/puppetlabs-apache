@@ -1,7 +1,7 @@
 class apache::mod::userdir (
   $home = '/home',
   $dir = 'public_html',
-  $disable_root = true,
+  $disable_root = true
 ) {
   apache::mod { 'userdir': }
 

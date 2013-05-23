@@ -32,7 +32,7 @@ class apache (
   $vhost_dir            = $apache::params::vhost_dir,
   $mod_dir              = $apache::params::mod_dir,
   $mod_enable_dir       = $apache::params::mod_enable_dir,
-  $mpm_module           = $apache::params::mpm_module,
+  $mpm_module           = $apache::params::mpm_module
 ) inherits apache::params {
 
   package { 'httpd':

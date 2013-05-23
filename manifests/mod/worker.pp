@@ -5,7 +5,7 @@ class apache::mod::worker (
   $maxsparethreads     = '75',
   $threadsperchild     = '25',
   $maxrequestsperchild = '0',
-  $serverlimit         = '25',
+  $serverlimit         = '25'
 ) {
   if defined(Class['apache::mod::prefork']) {
     fail('May not include both apache::mod::worker and apache::mod::prefork on the same node')
