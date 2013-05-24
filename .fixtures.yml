@@ -5,3 +5,4 @@ fixtures:
     concat: "git://github.com/ripienaar/puppet-concat.git"
   symlinks:
     apache: "#{source_dir}"
+    apache/templates/fake.conf.erb: "../spec/fixtures/templates/fake.conf.erb"

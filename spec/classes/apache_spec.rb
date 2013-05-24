@@ -258,9 +258,9 @@ describe 'apache', :type => :class do
       end
       context "with non-default" do
         let :params do
-          { :conf_template => 'apache/listen.erb' }
+          { :conf_template => 'apache/fake.conf.erb' }
         end
-        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Listen} }
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Fake template for rspec.$} }
       end
     end
   end
