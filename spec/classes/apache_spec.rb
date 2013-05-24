@@ -248,5 +248,20 @@ describe 'apache', :type => :class do
         it { expect { should contain_class('apache::params') }.to raise_error Puppet::Error, /does not match/ }
       end
     end
+
+    describe "different templates for httpd.conf" do
+      context "with default" do
+        let :params do
+          { :conf_template => 'apache/httpd.conf.erb' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^# Security\n} }
+      end
+      context "with non-default" do
+        let :params do
+          { :conf_template => 'apache/listen.erb' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Listen} }
+      end
+    end
   end
 end
