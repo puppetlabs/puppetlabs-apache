@@ -14,7 +14,7 @@ define apache::passwd($users, $file='') {
     content => template('apache/passwd.erb'),
     owner   => 'root',
     group   => 'root',
-    mode    => '0640',
+    mode    => '0644',
     require => Package['httpd']
   }
 }
