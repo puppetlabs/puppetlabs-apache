@@ -1,33 +1,25 @@
 require 'spec_helper_system'
 
 describe 'apache class' do
+  let(:distro_commands) {
+    YAML.load(File.read(File.dirname(__FILE__) + '/../fixtures/system/distro_commands.yaml'))
+  }
+  let(:os) {
+    system_node.facts['osfamily']
+  }
 
   it 'should install apache' do
-    pp = <<-EOS
-      class { 'apache': }
-    EOS
-    puppet_apply(pp)
-
-    if system_node.facts['osfamily'] == 'Debian'
-      system_run('dpkg --get-selections | grep apache2') do |r|
-        r.stdout.should =~ /^apache2\s+install$/
-        r.exit_code.should == 0
-      end
-    elsif system_node.facts['osfamily'] == 'RedHat' or system_node.facts['osfamily'] == 'amazon'
-      system_run('rpm -q httpd') do |r|
-        r.stdout.should =~ /httpd/
+    if distro_commands.has_key?(os)
+      system_run(distro_commands[os]["package_check"]["command"]) do |r|
+        r.stdout.should =~ distro_commands[os]['package_check']['stdout']
         r.exit_code.should == 0
       end
     end
   end
 
   it 'should start the apache service' do
-    if system_node.facts['osfamily'] == 'Debian'
-      system_run('service apache2 status') do |r|
-        r.exit_code.should == 0
-      end
-    elsif system_node.facts['osfamily'] == 'RedHat' or system_node.facts['osfamily'] == 'amazon'
-      system_run('service httpd status') do |r|
+    if distro_commands.has_key?(os)
+      system_run(distro_commands[os]["service_check"]["command"]) do |r|
         r.exit_code.should == 0
       end
     end
