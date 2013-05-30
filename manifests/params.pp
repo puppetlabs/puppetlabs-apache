@@ -10,6 +10,7 @@
 # - The $php_package is the name of the package that provided PHP
 # - The $ssl_package is the name of the Apache SSL package
 # - The $apache_dev is the name of the Apache development libraries package
+# - The $conf_contents is the contents of the Apache configuration file
 #
 # Actions:
 #
@@ -66,6 +67,7 @@ class apache::params {
     $mod_libs             = {
       'php5' => 'libphp5.so',
     }
+    $conf_template        = 'apache/httpd.conf.erb'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -98,6 +100,7 @@ class apache::params {
       'wsgi'       => 'libapache2-mod-wsgi',
     }
     $mod_libs         = {}
+    $conf_template    = 'apache/httpd.conf.erb'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
