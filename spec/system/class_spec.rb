@@ -3,6 +3,11 @@ require 'spec_helper_system'
 describe 'apache class' do
 
   it 'should install apache' do
+    pp = <<-EOS
+      class { 'apache': }
+    EOS
+    puppet_apply(pp)
+
     if system_node.facts['osfamily'] == 'Debian'
       system_run('dpkg --get-selections | grep apache2') do |r|
         r.stdout.should =~ /^apache2\s+install$/
