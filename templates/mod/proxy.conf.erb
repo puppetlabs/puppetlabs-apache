@@ -6,7 +6,7 @@
   # Do not enable proxying with ProxyRequests until you have secured your
   # server.  Open proxy servers are dangerous both to your network and to the
   # Internet at large.
-  ProxyRequests <%= proxy_requests %>
+  ProxyRequests <%= @proxy_requests %>
 
   <Proxy *>
     Order deny,allow
