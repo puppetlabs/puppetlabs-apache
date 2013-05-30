@@ -24,7 +24,7 @@ class apache (
   $default_ssl_crl      = undef,
   $service_enable       = true,
   $purge_configs        = true,
-  $purge_vdir           = true,
+  $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
   $error_documents      = false,
