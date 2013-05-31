@@ -10,6 +10,6 @@ RedHat:
     command: 'rpm -q httpd'
     stdout: !ruby/regexp '/httpd/'
   service_check:
-    command: '/usr/sbin/service httpd status'
+    command: '/sbin/service httpd status'
     stdout: ''
 
