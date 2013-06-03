@@ -1,7 +1,7 @@
 <IfModule mod_proxy.c>
   <IfModule mod_disk_cache.c>
      CacheEnable disk /
-     CacheRoot "<%= cache_root %>"
+     CacheRoot "<%= @cache_root %>"
      CacheDirLevels 2
      CacheDirLength 1
   </IfModule>

@@ -165,6 +165,18 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /CustomLog \/var\/log\/.+_access\.log combined$/,
         },
         {
+          :title => 'should contain error logs',
+          :attr  => 'error_log',
+          :value => true,
+          :match => /ErrorLog.+$/,
+        },
+        {
+          :title    => 'should not contain error logs',
+          :attr     => 'error_log',
+          :value    => false,
+          :notmatch => /ErrorLog.+$/,
+        },
+        {
           :title => 'should accept scriptaliases',
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
@@ -177,6 +189,21 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             '  ProxyPass        / http://fake.com/',
             '  ProxyPassReverse / http://fake.com/',
+          ],
+          :notmatch => /ProxyPass .+!$/,
+        },
+        {
+          :title    => 'should accept proxy_pass array of hash',
+          :attr     => 'proxy_pass',
+          :value    => [
+            { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
+            { 'path' => '/path-b', 'url' => 'http://fake.com/b/' },
+          ],
+          :match    => [
+            '  ProxyPass        /path-a http://fake.com/a/',
+            '  ProxyPassReverse /path-a http://fake.com/a/',
+            '  ProxyPass        /path-b http://fake.com/b/',
+            '  ProxyPassReverse /path-b http://fake.com/b/',
           ],
           :notmatch => /ProxyPass .+!$/,
         },

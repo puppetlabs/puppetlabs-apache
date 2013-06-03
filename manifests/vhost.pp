@@ -90,6 +90,7 @@ define apache::vhost(
     $error_log_pipe     = undef,
     $scriptalias        = undef,
     $proxy_dest         = undef,
+    $proxy_pass         = undef,
     $no_proxy_uris      = [],
     $redirect_source    = '/',
     $redirect_dest      = undef,
@@ -117,6 +118,7 @@ define apache::vhost(
   validate_bool($ip_based)
   validate_bool($configure_firewall)
   validate_bool($access_log)
+  validate_bool($error_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
 
@@ -241,7 +243,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if $proxy_dest {
+  if ($proxy_dest or $proxy_pass) {
     if ! defined(Class['apache::mod::proxy']) {
       include apache::mod::proxy
     }
