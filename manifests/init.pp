@@ -33,6 +33,8 @@ class apache (
   $mod_dir              = $apache::params::mod_dir,
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
+  $user                 = $apache::params::user,
+  $group                = $apache::params::group,
 ) inherits apache::params {
 
   package { 'httpd':
@@ -48,8 +50,6 @@ class apache (
     validate_re($mpm_module, '(prefork|worker)')
   }
 
-  $user       = $apache::params::user
-  $group      = $apache::params::group
   $httpd_dir  = $apache::params::httpd_dir
   $ports_file = $apache::params::ports_file
   $logroot    = $apache::params::logroot
