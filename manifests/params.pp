@@ -96,6 +96,7 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
+      'shib2'   => 'libapache2-mod-shib2',
     }
     $mod_libs         = {}
   } else {
