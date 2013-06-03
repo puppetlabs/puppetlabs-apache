@@ -447,6 +447,22 @@ If nothing matches the priority, the first name-based vhost will be used. Likewi
 
 Specifies the destination address of a proxypass configuration. Defaults to 'undef'.
 
+#####`proxy_pass`
+
+Specifies an array of path => uri for a proxypass configuration. Defaults to 'undef'.
+
+Example:
+$proxy_pass = [
+  { 'path' => '/a', 'url' => 'http://backend-a/' },
+  { 'path' => '/b', 'url' => 'http://backend-b/' },
+  { 'path' => '/c', 'url' => 'http://backend-a/c' },
+]
+
+apache::vhost { 'site.name.fdqn':
+  …
+  proxy_pass       => $proxy_pass,
+}
+
 #####`rack_base_uris`
 
 Specifies the resource identifiers for a rack configuration. The file paths specified will be listed as rack application roots for passenger/rack in the `_rack.erb` template. Defaults to 'undef'.
