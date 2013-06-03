@@ -4,5 +4,6 @@ class apache::mod::php {
     ensure  => file,
     path    => "${apache::mod_dir}/php.conf",
     content => template('apache/mod/php.conf.erb'),
+    require => Class['apache::mod::prefork'],
   }
 }
