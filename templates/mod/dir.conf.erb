@@ -1,1 +1,5 @@
+<% if @indexes and @indexex != '' -%>
+DirectoryIndex <%= @indexes %>
+<% else -%>
 DirectoryIndex index.html index.html.var index.cgi index.pl index.php index.xhtml index.htm
+<% end -%>
