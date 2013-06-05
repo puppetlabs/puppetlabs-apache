@@ -276,9 +276,9 @@ define apache::vhost(
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
       @firewall {
-        "0100-INPUT ACCEPT $port":
+        "0100-INPUT ACCEPT ${port}":
           action => 'accept',
-          dport  => $port,
+          dport  => ${port},
           proto  => 'tcp'
       }
     }
@@ -302,7 +302,7 @@ define apache::vhost(
       path    => $docroot,
       options => $options,
       allowoverride => $allowoverride,
-      order         => 'allow,deny'
+      order         => 'allow,deny',
       allow         => 'from all',
     } ]
   }
