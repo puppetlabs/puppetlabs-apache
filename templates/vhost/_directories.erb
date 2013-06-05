@@ -26,9 +26,9 @@
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- Array(directory['addhandlers']).each do |addhandler| -%>
-    AddHandler <%= addhandler['handler'] %> <%= addhandler['extensions'].join[' '] %>
-      <% end -%>
-    <% end -%>
+    AddHandler <%= addhandler['handler'] %> <%= addhandler['extensions'].join(' ') %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory["passengerEnabled"] and directory["passengerEnabled"] != '' -%>
     PassengerEnabled <%= directory["passengerEnabled"] %>
     <%- end -%>
