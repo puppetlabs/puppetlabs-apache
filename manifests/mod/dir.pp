@@ -3,8 +3,9 @@
 # - $indexes provides a string for the DirectoryIndex directive http://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
 class apache::mod::dir (
   $dir     = 'public_html',
-  $indexes = undef,
+  $indexes = $indexes = ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml','index.html'],
 ) {
+  validate_array($indexes)
   apache::mod { 'dir': }
 
   # Template uses
