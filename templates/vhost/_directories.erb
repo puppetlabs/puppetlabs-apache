@@ -4,19 +4,25 @@
 
   <Directory <%= directory["path"] %> >
     <%- if directory["options"] -%>
-    Options<%= Array(directory['options']).join(' ') %>
-    <% end -%>
+    Options <%= Array(directory['options']).join(' ') %>
+    <%- end -%>
     <%- if directory['override'] -%>
     AllowOverride <%= directory['override'].join(' ') %>
-    <% end -%>
+    <%- else -%>
+    AllowOverride None
+    <%- end -%>
     <%- if directory["order"] and directory["order"] != '' -%>
     Order <%= directory["order"] %>
+    <%- else -%>
+    Order allow,deny
     <%- end -%>
     <%- if directory["deny"] and directory["deny"] != '' -%>
     Deny <%= directory["deny"] %>
     <%- end -%>
     <%- if directory["allow"] and directory["allow"] != '' -%>
     Allow <%= directory["allow"] %>
+    <%- else -%>
+    Allow from all
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- Array(directory['addhandlers']).each do |addhandler| -%>
