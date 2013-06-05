@@ -13,6 +13,7 @@
 # Sample Usage:
 #
 class apache (
+  $managed              = true,
   $default_mods         = true,
   $default_vhost        = true,
   $default_ssl_vhost    = false,
@@ -165,11 +166,13 @@ class apache (
     # - $vhost_dir
     # - $error_documents
     # - $error_documents_path
-    file { "${apache::params::conf_dir}/${apache::params::conf_file}":
-      ensure  => file,
-      content => template("apache/httpd.conf.erb"),
-      notify  => Service['httpd'],
-      require => Package['httpd'],
+    if $managed {
+      file { "${apache::params::conf_dir}/${apache::params::conf_file}":
+        ensure  => file,
+        content => template("apache/httpd.conf.erb"),
+        notify  => Service['httpd'],
+        require => Package['httpd'],
+      }
     }
     if $default_mods {
       include apache::default_mods
