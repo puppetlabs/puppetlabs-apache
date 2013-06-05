@@ -1,10 +1,14 @@
-<% if @directories and ! @directories.empty? -%>
-
-  ## Directory declarations for resources outside the DocumentRoot
-  <%- Array(@directories).each do |directory| -%>
+<% if @_directories and ! @_directories.empty? -%>
+  <%- Array(@_directories).each do |directory| -%>
     <%- if directory["path"] and directory["path"] != ''-%>
 
   <Directory <%= directory["path"] %> >
+    <%- if directory["options"] -%>
+    Options<%= Array(directory['options']).join(' ') %>
+    <% end -%>
+    <%- if directory['override'] -%>
+    AllowOverride <%= directory['override'].join(' ') %>
+    <% end -%>
     <%- if directory["order"] and directory["order"] != '' -%>
     Order <%= directory["order"] %>
     <%- end -%>
@@ -14,9 +18,11 @@
     <%- if directory["allow"] and directory["allow"] != '' -%>
     Allow <%= directory["allow"] %>
     <%- end -%>
-    <%- if directory["allowOverride"] and directory["allowOverride"] != '' -%>
-    AllowOverride <%= directory["allowOverride"] %>
-    <%- end -%>
+    <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
+      <%- Array(directory['addhandlers']).each do |addhandler| -%>
+    AddHandler <%= addhandler['handler'] %> <%= addhandler['extensions'].join[' '] %>
+      <% end -%>
+    <% end -%>
     <%- if directory["passengerEnabled"] and directory["passengerEnabled"] != '' -%>
     PassengerEnabled <%= directory["passengerEnabled"] %>
     <%- end -%>

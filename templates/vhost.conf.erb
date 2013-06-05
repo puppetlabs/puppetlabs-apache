@@ -12,12 +12,8 @@
   ## Vhost docroot
   DocumentRoot <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_aliases.erb']) -%>
-  <Directory <%= @docroot %>>
-    Options <%= Array(@options).join(' ') %>
-    AllowOverride <%= Array(@override).join(' ') %>
-    Order allow,deny
-    allow from all
-  </Directory>
+
+  ## Directories, there should at least be a declaration for <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 
   ## Logging

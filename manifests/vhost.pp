@@ -294,6 +294,19 @@ define apache::vhost(
   ## Apache include does not always work with spaces in the filename
   $filename = regsubst($name, ' ', '_', 'G')
 
+  ## Create a default directory list if none defined
+  if $directories {
+    $_directories = $directories
+  } else {
+    $_directories = [ {
+      path    => $docroot,
+      options => $options,
+      allowoverride => $allowoverride,
+      order         => 'allow,deny'
+      allow         => 'from all',
+    } ]
+  }
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
@@ -303,6 +316,8 @@ define apache::vhost(
   # - $override
   # - $logroot
   # - $name
+  # - $aliases
+  # - $_directories
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format

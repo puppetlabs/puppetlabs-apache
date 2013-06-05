@@ -329,7 +329,22 @@ Passes a list of hashes to the vhost to create `<Directory /path/to/directory>..
 directory => [ { path => '/path/to/directory', <directive> => <value> } ],
 ```
 
+*Note:* At least one directory should match `docroot` parameter, once you start declaring directories `apache::vhost` assumes that all required `<Directory>` blocks will be declared.
+
+*Note:* If not defined a single default `<Directory>` block will be created that matches the `docroot` parameter.
+
 The directives will be embedded within the `Directory` directive block, missing directives should be undefined and not be added, resulting in their default vaules in Apache. Currently this is the list of supported directives:
+
+######`addhandlers`
+
+Sets `AddHandler` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_mime.html#addhandler). Accepts a list of hashes of the form `{ handler => 'handler-name', extensions => ['extension']}`. Note that `extensions` is a list of extenstions being handled by the handler.
+An example: 
+
+```ruby
+directory => [ { path => '/path/to/directory',
+  addhandlers => [ { handler => 'cgi-script', extensions => ['.cgi']} ]
+} ]
+```
 
 ######`allow`
 
@@ -341,10 +356,10 @@ directory => [ { path => '/path/to/directory', allow => 'from example.org' } ],
 
 ######`allowOverride`
 
-Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). An example:
+Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). Should accept in the form of a list or a string. An example:
 
 ```ruby
-directory => [ { path => '/path/to/directory', allowOverride => 'AuthConfig Indexes' } ],
+directory => [ { path => '/path/to/directory', allowOverride => ['AuthConfig', 'Indexes'] } ],
 ```
 
 ######`deny`
@@ -353,6 +368,14 @@ Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apa
 
 ```ruby
 directory => [ { path => '/path/to/directory', deny => 'from example.org' } ],
+```
+
+######`options`
+
+Lists the options for the given `<Directory>` block
+
+```ruby
+  directory => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'] }]
 ```
 
 ######`order`
