@@ -274,11 +274,11 @@ define apache::vhost(
 
   # Configure firewall rules
   if $configure_firewall {
-    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+    if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
       @firewall {
         "0100-INPUT ACCEPT ${port}":
           action => 'accept',
-          dport  => ${port},
+          dport  => $port,
           proto  => 'tcp'
       }
     }
