@@ -2,7 +2,7 @@
   <%- Array(@_directories).each do |directory| -%>
     <%- if directory['path'] and directory['path'] != ''-%>
 
-  <Directory <%= directory['path'] %> >
+  <Directory <%= directory['path'] %>>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
