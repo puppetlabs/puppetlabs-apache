@@ -253,7 +253,11 @@ describe 'apache::vhost', :type => :define do
         {
           :title => 'should accept multiple aliases',
           :attr  => 'aliases',
-          :value => [ { 'alias' => '/', 'path' => '/var/www'},{ 'alias' => '/cgi-bin', 'path' => '/var/www/cgi-bin'},{ 'alias' => '/css', 'path' => '/opt/someapp/css'} ],
+          :value => [
+            { 'alias' => '/', 'path' => '/var/www'},
+            { 'alias' => '/cgi-bin', 'path' => '/var/www/cgi-bin'},
+            { 'alias' => '/css', 'path' => '/opt/someapp/css'},
+          ],
           :match => [
             '  Alias / /var/www',
             '  Alias /cgi-bin /var/www/cgi-bin',
@@ -261,7 +265,7 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
-          :title    => 'should addept a directory',
+          :title    => 'should accept a directory',
           :attr     => 'directories',
           :value    => [ { 'path' => '/opt/app' }],
           :notmatch => '  <Directory /rspec/docroot>',
@@ -270,7 +274,25 @@ describe 'apache::vhost', :type => :define do
             '    AllowOverride None',
             '    Order allow,deny',
             '    Allow from all',
-            '  </Directory>'
+            '  </Directory>',
+          ],
+        },
+        {
+          :title    => 'should accept multiple directories',
+          :attr     => 'directories',
+          :value    => [
+            { 'path' => '/opt/app' },
+            { 'path' => '/var/www' },
+            { 'path' => '/rspec/docroot'}
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '  <Directory /var/www>',
+            '  <Directory /rspec/docroot>',
+            '    AllowOverride None',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Directory>',
           ],
         },
       ].each do |param|
