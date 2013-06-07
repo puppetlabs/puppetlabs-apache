@@ -1,6 +1,8 @@
 describe 'apache::mod::dir', :type => :class do
   let :pre_condition do
-    'include apache'
+    'class { "apache":
+      default_mods => false,
+    }'
   end
   context "on a Debian OS" do
     let :facts do
@@ -21,13 +23,13 @@ describe 'apache::mod::dir', :type => :class do
       it { should contain_file('dir.conf').with_content(/ index\.php /) }
       it { should contain_file('dir.conf').with_content(/ index\.xhtml$/) }
     end
-    # context "passing indexes => ['example.txt','fearsome.aspx']" do
-    #   let :params do
-    #     {:indexes => ['example.txt','fearsome.aspx']}
-    #   end
-    #   it { should contain_file('dir.conf').with_content(/ example\.txt /) }
-    #   it { should contain_file('dir.conf').with_content(/ fearsome\.aspx /) }
-    # end
+    context "passing indexes => ['example.txt','fearsome.aspx']" do
+      let :params do
+        {:indexes => ['example.txt','fearsome.aspx']}
+      end
+      it { should contain_file('dir.conf').with_content(/ example\.txt /) }
+      it { should contain_file('dir.conf').with_content(/ fearsome\.aspx /) }
+    end
   end
   context "on a RedHat OS" do
     let :facts do
