@@ -244,6 +244,12 @@ describe 'apache::vhost', :type => :define do
             '</VirtualHost>',
           ],
         },
+        {
+          :title => 'shoud accept an alias',
+          :attr  => 'aliases',
+          :value => '[{ alias => \'/\', path => \'/var/www\'}]',
+          :match => '^  Alias / /var/www$',
+        }
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
