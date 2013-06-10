@@ -54,16 +54,16 @@ class apache::params {
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
+      'php5'       => $distrelease ? {
+        '5' => 'php53',
+        '6' => 'php',
+      },
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
       'shibboleth' => 'shibboleth',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
       'dav_svn'    => 'mod_dav_svn',
-    }
-    $mod_packages['php5'] = $distrelease ? {
-      '5' => 'php53',
-      '6' => 'php',
     }
     $mod_libs             = {
       'php5' => 'libphp5.so',
