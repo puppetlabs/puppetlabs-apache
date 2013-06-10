@@ -244,6 +244,53 @@ describe 'apache::vhost', :type => :define do
             '</VirtualHost>',
           ],
         },
+        {
+          :title => 'should accept an alias',
+          :attr  => 'aliases',
+          :value => [ { 'alias' => '/', 'path' => '/var/www'} ],
+          :match => '  Alias / /var/www',
+        },
+        {
+          :title => 'should accept multiple aliases',
+          :attr  => 'aliases',
+          :value => [
+            { 'alias' => '/', 'path' => '/var/www'},
+            { 'alias' => '/cgi-bin', 'path' => '/var/www/cgi-bin'},
+            { 'alias' => '/css', 'path' => '/opt/someapp/css'},
+          ],
+          :match => [
+            '  Alias / /var/www',
+            '  Alias /cgi-bin /var/www/cgi-bin',
+            '  Alias /css /opt/someapp/css'
+          ],
+        },
+        {
+          :title    => 'should accept a directory',
+          :attr     => 'directories',
+          :value    => [ { 'path' => '/opt/app' }],
+          :notmatch => '  <Directory /rspec/docroot>',
+          :match    => [
+            '  <Directory /opt/app>',
+            '    AllowOverride None',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Directory>',
+          ],
+        },
+        {
+          :title    => 'should accept multiple directories',
+          :attr     => 'directories',
+          :value    => [
+            { 'path' => '/opt/app' },
+            { 'path' => '/var/www' },
+            { 'path' => '/rspec/docroot'}
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '  <Directory /var/www>',
+            '  <Directory /rspec/docroot>',
+          ],
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
