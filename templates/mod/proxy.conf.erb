@@ -11,7 +11,7 @@
   <Proxy *>
     Order deny,allow
     Deny from all
-    #Allow from .example.com
+    Allow from <%= Array(@allow_from).join(" ") %>
   </Proxy>
 
   # Enable/disable the handling of HTTP/1.1 "Via:" headers.
