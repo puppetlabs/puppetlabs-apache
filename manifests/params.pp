@@ -59,6 +59,7 @@ class apache::params {
       'shibboleth' => 'shibboleth',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
+      'dav_svn'    => 'mod_dav_svn',
     }
     $mod_packages['php5'] = $distrelease ? {
       '5' => 'php53',
@@ -98,6 +99,7 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
+      'dav_svn'    => 'libapache2-svn',
     }
     $mod_libs         = {}
     $conf_template    = 'apache/httpd.conf.erb'
