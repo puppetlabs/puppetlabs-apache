@@ -16,13 +16,18 @@
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
 # - The $options for the given vhost
-# - The $override for the given vhost (array of AllowOverride arguments)
+# - The $override for the given vhost (list of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
-# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
+#   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
+# - $directories is a lost of hashes for creating <Directory> statements as per http://httpd.apache.org/docs/2.2/mod/core.html#directory
+#   each statement is a hash in the form of { path => '/path/to/directory', <directive> => <value>}
+#   see README.md for list of supported directives.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -85,6 +90,8 @@ define apache::vhost(
     $access_log_file    = undef,
     $access_log_pipe    = undef,
     $access_log_format  = undef,
+    $aliases            = undef,
+    $directories        = undef,
     $error_log          = true,
     $error_log_file     = undef,
     $error_log_pipe     = undef,
@@ -267,9 +274,9 @@ define apache::vhost(
 
   # Configure firewall rules
   if $configure_firewall {
-    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+    if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
       @firewall {
-        "0100-INPUT ACCEPT $port":
+        "0100-INPUT ACCEPT ${port}":
           action => 'accept',
           dport  => $port,
           proto  => 'tcp'
@@ -287,6 +294,19 @@ define apache::vhost(
   ## Apache include does not always work with spaces in the filename
   $filename = regsubst($name, ' ', '_', 'G')
 
+  ## Create a default directory list if none defined
+  if $directories {
+    $_directories = $directories
+  } else {
+    $_directories = [ {
+      path          => $docroot,
+      options       => $options,
+      allowoverride => $override,
+      order         => 'allow,deny',
+      allow         => 'from all',
+    } ]
+  }
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
@@ -296,6 +316,8 @@ define apache::vhost(
   # - $override
   # - $logroot
   # - $name
+  # - $aliases
+  # - $_directories
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format
