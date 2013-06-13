@@ -5,12 +5,12 @@ describe 'apache class' do
     YAML.load(File.read(File.dirname(__FILE__) + '/../fixtures/system/distro_commands.yaml'))
   }
   let(:os) {
-    system_node.facts['osfamily']
+    node.facts['osfamily']
   }
 
   it 'should install apache' do
     if distro_commands.has_key?(os)
-      system_run(distro_commands[os]["package_check"]["command"]) do |r|
+      shell(distro_commands[os]["package_check"]["command"]) do |r|
         r.stdout.should =~ distro_commands[os]['package_check']['stdout']
         r.exit_code.should == 0
       end
@@ -19,10 +19,9 @@ describe 'apache class' do
 
   it 'should start the apache service' do
     if distro_commands.has_key?(os)
-      system_run(distro_commands[os]["service_check"]["command"]) do |r|
+      shell(distro_commands[os]["service_check"]["command"]) do |r|
         r.exit_code.should == 0
       end
     end
   end
-
 end
