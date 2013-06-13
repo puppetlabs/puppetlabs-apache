@@ -31,7 +31,14 @@ describe 'apache::mod::info', :type => :class do
     # Load the more generic tests for this context
     general_info_specs()
 
-    it { should contain_file("info.conf").with_path("/etc/apache2/mods-enabled/info.conf") }
+    it { should contain_file("info.conf").with({
+      :ensure => 'file',
+      :path   => '/etc/apache2/mods-available/info.conf',
+    } ) }
+    it { should contain_file("info.conf symlink").with({
+      :ensure => 'link',
+      :path   => '/etc/apache2/mods-enabled/info.conf',
+    } ) }
   end
 
   context "on a RedHat OS with default params" do
@@ -46,7 +53,7 @@ describe 'apache::mod::info', :type => :class do
     # Load the more generic tests for this context
     general_info_specs()
 
-    it { should contain_file("info.conf").with_path("/etc/httpd/mod.d/info.conf") }
+    it { should contain_file("info.conf").with_path("/etc/httpd/conf.d/info.conf") }
   end
 
   context "with $allow_from => ['10.10.10.10','11.11.11.11']" do
