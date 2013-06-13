@@ -1,26 +1,27 @@
 require 'rspec-system/spec_helper'
 require 'rspec-system-puppet/helpers'
 
+include RSpecSystemPuppet::Helpers
+
 RSpec.configure do |c|
   # Project root
   proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-  # Enable colour in Jenkins
+  # Enable colour
   c.tty = true
 
-  # This is where we 'setup' the nodes before running our tests
-  c.system_setup_block = proc do
-    # TODO: find a better way of importing this into this namespace
-    include RSpecSystemPuppet::Helpers
+  c.include RSpecSystemPuppet::Helpers
 
+  # This is where we 'setup' the nodes before running our tests
+  c.before :suite do
     # Install puppet
     puppet_install
-    puppet_master_install
 
-    # Replace mymodule with your module name
+    # Install modules and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'apache')
-    system_run('puppet module install puppetlabs-firewall')
-    system_run('puppet module install ripienaar-concat')
-    system_run('puppet module install puppetlabs-stdlib')
+    shell('puppet module install puppetlabs-firewall')
+    shell('puppet module install ripienaar-concat')
+    shell('puppet module install puppetlabs-stdlib')
   end
 end
+
