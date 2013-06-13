@@ -13,6 +13,7 @@ describe 'apache::mod::python', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_apache__mod("python") }
     it { should contain_package("libapache2-mod-python") }
+    it { should_not contain_file("python.conf") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -25,5 +26,6 @@ describe 'apache::mod::python', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_apache__mod("python") }
     it { should contain_package("mod_python") }
+    it { should contain_file("python.conf") }
   end
 end
