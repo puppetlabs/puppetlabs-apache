@@ -20,7 +20,7 @@ describe 'apache::vhost define' do
     it 'should create a default vhost config' do
       puppet_apply(%{
         class { 'apache': }
-      }) { |r| r.exit_code.should_not == 1 }
+      }) { |r| [0,2].should include r.exit_code}
     end
 
     it 'should have a default config file' do
@@ -43,7 +43,7 @@ describe 'apache::vhost define' do
         class { 'apache':
           default_ssl_vhost => true,
         }
-      }) { |r| r.exit_code.should_not == 1 }
+      }) { |r| [0,2].should include r.exit_code}
     end
 
     it 'should have a default config file' do
@@ -70,7 +70,7 @@ describe 'apache::vhost define' do
           port    => '80',
           docroot => '/var/www/first',
         }
-      }) { |r| r.exit_code.should_not == 1 }
+      }) { |r| [0,2].should include r.exit_code}
 
       shell("/bin/cat #{vhost_dir}/25-first.example.com.conf") do |r|
         r.stdout.should =~ /^<VirtualHost \*:80>$/
