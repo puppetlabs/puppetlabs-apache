@@ -233,7 +233,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `negotiation`
 * `passenger`*
 * `perl`
-* `php`
+* `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
 * `prefork`*
 * `proxy`*
 * `proxy_html`
