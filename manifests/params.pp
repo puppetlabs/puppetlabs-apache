@@ -103,7 +103,9 @@ class apache::params {
       'dav_svn'    => 'libapache2-svn',
       'xsendfile'  => 'libapache2-mod-xsendfile',
     }
-    $mod_libs         = {}
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
     $conf_template    = 'apache/httpd.conf.erb'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
