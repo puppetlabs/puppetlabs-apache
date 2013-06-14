@@ -80,9 +80,47 @@ describe 'apache::vhost define' do
     end
   end
 
-  it 'should still be running the apache service' do
-    if distro_commands.has_key?(os)
-      shell(distro_commands[os]["service_check"]["command"]) do |r|
+  context 'new vhost on port 80' do
+    it 'should configure two apache vhosts' do
+      puppet_apply(%{
+        class { 'apache': }
+        apache::vhost { 'first.example.com':
+          port    => '80',
+          docroot => '/var/www/first',
+        }
+        host { 'first.example.com': ip => '127.0.0.1', }
+        file { '/var/www/first/index.html':
+          ensure  => file,
+          content => "Hello from first\\n",
+        }
+        apache::vhost { 'second.example.com':
+          port    => '80',
+          docroot => '/var/www/second',
+        }
+        host { 'second.example.com': ip => '127.0.0.1', }
+        file { '/var/www/second/index.html':
+          ensure  => file,
+          content => "Hello from second\\n",
+        }
+      }) { |r| [0,2].should include r.exit_code}
+
+      if distro_commands.has_key?(os)
+        shell(distro_commands[os]["service_check"]["command"]) do |r|
+          r.exit_code.should == 0
+        end
+      end
+    end
+
+    it 'should answer to first.example.com' do
+      shell("/usr/bin/curl first.example.com:80") do |r|
+        r.stdout.should == "Hello from first\n"
+        r.exit_code.should == 0
+      end
+    end
+
+    it 'should answer to second.example.com' do
+      shell("/usr/bin/curl second.example.com:80") do |r|
+        r.stdout.should == "Hello from second\n"
         r.exit_code.should == 0
       end
     end
