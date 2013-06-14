@@ -151,6 +151,14 @@ class apache (
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
       }
+      'suse': {
+        $docroot              = '/srv/www/htdocs'
+        $pidfile              = '/var/run/httpd2.pid'
+        $error_log            = 'error_log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/srv/www/cgi-bin'
+        $access_log_file      = 'access_log'
+      }
     }
     # Template uses:
     # - $httpd_dir

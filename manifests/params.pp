@@ -103,6 +103,39 @@ class apache::params {
     }
     $mod_libs         = {}
     $conf_template    = 'apache/httpd.conf.erb'
+  } elsif $::osfamily == 'Suse' {
+    $user                  = 'wwwrun'
+    $group                 = 'www'
+    $apache_name           = 'apache2'
+    $httpd_dir             = '/etc/apache2'
+    $conf_dir              = "${httpd_dir}"
+    $confd_dir             = "${httpd_dir}/conf.d"
+    $mod_dir               = "${httpd_dir}/conf.d"
+    $vhost_dir             = "${httpd_dir}/vhosts.d"
+    $conf_file             = "${httpd_dir}/httpd.conf"
+    $ports_file            = "${httpd_dir}/listen.conf"
+    $logroot               = '/var/log/apache2'
+    $lib_path              = '/usr/lib64/apache2-prefork'
+    $mpm_module            = 'TODO'
+    $dev_packages          = ['libaprutil1-dev', 'libapr1-dev', 'apache2-devel']
+    $default_ssl_cert      = "${httpd_dir}/ssl.crt/server.crt"
+    $default_ssl_key       = "${httpd_dir}/ssl.key/server.key"
+    $ssl_certs_dir         = '/etc/ssl/certs'
+    $passenger_root        = '/usr'
+    $passenger_ruby        = '/usr/bin/ruby'
+    $mod_packages          = {
+      'auth_kerb'  => 'apache2-mod_auth_kerb',
+      'fcgid'      => 'apache2-mod_fcgid',
+      'passenger'  => 'apache2-mod_passenger',
+      'perl'       => 'apache2-mod_perl2',
+      'php5'       => 'apache2-mod_php5',
+      'proxy_html' => 'apache2-mod_proxy_html',
+      'python'     => 'apache2-mod_python',
+      'wsgi'       => 'apache2-mod_wsgi',
+      'dav_svn'    => 'apache2-mod_dav_svn',
+    }
+    $mod_libs              = {}
+    $conf_template         = 'apache/httpd.conf.erb'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

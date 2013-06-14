@@ -805,7 +805,7 @@ The Apache module relies heavily on templates to enable the `vhost` and `apache:
 
 ##Limitations
 
-This has been tested on Ubuntu Precise, Debian Wheezy, and CentOS 5.8.
+This has been tested on Ubuntu Precise, Debian Wheezy, and CentOS 5.8. SLES 11sp1 is experimental.
 
 ##Development
 

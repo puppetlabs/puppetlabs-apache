@@ -12,4 +12,10 @@ RedHat:
   service_check:
     command: '/sbin/service httpd status'
     stdout: ''
-
+SLES:
+  package_check:
+    command: 'rpm -q apache2'
+    stdout: !ruby/regexp '/apache2/'
+  service_check:
+    command: '/sbin/service apache2 status'
+    stdout: '/running/'
