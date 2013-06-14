@@ -13,6 +13,8 @@ describe 'apache::vhost define' do
       '/etc/apache2/sites-enabled'
     when 'RedHat'
       '/etc/httpd/conf.d'
+    when 'Suse'
+      '/etc/apache2/vhosts.d'
     end
   }
 
