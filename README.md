@@ -246,6 +246,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `userdir`*
 * `worker`*
 * `wsgi`
+* `xsendfile`
 
 Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention.
 
