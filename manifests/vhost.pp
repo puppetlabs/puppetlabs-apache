@@ -10,8 +10,6 @@
 # - The $configure_firewall option is set to true or false to specify if
 #   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
-# - The $template option specifies whether to use the default template or
-#   override
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
