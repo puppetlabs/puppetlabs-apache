@@ -7,7 +7,7 @@
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
     <%- if directory['allowoverride'] -%>
-    AllowOverride <%= directory['allowoverride'].join(' ') %>
+    AllowOverride <%= Array(directory['allowoverride']).join(' ') %>
     <%- else -%>
     AllowOverride None
     <%- end -%>
@@ -26,7 +26,7 @@
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- Array(directory['addhandlers']).each do |addhandler| -%>
-    AddHandler <%= addhandler['handler'] %> <%= addhandler['extensions'].join(' ') %>
+    AddHandler <%= addhandler['handler'] %> <%= Array(addhandler['extensions']).join(' ') %>
       <%- end -%>
     <%- end -%>
     <%- if directory['passengerEnabled'] and directory['passengerEnabled'] != '' -%>

@@ -278,6 +278,31 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title    => 'should accept directory directives',
+          :attr     => 'directories',
+          :value    => [
+            {
+              'path'             => '/opt/app',
+              'allow'            => 'from rspec.org',
+              'allowoverride'    => 'Lol',
+              'deny'             => 'from google.com',
+              'options'          => '-MultiViews',
+              'order'            => 'deny,yned',
+              'passengerEnabled' => 'onf',
+            },
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '    Allow from rspec.org',
+            '    AllowOverride Lol',
+            '    Deny from google.com',
+            '    Options -MultiViews',
+            '    Order deny,yned',
+            '    PassengerEnabled onf',
+            '  </Directory>',
+          ],
+        },
+        {
           :title    => 'should accept multiple directories',
           :attr     => 'directories',
           :value    => [
