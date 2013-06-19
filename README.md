@@ -314,10 +314,6 @@ For `Alias` to work, each will need a corresponding `<Directory /path/to/directo
 
 Specifies the list of things Apache will block access to. The default is an empty set, '[]'. Currently, the only option is 'scm', which blocks web access to .svn, .git and .bzr directories. To add to this, please see the [Development](#development) section.
 
-#####`configure_firewall`
-
-Specifies whether a firewall should be configured. Valid values are 'true' or 'false'.
-
 #####`custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the vhost configuration.
