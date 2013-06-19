@@ -7,8 +7,6 @@
 # - The $docroot provides the DocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
-# - The $configure_firewall option is set to true or false to specify if
-#   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
@@ -67,7 +65,6 @@ define apache::vhost(
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
-    $configure_firewall = true,
     $ssl                = false,
     $ssl_cert           = $apache::default_ssl_cert,
     $ssl_key            = $apache::default_ssl_key,
@@ -121,7 +118,6 @@ define apache::vhost(
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
   validate_bool($ip_based)
-  validate_bool($configure_firewall)
   validate_bool($access_log)
   validate_bool($error_log)
   validate_bool($ssl)
@@ -268,18 +264,6 @@ define apache::vhost(
     $priority_real = '10'
   } else {
     $priority_real = '25'
-  }
-
-  # Configure firewall rules
-  if $configure_firewall {
-    if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
-      @firewall {
-        "0100-INPUT ACCEPT ${port}":
-          action => 'accept',
-          dport  => $port,
-          proto  => 'tcp'
-      }
-    }
   }
 
   # Check if mod_headers is required to process $request_headers

@@ -19,7 +19,6 @@ RSpec.configure do |c|
 
     # Install modules and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'apache')
-    shell('puppet module install puppetlabs-firewall')
     shell('puppet module install ripienaar-concat')
     shell('puppet module install puppetlabs-stdlib')
   end
