@@ -6,13 +6,13 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
-    <%- if directory['allowoverride'] -%>
-    AllowOverride <%= directory['allowoverride'].join(' ') %>
+    <%- if directory['allow_override'] -%>
+    AllowOverride <%= Array(directory['allow_override']).join(' ') %>
     <%- else -%>
     AllowOverride None
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
-    Order <%= directory['order'] %>
+    Order <%= Array(directory['order']).join(',') %>
     <%- else -%>
     Order allow,deny
     <%- end -%>
@@ -26,11 +26,11 @@
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- Array(directory['addhandlers']).each do |addhandler| -%>
-    AddHandler <%= addhandler['handler'] %> <%= addhandler['extensions'].join(' ') %>
+    AddHandler <%= addhandler['handler'] %> <%= Array(addhandler['extensions']).join(' ') %>
       <%- end -%>
     <%- end -%>
-    <%- if directory['passengerEnabled'] and directory['passengerEnabled'] != '' -%>
-    PassengerEnabled <%= directory['passengerEnabled'] %>
+    <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
+    PassengerEnabled <%= directory['passenger_enabled'] %>
     <%- end -%>
   </Directory>
     <%- end -%>
