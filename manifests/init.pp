@@ -16,6 +16,7 @@ class apache (
   $default_mods         = true,
   $default_vhost        = true,
   $default_ssl_vhost    = false,
+  $default_vhost_configure_firewall   = true,
   $default_ssl_cert     = $apache::params::default_ssl_cert,
   $default_ssl_key      = $apache::params::default_ssl_key,
   $default_ssl_chain    = undef,
@@ -186,6 +187,7 @@ class apache (
         serveradmin     => $serveradmin,
         access_log_file => $access_log_file,
         priority        => '15',
+        configure_firewall => $default_vhost_configure_firewall,
       }
     }
     if $default_ssl_vhost {
@@ -197,6 +199,7 @@ class apache (
         serveradmin     => $serveradmin,
         access_log_file => "ssl_${access_log_file}",
         priority        => '15',
+        configure_firewall => $default_vhost_configure_firewall,
       }
     }
   }
