@@ -5,6 +5,7 @@
 # Parameters:
 # - The $port to configure the host on
 # - The $docroot provides the DocumentationRoot variable
+# - The $virtual_docroot provides VirtualDocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
@@ -58,6 +59,7 @@
 #
 define apache::vhost(
     $docroot,
+    $virtual_docroot    = false,
     $port               = undef,
     $ip                 = undef,
     $ip_based           = false,
@@ -294,6 +296,7 @@ define apache::vhost(
   # - $servername_real
   # - $serveradmin
   # - $docroot
+  # - $virtual_docroot
   # - $options
   # - $override
   # - $logroot

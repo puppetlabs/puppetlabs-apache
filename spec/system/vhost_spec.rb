@@ -125,4 +125,44 @@ describe 'apache::vhost define' do
       end
     end
   end
+  context 'virtual_docroot hosting separate sites' do
+    it 'should configure a vhost with VirtualDocumentRoot' do
+      puppet_apply(%{
+        class { 'apache': }
+        apache::vhost { 'virt.example.com':
+          vhost_name      => '*',
+          serveraliases   => '*virt.example.com',
+          port            => '80',
+          docroot         => '/var/www/virt',
+          virtual_docroot => '/var/www/virt/%1',
+        }
+        host { 'virt.example.com': ip => '127.0.0.1', }
+        host { 'a.virt.example.com': ip => '127.0.0.1', }
+        host { 'b.virt.example.com': ip => '127.0.0.1', }
+        file { [ '/var/www/virt/a', '/var/www/virt/b', ]: ensure => directory, }
+        file { '/var/www/virt/a/index.html': ensure  => file, content => "Hello from a.virt\\n", }
+        file { '/var/www/virt/b/index.html': ensure  => file, content => "Hello from b.virt\\n", }
+      }) { |r| [0,2].should include r.exit_code}
+
+      if distro_commands.has_key?(os)
+        shell(distro_commands[os]["service_check"]["command"]) do |r|
+          r.exit_code.should == 0
+        end
+      end
+    end
+
+    it 'should answer to a.virt.example.com' do
+      shell("/usr/bin/curl a.virt.example.com:80") do |r|
+        r.stdout.should == "Hello from a.virt\n"
+        r.exit_code.should == 0
+      end
+    end
+
+    it 'should answer to b.virt.example.com' do
+      shell("/usr/bin/curl b.virt.example.com:80") do |r|
+        r.stdout.should == "Hello from b.virt\n"
+        r.exit_code.should == 0
+      end
+    end
+  end
 end

@@ -94,6 +94,17 @@ To set up a virtual host with SSL and specific SSL certificates
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
 
+To set up a virtual host with wildcard alias for subdomain mapped to same named directory 
+`http://examle.com.loc => /var/www/example.com`
+
+    apache::vhost { 'subdomain.loc':
+      vhost_name => '*',
+      port       => '80',
+      virtual_docroot' => '/var/www/%-2+',
+      docroot          => '/var/www',
+      serveraliases    => ['*.loc',],
+    }
+
 To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples).
 
 ##Usage
