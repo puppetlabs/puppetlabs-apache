@@ -10,7 +10,11 @@
 <% end -%>
 
   ## Vhost docroot
+<% if @virtual_docroot -%>
+  VirtualDocumentRoot <%= @virtual_docroot %>
+<% else -%>
   DocumentRoot <%= @docroot %>
+<% end -%>
 <%= scope.function_template(['apache/vhost/_aliases.erb']) -%>
 
   ## Directories, there should at least be a declaration for <%= @docroot %>
