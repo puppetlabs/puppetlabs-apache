@@ -6,8 +6,8 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
-    <%- if directory['allowoverride'] -%>
-    AllowOverride <%= Array(directory['allowoverride']).join(' ') %>
+    <%- if directory['allow_override'] -%>
+    AllowOverride <%= Array(directory['allow_override']).join(' ') %>
     <%- else -%>
     AllowOverride None
     <%- end -%>
@@ -29,8 +29,8 @@
     AddHandler <%= addhandler['handler'] %> <%= Array(addhandler['extensions']).join(' ') %>
       <%- end -%>
     <%- end -%>
-    <%- if directory['passengerEnabled'] and directory['passengerEnabled'] != '' -%>
-    PassengerEnabled <%= directory['passengerEnabled'] %>
+    <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
+    PassengerEnabled <%= directory['passenger_enabled'] %>
     <%- end -%>
   </Directory>
     <%- end -%>

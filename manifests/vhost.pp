@@ -281,11 +281,11 @@ define apache::vhost(
     $_directories = $directories
   } else {
     $_directories = [ {
-      path          => $docroot,
-      options       => $options,
-      allowoverride => $override,
-      order         => 'allow,deny',
-      allow         => 'from all',
+      path           => $docroot,
+      options        => $options,
+      allow_override => $override,
+      order          => 'allow,deny',
+      allow          => 'from all',
     } ]
   }
 

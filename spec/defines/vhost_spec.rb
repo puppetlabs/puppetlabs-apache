@@ -41,7 +41,7 @@ describe 'apache::vhost', :type => :define do
       it { should include_class("apache::params") }
     end
   end
-  describe 'os-idenpendent items' do
+  describe 'os-independent items' do
     let :facts do
       {
         :osfamily               => 'Debian',
@@ -282,13 +282,13 @@ describe 'apache::vhost', :type => :define do
           :attr     => 'directories',
           :value    => [
             {
-              'path'             => '/opt/app',
-              'allow'            => 'from rspec.org',
-              'allowoverride'    => 'Lol',
-              'deny'             => 'from google.com',
-              'options'          => '-MultiViews',
-              'order'            => 'deny,yned',
-              'passengerEnabled' => 'onf',
+              'path'              => '/opt/app',
+              'allow'             => 'from rspec.org',
+              'allow_override'    => 'Lol',
+              'deny'              => 'from google.com',
+              'options'           => '-MultiViews',
+              'order'             => 'deny,yned',
+              'passenger_enabled' => 'onf',
             },
           ],
           :match    => [

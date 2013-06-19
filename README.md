@@ -355,12 +355,12 @@ Sets an `Allow` directive as per the [Apache Core documentation](http://httpd.ap
 directory => [ { path => '/path/to/directory', allow => 'from example.org' } ],
 ```
 
-######`allowOverride`
+######`allow_override`
 
 Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). Should accept in the form of a list or a string. An example:
 
 ```ruby
-directory => [ { path => '/path/to/directory', allowOverride => ['AuthConfig', 'Indexes'] } ],
+directory => [ { path => '/path/to/directory', allow_override => ['AuthConfig', 'Indexes'] } ],
 ```
 
 ######`deny`
@@ -386,12 +386,12 @@ Sets the order of processing `Allow` and `Deny` statements as per [Apache core d
 directory => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
 ```
 
-######`passengerEnabled`
+######`passenger_enabled`
 
 Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the [Passenger documentation](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled).
 
 ```ruby
-directory => [ { path => '/path/to/directory', passengerEnabled => 'off' } ],
+directory => [ { path => '/path/to/directory', passenger_enabled => 'off' } ],
 ```
 
 **Note:** This directive requires `apache::mod::passenger` to be active, Apache may not start with an unrecognised directive without it.
