@@ -12,7 +12,7 @@
     AllowOverride None
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
-    Order <%= directory['order'] %>
+    Order <%= Array(directory['order']).join(',') %>
     <%- else -%>
     Order allow,deny
     <%- end -%>
