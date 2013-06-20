@@ -357,5 +357,18 @@ define apache::vhost(
     ],
     notify  => Service['httpd'],
   }
+  if $::osfamily == 'Debian' {
+    $vhost_enable_dir = $apache::vhost_enable_dir
+    file{ "${priority_real}-${filename}.conf symlink":
+      ensure  => link,
+      path    => "${vhost_enable_dir}/${priority_real}-${filename}.conf",
+      target  => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      require => File["${priority_real}-${filename}.conf"],
+      notify  => Service['httpd'],
+    }
+  }
 }
 

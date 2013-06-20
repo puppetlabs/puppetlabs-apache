@@ -39,6 +39,15 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { should include_class("apache") }
       it { should include_class("apache::params") }
+      it { should contain_file("25-rspec.example.com.conf").with(
+        :ensure => 'present',
+        :path   => '/etc/apache2/sites-available/25-rspec.example.com.conf'
+      ) }
+      it { should contain_file("25-rspec.example.com.conf symlink").with(
+        :ensure => 'link',
+        :path   => '/etc/apache2/sites-enabled/25-rspec.example.com.conf',
+        :target => '/etc/apache2/sites-available/25-rspec.example.com.conf'
+      ) }
     end
   end
   describe 'os-idenpendent items' do

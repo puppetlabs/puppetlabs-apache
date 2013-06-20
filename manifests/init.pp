@@ -30,6 +30,7 @@ class apache (
   $error_documents      = false,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
+  $vhost_enable_dir     = $apache::params::vhost_enable_dir,
   $mod_dir              = $apache::params::mod_dir,
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
@@ -84,7 +85,7 @@ class apache (
     $purge_confd = $purge_configs
   }
 
-  file { $apache::confd_dir:
+  file { $confd_dir:
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
@@ -92,8 +93,8 @@ class apache (
     require => Package['httpd'],
   }
 
-  if ! defined(File[$apache::mod_dir]) {
-    file { $apache::mod_dir:
+  if ! defined(File[$mod_dir]) {
+    file { $mod_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
@@ -102,8 +103,21 @@ class apache (
     }
   }
 
-  if $apache::mod_enable_dir and ! defined(File[$apache::mod_enable_dir]) {
-    file { $apache::mod_enable_dir:
+  if $mod_enable_dir and ! defined(File[$mod_enable_dir]) {
+    $mod_load_dir = $mod_enable_dir
+    file { $mod_enable_dir:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_configs,
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
+  } else {
+    $mod_load_dir = $mod_dir
+  }
+
+  if ! defined(File[$vhost_dir]) {
+    file { $vhost_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
@@ -112,14 +126,17 @@ class apache (
     }
   }
 
-  if ! defined(File[$apache::vhost_dir]) {
-    file { $apache::vhost_dir:
+  if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) {
+    $vhost_load_dir = $vhost_enable_dir
+    file { $vhost_enable_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
       notify  => Service['httpd'],
       require => Package['httpd'],
     }
+  } else {
+    $vhost_load_dir = $vhost_dir
   }
 
   concat { $ports_file:
