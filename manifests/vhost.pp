@@ -137,6 +137,10 @@ define apache::vhost(
     include apache::mod::ssl
   }
 
+  if $virtual_docroot {
+    include apache::mod::vhost_alias
+  }
+
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
