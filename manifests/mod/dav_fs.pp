@@ -12,5 +12,7 @@ class apache::mod::dav_fs {
     ensure  => file,
     path    => "${apache::mod_dir}/dav_fs.conf",
     content => template('apache/mod/dav_fs.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

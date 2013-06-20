@@ -85,6 +85,14 @@ class apache (
     $purge_confd = $purge_configs
   }
 
+  Exec {
+    path => '/bin:/sbin:/usr/bin:/usr/sbin',
+  }
+
+  exec { "mkdir ${confd_dir}":
+    creates => $confd_dir,
+    require => Package['httpd'],
+  }
   file { $confd_dir:
     ensure  => directory,
     recurse => true,
@@ -94,6 +102,10 @@ class apache (
   }
 
   if ! defined(File[$mod_dir]) {
+    exec { "mkdir ${mod_dir}":
+      creates => $mod_dir,
+      require => Package['httpd'],
+    }
     file { $mod_dir:
       ensure  => directory,
       recurse => true,
@@ -105,6 +117,10 @@ class apache (
 
   if $mod_enable_dir and ! defined(File[$mod_enable_dir]) {
     $mod_load_dir = $mod_enable_dir
+    exec { "mkdir ${mod_enable_dir}":
+      creates => $mod_enable_dir,
+      require => Package['httpd'],
+    }
     file { $mod_enable_dir:
       ensure  => directory,
       recurse => true,
@@ -117,6 +133,10 @@ class apache (
   }
 
   if ! defined(File[$vhost_dir]) {
+    exec { "mkdir ${vhost_dir}":
+      creates => $vhost_dir,
+      require => Package['httpd'],
+    }
     file { $vhost_dir:
       ensure  => directory,
       recurse => true,
@@ -128,6 +148,10 @@ class apache (
 
   if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) {
     $vhost_load_dir = $vhost_enable_dir
+    exec { "mkdir ${vhost_load_dir}":
+      creates => $vhost_load_dir,
+      require => Package['httpd'],
+    }
     file { $vhost_enable_dir:
       ensure  => directory,
       recurse => true,

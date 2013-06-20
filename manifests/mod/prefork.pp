@@ -25,6 +25,8 @@ class apache::mod::prefork (
   file { "${apache::mod_dir}/prefork.conf":
     ensure  => file,
     content => template('apache/mod/prefork.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 
   case $::osfamily {
@@ -40,8 +42,10 @@ class apache::mod::prefork (
     }
     'debian': {
       file { "${apache::mod_enable_dir}/prefork.conf":
-        ensure => link,
-        target => "${apache::mod_dir}/prefork.conf",
+        ensure  => link,
+        target  => "${apache::mod_dir}/prefork.conf",
+        require => Exec["mkdir ${apache::mod_enable_dir}"],
+        before  => File[$apache::mod_enable_dir],
       }
       package { 'apache2-mpm-prefork':
         ensure => present,

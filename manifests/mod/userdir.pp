@@ -10,5 +10,7 @@ class apache::mod::userdir (
     ensure  => file,
     path    => "${apache::mod_dir}/userdir.conf",
     content => template('apache/mod/userdir.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }
