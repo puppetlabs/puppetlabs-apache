@@ -47,5 +47,8 @@ class apache::mod::prefork (
         ensure => present,
       }
     }
+    default: {
+      fail("Unsupported osfamily ${::osfamily}")
+    }
   }
 }

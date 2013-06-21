@@ -78,7 +78,7 @@ class apache (
 
   # Deprecated backwards-compatibility
   if $purge_vdir {
-    warning("Class['apache'] parameter purge_vdir is deprecated in favor of purge_configs")
+    warning('Class[\'apache\'] parameter purge_vdir is deprecated in favor of purge_configs')
     $purge_confd = $purge_vdir
   } else {
     $purge_confd = $purge_configs
@@ -128,7 +128,7 @@ class apache (
     mode   => '0644',
     notify => Service['httpd'],
   }
-  concat::fragment { "Apache ports header":
+  concat::fragment { 'Apache ports header':
     target  => $ports_file,
     content => template('apache/ports_header.erb')
   }
@@ -150,6 +150,9 @@ class apache (
         $error_documents_path = '/var/www/error'
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
+      }
+      default: {
+        fail("Unsupported osfamily ${::osfamily}")
       }
     }
     # Template uses:
