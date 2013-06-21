@@ -11,7 +11,7 @@ class apache::default_mods (
     default: {}
   }
   apache::mod { 'authz_host': }
- 
+
   # The rest of the modules only get loaded if we want all modules enabled
   if $all {
     case $::osfamily {
@@ -54,6 +54,7 @@ class apache::default_mods (
         apache::mod { 'version': }
         apache::mod { 'vhost_alias': }
       }
+      default: {}
     }
     include apache::mod::alias
     include apache::mod::autoindex
