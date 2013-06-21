@@ -4,7 +4,7 @@
 #
 # Parameters:
 # - The $port to configure the host on
-# - The $docroot provides the DocumentationRoot variable
+# - The $docroot provides the DocumentRoot variable
 # - The $virtual_docroot provides VirtualDocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
