@@ -75,7 +75,7 @@ class apache::params {
     $group            = 'www-data'
     $apache_name      = 'apache2'
     $httpd_dir        = '/etc/apache2'
-    $conf_dir         = "${httpd_dir}"
+    $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
     $mod_dir          = "${httpd_dir}/mods-available"
     $mod_enable_dir   = "${httpd_dir}/mods-enabled"

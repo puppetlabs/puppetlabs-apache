@@ -3,7 +3,7 @@ define apache::mod (
   $lib = undef
 ) {
   if ! defined(Class['apache']) {
-    fail("You must include the apache base class before using any apache defined resources")
+    fail('You must include the apache base class before using any apache defined resources')
   }
 
   $mod = $name
@@ -40,8 +40,8 @@ define apache::mod (
   }
 
   file { "${mod}.load":
-    path    => "${mod_dir}/${mod}.load",
     ensure  => file,
+    path    => "${mod_dir}/${mod}.load",
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -53,8 +53,8 @@ define apache::mod (
   if $::osfamily == 'Debian' {
     $enable_dir = $apache::mod_enable_dir
     file{ "${mod}.load symlink":
-      path    => "${enable_dir}/${mod}.load",
       ensure  => link,
+      path    => "${enable_dir}/${mod}.load",
       target  => "${mod_dir}/${mod}.load",
       owner   => 'root',
       group   => 'root',
@@ -67,8 +67,8 @@ define apache::mod (
     # Some modules do not require this file.
     if defined(File["${mod}.conf"]) {
       file{ "${mod}.conf symlink":
-        path    => "${enable_dir}/${mod}.conf",
         ensure  => link,
+        path    => "${enable_dir}/${mod}.conf",
         target  => "${mod_dir}/${mod}.conf",
         owner   => 'root',
         group   => 'root',

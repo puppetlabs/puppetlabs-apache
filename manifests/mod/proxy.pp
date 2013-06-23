@@ -1,5 +1,5 @@
 class apache::mod::proxy (
-  $proxy_requests = "Off",
+  $proxy_requests = 'Off',
   $allow_from = ['127.0.0.1','::1'],
 ) {
   apache::mod { 'proxy': }

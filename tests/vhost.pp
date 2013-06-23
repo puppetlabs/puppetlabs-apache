@@ -174,7 +174,7 @@ apache::vhost { 'nineteenth.example.com':
   setenvif => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
 }
 
-# Vhost with alias for subdomain mapped to same named directory 
+# Vhost with alias for subdomain mapped to same named directory
 # http://example.com.loc => /var/www/example.com
 apache::vhost { 'subdomain.loc':
   vhost_name      => '*',
