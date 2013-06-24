@@ -17,5 +17,5 @@
 <% end %>
   ProxyPass        / <%= @proxy_dest %>/
   ProxyPassReverse / <%= @proxy_dest %>/
-  ProxyPreserveHost On
+  ProxyPreserveHost <% if @proxy_preserve_host %> on <% else %> off <% end %>
 <% end -%>
