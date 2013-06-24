@@ -4,25 +4,27 @@
 #
 # Parameters:
 # - The $port to configure the host on
-# - The $docroot provides the DocumentationRoot variable
+# - The $docroot provides the DocumentRoot variable
+# - The $virtual_docroot provides VirtualDocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
-# - The $configure_firewall option is set to true or false to specify if
-#   a firewall should be configured.
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
-# - The $template option specifies whether to use the default template or
-#   override
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
 # - The $options for the given vhost
-# - The $override for the given vhost (array of AllowOverride arguments)
+# - The $override for the given vhost (list of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
-# - The $request_headers is an array of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
+# - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
+#   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
+# - $directories is a lost of hashes for creating <Directory> statements as per http://httpd.apache.org/docs/2.2/mod/core.html#directory
+#   each statement is a hash in the form of { path => '/path/to/directory', <directive> => <value>}
+#   see README.md for list of supported directives.
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -57,6 +59,7 @@
 #
 define apache::vhost(
     $docroot,
+    $virtual_docroot    = false,
     $port               = undef,
     $ip                 = undef,
     $ip_based           = false,
@@ -64,7 +67,6 @@ define apache::vhost(
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
-    $configure_firewall = true,
     $ssl                = false,
     $ssl_cert           = $apache::default_ssl_cert,
     $ssl_key            = $apache::default_ssl_key,
@@ -85,12 +87,15 @@ define apache::vhost(
     $access_log_file    = undef,
     $access_log_pipe    = undef,
     $access_log_format  = undef,
+    $aliases            = undef,
+    $directories        = undef,
     $error_log          = true,
     $error_log_file     = undef,
     $error_log_pipe     = undef,
     $scriptalias        = undef,
     $scriptlocation     = '/cgi-bin/',
     $proxy_dest         = undef,
+    $proxy_pass         = undef,
     $no_proxy_uris      = [],
     $redirect_source    = '/',
     $redirect_dest      = undef,
@@ -108,7 +113,7 @@ define apache::vhost(
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
-    fail("You must include the apache base class before using any apache defined resources")
+    fail('You must include the apache base class before using any apache defined resources')
   }
   $apache_name = $apache::params::apache_name
 
@@ -116,7 +121,6 @@ define apache::vhost(
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
   validate_bool($ip_based)
-  validate_bool($configure_firewall)
   validate_bool($access_log)
   validate_bool($error_log)
   validate_bool($ssl)
@@ -243,7 +247,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if $proxy_dest {
+  if ($proxy_dest or $proxy_pass) {
     if ! defined(Class['apache::mod::proxy']) {
       include apache::mod::proxy
     }
@@ -265,18 +269,6 @@ define apache::vhost(
     $priority_real = '25'
   }
 
-  # Configure firewall rules
-  if $configure_firewall {
-    if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-      @firewall {
-        "0100-INPUT ACCEPT $port":
-          action => 'accept',
-          dport  => $port,
-          proto  => 'tcp'
-      }
-    }
-  }
-
   # Check if mod_headers is required to process $request_headers
   if $request_headers {
     if ! defined(Class['apache::mod::headers']) {
@@ -287,15 +279,31 @@ define apache::vhost(
   ## Apache include does not always work with spaces in the filename
   $filename = regsubst($name, ' ', '_', 'G')
 
+  ## Create a default directory list if none defined
+  if $directories {
+    $_directories = $directories
+  } else {
+    $_directories = [ {
+      path           => $docroot,
+      options        => $options,
+      allow_override => $override,
+      order          => 'allow,deny',
+      allow          => 'from all',
+    } ]
+  }
+
   # Template uses:
   # - $nvh_addr_port
   # - $servername_real
   # - $serveradmin
   # - $docroot
+  # - $virtual_docroot
   # - $options
   # - $override
   # - $logroot
   # - $name
+  # - $aliases
+  # - $_directories
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format

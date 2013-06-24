@@ -48,5 +48,8 @@ class apache::mod::worker (
         ensure => present,
       }
     }
+    default: {
+      fail("Unsupported osfamily ${::osfamily}")
+    }
   }
 }

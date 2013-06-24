@@ -10,6 +10,7 @@
 # - The $php_package is the name of the package that provided PHP
 # - The $ssl_package is the name of the Apache SSL package
 # - The $apache_dev is the name of the Apache development libraries package
+# - The $conf_contents is the contents of the Apache configuration file
 #
 # Actions:
 #
@@ -53,25 +54,28 @@ class apache::params {
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
+      'php5'       => $distrelease ? {
+        '5' => 'php53',
+        '6' => 'php',
+      },
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
       'shibboleth' => 'shibboleth',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
-    }
-    $mod_packages['php5'] = $distrelease ? {
-      '5' => 'php53',
-      '6' => 'php',
+      'dav_svn'    => 'mod_dav_svn',
+      'xsendfile'  => 'mod_xsendfile',
     }
     $mod_libs             = {
       'php5' => 'libphp5.so',
     }
+    $conf_template        = 'apache/httpd.conf.erb'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
     $apache_name      = 'apache2'
     $httpd_dir        = '/etc/apache2'
-    $conf_dir         = "${httpd_dir}"
+    $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
     $mod_dir          = "${httpd_dir}/mods-available"
     $mod_enable_dir   = "${httpd_dir}/mods-enabled"
@@ -96,8 +100,13 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
+      'dav_svn'    => 'libapache2-svn',
+      'xsendfile'  => 'libapache2-mod-xsendfile',
     }
-    $mod_libs         = {}
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template    = 'apache/httpd.conf.erb'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

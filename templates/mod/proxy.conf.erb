@@ -6,12 +6,12 @@
   # Do not enable proxying with ProxyRequests until you have secured your
   # server.  Open proxy servers are dangerous both to your network and to the
   # Internet at large.
-  ProxyRequests <%= proxy_requests %>
+  ProxyRequests <%= @proxy_requests %>
 
   <Proxy *>
     Order deny,allow
     Deny from all
-    #Allow from .example.com
+    Allow from <%= Array(@allow_from).join(" ") %>
   </Proxy>
 
   # Enable/disable the handling of HTTP/1.1 "Via:" headers.

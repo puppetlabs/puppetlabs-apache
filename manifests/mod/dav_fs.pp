@@ -11,6 +11,6 @@ class apache::mod::dav_fs {
   file { 'dav_fs.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/dav_fs.conf",
-    content => template('apache/mod/php.conf.erb'),
+    content => template('apache/mod/dav_fs.conf.erb'),
   }
 }

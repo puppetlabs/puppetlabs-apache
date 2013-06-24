@@ -41,7 +41,7 @@ describe 'apache::vhost', :type => :define do
       it { should include_class("apache::params") }
     end
   end
-  describe 'os-idenpendent items' do
+  describe 'os-independent items' do
     let :facts do
       {
         :osfamily               => 'Debian',
@@ -193,6 +193,21 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /ProxyPass .+!$/,
         },
         {
+          :title    => 'should accept proxy_pass array of hash',
+          :attr     => 'proxy_pass',
+          :value    => [
+            { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
+            { 'path' => '/path-b', 'url' => 'http://fake.com/b/' },
+          ],
+          :match    => [
+            '  ProxyPass        /path-a http://fake.com/a/',
+            '  ProxyPassReverse /path-a http://fake.com/a/',
+            '  ProxyPass        /path-b http://fake.com/b/',
+            '  ProxyPassReverse /path-b http://fake.com/b/',
+          ],
+          :notmatch => /ProxyPass .+!$/,
+        },
+        {
           :title => 'should enable rack',
           :attr  => 'rack_base_uris',
           :value => ['/rack1','/rack2'],
@@ -227,6 +242,111 @@ describe 'apache::vhost', :type => :define do
             '  Some custom fragment line',
             '  That spans multiple lines',
             '</VirtualHost>',
+          ],
+        },
+        {
+          :title => 'should accept an alias',
+          :attr  => 'aliases',
+          :value => [ { 'alias' => '/', 'path' => '/var/www'} ],
+          :match => '  Alias / /var/www',
+        },
+        {
+          :title => 'should accept multiple aliases',
+          :attr  => 'aliases',
+          :value => [
+            { 'alias' => '/', 'path' => '/var/www'},
+            { 'alias' => '/cgi-bin', 'path' => '/var/www/cgi-bin'},
+            { 'alias' => '/css', 'path' => '/opt/someapp/css'},
+          ],
+          :match => [
+            '  Alias / /var/www',
+            '  Alias /cgi-bin /var/www/cgi-bin',
+            '  Alias /css /opt/someapp/css'
+          ],
+        },
+        {
+          :title    => 'should accept a directory',
+          :attr     => 'directories',
+          :value    => [ { 'path' => '/opt/app' }],
+          :notmatch => '  <Directory /rspec/docroot>',
+          :match    => [
+            '  <Directory /opt/app>',
+            '    AllowOverride None',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Directory>',
+          ],
+        },
+        {
+          :title    => 'should accept directory directives',
+          :attr     => 'directories',
+          :value    => [
+            {
+              'path'              => '/opt/app',
+              'allow'             => 'from rspec.org',
+              'allow_override'    => 'Lol',
+              'deny'              => 'from google.com',
+              'options'           => '-MultiViews',
+              'order'             => 'deny,yned',
+              'passenger_enabled' => 'onf',
+            },
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '    Allow from rspec.org',
+            '    AllowOverride Lol',
+            '    Deny from google.com',
+            '    Options -MultiViews',
+            '    Order deny,yned',
+            '    PassengerEnabled onf',
+            '  </Directory>',
+          ],
+        },
+        {
+          :title    => 'should accept directory directives with arrays',
+          :attr     => 'directories',
+          :value    => [
+            {
+              'path'              => '/opt/app',
+              'allow'             => 'from rspec.org',
+              'allow_override'    => ['AuthConfig','Indexes'],
+              'deny'              => 'from google.com',
+              'options'           => ['-MultiViews','+MultiViews'],
+              'order'             => ['deny','yned'],
+              'passenger_enabled' => 'onf',
+            },
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '    Allow from rspec.org',
+            '    AllowOverride AuthConfig Indexes',
+            '    Deny from google.com',
+            '    Options -MultiViews +MultiViews',
+            '    Order deny,yned',
+            '    PassengerEnabled onf',
+            '  </Directory>',
+          ],
+        },
+        {
+          :title    => 'should accept multiple directories',
+          :attr     => 'directories',
+          :value    => [
+            { 'path' => '/opt/app' },
+            { 'path' => '/var/www' },
+            { 'path' => '/rspec/docroot'}
+          ],
+          :match    => [
+            '  <Directory /opt/app>',
+            '  <Directory /var/www>',
+            '  <Directory /rspec/docroot>',
+          ],
+        },
+        {
+          :title => 'should contain virtual_docroot',
+          :attr  => 'virtual_docroot',
+          :value => '/not/default',
+          :match => [
+            '  VirtualDocumentRoot /not/default',
           ],
         },
       ].each do |param|
