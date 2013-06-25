@@ -699,11 +699,11 @@ Set up a mix of SSL and non-SSL vhosts at the same domain
 Configure a vhost to redirect non-SSL connections to SSL
 
     apache::vhost { 'sixteenth.example.com non-ssl':
-      servername   => 'sixteenth.example.com',
-      port         => '80',
-      docroot      => '/var/www/sixteenth',
-      rewrite_cond => '%{HTTPS} off',
-      rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+      servername      => 'sixteenth.example.com',
+      port            => '80',
+      docroot         => '/var/www/sixteenth',
+      redirect_status => 'permanent'
+      redirect_dest   => 'https://sixteenth.example.com/' 
     }
     apache::vhost { 'sixteenth.example.com ssl':
       servername => 'sixteenth.example.com',
