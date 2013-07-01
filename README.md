@@ -269,7 +269,7 @@ Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 
 	class { 'apache::mod::ssl': }
 
-To *use* SSL with a virtual host, you must either set the`default_ssl_vost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
+To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
 
 ####Defined Type: `apache::vhost`
 
