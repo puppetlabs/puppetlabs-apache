@@ -807,6 +807,22 @@ Enables named-based hosting of a virtual host
 
 Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
 
+####Defined Type: `apache::balancermember`
+
+Define members of a proxy_balancer set (mod_proxy_balancer). Very useful when using exported resources.
+
+On every app server you can export a balancermember like this:
+
+      @@apache::balancermember { "${::fqdn}-puppet00":
+        balancer_cluster => 'puppet00',
+        url              => "ajp://${::fqdn}:8009"
+        options          => ['ping=5', 'disablereuse=on', 'retry=5', 'ttl=120'],
+      }
+
+And on the proxy itself you create the balancer cluster using the defined type apache::balancer:
+
+      apache::balancer { 'puppet00': }
+
 ###Templates
 
 The Apache module relies heavily on templates to enable the `vhost` and `apache::mod` defined types. These templates are built based on Facter facts around your operating system. Unless explicitly called out, most templates are not meant for configuration.
