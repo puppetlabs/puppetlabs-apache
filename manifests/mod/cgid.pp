@@ -8,5 +8,7 @@ class apache::mod::cgid {
     ensure  => file,
     path    => "${apache::mod_dir}/cgid.conf",
     content => template('apache/mod/cgid.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

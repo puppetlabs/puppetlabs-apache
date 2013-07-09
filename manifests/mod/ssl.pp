@@ -16,5 +16,7 @@ class apache::mod::ssl (
     ensure  => file,
     path    => "${apache::mod_dir}/ssl.conf",
     content => template('apache/mod/ssl.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

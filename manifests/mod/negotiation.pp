@@ -5,5 +5,7 @@ class apache::mod::negotiation {
     ensure  => file,
     path    => "${apache::mod_dir}/negotiation.conf",
     content => template('apache/mod/negotiation.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

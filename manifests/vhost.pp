@@ -137,6 +137,10 @@ define apache::vhost(
     include apache::mod::ssl
   }
 
+  if $virtual_docroot {
+    include apache::mod::vhost_alias
+  }
+
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
@@ -356,6 +360,19 @@ define apache::vhost(
       File[$logroot],
     ],
     notify  => Service['httpd'],
+  }
+  if $::osfamily == 'Debian' {
+    $vhost_enable_dir = $apache::vhost_enable_dir
+    file{ "${priority_real}-${filename}.conf symlink":
+      ensure  => link,
+      path    => "${vhost_enable_dir}/${priority_real}-${filename}.conf",
+      target  => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      require => File["${priority_real}-${filename}.conf"],
+      notify  => Service['httpd'],
+    }
   }
 }
 

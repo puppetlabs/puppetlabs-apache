@@ -4,5 +4,7 @@ class apache::mod::mpm_event {
     ensure  => file,
     path    => "${apache::mod_dir}/mpm_event.conf",
     content => template('apache/mod/mpm_event.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

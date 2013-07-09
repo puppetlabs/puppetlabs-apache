@@ -9,5 +9,7 @@ class apache::mod::alias {
     ensure  => file,
     path    => "${apache::mod_dir}/alias.conf",
     content => template('apache/mod/alias.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }
