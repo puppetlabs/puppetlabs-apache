@@ -50,7 +50,7 @@ describe 'apache::mod::php class' do
     end
 
     it 'should have a default config file' do
-      shell("/bin/cat #{mod_dir}/php.conf") do |r|
+      shell("/bin/cat #{mod_dir}/php5.conf") do |r|
         r.stdout.should =~ /^DirectoryIndex index\.php$/
         r.exit_code.should == 0
       end

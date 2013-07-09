@@ -7,5 +7,7 @@ class apache::mod::info (
     ensure  => file,
     path    => "${apache::mod_dir}/info.conf",
     content => template('apache/mod/info.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }

@@ -30,6 +30,7 @@ class apache (
   $error_documents      = false,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
+  $vhost_enable_dir     = $apache::params::vhost_enable_dir,
   $mod_dir              = $apache::params::mod_dir,
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
@@ -84,7 +85,15 @@ class apache (
     $purge_confd = $purge_configs
   }
 
-  file { $apache::confd_dir:
+  Exec {
+    path => '/bin:/sbin:/usr/bin:/usr/sbin',
+  }
+
+  exec { "mkdir ${confd_dir}":
+    creates => $confd_dir,
+    require => Package['httpd'],
+  }
+  file { $confd_dir:
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
@@ -92,8 +101,12 @@ class apache (
     require => Package['httpd'],
   }
 
-  if ! defined(File[$apache::mod_dir]) {
-    file { $apache::mod_dir:
+  if ! defined(File[$mod_dir]) {
+    exec { "mkdir ${mod_dir}":
+      creates => $mod_dir,
+      require => Package['httpd'],
+    }
+    file { $mod_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
@@ -102,8 +115,29 @@ class apache (
     }
   }
 
-  if $apache::mod_enable_dir and ! defined(File[$apache::mod_enable_dir]) {
-    file { $apache::mod_enable_dir:
+  if $mod_enable_dir and ! defined(File[$mod_enable_dir]) {
+    $mod_load_dir = $mod_enable_dir
+    exec { "mkdir ${mod_enable_dir}":
+      creates => $mod_enable_dir,
+      require => Package['httpd'],
+    }
+    file { $mod_enable_dir:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_configs,
+      notify  => Service['httpd'],
+      require => Package['httpd'],
+    }
+  } else {
+    $mod_load_dir = $mod_dir
+  }
+
+  if ! defined(File[$vhost_dir]) {
+    exec { "mkdir ${vhost_dir}":
+      creates => $vhost_dir,
+      require => Package['httpd'],
+    }
+    file { $vhost_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
@@ -112,14 +146,21 @@ class apache (
     }
   }
 
-  if ! defined(File[$apache::vhost_dir]) {
-    file { $apache::vhost_dir:
+  if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) {
+    $vhost_load_dir = $vhost_enable_dir
+    exec { "mkdir ${vhost_load_dir}":
+      creates => $vhost_load_dir,
+      require => Package['httpd'],
+    }
+    file { $vhost_enable_dir:
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
       notify  => Service['httpd'],
       require => Package['httpd'],
     }
+  } else {
+    $vhost_load_dir = $vhost_dir
   }
 
   concat { $ports_file:

@@ -29,6 +29,7 @@ class apache::default_mods (
         include apache::mod::proxy
         include apache::mod::proxy_http
         include apache::mod::userdir
+        include apache::mod::vhost_alias
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
         apache::mod { 'authn_alias': }
@@ -52,7 +53,6 @@ class apache::default_mods (
         apache::mod { 'suexec': }
         apache::mod { 'usertrack': }
         apache::mod { 'version': }
-        apache::mod { 'vhost_alias': }
       }
       default: {}
     }

@@ -5,5 +5,7 @@ class apache::mod::setenvif {
     ensure  => file,
     path    => "${apache::mod_dir}/setenvif.conf",
     content => template('apache/mod/setenvif.conf.erb'),
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
   }
 }
