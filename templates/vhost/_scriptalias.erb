@@ -1,7 +1,7 @@
 <% if @scriptalias -%>
 
   ## Script alias directives
-  ScriptAlias /cgi-bin/ "<%= @scriptalias %>/"
+  ScriptAlias <%= @scriptlocation %> "<%= @scriptalias %>/"
   <Directory "<%= @scriptalias %>">
     AllowOverride None
     Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
