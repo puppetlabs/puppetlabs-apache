@@ -1,3 +1,13 @@
+2013-07-09 Release 0.7.0
+Changes:
+- Essentially rewrite the module -- too many to list
+- `apache::vhost` has many abilities -- see README.md for details
+- `apache::mod::*` classes provide httpd mod-loading capabilities
+- `apache` base class is much more configurable
+
+Bugfixes:
+- Many. And many more to come
+
 2013-03-2 Release 0.6.0
 - update travis tests (add more supported versions)
 - add access log_parameter
