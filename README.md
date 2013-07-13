@@ -178,6 +178,10 @@ Determines whether the 'httpd' service is enabled when the machine is booted, me
 
 Sets the server administrator. Defaults to 'root@localhost'.
 
+#####`servername`
+
+Sets the servername. Defaults to fqdn provided by facter.
+
 #####`sendfile`
 
 Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'false'.

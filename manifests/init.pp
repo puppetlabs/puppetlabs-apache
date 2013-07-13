@@ -35,6 +35,7 @@ class apache (
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
   $conf_template        = $apache::params::conf_template,
+  $servername           = $apache::params::servername,
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
 ) inherits apache::params {

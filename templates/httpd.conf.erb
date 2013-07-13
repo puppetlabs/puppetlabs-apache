@@ -3,6 +3,7 @@ ServerTokens OS
 ServerSignature On
 TraceEnable Off
 
+ServerName "<%= @servername %>"
 ServerRoot "<%= @httpd_dir %>"
 PidFile <%= @pidfile %>
 Timeout 120
