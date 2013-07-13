@@ -12,5 +12,6 @@ class apache::mod::php {
       Exec["mkdir ${apache::mod_dir}"],
     ],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }

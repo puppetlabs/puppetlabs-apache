@@ -11,5 +11,6 @@ class apache::mod::passenger (
     content => template('apache/mod/passenger.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }

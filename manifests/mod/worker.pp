@@ -29,6 +29,7 @@ class apache::mod::worker (
     content => template('apache/mod/worker.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 
   case $::osfamily {
@@ -47,6 +48,7 @@ class apache::mod::worker (
         target  => "${apache::mod_dir}/worker.conf",
         require => Exec["mkdir ${apache::mod_enable_dir}"],
         before  => File[$apache::mod_enable_dir],
+        notify  => Service['httpd'],
       }
       package { 'apache2-mpm-worker':
         ensure => present,
