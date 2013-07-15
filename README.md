@@ -823,6 +823,12 @@ And on the proxy itself you create the balancer cluster using the defined type a
 
       apache::balancer { 'puppet00': }
 
+If you need to use ProxySet in the balncer config you can do as so:
+
+      apache::balancer { 'puppet01':
+        proxy_set => {'stickysession' => 'JSESSIONID'},
+      }
+
 ###Templates
 
 The Apache module relies heavily on templates to enable the `vhost` and `apache::mod` defined types. These templates are built based on Facter facts around your operating system. Unless explicitly called out, most templates are not meant for configuration.

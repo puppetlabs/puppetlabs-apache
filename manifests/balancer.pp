@@ -19,6 +19,10 @@
 # The namevar of the defined resource type is the balancer clusters name.
 # This name is also used in the name of the conf.d file
 #
+# [*proxy_set*]
+# Hash, default empty. If given, each key-value pair will be used as a ProxySet
+# line in the configuration.
+#
 # [*collect_exported*]
 # Boolean, default 'true'. True means 'collect exported @@balancermember
 # resources' (for the case when every balancermember node exports itself),
@@ -35,6 +39,7 @@
 # apache::balancer { 'puppet00': }
 #
 define apache::balancer (
+  $proxy_set = {},
   $collect_exported = true,
 ) {
   include concat::setup
@@ -59,6 +64,12 @@ define apache::balancer (
   }
   # else: the resources have been created and they introduced their
   # concat fragments. We don't have to do anything about them.
+
+  concat::fragment { "01-${name}-proxyset":
+    target  => $target,
+    order   => '19',
+    content => inline_template("<% proxy_set.each do |key, value| %> Proxyset <%= key %>=<%= value %>\n<% end %>"),
+  }
 
   concat::fragment { "01-${name}-footer":
     target  => $target,
