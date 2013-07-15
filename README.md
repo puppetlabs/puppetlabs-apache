@@ -335,11 +335,15 @@ Sets a given `apache::vhost` as the default to serve requests that do not match 
 
 #####`directories`
 
-Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory). Each hash should be of the form of:
+Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory).  The `path` key is required in these hashes.  Usage will typically look like:
 
-```ruby
-directory => [ { path => '/path/to/directory', <directive> => <value> } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path => '/path/to/directory', <directive> => <value> },
+        { path => '/path/to/another/directory', <directive> => <value> },
+      ],
+    }
 
 *Note:* At least one directory should match `docroot` parameter, once you start declaring directories `apache::vhost` assumes that all required `<Directory>` blocks will be declared.
 
@@ -352,58 +356,65 @@ The directives will be embedded within the `Directory` directive block, missing 
 Sets `AddHandler` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_mime.html#addhandler). Accepts a list of hashes of the form `{ handler => 'handler-name', extensions => ['extension']}`. Note that `extensions` is a list of extenstions being handled by the handler.
 An example: 
 
-```ruby
-directory => [ { path => '/path/to/directory',
-  addhandlers => [ { handler => 'cgi-script', extensions => ['.cgi']} ]
-} ]
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory',
+        addhandlers => [ { handler => 'cgi-script', extensions => ['.cgi']} ],
+      } ],
+    }
 
 ######`allow`
 
 Sets an `Allow` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow). An example:
 
-```ruby
-directory => [ { path => '/path/to/directory', allow => 'from example.org' } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', allow => 'from example.org' } ],
+    }
 
 ######`allow_override`
 
 Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). Should accept in the form of a list or a string. An example:
 
-```ruby
-directory => [ { path => '/path/to/directory', allow_override => ['AuthConfig', 'Indexes'] } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', allow_override => ['AuthConfig', 'Indexes'] } ],
+    }
 
 ######`deny`
 
 Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny). An example:
 
-```ruby
-directory => [ { path => '/path/to/directory', deny => 'from example.org' } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', deny => 'from example.org' } ],
+    }
 
 ######`options`
 
 Lists the options for the given `<Directory>` block
 
-```ruby
-  directory => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'] }]
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'] }],
+    }
 
 ######`order`
 Sets the order of processing `Allow` and `Deny` statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). An example:
 
-```ruby
-directory => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
+    }
 
 ######`passenger_enabled`
 
 Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the [Passenger documentation](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled).
 
-```ruby
-directory => [ { path => '/path/to/directory', passenger_enabled => 'off' } ],
-```
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', passenger_enabled => 'off' } ],
+    }
 
 **Note:** This directive requires `apache::mod::passenger` to be active, Apache may not start with an unrecognised directive without it.
 
