@@ -18,5 +18,6 @@ class apache::mod::ssl (
     content => template('apache/mod/ssl.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }

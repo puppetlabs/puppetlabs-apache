@@ -10,5 +10,6 @@ class apache::mod::cgid {
     content => template('apache/mod/cgid.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }
