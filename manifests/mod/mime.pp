@@ -7,5 +7,6 @@ class apache::mod::mime {
     content => template('apache/mod/mime.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }

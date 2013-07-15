@@ -14,5 +14,6 @@ class apache::mod::disk_cache {
     content => template('apache/mod/disk_cache.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
+    notify  => Service['httpd'],
   }
 }
