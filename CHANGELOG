@@ -1,3 +1,15 @@
+2013-07-16 Release 0.8.0
+Features:
+- Add `servername` parameter to `apache` class
+- Add `proxy_set` parameter to `apache::balancer` define
+
+Bugfixes:
+- Fix ordering for multiple `apache::balancer` clusters
+- Fix symlinking for sites-available on Debian-based OSs
+- Fix dependency ordering for recursive confdir management
+- Fix `apache::mod::*` to notify the service on config change
+- Documentation updates
+
 2013-07-09 Release 0.7.0
 Changes:
 - Essentially rewrite the module -- too many to list
