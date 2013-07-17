@@ -37,6 +37,7 @@ class apache (
   $conf_template        = $apache::params::conf_template,
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
+  $keepalive            = 'Off'
 ) inherits apache::params {
 
   package { 'httpd':
