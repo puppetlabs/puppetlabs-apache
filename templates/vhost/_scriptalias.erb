@@ -12,3 +12,10 @@
 <% end -%>
   </Directory>
 <% end -%>
+
+<% if @wsgiscriptalias -%>
+
+  ## Script alias directives
+  WSGIScriptAlias / "<%= @wsgiscriptalias %>/"
+
+<% end -%>

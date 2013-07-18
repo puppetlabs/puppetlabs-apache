@@ -93,6 +93,7 @@ define apache::vhost(
     $error_log_file     = undef,
     $error_log_pipe     = undef,
     $scriptalias        = undef,
+    $wsgiscriptalias    = undef,
     $proxy_dest         = undef,
     $proxy_pass         = undef,
     $no_proxy_uris      = [],
@@ -246,6 +247,13 @@ define apache::vhost(
   if $scriptalias or ($redirect_source and $redirect_dest) {
     if ! defined(Class['apache::mod::alias']) {
       include apache::mod::alias
+    }
+  }
+
+  # Load mod_wsgi if needed and not yet loaded
+  if $wsgiscriptalias {
+    if ! defined(Class['apache::mod::wsgi']) {
+      include apache::mod::wsgi
     }
   }
 
