@@ -22,7 +22,6 @@ class apache::default_mods (
       'redhat': {
         include apache::mod::cgi # RedHat uses mpm_prefork
         include apache::mod::cache
-        include apache::mod::disk_cache
         include apache::mod::info
         include apache::mod::ldap
         include apache::mod::mime_magic
