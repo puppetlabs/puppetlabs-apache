@@ -94,6 +94,7 @@ define apache::vhost(
     $error_log_pipe     = undef,
     $scriptalias        = undef,
     $wsgiscriptalias    = undef,
+    $wsgiscriptroot     = '/',
     $proxy_dest         = undef,
     $proxy_pass         = undef,
     $no_proxy_uris      = [],
