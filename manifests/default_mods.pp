@@ -22,12 +22,7 @@ class apache::default_mods (
       'redhat': {
         include apache::mod::cgi # RedHat uses mpm_prefork
         include apache::mod::cache
-        include apache::mod::info
-        include apache::mod::ldap
         include apache::mod::mime_magic
-        include apache::mod::proxy
-        include apache::mod::proxy_http
-        include apache::mod::userdir
         include apache::mod::vhost_alias
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
@@ -64,7 +59,6 @@ class apache::default_mods (
     include apache::mod::mime
     include apache::mod::negotiation
     include apache::mod::setenvif
-    include apache::mod::status
     apache::mod { 'auth_basic': }
     apache::mod { 'authn_file': }
     apache::mod { 'authz_default': }
