@@ -37,10 +37,6 @@ class apache::default_mods (
         apache::mod { 'ext_filter': }
         apache::mod { 'include': }
         apache::mod { 'logio': }
-        apache::mod { 'proxy_ajp': }
-        apache::mod { 'proxy_balancer': }
-        apache::mod { 'proxy_connect': }
-        apache::mod { 'proxy_ftp': }
         apache::mod { 'rewrite': }
         apache::mod { 'speling': }
         apache::mod { 'substitute': }
