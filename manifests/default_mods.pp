@@ -30,7 +30,6 @@ class apache::default_mods (
         apache::mod { 'authn_anon': }
         apache::mod { 'authn_dbm': }
         apache::mod { 'authn_default': }
-        apache::mod { 'authnz_ldap': }
         apache::mod { 'authz_dbm': }
         apache::mod { 'authz_owner': }
         apache::mod { 'expires': }
