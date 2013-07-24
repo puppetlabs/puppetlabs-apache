@@ -16,11 +16,9 @@ class apache::default_mods (
   if $all {
     case $::osfamily {
       'debian': {
-        include apache::mod::cgid # Debian uses mpm_worker
         include apache::mod::reqtimeout
       }
       'redhat': {
-        include apache::mod::cgi # RedHat uses mpm_prefork
         include apache::mod::cache
         include apache::mod::disk_cache
         include apache::mod::info
@@ -55,6 +53,14 @@ class apache::default_mods (
         apache::mod { 'version': }
       }
       default: {}
+    }
+    case $apache::mpm_module {
+      'prefork': {
+        include apache::mod::cgi
+      }
+      'worker': {
+        include apache::mod::cgid
+      }
     }
     include apache::mod::alias
     include apache::mod::autoindex
