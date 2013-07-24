@@ -38,7 +38,7 @@ class apache::mod::worker (
         ensure => present,
         path   => '/etc/sysconfig/httpd',
         line   => 'HTTPD=/usr/sbin/httpd.worker',
-        match  => '#?HTTPD=',
+        match  => '#?HTTPD=/usr/sbin/httpd.worker',
         notify => Service['httpd'],
       }
     }
