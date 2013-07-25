@@ -9,3 +9,14 @@ describe 'basic tests:' do
   end
 end
 
+describe 'disable selinux:' do
+  context puppet_apply '
+  exec { "setenforce 0":
+    path   => "/bin:/sbin:/usr/bin:/usr/sbin",
+    onlyif => "which setenforce && getenforce | grep Enforcing",
+  }
+  ' do
+    its(:stderr) { should be_empty }
+    its(:exit_code) { should_not == 1 }
+  end
+end
