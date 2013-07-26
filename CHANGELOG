@@ -1,3 +1,9 @@
+2013-07-26 Release 0.8.1
+Bugfixes:
+- Update `apache::mpm_module` detection for worker/prefork
+- Update `apache::mod::cgi` and `apache::mod::cgid` detection for
+worker/prefork
+
 2013-07-16 Release 0.8.0
 Features:
 - Add `servername` parameter to `apache` class
