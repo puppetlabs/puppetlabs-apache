@@ -11,7 +11,7 @@ class apache::mod::prefork (
   }
   File {
     owner => 'root',
-    group => 'root',
+    group => $apache::params::root_group,
     mode  => '0644',
   }
 
@@ -52,6 +52,12 @@ class apache::mod::prefork (
       package { 'apache2-mpm-prefork':
         ensure => present,
       }
+    }
+    'freebsd': {
+      # FIXME:
+      #package { 'apache2-mpm-prefork':
+      #  ensure => present,
+      #}
     }
     default: {
       fail("Unsupported osfamily ${::osfamily}")

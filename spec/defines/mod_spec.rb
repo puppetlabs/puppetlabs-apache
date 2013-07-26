@@ -76,4 +76,30 @@ describe 'apache::mod', :type => :define do
       end
     end
   end
+
+  context "on a FreeBSD osfamily" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+
+    describe "for non-special modules" do
+      let :title do
+        'spec_m'
+      end
+      it { should include_class("apache::params") }
+      it "should manage the module load file" do
+        should contain_file('spec_m.load').with({
+          :path    => '/usr/local/etc/apache22/Modules/spec_m.load',
+          :content => "LoadModule spec_m_module /usr/local/libexec/apache22/mod_spec_m.so\n",
+          :owner   => 'root',
+          :group   => 'wheel',
+          :mode    => '0644',
+        } )
+      end
+    end
+  end
 end

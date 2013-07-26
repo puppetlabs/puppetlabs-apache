@@ -8,6 +8,9 @@ class apache::default_mods (
     'redhat': {
       apache::mod { 'log_config': }
     }
+    'freebsd': {
+      apache::mod { 'log_config': }
+    }
     default: {}
   }
   apache::mod { 'authz_host': }
@@ -49,6 +52,40 @@ class apache::default_mods (
         apache::mod { 'speling': }
         apache::mod { 'substitute': }
         apache::mod { 'suexec': }
+        apache::mod { 'usertrack': }
+        apache::mod { 'version': }
+      }
+      'freebsd': {
+        include apache::mod::cache
+        include apache::mod::disk_cache
+        include apache::mod::headers
+        include apache::mod::info
+        include apache::mod::mime_magic
+        include apache::mod::reqtimeout
+        include apache::mod::rewrite
+        include apache::mod::userdir
+        include apache::mod::vhost_alias
+
+        apache::mod { 'actions': }
+        apache::mod { 'asis': }
+        apache::mod { 'auth_digest': }
+        apache::mod { 'authn_alias': }
+        apache::mod { 'authn_anon': }
+        apache::mod { 'authn_dbm': }
+        apache::mod { 'authn_default': }
+        apache::mod { 'authz_dbm': }
+        apache::mod { 'authz_owner': }
+        apache::mod { 'cern_meta': }
+        apache::mod { 'charset_lite': }
+        apache::mod { 'dumpio': }
+        apache::mod { 'expires': }
+        apache::mod { 'file_cache': }
+        apache::mod { 'filter':}
+        apache::mod { 'imagemap':}
+        apache::mod { 'include': }
+        apache::mod { 'logio': }
+        apache::mod { 'speling': }
+        apache::mod { 'unique_id': }
         apache::mod { 'usertrack': }
         apache::mod { 'version': }
       }

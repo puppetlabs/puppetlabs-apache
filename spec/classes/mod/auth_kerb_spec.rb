@@ -26,4 +26,17 @@ describe 'apache::mod::auth_kerb', :type => :class do
     it { should contain_apache__mod("auth_kerb") }
     it { should contain_package("mod_auth_kerb") }
   end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod("auth_kerb") }
+    # FIXME:
+    #it { should contain_package("libapache2-mod-auth-kerb") }
+  end
 end

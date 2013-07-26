@@ -12,7 +12,7 @@ class apache::mod::worker (
   }
   File {
     owner => 'root',
-    group => 'root',
+    group => $apache::params::root_group,
     mode  => '0644',
   }
 
@@ -53,6 +53,12 @@ class apache::mod::worker (
       package { 'apache2-mpm-worker':
         ensure => present,
       }
+    }
+    'freebsd': {
+      # FIXME:
+      #package { 'apache2-mpm-worker':
+      #  ensure => present,
+      #}
     }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
