@@ -43,7 +43,5 @@ describe 'apache::mod::prefork', :type => :class do
     it { should include_class("apache::params") }
     it { should_not contain_apache__mod('prefork') }
     it { should contain_file("/usr/local/etc/apache22/Modules/prefork.conf").with_ensure('file') }
-    # FIXME:
-    # it { should contain_package("apache2-mpm-prefork") }
   end
 end

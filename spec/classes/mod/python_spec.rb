@@ -36,7 +36,6 @@ describe 'apache::mod::python', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod("python") }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-python") }
+    it { should contain_package("www/mod_python3") }
   end
 end

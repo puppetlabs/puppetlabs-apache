@@ -36,7 +36,6 @@ describe 'apache::mod::fcgid', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('fcgid') }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-fcgid") }
+    it { should contain_package("www/mod_fcgid") }
   end
 end

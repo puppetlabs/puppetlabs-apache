@@ -72,13 +72,8 @@ describe 'apache::mod::php', :type => :class do
       end
       it { should include_class('apache::params') }
       it { should contain_apache__mod('php5') }
-      # FIXME:
-      #it { should contain_package("libapache2-mod-php5") }
-      it { should_not contain_file('php5.load') }
-      it { should contain_file_line('httpd.conf LoadModule php5_module').with(
-        :path => "/usr/local/etc/apache22/httpd.conf",
-        :line => 'LoadModule php5_module libexec/apache22/libphp5.so'
-      ) }
+      it { should contain_package("lang/php5") }
+      it { should contain_file('php5.load') }
     end
     # FIXME: not sure about the following context
     context 'with mpm_module => worker' do

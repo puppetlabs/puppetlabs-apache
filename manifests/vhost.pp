@@ -373,5 +373,5 @@ define apache::vhost(
       require => File["${priority_real}-${filename}.conf"],
       notify  => Service['httpd'],
     }
-  } 
+  }
 }

@@ -54,11 +54,10 @@ class apache::mod::worker (
         ensure => present,
       }
     }
-    'freebsd': {
-      # FIXME:
-      #package { 'apache2-mpm-worker':
-      #  ensure => present,
-      #}
+    'freebsd' : {
+      class { 'apache::package':
+        mpm_module => 'worker'
+      }
     }
     default: {
       fail("Unsupported osfamily ${::osfamily}")

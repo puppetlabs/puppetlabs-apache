@@ -36,7 +36,6 @@ describe 'apache::mod::dav_svn', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('dav_svn') }
-    # FIXME:
-    #it { should contain_package("libapache2-svn") }
+    it { should contain_package("devel/subversion") }
   end
 end

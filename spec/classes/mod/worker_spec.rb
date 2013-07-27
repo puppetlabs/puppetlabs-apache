@@ -40,7 +40,5 @@ describe 'apache::mod::worker', :type => :class do
     it { should include_class("apache::params") }
     it { should_not contain_apache__mod('worker') }
     it { should contain_file("/usr/local/etc/apache22/Modules/worker.conf").with_ensure('file') }
-    # FIXME:
-    #it { should contain_package("apache2-mpm-worker") }
   end
 end

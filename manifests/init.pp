@@ -41,18 +41,26 @@ class apache (
   $group                = $apache::params::group,
 ) inherits apache::params {
 
-  package { 'httpd':
-    ensure => installed,
-    name   => $apache::params::apache_package,
-  }
-
   validate_bool($default_mods)
   validate_bool($default_vhost)
   validate_bool($default_confd_files)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
-  if $mpm_module {
-    validate_re($mpm_module, '(prefork|worker)')
+
+  if $::osfamily == 'FreeBSD' {
+    if $mpm_module {
+      validate_re($mpm_module,'(prefork|worker|event|peruser|itk)')
+    }
+    # note: it's mpm module's responsibility to instal httpd package.
+  } else {
+    if $mpm_module {
+      validate_re($mpm_module, '(prefork|worker)')
+    }
+    # NOTE: this might be replaced with class { 'apache::package': }
+    package { 'httpd':
+      ensure => present,
+      name   => $apache::params::apache_name,
+    }
   }
 
   $httpd_dir  = $apache::params::httpd_dir
@@ -61,8 +69,7 @@ class apache (
   $logroot    = $apache::params::logroot
 
   # declare the web server user and group
-  # Note: requiring the package means the package ought to create them and not
-  #       puppet
+  # Note: requiring the package means the package ought to create them and not puppet
   group { $group:
     ensure  => present,
     require => Package['httpd']
@@ -209,10 +216,9 @@ class apache (
         fail("Unsupported osfamily ${::osfamily}")
       }
     }
-    if $::osfamily == 'FreeBSD' {
-      $freebsd_workarounds = true
-    } else {
-      $freebsd_workarounds = false
+    $freebsd_workarounds = $::osfamily ? {
+      'freebsd' => true,
+      default   => false
     }
     # Template uses:
     # - $httpd_dir

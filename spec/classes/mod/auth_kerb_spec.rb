@@ -36,7 +36,6 @@ describe 'apache::mod::auth_kerb', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod("auth_kerb") }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-auth-kerb") }
+    it { should contain_package("www/mod_auth_kerb2") }
   end
 end

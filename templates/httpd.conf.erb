@@ -37,8 +37,8 @@ EnableSendfile <%= @sendfile %>
 #Listen 80
 
 <% if @freebsd_workarounds -%>
-# Workaround for FreeBSD PHP5 module
-#LoadModule php5_module libexec/apache22/mod_php5.so
+# Workaround for FreeBSD module activation procedures
+#LoadModule fake_module libexec/apache22/mod_fake.so
 <% end -%>
 
 Include <%= @mod_load_dir %>/*.load

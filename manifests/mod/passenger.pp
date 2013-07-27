@@ -3,7 +3,13 @@ class apache::mod::passenger (
   $passenger_ruby          = $apache::params::passenger_ruby,
   $passenger_max_pool_size = undef,
 ) {
-  apache::mod { 'passenger': }
+  if $::osfamily == 'FreeBSD' {
+    apache::mod { 'passenger':
+      lib_path => "${passenger_root}/buildout/apache2"
+    }
+  } else {
+    apache::mod { 'passenger': }
+  }
   # Template uses: $passenger_root, $passenger_ruby, $passenger_max_pool_size
   file { 'passenger.conf':
     ensure  => file,

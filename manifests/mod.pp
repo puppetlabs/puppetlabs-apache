@@ -1,7 +1,7 @@
 define apache::mod (
   $package = undef,
   $lib = undef,
-  $loadfile = true,
+  $lib_path = $apache::params::lib_path,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -9,7 +9,6 @@ define apache::mod (
 
   $mod = $name
   #include apache #This creates duplicate resources in rspec-puppet
-  $lib_path = $apache::params::lib_path
   $mod_dir = $apache::mod_dir
 
   # Determine if we have special lib
@@ -31,56 +30,55 @@ define apache::mod (
   } elsif "${mod_package}" {
     $package_REAL = $mod_package
   }
-  if $loadfile {
-    if $package_REAL {
-      # $package_REAL may be an array
-      package { $package_REAL:
-        ensure  => present,
-        require => Package['httpd'],
-        before  => File["${mod_dir}/${mod}.load"],
+  if $package_REAL {
+    # $package_REAL may be an array
+    package { $package_REAL:
+      ensure  => present,
+      require => Package['httpd'],
+      before  => $::osfamily ? {
+        # note: FreeBSD/ports uses apxs tool to activate modules; apxs clutters
+        # httpd.conf with 'LoadModule' directives; here, by proper resource
+        # ordering, we ensure that our version of httpd.conf is used after all.
+        # To prevent regressions on other systems, this ordering is currently
+        # used only on FreeBSD.
+        'freebsd' => [
+          File["${mod_dir}/${mod}.load"],
+          File["${apache::params::conf_dir}/${apache::params::conf_file}"]
+        ],
+        default => File["${mod_dir}/${mod}.load"],
       }
     }
-    file { "${mod}.load":
-      ensure  => file,
-      path    => "${mod_dir}/${mod}.load",
-      owner   => 'root',
-      group   => $apache::params::root_group,
-      mode    => '0644',
-      content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
-      require => [
-        Package['httpd'],
-        Exec["mkdir ${mod_dir}"],
-      ],
-      before  => File[$mod_dir],
-      notify  => Service['httpd'],
-    }
-  } else {
-    if $package_REAL {
-      # $package_REAL may be an array
-      package { $package_REAL:
-        ensure  => present,
-        require => Package['httpd'],
-      }
-    }
+  }
+  file { "${mod}.load":
+    ensure  => file,
+    path    => "${mod_dir}/${mod}.load",
+    owner   => 'root',
+    group   => $apache::params::root_group,
+    mode    => '0644',
+    content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
+    require => [
+      Package['httpd'],
+      Exec["mkdir ${mod_dir}"],
+    ],
+    before  => File[$mod_dir],
+    notify  => Service['httpd'],
   }
 
   if $::osfamily == 'Debian' {
     $enable_dir = $apache::mod_enable_dir
-    if $loadfile {
-      file{ "${mod}.load symlink":
-        ensure  => link,
-        path    => "${enable_dir}/${mod}.load",
-        target  => "${mod_dir}/${mod}.load",
-        owner   => 'root',
-        group   => $apache::params::root_group,
-        mode    => '0644',
-        require => [
-          File["${mod}.load"],
-          Exec["mkdir ${enable_dir}"],
-        ],
-        before  => File[$enable_dir],
-        notify  => Service['httpd'],
-      }
+    file{ "${mod}.load symlink":
+      ensure  => link,
+      path    => "${enable_dir}/${mod}.load",
+      target  => "${mod_dir}/${mod}.load",
+      owner   => 'root',
+      group   => $apache::params::root_group,
+      mode    => '0644',
+      require => [
+        File["${mod}.load"],
+        Exec["mkdir ${enable_dir}"],
+      ],
+      before  => File[$enable_dir],
+      notify  => Service['httpd'],
     }
     # Each module may have a .conf file as well, which should be
     # defined in the class apache::mod::module

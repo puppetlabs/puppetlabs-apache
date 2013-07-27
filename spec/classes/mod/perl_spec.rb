@@ -36,7 +36,6 @@ describe 'apache::mod::perl', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('perl') }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-perl2") }
+    it { should contain_package("www/mod_perl2") }
   end
 end

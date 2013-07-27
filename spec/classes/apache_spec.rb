@@ -273,7 +273,7 @@ describe 'apache', :type => :class do
       }
     end
     it { should include_class("apache::params") }
-    it { should contain_package("httpd") }
+    it { should contain_class("apache::package").with({'ensure' => 'present'}) }
     it { should contain_user("www") }
     it { should contain_group("www") }
     it { should contain_service("httpd").with(
@@ -305,7 +305,7 @@ describe 'apache', :type => :class do
       'notify'  => 'Service[httpd]'
       )
     }
-    # Assert that load files are placed and symlinked for these mods, but no conf file.
+    # Assert that load files are placed for these mods, but no conf file.
     [
       'auth_basic',
       'authn_file',
@@ -321,7 +321,6 @@ describe 'apache', :type => :class do
         'ensure' => 'file'
       ) }
       it { should_not contain_file("#{modname}.conf") }
-      it { should_not contain_file("#{modname}.conf symlink") }
     end
 
     # Assert that both load files and conf files are placed for these mods

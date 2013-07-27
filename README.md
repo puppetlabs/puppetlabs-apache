@@ -38,6 +38,7 @@ Apache is a widely-used web server, and this module provides a simplified way of
 * Apache modules
 * virtual hosts
 * listened-to ports
+* `/etc/make.conf` on FreeBSD
 
 ###Beginning with Apache
 
@@ -134,9 +135,7 @@ Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [cu
 
 #####`default_confd_files`
 
-Generates default set of include-able apache configuration files under
-`/etc/apache2/conf.d/` (or appropriate) directory. These configuration files
-correspond to what is usually installed with apache package on given platform.
+Generates default set of include-able apache configuration files under  `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with apache package on given platform.
 
 #####`default_ssl_vhost`
 
@@ -211,7 +210,7 @@ Changes the location of the configuration directory your Apache modules configur
 
 #####`mpm_module`
 
-Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork` and `apache::mod::worker` classes. Must be set to `false` to explicitly declare `apache::mod::worker` or `apache::mod::prefork` classes with parameters. Valid values are `worker`, `prefork`, or the boolean `false`. Defaults to `prefork` on RedHat and FreeBSD and `worker` on Debian.
+Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork` and `apache::mod::worker` classes. Must be set to `false` to explicitly declare `apache::mod::worker` or `apache::mod::prefork` classes with parameters. Valid values are `worker`, `prefork`, or the boolean `false` (on FreeBSD one may also use `itk`, `event` or `peruser`). Defaults to `prefork` on RedHat and FreeBSD and `worker` on Debian. Note: on FreeBSD switching between different mpm modules is quite difficult (but possible). Before changing `$mpm_module` one has to deinstall all packages that depend on currently installed `apache`.
 
 #####`conf_template`
 
@@ -862,8 +861,7 @@ The Apache module relies heavily on templates to enable the `vhost` and `apache:
 
 ##Limitations
 
-This has been tested on Ubuntu Precise, Debian Wheezy, CentOS 5.8, and FreeBSD
-9.1.
+This has been tested on Ubuntu Precise, Debian Wheezy, CentOS 5.8, and FreeBSD 9.1.
 
 ##Development
 

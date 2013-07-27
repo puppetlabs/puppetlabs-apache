@@ -49,7 +49,5 @@ describe 'apache::mod::ssl', :type => :class do
     end
     it { should include_class('apache::params') }
     it { should contain_apache__mod('ssl') }
-    # FIXME:
-    #it { should_not contain_package('libapache2-mod-ssl') }
   end
 end

@@ -11,7 +11,6 @@ class apache::mod::ssl (
     'redhat'  => 'default',
     'freebsd' => 'default', 
   }
-  # FIXME: SSLMutex was replaced with Mutex in apache 2.4
   apache::mod { 'ssl': }
 
   # Template uses $ssl_compression, $session_cache, $ssl_mutex

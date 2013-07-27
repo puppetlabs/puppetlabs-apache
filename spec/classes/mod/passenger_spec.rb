@@ -36,7 +36,6 @@ describe 'apache::mod::passenger', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('passenger') }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-passenger") }
+    it { should contain_package("www/rubygem-passenger") }
   end
 end

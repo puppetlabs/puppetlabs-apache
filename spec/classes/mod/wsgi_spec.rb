@@ -36,7 +36,6 @@ describe 'apache::mod::wsgi', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('wsgi') }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-wsgi") }
+    it { should contain_package("www/mod_wsgi") }
   end
 end

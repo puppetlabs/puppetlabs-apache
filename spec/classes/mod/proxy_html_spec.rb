@@ -40,7 +40,6 @@ describe 'apache::mod::proxy_html', :type => :class do
     end
     it { should include_class("apache::params") }
     it { should contain_apache__mod('proxy_html') }
-    # FIXME:
-    #it { should contain_package("libapache2-mod-proxy-html") }
+    it { should contain_package("www/mod_proxy_html") }
   end
 end
