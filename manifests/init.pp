@@ -51,7 +51,7 @@ class apache (
     if $mpm_module {
       validate_re($mpm_module,'(prefork|worker|event|peruser|itk)')
     }
-    # note: it's mpm module's responsibility to instal httpd package.
+    # note: it's mpm module's responsibility to install httpd package.
   } else {
     if $mpm_module {
       validate_re($mpm_module, '(prefork|worker)')
