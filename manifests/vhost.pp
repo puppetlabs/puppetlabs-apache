@@ -65,7 +65,7 @@ define apache::vhost(
     $ip_based           = false,
     $add_listen         = true,
     $docroot_owner      = 'root',
-    $docroot_group      = 'root',
+    $docroot_group      = $apache::params::root_group,
     $serveradmin        = false,
     $ssl                = false,
     $ssl_cert           = $apache::default_ssl_cert,
@@ -352,7 +352,7 @@ define apache::vhost(
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
     content => template('apache/vhost.conf.erb'),
     owner   => 'root',
-    group   => 'root',
+    group   => $apache::params::root_group,
     mode    => '0644',
     require => [
       Package['httpd'],
@@ -368,11 +368,10 @@ define apache::vhost(
       path    => "${vhost_enable_dir}/${priority_real}-${filename}.conf",
       target  => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
       owner   => 'root',
-      group   => 'root',
+      group   => $apache::params::root_group,
       mode    => '0644',
       require => File["${priority_real}-${filename}.conf"],
       notify  => Service['httpd'],
     }
   }
 }
-

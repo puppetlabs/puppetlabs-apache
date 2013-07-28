@@ -29,4 +29,16 @@ describe 'apache::mod::worker', :type => :class do
     it { should contain_file("/etc/httpd/conf.d/worker.conf").with_ensure('file') }
     it { should contain_file_line("/etc/sysconfig/httpd worker enable") }
   end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should_not contain_apache__mod('worker') }
+    it { should contain_file("/usr/local/etc/apache22/Modules/worker.conf").with_ensure('file') }
+  end
 end

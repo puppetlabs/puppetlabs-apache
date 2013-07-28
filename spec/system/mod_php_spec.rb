@@ -13,6 +13,8 @@ describe 'apache::mod::php class' do
       '/etc/apache2/mods-available'
     when 'RedHat'
       '/etc/httpd/conf.d'
+    when 'FreeBSD'
+      '/usr/local/etc/apache22/Modules'
     end
   }
   let(:vhost_dir) {
@@ -21,6 +23,8 @@ describe 'apache::mod::php class' do
       '/etc/apache2/sites-enabled'
     when 'RedHat'
       '/etc/httpd/conf.d'
+    when 'FreeBSD'
+      '/usr/local/etc/apache22/Vhosts'
     end
   }
 

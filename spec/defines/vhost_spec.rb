@@ -49,6 +49,23 @@ describe 'apache::vhost', :type => :define do
         :target => '/etc/apache2/sites-available/25-rspec.example.com.conf'
       ) }
     end
+    context "on FreeBSD systems" do
+      let :default_facts do
+        {
+          :osfamily               => 'FreeBSD',
+          :operatingsystemrelease => '9',
+          :concat_basedir         => '/dne',
+        }
+      end
+      let :params do default_params end
+      let :facts do default_facts end
+      it { should include_class("apache") }
+      it { should include_class("apache::params") }
+      it { should contain_file("25-rspec.example.com.conf").with(
+        :ensure => 'present',
+        :path   => '/usr/local/etc/apache22/Vhosts/25-rspec.example.com.conf'
+      ) }
+    end
   end
   describe 'os-independent items' do
     let :facts do
