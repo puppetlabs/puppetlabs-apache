@@ -17,6 +17,9 @@
 <% if @ssl_crl -%>
   SSLCARevocationFile     <%= @ssl_crl %>
 <% end -%>
+<% if @sslproxyengine -%>
+  SSLProxyEngine On
+<% end -%>
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars
   </FilesMatch>
