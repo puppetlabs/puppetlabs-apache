@@ -1,6 +1,8 @@
 define apache::mod (
   $package = undef,
-  $lib = undef
+  $lib = undef,
+  $identifier = undef,
+  $path = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -20,6 +22,19 @@ define apache::mod (
     $lib_REAL = $mod_lib
   } else {
     $lib_REAL = "mod_${mod}.so"
+  }
+
+  # Determine if declaration specified a path to the module
+  if $path {
+    $path_REAL = $path
+  } else {
+    $path_REAL = "${lib_path}/${lib_REAL}"
+  }
+
+  if $identifier {
+    $id_REAL = $identifier
+  } else {
+    $id_REAL = "${mod}_module"
   }
 
   # Determine if we have a package
@@ -45,7 +60,7 @@ define apache::mod (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
+    content => "LoadModule $id_REAL $path_REAL\n",
     require => [
       Package['httpd'],
       Exec["mkdir ${mod_dir}"],
