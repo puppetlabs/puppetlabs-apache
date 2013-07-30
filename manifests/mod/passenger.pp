@@ -10,7 +10,15 @@ class apache::mod::passenger (
   $passenger_max_pool_size        = undef,
 ) {
   apache::mod { 'passenger': }
-  # Template uses: $passenger_root, $passenger_ruby, $passenger_max_pool_size
+  # Template uses:
+  # - $passenger_root
+  # - $passenger_ruby
+  # - $passenger_max_pool_size
+  # - $passenger_high_performance
+  # - $passenger_max_requests
+  # - $passenger_stat_throttle_rate
+  # - $rack_autodetect
+  # - $rails_autodetect
   file { 'passenger.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/passenger.conf",
