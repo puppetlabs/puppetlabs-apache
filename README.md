@@ -374,6 +374,24 @@ Sets the usage of `.htaccess` files as per the [Apache core documentation](http:
 directory => [ { path => '/path/to/directory', allow_override => ['AuthConfig', 'Indexes'] } ],
 ```
 
+######`auth_basic_file`
+
+Provide an "htpasswd" file for HTTP Basic authentication. The argument to this parameter will be supplied directly to the [`AuthUserFile` directive](https://httpd.apache.org/docs/2.2/mod/mod_authn_file.html#authuserfile). 
+
+```ruby
+directory => [ { path => '/path/to/directory', auth_basic_file => '/path/to/my-web-auth.htpasswd' } ],
+```
+
+######`auth_basic_name`
+
+Provide a realm name for HTTP Basic authentication. If unspecified, the default is "Restricted." If `auth_basic_file` is not specified, this parameter has no effect.
+
+The argument to this parameter will be supplied directly to the [`AuthName` directive](https://httpd.apache.org/docs/2.2/mod/core.html#authname). 
+
+```ruby
+directory => [ { path => '/path/to/directory', auth_basic_file => '/path/to/my-web-auth.htpasswd', auth_basic_name => 'Secrets' } ],
+```
+
 ######`deny`
 
 Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny). An example:
