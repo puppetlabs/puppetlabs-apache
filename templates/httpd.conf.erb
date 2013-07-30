@@ -30,7 +30,7 @@ DefaultType none
 HostnameLookups Off
 ErrorLog <%= @logroot %>/<%= @error_log %>
 LogLevel warn
-<% if @sendfile #XXX Why? %>
+<% if @sendfile %>
 EnableSendfile <%= @sendfile %>
 <% end %>
 
