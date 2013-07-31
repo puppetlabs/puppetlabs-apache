@@ -72,6 +72,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $keepalive            = 'Off'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -110,6 +111,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template    = 'apache/httpd.conf.erb'
+    $keepalive        = 'Off'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
