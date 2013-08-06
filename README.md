@@ -210,6 +210,11 @@ Configures which mpm module is loaded and configured for the httpd process by th
 
 Setting this allows you to override the template used for the main apache configuration file.  This is a potentially risky thing to do as this module has been built around the concept of a minimal configuration file with most of the configuration coming in the form of conf.d/ entries.  Defaults to 'apache/httpd.conf.erb'.
 
+#####`keepalive`
+
+Setting this allows you to enable persistent connections.
+ 
+
 ####Class: `apache::default_mods`
 
 Installs default Apache modules based on what OS you are running
