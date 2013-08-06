@@ -38,6 +38,7 @@ class apache (
   $servername           = $apache::params::servername,
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
+  $keepalive            = $apache::params::keepalive,
 ) inherits apache::params {
 
   package { 'httpd':
