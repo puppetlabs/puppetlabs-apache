@@ -84,7 +84,6 @@ describe 'apache', :type => :class do
       'mime',
       'negotiation',
       'setenvif',
-      'status',
     ].each do |modname|
       it { should contain_file("#{modname}.load").with(
         'path'   => "/etc/apache2/mods-available/#{modname}.load",
@@ -187,7 +186,6 @@ describe 'apache', :type => :class do
         'mime',
         'negotiation',
         'setenvif',
-        'status',
       ].each do |modname|
         it { should contain_file("#{modname}.load").with_path(
           "/etc/httpd/mod.d/#{modname}.load"
