@@ -647,6 +647,10 @@ Specifies the location of the certificate revocation list.
 
 Specifies the SSL key.
 
+#####`sslproxyengine`
+
+Specifies whether to use `SSLProxyEngine` or not. Defaults to `false`.
+
 #####`vhost_name`
 
 This parameter is for use with name-based virtual hosting. Defaults to '*'.
