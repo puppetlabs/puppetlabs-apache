@@ -2,8 +2,12 @@ class apache::mod::passenger (
   $passenger_root          = $apache::params::passenger_root,
   $passenger_ruby          = $apache::params::passenger_ruby,
   $passenger_max_pool_size = undef,
+  $package                 = undef,
 ) {
-  apache::mod { 'passenger': }
+  apache::mod { 'passenger':
+    package => $package,
+  }
+
   # Template uses: $passenger_root, $passenger_ruby, $passenger_max_pool_size
   file { 'passenger.conf':
     ensure  => file,
