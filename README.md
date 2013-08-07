@@ -190,6 +190,10 @@ Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 
 
 Enables custom error documents. Defaults to 'false'.
 
+#####`httpd_dir`
+
+Changes the base location of the configuration directories used for the service. This is useful for specially repackaged HTTPD builds but may have unintended concequences when used in combination with the default distribution packages. Default is based on your OS.
+
 #####`confd_dir`
 
 Changes the location of the configuration directory your custom configuration files are placed in. Default is based on your OS.

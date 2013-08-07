@@ -28,6 +28,7 @@ class apache (
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
   $error_documents      = false,
+  $httpd_dir            = $apache::params::httpd_dir,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
   $vhost_enable_dir     = $apache::params::vhost_enable_dir,
@@ -54,7 +55,6 @@ class apache (
     validate_re($mpm_module, '(prefork|worker)')
   }
 
-  $httpd_dir  = $apache::params::httpd_dir
   $ports_file = $apache::params::ports_file
   $logroot    = $apache::params::logroot
 
