@@ -1,31 +1,17 @@
 require 'spec_helper_system'
 
 describe 'apache::mod::php class' do
-  let(:distro_commands) {
-    YAML.load(File.read(File.dirname(__FILE__) + '/../fixtures/system/distro_commands.yaml'))
-  }
-  let(:os) {
-    node.facts['osfamily']
-  }
-  let(:mod_dir) {
-    case node.facts['osfamily']
-    when 'Debian'
-      '/etc/apache2/mods-available'
-    when 'RedHat'
-      '/etc/httpd/conf.d'
-    end
-  }
-  let(:vhost_dir) {
-    case node.facts['osfamily']
-    when 'Debian'
-      '/etc/apache2/sites-enabled'
-    when 'RedHat'
-      '/etc/httpd/conf.d'
-    end
-  }
+  case node.facts['osfamily']
+  when 'Debian'
+    mod_dir = '/etc/apache2/mods-available'
+    service_name = 'apache2'
+  when 'RedHat'
+    mod_dir = '/etc/httpd/conf.d'
+    service_name = 'httpd'
+  end
 
   context "default php config" do
-    it 'should install php' do
+    it 'succeeds in puppeting php' do
       puppet_apply(%{
         class { 'apache':
           mpm_module => 'prefork',
@@ -41,19 +27,15 @@ describe 'apache::mod::php class' do
           content => "<?php phpinfo(); ?>\\n",
         }
       }) { |r| [0,2].should include r.exit_code}
-
-      if distro_commands.has_key?(os)
-        shell(distro_commands[os]["service_check"]["command"]) do |r|
-          r.exit_code.should == 0
-        end
-      end
     end
 
-    it 'should have a default config file' do
-      shell("/bin/cat #{mod_dir}/php5.conf") do |r|
-        r.stdout.should =~ /^DirectoryIndex index\.php$/
-        r.exit_code.should == 0
-      end
+    describe service(service_name) do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    describe file("#{mod_dir}/php5.conf") do
+      it { should contain "DirectoryIndex index.php" }
     end
 
     it 'should answer to php.example.com' do
