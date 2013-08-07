@@ -261,5 +261,16 @@ describe 'apache', :type => :class do
         it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Fake template for rspec.$} }
       end
     end
+
+    describe "default mods" do
+      context "without" do
+        let :params do
+          { :default_mods => false }
+        end
+
+        it { should contain_apache__mod('authz_host') }
+        it { should_not contain_apache__mod('env') }
+      end
+    end
   end
 end

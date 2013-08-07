@@ -1,20 +1,16 @@
 require 'spec_helper_system'
 
 describe 'apache::vhost define' do
-  let(:distro_commands) {
-    YAML.load(File.read(File.dirname(__FILE__) + '/../fixtures/system/distro_commands.yaml'))
-  }
-  let(:os) {
-    node.facts['osfamily']
-  }
-  let(:vhost_dir) {
-    case node.facts['osfamily']
-    when 'Debian'
-      '/etc/apache2/sites-enabled'
-    when 'RedHat'
-      '/etc/httpd/conf.d'
-    end
-  }
+  case node.facts['osfamily']
+  when 'RedHat'
+    vhost_dir = '/etc/httpd/conf.d'
+    package_name = 'httpd'
+    service_name = 'httpd'
+  when 'Debian'
+    vhost_dir = '/etc/apache2/sites-enabled'
+    package_name = 'apache2'
+    service_name = 'apache2'
+  end
 
   context "default vhost without ssl" do
     it 'should create a default vhost config' do
@@ -23,17 +19,12 @@ describe 'apache::vhost define' do
       }) { |r| [0,2].should include r.exit_code}
     end
 
-    it 'should have a default config file' do
-      shell("/bin/cat #{vhost_dir}/15-default.conf") do |r|
-        r.stdout.should =~ /^<VirtualHost \*:80>$/
-        r.exit_code.should == 0
-      end
+    describe file("#{vhost_dir}/15-default.conf") do
+      it { should contain "<VirtualHost *:80>" }
     end
 
-    it 'should not have a default ssl config file' do
-      shell("/bin/cat #{vhost_dir}/15-default-ssl.conf") do |r|
-        r.exit_code.should == 1
-      end
+    describe file("#{vhost_dir}/15-default-ssl.conf") do
+      it { should_not be_file }
     end
   end
 
@@ -46,19 +37,13 @@ describe 'apache::vhost define' do
       }) { |r| [0,2].should include r.exit_code}
     end
 
-    it 'should have a default config file' do
-      shell("/bin/cat #{vhost_dir}/15-default.conf") do |r|
-        r.stdout.should =~ /^<VirtualHost \*:80>$/
-        r.exit_code.should == 0
-      end
+    describe file("#{vhost_dir}/15-default.conf") do
+      it { should contain "<VirtualHost *:80>" }
     end
 
-    it 'should have a default ssl config file' do
-      shell("/bin/cat #{vhost_dir}/15-default-ssl.conf") do |r|
-        r.stdout.should =~ /^<VirtualHost \*:443>$/
-        r.stdout.should =~ /SSLEngine on/
-        r.exit_code.should == 0
-      end
+    describe file("#{vhost_dir}/15-default-ssl.conf") do
+      it { should contain "<VirtualHost *:443>" }
+      it { should contain "SSLEngine on" }
     end
   end
 
@@ -71,12 +56,11 @@ describe 'apache::vhost define' do
           docroot => '/var/www/first',
         }
       }) { |r| [0,2].should include r.exit_code}
+    end
 
-      shell("/bin/cat #{vhost_dir}/25-first.example.com.conf") do |r|
-        r.stdout.should =~ /^<VirtualHost \*:80>$/
-        r.stdout.should =~ /ServerName first\.example\.com$/
-        r.exit_code.should == 0
-      end
+    describe file("#{vhost_dir}/25-first.example.com.conf") do
+      it { should contain "<VirtualHost *:80>" }
+      it { should contain "ServerName first.example.com" }
     end
   end
 
@@ -103,12 +87,11 @@ describe 'apache::vhost define' do
           content => "Hello from second\\n",
         }
       }) { |r| [0,2].should include r.exit_code}
+    end
 
-      if distro_commands.has_key?(os)
-        shell(distro_commands[os]["service_check"]["command"]) do |r|
-          r.exit_code.should == 0
-        end
-      end
+    describe service(service_name) do
+      it { should be_enabled }
+      it { should be_running }
     end
 
     it 'should answer to first.example.com' do
@@ -125,6 +108,7 @@ describe 'apache::vhost define' do
       end
     end
   end
+
   context 'virtual_docroot hosting separate sites' do
     it 'should configure a vhost with VirtualDocumentRoot' do
       puppet_apply(%{
@@ -143,12 +127,11 @@ describe 'apache::vhost define' do
         file { '/var/www/virt/a/index.html': ensure  => file, content => "Hello from a.virt\\n", }
         file { '/var/www/virt/b/index.html': ensure  => file, content => "Hello from b.virt\\n", }
       }) { |r| [0,2].should include r.exit_code}
+    end
 
-      if distro_commands.has_key?(os)
-        shell(distro_commands[os]["service_check"]["command"]) do |r|
-          r.exit_code.should == 0
-        end
-      end
+    describe service(service_name) do
+      it { should be_enabled }
+      it { should be_running }
     end
 
     it 'should answer to a.virt.example.com' do
