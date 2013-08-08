@@ -108,7 +108,7 @@ To set up a virtual host with SSL and specific SSL certificates
     }
 ```
 
-To set up a virtual host with wildcard alias for subdomain mapped to same named directory 
+To set up a virtual host with wildcard alias for subdomain mapped to same named directory
 `http://examle.com.loc => /var/www/example.com`
 
 ```puppet
@@ -235,7 +235,7 @@ Setting this allows you to override the template used for the main apache config
 #####`keepalive`
 
 Setting this allows you to enable persistent connections.
- 
+
 
 ####Class: `apache::default_mods`
 
@@ -395,7 +395,7 @@ The directives will be embedded within the `Directory` directive block, missing 
 ######`addhandlers`
 
 Sets `AddHandler` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_mime.html#addhandler). Accepts a list of hashes of the form `{ handler => 'handler-name', extensions => ['extension']}`. Note that `extensions` is a list of extenstions being handled by the handler.
-An example: 
+An example:
 
 ```puppet
     apache::vhost { 'sample.example.net':
@@ -459,6 +459,76 @@ Sets the order of processing `Allow` and `Deny` statements as per [Apache core d
       directories => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
     }
 ```
+
+
+######`auth_type`
+
+Sets the value for `AuthType` as per the [Apache AuthType
+documentation](https://httpd.apache.org/docs/2.2/mod/core.html#authtype).
+
+######`auth_name`
+
+Sets the value for `AuthName` as per the [Apache AuthName
+documentation](https://httpd.apache.org/docs/2.2/mod/core.html#authname).
+
+######`auth_digest_algorithm`
+
+Sets the value for `AuthDigestAlgorithm` as per the [Apache
+AuthDigestAlgorithm
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestalgorithm)
+
+######`auth_digest_domain`
+
+Sets the value for `AuthDigestDomain` as per the [Apache AuthDigestDomain
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestdomain).
+
+######`auth_digest_nonce_lifetime`
+
+Sets the value for `AuthDigestNonceLifetime` as per the [Apache
+AuthDigestNonceLifetime
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestnoncelifetime)
+
+######`auth_digest_provider`
+
+Sets the value for `AuthDigestProvider` as per the [Apache AuthDigestProvider
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestprovider).
+
+######`auth_digest_qop`
+
+Sets the value for `AuthDigestQop` as per the [Apache AuthDigestQop
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestqop).
+
+######`auth_digest_shmem_size`
+
+Sets the value for `AuthAuthDigestShmemSize` as per the [Apache AuthDigestShmemSize
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_digest.html#authdigestshmemsize).
+
+######`auth_basic_authoritative`
+
+Sets the value for `AuthBasicAuthoritative` as per the [Apache
+AuthBasicAuthoritative
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_basic.html#authbasicauthoritative).
+
+######`auth_basic_fake`
+
+Sets the value for `AuthBasicFake` as per the [Apache AuthBasicFake
+documentation](https://httpd.apache.org/docs/trunk/mod/mod_auth_basic.html#authbasicfake).
+
+######`auth_basic_provider`
+
+Sets the value for `AuthBasicProvider` as per the [Apache AuthBasicProvider
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_basic.html#authbasicprovider).
+
+######`auth_user_file`
+
+Sets the value for `AuthUserFile` as per the [Apache AuthUserFile
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_authn_file.html#authuserfile).
+
+######`auth_require`
+
+Sets the value for `AuthName` as per the [Apache Require
+documentation](https://httpd.apache.org/docs/2.2/mod/core.html#require)
+
 
 ######`passenger_enabled`
 
@@ -802,7 +872,7 @@ Configure a vhost to redirect non-SSL connections to SSL
       port            => '80',
       docroot         => '/var/www/sixteenth',
       redirect_status => 'permanent'
-      redirect_dest   => 'https://sixteenth.example.com/' 
+      redirect_dest   => 'https://sixteenth.example.com/'
     }
     apache::vhost { 'sixteenth.example.com ssl':
       servername => 'sixteenth.example.com',
