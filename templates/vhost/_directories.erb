@@ -32,17 +32,7 @@
     <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
     PassengerEnabled <%= directory['passenger_enabled'] %>
     <%- end -%>
-    <%- if directory['auth_basic_file'] -%>
-    AuthType basic
-      <%- if directory['auth_basic_name'] -%>
-    AuthName <%= directory['auth_basic_name'] %>
-      <%- else -%>
-    AuthName "Restricted"
-      <%- end -%>
-    AuthBasicProvider file
-    AuthUserFile <%= directory['auth_basic_file'] %>
-    Require valid-user
-    <%- end -%>
+    <%= scope.function_template(['apache/vhost/_auth.erb']) -%>
   </Directory>
     <%- end -%>
   <%- end -%>
