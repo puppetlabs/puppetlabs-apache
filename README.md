@@ -545,6 +545,11 @@ Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the 
 
 **Note:** Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the `PassengerEnabled` directive with the `PassengerHighPerformance` directive.
 
+######`custom_fragment`
+
+Pass a string of custom configuration directives to be placed at the end of the
+directory configuration.
+
 #####`docroot`
 
 Provides the DocumentRoot directive, identifying the directory Apache serves files from.
