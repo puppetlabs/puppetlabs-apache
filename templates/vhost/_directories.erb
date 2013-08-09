@@ -71,6 +71,9 @@
     <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
     <%- end -%>
+    <%- if directory['custom_fragment'] -%>
+    <%= directory['custom_fragment'] %>
+    <%- end -%>
   </Directory>
     <%- end -%>
   <%- end -%>
