@@ -86,12 +86,14 @@ define apache::vhost(
     $access_log         = true,
     $access_log_file    = undef,
     $access_log_pipe    = undef,
+    $access_log_syslog  = undef,
     $access_log_format  = undef,
     $aliases            = undef,
     $directories        = undef,
     $error_log          = true,
     $error_log_file     = undef,
     $error_log_pipe     = undef,
+    $error_log_syslog   = undef,
     $scriptalias        = undef,
     $proxy_dest         = undef,
     $proxy_pass         = undef,
@@ -178,6 +180,8 @@ define apache::vhost(
     $access_log_destination = "${logroot}/${access_log_file}"
   } elsif $access_log_pipe {
     $access_log_destination = "\"${access_log_pipe}\""
+  } elsif $access_log_syslog {
+    $access_log_destination = "${access_log_syslog}"
   } else {
     if $ssl {
       $access_log_destination = "${logroot}/${servername_real}_access_ssl.log"
@@ -190,6 +194,8 @@ define apache::vhost(
     $error_log_destination = "${logroot}/${error_log_file}"
   } elsif $error_log_pipe {
     $error_log_destination = "\"${error_log_pipe}\""
+  } elsif $error_log_syslog {
+    $error_log_destination = "${error_log_syslog}"
   } else {
     if $ssl {
       $error_log_destination = "${logroot}/${servername_real}_error_ssl.log"
