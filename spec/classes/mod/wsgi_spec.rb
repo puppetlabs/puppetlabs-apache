@@ -25,5 +25,12 @@ describe 'apache::mod::wsgi', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_apache__mod('wsgi') }
     it { should contain_package("mod_wsgi") }
+
+    describe "with custom WSGISocketPrefix" do
+      let :params do
+        { :wsgi_socket_prefix => 'run/wsgi' }
+      end
+      it {should contain_file('wsgi.conf').with_content(/^  WSGISocketPrefix run\/wsgi$/)}
+    end
   end
 end
