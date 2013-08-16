@@ -40,6 +40,8 @@ class apache (
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
   $keepalive            = $apache::params::keepalive,
+  $logroot              = $apache::params::logroot,
+  $ports_file           = $apache::params::ports_file,
 ) inherits apache::params {
 
   package { 'httpd':
@@ -54,9 +56,6 @@ class apache (
   if $mpm_module {
     validate_re($mpm_module, '(prefork|worker)')
   }
-
-  $ports_file = $apache::params::ports_file
-  $logroot    = $apache::params::logroot
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
