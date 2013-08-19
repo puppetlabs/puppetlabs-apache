@@ -1,5 +1,4 @@
 class apache::mod::fastcgi {
-  Class['apache::mod::worker'] -> Class['apache::mod::fastcgi']
 
   # Debian specifies it's fastcgi lib path, but RedHat uses the default value
   # with no config file

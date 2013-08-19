@@ -1,6 +1,6 @@
 describe 'apache::mod::fastcgi', :type => :class do
   let :pre_condition do
-    'class { "apache": mpm_module => worker, }'
+    'class { "apache": }'
   end
   context "on a Debian OS" do
     let :facts do
