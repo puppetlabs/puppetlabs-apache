@@ -55,7 +55,7 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
   if $mpm_module {
-    validate_re($mpm_module, '(prefork|worker)')
+    validate_re($mpm_module, '(prefork|worker|itk)')
   }
 
   # declare the web server user and group
