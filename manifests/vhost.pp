@@ -117,7 +117,8 @@ define apache::vhost(
     $wsgi_daemon_process_options = undef,
     $wsgi_process_group          = undef,
     $wsgi_script_aliases         = undef,
-    $custom_fragment             = undef
+    $custom_fragment             = undef,
+    $itk                         = undef
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -142,6 +143,9 @@ define apache::vhost(
   }
   if $wsgi_daemon_process_options {
     validate_hash($wsgi_daemon_process_options)
+  }
+  if $itk {
+    validate_hash($itk)
   }
 
   if $access_log_file and $access_log_pipe {

@@ -17,6 +17,8 @@
 <% end -%>
 <%= scope.function_template(['apache/vhost/_aliases.erb']) -%>
 
+<%= scope.function_template(['apache/vhost/_itk.erb']) -%>
+
   ## Directories, there should at least be a declaration for <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 
