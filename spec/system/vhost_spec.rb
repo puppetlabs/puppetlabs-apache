@@ -64,6 +64,28 @@ describe 'apache::vhost define' do
     end
   end
 
+  context 'new proxy vhost on port 80' do
+    it 'should configure an apache proxy vhost' do
+      puppet_apply(%{
+        class { 'apache': }
+        apache::vhost { 'proxy.example.com':
+          port    => '80',
+          docroot => '/var/www/proxy',
+          proxy_pass => [
+            { 'path' => '/foo', 'url' => 'http://backend-foo/'},
+          ],
+        }
+      }) { |r| [0,2].should include r.exit_code}
+    end
+
+    describe file("#{vhost_dir}/25-proxy.example.com.conf") do
+      it { should contain '<VirtualHost \*:80>' }
+      it { should contain "ServerName proxy.example.com" }
+      it { should contain "ProxyPass" }
+      it { should_not contain "<Proxy \*>" }
+    end
+  end
+
   context 'new vhost on port 80' do
     it 'should configure two apache vhosts' do
       puppet_apply(%{
