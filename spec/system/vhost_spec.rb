@@ -20,7 +20,7 @@ describe 'apache::vhost define' do
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
-      it { should contain "<VirtualHost *:80>" }
+      it { should contain '<VirtualHost \*:80>' }
     end
 
     describe file("#{vhost_dir}/15-default-ssl.conf") do
@@ -38,11 +38,11 @@ describe 'apache::vhost define' do
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
-      it { should contain "<VirtualHost *:80>" }
+      it { should contain '<VirtualHost \*:80>' }
     end
 
     describe file("#{vhost_dir}/15-default-ssl.conf") do
-      it { should contain "<VirtualHost *:443>" }
+      it { should contain '<VirtualHost \*:443>' }
       it { should contain "SSLEngine on" }
     end
   end
@@ -59,7 +59,7 @@ describe 'apache::vhost define' do
     end
 
     describe file("#{vhost_dir}/25-first.example.com.conf") do
-      it { should contain "<VirtualHost *:80>" }
+      it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName first.example.com" }
     end
   end
