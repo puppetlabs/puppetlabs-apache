@@ -103,7 +103,6 @@ define apache::vhost(
     $rack_base_uris     = undef,
     $request_headers    = undef,
     $rewrite_rule       = undef,
-    $rewrite_base       = undef,
     $rewrite_cond       = undef,
     $setenv             = [],
     $setenvif           = [],
@@ -337,7 +336,6 @@ define apache::vhost(
   #   - $request_headers
   # rewrite fragment:
   #   - $rewrite_rule
-  #   - $rewrite_base
   #   - $rewrite_cond
   # scriptalias fragment:
   #   - $scriptalias
