@@ -40,6 +40,7 @@ class apache (
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
   $keepalive            = $apache::params::keepalive,
+  $keepalive_timeout    = $apache::params::keepalive_timeout,
 ) inherits apache::params {
 
   package { 'httpd':

@@ -9,7 +9,7 @@ PidFile <%= @pidfile %>
 Timeout 120
 KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests 100
-KeepAliveTimeout 15
+KeepAliveTimeout <%= @keepalive_timeout %>
 
 User <%= @user %>
 Group <%= @group %>
