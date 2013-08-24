@@ -1,5 +1,7 @@
 #apache
 
+[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-apache.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-apache)
+
 ####Table of Contents
 
 1. [Overview - What is the Apache module?](#overview)
@@ -52,7 +54,6 @@ The defaults are determined by your operating system (e.g. Debian systems have o
 ```puppet
     class { 'apache':
       default_mods => false,
-      …
     }
 ```
 
