@@ -1,0 +1,13 @@
+<% if @wsgi_daemon_process -%>
+  WSGIDaemonProcess <%= @wsgi_daemon_process %>
+<% end -%>
+<% if @wsgi_process_group -%>
+  WSGIProcessGroup <%= @wsgi_process_group %>
+<% end -%>
+<% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
+  <%- @wsgi_script_aliases.each do |a, p| -%>
+    <%- if a != '' and p != ''-%>
+  WSGIScriptAlias <%= a %> <%= p %>
+    <%- end -%>
+  <%- end -%>
+<% end -%>
