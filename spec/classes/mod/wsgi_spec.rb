@@ -32,5 +32,11 @@ describe 'apache::mod::wsgi', :type => :class do
       end
       it {should contain_file('wsgi.conf').with_content(/^  WSGISocketPrefix run\/wsgi$/)}
     end
+    describe "with custom WSGIPythonHome" do
+      let :params do
+        { :wsgi_python_home => '/path/to/virtenv' }
+      end
+      it {should contain_file('wsgi.conf').with_content(/^  WSGIPythonHome \/path\/to\/virtenv$/)}
+    end
   end
 end
