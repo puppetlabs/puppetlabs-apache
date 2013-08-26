@@ -10,20 +10,18 @@ describe 'apache', :type => :class do
       }
     end
     it { should include_class("apache::params") }
-    it { should contain_package("httpd") }
-    it { should contain_user("www-data") }
-    it { should contain_group("www-data") }
-    it { should contain_service("httpd").with(
-      'ensure'    => 'true',
-      'enable'    => 'true',
-      'subscribe' => 'Package[httpd]'
+    it { should contain_package("httpd").with(
+      'notify' => 'Class[Apache::Service]'
       )
     }
+    it { should contain_user("www-data") }
+    it { should contain_group("www-data") }
+    it { should contain_class("apache::service") }
     it { should contain_file("/etc/apache2/sites-enabled").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
-      'notify'  => 'Service[httpd]',
+      'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
       )
     }
@@ -31,7 +29,7 @@ describe 'apache', :type => :class do
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
-      'notify'  => 'Service[httpd]',
+      'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
       )
     }
@@ -39,7 +37,7 @@ describe 'apache', :type => :class do
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
-      'notify'  => 'Service[httpd]',
+      'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
       )
     }
@@ -47,7 +45,7 @@ describe 'apache', :type => :class do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
-      'notify'  => 'Service[httpd]'
+      'notify'  => 'Class[Apache::Service]'
       )
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
@@ -114,20 +112,18 @@ describe 'apache', :type => :class do
       }
     end
     it { should include_class("apache::params") }
-    it { should contain_package("httpd") }
-    it { should contain_user("apache") }
-    it { should contain_group("apache") }
-    it { should contain_service("httpd").with(
-      'ensure'    => 'true',
-      'enable'    => 'true',
-      'subscribe' => 'Package[httpd]'
+    it { should contain_package("httpd").with(
+      'notify' => 'Class[Apache::Service]'
       )
     }
+    it { should contain_user("apache") }
+    it { should contain_group("apache") }
+    it { should contain_class("apache::service") }
     it { should contain_file("/etc/httpd/conf.d").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
-      'notify'  => 'Service[httpd]',
+      'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
       )
     }
@@ -135,7 +131,7 @@ describe 'apache', :type => :class do
       'owner'   => 'root',
       'group'   => 'root',
       'mode'    => '0644',
-      'notify'  => 'Service[httpd]'
+      'notify'  => 'Class[Apache::Service]'
       )
     }
     describe "Alternate confd/mod/vhosts directory" do
@@ -152,7 +148,7 @@ describe 'apache', :type => :class do
           'ensure'  => 'directory',
           'recurse' => 'true',
           'purge'   => 'true',
-          'notify'  => 'Service[httpd]',
+          'notify'  => 'Class[Apache::Service]',
           'require' => 'Package[httpd]'
         ) }
       end
@@ -210,7 +206,7 @@ describe 'apache', :type => :class do
         'ensure'  => 'directory',
         'recurse' => 'true',
         'purge'   => 'true',
-        'notify'  => 'Service[httpd]',
+        'notify'  => 'Class[Apache::Service]',
         'require' => 'Package[httpd]'
       ) }
     end
