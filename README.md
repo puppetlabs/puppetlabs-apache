@@ -292,7 +292,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `status`
 * `userdir`*
 * `worker`*
-* `wsgi`
+* `wsgi` (see [apache::mod::wsgi](#class-apachemodwsgi) below)
 * `xsendfile`
 
 Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention.
@@ -309,6 +309,14 @@ Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
 
 To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
 
+####Class: `apache::mod::wsgi`
+
+```puppet
+    class { 'apache::mod::wsgi':
+      wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+      wsgi_python_home   => '/path/to/virtenv',
+    }
+```
 ####Defined Type: `apache::vhost`
 
 The Apache module allows a lot of flexibility in the set up and configuration of virtual hosts. This flexibility is due, in part, to `vhost`'s setup as a defined resource type, which allows it to be evaluated multiple times with different parameters.
