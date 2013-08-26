@@ -77,7 +77,7 @@ define apache::vhost(
     $ssl_certs_dir      = $apache::params::ssl_certs_dir,
     $priority           = undef,
     $default_vhost      = false,
-    $servername         = undef,
+    $servername         = $name,
     $serveraliases      = [],
     $options            = ['Indexes','FollowSymLinks','MultiViews'],
     $override           = ['None'],
@@ -166,13 +166,6 @@ define apache::vhost(
   # Is apache::mod::passenger enabled (or apache::mod['passenger'])
   $passenger_enabled = defined(Apache::Mod['passenger'])
 
-  # Open listening ports if they are not already
-  if $servername {
-    $servername_real = $servername
-  } else {
-    $servername_real = $name
-  }
-
   # Define log file names
   if $access_log_file {
     $access_log_destination = "${logroot}/${access_log_file}"
@@ -180,9 +173,9 @@ define apache::vhost(
     $access_log_destination = "\"${access_log_pipe}\""
   } else {
     if $ssl {
-      $access_log_destination = "${logroot}/${servername_real}_access_ssl.log"
+      $access_log_destination = "${logroot}/${servername}_access_ssl.log"
     } else {
-      $access_log_destination = "${logroot}/${servername_real}_access.log"
+      $access_log_destination = "${logroot}/${servername}_access.log"
     }
   }
 
@@ -192,9 +185,9 @@ define apache::vhost(
     $error_log_destination = "\"${error_log_pipe}\""
   } else {
     if $ssl {
-      $error_log_destination = "${logroot}/${servername_real}_error_ssl.log"
+      $error_log_destination = "${logroot}/${servername}_error_ssl.log"
     } else {
-      $error_log_destination = "${logroot}/${servername_real}_error.log"
+      $error_log_destination = "${logroot}/${servername}_error.log"
     }
   }
 
@@ -303,7 +296,7 @@ define apache::vhost(
 
   # Template uses:
   # - $nvh_addr_port
-  # - $servername_real
+  # - $servername
   # - $serveradmin
   # - $docroot
   # - $virtual_docroot
