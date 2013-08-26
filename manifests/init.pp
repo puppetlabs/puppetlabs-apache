@@ -45,6 +45,7 @@ class apache (
   package { 'httpd':
     ensure => installed,
     name   => $apache::params::apache_name,
+    notify => Class['Apache::Service'],
   }
 
   validate_bool($default_mods)
@@ -69,14 +70,10 @@ class apache (
     ensure  => present,
     gid     => $group,
     require => Package['httpd'],
-    before  => Service['httpd'],
   }
 
-  service { 'httpd':
-    ensure    => $service_enable,
-    name      => $apache::params::apache_name,
-    enable    => $service_enable,
-    subscribe => Package['httpd'],
+  class { 'apache::service':
+    service_enable => $service_enable,
   }
 
   # Deprecated backwards-compatibility
@@ -99,7 +96,7 @@ class apache (
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
-    notify  => Service['httpd'],
+    notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
 
@@ -112,7 +109,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
   }
@@ -127,7 +124,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
   } else {
@@ -143,7 +140,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
   }
@@ -158,7 +155,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
   } else {
@@ -169,7 +166,7 @@ class apache (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['httpd'],
+    notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
   concat::fragment { 'Apache ports header':
@@ -216,7 +213,7 @@ class apache (
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
-      notify  => Service['httpd'],
+      notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
     class { 'apache::default_mods':
