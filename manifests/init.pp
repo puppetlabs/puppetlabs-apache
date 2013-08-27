@@ -64,7 +64,7 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
   if $mpm_module {
-    validate_re($mpm_module, '(prefork|worker|itk)')
+    validate_re($mpm_module, '(prefork|worker|itk|event)')
   }
   validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
 
