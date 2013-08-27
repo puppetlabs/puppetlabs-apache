@@ -3,7 +3,7 @@
   ## Rewrite rules
   RewriteEngine On
 <% if @rewrite_base -%>
-  RewriteBase <%= @rewrite_base -%>
+  RewriteBase <%= @rewrite_base %>
 <% end -%>
 <% if @rewrite_cond -%>
 <% Array(@rewrite_cond).each do |cond| -%>
