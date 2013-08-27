@@ -301,6 +301,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `setenvif`
 * `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
 * `status`
+* `suphp`
 * `userdir`*
 * `worker`*
 * `wsgi` (see [apache::mod::wsgi](#class-apachemodwsgi) below)

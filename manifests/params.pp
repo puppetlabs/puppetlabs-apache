@@ -70,6 +70,7 @@ class apache::params {
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
       'dav_svn'    => 'mod_dav_svn',
+      'suphp'      => 'mod_suphp',
       'xsendfile'  => 'mod_xsendfile',
     }
     $mod_libs             = {
@@ -109,6 +110,7 @@ class apache::params {
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
       'dav_svn'    => 'libapache2-svn',
+      'suphp'      => 'libapache2-mod-suphp',
       'xsendfile'  => 'libapache2-mod-xsendfile',
     }
     $mod_libs         = {
