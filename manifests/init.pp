@@ -48,7 +48,6 @@ class apache (
     notify => Class['Apache::Service'],
   }
 
-  validate_bool($default_mods)
   validate_bool($default_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
@@ -216,8 +215,18 @@ class apache (
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
-    class { 'apache::default_mods':
-      all => $default_mods
+
+    # preserve back-wards compatibility to the times when default_mods was
+    # only a boolean value. Now it can be an array (too)
+    if is_array($default_mods) {
+      class { 'apache::default_mods':
+        all  => false,
+        mods => $default_mods,
+      }
+    } else {
+      class { 'apache::default_mods':
+        all => $default_mods,
+      }
     }
     if $mpm_module {
       class { "apache::mod::${mpm_module}": }
