@@ -802,6 +802,19 @@ Specifies whether to use `SSLProxyEngine` or not. Defaults to `false`.
 
 This parameter is for use with name-based virtual hosting. Defaults to '*'.
 
+#####`wsgiscriptroot`
+
+Defines the root url of the corresponding `wsgiscriptalias`. See
+[WSGIScriptAlias](http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIScriptAlias.html)
+for details.
+
+#####`wsgiscriptalias`
+
+Defines the full-path to the WSGI script that is responsible for
+hosting the site hosted at `wsgiscriptroot`. See
+[WSGIScriptAlias](http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIScriptAlias.html)
+for details.
+
 ###Virtual Host Examples
 
 The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the [Tests section](https://github.com/puppetlabs/puppetlabs-apache/tree/master/tests) for even more examples.
