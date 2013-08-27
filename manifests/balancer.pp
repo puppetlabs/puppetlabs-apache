@@ -43,6 +43,7 @@ define apache::balancer (
   $collect_exported = true,
 ) {
   include concat::setup
+  include apache::mod::proxy_balancer
 
   $target = "${::apache::params::confd_dir}/balancer_${name}.conf"
 
