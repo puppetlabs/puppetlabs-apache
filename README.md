@@ -121,6 +121,17 @@ To set up a virtual host with wildcard alias for subdomain mapped to same named 
       serveraliases    => ['*.loc',],
     }
 ```
+To set up a virtual host with WSGI
+
+```puppet
+    apache::vhost { 'wsgi.example.com':
+      port                => '80',
+      docroot             => '/var/www/pythonapp',
+      wsgi_daemon_process => 'wsgi',
+      wsgi_process_group  => 'wsgi',
+      wsgi_script_aliases => { '/' => '/var/www/demo.wsgi' },
+    }
+```
 
 To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples).
 

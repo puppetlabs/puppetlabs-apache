@@ -109,6 +109,9 @@ define apache::vhost(
     $setenvif           = [],
     $block              = [],
     $ensure             = 'present',
+    $wsgi_daemon_process= undef,
+    $wsgi_process_group = undef,
+    $wsgi_script_aliases= undef,
     $custom_fragment    = undef
   ) {
   # The base class must be included first because it is used by parameter defaults
@@ -126,6 +129,9 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($sslproxyengine)
+  if $wsgi_script_aliases {
+    validate_hash($wsgi_script_aliases)
+  }
 
   if $access_log_file and $access_log_pipe {
     fail("Apache::Vhost[${name}]: 'access_log_file' and 'access_log_pipe' cannot be defined at the same time")
@@ -349,6 +355,10 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  # wsgi fragment:
+  #   - $wsgi_daemon_process
+  #   - $wsgi_process_group
+  #   - $wsgi_script_aliases
   file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",

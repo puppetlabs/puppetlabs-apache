@@ -274,6 +274,26 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept a wsgi script alias',
+          :attr  => 'wsgi_script_aliases',
+          :value => { '/' => '/var/www/myapp.wsgi'},
+          :match => '  WSGIScriptAlias / /var/www/myapp.wsgi',
+        },
+        {
+          :title => 'should accept multiple wsgi aliases',
+          :attr  => 'wsgi_script_aliases',
+          :value => {
+            '/wiki' => '/usr/local/wsgi/scripts/mywiki.wsgi',
+            '/blog' => '/usr/local/wsgi/scripts/myblog.wsgi',
+            '/'     => '/usr/local/wsgi/scripts/myapp.wsgi',
+          },
+          :match => [
+            '  WSGIScriptAlias /wiki /usr/local/wsgi/scripts/mywiki.wsgi',
+            '  WSGIScriptAlias /blog /usr/local/wsgi/scripts/myblog.wsgi',
+            '  WSGIScriptAlias / /usr/local/wsgi/scripts/myapp.wsgi'
+          ],
+        },
+        {
           :title    => 'should accept a directory',
           :attr     => 'directories',
           :value    => [ { 'path' => '/opt/app' }],
