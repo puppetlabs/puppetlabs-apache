@@ -274,6 +274,24 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept a suPHP_AddHandler',
+          :attr  => 'suphp_addhandler',
+          :value => 'x-httpd-php',
+          :match => '  suPHP_AddHandler x-httpd-php',
+        },
+        {
+          :title => 'should accept a suPHP_Engine',
+          :attr  => 'suphp_engine',
+          :value => 'on',
+          :match => '  suPHP_Engine on',
+        },
+        {
+          :title => 'should accept a suPHP_ConfigPath',
+          :attr  => 'suphp_configpath',
+          :value => '/etc/php5/apache2',
+          :match => '  suPHP_ConfigPath /etc/php5/apache2',
+        },
+        {
           :title => 'should accept a wsgi script alias',
           :attr  => 'wsgi_script_aliases',
           :value => { '/' => '/var/www/myapp.wsgi'},

@@ -96,6 +96,9 @@ define apache::vhost(
     $proxy_dest         = undef,
     $proxy_pass         = undef,
     $sslproxyengine     = false,
+    $suphp_addhandler   = undef,
+    $suphp_engine       = undef,
+    $suphp_configpath   = undef,
     $no_proxy_uris      = [],
     $redirect_source    = '/',
     $redirect_dest      = undef,
@@ -353,6 +356,10 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  # suphp fragment:
+  #   - $suphp_addhandler
+  #   - $suphp_engine
+  #   - $suphp_configpath
   # wsgi fragment:
   #   - $wsgi_daemon_process
   #   - $wsgi_process_group
