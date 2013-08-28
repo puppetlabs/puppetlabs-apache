@@ -202,6 +202,16 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /ProxyPass .+!$/,
         },
         {
+          :title    => 'should accept proxy_pass hash',
+          :attr     => 'proxy_pass',
+          :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
+          :match    => [
+            '  ProxyPass        /path-a http://fake.com/a/',
+            '  ProxyPassReverse /path-a http://fake.com/a/',
+          ],
+          :notmatch => /ProxyPass .+!$/,
+        },
+        {
           :title    => 'should accept proxy_pass array of hash',
           :attr     => 'proxy_pass',
           :value    => [
@@ -254,9 +264,15 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
-          :title => 'should accept an alias',
+          :title => 'should accept an array of alias hashes',
           :attr  => 'aliases',
           :value => [ { 'alias' => '/', 'path' => '/var/www'} ],
+          :match => '  Alias / /var/www',
+        },
+        {
+          :title => 'should accept an alias hash',
+          :attr  => 'aliases',
+          :value => { 'alias' => '/', 'path' => '/var/www'},
           :match => '  Alias / /var/www',
         },
         {
@@ -296,7 +312,7 @@ describe 'apache::vhost', :type => :define do
         {
           :title    => 'should accept a directory',
           :attr     => 'directories',
-          :value    => [ { 'path' => '/opt/app' }],
+          :value    => { 'path' => '/opt/app' },
           :notmatch => '  <Directory /rspec/docroot>',
           :match    => [
             '  <Directory /opt/app>',
@@ -307,19 +323,17 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
-          :title    => 'should accept directory directives',
+          :title    => 'should accept directory directives hash',
           :attr     => 'directories',
-          :value    => [
-            {
-              'path'              => '/opt/app',
-              'allow'             => 'from rspec.org',
-              'allow_override'    => 'Lol',
-              'deny'              => 'from google.com',
-              'options'           => '-MultiViews',
-              'order'             => 'deny,yned',
-              'passenger_enabled' => 'onf',
-            },
-          ],
+          :value    => {
+            'path'              => '/opt/app',
+            'allow'             => 'from rspec.org',
+            'allow_override'    => 'Lol',
+            'deny'              => 'from google.com',
+            'options'           => '-MultiViews',
+            'order'             => 'deny,yned',
+            'passenger_enabled' => 'onf',
+          },
           :match    => [
             '  <Directory /opt/app>',
             '    Allow from rspec.org',
@@ -332,11 +346,11 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
-          :title    => 'should accept directory directives with arrays',
+          :title    => 'should accept directory directives with arrays and hashes',
           :attr     => 'directories',
           :value    => [
             {
-              'path'              => '/opt/app',
+              'path'              => '/opt/app1',
               'allow'             => 'from rspec.org',
               'allow_override'    => ['AuthConfig','Indexes'],
               'deny'              => 'from google.com',
@@ -344,15 +358,28 @@ describe 'apache::vhost', :type => :define do
               'order'             => ['deny','yned'],
               'passenger_enabled' => 'onf',
             },
+            {
+              'path'        => '/opt/app2',
+              'addhandlers' => {
+                'handler'    => 'cgi-script',
+                'extensions' => '.cgi',
+              },
+            },
           ],
           :match    => [
-            '  <Directory /opt/app>',
+            '  <Directory /opt/app1>',
             '    Allow from rspec.org',
             '    AllowOverride AuthConfig Indexes',
             '    Deny from google.com',
             '    Options -MultiViews +MultiViews',
             '    Order deny,yned',
             '    PassengerEnabled onf',
+            '  </Directory>',
+            '  <Directory /opt/app2>',
+            '    AllowOverride None',
+            '    Order allow,deny',
+            '    Allow from all',
+            '    AddHandler cgi-script .cgi',
             '  </Directory>',
           ],
         },
@@ -385,7 +412,7 @@ describe 'apache::vhost', :type => :define do
           it { should contain_file("25-#{title}.conf").with_mode('0644') }
           it param[:title] do
             lines = subject.resource('file', "25-#{title}.conf").send(:parameters)[:content].split("\n")
-            (Array(param[:match]).collect { |x| lines.grep x }.flatten.length).should == Array(param[:match]).length
+            (Array(param[:match]).collect { |x| (lines.grep x).first }.length).should == Array(param[:match]).length
             (Array(param[:notmatch]).collect { |x| lines.grep x }.flatten).should be_empty
           end
         end
