@@ -248,6 +248,13 @@ Setting this allows you to override the template used for the main apache config
 
 Setting this allows you to enable persistent connections.
 
+#####`logroot`
+
+Changes the location of the directory Apache log files are placed in. Defaut is based on your OS.
+
+#####`ports_file`
+
+Changes the name of the file containing Apache ports configuration. Default is `${conf_dir}/ports.conf`.
 
 ####Class: `apache::default_mods`
 
