@@ -40,6 +40,7 @@ class apache (
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
   $keepalive            = $apache::params::keepalive,
+  $keepalive_timeout    = $apache::params::keepalive_timeout,
   $logroot              = $apache::params::logroot,
   $ports_file           = $apache::params::ports_file,
 ) inherits apache::params {
@@ -208,6 +209,8 @@ class apache (
     # - $vhost_dir
     # - $error_documents
     # - $error_documents_path
+    # - $keepalive
+    # - $keepalive_timeout
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
