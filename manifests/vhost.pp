@@ -64,8 +64,6 @@ define apache::vhost(
     $ip                 = undef,
     $ip_based           = false,
     $add_listen         = true,
-    $docroot_owner      = 'root',
-    $docroot_group      = 'root',
     $serveradmin        = false,
     $ssl                = false,
     $ssl_cert           = $apache::default_ssl_cert,
@@ -143,18 +141,8 @@ define apache::vhost(
     include apache::mod::vhost_alias
   }
 
-  # This ensures that the docroot exists
+  # This ensures that the logroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
-    file { $docroot:
-      ensure  => directory,
-      owner   => $docroot_owner,
-      group   => $docroot_group,
-      require => Package['httpd'],
-    }
-  }
-
-  # Same as above, but for logroot
   if ! defined(File[$logroot]) {
     file { $logroot:
       ensure  => directory,
@@ -365,7 +353,6 @@ define apache::vhost(
     mode    => '0644',
     require => [
       Package['httpd'],
-      File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],
