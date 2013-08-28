@@ -214,6 +214,8 @@ class apache (
     # - $vhost_dir
     # - $error_documents
     # - $error_documents_path
+    # - $keepalive
+    # - $keepalive_timeout
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
