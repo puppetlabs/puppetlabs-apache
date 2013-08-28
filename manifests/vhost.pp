@@ -82,7 +82,7 @@ define apache::vhost(
     $options            = ['Indexes','FollowSymLinks','MultiViews'],
     $override           = ['None'],
     $vhost_name         = '*',
-    $logroot            = "/var/log/${apache::params::apache_name}",
+    $logroot            = $apache::logroot,
     $access_log         = true,
     $access_log_file    = undef,
     $access_log_pipe    = undef,
