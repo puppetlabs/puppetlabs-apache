@@ -248,6 +248,9 @@ Setting this allows you to override the template used for the main apache config
 
 Setting this allows you to enable persistent connections.
 
+#####`keepalive_timeout`
+
+Amount of time the server will wait for subsequent requests on a persistent connection. Defaults to '15'.
 
 ####Class: `apache::default_mods`
 
