@@ -156,6 +156,18 @@ describe 'apache::vhost', :type => :define do
           :match => /ErrorLog "| \/bin\/fake\/logging" combined$/,
         },
         {
+          :title => 'should accept syslog destination for access log',
+          :attr  => 'access_log_syslog',
+          :value => 'syslog:local1',
+          :match => /CustomLog syslog:local1 combined$/,
+        },
+        {
+          :title => 'should accept syslog destination for error log',
+          :attr  => 'error_log_syslog',
+          :value => 'syslog',
+          :match => /ErrorLog syslog$/,
+        },
+        {
           :title => 'should accept custom format for access logs',
           :attr  => 'access_log_format',
           :value => '%h %{X-Forwarded-For}i %l %u %t \"%r\" %s %b  \"%{Referer}i\" \"%{User-agent}i\" \"Host: %{Host}i\" %T %D',

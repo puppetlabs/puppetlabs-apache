@@ -338,6 +338,10 @@ Points to the `*_access.log` file. Defaults to 'undef'.
 
 Specifies a pipe to send access log messages to. Defaults to 'undef'.
 
+#####`access_log_syslog`
+
+Sends all access log messages to syslog. Defaults to 'undef'.
+
 #####`access_log_format`
 
 Specifies either a LogFormat nickname or custom format string for access log. Defaults to 'undef'.
@@ -573,6 +577,10 @@ Points to the `*_error.log` file. Defaults to 'undef'.
 #####`error_log_pipe`
 
 Specifies a pipe to send error log messages to. Defaults to 'undef'.
+
+#####`error_log_syslog`
+
+Sends all error log messages to syslog. Defaults to 'undef'.
 
 #####`ensure`
 
