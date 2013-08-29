@@ -297,6 +297,7 @@ define apache::vhost(
     $_directories = $directories
   } else {
     $_directories = [ {
+      provider       => 'directory',
       path           => $docroot,
       options        => $options,
       allow_override => $override,
