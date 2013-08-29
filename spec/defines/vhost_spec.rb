@@ -339,6 +339,7 @@ describe 'apache::vhost', :type => :define do
           :attr     => 'directories',
           :value    => {
             'path'              => '/opt/app',
+            'headers'           => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
             'allow'             => 'from rspec.org',
             'allow_override'    => 'Lol',
             'deny'              => 'from google.com',
@@ -348,6 +349,7 @@ describe 'apache::vhost', :type => :define do
           },
           :match    => [
             '  <Directory /opt/app>',
+            '    Header Set X-Robots-Tag "noindex, noarchive, nosnippet"',
             '    Allow from rspec.org',
             '    AllowOverride Lol',
             '    Deny from google.com',

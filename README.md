@@ -474,6 +474,20 @@ Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apa
     }
 ```
 
+######`headers`
+
+Adds lines for `Header` directives as per the [Apache Header documentation](http://httpd.apache.org/docs/2.2/mod/mod_headers.html#header). An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => {
+        path    => '/path/to/directory',
+        headers => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+      },
+    }
+```
+
 ######`options`
 
 Lists the options for the given `<Directory>` block
