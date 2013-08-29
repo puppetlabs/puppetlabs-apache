@@ -1,4 +1,6 @@
-<% if @wsgi_daemon_process -%>
+<% if @wsgi_daemon_process and @wsgi_daemon_process_options -%>
+  WSGIDaemonProcess <%= @wsgi_daemon_process %> <%= @wsgi_daemon_process_options.collect { |k,v| "#{k}=#{v}"}.join(' ') %>
+<% elsif @wsgi_daemon_process and !@wsgi_daemon_process_options -%>
   WSGIDaemonProcess <%= @wsgi_daemon_process %>
 <% end -%>
 <% if @wsgi_process_group -%>
