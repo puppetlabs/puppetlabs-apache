@@ -96,9 +96,9 @@ define apache::vhost(
     $proxy_dest         = undef,
     $proxy_pass         = undef,
     $sslproxyengine     = false,
-    $suphp_addhandler   = undef,
-    $suphp_engine       = undef,
-    $suphp_configpath   = undef,
+    $suphp_addhandler   = $apache::params::suphp_addhandler,
+    $suphp_engine       = $apache::params::suphp_engine,
+    $suphp_configpath   = $apache::params::suphp_configpath,
     $no_proxy_uris      = [],
     $redirect_source    = '/',
     $redirect_dest      = undef,
@@ -125,6 +125,9 @@ define apache::vhost(
   validate_re($ensure, '^(present|absent)$',
   "${ensure} is not supported for ensure.
   Allowed values are 'present' and 'absent'.")
+  validate_re($suphp_engine, '^(on|off)$',
+  "${suphp_engine} is not supported for suphp_engine.
+  Allowed values are 'on' and 'off'.")
   validate_bool($ip_based)
   validate_bool($access_log)
   validate_bool($error_log)
