@@ -3,6 +3,11 @@
     <%- if directory['path'] and directory['path'] != ''-%>
 
   <Directory <%= directory['path'] %>>
+    <%- if directory['headers'] -%>
+      <%- Array(directory['headers']).each do |header| -%>
+    Header <%= header %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
