@@ -464,6 +464,18 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when wsgi_daemon_process and wsgi_daemon_process_options are specified' do
+        let :params do default_params.merge({
+          :wsgi_daemon_process         => 'example.org',
+          :wsgi_daemon_process_options => { 'processes' => '2', 'threads' => '15' },
+        }) end
+        it 'should set wsgi_daemon_process_options' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  WSGIDaemonProcess example.org processes=2 threads=15$/
+          )
+        end
+      end
+
       describe 'when rewrite_rule and rewrite_cond are specified' do
         let :params do default_params.merge({
           :rewrite_cond => '%{HTTPS} off',
