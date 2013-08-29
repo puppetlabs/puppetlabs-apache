@@ -121,6 +121,19 @@ To set up a virtual host with wildcard alias for subdomain mapped to same named 
       serveraliases    => ['*.loc',],
     }
 ```
+
+To set up a virtual host with suPHP
+
+```puppet
+    apache::vhost { 'suphp.example.com':
+      port                => '80',
+      docroot             => '/home/appuser/myphpapp',
+      suphp_addhandler    => 'x-httpd-php',
+      suphp_engine        => 'on',
+      suphp_configpath    => '/etc/php5/apache2',
+    }
+```
+
 To set up a virtual host with WSGI
 
 ```puppet
@@ -312,6 +325,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `setenvif`
 * `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
 * `status`
+* `suphp`
 * `userdir`*
 * `worker`*
 * `wsgi` (see [apache::mod::wsgi](#class-apachemodwsgi) below)
