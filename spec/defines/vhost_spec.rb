@@ -302,6 +302,12 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept a suPHP_Engine',
+          :attr  => 'suphp_engine',
+          :value => 'on',
+          :match => '  suPHP_Engine on',
+        },
+        {
           :title => 'should accept a wsgi script alias',
           :attr  => 'wsgi_script_aliases',
           :value => { '/' => '/var/www/myapp.wsgi'},
@@ -474,6 +480,30 @@ describe 'apache::vhost', :type => :define do
         it 'should set RewriteCond' do
           should contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTPS\} off$/
+          )
+        end
+      end
+
+      describe 'when suphp_engine is on and suphp_configpath is specified' do
+        let :params do default_params.merge({
+          :suphp_engine     => 'on',
+          :suphp_configpath => '/etc/php5/apache2',
+        }) end
+        it 'should set suphp_configpath' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  suPHP_ConfigPath \/etc\/php5\/apache2$/
+          )
+        end
+      end
+
+      describe 'when suphp_engine is on and suphp_addhandler is specified' do
+        let :params do default_params.merge({
+          :suphp_engine     => 'on',
+          :suphp_addhandler => 'x-httpd-php',
+        }) end
+        it 'should set suphp_addhandler' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  suPHP_AddHandler x-httpd-php/
           )
         end
       end

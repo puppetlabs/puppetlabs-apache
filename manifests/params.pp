@@ -55,6 +55,9 @@ class apache::params {
     }
     $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
     $passenger_ruby       = '/usr/bin/ruby'
+    $suphp_addhandler     = 'php5-script'
+    $suphp_engine         = 'off'
+    $suphp_configpath     = undef
     $mod_packages         = {
       'auth_kerb'  => 'mod_auth_kerb',
       'fcgid'      => 'mod_fcgid',
@@ -70,6 +73,7 @@ class apache::params {
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
       'dav_svn'    => 'mod_dav_svn',
+      'suphp'      => 'mod_suphp',
       'xsendfile'  => 'mod_xsendfile',
     }
     $mod_libs             = {
@@ -100,6 +104,9 @@ class apache::params {
     $ssl_certs_dir    = '/etc/ssl/certs'
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler  = 'x-httpd-php'
+    $suphp_engine      = 'off'
+    $suphp_configpath  = '/etc/php5/apache2'
     $mod_packages     = {
       'auth_kerb'  => 'libapache2-mod-auth-kerb',
       'fcgid'      => 'libapache2-mod-fcgid',
@@ -110,6 +117,7 @@ class apache::params {
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
       'dav_svn'    => 'libapache2-svn',
+      'suphp'      => 'libapache2-mod-suphp',
       'xsendfile'  => 'libapache2-mod-xsendfile',
     }
     $mod_libs         = {
