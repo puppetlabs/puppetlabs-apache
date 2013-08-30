@@ -10,8 +10,8 @@ The following declarations are supported and can be passed to `apache::mod::pass
 
 ```
 class {'apache::mod::passenger':
-  passengerhighperformance  => 'on',
-  railsautodetect           => 'off',
+  passenger_high_performance  => 'on',
+  rails_autodetect            => 'off',
 }
 ```
 
@@ -19,43 +19,43 @@ The general form is using the all lower case version of the declaration.
 
 If you pass a default value to `apache::mod::passenger` it will be ignored and not passed through to the configuration file.
 
-## PassengerHighPerformance
+## passenger_high_performance
 
 Default is `off`, when turned `on` Passenger runs in a higher performance mode that can be less compatible with other Apache modules.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerHighPerformance
 
-## PassengerMaxPoolSize
+## passenger_max_pool_size
 
 Set's the maximum number of Passenger application processes that may simultaneously run. The default value is 6.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_passengermaxpoolsize_lt_integer_gt
 
-## PassengerPoolIdleTime
+## passenger_pool_idle_time
 
 The maximum number of seconds a Passenger Application process will be allowed to remain idle before being shut down. The default value is 300.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerPoolIdleTime
 
-## PassengerMaxRequests
+## passenger_max_requests
 
 The maximum number of request a Passenger application will process before being restarted. The default value is 0, which indicates that a process will only shut down if the Pool Idle Time (see above) expires.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerMaxRequests
 
-## PassengerStatThrottleRate
+## passenger_stat_throttle_rate
 
 Sets how often Passenger performs file system checks, at most once every _x_ seconds. Default is 0, which means the checks are performed with every request.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_passengerstatthrottlerate_lt_integer_gt
 
-## RackAutoDetect
+## rack_auto_detect
 
 Should Passenger automatically detect if the document root of a virtual host is a Rack application. The default is `on`
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_rackautodetect_lt_on_off_gt
 
-## RailsAutoDetect
+## rails_auto_detect
 
 Should Passenger automatically detect if the document root of a virtual host is a Rails application. The default is on.
 
