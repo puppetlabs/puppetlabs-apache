@@ -35,8 +35,11 @@ class apache::params {
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
     $group                = 'apache'
+    $root_group           = 'root'
     $apache_name          = 'httpd'
+    $service_name         = 'httpd'
     $httpd_dir            = '/etc/httpd'
+    $server_root          = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
     $mod_dir              = "${httpd_dir}/conf.d"
@@ -82,11 +85,16 @@ class apache::params {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    # $mime_support_package = '???' # XXX: do we need any package for mime?
+    $mime_types_config    = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
+    $root_group       = 'root'
     $apache_name      = 'apache2'
+    $service_name     = 'apache2'
     $httpd_dir        = '/etc/apache2'
+    $server_root      = '/etc/apache2'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
     $mod_dir          = "${httpd_dir}/mods-available"
@@ -126,6 +134,105 @@ class apache::params {
     $conf_template     = 'apache/httpd.conf.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
+    # $mime_support_package = 'mime-support' # XXX: consider uncommenting this
+    $mime_types_config = '/etc/mime.types'
+  } elsif $::osfamily == 'Archlinux' {
+    $user             = 'http'
+    $group            = 'http'
+    $root_group       = 'root'
+    $apache_name      = 'apache'
+    $service_name     = 'httpd'
+    $httpd_dir        = '/etc/httpd'
+    $server_root      = '/etc/httpd'
+    $conf_dir         = '/etc/httpd/conf'
+    $confd_dir        = '/etc/httpd/conf/extra'
+    $mod_dir          = '/etc/httpd/modules'
+    $vhost_dir        = '/etc/httpd/conf/extra'
+    $conf_file        = 'httpd.conf'
+    $ports_file       = '/etc/httpd/ports.conf'
+    $logroot          = '/var/log/httpd'
+    $lib_path         = '/usr/lib/httpd/modules'
+    $mpm_module       = 'worker'
+    $dev_packages     = undef
+    $default_ssl_cert = '/etc/httpd/conf/server.crt'
+    $default_ssl_key  = '/etc/httpd/conf/server.key'
+    $ssl_certs_dir    = '/etc/ssl/certs'
+    $passenger_root   = '/usr/lib/ruby/gems/2.0.0/gems/passenger-3.0.17'
+    $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler  = 'x-httpd-php'
+    $suphp_engine      = 'off'
+    $suphp_configpath  = '/etc/php'
+    $mod_packages     = {
+      'auth_kerb'     => 'mod_auth_kerb',
+      'fcgid'         => 'mod_fcgid',
+      'passenger'     => 'passenger',
+      'perl'          => 'mod_perl',
+      'php5'          => ['php', 'php-apache',],
+      'python'        => 'mod_python',
+      'wsgi'          => 'mod_wsgi',
+      'xsendfile'     => 'mod_xsendfile',
+    }
+    $mod_libs         = {
+      'php5'          => 'libphp5.so',
+    }
+
+    $conf_template     = 'apache/httpd.conf.erb'
+    $keepalive         = 'Off'
+    $keepalive_timeout = 15
+    $mime_types_config = '/etc/httpd/conf/mime.types'
+  } elsif $::osfamily == 'FreeBSD' {
+    $user             = 'www'
+    $group            = 'www'
+    $root_group       = 'wheel'
+    $apache_name      = 'apache22'
+    $service_name     = 'apache22'
+    $httpd_dir        = '/usr/local/etc/apache22'
+    $server_root      = '/usr/local'
+    $conf_dir         = $httpd_dir
+    $confd_dir        = "${httpd_dir}/Includes"
+    $mod_dir          = "${httpd_dir}/Modules"
+    $vhost_dir        = "${httpd_dir}/Vhosts"
+    $conf_file        = 'httpd.conf'
+    $ports_file       = "${conf_dir}/ports.conf"
+    $logroot          = '/var/log/apache22'
+    $lib_path         = '/usr/local/libexec/apache22'
+    $mpm_module       = 'prefork'
+    $dev_packages     = ['www/apache22'] # FIXME: not sure
+    $default_ssl_cert = '/usr/local/etc/apache22/server.crt'
+    $default_ssl_key  = '/usr/local/etc/apache22/server.key'
+    $ssl_certs_dir    = '/usr/local/etc/apache22'
+    $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
+    $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler = 'php5-script'
+    $suphp_engine     = 'off'
+    $suphp_configpath = undef
+    $mod_packages     = {
+      # NOTE: I list here only modules that are not included in www/apache22
+      # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
+      # NOTE: 'php' needs to enable APACHE option in make config
+      # NOTE: 'dav_svn' needs to enable MOD_DAV_SVN make config
+      # NOTE: not sure where the shibboleth should come from
+      # NOTE: don't know where the shibboleth module should come from
+      'auth_kerb'  => 'www/mod_auth_kerb2',
+      'fcgid'      => 'www/mod_fcgid',
+      'passenger'  => 'www/rubygem-passenger',
+      'perl'       => 'www/mod_perl2',
+      'php5'       => 'lang/php5',
+      'proxy_html' => 'www/mod_proxy_html',
+      'python'     => 'www/mod_python3',
+      'wsgi'       => 'www/mod_wsgi',
+      'dav_svn'    => 'devel/subversion',
+      'xsendfile'  => 'www/mod_xsendfile',
+    }
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template        = 'apache/httpd.conf.erb'
+    $keepalive            = 'Off'
+    $keepalive_timeout    = 15
+    $mime_support_package = 'misc/mime-support'
+    $mime_types_config    = '/usr/local/etc/mime.types'
+
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

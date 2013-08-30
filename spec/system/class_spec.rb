@@ -8,6 +8,12 @@ describe 'apache class' do
   when 'Debian'
     package_name = 'apache2'
     service_name = 'apache2'
+  when 'Archlinux'
+    package_name = 'apache'
+    service_name = 'httpd'
+  when 'FreeBSD'
+    package_name = 'apache22'
+    service_name = 'apache22'
   end
 
   context 'default parameters' do

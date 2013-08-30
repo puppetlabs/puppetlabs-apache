@@ -32,4 +32,16 @@ describe 'apache::mod::prefork', :type => :class do
     })
     }
   end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should_not contain_apache__mod('prefork') }
+    it { should contain_file("/usr/local/etc/apache22/Modules/prefork.conf").with_ensure('file') }
+  end
 end

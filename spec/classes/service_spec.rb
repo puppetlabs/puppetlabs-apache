@@ -59,4 +59,19 @@ describe 'apache::service', :type => :class do
       )
     }
   end
+
+  context "on Archlinux" do
+    let :facts do
+      {
+        :osfamily               => 'Archlinux',
+        :operatingsystemrelease => 'Rolling',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should contain_service("httpd").with(
+      'ensure'    => 'true',
+      'enable'    => 'true'
+      )
+    }
+  end
 end

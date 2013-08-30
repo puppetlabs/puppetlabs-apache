@@ -38,4 +38,16 @@ describe 'apache::mod::ssl', :type => :class do
     it { should contain_apache__mod('ssl') }
     it { should_not contain_package('libapache2-mod-ssl') }
   end
+
+  context 'on a FreeBSD OS' do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class('apache::params') }
+    it { should contain_apache__mod('ssl') }
+  end
 end
