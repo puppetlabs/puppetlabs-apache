@@ -109,6 +109,37 @@ describe 'apache::vhost define' do
     end
   end
 
+  context 'apache_directories readme example, adapted' do
+    it 'should configure a vhost with Files' do
+      puppet_apply(%{
+        apache::vhost { 'files.example.net':
+          docroot     => '/var/www/files',
+          directories => [
+            { path => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
+          ],
+        }
+        file { '/var/www/files/index.html.bak':
+          ensure  => file,
+          content => "Hello World\\n",
+        }
+        host { 'files.example.net': ip => '127.0.0.1', }
+      }) { |r| [0,2].should include r.exit_code}
+    end
+
+    describe service(service_name) do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    it 'should answer to files.example.net' do
+      shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak") do |r|
+        r.stderr.should == "curl: (22) The requested URL returned error: 403 Forbidden\n"
+        r.exit_code.should == 22
+      end
+    end
+
+  end
+
   context 'virtual_docroot hosting separate sites' do
     it 'should configure a vhost with VirtualDocumentRoot' do
       puppet_apply(%{
