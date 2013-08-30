@@ -46,6 +46,17 @@ describe 'apache::mod::php', :type => :class do
         :content => "LoadModule php5_module modules/libphp5.so\n"
       ) }
     end
+    context "with specific version" do
+      let :pre_condition do
+        'class { "apache": }'
+      end
+      let :params do
+        { :package_ensure => '5.3.13'}
+      end
+      it { should contain_package("php").with(
+        :ensure => '5.3.13'
+      ) }
+    end
     context "with mpm_module => prefork" do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
