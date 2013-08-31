@@ -23,6 +23,7 @@ class apache (
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
   $service_enable       = true,
+  $service_manage       = true,
   $purge_configs        = true,
   $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
@@ -54,6 +55,7 @@ class apache (
   validate_bool($default_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
+  validate_bool($service_manage)
   if $mpm_module {
     validate_re($mpm_module, '(prefork|worker)')
   }
@@ -73,6 +75,7 @@ class apache (
 
   class { 'apache::service':
     service_enable => $service_enable,
+    service_manage => $service_manage,
   }
 
   # Deprecated backwards-compatibility
