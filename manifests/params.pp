@@ -74,6 +74,8 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    # $mime_support_package = '???' # XXX: do we need any package for mime?
+    $mime_types_config    = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -114,6 +116,8 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template    = 'apache/httpd.conf.erb'
+    # $mime_support_package = 'mime-support' # XXX: consider uncommenting this
+    $mime_types_config = '/etc/mime.types'
   } elsif $::osfamily == 'FreeBSD' {
     $user             = 'www'
     $group            = 'www'
@@ -134,10 +138,7 @@ class apache::params {
     $default_ssl_cert = '/usr/local/etc/apache22/server.crt'
     $default_ssl_key  = '/usr/local/etc/apache22/server.key'
     $ssl_certs_dir    = '/usr/local/etc/apache22'
-    $passenger_root   = $::osfamily ? {
-      'freebsd' => '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10',
-      default   => '/usr/share/rubygems/gems/passenger-3.0.17',
-    }
+    $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
     $passenger_ruby   = '/usr/bin/ruby'
     $mod_packages     = { 
       # NOTE: I list here only modules that are not included in www/apache22
@@ -160,7 +161,9 @@ class apache::params {
     $mod_libs         = {
       'php5' => 'libphp5.so',
     }
-    $conf_template    = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.erb'
+    $mime_support_package = 'misc/mime-support'
+    $mime_types_config    = '/usr/local/etc/mime.types'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

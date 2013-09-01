@@ -2,6 +2,8 @@ define apache::mod (
   $package = undef,
   $lib = undef,
   $lib_path = $apache::params::lib_path,
+  $id = undef,
+  $path = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -15,24 +17,36 @@ define apache::mod (
   $mod_libs = $apache::params::mod_libs
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
-    $lib_REAL = $lib
+    $_lib = $lib
   } elsif $mod_lib {
-    $lib_REAL = $mod_lib
+    $_lib = $mod_lib
   } else {
-    $lib_REAL = "mod_${mod}.so"
+    $_lib = "mod_${mod}.so"
+  }
+
+  if $path {
+    $_path = $path
+  } else {
+    $_path = "${lib_path}/${_lib}"
+  }
+
+  if $id {
+    $_id = $id
+  } else {
+    $_id = "${mod}_module"
   }
 
   # Determine if we have a package
   $mod_packages = $apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
-    $package_REAL = $package
+    $_package = $package
   } elsif "${mod_package}" {
-    $package_REAL = $mod_package
+    $_package = $mod_package
   }
-  if $package_REAL {
-    # $package_REAL may be an array
-    package { $package_REAL:
+  if $_package {
+    # $_package may be an array
+    package { $_package:
       ensure  => present,
       require => Package['httpd'],
       before  => $::osfamily ? {
@@ -55,7 +69,7 @@ define apache::mod (
     owner   => 'root',
     group   => $apache::params::root_group,
     mode    => '0644',
-    content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
+    content => "LoadModule ${_id} ${_path}\n",
     require => [
       Package['httpd'],
       Exec["mkdir ${mod_dir}"],

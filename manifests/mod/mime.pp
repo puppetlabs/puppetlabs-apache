@@ -1,16 +1,9 @@
 class apache::mod::mime (
-  $mime_support_package = $::osfamily ? {
-    'freebsd'  => 'misc/mime-support',
-    # 'debian' => 'mime-support', # XXX: consider uncommenting this case
-    default    => undef,
-  },
+  $mime_support_package = $apache::params::mime_support_package,
+  $mime_types_config = $apache::params::mime_mime_types_config,
 ) {
   apache::mod { 'mime': }
-  $types_config = $::osfamily ? {
-    'freebsd' => '/usr/local/etc/mime.types',
-    default   => '/etc/mime.types',
-  }
-  # Template uses $types_config
+  # Template uses $mime_types_config
   file { 'mime.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/mime.conf",

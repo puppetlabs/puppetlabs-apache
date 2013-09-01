@@ -63,10 +63,10 @@ class apache (
     }
   }
 
-  $httpd_dir  = $apache::params::httpd_dir
+  $httpd_dir   = $apache::params::httpd_dir
   $server_root = $apache::params::server_root
-  $ports_file = $apache::params::ports_file
-  $logroot    = $apache::params::logroot
+  $ports_file  = $apache::params::ports_file
+  $logroot     = $apache::params::logroot
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
