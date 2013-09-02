@@ -43,6 +43,8 @@ class apache (
   $keepalive_timeout    = $apache::params::keepalive_timeout,
   $logroot              = $apache::params::logroot,
   $ports_file           = $apache::params::ports_file,
+  $server_tokens        = 'OS',
+  $server_signature     = 'On',
 ) inherits apache::params {
 
   package { 'httpd':
