@@ -60,16 +60,18 @@ class apache (
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
-  group { $group:
+  $group_params = {
     ensure  => present,
     require => Package['httpd']
   }
+  ensure_resource('group', $group, $group_params)
 
-  user { $user:
+  $user_params = {
     ensure  => present,
     gid     => $group,
     require => Package['httpd'],
   }
+  ensure_resource('user', $user, $user_params)
 
   class { 'apache::service':
     service_enable => $service_enable,
