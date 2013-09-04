@@ -1,5 +1,6 @@
 class apache::default_mods (
   $all  = true,
+  $mods = undef,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include
@@ -68,13 +69,5 @@ class apache::default_mods (
     apache::mod { 'env': }
   } elsif $mods {
     apache::default_mods::load { $mods: }
-  }
-}
-
-define apache::default_mods::load ($module = $title) {
-  if defined("apache::mod::${module}") {
-    include "apache::mod::${module}"
-  } else {
-    apache::mod { $module: }
   }
 }
