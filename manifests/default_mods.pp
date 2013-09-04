@@ -1,5 +1,6 @@
 class apache::default_mods (
   $all  = true,
+  $mods  = undef,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include

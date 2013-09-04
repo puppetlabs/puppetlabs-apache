@@ -17,7 +17,7 @@ class apache::package (
           default   => "www/apache22-${mpm_module}-mpm"
         }
       } else {
-        $apache_package = "www/apache22"
+        $apache_package = 'www/apache22'
       }
       $other_mpms = delete($all_mpms, $apache_package)
       # Configure ports to have apache module packages dependent on correct

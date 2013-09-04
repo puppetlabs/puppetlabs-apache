@@ -1,8 +1,6 @@
 require 'spec_helper_system'
 
 describe 'apache::mod::php class' do
-    when 'FreeBSD'
-      '/usr/local/etc/apache22/Modules'
   case node.facts['osfamily']
   when 'Debian'
     mod_dir = '/etc/apache2/mods-available'
