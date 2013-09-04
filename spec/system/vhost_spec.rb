@@ -112,6 +112,7 @@ describe 'apache::vhost define' do
   context 'apache_directories readme example, adapted' do
     it 'should configure a vhost with Files' do
       puppet_apply(%{
+        class { 'apache': }
         apache::vhost { 'files.example.net':
           docroot     => '/var/www/files',
           directories => [
@@ -133,7 +134,7 @@ describe 'apache::vhost define' do
 
     it 'should answer to files.example.net' do
       shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak") do |r|
-        r.stderr.should == "curl: (22) The requested URL returned error: 403 Forbidden\n"
+        r.stderr.should =~ /curl: \(22\) The requested URL returned error: 403/
         r.exit_code.should == 22
       end
     end
