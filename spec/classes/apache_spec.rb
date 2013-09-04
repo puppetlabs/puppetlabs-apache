@@ -267,6 +267,23 @@ describe 'apache', :type => :class do
         it { should contain_apache__mod('authz_host') }
         it { should_not contain_apache__mod('env') }
       end
+      context "custom" do
+        let :params do
+          { :default_mods => [
+            'info',
+            'alias',
+            'mime',
+            'env',
+            'setenv',
+            'expires',
+          ]}
+        end
+
+        it { should contain_apache__mod('authz_host') }
+        it { should contain_apache__mod('env') }
+        it { should contain_class('apache::mod::info') }
+        it { should contain_class('apache::mod::mime') }
+      end
     end
   end
 end
