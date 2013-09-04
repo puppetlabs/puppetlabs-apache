@@ -1,0 +1,59 @@
+{
+  "name": "puppetlabs-apache",
+  "version": "0.8.1",
+  "summary": "Puppet module for Apache",
+  "author": "puppetlabs",
+  "description": "Module for Apache configuration",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "\u003e\u003d 2.4.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": "\u003e\u003d 1.0.0"
+    }
+  ],
+  "types": [
+    {
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the module to be managed"
+        },
+        {
+          "name": "lib",
+          "doc": "The name of the .so library to be loaded"
+        },
+        {
+          "name": "identifier",
+          "doc": "Module identifier string used by LoadModule. Default: module-name_module"
+        }
+      ],
+      "providers": [
+        {
+          "name": "redhat",
+          "doc": "Manage Apache 2 modules on RedHat family OSs"
+        },
+        {
+          "name": "modfix",
+          "doc": "Dummy provider for A2mod.\n\n    Fake nil resources when there is no crontab binary available. Allows\n    puppetd to run on a bootstrapped machine before a Cron package has been\n    installed. Workaround for: http://projects.puppetlabs.com/issues/2384\n    "
+        },
+        {
+          "name": "a2mod",
+          "doc": "Manage Apache 2 modules on Debian and Ubuntu"
+        },
+        {
+          "name": "gentoo",
+          "doc": "Manage Apache 2 modules on Gentoo"
+        }
+      ],
+      "name": "a2mod",
+      "doc": "Manage Apache 2 modules"
+    }
+  ],
+  "checksums": {},
+  "source": "git://github.com/puppetlabs/puppetlabs-apache.git",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-apache",
+  "license": "Apache 2.0"
+}

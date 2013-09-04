@@ -23,4 +23,27 @@ describe 'apache::dev', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_package("httpd-devel") }
   end
+  context "on Archlinux" do
+    let :facts do
+      {
+        :osfamily               => 'Archlinux',
+        :operatingsystemrelease => 'Rolling',          
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_package("undef") }
+  end
+  context "on a FreeBSD OS" do
+      let :facts do
+        {
+          :osfamily               => 'FreeBSD',
+          :operatingsystemrelease => '9',
+        }
+      end
+      it { should include_class("apache::params") }
+      # FIXME:
+      #it { should contain_package("libaprutil1-dev") }
+      #it { should contain_package("libapr1-dev") }
+      #it { should contain_package("apache2-prefork-dev") }
+    end
 end

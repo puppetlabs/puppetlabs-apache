@@ -4,7 +4,7 @@ ServerSignature On
 TraceEnable Off
 
 ServerName "<%= @servername %>"
-ServerRoot "<%= @httpd_dir %>"
+ServerRoot "<%= @server_root %>"
 PidFile <%= @pidfile %>
 Timeout 120
 KeepAlive <%= @keepalive %>
@@ -35,6 +35,12 @@ EnableSendfile <%= @sendfile %>
 <% end %>
 
 #Listen 80
+
+<% if @freebsd_workarounds -%>
+# Workaround for FreeBSD module activation procedures
+#LoadModule fake_module libexec/apache22/mod_fake.so
+<% end -%>
+
 Include <%= @mod_load_dir %>/*.load
 <% if @mod_load_dir != @confd_dir and @mod_load_dir != @vhost_load_dir -%>
 Include <%= @mod_load_dir %>/*.conf

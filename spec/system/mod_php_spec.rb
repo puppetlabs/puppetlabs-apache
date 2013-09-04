@@ -8,6 +8,9 @@ describe 'apache::mod::php class' do
   when 'RedHat'
     mod_dir = '/etc/httpd/conf.d'
     service_name = 'httpd'
+  when 'FreeBSD'
+    mod_dir = '/usr/local/etc/apache22/Vhosts'
+    service_name = 'apache22'
   end
 
   context "default php config" do
