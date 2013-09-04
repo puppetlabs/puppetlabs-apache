@@ -112,6 +112,7 @@ describe 'apache::vhost define' do
   context 'apache_directories readme example, adapted' do
     it 'should configure a vhost with Files' do
       puppet_apply(%{
+        class { 'apache': }
         apache::vhost { 'files.example.net':
           docroot     => '/var/www/files',
           directories => [
