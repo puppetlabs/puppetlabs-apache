@@ -211,7 +211,7 @@ define apache::vhost(
   } elsif $access_log_pipe {
     $access_log_destination = "\"${access_log_pipe}\""
   } elsif $access_log_syslog {
-    $access_log_destination = "${access_log_syslog}"
+    $access_log_destination = $access_log_syslog
   } else {
     if $ssl {
       $access_log_destination = "${logroot}/${servername}_access_ssl.log"
@@ -225,7 +225,7 @@ define apache::vhost(
   } elsif $error_log_pipe {
     $error_log_destination = "\"${error_log_pipe}\""
   } elsif $error_log_syslog {
-    $error_log_destination = "${error_log_syslog}"
+    $error_log_destination = $error_log_syslog
   } else {
     if $ssl {
       $error_log_destination = "${logroot}/${servername}_error_ssl.log"
@@ -449,4 +449,3 @@ define apache::vhost(
     }
   }
 }
-

@@ -62,6 +62,11 @@ class apache::mod::prefork (
         ensure => present,
       }
     }
+    'freebsd' : {
+      class { 'apache::package':
+        mpm_module => 'prefork'
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

@@ -90,4 +90,20 @@ describe 'apache::service', :type => :class do
       )
     }
   end
+
+  context "on a FreeBSD 5 OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should contain_service("httpd").with(
+      'name'      => 'apache22',
+      'ensure'    => 'running',
+      'enable'    => 'true'
+      )
+    }
+  end
 end

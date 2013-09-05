@@ -2,12 +2,14 @@ class apache::mod::ssl (
   $ssl_compression = false,
 ) {
   $session_cache = $::osfamily ? {
-    'debian' => '${APACHE_RUN_DIR}/ssl_scache(512000)',
-    'redhat' => '/var/cache/mod_ssl/scache(512000)',
+    'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
+    'redhat'  => '/var/cache/mod_ssl/scache(512000)',
+    'freebsd' => '/var/run/ssl_scache(512000)',
   }
   $ssl_mutex = $::osfamily ? {
-    'debian' => 'file:${APACHE_RUN_DIR}/ssl_mutex',
-    'redhat' => 'default',
+    'debian'  => 'file:${APACHE_RUN_DIR}/ssl_mutex',
+    'redhat'  => 'default',
+    'freebsd' => 'default',
   }
   apache::mod { 'ssl': }
 
