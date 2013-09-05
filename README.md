@@ -253,7 +253,7 @@ Changes the location of the configuration directory your Apache modules configur
 
 #####`mpm_module`
 
-Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork` and `apache::mod::worker` classes. Must be set to `false` to explicitly declare `apache::mod::worker` or `apache::mod::prefork` classes with parameters. Valid values are `worker`, `prefork`, or the boolean `false`. Defaults to `prefork` on RedHat and `worker` on Debian.
+Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork`, `apache::mod::worker` and `apache::mod::itk` classes. Must be set to `false` to explicitly declare `apache::mod::worker`, `apache::mod::worker` or `apache::mod::itk` classes with parameters. Valid values are `worker`, `prefork`, `itk` (Debian), or the boolean `false`. Defaults to `prefork` on RedHat and `worker` on Debian.
 
 #####`conf_template`
 
@@ -861,6 +861,31 @@ Specifies whether to use `SSLProxyEngine` or not. Defaults to `false`.
 #####`vhost_name`
 
 This parameter is for use with name-based virtual hosting. Defaults to '*'.
+
+#####`itk`
+
+Hash containing infos to configure itk as per the [ITK documentation](http://mpm-itk.sesse.net/).
+
+Keys could be:
+* user + group
+* assignuseridexpr
+* assigngroupidexpr
+* maxclientvhost
+* nice
+* limituidrange (Linux 3.5.0 or newer)
+* limitgidrange (Linux 3.5.0 or newer)
+
+Usage will typically look like:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      itk => {
+        user  => 'someuser',
+        group => 'somegroup',
+      },
+    }
+```
 
 ###Virtual Host Examples
 
