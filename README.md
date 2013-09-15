@@ -275,6 +275,14 @@ Changes the location of the directory Apache log files are placed in. Defaut is 
 
 Changes the name of the file containing Apache ports configuration. Default is `${conf_dir}/ports.conf`.
 
+#####`server_tokens`
+
+Controls how much information Apache sends to the browser about itself and the operating system. See Apache documentation for 'ServerTokens'. Defaults to 'OS'.
+
+#####`server_signature`
+
+Allows the configuration of a trailing footer line under server-generated documents. See Apache documentation for 'ServerSignature'. Defaults to 'On'.
+
 ####Class: `apache::default_mods`
 
 Installs default Apache modules based on what OS you are running
@@ -524,7 +532,6 @@ Sets the order of processing `Allow` and `Deny` statements as per [Apache core d
       directories => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
     }
 ```
-
 
 ######`auth_type`
 
