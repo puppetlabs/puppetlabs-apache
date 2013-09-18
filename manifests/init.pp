@@ -28,6 +28,7 @@ class apache (
   $serveradmin          = 'root@localhost',
   $sendfile             = false,
   $error_documents      = false,
+  $timeout              = '120',
   $httpd_dir            = $apache::params::httpd_dir,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
