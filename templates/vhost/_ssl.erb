@@ -24,7 +24,7 @@
   SSLProtocol           <%= @ssl_protocol %>
 <% end -%>
 <% if @ssl_chiper -%>
-  SSLCipherSuite        <%= @ssl_chiper %>
+  SSLCipherSuite        <%= @ssl_cipher %>
 <% end -%>
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars

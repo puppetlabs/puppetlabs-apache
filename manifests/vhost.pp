@@ -76,7 +76,7 @@ define apache::vhost(
     $ssl_crl                     = $apache::default_ssl_crl,
     $ssl_certs_dir               = $apache::params::ssl_certs_dir,
     $ssl_protocol                = undef,
-    $ssl_chiper                  = undef,
+    $ssl_cipher                  = undef,
     $priority                    = undef,
     $default_vhost               = false,
     $servername                  = $name,

@@ -838,7 +838,7 @@ Specifies the SSL certification.
 
 Specifies the SSL Protocol (SSLProtocol).
 
-#####`ssl_chiper`
+#####`ssl_cipher`
 
 Specifies the SSLCipherSuite.
 
