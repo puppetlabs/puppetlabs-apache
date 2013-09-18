@@ -30,9 +30,7 @@ DefaultType none
 HostnameLookups Off
 ErrorLog <%= @logroot %>/<%= @error_log %>
 LogLevel warn
-<% if @sendfile %>
 EnableSendfile <%= @sendfile %>
-<% end %>
 
 #Listen 80
 Include <%= @mod_load_dir %>/*.load

@@ -26,7 +26,7 @@ class apache (
   $purge_configs        = true,
   $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
-  $sendfile             = false,
+  $sendfile             = 'On',
   $error_documents      = false,
   $httpd_dir            = $apache::params::httpd_dir,
   $confd_dir            = $apache::params::confd_dir,
@@ -59,6 +59,7 @@ class apache (
   if $mpm_module {
     validate_re($mpm_module, '(prefork|worker|itk)')
   }
+  validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
