@@ -6,7 +6,7 @@ TraceEnable Off
 ServerName "<%= @servername %>"
 ServerRoot "<%= @httpd_dir %>"
 PidFile <%= @pidfile %>
-Timeout 120
+Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests 100
 KeepAliveTimeout <%= @keepalive_timeout %>
