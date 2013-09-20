@@ -595,14 +595,15 @@ describe 'apache::vhost', :type => :define do
 
       describe 'when rewrites are specified' do
         let :params do default_params.merge({
-          :rewrites => { 
-            'force www domain' => {
-               'rewrite_conds' => ['firstCond', 'secondCond'],
-               'rewrite_rules' => ['firstRule', 'secondRule']
+          :rewrites => [
+            {
+              'comment'       => 'force www domain',
+              'rewrite_conds' => ['firstCond', 'secondCond'],
+              'rewrite_rules' => ['firstRule', 'secondRule'],
             }
-          }
+          ]
         }) end
-        it 'should set first RewriteCond' do
+        it 'should set RewriteConds and RewriteRules' do
           should contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond firstCond$/
           )
