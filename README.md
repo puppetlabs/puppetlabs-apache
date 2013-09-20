@@ -851,9 +851,18 @@ Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'.
 
 The above example would limit the index.html -> welcome.html rewrite to only something inside of http://example.com/blog/.
 
-#####`rewrite_cond`
+#####`rewrites`
 
-Rewrites a URL via `rewrite_rule` based on the truth of specified conditions. For example
+Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html.
+
+```puppet
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrites => [ { rewrite_rule => ['^index\.html$ welcome.html'] } ]
+    }
+```
+
+Allows rewrite conditions, that when true, will execute the associated rule. For example
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
@@ -868,9 +877,9 @@ Rewrites a URL via `rewrite_rule` based on the truth of specified conditions. Fo
     }
 ```
 
-will rewrite URLs only if the visitor is using IE. Defaults to 'undef'.
+will rewrite URLs only if the visitor is using IE.
 
-Multiple conditions can also be applied
+Multiple conditions can be applied, the following will rewrite index.html to welcome.html only when the browser is lynx or mozilla version 1 or 2
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
@@ -885,23 +894,7 @@ Multiple conditions can also be applied
     }
 ```
 
-#####`rewrite_rule`
-
-Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html.
-
-```puppet
-    apache::vhost { 'site.name.fdqn':
-      …
-      rewrites => [
-        { 
-          comment      => 'welcome.html',
-          rewrite_rule => ['^index\.html$ welcome.html'],
-        }
-      ]
-    }
-```
-
-Multiple rewrites are also possible
+Multiple rewrites and conditions are also possible
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
@@ -918,12 +911,13 @@ Multiple rewrites are also possible
           rewrite_rules => ['^index\.html$ /index.IE.html [L]'],
         },
         }
-          comment       => 'old redirects',
           rewrite_rules => ['^index\.cgi$ index.php', '^index\.html$ index.php', '^index\.asp$ index.html'],
         }
      ] 
     }
 ```
+
+refer to the [`mod_rewrite` documentation for more details](http://httpd.apache.org/docs/current/mod/mod_rewrite.html) for more details on what is possible with rewrite rules and conditions
 
 #####`scriptalias`
 
