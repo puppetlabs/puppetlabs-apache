@@ -969,43 +969,87 @@ Specifies additional request headers.
 
 #####`rewrite_base`
 
-Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'.
+Limits the `rewrites` to the specified base URL. Defaults to 'undef'.
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
       …
-      rewrite_rule => '^index\.html$ welcome.html',
       rewrite_base => '/blog/',
+      rewrites => [
+        { rewrite_rule => ['^index\.html$ welcome.html'] }
+      ]
     }
 ```
 
 The above example would limit the index.html -> welcome.html rewrite to only something inside of http://example.com/blog/.
 
-#####`rewrite_cond`
-
-Rewrites a URL via `rewrite_rule` based on the truth of specified conditions. For example
-
-```puppet
-    apache::vhost { 'site.name.fdqn':
-      …
-      rewrite_cond => '%{HTTP_USER_AGENT} ^MSIE',
-    }
-```
-
-will rewrite URLs only if the visitor is using IE. Defaults to 'undef'.
-
-*Note*: At the moment, each vhost is limited to a single list of rewrite conditions. In the future, you will be able to specify multiple `rewrite_cond` and `rewrite_rules` per vhost, so that different conditions get different rewrites.
-
-#####`rewrite_rule`
+#####`rewrites`
 
 Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to specify, for example, that anyone trying to access index.html will be served welcome.html.
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
       …
-      rewrite_rule => '^index\.html$ welcome.html',
+      rewrites => [ { rewrite_rule => ['^index\.html$ welcome.html'] } ]
     }
 ```
+
+Allows rewrite conditions, that when true, will execute the associated rule. For example
+
+```puppet
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrites => [
+        {
+          comment       => 'redirect IE',
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^MSIE'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
+        }
+      ]
+    }
+```
+
+will rewrite URLs only if the visitor is using IE.
+
+Multiple conditions can be applied, the following will rewrite index.html to welcome.html only when the browser is lynx or mozilla version 1 or 2
+
+```puppet
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrites => [
+        {
+          comment       => 'Lynx or Mozilla v1/2',
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
+        }
+      ]
+    }
+```
+
+Multiple rewrites and conditions are also possible
+
+```puppet
+    apache::vhost { 'site.name.fdqn':
+      …
+      rewrites => [
+        {
+          comment       => 'Lynx or Mozilla v1/2',
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
+        },
+        {
+          comment       => 'Internet Explorer',
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^MSIE'],
+          rewrite_rule => ['^index\.html$ /index.IE.html [L]'],
+        },
+        }
+          rewrite_rule => ['^index\.cgi$ index.php', '^index\.html$ index.php', '^index\.asp$ index.html'],
+        }
+     ] 
+    }
+```
+
+refer to the [`mod_rewrite` documentation](http://httpd.apache.org/docs/current/mod/mod_rewrite.html) for more details on what is possible with rewrite rules and conditions
 
 #####`scriptalias`
 
