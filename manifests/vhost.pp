@@ -40,6 +40,22 @@
 #    docroot => '/path/to/docroot',
 #  }
 #
+#  # Multiple Mod Rewrites:
+#  apache::vhost { 'site.name.fqdn':
+#    port => '80',
+#    docroot => '/path/to/docroot',
+#    rewrites => {
+#      'force www domain' => {
+#        rewrite_conds => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
+#        rewrite_rules => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
+#      },
+#      'prevent image hotlinking' => {
+#        rewrite_conds => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
+#        rewrite_rules => ['.(gif|jpg|png)$ - [F]']
+#      },
+#    }
+#  }
+#
 #  # SSL vhost with non-SSL rewrite:
 #  apache::vhost { 'site.name.fqdn':
 #    port    => '443',
@@ -48,8 +64,12 @@
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port          => '80',
-#    rewrite_cond => '%{HTTPS} off',
-#    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+#    rewrites => {
+#      "redirect non-SSL traffic to SSL site" => {
+#        rewrite_conds => ['%{HTTS} off'],
+#        rewrite_rules => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
+#      }
+#    }
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port            => '80',
@@ -107,6 +127,7 @@ define apache::vhost(
     $redirect_status             = undef,
     $rack_base_uris              = undef,
     $request_headers             = undef,
+    $rewrites                    = undef,
     $rewrite_rule                = undef,
     $rewrite_cond                = undef,
     $setenv                      = [],
@@ -260,7 +281,7 @@ define apache::vhost(
   }
 
   # Load mod_rewrite if needed and not yet loaded
-  if $rewrite_rule {
+  if $rewrites or $rewrite_cond {
     if ! defined(Apache::Mod['rewrite']) {
       apache::mod { 'rewrite': }
     }
@@ -355,8 +376,7 @@ define apache::vhost(
   # requestheader fragment:
   #   - $request_headers
   # rewrite fragment:
-  #   - $rewrite_rule
-  #   - $rewrite_cond
+  #   - $rewrites
   # scriptalias fragment:
   #   - $scriptalias
   #   - $ssl

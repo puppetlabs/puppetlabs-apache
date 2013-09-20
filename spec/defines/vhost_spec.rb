@@ -260,6 +260,12 @@ describe 'apache::vhost', :type => :define do
           :match => '  RewriteRule not a real rule',
         },
         {
+          :title => 'should accept rewrite rules',
+          :attr  => 'rewrites',
+          :value => 'not a real rule',
+          :match => '  RewriteRule not a real rule',
+        },
+        {
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
@@ -480,6 +486,31 @@ describe 'apache::vhost', :type => :define do
         it 'should set wsgi_daemon_process_options' do
           should contain_file("25-#{title}.conf").with_content(
             /^  WSGIDaemonProcess example.org processes=2 threads=15$/
+          )
+        end
+      end
+
+      describe 'when rewrites are specified' do
+        let :params do default_params.merge({
+          :rewrites => { 
+            'force www domain' => {
+               'rewrite_conds' => ['firstCond', 'secondCond'],
+               'rewrite_rules' => ['firstRule', 'secondRule']
+            }
+          }
+        }) end
+        it 'should set first RewriteCond' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond firstCond$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond secondCond$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule firstRule$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule secondRule$/
           )
         end
       end
