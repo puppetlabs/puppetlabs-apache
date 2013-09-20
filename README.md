@@ -847,7 +847,7 @@ Multiple rewrites and conditions are also possible
     }
 ```
 
-refer to the [`mod_rewrite` documentation for more details](http://httpd.apache.org/docs/current/mod/mod_rewrite.html) for more details on what is possible with rewrite rules and conditions
+refer to the [`mod_rewrite` documentation](http://httpd.apache.org/docs/current/mod/mod_rewrite.html) for more details on what is possible with rewrite rules and conditions
 
 #####`scriptalias`
 
