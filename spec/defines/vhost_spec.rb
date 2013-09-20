@@ -415,6 +415,40 @@ describe 'apache::vhost', :type => :define do
           :match => [/^  RewriteRule not a real rule$/],
         },
         {
+          :title => 'should accept rewrite rules',
+          :attr  => 'rewrites',
+          :value => [{'rewrite_rule' => ['not a real rule']}],
+          :match => [/^  RewriteRule not a real rule$/],
+        },
+        {
+          :title => 'should accept rewrite comment',
+          :attr  => 'rewrites',
+          :value => [{'comment' => 'rewrite comment', 'rewrite_rule' => ['not a real rule']}],
+          :match => [/^  #rewrite comment/],
+        },
+        {
+          :title => 'should accept rewrite conditions',
+          :attr  => 'rewrites',
+          :value => [{'comment' => 'redirect IE', 'rewrite_cond' => ['%{HTTP_USER_AGENT} ^MSIE'], 'rewrite_rule' => ['^index\.html$ welcome.html'],}],
+          :match => [
+            /^  #redirect IE$/,
+            /^  RewriteCond %{HTTP_USER_AGENT} \^MSIE$/,
+            /^  RewriteRule \^index\\\.html\$ welcome.html$/,
+          ],
+        },
+        {
+          :title => 'should accept multiple rewrites',
+          :attr  => 'rewrites',
+          :value => [
+            {'rewrite_rule' => ['not a real rule']},
+            {'rewrite_rule' => ['not a real rule two']},
+          ],
+          :match => [
+            /^  RewriteRule not a real rule$/,
+            /^  RewriteRule not a real rule two$/,
+          ],
+        },
+        {
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
@@ -850,6 +884,35 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when rewrites are specified' do
+        let :params do default_params.merge({
+          :rewrites => [
+            {
+              'comment'       => 'test rewrites',
+              'rewrite_cond' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+              'rewrite_rule' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
+            }
+          ]
+        }) end
+        it 'should set RewriteConds and RewriteRules' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  #test rewrites$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Lynx\/ \[OR\]$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Mozilla\/\[12\]$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule \^index\\.html\$ welcome.html$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule \^index\\.cgi\$ index.php$/
+          )
+        end
+      end
+
       describe 'when rewrite_rule and rewrite_cond are specified' do
         let :params do default_params.merge({
           :rewrite_cond => '%{HTTPS} off',
@@ -999,6 +1062,20 @@ describe 'apache::vhost', :type => :define do
 
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/login} }
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
+        end
+        describe 'redirect match rules' do
+          let :params do
+            default_params.merge({
+              :redirectmatch_status => [
+                '404',
+              ],
+              :redirectmatch_regexp   => [
+                '/\.git(/.*|$)',
+              ],
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content %r{  RedirectMatch 404 } }
         end
         describe 'without a status' do
           let :params do
