@@ -145,10 +145,13 @@ apache::vhost { 'sixteenth.example.com non-ssl':
   servername   => 'sixteenth.example.com',
   port         => '80',
   docroot      => '/var/www/sixteenth',
-  rewrites     => { "redirect non-SSL traffic to SSL site" => {
-    rewrite_conds => ['%{HTTS} off'],
-    rewrite_rules => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
-  } }
+  rewrites     => [
+    {
+      comment       => "redirect non-SSL traffic to SSL site",
+      rewrite_conds => ['%{HTTS} off'],
+      rewrite_rules => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}'],
+    }
+  ]
 }
 apache::vhost { 'sixteenth.example.com ssl':
   servername => 'sixteenth.example.com',

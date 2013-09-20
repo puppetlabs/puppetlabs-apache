@@ -5,14 +5,18 @@
   RewriteBase <%= @rewrite_base %>
 <% end -%>
 
-<% Array(@rewrites).each do |comment, rewrite_details| -%>
-  #<%= comment %>
-<%- rewrite_details.fetch('rewrite_conds').each do |commands| -%>
+<% [@rewrites].flatten.compact.each do |rewrite_details| -%>
+<% if rewrite_details['comment'] -%>
+  #<%= rewrite_details['comment'] %>
+<% end -%>
+<% if rewrite_details['rewrite_conds'] -%>
+<%- Array(rewrite_details['rewrite_conds']).each do |commands| -%>
 <%- Array(commands).each do |command| -%>
   RewriteCond <%= command %>
 <%- end -%>
 <% end -%>
-<%- rewrite_details.fetch('rewrite_rules').each do |commands| -%>
+<% end -%>
+<%- Array(rewrite_details['rewrite_rules']).each do |commands| -%>
 <%- Array(commands).each do |command| -%>
   RewriteRule <%= command %>
 <%- end -%>

@@ -44,16 +44,18 @@
 #  apache::vhost { 'site.name.fqdn':
 #    port => '80',
 #    docroot => '/path/to/docroot',
-#    rewrites => {
-#      'force www domain' => {
+#    rewrites => [
+#      {
+#        comment       => 'force www domain',
 #        rewrite_conds => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
 #        rewrite_rules => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
 #      },
-#      'prevent image hotlinking' => {
+#      {
+#        comment       => 'prevent image hotlinking',
 #        rewrite_conds => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
 #        rewrite_rules => ['.(gif|jpg|png)$ - [F]']
 #      },
-#    }
+#    ]
 #  }
 #
 #  # SSL vhost with non-SSL rewrite:
@@ -64,12 +66,13 @@
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port          => '80',
-#    rewrites => {
-#      "redirect non-SSL traffic to SSL site" => {
+#    rewrites => [
+#      {
+#        comment       => "redirect non-SSL traffic to SSL site",
 #        rewrite_conds => ['%{HTTS} off'],
 #        rewrite_rules => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
 #      }
-#    }
+#    ]
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port            => '80',
