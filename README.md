@@ -229,7 +229,7 @@ Sets the servername. Defaults to fqdn provided by facter.
 
 #####`sendfile`
 
-Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'false'.
+Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'On'.
 
 #####`error_documents`
 
