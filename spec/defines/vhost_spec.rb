@@ -262,8 +262,35 @@ describe 'apache::vhost', :type => :define do
         {
           :title => 'should accept rewrite rules',
           :attr  => 'rewrites',
-          :value => 'not a real rule',
+          :value => [{'rewrite_rule' => ['not a real rule']}],
           :match => '  RewriteRule not a real rule',
+        },
+        {
+          :title => 'should accept rewrite comment',
+          :attr  => 'rewrites',
+          :value => [{'comment' => 'rewrite comment', 'rewrite_rule' => ['not a real rule']}],
+          :match => '  #rewrite comment',
+        },
+        {
+          :title => 'should accept rewrite conditions',
+          :attr  => 'rewrites',
+          :value => [{'rewrite_rules' => ['not a real rule'], 'rewrite_conds' => ['not a real condition']}],
+          :match => [
+            '  RewriteRule not a real rule',
+            '  RewriteCond not a real condition',
+          ],
+        },
+        {
+          :title => 'should accept multiple rewrites',
+          :attr  => 'rewrites',
+          :value => [
+            {'rewrite_rules' => ['not a real rule']},
+            {'rewrite_rules' => ['not a real rule two']},
+          ],
+          :match => [
+            '  RewriteRule not a real rule',
+            '  RewriteRule not a real rule two',
+          ],
         },
         {
           :title => 'should block scm',

@@ -767,7 +767,7 @@ Specifies additional request headers.
 
 #####`rewrite_base`
 
-Limits the `rewrite_rule` to the specified base URL. Defaults to 'undef'.
+Limits the `rewrites` to the specified base URL. Defaults to 'undef'.
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
@@ -788,7 +788,7 @@ Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to spe
 ```puppet
     apache::vhost { 'site.name.fdqn':
       …
-      rewrites => [ { rewrite_rule => ['^index\.html$ welcome.html'] } ]
+      rewrites => [ { rewrite_rules => ['^index\.html$ welcome.html'] } ]
     }
 ```
 
