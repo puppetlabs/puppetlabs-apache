@@ -176,6 +176,7 @@ define apache::vhost(
   validate_bool($sslproxyengine)
   if $rewrites {
     validate_array($rewrites)
+    validate_hash($rewrites[0])
   }
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
