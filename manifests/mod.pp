@@ -1,5 +1,6 @@
 define apache::mod (
   $package = undef,
+  $package_ensure = 'present',
   $lib = undef
 ) {
   if ! defined(Class['apache']) {
@@ -33,7 +34,7 @@ define apache::mod (
   if $package_REAL {
     # $package_REAL may be an array
     package { $package_REAL:
-      ensure  => present,
+      ensure  => $package_ensure,
       require => Package['httpd'],
       before  => File["${mod_dir}/${mod}.load"],
     }
