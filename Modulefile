@@ -1,5 +1,5 @@
 name 'puppetlabs-apache'
-version '0.6.0'
+version '0.9.0'
 source 'git://github.com/puppetlabs/puppetlabs-apache.git'
 author 'puppetlabs'
 license 'Apache 2.0'
@@ -8,5 +8,5 @@ description 'Module for Apache configuration'
 project_page 'https://github.com/puppetlabs/puppetlabs-apache'
 
 ## Add dependencies, if any:
-dependency 'puppetlabs/firewall', '>= 0.0.4'
-dependency 'puppetlabs/stdlib', '>= 2.2.1'
+dependency 'puppetlabs/stdlib', '>= 2.4.0'
+dependency 'puppetlabs/concat', '>= 1.0.0'

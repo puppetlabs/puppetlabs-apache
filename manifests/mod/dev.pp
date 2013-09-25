@@ -1,8 +1,5 @@
-class apache::mod::dev inherits apache::params {
-  # Development packages have no mod to load
-  $packages = $apache::params::mod_packages['dev']
-  package { $packages:
-    ensure  => present,
-    require => Package['httpd'],
-  }
+class apache::mod::dev {
+  # Development packages are not apache modules
+  warning('apache::mod::dev is deprecated; please use apache::dev')
+  include apache::dev
 }
