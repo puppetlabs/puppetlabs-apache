@@ -841,6 +841,14 @@ Specifies the certificate authority.
 
 Specifies the SSL certification.
 
+#####`ssl_protocol`
+
+Specifies the SSL Protocol (SSLProtocol).
+
+#####`ssl_cipher`
+
+Specifies the SSLCipherSuite.
+
 #####`ssl_certs_dir`
 
 Specifies the location of the SSL certification directory. Defaults to `/etc/ssl/certs`.
