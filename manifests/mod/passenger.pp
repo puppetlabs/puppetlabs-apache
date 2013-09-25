@@ -8,6 +8,7 @@ class apache::mod::passenger (
   $passenger_root                 = $apache::params::passenger_root,
   $passenger_ruby                 = $apache::params::passenger_ruby,
   $passenger_max_pool_size        = undef,
+  $passenger_use_global_queue     = undef,
 ) {
   apache::mod { 'passenger': }
   # Template uses:
