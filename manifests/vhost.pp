@@ -398,8 +398,12 @@ define apache::vhost(
   }
   if $::osfamily == 'Debian' {
     $vhost_enable_dir = $apache::vhost_enable_dir
+    $vhost_symlink_ensure = $ensure ? {
+      present => link,
+      default => $ensure,
+    }
     file{ "${priority_real}-${filename}.conf symlink":
-      ensure  => link,
+      ensure  => $vhost_symlink_ensure,
       path    => "${vhost_enable_dir}/${priority_real}-${filename}.conf",
       target  => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
       owner   => 'root',
