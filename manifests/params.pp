@@ -32,6 +32,8 @@ class apache::params {
     $servername = $::hostname
   }
 
+  $manage_user = true
+
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
     $group                = 'apache'
