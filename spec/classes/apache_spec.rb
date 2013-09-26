@@ -326,6 +326,31 @@ describe 'apache', :type => :class do
 
         it { should_not contain_group('apache') }
         it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Group apache\n} }
+
+      end
+    end
+    describe "sendfile" do
+      context "with invalid value" do
+        let :params do
+          { :sendfile => 'foo' }
+        end
+        it "should fail" do
+          expect do
+            subject
+          end.to raise_error(Puppet::Error, /"foo" does not match/)
+        end
+      end
+      context "On" do
+        let :params do
+          { :sendfile => 'On' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^EnableSendfile On\n} }
+      end
+      context "Off" do
+        let :params do
+          { :sendfile => 'Off' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^EnableSendfile Off\n} }
       end
     end
   end
