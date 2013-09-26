@@ -178,6 +178,15 @@ define apache::vhost(
     validate_array($rewrites)
     validate_hash($rewrites[0])
   }
+
+  # Deprecated backwards-compatibility
+  if $rewrite_rule {
+    warning('Apache::Vhost: parameter rewrite_rule is depricated in favor of rewrites')
+  }
+  if $rewrite_cond {
+    warning('Apache::Vhost parameter rewrite_cond is depricated in favor of rewrites')
+  }
+
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
   }
