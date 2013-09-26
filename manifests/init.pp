@@ -37,7 +37,8 @@ class apache (
   $mpm_module           = $apache::params::mpm_module,
   $conf_template        = $apache::params::conf_template,
   $servername           = $apache::params::servername,
-  $manage_user          = $apache::params::manage_user,
+  $manage_user          = true,
+  $manage_group         = true,
   $user                 = $apache::params::user,
   $group                = $apache::params::group,
   $keepalive            = $apache::params::keepalive,
@@ -61,19 +62,21 @@ class apache (
     validate_re($mpm_module, '(prefork|worker|itk)')
   }
 
+  # declare the web server user and group
+  # Note: requiring the package means the package ought to create them and not puppet
   validate_bool($manage_user)
   if $manage_user {
-    # declare the web server user and group
-    # Note: requiring the package means the package ought to create them and not puppet
-    group { $group:
-      ensure  => present,
-      require => Package['httpd']
-    }
-
     user { $user:
       ensure  => present,
       gid     => $group,
       require => Package['httpd'],
+    }
+  }
+  validate_bool($manage_group)
+  if $manage_group {
+    group { $group:
+      ensure  => present,
+      require => Package['httpd']
     }
   }
 
