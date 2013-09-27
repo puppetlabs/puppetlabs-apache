@@ -12,7 +12,7 @@ describe 'apache', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_package("httpd").with(
       'notify' => 'Class[Apache::Service]',
-      'ensure' => 'installed',
+      'ensure' => 'installed'
       )
     }
     it { should contain_user("www-data") }
@@ -135,7 +135,7 @@ describe 'apache', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_package("httpd").with(
       'notify' => 'Class[Apache::Service]',
-      'ensure' => 'installed',
+      'ensure' => 'installed'
       )
     }
     it { should contain_user("apache") }
