@@ -148,6 +148,18 @@ To set up a virtual host with WSGI
     }
 ```
 
+Starting 2.2.16, httpd supports [FallbackResource](https://httpd.apache.org/docs/2.2/mod/mod_dir.html#fallbackresource) which is a simple replace for common RewriteRules:
+
+```puppet
+    apache::vhost { 'wordpress.example.com':
+      port                => '80',
+      docroot             => '/var/www/wordpress',
+      fallbackresource    => '/index.php',
+    }
+```
+
+Please note that the `disabled` argument to FallbackResource is only supported since 2.2.24.
+
 To see a list of all virtual host parameters, [please go here](#defined-type-apachevhost). To see an extensive list of virtual host examples [please look here](#virtual-host-examples).
 
 ##Usage
