@@ -19,6 +19,10 @@
 
 <%= scope.function_template(['apache/vhost/_itk.erb']) -%>
 
+<% if @fallbackresource -%>
+  FallbackResource <%= @fallbackresource %>
+<% end -%>
+
   ## Directories, there should at least be a declaration for <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 

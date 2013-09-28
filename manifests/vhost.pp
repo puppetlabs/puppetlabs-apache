@@ -94,6 +94,7 @@ define apache::vhost(
     $error_log_file              = undef,
     $error_log_pipe              = undef,
     $error_log_syslog            = undef,
+    $fallbackresource            = undef,
     $scriptalias                 = undef,
     $proxy_dest                  = undef,
     $proxy_pass                  = undef,
@@ -154,6 +155,10 @@ define apache::vhost(
 
   if $error_log_file and $error_log_pipe {
     fail("Apache::Vhost[${name}]: 'error_log_file' and 'error_log_pipe' cannot be defined at the same time")
+  }
+
+  if $fallbackresource {
+    validate_re($fallbackresource, '^/|disabled', 'Please make sure fallbackresource starts with a / (or is "disabled")')
   }
 
   if $ssl {
@@ -337,6 +342,7 @@ define apache::vhost(
   # - $_access_log_format
   # - $error_log
   # - $error_log_destination
+  # - $fallbackresource
   # - $custom_fragment
   # block fragment:
   #   - $block

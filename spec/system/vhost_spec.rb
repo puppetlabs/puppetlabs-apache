@@ -163,6 +163,45 @@ describe 'apache::vhost define' do
 
   end
 
+  case node.facts['lsbdistcodename']
+  when 'precise', 'wheezy'
+    context 'vhost fallbackresouce example' do
+      it 'should configure a vhost with Fallbackresource' do
+        puppet_apply(%{
+        class { 'apache': }
+        apache::vhost { 'fallback.example.net':
+          docroot         => '/var/www/fallback',
+          fallbackresource => '/index.html'
+        }
+        file { '/var/www/fallback/index.html':
+          ensure  => file,
+          content => "Hello World\\n",
+        }
+        host { 'fallback.example.net': ip => '127.0.0.1', }
+                     }) { |r| [0,2].should include r.exit_code}
+      end
+
+      describe service(service_name) do
+        it { should be_enabled }
+        it { should be_running }
+      end
+
+      it 'should answer to fallback.example.net' do
+        shell("/usr/bin/curl fallback.example.net:80/Does/Not/Exist") do |r|
+          r.stdout.should == "Hello World\n"
+          r.exit_code.should == 0
+        end
+      end
+
+    end
+  else
+    # The current stable RHEL release (6.4) comes with Apache httpd 2.2.15
+    # That was released March 6, 2010.
+    # FallbackResource was backported to 2.2.16, and released July 25, 2010.
+    # Ubuntu Lucid (10.04) comes with apache2 2.2.14, released October 3, 2009.
+    # https://svn.apache.org/repos/asf/httpd/httpd/branches/2.2.x/STATUS
+  end
+
   context 'virtual_docroot hosting separate sites' do
     it 'should configure a vhost with VirtualDocumentRoot' do
       puppet_apply(%{

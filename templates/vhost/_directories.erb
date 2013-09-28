@@ -80,6 +80,9 @@
     <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
     <%- end -%>
+    <%- if directory['fallbackresource'] -%>
+    FallbackResource <%= directory['fallbackresource'] %>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>
