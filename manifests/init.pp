@@ -48,10 +48,11 @@ class apache (
   $ports_file           = $apache::params::ports_file,
   $server_tokens        = 'OS',
   $server_signature     = 'On',
+  $package_ensure       = 'installed',
 ) inherits apache::params {
 
   package { 'httpd':
-    ensure => installed,
+    ensure => $package_ensure,
     name   => $apache::params::apache_name,
     notify => Class['Apache::Service'],
   }
