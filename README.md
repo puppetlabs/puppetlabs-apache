@@ -291,6 +291,9 @@ Setting this to false will avoid the user resource to be created by this module.
 
 Setting this to false will avoid the group resource to be created by this module. This is useful when you already have a group created in another puppet module and that you want to used it for apache. Without this, it would result in a duplicate resource error. 
 
+#####`package_ensure`
+
+Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or wheter it is only installed.
 
 ####Class: `apache::default_mods`
 
