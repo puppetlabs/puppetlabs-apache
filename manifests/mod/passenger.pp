@@ -18,6 +18,7 @@ class apache::mod::passenger (
   # - $passenger_high_performance
   # - $passenger_max_requests
   # - $passenger_stat_throttle_rate
+  # - $passenger_use_global_queue
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':
