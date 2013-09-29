@@ -49,10 +49,7 @@ class apache::params {
     $dev_packages         = 'httpd-devel'
     $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
     $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
-    $ssl_certs_dir        = $distrelease ? {
-      '5'     => '/etc/pki/tls/certs',
-      default => '/etc/ssl/certs',
-    }
+    $ssl_certs_dir        = '/etc/pki/tls/certs'
     $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
     $passenger_ruby       = '/usr/bin/ruby'
     $suphp_addhandler     = 'php5-script'
