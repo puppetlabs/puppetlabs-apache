@@ -867,7 +867,7 @@ Specifies the SSL certification.
 
 #####`ssl_certs_dir`
 
-Specifies the location of the SSL certification directory. Defaults to `/etc/ssl/certs`.
+Specifies the location of the SSL certification directory. Defaults to `/etc/ssl/certs` on Debian and `/etc/pki/tls/certs` on RedHat.
 
 #####`ssl_chain`
 
