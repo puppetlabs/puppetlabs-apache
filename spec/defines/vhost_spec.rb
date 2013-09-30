@@ -431,6 +431,24 @@ describe 'apache::vhost', :type => :define do
             '  VirtualDocumentRoot /not/default',
           ],
         },
+        {
+            :title => 'should accept setting SSLProtocol',
+            :attr  => 'ssl_protocol',
+            :value => 'all -SSLv2',
+            :match => '  SSLProtocol           all -SSLv2',
+        },
+        {
+            :title => 'should accept setting SSLCipherSuite',
+            :attr  => 'ssl_cipher',
+            :value => 'RC4-SHA:HIGH:!ADH:!SSLv2',
+            :match => '  SSLCipherSuite        RC4-SHA:HIGH:!ADH:!SSLv2',
+        },
+        {
+            :title => 'should accept setting SSLHonorCipherOrder',
+            :attr  => 'ssl_honorcipherorder',
+            :value => 'On',
+            :match => '  SSLHonorCipherOrder     On'
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
