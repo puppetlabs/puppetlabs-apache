@@ -184,18 +184,19 @@ apache::vhost { 'subdomain.loc':
   serveraliases   => ['*.loc',],
 }
 
-# Vhost with SSLProtocol and SSLCipherSuite
+# Vhost with SSLProtocol,SSLCipherSuite, SSLHonorCipherOrder
 apache::vhost { 'securedomain.com':
-        priority        => '10',
-        vhost_name      => 'www.securedomain.com',
-        port            => '443',
-        docroot         => '/var/www/secure',
-        ssl             => true,
-        ssl_cert        => '/etc/ssl/securedomain.cert',
-        ssl_key         => '/etc/ssl/securedomain.key',
-        ssl_chain       => '/etc/ssl/securedomain.crt',
-        ssl_protocol    => '-ALL +SSLv3 +TLSv1',
-        ssl_cipher      => 'ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
-        add_listen      => 'false',
+        priority              => '10',
+        vhost_name            => 'www.securedomain.com',
+        port                  => '443',
+        docroot               => '/var/www/secure',
+        ssl                   => true,
+        ssl_cert              => '/etc/ssl/securedomain.cert',
+        ssl_key               => '/etc/ssl/securedomain.key',
+        ssl_chain             => '/etc/ssl/securedomain.crt',
+        ssl_protocol          => '-ALL +SSLv3 +TLSv1',
+        ssl_cipher            => 'ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
+        ssl_honorcipherorder  => 'On',
+        add_listen            => 'false',
 }
 

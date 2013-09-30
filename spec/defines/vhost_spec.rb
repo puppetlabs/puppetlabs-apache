@@ -443,6 +443,12 @@ describe 'apache::vhost', :type => :define do
             :value => 'RC4-SHA:HIGH:!ADH:!SSLv2',
             :match => '  SSLCipherSuite        RC4-SHA:HIGH:!ADH:!SSLv2',
         },
+        {
+            :title => 'should accept setting SSLHonorCipherOrder',
+            :attr  => 'ssl_honorcipherorder',
+            :value => 'On',
+            :match => '  SSLHonorCipherOrder     On'
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
