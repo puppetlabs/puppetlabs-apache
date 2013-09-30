@@ -849,6 +849,10 @@ Specifies the SSL Protocol (SSLProtocol).
 
 Specifies the SSLCipherSuite.
 
+#####`ssl_honorcipherorder`
+
+Sets SSLHonorCipherOrder directive, used to prefer the server's cipher preference order
+
 #####`ssl_certs_dir`
 
 Specifies the location of the SSL certification directory. Defaults to `/etc/ssl/certs`.
