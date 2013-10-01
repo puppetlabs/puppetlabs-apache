@@ -21,6 +21,7 @@ class apache::default_mods (
       }
       'redhat': {
         include apache::mod::cache
+        include apache::mod::mime
         include apache::mod::mime_magic
         include apache::mod::vhost_alias
         apache::mod { 'actions': }
