@@ -20,6 +20,15 @@
 <% if @sslproxyengine -%>
   SSLProxyEngine On
 <% end -%>
+<% if @ssl_protocol -%>
+  SSLProtocol             <%= @ssl_protocol %>
+<% end -%>
+<% if @ssl_cipher -%>
+  SSLCipherSuite          <%= @ssl_cipher %>
+<% end -%>
+<% if @ssl_honorcipherorder -%>
+  SSLHonorCipherOrder     <%= @ssl_honorcipherorder %>
+<% end -%>
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars
   </FilesMatch>
