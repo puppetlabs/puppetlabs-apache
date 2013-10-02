@@ -24,4 +24,7 @@
   <%- if @rails_autodetect -%>
   RailsAutoDetect <%= @rails_autodetect %>
   <%- end -%>
+  <%- if @passenger_use_global_queue -%>
+  PassengerUseGlobalQueue <%= @passenger_use_global_queue %>
+  <%- end -%> 
 </IfModule>

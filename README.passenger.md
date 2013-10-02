@@ -61,6 +61,10 @@ Should Passenger automatically detect if the document root of a virtual host is 
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_railsautodetect_lt_on_off_gt
 
+## passenger_use_global_queue
+
+Allows toggling of PassengerUseGlobalQueue.  NOTE: PassengerUseGlobalQueue is the default in Passenger 4.x and the versions >= 4.x have disabled this configuration option altogether.  Use with caution.
+
 # Attribution
 
 The Passenger tuning parameters for the `apache::mod::puppet` Puppet class was modified by Aaron Hicks (hicksa@landcareresearch.co.nz) for work on the NeSI Project and the Tuakiri New Zealand Access Federation as a fork from the PuppetLabs Apache module on GitHub.
