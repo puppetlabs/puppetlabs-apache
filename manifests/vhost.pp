@@ -84,6 +84,7 @@ define apache::vhost(
     $serveraliases               = [],
     $options                     = ['Indexes','FollowSymLinks','MultiViews'],
     $override                    = ['None'],
+    $directoryindex              = '',
     $vhost_name                  = '*',
     $logroot                     = $apache::logroot,
     $access_log                  = true,
@@ -323,6 +324,7 @@ define apache::vhost(
       path           => $docroot,
       options        => $options,
       allow_override => $override,
+      directoryindex => $directoryindex,
       order          => 'allow,deny',
       allow          => 'from all',
     } ]
