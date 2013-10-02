@@ -122,7 +122,10 @@ define apache::vhost(
     $wsgi_process_group          = undef,
     $wsgi_script_aliases         = undef,
     $custom_fragment             = undef,
-    $itk                         = undef
+    $itk                         = undef,
+    $fastcgi_server              = undef,
+    $fastcgi_socket              = undef,
+    $fastcgi_dir                 = undef,
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -292,6 +295,13 @@ define apache::vhost(
   if $rack_base_uris {
     if ! defined(Class['apache::mod::passenger']) {
       include apache::mod::passenger
+    }
+  }
+
+  # Load mod_fastci if needed and not yet loaded
+  if $fastcgi_server and $fastcgi_socket {
+    if ! defined(Class['apache::mod::fastcgi']) {
+      include apache::mod::fastcgi
     }
   }
 
