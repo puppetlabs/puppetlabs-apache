@@ -676,6 +676,15 @@ describe 'apache::vhost', :type => :define do
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/test} }
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /logout http://10\.0\.0\.10/test} }
         end
+
+        describe 'with a directoryindex specified' do
+          let :params do
+            default_params.merge({
+              :directoryindex => 'index.php'
+            })
+          end
+          it { should contain_file("25-#{title}.conf").with_content %r{DirectoryIndex index.php} }
+	end
       end
     end
   end

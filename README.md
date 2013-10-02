@@ -646,6 +646,10 @@ Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the 
 Pass a string of custom configuration directives to be placed at the end of the
 directory configuration.
 
+#####`directoryindex`
+
+Set a DirectoryIndex directive, to set the list of resources to look for, when the client requests an index of the directory by specifying a / at the end of the directory name..
+
 #####`docroot`
 
 Provides the DocumentRoot directive, identifying the directory Apache serves files from.
