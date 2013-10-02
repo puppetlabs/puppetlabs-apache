@@ -23,6 +23,7 @@ class apache (
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
   $service_enable       = true,
+  $service_ensure       = 'running',
   $purge_configs        = true,
   $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
@@ -85,6 +86,7 @@ class apache (
 
   class { 'apache::service':
     service_enable => $service_enable,
+    service_ensure => $service_ensure,
   }
 
   # Deprecated backwards-compatibility

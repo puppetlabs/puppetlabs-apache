@@ -229,7 +229,11 @@ The default certificate revocation list to use, which is automatically set to 'u
 
 #####`service_enable`
 
-Determines whether the 'httpd' service is enabled when the machine is booted, meaning Puppet will check the service status to start/stop it. Defaults to 'true', meaning the service is enabled/running.
+Determines whether the 'httpd' service is enabled when the machine is booted. Defaults to 'true'.
+
+#####`service_ensure`
+
+Determines whether the service should be running. Can be set to 'undef' which is useful when you want to let the service be managed by some other application like pacemaker. Defaults to 'running'.
 
 #####`serveradmin`
 
