@@ -17,7 +17,7 @@ define apache::mod (
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
     $lib_REAL = $lib
-  } elsif $mod_lib {
+  } elsif "${mod_lib}" {
     $lib_REAL = $mod_lib
   } else {
     $lib_REAL = "mod_${mod}.so"
