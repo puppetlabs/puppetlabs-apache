@@ -905,6 +905,18 @@ Specifies the location of the certificate revocation list.
 
 Specifies the SSL key.
 
+#####`ssl_verify_client`
+
+Specifies the SSLVerifyClient option.
+
+#####`ssl_verify_depth`
+
+Specifies the SSLVerifyDepth option.
+
+#####`ssl_options`
+
+Specifies the SSLOptions option for the vhost.  This is the global setting for the vhost and can be a string or an array.
+
 #####`sslproxyengine`
 
 Specifies whether to use `SSLProxyEngine` or not. Defaults to `false`.
