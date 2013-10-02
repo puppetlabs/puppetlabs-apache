@@ -7,6 +7,10 @@ class apache::mod::fastcgi {
   apache::mod { 'fastcgi': }
 
   if $fastcgi_lib_path {
+    # Template uses:
+    # - $fastcgi_server
+    # - $fastcgi_socket
+    # - $fastcgi_dir
     file { 'fastcgi.conf':
       ensure  => file,
       path    => "${apache::mod_dir}/fastcgi.conf",
