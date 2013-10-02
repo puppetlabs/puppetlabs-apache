@@ -103,6 +103,7 @@ define apache::vhost(
     $error_log_syslog            = undef,
     $fallbackresource            = undef,
     $scriptalias                 = undef,
+    $scriptaliases               = [],
     $proxy_dest                  = undef,
     $proxy_pass                  = undef,
     $sslproxyengine              = false,
@@ -282,7 +283,7 @@ define apache::vhost(
   }
 
   # Load mod_alias if needed and not yet loaded
-  if $scriptalias or ($redirect_source and $redirect_dest) {
+  if ($scriptalias or $scriptaliases != []) or ($redirect_source and $redirect_dest) {
     if ! defined(Class['apache::mod::alias']) {
       include apache::mod::alias
     }
@@ -387,6 +388,7 @@ define apache::vhost(
   #   - $rewrite_cond
   # scriptalias fragment:
   #   - $scriptalias
+  #   - $scriptaliases
   #   - $ssl
   # serveralias fragment:
   #   - $serveraliases

@@ -198,10 +198,34 @@ describe 'apache::vhost', :type => :define do
           :notmatch => /ErrorLog.+$/,
         },
         {
-          :title => 'should accept scriptaliases',
+          :title => 'should accept a scriptalias',
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
-          :match => '  ScriptAlias /cgi-bin/ "/usr/scripts/"',
+          :match => [
+            '  ScriptAlias /cgi-bin/ "/usr/scripts/"',
+            '  <Directory "/usr/scripts/">',
+          ],
+        },
+        {
+          :title    => 'should accept a single scriptaliases',
+          :attr     => 'scriptaliases',
+          :value    => { 'alias' => '/blah/', 'path' => '/usr/scripts' },
+          :match    => [
+            '  ScriptAlias /blah/ "/usr/scripts/"',
+            '  <Directory "/usr/scripts/">',
+          ],
+          :nomatch  => /ScriptAlias \/cgi\-bin\//
+        },
+        {
+          :title    => 'should accept multiple scriptaliases',
+          :attr     => 'scriptaliases',
+          :value    => [ { 'alias' => '/blah/', 'path' => '/usr/scripts' }, { 'alias' => '/blah2/', 'path' => '/usr/scripts' } ],
+          :match    => [
+            '  ScriptAlias /blah/ "/usr/scripts/"',
+            '  ScriptAlias /blah2/ "/usr/scripts/"',
+            '  <Directory "/usr/scripts/">',
+          ],
+          :nomatch  => /ScriptAlias \/cgi\-bin\//
         },
         {
           :title    => 'should accept proxy destinations',
