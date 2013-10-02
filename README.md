@@ -301,11 +301,11 @@ Allows the configuration of a trailing footer line under server-generated docume
 
 #####`manage_user`
 
-Setting this to false will avoid the user resource to be created by this module. This is useful when you already have a user created in another puppet module and that you want to used it to run apache. Without this, it would result in a duplicate resource error. 
+Setting this to false will avoid the user resource to be created by this module. This is useful when you already have a user created in another puppet module and that you want to used it to run apache. Without this, it would result in a duplicate resource error.
 
 #####`manage_group`
 
-Setting this to false will avoid the group resource to be created by this module. This is useful when you already have a group created in another puppet module and that you want to used it for apache. Without this, it would result in a duplicate resource error. 
+Setting this to false will avoid the group resource to be created by this module. This is useful when you already have a group created in another puppet module and that you want to used it for apache. Without this, it would result in a duplicate resource error.
 
 #####`package_ensure`
 
@@ -345,6 +345,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `dir`*
 * `disk_cache`
 * `fcgid`
+* `fastcgi`
 * `info`
 * `ldap`
 * `mime`
@@ -685,6 +686,18 @@ Sends all error log messages to syslog. Defaults to 'undef'.
 #####`ensure`
 
 Specifies if the vhost file is present or absent.
+
+#####`fastcgi_server`
+
+Specifies the filename as an external FastCGI application. Defaults to 'undef'.
+
+#####`fastcgi_socket`
+
+Filename used to communicate with the web server.  Defaults to 'undef'.
+
+#####`fastcgi_dir`
+
+Directory to enable for FastCGI.  Defaults to 'undef'.
 
 #####`ip`
 
