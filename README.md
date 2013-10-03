@@ -907,15 +907,47 @@ Specifies the SSL key.
 
 #####`ssl_verify_client`
 
-Specifies the SSLVerifyClient option.
+Sets `SSLVerifyClient` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslverifyclient). Defaults to undef.
+An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_verify_client => 'optional',
+    }
+```
 
 #####`ssl_verify_depth`
 
-Specifies the SSLVerifyDepth option.
+Sets `SSLVerifyDepth` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslverifydepth). Defaults to undef.
+An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_verify_depth => 1,
+    }
+```
 
 #####`ssl_options`
 
-Specifies the SSLOptions option for the vhost.  This is the global setting for the vhost and can be a string or an array.
+Sets `SSLVerifyOptions` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions). This is the global setting for the vhost and can be a string or an array. Defaults to undef. A single string example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_options => '+StdEnvVars',
+    }
+```
+
+An array of strings example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_options => [ '+StdEnvVars', '+ExportCertData' ],
+    }
+```
 
 #####`sslproxyengine`
 
