@@ -356,6 +356,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
 * `prefork`*
 * `proxy`*
+* `proxy_ajp`
 * `proxy_html`
 * `proxy_http`
 * `python`
