@@ -78,6 +78,9 @@ define apache::vhost(
     $ssl_protocol                = undef,
     $ssl_cipher                  = undef,
     $ssl_honorcipherorder        = undef,
+    $ssl_verify_client           = undef,
+    $ssl_verify_depth            = undef,
+    $ssl_options                 = undef,
     $priority                    = undef,
     $default_vhost               = false,
     $servername                  = $name,
@@ -385,6 +388,9 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  #   - $ssl_verify_client
+  #   - $ssl_verify_depth
+  #   - $ssl_options
   # suphp fragment:
   #   - $suphp_addhandler
   #   - $suphp_engine

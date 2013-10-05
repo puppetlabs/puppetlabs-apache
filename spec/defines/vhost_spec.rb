@@ -449,6 +449,31 @@ describe 'apache::vhost', :type => :define do
             :value => 'On',
             :match => '  SSLHonorCipherOrder     On'
         },
+        {
+            :title => 'should accept setting SSLVerifyClient',
+            :attr  => 'ssl_verify_client',
+            :value => 'optional',
+            :match => /SSLVerifyClient\w+optional/
+        },
+        {
+            :title => 'should accept setting SSLVerifyDepth',
+            :attr  => 'ssl_verify_depth',
+            :value => '1',
+            :match => /SSLVerifyDepth\w+1/
+        },
+        {
+            :title => 'should accept setting SSLOptions with a string',
+            :attr  => 'ssl_options',
+            :value => '+ExportCertData',
+            :match => /SSLOptions\w+\+ExportCertData/
+        },
+        {
+            :title => 'should accept setting SSLOptions with an array',
+            :attr  => 'ssl_options',
+            :value => ['+StdEnvVars','+ExportCertData'],
+            :match => /SSLOptions\w+\+StdEnvVars\w+\+ExportCertData/
+        },
+
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
