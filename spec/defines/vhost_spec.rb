@@ -274,10 +274,11 @@ describe 'apache::vhost', :type => :define do
         {
           :title => 'should accept rewrite conditions',
           :attr  => 'rewrites',
-          :value => [{'rewrite_rules' => ['not a real rule'], 'rewrite_conds' => ['not a real condition']}],
+          :value => [{'comment' => 'redirect IE', 'rewrite_conds' => ['%{HTTP_USER_AGENT} ^MSIE'], 'rewrite_rules' => ['^index\.html$ welcome.html'],}],
           :match => [
-            '  RewriteRule not a real rule',
-            '  RewriteCond not a real condition',
+            '  # redirect ID',
+            '  RewriteCond %{HTTP_USER_AGENT} ^MSIE',
+            '  RewriteRule ^index\.html$ welcome.html',
           ],
         },
         {
@@ -521,24 +522,27 @@ describe 'apache::vhost', :type => :define do
         let :params do default_params.merge({
           :rewrites => [
             {
-              'comment'       => 'force www domain',
-              'rewrite_conds' => ['firstCond', 'secondCond'],
-              'rewrite_rules' => ['firstRule', 'secondRule'],
+              'comment'       => 'test rewrites',
+              'rewrite_conds' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+              'rewrite_rules' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
             }
           ]
         }) end
         it 'should set RewriteConds and RewriteRules' do
           should contain_file("25-#{title}.conf").with_content(
-            /^  RewriteCond firstCond$/
+            /^  #test rewrites$/
           )
           should contain_file("25-#{title}.conf").with_content(
-            /^  RewriteCond secondCond$/
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Lynx\/ \[OR\]$/
           )
           should contain_file("25-#{title}.conf").with_content(
-            /^  RewriteRule firstRule$/
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Mozilla\/\[12\]$/
           )
           should contain_file("25-#{title}.conf").with_content(
-            /^  RewriteRule secondRule$/
+            /^  RewriteRule \^index\\.html\$ welcome.html$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule \^index\\.cgi\$ index.php$/
           )
         end
       end
