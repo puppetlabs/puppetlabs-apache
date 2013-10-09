@@ -37,9 +37,7 @@ describe 'apache::service', :type => :class do
       let (:params) {{ :service_enable => 'not-a-boolean' }}
 
       it 'should fail' do
-        expect {
-          should include_class('apache::service')
-        }.to raise_error(Puppet::Error, /is not a boolean/)
+        expect { subject }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
 
