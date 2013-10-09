@@ -264,7 +264,7 @@ describe 'apache', :type => :class do
         let :params do
           { :mpm_module => 'breakme' }
         end
-        it { expect { should contain_class('apache::params') }.to raise_error Puppet::Error, /does not match/ }
+        it { expect { subject }.to raise_error Puppet::Error, /does not match/ }
       end
     end
 

@@ -10,7 +10,7 @@ describe 'apache::mod::ssl', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { expect { should raise_error(Puppet::Error, "Unsupported operatingsystem:") } }
+    it { expect { subject }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
   end
 
   context 'on a RedHat OS' do
