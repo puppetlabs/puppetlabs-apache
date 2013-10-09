@@ -23,7 +23,7 @@ describe 'apache::mod::php', :type => :class do
         'class { "apache": mpm_module => worker, }'
       end
       it 'should raise an error' do
-        expect { subject.should contain_apache__mod('php5') }.to raise_error Puppet::Error, /mpm_module => 'prefork'/
+        expect { subject }.to raise_error Puppet::Error, /mpm_module => 'prefork'/
       end
     end
   end

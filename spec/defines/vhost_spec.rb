@@ -495,7 +495,7 @@ describe 'apache::vhost', :type => :define do
           :access_log_pipe => '| /bin/fake',
         }) end
         it 'should cause a failure' do
-          expect {should raise_error(Puppet::Error, 'Apache::Vhost[${name}]: \'access_log_file\' and \'access_log_pipe\' cannot be defined at the same time') }
+          expect { subject }.to raise_error(Puppet::Error, /'access_log_file' and 'access_log_pipe' cannot be defined at the same time/)
         end
       end
       describe 'when error_log_file and error_log_pipe are specified' do
@@ -504,7 +504,7 @@ describe 'apache::vhost', :type => :define do
           :error_log_pipe => '| /bin/fake',
         }) end
         it 'should cause a failure' do
-          expect { should raise_error(Puppet::Error, 'Apache::Vhost[${name}]: \'error_log_file\' and \'error_log_pipe\' cannot be defined at the same time') }
+          expect { subject }.to raise_error(Puppet::Error, /'error_log_file' and 'error_log_pipe' cannot be defined at the same time/)
         end
       end
       describe 'when docroot owner is specified' do
