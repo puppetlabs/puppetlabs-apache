@@ -235,6 +235,10 @@ Determines whether the 'httpd' service is enabled when the machine is booted. De
 
 Determines whether the service should be running. Can be set to 'undef' which is useful when you want to let the service be managed by some other application like pacemaker. Defaults to 'running'.
 
+#####`purge_configs`
+
+Removes all other apache configs and vhosts, which is automatically set to true. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise managed configuration. It is recommended that you move your configuration entirely to resources within this module.
+
 #####`serveradmin`
 
 Sets the server administrator. Defaults to 'root@localhost'.
@@ -253,7 +257,7 @@ Enables custom error documents. Defaults to 'false'.
 
 #####`httpd_dir`
 
-Changes the base location of the configuration directories used for the service. This is useful for specially repackaged HTTPD builds but may have unintended concequences when used in combination with the default distribution packages. Default is based on your OS.
+Changes the base location of the configuration directories used for the service. This is useful for specially repackaged HTTPD builds but may have unintended consequences when used in combination with the default distribution packages. Default is based on your OS.
 
 #####`confd_dir`
 
@@ -309,7 +313,7 @@ Setting this to false will avoid the group resource to be created by this module
 
 #####`package_ensure`
 
-Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or wheter it is only installed.
+Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or whether it is only installed.
 
 ####Class: `apache::default_mods`
 
