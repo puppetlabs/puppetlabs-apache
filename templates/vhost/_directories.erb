@@ -1,7 +1,6 @@
 <% if @_directories and ! @_directories.empty? -%>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != ''-%>
-
   <%- provider = 'Directory' -%>
   <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
     <%- provider = directory['provider'].capitalize -%>
@@ -15,10 +14,12 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
+    <%- if provider == 'Directory' -%>
     <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
     <%- else -%>
     AllowOverride None
+    <%- end -%>
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
