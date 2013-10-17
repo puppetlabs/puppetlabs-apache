@@ -373,7 +373,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `reqtimeout`
 * `setenvif`
 * `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
-* `status`
+* `status`*
 * `suphp`
 * `userdir`*
 * `worker`*
