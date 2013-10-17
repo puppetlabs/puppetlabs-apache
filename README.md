@@ -562,7 +562,7 @@ Sets the order of processing `Allow` and `Deny` statements as per [Apache core d
 ```puppet
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
-      directories => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
+      directories => [ { path => '/path/to/directory', order => 'Allow,Deny' } ],
     }
 ```
 
