@@ -1,11 +1,13 @@
 <% if @_directories and ! @_directories.empty? -%>
   <%- [@_directories].flatten.compact.each do |directory| -%>
-    <%- if directory['path'] and directory['path'] != ''-%>
+    <%- if directory['path'] and directory['path'] != '' -%>
 
-  <%- provider = 'Directory' -%>
   <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
     <%- provider = directory['provider'].capitalize -%>
+  <%- else -%>
+    <%- provider = 'Directory' -%>
   <%- end -%>
+
   <<%= provider + ' ' + directory['path'] %>>
     <%- if directory['headers'] -%>
       <%- Array(directory['headers']).each do |header| -%>
@@ -24,7 +26,7 @@
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
-    <%- else -%>
+    <%- elsif provider == 'Directory' -%>
     Order allow,deny
     <%- end -%>
     <%- if directory['deny'] and directory['deny'] != '' -%>
@@ -32,7 +34,7 @@
     <%- end -%>
     <%- if directory['allow'] and directory['allow'] != '' -%>
     Allow <%= directory['allow'] %>
-    <%- else -%>
+    <%- elsif provider == 'Directory' -%>
     Allow from all
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
@@ -92,6 +94,7 @@
     <%= directory['custom_fragment'] %>
     <%- end -%>
   </<%= provider %>>
+
     <%- end -%>
   <%- end -%>
 <% end -%>
