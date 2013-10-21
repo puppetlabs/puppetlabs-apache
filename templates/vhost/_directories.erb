@@ -89,6 +89,19 @@
     <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
+    <%- if directory['expires_active'] -%>
+    ExpiresActive <%= directory['expires_active'] %>
+    <%- end -%>
+    <%- if directory['expires_default'] -%>
+    ExpiresDefault <%= directory['expires_default'] %>
+    <%- end -%>
+    <%- if directory['expires_by_type'] -%>
+    <%- Array(directory['expires_by_type']).each do |rule| -%>
+    ExpiresByType <%= rule %>
+    <%- end -%>
+    <%- end -%>
+    <%- if directory['force_type'] -%>
+    ForceType <%= directory['force_type'] %>
     <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
