@@ -364,6 +364,10 @@ define apache::vhost(
   # directories fragment:
   #   - $passenger_enabled
   #   - $directories (a list of key-value hashes is expected)
+  # fastcgi fragment:
+  #   - $fastcgi_server
+  #   - $fastcgi_socket
+  #   - $fastcgi_dir
   # proxy fragment:
   #   - $proxy_dest
   #   - $no_proxy_uris
