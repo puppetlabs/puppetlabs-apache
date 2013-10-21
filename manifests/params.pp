@@ -57,6 +57,7 @@ class apache::params {
     $suphp_configpath     = undef
     $mod_packages         = {
       'auth_kerb'  => 'mod_auth_kerb',
+      'fastcgi'    => 'mod_fastcgi',
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
@@ -106,6 +107,7 @@ class apache::params {
     $suphp_configpath  = '/etc/php5/apache2'
     $mod_packages     = {
       'auth_kerb'  => 'libapache2-mod-auth-kerb',
+      'fastcgi'    => 'libapache2-mod-fastcgi',
       'fcgid'      => 'libapache2-mod-fcgid',
       'passenger'  => 'libapache2-mod-passenger',
       'perl'       => 'libapache2-mod-perl2',
