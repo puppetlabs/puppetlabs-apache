@@ -58,6 +58,7 @@ class apache::params {
     $mod_packages         = {
       'auth_kerb'   => 'mod_auth_kerb',
       'authnz_ldap' => 'mod_authz_ldap',
+      'fastcgi'     => 'mod_fastcgi',
       'fcgid'       => 'mod_fcgid',
       'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
@@ -80,6 +81,7 @@ class apache::params {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    $fastcgi_lib_path     = undef
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -108,6 +110,7 @@ class apache::params {
     $mod_packages     = {
       'auth_kerb'   => 'libapache2-mod-auth-kerb',
       'authnz_ldap' => 'libapache2-mod-authz-ldap',
+      'fastcgi'     => 'libapache2-mod-fastcgi',
       'fcgid'       => 'libapache2-mod-fcgid',
       'passenger'   => 'libapache2-mod-passenger',
       'perl'        => 'libapache2-mod-perl2',
@@ -125,6 +128,7 @@ class apache::params {
     $conf_template     = 'apache/httpd.conf.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
+    $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
