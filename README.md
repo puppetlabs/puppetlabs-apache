@@ -466,7 +466,7 @@ Sets a given `apache::vhost` as the default to serve requests that do not match 
 
 #####`directories`
 
-Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory).  The `path` key is required in these hashes.  Usage will typically look like:
+Passes a list of hashes to the vhost to create `<Directory /path/to/directory>...</Directory>` directive blocks as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#directory).  The `path` key is required in these hashes. An optional `provider` defaults to `directory`.  Usage will typically look like:
 
 ```puppet
     apache::vhost { 'sample.example.net':
@@ -482,7 +482,18 @@ Passes a list of hashes to the vhost to create `<Directory /path/to/directory>..
 
 *Note:* If not defined a single default `<Directory>` block will be created that matches the `docroot` parameter.
 
-The directives will be embedded within the `Directory` directive block, missing directives should be undefined and not be added, resulting in their default vaules in Apache. Currently this is the list of supported directives:
+`provider` can be set to any of `directory`, `files`, or `location`. If the [pathspec starts with a `~`](https://httpd.apache.org/docs/2.2/mod/core.html#files), httpd will interpret this as the equivalent of `DirectoryMatch`, `FilesMatch`, or `LocationMatch`, respectively.
+
+```puppet
+    apache::vhost { 'files.example.net':
+      docroot     => '/var/www/files',
+      directories => [
+        { path => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
+      ],
+    }
+```
+
+The directives will be embedded within the `Directory` (`Files`, or `Location`) directive block, missing directives should be undefined and not be added, resulting in their default vaules in Apache. Currently this is the list of supported directives:
 
 ######`addhandlers`
 
