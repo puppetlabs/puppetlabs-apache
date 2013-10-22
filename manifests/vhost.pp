@@ -78,6 +78,9 @@ define apache::vhost(
     $ssl_protocol                = undef,
     $ssl_cipher                  = undef,
     $ssl_honorcipherorder        = undef,
+    $ssl_verify_client           = undef,
+    $ssl_verify_depth            = undef,
+    $ssl_options                 = undef,
     $priority                    = undef,
     $default_vhost               = false,
     $servername                  = $name,
@@ -273,8 +276,8 @@ define apache::vhost(
 
   # Load mod_rewrite if needed and not yet loaded
   if $rewrite_rule {
-    if ! defined(Apache::Mod['rewrite']) {
-      apache::mod { 'rewrite': }
+    if ! defined(Class['apache::mod::rewrite']) {
+      include apache::mod::rewrite
     }
   }
 
@@ -399,6 +402,9 @@ define apache::vhost(
   #   - $ssl_ca
   #   - $ssl_crl
   #   - $ssl_crl_path
+  #   - $ssl_verify_client
+  #   - $ssl_verify_depth
+  #   - $ssl_options
   # suphp fragment:
   #   - $suphp_addhandler
   #   - $suphp_engine
@@ -423,8 +429,12 @@ define apache::vhost(
   }
   if $::osfamily == 'Debian' {
     $vhost_enable_dir = $apache::vhost_enable_dir
+    $vhost_symlink_ensure = $ensure ? {
+      present => link,
+      default => $ensure,
+    }
     file{ "${priority_real}-${filename}.conf symlink":
-      ensure  => link,
+      ensure  => $vhost_symlink_ensure,
       path    => "${vhost_enable_dir}/${priority_real}-${filename}.conf",
       target  => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
       owner   => 'root',

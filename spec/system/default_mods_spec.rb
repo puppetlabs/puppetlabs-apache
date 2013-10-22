@@ -90,6 +90,7 @@ describe 'apache::default_mods class' do
       # Run it twice and test for idempotency
       puppet_apply(pp) do |r|
         [0,2].should include(r.exit_code)
+        sleep 10 # avoid race condition on centos :(
         r.refresh
         r.exit_code.should be_zero
       end

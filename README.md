@@ -235,6 +235,10 @@ Determines whether the 'httpd' service is enabled when the machine is booted. De
 
 Determines whether the service should be running. Can be set to 'undef' which is useful when you want to let the service be managed by some other application like pacemaker. Defaults to 'running'.
 
+#####`purge_configs`
+
+Removes all other apache configs and vhosts, which is automatically set to true. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise managed configuration. It is recommended that you move your configuration entirely to resources within this module.
+
 #####`serveradmin`
 
 Sets the server administrator. Defaults to 'root@localhost'.
@@ -253,7 +257,7 @@ Enables custom error documents. Defaults to 'false'.
 
 #####`httpd_dir`
 
-Changes the base location of the configuration directories used for the service. This is useful for specially repackaged HTTPD builds but may have unintended concequences when used in combination with the default distribution packages. Default is based on your OS.
+Changes the base location of the configuration directories used for the service. This is useful for specially repackaged HTTPD builds but may have unintended consequences when used in combination with the default distribution packages. Default is based on your OS.
 
 #####`confd_dir`
 
@@ -309,7 +313,7 @@ Setting this to false will avoid the group resource to be created by this module
 
 #####`package_ensure`
 
-Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or wheter it is only installed.
+Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or whether it is only installed.
 
 ####Class: `apache::default_mods`
 
@@ -357,6 +361,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
 * `prefork`*
 * `proxy`*
+* `proxy_ajp`
 * `proxy_html`
 * `proxy_http`
 * `python`
@@ -558,7 +563,7 @@ Sets the order of processing `Allow` and `Deny` statements as per [Apache core d
 ```puppet
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
-      directories => [ { path => '/path/to/directory', order => 'Allow, Deny' } ],
+      directories => [ { path => '/path/to/directory', order => 'Allow,Deny' } ],
     }
 ```
 
@@ -917,6 +922,50 @@ Specifies the location of the certificate revocation list.
 #####`ssl_key`
 
 Specifies the SSL key.
+
+#####`ssl_verify_client`
+
+Sets `SSLVerifyClient` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslverifyclient). Defaults to undef.
+An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_verify_client => 'optional',
+    }
+```
+
+#####`ssl_verify_depth`
+
+Sets `SSLVerifyDepth` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#sslverifydepth). Defaults to undef.
+An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_verify_depth => 1,
+    }
+```
+
+#####`ssl_options`
+
+Sets `SSLVerifyOptions` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions). This is the global setting for the vhost and can be a string or an array. Defaults to undef. A single string example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_options => '+StdEnvVars',
+    }
+```
+
+An array of strings example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_options => [ '+StdEnvVars', '+ExportCertData' ],
+    }
+```
 
 #####`sslproxyengine`
 
