@@ -24,6 +24,7 @@ class apache::default_mods (
         include apache::mod::mime
         include apache::mod::mime_magic
         include apache::mod::vhost_alias
+        include apache::mod::rewrite
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
         apache::mod { 'authn_alias': }
@@ -36,7 +37,6 @@ class apache::default_mods (
         apache::mod { 'ext_filter': }
         apache::mod { 'include': }
         apache::mod { 'logio': }
-        apache::mod { 'rewrite': }
         apache::mod { 'speling': }
         apache::mod { 'substitute': }
         apache::mod { 'suexec': }
