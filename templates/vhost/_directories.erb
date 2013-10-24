@@ -37,8 +37,11 @@
     <%- if directory['deny'] and directory['deny'] != '' -%>
     Deny <%= directory['deny'] %>
     <%- end -%>
-    <%- if directory['allow'] and directory['allow'] != '' -%>
+    <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
     Allow <%= directory['allow'] %>
+    <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
+    <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
+    Deny from all
     <%- else -%>
     Allow from all
     <%- end -%>
