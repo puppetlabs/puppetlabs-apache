@@ -1,5 +1,5 @@
 # This function is called inside the OS specific contexts
-def general_info_specs
+def general_mime_magic_specs
   it { should contain_apache__mod("mime_magic") }
 end
 
@@ -17,7 +17,7 @@ describe 'apache::mod::mime_magic', :type => :class do
       }
     end
 
-    general_info_specs()
+    general_mime_magic_specs()
 
     it do
       should contain_file("mime_magic.conf").with_content(
@@ -57,7 +57,7 @@ describe 'apache::mod::mime_magic', :type => :class do
       }
     end
 
-    general_info_specs()
+    general_mime_magic_specs()
 
     it do
       should contain_file("mime_magic.conf").with_content(
