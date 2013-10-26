@@ -353,7 +353,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `info`
 * `ldap`
 * `mime`
-* `mime_magic`
+* `mime_magic`*
 * `mpm_event`
 * `negotiation`
 * `passenger`*
