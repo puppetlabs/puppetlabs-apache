@@ -7,6 +7,11 @@ class apache::mod::php (
   apache::mod { 'php5':
     package_ensure => $package_ensure,
   }
+
+  include apache::mod::mime
+  include apache::mod::dir
+  Class['apache::mod::mime'] -> Class['apache::mod::dir'] -> Class['apache::mod::php']
+
   file { 'php5.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/php5.conf",
