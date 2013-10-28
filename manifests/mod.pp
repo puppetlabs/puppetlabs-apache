@@ -31,7 +31,7 @@ define apache::mod (
   } elsif "${mod_package}" {
     $package_REAL = $mod_package
   }
-  if $package_REAL {
+  if $package_REAL and ! defined(Package[$package_REAL]) {
     # $package_REAL may be an array
     package { $package_REAL:
       ensure  => $package_ensure,
