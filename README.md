@@ -870,6 +870,32 @@ Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to spe
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin'
 
+#####`scriptaliases`
+
+Takes an array hashes with the keys containing the alias and path.  For example:
+
+Usage will typically look like:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      scriptaliases => [
+        {
+          alias => '/myscript/',
+          path  => '/usr/share/myscript',
+        },
+        {
+          alias => '/oldscript/',
+          path  => '/usr/share/myscript',
+        },
+        {
+          alias => '/neatscript/',
+          path  => '/usr/share/neatscript',
+        },
+      ]
+    }
+```
+
 #####`serveradmin`
 
 Specifies the email address Apache will display when it renders one of its error pages.
