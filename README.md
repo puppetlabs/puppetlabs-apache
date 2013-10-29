@@ -360,6 +360,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `mime_magic`*
 * `mpm_event`
 * `negotiation`
+* `nss`*
 * `passenger`*
 * `perl`
 * `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
