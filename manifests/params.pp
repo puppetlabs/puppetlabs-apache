@@ -128,6 +128,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template     = 'apache/httpd.conf.erb'
+    $envvars_template  = 'apache/envvars.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
