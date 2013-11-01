@@ -38,6 +38,7 @@ class apache (
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
   $conf_template        = $apache::params::conf_template,
+  $envvars_template     = $apache::params::envvars_template,
   $servername           = $apache::params::servername,
   $manage_user          = true,
   $manage_group         = true,
@@ -229,6 +230,16 @@ class apache (
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
+      require => Package['httpd'],
+      require => File["${apache::params::conf_dir}/${apache::params::envvars_file}"],
+    }
+
+    # Configure and control apache environment variables
+    # Required for older apache versions which ship with settings
+    # that don't have all the env vars required for this module
+    file { "${apache::params::httpd_dir}/${apache::params::envvars_file}":
+      ensure  => file,
+      content => template($envvars_template),
       require => Package['httpd'],
     }
 

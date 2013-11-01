@@ -42,6 +42,7 @@ class apache::params {
     $mod_dir              = "${httpd_dir}/conf.d"
     $vhost_dir            = "${httpd_dir}/conf.d"
     $conf_file            = 'httpd.conf'
+    $envvars_file         = 'envvars'
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'
     $lib_path             = 'modules'
@@ -79,6 +80,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $envvars_template     = 'apache/envvars.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $fastcgi_lib_path     = undef
