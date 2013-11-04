@@ -356,4 +356,31 @@ describe 'apache', :type => :class do
       end
     end
   end
+  context 'on all OSes' do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    context 'default vhost defaults' do
+      it { should contain_apache__vhost('default').with_ensure('present') }
+      it { should contain_apache__vhost('default-ssl').with_ensure('absent') }
+    end
+    context 'without default non-ssl vhost' do
+      let :params do {
+        :default_vhost  => false
+      }
+      end
+      it { should contain_apache__vhost('default').with_ensure('absent') }
+    end
+    context 'with default ssl vhost' do
+      let :params do {
+          :default_ssl_vhost  => true
+        }
+      end
+      it { should contain_apache__vhost('default').with_ensure('present') }
+    end
+  end
 end
