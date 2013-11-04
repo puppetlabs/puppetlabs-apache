@@ -177,7 +177,7 @@ class apache (
 
   concat { $ports_file:
     owner   => 'root',
-    group   => 'root',
+    group   => $apache::params::root_group,
     mode    => '0644',
     notify  => Class['Apache::Service'],
     require => Package['httpd'],

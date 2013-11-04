@@ -14,7 +14,7 @@ class apache::mod::itk (
   }
   File {
     owner => 'root',
-    group => 'root',
+    group => $apache::params::root_group,
     mode  => '0644',
   }
 
