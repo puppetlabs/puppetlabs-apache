@@ -1,4 +1,6 @@
-class apache::mod::status {
+class apache::mod::status (
+  $allow_from = ['127.0.0.1','::1'],
+){
   apache::mod { 'status': }
   # Template uses no variables
   file { 'status.conf':
