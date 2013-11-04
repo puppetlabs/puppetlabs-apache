@@ -227,6 +227,10 @@ The default certificate revocation list path, which is automatically set to 'und
 
 The default certificate revocation list to use, which is automatically set to 'undef'. This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
+#####`service_name`
+
+Name of apache service to run. Defaults to: `'httpd'` on RedHat and `'apache2'` on Debian.
+
 #####`service_enable`
 
 Determines whether the 'httpd' service is enabled when the machine is booted. Defaults to 'true'.
