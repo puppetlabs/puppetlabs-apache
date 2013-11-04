@@ -6,6 +6,12 @@ class apache::mod::itk (
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
 ) {
+  if defined(Class['apache::mod::event']) {
+    fail('May not include both apache::mod::itk and apache::mod::event on the same node')
+  }
+  if defined(Class['apache::mod::peruser']) {
+    fail('May not include both apache::mod::itk and apache::mod::peruser on the same node')
+  }
   if defined(Class['apache::mod::prefork']) {
     fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
   }
