@@ -7,8 +7,14 @@ class apache::mod::worker (
   $maxrequestsperchild = '0',
   $serverlimit         = '25',
 ) {
+  if defined(Class['apache::mod::event']) {
+    fail('May not include both apache::mod::worker and apache::mod::event on the same node')
+  }
   if defined(Class['apache::mod::itk']) {
     fail('May not include both apache::mod::worker and apache::mod::itk on the same node')
+  }
+  if defined(Class['apache::mod::peruser']) {
+    fail('May not include both apache::mod::worker and apache::mod::peruser on the same node')
   }
   if defined(Class['apache::mod::prefork']) {
     fail('May not include both apache::mod::worker and apache::mod::prefork on the same node')
@@ -55,6 +61,11 @@ class apache::mod::worker (
       }
       package { 'apache2-mpm-worker':
         ensure => present,
+      }
+    }
+    'freebsd' : {
+      class { 'apache::package':
+        mpm_module => 'worker'
       }
     }
     default: {

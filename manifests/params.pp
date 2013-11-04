@@ -37,7 +37,9 @@ class apache::params {
     $group                = 'apache'
     $root_group           = 'root'
     $apache_name          = 'httpd'
+    $service_name         = 'httpd'
     $httpd_dir            = '/etc/httpd'
+    $server_root          = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
     $mod_dir              = "${httpd_dir}/conf.d"
@@ -75,20 +77,26 @@ class apache::params {
       'dav_svn'     => 'mod_dav_svn',
       'suphp'       => 'mod_suphp',
       'xsendfile'   => 'mod_xsendfile',
+      'nss'         => 'mod_nss',
     }
     $mod_libs             = {
       'php5' => 'libphp5.so',
+      'nss'  => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $fastcgi_lib_path     = undef
+    $mime_support_package = 'mailcap'
+    $mime_types_config    = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
     $root_group       = 'root'
     $apache_name      = 'apache2'
+    $service_name     = 'apache2'
     $httpd_dir        = '/etc/apache2'
+    $server_root      = '/etc/apache2'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
     $mod_dir          = "${httpd_dir}/mods-available"
@@ -123,6 +131,7 @@ class apache::params {
       'dav_svn'     => 'libapache2-svn',
       'suphp'       => 'libapache2-mod-suphp',
       'xsendfile'   => 'libapache2-mod-xsendfile',
+      'nss'         => 'libapache2-mod-nss',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
@@ -131,6 +140,8 @@ class apache::params {
     $keepalive         = 'Off'
     $keepalive_timeout = 15
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
+    $mime_support_package = 'mime-support'
+    $mime_types_config = '/etc/mime.types'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

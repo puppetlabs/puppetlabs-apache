@@ -290,6 +290,40 @@ describe 'apache::vhost', :type => :define do
           :match => '  RewriteRule not a real rule',
         },
         {
+          :title => 'should accept rewrite rules',
+          :attr  => 'rewrites',
+          :value => [{'rewrite_rule' => ['not a real rule']}],
+          :match => '  RewriteRule not a real rule',
+        },
+        {
+          :title => 'should accept rewrite comment',
+          :attr  => 'rewrites',
+          :value => [{'comment' => 'rewrite comment', 'rewrite_rule' => ['not a real rule']}],
+          :match => '  #rewrite comment',
+        },
+        {
+          :title => 'should accept rewrite conditions',
+          :attr  => 'rewrites',
+          :value => [{'comment' => 'redirect IE', 'rewrite_cond' => ['%{HTTP_USER_AGENT} ^MSIE'], 'rewrite_rule' => ['^index\.html$ welcome.html'],}],
+          :match => [
+            '  # redirect ID',
+            '  RewriteCond %{HTTP_USER_AGENT} ^MSIE',
+            '  RewriteRule ^index\.html$ welcome.html',
+          ],
+        },
+        {
+          :title => 'should accept multiple rewrites',
+          :attr  => 'rewrites',
+          :value => [
+            {'rewrite_rule' => ['not a real rule']},
+            {'rewrite_rule' => ['not a real rule two']},
+          ],
+          :match => [
+            '  RewriteRule not a real rule',
+            '  RewriteRule not a real rule two',
+          ],
+        },
+        {
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
@@ -448,6 +482,36 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept location for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => '/',
+            'provider' => 'location',
+          },
+          :notmatch => '    AllowOverride None',
+          :match => [
+            '  <Location />',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Location>',
+          ],
+        },
+        {
+          :title => 'should accept files for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'files',
+          },
+          :notmatch => '    AllowOverride None',
+          :match => [
+            '  <Files index.html>',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Files>',
+          ],
+        },
+        {
           :title => 'should contain virtual_docroot',
           :attr  => 'virtual_docroot',
           :value => '/not/default',
@@ -553,6 +617,35 @@ describe 'apache::vhost', :type => :define do
         it 'should set wsgi_daemon_process_options' do
           should contain_file("25-#{title}.conf").with_content(
             /^  WSGIDaemonProcess example.org processes=2 threads=15$/
+          )
+        end
+      end
+
+      describe 'when rewrites are specified' do
+        let :params do default_params.merge({
+          :rewrites => [
+            {
+              'comment'       => 'test rewrites',
+              'rewrite_cond' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+              'rewrite_rule' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
+            }
+          ]
+        }) end
+        it 'should set RewriteConds and RewriteRules' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  #test rewrites$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Lynx\/ \[OR\]$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteCond %\{HTTP_USER_AGENT\} \^Mozilla\/\[12\]$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule \^index\\.html\$ welcome.html$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteRule \^index\\.cgi\$ index.php$/
           )
         end
       end

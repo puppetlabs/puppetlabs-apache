@@ -239,7 +239,9 @@ describe 'apache', :type => :class do
           { :mpm_module => false }
         end
         it 'should not declare mpm modules' do
+          should_not contain_class('apache::mod::event')
           should_not contain_class('apache::mod::itk')
+          should_not contain_class('apache::mod::peruser')
           should_not contain_class('apache::mod::prefork')
           should_not contain_class('apache::mod::worker')
         end
@@ -249,7 +251,9 @@ describe 'apache', :type => :class do
           { :mpm_module => 'prefork' }
         end
         it { should contain_class('apache::mod::prefork') }
+        it { should_not contain_class('apache::mod::event') }
         it { should_not contain_class('apache::mod::itk') }
+        it { should_not contain_class('apache::mod::peruser') }
         it { should_not contain_class('apache::mod::worker') }
       end
       context "when declaring mpm_module => worker" do
@@ -257,7 +261,9 @@ describe 'apache', :type => :class do
           { :mpm_module => 'worker' }
         end
         it { should contain_class('apache::mod::worker') }
+        it { should_not contain_class('apache::mod::event') }
         it { should_not contain_class('apache::mod::itk') }
+        it { should_not contain_class('apache::mod::peruser') }
         it { should_not contain_class('apache::mod::prefork') }
       end
       context "when declaring mpm_module => breakme" do

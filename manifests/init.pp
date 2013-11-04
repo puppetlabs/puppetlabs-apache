@@ -13,6 +13,7 @@
 # Sample Usage:
 #
 class apache (
+  $service_name         = $apache::params::service_name,
   $default_mods         = true,
   $default_vhost        = true,
   $default_ssl_vhost    = false,
@@ -31,6 +32,7 @@ class apache (
   $error_documents      = false,
   $timeout              = '120',
   $httpd_dir            = $apache::params::httpd_dir,
+  $server_root          = $apache::params::server_root,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
   $vhost_enable_dir     = $apache::params::vhost_enable_dir,
@@ -63,7 +65,7 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
   if $mpm_module {
-    validate_re($mpm_module, '(prefork|worker|itk)')
+    validate_re($mpm_module, '(prefork|worker|itk|event)')
   }
   validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
 
@@ -86,6 +88,7 @@ class apache (
   }
 
   class { 'apache::service':
+    service_name   => $service_name,
     service_enable => $service_enable,
     service_ensure => $service_ensure,
   }
@@ -210,6 +213,12 @@ class apache (
         fail("Unsupported osfamily ${::osfamily}")
       }
     }
+
+    $apxs_workaround = $::osfamily ? {
+      'freebsd' => true,
+      default   => false
+    }
+
     # Template uses:
     # - $httpd_dir
     # - $pidfile
@@ -224,8 +233,10 @@ class apache (
     # - $vhost_dir
     # - $error_documents
     # - $error_documents_path
+    # - $apxs_workaround
     # - $keepalive
     # - $keepalive_timeout
+    # - $server_root
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
