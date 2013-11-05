@@ -15,10 +15,12 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
-    <%- if directory['allow_override'] -%>
+    <%- if directory['provider'] == 'Directory' %>
+      <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
-    <%- else -%>
+      <%- else -%>
     AllowOverride None
+      <%- end -%>
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
