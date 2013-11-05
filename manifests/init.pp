@@ -59,6 +59,7 @@ class apache (
   }
 
   validate_bool($default_vhost)
+  validate_bool($default_ssl_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
   if $mpm_module {
@@ -247,26 +248,34 @@ class apache (
     if $mpm_module {
       class { "apache::mod::${mpm_module}": }
     }
-    if $default_vhost {
-      apache::vhost { 'default':
-        port            => 80,
-        docroot         => $docroot,
-        scriptalias     => $scriptalias,
-        serveradmin     => $serveradmin,
-        access_log_file => $access_log_file,
-        priority        => '15',
-      }
+
+    $default_vhost_ensure = $default_vhost ? {
+      true  => 'present',
+      false => 'absent'
     }
-    if $default_ssl_vhost {
-      apache::vhost { 'default-ssl':
-        port            => 443,
-        ssl             => true,
-        docroot         => $docroot,
-        scriptalias     => $scriptalias,
-        serveradmin     => $serveradmin,
-        access_log_file => "ssl_${access_log_file}",
-        priority        => '15',
-      }
+    $default_ssl_vhost_ensure = $default_ssl_vhost ? {
+      true  => 'present',
+      false => 'absent'
+    }
+
+    apache::vhost { 'default':
+      ensure          => $default_vhost_ensure,
+      port            => 80,
+      docroot         => $docroot,
+      scriptalias     => $scriptalias,
+      serveradmin     => $serveradmin,
+      access_log_file => $access_log_file,
+      priority        => '15',
+    }
+    apache::vhost { 'default-ssl':
+      ensure          => $default_ssl_vhost_ensure,
+      port            => 443,
+      ssl             => true,
+      docroot         => $docroot,
+      scriptalias     => $scriptalias,
+      serveradmin     => $serveradmin,
+      access_log_file => "ssl_${access_log_file}",
+      priority        => '15',
     }
   }
 }
