@@ -26,7 +26,7 @@
     <%- end -%>
     <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
-    <%- elsif provider == 'Directory' -%>
+    <%- else -%>
     Order allow,deny
     <%- end -%>
     <%- if directory['deny'] and directory['deny'] != '' -%>
@@ -34,7 +34,7 @@
     <%- end -%>
     <%- if directory['allow'] and directory['allow'] != '' -%>
     Allow <%= directory['allow'] %>
-    <%- elsif provider == 'Directory' -%>
+    <%- else -%>
     Allow from all
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
