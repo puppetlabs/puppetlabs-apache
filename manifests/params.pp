@@ -35,6 +35,7 @@ class apache::params {
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
     $group                = 'apache'
+    $root_group           = 'root'
     $apache_name          = 'httpd'
     $httpd_dir            = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
@@ -85,6 +86,7 @@ class apache::params {
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
+    $root_group       = 'root'
     $apache_name      = 'apache2'
     $httpd_dir        = '/etc/apache2'
     $conf_dir         = $httpd_dir

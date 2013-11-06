@@ -44,7 +44,7 @@ define apache::mod (
     ensure  => file,
     path    => "${mod_dir}/${mod}.load",
     owner   => 'root',
-    group   => 'root',
+    group   => $apache::params::root_group,
     mode    => '0644',
     content => "LoadModule ${mod}_module ${lib_path}/${lib_REAL}\n",
     require => [
@@ -62,7 +62,7 @@ define apache::mod (
       path    => "${enable_dir}/${mod}.load",
       target  => "${mod_dir}/${mod}.load",
       owner   => 'root',
-      group   => 'root',
+      group   => $apache::params::root_group,
       mode    => '0644',
       require => [
         File["${mod}.load"],
@@ -80,7 +80,7 @@ define apache::mod (
         path    => "${enable_dir}/${mod}.conf",
         target  => "${mod_dir}/${mod}.conf",
         owner   => 'root',
-        group   => 'root',
+        group   => $apache::params::root_group,
         mode    => '0644',
         require => [
           File["${mod}.conf"],
