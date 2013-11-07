@@ -33,6 +33,14 @@ LogLevel warn
 EnableSendfile <%= @sendfile %>
 
 #Listen 80
+
+<% if @apxs_workaround -%>
+# Workaround: without this hack apxs would be confused about where to put
+# LoadModule directives and fail entire procedure of apache package
+# installation/reinstallation. This problem was observed on FreeBSD (apache22).
+#LoadModule fake_module libexec/apache22/mod_fake.so
+<% end -%>
+
 Include <%= @mod_load_dir %>/*.load
 <% if @mod_load_dir != @confd_dir and @mod_load_dir != @vhost_load_dir -%>
 Include <%= @mod_load_dir %>/*.conf
