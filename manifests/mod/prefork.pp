@@ -6,11 +6,17 @@ class apache::mod::prefork (
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
 ) {
+  if defined(Class['apache::mod::event']) {
+    fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
+  }
   if defined(Class['apache::mod::itk']) {
-    fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
+    fail('May not include both apache::mod::prefork and apache::mod::itk on the same node')
+  }
+  if defined(Class['apache::mod::peruser']) {
+    fail('May not include both apache::mod::prefork and apache::mod::peruser on the same node')
   }
   if defined(Class['apache::mod::worker']) {
-    fail('May not include both apache::mod::worker and apache::mod::prefork on the same node')
+    fail('May not include both apache::mod::prefork and apache::mod::worker on the same node')
   }
   File {
     owner => 'root',
