@@ -18,7 +18,7 @@
     <%- if directory['provider'] == 'Directory' %>
       <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
-      <%- else -%>
+      <%- elsif provider == 'Directory' -%>
     AllowOverride None
       <%- end -%>
     <%- end -%>
