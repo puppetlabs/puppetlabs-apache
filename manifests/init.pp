@@ -210,6 +210,12 @@ class apache (
         fail("Unsupported osfamily ${::osfamily}")
       }
     }
+
+    $apxs_workaround = $::osfamily ? {
+      'freebsd' => true,
+      default   => false
+    }
+
     # Template uses:
     # - $httpd_dir
     # - $pidfile
@@ -224,6 +230,7 @@ class apache (
     # - $vhost_dir
     # - $error_documents
     # - $error_documents_path
+    # - $apxs_workaround
     # - $keepalive
     # - $keepalive_timeout
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
