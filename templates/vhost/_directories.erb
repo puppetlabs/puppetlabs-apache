@@ -15,7 +15,7 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
-    <%- if directory['provider'] == 'Directory' %>
+    <%- if directory['provider'] == 'directory' %>
       <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
       <%- elsif provider == 'Directory' -%>
