@@ -13,6 +13,7 @@
 # Sample Usage:
 #
 class apache (
+  $service_name         = $apache::params::service_name,
   $default_mods         = true,
   $default_vhost        = true,
   $default_ssl_vhost    = false,
@@ -86,6 +87,7 @@ class apache (
   }
 
   class { 'apache::service':
+    service_name   => $service_name,
     service_enable => $service_enable,
     service_ensure => $service_ensure,
   }
