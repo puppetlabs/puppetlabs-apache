@@ -76,9 +76,11 @@ class apache::params {
       'dav_svn'     => 'mod_dav_svn',
       'suphp'       => 'mod_suphp',
       'xsendfile'   => 'mod_xsendfile',
+      'nss'         => 'mod_nss',
     }
     $mod_libs             = {
       'php5' => 'libphp5.so',
+      'nss'  => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
@@ -125,6 +127,7 @@ class apache::params {
       'dav_svn'     => 'libapache2-svn',
       'suphp'       => 'libapache2-mod-suphp',
       'xsendfile'   => 'libapache2-mod-xsendfile',
+      'nss'         => 'libapache2-mod-nss',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
