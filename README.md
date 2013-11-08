@@ -255,6 +255,10 @@ Sets the servername. Defaults to fqdn provided by facter.
 
 Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'On'.
 
+#####`server_root`
+
+A value to be set as `ServerRoot` in main configuration file (`httpd.conf`). Defaults to `/etc/httpd` on RedHat and `/etc/apache2` on Debian.
+
 #####`error_documents`
 
 Enables custom error documents. Defaults to 'false'.

@@ -32,6 +32,7 @@ class apache (
   $error_documents      = false,
   $timeout              = '120',
   $httpd_dir            = $apache::params::httpd_dir,
+  $server_root          = $apache::params::server_root,
   $confd_dir            = $apache::params::confd_dir,
   $vhost_dir            = $apache::params::vhost_dir,
   $vhost_enable_dir     = $apache::params::vhost_enable_dir,
@@ -235,6 +236,7 @@ class apache (
     # - $apxs_workaround
     # - $keepalive
     # - $keepalive_timeout
+    # - $server_root
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
