@@ -230,7 +230,7 @@ class apache (
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
-      require => [ Package['httpd'], File["${apache::params::conf_dir}/${apache::params::envvars_file}"] ],
+      require => [ Package['httpd'], File["${apache::params::httpd_dir}/${apache::params::envvars_file}"] ],
     }
 
     # Configure and control apache environment variables
