@@ -87,6 +87,8 @@ class apache::params {
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $fastcgi_lib_path     = undef
+    $mime_support_package = 'mailcap'
+    $mime_types_config    = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -138,6 +140,8 @@ class apache::params {
     $keepalive         = 'Off'
     $keepalive_timeout = 15
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
+    $mime_support_package = 'mime-support'
+    $mime_types_config = '/etc/mime.types'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
