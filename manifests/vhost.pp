@@ -174,6 +174,8 @@ define apache::vhost(
 
   if $ssl {
     include apache::mod::ssl
+    # Required for the AddType lines.
+    include apache::mod::mime
   }
 
   if $virtual_docroot {
