@@ -568,13 +568,25 @@ Lists the options for the given `<Directory>` block
     }
 ```
 
-######`order`
-Sets the order of processing `Allow` and `Deny` statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). An example:
+######`index_options`
+
+Styles the list
 
 ```puppet
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
-      directories => [ { path => '/path/to/directory', order => 'Allow,Deny' } ],
+      directories => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'],
+		 	 indexoptions => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'] }],
+    }
+```
+
+######`index_order_default`
+Sets the order of the list 
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', order => 'Allow,Deny', index_order_default => ['Descending', 'Date']}, ],
     }
 ```
 
