@@ -227,6 +227,10 @@ The default certificate revocation list path, which is automatically set to 'und
 
 The default certificate revocation list to use, which is automatically set to 'undef'. This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
+#####`service_name`
+
+Name of apache service to run. Defaults to: `'httpd'` on RedHat and `'apache2'` on Debian.
+
 #####`service_enable`
 
 Determines whether the 'httpd' service is enabled when the machine is booted. Defaults to 'true'.
@@ -250,6 +254,10 @@ Sets the servername. Defaults to fqdn provided by facter.
 #####`sendfile`
 
 Makes Apache use the Linux kernel 'sendfile' to serve static files. Defaults to 'On'.
+
+#####`server_root`
+
+A value to be set as `ServerRoot` in main configuration file (`httpd.conf`). Defaults to `/etc/httpd` on RedHat and `/etc/apache2` on Debian.
 
 #####`error_documents`
 
@@ -356,6 +364,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `mime_magic`*
 * `mpm_event`
 * `negotiation`
+* `nss`*
 * `passenger`*
 * `perl`
 * `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)

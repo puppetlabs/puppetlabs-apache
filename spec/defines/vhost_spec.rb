@@ -448,6 +448,36 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept location for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => '/',
+            'provider' => 'location',
+          },
+          :notmatch => '    AllowOverride None',
+          :match => [
+            '  <Location />',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Location>',
+          ],
+        },
+        {
+          :title => 'should accept files for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'files',
+          },
+          :notmatch => '    AllowOverride None',
+          :match => [
+            '  <Files index.html>',
+            '    Order allow,deny',
+            '    Allow from all',
+            '  </Files>',
+          ],
+        },
+        {
           :title => 'should contain virtual_docroot',
           :attr  => 'virtual_docroot',
           :value => '/not/default',
