@@ -598,6 +598,16 @@ Sets the order of the list
     }
 ```
 
+######`order`
+Sets the order of processing `Allow` and `Deny` statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', order => 'Allow,Deny' } ],
+    }
+```
+
 ######`auth_type`
 
 Sets the value for `AuthType` as per the [Apache AuthType
