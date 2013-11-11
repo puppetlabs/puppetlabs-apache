@@ -584,7 +584,7 @@ Styles the list
 ```puppet
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
-      directories => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'], indexoptions => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'] }],
+      directories => [ { path => '/path/to/directory', options => ['Indexes','FollowSymLinks','MultiViews'], index_options => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'] }],
     }
 ```
 
