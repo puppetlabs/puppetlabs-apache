@@ -52,6 +52,11 @@ class apache::mod::itk (
         ensure => present,
       }
     }
+    'freebsd' : {
+      class { 'apache::package':
+        mpm_module => 'itk'
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

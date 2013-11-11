@@ -47,11 +47,22 @@ define apache::mod (
     $_package = $mod_package
   }
   if $_package and ! defined(Package[$_package]) {
+    # note: FreeBSD/ports uses apxs tool to activate modules; apxs clutters
+    # httpd.conf with 'LoadModule' directives; here, by proper resource
+    # ordering, we ensure that our version of httpd.conf is reverted after
+    # the module gets installed.
+    $package_before = $::osfamily ? {
+      'freebsd' => [
+        File["${mod_dir}/${mod}.load"],
+        File["${apache::params::conf_dir}/${apache::params::conf_file}"]
+      ],
+      default => File["${mod_dir}/${mod}.load"],
+    }
     # $_package may be an array
     package { $_package:
       ensure  => $package_ensure,
       require => Package['httpd'],
-      before  => File["${mod_dir}/${mod}.load"],
+      before  => $package_before,
     }
   }
 

@@ -3,11 +3,14 @@ require 'spec_helper_system'
 describe 'apache::mod::php class' do
   case node.facts['osfamily']
   when 'Debian'
-    mod_dir = '/etc/apache2/mods-available'
+    mod_dir      = '/etc/apache2/mods-available'
     service_name = 'apache2'
   when 'RedHat'
-    mod_dir = '/etc/httpd/conf.d'
+    mod_dir      = '/etc/httpd/conf.d'
     service_name = 'httpd'
+  when 'FreeBSD'
+    mod_dir      = '/usr/local/etc/apache22/Modules'
+    service_name = 'apache22'
   end
 
   context "default php config" do

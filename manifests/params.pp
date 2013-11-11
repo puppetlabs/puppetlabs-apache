@@ -142,6 +142,61 @@ class apache::params {
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config = '/etc/mime.types'
+  } elsif $::osfamily == 'FreeBSD' {
+    $user             = 'www'
+    $group            = 'www'
+    $root_group       = 'wheel'
+    $apache_name      = 'apache22'
+    $service_name     = 'apache22'
+    $httpd_dir        = '/usr/local/etc/apache22'
+    $server_root      = '/usr/local'
+    $conf_dir         = $httpd_dir
+    $confd_dir        = "${httpd_dir}/Includes"
+    $mod_dir          = "${httpd_dir}/Modules"
+    $mod_enable_dir   = undef
+    $vhost_dir        = "${httpd_dir}/Vhosts"
+    $vhost_enable_dir = undef
+    $conf_file        = 'httpd.conf'
+    $ports_file       = "${conf_dir}/ports.conf"
+    $logroot          = '/var/log/apache22'
+    $lib_path         = '/usr/local/libexec/apache22'
+    $mpm_module       = 'prefork'
+    $dev_packages     = undef
+    $default_ssl_cert = '/usr/local/etc/apache22/server.crt'
+    $default_ssl_key  = '/usr/local/etc/apache22/server.key'
+    $ssl_certs_dir    = '/usr/local/etc/apache22'
+    $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
+    $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler = 'php5-script'
+    $suphp_engine     = 'off'
+    $suphp_configpath = undef
+    $mod_packages     = {
+      # NOTE: I list here only modules that are not included in www/apache22
+      # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
+      # NOTE: 'php' needs to enable APACHE option in make config
+      # NOTE: 'dav_svn' needs to enable MOD_DAV_SVN make config
+      # NOTE: not sure where the shibboleth should come from
+      # NOTE: don't know where the shibboleth module should come from
+      'auth_kerb'  => 'www/mod_auth_kerb2',
+      'fcgid'      => 'www/mod_fcgid',
+      'passenger'  => 'www/rubygem-passenger',
+      'perl'       => 'www/mod_perl2',
+      'php5'       => 'lang/php5',
+      'proxy_html' => 'www/mod_proxy_html',
+      'python'     => 'www/mod_python3',
+      'wsgi'       => 'www/mod_wsgi',
+      'dav_svn'    => 'devel/subversion',
+      'xsendfile'  => 'www/mod_xsendfile',
+    }
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template        = 'apache/httpd.conf.erb'
+    $keepalive            = 'Off'
+    $keepalive_timeout    = 15
+    $fastcgi_lib_path     = undef # TODO: revisit
+    $mime_support_package = 'misc/mime-support'
+    $mime_types_config    = '/usr/local/etc/mime.types'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

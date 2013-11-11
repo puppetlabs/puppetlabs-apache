@@ -16,4 +16,16 @@ describe 'apache::mod::itk', :type => :class do
     it { should contain_file("/etc/apache2/mods-enabled/itk.conf").with_ensure('link') }
     it { should contain_package("apache2-mpm-itk") }
   end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should_not contain_apache__mod('itk') }
+    it { should contain_file("/usr/local/etc/apache22/Modules/itk.conf").with_ensure('file') }
+  end
 end

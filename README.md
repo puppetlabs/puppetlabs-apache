@@ -40,6 +40,7 @@ Apache is a widely-used web server, and this module provides a simplified way of
 * Apache modules
 * virtual hosts
 * listened-to ports
+* `/etc/make.conf` on FreeBSD
 
 ###Beginning with Apache
 
@@ -53,7 +54,8 @@ The defaults are determined by your operating system (e.g. Debian systems have o
 
 ```puppet
     class { 'apache':
-      default_mods => false,
+      default_mods        => false,
+      default_confd_files => false,
     }
 ```
 
@@ -186,6 +188,10 @@ Sets up Apache with default settings based on your OS. Defaults to 'true', set t
 
 Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
 
+#####`default_confd_files`
+
+Generates default set of include-able apache configuration files under  `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with apache package on given platform.
+
 #####`default_ssl_vhost`
 
 Sets up a default SSL virtual host. Defaults to 'false'.
@@ -205,11 +211,11 @@ SSL vhosts only respond to HTTPS queries.
 
 #####`default_ssl_cert`
 
-The default SSL certification, which is automatically set based on your operating system  (`/etc/pki/tls/certs/localhost.crt` for RedHat, `/etc/ssl/certs/ssl-cert-snakeoil.pem` for Debian). This default will work out of the box but must be updated with your specific certificate information before being used in production.
+The default SSL certification, which is automatically set based on your operating system  (`/etc/pki/tls/certs/localhost.crt` for RedHat, `/etc/ssl/certs/ssl-cert-snakeoil.pem` for Debian, `/usr/local/etc/apache22/server.crt` for FreeBSD). This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
 #####`default_ssl_key`
 
-The default SSL key, which is automatically set based on your operating system (`/etc/pki/tls/private/localhost.key` for RedHat, `/etc/ssl/private/ssl-cert-snakeoil.key` for Debian). This default will work out of the box but must be updated with your specific certificate information before being used in production.
+The default SSL key, which is automatically set based on your operating system (`/etc/pki/tls/private/localhost.key` for RedHat, `/etc/ssl/private/ssl-cert-snakeoil.key` for Debian, `/usr/local/etc/apache22/server.key` for FreeBSD). This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
 #####`default_ssl_chain`
 
@@ -229,7 +235,7 @@ The default certificate revocation list to use, which is automatically set to 'u
 
 #####`service_name`
 
-Name of apache service to run. Defaults to: `'httpd'` on RedHat and `'apache2'` on Debian.
+Name of apache service to run. Defaults to: `'httpd'` on RedHat, `'apache2'` on Debian, and `'apache22'` on FreeBSD.
 
 #####`service_enable`
 
@@ -250,6 +256,10 @@ Sets the server administrator. Defaults to 'root@localhost'.
 #####`servername`
 
 Sets the servername. Defaults to fqdn provided by facter.
+
+#####`server_root`
+
+A value to be set as `ServerRoot` in main configuration file (`httpd.conf`). Defaults to `/etc/httpd` on RedHat, `/etc/apache2` on Debian and `/usr/local` on FreeBSD.
 
 #####`sendfile`
 
@@ -281,7 +291,7 @@ Changes the location of the configuration directory your Apache modules configur
 
 #####`mpm_module`
 
-Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::prefork`, `apache::mod::worker` and `apache::mod::itk` classes. Must be set to `false` to explicitly declare `apache::mod::worker`, `apache::mod::worker` or `apache::mod::itk` classes with parameters. Valid values are `worker`, `prefork`, `itk` (Debian), or the boolean `false`. Defaults to `prefork` on RedHat and `worker` on Debian.
+Configures which mpm module is loaded and configured for the httpd process by the `apache::mod::event`, `apache::mod::itk`, `apache::mod::peruser`, `apache::mod::prefork` and `apache::mod::worker` classes. Must be set to `false` to explicitly declare `apache::mod::event`, `apache::mod::itk`, `apache::mod::peruser`,  `apache::mod::prefork` or `apache::mod::worker` classes with parameters. All possible values are `event`, `itk`, `peruser`, `prefork`, `worker` (valid values depend on agent's OS), or the boolean `false`. Defaults to `prefork` on RedHat and FreeBSD and `worker` on Debian. Note: on FreeBSD switching between different mpm modules is quite difficult (but possible). Before changing `$mpm_module` one has to deinstall all packages that depend on currently installed `apache`.
 
 #####`conf_template`
 
@@ -353,12 +363,17 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `cgid`
 * `dav`
 * `dav_fs`
+* `dav_svn`
 * `deflate`
+* `dev`
 * `dir`*
 * `disk_cache`
-* `fcgid`
+* `event`
 * `fastcgi`
+* `fcgid`
+* `headers`
 * `info`
+* `itk`
 * `ldap`
 * `mime`
 * `mime_magic`*
@@ -367,6 +382,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `nss`*
 * `passenger`*
 * `perl`
+* `peruser`
 * `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
 * `prefork`*
 * `proxy`*
@@ -375,11 +391,13 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `proxy_http`
 * `python`
 * `reqtimeout`
+* `rewrite`
 * `setenvif`
 * `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
 * `status`
 * `suphp`
 * `userdir`*
+* `vhost_alias`
 * `worker`*
 * `wsgi` (see [apache::mod::wsgi](#class-apachemodwsgi) below)
 * `xsendfile`
@@ -1228,6 +1246,8 @@ Installs Apache development libraries
     class { 'apache::dev': }
 ```
 
+On FreeBSD you're required to define `apache::package` or `apache` class before `apache::dev`.
+
 ####Defined Type: `apache::listen`
 
 Controls which ports Apache binds to for listening based on the title:
@@ -1285,7 +1305,7 @@ The Apache module relies heavily on templates to enable the `vhost` and `apache:
 
 ##Limitations
 
-This has been tested on Ubuntu Precise, Debian Wheezy, and CentOS 5.8.
+This has been tested on Ubuntu Precise, Debian Wheezy, CentOS 5.8, and FreeBSD 9.1.
 
 ##Development
 

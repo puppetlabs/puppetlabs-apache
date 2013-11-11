@@ -3,6 +3,8 @@ require 'spec_helper_system'
 case node.facts['osfamily']
 when 'Debian'
   service_name = 'apache2'
+when 'FreeBSD'
+  service_name = 'apache22'
 else
   # Not implemented yet
   service_name = :skip
