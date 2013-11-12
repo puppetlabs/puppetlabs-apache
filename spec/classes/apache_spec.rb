@@ -458,7 +458,7 @@ describe 'apache', :type => :class do
           :default_ssl_vhost  => true
         }
       end
-      it { should contain_apache__vhost('default').with_ensure('present') }
+      it { should contain_apache__vhost('default-ssl').with_ensure('present') }
     end
   end
 end
