@@ -56,6 +56,7 @@ class apache (
 ) inherits apache::params {
 
   validate_bool($default_vhost)
+  validate_bool($default_ssl_vhost)
   validate_bool($default_confd_files)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
@@ -80,7 +81,6 @@ class apache (
       name   => $apache::params::apache_name,
       notify => Class['Apache::Service'],
     }
-  validate_bool($default_ssl_vhost)
   }
   validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
 
