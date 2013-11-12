@@ -47,13 +47,13 @@
 #    rewrites => [
 #      {
 #        comment       => 'force www domain',
-#        rewrite_conds => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
-#        rewrite_rules => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
+#        rewrite_cond => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
+#        rewrite_rule => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
 #      },
 #      {
 #        comment       => 'prevent image hotlinking',
-#        rewrite_conds => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
-#        rewrite_rules => ['.(gif|jpg|png)$ - [F]']
+#        rewrite_cond => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
+#        rewrite_rule => ['.(gif|jpg|png)$ - [F]']
 #      },
 #    ]
 #  }
@@ -69,8 +69,8 @@
 #    rewrites => [
 #      {
 #        comment       => "redirect non-SSL traffic to SSL site",
-#        rewrite_conds => ['%{HTTPS} off'],
-#        rewrite_rules => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
+#        rewrite_cond => ['%{HTTPS} off'],
+#        rewrite_rule => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
 #      }
 #    ]
 #  }

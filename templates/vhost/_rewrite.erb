@@ -9,14 +9,14 @@
 <% if rewrite_details['comment'] -%>
   #<%= rewrite_details['comment'] %>
 <% end -%>
-<% if rewrite_details['rewrite_conds'] -%>
-<%- Array(rewrite_details['rewrite_conds']).each do |commands| -%>
+<% if rewrite_details['rewrite_cond'] -%>
+<%- Array(rewrite_details['rewrite_cond']).each do |commands| -%>
 <%- Array(commands).each do |command| -%>
   RewriteCond <%= command %>
 <%- end -%>
 <% end -%>
 <% end -%>
-<%- Array(rewrite_details['rewrite_rules']).each do |commands| -%>
+<%- Array(rewrite_details['rewrite_rule']).each do |commands| -%>
 <%- Array(commands).each do |command| -%>
   RewriteRule <%= command %>
 <%- end -%>

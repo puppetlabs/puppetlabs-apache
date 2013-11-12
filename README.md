@@ -844,7 +844,7 @@ Limits the `rewrites` to the specified base URL. Defaults to 'undef'.
       …
       rewrite_base => '/blog/',
       rewrites => [
-        { rewrite_rules => ['^index\.html$ welcome.html'] }
+        { rewrite_rule => ['^index\.html$ welcome.html'] }
       ]
     }
 ```
@@ -858,7 +858,7 @@ Creates URL rewrite rules. Defaults to 'undef'. This parameter allows you to spe
 ```puppet
     apache::vhost { 'site.name.fdqn':
       …
-      rewrites => [ { rewrite_rules => ['^index\.html$ welcome.html'] } ]
+      rewrites => [ { rewrite_rule => ['^index\.html$ welcome.html'] } ]
     }
 ```
 
@@ -870,8 +870,8 @@ Allows rewrite conditions, that when true, will execute the associated rule. For
       rewrites => [
         {
           comment       => 'redirect IE',
-          rewrite_conds => ['%{HTTP_USER_AGENT} ^MSIE'],
-          rewrite_rules => ['^index\.html$ welcome.html'],
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^MSIE'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
         }
       ]
     }
@@ -887,8 +887,8 @@ Multiple conditions can be applied, the following will rewrite index.html to wel
       rewrites => [
         {
           comment       => 'Lynx or Mozilla v1/2',
-          rewrite_conds => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
-          rewrite_rules => ['^index\.html$ welcome.html'],
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
         }
       ]
     }
@@ -902,16 +902,16 @@ Multiple rewrites and conditions are also possible
       rewrites => [
         {
           comment       => 'Lynx or Mozilla v1/2',
-          rewrite_conds => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
-          rewrite_rules => ['^index\.html$ welcome.html'],
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+          rewrite_rule => ['^index\.html$ welcome.html'],
         },
         {
           comment       => 'Internet Explorer',
-          rewrite_conds => ['%{HTTP_USER_AGENT} ^MSIE'],
-          rewrite_rules => ['^index\.html$ /index.IE.html [L]'],
+          rewrite_cond => ['%{HTTP_USER_AGENT} ^MSIE'],
+          rewrite_rule => ['^index\.html$ /index.IE.html [L]'],
         },
         }
-          rewrite_rules => ['^index\.cgi$ index.php', '^index\.html$ index.php', '^index\.asp$ index.html'],
+          rewrite_rule => ['^index\.cgi$ index.php', '^index\.html$ index.php', '^index\.asp$ index.html'],
         }
      ] 
     }

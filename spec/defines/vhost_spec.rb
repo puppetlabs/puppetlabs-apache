@@ -304,7 +304,7 @@ describe 'apache::vhost', :type => :define do
         {
           :title => 'should accept rewrite conditions',
           :attr  => 'rewrites',
-          :value => [{'comment' => 'redirect IE', 'rewrite_conds' => ['%{HTTP_USER_AGENT} ^MSIE'], 'rewrite_rules' => ['^index\.html$ welcome.html'],}],
+          :value => [{'comment' => 'redirect IE', 'rewrite_cond' => ['%{HTTP_USER_AGENT} ^MSIE'], 'rewrite_rule' => ['^index\.html$ welcome.html'],}],
           :match => [
             '  # redirect ID',
             '  RewriteCond %{HTTP_USER_AGENT} ^MSIE',
@@ -315,8 +315,8 @@ describe 'apache::vhost', :type => :define do
           :title => 'should accept multiple rewrites',
           :attr  => 'rewrites',
           :value => [
-            {'rewrite_rules' => ['not a real rule']},
-            {'rewrite_rules' => ['not a real rule two']},
+            {'rewrite_rule' => ['not a real rule']},
+            {'rewrite_rule' => ['not a real rule two']},
           ],
           :match => [
             '  RewriteRule not a real rule',
@@ -626,8 +626,8 @@ describe 'apache::vhost', :type => :define do
           :rewrites => [
             {
               'comment'       => 'test rewrites',
-              'rewrite_conds' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
-              'rewrite_rules' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
+              'rewrite_cond' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
+              'rewrite_rule' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
             }
           ]
         }) end
