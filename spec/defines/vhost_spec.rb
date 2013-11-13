@@ -349,6 +349,20 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept multiple additional includes',
+          :attr  => 'additional_includes',
+          :value => [
+            '/tmp/proxy_group_a',
+            '/tmp/proxy_group_b',
+            '/tmp/proxy_group_c',
+          ],
+          :match => [
+            '  Include /tmp/proxy_group_a',
+            '  Include /tmp/proxy_group_b',
+            '  Include /tmp/proxy_group_c'
+          ],
+        },
+        {
           :title => 'should accept a suPHP_Engine',
           :attr  => 'suphp_engine',
           :value => 'on',

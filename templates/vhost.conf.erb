@@ -26,6 +26,11 @@
   ## Directories, there should at least be a declaration for <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 
+  ## Load additional static includes
+<% Array(@additional_includes).each do |include| %>
+  Include <%= include %>
+<% end %>
+
   ## Logging
 <% if @error_log -%>
   ErrorLog <%= @error_log_destination %>

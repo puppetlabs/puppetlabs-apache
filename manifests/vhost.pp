@@ -131,6 +131,7 @@ define apache::vhost(
     $fastcgi_server              = undef,
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
+    $additional_includes         = [],
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -365,6 +366,7 @@ define apache::vhost(
   # - $error_log_destination
   # - $fallbackresource
   # - $custom_fragment
+  # - $additional_includes
   # block fragment:
   #   - $block
   # directories fragment:
