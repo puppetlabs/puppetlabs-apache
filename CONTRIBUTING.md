@@ -32,7 +32,7 @@ Checklist (and a short version for the impatient)
       feature you are adding.
 
     - Make sure the test suites passe after your commit:
-      `rake spec unit spec:system` More information on [testing](#Writing Tests) below
+      `rake spec spec:system` More information on [testing](#Testing) below
 
     - When introducing a new feature, make sure it is properly
       documented in the README.md
@@ -131,10 +131,70 @@ The long version
       location of your branch, along with any other commentary you
 			may wish to make.
 
-Writing Tests
-=============
+Testing
+=======
 
-# XXX The stuff we always say about how to get started with tests
+Getting Started
+---------------
+
+Our puppet modules provide [`Gemfile`](./Gemfile)s which can tell a ruby
+package manager such as [bundler](http://bundler.io/) what Ruby packages,
+or Gems, are required to build, develop, and test this software.
+
+Please make sure you have [bundler installed](http://bundler.io/#getting-started)
+on your system, then use it to install all dependencies needed for this project,
+by running
+
+```shell
+% bundle install
+Fetching gem metadata from https://rubygems.org/........
+Fetching gem metadata from https://rubygems.org/..
+Using rake (10.1.0)
+Using builder (3.2.2)
+-- 8><-- many more --><8 --
+Using rspec-system-puppet (2.2.0)
+Using serverspec (0.6.3)
+Using rspec-system-serverspec (1.0.0)
+Using bundler (1.3.5)
+Your bundle is complete!
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+```
+
+NOTE some systems may require you to run this command with sudo.
+
+With all dependencies installed we can now run the tests:
+
+```shell
+% rake spec
+```
+
+This will execute all the [rspec tests](http://rspec-puppet.com/) tests
+under [spec/defines](./spec/defines), [spec/classes](./spec/classes),
+and so on. rspec tests may have the same kind of dependencies as the
+module they are testing. While the module defines in its [Modulefile](./Modulefile),
+rspec tests define them in [.fixtures.yml](./fixtures.yml).
+
+Some puppet modules also come with [rspec-system](https://github.com/puppetlabs/rspec-system)
+tests. These tests spin up a virtual machine under
+[VirtualBox](https://www.virtualbox.org/)) with, controlling it with
+[Vagrant](http://www.vagrantup.com/) to actually simulate scripted test
+scenarios. In order to run these, you will need both of those tools
+installed on your system.
+
+You can run them by issuing the following command
+
+```shell
+% rake spec:system
+```
+
+This will now download a pre-fabricated image configured in [.nodeset.yml](./.nodeset.yml),
+install puppet, copy this module and install its dependencies per [spec/spec_helper_system.rb](./spec/spec_helper_system.rb)
+and then run all the tests under [spec/system](./spec/system).
+
+Writing Tests
+-------------
+
+XXX getting started writing tests.
 
 If you have commit access to the repository
 ===========================================
