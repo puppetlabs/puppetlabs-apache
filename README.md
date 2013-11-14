@@ -392,6 +392,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `python`
 * `reqtimeout`
 * `rewrite`
+* `rpaf`*
 * `setenvif`
 * `ssl`* (see [apache::mod::ssl](#class-apachemodssl) below)
 * `status`*
