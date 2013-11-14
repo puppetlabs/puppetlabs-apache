@@ -108,7 +108,7 @@ The long version
 
       To submit your changes via a GitHub pull request, we _highly_
       recommend that you have them on a topic branch, instead of
-      directly on "master" or one of the release.
+      directly on "master".
       It makes things much easier to keep track of, especially if
       you decide to work on another thing before your first change
       is merged in.
@@ -139,10 +139,10 @@ Writing Tests
 If you have commit access to the repository
 ===========================================
 
-Even if you have commit access to the repository, you'll still need to
+Even if you have commit access to the repository, you will still need to
 go through the process above, and have someone else review and merge
 in your changes.  The rule is that all changes must be reviewed by a
-developer on the project (that didn't write the code) to ensure that
+developer on the project (that did not write the code) to ensure that
 all changes go through a code review process.
 
 Having someone other than the author of the topic branch recorded as
