@@ -780,6 +780,10 @@ This directive must be used with `suphp_engine => on` in the vhost declaration. 
     }
 ```
 
+######`php_admin_value` and `php_admin_flag`
+
+Allows per-vhost (and per-directory) setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user, or an application.
+
 ######`custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the
