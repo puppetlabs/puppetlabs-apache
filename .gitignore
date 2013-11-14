@@ -4,4 +4,4 @@ vendor
 spec/fixtures
 .rspec_system
 .bundle
-.sw*
+.*sw*
