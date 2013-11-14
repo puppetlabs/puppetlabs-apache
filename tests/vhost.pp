@@ -168,10 +168,18 @@ apache::vhost { 'eighteenth.example.com':
   docroot => '/var/www/eighteenth',
   setenv  => ['SPECIAL_PATH /foo/bin','KILROY was_here'],
 }
+
 apache::vhost { 'nineteenth.example.com':
   port     => '80',
   docroot  => '/var/www/nineteenth',
   setenvif => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
+}
+
+# Vhost with additional include files
+apache::vhost { 'twentyieth.example.com':
+  port                => '80',
+  docroot             => '/var/www/twelfth',
+  additional_includes => ['/tmp/proxy_group_a','/tmp/proxy_group_b'],
 }
 
 # Vhost with alias for subdomain mapped to same named directory
@@ -199,4 +207,3 @@ apache::vhost { 'securedomain.com':
         ssl_honorcipherorder  => 'On',
         add_listen            => 'false',
 }
-

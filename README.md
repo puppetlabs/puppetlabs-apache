@@ -763,6 +763,12 @@ Filename used to communicate with the web server.  Defaults to 'undef'.
 
 Directory to enable for FastCGI.  Defaults to 'undef'.
 
+#####`additional_includes`
+
+Specifies paths to additional static vhost-specific Apache configuration files.
+This option is useful when you need to implement a unique and/or custom
+configuration not supported by this module.
+
 #####`ip`
 
 The IP address the vhost listens on. Defaults to 'undef'.
