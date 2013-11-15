@@ -188,6 +188,7 @@ class apache::params {
       'wsgi'       => 'www/mod_wsgi',
       'dav_svn'    => 'devel/subversion',
       'xsendfile'  => 'www/mod_xsendfile',
+      'rpaf'       => 'www/mod_rpaf2'
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
