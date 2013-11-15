@@ -266,7 +266,7 @@ define apache::vhost(
       }
     }
   }
-  if $add_listen {
+  if $add_listen and $ensure == 'present' {
     if $ip and defined(Apache::Listen[$port]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
@@ -274,7 +274,7 @@ define apache::vhost(
       apache::listen { $listen_addr_port: }
     }
   }
-  if ! $ip_based {
+  if ! $ip_based and $ensure == 'present' {
     if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) {
       apache::namevirtualhost { $nvh_addr_port: }
     }
