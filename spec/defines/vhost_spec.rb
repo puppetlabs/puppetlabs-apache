@@ -269,7 +269,7 @@ describe 'apache::vhost', :type => :define do
           :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
           :match    => [
             /^  ProxyPass \/path-a http:\/\/fake.com\/a\/$/,
-            /^  ProxyPassReverse \/path-a http:\/\/fake.com\/a\/$/,
+            /^  ProxyPassReverse \/$/,
           ],
           :notmatch => [/ProxyPass .+!$/],
         },
@@ -282,7 +282,7 @@ describe 'apache::vhost', :type => :define do
           ],
           :match    => [
             /^  ProxyPass \/path-a http:\/\/fake.com\/a\/$/,
-            /^  <Location          \/path-a\/>$/,
+            /^  <Location \/path-a\/>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
             /^  ProxyPass          \/path-b http:\/\/fake.com\/b\/$/,
@@ -320,7 +320,7 @@ describe 'apache::vhost', :type => :define do
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
-          :match => ['  <DirectoryMatch .*\\\\.(svn|git|bzr)/.*>'],
+          :match => ['  <DirectoryMatch .*\\.(svn|git|bzr)/.*>'],
         },
         {
           :title => 'should accept a custom fragment',
