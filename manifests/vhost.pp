@@ -175,7 +175,7 @@ define apache::vhost(
     validate_re($fallbackresource, '^/|disabled', 'Please make sure fallbackresource starts with a / (or is "disabled")')
   }
 
-  if $ssl {
+  if $ssl and $ensure == 'present' {
     include apache::mod::ssl
     # Required for the AddType lines.
     include apache::mod::mime
@@ -270,12 +270,12 @@ define apache::vhost(
     if $ip and defined(Apache::Listen[$port]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
-    if ! defined(Apache::Listen[$listen_addr_port]) and $listen_addr_port {
+    if ! defined(Apache::Listen[$listen_addr_port]) and $listen_addr_port and $ensure == 'present' {
       apache::listen { $listen_addr_port: }
     }
   }
   if ! $ip_based {
-    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) {
+    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) and $ensure == 'present' {
       apache::namevirtualhost { $nvh_addr_port: }
     }
   }
