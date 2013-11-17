@@ -512,17 +512,43 @@ describe 'apache::vhost', :type => :define do
             /^  VirtualDocumentRoot \/not\/default$/,
           ],
         },
+
+      ].each do |param|
+        describe "when #{param[:attr]} is #{param[:value]}" do
+          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
+
+          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          if param[:match]
+            it "#{param[:title]}: matches" do
+              param[:match].each do |match|
+                should contain_file("25-#{title}.conf").with_content( match )
+              end
+            end
+          end
+          if param[:notmatch]
+            it "#{param[:title]}: notmatches" do
+              param[:notmatch].each do |notmatch|
+                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+              end
+            end
+          end
+        end
+      end
+    end
+
+    context ".conf content with SSL" do
+      [
         {
             :title => 'should accept setting SSLProtocol',
             :attr  => 'ssl_protocol',
             :value => 'all -SSLv2',
-            :match => [/^  SSLProtocol           all -SSLv2$/],
+            :match => [/^  SSLProtocol             all -SSLv2$/],
         },
         {
             :title => 'should accept setting SSLCipherSuite',
             :attr  => 'ssl_cipher',
             :value => 'RC4-SHA:HIGH:!ADH:!SSLv2',
-            :match => [/^  SSLCipherSuite        RC4-SHA:HIGH:!ADH:!SSLv2$/],
+            :match => [/^  SSLCipherSuite          RC4-SHA:HIGH:!ADH:!SSLv2$/],
         },
         {
             :title => 'should accept setting SSLHonorCipherOrder',
@@ -534,31 +560,34 @@ describe 'apache::vhost', :type => :define do
             :title => 'should accept setting SSLVerifyClient',
             :attr  => 'ssl_verify_client',
             :value => 'optional',
-            :match => [/SSLVerifyClient\w+optional/],
+            :match => [/^  SSLVerifyClient         optional$/],
         },
         {
             :title => 'should accept setting SSLVerifyDepth',
             :attr  => 'ssl_verify_depth',
             :value => '1',
-            :match => [/SSLVerifyDepth\w+1/],
+            :match => [/^  SSLVerifyDepth          1$/],
         },
         {
             :title => 'should accept setting SSLOptions with a string',
             :attr  => 'ssl_options',
             :value => '+ExportCertData',
-            :match => [/SSLOptions\w+\+ExportCertData/],
+            :match => [/^  SSLOptions +ExportCertData$/],
         },
         {
             :title => 'should accept setting SSLOptions with an array',
             :attr  => 'ssl_options',
             :value => ['+StdEnvVars','+ExportCertData'],
-            :match => [/SSLOptions\w+\+StdEnvVars\w+\+ExportCertData/],
+            :match => [/^  SSLOptions +StdEnvVars +ExportCertData/],
         },
-
       ].each do |param|
-        describe "when #{param[:attr]} is #{param[:value]}" do
-          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
-
+        describe "when #{param[:attr]} is #{param[:value]} with SSL" do
+          let :params do
+            default_params.merge( {
+              param[:attr].to_sym => param[:value],
+              :ssl                => true,
+            } )
+          end
           it { should contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
             it "#{param[:title]}: matches" do
