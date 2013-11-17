@@ -120,18 +120,19 @@ class apache::params {
     $mod_packages     = {
       'auth_kerb'   => 'libapache2-mod-auth-kerb',
       'authnz_ldap' => 'libapache2-mod-authz-ldap',
+      'dav_svn'     => 'libapache2-svn',
       'fastcgi'     => 'libapache2-mod-fastcgi',
       'fcgid'       => 'libapache2-mod-fcgid',
+      'nss'         => 'libapache2-mod-nss',
       'passenger'   => 'libapache2-mod-passenger',
       'perl'        => 'libapache2-mod-perl2',
       'php5'        => 'libapache2-mod-php5',
       'proxy_html'  => 'libapache2-mod-proxy-html',
       'python'      => 'libapache2-mod-python',
-      'wsgi'        => 'libapache2-mod-wsgi',
-      'dav_svn'     => 'libapache2-svn',
+      'rpaf'        => 'libapache2-mod-rpaf',
       'suphp'       => 'libapache2-mod-suphp',
+      'wsgi'        => 'libapache2-mod-wsgi',
       'xsendfile'   => 'libapache2-mod-xsendfile',
-      'nss'         => 'libapache2-mod-nss',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
@@ -187,6 +188,7 @@ class apache::params {
       'wsgi'       => 'www/mod_wsgi',
       'dav_svn'    => 'devel/subversion',
       'xsendfile'  => 'www/mod_xsendfile',
+      'rpaf'       => 'www/mod_rpaf2'
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
