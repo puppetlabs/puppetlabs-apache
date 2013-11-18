@@ -1058,7 +1058,7 @@ An array of strings example:
     }
 ```
 
-#####`sslproxyengine`
+#####`ssl_proxyengine`
 
 Specifies whether to use `SSLProxyEngine` or not. Defaults to `false`.
 

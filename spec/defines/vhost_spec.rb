@@ -539,6 +539,54 @@ describe 'apache::vhost', :type => :define do
     context ".conf content with SSL" do
       [
         {
+            :title => 'should accept setting SSLCertificateFile',
+            :attr  => 'ssl_cert',
+            :value => '/path/to/cert.pem',
+            :match => [/^  SSLCertificateFile      \/path\/to\/cert\.pem$/],
+        },
+        {
+            :title => 'should accept setting SSLCertificateKeyFile',
+            :attr  => 'ssl_key',
+            :value => '/path/to/cert.pem',
+            :match => [/^  SSLCertificateKeyFile   \/path\/to\/cert\.pem$/],
+        },
+        {
+            :title => 'should accept setting SSLCertificateChainFile',
+            :attr  => 'ssl_chain',
+            :value => '/path/to/cert.pem',
+            :match => [/^  SSLCertificateChainFile \/path\/to\/cert\.pem$/],
+        },
+        {
+            :title => 'should accept setting SSLCertificatePath',
+            :attr  => 'ssl_certs_dir',
+            :value => '/path/to/certs',
+            :match => [/^  SSLCACertificatePath    \/path\/to\/certs$/],
+        },
+        {
+            :title => 'should accept setting SSLCertificateFile',
+            :attr  => 'ssl_ca',
+            :value => '/path/to/ca.pem',
+            :match => [/^  SSLCACertificateFile    \/path\/to\/ca\.pem$/],
+        },
+        {
+            :title => 'should accept setting SSLRevocationPath',
+            :attr  => 'ssl_crl_path',
+            :value => '/path/to/crl',
+            :match => [/^  SSLCARevocationPath     \/path\/to\/crl$/],
+        },
+        {
+            :title => 'should accept setting SSLRevocationFile',
+            :attr  => 'ssl_crl',
+            :value => '/path/to/crl.pem',
+            :match => [/^  SSLCARevocationFile     \/path\/to\/crl\.pem$/],
+        },
+        {
+            :title => 'should accept setting SSLProxyEngine',
+            :attr  => 'ssl_proxyengine',
+            :value => true,
+            :match => [/^  SSLProxyEngine On$/],
+        },
+        {
             :title => 'should accept setting SSLProtocol',
             :attr  => 'ssl_protocol',
             :value => 'all -SSLv2',
@@ -572,13 +620,13 @@ describe 'apache::vhost', :type => :define do
             :title => 'should accept setting SSLOptions with a string',
             :attr  => 'ssl_options',
             :value => '+ExportCertData',
-            :match => [/^  SSLOptions +ExportCertData$/],
+            :match => [/^  SSLOptions \+ExportCertData$/],
         },
         {
             :title => 'should accept setting SSLOptions with an array',
             :attr  => 'ssl_options',
             :value => ['+StdEnvVars','+ExportCertData'],
-            :match => [/^  SSLOptions +StdEnvVars +ExportCertData/],
+            :match => [/^  SSLOptions \+StdEnvVars \+ExportCertData/],
         },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]} with SSL" do
