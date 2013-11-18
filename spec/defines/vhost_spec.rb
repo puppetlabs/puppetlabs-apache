@@ -147,7 +147,7 @@ describe 'apache::vhost', :type => :define do
           #:value => ['Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1'],
           #:match => ['  SetEnvIf Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1'],
           :value => ['Host "^test\.com$" VHOST_ACCESS=test'],
-          :match => ['  SetEnvIf Host "^test\.com$" VHOST_ACCESS=test'],
+          :match => [/^  SetEnvIf Host "\^test\\.com\$" VHOST_ACCESS=test$/],
         },
         {
           :title => 'should accept options',
@@ -226,8 +226,8 @@ describe 'apache::vhost', :type => :define do
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
           :match => [
-            /^  ScriptAlias \/cgi-bin\/ "\/usr\/scripts\/"$/,
-            '  <Directory /usr/scripts/>',
+            /^  ScriptAlias \/cgi-bin\/ \/usr\/scripts\/$/,
+            /^  <Directory \/usr\/scripts>$/,
           ],
         },
         {
@@ -236,7 +236,7 @@ describe 'apache::vhost', :type => :define do
           :value    => { 'alias' => '/blah/', 'path' => '/usr/scripts' },
           :match    => [
             /^  ScriptAlias \/blah\/ \/usr\/scripts\/$/,
-            '  <Directory /usr/scripts/>',
+            /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },
@@ -247,7 +247,7 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ScriptAlias \/blah\/ \/usr\/scripts\/$/,
             /^  ScriptAlias \/blah2\/ \/usr\/scripts\/$/,
-            '  <Directory /usr/scripts/>',
+            /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },
@@ -269,7 +269,7 @@ describe 'apache::vhost', :type => :define do
           :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
           :match    => [
             /^  ProxyPass \/path-a http:\/\/fake.com\/a\/$/,
-            /^  ProxyPassReverse \/$/,
+            /    ProxyPassReverse \//,
           ],
           :notmatch => [/ProxyPass .+!$/],
         },
@@ -285,8 +285,8 @@ describe 'apache::vhost', :type => :define do
             /^  <Location \/path-a\/>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
-            /^  ProxyPass          \/path-b http:\/\/fake.com\/b\/$/,
-            /^  <Location          \/path-b\/>$/,
+            /^  ProxyPass \/path-b http:\/\/fake.com\/b\/$/,
+            /^  <Location \/path-b\/>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
           ],
@@ -320,7 +320,7 @@ describe 'apache::vhost', :type => :define do
           :title => 'should block scm',
           :attr  => 'block',
           :value => 'scm',
-          :match => ['  <DirectoryMatch .*\\.(svn|git|bzr)/.*>'],
+          :match => [/^  <DirectoryMatch \.\*\\\.\(svn\|git\|bzr\)\/\.\*>$/],
         },
         {
           :title => 'should accept a custom fragment',
@@ -388,7 +388,7 @@ describe 'apache::vhost', :type => :define do
           :title    => 'should accept a directory',
           :attr     => 'directories',
           :value    => { 'path' => '/opt/app' },
-          :notmatch => '  <Directory /rspec/docroot>',
+          :notmatch => ['  <Directory /rspec/docroot>'],
           :match    => [
             /^  <Directory \/opt\/app>$/,
             /^    AllowOverride None$/,
@@ -448,7 +448,7 @@ describe 'apache::vhost', :type => :define do
             /^    Allow from rspec.org$/,
             /^    AllowOverride AuthConfig Indexes$/,
             /^    Deny from google.com$/,
-            /^    Options -MultiViews +MultiViews$/,
+            /^    Options -MultiViews \+MultiViews$/,
             /^    Order deny,yned$/,
             /^    PassengerEnabled onf$/,
             /^  <\/Directory>$/,
@@ -481,7 +481,7 @@ describe 'apache::vhost', :type => :define do
             'path'     => '/',
             'provider' => 'location',
           },
-          :notmatch => '    AllowOverride None',
+          :notmatch => ['    AllowOverride None'],
           :match => [
             /^  <Location \/>$/,
             /^    Order allow,deny$/,
@@ -496,7 +496,7 @@ describe 'apache::vhost', :type => :define do
             'path'     => 'index.html',
             'provider' => 'files',
           },
-          :notmatch => '    AllowOverride None',
+          :notmatch => ['    AllowOverride None'],
           :match => [
             /^  <Files index.html>$/,
             /^    Order allow,deny$/,
