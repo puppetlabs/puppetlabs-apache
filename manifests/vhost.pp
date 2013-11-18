@@ -81,6 +81,7 @@ define apache::vhost(
     $ssl_verify_client           = undef,
     $ssl_verify_depth            = undef,
     $ssl_options                 = undef,
+    $ssl_proxyengine             = false,
     $priority                    = undef,
     $default_vhost               = false,
     $servername                  = $name,
@@ -108,7 +109,6 @@ define apache::vhost(
     $scriptaliases               = [],
     $proxy_dest                  = undef,
     $proxy_pass                  = undef,
-    $sslproxyengine              = false,
     $suphp_addhandler            = $apache::params::suphp_addhandler,
     $suphp_engine                = $apache::params::suphp_engine,
     $suphp_configpath            = $apache::params::suphp_configpath,
@@ -152,7 +152,7 @@ define apache::vhost(
   validate_bool($error_log)
   validate_bool($ssl)
   validate_bool($default_vhost)
-  validate_bool($sslproxyengine)
+  validate_bool($ssl_proxyengine)
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
   }
