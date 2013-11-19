@@ -444,6 +444,16 @@ Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template. These are
 
 To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
 
+####Class: `apache::mod::perl`
+
+```puppet
+    class { 'apache::mod::perl':
+      perl_set_var     => "foo bar",
+      perl_switches    => '-wT',
+      perl_load_module => 'SOME::Perl::Module',
+    }
+```
+
 ####Class: `apache::mod::wsgi`
 
 ```puppet
