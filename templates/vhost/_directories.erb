@@ -1,7 +1,6 @@
 <% if @_directories and ! @_directories.empty? -%>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
-
   <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
     <%- provider = directory['provider'].capitalize -%>
   <%- else -%>
@@ -17,7 +16,7 @@
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
-    <%- if provider == 'Directory' %>
+    <%- if provider == 'Directory' -%>
       <%- if directory['index_options'] -%>
     IndexOptions <%= Array(directory['index_options']).join(' ') %>
       <%- end -%>
@@ -114,7 +113,6 @@
     <%= directory['custom_fragment'] %>
     <%- end -%>
   </<%= provider %>>
-
     <%- end -%>
   <%- end -%>
 <% end -%>
