@@ -423,6 +423,7 @@ To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` par
     class { 'apache::mod::wsgi':
       wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
       wsgi_python_home   => '/path/to/virtenv',
+      wsgi_python_path   => '/path/to/virtenv/site-packages',
     }
 ```
 ####Defined Type: `apache::vhost`
