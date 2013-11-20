@@ -359,6 +359,32 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept an aliasmatch hash',
+          :attr  => 'aliases',
+          ## XXX As mentioned above, rspec-puppet drops the $1. Thus, these
+          # tests don't work.
+          #:value => { 'aliasmatch' => '^/image/(.*).gif', 'path' => '/files/gifs/$1.gif' },
+          #:match => [/^  AliasMatch \^\/image\/\(\.\*\)\.gif \/files\/gifs\/\$1\.gif$/],
+        },
+        {
+          :title => 'should accept a array of alias and aliasmatch hashes mixed',
+          :attr  => 'aliases',
+          ## XXX As mentioned above, rspec-puppet drops the $1. Thus, these
+          # tests don't work.
+          #:value => [
+          #  { 'alias' => '/css', 'path' => '/files/css' },
+          #  { 'aliasmatch' => '^/image/(.*).gif', 'path' => '/files/gifs/$1.gif' },
+          #  { 'aliasmatch' => '^/image/(.*).jpg', 'path' => '/files/jpgs/$1.jpg' },
+          #  { 'alias' => '/image', 'path' => '/files/images' },
+          #],
+          #:match => [
+          #  /^  Alias \/css \/files\/css$/,
+          #  /^  AliasMatch \^\/image\/\(.\*\)\.gif \/files\/gifs\/\$1\.gif$/,
+          #  /^  AliasMatch \^\/image\/\(.\*\)\.jpg \/files\/jpgs\/\$1\.jpg$/,
+          #  /^  Alias \/image \/files\/images$/
+          #],
+        },
+        {
           :title => 'should accept a suPHP_Engine',
           :attr  => 'suphp_engine',
           :value => 'on',
