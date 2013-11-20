@@ -472,13 +472,16 @@ Setting `add_listen` to 'false' stops the vhost from creating a listen statement
 
 #####`aliases`
 
-Passes a list of hashes to the vhost to create `Alias` statements as per the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). Each hash is expected to be of the form:
+Passes a list of hashes to the vhost to create `Alias` or `AliasMatch` statements as per the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). Each hash is expected to be of the form:
 
-```puppet
-aliases => [ { alias => '/alias', path => '/path/to/directory' } ],
+```
+aliases => [
+  { aliasmatch => '^/image/(.*)\.jpg$', path => '/files/jpg.images/$1.jpg' }
+  { alias      => '/image',             path => '/ftp/pub/image' },
+],
 ```
 
-For `Alias` to work, each will need a corresponding `<Directory /path/to/directory>` or `<Location /path/to/directory>` block.
+For `Alias` and `AliasMatch` to work, each will need a corresponding `<Directory /path/to/directory>` or `<Location /path/to/directory>` block. The `Alias` and `AliasMatch` directives are created in the order specified in the `aliases` paramter. As described in the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html) more specific `Alias` or `AliasMatch` directives should come before the more general ones to avoid shadowing.
 
 **Note:** If `apache::mod::passenger` is loaded and `PassengerHighPerformance true` is set, then `Alias` may have issues honouring the `PassengerEnabled off` statement. See [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
 
