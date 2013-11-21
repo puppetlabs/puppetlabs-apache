@@ -1,7 +1,7 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apache class' do
-  case node.facts['osfamily']
+  case fact('osfamily')
   when 'RedHat'
     package_name = 'httpd'
     service_name = 'httpd'
@@ -21,11 +21,8 @@ describe 'apache class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
     describe package(package_name) do
@@ -50,11 +47,8 @@ describe 'apache class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
     describe service(service_name) do

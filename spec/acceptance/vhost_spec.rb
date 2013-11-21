@@ -1,7 +1,7 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apache::vhost define' do
-  case node.facts['osfamily']
+  case fact('osfamily')
   when 'RedHat'
     vhost_dir = '/etc/httpd/conf.d'
     package_name = 'httpd'
@@ -18,9 +18,11 @@ describe 'apache::vhost define' do
 
   context "default vhost without ssl" do
     it 'should create a default vhost config' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
@@ -34,11 +36,12 @@ describe 'apache::vhost define' do
 
   context 'default vhost with ssl' do
     it 'should create default vhost configs' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache':
           default_ssl_vhost => true,
         }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
@@ -53,13 +56,14 @@ describe 'apache::vhost define' do
 
   context 'new vhost on port 80' do
     it 'should configure an apache vhost' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'first.example.com':
           port    => '80',
           docroot => '/var/www/first',
         }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe file("#{vhost_dir}/25-first.example.com.conf") do
@@ -70,7 +74,7 @@ describe 'apache::vhost define' do
 
   context 'new proxy vhost on port 80' do
     it 'should configure an apache proxy vhost' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'proxy.example.com':
           port    => '80',
@@ -79,7 +83,8 @@ describe 'apache::vhost define' do
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
           ],
         }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe file("#{vhost_dir}/25-proxy.example.com.conf") do
@@ -92,7 +97,7 @@ describe 'apache::vhost define' do
 
   context 'new vhost on port 80' do
     it 'should configure two apache vhosts' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'first.example.com':
           port    => '80',
@@ -112,7 +117,8 @@ describe 'apache::vhost define' do
           ensure  => file,
           content => "Hello from second\\n",
         }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe service(service_name) do
@@ -121,23 +127,21 @@ describe 'apache::vhost define' do
     end
 
     it 'should answer to first.example.com' do
-      shell("/usr/bin/curl first.example.com:80") do |r|
+      shell("/usr/bin/curl first.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should == "Hello from first\n"
-        r.exit_code.should == 0
       end
     end
 
     it 'should answer to second.example.com' do
-      shell("/usr/bin/curl second.example.com:80") do |r|
+      shell("/usr/bin/curl second.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should == "Hello from second\n"
-        r.exit_code.should == 0
       end
     end
   end
 
   context 'apache_directories readme example, adapted' do
     it 'should configure a vhost with Files' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'files.example.net':
           docroot     => '/var/www/files',
@@ -150,7 +154,8 @@ describe 'apache::vhost define' do
           content => "Hello World\\n",
         }
         host { 'files.example.net': ip => '127.0.0.1', }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe service(service_name) do
@@ -159,19 +164,16 @@ describe 'apache::vhost define' do
     end
 
     it 'should answer to files.example.net' do
-      shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak") do |r|
-        r.stderr.should =~ /curl: \(22\) The requested URL returned error: 403/
-        r.exit_code.should == 22
-      end
+      shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak", {:acceptable_exit_codes => 22}).stderr.should =~ /curl: \(22\) The requested URL returned error: 403/
     end
 
   end
 
-  case node.facts['lsbdistcodename']
+  case fact('lsbdistcodename')
   when 'precise', 'wheezy'
     context 'vhost fallbackresouce example' do
       it 'should configure a vhost with Fallbackresource' do
-        puppet_apply(%{
+        pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'fallback.example.net':
           docroot         => '/var/www/fallback',
@@ -182,7 +184,8 @@ describe 'apache::vhost define' do
           content => "Hello World\\n",
         }
         host { 'fallback.example.net': ip => '127.0.0.1', }
-                     }) { |r| [0,2].should include r.exit_code}
+        EOS
+        expect([0,2]).to include (apply_manifest(pp).exit_code)
       end
 
       describe service(service_name) do
@@ -191,9 +194,8 @@ describe 'apache::vhost define' do
       end
 
       it 'should answer to fallback.example.net' do
-        shell("/usr/bin/curl fallback.example.net:80/Does/Not/Exist") do |r|
+        shell("/usr/bin/curl fallback.example.net:80/Does/Not/Exist", {:acceptable_exit_codes => 0}) do |r|
           r.stdout.should == "Hello World\n"
-          r.exit_code.should == 0
         end
       end
 
@@ -208,7 +210,7 @@ describe 'apache::vhost define' do
 
   context 'virtual_docroot hosting separate sites' do
     it 'should configure a vhost with VirtualDocumentRoot' do
-      puppet_apply(%{
+      pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'virt.example.com':
           vhost_name      => '*',
@@ -223,7 +225,8 @@ describe 'apache::vhost define' do
         file { [ '/var/www/virt/a', '/var/www/virt/b', ]: ensure => directory, }
         file { '/var/www/virt/a/index.html': ensure  => file, content => "Hello from a.virt\\n", }
         file { '/var/www/virt/b/index.html': ensure  => file, content => "Hello from b.virt\\n", }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
     end
 
     describe service(service_name) do
@@ -232,16 +235,14 @@ describe 'apache::vhost define' do
     end
 
     it 'should answer to a.virt.example.com' do
-      shell("/usr/bin/curl a.virt.example.com:80") do |r|
+      shell("/usr/bin/curl a.virt.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should == "Hello from a.virt\n"
-        r.exit_code.should == 0
       end
     end
 
     it 'should answer to b.virt.example.com' do
-      shell("/usr/bin/curl b.virt.example.com:80") do |r|
+      shell("/usr/bin/curl b.virt.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         r.stdout.should == "Hello from b.virt\n"
-        r.exit_code.should == 0
       end
     end
   end

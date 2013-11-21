@@ -1,6 +1,6 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-case node.facts['osfamily']
+case fact('osfamily')
 when 'RedHat'
   servicename = 'httpd'
 when 'Debian'
@@ -8,10 +8,10 @@ when 'Debian'
 when 'FreeBSD'
   servicename = 'apache22'
 else
-  raise "Unconfigured OS for apache service on #{node.facts['osfamily']}"
+  raise "Unconfigured OS for apache service on #{fact('osfamily')}"
 end
 
-case node.facts['osfamily']
+case fact('osfamily')
 when 'FreeBSD'
   describe 'apache::mod::event class' do
     describe 'running puppet code' do
@@ -24,11 +24,8 @@ when 'FreeBSD'
         EOS
 
         # Run it twice and test for idempotency
-        puppet_apply(pp) do |r|
-          r.exit_code.should_not == 1
-          r.refresh
-          r.exit_code.should be_zero
-        end
+        expect([0,2]).to include (apply_manifest(pp).exit_code)
+        expect(apply_manifest(pp).exit_code).to eq(0)
       end
     end
 
@@ -50,11 +47,8 @@ describe 'apache::mod::worker class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
   end
 
@@ -75,11 +69,8 @@ describe 'apache::mod::prefork class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        r.exit_code.should_not == 1
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
   end
 
