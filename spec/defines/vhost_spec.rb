@@ -264,7 +264,6 @@ describe 'apache::vhost', :type => :define do
           :value => '/usr/scripts',
           :match => [
             /^  ScriptAlias \/cgi-bin\/ \/usr\/scripts$/,
-            /^  <Directory \/usr\/scripts>$/,
           ],
         },
         {
@@ -273,7 +272,6 @@ describe 'apache::vhost', :type => :define do
           :value    => { 'alias' => '/blah/', 'path' => '/usr/scripts' },
           :match    => [
             /^  ScriptAlias \/blah\/ \/usr\/scripts$/,
-            /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },
@@ -284,7 +282,6 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ScriptAlias \/blah \/usr\/scripts$/,
             /^  ScriptAlias \/blah2 \/usr\/scripts$/,
-            /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },
@@ -295,7 +292,6 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ScriptAlias \/blah \/usr\/scripts$/,
             /^  ScriptAlias \/blah2\/ \/usr\/scripts2\/$/,
-            /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },

@@ -11,24 +11,8 @@
 <%# for backward compatibility and ease of implementation -%>
 <% aliases << { 'alias' => '/cgi-bin/', 'path' => @scriptalias } if @scriptalias -%>
 <% aliases.flatten.compact! %>
-<%# Multiple paths could be provided for the same directory, make sure we only -%>
-<%# add a single <Directory> entry per path -%>
-<% dirs = aliases.map { |h| h['path'] }.uniq.compact -%>
 <% aliases.each do |salias| -%>
   ## Script alias directives
   ScriptAlias <%= salias['alias'] %> <%= salias['path'] %>
 <% end -%>
-
-<% dirs.sort.each do |dir| -%>
-  <Directory <%= dir %>>
-    AllowOverride None
-    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-    Order allow,deny
-    Allow from all
-<% if @ssl -%>
-    SSLOptions +StdEnvVars
-<% end -%>
-  </Directory>
-<% end -%>
-
 <% end -%>
