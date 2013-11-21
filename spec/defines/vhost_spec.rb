@@ -226,7 +226,7 @@ describe 'apache::vhost', :type => :define do
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
           :match => [
-            /^  ScriptAlias \/cgi-bin\/ \/usr\/scripts\/$/,
+            /^  ScriptAlias \/cgi-bin\/ \/usr\/scripts$/,
             /^  <Directory \/usr\/scripts>$/,
           ],
         },
@@ -235,7 +235,7 @@ describe 'apache::vhost', :type => :define do
           :attr     => 'scriptaliases',
           :value    => { 'alias' => '/blah/', 'path' => '/usr/scripts' },
           :match    => [
-            /^  ScriptAlias \/blah\/ \/usr\/scripts\/$/,
+            /^  ScriptAlias \/blah\/ \/usr\/scripts$/,
             /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
@@ -243,10 +243,21 @@ describe 'apache::vhost', :type => :define do
         {
           :title    => 'should accept multiple scriptaliases',
           :attr     => 'scriptaliases',
-          :value    => [ { 'alias' => '/blah/', 'path' => '/usr/scripts' }, { 'alias' => '/blah2/', 'path' => '/usr/scripts' } ],
+          :value    => [ { 'alias' => '/blah', 'path' => '/usr/scripts' }, { 'alias' => '/blah2', 'path' => '/usr/scripts' } ],
           :match    => [
-            /^  ScriptAlias \/blah\/ \/usr\/scripts\/$/,
-            /^  ScriptAlias \/blah2\/ \/usr\/scripts\/$/,
+            /^  ScriptAlias \/blah \/usr\/scripts$/,
+            /^  ScriptAlias \/blah2 \/usr\/scripts$/,
+            /^  <Directory \/usr\/scripts>$/,
+          ],
+          :nomatch  => [/ScriptAlias \/cgi\-bin\//],
+        },
+        {
+          :title    => 'should accept multiple scriptaliases with and without trailing slashes',
+          :attr     => 'scriptaliases',
+          :value    => [ { 'alias' => '/blah', 'path' => '/usr/scripts' }, { 'alias' => '/blah2/', 'path' => '/usr/scripts2/' } ],
+          :match    => [
+            /^  ScriptAlias \/blah \/usr\/scripts$/,
+            /^  ScriptAlias \/blah2\/ \/usr\/scripts2\/$/,
             /^  <Directory \/usr\/scripts>$/,
           ],
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
