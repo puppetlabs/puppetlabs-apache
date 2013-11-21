@@ -712,6 +712,7 @@ describe 'apache::vhost', :type => :define do
              '/\\.git(/.*|$)',
            ],
          })
+	end
         it { should contain_file("25-#{title}.conf").with_content %r{  RedirectMatch 404 /\\\.git(/\.*|$)} }
        end
 
