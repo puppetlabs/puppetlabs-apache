@@ -1,11 +1,11 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apache::mod::suphp class' do
-  case node.facts['osfamily']
+  case fact('osfamily')
   when 'Debian'
     context "default suphp config" do
       it 'succeeds in puppeting suphp' do
-        puppet_apply(%{
+        pp = <<-EOS
           class { 'apache':
             mpm_module => 'prefork',
           }
@@ -22,7 +22,8 @@ describe 'apache::mod::suphp class' do
             group   => 'puppet',
             content => "<?php echo get_current_user(); ?>\\n",
           }
-        }) { |r| [0,2].should include r.exit_code}
+        EOS
+        expect([0,2]).to include (apply_manifest(pp).exit_code)
       end
 
       describe service('apache2') do
