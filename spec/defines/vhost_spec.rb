@@ -702,17 +702,17 @@ describe 'apache::vhost', :type => :define do
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /logout http://10\.0\.0\.10/test} }
         end
 
-       describe 'redirect match rules' do
-        let :params do
-         default_params.merge({
-           :redirectmatch_status => [
-             '404',
-           ],
-           :redirectmatch_regexp   => [
-             '/\\.git(/.*|$)',
-           ],
-         })
-	end
+        describe 'redirect match rules' do
+          let :params do
+            default_params.merge({
+              :redirectmatch_status => [
+                  '404',
+              ],
+              :redirectmatch_regexp   => [
+                  '/\\.git(/.*|$)',
+              ],
+            })
+	  end
         it { should contain_file("25-#{title}.conf").with_content %r{  RedirectMatch 404 /\\\.git(/\.*|$)} }
        end
 
