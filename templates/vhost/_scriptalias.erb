@@ -16,7 +16,7 @@
 <% dirs = aliases.map { |h| h['path'] }.uniq.compact -%>
 <% aliases.each do |salias| -%>
   ## Script alias directives
-  ScriptAlias <%= salias['alias'] %> <%= salias['path'] %>/
+  ScriptAlias <%= salias['alias'] %> <%= salias['path'] %>
 <% end -%>
 
 <% dirs.sort.each do |dir| -%>
