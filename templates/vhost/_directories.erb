@@ -56,6 +56,11 @@
     <%- if directory['directoryindex'] and directory['directoryindex'] != '' -%>
     DirectoryIndex <%= directory['directoryindex'] %>
     <%- end -%>
+    <%- if directory['error_documents'] and ! directory['error_documents'].empty? -%>
+      <%- [directory['error_documents']].flatten.compact.each do |error_document| -%>
+    ErrorDocument <%= error_document['error_code'] %> <%= error_document['document'] %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['auth_type'] -%>
     AuthType <%= directory['auth_type'] %>
     <%- end -%>
@@ -110,6 +115,9 @@
     <%- end -%>
     <%- end -%>
     <%- if directory['force_type'] -%>
+    ForceType <%= directory['force_type'] %>
+    <%- end -%>
+    <%- if directory['error_documents'] -%>
     ForceType <%= directory['force_type'] %>
     <%- end -%>
     <%- if directory['custom_fragment'] -%>

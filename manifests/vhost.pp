@@ -104,6 +104,7 @@ define apache::vhost(
     $error_log_file              = undef,
     $error_log_pipe              = undef,
     $error_log_syslog            = undef,
+    $error_documents             = [],
     $fallbackresource            = undef,
     $scriptalias                 = undef,
     $scriptaliases               = [],
@@ -366,6 +367,7 @@ define apache::vhost(
   # - $_access_log_format
   # - $error_log
   # - $error_log_destination
+  # - $error_documents
   # - $fallbackresource
   # - $custom_fragment
   # - $additional_includes
