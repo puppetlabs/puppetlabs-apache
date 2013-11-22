@@ -222,6 +222,43 @@ describe 'apache::vhost', :type => :define do
           :notmatch => [/ErrorLog.+$/],
         },
         {
+          :title    => 'should set ErrorDocument 503',
+          :attr     => 'error_documents',
+          :value    => [ { 'error_code' => '503', 'document' => '"Go away, the backend is broken."'}],
+          :match => [/^  ErrorDocument 503 "Go away, the backend is broken."$/],
+        },
+        {
+          :title    => 'should set ErrorDocuments 503 407',
+          :attr     => 'error_documents',
+          :value    => [
+            { 'error_code' => '503', 'document' => '/service-unavail'},
+            { 'error_code' => '407', 'document' => 'https://example.com/proxy/login'},
+          ],
+          :match => [
+            /^  ErrorDocument 503 \/service-unavail$/,
+            /^  ErrorDocument 407 https:\/\/example\.com\/proxy\/login$/,
+          ],
+        },
+        {
+          :title    => 'should set ErrorDocument 503 in directory',
+          :attr     => 'directories',
+          :value    => { 'path' => '/srv/www', 'error_documents' => [{ 'error_code' => '503', 'document' => '"Go away, the backend is broken."'}] },
+          :match => [/^    ErrorDocument 503 "Go away, the backend is broken."$/],
+        },
+        {
+          :title    => 'should set ErrorDocuments 503 407 in directory',
+          :attr     => 'directories',
+          :value    => { 'path' => '/srv/www', 'error_documents' =>
+          [
+            { 'error_code' => '503', 'document' => '/service-unavail'},
+            { 'error_code' => '407', 'document' => 'https://example.com/proxy/login'},
+          ]},
+          :match => [
+            /^    ErrorDocument 503 \/service-unavail$/,
+            /^    ErrorDocument 407 https:\/\/example\.com\/proxy\/login$/,
+          ],
+        },
+        {
           :title => 'should accept a scriptalias',
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
