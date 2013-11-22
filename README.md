@@ -574,6 +574,19 @@ Sets an `Deny` directive as per the [Apache Core documentation](http://httpd.apa
       directories => [ { path => '/path/to/directory', deny => 'from example.org' } ],
     }
 ```
+######`error_documents`
+
+A list of hashes which can be used to override the [ErrorDocument](https://httpd.apache.org/docs/2.2/mod/core.html#errordocument) settings for this directory. Example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      directories => [ { path => '/srv/www'
+        error_documents => [
+          { 'error_code' => '503', 'document' => '/service-unavail' },
+        ],
+      }]
+    }
+```
 
 ######`headers`
 
@@ -751,6 +764,19 @@ Specifies a pipe to send error log messages to. Defaults to 'undef'.
 #####`error_log_syslog`
 
 Sends all error log messages to syslog. Defaults to 'undef'.
+
+#####`error_documents`
+
+A list of hashes which can be used to override the [ErrorDocument](https://httpd.apache.org/docs/2.2/mod/core.html#errordocument) settings for this vhost. Defaults to `[]`. Example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      error_documents => [
+        { 'error_code' => '503', 'document' => '/service-unavail' },
+        { 'error_code' => '407', 'document' => 'https://example.com/proxy/login' },
+      ],
+    }
+```
 
 #####`ensure`
 
