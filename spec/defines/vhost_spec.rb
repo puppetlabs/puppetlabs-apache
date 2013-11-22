@@ -877,6 +877,20 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when suphp_engine is on and suphp { user & group } is specified' do
+        let :params do default_params.merge({
+          :suphp_engine     => 'on',
+          :directories      => { 'path' => '/srv/www',
+            'suphp' => { 'user' => 'myappuser', 'group' => 'myappgroup' },
+          }
+        }) end
+        it 'should set suphp_UserGroup' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^    suPHP_UserGroup myappuser myappgroup/
+          )
+        end
+      end
+
       describe 'priority/default settings' do
         describe 'when neither priority/default is specified' do
           let :params do default_params end
