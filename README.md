@@ -957,29 +957,30 @@ Defines a directory of CGI scripts to be aliased to the path '/cgi-bin'
 
 #####`scriptaliases`
 
-Takes an array hashes with the keys containing the alias and path.  For example:
-
-Usage will typically look like:
+Passes a list of hashes to the vhost to create `ScriptAlias` or `ScriptAliasMatch` statements as per the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). Each hash is expected to be of the form:
 
 ```puppet
-    apache::vhost { 'sample.example.net':
-      docroot     => '/path/to/directory',
-      scriptaliases => [
-        {
-          alias => '/myscript/',
-          path  => '/usr/share/myscript',
-        },
-        {
-          alias => '/oldscript/',
-          path  => '/usr/share/myscript',
-        },
-        {
-          alias => '/neatscript/',
-          path  => '/usr/share/neatscript',
-        },
-      ]
-    }
+    scriptaliases => [
+      {
+        alias => '/myscript',
+        path  => '/usr/share/myscript',
+      },
+      {
+        aliasmatch => '^/foo(.*)',
+        path       => '/usr/share/fooscripts$1',
+      },
+      {
+        aliasmatch => '^/bar/(.*)',
+        path       => '/usr/share/bar/wrapper.sh/$1',
+      },
+      {
+        alias => '/neatscript',
+        path  => '/usr/share/neatscript',
+      },
+    ]
 ```
+
+These directives are created in the order specified. As with `Alias` and `AliasMatch` directives the more specific aliases should come before the more general ones to avoid shadowing.
 
 #####`serveradmin`
 

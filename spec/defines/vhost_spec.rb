@@ -296,6 +296,51 @@ describe 'apache::vhost', :type => :define do
           :nomatch  => [/ScriptAlias \/cgi\-bin\//],
         },
         {
+          :title    => 'should accept a ScriptAliasMatch directive',
+          :attr     => 'scriptaliases',
+          ## XXX As mentioned above, rspec-puppet drops constructs like $1.
+          ## Thus, these tests don't work as they should. As a workaround we
+          ## use FOO instead of $1 here.
+          :value    => [ { 'aliasmatch' => '^/cgi-bin(.*)', 'path' => '/usr/local/apache/cgi-binFOO' } ],
+          :match    => [
+            /^  ScriptAliasMatch \^\/cgi-bin\(\.\*\) \/usr\/local\/apache\/cgi-binFOO$/
+          ],
+        },
+        {
+          :title    => 'should accept multiple ScriptAliasMatch directives',
+          :attr     => 'scriptaliases',
+          ## XXX As mentioned above, rspec-puppet drops constructs like $1.
+          ## Thus, these tests don't work as they should. As a workaround we
+          ## use FOO instead of $1 here.
+          :value    => [
+            { 'aliasmatch' => '^/cgi-bin(.*)', 'path' => '/usr/local/apache/cgi-binFOO' },
+            { 'aliasmatch' => '"(?x)^/git/(.*/(HEAD|info/refs|objects/(info/[^/]+|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))|git-(upload|receive)-pack))"', 'path' => '/var/www/bin/gitolite-suexec-wrapper/FOO' },
+          ],
+          :match    => [
+            /^  ScriptAliasMatch \^\/cgi-bin\(\.\*\) \/usr\/local\/apache\/cgi-binFOO$/,
+            /^  ScriptAliasMatch "\(\?x\)\^\/git\/\(\.\*\/\(HEAD\|info\/refs\|objects\/\(info\/\[\^\/\]\+\|\[0-9a-f\]\{2\}\/\[0-9a-f\]\{38\}\|pack\/pack-\[0-9a-f\]\{40\}\\\.\(pack\|idx\)\)\|git-\(upload\|receive\)-pack\)\)" \/var\/www\/bin\/gitolite-suexec-wrapper\/FOO$/,
+          ],
+        },
+        {
+          :title    => 'should accept mixed ScriptAlias and ScriptAliasMatch directives',
+          :attr     => 'scriptaliases',
+          ## XXX As mentioned above, rspec-puppet drops constructs like $1.
+          ## Thus, these tests don't work as they should. As a workaround we
+          ## use FOO instead of $1 here.
+          :value    => [
+            { 'aliasmatch' => '"(?x)^/git/(.*/(HEAD|info/refs|objects/(info/[^/]+|[0-9a-f]{2}/[0-9a-f]{38}|pack/pack-[0-9a-f]{40}\.(pack|idx))|git-(upload|receive)-pack))"', 'path' => '/var/www/bin/gitolite-suexec-wrapper/FOO' },
+            { 'alias' => '/git', 'path' => '/var/www/gitweb/index.cgi' },
+            { 'aliasmatch' => '^/cgi-bin(.*)', 'path' => '/usr/local/apache/cgi-binFOO' },
+            { 'alias' => '/trac', 'path' => '/etc/apache2/trac.fcgi' },
+          ],
+          :match    => [
+            /^  ScriptAliasMatch "\(\?x\)\^\/git\/\(\.\*\/\(HEAD\|info\/refs\|objects\/\(info\/\[\^\/\]\+\|\[0-9a-f\]\{2\}\/\[0-9a-f\]\{38\}\|pack\/pack-\[0-9a-f\]\{40\}\\\.\(pack\|idx\)\)\|git-\(upload\|receive\)-pack\)\)" \/var\/www\/bin\/gitolite-suexec-wrapper\/FOO$/,
+            /^  ScriptAlias \/git \/var\/www\/gitweb\/index\.cgi$/,
+            /^  ScriptAliasMatch \^\/cgi-bin\(\.\*\) \/usr\/local\/apache\/cgi-binFOO$/,
+            /^  ScriptAlias \/trac \/etc\/apache2\/trac.fcgi$/,
+          ],
+        },
+        {
           :title    => 'should accept proxy destinations',
           :attr     => 'proxy_dest',
           :value    => 'http://fake.com',
