@@ -133,6 +133,9 @@ To set up a virtual host with suPHP
       suphp_addhandler    => 'x-httpd-php',
       suphp_engine        => 'on',
       suphp_configpath    => '/etc/php5/apache2',
+      directories         => { path => '/home/appuser/myphpapp',
+        'suphp'           => { user => 'myappuser', group => 'myappgroup' },
+      }
     }
 ```
 
@@ -741,6 +744,20 @@ String or list of [`SSLOptions`](https://httpd.apache.org/docs/2.2/mod/mod_ssl.h
       directories => [
         { path => '/path/to/directory', ssl_options => '+ExportCertData' }
         { path => '/path/to/different/dir', ssl_options => [ '-StdEnvVars', '+ExportCertData'] },
+      ],
+    }
+```
+
+######`suphp`
+
+An array containing two values: User and group for the [suPHP_UserGroup](http://www.suphp.org/DocumentationView.html?file=apache/CONFIG) setting.
+This directive must be used with `suphp_engine => on` in the vhost declaration. This directive only works in `<Directory>` or `<Location>`.
+
+```puppet
+    apache::vhost { 'secure.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path => '/path/to/directory', suphp => { user =>  'myappuser', group => 'myappgroup' }
       ],
     }
 ```
