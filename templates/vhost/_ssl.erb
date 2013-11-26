@@ -38,7 +38,4 @@
 <% if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>
 <% end -%>
-  <FilesMatch "\.(cgi|shtml|phtml|php)$">
-    SSLOptions +StdEnvVars
-  </FilesMatch>
 <% end -%>

@@ -409,10 +409,13 @@ The modules mentioned above, and other Apache modules that have templates, will 
 
 ####Class: `apache::mod::ssl`
 
-Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template
+Installs Apache SSL capabilities and utilizes `ssl.conf.erb` template. These are the defaults:
 
 ```puppet
-	class { 'apache::mod::ssl': }
+    class { 'apache::mod::ssl':
+      ssl_compression => false,
+      ssl_options     => [ 'StdEnvVars' ],
+  }
 ```
 
 To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
@@ -727,6 +730,20 @@ Sets the value for the `PassengerEnabled` directory to `on` or `off` as per the 
 **Note:** This directive requires `apache::mod::passenger` to be active, Apache may not start with an unrecognised directive without it.
 
 **Note:** Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the `PassengerEnabled` directive with the `PassengerHighPerformance` directive.
+
+######`ssl_options`
+
+String or list of [`SSLOptions`](https://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions) for the given `<Directory>` block. This overrides, or refines the [`SSLOptions`](https://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions) of the parent block (either vhost, or server).
+
+```puppet
+    apache::vhost { 'secure.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path => '/path/to/directory', ssl_options => '+ExportCertData' }
+        { path => '/path/to/different/dir', ssl_options => [ '-StdEnvVars', '+ExportCertData'] },
+      ],
+    }
+```
 
 ######`custom_fragment`
 
@@ -1072,12 +1089,12 @@ An example:
 
 #####`ssl_options`
 
-Sets `SSLVerifyOptions` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions). This is the global setting for the vhost and can be a string or an array. Defaults to undef. A single string example:
+Sets `SSLOptions` directives as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/mod_ssl.html#ssloptions). This is the global setting for the vhost and can be a string or an array. Defaults to undef. A single string example:
 
 ```puppet
     apache::vhost { 'sample.example.net':
       …
-      ssl_options => '+StdEnvVars',
+      ssl_options => '+ExportCertData',
     }
 ```
 
@@ -1086,7 +1103,7 @@ An array of strings example:
 ```puppet
     apache::vhost { 'sample.example.net':
       …
-      ssl_options => [ '+StdEnvVars', '+ExportCertData' ],
+      ssl_options => [ '+StrictRequire', '+ExportCertData' ],
     }
 ```
 

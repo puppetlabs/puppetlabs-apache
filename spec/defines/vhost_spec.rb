@@ -754,8 +754,20 @@ describe 'apache::vhost', :type => :define do
         {
             :title => 'should accept setting SSLOptions with an array',
             :attr  => 'ssl_options',
-            :value => ['+StdEnvVars','+ExportCertData'],
-            :match => [/^  SSLOptions \+StdEnvVars \+ExportCertData/],
+            :value => ['+StrictRequire','+ExportCertData'],
+            :match => [/^  SSLOptions \+StrictRequire \+ExportCertData/],
+        },
+        {
+            :title => 'should accept setting SSLOptions with a string in directories',
+            :attr  => 'directories',
+            :value => { 'path' => '/srv/www', 'ssl_options' => '+ExportCertData'},
+            :match => [/^    SSLOptions \+ExportCertData$/],
+        },
+        {
+            :title => 'should accept setting SSLOptions with an array in directories',
+            :attr  => 'directories',
+            :value => { 'path' => '/srv/www', 'ssl_options' => ['-StdEnvVars','+ExportCertData']},
+            :match => [/^    SSLOptions -StdEnvVars \+ExportCertData/],
         },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]} with SSL" do
