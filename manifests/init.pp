@@ -52,6 +52,7 @@ class apache (
   $ports_file           = $apache::params::ports_file,
   $server_tokens        = 'OS',
   $server_signature     = 'On',
+  $trace_enable         = 'On',
   $package_ensure       = 'installed',
 ) inherits apache::params {
 
@@ -259,6 +260,9 @@ class apache (
     # - $keepalive
     # - $keepalive_timeout
     # - $server_root
+    # - $server_tokens
+    # - $server_signature
+    # - $trace_enable
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),

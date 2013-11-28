@@ -324,6 +324,10 @@ Controls how much information Apache sends to the browser about itself and the o
 
 Allows the configuration of a trailing footer line under server-generated documents. See Apache documentation for 'ServerSignature'. Defaults to 'On'.
 
+#####`trace_enable`
+
+Controls, how TRACE requests per RFC 2616 are handled. See Apache documentation for 'TraceEnable'. Defaults to 'On'.
+
 #####`manage_user`
 
 Setting this to false will avoid the user resource to be created by this module. This is useful when you already have a user created in another puppet module and that you want to used it to run apache. Without this, it would result in a duplicate resource error.
