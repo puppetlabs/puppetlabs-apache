@@ -24,6 +24,7 @@ class apache (
   $default_ssl_ca       = undef,
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
+  $ip                   = undef,
   $service_enable       = true,
   $service_ensure       = 'running',
   $purge_configs        = true,
@@ -306,6 +307,7 @@ class apache (
       serveradmin     => $serveradmin,
       access_log_file => $access_log_file,
       priority        => '15',
+      ip              => $ip,
     }
     $ssl_access_log_file = $::osfamily ? {
       'freebsd' => $access_log_file,
@@ -320,6 +322,7 @@ class apache (
       serveradmin     => $serveradmin,
       access_log_file => $ssl_access_log_file,
       priority        => '15',
+      ip              => $ip,
     }
   }
 }
