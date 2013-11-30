@@ -12,6 +12,7 @@
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
 # - The $serveraliases of the site
+# - The $ip to configure the host on, defaulting to *
 # - The $options for the given vhost
 # - The $override for the given vhost (list of AllowOverride arguments)
 # - The $vhost_name for name based virtualhosting, defaulting to *

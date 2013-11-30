@@ -111,6 +111,16 @@ To set up a virtual host with SSL and specific SSL certificates
     }
 ```
 
+To set up a virtual host with IP address different than '*'
+
+```puppet
+    apache::vhost { 'subdomain.example.com':
+      ip      => '127.0.0.1',
+      port    => '80',
+      docrout => '/var/www/subdomain',
+    }
+```
+
 To set up a virtual host with wildcard alias for subdomain mapped to same named directory
 `http://examle.com.loc => /var/www/example.com`
 
