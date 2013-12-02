@@ -1,17 +1,42 @@
-require 'spec_helper'
-
 describe 'apache::mod::wsgi', :type => :class do
-  context "On a Debian OS" do
+  let :pre_condition do
+    'include apache'
+  end
+  context "on a Debian OS" do
     let :facts do
-      { :osfamily => 'Debian' }
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
     end
-    it { should include_class("apache") }
-    it { should contain_package("mod_wsgi_package").with(
-     'require' => 'Package[httpd]'
-    ) }
-    it { should contain_a2mod("wsgi").with(
-     'ensure'  => 'present'
-      )
-    }
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod('wsgi') }
+    it { should contain_package("libapache2-mod-wsgi") }
+  end
+  context "on a RedHat OS" do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_apache__mod('wsgi') }
+    it { should contain_package("mod_wsgi") }
+
+    describe "with custom WSGISocketPrefix" do
+      let :params do
+        { :wsgi_socket_prefix => 'run/wsgi' }
+      end
+      it {should contain_file('wsgi.conf').with_content(/^  WSGISocketPrefix run\/wsgi$/)}
+    end
+    describe "with custom WSGIPythonHome" do
+      let :params do
+        { :wsgi_python_home => '/path/to/virtenv' }
+      end
+      it {should contain_file('wsgi.conf').with_content(/^  WSGIPythonHome \/path\/to\/virtenv$/)}
+    end
   end
 end

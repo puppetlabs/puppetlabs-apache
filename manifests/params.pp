@@ -10,6 +10,7 @@
 # - The $php_package is the name of the package that provided PHP
 # - The $ssl_package is the name of the Apache SSL package
 # - The $apache_dev is the name of the Apache development libraries package
+# - The $conf_contents is the contents of the Apache configuration file
 #
 # Actions:
 #
@@ -18,67 +19,96 @@
 # Sample Usage:
 #
 class apache::params {
+  # This will be 5 or 6 on RedHat, 6 or wheezy on Debian, 12 or quantal on Ubuntu, 3 on Amazon, etc.
+  $osr_array = split($::operatingsystemrelease,'[\/\.]')
+  $distrelease = $osr_array[0]
+  if ! $distrelease {
+    fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
+  }
 
-  $ssl           = true
-  $template      = 'apache/vhost-default.conf.erb'
-  $priority      = '25'
-  $servername    = ''
-  $serveraliases = ''
-  $auth          = false
-  $redirect_ssl  = false
-  $ssl_path      = '/etc/ssl'
-  $options       = 'Indexes FollowSymLinks MultiViews'
-  $override      = 'None'
-  $vhost_name    = '*'
-  
-  if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
-    $user                  = 'apache'
-    $group                 = 'apache'
-    $apache_name           = 'httpd'
-    $php_package           = 'php'
-    $mod_passenger_package = 'mod_passenger'
-    $mod_python_package    = 'mod_python'
-    $mod_wsgi_package      = 'mod_wsgi'
-    $mod_auth_kerb_package = 'mod_auth_kerb'
-    $ssl_package           = 'mod_ssl'
-    $apache_dev            = 'httpd-devel'
-    $httpd_dir             = '/etc/httpd'
-    $conf_dir              = "${httpd_dir}/conf"
-    $mod_dir               = "${httpd_dir}/mod.d"
-    $vdir                  = "${httpd_dir}/conf.d"
-    $conf_file             = 'httpd.conf'
-    $mod_packages          = {
-      'dev'        => 'httpd-devel',
+  if($::fqdn) {
+    $servername = $::fqdn
+  } else {
+    $servername = $::hostname
+  }
+
+  if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
+    $user                 = 'apache'
+    $group                = 'apache'
+    $apache_name          = 'httpd'
+    $httpd_dir            = '/etc/httpd'
+    $conf_dir             = "${httpd_dir}/conf"
+    $confd_dir            = "${httpd_dir}/conf.d"
+    $mod_dir              = "${httpd_dir}/conf.d"
+    $vhost_dir            = "${httpd_dir}/conf.d"
+    $conf_file            = 'httpd.conf'
+    $ports_file           = "${conf_dir}/ports.conf"
+    $logroot              = '/var/log/httpd'
+    $lib_path             = 'modules'
+    $mpm_module           = 'prefork'
+    $dev_packages         = 'httpd-devel'
+    $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
+    $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
+    $ssl_certs_dir        = $distrelease ? {
+      '5'     => '/etc/pki/tls/certs',
+      default => '/etc/ssl/certs',
+    }
+    $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
+    $passenger_ruby       = '/usr/bin/ruby'
+    $suphp_addhandler     = 'php5-script'
+    $suphp_engine         = 'off'
+    $suphp_configpath     = undef
+    $mod_packages         = {
+      'auth_kerb'  => 'mod_auth_kerb',
       'fcgid'      => 'mod_fcgid',
       'passenger'  => 'mod_passenger',
       'perl'       => 'mod_perl',
-      'php5'       => 'php',
+      'php5'       => $distrelease ? {
+        '5'     => 'php53',
+        default => 'php',
+      },
       'proxy_html' => 'mod_proxy_html',
       'python'     => 'mod_python',
+      'shibboleth' => 'shibboleth',
       'ssl'        => 'mod_ssl',
       'wsgi'       => 'mod_wsgi',
-      'shibboleth' => 'shibboleth',
+      'dav_svn'    => 'mod_dav_svn',
+      'suphp'      => 'mod_suphp',
+      'xsendfile'  => 'mod_xsendfile',
     }
-    $mod_libs              = {
+    $mod_libs             = {
       'php5' => 'libphp5.so',
     }
-    $mod_identifiers       = {
-      'shibboleth' => 'mod_shib',
-    }
-  } elsif $::osfamily == 'debian' {
-    $user                  = 'www-data'
-    $group                 = 'www-data'
-    $apache_name           = 'apache2'
-    $php_package           = 'libapache2-mod-php5'
-    $mod_passenger_package = 'libapache2-mod-passenger'
-    $mod_python_package    = 'libapache2-mod-python'
-    $mod_wsgi_package      = 'libapache2-mod-wsgi'
-    $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
-    $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
-    $vdir                  = '/etc/apache2/sites-enabled/'
-    $proxy_modules         = ['proxy', 'proxy_http']
-    $mod_packages          = {
-      'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
+    $conf_template        = 'apache/httpd.conf.erb'
+    $keepalive            = 'Off'
+    $keepalive_timeout    = 15
+  } elsif $::osfamily == 'Debian' {
+    $user             = 'www-data'
+    $group            = 'www-data'
+    $apache_name      = 'apache2'
+    $httpd_dir        = '/etc/apache2'
+    $conf_dir         = $httpd_dir
+    $confd_dir        = "${httpd_dir}/conf.d"
+    $mod_dir          = "${httpd_dir}/mods-available"
+    $mod_enable_dir   = "${httpd_dir}/mods-enabled"
+    $vhost_dir        = "${httpd_dir}/sites-available"
+    $vhost_enable_dir = "${httpd_dir}/sites-enabled"
+    $conf_file        = 'apache2.conf'
+    $ports_file       = "${conf_dir}/ports.conf"
+    $logroot          = '/var/log/apache2'
+    $lib_path         = '/usr/lib/apache2/modules'
+    $mpm_module       = 'worker'
+    $dev_packages     = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
+    $default_ssl_cert = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+    $default_ssl_key  = '/etc/ssl/private/ssl-cert-snakeoil.key'
+    $ssl_certs_dir    = '/etc/ssl/certs'
+    $passenger_root   = '/usr'
+    $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler  = 'x-httpd-php'
+    $suphp_engine      = 'off'
+    $suphp_configpath  = '/etc/php5/apache2'
+    $mod_packages     = {
+      'auth_kerb'  => 'libapache2-mod-auth-kerb',
       'fcgid'      => 'libapache2-mod-fcgid',
       'passenger'  => 'libapache2-mod-passenger',
       'perl'       => 'libapache2-mod-perl2',
@@ -86,10 +116,17 @@ class apache::params {
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
+      'dav_svn'    => 'libapache2-svn',
+      'suphp'      => 'libapache2-mod-suphp',
+      'xsendfile'  => 'libapache2-mod-xsendfile',
     }
-    $mod_libs              = {}
-    $mod_identifiers       = {}
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template     = 'apache/httpd.conf.erb'
+    $keepalive         = 'Off'
+    $keepalive_timeout = 15
   } else {
-    fail("Class['apache::params']: Unsupported operatingsystem: $operatingsystem")
+    fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
 }
