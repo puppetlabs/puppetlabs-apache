@@ -1,6 +1,6 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-case node.facts['osfamily']
+case fact('osfamily')
 when 'RedHat'
   servicename = 'httpd'
 when 'Debian'
@@ -8,7 +8,7 @@ when 'Debian'
 when 'FreeBSD'
   servicename = 'apache22'
 else
-  raise "Unconfigured OS for apache service on #{node.facts['osfamily']}"
+  raise "Unconfigured OS for apache service on #{fact('osfamily')}"
 end
 
 describe 'apache::default_mods class' do
@@ -22,11 +22,8 @@ describe 'apache::default_mods class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [0,2].should include(r.exit_code)
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
     describe service(servicename) do
@@ -51,17 +48,12 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [4,6].should include(r.exit_code)
-      end
+      apply_manifest(pp, { :acceptable_exit_codes => [4,6], :catch_failures => true })
     end
 
     describe "service #{servicename}" do
       it 'should not be running' do
-        shell("pidof #{servicename}") do |r|
-          r.exit_code.should eq(1)
-        end
+        shell("pidof #{servicename}", {:acceptable_exit_codes => 1})
       end
     end
   end
@@ -89,13 +81,9 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [0,2].should include(r.exit_code)
-        sleep 10 # avoid race condition on centos :(
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      shell('sleep 10')
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
     describe service(servicename) do

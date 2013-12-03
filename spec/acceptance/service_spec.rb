@@ -1,4 +1,4 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apache::service class' do
   describe 'adding dependencies in between the base class and service class' do
@@ -12,11 +12,8 @@ describe 'apache::service class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [0,2].should include(r.exit_code)
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      expect(apply_manifest(pp).exit_code).to eq(0)
     end
   end
 end
