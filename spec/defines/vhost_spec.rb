@@ -355,10 +355,13 @@ describe 'apache::vhost', :type => :define do
         {
           :title    => 'should accept proxy_pass hash',
           :attr     => 'proxy_pass',
-          :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
+          :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a' },
           :match    => [
-            /^  ProxyPass \/path-a http:\/\/fake.com\/a\/$/,
-            /    ProxyPassReverse \//,
+            /^  ProxyPass \/path-a http:\/\/fake.com\/a$/,
+            /^  <Location \/path-a>$/,
+            /^    ProxyPassReverse \/$/,
+            /^  <\/Location>$/,
+
           ],
           :notmatch => [/ProxyPass .+!$/],
         },
@@ -366,16 +369,16 @@ describe 'apache::vhost', :type => :define do
           :title    => 'should accept proxy_pass array of hash',
           :attr     => 'proxy_pass',
           :value    => [
-            { 'path' => '/path-a', 'url' => 'http://fake.com/a/' },
-            { 'path' => '/path-b', 'url' => 'http://fake.com/b/' },
+            { 'path' => '/path-a/', 'url' => 'http://fake.com/a/' },
+            { 'path' => '/path-b', 'url' => 'http://fake.com/b' },
           ],
           :match    => [
-            /^  ProxyPass \/path-a http:\/\/fake.com\/a\/$/,
+            /^  ProxyPass \/path-a\/ http:\/\/fake.com\/a\/$/,
             /^  <Location \/path-a\/>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
-            /^  ProxyPass \/path-b http:\/\/fake.com\/b\/$/,
-            /^  <Location \/path-b\/>$/,
+            /^  ProxyPass \/path-b http:\/\/fake.com\/b$/,
+            /^  <Location \/path-b>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
           ],
