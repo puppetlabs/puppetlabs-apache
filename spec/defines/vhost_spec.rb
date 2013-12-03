@@ -168,6 +168,12 @@ describe 'apache::vhost', :type => :define do
           :match => [/CustomLog \/fake\/log\//,/ErrorLog \/fake\/log\//],
         },
         {
+          :title => 'should accept log_level',
+          :attr  => 'log_level',
+          :value => 'info',
+          :match => [/LogLevel info/],
+        },
+        {
           :title => 'should accept pipe destination for access log',
           :attr  => 'access_log_pipe',
           :value => '| /bin/fake/logging',

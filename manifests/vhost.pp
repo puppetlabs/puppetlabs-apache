@@ -17,6 +17,9 @@
 # - The $vhost_name for name based virtualhosting, defaulting to *
 # - The $logroot specifies the location of the virtual hosts logfiles, default
 #   to /var/log/<apache log location>/
+# - The $log_level specifies the verbosity of the error log for this vhost. Not
+#   set by default for the vhost, instead the global server configuration default
+#   of 'warn' is used.
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
 # - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
@@ -93,6 +96,7 @@ define apache::vhost(
     $directoryindex              = '',
     $vhost_name                  = '*',
     $logroot                     = $apache::logroot,
+    $log_level                   = undef,
     $access_log                  = true,
     $access_log_file             = undef,
     $access_log_pipe             = undef,
@@ -162,6 +166,11 @@ define apache::vhost(
   }
   if $itk {
     validate_hash($itk)
+  }
+
+  if $log_level {
+    validate_re($log_level, '^(emerg|alert|crit|error|warn|notice|info|debug)$',
+    "Log level '${log_level}' is not one of the supported Apache HTTP Server log levels.")
   }
 
   if $access_log_file and $access_log_pipe {
@@ -362,6 +371,7 @@ define apache::vhost(
   # - $name
   # - $aliases
   # - $_directories
+  # - $log_level
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format
