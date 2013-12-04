@@ -245,4 +245,45 @@ describe 'apache::vhost define' do
       end
     end
   end
+
+  context 'proxy_pass for alternative vhost' do
+    it 'should configure a local vhost and a proxy vhost' do
+      puppet_apply(%{
+        class { 'apache': default_vhost => false, }
+        apache::vhost { 'localhost':
+          docroot => '/var/www/local',
+          ip      => '127.0.0.1',
+          port    => '8888',
+        }
+        apache::listen { '*:80': }
+        apache::vhost { 'proxy.example.com':
+          docroot    => '/var/www',
+          port       => '80',
+          add_listen => false,
+          proxy_pass => {
+            'path' => '/',
+            'url'  => 'http://localhost.localdomain:8888/subdir/',
+          },
+        }
+        host { 'proxy.example.com': ip => '127.0.0.1', }
+        file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
+        file { '/var/www/local/subdir/index.html':
+          ensure  => file,
+          content => "Hello from localhost\\n",
+        }
+      }) { |r| [0,2].should include r.exit_code}
+    end
+
+    describe service(service_name) do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    it 'should get a response from the back end' do
+      shell("/usr/bin/curl --max-redirs 0 proxy.example.com:80") do |r|
+        r.stdout.should == "Hello from localhost\n"
+        r.exit_code.should == 0
+      end
+    end
+  end
 end
