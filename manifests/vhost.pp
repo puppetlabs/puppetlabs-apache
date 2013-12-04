@@ -300,6 +300,9 @@ define apache::vhost(
     if ! defined(Class['apache::mod::proxy']) {
       include apache::mod::proxy
     }
+    if ! defined(Class['apache::mod::proxy_http']) {
+      include apache::mod::proxy_http
+    }
   }
 
   # Load mod_passenger if needed and not yet loaded
