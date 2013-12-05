@@ -50,6 +50,7 @@ class apache (
   $keepalive            = $apache::params::keepalive,
   $keepalive_timeout    = $apache::params::keepalive_timeout,
   $logroot              = $apache::params::logroot,
+  $log_level            = $apache::params::log_level,
   $ports_file           = $apache::params::ports_file,
   $server_tokens        = 'OS',
   $server_signature     = 'On',
@@ -103,6 +104,11 @@ class apache (
       require => Package['httpd']
     }
   }
+
+  $valid_log_level_re = '(emerg|alert|crit|error|warn|notice|info|debug)'
+
+  validate_re($log_level, $valid_log_level_re,
+  "Log level '${log_level}' is not one of the supported Apache HTTP Server log levels.")
 
   class { 'apache::service':
     service_name   => $service_name,
