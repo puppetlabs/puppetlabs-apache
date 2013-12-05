@@ -850,6 +850,10 @@ Enables an IP-based vhost. This parameter inhibits the creation of a NameVirtual
 
 Specifies the location of the virtual host's logfiles. Defaults to `/var/log/<apache log location>/`.
 
+#####`log_level`
+
+Specifies the verbosity level of the error log. Defaults to `warn` for the global server configuration and can be overridden on a per-vhost basis using this parameter. Valid value for `log_level` is one of `emerg`, `alert`, `crit`, `error`, `warn`, `notice`, `info` or `debug`.
+
 #####`no_proxy_uris`
 
 Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with `proxy_dest`.

@@ -35,7 +35,9 @@
 <% if @error_log -%>
   ErrorLog <%= @error_log_destination %>
 <% end -%>
-  LogLevel warn
+<% if @log_level -%>
+  LogLevel <%= @log_level %>
+<% end -%>
   ServerSignature Off
 <% if @access_log -%>
   CustomLog <%= @access_log_destination %> <%= @_access_log_format %>
