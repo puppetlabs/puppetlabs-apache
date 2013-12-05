@@ -29,7 +29,7 @@ AccessFileName .htaccess
 DefaultType none
 HostnameLookups Off
 ErrorLog <%= @logroot %>/<%= @error_log %>
-LogLevel warn
+LogLevel <%= @log_level %>
 EnableSendfile <%= @sendfile %>
 
 #Listen 80
