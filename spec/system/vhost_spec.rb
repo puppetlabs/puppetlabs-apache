@@ -262,7 +262,7 @@ describe 'apache::vhost define' do
           add_listen => false,
           proxy_pass => {
             'path' => '/',
-            'url'  => 'http://localhost.localdomain:8888/subdir/',
+            'url'  => 'http://localhost:8888/subdir/',
           },
         }
         host { 'proxy.example.com': ip => '127.0.0.1', }
