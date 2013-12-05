@@ -32,6 +32,9 @@ class apache::params {
     $servername = $::hostname
   }
 
+  # The default error log level
+  $log_level = 'warn'
+
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
     $group                = 'apache'

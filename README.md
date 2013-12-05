@@ -322,6 +322,10 @@ Amount of time the server will wait for subsequent requests on a persistent conn
 
 Changes the location of the directory Apache log files are placed in. Defaut is based on your OS.
 
+#####`log_level`
+
+Changes the verbosity level of the error log. Defaults to 'warn'. Valid values are `emerg`, `alert`, `crit`, `error`, `warn`, `notice`, `info` or `debug`.
+
 #####`ports_file`
 
 Changes the name of the file containing Apache ports configuration. Default is `${conf_dir}/ports.conf`.
