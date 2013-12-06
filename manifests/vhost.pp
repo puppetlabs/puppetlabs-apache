@@ -44,6 +44,24 @@
 #    docroot => '/path/to/docroot',
 #  }
 #
+#  # Multiple Mod Rewrites:
+#  apache::vhost { 'site.name.fqdn':
+#    port => '80',
+#    docroot => '/path/to/docroot',
+#    rewrites => [
+#      {
+#        comment       => 'force www domain',
+#        rewrite_cond => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
+#        rewrite_rule => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
+#      },
+#      {
+#        comment       => 'prevent image hotlinking',
+#        rewrite_cond => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
+#        rewrite_rule => ['.(gif|jpg|png)$ - [F]']
+#      },
+#    ]
+#  }
+#
 #  # SSL vhost with non-SSL rewrite:
 #  apache::vhost { 'site.name.fqdn':
 #    port    => '443',
@@ -52,8 +70,13 @@
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port          => '80',
-#    rewrite_cond => '%{HTTPS} off',
-#    rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+#    rewrites => [
+#      {
+#        comment       => "redirect non-SSL traffic to SSL site",
+#        rewrite_cond => ['%{HTTPS} off'],
+#        rewrite_rule => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
+#      }
+#    ]
 #  }
 #  apache::vhost { 'site.name.fqdn':
 #    port            => '80',
@@ -124,6 +147,7 @@ define apache::vhost(
     $redirect_status             = undef,
     $rack_base_uris              = undef,
     $request_headers             = undef,
+    $rewrites                    = undef,
     $rewrite_rule                = undef,
     $rewrite_cond                = undef,
     $setenv                      = [],
@@ -159,6 +183,19 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  if $rewrites {
+    validate_array($rewrites)
+    validate_hash($rewrites[0])
+  }
+
+  # Deprecated backwards-compatibility
+  if $rewrite_rule {
+    warning('Apache::Vhost: parameter rewrite_rule is deprecated in favor of rewrites')
+  }
+  if $rewrite_cond {
+    warning('Apache::Vhost parameter rewrite_cond is deprecated in favor of rewrites')
+  }
+
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
   }
@@ -292,9 +329,9 @@ define apache::vhost(
   }
 
   # Load mod_rewrite if needed and not yet loaded
-  if $rewrite_rule {
-    if ! defined(Class['apache::mod::rewrite']) {
-      include apache::mod::rewrite
+  if $rewrites or $rewrite_cond {
+    if ! defined(Apache::Mod['rewrite']) {
+      apache::mod { 'rewrite': }
     }
   }
 
@@ -406,8 +443,7 @@ define apache::vhost(
   # requestheader fragment:
   #   - $request_headers
   # rewrite fragment:
-  #   - $rewrite_rule
-  #   - $rewrite_cond
+  #   - $rewrites
   # scriptalias fragment:
   #   - $scriptalias
   #   - $scriptaliases

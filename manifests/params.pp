@@ -135,6 +135,7 @@ class apache::params {
       'suphp'       => 'libapache2-mod-suphp',
       'wsgi'        => 'libapache2-mod-wsgi',
       'xsendfile'   => 'libapache2-mod-xsendfile',
+      'nss'         => 'libapache2-mod-nss',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
