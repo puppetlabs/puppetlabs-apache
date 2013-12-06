@@ -488,6 +488,10 @@ Sends all access log messages to syslog. Defaults to 'undef'.
 
 Specifies either a LogFormat nickname or custom format string for access log. Defaults to 'undef'.
 
+#####`access_log_env_var`
+
+Adds writing control of access log via environment variable of the access. Defaults to 'undef'.
+
 #####`add_listen`
 
 Determines whether the vhost creates a listen statement. The default value is 'true'.

@@ -720,6 +720,12 @@ describe 'apache::vhost', :type => :define do
             /^  VirtualDocumentRoot \/not\/default$/,
           ],
         },
+        {
+          :title => 'should contain environment variables',
+          :attr  => 'access_log_env_var',
+          :value => 'admin',
+          :match => [/CustomLog \/var\/log\/.+_access\.log combined env=admin$/]
+        },
 
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do

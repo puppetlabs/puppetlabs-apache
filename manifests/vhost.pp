@@ -126,6 +126,7 @@ define apache::vhost(
     $access_log_pipe             = undef,
     $access_log_syslog           = undef,
     $access_log_format           = undef,
+    $access_log_env_var          = undef,
     $aliases                     = undef,
     $directories                 = undef,
     $error_log                   = true,
@@ -294,6 +295,9 @@ define apache::vhost(
     $_access_log_format = 'combined'
   }
 
+  if $access_log_env_var {
+    $_access_log_env_var = "env=${access_log_env_var}"
+  }
 
   if $ip {
     if $port {
@@ -418,6 +422,7 @@ define apache::vhost(
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format
+  # - $_access_log_env_var
   # - $error_log
   # - $error_log_destination
   # - $error_documents
