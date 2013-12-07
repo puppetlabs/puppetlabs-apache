@@ -30,7 +30,7 @@ describe 'apache::mod::php class' do
           content => "<?php phpinfo(); ?>\\n",
         }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do

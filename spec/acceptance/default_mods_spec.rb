@@ -22,8 +22,8 @@ describe 'apache::default_mods class' do
       EOS
 
       # Run it twice and test for idempotency
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
-      expect(apply_manifest(pp).exit_code).to eq(0)
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service(servicename) do
@@ -48,9 +48,13 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      apply_manifest(pp, { :acceptable_exit_codes => [4,6], :catch_failures => true })
+      apply_manifest(pp, { :expect_failures => true })
     end
 
+    # Are these the same?
+    describe service(servicename) do
+      it { should_not be_running }
+    end
     describe "service #{servicename}" do
       it 'should not be running' do
         shell("pidof #{servicename}", {:acceptable_exit_codes => 1})
@@ -81,9 +85,9 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
       shell('sleep 10')
-      expect(apply_manifest(pp).exit_code).to eq(0)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service(servicename) do

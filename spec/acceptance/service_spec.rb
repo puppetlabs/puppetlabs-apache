@@ -12,8 +12,8 @@ describe 'apache::service class' do
       EOS
 
       # Run it twice and test for idempotency
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
-      expect(apply_manifest(pp).exit_code).to eq(0)
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
   end
 end
