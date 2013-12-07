@@ -23,7 +23,7 @@ describe 'apache::mod::suphp class' do
             content => "<?php echo get_current_user(); ?>\\n",
           }
         EOS
-        expect([0,2]).to include (apply_manifest(pp).exit_code)
+        apply_manifest(pp, :catch_failures => true)
       end
 
       describe service('apache2') do

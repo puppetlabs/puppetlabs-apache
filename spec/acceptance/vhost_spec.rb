@@ -22,7 +22,7 @@ describe 'apache::vhost define' do
         class { 'apache': }
       EOS
 
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
@@ -41,7 +41,7 @@ describe 'apache::vhost define' do
           default_ssl_vhost => true,
         }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{vhost_dir}/15-default.conf") do
@@ -63,7 +63,7 @@ describe 'apache::vhost define' do
           docroot => '/var/www/first',
         }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{vhost_dir}/25-first.example.com.conf") do
@@ -84,7 +84,7 @@ describe 'apache::vhost define' do
           ],
         }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{vhost_dir}/25-proxy.example.com.conf") do
@@ -118,7 +118,7 @@ describe 'apache::vhost define' do
           content => "Hello from second\\n",
         }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do
@@ -155,7 +155,7 @@ describe 'apache::vhost define' do
         }
         host { 'files.example.net': ip => '127.0.0.1', }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do
@@ -185,7 +185,7 @@ describe 'apache::vhost define' do
         }
         host { 'fallback.example.net': ip => '127.0.0.1', }
         EOS
-        expect([0,2]).to include (apply_manifest(pp).exit_code)
+        apply_manifest(pp, :catch_failures => true)
       end
 
       describe service(service_name) do
@@ -194,7 +194,7 @@ describe 'apache::vhost define' do
       end
 
       it 'should answer to fallback.example.net' do
-        shell("/usr/bin/curl fallback.example.net:80/Does/Not/Exist", {:acceptable_exit_codes => 0}) do |r|
+        shell("/usr/bin/curl fallback.example.net:80/Does/Not/Exist") do |r|
           r.stdout.should == "Hello World\n"
         end
       end
@@ -226,7 +226,7 @@ describe 'apache::vhost define' do
         file { '/var/www/virt/a/index.html': ensure  => file, content => "Hello from a.virt\\n", }
         file { '/var/www/virt/b/index.html': ensure  => file, content => "Hello from b.virt\\n", }
       EOS
-      expect([0,2]).to include (apply_manifest(pp).exit_code)
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do
@@ -249,7 +249,7 @@ describe 'apache::vhost define' do
 
   context 'proxy_pass for alternative vhost' do
     it 'should configure a local vhost and a proxy vhost' do
-      puppet_apply(%{
+      apply_manifest(%{
         class { 'apache': default_vhost => false, }
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
@@ -272,7 +272,7 @@ describe 'apache::vhost define' do
           ensure  => file,
           content => "Hello from localhost\\n",
         }
-      }) { |r| [0,2].should include r.exit_code}
+      }, :catch_failures => true)
     end
 
     describe service(service_name) do
