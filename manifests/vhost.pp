@@ -126,6 +126,7 @@ define apache::vhost(
     $access_log_pipe             = undef,
     $access_log_syslog           = undef,
     $access_log_format           = undef,
+    $access_log_conditions	 = undef,
     $aliases                     = undef,
     $directories                 = undef,
     $error_log                   = true,
@@ -290,6 +291,14 @@ define apache::vhost(
     $_access_log_format = "\"${access_log_format}\""
   } else {
     $_access_log_format = 'combined'
+  }
+
+  # permit conditional controls to custom logs
+  if $access_log_conditions {
+    # note that we're prepending a space here, for use in the template later
+    $_access_log_conditions = " ${access_log_conditions}"
+  } else {
+    $_access_log_conditions = ''
   }
 
 
