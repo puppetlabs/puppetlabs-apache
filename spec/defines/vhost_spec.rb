@@ -465,6 +465,22 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept an array of custom fragments',
+          :attr  => 'custom_fragment',
+          :value => [
+            { 'comment' => 'First comment', 'commands' => ['Command one', 'Command two'] },
+            { 'comment' => 'Second comment', 'commands' => ['Command three'] }
+          ],
+          :match => [
+            /^  #First comment$/,
+            /^  Command one$/,
+            /^  Command two$/,
+            /^  #Second comment$/,
+            /^  Command three$/,
+            /^<\/VirtualHost>$/,
+          ],
+        },
+        {
           :title => 'should accept an array of alias hashes',
           :attr  => 'aliases',
           :value => [ { 'alias' => '/', 'path' => '/var/www'} ],

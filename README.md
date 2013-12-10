@@ -516,6 +516,13 @@ Specifies the list of things Apache will block access to. The default is an empt
 #####`custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the vhost configuration.
+Usage example:
+```puppet
+custom_fragment       => [{'comment' => 'Fixes issues with SSL / HTTP 1.1 / KeepAlive / Ajax in IE8',
+                           'commands' => ['BrowserMatch ".*MSIE 8.0.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0 is-old-ie']},
+                          {'comment' => 'Fixes redirects when using raw ssl on port 4443',
+                           'commands' => ['Header edit Location ^http://(.*:4443/.*)$ "https://$1"']}],
+```                                       
 
 #####`default_vhost`
 

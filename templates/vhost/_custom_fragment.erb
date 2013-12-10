@@ -1,5 +1,19 @@
+<% if @custom_fragment.is_a? Array %>
+<% [@custom_fragment].flatten.compact.each do |fragment_details| -%>
+<% if fragment_details['comment'] -%>
+  #<%= fragment_details['comment'] %>
+<% end -%>
+<% if fragment_details['commands'] -%>
+<%- Array(fragment_details['commands']).each do |command| -%>
+  <%= command %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% else -%>
+<%# reverse compatibility %>
 <% if @custom_fragment -%>
 
   ## Custom fragment
 <%= @custom_fragment %>
+<% end -%>
 <% end -%>
