@@ -1063,7 +1063,7 @@ describe 'apache::vhost', :type => :define do
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/login} }
           it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
         end
-        describe 'redirect match rules' do
+	describe 'redirect match rules' do
           let :params do
             default_params.merge({
               :redirectmatch_status => [
