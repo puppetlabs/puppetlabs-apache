@@ -577,6 +577,17 @@ Sets an `Allow` directive as per the [Apache Core documentation](http://httpd.ap
     }
 ```
 
+######`dav`
+
+Enables/disables WebDAV for the given directory. An example:
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [ { path => '/path/to/directory', dav => 'on' } ],
+    }
+```
+
 ######`allow_override`
 
 Sets the usage of `.htaccess` files as per the [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#allowoverride). Should accept in the form of a list or a string. An example:

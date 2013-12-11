@@ -13,6 +13,9 @@
     Header <%= header %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['dav'] -%>
+    Dav <%= directory['dav'] %>
+    <%- end -%>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
