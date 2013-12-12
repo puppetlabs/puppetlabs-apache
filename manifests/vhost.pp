@@ -68,7 +68,7 @@ define apache::vhost(
     $docroot_owner               = 'root',
     $docroot_group               = $apache::params::root_group,
     $serveradmin                 = false,
-    $default_charset            = false,
+    $default_charset             = false,
     $ssl                         = false,
     $ssl_cert                    = $apache::default_ssl_cert,
     $ssl_key                     = $apache::default_ssl_key,
