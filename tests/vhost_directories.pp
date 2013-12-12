@@ -28,3 +28,10 @@ apache::vhost { 'files.example.net':
   ],
 }
 
+# dav test
+apache::vhost { 'dav.example.net':
+  docroot     => '/var/www/dav',
+  directories => [
+    { path => '/var/www/dav/', dav => 'on' },
+  ],
+}
