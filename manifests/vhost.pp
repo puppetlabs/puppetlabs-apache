@@ -142,6 +142,7 @@ define apache::vhost(
     $suphp_engine                = $apache::params::suphp_engine,
     $suphp_configpath            = $apache::params::suphp_configpath,
     $no_proxy_uris               = [],
+    $proxy_preserve_host         = false,
     $redirect_source             = '/',
     $redirect_dest               = undef,
     $redirect_status             = undef,
@@ -183,6 +184,7 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  validate_bool($proxy_preserve_host)
   if $rewrites {
     validate_array($rewrites)
     validate_hash($rewrites[0])
@@ -421,6 +423,7 @@ define apache::vhost(
   # - $error_documents
   # - $fallbackresource
   # - $custom_fragment
+  # - $proxy_preserve_host
   # - $additional_includes
   # block fragment:
   #   - $block
