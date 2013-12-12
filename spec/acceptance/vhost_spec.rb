@@ -6,14 +6,43 @@ describe 'apache::vhost define' do
     vhost_dir = '/etc/httpd/conf.d'
     package_name = 'httpd'
     service_name = 'httpd'
+    ports_file = '/etc/httpd/conf/ports.conf'
+    suphp_handler = 'php5-script'
+    suphp_configpath = 'undef'
   when 'FreeBSD'
     vhost_dir = '/usr/local/etc/apache22/Vhosts'
     package_name = 'apache22'
     service_name = 'apache22'
+    ports_file = '/usr/local/etc/apache22/ports.conf'
   when 'Debian'
     vhost_dir = '/etc/apache2/sites-enabled'
     package_name = 'apache2'
     service_name = 'apache2'
+    ports_file = '/etc/apache2/conf/ports.conf'
+    suphp_handler = 'x-httpd-php'
+    suphp_configpath = '/etc/php5/apache2'
+  end
+
+  context 'no default vhosts' do
+    it 'should create no default vhosts' do
+      pp = <<-EOS
+        class { 'apache':
+          default_vhost => false,
+          default_ssl_vhost => false,
+          service_ensure => stopped
+        }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/15-default.conf") do
+      it { should_not be_file }
+    end
+
+    describe file("#{vhost_dir}/15-default-ssl.conf") do
+      it { should_not be_file }
+    end
   end
 
   context "default vhost without ssl" do
@@ -287,4 +316,574 @@ describe 'apache::vhost define' do
       end
     end
   end
+
+  describe 'ip_based' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          ip_based   => true,
+          servername => 'test.server',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file(ports_file) do
+      it { should be_file }
+      it { should_not contain 'NameVirtualHost test.server' }
+    end
+  end
+
+  describe 'add_listen' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': default_vhost => false }
+        host { 'testlisten.server': ip => '127.0.0.1' }
+        apache::listen { '81': }
+        apache::vhost { 'testlisten.server':
+          docroot    => '/tmp',
+          port       => '80',
+          add_listen => false,
+          servername => 'testlisten.server',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file(ports_file) do
+      it { should be_file }
+      it { should_not contain 'Listen 80' }
+      it { should contain 'Listen 81' }
+    end
+  end
+
+  describe 'docroot' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot       => '/tmp/test',
+          docroot_owner => 'vagrant',
+          docroot_group => 'vagrant',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file('/tmp/test') do
+      it { should be_directory }
+      it { should be_owned_by 'vagrant' }
+      it { should be_grouped_into 'vagrant' }
+    end
+  end
+
+  describe 'default_vhost' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          default_vhost => true,
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/10-test.server.conf") do
+      it { should be_file }
+    end
+  end
+
+  describe 'options' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          options    => ['Indexes','FollowSymLinks', 'ExecCGI'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'Options Indexes FollowSymLinks ExecCGI' }
+    end
+  end
+
+  describe 'override' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          override   => ['All'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'AllowOverride All' }
+    end
+  end
+
+  describe 'logroot' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          logroot    => '/tmp',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'CustomLog /tmp' }
+    end
+  end
+
+  ['access', 'error'].each do |logtype|
+    case logtype
+    when 'access'
+      logname = 'CustomLog'
+    when 'error'
+      logname = 'ErrorLog'
+    end
+
+    describe "#{logtype}_log" do
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot    => '/tmp',
+            logroot    => '/tmp',
+            #{logtype}_log => false,
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file("#{vhost_dir}/25-test.server.conf") do
+        it { should be_file }
+        it { should_not contain "#{logname} /tmp" }
+      end
+    end
+
+    describe "#{logtype}_log_pipe" do
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot    => '/tmp',
+            logroot    => '/tmp',
+            #{logtype}_log_pipe => '|test',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file("#{vhost_dir}/25-test.server.conf") do
+        it { should be_file }
+        it { should contain "#{logname} \"|test\"" }
+      end
+    end
+
+    describe "#{logtype}_log_syslog" do
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot    => '/tmp',
+            logroot    => '/tmp',
+            #{logtype}_log_syslog => 'syslog',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file("#{vhost_dir}/25-test.server.conf") do
+        it { should be_file }
+        it { should contain "#{logname} syslog" }
+      end
+    end
+  end
+
+  describe 'access_log_format' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          logroot    => '/tmp',
+          access_log_syslog => 'syslog',
+          access_log_format => '%h %l',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'CustomLog syslog "%h %l"' }
+    end
+  end
+
+  describe 'aliases' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          aliases => [{ alias => '/image', path => '/ftp/pub/image' }],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'Alias /image /ftp/pub/image' }
+    end
+  end
+
+  describe 'scriptaliases' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'ScriptAlias /myscript /usr/share/myscript' }
+    end
+  end
+
+  describe 'proxy' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': service_ensure => stopped, }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          proxy_dest => 'test2',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'ProxyPass          / test2/' }
+    end
+  end
+
+  describe 'suphp' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': service_ensure => stopped, }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          suphp_addhandler => '#{suphp_handler}',
+          suphp_engine     => 'on',
+          suphp_configpath => '#{suphp_configpath}',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain "suPHP_AddHandler #{suphp_handler}" }
+      it { should contain 'suPHP_Engine on' }
+      it { should contain "suPHP_ConfigPath #{suphp_configpath}" }
+    end
+  end
+
+  describe 'no_proxy_uris' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': service_ensure => stopped, }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          proxy_dest       => 'http://test2',
+          no_proxy_uris    => [ 'http://test2/test' ],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'ProxyPass          / http://test2/' }
+      it { should contain 'ProxyPass        http://test2/test !' }
+    end
+  end
+
+  describe 'redirect' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          redirect_source  => ['/images'],
+          redirect_dest    => ['http://test.server/'],
+          redirect_status  => ['permanent'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'Redirect permanent /images http://test.server/' }
+    end
+  end
+
+  describe 'rack_base_uris' do
+    if fact('osfamily') == 'RedHat'
+      it 'adds epel' do
+        pp = "class { 'epel': }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          rack_base_uris  => ['/test'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'RackBaseURI /test' }
+    end
+  end
+
+
+  describe 'request_headers' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          request_headers  => ['append MirrorID "mirror 12"'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'append MirrorID "mirror 12"' }
+    end
+  end
+
+  describe 'rewrite rules' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          rewrites => [
+            { comment => 'test',
+              rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
+              rewrite_rule => ['^index\.html$ welcome.html'],
+            }
+          ],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '#test' }
+      it { should contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
+      it { should contain 'RewriteRule ^index.html$ welcome.html' }
+    end
+  end
+
+  describe 'setenv/setenvif' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          setenv   => ['TEST /test'],
+          setenvif => ['Request_URI "\.gif$" object_is_image=gif']
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'SetEnv TEST /test' }
+      it { should contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
+    end
+  end
+
+  describe 'block' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          block    => 'scm',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '<DirectoryMatch .*\.(svn|git|bzr)/.*>' }
+    end
+  end
+
+  describe 'wsgi' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        class { 'apache::mod::wsgi': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot                     => '/tmp',
+          wsgi_daemon_process         => 'wsgi',
+          wsgi_daemon_process_options => {processes => '2'},
+          wsgi_process_group          => 'vagrant',
+          wsgi_script_aliases         => { '/test' => '/test1' },
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'WSGIDaemonProcess wsgi processes=2' }
+      it { should contain 'WSGIProcessGroup vagrant' }
+      it { should contain 'WSGIScriptAlias /test /test1' }
+    end
+  end
+
+  describe 'custom_fragment' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          custom_fragment => inline_template('#weird test string'),
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '#weird test string' }
+    end
+  end
+
+  describe 'itk' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          itk      => { user => 'vagrant', group => 'vagrant' }
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'AssignUserId vagrant vagrant' }
+    end
+  end
+
+  describe 'fastcgi' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        class { 'apache::mod::fastcgi': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot        => '/tmp',
+          fastcgi_server => 'localhost',
+          fastcgi_socket => '/tmp/fast/1234',
+          fastcgi_dir    => '/tmp/fast',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'FastCgiExternalServer localhost -socket /tmp/fast/1234' }
+      it { should contain '<Directory /tmp/fast>' }
+    end
+  end
+
+  describe 'additional_includes' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        file { '/tmp/include': ensure => present, content => '#additional_includes' }
+        apache::vhost { 'test.server':
+          docroot             => '/tmp',
+          additional_includes => '/tmp/include',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'Include /tmp/include' }
+    end
+  end
+
 end
