@@ -227,3 +227,11 @@ apache::vhost { 'securedomain.com':
         ssl_honorcipherorder  => 'On',
         add_listen            => 'false',
 }
+
+# Vhost with access log environment variables writing control
+apache::vhost { 'twentyfirst.example.com':
+  port               => '80',
+  docroot            => '/var/www/twentyfirst',
+  access_log_env_var => 'admin',
+}
+
