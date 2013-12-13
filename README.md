@@ -488,6 +488,28 @@ Sends all access log messages to syslog. Defaults to 'undef'.
 
 Specifies either a LogFormat nickname or custom format string for access log. Defaults to 'undef'.
 
+#####`access_log_conditions`
+
+Specifies optional conditions to be applied to the CustomLog directive. Typically used in conjunction with SetEnv and/or SetEnvIf directives:
+
+The following manifest
+```
+  apache::vhost { 'site.name.fqdn':
+    access_log_file       => '/var/log/httpd/site.name.fqdn.log',
+    access_log_format     => 'combined',
+    access_log_conditions => 'env=!monitor',
+    setenvif              => [ 'User-Agent "F5\ BIG-IP\ Monitor$" monitor' ],
+  }
+```
+
+will produce the following configuration:
+
+```
+  CustomLog /var/log/httpd/site.name.fqdn.log combined env=!monitor
+```
+
+Defaults to 'undef'.
+
 #####`add_listen`
 
 Determines whether the vhost creates a listen statement. The default value is 'true'.
