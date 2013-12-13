@@ -47,6 +47,8 @@ class apache::params {
     $confd_dir            = "${httpd_dir}/conf.d"
     $mod_dir              = "${httpd_dir}/conf.d"
     $vhost_dir            = "${httpd_dir}/conf.d"
+    $run_dir              = "/var/run/apache2"
+    $lock_dir             = "/var/lock/apache2"
     $conf_file            = 'httpd.conf'
     $envvars_file         = 'envvars'
     $ports_file           = "${conf_dir}/ports.conf"
