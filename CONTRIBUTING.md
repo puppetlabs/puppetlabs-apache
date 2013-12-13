@@ -162,7 +162,13 @@ Use `bundle show [gemname]` to see where a bundled gem is installed.
 
 NOTE some systems may require you to run this command with sudo.
 
-With all dependencies installed we can now run the tests:
+If you already have those gems installed, make sure they are up-to-date:
+
+```shell
+% bundle update
+```
+
+With all dependencies in place and up-to-date we can now run the tests:
 
 ```shell
 % rake spec
@@ -174,7 +180,7 @@ and so on. rspec tests may have the same kind of dependencies as the
 module they are testing. While the module defines in its [Modulefile](./Modulefile),
 rspec tests define them in [.fixtures.yml](./fixtures.yml).
 
-Some puppet modules also come with [rspec-system](https://github.com/puppetlabs/rspec-system)
+Some puppet modules also come with [beaker](https://github.com/puppetlabs/beaker)
 tests. These tests spin up a virtual machine under
 [VirtualBox](https://www.virtualbox.org/)) with, controlling it with
 [Vagrant](http://www.vagrantup.com/) to actually simulate scripted test
@@ -184,12 +190,13 @@ installed on your system.
 You can run them by issuing the following command
 
 ```shell
-% rake spec:system
+% rake spec_clean
+% rspec spec/acceptance
 ```
 
 This will now download a pre-fabricated image configured in [.nodeset.yml](./.nodeset.yml),
-install puppet, copy this module and install its dependencies per [spec/spec_helper_system.rb](./spec/spec_helper_system.rb)
-and then run all the tests under [spec/system](./spec/system).
+install puppet, copy this module and install its dependencies per [spec/spec_helper_acceptance.rb](./spec/spec_helper_acceptance.rb)
+and then run all the tests under [spec/acceptance](./spec/acceptance).
 
 Writing Tests
 -------------
@@ -216,8 +223,6 @@ Additional Resources
 * [Getting additional help](http://projects.puppetlabs.com/projects/puppet/wiki/Getting_Help)
 
 * [Writing tests](http://projects.puppetlabs.com/projects/puppet/wiki/Development_Writing_Tests)
-
-* [Bug tracker (Redmine)](http://projects.puppetlabs.com/projects/modules)
 
 * [Patchwork](https://patchwork.puppetlabs.com)
 
