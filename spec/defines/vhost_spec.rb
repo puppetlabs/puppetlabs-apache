@@ -204,6 +204,12 @@ describe 'apache::vhost', :type => :define do
           :match => [/CustomLog \/var\/log\/.+_access\.log "%h %\{X-Forwarded-For\}i %l %u %t \\"%r\\" %s %b  \\"%\{Referer\}i\\" \\"%\{User-agent\}i\\" \\"Host: %\{Host\}i\\" %T %D"$/],
         },
         {
+          :title => 'should accept access_log conditions',
+          :attr  => 'access_log_conditions',
+          :value => 'env=!monitor',
+          :match => [/CustomLog \/var\/log\/.+_access\.log combined env=\!monitor/],
+        },
+        {
           :title => 'should contain access logs',
           :attr  => 'access_log',
           :value => true,

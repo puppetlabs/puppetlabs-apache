@@ -22,6 +22,7 @@
 #   set by default for the vhost, instead the global server configuration default
 #   of 'warn' is used.
 # - The $access_log specifies if *_access.log directives should be configured.
+# - The $access_log_conditions define optional conditional directives to apply to access logs.
 # - The $ensure specifies if vhost file is present or absent.
 # - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 # - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
@@ -84,6 +85,12 @@
 #    custom_fragment => template("${module_name}/my_fragment.erb"),
 #  }
 #
+#  # Don't log hits from monitoring devices 
+#  apache::vhost { 'site.name.fqdn':
+#    access_log_format     => 'combined',
+#    access_log_conditions => 'env=!monitor',
+#    setenvif              => [ 'User-Agent "F5\ BIG-IP\ Monitor$" monitor' ],
+#  }
 define apache::vhost(
     $docroot,
     $virtual_docroot             = false,
@@ -126,7 +133,7 @@ define apache::vhost(
     $access_log_pipe             = undef,
     $access_log_syslog           = undef,
     $access_log_format           = undef,
-    $access_log_conditions	 = undef,
+    $access_log_conditions       = undef,
     $aliases                     = undef,
     $directories                 = undef,
     $error_log                   = true,
@@ -292,15 +299,6 @@ define apache::vhost(
   } else {
     $_access_log_format = 'combined'
   }
-
-  # permit conditional controls to custom logs
-  if $access_log_conditions {
-    # note that we're prepending a space here, for use in the template later
-    $_access_log_conditions = " ${access_log_conditions}"
-  } else {
-    $_access_log_conditions = ''
-  }
-
 
   if $ip {
     if $port {
