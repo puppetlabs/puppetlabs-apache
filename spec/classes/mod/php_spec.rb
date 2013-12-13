@@ -69,4 +69,31 @@ describe 'apache::mod::php', :type => :class do
       ) }
     end
   end
+  describe "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    context "with mpm_module => prefork" do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      it { should include_class('apache::params') }
+      it { should contain_apache__mod('php5') }
+      it { should contain_package("lang/php5") }
+      it { should contain_file('php5.load') }
+    end
+    # FIXME: not sure about the following context
+    context 'with mpm_module => worker' do
+      let :pre_condition do
+        'class { "apache": mpm_module => worker, }'
+      end
+      it 'should raise an error' do
+        expect { subject.should contain_apache__mod('php5') }.to raise_error Puppet::Error, /mpm_module => 'prefork'/
+      end
+    end
+  end
 end

@@ -5,10 +5,9 @@ group :development, :test do
   gem 'rspec-puppet',            :require => false
   gem 'puppetlabs_spec_helper',  :require => false
   gem 'serverspec',              :require => false
-  gem 'rspec-system',            :require => false
-  gem 'rspec-system-puppet',     :require => false
-  gem 'rspec-system-serverspec', :require => false
   gem 'puppet-lint',             :require => false
+  gem 'beaker',                  :require => false
+  gem 'beaker-rspec',            :require => false
 end
 
 if facterversion = ENV['FACTER_GEM_VERSION']

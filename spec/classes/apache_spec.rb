@@ -239,7 +239,9 @@ describe 'apache', :type => :class do
           { :mpm_module => false }
         end
         it 'should not declare mpm modules' do
+          should_not contain_class('apache::mod::event')
           should_not contain_class('apache::mod::itk')
+          should_not contain_class('apache::mod::peruser')
           should_not contain_class('apache::mod::prefork')
           should_not contain_class('apache::mod::worker')
         end
@@ -249,7 +251,9 @@ describe 'apache', :type => :class do
           { :mpm_module => 'prefork' }
         end
         it { should contain_class('apache::mod::prefork') }
+        it { should_not contain_class('apache::mod::event') }
         it { should_not contain_class('apache::mod::itk') }
+        it { should_not contain_class('apache::mod::peruser') }
         it { should_not contain_class('apache::mod::worker') }
       end
       context "when declaring mpm_module => worker" do
@@ -257,7 +261,9 @@ describe 'apache', :type => :class do
           { :mpm_module => 'worker' }
         end
         it { should contain_class('apache::mod::worker') }
+        it { should_not contain_class('apache::mod::event') }
         it { should_not contain_class('apache::mod::itk') }
+        it { should_not contain_class('apache::mod::peruser') }
         it { should_not contain_class('apache::mod::prefork') }
       end
       context "when declaring mpm_module => breakme" do
@@ -354,6 +360,105 @@ describe 'apache', :type => :class do
         end
         it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^EnableSendfile Off\n} }
       end
+    end
+  end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should include_class("apache::params") }
+    it { should contain_class("apache::package").with({'ensure' => 'present'}) }
+    it { should contain_user("www") }
+    it { should contain_group("www") }
+    it { should contain_class("apache::service") }
+    it { should contain_file("/usr/local/etc/apache22/Vhosts").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Class[Apache::Service]',
+      'require' => 'Package[httpd]'
+    ) }
+    it { should contain_file("/usr/local/etc/apache22/Modules").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Class[Apache::Service]',
+      'require' => 'Package[httpd]'
+    ) }
+    it { should contain_concat("/usr/local/etc/apache22/ports.conf").with(
+      'owner'   => 'root',
+      'group'   => 'wheel',
+      'mode'    => '0644',
+      'notify'  => 'Class[Apache::Service]'
+    ) }
+    # Assert that load files are placed for these mods, but no conf file.
+    [
+      'auth_basic',
+      'authn_file',
+      'authz_default',
+      'authz_groupfile',
+      'authz_host',
+      'authz_user',
+      'dav',
+      'env'
+    ].each do |modname|
+      it { should contain_file("#{modname}.load").with(
+        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.load",
+        'ensure' => 'file'
+      ) }
+      it { should_not contain_file("#{modname}.conf") }
+    end
+
+    # Assert that both load files and conf files are placed for these mods
+    [
+      'alias',
+      'autoindex',
+      'dav_fs',
+      'deflate',
+      'dir',
+      'mime',
+      'negotiation',
+      'setenvif',
+    ].each do |modname|
+      it { should contain_file("#{modname}.load").with(
+        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.load",
+        'ensure' => 'file'
+      ) }
+      it { should contain_file("#{modname}.conf").with(
+        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.conf",
+        'ensure' => 'file'
+      ) }
+    end
+  end
+  context 'on all OSes' do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    context 'default vhost defaults' do
+      it { should contain_apache__vhost('default').with_ensure('present') }
+      it { should contain_apache__vhost('default-ssl').with_ensure('absent') }
+    end
+    context 'without default non-ssl vhost' do
+      let :params do {
+        :default_vhost  => false
+      }
+      end
+      it { should contain_apache__vhost('default').with_ensure('absent') }
+    end
+    context 'with default ssl vhost' do
+      let :params do {
+          :default_ssl_vhost  => true
+        }
+      end
+      it { should contain_apache__vhost('default-ssl').with_ensure('present') }
     end
   end
 end

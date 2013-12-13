@@ -1,18 +1,21 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
 describe 'apache::mod::php class' do
-  case node.facts['osfamily']
+  case fact('osfamily')
   when 'Debian'
-    mod_dir = '/etc/apache2/mods-available'
+    mod_dir      = '/etc/apache2/mods-available'
     service_name = 'apache2'
   when 'RedHat'
-    mod_dir = '/etc/httpd/conf.d'
+    mod_dir      = '/etc/httpd/conf.d'
     service_name = 'httpd'
+  when 'FreeBSD'
+    mod_dir      = '/usr/local/etc/apache22/Modules'
+    service_name = 'apache22'
   end
 
   context "default php config" do
     it 'succeeds in puppeting php' do
-      puppet_apply(%{
+      pp= <<-EOS
         class { 'apache':
           mpm_module => 'prefork',
         }
@@ -26,7 +29,8 @@ describe 'apache::mod::php class' do
           ensure  => file,
           content => "<?php phpinfo(); ?>\\n",
         }
-      }) { |r| [0,2].should include r.exit_code}
+      EOS
+      apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do

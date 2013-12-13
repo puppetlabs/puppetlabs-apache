@@ -1,8 +1,10 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-case node.facts['osfamily']
+case fact('osfamily')
 when 'Debian'
   service_name = 'apache2'
+when 'FreeBSD'
+  service_name = 'apache22'
 else
   # Not implemented yet
   service_name = :skip
@@ -19,12 +21,9 @@ unless service_name.equal? :skip
           }
         EOS
 
-        # Run it twice and test for idempotency
-        puppet_apply(pp) do |r|
-          r.exit_code.should_not == 1
-          r.refresh
-          r.exit_code.should be_zero
-        end
+         # Run it twice and test for idempotency
+        apply_manifest(pp, :catch_failures => true)
+        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
       end
     end
 

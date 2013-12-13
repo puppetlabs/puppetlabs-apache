@@ -23,4 +23,16 @@ describe 'apache::dev', :type => :class do
     it { should include_class("apache::params") }
     it { should contain_package("httpd-devel") }
   end
+  context "on a FreeBSD OS" do
+    let :pre_condition do
+      'include apache::package'
+    end
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+      }
+    end
+    it { should include_class("apache::params") }
+  end
 end
