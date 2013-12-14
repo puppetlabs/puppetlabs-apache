@@ -11,7 +11,7 @@ describe 'apache::mod::php', :type => :class do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('php5') }
       it { should contain_package("libapache2-mod-php5") }
       it { should contain_file("php5.load").with(
@@ -39,7 +39,7 @@ describe 'apache::mod::php', :type => :class do
       let :pre_condition do
         'class { "apache": }'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('php5') }
       it { should contain_package("php") }
       it { should contain_file("php5.load").with(
@@ -61,7 +61,7 @@ describe 'apache::mod::php', :type => :class do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('php5') }
       it { should contain_package("php") }
       it { should contain_file("php5.load").with(
@@ -81,7 +81,7 @@ describe 'apache::mod::php', :type => :class do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
       end
-      it { should include_class('apache::params') }
+      it { should contain_class('apache::params') }
       it { should contain_apache__mod('php5') }
       it { should contain_package("lang/php5") }
       it { should contain_file('php5.load') }

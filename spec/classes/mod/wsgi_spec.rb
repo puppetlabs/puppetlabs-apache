@@ -10,7 +10,7 @@ describe 'apache::mod::wsgi', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('wsgi') }
     it { should contain_package("libapache2-mod-wsgi") }
   end
@@ -22,7 +22,7 @@ describe 'apache::mod::wsgi', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('wsgi') }
     it { should contain_package("mod_wsgi") }
 
@@ -47,7 +47,7 @@ describe 'apache::mod::wsgi', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('wsgi') }
     it { should contain_package("www/mod_wsgi") }
   end

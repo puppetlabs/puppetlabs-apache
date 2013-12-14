@@ -21,7 +21,7 @@ describe 'apache::mod::ssl', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class('apache::params') }
+    it { should contain_class('apache::params') }
     it { should contain_apache__mod('ssl') }
     it { should contain_package('mod_ssl') }
   end
@@ -34,7 +34,7 @@ describe 'apache::mod::ssl', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class('apache::params') }
+    it { should contain_class('apache::params') }
     it { should contain_apache__mod('ssl') }
     it { should_not contain_package('libapache2-mod-ssl') }
   end
@@ -47,7 +47,7 @@ describe 'apache::mod::ssl', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class('apache::params') }
+    it { should contain_class('apache::params') }
     it { should contain_apache__mod('ssl') }
   end
 end

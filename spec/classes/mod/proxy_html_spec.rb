@@ -14,7 +14,7 @@ describe 'apache::mod::proxy_html', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('proxy_html') }
     it { should contain_package("libapache2-mod-proxy-html") }
   end
@@ -26,7 +26,7 @@ describe 'apache::mod::proxy_html', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('proxy_html') }
     it { should contain_package("mod_proxy_html") }
   end
@@ -38,7 +38,7 @@ describe 'apache::mod::proxy_html', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('proxy_html') }
     it { should contain_package("www/mod_proxy_html") }
   end

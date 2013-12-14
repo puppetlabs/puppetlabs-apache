@@ -17,7 +17,7 @@ describe 'apache::mod::dev', :type => :class do
           :operatingsystemrelease => operatingsystemrelease,
         }
       end
-      it { should include_class('apache::dev') }
+      it { should contain_class('apache::dev') }
     end
   end
 end

@@ -10,7 +10,7 @@ describe 'apache::mod::worker', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('worker') }
     it { should contain_file("/etc/apache2/mods-available/worker.conf").with_ensure('file') }
     it { should contain_file("/etc/apache2/mods-enabled/worker.conf").with_ensure('link') }
@@ -24,7 +24,7 @@ describe 'apache::mod::worker', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('worker') }
     it { should contain_file("/etc/httpd/conf.d/worker.conf").with_ensure('file') }
     it { should contain_file_line("/etc/sysconfig/httpd worker enable") }
@@ -37,7 +37,7 @@ describe 'apache::mod::worker', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('worker') }
     it { should contain_file("/usr/local/etc/apache22/Modules/worker.conf").with_ensure('file') }
   end
