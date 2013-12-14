@@ -10,7 +10,7 @@ describe 'apache::mod::fastcgi', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('fastcgi') }
     it { should contain_package("libapache2-mod-fastcgi") }
     it { should contain_file('fastcgi.conf') }
@@ -24,7 +24,7 @@ describe 'apache::mod::fastcgi', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('fastcgi') }
     it { should contain_package("mod_fastcgi") }
     it { should_not contain_file('fastcgi.conf') }

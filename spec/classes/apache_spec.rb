@@ -9,7 +9,7 @@ describe 'apache', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_package("httpd").with(
       'notify' => 'Class[Apache::Service]',
       'ensure' => 'installed'
@@ -132,7 +132,7 @@ describe 'apache', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_package("httpd").with(
       'notify' => 'Class[Apache::Service]',
       'ensure' => 'installed'
@@ -370,7 +370,7 @@ describe 'apache', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_class("apache::package").with({'ensure' => 'present'}) }
     it { should contain_user("www") }
     it { should contain_group("www") }

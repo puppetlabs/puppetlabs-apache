@@ -17,7 +17,7 @@ describe 'apache::mod', :type => :define do
       let :title do
         'spec_m'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it "should manage the module load file" do
         should contain_file('spec_m.load').with({
           :path    => '/etc/httpd/conf.d/spec_m.load',
@@ -37,7 +37,7 @@ describe 'apache::mod', :type => :define do
       # parameters
       let(:params) { {:package => 'mod_xsendfile'} }
 
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_package('mod_xsendfile') }
     end
   end
@@ -55,7 +55,7 @@ describe 'apache::mod', :type => :define do
       let :title do
         'spec_m'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it "should manage the module load file" do
         should contain_file('spec_m.load').with({
           :path    => '/etc/apache2/mods-available/spec_m.load',
@@ -90,7 +90,7 @@ describe 'apache::mod', :type => :define do
       let :title do
         'spec_m'
       end
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it "should manage the module load file" do
         should contain_file('spec_m.load').with({
           :path    => '/usr/local/etc/apache22/Modules/spec_m.load',

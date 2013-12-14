@@ -10,7 +10,7 @@ describe 'apache::mod::peruser', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('peruser') }
     it { should contain_file("/usr/local/etc/apache22/Modules/peruser.conf").with_ensure('file') }
   end

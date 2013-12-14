@@ -10,7 +10,7 @@ describe 'apache::mod::suphp', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_package("libapache2-mod-suphp") }
   end
   context "on a RedHat OS" do
@@ -21,7 +21,7 @@ describe 'apache::mod::suphp', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_package("mod_suphp") }
   end
 end

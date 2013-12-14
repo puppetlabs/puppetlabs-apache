@@ -10,7 +10,7 @@ describe 'apache::mod::event', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('event') }
     it { should contain_file("/usr/local/etc/apache22/Modules/event.conf").with_ensure('file') }
   end

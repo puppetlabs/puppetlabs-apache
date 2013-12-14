@@ -10,7 +10,7 @@ describe 'apache::mod::passenger', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("libapache2-mod-passenger") }
     it { should contain_file('passenger.conf').with({
@@ -88,7 +88,7 @@ describe 'apache::mod::passenger', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("mod_passenger") }
     it { should contain_file('passenger.conf').with({
@@ -105,7 +105,7 @@ describe 'apache::mod::passenger', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("www/rubygem-passenger") }
   end

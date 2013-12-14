@@ -12,7 +12,7 @@ describe 'apache::mod::rpaf', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('rpaf') }
     it { should contain_package("libapache2-mod-rpaf") }
     it { should contain_file('rpaf.conf').with({
@@ -47,7 +47,7 @@ describe 'apache::mod::rpaf', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('rpaf') }
     it { should contain_package("www/mod_rpaf2") }
     it { should contain_file('rpaf.conf').with({
