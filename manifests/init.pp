@@ -219,7 +219,7 @@ class apache (
     case $::osfamily {
       'debian': {
         $docroot              = '/var/www'
-        $pidfile              = '${APACHE_PID_FILE}'
+        $pidfile              = '/var/run/apache2.pid'
         $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/usr/lib/cgi-bin'
@@ -227,7 +227,7 @@ class apache (
       }
       'redhat': {
         $docroot              = '/var/www/html'
-        $pidfile              = 'run/httpd.pid'
+        $pidfile              = '/var/run/httpd.pid'
         $error_log            = 'error_log'
         $error_documents_path = '/var/www/error'
         $scriptalias          = '/var/www/cgi-bin'
