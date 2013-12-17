@@ -18,35 +18,35 @@ define apache::mod (
   $mod_libs = $apache::params::mod_libs
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
-    $_lib = $lib
+    $my_lib = $lib
   } elsif "${mod_lib}" {
-    $_lib = $mod_lib
+    $my_lib = $mod_lib
   } else {
-    $_lib = "mod_${mod}.so"
+    $my_lib = "mod_${mod}.so"
   }
 
   # Determine if declaration specified a path to the module
   if $path {
-    $_path = $path
+    $my_path = $path
   } else {
-    $_path = "${lib_path}/${_lib}"
+    $my_path = "${lib_path}/${my_lib}"
   }
 
   if $id {
-    $_id = $id
+    $my_id = $id
   } else {
-    $_id = "${mod}_module"
+    $my_id = "${mod}_module"
   }
 
   # Determine if we have a package
   $mod_packages = $apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
-    $_package = $package
+    $my_package = $package
   } elsif "${mod_package}" {
-    $_package = $mod_package
+    $my_package = $mod_package
   }
-  if $_package and ! defined(Package[$_package]) {
+  if $my_package and ! defined(Package[$my_package]) {
     # note: FreeBSD/ports uses apxs tool to activate modules; apxs clutters
     # httpd.conf with 'LoadModule' directives; here, by proper resource
     # ordering, we ensure that our version of httpd.conf is reverted after
@@ -58,8 +58,8 @@ define apache::mod (
       ],
       default => File["${mod_dir}/${mod}.load"],
     }
-    # $_package may be an array
-    package { $_package:
+    # $my_package may be an array
+    package { $my_package:
       ensure  => $package_ensure,
       require => Package['httpd'],
       before  => $package_before,
@@ -72,7 +72,7 @@ define apache::mod (
     owner   => 'root',
     group   => $apache::params::root_group,
     mode    => '0644',
-    content => "LoadModule ${_id} ${_path}\n",
+    content => "LoadModule ${my_id} ${my_path}\n",
     require => [
       Package['httpd'],
       Exec["mkdir ${mod_dir}"],
