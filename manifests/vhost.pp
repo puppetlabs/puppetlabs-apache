@@ -161,6 +161,7 @@ define apache::vhost(
     $wsgi_daemon_process_options = undef,
     $wsgi_process_group          = undef,
     $wsgi_script_aliases         = undef,
+    $wsgi_pass_auth              = undef,
     $custom_fragment             = undef,
     $itk                         = undef,
     $fastcgi_server              = undef,
@@ -482,6 +483,7 @@ define apache::vhost(
   #   - $wsgi_daemon_process
   #   - $wsgi_process_group
   #   - $wsgi_script_aliases
+  #   - $wsgi_pass_auth
   file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",

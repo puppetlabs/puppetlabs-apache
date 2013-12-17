@@ -47,7 +47,10 @@ class apache::params {
     $confd_dir            = "${httpd_dir}/conf.d"
     $mod_dir              = "${httpd_dir}/conf.d"
     $vhost_dir            = "${httpd_dir}/conf.d"
+    $run_dir              = "/var/run/apache2"
+    $lock_dir             = "/var/lock/apache2"
     $conf_file            = 'httpd.conf'
+    $envvars_file         = 'envvars'
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'
     $lib_path             = 'modules'
@@ -87,6 +90,7 @@ class apache::params {
       'nss'  => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $envvars_template     = 'apache/envvars.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $fastcgi_lib_path     = undef
@@ -107,6 +111,7 @@ class apache::params {
     $vhost_dir        = "${httpd_dir}/sites-available"
     $vhost_enable_dir = "${httpd_dir}/sites-enabled"
     $conf_file        = 'apache2.conf'
+    $envvars_file     = 'envvars'
     $ports_file       = "${conf_dir}/ports.conf"
     $logroot          = '/var/log/apache2'
     $lib_path         = '/usr/lib/apache2/modules'
@@ -140,6 +145,7 @@ class apache::params {
       'php5' => 'libphp5.so',
     }
     $conf_template     = 'apache/httpd.conf.erb'
+    $envvars_template  = 'apache/envvars.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'

@@ -42,6 +42,7 @@ class apache (
   $mod_enable_dir       = $apache::params::mod_enable_dir,
   $mpm_module           = $apache::params::mpm_module,
   $conf_template        = $apache::params::conf_template,
+  $envvars_template     = $apache::params::envvars_template,
   $servername           = $apache::params::servername,
   $manage_user          = true,
   $manage_group         = true,
@@ -218,7 +219,7 @@ class apache (
     case $::osfamily {
       'debian': {
         $docroot              = '/var/www'
-        $pidfile              = '${APACHE_PID_FILE}'
+        $pidfile              = '/var/run/apache2.pid'
         $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/usr/lib/cgi-bin'
@@ -226,7 +227,7 @@ class apache (
       }
       'redhat': {
         $docroot              = '/var/www/html'
-        $pidfile              = 'run/httpd.pid'
+        $pidfile              = '/var/run/httpd.pid'
         $error_log            = 'error_log'
         $error_documents_path = '/var/www/error'
         $scriptalias          = '/var/www/cgi-bin'
@@ -274,6 +275,15 @@ class apache (
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
+      require => [ Package['httpd'], File["${apache::params::httpd_dir}/${apache::params::envvars_file}"] ],
+    }
+
+    # Configure and control apache environment variables
+    # Required for older apache versions which ship with settings
+    # that don't have all the env vars required for this module
+    file { "${apache::params::httpd_dir}/${apache::params::envvars_file}":
+      ensure  => file,
+      content => template($envvars_template),
       require => Package['httpd'],
     }
 

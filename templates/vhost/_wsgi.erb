@@ -6,6 +6,9 @@
 <% if @wsgi_process_group -%>
   WSGIProcessGroup <%= @wsgi_process_group %>
 <% end -%>
+<% if ['On', 'on', true, 'true'].include? @wsgi_pass_auth -%>
+  WSGIPassAuthorization On
+<% end -%>
 <% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
   <%- @wsgi_script_aliases.each do |a, p| -%>
     <%- if a != '' and p != ''-%>
