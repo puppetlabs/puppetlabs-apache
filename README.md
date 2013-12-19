@@ -393,6 +393,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `fastcgi`
 * `fcgid`
 * `headers`
+* `include`
 * `info`
 * `itk`
 * `ldap`
