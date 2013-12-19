@@ -1,7 +1,8 @@
 class apache::mod::alias {
-  $icons_path = $::osfamily ? {
+  $icons_path = $::osfamily or $::operatingsystem ? {
     'debian'  => '/usr/share/apache2/icons',
     'redhat'  => '/var/www/icons',
+    'amazon'  => '/var/www/icons',
     'freebsd' => '/usr/local/www/apache22/icons',
   }
   apache::mod { 'alias': }
