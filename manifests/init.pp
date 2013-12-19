@@ -215,35 +215,30 @@ class apache (
   }
 
   if $apache::params::conf_dir and $apache::params::conf_file {
-    case $::osfamily {
-      'debian': {
-        $docroot              = '/var/www'
-        $pidfile              = '${APACHE_PID_FILE}'
-        $error_log            = 'error.log'
-        $error_documents_path = '/usr/share/apache2/error'
-        $scriptalias          = '/usr/lib/cgi-bin'
-        $access_log_file      = 'access.log'
-      }
-      'redhat': {
-        $docroot              = '/var/www/html'
-        $pidfile              = 'run/httpd.pid'
-        $error_log            = 'error_log'
-        $error_documents_path = '/var/www/error'
-        $scriptalias          = '/var/www/cgi-bin'
-        $access_log_file      = 'access_log'
-      }
-      'freebsd': {
-        $docroot              = '/usr/local/www/apache22/data'
-        $pidfile              = '/var/run/httpd.pid'
-        $error_log            = 'httpd-error.log'
-        $error_documents_path = '/usr/local/www/apache22/error'
-        $scriptalias          = '/usr/local/www/apache22/cgi-bin'
-        $access_log_file      = 'httpd-access.log'
-      }
-      default: {
-        fail("Unsupported osfamily ${::osfamily}")
-      }
-    }
+    if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
+      $docroot              = '/var/www/html'
+      $pidfile              = 'run/httpd.pid'
+      $error_log            = 'error_log'
+      $error_documents_path = '/var/www/error'
+      $scriptalias          = '/var/www/cgi-bin'
+      $access_log_file      = 'access_log'
+    } elsif $::osfamily == 'debian' {
+      $docroot              = '/var/www'
+      $pidfile              = '${APACHE_PID_FILE}'
+      $error_log            = 'error.log'
+      $error_documents_path = '/usr/share/apache2/error'
+      $scriptalias          = '/usr/lib/cgi-bin'
+      $access_log_file      = 'access.log'
+    } elsif $::osfamily == 'freebsd' {
+      $docroot              = '/usr/local/www/apache22/data'
+      $pidfile              = '/var/run/httpd.pid'
+      $error_log            = 'httpd-error.log'
+      $error_documents_path = '/usr/local/www/apache22/error'
+      $scriptalias          = '/usr/local/www/apache22/cgi-bin'
+      $access_log_file      = 'httpd-access.log'
+    } else {
+      fail("Unsupported osfamily ${::osfamily}")
+  }
 
     $apxs_workaround = $::osfamily ? {
       'freebsd' => true,
