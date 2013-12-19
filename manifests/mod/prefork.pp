@@ -39,36 +39,31 @@ class apache::mod::prefork (
     notify  => Service['httpd'],
   }
 
-  case $::osfamily {
-    'redhat': {
-      file_line { '/etc/sysconfig/httpd prefork enable':
-        ensure  => present,
-        path    => '/etc/sysconfig/httpd',
-        line    => '#HTTPD=/usr/sbin/httpd.worker',
-        match   => '#?HTTPD=/usr/sbin/httpd.worker',
-        require => Package['httpd'],
-        notify  => Service['httpd'],
-      }
-    }
-    'debian': {
-      file { "${apache::mod_enable_dir}/prefork.conf":
-        ensure  => link,
-        target  => "${apache::mod_dir}/prefork.conf",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Service['httpd'],
-      }
-      package { 'apache2-mpm-prefork':
-        ensure => present,
-      }
-    }
-    'freebsd' : {
-      class { 'apache::package':
-        mpm_module => 'prefork'
-      }
-    }
-    default: {
-      fail("Unsupported osfamily ${::osfamily}")
-    }
+  if $::osfamily == 'redhat' or $::operatingsystem == 'amazon' {
+    file_line { '/etc/sysconfig/httpd prefork enable':
+      ensure  => present,
+      path    => '/etc/sysconfig/httpd',
+      line    => '#HTTPD=/usr/sbin/httpd.worker',
+      match   => '#?HTTPD=/usr/sbin/httpd.worker',
+      require => Package['httpd'],
+      notify  => Service['httpd'],
+    } 
+  } elsif $::osfamily == 'debian' {
+    file { "${apache::mod_enable_dir}/prefork.conf":
+      ensure  => link,
+      target  => "${apache::mod_dir}/prefork.conf",
+      require => Exec["mkdir ${apache::mod_enable_dir}"],
+      before  => File[$apache::mod_enable_dir],
+      notify  => Service['httpd'],
+    } 
+    package { 'apache2-mpm-prefork':
+      ensure => present,
+    } 
+  } elsif $::osfamily == 'freebsd' {
+    class { 'apache::package':
+      mpm_module => 'prefork'
+    } 
+  } else {
+    fail("Unsupported osfamily ${::osfamily}")
   }
 }
