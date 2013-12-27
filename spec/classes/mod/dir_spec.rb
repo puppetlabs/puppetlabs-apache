@@ -13,7 +13,7 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('dir') }
       it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
       it { should contain_file('dir.conf').with_content(/ index\.html /) }
@@ -40,7 +40,7 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('dir') }
       it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
       it { should contain_file('dir.conf').with_content(/ index\.html /) }
@@ -67,7 +67,7 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should include_class("apache::params") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__mod('dir') }
       it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
       it { should contain_file('dir.conf').with_content(/ index\.html /) }

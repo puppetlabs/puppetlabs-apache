@@ -39,7 +39,9 @@
   LogLevel <%= @log_level %>
 <% end -%>
   ServerSignature Off
-<% if @access_log -%>
+<% if @access_log and @_access_log_env_var -%>
+  CustomLog <%= @access_log_destination %> <%= @_access_log_format %> <%= @_access_log_env_var %>
+<% elsif @access_log -%>
   CustomLog <%= @access_log_destination %> <%= @_access_log_format %>
 <% end -%>
 <%= scope.function_template(['apache/vhost/_block.erb']) -%>
@@ -53,6 +55,7 @@
 <%= scope.function_template(['apache/vhost/_setenv.erb']) -%>
 <%= scope.function_template(['apache/vhost/_ssl.erb']) -%>
 <%= scope.function_template(['apache/vhost/_suphp.erb']) -%>
+<%= scope.function_template(['apache/vhost/_php_admin.erb']) -%>
 <%= scope.function_template(['apache/vhost/_requestheader.erb']) -%>
 <%= scope.function_template(['apache/vhost/_wsgi.erb']) -%>
 <%= scope.function_template(['apache/vhost/_custom_fragment.erb']) -%>

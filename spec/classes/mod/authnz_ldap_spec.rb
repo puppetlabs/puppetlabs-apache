@@ -11,8 +11,8 @@ describe 'apache::mod::authnz_ldap', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
-    it { should include_class("apache::mod::ldap") }
+    it { should contain_class("apache::params") }
+    it { should contain_class("apache::mod::ldap") }
     it { should contain_apache__mod('authnz_ldap') }
 
     context 'default verifyServerCert' do
@@ -40,8 +40,8 @@ describe 'apache::mod::authnz_ldap', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
-    it { should include_class("apache::mod::ldap") }
+    it { should contain_class("apache::params") }
+    it { should contain_class("apache::mod::ldap") }
     it { should contain_apache__mod('authnz_ldap') }
 
     context 'default verifyServerCert' do

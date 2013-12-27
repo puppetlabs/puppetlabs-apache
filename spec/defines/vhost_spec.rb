@@ -24,8 +24,8 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should include_class("apache") }
-      it { should include_class("apache::params") }
+      it { should contain_class("apache") }
+      it { should contain_class("apache::params") }
     end
     context "on Debian based systems" do
       let :default_facts do
@@ -37,8 +37,8 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should include_class("apache") }
-      it { should include_class("apache::params") }
+      it { should contain_class("apache") }
+      it { should contain_class("apache::params") }
       it { should contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/etc/apache2/sites-available/25-rspec.example.com.conf'
@@ -59,8 +59,8 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should include_class("apache") }
-      it { should include_class("apache::params") }
+      it { should contain_class("apache") }
+      it { should contain_class("apache::params") }
       it { should contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/usr/local/etc/apache22/Vhosts/25-rspec.example.com.conf'
@@ -77,8 +77,8 @@ describe 'apache::vhost', :type => :define do
     end
     describe 'basic assumptions' do
       let :params do default_params end
-      it { should include_class("apache") }
-      it { should include_class("apache::params") }
+      it { should contain_class("apache") }
+      it { should contain_class("apache::params") }
       it { should contain_apache__listen(params[:port]) }
       it { should contain_apache__namevirtualhost("*:#{params[:port]}") }
     end
@@ -553,6 +553,42 @@ describe 'apache::vhost', :type => :define do
           :match => [/^  suPHP_Engine on$/],
         },
         {
+          :title => 'should accept a php_admin_flags',
+          :attr  => 'php_admin_flags',
+          :value => { 'php_engine' => 'on' },
+          :match => [/^  php_admin_flag php_engine on$/],
+        },
+        {
+          :title => 'should accept php_admin_values',
+          :attr  => 'php_admin_values',
+          :value => { 'open_basedir' => '/srv/web/www.com/:/usr/share/pear/' },
+          :match => [/^  php_admin_value open_basedir \/srv\/web\/www.com\/:\/usr\/share\/pear\/$/],
+        },
+        {
+          :title => 'should accept php_admin_flags in directories',
+          :attr  => 'directories',
+          :value => {
+						'path'            => '/srv/www',
+						'php_admin_flags' => { 'php_engine' => 'on' }
+					},
+          :match => [/^    php_admin_flag php_engine on$/],
+        },
+        {
+          :title => 'should accept php_admin_values',
+          :attr  => 'php_admin_values',
+          :value => { 'open_basedir' => '/srv/web/www.com/:/usr/share/pear/' },
+          :match => [/^  php_admin_value open_basedir \/srv\/web\/www.com\/:\/usr\/share\/pear\/$/],
+        },
+        {
+          :title => 'should accept php_admin_values in directories',
+          :attr  => 'directories',
+          :value => {
+            'path'             => '/srv/www',
+            'php_admin_values' => { 'open_basedir' => '/srv/web/www.com/:/usr/share/pear/' }
+          },
+          :match => [/^    php_admin_value open_basedir \/srv\/web\/www.com\/:\/usr\/share\/pear\/$/],
+        },
+        {
           :title => 'should accept a wsgi script alias',
           :attr  => 'wsgi_script_aliases',
           :value => { '/' => '/var/www/myapp.wsgi'},
@@ -699,6 +735,12 @@ describe 'apache::vhost', :type => :define do
           :match => [
             /^  VirtualDocumentRoot \/not\/default$/,
           ],
+        },
+        {
+          :title => 'should contain environment variables',
+          :attr  => 'access_log_env_var',
+          :value => 'admin',
+          :match => [/CustomLog \/var\/log\/.+_access\.log combined env=admin$/]
         },
 
       ].each do |param|

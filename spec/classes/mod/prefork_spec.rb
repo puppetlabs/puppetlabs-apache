@@ -10,7 +10,7 @@ describe 'apache::mod::prefork', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('prefork') }
     it { should contain_file("/etc/apache2/mods-available/prefork.conf").with_ensure('file') }
     it { should contain_file("/etc/apache2/mods-enabled/prefork.conf").with_ensure('link') }
@@ -24,7 +24,7 @@ describe 'apache::mod::prefork', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('prefork') }
     it { should contain_file("/etc/httpd/conf.d/prefork.conf").with_ensure('file') }
     it { should contain_file_line("/etc/sysconfig/httpd prefork enable").with({
@@ -40,7 +40,7 @@ describe 'apache::mod::prefork', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('prefork') }
     it { should contain_file("/usr/local/etc/apache22/Modules/prefork.conf").with_ensure('file') }
   end

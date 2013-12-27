@@ -10,7 +10,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod("auth_kerb") }
     it { should contain_package("libapache2-mod-auth-kerb") }
   end
@@ -22,7 +22,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod("auth_kerb") }
     it { should contain_package("mod_auth_kerb") }
   end
@@ -34,7 +34,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod("auth_kerb") }
     it { should contain_package("www/mod_auth_kerb2") }
   end

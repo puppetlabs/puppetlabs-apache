@@ -53,6 +53,17 @@
     <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
     PassengerEnabled <%= directory['passenger_enabled'] %>
     <%- end -%>
+    <%- if directory['php_admin_flags'] and ! directory['php_admin_flags'].empty? -%>
+      <%- directory['php_admin_flags'].each do |flag,value| -%>
+      <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
+    php_admin_flag <%= "#{flag} #{value}" %>
+      <%- end -%>
+    <%- end -%>
+    <%- if directory['php_admin_values'] and ! directory['php_admin_values'].empty? -%>
+      <%- directory['php_admin_values'].each do |key,value| -%>
+    php_admin_value <%= "#{key} #{value}" %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['directoryindex'] and directory['directoryindex'] != '' -%>
     DirectoryIndex <%= directory['directoryindex'] %>
     <%- end -%>

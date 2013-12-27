@@ -10,7 +10,7 @@ describe 'apache::mod::itk', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('itk') }
     it { should contain_file("/etc/apache2/mods-available/itk.conf").with_ensure('file') }
     it { should contain_file("/etc/apache2/mods-enabled/itk.conf").with_ensure('link') }
@@ -24,7 +24,7 @@ describe 'apache::mod::itk', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should_not contain_apache__mod('itk') }
     it { should contain_file("/usr/local/etc/apache22/Modules/itk.conf").with_ensure('file') }
   end

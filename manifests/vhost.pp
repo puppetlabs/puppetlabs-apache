@@ -126,6 +126,7 @@ define apache::vhost(
     $access_log_pipe             = undef,
     $access_log_syslog           = undef,
     $access_log_format           = undef,
+    $access_log_env_var          = undef,
     $aliases                     = undef,
     $directories                 = undef,
     $error_log                   = true,
@@ -141,6 +142,8 @@ define apache::vhost(
     $suphp_addhandler            = $apache::params::suphp_addhandler,
     $suphp_engine                = $apache::params::suphp_engine,
     $suphp_configpath            = $apache::params::suphp_configpath,
+    $php_admin_flags             = [],
+    $php_admin_values            = [],
     $no_proxy_uris               = [],
     $redirect_source             = '/',
     $redirect_dest               = undef,
@@ -292,6 +295,9 @@ define apache::vhost(
     $_access_log_format = 'combined'
   }
 
+  if $access_log_env_var {
+    $_access_log_env_var = "env=${access_log_env_var}"
+  }
 
   if $ip {
     if $port {
@@ -416,6 +422,7 @@ define apache::vhost(
   # - $access_log
   # - $access_log_destination
   # - $_access_log_format
+  # - $_access_log_env_var
   # - $error_log
   # - $error_log_destination
   # - $error_documents
@@ -426,6 +433,8 @@ define apache::vhost(
   #   - $block
   # directories fragment:
   #   - $passenger_enabled
+  #   - $php_admin_flags
+  #   - $php_admin_values
   #   - $directories (a list of key-value hashes is expected)
   # fastcgi fragment:
   #   - $fastcgi_server
