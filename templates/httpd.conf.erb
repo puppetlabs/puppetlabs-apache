@@ -16,9 +16,13 @@ Group <%= @group %>
 
 AccessFileName .htaccess
 <Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
-    Satisfy all
+<%- if @apache_version == '2.4' -%>
+    Require all denied
+<%- else -%>
+     Order allow,deny
+     Deny from all
+     Satisfy all
+<%- end -%>
 </Files>
 
 <Directory />
@@ -52,7 +56,7 @@ LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 
-Include <%= @confd_dir %>/*.conf
+IncludeOptional <%= @confd_dir %>/*.conf
 <% if @vhost_load_dir != @confd_dir -%>
 Include <%= @vhost_load_dir %>/*.conf
 <% end -%>

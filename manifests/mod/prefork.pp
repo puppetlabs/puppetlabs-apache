@@ -6,6 +6,9 @@ class apache::mod::prefork (
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
 ) {
+  $lib_path       = $apache::params::lib_path
+  $apache_version = $apache::params::apache_version
+
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
   }
@@ -58,6 +61,26 @@ class apache::mod::prefork (
         before  => File[$apache::mod_enable_dir],
         notify  => Service['httpd'],
       }
+
+      if $apache_version == 2.4 {
+        file { "${apache::mod_dir}/prefork.load":
+          ensure  => file,
+          path    => "${apache::mod_dir}/prefork.load",
+          content => "LoadModule mpm_prefork_module ${lib_path}/mod_mpm_prefork.so\n",
+          require => Exec["mkdir ${apache::mod_dir}"],
+          before  => File[$apache::mod_dir],
+          notify  => Service['httpd'],
+        }
+
+        file { "${apache::mod_enable_dir}/prefork.load":
+          ensure  => link,
+          target  => "${apache::mod_dir}/prefork.load",
+          require => Exec["mkdir ${apache::mod_enable_dir}"],
+          before  => File[$apache::mod_enable_dir],
+          notify  => Service['httpd'],
+        }
+      }
+
       package { 'apache2-mpm-prefork':
         ensure => present,
       }

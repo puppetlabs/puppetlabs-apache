@@ -57,6 +57,7 @@ class apache (
   $trace_enable         = 'On',
   $package_ensure       = 'installed',
 ) inherits apache::params {
+  $apache_version = $apache::params::apache_version
 
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -64,9 +65,9 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
 
-  $valid_mpms_re = $::osfamily ? {
-    'FreeBSD' => '(event|itk|peruser|prefork|worker)',
-    default   => '(itk|prefork|worker)'
+  $valid_mpms_re = $apache_version ? {
+    2.4     => '(event|itk|peruser|prefork|worker)',
+    default => '(itk|prefork|worker)'
   }
 
   if $mpm_module {

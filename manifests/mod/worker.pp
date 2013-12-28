@@ -7,6 +7,9 @@ class apache::mod::worker (
   $maxrequestsperchild = '0',
   $serverlimit         = '25',
 ) {
+  $lib_path       = $apache::params::lib_path
+  $apache_version = $apache::params::apache_version
+
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::worker and apache::mod::event on the same node')
   }
@@ -59,6 +62,26 @@ class apache::mod::worker (
         before  => File[$apache::mod_enable_dir],
         notify  => Service['httpd'],
       }
+
+      if $apache_version == 2.4 {
+        file { "${apache::mod_dir}/worker.load":
+          ensure  => file,
+          path    => "${apache::mod_dir}/worker.load",
+          content => "LoadModule mpm_worker_module ${lib_path}/mod_mpm_worker.so\n",
+          require => Exec["mkdir ${apache::mod_dir}"],
+          before  => File[$apache::mod_dir],
+          notify  => Service['httpd'],
+        }
+
+        file { "${apache::mod_enable_dir}/worker.load":
+          ensure  => link,
+          target  => "${apache::mod_dir}/worker.load",
+          require => Exec["mkdir ${apache::mod_enable_dir}"],
+          before  => File[$apache::mod_enable_dir],
+          notify  => Service['httpd'],
+        }
+      }
+
       package { 'apache2-mpm-worker':
         ensure => present,
       }
