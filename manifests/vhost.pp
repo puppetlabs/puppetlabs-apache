@@ -172,7 +172,9 @@ define apache::vhost(
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
   }
-  $apache_name = $apache::params::apache_name
+
+  $apache_name    = $apache::params::apache_name
+  $apache_version = $apache::params::apache_version
 
   validate_re($ensure, '^(present|absent)$',
   "${ensure} is not supported for ensure.
@@ -395,15 +397,26 @@ define apache::vhost(
   if $directories {
     $_directories = $directories
   } else {
-    $_directories = [ {
-      provider       => 'directory',
-      path           => $docroot,
-      options        => $options,
-      allow_override => $override,
-      directoryindex => $directoryindex,
-      order          => 'allow,deny',
-      allow          => 'from all',
-    } ]
+    if $apache_version == 2.4 {
+      $_directories = [ {
+        provider       => 'directory',
+        path           => $docroot,
+        options        => $options,
+        allow_override => $override,
+        directoryindex => $directoryindex,
+        require        => 'all granted',
+      } ]
+    } else {
+      $_directories = [ {
+        provider       => 'directory',
+        path           => $docroot,
+        options        => $options,
+        allow_override => $override,
+        directoryindex => $directoryindex,
+        order          => 'allow,deny',
+        allow          => 'from all',
+      } ]
+    }
   }
 
   # Template uses:

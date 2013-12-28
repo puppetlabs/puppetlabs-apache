@@ -17,8 +17,13 @@ Group <%= @group %>
 AccessFileName .htaccess
 <Files ~ "^\.ht">
     Order allow,deny
-    Deny from all
-    Satisfy all
+<%- if @apache_version == '2.4' -%>
+    Require all denied
+<%- else -%>
+     Order allow,deny
+     Deny from all
+     Satisfy all
+<%- end -%>
 </Files>
 
 <Directory />
