@@ -64,9 +64,9 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
 
-  $valid_mpms_re = $::osfamily ? {
-    'FreeBSD' => '(event|itk|peruser|prefork|worker)',
-    default   => '(itk|prefork|worker)'
+  $valid_mpms_re = $apache::params::apache_version ? {
+    2.4     => '(event|itk|peruser|prefork|worker)',
+    default => '(itk|prefork|worker)'
   }
 
   if $mpm_module {

@@ -92,6 +92,7 @@ class apache::params {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
+    $apache_version       = 2.4
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -145,6 +146,12 @@ class apache::params {
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config = '/etc/mime.types'
+
+    if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease >= 13.10 {
+      $apache_version  = 2.4
+    } else {
+      $apache_version  = 2.2
+    }
   } elsif $::osfamily == 'FreeBSD' {
     $user             = 'www'
     $group            = 'www'
@@ -201,6 +208,7 @@ class apache::params {
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
+    $apache_version       = 2.2
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
