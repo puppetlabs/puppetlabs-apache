@@ -5,6 +5,7 @@ class apache::mod::prefork (
   $serverlimit         = '256',
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
+  $apache_version      = $apache::apache_version,
 ) {
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
@@ -41,30 +42,25 @@ class apache::mod::prefork (
 
   case $::osfamily {
     'redhat': {
-      file_line { '/etc/sysconfig/httpd prefork enable':
-        ensure  => present,
-        path    => '/etc/sysconfig/httpd',
-        line    => '#HTTPD=/usr/sbin/httpd.worker',
-        match   => '#?HTTPD=/usr/sbin/httpd.worker',
-        require => Package['httpd'],
-        notify  => Service['httpd'],
+      if $apache_version >= 2.4 {
+        apache::mpm{ 'prefork':
+          apache_version => $apache_version,
+        }
+      }
+      else {
+        file_line { '/etc/sysconfig/httpd prefork enable':
+          ensure  => present,
+          path    => '/etc/sysconfig/httpd',
+          line    => '#HTTPD=/usr/sbin/httpd.worker',
+          match   => '#?HTTPD=/usr/sbin/httpd.worker',
+          require => Package['httpd'],
+          notify  => Service['httpd'],
+        }
       }
     }
-    'debian': {
-      file { "${apache::mod_enable_dir}/prefork.conf":
-        ensure  => link,
-        target  => "${apache::mod_dir}/prefork.conf",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Service['httpd'],
-      }
-      package { 'apache2-mpm-prefork':
-        ensure => present,
-      }
-    }
-    'freebsd' : {
-      class { 'apache::package':
-        mpm_module => 'prefork'
+    'debian', 'freebsd' : {
+      apache::mpm{ 'prefork':
+        apache_version => $apache_version,
       }
     }
     default: {

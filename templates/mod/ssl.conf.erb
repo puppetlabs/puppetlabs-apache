@@ -13,7 +13,11 @@
 <% if @ssl_compression -%>
   SSLCompression Off
 <% end -%>
+  <% if @apache_version >= '2.4' -%>
+  SSLMutex sysvsem <%= @ssl_mutex %>
+  <% else -%>
   SSLMutex <%= @ssl_mutex %>
+  <% end -%>
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
   SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5

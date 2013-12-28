@@ -1,6 +1,7 @@
 class apache::default_mods (
-  $all  = true,
-  $mods = undef,
+  $all            = true,
+  $mods           = undef,
+  $apache_version = $apache::apache_version
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include
@@ -27,10 +28,8 @@ class apache::default_mods (
         include apache::mod::rewrite
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
-        apache::mod { 'authn_alias': }
         apache::mod { 'authn_anon': }
         apache::mod { 'authn_dbm': }
-        apache::mod { 'authn_default': }
         apache::mod { 'authz_dbm': }
         apache::mod { 'authz_owner': }
         apache::mod { 'expires': }
@@ -42,6 +41,18 @@ class apache::default_mods (
         apache::mod { 'suexec': }
         apache::mod { 'usertrack': }
         apache::mod { 'version': }
+
+        if $apache_version >= 2.4 {
+          # Lets fork it
+          apache::mod { 'systemd': }
+
+          apache::mod { 'unixd': }
+          apache::mod { 'authn_core': }
+        }
+        else {
+          apache::mod { 'authn_alias': }
+          apache::mod { 'authn_default': }
+        }
       }
       'freebsd': {
         include apache::mod::cache
@@ -101,7 +112,19 @@ class apache::default_mods (
     include apache::mod::setenvif
     apache::mod { 'auth_basic': }
     apache::mod { 'authn_file': }
-    apache::mod { 'authz_default': }
+
+    if $apache_version >= 2.4 {
+      # authz_core is needed for 'Require' directive
+      apache::mod { 'authz_core':
+        id => 'authz_core_module',
+      }
+
+      # filter is needed by mod_deflate
+      apache::mod { 'filter': }
+    } else {
+      apache::mod { 'authz_default': }
+    }
+
     apache::mod { 'authz_groupfile': }
     apache::mod { 'authz_user': }
     apache::mod { 'env': }

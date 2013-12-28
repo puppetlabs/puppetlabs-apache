@@ -602,6 +602,60 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should contain environment variables',
+          :attr  => 'access_log_env_var',
+          :value => 'admin',
+          :match => [/CustomLog "\/var\/log\/.+_access\.log" combined env=admin$/]
+        },
+        {
+          :title => 'should contain virtual_docroot',
+          :attr  => 'virtual_docroot',
+          :value => '/not/default',
+          :match => [
+            /^  VirtualDocumentRoot "\/not\/default"$/,
+          ],
+        },
+        {
+          :title    => 'should accept multiple directories',
+          :attr     => 'directories',
+          :value    => [
+            { 'path' => '/opt/app' },
+            { 'path' => '/var/www' },
+            { 'path' => '/rspec/docroot'}
+          ],
+          :match    => [
+            /^  <Directory "\/opt\/app">$/,
+            /^  <Directory "\/var\/www">$/,
+            /^  <Directory "\/rspec\/docroot">$/,
+          ],
+        },
+      ].each do |param|
+        describe "when #{param[:attr]} is #{param[:value]}" do
+          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
+
+          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          if param[:match]
+            it "#{param[:title]}: matches" do
+              param[:match].each do |match|
+                should contain_file("25-#{title}.conf").with_content( match )
+              end
+            end
+          end
+          if param[:notmatch]
+            it "#{param[:title]}: notmatches" do
+              param[:notmatch].each do |notmatch|
+                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+              end
+            end
+          end
+        end
+      end
+    end
+
+    # Apache below 2.4 (Default Version). All match and notmatch should be a list of regexs and exact match strings
+    context ".conf content with $apache_version < 2.4" do
+      [
+        {
           :title    => 'should accept a directory',
           :attr     => 'directories',
           :value    => { 'path' => '/opt/app' },
@@ -678,20 +732,6 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
-          :title    => 'should accept multiple directories',
-          :attr     => 'directories',
-          :value    => [
-            { 'path' => '/opt/app' },
-            { 'path' => '/var/www' },
-            { 'path' => '/rspec/docroot'}
-          ],
-          :match    => [
-            /^  <Directory "\/opt\/app">$/,
-            /^  <Directory "\/var\/www">$/,
-            /^  <Directory "\/rspec\/docroot">$/,
-          ],
-        },
-        {
           :title => 'should accept location for provider',
           :attr  => 'directories',
           :value => {
@@ -721,39 +761,12 @@ describe 'apache::vhost', :type => :define do
             /^  <\/Files>$/,
           ],
         },
-        {
-          :title => 'should accept files match for provider',
-          :attr  => 'directories',
-          :value => {
-            'path'     => 'index.html',
-            'provider' => 'filesmatch',
-          },
-          :notmatch => ['    AllowOverride None'],
-          :match => [
-            /^  <FilesMatch "index.html">$/,
-            /^    Order allow,deny$/,
-            /^    Allow from all$/,
-            /^  <\/FilesMatch>$/,
-          ],
-        },
-        {
-          :title => 'should contain virtual_docroot',
-          :attr  => 'virtual_docroot',
-          :value => '/not/default',
-          :match => [
-            /^  VirtualDocumentRoot "\/not\/default"$/,
-          ],
-        },
-        {
-          :title => 'should contain environment variables',
-          :attr  => 'access_log_env_var',
-          :value => 'admin',
-          :match => [/CustomLog "\/var\/log\/.+_access\.log" combined env=admin$/]
-        },
-
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
-          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
+          let :params do default_params.merge({
+            param[:attr].to_sym => param[:value],
+            :apache_version => 2.2,
+          }) end
 
           it { should contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
@@ -774,6 +787,145 @@ describe 'apache::vhost', :type => :define do
       end
     end
 
+    # Apache equals or above 2.4. All match and notmatch should be a list of regexs and exact match strings
+    context ".conf content with $apache_version >= 2.4" do
+      [
+        {
+          :title    => 'should accept a directory',
+          :attr     => 'directories',
+          :value    => { 'path' => '/opt/app' },
+          :notmatch => ['  <Directory /rspec/docroot>'],
+          :match    => [
+            /^  <Directory "\/opt\/app">$/,
+            /^    AllowOverride None$/,
+            /^    Require all granted$/,
+            /^  <\/Directory>$/,
+          ],
+        },
+        {
+          :title    => 'should accept directory directives hash',
+          :attr     => 'directories',
+          :value    => {
+            'path'              => '/opt/app',
+            'headers'           => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+            'allow_override'    => 'Lol',
+            'options'           => '-MultiViews',
+            'require'           => 'something denied',
+            'passenger_enabled' => 'onf',
+          },
+          :match    => [
+            /^  <Directory "\/opt\/app">$/,
+            /^    Header Set X-Robots-Tag "noindex, noarchive, nosnippet"$/,
+            /^    AllowOverride Lol$/,
+            /^    Options -MultiViews$/,
+            /^    Require something denied$/,
+            /^    PassengerEnabled onf$/,
+            /^  <\/Directory>$/,
+          ],
+        },
+        {
+          :title    => 'should accept directory directives with arrays and hashes',
+          :attr     => 'directories',
+          :value    => [
+            {
+              'path'              => '/opt/app1',
+              'allow_override'    => ['AuthConfig','Indexes'],
+              'options'           => ['-MultiViews','+MultiViews'],
+              'require'           => ['host','example.org'],
+              'passenger_enabled' => 'onf',
+            },
+            {
+              'path'        => '/opt/app2',
+              'addhandlers' => {
+                'handler'    => 'cgi-script',
+                'extensions' => '.cgi',
+              },
+            },
+          ],
+          :match    => [
+            /^  <Directory "\/opt\/app1">$/,
+            /^    AllowOverride AuthConfig Indexes$/,
+            /^    Options -MultiViews \+MultiViews$/,
+            /^    Require host example.org$/,
+            /^    PassengerEnabled onf$/,
+            /^  <\/Directory>$/,
+            /^  <Directory "\/opt\/app2">$/,
+            /^    AllowOverride None$/,
+            /^    Require all granted$/,
+            /^    AddHandler cgi-script .cgi$/,
+            /^  <\/Directory>$/,
+          ],
+        },
+        {
+          :title => 'should accept location for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => '/',
+            'provider' => 'location',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <Location "\/">$/,
+            /^    Require all granted$/,
+            /^  <\/Location>$/,
+          ],
+        },
+        {
+          :title => 'should accept files for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'files',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <Files "index.html">$/,
+            /^    Require all granted$/,
+            /^  <\/Files>$/,
+          ],
+        },
+        {
+          :title => 'should accept files match for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'filesmatch',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <FilesMatch "index.html">$/,
+            /^    Order allow,deny$/,
+            /^    Allow from all$/,
+            /^  <\/FilesMatch>$/,
+          ],
+        },
+      ].each do |param|
+        describe "when #{param[:attr]} is #{param[:value]}" do
+          let :params do default_params.merge({
+            param[:attr].to_sym => param[:value],
+            :apache_version => 2.4,
+          }) end
+
+          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          if param[:match]
+            it "#{param[:title]}: matches" do
+              param[:match].each do |match|
+                should contain_file("25-#{title}.conf").with_content( match )
+              end
+            end
+          end
+          if param[:notmatch]
+            it "#{param[:title]}: notmatches" do
+              param[:notmatch].each do |notmatch|
+                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+              end
+            end
+          end
+        end
+      end
+    end
+
+    # All match and notmatch should be a list of regexs and exact match strings
     context ".conf content with SSL" do
       [
         {

@@ -34,21 +34,29 @@
     AllowOverride None
       <%- end -%>
     <%- end -%>
-    <%- if directory['order'] and directory['order'] != '' -%>
+    <%- if @apache_version == '2.4' -%>
+      <%- if directory['require'] and directory['require'] != '' -%>
+    Require <%= Array(directory['require']).join(' ') %>
+      <%- else -%>
+    Require all granted
+      <%- end -%>
+    <%- else -%>
+      <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
-    <%- else -%>
+      <%- else -%>
     Order allow,deny
-    <%- end -%>
-    <%- if directory['deny'] and directory['deny'] != '' -%>
+      <%- end -%>
+      <%- if directory['deny'] and directory['deny'] != '' -%>
     Deny <%= directory['deny'] %>
-    <%- end -%>
-    <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
+      <%- end -%>
+      <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
     Allow <%= directory['allow'] %>
-    <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
-    <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
+      <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
+      <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
     Deny from all
-    <%- else -%>
+      <%- else -%>
     Allow from all
+      <%- end -%>
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- [directory['addhandlers']].flatten.compact.each do |addhandler| -%>

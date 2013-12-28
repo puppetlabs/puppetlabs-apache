@@ -169,11 +169,13 @@ define apache::vhost(
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
     $additional_includes         = [],
+    $apache_version              = $apache::apache_version
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
   }
+
   $apache_name = $apache::params::apache_name
 
   validate_re($ensure, '^(present|absent)$',
@@ -400,15 +402,22 @@ define apache::vhost(
     }
     $_directories = $directories
   } else {
-    $_directories = [ {
+    $_directory = {
       provider       => 'directory',
       path           => $docroot,
       options        => $options,
       allow_override => $override,
       directoryindex => $directoryindex,
-      order          => 'allow,deny',
-      allow          => 'from all',
-    } ]
+    }
+
+    if $apache_version == 2.4 {
+      $_directory[require] = 'all granted'
+    } else {
+      $_directory[order] = 'allow,deny'
+      $_directory[allow] = 'from all'
+    }
+
+    $_directories = [ $_directory ]
   }
 
   # Template uses:

@@ -1,4 +1,6 @@
-class apache::mod::alias {
+class apache::mod::alias(
+  $apache_version = $apache::apache_version
+) {
   $icons_path = $::osfamily ? {
     'debian'  => '/usr/share/apache2/icons',
     'redhat'  => '/var/www/icons',

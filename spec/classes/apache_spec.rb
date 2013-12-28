@@ -73,6 +73,22 @@ describe 'apache', :type => :class do
       it { should_not contain_file("#{modname}.conf symlink") }
     end
 
+    context "with Apache version < 2.4" do
+      let :params do
+        { :apache_version => 2.2 }
+      end
+
+      it { should contain_file("/etc/apache2/apache2.conf").with_content %r{^Include "/etc/apache2/conf\.d/\*\.conf"$} }
+    end
+
+    context "with Apache version >= 2.4" do
+      let :params do
+        { :apache_version => 2.4 }
+      end
+
+      it { should contain_file("/etc/apache2/apache2.conf").with_content %r{^IncludeOptional "/etc/apache2/conf\.d/\*\.conf"$} }
+    end
+
     # Assert that both load files and conf files are placed and symlinked for these mods
     [
       'alias',
@@ -103,6 +119,7 @@ describe 'apache', :type => :class do
         'target' => "/etc/apache2/mods-available/#{modname}.conf"
       ) }
     end
+
     describe "Don't create user resource" do
       context "when parameter manage_user is false" do
         let :params do
@@ -213,7 +230,22 @@ describe 'apache', :type => :class do
         ) }
       end
 
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/conf\.d/\*\.conf"$} }
+      context "with Apache version < 2.4" do
+        let :params do
+          { :apache_version => 2.2 }
+        end
+
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/conf\.d/\*\.conf"$} }
+      end
+
+      context "with Apache version >= 2.4" do
+        let :params do
+          { :apache_version => 2.4 }
+        end
+
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
+      end
+
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/site\.d/\*\.conf"$} }
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
