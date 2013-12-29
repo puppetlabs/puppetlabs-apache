@@ -4,10 +4,19 @@
   ProxyRequests Off
 <%- end -%>
 <% [@proxy_pass].flatten.compact.each do |proxy| %>
+  <%- if proxy['url'] != '' -%>
+    <%- if proxy['path'] and proxy['url'] != '' -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] %>
   <Location <%= proxy['path']%>>
     ProxyPassReverse /
   </Location>
+    <%- elsif proxy['pathmatch'] and proxy['url'] != '' -%>
+  ProxyPassMatch <%= proxy['pathmatch'] %> <%= proxy['url'] %>
+  <Location <%= proxy['pathmatch']%>>
+    ProxyPassReverse /
+  </Location>
+    <%- end -%>
+  <%- end -%>
 <% end %>
 <% if @proxy_dest -%>
 <% Array(@no_proxy_uris).each do |uri| %>
