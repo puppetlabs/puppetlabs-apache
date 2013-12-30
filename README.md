@@ -932,7 +932,7 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-These directives are created in the order specified. As with `ProxyPass` and `ProxyPassMatch` directives the more specific paths should come before the more general ones to avoid shadowing.
+These directives are created in the order specified. As with `Alias` and `AliasMatch` directives the more specific paths should come before the more general ones to avoid shadowing.
 
 #####`rack_base_uris`
 
