@@ -290,13 +290,13 @@ define apache::vhost(
 
   # Set access log format
   if $access_log_format {
-    $_access_log_format = "\"${access_log_format}\""
+    $my_access_log_format = "\"${access_log_format}\""
   } else {
-    $_access_log_format = 'combined'
+    $my_access_log_format = 'combined'
   }
 
   if $access_log_env_var {
-    $_access_log_env_var = "env=${access_log_env_var}"
+    $my_access_log_env_var = "env=${access_log_env_var}"
   }
 
   if $ip {
@@ -393,9 +393,9 @@ define apache::vhost(
 
   ## Create a default directory list if none defined
   if $directories {
-    $_directories = $directories
+    $my_directories = $directories
   } else {
-    $_directories = [ {
+    $my_directories = [ {
       provider       => 'directory',
       path           => $docroot,
       options        => $options,
@@ -417,12 +417,12 @@ define apache::vhost(
   # - $logroot
   # - $name
   # - $aliases
-  # - $_directories
+  # - $my_directories
   # - $log_level
   # - $access_log
   # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
+  # - $my_access_log_format
+  # - $my_access_log_env_var
   # - $error_log
   # - $error_log_destination
   # - $error_documents
