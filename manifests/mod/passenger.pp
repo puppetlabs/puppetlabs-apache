@@ -9,14 +9,37 @@ class apache::mod::passenger (
   $passenger_ruby                 = $apache::params::passenger_ruby,
   $passenger_max_pool_size        = undef,
   $passenger_use_global_queue     = undef,
+  $mod_package                    = undef,
+  $mod_package_ensure             = undef,
+  $mod_lib                        = undef,
+  $mod_lib_path                   = undef,
+  $mod_id                         = undef,
+  $mod_path                       = undef,
 ) {
+
+  $_package = $mod_package
+  $_package_ensure = $mod_package_ensure
+  $_lib = $mod_lib
   if $::osfamily == 'FreeBSD' {
-    apache::mod { 'passenger':
-      lib_path => "${passenger_root}/buildout/apache2"
+    if $mod_lib_path {
+      $_lib_path = $mod_lib_path
+    } else {
+      $_lib_path = "${passenger_root}/buildout/apache2"
     }
   } else {
-    apache::mod { 'passenger': }
+    $_lib_path = $mod_lib_path
   }
+  $_id = $mod_id
+  $_path = $mod_path
+  apache::mod { 'passenger':
+    package        => $_package,
+    package_ensure => $_package_ensure,
+    lib            => $_lib,
+    lib_path       => $_lib_path,
+    id             => $_id,
+    path           => $_path,
+  }
+
   # Template uses:
   # - $passenger_root
   # - $passenger_ruby
