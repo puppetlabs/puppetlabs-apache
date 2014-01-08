@@ -37,7 +37,7 @@ describe 'apache', :type => :class do
     it { should contain_file("/etc/apache2/mods-available").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
-      'purge'   => 'true',
+      'purge'   => 'false',
       'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
       )
