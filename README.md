@@ -1434,7 +1434,7 @@ Apache httpd requires that `Listen` directives must be added for every port. The
 Enables named-based hosting of a virtual host
 
 ```puppet
-    class { 'apache::namevirtualhost`: }
+    apache::namevirtualhost { '*:80': }
 ```
 
 Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
