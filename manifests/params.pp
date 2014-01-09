@@ -56,8 +56,10 @@ class apache::params {
     $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
     $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
     $ssl_certs_dir        = '/etc/pki/tls/certs'
-    $passenger_root       = '/usr/share/rubygems/gems/passenger-3.0.17'
-    $passenger_ruby       = '/usr/bin/ruby'
+    $passenger_conf_file  = 'passenger_extra.conf'
+    $passenger_conf_package_file = 'passenger.conf'
+    $passenger_root       = undef
+    $passenger_ruby       = undef
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
@@ -115,6 +117,8 @@ class apache::params {
     $default_ssl_cert = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key  = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_certs_dir    = '/etc/ssl/certs'
+    $passenger_conf_file = 'passenger.conf'
+    $passenger_conf_package_file = undef
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
     $suphp_addhandler  = 'x-httpd-php'
@@ -168,6 +172,8 @@ class apache::params {
     $default_ssl_cert = '/usr/local/etc/apache22/server.crt'
     $default_ssl_key  = '/usr/local/etc/apache22/server.key'
     $ssl_certs_dir    = '/usr/local/etc/apache22'
+    $passenger_conf_file = 'passenger.conf'
+    $passenger_conf_package_file = undef
     $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
     $passenger_ruby   = '/usr/bin/ruby'
     $suphp_addhandler = 'php5-script'

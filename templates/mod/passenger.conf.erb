@@ -1,8 +1,12 @@
 # The Passanger Apache module configuration file is being
 # managed by Puppet and changes will be overwritten.
 <IfModule mod_passenger.c>
+  <%- if @passenger_root -%>
   PassengerRoot <%= @passenger_root %>
+  <%- end -%>
+  <%- if @passenger_ruby -%>
   PassengerRuby <%= @passenger_ruby %>
+  <%- end -%>
   <%- if @passenger_high_performance -%>
   PassengerHighPerformance <%= @passenger_high_performance %>
   <%- end -%>
