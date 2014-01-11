@@ -21,7 +21,7 @@ describe 'apache::mod::mime_magic', :type => :class do
 
     it do
       should contain_file("mime_magic.conf").with_content(
-        "MIMEMagicFile /etc/apache2/magic\n"
+        "MIMEMagicFile \"/etc/apache2/magic\"\n"
       )
     end
 
@@ -41,7 +41,7 @@ describe 'apache::mod::mime_magic', :type => :class do
 
       it do
         should contain_file("mime_magic.conf").with_content(
-          "MIMEMagicFile /tmp/Debian_magic\n"
+          "MIMEMagicFile \"/tmp/Debian_magic\"\n"
         )
       end
     end
@@ -61,7 +61,7 @@ describe 'apache::mod::mime_magic', :type => :class do
 
     it do
       should contain_file("mime_magic.conf").with_content(
-        "MIMEMagicFile /etc/httpd/conf/magic\n"
+        "MIMEMagicFile \"/etc/httpd/conf/magic\"\n"
       )
     end
 
@@ -84,7 +84,7 @@ describe 'apache::mod::mime_magic', :type => :class do
 
     it do
       should contain_file("mime_magic.conf").with_content(
-        "MIMEMagicFile /tmp/magic\n"
+        "MIMEMagicFile \"/tmp/magic\"\n"
       )
     end
   end

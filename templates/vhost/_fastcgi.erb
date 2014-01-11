@@ -4,7 +4,7 @@
 <% end -%>
 <% if @fastcgi_dir -%>
 
-  <Directory <%= @fastcgi_dir %>>
+  <Directory "<%= @fastcgi_dir %>">
     Options +ExecCGI
     AllowOverride All
     SetHandler fastcgi-script

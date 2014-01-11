@@ -9,7 +9,7 @@
 <% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
   <%- @wsgi_script_aliases.each do |a, p| -%>
     <%- if a != '' and p != ''-%>
-  WSGIScriptAlias <%= a %> <%= p %>
+  WSGIScriptAlias <%= a %> "<%= p %>"
     <%- end -%>
   <%- end -%>
 <% end -%>

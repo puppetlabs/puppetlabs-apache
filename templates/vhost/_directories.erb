@@ -7,7 +7,7 @@
     <%- provider = 'Directory' -%>
   <%- end -%>
 
-  <<%= provider + ' ' + directory['path'] %>>
+  <<%= provider %> "<%= directory['path'] %>">
     <%- if directory['headers'] -%>
       <%- Array(directory['headers']).each do |header| -%>
     Header <%= header %>

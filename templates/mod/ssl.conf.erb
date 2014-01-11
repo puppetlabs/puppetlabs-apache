@@ -8,7 +8,7 @@
   AddType application/x-pkcs7-crl    .crl
 
   SSLPassPhraseDialog  builtin
-  SSLSessionCache shmcb:<%= @session_cache %>
+  SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
 <% if @ssl_compression -%>
   SSLCompression Off

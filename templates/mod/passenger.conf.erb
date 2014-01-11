@@ -2,10 +2,10 @@
 # managed by Puppet and changes will be overwritten.
 <IfModule mod_passenger.c>
   <%- if @passenger_root -%>
-  PassengerRoot <%= @passenger_root %>
+  PassengerRoot "<%= @passenger_root %>"
   <%- end -%>
   <%- if @passenger_ruby -%>
-  PassengerRuby <%= @passenger_ruby %>
+  PassengerRuby "<%= @passenger_ruby %>"
   <%- end -%>
   <%- if @passenger_high_performance -%>
   PassengerHighPerformance <%= @passenger_high_performance %>
@@ -30,5 +30,5 @@
   <%- end -%>
   <%- if @passenger_use_global_queue -%>
   PassengerUseGlobalQueue <%= @passenger_use_global_queue %>
-  <%- end -%> 
+  <%- end -%>
 </IfModule>
