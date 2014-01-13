@@ -2,11 +2,9 @@ require 'spec_helper_acceptance'
 
 case fact('osfamily')
 when 'RedHat'
-  vhost = '/etc/httpd/conf.d/15-default-ssl.conf'
   vhostd = '/etc/httpd/conf.d'
 when 'Debian'
-  vhost = '/etc/apache2/conf/15-default-ssl.conf'
-  vhostd = '/etc/apache2/conf'
+  vhostd = '/etc/apache2/sites-available'
 end
 
 describe 'apache ssl' do
@@ -28,7 +26,7 @@ describe 'apache ssl' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(vhost) do
+    describe file("#{vhostd}/15-default-ssl.conf") do
       it { should be_file }
       it { should contain 'SSLCertificateFile      /tmp/ssl_cert' }
       it { should contain 'SSLCertificateKeyFile   /tmp/ssl_key' }

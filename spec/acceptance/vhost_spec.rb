@@ -18,7 +18,7 @@ describe 'apache::vhost define' do
     vhost_dir = '/etc/apache2/sites-enabled'
     package_name = 'apache2'
     service_name = 'apache2'
-    ports_file = '/etc/apache2/conf/ports.conf'
+    ports_file = '/etc/apache2/ports.conf'
     suphp_handler = 'x-httpd-php'
     suphp_configpath = '/etc/php5/apache2'
   end
@@ -65,6 +65,9 @@ describe 'apache::vhost define' do
 
   context 'default vhost with ssl' do
     it 'should create default vhost configs' do
+      # Doesn't work on Ubuntu 10.04 because ssl.conf should contain
+      # 'file:/var/run/apache2/ssl_mutex' but contains
+      # 'file:${APACHE_RUN_DIR}/ssl_mutex'
       pp = <<-EOS
         class { 'apache':
           default_ssl_vhost => true,
@@ -168,34 +171,89 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'apache_directories readme example, adapted' do
-    it 'should configure a vhost with Files' do
-      pp = <<-EOS
-        class { 'apache': }
-        apache::vhost { 'files.example.net':
-          docroot     => '/var/www/files',
-          directories => [
-            { path => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
-          ],
-        }
-        file { '/var/www/files/index.html.bak':
-          ensure  => file,
-          content => "Hello World\\n",
-        }
-        host { 'files.example.net': ip => '127.0.0.1', }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+  context 'apache_directories' do
+    describe 'readme example, adapted' do
+      it 'should configure a vhost with Files' do
+        pp = <<-EOS
+          class { 'apache': }
+          apache::vhost { 'files.example.net':
+            docroot     => '/var/www/files',
+            directories => [
+              { 'path' => '/var/www/files', },
+              { 'path' => '~ "(\.swp|\.bak|~)$"', 'provider' => 'files', 'deny' => 'from all' },
+            ],
+          }
+          file { '/var/www/files/index.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          file { '/var/www/files/index.html.bak':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          host { 'files.example.net': ip => '127.0.0.1', }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe service(service_name) do
+        it { should be_enabled }
+        it { should be_running }
+      end
+
+      it 'should answer to files.example.net' do
+        shell("/usr/bin/curl -sSf files.example.net:80/index.html").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 403/)
+      end
     end
 
-    describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
-    end
+    describe 'other Directory options' do
+      it 'should configure a vhost with multiple Directory sections' do
+        pp = <<-EOS
+          class { 'apache': }
+          apache::vhost { 'files.example.net':
+            docroot     => '/var/www/files',
+            directories => [
+              { 'path' => '/var/www/files', },
+              {
+                'provider'       => 'location',
+                'path'           => '/foo/',
+                'directoryindex' => 'notindex.html',
+              },
+              {
+                'provider' => 'files',
+                'path'     => '~ "private.html$"',
+                'deny'     => 'from all',
+              },
+            ],
+          }
+          file { '/var/www/files/foo':
+            ensure => directory,
+          }
+          file { '/var/www/files/foo/notindex.html':
+            ensure  => file,
+            content => "Hello Foo\\n",
+          }
+          file { '/var/www/files/private.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          host { 'files.example.net': ip => '127.0.0.1', }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
 
-    it 'should answer to files.example.net' do
-      shell("/usr/bin/curl -sSf files.example.net:80/index.html.bak", {:acceptable_exit_codes => 22}).stderr.should =~ /curl: \(22\) The requested URL returned error: 403/
-    end
+      describe service(service_name) do
+        it { should be_enabled }
+        it { should be_running }
+      end
 
+      it 'should answer to files.example.net' do
+        shell("/usr/bin/curl -sSf files.example.net:80/").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/foo/").stdout.should eq("Hello Foo\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/private.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 403/)
+      end
+    end
   end
 
   case fact('lsbdistcodename')
@@ -546,6 +604,27 @@ describe 'apache::vhost define' do
     end
   end
 
+  describe 'access_log_env_var' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot            => '/tmp',
+          logroot            => '/tmp',
+          access_log_syslog  => 'syslog',
+          access_log_env_var => 'admin',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'CustomLog syslog combined env=admin' }
+    end
+  end
+
   describe 'aliases' do
     it 'applies cleanly' do
       pp = <<-EOS
@@ -668,29 +747,32 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'rack_base_uris' do
-    if fact('osfamily') == 'RedHat'
-      it 'adds epel' do
-        pp = "class { 'epel': }"
+  # Passenger isn't even in EPEL on el-5
+  if default['platform'] !~ /^el-5/
+    describe 'rack_base_uris' do
+      if fact('osfamily') == 'RedHat'
+        it 'adds epel' do
+          pp = "class { 'epel': }"
+          apply_manifest(pp, :catch_failures => true)
+        end
+      end
+
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot          => '/tmp',
+            rack_base_uris  => ['/test'],
+          }
+        EOS
         apply_manifest(pp, :catch_failures => true)
       end
-    end
 
-    it 'applies cleanly' do
-      pp = <<-EOS
-        class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot          => '/tmp',
-          rack_base_uris  => ['/test'],
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
-
-    describe file("#{vhost_dir}/25-test.server.conf") do
-      it { should be_file }
-      it { should contain 'RackBaseURI /test' }
+      describe file("#{vhost_dir}/25-test.server.conf") do
+        it { should be_file }
+        it { should contain 'RackBaseURI /test' }
+      end
     end
   end
 
@@ -843,26 +925,29 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'fastcgi' do
-    it 'applies cleanly' do
-      pp = <<-EOS
-        class { 'apache': }
-        class { 'apache::mod::fastcgi': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot        => '/tmp',
-          fastcgi_server => 'localhost',
-          fastcgi_socket => '/tmp/fast/1234',
-          fastcgi_dir    => '/tmp/fast',
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
+  # So what does this work on?
+  if default['platform'] !~ /^(debian-(6|7)|el-(5|6))/
+    describe 'fastcgi' do
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          class { 'apache::mod::fastcgi': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot        => '/tmp',
+            fastcgi_server => 'localhost',
+            fastcgi_socket => '/tmp/fast/1234',
+            fastcgi_dir    => '/tmp/fast',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
-      it { should be_file }
-      it { should contain 'FastCgiExternalServer localhost -socket /tmp/fast/1234' }
-      it { should contain '<Directory /tmp/fast>' }
+      describe file("#{vhost_dir}/25-test.server.conf") do
+        it { should be_file }
+        it { should contain 'FastCgiExternalServer localhost -socket /tmp/fast/1234' }
+        it { should contain '<Directory /tmp/fast>' }
+      end
     end
   end
 
