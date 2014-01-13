@@ -18,8 +18,8 @@ describe 'apache::mod::suphp class' do
           host { 'suphp.example.com': ip => '127.0.0.1', }
           file { '/var/www/suphp/index.php':
             ensure  => file,
-            owner   => 'puppet',
-            group   => 'puppet',
+            owner   => 'daemon',
+            group   => 'daemon',
             content => "<?php echo get_current_user(); ?>\\n",
           }
         EOS
@@ -33,7 +33,7 @@ describe 'apache::mod::suphp class' do
 
       it 'should answer to suphp.example.com' do
         shell("/usr/bin/curl suphp.example.com:80") do |r|
-          r.stdout.should =~ /^puppet$/
+          r.stdout.should =~ /^daemon$/
           r.exit_code.should == 0
         end
       end

@@ -539,8 +539,8 @@ describe 'apache::vhost', :type => :define do
         {
           :title => 'should accept a php_admin_flags',
           :attr  => 'php_admin_flags',
-          :value => { 'php_engine' => 'on' },
-          :match => [/^  php_admin_flag php_engine on$/],
+          :value => { 'engine' => 'on' },
+          :match => [/^  php_admin_flag engine on$/],
         },
         {
           :title => 'should accept php_admin_values',

@@ -2,21 +2,21 @@ require 'spec_helper_acceptance'
 
 case fact('osfamily')
 when 'RedHat'
-  conf_dir = '/etc/httpd/conf'
   confd_dir = '/etc/httpd/conf.d'
   conf_file = '/etc/httpd/conf/httpd.conf'
   ports_file = '/etc/httpd/conf/ports.conf'
   vhost = '/etc/httpd/conf.d/15-default.conf'
   service_name = 'httpd'
   package_name = 'httpd'
+  error_log = 'error_log'
 when 'Debian'
-  conf_dir = '/etc/apache2/conf.d'
-  confd_dir = '/etc/apache2/conf.d'
-  conf_file = '/etc/apache2/conf/apache2.conf'
-  ports_file = '/etc/httpd/conf/ports.conf'
-  vhost = '/etc/httpd/conf.d/15-default.conf'
+  confd_dir = '/etc/apache2/mods-available'
+  conf_file = '/etc/apache2/apache2.conf'
+  ports_file = '/etc/apache2/ports.conf'
+  vhost = '/etc/apache2/sites-available/15-default.conf'
   service_name = 'apache2'
   package_name = 'apache2'
+  error_log = 'error.log'
 end
 
 describe 'apache parameters' do
@@ -200,15 +200,15 @@ describe 'apache parameters' do
       it 'applies cleanly' do
         pp = <<-EOS
           class { 'apache': httpd_dir => '/tmp', service_ensure => stopped }
-          include 'apache::mod::nss'
+          include 'apache::mod::mime'
         EOS
         apply_manifest(pp, :catch_failures => true)
       end
     end
 
-    describe file("#{confd_dir}/nss.conf") do
+    describe file("#{confd_dir}/mime.conf") do
       it { should be_file }
-      it { should contain 'NSSCertificateDatabase /tmp/alias' }
+      it { should contain 'AddLanguage eo .eo' }
     end
   end
 
@@ -244,8 +244,8 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': conf_template => 'another/test.conf.erb', service_ensure => stopped }"
-        shell('mkdir -p /etc/puppet/modules/another/templates')
-        shell('echo "testcontent" >> /etc/puppet/modules/another/templates/test.conf.erb')
+        shell("mkdir -p #{default['distmoduledir']}/another/templates")
+        shell("echo 'testcontent' >> #{default['distmoduledir']}/another/templates/test.conf.erb")
         apply_manifest(pp, :catch_failures => true)
       end
     end
@@ -318,7 +318,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file('/tmp/error_log') do
+    describe file("/tmp/#{error_log}") do
       it { should be_file }
     end
   end
