@@ -6,8 +6,15 @@
   <%- else -%>
     <%- provider = 'Directory' -%>
   <%- end -%>
+  <%- if /^~(.*)/ =~ directory['path'] -%>
+  <%-# if /^~.*/.match(directory['path']) -%>
+    <%- path = $1.strip -%>
+    <%- provider += 'Match' -%>
+  <%- else -%>
+    <%- path = directory['path'] %>
+  <%- end -%>
 
-  <<%= provider %> "<%= directory['path'] %>">
+  <<%= provider %> "<%= path %>">
     <%- if directory['headers'] -%>
       <%- Array(directory['headers']).each do |header| -%>
     Header <%= header %>
