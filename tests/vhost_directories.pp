@@ -7,8 +7,14 @@ class { 'apache': }
 apache::vhost { 'readme.example.net':
   docroot     => '/var/www/readme',
   directories => [
-    { path => '/var/www/readme', 'ServerTokens' => 'prod' },
-    { path => '/usr/share/empty', 'allow' => 'from all' },
+    {
+      'path'         => '/var/www/readme',
+      'ServerTokens' => 'prod' ,
+    },
+    {
+      'path'  => '/usr/share/empty',
+      'allow' => 'from all',
+    },
   ],
 }
 
@@ -16,7 +22,11 @@ apache::vhost { 'readme.example.net':
 apache::vhost { 'location.example.net':
   docroot     => '/var/www/location',
   directories => [
-    { path => '/location', 'provider' => 'location', 'ServerTokens' => 'prod' }, 
+    {
+      'path'         => '/location',
+      'provider'     => 'location',
+      'ServerTokens' => 'prod'
+    },
   ],
 }
 
@@ -24,7 +34,11 @@ apache::vhost { 'location.example.net':
 apache::vhost { 'files.example.net':
   docroot     => '/var/www/files',
   directories => [
-    { path => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' }, 
+    {
+      'path'     => '~ (\.swp|\.bak|~)$',
+      'provider' => 'files',
+      'deny'     => 'from all'
+    },
   ],
 }
 
