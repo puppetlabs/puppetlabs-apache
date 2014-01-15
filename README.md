@@ -378,6 +378,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `alias`
 * `auth_basic`
 * `auth_kerb`
+* `authnz_ldap`*
 * `autoindex`
 * `cache`
 * `cgi`
@@ -390,6 +391,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `dir`*
 * `disk_cache`
 * `event`
+* `expires`
 * `fastcgi`
 * `fcgid`
 * `headers`
@@ -399,7 +401,6 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `ldap`
 * `mime`
 * `mime_magic`*
-* `mpm_event`
 * `negotiation`
 * `nss`*
 * `passenger`*
@@ -409,6 +410,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `prefork`*
 * `proxy`*
 * `proxy_ajp`
+* `proxy_balancer`
 * `proxy_html`
 * `proxy_http`
 * `python`
@@ -1434,7 +1436,7 @@ Apache httpd requires that `Listen` directives must be added for every port. The
 Enables named-based hosting of a virtual host
 
 ```puppet
-    class { 'apache::namevirtualhost`: }
+    apache::namevirtualhost { '*:80': }
 ```
 
 Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
