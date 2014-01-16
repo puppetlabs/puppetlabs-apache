@@ -4,11 +4,11 @@ class apache::mod::nss (
   $passwd_file = undef
   ) {
   include apache::mod::mime
-  
+
   apache::mod { 'nss': }
 
   $httpd_dir = $apache::httpd_dir
-  
+
   # Template uses:
   # $transfer_log
   # $error_log
