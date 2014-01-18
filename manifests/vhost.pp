@@ -1,89 +1,4 @@
-# Definition: apache::vhost
-#
-# This class installs Apache Virtual Hosts
-#
-# Parameters:
-# - The $port to configure the host on
-# - The $docroot provides the DocumentRoot variable
-# - The $virtual_docroot provides VirtualDocumentationRoot variable
-# - The $serveradmin will specify an email address for Apache that it will
-#   display when it renders one of it's error pages
-# - The $ssl option is set true or false to enable SSL for this Virtual Host
-# - The $priority of the site
-# - The $servername is the primary name of the virtual host
-# - The $serveraliases of the site
-# - The $ip to configure the host on, defaulting to *
-# - The $options for the given vhost
-# - The $override for the given vhost (list of AllowOverride arguments)
-# - The $vhost_name for name based virtualhosting, defaulting to *
-# - The $logroot specifies the location of the virtual hosts logfiles, default
-#   to /var/log/<apache log location>/
-# - The $log_level specifies the verbosity of the error log for this vhost. Not
-#   set by default for the vhost, instead the global server configuration default
-#   of 'warn' is used.
-# - The $access_log specifies if *_access.log directives should be configured.
-# - The $ensure specifies if vhost file is present or absent.
-# - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
-# - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
-#   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
-# - $directories is a lost of hashes for creating <Directory> statements as per http://httpd.apache.org/docs/2.2/mod/core.html#directory
-#   each statement is a hash in the form of { path => '/path/to/directory', <directive> => <value>}
-#   see README.md for list of supported directives.
-#
-# Actions:
-# - Install Apache Virtual Hosts
-#
-# Requires:
-# - The apache class
-#
-# Sample Usage:
-#
-#  # Simple vhost definition:
-#  apache::vhost { 'site.name.fqdn':
-#    port => '80',
-#    docroot => '/path/to/docroot',
-#  }
-#
-#  # Multiple Mod Rewrites:
-#  apache::vhost { 'site.name.fqdn':
-#    port => '80',
-#    docroot => '/path/to/docroot',
-#    rewrites => [
-#      {
-#        comment       => 'force www domain',
-#        rewrite_cond => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
-#        rewrite_rule => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
-#      },
-#      {
-#        comment       => 'prevent image hotlinking',
-#        rewrite_cond => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
-#        rewrite_rule => ['.(gif|jpg|png)$ - [F]']
-#      },
-#    ]
-#  }
-#
-#  # SSL vhost with non-SSL rewrite:
-#  apache::vhost { 'site.name.fqdn':
-#    port    => '443',
-#    ssl     => true,
-#    docroot => '/path/to/docroot',
-#  }
-#  apache::vhost { 'site.name.fqdn':
-#    port          => '80',
-#    rewrites => [
-#      {
-#        comment       => "redirect non-SSL traffic to SSL site",
-#        rewrite_cond => ['%{HTTPS} off'],
-#        rewrite_rule => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
-#      }
-#    ]
-#  }
-#  apache::vhost { 'site.name.fqdn':
-#    port            => '80',
-#    docroot         => '/path/to/other_docroot',
-#    custom_fragment => template("${module_name}/my_fragment.erb"),
-#  }
-#
+# See README.md for more information on usage.
 define apache::vhost(
     $docroot,
     $virtual_docroot             = false,
@@ -167,6 +82,7 @@ define apache::vhost(
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
     $additional_includes         = [],
+    $custom_content              = {}
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -419,6 +335,7 @@ define apache::vhost(
     notify  => Service['httpd'],
   }
 
+  # Concat uses:
   # nvh_addr_port
   # servername
   # serveradmin
@@ -427,6 +344,7 @@ define apache::vhost(
     order   => 01,
     content => template('apache/vhost/_header.erb'),
   }
+  # Concat uses:
   # virtual_docroot
   # docroot
   concat::fragment { "${name}-apache-docroot":
@@ -436,6 +354,7 @@ define apache::vhost(
   }
 
   if $aliases {
+    # Concat uses:
     # aliases
     # alias_statement
     concat::fragment { "${name}-apache-aliases":
@@ -446,6 +365,7 @@ define apache::vhost(
   }
 
   if $itk {
+    # Concat uses:
     # itk
     concat::fragment { "${name}-apache-itk":
       target  => "${priority_real}-${filename}.conf",
@@ -455,6 +375,7 @@ define apache::vhost(
   }
 
   if $fallbackresource {
+    # Concat uses:
     # fallbackresource
     concat::fragment { "${name}-apache-fallbackresource":
       target  => "${priority_real}-${filename}.conf",
@@ -464,6 +385,7 @@ define apache::vhost(
   }
 
   if $_directories {
+    # Concat uses:
     # _directories
     concat::fragment { "${name}-apache-directories":
       target  => "${priority_real}-${filename}.conf",
@@ -473,6 +395,7 @@ define apache::vhost(
   }
 
   if $additional_includes {
+    # Concat uses:
     # additional_includes
     concat::fragment { "${name}-apache-additional_includes":
       target  => "${priority_real}-${filename}.conf",
@@ -482,6 +405,7 @@ define apache::vhost(
   }
 
   if ($log_level or $error_log) {
+    # Concat uses:
     # log_level
     # error_log
     concat::fragment { "${name}-apache-logging":
@@ -498,6 +422,7 @@ define apache::vhost(
   }
 
   if ($access_log and $_access_log_env_var) {
+    # Concat uses:
     # access_log
     # access_log_env_var
     concat::fragment { "${name}-apache-accesslog":
@@ -508,6 +433,7 @@ define apache::vhost(
   }
 
   if $block != [] {
+    # Concat uses:
     # block
     concat::fragment { "${name}-apache-block":
       target  => "${priority_real}-${filename}.conf",
@@ -517,6 +443,7 @@ define apache::vhost(
   }
 
   if $error_documents != [] {
+    # Concat uses:
     # error_documents
     concat::fragment { "${name}-apache-error_documents":
       target  => "${priority_real}-${filename}.conf",
@@ -526,6 +453,7 @@ define apache::vhost(
   }
 
   if ($proxy_dest or $proxy_pass) {
+    # Concat uses:
     # proxy_dest
     # proxy_pass
     concat::fragment { "${name}-apache-proxy":
@@ -536,6 +464,7 @@ define apache::vhost(
   }
 
   if $rack_base_uris {
+    # Concat uses:
     # rack_base_uris
     concat::fragment { "${name}-apache-rack":
       target  => "${priority_real}-${filename}.conf",
@@ -545,6 +474,7 @@ define apache::vhost(
   }
 
   if ($redirect_source and $redirect_dest) {
+    # Concat uses:
     # redirect_source
     # redirect_dest
     concat::fragment { "${name}-apache-redirect":
@@ -555,6 +485,7 @@ define apache::vhost(
   }
 
   if $rewrites {
+    # Concat uses:
     # rewrites
     concat::fragment { "${name}-apache-rewrite":
       target  => "${priority_real}-${filename}.conf",
@@ -564,6 +495,7 @@ define apache::vhost(
   }
 
   if $scriptaliases != [] {
+    # Concat uses:
     # scriptaliases
     concat::fragment { "${name}-apache-scriptaliases":
       target  => "${priority_real}-${filename}.conf",
@@ -572,9 +504,10 @@ define apache::vhost(
     }
   }
 
-  if $serveraliases {
+  if $serveraliases != [] {
+    # Concat uses:
     # serveralias
-    concat::fragment { "${name}-apache-rewrites":
+    concat::fragment { "${name}-apache-serveralias":
       target  => "${priority_real}-${filename}.conf",
       order   => 170,
       content => template('apache/vhost/_serveralias.erb'),
@@ -582,6 +515,7 @@ define apache::vhost(
   }
 
   if $setenv != [] {
+    # Concat uses:
     # setenv
     # setenvif
     concat::fragment { "${name}-apache-setenv":
@@ -592,6 +526,7 @@ define apache::vhost(
   }
 
   if $ssl {
+    # Concat uses:
     # ssl
     # ssl_cert
     # ssl_key
@@ -615,6 +550,7 @@ define apache::vhost(
   }
 
   if $suphp_engine == 'on' {
+    # Concat uses:
     # suphp_engine
     # suphp_addhandler
     # suphp_configpath
@@ -626,6 +562,7 @@ define apache::vhost(
   }
 
   if $php_admin_values != [] {
+    # Concat uses:
     # php_admin_values
     # php_admin_flags
     concat::fragment { "${name}-apache-php_admin":
@@ -636,6 +573,7 @@ define apache::vhost(
   }
 
   if $request_headers {
+    # Concat uses:
     # request_headers
     # request_statement
     concat::fragment { "${name}-apache-requestheader":
@@ -646,6 +584,7 @@ define apache::vhost(
   }
 
   if ($wsgi_daemon_process and $wsgi_daemon_process_options) {
+    # Concat uses:
     # wsgi_daemon_process
     # wsgi_daemon_process_options
     # wsgi_process_group
@@ -658,6 +597,7 @@ define apache::vhost(
   }
 
   if $custom_fragment {
+    # Concat uses:
     # custom_fragment
     concat::fragment { "${name}-apache-custom_fragment":
       target  => "${priority_real}-${filename}.conf",
@@ -667,6 +607,7 @@ define apache::vhost(
   }
 
   if $fastcgi_server {
+    # Concat uses:
     # fastcgi_server
     # fastcgi_socket
     # fastcgi_dir
@@ -681,6 +622,11 @@ define apache::vhost(
     target  => "${priority_real}-${filename}.conf",
     order   => 999,
     content => template('apache/vhost/_footer.erb'),
+  }
+
+  # Allow the passing of additional fragment blocks.
+  if $custom_content != {} {
+    create_resources(concat::fragment, $custom_content)
   }
 
   if $::osfamily == 'Debian' {
