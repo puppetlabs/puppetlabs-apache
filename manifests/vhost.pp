@@ -406,86 +406,8 @@ define apache::vhost(
     } ]
   }
 
-  # Template uses:
-  # - $nvh_addr_port
-  # - $servername
-  # - $serveradmin
-  # - $docroot
-  # - $virtual_docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $name
-  # - $aliases
-  # - $_directories
-  # - $log_level
-  # - $access_log
-  # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
-  # - $error_log
-  # - $error_log_destination
-  # - $error_documents
-  # - $fallbackresource
-  # - $custom_fragment
-  # - $additional_includes
-  # block fragment:
-  #   - $block
-  # directories fragment:
-  #   - $passenger_enabled
-  #   - $php_admin_flags
-  #   - $php_admin_values
-  #   - $directories (a list of key-value hashes is expected)
-  # fastcgi fragment:
-  #   - $fastcgi_server
-  #   - $fastcgi_socket
-  #   - $fastcgi_dir
-  # proxy fragment:
-  #   - $proxy_dest
-  #   - $no_proxy_uris
-  # rack fragment:
-  #   - $rack_base_uris
-  # redirect fragment:
-  #   - $redirect_source
-  #   - $redirect_dest
-  #   - $redirect_status
-  # requestheader fragment:
-  #   - $request_headers
-  # rewrite fragment:
-  #   - $rewrites
-  # scriptalias fragment:
-  #   - $scriptalias
-  #   - $scriptaliases
-  #   - $ssl
-  # serveralias fragment:
-  #   - $serveraliases
-  # setenv fragment:
-  #   - $setenv
-  #   - $setenvif
-  # ssl fragment:
-  #   - $ssl
-  #   - $ssl_cert
-  #   - $ssl_key
-  #   - $ssl_chain
-  #   - $ssl_certs_dir
-  #   - $ssl_ca
-  #   - $ssl_crl
-  #   - $ssl_crl_path
-  #   - $ssl_verify_client
-  #   - $ssl_verify_depth
-  #   - $ssl_options
-  # suphp fragment:
-  #   - $suphp_addhandler
-  #   - $suphp_engine
-  #   - $suphp_configpath
-  # wsgi fragment:
-  #   - $wsgi_daemon_process
-  #   - $wsgi_process_group
-  #   - $wsgi_script_aliases
-  file { "${priority_real}-${filename}.conf":
-    ensure  => $ensure,
+  concat { "${priority_real}-${filename}.conf":
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
-    content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => $apache::params::root_group,
     mode    => '0644',
@@ -496,6 +418,271 @@ define apache::vhost(
     ],
     notify  => Service['httpd'],
   }
+
+  # nvh_addr_port
+  # servername
+  # serveradmin
+  concat::fragment { "${name}-apache-header":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 01,
+    content => template('apache/vhost/_header.erb'),
+  }
+  # virtual_docroot
+  # docroot
+  concat::fragment { "${name}-apache-docroot":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 10,
+    content => template('apache/vhost/_docroot.erb'),
+  }
+
+  if $aliases {
+    # aliases
+    # alias_statement
+    concat::fragment { "${name}-apache-aliases":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 20,
+      content => template('apache/vhost/_aliases.erb'),
+    }
+  }
+
+  if $itk {
+    # itk
+    concat::fragment { "${name}-apache-itk":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 30,
+      content => template('apache/vhost/_itk.erb'),
+    }
+  }
+
+  if $fallbackresource {
+    # fallbackresource
+    concat::fragment { "${name}-apache-fallbackresource":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 40,
+      content => template('apache/vhost/_fallbackresource.erb'),
+    }
+  }
+
+  if $_directories {
+    # _directories
+    concat::fragment { "${name}-apache-directories":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 50,
+      content => template('apache/vhost/_directories.erb'),
+    }
+  }
+
+  if $additional_includes {
+    # additional_includes
+    concat::fragment { "${name}-apache-additional_includes":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 60,
+      content => template('apache/vhost/_additional_includes.erb'),
+    }
+  }
+
+  if ($log_level or $error_log) {
+    # log_level
+    # error_log
+    concat::fragment { "${name}-apache-logging":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 70,
+      content => template('apache/vhost/_logging.erb'),
+    }
+  }
+
+  concat::fragment { "${name}-apache-serversignature":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 80,
+    content => template('apache/vhost/_serversignature.erb'),
+  }
+
+  if ($access_log and $_access_log_env_var) {
+    # access_log
+    # access_log_env_var
+    concat::fragment { "${name}-apache-accesslog":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 90,
+      content => template('apache/vhost/_access_log.erb'),
+    }
+  }
+
+  if $block {
+    # block
+    concat::fragment { "${name}-apache-block":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 100,
+      content => template('apache/vhost/_block.erb'),
+    }
+  }
+
+  if $error_documents {
+    # error_documents
+    concat::fragment { "${name}-apache-error_documents":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 110,
+      content => template('apache/vhost/_error_document.erb'),
+    }
+  }
+
+  if ($proxy_dest or $proxy_pass) {
+    # proxy_dest
+    # proxy_pass
+    concat::fragment { "${name}-apache-proxy":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 120,
+      content => template('apache/vhost/_proxy.erb'),
+    }
+  }
+
+  if $rack_base_uris {
+    # rack_base_uris
+    concat::fragment { "${name}-apache-rack":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 130,
+      content => template('apache/vhost/_rack.erb'),
+    }
+  }
+
+  if ($redirect_source and $redirect_dest) {
+    # redirect_source
+    # redirect_dest
+    concat::fragment { "${name}-apache-redirect":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 140,
+      content => template('apache/vhost/_redirect.erb'),
+    }
+  }
+
+  if $rewrites {
+    # rewrites
+    concat::fragment { "${name}-apache-rewrite":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 150,
+      content => template('apache/vhost/_rewrite.erb'),
+    }
+  }
+
+  if $scriptaliases {
+    # scriptaliases
+    concat::fragment { "${name}-apache-scriptaliases":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 160,
+      content => template('apache/vhost/_scriptalias.erb'),
+    }
+  }
+
+  if $serveraliases {
+    # serveralias
+    concat::fragment { "${name}-apache-rewrites":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 170,
+      content => template('apache/vhost/_serveralias.erb'),
+    }
+  }
+
+  if $setenv {
+    # setenv
+    # setenvif
+    concat::fragment { "${name}-apache-setenv":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 180,
+      content => template('apache/vhost/_setenv.erb'),
+    }
+  }
+
+  if $ssl {
+    # ssl
+    # ssl_cert
+    # ssl_key
+    # ssl_chain
+    # ssl_certs_dir
+    # ssl_ca
+    # ssl_crl_path
+    # ssl_crl
+    # ssl_proxyengine
+    # ssl_protocol
+    # ssl_protocol
+    # ssl_cipher
+    # ssl_honorcipherorder
+    # ssl_verify_client
+    # ssl_verify_depths
+    concat::fragment { "${name}-apache-ssl":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 190,
+      content => template('apache/vhost/_ssl.erb'),
+    }
+  }
+
+  if $suphp_engine == 'on' {
+    # suphp_engine
+    # suphp_addhandler
+    # suphp_configpath
+    concat::fragment { "${name}-apache-suphp":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 200,
+      content => template('apache/vhost/_suphp.erb'),
+    }
+  }
+
+  if $php_admin_values {
+    # php_admin_values
+    # php_admin_flags
+    concat::fragment { "${name}-apache-php_admin":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 210,
+      content => template('apache/vhost/_php_admin.erb'),
+    }
+  }
+
+  if $request_headers {
+    # request_headers
+    # request_statement
+    concat::fragment { "${name}-apache-requestheader":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 220,
+      content => template('apache/vhost/_requestheader.erb'),
+    }
+  }
+
+  if ($wsgi_daemon_process and $wsgi_daemon_process_options) {
+    # wsgi_daemon_process
+    # wsgi_daemon_process_options
+    # wsgi_process_group
+    # wsgi_script_aliases
+    concat::fragment { "${name}-apache-wsgi":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 230,
+      content => template('apache/vhost/_wsgi.erb'),
+    }
+  }
+
+  if $custom_fragment {
+    # custom_fragment
+    concat::fragment { "${name}-apache-custom_fragment":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 240,
+      content => template('apache/vhost/_custom_fragment.erb'),
+    }
+  }
+
+  if $fastcgi_server {
+    # fastcgi_server
+    # fastcgi_socket
+    # fastcgi_dir
+    concat::fragment { "${name}-apache-fastcgi":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 250,
+      content => template('apache/vhost/_fastcgi.erb'),
+    }
+  }
+
+  concat::fragment { "${name}-apache-footer":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 999,
+    content => template('apache/vhost/_footer.erb'),
+  }
+
   if $::osfamily == 'Debian' {
     $vhost_enable_dir = $apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
