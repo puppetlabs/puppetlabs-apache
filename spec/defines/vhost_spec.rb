@@ -400,6 +400,15 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept headers',
+          :attr  => 'headers',
+          :value => ['add something', 'merge something_else'],
+          :match => [
+            /^  Header add something$/,
+            /^  Header merge something_else$/,
+          ],
+        },
+        {
           :title => 'should accept request headers',
           :attr  => 'request_headers',
           :value => ['append something', 'unset something_else'],

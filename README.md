@@ -863,6 +863,20 @@ Specifies paths to additional static vhost-specific Apache configuration files.
 This option is useful when you need to implement a unique and/or custom
 configuration not supported by this module.
 
+#####`headers`
+
+Specifies additional response headers as per [the `mod_headers` documentation](http://httpd.apache.org/docs/2.2/mod/mod_headers.html#header).
+
+```puppet
+    apache::vhost { 'site.name.fdqn':
+      …
+      headers => [
+        'add Strict-Transport-Security "max-age=15768000"',
+        'merge Cache-Control no-cache env=CGI',
+      ],
+    }
+```
+
 #####`ip`
 
 The IP address the vhost listens on. Defaults to 'undef'.

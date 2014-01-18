@@ -23,6 +23,7 @@
 #   of 'warn' is used.
 # - The $access_log specifies if *_access.log directives should be configured.
 # - The $ensure specifies if vhost file is present or absent.
+# - The $headers is a list of Header statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#header
 # - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
 # - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
 #   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
@@ -149,6 +150,7 @@ define apache::vhost(
     $redirect_dest               = undef,
     $redirect_status             = undef,
     $rack_base_uris              = undef,
+    $headers                     = undef,
     $request_headers             = undef,
     $rewrites                    = undef,
     $rewrite_rule                = undef,
@@ -381,8 +383,8 @@ define apache::vhost(
     $priority_real = '25'
   }
 
-  # Check if mod_headers is required to process $request_headers
-  if $request_headers {
+  # Check if mod_headers is required to process $headers/$request_headers
+  if $headers or $request_headers {
     if ! defined(Class['apache::mod::headers']) {
       include apache::mod::headers
     }
@@ -449,6 +451,8 @@ define apache::vhost(
   #   - $redirect_source
   #   - $redirect_dest
   #   - $redirect_status
+  # header fragment
+  #   - $headers
   # requestheader fragment:
   #   - $request_headers
   # rewrite fragment:
