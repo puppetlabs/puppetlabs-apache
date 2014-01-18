@@ -507,7 +507,7 @@ define apache::vhost(
     }
   }
 
-  if $block {
+  if $block != [] {
     # block
     concat::fragment { "${name}-apache-block":
       target  => "${priority_real}-${filename}.conf",
@@ -516,7 +516,7 @@ define apache::vhost(
     }
   }
 
-  if $error_documents {
+  if $error_documents != [] {
     # error_documents
     concat::fragment { "${name}-apache-error_documents":
       target  => "${priority_real}-${filename}.conf",
@@ -563,7 +563,7 @@ define apache::vhost(
     }
   }
 
-  if $scriptaliases {
+  if $scriptaliases != [] {
     # scriptaliases
     concat::fragment { "${name}-apache-scriptaliases":
       target  => "${priority_real}-${filename}.conf",
@@ -581,7 +581,7 @@ define apache::vhost(
     }
   }
 
-  if $setenv {
+  if $setenv != [] {
     # setenv
     # setenvif
     concat::fragment { "${name}-apache-setenv":
@@ -625,7 +625,7 @@ define apache::vhost(
     }
   }
 
-  if $php_admin_values {
+  if $php_admin_values != [] {
     # php_admin_values
     # php_admin_flags
     concat::fragment { "${name}-apache-php_admin":
