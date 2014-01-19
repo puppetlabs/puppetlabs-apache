@@ -40,6 +40,19 @@ class apache::mod::itk (
   }
 
   case $::osfamily {
+    'redhat': {
+      file_line { '/etc/sysconfig/httpd itk enable':
+        ensure  => present,
+        path    => '/etc/sysconfig/httpd',
+        line    => 'HTTPD=/usr/sbin/httpd.itk',
+        match   => '#?HTTPD=',
+        require => Package['httpd'],
+        notify  => Service['httpd'];
+      }
+      package { 'httpd-itk': 
+        ensure => present,
+      }
+    }
     'debian' : {
       file { "${apache::mod_enable_dir}/itk.conf":
         ensure  => link,
