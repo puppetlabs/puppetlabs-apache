@@ -225,7 +225,7 @@ apache::vhost { 'securedomain.com':
         ssl_protocol          => '-ALL +SSLv3 +TLSv1',
         ssl_cipher            => 'ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
         ssl_honorcipherorder  => 'On',
-        add_listen            => 'false',
+        add_listen            => false,
 }
 
 # Vhost with access log environment variables writing control

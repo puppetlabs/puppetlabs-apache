@@ -7,6 +7,9 @@ class apache::default_confd_files (
       'freebsd': {
         include apache::confd::no_accf
       }
+      default: {
+        # do nothing
+      }
     }
   }
 }
