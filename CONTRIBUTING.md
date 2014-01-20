@@ -18,7 +18,7 @@ Checklist (and a short version for the impatient)
       number(s)), and should skip the full stop.
 
     - Associate the issue in the message. The first line should include
-			the issue number in the form "(#XXXX) Rest of message".
+      the issue number in the form "(#XXXX) Rest of message".
 
     - The body should provide a meaningful commit message, which:
 
@@ -31,8 +31,8 @@ Checklist (and a short version for the impatient)
     - Make sure that you have tests for the bug you are fixing, or
       feature you are adding.
 
-    - Make sure the test suites passe after your commit:
-      `rake spec spec:system` More information on [testing](#Testing) below
+    - Make sure the test suites passes after your commit:
+      `bundle exec rspec spec/acceptance` More information on [testing](#Testing) below
 
     - When introducing a new feature, make sure it is properly
       documented in the README.md
@@ -64,7 +64,7 @@ The long version
   1.  Make separate commits for logically separate changes.
 
       Please break your commits down into logically consistent units
-      which include new or changed tests relevent to the rest of the
+      which include new or changed tests relevant to the rest of the
       change.  The goal of doing this is to make the diff easier to
       read for whoever is reviewing your code.  In general, the easier
       your diff is to read, the more likely someone will be happy to
@@ -91,7 +91,7 @@ The long version
       includes them.
 
       Please also check that you are not introducing any trailing
-      whitespaces or other "whitespace errors".  You can do this by
+      whitespace or other "whitespace errors".  You can do this by
       running "git diff --check" on your changes before you commit.
 
   2.  Sign the Contributor License Agreement
@@ -129,7 +129,7 @@ The long version
       If there is a GitHub issue associated with the change you
       submitted, then you should update the ticket to include the
       location of your branch, along with any other commentary you
-			may wish to make.
+      may wish to make.
 
 Testing
 =======

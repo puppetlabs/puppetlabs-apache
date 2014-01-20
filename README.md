@@ -1496,7 +1496,7 @@ Quickstart:
     gem install bundler
     bundle install
     bundle exec rake spec
-    bundle exec rake spec:system
+    bundle exec rspec spec/acceptance
 
 ##Copyright and License
 
