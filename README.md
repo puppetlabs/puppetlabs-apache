@@ -1253,6 +1253,10 @@ Usage will typically look like:
     }
 ```
 
+#####`suexec_user` and `suexec_group`
+
+User and group for the suexec module. Both must be specified, specifying only one of the two parameters won't work.
+
 ###Virtual Host Examples
 
 The Apache module allows you to set up pretty much any configuration of virtual host you might desire. This section will address some common configurations. Please see the [Tests section](https://github.com/puppetlabs/puppetlabs-apache/tree/master/tests) for even more examples.
