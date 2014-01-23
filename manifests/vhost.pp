@@ -114,8 +114,6 @@ define apache::vhost(
     $servername                  = $name,
     $serveraliases               = [],
     $options                     = ['Indexes','FollowSymLinks','MultiViews'],
-    $index_options               = [],
-    $index_order_default         = [],
     $override                    = ['None'],
     $directoryindex              = '',
     $vhost_name                  = '*',
