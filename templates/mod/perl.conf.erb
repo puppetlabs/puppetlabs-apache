@@ -2,13 +2,13 @@
 # managed by Puppet an changes will be overwritten.
 
 <IfModule mod_perl.c>
-  <% if @perlswitches -%>
-  PerlSwitches   <%= @perlswitches %>
-  <% end -%>
-  <% if @perlloadmodule -%>
-  PerlLoadModule <%= @perlloadmodule %>
-  <% end -%>
-  <% if @perlsetvar -%>
-  PerlSetVar     <%= @perlsetvar %>
-  <% end -%>
+<% if @perl_switches -%>
+  PerlSwitches <%= @perl_switches %>
+<% end -%>
+<% if @perl_load_module -%>
+  PerlLoadModule <%= @perl_load_module %>
+<% end -%>
+<% if @perl_set_var -%>
+  PerlSetVar <%= @perl_set_var %>
+<% end -%>
 </IfModule>

@@ -361,6 +361,34 @@ describe 'apache', :type => :class do
         it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^EnableSendfile Off\n} }
       end
     end
+    describe "use_canonical_name" do
+      context "Off" do
+        let :params do
+          { :use_canonical_name => 'Off' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^UseCanonicalName Off\n} }
+      end
+      context "On" do
+        let :params do
+          { :use_canonical_name => 'On' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^UseCanonicalName On\n} }
+      end
+    end
+    describe "use_canonical_physical_port" do
+      context "Off" do
+        let :params do
+          { :use_canonical_physical_port => 'Off' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^UseCanonicalPhysicalPort Off\n} }
+      end
+      context "On" do
+        let :params do
+          { :use_canonical_physical_port => 'On' }
+        end
+        it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^UseCanonicalPhysicalPort On\n} }
+      end
+    end
   end
   context "on a FreeBSD OS" do
     let :facts do
