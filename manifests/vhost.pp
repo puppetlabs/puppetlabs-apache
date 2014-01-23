@@ -323,6 +323,7 @@ define apache::vhost(
   }
 
   concat { "${priority_real}-${filename}.conf":
+    ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
     owner   => 'root',
     group   => $apache::params::root_group,
