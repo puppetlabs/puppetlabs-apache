@@ -270,9 +270,9 @@ define apache::vhost(
     $access_log_destination = $access_log_syslog
   } else {
     if $ssl {
-      $access_log_destination = "${logroot}/${servername}_access_ssl.log"
+      $access_log_destination = "${logroot}/${name}_access_ssl.log"
     } else {
-      $access_log_destination = "${logroot}/${servername}_access.log"
+      $access_log_destination = "${logroot}/${name}_access.log"
     }
   }
 
@@ -284,9 +284,9 @@ define apache::vhost(
     $error_log_destination = $error_log_syslog
   } else {
     if $ssl {
-      $error_log_destination = "${logroot}/${servername}_error_ssl.log"
+      $error_log_destination = "${logroot}/${name}_error_ssl.log"
     } else {
-      $error_log_destination = "${logroot}/${servername}_error.log"
+      $error_log_destination = "${logroot}/${name}_error.log"
     }
   }
 
