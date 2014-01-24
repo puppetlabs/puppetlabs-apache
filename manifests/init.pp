@@ -145,10 +145,12 @@ class apache (
       creates => $mod_dir,
       require => Package['httpd'],
     }
+    # Don't purge available modules if an enable dir is used
+    $purge_mod_dir = $purge_configs and !$mod_enable_dir
     file { $mod_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_configs,
+      purge   => $purge_mod_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
