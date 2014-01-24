@@ -25,6 +25,24 @@ describe 'apache::mod::perl', :type => :class do
     it { should contain_class("apache::params") }
     it { should contain_apache__mod('perl') }
     it { should contain_package("mod_perl") }
+    describe "with custom perl_switches" do
+      let :params do
+        { :perl_switches => '-I' }
+      end
+      it { should contain_file('perl.conf').with_content(/^  PerlSwitches -I/)}
+    end
+    describe "with custom perl_load_module" do
+      let :params do
+        { :perl_load_module => 'SOME::Perl::Module' }
+      end
+      it { should contain_file('perl.conf').with_content(/^  PerlLoadModule SOME::Perl::Module/)}
+    end
+    describe "with custom perl_set_var" do
+      let :params do
+        { :perl_set_var => 'MasonMultipleConfig 1' }
+      end
+      it { should contain_file('perl.conf').with_content(/^  PerlSetVar MasonMultipleConfig 1/)}
+    end
   end
   context "on a FreeBSD OS" do
     let :facts do
