@@ -395,6 +395,9 @@ define apache::vhost(
 
   ## Create a default directory list if none defined
   if $directories {
+    if !is_hash($directories) and !(is_array($directories) and is_hash($directories[0])) {
+      fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
+    }
     $_directories = $directories
   } else {
     $_directories = [ {
