@@ -146,6 +146,8 @@ define apache::vhost(
     $redirect_source             = '/',
     $redirect_dest               = undef,
     $redirect_status             = undef,
+    $redirectmatch_status        = undef,
+    $redirectmatch_regexp        = undef,
     $rack_base_uris              = undef,
     $request_headers             = undef,
     $rewrites                    = undef,
