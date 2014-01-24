@@ -19,7 +19,7 @@ define apache::mod (
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
     $_lib = $lib
-  } elsif "${mod_lib}" {
+  } elsif $mod_lib {
     $_lib = $mod_lib
   } else {
     $_lib = "mod_${mod}.so"
@@ -43,7 +43,7 @@ define apache::mod (
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
     $_package = $package
-  } elsif "${mod_package}" {
+  } elsif $mod_package {
     $_package = $mod_package
   }
   if $_package and ! defined(Package[$_package]) {

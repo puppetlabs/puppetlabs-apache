@@ -86,6 +86,9 @@ class apache::default_mods (
       'worker': {
         include apache::mod::cgid
       }
+      default: {
+        # do nothing
+      }
     }
     include apache::mod::alias
     include apache::mod::autoindex
