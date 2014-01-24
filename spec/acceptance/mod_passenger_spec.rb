@@ -5,12 +5,15 @@ describe 'apache::mod::passenger class' do
   when 'Debian'
     mod_dir      = '/etc/apache2/mods-available'
     service_name = 'apache2'
+    passenger_conf_path = "#{mod_dir}/passenger.conf"
   when 'RedHat'
     mod_dir      = '/etc/httpd/conf.d'
     service_name = 'httpd'
+    passenger_conf_path = "#{mod_dir}/passenger_extra.conf"
   when 'FreeBSD'
     mod_dir      = '/usr/local/etc/apache22/Modules'
     service_name = 'apache22'
+    passenger_conf_path = "#{mod_dir}/passenger.conf"
   end
 
   context "default passenger config" do
@@ -47,7 +50,7 @@ describe 'apache::mod::passenger class' do
       it { should be_running }
     end
 
-    describe file("#{mod_dir}/passenger.conf") do
+    describe file(passenger_conf_path) do
       it { should contain /^<IfModule mod_passenger\.c>$/ }
       it { should contain /^  PassengerRuby \/usr\/bin\/ruby$/ }
     end
@@ -100,7 +103,7 @@ describe 'apache::mod::passenger class' do
       it { should be_running }
     end
 
-    describe file("#{mod_dir}/passenger.conf") do
+    describe file(passenger_conf_path) do
       it { should contain /^<IfModule mod_passenger\.c>$/ }
       it { should contain /^  PassengerRuby \/usr\/bin\/ruby$/ }
     end

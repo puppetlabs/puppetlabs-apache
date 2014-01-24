@@ -98,6 +98,15 @@ Allows overriding the library file name used by apache when loading the passenge
 
 Allows overriding the full path to the library file used by apache when loading the passenger module. The default is the concatenation of the `mod_lib_path` and `mod_lib` parameters.
 
+# Dependencies
+
+RedHat-based systems will need to configure additional package repositories in order to install Passenger, specifically:
+
+* [Extra Packages for Enterprise Linux](https://fedoraproject.org/wiki/EPEL)
+* [Phusion Passenger](http://passenger.stealthymonkeys.com)
+
+Configuration of these repositories is beyond the scope of this module and is left to the user.
+
 # Attribution
 
 The Passenger tuning parameters for the `apache::mod::puppet` Puppet class was modified by Aaron Hicks (hicksa@landcareresearch.co.nz) for work on the NeSI Project and the Tuakiri New Zealand Access Federation as a fork from the PuppetLabs Apache module on GitHub.
