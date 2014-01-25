@@ -8,6 +8,9 @@
 <% if @serveradmin -%>
   ServerAdmin <%= @serveradmin %>
 <% end -%>
+<% if @default_charset %>
+  AddDefaultCharset <%= @default_charset %>
+<% end %>
 
   ## Vhost docroot
 <% if @virtual_docroot -%>

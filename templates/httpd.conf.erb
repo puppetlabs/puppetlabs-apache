@@ -34,6 +34,10 @@ EnableSendfile <%= @sendfile %>
 
 #Listen 80
 
+<% if @default_charset %>
+AddDefaultCharset <%= @default_charset %>
+<% end %>
+
 <% if @apxs_workaround -%>
 # Workaround: without this hack apxs would be confused about where to put
 # LoadModule directives and fail entire procedure of apache package

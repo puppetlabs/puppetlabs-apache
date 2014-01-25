@@ -8,6 +8,7 @@
 # - The $virtual_docroot provides VirtualDocumentationRoot variable
 # - The $serveradmin will specify an email address for Apache that it will
 #   display when it renders one of it's error pages
+# - The $default_charset provides the AddDefaultEncoding variable
 # - The $ssl option is set true or false to enable SSL for this Virtual Host
 # - The $priority of the site
 # - The $servername is the primary name of the virtual host
@@ -95,6 +96,7 @@ define apache::vhost(
     $docroot_owner               = 'root',
     $docroot_group               = $apache::params::root_group,
     $serveradmin                 = false,
+    $default_charset             = false,
     $ssl                         = false,
     $ssl_cert                    = $apache::default_ssl_cert,
     $ssl_key                     = $apache::default_ssl_key,
@@ -415,6 +417,7 @@ define apache::vhost(
   # - $nvh_addr_port
   # - $servername
   # - $serveradmin
+  # - $default_charset
   # - $docroot
   # - $virtual_docroot
   # - $options
