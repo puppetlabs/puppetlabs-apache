@@ -108,6 +108,9 @@
     <%- if directory['auth_user_file'] -%>
     AuthUserFile <%= directory['auth_user_file'] %>
     <%- end -%>
+    <%- if directory['auth_group_file'] -%>
+    AuthGroupFile <%= directory['auth_group_file'] %>
+    <%- end -%>
     <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
     <%- end -%>
