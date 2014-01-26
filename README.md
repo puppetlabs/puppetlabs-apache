@@ -738,6 +738,11 @@ documentation](https://httpd.apache.org/docs/2.2/mod/mod_auth_basic.html#authbas
 Sets the value for `AuthUserFile` as per the [Apache AuthUserFile
 documentation](https://httpd.apache.org/docs/2.2/mod/mod_authn_file.html#authuserfile).
 
+######`auth_group_file`
+
+Sets the value for `AuthGroupFile` as per the [Apache AuthGroupFile
+documentation](https://httpd.apache.org/docs/2.2/mod/mod_authz_groupfile.html#authgroupfile).
+
 ######`auth_require`
 
 Sets the value for `AuthName` as per the [Apache Require
