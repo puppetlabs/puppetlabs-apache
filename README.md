@@ -413,6 +413,7 @@ Used to enable arbitrary Apache HTTPD modules for which there is no specific `ap
 
 There are many `apache::mod::[name]` classes within this module that can be declared using `include`:
 
+* `actions`
 * `alias`
 * `auth_basic`
 * `auth_kerb`

@@ -21,12 +21,12 @@ class apache::default_mods (
         include ::apache::mod::reqtimeout
       }
       'redhat': {
+        include ::apache::mod::actions
         include ::apache::mod::cache
         include ::apache::mod::mime
         include ::apache::mod::mime_magic
         include ::apache::mod::vhost_alias
         include ::apache::mod::rewrite
-        ::apache::mod { 'actions': }
         ::apache::mod { 'auth_digest': }
         ::apache::mod { 'authn_anon': }
         ::apache::mod { 'authn_dbm': }
@@ -55,6 +55,7 @@ class apache::default_mods (
         }
       }
       'freebsd': {
+        include ::apache::mod::actions
         include ::apache::mod::cache
         include ::apache::mod::disk_cache
         include ::apache::mod::headers
@@ -65,7 +66,6 @@ class apache::default_mods (
         include ::apache::mod::userdir
         include ::apache::mod::vhost_alias
 
-        ::apache::mod { 'actions': }
         ::apache::mod { 'asis': }
         ::apache::mod { 'auth_digest': }
         ::apache::mod { 'authn_alias': }

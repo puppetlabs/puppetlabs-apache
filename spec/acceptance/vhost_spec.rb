@@ -682,6 +682,25 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  describe 'actions' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+	  action => 'php-fastcgi',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain 'Action php-fastcgi /cgi-bin virtual' }
+    end
+  end
+
   describe 'suphp' do
     it 'applies cleanly' do
       pp = <<-EOS

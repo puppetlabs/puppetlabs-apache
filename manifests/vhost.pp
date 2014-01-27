@@ -169,6 +169,7 @@ define apache::vhost(
     $wsgi_script_aliases         = undef,
     $custom_fragment             = undef,
     $itk                         = undef,
+    $action                      = undef,
     $fastcgi_server              = undef,
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
