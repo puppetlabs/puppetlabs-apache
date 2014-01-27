@@ -213,10 +213,10 @@ describe 'apache', :type => :class do
         ) }
       end
 
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include /etc/httpd/conf\.d/\*\.conf$} }
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include /etc/httpd/site\.d/\*\.conf$} }
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include /etc/httpd/mod\.d/\*\.conf$} }
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include /etc/httpd/mod\.d/\*\.load$} }
+      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/conf\.d/\*\.conf"$} }
+      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/site\.d/\*\.conf"$} }
+      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
+      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
 
     describe "Alternate conf.d directory" do

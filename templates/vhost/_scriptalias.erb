@@ -15,9 +15,9 @@
 <%- aliases.each do |salias| -%>
   <%- if salias["path"] != '' -%>
     <%- if salias["alias"] and salias["alias"] != '' -%>
-  ScriptAlias <%= salias['alias'] %> <%= salias['path'] %>
+  ScriptAlias <%= salias['alias'] %> "<%= salias['path'] %>"
     <%- elsif salias["aliasmatch"] and salias["aliasmatch"] != '' -%>
-  ScriptAliasMatch <%= salias['aliasmatch'] %> <%= salias['path'] %>
+  ScriptAliasMatch <%= salias['aliasmatch'] %> "<%= salias['path'] %>"
     <%- end -%>
   <%- end -%>
 <%- end -%>

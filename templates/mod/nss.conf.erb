@@ -2,16 +2,16 @@
 # This is the Apache server configuration file providing SSL support using.
 # the mod_nss plugin.  It contains the configuration directives to instruct
 # the server how to serve pages over an https connection.
-# 
+#
 # Do NOT simply read the instructions in here without understanding
 # what they do.  They're here only as hints or reminders.  If you are unsure
-# consult the online docs. You have been warned.  
+# consult the online docs. You have been warned.
 #
 
 #LoadModule nss_module modules/libmodnss.so
 
 #
-# When we also provide SSL we have to listen to the 
+# When we also provide SSL we have to listen to the
 # standard HTTP port (see above) and to the HTTPS port
 #
 # Note: Configurations that use IPv6 but not IPv4-mapped addresses need two
@@ -37,7 +37,7 @@ AddType application/x-pkcs7-crl    .crl
 #   The filtering dialog program (`builtin' is a internal
 #   terminal dialog) has to provide the pass phrase on stdout.
 <% if @passwd_file -%>
-NSSPassPhraseDialog  file:<%= @passwd_file %>
+NSSPassPhraseDialog  "file:<%= @passwd_file %>"
 <% else -%>
 NSSPassPhraseDialog  builtin
 <% end -%>
@@ -47,7 +47,7 @@ NSSPassPhraseDialog  builtin
 #   restarts of Apache.
 NSSPassPhraseHelper /usr/sbin/nss_pcache
 
-#   Configure the SSL Session Cache. 
+#   Configure the SSL Session Cache.
 #   NSSSessionCacheSize is the number of entries in the cache.
 #   NSSSessionCacheTimeout is the SSL2 session timeout (in seconds).
 #   NSSSession3CacheTimeout is the SSL3/TLS session timeout (in seconds).
@@ -93,8 +93,8 @@ NSSRequireSafeNegotiation off
 
 # mod_nss can log to separate log files, you can choose to do that if you'd like
 # LogLevel is not inherited from httpd.conf.
-ErrorLog <%= @error_log %>
-TransferLog <%= @transfer_log %>
+ErrorLog "<%= @error_log %>"
+TransferLog "<%= @transfer_log %>"
 LogLevel warn
 
 #   SSL Engine Switch:
@@ -138,7 +138,7 @@ NSSNickname Server-Cert
 #   The NSS security database directory that holds the certificates and
 #   keys. The database consists of 3 files: cert8.db, key3.db and secmod.db.
 #   Provide the directory that these files exist.
-NSSCertificateDatabase <%= @httpd_dir -%>/alias
+NSSCertificateDatabase "<%= @httpd_dir -%>/alias"
 
 #   Database Prefix:
 #   In order to be able to store multiple NSS databases in one directory
@@ -209,7 +209,7 @@ NSSCertificateDatabase <%= @httpd_dir -%>/alias
 #     and no other module can change it.
 #   o OptRenegotiate:
 #     This enables optimized SSL connection renegotiation handling when SSL
-#     directives are used in per-directory context. 
+#     directives are used in per-directory context.
 #NSSOptions +FakeBasicAuth +ExportCertData +CompatEnvVars +StrictRequire
 <Files ~ "\.(cgi|shtml|phtml|php3?)$">
     NSSOptions +StdEnvVars
@@ -224,5 +224,5 @@ NSSCertificateDatabase <%= @httpd_dir -%>/alias
 #CustomLog /home/rcrit/redhat/apache/logs/ssl_request_log \
 #          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
-</VirtualHost>                                  
+</VirtualHost>
 

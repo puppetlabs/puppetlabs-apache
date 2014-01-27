@@ -36,7 +36,7 @@ describe 'apache::mod::wsgi', :type => :class do
       let :params do
         { :wsgi_python_home => '/path/to/virtenv' }
       end
-      it {should contain_file('wsgi.conf').with_content(/^  WSGIPythonHome \/path\/to\/virtenv$/)}
+      it {should contain_file('wsgi.conf').with_content(/^  WSGIPythonHome "\/path\/to\/virtenv"$/)}
     end
   end
   context "on a FreeBSD OS" do
