@@ -126,8 +126,8 @@ describe 'apache::mod::passenger', :type => :class do
     it { should contain_file('passenger.conf').with({
       'path' => '/etc/httpd/conf.d/passenger_extra.conf',
     }) }
-    it { should contain_file('passenger.conf').without_content(/PassengerRoot/) }
-    it { should contain_file('passenger.conf').without_content(/PassengerRuby/) }
+    it { should contain_file('passenger.conf').with_content(/^  PassengerRoot \/usr\/lib\/ruby\/gems\/1.8\/gems\/passenger-3\.0\.19$/) }
+    it { should contain_file('passenger.conf').with_content(/^  PassengerRuby \/usr\/bin\/ruby/) }
     describe "with passenger_root => '/usr/lib/example'" do
       let :params do
         { :passenger_root => '/usr/lib/example' }
