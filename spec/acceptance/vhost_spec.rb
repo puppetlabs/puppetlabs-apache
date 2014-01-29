@@ -180,7 +180,7 @@ describe 'apache::vhost define' do
             docroot     => '/var/www/files',
             directories => [
               { 'path' => '/var/www/files', },
-              { 'path' => '~ "(\.swp|\.bak|~)$"', 'provider' => 'files', 'deny' => 'from all' },
+              { 'path' => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
             ],
           }
           file { '/var/www/files/index.html':
@@ -222,7 +222,7 @@ describe 'apache::vhost define' do
               },
               {
                 'provider' => 'files',
-                'path'     => '~ "private.html$"',
+                'path'     => '~ private.html$',
                 'deny'     => 'from all',
               },
             ],
@@ -510,7 +510,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'CustomLog /tmp' }
+      it { should contain '  CustomLog "/tmp"' }
     end
   end
 
@@ -538,7 +538,7 @@ describe 'apache::vhost define' do
 
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should_not contain "#{logname} /tmp" }
+        it { should_not contain "  #{logname} \"/tmp\"" }
       end
     end
 
@@ -558,7 +558,7 @@ describe 'apache::vhost define' do
 
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should contain "#{logname} \"|test\"" }
+        it { should contain "  #{logname} \"|test\"" }
       end
     end
 
@@ -578,7 +578,7 @@ describe 'apache::vhost define' do
 
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should contain "#{logname} syslog" }
+        it { should contain "  #{logname} \"syslog\"" }
       end
     end
   end
@@ -600,7 +600,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'CustomLog syslog "%h %l"' }
+      it { should contain 'CustomLog "syslog" "%h %l"' }
     end
   end
 
@@ -621,7 +621,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'CustomLog syslog combined env=admin' }
+      it { should contain 'CustomLog "syslog" combined env=admin' }
     end
   end
 
@@ -640,7 +640,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'Alias /image /ftp/pub/image' }
+      it { should contain 'Alias /image "/ftp/pub/image"' }
     end
   end
 
@@ -659,7 +659,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'ScriptAlias /myscript /usr/share/myscript' }
+      it { should contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
   end
 
@@ -701,7 +701,7 @@ describe 'apache::vhost define' do
       it { should be_file }
       it { should contain "suPHP_AddHandler #{suphp_handler}" }
       it { should contain 'suPHP_Engine on' }
-      it { should contain "suPHP_ConfigPath #{suphp_configpath}" }
+      it { should contain "suPHP_ConfigPath \"#{suphp_configpath}\"" }
     end
   end
 
@@ -883,7 +883,7 @@ describe 'apache::vhost define' do
       it { should be_file }
       it { should contain 'WSGIDaemonProcess wsgi processes=2' }
       it { should contain 'WSGIProcessGroup vagrant' }
-      it { should contain 'WSGIScriptAlias /test /test1' }
+      it { should contain 'WSGIScriptAlias /test "/test1"' }
     end
   end
 
@@ -946,7 +946,7 @@ describe 'apache::vhost define' do
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
         it { should contain 'FastCgiExternalServer localhost -socket /tmp/fast/1234' }
-        it { should contain '<Directory /tmp/fast>' }
+        it { should contain '<Directory "/tmp/fast">' }
       end
     end
   end
@@ -967,7 +967,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'Include /tmp/include' }
+      it { should contain 'Include "/tmp/include"' }
     end
   end
 
