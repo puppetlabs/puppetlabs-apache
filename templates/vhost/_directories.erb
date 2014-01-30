@@ -4,6 +4,8 @@
   <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
     <%- if /^(.*)match$/ =~ directory['provider'] -%>
       <%- provider = directory['provider'].capitalize + 'Match' -%>
+    <%- else -%>
+      <%- provider = directory['provider'].capitalize -%>
     <%- end -%>
   <%- else -%>
     <%- provider = 'Directory' -%>
