@@ -2,16 +2,11 @@
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
   <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
-    <%- provider = directory['provider'].capitalize -%>
+    <%- if /^(.*)match$/ =~ directory['provider'] -%>
+      <%- provider = directory['provider'].capitalize + 'Match' -%>
+    <%- end -%>
   <%- else -%>
     <%- provider = 'Directory' -%>
-  <%- end -%>
-  <%- if /^~(.*)/ =~ directory['path'] -%>
-  <%-# if /^~.*/.match(directory['path']) -%>
-    <%- path = $1.strip -%>
-    <%- provider += 'Match' -%>
-  <%- else -%>
-    <%- path = directory['path'] %>
   <%- end -%>
 
   <<%= provider %> "<%= path %>">
