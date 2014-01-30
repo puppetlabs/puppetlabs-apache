@@ -510,7 +510,7 @@ describe 'apache::vhost define' do
 
     describe file("#{vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain '  CustomLog "/tmp"' }
+      it { should contain '  CustomLog "/tmp' }
     end
   end
 
@@ -538,7 +538,7 @@ describe 'apache::vhost define' do
 
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should_not contain "  #{logname} \"/tmp\"" }
+        it { should_not contain "  #{logname} \"/tmp" }
       end
     end
 
@@ -558,7 +558,7 @@ describe 'apache::vhost define' do
 
       describe file("#{vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should contain "  #{logname} \"|test\"" }
+        it { should contain "  #{logname} \"|test" }
       end
     end
 
