@@ -10,6 +10,7 @@
   <%- else -%>
     <%- provider = 'Directory' -%>
   <%- end -%>
+  <%- path = directory['path'] %>
 
   <<%= provider %> "<%= path %>">
     <%- if directory['headers'] -%>
