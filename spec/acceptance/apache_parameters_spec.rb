@@ -236,7 +236,7 @@ describe 'apache parameters' do
 
     describe file(conf_file) do
       it { should be_file }
-      it { should contain 'Include /tmp/root/*.conf' }
+      it { should contain 'Include "/tmp/root/*.conf"' }
     end
   end
 
