@@ -35,8 +35,8 @@ apache::vhost { 'files.example.net':
   docroot     => '/var/www/files',
   directories => [
     {
-      'path'     => '~ (\.swp|\.bak|~)$',
-      'provider' => 'files',
+      'path'     => '(\.swp|\.bak|~)$',
+      'provider' => 'filesmatch',
       'deny'     => 'from all'
     },
   ],

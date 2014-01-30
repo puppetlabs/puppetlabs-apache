@@ -180,7 +180,7 @@ describe 'apache::vhost define' do
             docroot     => '/var/www/files',
             directories => [
               { 'path' => '/var/www/files', },
-              { 'path' => '~ (\.swp|\.bak|~)$', 'provider' => 'files', 'deny' => 'from all' },
+              { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all' },
             ],
           }
           file { '/var/www/files/index.html':
@@ -221,8 +221,8 @@ describe 'apache::vhost define' do
                 'directoryindex' => 'notindex.html',
               },
               {
-                'provider' => 'files',
-                'path'     => '~ private.html$',
+                'provider' => 'filesmatch',
+                'path'     => 'private.html$',
                 'deny'     => 'from all',
               },
             ],
