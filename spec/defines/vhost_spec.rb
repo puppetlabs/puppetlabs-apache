@@ -534,9 +534,9 @@ describe 'apache::vhost', :type => :define do
             '/tmp/proxy_group_c',
           ],
           :match => [
-            /^  Include \/tmp\/proxy_group_a$/,
-            /^  Include \/tmp\/proxy_group_b$/,
-            /^  Include \/tmp\/proxy_group_c$/,
+            /^  Include "\/tmp\/proxy_group_a"$/,
+            /^  Include "\/tmp\/proxy_group_b"$/,
+            /^  Include "\/tmp\/proxy_group_c"$/,
           ],
         },
         {
