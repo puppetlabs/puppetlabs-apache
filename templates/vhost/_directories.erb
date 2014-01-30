@@ -1,9 +1,9 @@
 <% if @_directories and ! @_directories.empty? -%>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
-  <%- if directory['provider'] and [ 'directory', 'location', 'files' ].include?(directory['provider']) -%>
+  <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
     <%- if /^(.*)match$/ =~ directory['provider'] -%>
-      <%- provider = directory['provider'].capitalize + 'Match' -%>
+      <%- provider = $1.capitalize + 'Match' -%>
     <%- else -%>
       <%- provider = directory['provider'].capitalize -%>
     <%- end -%>

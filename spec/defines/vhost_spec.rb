@@ -722,6 +722,21 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept files match for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'filesmatch',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <FilesMatch "index.html">$/,
+            /^    Order allow,deny$/,
+            /^    Allow from all$/,
+            /^  <\/FilesMatch>$/,
+          ],
+        },
+        {
           :title => 'should contain virtual_docroot',
           :attr  => 'virtual_docroot',
           :value => '/not/default',
