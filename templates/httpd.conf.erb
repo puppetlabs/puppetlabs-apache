@@ -15,11 +15,11 @@ User <%= @user %>
 Group <%= @group %>
 
 AccessFileName .htaccess
-<Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
-    Satisfy all
-</Files>
+<FilesMatch "^\.ht">
+     Order allow,deny
+     Deny from all
+     Satisfy all
+</FilesMatch>
 
 <Directory />
   Options FollowSymLinks

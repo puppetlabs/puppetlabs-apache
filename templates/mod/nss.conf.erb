@@ -211,9 +211,9 @@ NSSCertificateDatabase "<%= @httpd_dir -%>/alias"
 #     This enables optimized SSL connection renegotiation handling when SSL
 #     directives are used in per-directory context.
 #NSSOptions +FakeBasicAuth +ExportCertData +CompatEnvVars +StrictRequire
-<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+<FilesMatch "\.(cgi|shtml|phtml|php3?)$">
     NSSOptions +StdEnvVars
-</Files>
+</FilesMatch>
 <Directory "/var/www/cgi-bin">
     NSSOptions +StdEnvVars
 </Directory>

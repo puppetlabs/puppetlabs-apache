@@ -265,7 +265,7 @@ define apache::vhost(
   if $access_log_file {
     $access_log_destination = "${logroot}/${access_log_file}"
   } elsif $access_log_pipe {
-    $access_log_destination = "\"${access_log_pipe}\""
+    $access_log_destination = "${access_log_pipe}"
   } elsif $access_log_syslog {
     $access_log_destination = $access_log_syslog
   } else {
@@ -279,7 +279,7 @@ define apache::vhost(
   if $error_log_file {
     $error_log_destination = "${logroot}/${error_log_file}"
   } elsif $error_log_pipe {
-    $error_log_destination = "\"${error_log_pipe}\""
+    $error_log_destination = "${error_log_pipe}"
   } elsif $error_log_syslog {
     $error_log_destination = $error_log_syslog
   } else {

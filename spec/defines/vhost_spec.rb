@@ -534,9 +534,9 @@ describe 'apache::vhost', :type => :define do
             '/tmp/proxy_group_c',
           ],
           :match => [
-            /^  Include \/tmp\/proxy_group_a$/,
-            /^  Include \/tmp\/proxy_group_b$/,
-            /^  Include \/tmp\/proxy_group_c$/,
+            /^  Include "\/tmp\/proxy_group_a"$/,
+            /^  Include "\/tmp\/proxy_group_b"$/,
+            /^  Include "\/tmp\/proxy_group_c"$/,
           ],
         },
         {
@@ -719,6 +719,21 @@ describe 'apache::vhost', :type => :define do
             /^    Order allow,deny$/,
             /^    Allow from all$/,
             /^  <\/Files>$/,
+          ],
+        },
+        {
+          :title => 'should accept files match for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'filesmatch',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <FilesMatch "index.html">$/,
+            /^    Order allow,deny$/,
+            /^    Allow from all$/,
+            /^  <\/FilesMatch>$/,
           ],
         },
         {

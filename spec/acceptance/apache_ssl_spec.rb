@@ -28,12 +28,12 @@ describe 'apache ssl' do
 
     describe file("#{vhostd}/15-default-ssl.conf") do
       it { should be_file }
-      it { should contain 'SSLCertificateFile      /tmp/ssl_cert' }
-      it { should contain 'SSLCertificateKeyFile   /tmp/ssl_key' }
-      it { should contain 'SSLCertificateChainFile /tmp/ssl_chain' }
-      it { should contain 'SSLCACertificateFile    /tmp/ssl_ca' }
-      it { should contain 'SSLCARevocationPath     /tmp/ssl_crl_path' }
-      it { should contain 'SSLCARevocationFile     /tmp/ssl_crl' }
+      it { should contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
+      it { should contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
+      it { should contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
+      it { should contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
+      it { should contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
+      it { should contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
     end
   end
 
@@ -68,12 +68,12 @@ describe 'apache ssl' do
 
     describe file("#{vhostd}/25-test_ssl.conf") do
       it { should be_file }
-      it { should contain 'SSLCertificateFile      /tmp/ssl_cert' }
-      it { should contain 'SSLCertificateKeyFile   /tmp/ssl_key' }
-      it { should contain 'SSLCertificateChainFile /tmp/ssl_chain' }
-      it { should contain 'SSLCACertificateFile    /tmp/ssl_ca' }
-      it { should contain 'SSLCARevocationPath     /tmp/ssl_crl_path' }
-      it { should contain 'SSLCARevocationFile     /tmp/ssl_crl' }
+      it { should contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
+      it { should contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
+      it { should contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
+      it { should contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
+      it { should contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
+      it { should contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
       it { should contain 'SSLProxyEngine On' }
       it { should contain 'SSLProtocol             test' }
       it { should contain 'SSLCipherSuite          test' }
