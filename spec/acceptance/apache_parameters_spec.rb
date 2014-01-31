@@ -111,21 +111,23 @@ describe 'apache parameters' do
     end
   end
 
-  describe 'purge parameters => true' do
-    it 'applies cleanly' do
-      pp = <<-EOS
-        class { 'apache':
-          purge_configs => true,
-          purge_vdir    => true,
-        }
-      EOS
-      shell("touch #{confd_dir}/test.conf")
-      apply_manifest(pp, :catch_failures => true)
-    end
+  if fact('osfamily') != 'Debian'
+    describe 'purge parameters => true' do
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache':
+            purge_configs => true,
+            purge_vdir    => true,
+          }
+        EOS
+        shell("touch #{confd_dir}/test.conf")
+        apply_manifest(pp, :catch_failures => true)
+      end
 
-    # File should be gone
-    describe file("#{confd_dir}/test.conf") do
-      it { should_not be_file }
+      # File should be gone
+      describe file("#{confd_dir}/test.conf") do
+        it { should_not be_file }
+      end
     end
   end
 
