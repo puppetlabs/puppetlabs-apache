@@ -94,7 +94,7 @@ define apache::vhost(
     $add_listen                  = true,
     $docroot_owner               = 'root',
     $docroot_group               = $apache::params::root_group,
-    $serveradmin                 = false,
+    $serveradmin                 = undef,
     $ssl                         = false,
     $ssl_cert                    = $apache::default_ssl_cert,
     $ssl_key                     = $apache::default_ssl_key,
