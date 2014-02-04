@@ -58,8 +58,8 @@ class apache::params inherits apache::version {
     $ssl_certs_dir        = '/etc/pki/tls/certs'
     $passenger_conf_file  = 'passenger_extra.conf'
     $passenger_conf_package_file = 'passenger.conf'
-    $passenger_root       = undef
-    $passenger_ruby       = undef
+    $passenger_root       = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.19'
+    $passenger_ruby       = '/usr/bin/ruby'
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
