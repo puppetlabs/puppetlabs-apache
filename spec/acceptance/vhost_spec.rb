@@ -252,6 +252,38 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         shell("/usr/bin/curl -sSf files.example.net:80/private.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 403/)
       end
     end
+
+    describe 'SetHandler directive' do
+      it 'should configure a vhost with a SetHandler directive' do
+        pp = <<-EOS
+          class { 'apache': }
+          apache::mod { 'status': }
+          host { 'files.example.net': ip => '127.0.0.1', }
+          apache::vhost { 'files.example.net':
+            docroot     => '/var/www/files',
+            directories => [
+              { path => '/var/www/files', },
+              { path => '/server-status', provider => 'location', sethandler => 'server-status', },
+            ],
+          }
+          file { '/var/www/files/index.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe service($service_name) do
+        it { should be_enabled }
+        it { should be_running }
+      end
+
+      it 'should answer to files.example.net' do
+        shell("/usr/bin/curl -sSf files.example.net:80/index.html").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/server-status?auto").stdout.should match(/Scoreboard: /)
+      end
+    end
   end
 
   case fact('lsbdistcodename')
