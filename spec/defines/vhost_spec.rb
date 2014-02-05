@@ -391,6 +391,42 @@ describe 'apache::vhost', :type => :define do
           :notmatch => [/ProxyPass .+!$/],
         },
         {
+          :title => 'should accept an pathmatch hash',
+          :attr  => 'proxy_pass',
+          ## XXX As mentioned above, rspec-puppet drops constructs like $1.
+          ## Thus, these tests don't work as they should. As a workaround we
+          ## use FOO instead of $1 here.
+          :value => { 'pathmatch' => '^/image/(.*).gif', 'url' => 'http://fake.com/files/gifs/FOO.gif' },
+          :match => [/^  ProxyPassMatch \^\/image\/\(\.\*\)\.gif http:\/\/fake.com\/files\/gifs\/FOO\.gif$/],
+        },
+        {
+          :title    => 'should accept an array of path and pathmatch hashes mixed',
+          :attr     => 'proxy_pass',
+          ## XXX As mentioned above, rspec-puppet drops constructs like $1.
+          ## Thus, these tests don't work as they should. As a workaround we
+          ## use FOO instead of $1 here.
+          :value    => [
+            { 'path' => '/path-a/', 'url' => 'http://fake.com/a/' },
+            { 'pathmatch' => '^/image/(.*).gif', 'url' => 'http://fake.com/files/gifs/FOO.gif' },
+            { 'path' => '/path-b', 'url' => 'http://fake.com/b' },
+          ],
+          :match    => [
+            /^  ProxyPass \/path-a\/ http:\/\/fake.com\/a\/$/,
+            /^  <Location \/path-a\/>$/,
+            /^    ProxyPassReverse \/$/,
+            /^  <\/Location>$/,
+            /^  ProxyPassMatch \^\/image\/\(\.\*\)\.gif http:\/\/fake.com\/files\/gifs\/FOO\.gif$/,
+            /^  <Location \^\/image\/\(\.\*\)\.gif>$/,
+            /^    ProxyPassReverse \/$/,
+            /^  <\/Location>$/,
+            /^  ProxyPass \/path-b http:\/\/fake.com\/b$/,
+            /^  <Location \/path-b>$/,
+            /^    ProxyPassReverse \/$/,
+            /^  <\/Location>$/,
+          ],
+          :notmatch => [/ProxyPass .+!$/],
+        },
+        {
           :title => 'should enable rack',
           :attr  => 'rack_base_uris',
           :value => ['/rack1','/rack2'],

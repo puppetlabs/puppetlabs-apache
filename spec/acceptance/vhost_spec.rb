@@ -113,6 +113,7 @@ describe 'apache::vhost define' do
           docroot => '/var/www/proxy',
           proxy_pass => [
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
+            { 'pathmatch' => '^/image/(.*).gif', 'url' => 'http://backend-foo/files/gifs/$1.gif'},
           ],
         }
       EOS
@@ -122,7 +123,8 @@ describe 'apache::vhost define' do
     describe file("#{vhost_dir}/25-proxy.example.com.conf") do
       it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName proxy.example.com" }
-      it { should contain "ProxyPass" }
+      it { should contain "ProxyPass " }
+      it { should contain "ProxyPassMatch" }
       it { should_not contain "<Proxy \*>" }
     end
   end

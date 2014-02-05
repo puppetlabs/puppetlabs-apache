@@ -935,7 +935,7 @@ Specifies the destination address of a proxypass configuration. Defaults to 'und
 
 #####`proxy_pass`
 
-Specifies an array of path => uri for a proxypass configuration. Defaults to 'undef'.
+Passes a list of hashes to the vhost to create `ProxyPass` or `ProxyPassMatch` statements as per the [`mod_proxy` documentation](http://httpd.apache.org/docs/current/mod/mod_proxy.html). Defaults to 'undef'.
 
 Example:
 
@@ -943,6 +943,7 @@ Example:
 $proxy_pass = [
   { 'path' => '/a', 'url' => 'http://backend-a/' },
   { 'path' => '/b', 'url' => 'http://backend-b/' },
+  { 'pathmatch' => '^/img/(.*).jpg', 'url' => 'http://backend-c/images/$1.jpg' },
   { 'path' => '/c', 'url' => 'http://backend-a/c' }
 ]
 
@@ -951,6 +952,8 @@ apache::vhost { 'site.name.fdqn':
   proxy_pass       => $proxy_pass,
 }
 ```
+
+These directives are created in the order specified. As with `Alias` and `AliasMatch` directives the more specific paths should come before the more general ones to avoid shadowing.
 
 #####`rack_base_uris`
 
