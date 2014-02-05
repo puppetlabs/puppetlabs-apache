@@ -367,7 +367,6 @@ describe 'apache::vhost', :type => :define do
             /^  <Location \/path-a>$/,
             /^    ProxyPassReverse \/$/,
             /^  <\/Location>$/,
-
           ],
           :notmatch => [/ProxyPass .+!$/],
         },
@@ -471,6 +470,14 @@ describe 'apache::vhost', :type => :define do
             /^  Some custom fragment line$/,
             /^  That spans multiple lines$/,
             /^<\/VirtualHost>$/,
+          ],
+        },
+        {
+          :title => 'should accept proxy preserve host option',
+          :attr  => 'proxy_preserve_host',
+          :value => true,
+          :match => [
+            /^  ProxyPreserveHost On$/,
           ],
         },
         {

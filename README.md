@@ -524,6 +524,10 @@ Specifies the list of things Apache will block access to. The default is an empt
 
 Pass a string of custom configuration directives to be placed at the end of the vhost configuration.
 
+#####`proxy_preserve_host`
+
+Specifies whether `ProxyPreserveHost` directives should be used. Valid values are 'true' and 'false'. Defaults to 'false'.
+
 #####`default_vhost`
 
 Sets a given `apache::vhost` as the default to serve requests that do not match any other `apache::vhost` definitions. The default value is 'false'.
