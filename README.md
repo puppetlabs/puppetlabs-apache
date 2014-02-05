@@ -246,6 +246,10 @@ The default certificate revocation list path, which is automatically set to 'und
 
 The default certificate revocation list to use, which is automatically set to 'undef'. This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
+#####`default_charset`
+
+If defined, the value will be set as `AddDefaultCharset` in the main configuration file (`httpd.conf`). It is undefined by default.
+
 #####`service_name`
 
 Name of apache service to run. Defaults to: `'httpd'` on RedHat, `'apache2'` on Debian, and `'apache22'` on FreeBSD.

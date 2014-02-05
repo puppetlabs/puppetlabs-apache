@@ -24,6 +24,7 @@ class apache (
   $default_ssl_ca       = undef,
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
+  $default_charset      = undef,
   $ip                   = undef,
   $service_enable       = true,
   $service_ensure       = 'running',
