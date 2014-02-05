@@ -1,3 +1,40 @@
+## 2014-01-31 Release 0.11.0
+### Summary:
+
+This release adds preliminary support for Windows compatibility and multiple rewrite support.
+
+### Backwards-incompatible Changes:
+
+- The rewrite_rule parameter is deprecated in favor of the new rewrite parameter
+  and will be removed in a future release.
+
+### Features:
+
+- add Match directive
+- quote paths for windows compatibility
+- add auth_group_file option to README.md
+- allow AuthGroupFile directive for vhosts
+- Support Header directives in vhost context
+- Don't purge mods-available dir when separate enable dir is used
+- Fix the servername used in log file name
+- Added support for mod_include
+- Remove index parameters.
+- Support environment variable control for CustomLog
+- added redirectmatch support
+- Setting up the ability to do multiple rewrites and conditions.
+- Convert spec tests to beaker.
+- Support php_admin_(flag|value)s
+
+### Bugfixes:
+
+- directories are either a Hash or an Array of Hashes
+- Configure Passenger in separate .conf file on RH so PassengerRoot isn't lost
+- (docs) Update list of `apache::mod::[name]` classes
+- (docs) Fix apache::namevirtualhost example call style
+- Fix $ports_file reference in apache::listen.
+- Fix $ports_file reference in Namevirtualhost.
+
+
 ## 2013-12-05 Release 0.10.0
 ### Summary:
 
