@@ -18,6 +18,7 @@ class apache::default_mods (
     case $::osfamily {
       'debian': {
         include apache::mod::reqtimeout
+        apache::mod { 'authz_default': }
       }
       'redhat': {
         include apache::mod::cache
@@ -27,10 +28,8 @@ class apache::default_mods (
         include apache::mod::rewrite
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
-        apache::mod { 'authn_alias': }
         apache::mod { 'authn_anon': }
         apache::mod { 'authn_dbm': }
-        apache::mod { 'authn_default': }
         apache::mod { 'authz_dbm': }
         apache::mod { 'authz_owner': }
         apache::mod { 'expires': }
@@ -42,6 +41,21 @@ class apache::default_mods (
         apache::mod { 'suexec': }
         apache::mod { 'usertrack': }
         apache::mod { 'version': }
+
+        if ($::operatingsystem == 'Fedora' and (is_integer($::operatingsystemrelease) and $::operatingsystemrelease >= 18 or $::operatingsystemrelease == "Rawhide")) {
+          apache::mod { 'access_compat': }
+          apache::mod { 'authn_core': }
+          apache::mod { 'authz_core': }
+          apache::mod { 'filter': }
+          apache::mod { 'mpm_prefork': }
+          apache::mod { 'slotmem_shm': }
+          apache::mod { 'systemd': }
+          apache::mod { 'unixd': }
+        } else {
+          apache::mod { 'authn_alias': }
+          apache::mod { 'authn_default': }
+          apache::mod { 'authz_default': }
+        }
       }
       'freebsd': {
         include apache::mod::cache
@@ -61,6 +75,7 @@ class apache::default_mods (
         apache::mod { 'authn_anon': }
         apache::mod { 'authn_dbm': }
         apache::mod { 'authn_default': }
+        apache::mod { 'authz_default': }
         apache::mod { 'authz_dbm': }
         apache::mod { 'authz_owner': }
         apache::mod { 'cern_meta': }
@@ -101,7 +116,6 @@ class apache::default_mods (
     include apache::mod::setenvif
     apache::mod { 'auth_basic': }
     apache::mod { 'authn_file': }
-    apache::mod { 'authz_default': }
     apache::mod { 'authz_groupfile': }
     apache::mod { 'authz_user': }
     apache::mod { 'env': }
