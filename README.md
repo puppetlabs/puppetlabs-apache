@@ -342,6 +342,14 @@ Allows the configuration of a trailing footer line under server-generated docume
 
 Controls, how TRACE requests per RFC 2616 are handled. See Apache documentation for 'TraceEnable'. Defaults to 'On'.
 
+#####`use_canonical_name`
+
+Controls how apache constructs self-referential urls, using the physical port or the configured port. See Apache documentation for 'UseCanonicalName'. Defaults to 'Off'.
+
+#####`use_canonical_physical_port`
+
+Controls how apache constructs self-referential urls, using the hostname from servername or the hostname a client requested. See Apache documentation for 'UseCanonicalPhysicalPort'. Defaults to 'Off'.
+
 #####`manage_user`
 
 Setting this to false will avoid the user resource to be created by this module. This is useful when you already have a user created in another puppet module and that you want to used it to run apache. Without this, it would result in a duplicate resource error.
