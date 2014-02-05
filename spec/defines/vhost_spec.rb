@@ -602,6 +602,12 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title => 'should accept a wsgi application group',
+          :attr  => 'wsgi_application_group',
+          :value => '%{GLOBAL}',
+          :match => [/^  WSGIApplicationGroup %{GLOBAL}$/],
+        },
+        {
           :title => 'should contain environment variables',
           :attr  => 'access_log_env_var',
           :value => 'admin',
@@ -1112,6 +1118,18 @@ describe 'apache::vhost', :type => :define do
         it 'should set wsgi_daemon_process_options' do
           should contain_file("25-#{title}.conf").with_content(
             /^  WSGIDaemonProcess example.org processes=2 threads=15$/
+          )
+        end
+      end
+
+      describe 'when wsgi_import_script and wsgi_import_script_options are specified' do
+        let :params do default_params.merge({
+          :wsgi_import_script         => '/var/www/demo.wsgi',
+          :wsgi_import_script_options => { 'application-group' => '%{GLOBAL}', 'process-group' => 'wsgi' },
+        }) end
+        it 'should set wsgi_import_script_options' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  WSGIImportScript \/var\/www\/demo.wsgi application-group=%{GLOBAL} process-group=wsgi$/
           )
         end
       end
