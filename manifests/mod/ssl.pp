@@ -12,11 +12,7 @@ class apache::mod::ssl (
   case $::osfamily {
     'debian': {
       if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
-        file { "${APACHE_RUN_DIR}/ssl_mutex":
-          ensure => directory
-        }
-
-        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex default'
+        $ssl_mutex = 'default'
       } else {
         $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex'
       }
