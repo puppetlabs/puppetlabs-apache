@@ -1,28 +1,7 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache::vhost define' do
-  case fact('osfamily')
-  when 'RedHat'
-    vhost_dir = '/etc/httpd/conf.d'
-    package_name = 'httpd'
-    service_name = 'httpd'
-    ports_file = '/etc/httpd/conf/ports.conf'
-    suphp_handler = 'php5-script'
-    suphp_configpath = 'undef'
-  when 'FreeBSD'
-    vhost_dir = '/usr/local/etc/apache22/Vhosts'
-    package_name = 'apache22'
-    service_name = 'apache22'
-    ports_file = '/usr/local/etc/apache22/ports.conf'
-  when 'Debian'
-    vhost_dir = '/etc/apache2/sites-enabled'
-    package_name = 'apache2'
-    service_name = 'apache2'
-    ports_file = '/etc/apache2/ports.conf'
-    suphp_handler = 'x-httpd-php'
-    suphp_configpath = '/etc/php5/apache2'
-  end
-
   context 'no default vhosts' do
     it 'should create no default vhosts' do
       pp = <<-EOS
@@ -36,11 +15,11 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/15-default.conf") do
+    describe file("#{$vhost_dir}/15-default.conf") do
       it { should_not be_file }
     end
 
-    describe file("#{vhost_dir}/15-default-ssl.conf") do
+    describe file("#{$vhost_dir}/15-default-ssl.conf") do
       it { should_not be_file }
     end
   end
@@ -54,11 +33,11 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/15-default.conf") do
+    describe file("#{$vhost_dir}/15-default.conf") do
       it { should contain '<VirtualHost \*:80>' }
     end
 
-    describe file("#{vhost_dir}/15-default-ssl.conf") do
+    describe file("#{$vhost_dir}/15-default-ssl.conf") do
       it { should_not be_file }
     end
   end
@@ -69,18 +48,24 @@ describe 'apache::vhost define' do
       # 'file:/var/run/apache2/ssl_mutex' but contains
       # 'file:${APACHE_RUN_DIR}/ssl_mutex'
       pp = <<-EOS
+        file { '#{$run_dir}':
+          ensure  => 'directory',
+          recurse => true,
+        }
+
         class { 'apache':
           default_ssl_vhost => true,
+          require => File['#{$run_dir}'],
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/15-default.conf") do
+    describe file("#{$vhost_dir}/15-default.conf") do
       it { should contain '<VirtualHost \*:80>' }
     end
 
-    describe file("#{vhost_dir}/15-default-ssl.conf") do
+    describe file("#{$vhost_dir}/15-default-ssl.conf") do
       it { should contain '<VirtualHost \*:443>' }
       it { should contain "SSLEngine on" }
     end
@@ -90,15 +75,21 @@ describe 'apache::vhost define' do
     it 'should configure an apache vhost' do
       pp = <<-EOS
         class { 'apache': }
+        file { '#{$run_dir}':
+          ensure  => 'directory',
+          recurse => true,
+        }
+
         apache::vhost { 'first.example.com':
           port    => '80',
           docroot => '/var/www/first',
+          require => File['#{$run_dir}'],
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-first.example.com.conf") do
+    describe file("#{$vhost_dir}/25-first.example.com.conf") do
       it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName first.example.com" }
     end
@@ -119,7 +110,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-proxy.example.com.conf") do
+    describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
       it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName proxy.example.com" }
       it { should contain "ProxyPass" }
@@ -153,7 +144,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { should be_enabled }
       it { should be_running }
     end
@@ -176,12 +167,21 @@ describe 'apache::vhost define' do
       it 'should configure a vhost with Files' do
         pp = <<-EOS
           class { 'apache': }
+
+          if $apache::apache_version >= 2.4 {
+            $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
+          } else {
+            $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
+          }
+
+          $_directories = [
+            { 'path' => '/var/www/files', },
+            $_files_match_directory,
+          ]
+
           apache::vhost { 'files.example.net':
             docroot     => '/var/www/files',
-            directories => [
-              { 'path' => '/var/www/files', },
-              { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all' },
-            ],
+            directories => $_directories,
           }
           file { '/var/www/files/index.html':
             ensure  => file,
@@ -196,7 +196,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe service(service_name) do
+      describe service($service_name) do
         it { should be_enabled }
         it { should be_running }
       end
@@ -211,21 +211,22 @@ describe 'apache::vhost define' do
       it 'should configure a vhost with multiple Directory sections' do
         pp = <<-EOS
           class { 'apache': }
+
+          if $apache::apache_version >= 2.4 {
+            $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
+          } else {
+            $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' }
+          }
+
+          $_directories = [
+            { 'path' => '/var/www/files', },
+            { 'path' => '/foo/', 'provider' => 'location', 'directoryindex' => 'notindex.html', },
+            $_files_match_directory,
+          ]
+
           apache::vhost { 'files.example.net':
             docroot     => '/var/www/files',
-            directories => [
-              { 'path' => '/var/www/files', },
-              {
-                'provider'       => 'location',
-                'path'           => '/foo/',
-                'directoryindex' => 'notindex.html',
-              },
-              {
-                'provider' => 'filesmatch',
-                'path'     => 'private.html$',
-                'deny'     => 'from all',
-              },
-            ],
+            directories => $_directories,
           }
           file { '/var/www/files/foo':
             ensure => directory,
@@ -243,7 +244,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe service(service_name) do
+      describe service($service_name) do
         it { should be_enabled }
         it { should be_running }
       end
@@ -275,7 +276,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe service(service_name) do
+      describe service($service_name) do
         it { should be_enabled }
         it { should be_running }
       end
@@ -316,7 +317,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { should be_enabled }
       it { should be_running }
     end
@@ -362,7 +363,7 @@ describe 'apache::vhost define' do
       }, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { should be_enabled }
       it { should be_running }
     end
@@ -389,7 +390,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(ports_file) do
+    describe file($ports_file) do
       it { should be_file }
       it { should_not contain 'NameVirtualHost test.server' }
     end
@@ -411,7 +412,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(ports_file) do
+    describe file($ports_file) do
       it { should be_file }
       it { should_not contain 'Listen 80' }
       it { should contain 'Listen 81' }
@@ -452,7 +453,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/10-test.server.conf") do
+    describe file("#{$vhost_dir}/10-test.server.conf") do
       it { should be_file }
     end
   end
@@ -470,7 +471,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'Options Indexes FollowSymLinks ExecCGI' }
     end
@@ -489,7 +490,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'AllowOverride All' }
     end
@@ -508,7 +509,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain '  CustomLog "/tmp' }
     end
@@ -536,7 +537,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file("#{vhost_dir}/25-test.server.conf") do
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { should be_file }
         it { should_not contain "  #{logname} \"/tmp" }
       end
@@ -550,15 +551,15 @@ describe 'apache::vhost define' do
           apache::vhost { 'test.server':
             docroot    => '/tmp',
             logroot    => '/tmp',
-            #{logtype}_log_pipe => '|test',
+            #{logtype}_log_pipe => '|/bin/sh',
           }
         EOS
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file("#{vhost_dir}/25-test.server.conf") do
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { should be_file }
-        it { should contain "  #{logname} \"|test" }
+        it { should contain "  #{logname} \"|/bin/sh" }
       end
     end
 
@@ -576,7 +577,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file("#{vhost_dir}/25-test.server.conf") do
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { should be_file }
         it { should contain "  #{logname} \"syslog\"" }
       end
@@ -598,7 +599,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'CustomLog "syslog" "%h %l"' }
     end
@@ -619,7 +620,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'CustomLog "syslog" combined env=admin' }
     end
@@ -638,7 +639,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'Alias /image "/ftp/pub/image"' }
     end
@@ -657,7 +658,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
@@ -676,7 +677,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'ProxyPass          / test2/' }
     end
@@ -689,19 +690,19 @@ describe 'apache::vhost define' do
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot          => '/tmp',
-          suphp_addhandler => '#{suphp_handler}',
+          suphp_addhandler => '#{$suphp_handler}',
           suphp_engine     => 'on',
-          suphp_configpath => '#{suphp_configpath}',
+          suphp_configpath => '#{$suphp_configpath}',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain "suPHP_AddHandler #{suphp_handler}" }
+      it { should contain "suPHP_AddHandler #{$suphp_handler}" }
       it { should contain 'suPHP_Engine on' }
-      it { should contain "suPHP_ConfigPath \"#{suphp_configpath}\"" }
+      it { should contain "suPHP_ConfigPath \"#{$suphp_configpath}\"" }
     end
   end
 
@@ -719,7 +720,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'ProxyPass          / http://test2/' }
       it { should contain 'ProxyPass        http://test2/test !' }
@@ -741,7 +742,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'Redirect permanent /images http://test.server/' }
     end
@@ -769,7 +770,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file("#{vhost_dir}/25-test.server.conf") do
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { should be_file }
         it { should contain 'RackBaseURI /test' }
       end
@@ -790,7 +791,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'append MirrorID "mirror 12"' }
     end
@@ -814,7 +815,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain '#test' }
       it { should contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
@@ -836,7 +837,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'SetEnv TEST /test' }
       it { should contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
@@ -856,7 +857,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain '<DirectoryMatch .*\.(svn|git|bzr)/.*>' }
     end
@@ -879,7 +880,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'WSGIDaemonProcess wsgi processes=2' }
       it { should contain 'WSGIProcessGroup vagrant' }
@@ -900,7 +901,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain '#weird test string' }
     end
@@ -919,7 +920,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'AssignUserId vagrant vagrant' }
     end
@@ -943,7 +944,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file("#{vhost_dir}/25-test.server.conf") do
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { should be_file }
         it { should contain 'FastCgiExternalServer localhost -socket /tmp/fast/1234' }
         it { should contain '<Directory "/tmp/fast">' }
@@ -965,7 +966,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{vhost_dir}/25-test.server.conf") do
+    describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
       it { should contain 'Include "/tmp/include"' }
     end

@@ -761,6 +761,21 @@ describe 'apache::vhost', :type => :define do
             /^  <\/Files>$/,
           ],
         },
+        {
+          :title => 'should accept files match for provider',
+          :attr  => 'directories',
+          :value => {
+            'path'     => 'index.html',
+            'provider' => 'filesmatch',
+          },
+          :notmatch => ['    AllowOverride None'],
+          :match => [
+            /^  <FilesMatch "index.html">$/,
+            /^    Order allow,deny$/,
+            /^    Allow from all$/,
+            /^  <\/FilesMatch>$/,
+          ],
+        },
       ].each do |param|
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({
@@ -894,8 +909,7 @@ describe 'apache::vhost', :type => :define do
           :notmatch => ['    AllowOverride None'],
           :match => [
             /^  <FilesMatch "index.html">$/,
-            /^    Order allow,deny$/,
-            /^    Allow from all$/,
+            /^    Require all granted$/,
             /^  <\/FilesMatch>$/,
           ],
         },

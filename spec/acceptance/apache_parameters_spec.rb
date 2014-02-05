@@ -1,23 +1,5 @@
 require 'spec_helper_acceptance'
-
-case fact('osfamily')
-when 'RedHat'
-  confd_dir = '/etc/httpd/conf.d'
-  conf_file = '/etc/httpd/conf/httpd.conf'
-  ports_file = '/etc/httpd/conf/ports.conf'
-  vhost = '/etc/httpd/conf.d/15-default.conf'
-  service_name = 'httpd'
-  package_name = 'httpd'
-  error_log = 'error_log'
-when 'Debian'
-  confd_dir = '/etc/apache2/mods-available'
-  conf_file = '/etc/apache2/apache2.conf'
-  ports_file = '/etc/apache2/ports.conf'
-  vhost = '/etc/apache2/sites-available/15-default.conf'
-  service_name = 'apache2'
-  package_name = 'apache2'
-  error_log = 'error.log'
-end
+require_relative './version.rb'
 
 describe 'apache parameters' do
 
@@ -41,7 +23,7 @@ describe 'apache parameters' do
     end
 
     if fact('osfamily') == 'FreeBSD'
-      describe file("#{confd_dir}/no-accf.conf.erb") do
+      describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { should be_file }
       end
     end
@@ -53,7 +35,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(ports_file) do
+    describe file($ports_file) do
       it { should be_file }
       it { should contain 'Listen 10.1.1.1' }
     end
@@ -70,7 +52,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { should be_running }
       it { should be_enabled }
     end
@@ -87,7 +69,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { should_not be_running }
       it { should_not be_enabled }
     end
@@ -101,12 +83,12 @@ describe 'apache parameters' do
           purge_vdir    => false,
         }
       EOS
-      shell("touch #{confd_dir}/test.conf")
+      shell("touch #{$confd_dir}/test.conf")
       apply_manifest(pp, :catch_failures => true)
     end
 
     # Ensure the file didn't disappear.
-    describe file("#{confd_dir}/test.conf") do
+    describe file("#{$confd_dir}/test.conf") do
       it { should be_file }
     end
   end
@@ -120,12 +102,12 @@ describe 'apache parameters' do
             purge_vdir    => true,
           }
         EOS
-        shell("touch #{confd_dir}/test.conf")
+        shell("touch #{$confd_dir}/test.conf")
         apply_manifest(pp, :catch_failures => true)
       end
 
       # File should be gone
-      describe file("#{confd_dir}/test.conf") do
+      describe file("#{$confd_dir}/test.conf") do
         it { should_not be_file }
       end
     end
@@ -137,7 +119,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(vhost) do
+    describe file($vhost) do
       it { should be_file }
       it { should contain 'ServerAdmin test@example.com' }
     end
@@ -151,7 +133,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'EnableSendfile On' }
     end
@@ -163,7 +145,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'Sendfile Off' }
     end
@@ -177,7 +159,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'Alias /error/' }
     end
@@ -191,7 +173,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'Timeout 1234' }
     end
@@ -208,7 +190,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file("#{confd_dir}/mime.conf") do
+    describe file("#{$confd_dir}/mime.conf") do
       it { should be_file }
       it { should contain 'AddLanguage eo .eo' }
     end
@@ -222,7 +204,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'ServerRoot "/tmp/root"' }
     end
@@ -236,9 +218,16 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
-      it { should be_file }
-      it { should contain 'Include "/tmp/root/*.conf"' }
+    if $apache_version >= 2.4
+      describe file($conf_file) do
+        it { should be_file }
+        it { should contain 'IncludeOptional "/tmp/root/*.conf"' }
+      end
+    else
+      describe file($conf_file) do
+        it { should be_file }
+        it { should contain 'Include "/tmp/root/*.conf"' }
+      end
     end
   end
 
@@ -252,7 +241,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'testcontent' }
     end
@@ -266,7 +255,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'ServerName "test.server"' }
     end
@@ -305,7 +294,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'KeepAlive On' }
       it { should contain 'KeepAliveTimeout 30' }
@@ -320,7 +309,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file("/tmp/#{error_log}") do
+    describe file("/tmp/#{$error_log}") do
       it { should be_file }
     end
   end
@@ -347,15 +336,15 @@ describe 'apache parameters' do
     it 'applys cleanly' do
       pp = <<-EOS
         class { 'apache':
-          server_tokens  => 'testtokens',
+          server_tokens  => 'Minor',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
-      it { should contain 'ServerTokens testtokens' }
+      it { should contain 'ServerTokens Minor' }
     end
   end
 
@@ -370,7 +359,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'ServerSignature testsig' }
     end
@@ -386,7 +375,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file(conf_file) do
+    describe file($conf_file) do
       it { should be_file }
       it { should contain 'TraceEnable Off' }
     end
@@ -402,7 +391,7 @@ describe 'apache parameters' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe package(package_name) do
+    describe package($package_name) do
       it { should be_installed }
     end
   end

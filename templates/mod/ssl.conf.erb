@@ -14,7 +14,7 @@
   SSLCompression Off
 <% end -%>
   <% if @apache_version >= '2.4' -%>
-  SSLMutex sysvsem <%= @ssl_mutex %>
+  Mutex <%= @ssl_mutex %>
   <% else -%>
   SSLMutex <%= @ssl_mutex %>
   <% end -%>

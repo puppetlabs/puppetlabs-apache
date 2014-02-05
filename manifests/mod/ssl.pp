@@ -8,12 +8,32 @@ class apache::mod::ssl (
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
   }
-  $ssl_mutex = $::osfamily ? {
-    'debian'  => 'file:${APACHE_RUN_DIR}/ssl_mutex',
-    'redhat'  => 'default',
-    'freebsd' => 'default',
+
+  case $::osfamily {
+    'debian': {
+      if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
+        file { "${APACHE_RUN_DIR}/ssl_mutex":
+          ensure => directory
+        }
+
+        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex default'
+      } else {
+        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex'
+      }
+    }
+    'redhat': {
+      $ssl_mutex = 'default'
+    }
+    'freebsd': {
+      $ssl_mutex = 'default'
+    }
   }
+
   apache::mod { 'ssl': }
+
+  if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
+    apache::mod { 'socache_shmcb': }
+  }
 
   # Template uses
   #
