@@ -14,7 +14,34 @@ describe 'apache::mod::itk', :type => :class do
     it { should_not contain_apache__mod('itk') }
     it { should contain_file("/etc/apache2/mods-available/itk.conf").with_ensure('file') }
     it { should contain_file("/etc/apache2/mods-enabled/itk.conf").with_ensure('link') }
-    it { should contain_package("apache2-mpm-itk") }
+
+    context "with Apache version < 2.4" do
+      let :params do
+        {
+          :apache_version => 2.2,
+        }
+      end
+
+      it { should_not contain_file("/etc/apache2/mods-available/itk.load") }
+      it { should_not contain_file("/etc/apache2/mods-enabled/itk.load") }
+
+      it { should contain_package("apache2-mpm-itk") }
+    end
+
+    context "with Apache version >= 2.4" do
+      let :params do
+        {
+          :apache_version => 2.4,
+        }
+      end
+
+      it { should contain_file("/etc/apache2/mods-available/itk.load").with({
+        'ensure'  => 'file',
+        'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n"
+        })
+      }
+      it { should contain_file("/etc/apache2/mods-enabled/itk.load").with_ensure('link') }
+    end
   end
   context "on a FreeBSD OS" do
     let :facts do

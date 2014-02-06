@@ -8,8 +8,12 @@
     Options +ExecCGI
     AllowOverride All
     SetHandler fastcgi-script
+  <%- if @apache_version >= '2.4' -%>
+    Require all granted
+  <%- else -%>
     Order allow,deny
-    Allow from all
+    Allow From All
+  <%- end -%>
     AuthBasicAuthoritative Off
   </Directory>
 

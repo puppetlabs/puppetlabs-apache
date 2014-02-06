@@ -5,6 +5,7 @@ class apache::mod::itk (
   $serverlimit         = '256',
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
+  $apache_version      = $apache::apache_version,
 ) {
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::itk and apache::mod::event on the same node')
@@ -40,21 +41,9 @@ class apache::mod::itk (
   }
 
   case $::osfamily {
-    'debian' : {
-      file { "${apache::mod_enable_dir}/itk.conf":
-        ensure  => link,
-        target  => "${apache::mod_dir}/itk.conf",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Service['httpd'],
-      }
-      package { 'apache2-mpm-itk':
-        ensure => present,
-      }
-    }
-    'freebsd' : {
-      class { 'apache::package':
-        mpm_module => 'itk'
+    'debian', 'freebsd': {
+      apache::mpm{ 'itk':
+        apache_version => $apache_version,
       }
     }
     default: {

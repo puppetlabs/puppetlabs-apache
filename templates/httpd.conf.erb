@@ -16,9 +16,13 @@ Group <%= @group %>
 
 AccessFileName .htaccess
 <FilesMatch "^\.ht">
+<%- if @apache_version >= '2.4' -%>
+    Require all denied
+<%- else -%>
      Order allow,deny
      Deny from all
      Satisfy all
+<%- end -%>
 </FilesMatch>
 
 <Directory />
@@ -52,7 +56,11 @@ LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
 
+<%- if @apache_version >= '2.4' -%>
+IncludeOptional "<%= @confd_dir %>/*.conf"
+<%- else -%>
 Include "<%= @confd_dir %>/*.conf"
+<%- end -%>
 <% if @vhost_load_dir != @confd_dir -%>
 Include "<%= @vhost_load_dir %>/*.conf"
 <% end -%>
@@ -66,8 +74,12 @@ Alias /error/ "<%= @error_documents_path %>/"
   Options IncludesNoExec
   AddOutputFilter Includes html
   AddHandler type-map var
+<%- if @apache_version == '2.4' -%>
+  Require all granted
+<%- else -%>
   Order allow,deny
   Allow from all
+<%- end -%>
   LanguagePriority en cs de es fr it nl sv pt-br ro
   ForceLanguagePriority Prefer Fallback
 </Directory>
