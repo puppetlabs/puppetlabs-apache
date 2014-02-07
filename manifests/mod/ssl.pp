@@ -27,7 +27,7 @@ class apache::mod::ssl (
 
   apache::mod { 'ssl': }
 
-  if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
+  if $apache_version >= 2.4 {
     apache::mod { 'socache_shmcb': }
   }
 
