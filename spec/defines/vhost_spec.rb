@@ -353,7 +353,7 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ProxyPass          \/ http:\/\/fake.com\/$/,
             /^  <Location          \/>$/,
-            /^    ProxyPassReverse \/$/,
+            /^    ProxyPassReverse http:\/\/fake.com\/$/,
             /^  <\/Location>$/,
           ],
           :notmatch => [/ProxyPass .+!$/],
@@ -365,7 +365,7 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ProxyPass \/path-a http:\/\/fake.com\/a$/,
             /^  <Location \/path-a>$/,
-            /^    ProxyPassReverse \/$/,
+            /^    ProxyPassReverse http:\/\/fake.com\/a$/,
             /^  <\/Location>$/,
 
           ],
@@ -381,11 +381,11 @@ describe 'apache::vhost', :type => :define do
           :match    => [
             /^  ProxyPass \/path-a\/ http:\/\/fake.com\/a\/$/,
             /^  <Location \/path-a\/>$/,
-            /^    ProxyPassReverse \/$/,
+            /^    ProxyPassReverse http:\/\/fake.com\/a\/$/,
             /^  <\/Location>$/,
             /^  ProxyPass \/path-b http:\/\/fake.com\/b$/,
             /^  <Location \/path-b>$/,
-            /^    ProxyPassReverse \/$/,
+            /^    ProxyPassReverse http:\/\/fake.com\/b$/,
             /^  <\/Location>$/,
           ],
           :notmatch => [/ProxyPass .+!$/],
