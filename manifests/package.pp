@@ -26,7 +26,7 @@ class apache::package (
         ensure => $ensure,
         path   => '/etc/make.conf',
         line   => "APACHE_PORT=${apache_package}",
-        match  => "^\\s*#?\\s*APACHE_PORT\\s*=\\s*",
+        match  => '^\\s*#?\\s*APACHE_PORT\\s*=\\s*',
         before => Package['httpd'],
       }
       # remove other packages
