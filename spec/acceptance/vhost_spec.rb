@@ -426,8 +426,8 @@ describe 'apache::vhost define' do
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot       => '/tmp/test',
-          docroot_owner => 'vagrant',
-          docroot_group => 'vagrant',
+          docroot_owner => 'nobody',
+          docroot_group => 'nobody',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -435,8 +435,8 @@ describe 'apache::vhost define' do
 
     describe file('/tmp/test') do
       it { should be_directory }
-      it { should be_owned_by 'vagrant' }
-      it { should be_grouped_into 'vagrant' }
+      it { should be_owned_by 'nobody' }
+      it { should be_grouped_into 'nobody' }
     end
   end
 
@@ -876,7 +876,7 @@ describe 'apache::vhost define' do
           wsgi_daemon_process_options => {processes => '2'},
           wsgi_import_script          => '/test1',
           wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
-          wsgi_process_group          => 'vagrant',
+          wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
         }
       EOS
@@ -888,7 +888,7 @@ describe 'apache::vhost define' do
       it { should contain 'WSGIApplicationGroup %{GLOBAL}' }
       it { should contain 'WSGIDaemonProcess wsgi processes=2' }
       it { should contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
-      it { should contain 'WSGIProcessGroup vagrant' }
+      it { should contain 'WSGIProcessGroup nobody' }
       it { should contain 'WSGIScriptAlias /test "/test1"' }
     end
   end
@@ -919,7 +919,7 @@ describe 'apache::vhost define' do
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot  => '/tmp',
-          itk      => { user => 'vagrant', group => 'vagrant' }
+          itk      => { user => 'nobody', group => 'nobody' }
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -927,7 +927,7 @@ describe 'apache::vhost define' do
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'AssignUserId vagrant vagrant' }
+      it { should contain 'AssignUserId nobody nobody' }
     end
   end
 
