@@ -23,6 +23,9 @@ class apache::mod::ssl (
     'freebsd': {
       $ssl_mutex = 'default'
     }
+    default: {
+      fail("Unsupported osfamily ${::osfamily}")
+    }
   }
 
   apache::mod { 'ssl': }
