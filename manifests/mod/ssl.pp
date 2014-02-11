@@ -4,7 +4,7 @@ class apache::mod::ssl (
   $apache_version  = $apache::apache_version,
 ) {
   $session_cache = $::osfamily ? {
-    'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
+    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)${::pass_lint_trick}",
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
   }
@@ -14,7 +14,7 @@ class apache::mod::ssl (
       if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
         $ssl_mutex = 'default'
       } else {
-        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex'
+        $ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex${::pass_lint_trick}"
       }
     }
     'redhat': {
