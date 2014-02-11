@@ -172,7 +172,9 @@ define apache::vhost(
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
     $additional_includes         = [],
-    $apache_version              = $apache::apache_version
+    $apache_version              = $apache::apache_version,
+    $suexec_user                 = undef,
+    $suexec_group                = undef,
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
