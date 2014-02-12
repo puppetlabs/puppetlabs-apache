@@ -117,7 +117,7 @@ To set up a virtual host with IP address different than '*'
     apache::vhost { 'subdomain.example.com':
       ip      => '127.0.0.1',
       port    => '80',
-      docrout => '/var/www/subdomain',
+      docroot => '/var/www/subdomain',
     }
 ```
 
