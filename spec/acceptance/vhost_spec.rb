@@ -422,12 +422,14 @@ describe 'apache::vhost define' do
   describe 'docroot' do
     it 'applies cleanly' do
       pp = <<-EOS
+        user { 'test_owner': ensure => present, }
+        group { 'test_group': ensure => present, }
         class { 'apache': }
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot       => '/tmp/test',
-          docroot_owner => 'nobody',
-          docroot_group => 'nobody',
+          docroot_owner => 'test_owner',
+          docroot_group => 'test_group',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -435,8 +437,8 @@ describe 'apache::vhost define' do
 
     describe file('/tmp/test') do
       it { should be_directory }
-      it { should be_owned_by 'nobody' }
-      it { should be_grouped_into 'nobody' }
+      it { should be_owned_by 'test_owner' }
+      it { should be_grouped_into 'test_group' }
     end
   end
 
