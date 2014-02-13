@@ -91,6 +91,7 @@ class apache::params inherits apache::version {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
