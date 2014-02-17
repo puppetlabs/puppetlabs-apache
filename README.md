@@ -358,6 +358,10 @@ Setting this to false will avoid the group resource to be created by this module
 
 Allow control over the package ensure statement. This is useful if you want to make sure apache is always at the latest version or whether it is only installed.
 
+#####`extended_status`
+
+Allow control over the extended status configuration directive. Defaults to 'Off'.
+
 ####Class: `apache::default_mods`
 
 Installs default Apache modules based on what OS you are running
