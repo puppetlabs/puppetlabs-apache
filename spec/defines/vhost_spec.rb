@@ -1138,7 +1138,8 @@ describe 'apache::vhost', :type => :define do
         let :params do default_params.merge({
           :rewrites => [
             {
-              'comment'       => 'test rewrites',
+              'comment'      => 'test rewrites',
+              'rewrite_base' => '/mytestpath/',
               'rewrite_cond' => ['%{HTTP_USER_AGENT} ^Lynx/ [OR]', '%{HTTP_USER_AGENT} ^Mozilla/[12]'],
               'rewrite_rule' => ['^index\.html$ welcome.html', '^index\.cgi$ index.php'],
             }
@@ -1150,6 +1151,9 @@ describe 'apache::vhost', :type => :define do
           )
           should contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTP_USER_AGENT\} \^Lynx\/ \[OR\]$/
+          )
+          should contain_file("25-#{title}.conf").with_content(
+            /^  RewriteBase \/mytestpath\/$/
           )
           should contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTP_USER_AGENT\} \^Mozilla\/\[12\]$/

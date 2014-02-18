@@ -153,6 +153,7 @@ define apache::vhost(
     $headers                     = undef,
     $request_headers             = undef,
     $rewrites                    = undef,
+    $rewrite_base                = undef,
     $rewrite_rule                = undef,
     $rewrite_cond                = undef,
     $setenv                      = [],
@@ -199,6 +200,9 @@ define apache::vhost(
   }
 
   # Deprecated backwards-compatibility
+  if $rewrite_base {
+    warning('Apache::Vhost: parameter rewrite_base is deprecated in favor of rewrites')
+  }
   if $rewrite_rule {
     warning('Apache::Vhost: parameter rewrite_rule is deprecated in favor of rewrites')
   }
