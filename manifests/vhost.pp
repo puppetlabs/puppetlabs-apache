@@ -417,13 +417,17 @@ define apache::vhost(
     }
 
     if $apache_version == 2.4 {
-      $_directory[require] = 'all granted'
+      $_directory_version = {
+        require => 'all granted',
+      }
     } else {
-      $_directory[order] = 'allow,deny'
-      $_directory[allow] = 'from all'
+      $_directory_version = {
+        order => 'allow,deny',
+        allow => 'from all',
+      }
     }
 
-    $_directories = [ $_directory ]
+    $_directories = [ merge($_directory, $_directory_version) ]
   }
 
   # Template uses:
