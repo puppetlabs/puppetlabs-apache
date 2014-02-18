@@ -79,16 +79,22 @@ describe 'apache parameters' do
     it 'applies cleanly' do
       pp = <<-EOS
         class { 'apache':
+          vhost_dir => "#${confd_dir}.vhosts",
           purge_configs => false,
           purge_vdir    => false,
+          purge_vdir_configs => false,
         }
       EOS
       shell("touch #{$confd_dir}/test.conf")
+      shell("touch #{$vhost_dir}/test.conf")
       apply_manifest(pp, :catch_failures => true)
     end
 
-    # Ensure the file didn't disappear.
+    # Ensure the files didn't disappear.
     describe file("#{$confd_dir}/test.conf") do
+      it { should be_file }
+    end
+    describe file("#{$vhost_dir}/test.conf") do
       it { should be_file }
     end
   end
@@ -98,16 +104,22 @@ describe 'apache parameters' do
       it 'applies cleanly' do
         pp = <<-EOS
           class { 'apache':
+            vhost_dir => "#{$confd_dir}.vhosts",
             purge_configs => true,
             purge_vdir    => true,
+            purge_vdir_configs => true,
           }
         EOS
         shell("touch #{$confd_dir}/test.conf")
+        shell("touch #{$vhost_dir}test.conf")
         apply_manifest(pp, :catch_failures => true)
       end
 
-      # File should be gone
+      # Files should be gone
       describe file("#{$confd_dir}/test.conf") do
+        it { should_not be_file }
+      end
+      describe file("#{$vhost_dir}test.conf") do
         it { should_not be_file }
       end
     end
