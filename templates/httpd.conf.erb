@@ -34,7 +34,9 @@ AccessFileName .htaccess
 AddDefaultCharset <%= @default_charset %>
 <% end -%>
 
-DefaultType none
+<%- if scope.function_versioncmp([@apache_version, '2.4']) < 0 -%>
+DefaultType <%= @default_type %>
+<%- end -%>
 HostnameLookups Off
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
 LogLevel <%= @log_level %>
