@@ -185,7 +185,7 @@ To set up a virtual host with WSGI
     }
 ```
 
-Starting in Apache 2.2.16, httpd supports [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource), a simple replace for common RewriteRules.
+Starting in Apache 2.2.16, HTTPD supports [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource), a simple replacement for common RewriteRules.
 
 ```puppet
     apache::vhost { 'wordpress.example.com':
