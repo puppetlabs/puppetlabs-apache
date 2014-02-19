@@ -88,12 +88,13 @@ class apache::params inherits apache::version {
       'php5' => 'libphp5.so',
       'nss'  => 'libmodnss.so',
     }
-    $conf_template        = 'apache/httpd.conf.erb'
-    $keepalive            = 'Off'
-    $keepalive_timeout    = 15
-    $fastcgi_lib_path     = undef
-    $mime_support_package = 'mailcap'
-    $mime_types_config    = '/etc/mime.types'
+    $conf_template          = 'apache/httpd.conf.erb'
+    $keepalive              = 'Off'
+    $keepalive_timeout      = 15
+    $max_keepalive_requests = 100
+    $fastcgi_lib_path       = undef
+    $mime_support_package   = 'mailcap'
+    $mime_types_config      = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'

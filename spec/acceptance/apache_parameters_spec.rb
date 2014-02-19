@@ -289,7 +289,7 @@ describe 'apache parameters' do
   describe 'keepalive' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': keepalive => 'On', keepalive_timeout => '30' }"
+        pp = "class { 'apache': keepalive => 'On', keepalive_timeout => '30', max_keepalive_requests => '50' }"
         apply_manifest(pp, :catch_failures => true)
       end
     end
@@ -298,6 +298,7 @@ describe 'apache parameters' do
       it { should be_file }
       it { should contain 'KeepAlive On' }
       it { should contain 'KeepAliveTimeout 30' }
+      it { should contain 'MaxKeepAliveRequests 50' }
     end
   end
 
