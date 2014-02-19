@@ -2,12 +2,12 @@
 
   ## Proxy rules
   ProxyRequests Off
+  ProxyPreserveHost On
 <%- end -%>
 <% [@proxy_pass].flatten.compact.each do |proxy| %>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] %>
-  <Location <%= proxy['path']%>>
-    ProxyPassReverse /
-  </Location>
+  ProxyPassReverse <%= proxy['path'] %> <%= proxy['url'] %>
+  
 <% end %>
 <% if @proxy_dest -%>
 <% Array(@no_proxy_uris).each do |uri| %>
