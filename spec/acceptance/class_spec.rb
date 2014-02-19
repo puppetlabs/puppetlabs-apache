@@ -38,16 +38,16 @@ describe 'apache class' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      file { '/apache': ensure => directory, }
+      file { '/tmp/apache_custom': ensure => directory, }
       class { 'apache':
-        mod_dir   => '/apache/mods',
-        vhost_dir => '/apache/vhosts',
+        mod_dir   => '/tmp/apache_custom/mods',
+        vhost_dir => '/tmp/apache_custom/vhosts',
       }
       EOS
 
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      apply_manifest(pp, :catch_changes => true)
     end
 
     describe service(service_name) do
