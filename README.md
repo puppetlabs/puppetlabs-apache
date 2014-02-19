@@ -266,6 +266,10 @@ Determines whether the service should be running. Can be set to 'undef' which is
 
 Removes all other apache configs and vhosts, which is automatically set to true. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise managed configuration. It is recommended that you move your configuration entirely to resources within this module.
 
+#####`purge_vdir_configs`
+
+If `vhost_dir` != `confd_dir`, this controls the removal of any configurations that are not managed by puppet within `vhost_dir`. It defaults to true. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
+
 #####`serveradmin`
 
 Sets the server administrator. Defaults to 'root@localhost'.
