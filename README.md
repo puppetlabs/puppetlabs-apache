@@ -1610,15 +1610,7 @@ If you statically declare all of your backend servers, you should set this to 'f
 
 If you wish to dynamically declare your backend servers via [exported resources](http://docs.puppetlabs.com/guides/exported_resources.html) collected on a central node, you must set this parameter to 'true' in order to collect the exported balancer member resources that were exported by the balancer member nodes.
 
-<<<<<<< HEAD
-```puppet
-    apache::namevirtualhost { '*:80': }
-```
-
-Declaring this defined type will add all `NameVirtualHost` directives to the `ports.conf` file in the Apache https configuration directory. `apache::namevirtualhost` titles should always take the form of: `*`, `*:<port>`, `_default_:<port>`, `<ip>`, or `<ip>:<port>`.
-=======
 If you choose not to use exported resources, all balancer members will be configured in a single puppet run. If you are using exported resources, Puppet has to run on the balanced nodes, then run on the balancer.
->>>>>>> Updates README
 
 ####Defined Type: `apache::balancermember`
 
@@ -1746,25 +1738,4 @@ Quickstart:
     bundle install
     bundle exec rake spec
     bundle exec rspec spec/acceptance
-<<<<<<< HEAD
-
-##Copyright and License
-
-Copyright (C) 2012 [Puppet Labs](https://www.puppetlabs.com/) Inc
-
-Puppet Labs can be contacted at: info@puppetlabs.com
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-=======
-    RS_DEBUG=yes bundle exec rspec spec/acceptance 
->>>>>>> Updates README
+    RS_DEBUG=yes bundle exec rspec spec/acceptance
