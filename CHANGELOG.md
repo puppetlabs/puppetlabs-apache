@@ -1,3 +1,20 @@
+## 2014-02-26 Release 1.0.0
+### Summary:
+
+This release introduces Apache 2.4 support for Debian and RHEL based osfamilies.
+
+### Features:
+
+  - Add apache24 support
+  - Add rewrite_base functionality to rewrites
+  - Updated README documentation
+  - Add WSGIApplicationGroup and WSGIImportScript directives
+
+### Bugfixes:
+
+  - Replace mutating hashes with merge() for Puppet 3.5
+  - Fix WSGI import_script and mod_ssl issues on Lucid
+
 ## 2014-01-31 Release 0.11.0
 ### Summary:
 
