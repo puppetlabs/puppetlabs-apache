@@ -308,6 +308,10 @@ Changes the verbosity level of the error log. Defaults to 'warn'. Valid values a
 
 Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, and '/var/log/apache22' on FreeBSD.
 
+#####`manage_default_vhosts`
+
+Setting this to 'false' will stop the default apache::vhost resources to be created. That way you can create you own custom apache::vhost { 'default': } and apache::vhost { 'default-ssl': } resources.
+
 #####`manage_group`
 
 Setting this to 'false' will stop the group resource from being created. This is for when you have a group, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established group would result in a duplicate resource error.
