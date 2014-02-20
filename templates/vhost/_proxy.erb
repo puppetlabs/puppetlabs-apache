@@ -25,6 +25,9 @@
     ProxyPassReverse <%= reverse_url %>
     <%- end -%>
   <%- end -%>
+  <%- if proxy['nokeepalive'] -%>
+    SetEnv proxy-nokeepalive 1
+  <%- end -%>
   </Location>
 <% end -%>
 <% if @proxy_dest -%>
