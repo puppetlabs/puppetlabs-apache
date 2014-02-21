@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::php class' do
+describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   case fact('osfamily')
   when 'Debian'
     vhost_dir    = '/etc/apache2/sites-enabled'
