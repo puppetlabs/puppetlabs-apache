@@ -44,9 +44,6 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
   context 'default vhost with ssl' do
     it 'should create default vhost configs' do
-      # Doesn't work on Ubuntu 10.04 because ssl.conf should contain
-      # 'file:/var/run/apache2/ssl_mutex' but contains
-      # 'file:${APACHE_RUN_DIR}/ssl_mutex'
       pp = <<-EOS
         file { '#{$run_dir}':
           ensure  => 'directory',
@@ -866,7 +863,24 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
   end
 
   describe 'wsgi' do
-    it 'applies cleanly' do
+    it 'import_script applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        class { 'apache::mod::wsgi': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot                     => '/tmp',
+          wsgi_application_group      => '%{GLOBAL}',
+          wsgi_daemon_process         => 'wsgi',
+          wsgi_daemon_process_options => {processes => '2'},
+          wsgi_process_group          => 'nobody',
+          wsgi_script_aliases         => { '/test' => '/test1' },
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    it 'import_script applies cleanly', :unless => fact('lsbcodename') == 'lucid' do
       pp = <<-EOS
         class { 'apache': }
         class { 'apache::mod::wsgi': }
