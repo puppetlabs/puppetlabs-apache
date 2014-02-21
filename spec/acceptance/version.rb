@@ -51,7 +51,5 @@ when 'FreeBSD'
   $error_log        = 'http-error.log'
 
   $apache_version = 2.2
-else
-  fail RuntimeError, "Unsupported osfamily: #{_osfamily}"
 end
 

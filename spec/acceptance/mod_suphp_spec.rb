@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::suphp class' do
+describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   case fact('osfamily')
   when 'Debian'
     context "default suphp config" do

@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache parameters' do
+describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do

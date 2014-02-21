@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache::vhost define' do
+describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   context 'no default vhosts' do
     it 'should create no default vhosts' do
       pp = <<-EOS

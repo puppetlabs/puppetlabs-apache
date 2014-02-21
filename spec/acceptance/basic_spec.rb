@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'disable selinux:' do
+describe 'disable selinux:', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   it "because otherwise apache won't work" do
     apply_manifest(%{
       exec { "setenforce 0":
