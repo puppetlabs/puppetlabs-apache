@@ -8,12 +8,12 @@ hosts.each do |host|
   if host.is_pe?
     install_pe
   else
-    # Install Puppet
-    install_package host, 'rubygems'
-    on host, 'gem install puppet --no-ri --no-rdoc'
+    install_puppet
     on host, "mkdir -p #{host['distmoduledir']}"
   end
 end
+
+UNSUPPORTED_PLATFORMS = ['Suse','windows','AIX','Solaris']
 
 RSpec.configure do |c|
   # Project root

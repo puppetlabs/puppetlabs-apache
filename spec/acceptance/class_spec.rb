@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache class' do
+describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   case fact('osfamily')
   when 'RedHat'
     package_name = 'httpd'
