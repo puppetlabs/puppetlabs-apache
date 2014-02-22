@@ -57,6 +57,7 @@ class apache (
   $server_signature     = 'On',
   $trace_enable         = 'On',
   $package_ensure       = 'installed',
+  $manage_default_vhosts = true,
 ) inherits apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -297,40 +298,43 @@ class apache (
     if $mpm_module {
       class { "apache::mod::${mpm_module}": }
     }
+    
+    if $manage_default_vhosts == true {
 
-    $default_vhost_ensure = $default_vhost ? {
-      true  => 'present',
-      false => 'absent'
-    }
-    $default_ssl_vhost_ensure = $default_ssl_vhost ? {
-      true  => 'present',
-      false => 'absent'
-    }
-
-    apache::vhost { 'default':
-      ensure          => $default_vhost_ensure,
-      port            => 80,
-      docroot         => $docroot,
-      scriptalias     => $scriptalias,
-      serveradmin     => $serveradmin,
-      access_log_file => $access_log_file,
-      priority        => '15',
-      ip              => $ip,
-    }
-    $ssl_access_log_file = $::osfamily ? {
-      'freebsd' => $access_log_file,
-      default   => "ssl_${access_log_file}",
-    }
-    apache::vhost { 'default-ssl':
-      ensure          => $default_ssl_vhost_ensure,
-      port            => 443,
-      ssl             => true,
-      docroot         => $docroot,
-      scriptalias     => $scriptalias,
-      serveradmin     => $serveradmin,
-      access_log_file => $ssl_access_log_file,
-      priority        => '15',
-      ip              => $ip,
-    }
+      $default_vhost_ensure = $default_vhost ? {
+        true  => 'present',
+        false => 'absent'
+      }
+      $default_ssl_vhost_ensure = $default_ssl_vhost ? {
+        true  => 'present',
+        false => 'absent'
+      }
+  
+      apache::vhost { 'default':
+        ensure          => $default_vhost_ensure,
+        port            => 80,
+        docroot         => $docroot,
+        scriptalias     => $scriptalias,
+        serveradmin     => $serveradmin,
+        access_log_file => $access_log_file,
+        priority        => '15',
+        ip              => $ip,
+      }
+      $ssl_access_log_file = $::osfamily ? {
+        'freebsd' => $access_log_file,
+        default   => "ssl_${access_log_file}",
+      }
+      apache::vhost { 'default-ssl':
+        ensure          => $default_ssl_vhost_ensure,
+        port            => 443,
+        ssl             => true,
+        docroot         => $docroot,
+        scriptalias     => $scriptalias,
+        serveradmin     => $serveradmin,
+        access_log_file => $ssl_access_log_file,
+        priority        => '15',
+        ip              => $ip,
+      }
+  }
   }
 }
