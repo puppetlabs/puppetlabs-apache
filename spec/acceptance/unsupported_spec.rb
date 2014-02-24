@@ -1,4 +1,4 @@
-equire 'spec_helper_acceptance'
+require 'spec_helper_acceptance'
 
 describe 'unsupported distributions and OSes', :if => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   it 'should fail' do
@@ -8,6 +8,6 @@ describe 'unsupported distributions and OSes', :if => UNSUPPORTED_PLATFORMS.incl
         docroot => '/var/www',
       }
     EOS
-    expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/is not supported/)
+    expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/unsupported/i)
   end
 end
