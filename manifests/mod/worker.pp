@@ -6,7 +6,7 @@ class apache::mod::worker (
   $threadsperchild     = '25',
   $maxrequestsperchild = '0',
   $serverlimit         = '25',
-  $apache_version      = $apache::apache_version,
+  $apache_version      = $::apache::apache_version,
 ) {
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::worker and apache::mod::event on the same node')
@@ -22,7 +22,7 @@ class apache::mod::worker (
   }
   File {
     owner => 'root',
-    group => $apache::params::root_group,
+    group => $::apache::params::root_group,
     mode  => '0644',
   }
 
@@ -34,18 +34,18 @@ class apache::mod::worker (
   # - $threadsperchild
   # - $maxrequestsperchild
   # - $serverlimit
-  file { "${apache::mod_dir}/worker.conf":
+  file { "${::apache::mod_dir}/worker.conf":
     ensure  => file,
     content => template('apache/mod/worker.conf.erb'),
-    require => Exec["mkdir ${apache::mod_dir}"],
-    before  => File[$apache::mod_dir],
+    require => Exec["mkdir ${::apache::mod_dir}"],
+    before  => File[$::apache::mod_dir],
     notify  => Service['httpd'],
   }
 
   case $::osfamily {
     'redhat': {
       if $apache_version >= 2.4 {
-        apache::mpm{ 'worker':
+        ::apache::mpm{ 'worker':
           apache_version => $apache_version,
         }
       }
@@ -61,7 +61,7 @@ class apache::mod::worker (
       }
     }
     'debian', 'freebsd': {
-      apache::mpm{ 'worker':
+      ::apache::mpm{ 'worker':
         apache_version => $apache_version,
       }
     }

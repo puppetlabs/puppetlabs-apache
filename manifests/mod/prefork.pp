@@ -5,7 +5,7 @@ class apache::mod::prefork (
   $serverlimit         = '256',
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
-  $apache_version      = $apache::apache_version,
+  $apache_version      = $::apache::apache_version,
 ) {
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
@@ -21,7 +21,7 @@ class apache::mod::prefork (
   }
   File {
     owner => 'root',
-    group => $apache::params::root_group,
+    group => $::apache::params::root_group,
     mode  => '0644',
   }
 
@@ -32,18 +32,18 @@ class apache::mod::prefork (
   # - $serverlimit
   # - $maxclients
   # - $maxrequestsperchild
-  file { "${apache::mod_dir}/prefork.conf":
+  file { "${::apache::mod_dir}/prefork.conf":
     ensure  => file,
     content => template('apache/mod/prefork.conf.erb'),
-    require => Exec["mkdir ${apache::mod_dir}"],
-    before  => File[$apache::mod_dir],
+    require => Exec["mkdir ${::apache::mod_dir}"],
+    before  => File[$::apache::mod_dir],
     notify  => Service['httpd'],
   }
 
   case $::osfamily {
     'redhat': {
       if $apache_version >= 2.4 {
-        apache::mpm{ 'prefork':
+        ::apache::mpm{ 'prefork':
           apache_version => $apache_version,
         }
       }
@@ -59,7 +59,7 @@ class apache::mod::prefork (
       }
     }
     'debian', 'freebsd' : {
-      apache::mpm{ 'prefork':
+      ::apache::mpm{ 'prefork':
         apache_version => $apache_version,
       }
     }
