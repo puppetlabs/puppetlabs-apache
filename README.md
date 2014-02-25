@@ -15,6 +15,7 @@
         * [Class: apache::default_mods](#class-apachedefault_mods)
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
+        * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::ssl](#class-apachemodssl)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
@@ -442,6 +443,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `mime_magic`*
 * `negotiation`
 * `nss`*
+* `pagespeed` (see [`apache::mod::pagespeed`](#class-apachemodpagespeed) below)
 * `passenger`*
 * `perl`
 * `peruser`
@@ -469,6 +471,57 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention.
 
 The modules mentioned above, and other Apache modules that have templates, will cause template files to be dropped along with the mod install and the module will not work without the template. Any module without a template will install the package but drop no files.
+
+####Class: `apache::mod::pagespeed`
+
+Installs and manages mod_pagespeed, which is a Google module that rewrites web pages to reduce latency and bandwidth.
+
+This module does *not* manage the software repositories needed to automatically install the
+mod-pagespeed-stable package. The module does however require that the package be installed,
+or be installable using the system's default package provider.  You should ensure that this
+pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet run to fail.
+
+These are the defaults:
+
+```puppet
+    class { 'apache::mod::pagespeed':
+      inherit_vhost_config          => 'on',
+      filter_xhtml                  => false,
+      cache_path                    => '/var/cache/mod_pagespeed/',
+      log_dir                       => '/var/log/pagespeed',
+      memache_servers               => [],
+      rewrite_level                 => 'CoreFilters',
+      disable_filters               => [],
+      enable_filters                => [],
+      forbid_filters                => [],
+      rewrite_deadline_per_flush_ms => 10,
+      additional_domains            => undef,
+      file_cache_size_kb            => 102400,
+      file_cache_clean_interval_ms  => 3600000,
+      lru_cache_per_process         => 1024,
+      lru_cache_byte_limit          => 16384,
+      css_flatten_max_bytes         => 2048,
+      css_inline_max_bytes          => 2048,
+      css_image_inline_max_bytes    => 2048,
+      image_inline_max_bytes        => 2048,
+      js_inline_max_bytes           => 2048,
+      css_outline_min_bytes         => 3000,
+      js_outline_min_bytes          => 3000,
+      inode_limit                   => 500000,
+      image_max_rewrites_at_once    => 8,
+      num_rewrite_threads           => 4,
+      num_expensive_rewrite_threads => 4,
+      collect_statistics            => 'on',
+      statistics_logging            => 'on',
+      allow_view_stats              => [],
+      allow_pagespeed_console       => [],
+      allow_pagespeed_message       => [],
+      message_buffer_size           => 100000,
+      additional_configuration      => { }
+    }
+```
+
+Full documentation for mod_pagespeed is available from [Google](http://modpagespeed.com).
 
 ####Class: `apache::mod::ssl`
 

@@ -61,6 +61,7 @@ class apache::params inherits ::apache::version {
       'authnz_ldap' => 'mod_authz_ldap',
       'fastcgi'     => 'mod_fastcgi',
       'fcgid'       => 'mod_fcgid',
+      'pagespeed'   => 'mod-pagespeed-stable',
       'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
       'php5'        => $distrelease ? {
@@ -123,6 +124,7 @@ class apache::params inherits ::apache::version {
       'fastcgi'     => 'libapache2-mod-fastcgi',
       'fcgid'       => 'libapache2-mod-fcgid',
       'nss'         => 'libapache2-mod-nss',
+      'pagespeed'   => 'mod-pagespeed-stable',
       'passenger'   => 'libapache2-mod-passenger',
       'perl'        => 'libapache2-mod-perl2',
       'php5'        => 'libapache2-mod-php5',
