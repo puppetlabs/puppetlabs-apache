@@ -1,7 +1,7 @@
 class apache::mod::ssl (
   $ssl_compression = false,
   $ssl_options     = [ 'StdEnvVars' ],
-  $apache_version  = $apache::apache_version,
+  $apache_version  = $::apache::apache_version,
 ) {
   $session_cache = $::osfamily ? {
     'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
@@ -30,10 +30,10 @@ class apache::mod::ssl (
     }
   }
 
-  apache::mod { 'ssl': }
+  ::apache::mod { 'ssl': }
 
   if $apache_version >= 2.4 {
-    apache::mod { 'socache_shmcb': }
+    ::apache::mod { 'socache_shmcb': }
   }
 
   # Template uses
@@ -46,10 +46,10 @@ class apache::mod::ssl (
   #
   file { 'ssl.conf':
     ensure  => file,
-    path    => "${apache::mod_dir}/ssl.conf",
+    path    => "${::apache::mod_dir}/ssl.conf",
     content => template('apache/mod/ssl.conf.erb'),
-    require => Exec["mkdir ${apache::mod_dir}"],
-    before  => File[$apache::mod_dir],
+    require => Exec["mkdir ${::apache::mod_dir}"],
+    before  => File[$::apache::mod_dir],
     notify  => Service['httpd'],
   }
 }

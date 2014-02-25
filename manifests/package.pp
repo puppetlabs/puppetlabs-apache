@@ -1,6 +1,6 @@
 class apache::package (
   $ensure     = 'present',
-  $mpm_module = $apache::params::mpm_module,
+  $mpm_module = $::apache::params::mpm_module,
 ) {
   case $::osfamily {
     'freebsd' : {
@@ -37,7 +37,7 @@ class apache::package (
       })
     }
     default: {
-      $apache_package = $apache::params::apache_name
+      $apache_package = $::apache::params::apache_name
     }
   }
   package { 'httpd':
