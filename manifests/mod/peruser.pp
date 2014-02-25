@@ -22,11 +22,11 @@ class apache::mod::peruser (
   }
   File {
     owner => 'root',
-    group => $apache::params::root_group,
+    group => $::apache::params::root_group,
     mode  => '0644',
   }
 
-  $mod_dir = $apache::mod_dir
+  $mod_dir = $::apache::mod_dir
 
   # Template uses:
   # - $minspareprocessors
@@ -38,31 +38,31 @@ class apache::mod::peruser (
   # - $expiretimeout
   # - $keepalive
   # - $mod_dir
-  file { "${apache::mod_dir}/peruser.conf":
+  file { "${::apache::mod_dir}/peruser.conf":
     ensure  => file,
     content => template('apache/mod/peruser.conf.erb'),
-    require => Exec["mkdir ${apache::mod_dir}"],
-    before  => File[$apache::mod_dir],
+    require => Exec["mkdir ${::apache::mod_dir}"],
+    before  => File[$::apache::mod_dir],
     notify  => Service['httpd'],
   }
-  file { "${apache::mod_dir}/peruser":
+  file { "${::apache::mod_dir}/peruser":
     ensure  => directory,
-    require => File[$apache::mod_dir],
+    require => File[$::apache::mod_dir],
   }
-  file { "${apache::mod_dir}/peruser/multiplexers":
+  file { "${::apache::mod_dir}/peruser/multiplexers":
     ensure  => directory,
-    require => File["${apache::mod_dir}/peruser"],
+    require => File["${::apache::mod_dir}/peruser"],
   }
-  file { "${apache::mod_dir}/peruser/processors":
+  file { "${::apache::mod_dir}/peruser/processors":
     ensure  => directory,
-    require => File["${apache::mod_dir}/peruser"],
+    require => File["${::apache::mod_dir}/peruser"],
   }
 
-  apache::peruser::multiplexer { '01-default': }
+  ::apache::peruser::multiplexer { '01-default': }
 
   case $::osfamily {
     'freebsd' : {
-      class { 'apache::package':
+      class { '::apache::package':
         mpm_module => 'peruser'
       }
     }

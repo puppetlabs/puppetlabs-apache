@@ -8,10 +8,10 @@ define apache::peruser::processor (
   } else {
     $filename = $file
   }
-  file { "${apache::mod_dir}/peruser/processors/${filename}":
+  file { "${::apache::mod_dir}/peruser/processors/${filename}":
     ensure  => file,
     content => "Processor ${user} ${group}\n",
-    require => File["${apache::mod_dir}/peruser/processors"],
+    require => File["${::apache::mod_dir}/peruser/processors"],
     notify  => Service['httpd'],
   }
 }

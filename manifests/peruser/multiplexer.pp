@@ -1,6 +1,6 @@
 define apache::peruser::multiplexer (
-  $user = $apache::user,
-  $group = $apache::group,
+  $user = $::apache::user,
+  $group = $::apache::group,
   $file = undef,
 ) {
   if ! $file {
@@ -8,10 +8,10 @@ define apache::peruser::multiplexer (
   } else {
     $filename = $file
   }
-  file { "${apache::mod_dir}/peruser/multiplexers/${filename}":
+  file { "${::apache::mod_dir}/peruser/multiplexers/${filename}":
     ensure  => file,
     content => "Multiplexer ${user} ${group}\n",
-    require => File["${apache::mod_dir}/peruser/multiplexers"],
+    require => File["${::apache::mod_dir}/peruser/multiplexers"],
     notify  => Service['httpd'],
   }
 }

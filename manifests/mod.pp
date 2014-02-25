@@ -2,7 +2,7 @@ define apache::mod (
   $package = undef,
   $package_ensure = 'present',
   $lib = undef,
-  $lib_path = $apache::params::lib_path,
+  $lib_path = $::apache::params::lib_path,
   $id = undef,
   $path = undef,
 ) {
@@ -12,10 +12,10 @@ define apache::mod (
 
   $mod = $name
   #include apache #This creates duplicate resources in rspec-puppet
-  $mod_dir = $apache::mod_dir
+  $mod_dir = $::apache::mod_dir
 
   # Determine if we have special lib
-  $mod_libs = $apache::params::mod_libs
+  $mod_libs = $::apache::params::mod_libs
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
     $_lib = $lib
@@ -39,7 +39,7 @@ define apache::mod (
   }
 
   # Determine if we have a package
-  $mod_packages = $apache::params::mod_packages
+  $mod_packages = $::apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
     $_package = $package
@@ -54,7 +54,7 @@ define apache::mod (
     $package_before = $::osfamily ? {
       'freebsd' => [
         File["${mod_dir}/${mod}.load"],
-        File["${apache::params::conf_dir}/${apache::params::conf_file}"]
+        File["${::apache::params::conf_dir}/${::apache::params::conf_file}"]
       ],
       default => File["${mod_dir}/${mod}.load"],
     }
@@ -70,7 +70,7 @@ define apache::mod (
     ensure  => file,
     path    => "${mod_dir}/${mod}.load",
     owner   => 'root',
-    group   => $apache::params::root_group,
+    group   => $::apache::params::root_group,
     mode    => '0644',
     content => "LoadModule ${_id} ${_path}\n",
     require => [
@@ -82,13 +82,13 @@ define apache::mod (
   }
 
   if $::osfamily == 'Debian' {
-    $enable_dir = $apache::mod_enable_dir
+    $enable_dir = $::apache::mod_enable_dir
     file{ "${mod}.load symlink":
       ensure  => link,
       path    => "${enable_dir}/${mod}.load",
       target  => "${mod_dir}/${mod}.load",
       owner   => 'root',
-      group   => $apache::params::root_group,
+      group   => $::apache::params::root_group,
       mode    => '0644',
       require => [
         File["${mod}.load"],
@@ -106,7 +106,7 @@ define apache::mod (
         path    => "${enable_dir}/${mod}.conf",
         target  => "${mod_dir}/${mod}.conf",
         owner   => 'root',
-        group   => $apache::params::root_group,
+        group   => $::apache::params::root_group,
         mode    => '0644',
         require => [
           File["${mod}.conf"],
