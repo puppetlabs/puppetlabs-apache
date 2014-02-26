@@ -27,6 +27,7 @@ class apache::default_mods (
         include ::apache::mod::mime_magic
         include ::apache::mod::vhost_alias
         include ::apache::mod::rewrite
+        include ::apache::mod::speling
         ::apache::mod { 'auth_digest': }
         ::apache::mod { 'authn_anon': }
         ::apache::mod { 'authn_dbm': }
@@ -36,7 +37,6 @@ class apache::default_mods (
         ::apache::mod { 'ext_filter': }
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
-        ::apache::mod { 'speling': }
         ::apache::mod { 'substitute': }
         ::apache::mod { 'suexec': }
         ::apache::mod { 'usertrack': }
@@ -65,6 +65,7 @@ class apache::default_mods (
         include ::apache::mod::rewrite
         include ::apache::mod::userdir
         include ::apache::mod::vhost_alias
+        include ::apache::mod::speling
 
         ::apache::mod { 'asis': }
         ::apache::mod { 'auth_digest': }
@@ -83,7 +84,6 @@ class apache::default_mods (
         ::apache::mod { 'imagemap':}
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
-        ::apache::mod { 'speling': }
         ::apache::mod { 'unique_id': }
         ::apache::mod { 'usertrack': }
         ::apache::mod { 'version': }
