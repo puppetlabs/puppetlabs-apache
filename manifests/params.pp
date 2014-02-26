@@ -19,13 +19,6 @@
 # Sample Usage:
 #
 class apache::params inherits ::apache::version {
-  # This will be 5 or 6 on RedHat, 6 or wheezy on Debian, 12 or quantal on Ubuntu, 3 on Amazon, etc.
-  $osr_array = split($::operatingsystemrelease,'[\/\.]')
-  $distrelease = $osr_array[0]
-  if ! $distrelease {
-    fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
-  }
-
   if($::fqdn) {
     $servername = $::fqdn
   } else {
