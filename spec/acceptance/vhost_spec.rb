@@ -880,7 +880,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       apply_manifest(pp, :catch_failures => true)
     end
 
-    it 'import_script applies cleanly', :unless => fact('lsbcodename') == 'lucid' do
+    it 'import_script applies cleanly', :unless => (fact('lsbcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
       pp = <<-EOS
         class { 'apache': }
         class { 'apache::mod::wsgi': }
