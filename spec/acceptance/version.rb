@@ -51,5 +51,7 @@ when 'FreeBSD'
   $error_log        = 'http-error.log'
 
   $apache_version = 2.2
+else
+  $apache_version = 0
 end
 

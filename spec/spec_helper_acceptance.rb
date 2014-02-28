@@ -1,15 +1,18 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 
-hosts.each do |host|
-  if host['platform'] =~ /debian/
-    on host, 'echo \'export PATH=/var/lib/gems/1.8/bin/:${PATH}\' >> ~/.bashrc'
-  end
-  if host.is_pe?
-    install_pe
-  else
-    install_puppet
-    on host, "mkdir -p #{host['distmoduledir']}"
+
+unless ENV['RS_PROVISION'] == 'no'
+  hosts.each do |host|
+    if host['platform'] =~ /debian/
+      on host, 'echo \'export PATH=/var/lib/gems/1.8/bin/:${PATH}\' >> ~/.bashrc'
+    end
+    if host.is_pe?
+      install_pe
+    else
+      install_puppet
+      on host, "mkdir -p #{host['distmoduledir']}"
+    end
   end
 end
 
