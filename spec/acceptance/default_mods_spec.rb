@@ -7,8 +7,6 @@ when 'Debian'
   servicename = 'apache2'
 when 'FreeBSD'
   servicename = 'apache22'
-else
-  raise "Unconfigured OS for apache service on #{fact('osfamily')}"
 end
 
 describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
