@@ -1,14 +1,27 @@
+## 2014-03-04 Supported Release 1.0.x
+###Summary
+
+####Features
+
+####Bugfixes
+
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+
+---
+
 ## 2014-01-31 Release 0.11.0
 ### Summary:
 
 This release adds preliminary support for Windows compatibility and multiple rewrite support.
 
-### Backwards-incompatible Changes:
+#### Backwards-incompatible Changes:
 
 - The rewrite_rule parameter is deprecated in favor of the new rewrite parameter
   and will be removed in a future release.
 
-### Features:
+#### Features:
 
 - add Match directive
 - quote paths for windows compatibility
@@ -25,7 +38,7 @@ This release adds preliminary support for Windows compatibility and multiple rew
 - Convert spec tests to beaker.
 - Support php_admin_(flag|value)s
 
-### Bugfixes:
+#### Bugfixes:
 
 - directories are either a Hash or an Array of Hashes
 - Configure Passenger in separate .conf file on RH so PassengerRoot isn't lost
@@ -40,7 +53,7 @@ This release adds preliminary support for Windows compatibility and multiple rew
 
 This release adds FreeBSD osfamily support and various other improvements to some mods.
 
-### Features:
+#### Features:
 
 - Add suPHP_UserGroup directive to directory context
 - Add support for ScriptAliasMatch directives
@@ -68,7 +81,7 @@ This release adds FreeBSD osfamily support and various other improvements to som
 - Add documentation about $ip
 - Add ability to pass ip (instead of wildcard) in default vhost files
 
-### Bugfixes:
+#### Bugfixes:
 
 - Don't listen on port or set NameVirtualHost for non-existent vhost
 - only apply Directory defaults when provider is a directory
@@ -80,7 +93,7 @@ This release adds more parameters to the base apache class and apache defined
 resource to make the module more flexible. It also adds or enhances SuPHP,
 WSGI, and Passenger mod support, and support for the ITK mpm module.
 
-### Backwards-incompatible Changes:
+#### Backwards-incompatible Changes:
 - Remove many default mods that are not normally needed.
 - Remove `rewrite_base` `apache::vhost` parameter; did not work anyway.
 - Specify dependencies on stdlib >=2.4.0 (this was already the case, but
@@ -88,7 +101,7 @@ making explicit)
 - Deprecate `a2mod` in favor of the `apache::mod::*` classes and `apache::mod`
 defined resource.
 
-### Features:
+#### Features:
 - `apache` class
   - Add `httpd_dir` parameter to change the location of the configuration
   files.
@@ -123,7 +136,7 @@ dependency chaining of `Class['apache'] -> <resource> ~>
 Class['apache::service']`
 - Added `apache::mod::proxy_balancer` class for `apache::balancer`
 
-### Bugfixes:
+#### Bugfixes:
 - Change dependency to puppetlabs-concat
 - Fix ruby 1.9 bug for `a2mod`
 - Change servername to be `$::hostname` if there is no `$::fqdn`
@@ -133,17 +146,17 @@ Class['apache::service']`
 array.
 
 ## 2013-07-26 Release 0.8.1
-### Bugfixes:
+#### Bugfixes:
 - Update `apache::mpm_module` detection for worker/prefork
 - Update `apache::mod::cgi` and `apache::mod::cgid` detection for
 worker/prefork
 
 ## 2013-07-16 Release 0.8.0
-### Features:
+#### Features:
 - Add `servername` parameter to `apache` class
 - Add `proxy_set` parameter to `apache::balancer` define
 
-### Bugfixes:
+#### Bugfixes:
 - Fix ordering for multiple `apache::balancer` clusters
 - Fix symlinking for sites-available on Debian-based OSs
 - Fix dependency ordering for recursive confdir management
@@ -151,13 +164,13 @@ worker/prefork
 - Documentation updates
 
 ## 2013-07-09 Release 0.7.0
-### Changes:
+#### Changes:
 - Essentially rewrite the module -- too many to list
 - `apache::vhost` has many abilities -- see README.md for details
 - `apache::mod::*` classes provide httpd mod-loading capabilities
 - `apache` base class is much more configurable
 
-### Bugfixes:
+#### Bugfixes:
 - Many. And many more to come
 
 ## 2013-03-2 Release 0.6.0
@@ -166,10 +179,10 @@ worker/prefork
 - make purging of vhost dir configurable
 
 ## 2012-08-24 Release 0.4.0
-### Changes:
+#### Changes:
 - `include apache` is now required when using `apache::mod::*`
 
-### Bugfixes:
+#### Bugfixes:
 - Fix syntax for validate_re
 - Fix formatting in vhost template
 - Fix spec tests such that they pass
