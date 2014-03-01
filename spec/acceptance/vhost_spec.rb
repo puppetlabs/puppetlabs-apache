@@ -880,7 +880,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       apply_manifest(pp, :catch_failures => true)
     end
 
-    it 'import_script applies cleanly', :unless => (fact('lsbcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
+    it 'import_script applies cleanly', :unless => (fact('lsbdistcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
       pp = <<-EOS
         class { 'apache': }
         class { 'apache::mod::wsgi': }
@@ -899,7 +899,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{$vhost_dir}/25-test.server.conf"), :unless => (fact('lsbcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
+    describe file("#{$vhost_dir}/25-test.server.conf"), :unless => (fact('lsbdistcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
       it { should be_file }
       it { should contain 'WSGIApplicationGroup %{GLOBAL}' }
       it { should contain 'WSGIDaemonProcess wsgi processes=2' }
