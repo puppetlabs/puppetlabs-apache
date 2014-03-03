@@ -1,9 +1,20 @@
-## 2014-03-04 Supported Release 1.0.x
+## 2014-03-04 Supported Release 1.0.0
 ###Summary
+
+This is a supported release. This release introduces Apache 2.4 support for
+Debian and RHEL based osfamilies.
 
 ####Features
 
+- Add apache24 support
+- Add rewrite_base functionality to rewrites
+- Updated README documentation
+- Add WSGIApplicationGroup and WSGIImportScript directives
+
 ####Bugfixes
+
+- Replace mutating hashes with merge() for Puppet 3.5
+- Fix WSGI import_script and mod_ssl issues on Lucid
 
 ####Known Bugs
 * By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
