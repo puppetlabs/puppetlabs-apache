@@ -269,7 +269,7 @@ describe 'apache::vhost', :type => :define do
           :attr  => 'scriptalias',
           :value => '/usr/scripts',
           :match => [
-            /^  ScriptAlias \/cgi-bin\/ "\/usr\/scripts"$/,
+            /^  ScriptAlias \/cgi-bin "\/usr\/scripts"$/,
           ],
         },
         {
@@ -1175,6 +1175,17 @@ describe 'apache::vhost', :type => :define do
         it 'should set RewriteCond' do
           should contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTPS\} off$/
+          )
+        end
+      end
+
+      describe 'when action is specified specified' do
+        let :params do default_params.merge({
+          :action => 'php-fastcgi',
+        }) end
+        it 'should set Action' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  Action php-fastcgi \/cgi-bin virtual$/
           )
         end
       end

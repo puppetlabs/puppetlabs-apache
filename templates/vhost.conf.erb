@@ -44,6 +44,7 @@
 <% elsif @access_log -%>
   CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %>
 <% end -%>
+<%= scope.function_template(['apache/vhost/_action.erb']) -%>
 <%= scope.function_template(['apache/vhost/_block.erb']) -%>
 <%= scope.function_template(['apache/vhost/_error_document.erb']) -%>
 <%= scope.function_template(['apache/vhost/_proxy.erb']) -%>
