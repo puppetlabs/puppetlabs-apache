@@ -251,6 +251,10 @@ define apache::vhost(
     include ::apache::mod::vhost_alias
   }
 
+  if $wsgi_daemon_process {
+    include ::apache::mod::wsgi
+  }
+
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
