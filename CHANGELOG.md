@@ -1,3 +1,16 @@
+## 2014-03-04 Supported Release 1.0.1
+###Summary
+
+This is a supported release.  This release removes a testing symlink that can
+cause trouble on systems where /var is on a seperate filesystem from the
+modulepath.
+
+####Features
+####Bugfixes
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+ 
 ## 2014-03-04 Supported Release 1.0.0
 ###Summary
 
