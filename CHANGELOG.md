@@ -1,14 +1,51 @@
+## 2014-03-04 Supported Release 1.0.1
+###Summary
+
+This is a supported release.  This release removes a testing symlink that can
+cause trouble on systems where /var is on a seperate filesystem from the
+modulepath.
+
+####Features
+####Bugfixes
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+ 
+## 2014-03-04 Supported Release 1.0.0
+###Summary
+
+This is a supported release. This release introduces Apache 2.4 support for
+Debian and RHEL based osfamilies.
+
+####Features
+
+- Add apache24 support
+- Add rewrite_base functionality to rewrites
+- Updated README documentation
+- Add WSGIApplicationGroup and WSGIImportScript directives
+
+####Bugfixes
+
+- Replace mutating hashes with merge() for Puppet 3.5
+- Fix WSGI import_script and mod_ssl issues on Lucid
+
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+
+---
+
 ## 2014-01-31 Release 0.11.0
 ### Summary:
 
 This release adds preliminary support for Windows compatibility and multiple rewrite support.
 
-### Backwards-incompatible Changes:
+#### Backwards-incompatible Changes:
 
 - The rewrite_rule parameter is deprecated in favor of the new rewrite parameter
   and will be removed in a future release.
 
-### Features:
+#### Features:
 
 - add Match directive
 - quote paths for windows compatibility
@@ -25,7 +62,7 @@ This release adds preliminary support for Windows compatibility and multiple rew
 - Convert spec tests to beaker.
 - Support php_admin_(flag|value)s
 
-### Bugfixes:
+#### Bugfixes:
 
 - directories are either a Hash or an Array of Hashes
 - Configure Passenger in separate .conf file on RH so PassengerRoot isn't lost
@@ -40,7 +77,7 @@ This release adds preliminary support for Windows compatibility and multiple rew
 
 This release adds FreeBSD osfamily support and various other improvements to some mods.
 
-### Features:
+#### Features:
 
 - Add suPHP_UserGroup directive to directory context
 - Add support for ScriptAliasMatch directives
@@ -68,7 +105,7 @@ This release adds FreeBSD osfamily support and various other improvements to som
 - Add documentation about $ip
 - Add ability to pass ip (instead of wildcard) in default vhost files
 
-### Bugfixes:
+#### Bugfixes:
 
 - Don't listen on port or set NameVirtualHost for non-existent vhost
 - only apply Directory defaults when provider is a directory
@@ -80,7 +117,7 @@ This release adds more parameters to the base apache class and apache defined
 resource to make the module more flexible. It also adds or enhances SuPHP,
 WSGI, and Passenger mod support, and support for the ITK mpm module.
 
-### Backwards-incompatible Changes:
+#### Backwards-incompatible Changes:
 - Remove many default mods that are not normally needed.
 - Remove `rewrite_base` `apache::vhost` parameter; did not work anyway.
 - Specify dependencies on stdlib >=2.4.0 (this was already the case, but
@@ -88,7 +125,7 @@ making explicit)
 - Deprecate `a2mod` in favor of the `apache::mod::*` classes and `apache::mod`
 defined resource.
 
-### Features:
+#### Features:
 - `apache` class
   - Add `httpd_dir` parameter to change the location of the configuration
   files.
@@ -123,7 +160,7 @@ dependency chaining of `Class['apache'] -> <resource> ~>
 Class['apache::service']`
 - Added `apache::mod::proxy_balancer` class for `apache::balancer`
 
-### Bugfixes:
+#### Bugfixes:
 - Change dependency to puppetlabs-concat
 - Fix ruby 1.9 bug for `a2mod`
 - Change servername to be `$::hostname` if there is no `$::fqdn`
@@ -133,17 +170,17 @@ Class['apache::service']`
 array.
 
 ## 2013-07-26 Release 0.8.1
-### Bugfixes:
+#### Bugfixes:
 - Update `apache::mpm_module` detection for worker/prefork
 - Update `apache::mod::cgi` and `apache::mod::cgid` detection for
 worker/prefork
 
 ## 2013-07-16 Release 0.8.0
-### Features:
+#### Features:
 - Add `servername` parameter to `apache` class
 - Add `proxy_set` parameter to `apache::balancer` define
 
-### Bugfixes:
+#### Bugfixes:
 - Fix ordering for multiple `apache::balancer` clusters
 - Fix symlinking for sites-available on Debian-based OSs
 - Fix dependency ordering for recursive confdir management
@@ -151,13 +188,13 @@ worker/prefork
 - Documentation updates
 
 ## 2013-07-09 Release 0.7.0
-### Changes:
+#### Changes:
 - Essentially rewrite the module -- too many to list
 - `apache::vhost` has many abilities -- see README.md for details
 - `apache::mod::*` classes provide httpd mod-loading capabilities
 - `apache` base class is much more configurable
 
-### Bugfixes:
+#### Bugfixes:
 - Many. And many more to come
 
 ## 2013-03-2 Release 0.6.0
@@ -166,44 +203,44 @@ worker/prefork
 - make purging of vhost dir configurable
 
 ## 2012-08-24 Release 0.4.0
-### Changes:
+#### Changes:
 - `include apache` is now required when using `apache::mod::*`
 
-### Bugfixes:
+#### Bugfixes:
 - Fix syntax for validate_re
 - Fix formatting in vhost template
 - Fix spec tests such that they pass
 
-    2012-05-08 Puppet Labs <info@puppetlabs.com> - 0.0.4
-    e62e362 Fix broken tests for ssl, vhost, vhost::*
-    42c6363 Changes to match style guide and pass puppet-lint without error
-    42bc8ba changed name => path for file resources in order to name namevar by it's name
-    72e13de One end too much
-    0739641 style guide fixes: 'true' <> true, $operatingsystem needs to be $::operatingsystem, etc.
-    273f94d fix tests
-    a35ede5 (#13860) Make a2enmod/a2dismo commands optional
-    98d774e (#13860) Autorequire Package['httpd']
-    05fcec5 (#13073) Add missing puppet spec tests
-    541afda (#6899) Remove virtual a2mod definition
-    976cb69 (#13072) Move mod python and wsgi package names to params
-    323915a (#13060) Add .gitignore to repo
-    fdf40af (#13060) Remove pkg directory from source tree
-    fd90015 Add LICENSE file and update the ModuleFile
-    d3d0d23 Re-enable local php class
-    d7516c7 Make management of firewalls configurable for vhosts
-    60f83ba Explicitly lookup scope of apache_name in templates.
-    f4d287f (#12581) Add explicit ordering for vdir directory
-    88a2ac6 (#11706) puppetlabs-apache depends on puppetlabs-firewall
-    a776a8b (#11071) Fix to work with latest firewall module
-    2b79e8b (#11070) Add support for Scientific Linux
-    405b3e9 Fix for a2mod
-    57b9048 Commit apache::vhost::redirect Manifest
-    8862d01 Commit apache::vhost::proxy Manifest
-    d5c1fd0 Commit apache::mod::wsgi Manifest
-    a825ac7 Commit apache::mod::python Manifest
-    b77062f Commit Templates
-    9a51b4a Vhost File Declarations
-    6cf7312 Defaults for Parameters
-    6a5b11a Ensure installed
-    f672e46 a2mod fix
-    8a56ee9 add pthon support to apache
+##2012-05-08 Puppet Labs <info@puppetlabs.com> - 0.0.4
+* e62e362 Fix broken tests for ssl, vhost, vhost::*
+* 42c6363 Changes to match style guide and pass puppet-lint without error
+* 42bc8ba changed name => path for file resources in order to name namevar by it's name
+* 72e13de One end too much
+* 0739641 style guide fixes: 'true' <> true, $operatingsystem needs to be $::operatingsystem, etc.
+* 273f94d fix tests
+* a35ede5 (#13860) Make a2enmod/a2dismo commands optional
+* 98d774e (#13860) Autorequire Package['httpd']
+* 05fcec5 (#13073) Add missing puppet spec tests
+* 541afda (#6899) Remove virtual a2mod definition
+* 976cb69 (#13072) Move mod python and wsgi package names to params
+* 323915a (#13060) Add .gitignore to repo
+* fdf40af (#13060) Remove pkg directory from source tree
+* fd90015 Add LICENSE file and update the ModuleFile
+* d3d0d23 Re-enable local php class
+* d7516c7 Make management of firewalls configurable for vhosts
+* 60f83ba Explicitly lookup scope of apache_name in templates.
+* f4d287f (#12581) Add explicit ordering for vdir directory
+* 88a2ac6 (#11706) puppetlabs-apache depends on puppetlabs-firewall
+* a776a8b (#11071) Fix to work with latest firewall module
+* 2b79e8b (#11070) Add support for Scientific Linux
+* 405b3e9 Fix for a2mod
+* 57b9048 Commit apache::vhost::redirect Manifest
+* 8862d01 Commit apache::vhost::proxy Manifest
+* d5c1fd0 Commit apache::mod::wsgi Manifest
+* a825ac7 Commit apache::mod::python Manifest
+* b77062f Commit Templates
+* 9a51b4a Vhost File Declarations
+* 6cf7312 Defaults for Parameters
+* 6a5b11a Ensure installed
+* f672e46 a2mod fix
+* 8a56ee9 add pthon support to apache
