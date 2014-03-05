@@ -1247,6 +1247,10 @@ Array of IPs to exclude from mod_security rule matching
 
 Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with [`proxy_dest`](#proxy_dest).
 
+#####`no_proxy_uris_match`
+
+This directive is equivalent to `no_proxy_uris`, but takes regular expressions.
+
 #####`proxy_preserve_host`
 
 Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxypreservehost).  true Enables the Host: line from an incoming request to be proxied to the host instead of hostname .  false sets this option to off (default).
@@ -1348,6 +1352,10 @@ apache::vhost { 'site.name.fdqn':
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
 `setenv` is optional and is an array to set environment variables for the proxy directive, for details see http://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings
+
+#####`proxy_pass_match`
+
+This directive is equivalent to proxy_pass, but takes regular expressions, see [ProxyPassMatch](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch) for details.
 
 #####`rack_base_uris`
 

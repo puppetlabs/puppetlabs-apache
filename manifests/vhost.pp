@@ -57,7 +57,10 @@ define apache::vhost(
   $scriptalias                 = undef,
   $scriptaliases               = [],
   $proxy_dest                  = undef,
+  $proxy_dest_match            = undef,
+  $proxy_dest_reverse_match    = undef,
   $proxy_pass                  = undef,
+  $proxy_pass_match            = undef,
   $suphp_addhandler            = $::apache::params::suphp_addhandler,
   $suphp_engine                = $::apache::params::suphp_engine,
   $suphp_configpath            = $::apache::params::suphp_configpath,
@@ -66,6 +69,7 @@ define apache::vhost(
   $php_admin_flags             = {},
   $php_admin_values            = {},
   $no_proxy_uris               = [],
+  $no_proxy_uris_match         = [],
   $proxy_preserve_host         = false,
   $proxy_error_override        = false,
   $redirect_source             = '/',
@@ -364,7 +368,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass) {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
     if ! defined(Class['apache::mod::proxy']) {
       include ::apache::mod::proxy
     }
