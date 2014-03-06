@@ -20,10 +20,10 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('passenger') }
+    it { is_expected.to contain_apache__mod('zpassenger') }
     it { is_expected.to contain_package("libapache2-mod-passenger") }
-    it { is_expected.to contain_file('passenger.load').with({
-      'path' => '/etc/apache2/mods-available/passenger.load',
+    it { is_expected.to contain_file('zpassenger.load').with({
+      'path' => '/etc/apache2/mods-available/zpassenger.load',
     }) }
     it { is_expected.to contain_file('passenger.conf').with({
       'path' => '/etc/apache2/mods-available/passenger.conf',
@@ -105,25 +105,25 @@ describe 'apache::mod::passenger', :type => :class do
       let :params do
         { :mod_path => '/usr/lib/foo/mod_foo.so' }
       end
-      it { is_expected.to contain_file('passenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/foo\/mod_foo\.so$/) }
+      it { is_expected.to contain_file('zpassenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/foo\/mod_foo\.so$/) }
     end
     describe "with mod_lib_path => '/usr/lib/foo'" do
       let :params do
         { :mod_lib_path => '/usr/lib/foo' }
       end
-      it { is_expected.to contain_file('passenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/foo\/mod_passenger\.so$/) }
+      it { is_expected.to contain_file('zpassenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/foo\/mod_passenger\.so$/) }
     end
     describe "with mod_lib => 'mod_foo.so'" do
       let :params do
         { :mod_lib => 'mod_foo.so' }
       end
-      it { is_expected.to contain_file('passenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/apache2\/modules\/mod_foo\.so$/) }
+      it { is_expected.to contain_file('zpassenger.load').with_content(/^LoadModule passenger_module \/usr\/lib\/apache2\/modules\/mod_foo\.so$/) }
     end
     describe "with mod_id => 'mod_foo'" do
       let :params do
         { :mod_id => 'mod_foo' }
       end
-      it { is_expected.to contain_file('passenger.load').with_content(/^LoadModule mod_foo \/usr\/lib\/apache2\/modules\/mod_passenger\.so$/) }
+      it { is_expected.to contain_file('zpassenger.load').with_content(/^LoadModule mod_foo \/usr\/lib\/apache2\/modules\/mod_passenger\.so$/) }
     end
 
     context "with Ubuntu 12.04 defaults" do
@@ -221,15 +221,15 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('passenger') }
+    it { is_expected.to contain_apache__mod('zpassenger') }
     it { is_expected.to contain_package("mod_passenger") }
     it { is_expected.to contain_file('passenger_package.conf').with({
       'path' => '/etc/httpd/conf.d/passenger.conf',
     }) }
     it { is_expected.to contain_file('passenger_package.conf').without_content }
     it { is_expected.to contain_file('passenger_package.conf').without_source }
-    it { is_expected.to contain_file('passenger.load').with({
-      'path' => '/etc/httpd/conf.d/passenger.load',
+    it { is_expected.to contain_file('zpassenger.load').with({
+      'path' => '/etc/httpd/conf.d/zpassenger.load',
     }) }
     it { is_expected.to contain_file('passenger.conf').without_content(/PassengerRoot/) }
     it { is_expected.to contain_file('passenger.conf').without_content(/PassengerRuby/) }
@@ -260,7 +260,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('passenger') }
+    it { is_expected.to contain_apache__mod('zpassenger') }
     it { is_expected.to contain_package("www/rubygem-passenger") }
   end
   context "on a Gentoo OS" do
@@ -277,7 +277,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('passenger') }
+    it { is_expected.to contain_apache__mod('zpassenger') }
     it { is_expected.to contain_package("www-apache/passenger") }
   end
 end
