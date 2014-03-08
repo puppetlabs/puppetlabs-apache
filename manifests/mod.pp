@@ -53,10 +53,10 @@ define apache::mod (
     # the module gets installed.
     $package_before = $::osfamily ? {
       'freebsd' => [
-        File["${mod_dir}/${mod}.load"],
+        File["${mod}.load"],
         File["${::apache::params::conf_dir}/${::apache::params::conf_file}"]
       ],
-      default => File["${mod_dir}/${mod}.load"],
+      default => File["${mod}.load"],
     }
     # $_package may be an array
     package { $_package:
