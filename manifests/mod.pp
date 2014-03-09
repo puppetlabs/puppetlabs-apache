@@ -5,6 +5,7 @@ define apache::mod (
   $lib_path = $::apache::params::lib_path,
   $id = undef,
   $path = undef,
+  $loadfiles = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -72,7 +73,7 @@ define apache::mod (
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
-    content => "LoadModule ${_id} ${_path}\n",
+    content => template('apache/mod/load.erb'),
     require => [
       Package['httpd'],
       Exec["mkdir ${mod_dir}"],
