@@ -9,7 +9,7 @@ class apache::version {
   if ! $distrelease {
     fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
   }
-  
+
   case $::osfamily {
     'RedHat': {
       if ($::operatingsystem == 'Fedora' and $distrelease >= 18) or ($::operatingsystem != 'Fedora' and $distrelease >= 7) {
@@ -19,7 +19,8 @@ class apache::version {
       }
     }
     'Debian': {
-      if $::operatingsystem == 'Ubuntu' and $distrelease >= 13.10 {
+      # We need the operatingsystemrelease here not the distrelease
+      if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease >= 13.10 {
         $default = 2.4
       } else {
         $default = 2.2
