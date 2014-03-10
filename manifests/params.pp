@@ -63,7 +63,7 @@ class apache::params inherits ::apache::version {
       'fcgid'       => 'mod_fcgid',
       'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
-      'php5'        => $distrelease ? {
+      'php5'        => $::apache::version::distrelease ? {
         '5'     => 'php53',
         default => 'php',
       },
