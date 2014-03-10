@@ -688,10 +688,11 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         class { 'apache': }
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
-          docroot          => '/tmp',
-	  action => 'php-fastcgi',
+          docroot => '/tmp',
+          action  => 'php-fastcgi',
         }
       EOS
+      pp = pp + "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian'
       apply_manifest(pp, :catch_failures => true)
     end
 
