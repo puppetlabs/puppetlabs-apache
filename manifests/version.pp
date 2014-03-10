@@ -9,7 +9,7 @@ class apache::version {
   if ! $distrelease {
     fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
   }
-  
+
   case $::osfamily {
     'RedHat': {
       if ($::operatingsystem == 'Fedora' and $distrelease >= 18) or ($::operatingsystem != 'Fedora' and $distrelease >= 7) {
