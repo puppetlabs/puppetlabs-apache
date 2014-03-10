@@ -140,6 +140,39 @@ describe 'apache', :type => :class do
         it { should contain_file("/etc/apache2/apache2.conf").with_content %r{^Group www-data\n} }
       end
     end
+
+    context "on Ubuntu" do
+      let :facts do
+        super().merge({
+          :operatingsystem => 'Ubuntu'
+        })
+      end
+
+      context "13.10" do
+        let :facts do
+          super().merge({
+            :operatingsystemrelease => '13.10'
+          })
+        end
+        it { should contain_class('apache').with_apache_version('2.4') }
+      end
+      context "12.04" do
+        let :facts do
+          super().merge({
+            :operatingsystemrelease => '12.04'
+          })
+        end
+        it { should contain_class('apache').with_apache_version('2.2') }
+      end
+      context "13.04" do
+        let :facts do
+          super().merge({
+            :operatingsystemrelease => '13.04'
+          })
+        end
+        it { should contain_class('apache').with_apache_version('2.2') }
+      end
+    end
   end
   context "on a RedHat 5 OS" do
     let :facts do
