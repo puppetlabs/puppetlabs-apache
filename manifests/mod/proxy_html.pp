@@ -1,21 +1,28 @@
 class apache::mod::proxy_html {
   Class['::apache::mod::proxy'] -> Class['::apache::mod::proxy_html']
   Class['::apache::mod::proxy_http'] -> Class['::apache::mod::proxy_html']
-  ::apache::mod { 'proxy_html': }
+
+  # Add libxml2
   case $::osfamily {
-    'RedHat': {
+    /RedHat|FreeBSD/: {
       ::apache::mod { 'xml2enc': }
     }
     'Debian': {
-      $proxy_html_loadfiles = $::apache::params::distrelease ? {
-        '6'     => '/usr/lib/libxml2.so.2',
-        default => "/usr/lib/${::hardwaremodel}-linux-gnu/libxml2.so.2",
+      $gnu_path = $::hardwaremodel ? {
+        'i686'  => 'i386',
+        default => $::hardwaremodel,
+      }
+      $loadfiles = $::apache::params::distrelease ? {
+        '6'     => ['/usr/lib/libxml2.so.2'],
+        default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
       }
     }
-    'FreeBSD': {
-      ::apache::mod { 'xml2enc': }
-    }
   }
+
+  ::apache::mod { 'proxy_html':
+    loadfiles => $loadfiles,
+  }
+
   # Template uses $icons_path
   file { 'proxy_html.conf':
     ensure  => file,
