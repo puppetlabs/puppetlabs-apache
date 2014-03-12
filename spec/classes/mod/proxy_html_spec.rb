@@ -6,7 +6,7 @@ describe 'apache::mod::proxy_html', :type => :class do
       'include apache::mod::proxy_http',
     ]
   end
-  context "on a Debian OS" do
+  context "on a Debian OS", :compile do
     let :facts do
       {
         :osfamily               => 'Debian',
@@ -18,7 +18,7 @@ describe 'apache::mod::proxy_html', :type => :class do
     it { should contain_apache__mod('proxy_html') }
     it { should contain_package("libapache2-mod-proxy-html") }
   end
-  context "on a RedHat OS" do
+  context "on a RedHat OS", :compile do
     let :facts do
       {
         :osfamily               => 'RedHat',
@@ -30,7 +30,7 @@ describe 'apache::mod::proxy_html', :type => :class do
     it { should contain_apache__mod('proxy_html') }
     it { should contain_package("mod_proxy_html") }
   end
-  context "on a FreeBSD OS" do
+  context "on a FreeBSD OS", :compile do
     let :facts do
       {
         :osfamily               => 'FreeBSD',
