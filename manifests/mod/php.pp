@@ -1,11 +1,15 @@
 class apache::mod::php (
+  $package        = undef,
   $package_ensure = 'present',
+  $path           = undef,
 ) {
   if ! defined(Class['apache::mod::prefork']) {
     fail('apache::mod::php requires apache::mod::prefork; please enable mpm_module => \'prefork\' on Class[\'apache\']')
   }
   ::apache::mod { 'php5':
+    package        => $package,
     package_ensure => $package_ensure,
+    path           => $path,
   }
 
   include ::apache::mod::mime
