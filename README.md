@@ -309,6 +309,14 @@ Sets the amount of time the server will wait for subsequent requests on a persis
 
 Changes the verbosity level of the error log. Defaults to 'warn'. Valid values are 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info', or 'debug'.
 
+#####`log_formats`
+
+Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log_config.html#logformat). This is done in a Hash:
+
+```puppet
+  $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
+```
+
 #####`logroot`
 
 Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, and '/var/log/apache22' on FreeBSD.

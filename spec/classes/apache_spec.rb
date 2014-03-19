@@ -141,6 +141,20 @@ describe 'apache', :type => :class do
       end
     end
 
+    describe "Add extra LogFormats" do
+      context "When parameter log_formats is a hash" do
+        let :params do
+          { :log_formats => {
+            'vhost_common'   => "%v %h %l %u %t \"%r\" %>s %b",
+            'vhost_combined' => "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
+          } }
+        end
+
+        it { should contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common\n} }
+        it { should contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined\n} }
+      end
+    end
+
     context "on Ubuntu" do
       let :facts do
         super().merge({

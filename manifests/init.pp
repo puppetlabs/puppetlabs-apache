@@ -51,6 +51,7 @@ class apache (
   $keepalive_timeout    = $::apache::params::keepalive_timeout,
   $logroot              = $::apache::params::logroot,
   $log_level            = $::apache::params::log_level,
+  $log_formats          = {},
   $ports_file           = $::apache::params::ports_file,
   $apache_version       = $::apache::version::default,
   $server_tokens        = 'OS',
