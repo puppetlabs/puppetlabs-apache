@@ -1555,7 +1555,7 @@ Configure a vhost to redirect non-SSL connections to SSL
       servername      => 'sixteenth.example.com',
       port            => '80',
       docroot         => '/var/www/sixteenth',
-      redirect_status => 'permanent'
+      redirect_status => 'permanent',
       redirect_dest   => 'https://sixteenth.example.com/'
     }
     apache::vhost { 'sixteenth.example.com ssl':
