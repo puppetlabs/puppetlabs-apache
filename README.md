@@ -16,6 +16,7 @@
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
+        * [Class: apache::mod::php](#class-apachemodphp)
         * [Class: apache::mod::ssl](#class-apachemodssl)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
@@ -522,6 +523,18 @@ These are the defaults:
 ```
 
 Full documentation for mod_pagespeed is available from [Google](http://modpagespeed.com).
+
+####Class: `apache::mod::php`
+
+Installs and configures mod_php. The defaults are OS-dependant.
+
+Overriding the package name:
+```
+  class {'::apache::mod::php':
+    package_name => "php54-php",
+    path         => "${::apache::params::lib_path}/libphp54-php5.so",
+  }
+```
 
 ####Class: `apache::mod::ssl`
 

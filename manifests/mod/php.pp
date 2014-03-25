@@ -1,5 +1,5 @@
 class apache::mod::php (
-  $package        = undef,
+  $package_name   = undef,
   $package_ensure = 'present',
   $path           = undef,
 ) {
@@ -7,7 +7,7 @@ class apache::mod::php (
     fail('apache::mod::php requires apache::mod::prefork; please enable mpm_module => \'prefork\' on Class[\'apache\']')
   }
   ::apache::mod { 'php5':
-    package        => $package,
+    package        => $package_name,
     package_ensure => $package_ensure,
     path           => $path,
   }
