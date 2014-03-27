@@ -47,7 +47,7 @@ define apache::mpm (
         }
       }
 
-      if $apache_version < 2.4 {
+      if $apache_version < 2.4 and ! defined(Package["apache2-mpm-${mpm}"]) {
         package { "apache2-mpm-${mpm}":
           ensure => present,
         }
