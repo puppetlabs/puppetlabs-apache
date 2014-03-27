@@ -12,7 +12,7 @@
 # Sample Usage:
 #
 #    sometype { 'foo':
-#      notify => Class['apache::service],
+#      notify => Class['apache::service'],
 #    }
 #
 #
