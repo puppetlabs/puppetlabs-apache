@@ -11,7 +11,7 @@
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
 <% if @ssl_compression -%>
-  SSLCompression Off
+  SSLCompression On
 <% end -%>
   <% if @apache_version >= '2.4' -%>
   Mutex <%= @ssl_mutex %>
