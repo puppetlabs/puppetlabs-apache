@@ -20,7 +20,7 @@
   <% end -%>
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
-  SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
+  SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol all -SSLv2
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>

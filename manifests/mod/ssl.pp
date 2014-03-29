@@ -1,6 +1,7 @@
 class apache::mod::ssl (
   $ssl_compression = false,
   $ssl_options     = [ 'StdEnvVars' ],
+  $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
   $apache_version  = $::apache::apache_version,
 ) {
   $session_cache = $::osfamily ? {
