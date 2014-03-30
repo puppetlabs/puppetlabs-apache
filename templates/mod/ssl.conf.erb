@@ -11,7 +11,7 @@
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
 <% if @ssl_compression -%>
-  SSLCompression Off
+  SSLCompression On
 <% end -%>
   <% if @apache_version >= '2.4' -%>
   Mutex <%= @ssl_mutex %>
@@ -20,7 +20,7 @@
   <% end -%>
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
-  SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
+  SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol all -SSLv2
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
