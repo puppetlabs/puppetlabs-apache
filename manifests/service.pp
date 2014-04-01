@@ -27,8 +27,13 @@ class apache::service (
   }
   validate_bool($service_enable)
 
+  $_service_ensure = $service_ensure ? {
+    'UNSET' => undef,
+    default => $service_ensure,
+  }
+  
   service { 'httpd':
-    ensure => $service_ensure,
+    ensure => $_service_ensure,
     name   => $service_name,
     enable => $service_enable,
   }
