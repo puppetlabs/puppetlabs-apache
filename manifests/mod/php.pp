@@ -2,10 +2,12 @@ class apache::mod::php (
   $package_name   = undef,
   $package_ensure = 'present',
   $path           = undef,
+  $extensions     = ['.php'],
 ) {
   if ! defined(Class['apache::mod::prefork']) {
     fail('apache::mod::php requires apache::mod::prefork; please enable mpm_module => \'prefork\' on Class[\'apache\']')
   }
+  validate_array($extensions)
   ::apache::mod { 'php5':
     package        => $package_name,
     package_ensure => $package_ensure,
