@@ -14,7 +14,7 @@
 #
 # Cause the PHP interpreter to handle files with a .php extension.
 #
-AddHandler php5-script <%= @extensions.join(' ') %>
+AddHandler php5-script <%= @@extensions.flatten.compact.join(' ') %>
 AddType text/html .php
 
 #
