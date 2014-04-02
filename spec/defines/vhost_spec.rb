@@ -686,6 +686,7 @@ describe 'apache::vhost', :type => :define do
             'options'           => '-MultiViews',
             'order'             => 'deny,yned',
             'passenger_enabled' => 'onf',
+            'sethandler'        => 'None',
           },
           :match    => [
             /^  <Directory "\/opt\/app">$/,
@@ -695,6 +696,7 @@ describe 'apache::vhost', :type => :define do
             /^    Deny from google.com$/,
             /^    Options -MultiViews$/,
             /^    Order deny,yned$/,
+            /^    SetHandler None$/,
             /^    PassengerEnabled onf$/,
             /^  <\/Directory>$/,
           ],
