@@ -167,6 +167,7 @@ define apache::vhost(
     $wsgi_import_script_options  = undef,
     $wsgi_process_group          = undef,
     $wsgi_script_aliases         = undef,
+    $wsgi_pass_authorization     = undef,
     $custom_fragment             = undef,
     $itk                         = undef,
     $action                      = undef,
