@@ -82,12 +82,18 @@ class apache::params inherits ::apache::version {
       'php5' => 'libphp5.so',
       'nss'  => 'libmodnss.so',
     }
-    $conf_template        = 'apache/httpd.conf.erb'
-    $keepalive            = 'Off'
-    $keepalive_timeout    = 15
-    $fastcgi_lib_path     = undef
-    $mime_support_package = 'mailcap'
-    $mime_types_config    = '/etc/mime.types'
+    $conf_template         = 'apache/httpd.conf.erb'
+    $keepalive             = 'Off'
+    $keepalive_timeout     = 15
+    $keepalive_request     = 100
+    $hostname_lookups      = 'Off'
+    $start_servers         = 3
+    $server_limit          = 256
+    $max_clients           = 256
+    $max_request_per_child = 0
+    $fastcgi_lib_path      = undef
+    $mime_support_package  = 'mailcap'
+    $mime_types_config     = '/etc/mime.types'
   } elsif $::osfamily == 'Debian' {
     $user             = 'www-data'
     $group            = 'www-data'
@@ -141,6 +147,12 @@ class apache::params inherits ::apache::version {
     $conf_template     = 'apache/httpd.conf.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
+    $keepalive_request     = 100
+    $hostname_lookups      = 'Off'
+    $start_servers         = 3
+    $server_limit          = 256
+    $max_clients           = 256
+    $max_request_per_child = 0
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config = '/etc/mime.types'
@@ -199,6 +211,12 @@ class apache::params inherits ::apache::version {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    $keepalive_request     = 100
+    $hostname_lookups      = 'Off'
+    $start_servers         = 3
+    $server_limit          = 256
+    $max_clients           = 256
+    $max_request_per_child = 0
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'

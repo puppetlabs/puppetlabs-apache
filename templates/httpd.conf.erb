@@ -8,8 +8,13 @@ ServerRoot "<%= @server_root %>"
 PidFile <%= @pidfile %>
 Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>
-MaxKeepAliveRequests 100
 KeepAliveTimeout <%= @keepalive_timeout %>
+MaxKeepAliveRequests 50 <%= @keepalive_request %>
+HostnameLookups Off <%= @hostname_lookups %>
+StartServers 60 <%= @start_servers %>
+ServerLimit 1024 <%= @server_limit %>
+MaxClients 1024 <%= @max_clients %>
+MaxRequestsPerChild 500 <%= @max_request_per_child %>
 
 User <%= @user %>
 Group <%= @group %>

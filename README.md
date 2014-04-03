@@ -306,6 +306,30 @@ Enables persistent connections.
 
 Sets the amount of time the server will wait for subsequent requests on a persistent connection. Defaults to '15'.
 
+#####`keepalive_request`
+
+The maximum number of requests to allow # during a persistent connection.
+
+#####`hostname_lookups`
+
+Enable DNS request to journalize the hostnames. [HostnameLookups](https://httpd.apache.org/docs/current/en/mod/core.html#hostnamelookups). Valid values are 'On', 'Off', 'Double'
+
+#####`start_servers`
+
+The [StartServers](https://httpd.apache.org/docs/current/en/mod/mpm_common.html#startservers) directive sets the number of child server processes created on startup.
+
+#####`server_limit`
+
+For the prefork MPM, this [directive](http://httpd.apache.org/docs/current/en/mod/mpm_common.html#serverlimit) sets the maximum configured value for MaxRequestWorkers for the lifetime of the Apache httpd process. For the worker MPM, this directive in combination with ThreadLimit sets the maximum configured value for MaxRequestWorkers for the lifetime of the Apache httpd process.
+
+#####`max_clients`
+
+The MaxClients [directive](http://httpd.apache.org/docs/2.0/fr/mod/mpm_common.html#maxclients) sets the limit on the number of simultaneous requests that will be served
+
+#####`max_request_per_child`
+
+The MaxRequestsPerChild [directive](http://httpd.apache.org/docs/2.0/fr/mod/mpm_common.html#maxrequestsperchild) sets the limit on the number of requests that an individual child server process will handle. After MaxRequestsPerChild requests, the child process will die. If MaxRequestsPerChild is 0, then the process will never expire.
+
 #####`log_level`
 
 Changes the verbosity level of the error log. Defaults to 'warn'. Valid values are 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info', or 'debug'.
