@@ -388,7 +388,7 @@ Determines whether the HTTPD service is enabled when the machine is booted. Defa
 
 #####`service_ensure`
 
-Determines whether the service should be running. Can be set to 'undef', which is useful when you want to let the service be managed by some other application like Pacemaker. Defaults to 'running'.
+Determines whether the service should be running. Valid values are true, false, 'running' or 'stopped' when Puppet should manage the service. Any other value will set ensure to false for the Apache service, which is useful when you want to let the service be managed by some other application like Pacemaker. Defaults to 'running'.
 
 #####`service_name`
 
