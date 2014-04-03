@@ -29,10 +29,10 @@ class apache::service (
 
   case $service_ensure {
     true, false, 'running', 'stopped': {
-      $_service_enable = $service_enable
+      $_service_ensure = $service_ensure
     }
     default: {
-      $_service_enable = undef
+      $_service_ensure = undef
     }
   }
 
