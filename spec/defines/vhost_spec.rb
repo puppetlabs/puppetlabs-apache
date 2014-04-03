@@ -740,6 +740,40 @@ describe 'apache::vhost', :type => :define do
           ],
         },
         {
+          :title  => 'should accept directory directives with rewrites array',
+          :attr   => 'directories',
+          :value  => [
+            {
+              'path'      => '/opt/app3',
+              'rewrites'  => [
+                {
+                  'comment' => 'Permalink Rewrites',
+                  'rewrite_base' => '/',
+                  'rewrite_rule' => [ '^index\.php$ - [L]' ],
+                },
+                {
+                  'rewrite_cond' => [
+                    '%{REQUEST_FILENAME} !-f',
+                    '%{REQUEST_FILENAME} !-d',
+                  ],
+                  'rewrite_rule' => [ '. /index.php [L]' ],
+                }
+              ]
+            }
+          ],
+          :match  => [
+            /^  <Directory "\/opt\/app3">$/,
+            /^    #Permalink Rewrites$/,
+            /^    RewriteEngine On$/,
+            /^    RewriteBase \/$/,
+            /^    RewriteRule \^index\\.php\$ - \[L\]$/,
+            /^    RewriteCond %{REQUEST_FILENAME} !-f$/,
+            /^    RewriteCond %{REQUEST_FILENAME} !-d$/,
+            /^    RewriteRule . \/index.php \[L\]$/,
+            /^  <\/Directory>$/,
+          ],
+        },
+        {
           :title => 'should accept location for provider',
           :attr  => 'directories',
           :value => {
@@ -876,6 +910,40 @@ describe 'apache::vhost', :type => :define do
             /^    AllowOverride None$/,
             /^    Require all granted$/,
             /^    AddHandler cgi-script .cgi$/,
+            /^  <\/Directory>$/,
+          ],
+        },
+        {
+          :title  => 'should accept directory directives with rewrites array',
+          :attr   => 'directories',
+          :value  => [
+            {
+              'path'      => '/opt/app3',
+              'rewrites'  => [
+                {
+                  'comment' => 'Permalink Rewrites',
+                  'rewrite_base' => '/',
+                  'rewrite_rule' => [ '^index\.php$ - [L]' ],
+                },
+                {
+                  'rewrite_cond' => [
+                    '%{REQUEST_FILENAME} !-f',
+                    '%{REQUEST_FILENAME} !-d',
+                  ],
+                  'rewrite_rule' => [ '. /index.php [L]' ],
+                }
+              ]
+            }
+          ],
+          :match  => [
+            /^  <Directory "\/opt\/app3">$/,
+            /^    #Permalink Rewrites$/,
+            /^    RewriteEngine On$/,
+            /^    RewriteBase \/$/,
+            /^    RewriteRule \^index\\.php\$ - \[L\]$/,
+            /^    RewriteCond %{REQUEST_FILENAME} !-f$/,
+            /^    RewriteCond %{REQUEST_FILENAME} !-d$/,
+            /^    RewriteRule . \/index.php \[L\]$/,
             /^  <\/Directory>$/,
           ],
         },

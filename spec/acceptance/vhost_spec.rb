@@ -874,6 +874,45 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  describe 'directory rewrite rules' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot      => '/tmp',
+          directories  => [
+            {
+            path => '/tmp',
+            rewrites => [
+              {
+              comment => 'Permalink Rewrites',
+              rewrite_base => '/',
+              },
+              { rewrite_rule => [ '^index\.php$ - [L]' ] },
+              { rewrite_cond => [
+                '%{REQUEST_FILENAME} !-f',
+                '%{REQUEST_FILENAME} !-d',                                                                                             ],                                                                                                                     rewrite_rule => [ '. /index.php [L]' ],                                                                              }
+              ],
+            },
+            ],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '#Permalink Rewrites' }
+      it { should contain 'RewriteEngine On' }
+      it { should contain 'RewriteBase /' }
+      it { should contain 'RewriteRule ^index\.php$ - [L]' }
+      it { should contain 'RewriteCond %{REQUEST_FILENAME} !-f' }
+      it { should contain 'RewriteCond %{REQUEST_FILENAME} !-d' }
+      it { should contain 'RewriteRule . /index.php [L]' }
+    end
+  end
+
   describe 'setenv/setenvif' do
     it 'applies cleanly' do
       pp = <<-EOS
