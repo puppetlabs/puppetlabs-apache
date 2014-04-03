@@ -3,13 +3,14 @@ class apache::mod::negotiation (
   $template = 'apache/mod/negotiation.conf.erb',
   $source   = '',
 ) {
-  $manage_content = $content ? {
-    ''      => $template ? {
-      ''      => undef,
-      default => template($template),
+  $manage_content = $source ? {
+    ''      => $content ? {
+      ''      => template($template),
+      default => $content,
     },
-    default => $content,
+    default => undef,
   }
+
   $manage_source = $source ? {
     ''      => undef,
     default => $source,
