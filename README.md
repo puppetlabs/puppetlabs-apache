@@ -442,7 +442,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `cgid`
 * `dav`
 * `dav_fs`
-* `dav_svn`
+* `dav_svn`*
 * `deflate`
 * `dev`
 * `dir`*
