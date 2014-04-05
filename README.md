@@ -674,6 +674,10 @@ Sets group access to the docroot directory. Defaults to 'root'.
 
 Sets individual user access to the docroot directory. Defaults to 'root'.
 
+#####`docroot_mode`
+
+Sets access permissions of the docroot directory. Defaults to 'undef'.
+
 #####`error_log`
 
 Specifies whether `*_error.log` directives should be configured. Defaults to 'true'.

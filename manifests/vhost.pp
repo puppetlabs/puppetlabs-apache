@@ -94,6 +94,7 @@ define apache::vhost(
     $add_listen                  = true,
     $docroot_owner               = 'root',
     $docroot_group               = $::apache::params::root_group,
+    $docroot_mode                = undef,
     $serveradmin                 = undef,
     $ssl                         = false,
     $ssl_cert                    = $::apache::default_ssl_cert,
@@ -262,6 +263,7 @@ define apache::vhost(
       ensure  => directory,
       owner   => $docroot_owner,
       group   => $docroot_group,
+      mode    => $docroot_mode,
       require => Package['httpd'],
     }
   }

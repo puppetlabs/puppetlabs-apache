@@ -427,6 +427,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           docroot       => '/tmp/test',
           docroot_owner => 'test_owner',
           docroot_group => 'test_group',
+          docroot_mode  => '0750',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -436,6 +437,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { should be_directory }
       it { should be_owned_by 'test_owner' }
       it { should be_grouped_into 'test_group' }
+      it { should be_mode '0750' }
     end
   end
 
