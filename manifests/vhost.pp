@@ -144,6 +144,7 @@ define apache::vhost(
     $php_admin_flags             = [],
     $php_admin_values            = [],
     $no_proxy_uris               = [],
+    $proxy_preserve_host         = false,
     $redirect_source             = '/',
     $redirect_dest               = undef,
     $redirect_status             = undef,
