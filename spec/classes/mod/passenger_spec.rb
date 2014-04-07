@@ -118,11 +118,16 @@ describe 'apache::mod::passenger', :type => :class do
     it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("mod_passenger") }
+    it { should contain_file('passenger_package.conf').with({
+      'path' => '/etc/httpd/conf.d/passenger.conf',
+    }) }
+    it { should contain_file('passenger_package.conf').without_content }
+    it { should contain_file('passenger_package.conf').without_source }
     it { should contain_file('passenger.load').with({
       'path' => '/etc/httpd/conf.d/passenger.load',
     }) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRoot "\/usr\/lib\/ruby\/gems\/1.8\/gems\/passenger-3\.0\.19"$/) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRuby "\/usr\/bin\/ruby"/) }
+    it { should contain_file('passenger.conf').without_content(/PassengerRoot/) }
+    it { should contain_file('passenger.conf').without_content(/PassengerRuby/) }
     describe "with passenger_root => '/usr/lib/example'" do
       let :params do
         { :passenger_root => '/usr/lib/example' }

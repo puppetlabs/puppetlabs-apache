@@ -49,10 +49,10 @@ class apache::params inherits ::apache::version {
     $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
     $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
     $ssl_certs_dir        = '/etc/pki/tls/certs'
-    $passenger_conf_file  = 'passenger.conf'
-    $passenger_conf_package_file = undef
-    $passenger_root       = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.19'
-    $passenger_ruby       = '/usr/bin/ruby'
+    $passenger_conf_file  = 'passenger_extra.conf'
+    $passenger_conf_package_file = 'passenger.conf'
+    $passenger_root       = undef
+    $passenger_ruby       = undef
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef

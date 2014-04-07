@@ -17,8 +17,10 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
     mod_dir = '/etc/httpd/conf.d/'
     conf_file = "#{mod_dir}passenger.conf"
     load_file = "#{mod_dir}passenger.load"
-    passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.19'
+    # sometimes installs as 3.0.12, sometimes as 3.0.19 - so just check for the stable part
+    passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.1'
     passenger_ruby = '/usr/bin/ruby'
+    passenger_tempdir = '/var/run/rubygem-passenger'
     passenger_module_path = 'modules/mod_passenger.so'
     rackapp_user = 'apache'
     rackapp_group = 'apache'
@@ -67,7 +69,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
         it { should be_enabled }
         it { should be_running }
       end
-      
+
       describe file(conf_file) do
         it { should contain "PassengerRoot \"#{passenger_root}\"" }
         it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
@@ -84,11 +86,11 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           r.stdout.should =~ /Passenger processes/
           r.stdout.should =~ /### Processes: [0-9]+/
           r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
-      
+
           r.exit_code.should == 0
         end
       end
-      
+
       # passenger-status fails under stock ubuntu-server-12042-x64 + mod_passenger,
       # even when the passenger process is successfully installed and running
       unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '12.04'
@@ -102,19 +104,19 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
             r.stdout.should =~ /active[ ]+= [0-9]+/
             r.stdout.should =~ /inactive[ ]+= [0-9]+/
             r.stdout.should =~ /Waiting on global queue: [0-9]+/
-      
+
             r.exit_code.should == 0
           end
         end
       end
-      
+
       it 'should answer to passenger.example.com' do
         shell("/usr/bin/curl passenger.example.com:80") do |r|
           r.stdout.should =~ /^hello <b>world<\/b>$/
           r.exit_code.should == 0
         end
       end
-      
+
     end
 
   when 'RedHat'
@@ -173,20 +175,31 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           it { should be_enabled }
           it { should be_running }
         end
-      
+
         describe file(conf_file) do
-          it { should contain "PassengerRoot \"#{passenger_root}\"" }
-          it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+          it { should contain "PassengerRoot #{passenger_root}" }
+          it { should contain "PassengerRuby #{passenger_ruby}" }
+          it { should contain "PassengerTempDir #{passenger_tempdir}" }
         end
 
         describe file(load_file) do
           it { should contain "LoadModule passenger_module #{passenger_module_path}" }
         end
 
-        # note: passenger-memory-stats is not installed on Redhat
+        it 'should output status via passenger-memory-stats' do
+          shell("sudo /usr/bin/passenger-memory-stats") do |r|
+            r.stdout.should =~ /Apache processes/
+            r.stdout.should =~ /Nginx processes/
+            r.stdout.should =~ /Passenger processes/
+            r.stdout.should =~ /### Processes: [0-9]+/
+            r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
+
+            r.exit_code.should == 0
+          end
+        end
 
         it 'should output status via passenger-status' do
-          shell("sudo /usr/bin/passenger-status") do |r|
+          shell("sudo PASSENGER_TMPDIR=/var/run/rubygem-passenger /usr/bin/passenger-status") do |r|
             # spacing may vary
             r.stdout.should =~ /[\-]+ General information [\-]+/
             r.stdout.should =~ /max[ ]+= [0-9]+/
@@ -194,11 +207,11 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
             r.stdout.should =~ /active[ ]+= [0-9]+/
             r.stdout.should =~ /inactive[ ]+= [0-9]+/
             r.stdout.should =~ /Waiting on global queue: [0-9]+/
-      
+
             r.exit_code.should == 0
           end
         end
-      
+
         it 'should answer to passenger.example.com' do
           shell("/usr/bin/curl passenger.example.com:80") do |r|
             r.stdout.should =~ /^hello <b>world<\/b>$/
