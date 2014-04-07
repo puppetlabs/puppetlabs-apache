@@ -608,6 +608,12 @@ describe 'apache::vhost', :type => :define do
           :match => [/^  WSGIApplicationGroup %{GLOBAL}$/],
         },
         {
+          :title => 'should accept a wsgi pass authorization',
+          :attr  => 'wsgi_pass_authorization',
+          :value => 'On',
+          :match => [/^  WSGIPassAuthorization On$/],
+        },
+        {
           :title => 'should contain environment variables',
           :attr  => 'access_log_env_var',
           :value => 'admin',

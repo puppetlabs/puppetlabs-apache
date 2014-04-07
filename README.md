@@ -1031,7 +1031,7 @@ Sets up a virtual host with a wildcard alias subdomain mapped to a directory wit
     }
 ```
 
-#####`wsgi_daemon_process`, `wsgi_daemon_process_options`, `wsgi_process_group`, & `wsgi_script_aliases`
+#####`wsgi_daemon_process`, `wsgi_daemon_process_options`, `wsgi_process_group`, `wsgi_script_aliases`, & `wsgi_pass_authorization`
 
 Set up a virtual host with [WSGI](https://code.google.com/p/modwsgi/).
 
@@ -1042,6 +1042,8 @@ Set up a virtual host with [WSGI](https://code.google.com/p/modwsgi/).
 `wsgi_process_group` sets the group ID the virtual host will run under. Defaults to 'undef'.
 
 `wsgi_script_aliases` requires a hash of web paths to filesystem .wsgi paths. Defaults to 'undef'.
+
+`wsgi_pass_authorization` the WSGI application handles authorisation instead of Apache when set to 'On'. For more information see [here] (http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).  Defaults to 'undef' where apache will set the defaults setting to 'Off'.
 
 To set up a virtual host with WSGI
 
