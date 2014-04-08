@@ -58,6 +58,19 @@ describe 'apache::mod', :type => :define do
       end
     end
 
+    context 'with a wrong ensure' do
+      let :params  do
+        {
+          :ensure  => 'otherensure',
+        }
+      end
+      it 'should cause a failure' do
+        expect {
+          subject
+        }.to raise_error(Puppet::Error, /ensure parameter must be 'present' or 'absent'/)
+      end
+    end
+
     context 'with source and content params' do
       let :params  do
         {
