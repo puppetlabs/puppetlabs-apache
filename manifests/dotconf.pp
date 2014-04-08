@@ -61,6 +61,9 @@ define apache::dotconf (
     fail('You must include the apache base class before using any apache defined resources')
   }
 
+  validate_re($ensure, '^(present|absent)$',
+    'ensure parameter must be \'present\' or \'absent\'')
+
   $manage_source = $source ? {
     ''      => undef,
     default => $source,
