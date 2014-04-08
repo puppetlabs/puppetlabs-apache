@@ -57,6 +57,10 @@ define apache::dotconf (
   $group    = $::apache::params::root_group,
   $path     = '',
 ) {
+  if ! defined(Class['apache']) {
+    fail('You must include the apache base class before using any apache defined resources')
+  }
+
   $manage_source = $source ? {
     ''      => undef,
     default => $source,
