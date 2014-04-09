@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'apache::mod', :type => :define do
+describe 'apache::dotconf', :type => :define do
   let :title do
     'spec_dot'
   end
@@ -8,8 +8,17 @@ describe 'apache::mod', :type => :define do
   let :pre_condition do
     'include apache'
   end
+  
+  let :default_params do
+    {
+      :ensure => 'present',
+      :owner  => 'root',
+      :group  => 'root',
+      :mode   => '0644',
+    }
+  end
 
-  describe 'os-independent items' do
+  context "os-independent items" do
     let :facts do
       {
         :osfamily => 'Debian',
@@ -18,29 +27,22 @@ describe 'apache::mod', :type => :define do
       }
     end
 
-    let :params do
-      {
-        :ensure => 'present',
-        :owner  => 'root',
-        :group  => 'root',
-        :mode   => '0644',
-      }
-    end
+    it { should contain_class("apache") }
 
+    let :params do default_params end
     it do
-      should contain_file('apache_dotconf_spec_dot.conf').with(
+      should contain_file('apache_dotconf_spec_dot.conf').with({
         :ensure => 'present',
         :owner  => 'root',
         :group  => 'root',
         :mode   => '0644'
-      )
+      } )
     end
 
     context 'without path param' do
-      let :params do
-        {
-          :path => ''
-        }
+      let :params do default_params.merge( {
+        :path => '',
+      } )
       end
       it do
         should contain_file('apache_dotconf_spec_dot.conf').with_path('/etc/apache2/conf.d/spec_dot.conf')
@@ -48,10 +50,9 @@ describe 'apache::mod', :type => :define do
     end
 
     context 'with path param' do
-      let :params do
-        {
-          :path => ''
-        }
+      let :params do default_params.merge( {
+        :path => '/etc/apache2/other_path'
+      } )
       end
       it do
         should contain_file('apache_dotconf_spec_dot.conf').with_path('/etc/apache2/other_path/spec_dot.conf')
@@ -71,39 +72,40 @@ describe 'apache::mod', :type => :define do
       end
     end
 
-    context 'with source and content params' do
-      let :params  do
-        {
-          :source  => 'somesource',
-          :content => 'somecontent',
-        }
-      end
-      it 'should cause a failure' do
-        expect {
-          contain_file('apache_dotconf_spec.dot.conf')
-        }.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
-      end
-    end
+    #context 'with source and content params' do
+      #let :params  do
+        #{
+          #:source  => 'somesource',
+          #:content => 'somecontent',
+        #}
+      #end
+      #it 'should cause a failure' do
+        #expect {
+          #contain_file('apache_dotconf_spec.dot.conf')
+        #}.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
+      #end
+    #end
 
-    context 'with source and template params' do
-      let :params do
-        {
-          :source   => 'somesource',
-          :template => 'somecontent',
-        }
-      end
-      it 'should cause a failure' do
-        expect {
-          contain_file('apache_dotconf_spec.dot.conf')
-        }.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
-      end
-    end
+    #context 'with source and template params' do
+      #let :params do
+        #{
+          #:source   => 'puppet:///modules/apache/spec',
+          #:template => 'apache/spec.erb',
+        #}
+      #end
+      #it 'should cause a failure' do
+        #expect {
+          #contain_file('apache_dotconf_spec.dot.conf')
+          ##subject
+        #}.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
+      #end
+    #end
 
     context 'with content and template params' do
       let :params do
         {
           :content  => 'somecontent',
-          :template => 'sometemplate',
+          :template => 'apache/spec.erb',
         }
       end
       it 'should prioritize content' do
