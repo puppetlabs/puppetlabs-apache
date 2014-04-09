@@ -72,35 +72,6 @@ describe 'apache::dotconf', :type => :define do
       end
     end
 
-    #context 'with source and content params' do
-      #let :params  do
-        #{
-          #:source  => 'somesource',
-          #:content => 'somecontent',
-        #}
-      #end
-      #it 'should cause a failure' do
-        #expect {
-          #contain_file('apache_dotconf_spec.dot.conf')
-        #}.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
-      #end
-    #end
-
-    #context 'with source and template params' do
-      #let :params do
-        #{
-          #:source   => 'puppet:///modules/apache/spec',
-          #:template => 'apache/spec.erb',
-        #}
-      #end
-      #it 'should cause a failure' do
-        #expect {
-          #contain_file('apache_dotconf_spec.dot.conf')
-          ##subject
-        #}.to raise_error(Puppet::Error, /You cannot specify more than one of content, source, target/)
-      #end
-    #end
-
     context 'with content and template params' do
       let :params do
         {
