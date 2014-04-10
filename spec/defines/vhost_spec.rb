@@ -608,10 +608,16 @@ describe 'apache::vhost', :type => :define do
           :match => [/^  WSGIApplicationGroup %{GLOBAL}$/],
         },
         {
-          :title => 'should accept a wsgi pass authorization',
+          :title => 'should set wsgi pass authorization',
           :attr  => 'wsgi_pass_authorization',
           :value => 'On',
           :match => [/^  WSGIPassAuthorization On$/],
+        },
+        {
+          :title => 'should set wsgi pass authorization false',
+          :attr  => 'wsgi_pass_authorization',
+          :value => 'Off',
+          :match => [/^  WSGIPassAuthorization Off$/],
         },
         {
           :title => 'should contain environment variables',

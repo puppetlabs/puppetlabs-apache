@@ -102,6 +102,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           proxy_pass => [
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
           ],
+    	  proxy_preserve_host   => true, 
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -111,6 +112,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName proxy.example.com" }
       it { should contain "ProxyPass" }
+      it { should contain "ProxyPreserveHost On" }
       it { should_not contain "<Proxy \*>" }
     end
   end

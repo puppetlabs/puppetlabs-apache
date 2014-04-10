@@ -478,6 +478,7 @@ define apache::vhost(
   # proxy fragment:
   #   - $proxy_dest
   #   - $no_proxy_uris
+  #   - $proxy_preserve_host (true to set ProxyPreserveHost to on and false to off
   # rack fragment:
   #   - $rack_base_uris
   # redirect fragment:
