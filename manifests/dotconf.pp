@@ -70,11 +70,11 @@ define apache::dotconf (
   }
 
   $manage_content = $content ? {
-    ''      => $template ? {
+    ''        => $template ? {
       ''      => undef,
       default => template($template),
     },
-    default => $content,
+    default   => $content,
   }
 
   $manage_path = $path ? {
