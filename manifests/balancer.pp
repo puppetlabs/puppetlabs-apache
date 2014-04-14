@@ -71,7 +71,7 @@ define apache::balancer (
     ensure  => present,
     target  => $target,
     order   => '19',
-    content => inline_template("<% proxy_set.each do |key, value| %> Proxyset <%= key %>=<%= value %>\n<% end %>"),
+    content => inline_template("<% proxy_set.keys.sort.each do |key| %> Proxyset <%= key %>=<%= proxy_set[key] %>\n<% end %>"),
   }
 
   concat::fragment { "01-${name}-footer":
