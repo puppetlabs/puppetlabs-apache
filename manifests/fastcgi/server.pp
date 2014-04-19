@@ -1,6 +1,7 @@
 define apache::fastcgi::server (
   $listen = '127.0.0.1:9000',
-  $path = '/var/www/$name.fcgi',
+  $timout = '15',
+  $faux_path = '/var/www/$name.fcgi',
   $alias = '/$name.cfgi',
   $file_type = 'application/x-httpd-php'
 ) {
