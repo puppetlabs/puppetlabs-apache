@@ -9,7 +9,7 @@ define apache::fastcgi::server (
   file { "$name":
     ensure => file,
     path    => "${::apache::mod_dir}/fastcgi-pool-$name.conf",
-    content => template('apache/mod/fastcgi.conf.erb'),
+    content => template('apache/fastcgi/server.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Service['httpd']
