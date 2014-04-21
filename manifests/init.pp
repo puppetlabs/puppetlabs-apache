@@ -28,6 +28,7 @@ class apache (
   $service_enable       = true,
   $service_ensure       = 'running',
   $purge_configs        = true,
+  $purge_vdir_configs   = true,
   $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
   $sendfile             = 'On',
@@ -182,7 +183,7 @@ class apache (
     file { $vhost_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_configs,
+      purge   => $purge_vdir_configs,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
