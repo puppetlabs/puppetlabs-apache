@@ -8,7 +8,7 @@ ServerRoot "<%= @server_root %>"
 PidFile <%= @pidfile %>
 Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>
-MaxKeepAliveRequests 100
+MaxKeepAliveRequests <%= @maxkeepaliverequests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
 
 User <%= @user %>

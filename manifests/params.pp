@@ -85,6 +85,7 @@ class apache::params inherits ::apache::version {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    $maxkeepaliverequests = 100
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
@@ -141,6 +142,7 @@ class apache::params inherits ::apache::version {
     $conf_template     = 'apache/httpd.conf.erb'
     $keepalive         = 'Off'
     $keepalive_timeout = 15
+    $maxkeepaliverequests = 100
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config = '/etc/mime.types'
@@ -199,6 +201,7 @@ class apache::params inherits ::apache::version {
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
+    $maxkeepaliverequests = 100
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
