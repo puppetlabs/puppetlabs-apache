@@ -28,6 +28,7 @@ class apache (
   $service_enable       = true,
   $service_ensure       = 'running',
   $purge_configs        = true,
+  $purge_vhost_dir      = undef,
   $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
   $sendfile             = 'On',
@@ -125,6 +126,13 @@ class apache (
     $purge_confd = $purge_configs
   }
 
+  # Set purge vhostd appropriately
+  if $purge_vhost_dir == undef {
+    $purge_vhostd = $purge_confd
+  } else {
+    $purge_vhostd = $purge_vhost_dir
+  }
+
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }
@@ -182,7 +190,7 @@ class apache (
     file { $vhost_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_configs,
+      purge   => $purge_vhostd,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
@@ -197,7 +205,7 @@ class apache (
     file { $vhost_enable_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_configs,
+      purge   => $purge_vhostd,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
