@@ -312,7 +312,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
   describe 'keepalive' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': keepalive => 'On', keepalive_timeout => '30', maxkeepaliverequests => '200' }"
+        pp = "class { 'apache': keepalive => 'On', keepalive_timeout => '30', max_keepalive_requests => '200' }"
         apply_manifest(pp, :catch_failures => true)
       end
     end

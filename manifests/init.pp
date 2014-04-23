@@ -49,7 +49,7 @@ class apache (
   $group                = $::apache::params::group,
   $keepalive            = $::apache::params::keepalive,
   $keepalive_timeout    = $::apache::params::keepalive_timeout,
-  $maxkeepaliverequests = $apache::params::maxkeepaliverequests,
+  $max_keepalive_requests = $apache::params::max_keepalive_requests,
   $logroot              = $::apache::params::logroot,
   $log_level            = $::apache::params::log_level,
   $log_formats          = {},
@@ -271,7 +271,7 @@ class apache (
     # - $apxs_workaround
     # - $keepalive
     # - $keepalive_timeout
-    # - $maxkeepaliverequests
+    # - $max_keepalive_requests
     # - $server_root
     # - $server_tokens
     # - $server_signature

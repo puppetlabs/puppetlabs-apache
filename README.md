@@ -306,7 +306,7 @@ Enables persistent connections.
 
 Sets the amount of time the server will wait for subsequent requests on a persistent connection. Defaults to '15'.
 
-#####`maxkeepaliverequests`
+#####`max_keepalive_requests`
 
 Sets the limit of the number of requests allowed per connection when KeepAlive is on. Defaults to '100'.
 
