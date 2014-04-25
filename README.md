@@ -315,7 +315,7 @@ Changes the verbosity level of the error log. Defaults to 'warn'. Valid values a
 Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log_config.html#logformat). This is done in a Hash:
 
 ```puppet
-  $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
+  $log_formats = { vhost_common => '%v %h %l %u %t \\"%r\\" %>s %b' }
 ```
 
 #####`logroot`
