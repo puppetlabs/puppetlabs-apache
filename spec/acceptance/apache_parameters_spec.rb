@@ -291,7 +291,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       it 'applies cleanly' do
         pp = <<-EOS
           class { 'apache':
-          { log_formats => {
+            log_formats => {
               'vhost_common'   => '%v %h %l %u %t \"%r\" %>s %b',
               'vhost_combined' => '%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"',
             }
