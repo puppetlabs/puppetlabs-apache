@@ -348,7 +348,7 @@ define apache::vhost(
     }
   }
   if ! $ip_based {
-    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) and $ensure == 'present' {
+    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) and $ensure == 'present' and $apache_version < 2.4 {
       ::apache::namevirtualhost { $nvh_addr_port: }
     }
   }
