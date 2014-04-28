@@ -484,6 +484,16 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       apply_manifest(pp, :catch_failures => true)
     end
 
+    describe file($ports_file) do
+      it { should be_file }
+      case fact('lsbdistcodename')
+      when 'saucy', 'trusty'
+        it { should_not contain 'NameVirtualHost test.server' }
+      else
+        it { should contain 'NameVirtualHost test.server' }
+      end
+    end
+
     describe file("#{$vhost_dir}/10-test.server.conf") do
       it { should be_file }
     end
