@@ -174,7 +174,8 @@ define apache::vhost(
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
     $additional_includes         = [],
-    $apache_version              = $::apache::apache_version
+    $apache_version              = $::apache::apache_version,
+    $suexec_user_group           = undef,
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -198,6 +199,11 @@ define apache::vhost(
   if $rewrites {
     validate_array($rewrites)
     validate_hash($rewrites[0])
+  }
+
+  if $suexec_user_group {
+    validate_re($suexec_user_group, '^\w+ \w+$',
+    "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
   }
 
   # Deprecated backwards-compatibility
@@ -253,6 +259,10 @@ define apache::vhost(
 
   if $wsgi_daemon_process {
     include ::apache::mod::wsgi
+  }
+
+  if $suexec_user_group {
+    include ::apache::mod::suexec
   }
 
   # This ensures that the docroot exists
