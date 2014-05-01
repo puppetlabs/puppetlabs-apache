@@ -249,12 +249,16 @@ define apache::vhost(
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) {
+    exec { "mkdocroot":
+      command => 'mkdir -p $docroot',
+      creates => $docroot,
+      require => Package['httpd'],
+    }
     file { $docroot:
       ensure  => directory,
       owner   => $docroot_owner,
       group   => $docroot_group,
-      mode    => $docroot_mode,
-      require => Package['httpd'],
+      require => Exec['mkdocroot'],
     }
   }
 
