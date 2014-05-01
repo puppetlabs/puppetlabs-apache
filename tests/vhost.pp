@@ -13,12 +13,13 @@ apache::vhost { 'first.example.com':
   docroot => '/var/www/first',
 }
 
-# Vhost with different docroot owner/group
+# Vhost with different docroot owner/group/mode
 apache::vhost { 'second.example.com':
   port          => '80',
   docroot       => '/var/www/second',
   docroot_owner => 'third',
   docroot_group => 'third',
+  docroot_mode  => '0770',
 }
 
 # Vhost with serveradmin
