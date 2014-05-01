@@ -70,16 +70,6 @@
 #    docroot => '/path/to/docroot',
 #  }
 #  apache::vhost { 'site.name.fqdn':
-#    port          => '80',
-#    rewrites => [
-#      {
-#        comment       => "redirect non-SSL traffic to SSL site",
-#        rewrite_cond => ['%{HTTPS} off'],
-#        rewrite_rule => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}']
-#      }
-#    ]
-#  }
-#  apache::vhost { 'site.name.fqdn':
 #    port            => '80',
 #    docroot         => '/path/to/other_docroot',
 #    custom_fragment => template("${module_name}/my_fragment.erb"),
