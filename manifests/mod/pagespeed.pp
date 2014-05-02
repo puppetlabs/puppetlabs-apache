@@ -34,7 +34,14 @@ class apache::mod::pagespeed (
   $additional_configuration      = {},
 ){
 
-  apache::mod { 'pagespeed': }
+  $_lib = $::apache::apache_version ? {
+    2.4     => 'mod_pagespeed_ap24.so',
+    default => undef
+  }
+
+  apache::mod { 'pagespeed':
+    lib => $_lib,
+  }
 
   file { 'pagespeed.conf':
     ensure  => file,
@@ -44,5 +51,4 @@ class apache::mod::pagespeed (
     before  => File[$::apache::mod_dir],
     notify  => Service['httpd'],
   }
-
 }
