@@ -1310,6 +1310,16 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when suexec_user_group is specified' do
+        let :params do
+          default_params.merge({
+            :suexec_user_group => 'nobody nogroup',
+          })
+        end
+
+        it { should contain_file("25-#{title}.conf").with_content %r{^  SuexecUserGroup nobody nogroup$} }
+      end
+
       describe 'redirect rules' do
         describe 'without lockstep arrays' do
           let :params do

@@ -26,6 +26,7 @@ class apache::default_mods (
         include ::apache::mod::mime
         include ::apache::mod::mime_magic
         include ::apache::mod::vhost_alias
+        include ::apache::mod::suexec
         include ::apache::mod::rewrite
         include ::apache::mod::speling
         ::apache::mod { 'auth_digest': }
@@ -38,7 +39,6 @@ class apache::default_mods (
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }
-        ::apache::mod { 'suexec': }
         ::apache::mod { 'usertrack': }
         ::apache::mod { 'version': }
 
