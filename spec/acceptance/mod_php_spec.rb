@@ -53,13 +53,15 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     end
   end
 
-  context "custom php admin_flag and php_admin_value" do
+  context "custom extensions, php_admin_flag, and php_admin_value" do
     it 'succeeds in puppeting php' do
       pp= <<-EOS
         class { 'apache':
           mpm_module => 'prefork',
         }
-        class { 'apache::mod::php': }
+        class { 'apache::mod::php':
+          extensions => ['.php','.php5'],
+        }
         apache::vhost { 'php.example.com':
           port             => '80',
           docroot          => '/var/www/php',
@@ -67,7 +69,7 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
           php_admin_flags  => { 'engine' => 'on', },
         }
         host { 'php.example.com': ip => '127.0.0.1', }
-        file { '/var/www/php/index.php':
+        file { '/var/www/php/index.php5':
           ensure  => file,
           content => "<?php phpinfo(); ?>\\n",
         }

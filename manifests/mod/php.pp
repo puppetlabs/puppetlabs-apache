@@ -18,6 +18,7 @@ class apache::mod::php (
   include ::apache::mod::dir
   Class['::apache::mod::mime'] -> Class['::apache::mod::dir'] -> Class['::apache::mod::php']
 
+  # Template uses $extensions
   file { 'php5.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/php5.conf",
