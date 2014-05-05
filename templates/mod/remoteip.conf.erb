@@ -1,0 +1,46 @@
+# Setting RemoteIPHeader allows you to change the header name to parse from the
+# default X-Forwarded-For to something of your choice.
+
+<% if @header -%>
+	RemoteIPHeader <%= @header %>
+<%- end -%>
+
+
+# The RemoteIPInternalProxy directive adds one or more addresses (or address 
+# blocks) to trust as presenting a valid RemoteIPHeader value of the useragent
+# IP. Unlike the RemoteIPTrustedProxy directive, any IP address presented in
+# this header, including private intranet addresses, are trusted when passed
+# from these proxies.
+
+<%- if @remoteIPInternalProxy -%>
+	<%- @remoteIPInternalProxy.each do |proxy| -%>
+		RemoteIPInternalProxy <%= proxy %>
+	<%- end -%>
+<%- end -%>
+
+
+# The RemoteIPProxiesHeader directive specifies a header into which mod_remoteip
+# will collect a list of all of the intermediate client IP addresses trusted to
+# resolve the useragent IP of the request. Note that intermediate
+# RemoteIPTrustedProxy addresses are recorded in this header, while any
+# intermediate RemoteIPInternalProxy addresses are discarded.
+
+<%- if @remoteIPProxiesHeader -%>
+	RemoteIPProxiesHeader <%= @remoteIPProxiesHeader %>
+<%- end -%>
+
+
+# The RemoteIPTrustedProxy directive adds one or more addresses (or address
+# blocks) to trust as presenting a valid RemoteIPHeader value of the useragent
+# IP. Unlike the RemoteIPInternalProxy directive, any intranet or private IP
+# address reported by such proxies, including the 10/8, 172.16/12, 192.168/16,
+# 169.254/16 and 127/8 blocks (or outside of the IPv6 public 2000::/3 block)
+# are not trusted as the useragent IP, and are left in the RemoteIPHeader
+# header's value.
+
+<%- if @remoteIPTrustedProxy -%>
+	<%- @remoteIPTrustedProxy.each do |proxy| -%>
+		RemoteIPTrustedProxy <%= proxy %>
+	<%- end -%>
+<%- end -%>
+
