@@ -469,7 +469,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { should be_directory }
       it { should be_owned_by 'test_owner' }
       it { should be_grouped_into 'test_group' }
-      it { should be_mode '0750' }
+      it { should be_mode 750 }
     end
   end
 
