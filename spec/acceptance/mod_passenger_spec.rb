@@ -5,7 +5,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
   when 'Debian'
     service_name = 'apache2'
     mod_dir = '/etc/apache2/mods-available/'
-    conf_file = "#{mod_dir}passenger.conf"
+    conf_file = "#{mod_dir}passenger_extra.conf"
     load_file = "#{mod_dir}passenger.load"
     passenger_root = '/usr'
     passenger_ruby = '/usr/bin/ruby'
@@ -71,8 +71,9 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       end
 
       describe file(conf_file) do
-        it { should contain "PassengerRoot \"#{passenger_root}\"" }
-        it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+        # passenger_extra.conf only contains directives if overridden from the class params
+        it { should_not contain "PassengerRoot \"#{passenger_root}\"" }
+        it { should_not contain "PassengerRuby \"#{passenger_ruby}\"" }
       end
 
       describe file(load_file) do
@@ -99,11 +100,17 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           shell("sudo /usr/sbin/passenger-status") do |r|
             # spacing may vary
             r.stdout.should =~ /[\-]+ General information [\-]+/
-            r.stdout.should =~ /max[ ]+= [0-9]+/
-            r.stdout.should =~ /count[ ]+= [0-9]+/
-            r.stdout.should =~ /active[ ]+= [0-9]+/
-            r.stdout.should =~ /inactive[ ]+= [0-9]+/
-            r.stdout.should =~ /Waiting on global queue: [0-9]+/
+            if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
+              r.stdout.should =~ /Max pool size[ ]+: [0-9]+/
+              r.stdout.should =~ /Processes[ ]+: [0-9]+/
+              r.stdout.should =~ /Requests in top-level queue[ ]+: [0-9]+/
+            else
+              r.stdout.should =~ /max[ ]+= [0-9]+/
+              r.stdout.should =~ /count[ ]+= [0-9]+/
+              r.stdout.should =~ /active[ ]+= [0-9]+/
+              r.stdout.should =~ /inactive[ ]+= [0-9]+/
+              r.stdout.should =~ /Waiting on global queue: [0-9]+/
+            end
 
             r.exit_code.should == 0
           end
