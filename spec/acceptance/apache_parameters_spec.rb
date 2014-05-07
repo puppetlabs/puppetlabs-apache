@@ -328,12 +328,15 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
   describe 'logging' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': logroot => '/tmp' }"
+        pp = <<-EOS
+          file { '/apache_spec': ensure => directory, }
+          class { 'apache': logroot => '/apache_spec' }
+        EOS
         apply_manifest(pp, :catch_failures => true)
       end
     end
 
-    describe file("/tmp/#{$error_log}") do
+    describe file("/apache_spec/#{$error_log}") do
       it { should be_file }
     end
   end
@@ -341,8 +344,9 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
   describe 'ports_file' do
     it 'applys cleanly' do
       pp = <<-EOS
+        file { '/apache_spec': ensure => directory, }
         class { 'apache':
-          ports_file     => '/tmp/ports_file',
+          ports_file     => '/apache_spec/ports_file',
           ip             => '10.1.1.1',
           service_ensure => stopped
         }
@@ -350,7 +354,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file('/tmp/ports_file') do
+    describe file('/apache_spec/ports_file') do
       it { should be_file }
       it { should contain 'Listen 10.1.1.1' }
     end

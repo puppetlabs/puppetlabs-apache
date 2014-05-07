@@ -488,8 +488,9 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
     describe file($ports_file) do
       it { should be_file }
-      case fact('lsbdistcodename')
-      when 'saucy', 'trusty'
+      if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+        it { should_not contain 'NameVirtualHost test.server' }
+      elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10)/
         it { should_not contain 'NameVirtualHost test.server' }
       else
         it { should contain 'NameVirtualHost test.server' }
@@ -1012,7 +1013,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
   end
 
   # So what does this work on?
-  if default['platform'] !~ /^(debian-(6|7)|el-(5|6))/
+  if default['platform'] !~ /^(debian-(6|7)|el-(5|6|7))/
     describe 'fastcgi' do
       it 'applies cleanly' do
         pp = <<-EOS
@@ -1042,10 +1043,11 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       pp = <<-EOS
         class { 'apache': }
         host { 'test.server': ip => '127.0.0.1' }
-        file { '/tmp/include': ensure => present, content => '#additional_includes' }
+        file { '/apache_spec': ensure => directory, }
+        file { '/apache_spec/include': ensure => present, content => '#additional_includes' }
         apache::vhost { 'test.server':
-          docroot             => '/tmp',
-          additional_includes => '/tmp/include',
+          docroot             => '/apache_spec',
+          additional_includes => '/apache_spec/include',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1053,7 +1055,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { should be_file }
-      it { should contain 'Include "/tmp/include"' }
+      it { should contain 'Include "/apache_spec/include"' }
     end
   end
 
