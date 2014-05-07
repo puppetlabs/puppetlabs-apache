@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::auth_kerb', :type => :class do
   let :pre_condition do
     'include apache'
@@ -5,8 +7,13 @@ describe 'apache::mod::auth_kerb', :type => :class do
   context "on a Debian OS", :compile do
     let :facts do
       {
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :lsbdistcodename        => 'squeeze',
         :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end
@@ -17,8 +24,12 @@ describe 'apache::mod::auth_kerb', :type => :class do
   context "on a RedHat OS", :compile do
     let :facts do
       {
+        :id                     => 'root',
+        :kernel                 => 'Linux',
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end
@@ -29,8 +40,12 @@ describe 'apache::mod::auth_kerb', :type => :class do
   context "on a FreeBSD OS", :compile do
     let :facts do
       {
+        :id                     => 'root',
+        :kernel                 => 'FreeBSD',
         :osfamily               => 'FreeBSD',
+        :operatingsystem        => 'FreeBSD',
         :operatingsystemrelease => '9',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end

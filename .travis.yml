@@ -14,6 +14,7 @@ env:
     - PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.6.0"
     - PUPPET_GEM_VERSION="~> 2.7.0" FACTER_GEM_VERSION="~> 1.7.0"
     - PUPPET_GEM_VERSION="~> 3.0"
+    - PUPPET_GEM_VERSION="~> 3.5.0" STRICT_VARIABLES="yes"
 matrix:
   fast_finish: true
   exclude:

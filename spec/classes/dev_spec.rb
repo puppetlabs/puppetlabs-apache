@@ -4,7 +4,9 @@ describe 'apache::dev', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
+        :lsbdistcodename        => 'squeeze',
         :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
       }
     end
@@ -17,6 +19,7 @@ describe 'apache::dev', :type => :class do
     let :facts do
       {
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
       }
     end
@@ -30,6 +33,7 @@ describe 'apache::dev', :type => :class do
     let :facts do
       {
         :osfamily               => 'FreeBSD',
+        :operatingsystem        => 'FreeBSD',
         :operatingsystemrelease => '9',
       }
     end

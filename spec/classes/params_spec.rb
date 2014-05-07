@@ -7,6 +7,11 @@ describe 'apache::params', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_apache__params }

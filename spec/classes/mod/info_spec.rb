@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 # This function is called inside the OS specific contexts
 def general_info_specs
   it { should contain_apache__mod("info") }
@@ -25,6 +27,11 @@ describe 'apache::mod::info', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
@@ -47,6 +54,10 @@ describe 'apache::mod::info', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
@@ -62,6 +73,10 @@ describe 'apache::mod::info', :type => :class do
         :osfamily               => 'FreeBSD',
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'FreeBSD',
+        :id                     => 'root',
+        :kernel                 => 'FreeBSD',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
@@ -80,6 +95,11 @@ describe 'apache::mod::info', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     let :params do
