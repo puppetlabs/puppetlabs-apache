@@ -38,10 +38,11 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      file { '/tmp/apache_custom': ensure => directory, }
+      file { '/apache_spec': ensure => directory, }
+      file { '/apache_spec/apache_custom': ensure => directory, }
       class { 'apache':
-        mod_dir   => '/tmp/apache_custom/mods',
-        vhost_dir => '/tmp/apache_custom/vhosts',
+        mod_dir   => '/apache_spec/apache_custom/mods',
+        vhost_dir => '/apache_spec/apache_custom/vhosts',
       }
       EOS
 

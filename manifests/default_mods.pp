@@ -9,6 +9,11 @@ class apache::default_mods (
   case $::osfamily {
     'redhat', 'freebsd': {
       ::apache::mod { 'log_config': }
+      if $apache_version >= 2.4 {
+        # Lets fork it
+        ::apache::mod { 'systemd': }
+        ::apache::mod { 'unixd': }
+      }
     }
     default: {}
   }
@@ -43,10 +48,6 @@ class apache::default_mods (
         ::apache::mod { 'version': }
 
         if $apache_version >= 2.4 {
-          # Lets fork it
-          ::apache::mod { 'systemd': }
-
-          ::apache::mod { 'unixd': }
           ::apache::mod { 'authn_core': }
         }
         else {
