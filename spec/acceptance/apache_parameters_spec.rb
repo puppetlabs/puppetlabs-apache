@@ -329,6 +329,20 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     describe 'setup' do
       it 'applies cleanly' do
         pp = <<-EOS
+          if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
+            package { 'policycoreutils-python': ensure => installed }
+            exec { 'set_apache_defaults':
+              command => 'semanage fcontext -a -t httpd_log_t "/apache_spec(/.*)?"',
+              path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
+              require => Package['policycoreutils-python'],
+            }
+            exec { 'restorecon_apache':
+              command => 'restorecon -Rv /apache_spec',
+              path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
+              before  => Service['httpd'],
+              require => Class['apache'],
+            }
+          }
           file { '/apache_spec': ensure => directory, }
           class { 'apache': logroot => '/apache_spec' }
         EOS
