@@ -70,7 +70,7 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :extensions => ['.php','.php5']}
       end
-      it { should contain_file("php5.conf").with_content =~ /AddHandler php5-script .php .php5\n/ }
+      it { should contain_file("php5.conf").with_content(/AddHandler php5-script .php .php5\n/) }
     end
     context "with specific version" do
       let :pre_condition do
