@@ -23,7 +23,10 @@ describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.inclu
         class { 'apache': }
         class { 'apache::mod::proxy': }
         class { 'apache::mod::proxy_http': }
-        class { 'apache::mod::proxy_html': }
+        # mod_proxy_html doesn't exist in RHEL5
+        if $::osfamily == 'RedHat' and $::operatingsystemmajrelease != '5' {
+          class { 'apache::mod::proxy_html': }
+        }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end

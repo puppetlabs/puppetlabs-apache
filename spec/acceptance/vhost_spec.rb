@@ -1041,13 +1041,18 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
   describe 'additional_includes' do
     it 'applies cleanly' do
       pp = <<-EOS
-        if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
+        if $::osfamily == 'RedHat' and $::selinux == 'true' {
           exec { 'set_apache_defaults':
             command => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
             path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-            require => Package['policycoreutils-python'],
+            require => Package[$semanage_package],
           }
-          package { 'policycoreutils-python': ensure => installed }
+          $semanage_package = $::operatingsystemmajrelease ? {
+            '5'       => 'policycoreutils',
+            'default' => 'policycoreutils-python',
+          }
+
+          package { $semanage_package: ensure => installed }
           exec { 'restorecon_apache':
             command => 'restorecon -Rv /apache_spec',
             path    => '/bin:/usr/bin/:/sbin:/usr/sbin',

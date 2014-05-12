@@ -329,12 +329,17 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     describe 'setup' do
       it 'applies cleanly' do
         pp = <<-EOS
-          if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
-            package { 'policycoreutils-python': ensure => installed }
+          if $::osfamily == 'RedHat' and $::selinux == 'true' {
+            $semanage_package = $::operatingsystemmajrelease ? {
+              '5'       => 'policycoreutils',
+              'default' => 'policycoreutils-python',
+            }
+
+            package { $semanage_package: ensure => installed }
             exec { 'set_apache_defaults':
               command => 'semanage fcontext -a -t httpd_log_t "/apache_spec(/.*)?"',
               path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-              require => Package['policycoreutils-python'],
+              require => Package[$semanage_package],
             }
             exec { 'restorecon_apache':
               command => 'restorecon -Rv /apache_spec',

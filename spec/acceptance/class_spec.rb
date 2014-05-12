@@ -38,12 +38,17 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
-        package { 'policycoreutils-python': ensure => installed }
+      if $::osfamily == 'RedHat' and $::selinux == 'true' {
+        $semanage_package = $::operatingsystemmajrelease ? {
+          '5'       => 'policycoreutils',
+          'default' => 'policycoreutils-python',
+        }
+
+        package { $semanage_package: ensure => installed }
         exec { 'set_apache_defaults':
           command => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
           path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          require => Package['policycoreutils-python'],
+          require => Package[$semanage_package],
         }
         exec { 'restorecon_apache':
           command => 'restorecon -Rv /apache_spec',
