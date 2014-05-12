@@ -1821,6 +1821,14 @@ The Apache module relies heavily on templates to enable the `vhost` and `apache:
 
 The `apache::vhost::WSGIImportScript` parameter creates a statement inside the VirtualHost which is unsupported on older versions of Apache, causing this to fail.  This will be remedied in a future refactoring.
 
+###RHEL/CentOS 5
+
+The `apache::mod::passenger` and `apache::mod::proxy_html` classes are untested since repositories are missing compatible packages.   
+
+###RHEL/CentOS 7
+
+The `apache::mod::passenger` class is untested as the repository does not have packages for EL7 yet.  The fact that passenger packages aren't available also makes us unable to test the `rack_base_uri` parameter in `apache::vhost`.
+
 ###General
 
 This module is CI tested on Centos 5 & 6, Ubuntu 12.04 & 14.04, Debian 7, and RHEL 5, 6 & 7 platforms against both the OSS and Enterprise version of Puppet. 
