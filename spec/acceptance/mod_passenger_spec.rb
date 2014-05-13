@@ -127,8 +127,8 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
     end
 
   when 'RedHat'
-    # no fedora 18 passenger package yet
-    unless (fact('operatingsystem') == 'Fedora' and fact('operatingsystemrelease').to_f >= 18)
+    # no fedora 18 passenger package yet, and rhel5 packages only exist for ruby 1.8.5
+    unless (fact('operatingsystem') == 'Fedora' and fact('operatingsystemrelease').to_f >= 18) or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5' and fact('rubyversion') != '1.8.5')
 
       context "default passenger config" do
         it 'succeeds in puppeting passenger' do
