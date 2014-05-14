@@ -12,7 +12,7 @@ class apache::mod::ssl (
 
   case $::osfamily {
     'debian': {
-      if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
+      if versioncmp($apache_version, '2.4') >= 0 and $::operatingsystem == 'Ubuntu' {
         $ssl_mutex = 'default'
       } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
@@ -33,7 +33,7 @@ class apache::mod::ssl (
 
   ::apache::mod { 'ssl': }
 
-  if $apache_version >= 2.4 {
+  if versioncmp($apache_version, '2.4') >= 0 {
     ::apache::mod { 'socache_shmcb': }
   }
 

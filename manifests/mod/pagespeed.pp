@@ -35,7 +35,7 @@ class apache::mod::pagespeed (
 ){
 
   $_lib = $::apache::apache_version ? {
-    2.4     => 'mod_pagespeed_ap24.so',
+    '2.4'   => 'mod_pagespeed_ap24.so',
     default => undef
   }
 

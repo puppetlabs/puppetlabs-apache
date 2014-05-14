@@ -788,7 +788,7 @@ describe 'apache::vhost', :type => :define do
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({
             param[:attr].to_sym => param[:value],
-            :apache_version => 2.2,
+            :apache_version => '2.2',
           }) end
 
           it { should contain_file("25-#{title}.conf").with_mode('0644') }
@@ -925,7 +925,7 @@ describe 'apache::vhost', :type => :define do
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({
             param[:attr].to_sym => param[:value],
-            :apache_version => 2.4,
+            :apache_version => '2.4',
           }) end
 
           it { should contain_file("25-#{title}.conf").with_mode('0644') }

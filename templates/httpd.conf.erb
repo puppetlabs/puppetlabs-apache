@@ -16,7 +16,7 @@ Group <%= @group %>
 
 AccessFileName .htaccess
 <FilesMatch "^\.ht">
-<%- if @apache_version >= '2.4' -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
     Require all denied
 <%- else -%>
      Order allow,deny
@@ -61,7 +61,7 @@ LogFormat "<%= format -%>" <%= nickname %>
   <%- end -%>
 <% end -%>
 
-<%- if @apache_version >= '2.4' -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 IncludeOptional "<%= @confd_dir %>/*.conf"
 <%- else -%>
 Include "<%= @confd_dir %>/*.conf"
@@ -79,7 +79,7 @@ Alias /error/ "<%= @error_documents_path %>/"
   Options IncludesNoExec
   AddOutputFilter Includes html
   AddHandler type-map var
-<%- if @apache_version == '2.4' -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Require all granted
 <%- else -%>
   Order allow,deny

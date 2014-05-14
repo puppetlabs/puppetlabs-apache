@@ -34,7 +34,7 @@
     AllowOverride None
       <%- end -%>
     <%- end -%>
-    <%- if @apache_version == '2.4' -%>
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] and directory['require'] != '' -%>
     Require <%= Array(directory['require']).join(' ') %>
       <%- else -%>

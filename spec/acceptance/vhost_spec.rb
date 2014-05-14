@@ -165,7 +165,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         pp = <<-EOS
           class { 'apache': }
 
-          if $apache::apache_version >= 2.4 {
+          if versioncmp($apache::apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
           } else {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
@@ -209,7 +209,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         pp = <<-EOS
           class { 'apache': }
 
-          if $apache::apache_version >= 2.4 {
+          if versioncmp($apache::apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' }
