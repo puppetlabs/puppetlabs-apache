@@ -19,3 +19,6 @@
     <%- end -%>
   <%- end -%>
 <% end -%>
+<% if @wsgi_pass_authorization -%>
+  WSGIPassAuthorization <%= @wsgi_pass_authorization %>
+<% end -%>

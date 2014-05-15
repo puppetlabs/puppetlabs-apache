@@ -102,6 +102,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           proxy_pass => [
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
           ],
+    	  proxy_preserve_host   => true, 
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -111,6 +112,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { should contain '<VirtualHost \*:80>' }
       it { should contain "ServerName proxy.example.com" }
       it { should contain "ProxyPass" }
+      it { should contain "ProxyPreserveHost On" }
       it { should_not contain "<Proxy \*>" }
     end
   end
@@ -940,6 +942,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_daemon_process_options => {processes => '2'},
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
+	  wsgi_pass_authorization     => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -959,6 +962,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
+	  wsgi_pass_authorization     => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -971,6 +975,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { should contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
       it { should contain 'WSGIProcessGroup nobody' }
       it { should contain 'WSGIScriptAlias /test "/test1"' }
+      it { should contain 'WSGIPassAuthorization On' }
     end
   end
 

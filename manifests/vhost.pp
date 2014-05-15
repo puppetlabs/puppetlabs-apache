@@ -135,6 +135,7 @@ define apache::vhost(
     $php_admin_flags             = [],
     $php_admin_values            = [],
     $no_proxy_uris               = [],
+    $proxy_preserve_host         = false,
     $redirect_source             = '/',
     $redirect_dest               = undef,
     $redirect_status             = undef,
@@ -158,6 +159,7 @@ define apache::vhost(
     $wsgi_import_script_options  = undef,
     $wsgi_process_group          = undef,
     $wsgi_script_aliases         = undef,
+    $wsgi_pass_authorization     = undef,
     $custom_fragment             = undef,
     $itk                         = undef,
     $action                      = undef,
@@ -478,6 +480,7 @@ define apache::vhost(
   # proxy fragment:
   #   - $proxy_dest
   #   - $no_proxy_uris
+  #   - $proxy_preserve_host (true to set ProxyPreserveHost to on and false to off
   # rack fragment:
   #   - $rack_base_uris
   # redirect fragment:
