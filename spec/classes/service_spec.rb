@@ -72,6 +72,11 @@ describe 'apache::service', :type => :class do
         )
       }
     end
+
+    context "with $service_ensure => 'UNDEF'" do
+      let (:params) {{ :service_ensure => 'UNDEF' }}
+      it { should contain_service("httpd").without_ensure }
+    end
   end
 
 
