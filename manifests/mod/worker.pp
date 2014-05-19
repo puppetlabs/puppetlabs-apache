@@ -44,7 +44,7 @@ class apache::mod::worker (
 
   case $::osfamily {
     'redhat': {
-      if $apache_version >= 2.4 {
+      if versioncmp($apache_version, '2.4') >= 0 {
         ::apache::mpm{ 'worker':
           apache_version => $apache_version,
         }

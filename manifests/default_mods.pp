@@ -9,7 +9,7 @@ class apache::default_mods (
   case $::osfamily {
     'redhat', 'freebsd': {
       ::apache::mod { 'log_config': }
-      if $apache_version >= 2.4 {
+      if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
         ::apache::mod { 'systemd': }
         ::apache::mod { 'unixd': }
@@ -47,7 +47,7 @@ class apache::default_mods (
         ::apache::mod { 'usertrack': }
         ::apache::mod { 'version': }
 
-        if $apache_version >= 2.4 {
+        if versioncmp($apache_version, '2.4') >= 0 {
           ::apache::mod { 'authn_core': }
         }
         else {
@@ -114,7 +114,7 @@ class apache::default_mods (
     ::apache::mod { 'auth_basic': }
     ::apache::mod { 'authn_file': }
 
-    if $apache_version >= 2.4 {
+      if versioncmp($apache_version, '2.4') >= 0 {
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
@@ -135,7 +135,7 @@ class apache::default_mods (
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
 
-    if $apache_version >= 2.4 {
+    if versioncmp($apache_version, '2.4') >= 0 {
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
@@ -145,7 +145,7 @@ class apache::default_mods (
       ::apache::mod { 'filter': }
     }
   } else {
-    if $apache_version >= 2.4 {
+    if versioncmp($apache_version, '2.4') >= 0 {
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',

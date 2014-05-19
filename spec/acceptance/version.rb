@@ -17,9 +17,9 @@ when 'RedHat'
   $suphp_configpath = 'undef'
 
   if (_operatingsystem == 'Fedora' and _operatingsystemrelease >= 18) or (_operatingsystem != 'Fedora' and _operatingsystemrelease >= 7)
-    $apache_version = 2.4
+    $apache_version = '2.4'
   else
-    $apache_version = 2.2
+    $apache_version = '2.2'
   end
 when 'Debian'
   $confd_dir        = '/etc/apache2/mods-available'
@@ -35,9 +35,9 @@ when 'Debian'
   $suphp_configpath = '/etc/php5/apache2'
 
   if _operatingsystem == 'Ubuntu' and _operatingsystemrelease >= 13.10
-    $apache_version = 2.4
+    $apache_version = '2.4'
   else
-    $apache_version = 2.2
+    $apache_version = '2.2'
   end
 when 'FreeBSD'
   $confd_dir        = '/usr/local/etc/apache22/Includes'
@@ -50,8 +50,8 @@ when 'FreeBSD'
   $package_name     = 'apache22'
   $error_log        = 'http-error.log'
 
-  $apache_version = 2.2
+  $apache_version = '2.2'
 else
-  $apache_version = 0
+  $apache_version = '0'
 end
 

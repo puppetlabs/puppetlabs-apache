@@ -1,6 +1,6 @@
 <Location /server-info>
     SetHandler server-info
-    <%- if @apache_version >= '2.4' -%>
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
     Require ip <%= Array(@allow_from).join(" ") %>
     <%- else -%>
     Order deny,allow

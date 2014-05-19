@@ -67,7 +67,7 @@ class apache (
   validate_bool($service_enable)
 
   $valid_mpms_re = $apache_version ? {
-    2.4     => '(event|itk|peruser|prefork|worker)',
+    '2.4'   => '(event|itk|peruser|prefork|worker)',
     default => '(event|itk|prefork|worker)'
   }
 

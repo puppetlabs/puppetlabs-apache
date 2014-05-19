@@ -218,7 +218,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       end
     end
 
-    if $apache_version >= 2.4
+    if $apache_version == '2.4'
       describe file($conf_file) do
         it { should be_file }
         it { should contain 'IncludeOptional "/tmp/root/*.conf"' }
