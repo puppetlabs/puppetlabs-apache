@@ -1048,8 +1048,8 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
             require => Package[$semanage_package],
           }
           $semanage_package = $::operatingsystemmajrelease ? {
-            '5'       => 'policycoreutils',
-            'default' => 'policycoreutils-python',
+            '5'     => 'policycoreutils',
+            default => 'policycoreutils-python',
           }
 
           package { $semanage_package: ensure => installed }
