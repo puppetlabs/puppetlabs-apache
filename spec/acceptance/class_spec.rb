@@ -40,8 +40,8 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       pp = <<-EOS
       if $::osfamily == 'RedHat' and $::selinux == 'true' {
         $semanage_package = $::operatingsystemmajrelease ? {
-          '5'       => 'policycoreutils',
-          'default' => 'policycoreutils-python',
+          '5'     => 'policycoreutils',
+          default => 'policycoreutils-python',
         }
 
         package { $semanage_package: ensure => installed }
