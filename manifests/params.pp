@@ -89,6 +89,8 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
+    $vhost_enable_dir     = undef
+    $mod_enable_dir       = undef
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
     $group               = 'www-data'
