@@ -46,15 +46,18 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
 
         package { $semanage_package: ensure => installed }
         exec { 'set_apache_defaults':
-          command => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
-          path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          require => Package[$semanage_package],
+          command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
+          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+          subscribe   => Package[$semanage_package],
+          refreshonly => true,
         }
         exec { 'restorecon_apache':
-          command => 'restorecon -Rv /apache_spec',
-          path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          before  => Service['httpd'],
-          require => Class['apache'],
+          command     => 'restorecon -Rv /apache_spec',
+          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+          before      => Service['httpd'],
+          require     => Class['apache'],
+          subscribe   => Exec['set_apache_defaults'],
+          refreshonly => true,
         }
       }
       file { '/apache_spec': ensure => directory, }
