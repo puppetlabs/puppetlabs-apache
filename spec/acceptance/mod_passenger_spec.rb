@@ -81,7 +81,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       end
 
       it 'should output status via passenger-memory-stats' do
-        shell("sudo /usr/sbin/passenger-memory-stats") do |r|
+        shell("/usr/sbin/passenger-memory-stats") do |r|
           r.stdout.should =~ /Apache processes/
           r.stdout.should =~ /Nginx processes/
           r.stdout.should =~ /Passenger processes/
@@ -97,7 +97,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '12.04'
         it 'should output status via passenger-status' do
           # xml output not available on ubunutu <= 10.04, so sticking with default pool output
-          shell("sudo /usr/sbin/passenger-status") do |r|
+          shell("/usr/sbin/passenger-status") do |r|
             # spacing may vary
             r.stdout.should =~ /[\-]+ General information [\-]+/
             if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
@@ -136,7 +136,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
             /* EPEL and passenger repositories */
             class { 'epel': }
             exec { 'passenger.repo GPG key':
-              command => '/usr/bin/sudo /usr/bin/curl -o /etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
+              command => '/usr/bin/curl -o /etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
               creates => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
             }
             file { 'passenger.repo GPG key':
@@ -194,7 +194,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
         end
 
         it 'should output status via passenger-memory-stats' do
-          shell("sudo /usr/bin/passenger-memory-stats") do |r|
+          shell("/usr/bin/passenger-memory-stats") do |r|
             r.stdout.should =~ /Apache processes/
             r.stdout.should =~ /Nginx processes/
             r.stdout.should =~ /Passenger processes/
@@ -206,7 +206,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
         end
 
         it 'should output status via passenger-status' do
-          shell("sudo PASSENGER_TMPDIR=/var/run/rubygem-passenger /usr/bin/passenger-status") do |r|
+          shell("PASSENGER_TMPDIR=/var/run/rubygem-passenger /usr/bin/passenger-status") do |r|
             # spacing may vary
             r.stdout.should =~ /[\-]+ General information [\-]+/
             r.stdout.should =~ /max[ ]+= [0-9]+/
