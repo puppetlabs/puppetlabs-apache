@@ -1,11 +1,12 @@
 define apache::mod (
-  $package = undef,
+  $package        = undef,
   $package_ensure = 'present',
-  $lib = undef,
-  $lib_path = $::apache::params::lib_path,
-  $id = undef,
-  $path = undef,
-  $loadfiles = undef,
+  $lib            = undef,
+  $lib_path       = $::apache::params::lib_path,
+  $id             = undef,
+  $path           = undef,
+  $loadfile_name  = undef,
+  $loadfiles      = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -39,6 +40,12 @@ define apache::mod (
     $_id = "${mod}_module"
   }
 
+  if $loadfile_name {
+    $_loadfile_name = $loadfile_name
+  } else {
+    $_loadfile_name = "${mod}.load"
+  }
+
   # Determine if we have a package
   $mod_packages = $::apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
@@ -69,7 +76,7 @@ define apache::mod (
 
   file { "${mod}.load":
     ensure  => file,
-    path    => "${mod_dir}/${mod}.load",
+    path    => "${mod_dir}/${_loadfile_name}",
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
@@ -86,8 +93,8 @@ define apache::mod (
     $enable_dir = $::apache::mod_enable_dir
     file{ "${mod}.load symlink":
       ensure  => link,
-      path    => "${enable_dir}/${mod}.load",
-      target  => "${mod_dir}/${mod}.load",
+      path    => "${enable_dir}/${_loadfile_name}",
+      target  => "${mod_dir}/${_loadfile_name}",
       owner   => 'root',
       group   => $::apache::params::root_group,
       mode    => '0644',
