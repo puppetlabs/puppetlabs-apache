@@ -1280,6 +1280,42 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'fcgid directory options' do
+        describe 'No fcgiwrapper' do
+          let :params do
+            default_params.merge({
+              :directories      => { 'path' => '/srv/www' },
+            })
+          end
+
+          it { should_not contain_file("25-#{title}.conf").with_content(%r{FcgidWrapper}) }
+        end
+
+        describe 'Only a command' do
+          let :params do
+            default_params.merge({
+              :directories      => { 'path' => '/srv/www',
+                'fcgiwrapper' => { 'command' => '/usr/local/bin/fcgiwrapper' },
+              }
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper  $}) }
+        end
+
+        describe 'All parameters' do
+          let :params do
+            default_params.merge({
+              :directories    => { 'path' => '/srv/www',
+                'fcgiwrapper' => { 'command' => '/usr/local/bin/fcgiwrapper', 'suffix' => '.php', 'virtual' => 'virtual' },
+              }
+            })
+          end
+
+          it { should contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper .php virtual$}) }
+        end
+      end
+
       describe 'various ip/port combos' do
         describe 'when ip_based is true' do
           let :params do default_params.merge({ :ip_based => true }) end
