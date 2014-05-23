@@ -35,6 +35,9 @@ class apache::mod::php (
   file { 'php5.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/php5.conf",
+    owner   => $::apache::user,
+    group   => $::apache::group,
+    mode    => '0644',
     content => $manage_content,
     source  => $manage_source,
     require => [
