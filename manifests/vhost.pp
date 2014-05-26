@@ -357,8 +357,8 @@ define apache::vhost(
 
   # Load mod_rewrite if needed and not yet loaded
   if $rewrites or $rewrite_cond {
-    if ! defined(Apache::Mod['rewrite']) {
-      ::apache::mod { 'rewrite': }
+    if ! defined(Class['apache::mod::rewrite']) {
+      include ::apache::mod::rewrite
     }
   }
 
