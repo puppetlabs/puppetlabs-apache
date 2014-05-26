@@ -214,7 +214,10 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           if versioncmp($apache::apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
-            $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' }
+            $_files_match_directory = [ 
+              { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' },
+              { 'path' => '/bar/bar.html', 'provider' => 'location', allow => [ 'from 127.0.0.1', ] },
+            ]
           }
 
           $_directories = [
@@ -238,6 +241,13 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
             ensure  => file,
             content => "Hello World\\n",
           }
+          file { '/var/www/files/bar':
+            ensure => directory,
+          }
+          file { '/var/www/files/bar/bar.html':
+            ensure  => file,
+            content => "Hello Bar\\n",
+          }
           host { 'files.example.net': ip => '127.0.0.1', }
         EOS
         apply_manifest(pp, :catch_failures => true)
@@ -252,6 +262,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         shell("/usr/bin/curl -sSf files.example.net:80/").stdout.should eq("Hello World\n")
         shell("/usr/bin/curl -sSf files.example.net:80/foo/").stdout.should eq("Hello Foo\n")
         shell("/usr/bin/curl -sSf files.example.net:80/private.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 403/)
+        shell("/usr/bin/curl -sSf files.example.net:80/bar/bar.html").stdout.should eq("Hello Bar\n")
       end
     end
 
