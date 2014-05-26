@@ -5,10 +5,39 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
   when 'Debian'
     service_name = 'apache2'
     mod_dir = '/etc/apache2/mods-available/'
-    conf_file = "#{mod_dir}passenger_extra.conf"
+    conf_file = "#{mod_dir}passenger.conf"
     load_file = "#{mod_dir}passenger.load"
-    passenger_root = '/usr'
-    passenger_ruby = '/usr/bin/ruby'
+
+    case fact('operatingsystem')
+    when 'Ubuntu'
+      case fact('lsbdistrelease')
+      when '10.04'
+        passenger_root = '/usr'
+        passenger_ruby = '/usr/bin/ruby'
+      when '12.04'
+        passenger_root = '/usr'
+        passenger_ruby = '/usr/bin/ruby'
+      when '14.04'
+        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+        passenger_ruby         = '/usr/bin/ruby'
+        passenger_default_ruby = '/usr/bin/ruby'
+      else
+        # This may or may not work on Ubuntu releases other than the above
+        passenger_root = '/usr'
+        passenger_ruby = '/usr/bin/ruby'
+      end
+    when 'Debian'
+      case fact('lsbdistcodename')
+      when 'wheezy'
+        passenger_root = '/usr'
+        passenger_ruby = '/usr/bin/ruby'
+      else
+        # This may or may not work on Debian releases other than the above
+        passenger_root = '/usr'
+        passenger_ruby = '/usr/bin/ruby'
+      end
+    end
+
     passenger_module_path = '/usr/lib/apache2/modules/mod_passenger.so'
     rackapp_user = 'www-data'
     rackapp_group = 'www-data'
@@ -71,9 +100,36 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       end
 
       describe file(conf_file) do
-        # passenger_extra.conf only contains directives if overridden from the class params
-        it { should_not contain "PassengerRoot \"#{passenger_root}\"" }
-        it { should_not contain "PassengerRuby \"#{passenger_ruby}\"" }
+        it { should contain "PassengerRoot \"#{passenger_root}\"" }
+
+        case fact('operatingsystem')
+        when 'Ubuntu'
+          case fact('lsbdistrelease')
+          when '10.04'
+            it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerDefaultRuby/" }
+          when '12.04'
+            it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerDefaultRuby/" }
+          when '14.04'
+            it { should contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerRuby/" }
+          else
+            # This may or may not work on Ubuntu releases other than the above
+            it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerDefaultRuby/" }
+          end
+        when 'Debian'
+          case fact('lsbdistcodename')
+          when 'wheezy'
+            it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerDefaultRuby/" }
+          else
+            # This may or may not work on Debian releases other than the above
+            it { should contain "PassengerRuby \"#{passenger_ruby}\"" }
+            it { should_not contain "/PassengerDefaultRuby/" }
+          end
+        end
       end
 
       describe file(load_file) do
@@ -85,8 +141,13 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           r.stdout.should =~ /Apache processes/
           r.stdout.should =~ /Nginx processes/
           r.stdout.should =~ /Passenger processes/
-          r.stdout.should =~ /### Processes: [0-9]+/
-          r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
+
+          # passenger-memory-stats output on Ubuntu 14.04 does not contain
+          # these two lines
+          unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
+            r.stdout.should =~ /### Processes: [0-9]+/
+            r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
+          end
 
           r.exit_code.should == 0
         end
