@@ -22,6 +22,7 @@
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
+        * [Defined Type: apache::dotconf](#defined-type-apachedotconf)
     * [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
     * [Load Balancing](#load-balancing)
         * [Defined Type: apache::balancer](#defined-type-apachebalancer)
@@ -1507,6 +1508,36 @@ An array:
 
 Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Valid values are 'true' and 'false'. Defaults to 'false'.
 
+####Defined Type: `apache::dotconf`
+
+`apache::dotconf` creates an Apache configurtion file you could include from
+other configuration files. This type creates the configuration file and also
+restart apache service when need it.
+
+#####Examples
+
+Creates /etc/apache2/conf.d/example.conf:
+
+```puppet
+    apache::dotconf { 'example':
+      source => 'puppet:///modules/apache/example.conf',
+    }
+```
+
+Creates the configuration file in another path:
+```puppet
+    apache::dotconf { 'another_example':
+      path    => '/etc/apache2/myvhconf.d',
+      content => '
+<Directory "/var/www">
+  Options FollowSymLinks MultiViews
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+</Directory>
+      ',
+    }
+```
 
 ###Virtual Host Examples
 
@@ -1796,6 +1827,8 @@ If you need to use ProxySet in the balancer config
 * `apache::mod`: Used to enable arbitrary Apache HTTPD modules for which there is no specific `apache::mod::[name]` class.
 * `apache::namevirtualhost`: Enables name-based hosting of a virtual host. Adds all [NameVirtualHost](http://httpd.apache.org/docs/current/vhosts/name-based.html) directives to the `ports.conf` file in the Apache HTTPD configuration directory. Titles take the form '\*', '*:<port>', '\_default_:<port>, '<ip>', or '<ip>:<port>'.
 * `apache::vhost`: Allows specialized configurations for virtual hosts that have requirements outside the defaults. 
+* `apache::dotconf`: Used to create an apache configuration file, by default,
+  at 'conf.d' directory
 
 ####Private Defined Types
 
