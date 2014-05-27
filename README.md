@@ -1514,6 +1514,48 @@ Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/cu
 other configuration files. This type creates the configuration file and also
 restart apache service when need it.
 
+**Parameters within `apache::dotconf`:**
+
+#####`ensure`
+
+Specifies if the configuration file is present or absent. Defaults to 'present'.
+
+#####`source`
+
+Sets the content of source parameter for the dotconf file. If defined,
+apache dotconf file will have the param: source => $source. **Note** `source`,
+`content` and `template` parameters are mutually exclusive: don't use both.
+
+#####`content`
+
+Sets the content of content parameter for the dotconf file. If defined,
+apache dotconf file will have the param: content => $content. **Note** `source`,
+`content` and `template` parameters are mutually exclusive: don't use both.
+
+#####`template`
+
+Sets the path to the template used as content for dotconf file. If defined,
+apache dotconf file will have the param: content => template($template).
+**Note** `source`, `content` and `template` parameters are mutually
+exclusive: don't use both.
+
+#####`owner`
+
+Sets the owner of the configuration file. It defaults to `root`
+
+#####`group`
+
+Sets the group of the configuration file. It defaults to `root`
+
+#####`mode`
+
+Sets the mode of the configuration file. It defaults to `0644`
+
+#####`path`
+
+Path of the directory where to store configuration file. It defaults to
+`$::apache::confd_dir`
+
 #####Examples
 
 Creates /etc/apache2/conf.d/example.conf:
