@@ -25,7 +25,7 @@
 #
 # [*template*]
 #   Sets the path to the template to use as content for dotconf file
-#   If defined, apache dotconf file has: content => content("$template")
+#   If defined, apache dotconf file has: content => template("$template")
 #   Note source, content and template parameters are mutually
 #   exclusive: don't use both
 #
