@@ -1523,19 +1523,19 @@ Specifies if the configuration file is present or absent. Defaults to 'present'.
 #####`source`
 
 Sets the content of source parameter for the dotconf file. If defined,
-apache dotconf file will have the param: source => $source. **Note** `source`,
+apache dotconf file will have the param: `source => $source`. **Note** `source`,
 `content` and `template` parameters are mutually exclusive: don't use both.
 
 #####`content`
 
 Sets the content of content parameter for the dotconf file. If defined,
-apache dotconf file will have the param: content => $content. **Note** `source`,
+apache dotconf file will have the param: `content => $content`. **Note** `source`,
 `content` and `template` parameters are mutually exclusive: don't use both.
 
 #####`template`
 
 Sets the path to the template used as content for dotconf file. If defined,
-apache dotconf file will have the param: content => template($template).
+apache dotconf file will have the param: `content => template($template)`.
 **Note** `source`, `content` and `template` parameters are mutually
 exclusive: don't use both.
 
