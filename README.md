@@ -310,6 +310,10 @@ Sets the amount of time the server will wait for subsequent requests on a persis
 
 Sets the limit of the number of requests allowed per connection when KeepAlive is on. Defaults to '100'.
 
+#####`loadfile_name`
+
+Sets the file name for the module loadfile. Should be in the format *.load.  This can be used to set the module load order.
+
 #####`log_level`
 
 Changes the verbosity level of the error log. Defaults to 'warn'. Valid values are 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info', or 'debug'.
