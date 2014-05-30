@@ -151,9 +151,13 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
                 File['passenger.repo GPG key'],
               ]
             }
+            $releasever_string = $operatingsystem ? {
+              'Scientific' => '6',
+              default      => '$releasever',
+            }
             yumrepo { 'passenger':
-              baseurl         => 'http://passenger.stealthymonkeys.com/rhel/$releasever/$basearch' ,
-              descr           => 'Red Hat Enterprise $releasever - Phusion Passenger',
+              baseurl         => "http://passenger.stealthymonkeys.com/rhel/${releasever_string}/\\$basearch" ,
+              descr           => "Red Hat Enterprise ${releasever_string} - Phusion Passenger",
               enabled         => 1,
               gpgcheck        => 1,
               gpgkey          => 'http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
