@@ -7,7 +7,10 @@ class apache::mod::dav_svn (
     
     if $authz_svn_enabled {
       ::apache::mod { 'authz_svn':
-        loadfile_name => 'dav_svn_authz_svn.load',
+        loadfile_name => $::osfamily ? {
+          'Debian' => undef,
+          default  => 'dav_svn_authz_svn.load',
+        },
         require       => Apache::Mod['dav_svn'],
       }
     }
