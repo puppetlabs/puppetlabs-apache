@@ -1009,6 +1009,47 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  describe 'single custom_blocks' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          custom_blocks => ['site_apache/custom_template.erb'],
+          custom_blocks_parameters => { 'some_var' => 'some_string' },
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '# A custom variable : some_string' }
+    end
+  end
+
+  describe 'multiple custom_blocks' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          custom_blocks => ['site_apache/custom_template.erb', 'site_apache/custom_template2.erb'],
+          custom_blocks_parameters => { 'some_var' => 'some_string', 'another_var' => 'another_string' },
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { should be_file }
+      it { should contain '# A custom variable : some_string' }
+      it { should contain '# Another custom variable : another_string' }
+    end
+  end
+
   describe 'itk' do
     it 'applies cleanly' do
       pp = <<-EOS
