@@ -8,12 +8,20 @@
     AllowOverride FileInfo AuthConfig Limit Indexes
     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
     <Limit GET POST OPTIONS>
+      <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+      Require all denied
+      <%- else -%>
       Order allow,deny
       Allow from all
+      <%- end -%>
     </Limit>
     <LimitExcept GET POST OPTIONS>
-      Order deny,allow
-      Deny from all
+      <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+      Require all denied
+      <%- else -%>
+      Order allow,deny
+      Allow from all
+      <%- end -%>
     </LimitExcept>
   </Directory>
 </IfModule>

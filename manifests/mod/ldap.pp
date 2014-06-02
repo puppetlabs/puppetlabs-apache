@@ -1,6 +1,8 @@
-class apache::mod::ldap {
+class apache::mod::ldap (
+  $apache_version = $::apache::apache_version,
+){
   ::apache::mod { 'ldap': }
-  # Template uses no variables
+  # Template uses $apache_version
   file { 'ldap.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/ldap.conf",
