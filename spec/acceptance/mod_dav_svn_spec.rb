@@ -48,7 +48,7 @@ describe 'apache::mod::dav_svn class' do
       it { should be_running }
     end
 
-    describe file("#{mod_dir}/authz_svn.load") do
+    describe file("#{mod_dir}/dav_svn_authz_svn.load") do
       it { should contain "LoadModule authz_svn_module" }
     end
   end
