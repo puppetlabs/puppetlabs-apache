@@ -1,5 +1,5 @@
-<% if @_directories and ! @_directories.empty? -%>
-  <%- [@_directories].flatten.compact.each do |directory| -%>
+<% if @directories and ! @directories.empty? -%>
+  <%- [@directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
   <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
     <%- if /^(.*)match$/ =~ directory['provider'] -%>
