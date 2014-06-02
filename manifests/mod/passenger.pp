@@ -25,28 +25,28 @@ class apache::mod::passenger (
     }
   }
 
-  $_package = $mod_package
-  $_package_ensure = $mod_package_ensure
-  $_lib = $mod_lib
+  $package = $mod_package
+  $package_ensure = $mod_package_ensure
+  $lib = $mod_lib
   if $::osfamily == 'FreeBSD' {
     if $mod_lib_path {
-      $_lib_path = $mod_lib_path
+      $lib_path = $mod_lib_path
     } else {
-      $_lib_path = "${passenger_root}/buildout/apache2"
+      $lib_path = "${passenger_root}/buildout/apache2"
     }
   } else {
-    $_lib_path = $mod_lib_path
+    $lib_path = $mod_lib_path
   }
 
-  $_id = $mod_id
-  $_path = $mod_path
+  $id = $mod_id
+  $path = $mod_path
   ::apache::mod { 'passenger':
-    package        => $_package,
-    package_ensure => $_package_ensure,
-    lib            => $_lib,
-    lib_path       => $_lib_path,
-    id             => $_id,
-    path           => $_path,
+    package        => $package,
+    package_ensure => $package_ensure,
+    lib            => $lib,
+    lib_path       => $lib_path,
+    id             => $id,
+    path           => $path,
   }
 
   # Template uses:

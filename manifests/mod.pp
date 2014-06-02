@@ -20,41 +20,41 @@ define apache::mod (
   $mod_libs = $::apache::params::mod_libs
   $mod_lib = $mod_libs[$mod] # 2.6 compatibility hack
   if $lib {
-    $_lib = $lib
+    $local_lib = $lib
   } elsif $mod_lib {
-    $_lib = $mod_lib
+    $local_lib = $mod_lib
   } else {
-    $_lib = "mod_${mod}.so"
+    $local_lib = "mod_${mod}.so"
   }
 
   # Determine if declaration specified a path to the module
   if $path {
-    $_path = $path
+    $local_path = $path
   } else {
-    $_path = "${lib_path}/${_lib}"
+    $local_path = "${lib_path}/${local_lib}"
   }
 
   if $id {
-    $_id = $id
+    $local_id = $id
   } else {
-    $_id = "${mod}_module"
+    $local_id = "${mod}_module"
   }
 
   if $loadfile_name {
-    $_loadfile_name = $loadfile_name
+    $local_loadfile_name = $loadfile_name
   } else {
-    $_loadfile_name = "${mod}.load"
+    $local_loadfile_name = "${mod}.load"
   }
 
   # Determine if we have a package
   $mod_packages = $::apache::params::mod_packages
   $mod_package = $mod_packages[$mod] # 2.6 compatibility hack
   if $package {
-    $_package = $package
+    $local_package = $package
   } elsif $mod_package {
-    $_package = $mod_package
+    $local_package = $mod_package
   }
-  if $_package and ! defined(Package[$_package]) {
+  if $local_package and ! defined(Package[$local_package]) {
     # note: FreeBSD/ports uses apxs tool to activate modules; apxs clutters
     # httpd.conf with 'LoadModule' directives; here, by proper resource
     # ordering, we ensure that our version of httpd.conf is reverted after
@@ -66,17 +66,17 @@ define apache::mod (
       ],
       default => File["${mod}.load"],
     }
-    # $_package may be an array
-    package { $_package:
+    # $local_package may be an array
+    package { $local_package:
       ensure  => $package_ensure,
       require => Package['httpd'],
       before  => $package_before,
     }
   }
 
-  file { "${_loadfile_name}":
+  file { "${local_loadfile_name}":
     ensure  => file,
-    path    => "${mod_dir}/${_loadfile_name}",
+    path    => "${mod_dir}/${local_loadfile_name}",
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
@@ -93,8 +93,8 @@ define apache::mod (
     $enable_dir = $::apache::mod_enable_dir
     file{ "${mod}.load symlink":
       ensure  => link,
-      path    => "${enable_dir}/${_loadfile_name}",
-      target  => "${mod_dir}/${_loadfile_name}",
+      path    => "${enable_dir}/${local_loadfile_name}",
+      target  => "${mod_dir}/${local_loadfile_name}",
       owner   => 'root',
       group   => $::apache::params::root_group,
       mode    => '0644',

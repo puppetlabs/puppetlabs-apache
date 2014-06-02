@@ -39,10 +39,10 @@
   LogLevel <%= @log_level %>
 <% end -%>
   ServerSignature Off
-<% if @access_log and @_access_log_env_var -%>
-  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %> <%= @_access_log_env_var %>
+<% if @access_log and @local_access_log_env_var -%>
+  CustomLog "<%= @access_log_destination %>" <%= @local_access_log_format %> <%= @local_access_log_env_var %>
 <% elsif @access_log -%>
-  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %>
+  CustomLog "<%= @access_log_destination %>" <%= @local_access_log_format %>
 <% end -%>
 <%= scope.function_template(['apache/vhost/_action.erb']) -%>
 <%= scope.function_template(['apache/vhost/_block.erb']) -%>
