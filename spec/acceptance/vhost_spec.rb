@@ -168,19 +168,19 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           class { 'apache': }
 
           if versioncmp($apache::apache_version, '2.4') >= 0 {
-            $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
+            $files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
           } else {
-            $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
+            $files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
           }
 
-          $_directories = [
+          $directories = [
             { 'path' => '/var/www/files', },
-            $_files_match_directory,
+            $files_match_directory,
           ]
 
           apache::vhost { 'files.example.net':
             docroot     => '/var/www/files',
-            directories => $_directories,
+            directories => $directories,
           }
           file { '/var/www/files/index.html':
             ensure  => file,
@@ -212,20 +212,20 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           class { 'apache': }
 
           if versioncmp($apache::apache_version, '2.4') >= 0 {
-            $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
+            $files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
-            $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' }
+            $files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' }
           }
 
-          $_directories = [
+          $directories = [
             { 'path' => '/var/www/files', },
             { 'path' => '/foo/', 'provider' => 'location', 'directoryindex' => 'notindex.html', },
-            $_files_match_directory,
+            $files_match_directory,
           ]
 
           apache::vhost { 'files.example.net':
             docroot     => '/var/www/files',
-            directories => $_directories,
+            directories => $directories,
           }
           file { '/var/www/files/foo':
             ensure => directory,

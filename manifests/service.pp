@@ -29,15 +29,15 @@ class apache::service (
 
   case $service_ensure {
     true, false, 'running', 'stopped': {
-      $_service_ensure = $service_ensure
+      $local_service_ensure = $service_ensure
     }
     default: {
-      $_service_ensure = undef
+      $local_service_ensure = undef
     }
   }
 
   service { 'httpd':
-    ensure => $_service_ensure,
+    ensure => $local_service_ensure,
     name   => $service_name,
     enable => $service_enable,
   }

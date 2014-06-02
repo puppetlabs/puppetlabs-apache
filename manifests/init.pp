@@ -84,7 +84,7 @@ class apache (
     package { 'httpd':
       ensure => $package_ensure,
       name   => $::apache::params::apache_name,
-      notify => Class['Apache::Service'],
+      notify => Class['apache::service'],
     }
   }
   validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
@@ -138,7 +138,7 @@ class apache (
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
-    notify  => Class['Apache::Service'],
+    notify  => Class['apache::service'],
     require => Package['httpd'],
   }
 
@@ -153,7 +153,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_mod_dir,
-      notify  => Class['Apache::Service'],
+      notify  => Class['apache::service'],
       require => Package['httpd'],
     }
   }
@@ -168,7 +168,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Class['Apache::Service'],
+      notify  => Class['apache::service'],
       require => Package['httpd'],
     }
   } else {
@@ -184,7 +184,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Class['Apache::Service'],
+      notify  => Class['apache::service'],
       require => Package['httpd'],
     }
   }
@@ -199,7 +199,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Class['Apache::Service'],
+      notify  => Class['apache::service'],
       require => Package['httpd'],
     }
   } else {
@@ -210,7 +210,7 @@ class apache (
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
-    notify  => Class['Apache::Service'],
+    notify  => Class['apache::service'],
     require => Package['httpd'],
   }
   concat::fragment { 'Apache ports header':
@@ -279,7 +279,7 @@ class apache (
     file { "${::apache::params::conf_dir}/${::apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
-      notify  => Class['Apache::Service'],
+      notify  => Class['apache::service'],
       require => Package['httpd'],
     }
 

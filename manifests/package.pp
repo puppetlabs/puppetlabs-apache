@@ -43,6 +43,6 @@ class apache::package (
   package { 'httpd':
     ensure => $ensure,
     name   => $apache_package,
-    notify => Class['Apache::Service'],
+    notify => Class['apache::service'],
   }
 }
