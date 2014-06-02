@@ -61,10 +61,10 @@ define apache::mod (
     # the module gets installed.
     $package_before = $::osfamily ? {
       'freebsd' => [
-        File["${mod}.load"],
+        File[$_loadfile_name],
         File["${::apache::params::conf_dir}/${::apache::params::conf_file}"]
       ],
-      default => File["${mod}.load"],
+      default => File[$_loadfile_name],
     }
     # $_package may be an array
     package { $_package:
@@ -91,7 +91,7 @@ define apache::mod (
 
   if $::osfamily == 'Debian' {
     $enable_dir = $::apache::mod_enable_dir
-    file{ "${mod}.load symlink":
+    file{ "${_loadfile_name} symlink":
       ensure  => link,
       path    => "${enable_dir}/${_loadfile_name}",
       target  => "${mod_dir}/${_loadfile_name}",
@@ -99,7 +99,7 @@ define apache::mod (
       group   => $::apache::params::root_group,
       mode    => '0644',
       require => [
-        File["${mod}.load"],
+        File[$_loadfile_name],
         Exec["mkdir ${enable_dir}"],
       ],
       before  => File[$enable_dir],
