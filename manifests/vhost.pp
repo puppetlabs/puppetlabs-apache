@@ -334,7 +334,7 @@ define apache::vhost(
     }
   } else {
     if $port {
-      $listen_addr_port = $port
+      $listen_addr_port = "${port}"
       $nvh_addr_port = "${vhost_name}:${port}"
     } else {
       $nvh_addr_port = $name
