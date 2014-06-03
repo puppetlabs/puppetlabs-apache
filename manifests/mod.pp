@@ -91,7 +91,7 @@ define apache::mod (
 
   if $::osfamily == 'Debian' {
     $enable_dir = $::apache::mod_enable_dir
-    file{ "${mod}.load symlink":
+    file{ "${_loadfile_name} symlink":
       ensure  => link,
       path    => "${enable_dir}/${_loadfile_name}",
       target  => "${mod_dir}/${_loadfile_name}",
@@ -99,7 +99,7 @@ define apache::mod (
       group   => $::apache::params::root_group,
       mode    => '0644',
       require => [
-        File["${mod}.load"],
+        File["${_loadfile_name}"],
         Exec["mkdir ${enable_dir}"],
       ],
       before  => File[$enable_dir],
