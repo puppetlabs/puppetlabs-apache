@@ -331,6 +331,11 @@ Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log
 
 Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, and '/var/log/apache22' on FreeBSD.
 
+#####`logroot_mode`
+
+Overrides the mode the logroot directory is set to. Defaults to undef. Do NOT give people write access to the directory the logs are stored
+in without being aware of the consequences; see http://httpd.apache.org/docs/2.4/logs.html#security for details.
+
 #####`manage_group`
 
 Setting this to 'false' will stop the group resource from being created. This is for when you have a group, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established group would result in a duplicate resource error.
