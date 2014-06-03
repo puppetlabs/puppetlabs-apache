@@ -19,6 +19,7 @@
         * [Class: apache::mod::php](#class-apachemodphp)
         * [Class: apache::mod::ssl](#class-apachemodssl)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
+        * [Class: apache::mod::fcgid](#class-apachemodfcgid)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
@@ -581,6 +582,41 @@ For customized parameters, which tell Apache how Python is currently configured 
 ```
 
 More information about [WSGI](http://modwsgi.readthedocs.org/en/latest/).
+
+####Class: `apache::mod::fcgid`
+
+Installs and configures mod_fcgid.
+
+The class makes no effort to list all available options, but rather uses an options hash to allow for ultimate flexibility:
+
+```puppet
+    class { 'apache::mod::fcgid':
+      options => {
+        'FcgidIPCDir'  => '/var/run/fcgidsock',
+        'SharememPath' => '/var/run/fcgid_shm',
+        'AddHandler'   => 'fcgid-script .fcgi',
+      },
+    }
+```
+
+For a full list op options, see the [official mod_fcgid documentation](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html).
+
+It is also possible to set the FcgidWrapper per directory per vhost. You must ensure the fcgid module is loaded because there is no auto loading.
+
+```puppet
+    include apache::mod::fcgid
+    apache::vhost { 'example.org':
+      docroot     => '/var/www/html',
+      directories => {
+        path        => '/var/www/html',
+        fcgiwrapper => {
+          command => '/usr/local/bin/fcgiwrapper',
+        }
+      },
+    }
+```
+
+See [FcgidWrapper documentation](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html#fcgidwrapper) for more information.
 
 ####Defined Type: `apache::vhost`
 
