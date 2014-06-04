@@ -16,16 +16,10 @@ describe 'apache::mod::passenger', :type => :class do
     it { should contain_file('passenger.load').with({
       'path' => '/etc/apache2/mods-available/passenger.load',
     }) }
-    it { should contain_file('passenger_package.conf').with({
+    it { should contain_file('passenger.conf').with({
       'path' => '/etc/apache2/mods-available/passenger.conf',
     }) }
-    it { should contain_file('passenger_package.conf').without_content }
-    it { should contain_file('passenger_package.conf').without_source }
-    it { should contain_file('passenger.conf').with({
-      'path' => '/etc/apache2/mods-available/passenger_extra.conf',
-    }) }
-    it { should contain_file('passenger.conf').without_content(/PassengerRoot/) }
-    it { should contain_file('passenger.conf').without_content(/PassengerRuby/) }
+    it { should contain_file('passenger_package.conf').with_ensure('absent') }
     describe "with passenger_root => '/usr/lib/example'" do
       let :params do
         { :passenger_root => '/usr/lib/example' }
@@ -38,11 +32,17 @@ describe 'apache::mod::passenger', :type => :class do
       end
       it { should contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/lib/example/ruby"}) }
     end
-    describe "with passenger_high_performance => true" do
+    describe "with passenger_default_ruby => /usr/lib/example/ruby1.9.3" do
       let :params do
-        { :passenger_high_performance => 'true' }
+        { :passenger_ruby => '/usr/lib/example/ruby1.9.3' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerHighPerformance true$/) }
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/lib/example/ruby1.9.3"}) }
+    end
+    describe "with passenger_high_performance => on" do
+      let :params do
+        { :passenger_high_performance => 'on' }
+      end
+      it { should contain_file('passenger.conf').with_content(/^  PassengerHighPerformance on$/) }
     end
     describe "with passenger_pool_idle_time => 1200" do
       let :params do
@@ -68,35 +68,23 @@ describe 'apache::mod::passenger', :type => :class do
       end
       it { should contain_file('passenger.conf').with_content(/^  PassengerMaxPoolSize 16$/) }
     end
-    describe "with rack_autodetect => true" do
+    describe "with rack_autodetect => on" do
       let :params do
-        { :rack_autodetect => true }
+        { :rack_autodetect => 'on' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  RackAutoDetect true$/) }
+      it { should contain_file('passenger.conf').with_content(/^  RackAutoDetect on$/) }
     end
-    describe "with rails_autodetect => true" do
+    describe "with rails_autodetect => on" do
       let :params do
-        { :rails_autodetect => true }
+        { :rails_autodetect => 'on' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  RailsAutoDetect true$/) }
+      it { should contain_file('passenger.conf').with_content(/^  RailsAutoDetect on$/) }
     end
-    describe "with passenger_root => '/usr/lib/example'" do
+    describe "with passenger_use_global_queue => on" do
       let :params do
-        { :passenger_root => '/usr/lib/example' }
+        { :passenger_use_global_queue => 'on' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerRoot "\/usr\/lib\/example"$/) }
-    end
-    describe "with passenger_ruby => /usr/lib/example/ruby" do
-      let :params do
-        { :passenger_ruby => '/usr/lib/example/ruby' }
-      end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerRuby "\/usr\/lib\/example\/ruby"$/) }
-    end
-    describe "with passenger_use_global_queue => true" do
-      let :params do
-        { :passenger_use_global_queue => 'true' }
-      end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerUseGlobalQueue true$/) }
+      it { should contain_file('passenger.conf').with_content(/^  PassengerUseGlobalQueue on$/) }
     end
     describe "with mod_path => '/usr/lib/foo/mod_foo.so'" do
       let :params do
@@ -123,7 +111,55 @@ describe 'apache::mod::passenger', :type => :class do
       it { should contain_file('passenger.load').with_content(/^LoadModule mod_foo \/usr\/lib\/apache2\/modules\/mod_passenger\.so$/) }
     end
 
+    context "with Ubuntu 12.04 defaults" do
+      let :facts do
+        {
+          :osfamily               => 'Debian',
+          :operatingsystemrelease => '12.04',
+          :operatingsystem        => 'Ubuntu',
+          :lsbdistrelease         => '12.04',
+          :concat_basedir         => '/dne',
+        }
+      end
+
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr"}) }
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/bin/ruby"}) }
+      it { should contain_file('passenger.conf').without_content(/PassengerDefaultRuby/) }
+    end
+
+    context "with Ubuntu 14.04 defaults" do
+      let :facts do
+        {
+          :osfamily               => 'Debian',
+          :operatingsystemrelease => '14.04',
+          :operatingsystem        => 'Ubuntu',
+          :lsbdistrelease         => '14.04',
+          :concat_basedir         => '/dne',
+        }
+      end
+
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"}) }
+      it { should contain_file('passenger.conf').without_content(/PassengerRuby/) }
+      it { should contain_file('passenger.conf').with_content(%r{PassengerDefaultRuby "/usr/bin/ruby"}) }
+    end
+
+    context "with Debian 7 defaults" do
+      let :facts do
+        {
+          :osfamily               => 'Debian',
+          :operatingsystemrelease => '7.3',
+          :operatingsystem        => 'Debian',
+          :lsbdistcodename        => 'wheezy',
+          :concat_basedir         => '/dne',
+        }
+      end
+
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr"}) }
+      it { should contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/bin/ruby"}) }
+      it { should contain_file('passenger.conf').without_content(/PassengerDefaultRuby/) }
+    end
   end
+
   context "on a RedHat OS" do
     let :facts do
       {

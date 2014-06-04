@@ -9,6 +9,7 @@ class apache::mod::passenger (
   $rails_autodetect               = undef,
   $passenger_root                 = $::apache::params::passenger_root,
   $passenger_ruby                 = $::apache::params::passenger_ruby,
+  $passenger_default_ruby         = $::apache::params::passenger_default_ruby,
   $passenger_max_pool_size        = undef,
   $passenger_use_global_queue     = undef,
   $mod_package                    = undef,
@@ -22,6 +23,20 @@ class apache::mod::passenger (
   if $passenger_conf_package_file {
     file { 'passenger_package.conf':
       path => "${::apache::mod_dir}/${passenger_conf_package_file}",
+    }
+  } else {
+    # Remove passenger_extra.conf left over from before Passenger support was
+    # reworked for Debian. This is a temporary fix for users running this
+    # module from master after release 1.0.1 It will be removed in two
+    # releases from now.
+    $passenger_package_conf_ensure = $::osfamily ? {
+      'Debian' => 'absent',
+      default  => undef,
+    }
+
+    file { 'passenger_package.conf':
+      ensure => $passenger_package_conf_ensure,
+      path   => "${::apache::mod_dir}/passenger_extra.conf",
     }
   }
 
@@ -52,6 +67,7 @@ class apache::mod::passenger (
   # Template uses:
   # - $passenger_root
   # - $passenger_ruby
+  # - $passenger_default_ruby
   # - $passenger_max_pool_size
   # - $passenger_high_performance
   # - $passenger_max_requests
