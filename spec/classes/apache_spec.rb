@@ -293,7 +293,7 @@ describe 'apache', :type => :class do
         it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
       end
 
-      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/site\.d/\*\.conf"$} }
+      it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/site\.d/\*"$} }
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { should contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end

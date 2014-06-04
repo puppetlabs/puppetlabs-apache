@@ -67,7 +67,7 @@ IncludeOptional "<%= @confd_dir %>/*.conf"
 Include "<%= @confd_dir %>/*.conf"
 <%- end -%>
 <% if @vhost_load_dir != @confd_dir -%>
-Include "<%= @vhost_load_dir %>/*.conf"
+Include "<%= @vhost_load_dir %>/*"
 <% end -%>
 
 <% if @error_documents -%>
