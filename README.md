@@ -1175,7 +1175,7 @@ Sets [AddHandler](http://httpd.apache.org/docs/current/mod/mod_mime.html#addhand
 
 ######`allow`
 
-Sets an [Allow](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow) directive, which groups authorizations based on hostnames or IPs. **Deprecated:** This parameter is being deprecated due to a change in Apache. It will only work with Apache 2.2 and lower. 
+Sets an [Allow](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow) directive, which groups authorizations based on hostnames or IPs. **Deprecated:** This parameter is being deprecated due to a change in Apache. It will only work with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.
 
 ```puppet
     apache::vhost { 'sample.example.net':

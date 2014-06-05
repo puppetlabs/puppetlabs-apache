@@ -50,7 +50,13 @@
     Deny <%= directory['deny'] %>
       <%- end -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
+        <%- if directory['allow'].kind_of?(Array) -%>
+          <%- Array(directory['allow']).each do |access| -%>
+    Allow <%=  access %>
+        <%- end -%>
+      <%- else -%>
     Allow <%= directory['allow'] %>
+      <%- end -%>
       <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
       <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
     Deny from all
