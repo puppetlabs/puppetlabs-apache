@@ -43,14 +43,14 @@ describe 'apache::mod::fcgid class', :unless => UNSUPPORTED_PLATFORMS.include?(f
       end
 
       describe service('httpd') do
-        it { should be_enabled }
-        it { should be_running }
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
       end
 
       it 'should answer to fcgid.example.com' do
         shell("/usr/bin/curl -H 'Host: fcgid.example.com' 127.0.0.1:80") do |r|
-          r.stdout.should =~ /^Hello world$/
-          r.exit_code.should == 0
+          expect(r.stdout).to match(/^Hello world$/)
+          expect(r.exit_code).to eq(0)
         end
       end
 

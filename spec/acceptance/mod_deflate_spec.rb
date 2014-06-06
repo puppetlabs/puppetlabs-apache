@@ -23,18 +23,18 @@ describe 'apache::mod::deflate class' do
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     describe file("#{mod_dir}/deflate.conf") do
-      it { should contain "AddOutputFilterByType DEFLATE text/html text/plain text/xml" }
-      it { should contain "AddOutputFilterByType DEFLATE text/css" }
-      it { should contain "AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript" }
-      it { should contain "AddOutputFilterByType DEFLATE application/rss+xml" }
-      it { should contain "DeflateFilterNote Input instream" }
-      it { should contain "DeflateFilterNote Output outstream" }
-      it { should contain "DeflateFilterNote Ratio ratio" }
+      it { is_expected.to contain "AddOutputFilterByType DEFLATE text/html text/plain text/xml" }
+      it { is_expected.to contain "AddOutputFilterByType DEFLATE text/css" }
+      it { is_expected.to contain "AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript" }
+      it { is_expected.to contain "AddOutputFilterByType DEFLATE application/rss+xml" }
+      it { is_expected.to contain "DeflateFilterNote Input instream" }
+      it { is_expected.to contain "DeflateFilterNote Output outstream" }
+      it { is_expected.to contain "DeflateFilterNote Ratio ratio" }
     end
   end
 end

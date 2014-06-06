@@ -23,12 +23,12 @@ describe 'apache::mod::dav_svn class' do
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     describe file("#{mod_dir}/dav_svn.load") do
-      it { should contain "LoadModule dav_svn_module" }
+      it { is_expected.to contain "LoadModule dav_svn_module" }
     end
   end
 
@@ -44,12 +44,12 @@ describe 'apache::mod::dav_svn class' do
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     describe file("#{mod_dir}/dav_svn_authz_svn.load") do
-      it { should contain "LoadModule authz_svn_module" }
+      it { is_expected.to contain "LoadModule authz_svn_module" }
     end
   end
 end

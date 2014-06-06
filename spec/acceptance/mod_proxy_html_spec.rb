@@ -32,8 +32,8 @@ describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.inclu
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
   end
 end

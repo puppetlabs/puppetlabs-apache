@@ -28,7 +28,7 @@ describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?
     end
 
     describe service(servicename) do
-      it { should be_running }
+      it { is_expected.to be_running }
     end
   end
 
@@ -54,7 +54,7 @@ describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?
 
     # Are these the same?
     describe service(servicename) do
-      it { should_not be_running }
+      it { is_expected.not_to be_running }
     end
     describe "service #{servicename}" do
       it 'should not be running' do
@@ -92,7 +92,7 @@ describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?
     end
 
     describe service(servicename) do
-      it { should be_running }
+      it { is_expected.to be_running }
     end
   end
 
@@ -110,11 +110,11 @@ describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?
     end
 
     describe service(servicename) do
-      it { should be_running }
+      it { is_expected.to be_running }
     end
 
     describe file("#{mod_dir}/zz_auth_basic.load") do
-      it { should be_file }
+      it { is_expected.to be_file }
     end
   end
 end
