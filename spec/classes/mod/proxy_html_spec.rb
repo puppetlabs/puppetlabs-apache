@@ -10,9 +10,9 @@ describe 'apache::mod::proxy_html', :type => :class do
   end
   context "on a Debian OS" do
     shared_examples "debian" do |loadfiles|
-      it { should contain_class("apache::params") }
-      it { should contain_apache__mod('proxy_html').with(:loadfiles => loadfiles) }
-      it { should contain_package("libapache2-mod-proxy-html") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('proxy_html').with(:loadfiles => loadfiles) }
+      it { is_expected.to contain_package("libapache2-mod-proxy-html") }
     end
     let :facts do
       {
@@ -62,9 +62,9 @@ describe 'apache::mod::proxy_html', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('proxy_html').with(:loadfiles => nil) }
-    it { should contain_package("mod_proxy_html") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('proxy_html').with(:loadfiles => nil) }
+    it { is_expected.to contain_package("mod_proxy_html") }
   end
   context "on a FreeBSD OS", :compile do
     let :facts do
@@ -78,8 +78,8 @@ describe 'apache::mod::proxy_html', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('proxy_html').with(:loadfiles => nil) }
-    it { should contain_package("www/mod_proxy_html") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('proxy_html').with(:loadfiles => nil) }
+    it { is_expected.to contain_package("www/mod_proxy_html") }
   end
 end

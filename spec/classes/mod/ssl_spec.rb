@@ -31,9 +31,9 @@ describe 'apache::mod::ssl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class('apache::params') }
-    it { should contain_apache__mod('ssl') }
-    it { should contain_package('mod_ssl') }
+    it { is_expected.to contain_class('apache::params') }
+    it { is_expected.to contain_apache__mod('ssl') }
+    it { is_expected.to contain_package('mod_ssl') }
   end
 
   context 'on a Debian OS' do
@@ -49,9 +49,9 @@ describe 'apache::mod::ssl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class('apache::params') }
-    it { should contain_apache__mod('ssl') }
-    it { should_not contain_package('libapache2-mod-ssl') }
+    it { is_expected.to contain_class('apache::params') }
+    it { is_expected.to contain_apache__mod('ssl') }
+    it { is_expected.not_to contain_package('libapache2-mod-ssl') }
   end
 
   context 'on a FreeBSD OS' do
@@ -66,7 +66,7 @@ describe 'apache::mod::ssl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class('apache::params') }
-    it { should contain_apache__mod('ssl') }
+    it { is_expected.to contain_class('apache::params') }
+    it { is_expected.to contain_apache__mod('ssl') }
   end
 end

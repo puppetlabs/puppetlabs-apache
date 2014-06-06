@@ -10,10 +10,10 @@ describe 'apache::dev', :type => :class do
         :operatingsystemrelease => '6',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_package("libaprutil1-dev") }
-    it { should contain_package("libapr1-dev") }
-    it { should contain_package("apache2-prefork-dev") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_package("libaprutil1-dev") }
+    it { is_expected.to contain_package("libapr1-dev") }
+    it { is_expected.to contain_package("apache2-prefork-dev") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -23,8 +23,8 @@ describe 'apache::dev', :type => :class do
         :operatingsystemrelease => '6',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_package("httpd-devel") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_package("httpd-devel") }
   end
   context "on a FreeBSD OS" do
     let :pre_condition do
@@ -37,6 +37,6 @@ describe 'apache::dev', :type => :class do
         :operatingsystemrelease => '9',
       }
     end
-    it { should contain_class("apache::params") }
+    it { is_expected.to contain_class("apache::params") }
   end
 end

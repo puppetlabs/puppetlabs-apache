@@ -17,8 +17,8 @@ describe 'apache::mod::suphp', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_package("libapache2-mod-suphp") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_package("libapache2-mod-suphp") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -32,7 +32,7 @@ describe 'apache::mod::suphp', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_package("mod_suphp") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_package("mod_suphp") }
   end
 end

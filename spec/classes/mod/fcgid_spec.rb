@@ -18,9 +18,9 @@ describe 'apache::mod::fcgid', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('fcgid') }
-    it { should contain_package("libapache2-mod-fcgid") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('fcgid') }
+    it { is_expected.to contain_package("libapache2-mod-fcgid") }
   end
 
   context "on a RedHat OS" do
@@ -37,9 +37,9 @@ describe 'apache::mod::fcgid', :type => :class do
     end
 
     describe 'without parameters' do
-      it { should contain_class("apache::params") }
-      it { should contain_apache__mod('fcgid') }
-      it { should contain_package("mod_fcgid") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('fcgid') }
+      it { is_expected.to contain_package("mod_fcgid") }
     end
 
     describe 'with parameters' do
@@ -54,14 +54,14 @@ describe 'apache::mod::fcgid', :type => :class do
 
       it 'should contain the correct config' do
         content = subject.resource('file', 'fcgid.conf').send(:parameters)[:content]
-        content.split("\n").reject { |c| c =~ /(^#|^$)/ }.should == [
+        expect(content.split("\n").reject { |c| c =~ /(^#|^$)/ }).to eq([
           '<IfModule mod_fcgid.c>',
           '  AddHandler fcgid-script .fcgi',
           '  FcgidIPCDir /var/run/fcgidsock',
           '  FcgidMinProcessesPerClass 0',
           '  SharememPath /var/run/fcgid_shm',
           '</IfModule>',
-        ]
+        ])
       end
     end
   end
@@ -79,8 +79,8 @@ describe 'apache::mod::fcgid', :type => :class do
       }
     end
 
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('fcgid') }
-    it { should contain_package("www/mod_fcgid") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('fcgid') }
+    it { is_expected.to contain_package("www/mod_fcgid") }
   end
 end

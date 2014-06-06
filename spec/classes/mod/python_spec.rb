@@ -17,9 +17,9 @@ describe 'apache::mod::python', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod("python") }
-    it { should contain_package("libapache2-mod-python") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod("python") }
+    it { is_expected.to contain_package("libapache2-mod-python") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -33,9 +33,9 @@ describe 'apache::mod::python', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod("python") }
-    it { should contain_package("mod_python") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod("python") }
+    it { is_expected.to contain_package("mod_python") }
   end
   context "on a FreeBSD OS" do
     let :facts do
@@ -49,8 +49,8 @@ describe 'apache::mod::python', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod("python") }
-    it { should contain_package("www/mod_python3") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod("python") }
+    it { is_expected.to contain_package("www/mod_python3") }
   end
 end

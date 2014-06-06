@@ -17,9 +17,9 @@ describe 'apache::mod::perl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('perl') }
-    it { should contain_package("libapache2-mod-perl2") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('perl') }
+    it { is_expected.to contain_package("libapache2-mod-perl2") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -33,9 +33,9 @@ describe 'apache::mod::perl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('perl') }
-    it { should contain_package("mod_perl") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('perl') }
+    it { is_expected.to contain_package("mod_perl") }
   end
   context "on a FreeBSD OS" do
     let :facts do
@@ -49,8 +49,8 @@ describe 'apache::mod::perl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('perl') }
-    it { should contain_package("www/mod_perl2") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('perl') }
+    it { is_expected.to contain_package("www/mod_perl2") }
   end
 end
