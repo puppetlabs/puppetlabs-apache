@@ -327,6 +327,7 @@ define apache::vhost(
       $listen_addr_port = "${ip}:${port}"
       $nvh_addr_port = "${ip}:${port}"
     } else {
+      $listen_addr_port = undef
       $nvh_addr_port = $ip
       if ! $servername and ! $ip_based {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
@@ -337,6 +338,7 @@ define apache::vhost(
       $listen_addr_port = $port
       $nvh_addr_port = "${vhost_name}:${port}"
     } else {
+      $listen_addr_port = undef
       $nvh_addr_port = $name
       if ! $servername {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")

@@ -53,6 +53,8 @@ define apache::mod (
     $_package = $package
   } elsif $mod_package {
     $_package = $mod_package
+  } else {
+    $_package = undef
   }
   if $_package and ! defined(Package[$_package]) {
     # note: FreeBSD/ports uses apxs tool to activate modules; apxs clutters

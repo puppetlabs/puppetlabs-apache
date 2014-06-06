@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 # This function is called inside the OS specific contexts
 def general_deflate_specs
   it { should contain_apache__mod("deflate") }
@@ -24,8 +26,12 @@ describe 'apache::mod::deflate', :type => :class do
   context "On a Debian OS with default params" do
     let :facts do
       {
+        :id                     => 'root',
+        :lsbdistcodename        => 'squeeze',
         :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end
@@ -46,8 +52,11 @@ describe 'apache::mod::deflate', :type => :class do
   context "on a RedHat OS with default params" do
     let :facts do
       {
+        :id                     => 'root',
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end
@@ -61,8 +70,11 @@ describe 'apache::mod::deflate', :type => :class do
   context "On a FreeBSD OS with default params" do
     let :facts do
       {
+        :id                     => 'root',
         :osfamily               => 'FreeBSD',
+        :operatingsystem        => 'FreeBSD',
         :operatingsystemrelease => '9',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
       }
     end

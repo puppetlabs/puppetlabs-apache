@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::proxy_html', :type => :class do
   let :pre_condition do
     [
@@ -14,9 +16,15 @@ describe 'apache::mod::proxy_html', :type => :class do
     end
     let :facts do
       {
-        :osfamily       => 'Debian',
-        :concat_basedir => '/dne',
-        :architecture   => 'i386'
+        :osfamily        => 'Debian',
+        :concat_basedir  => '/dne',
+        :architecture    => 'i386',
+        :lsbdistcodename => 'squeeze',
+        :operatingsystem => 'Debian',
+        :id              => 'root',
+        :kernel          => 'Linux',
+        :path            => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :hardwaremodel   => 'i386',
       }
     end
 
@@ -48,6 +56,10 @@ describe 'apache::mod::proxy_html', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }
@@ -60,6 +72,10 @@ describe 'apache::mod::proxy_html', :type => :class do
         :osfamily               => 'FreeBSD',
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'FreeBSD',
+        :id                     => 'root',
+        :kernel                 => 'FreeBSD',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }

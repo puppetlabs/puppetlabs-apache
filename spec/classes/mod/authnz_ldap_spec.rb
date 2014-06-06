@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::authnz_ldap', :type => :class do
   let :pre_condition do
     'include apache'
@@ -6,9 +8,14 @@ describe 'apache::mod::authnz_ldap', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
+        :lsbdistcodename        => 'squeeze',
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :operatingsystem        => 'Debian',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }
@@ -38,6 +45,10 @@ describe 'apache::mod::authnz_ldap', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :operatingsystem        => 'RedHat',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }

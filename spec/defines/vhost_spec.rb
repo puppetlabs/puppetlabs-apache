@@ -20,6 +20,10 @@ describe 'apache::vhost', :type => :define do
           :osfamily               => 'RedHat',
           :operatingsystemrelease => '6',
           :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :params do default_params end
@@ -33,6 +37,11 @@ describe 'apache::vhost', :type => :define do
           :osfamily               => 'Debian',
           :operatingsystemrelease => '6',
           :concat_basedir         => '/dne',
+          :lsbdistcodename        => 'squeeze',
+          :operatingsystem        => 'Debian',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :params do default_params end
@@ -55,6 +64,10 @@ describe 'apache::vhost', :type => :define do
           :osfamily               => 'FreeBSD',
           :operatingsystemrelease => '9',
           :concat_basedir         => '/dne',
+          :operatingsystem        => 'FreeBSD',
+          :id                     => 'root',
+          :kernel                 => 'FreeBSD',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :params do default_params end
@@ -73,6 +86,11 @@ describe 'apache::vhost', :type => :define do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     describe 'basic assumptions' do

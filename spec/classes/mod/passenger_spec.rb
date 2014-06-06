@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::passenger', :type => :class do
   let :pre_condition do
     'include apache'
@@ -8,6 +10,11 @@ describe 'apache::mod::passenger', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }
@@ -119,6 +126,8 @@ describe 'apache::mod::passenger', :type => :class do
           :operatingsystem        => 'Ubuntu',
           :lsbdistrelease         => '12.04',
           :concat_basedir         => '/dne',
+          :id                     => 'root',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
 
@@ -135,6 +144,8 @@ describe 'apache::mod::passenger', :type => :class do
           :operatingsystem        => 'Ubuntu',
           :lsbdistrelease         => '14.04',
           :concat_basedir         => '/dne',
+          :id                     => 'root',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
 
@@ -151,6 +162,8 @@ describe 'apache::mod::passenger', :type => :class do
           :operatingsystem        => 'Debian',
           :lsbdistcodename        => 'wheezy',
           :concat_basedir         => '/dne',
+          :id                     => 'root',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
 
@@ -166,6 +179,10 @@ describe 'apache::mod::passenger', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }
@@ -200,6 +217,10 @@ describe 'apache::mod::passenger', :type => :class do
         :osfamily               => 'FreeBSD',
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'FreeBSD',
+        :id                     => 'root',
+        :kernel                 => 'FreeBSD',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { should contain_class("apache::params") }
