@@ -28,8 +28,8 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should contain_class("apache") }
-      it { should contain_class("apache::params") }
+      it { is_expected.to contain_class("apache") }
+      it { is_expected.to contain_class("apache::params") }
     end
     context "on Debian based systems" do
       let :default_facts do
@@ -46,13 +46,13 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should contain_class("apache") }
-      it { should contain_class("apache::params") }
-      it { should contain_file("25-rspec.example.com.conf").with(
+      it { is_expected.to contain_class("apache") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/etc/apache2/sites-available/25-rspec.example.com.conf'
       ) }
-      it { should contain_file("25-rspec.example.com.conf symlink").with(
+      it { is_expected.to contain_file("25-rspec.example.com.conf symlink").with(
         :ensure => 'link',
         :path   => '/etc/apache2/sites-enabled/25-rspec.example.com.conf',
         :target => '/etc/apache2/sites-available/25-rspec.example.com.conf'
@@ -72,9 +72,9 @@ describe 'apache::vhost', :type => :define do
       end
       let :params do default_params end
       let :facts do default_facts end
-      it { should contain_class("apache") }
-      it { should contain_class("apache::params") }
-      it { should contain_file("25-rspec.example.com.conf").with(
+      it { is_expected.to contain_class("apache") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/usr/local/etc/apache22/Vhosts/25-rspec.example.com.conf'
       ) }
@@ -95,10 +95,10 @@ describe 'apache::vhost', :type => :define do
     end
     describe 'basic assumptions' do
       let :params do default_params end
-      it { should contain_class("apache") }
-      it { should contain_class("apache::params") }
-      it { should contain_apache__listen(params[:port]) }
-      it { should contain_apache__namevirtualhost("*:#{params[:port]}") }
+      it { is_expected.to contain_class("apache") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__listen(params[:port]) }
+      it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
     end
 
     # All match and notmatch should be a list of regexs and exact match strings
@@ -669,18 +669,18 @@ describe 'apache::vhost', :type => :define do
         describe "when #{param[:attr]} is #{param[:value]}" do
           let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
 
-          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          it { is_expected.to contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
             it "#{param[:title]}: matches" do
               param[:match].each do |match|
-                should contain_file("25-#{title}.conf").with_content( match )
+                is_expected.to contain_file("25-#{title}.conf").with_content( match )
               end
             end
           end
           if param[:notmatch]
             it "#{param[:title]}: notmatches" do
               param[:notmatch].each do |notmatch|
-                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+                is_expected.not_to contain_file("25-#{title}.conf").with_content( notmatch )
               end
             end
           end
@@ -821,18 +821,18 @@ describe 'apache::vhost', :type => :define do
             :apache_version => '2.2',
           }) end
 
-          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          it { is_expected.to contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
             it "#{param[:title]}: matches" do
               param[:match].each do |match|
-                should contain_file("25-#{title}.conf").with_content( match )
+                is_expected.to contain_file("25-#{title}.conf").with_content( match )
               end
             end
           end
           if param[:notmatch]
             it "#{param[:title]}: notmatches" do
               param[:notmatch].each do |notmatch|
-                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+                is_expected.not_to contain_file("25-#{title}.conf").with_content( notmatch )
               end
             end
           end
@@ -958,18 +958,18 @@ describe 'apache::vhost', :type => :define do
             :apache_version => '2.4',
           }) end
 
-          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          it { is_expected.to contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
             it "#{param[:title]}: matches" do
               param[:match].each do |match|
-                should contain_file("25-#{title}.conf").with_content( match )
+                is_expected.to contain_file("25-#{title}.conf").with_content( match )
               end
             end
           end
           if param[:notmatch]
             it "#{param[:title]}: notmatches" do
               param[:notmatch].each do |notmatch|
-                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+                is_expected.not_to contain_file("25-#{title}.conf").with_content( notmatch )
               end
             end
           end
@@ -1090,18 +1090,18 @@ describe 'apache::vhost', :type => :define do
               :ssl                => true,
             } )
           end
-          it { should contain_file("25-#{title}.conf").with_mode('0644') }
+          it { is_expected.to contain_file("25-#{title}.conf").with_mode('0644') }
           if param[:match]
             it "#{param[:title]}: matches" do
               param[:match].each do |match|
-                should contain_file("25-#{title}.conf").with_content( match )
+                is_expected.to contain_file("25-#{title}.conf").with_content( match )
               end
             end
           end
           if param[:notmatch]
             it "#{param[:title]}: notmatches" do
               param[:notmatch].each do |notmatch|
-                should_not contain_file("25-#{title}.conf").with_content( notmatch )
+                is_expected.not_to contain_file("25-#{title}.conf").with_content( notmatch )
               end
             end
           end
@@ -1135,7 +1135,7 @@ describe 'apache::vhost', :type => :define do
           :docroot_mode  => '0750',
         }) end
         it 'should set vhost ownership and permissions' do
-          should contain_file(params[:docroot]).with({
+          is_expected.to contain_file(params[:docroot]).with({
             :ensure => :directory,
             :owner  => 'testuser',
             :group  => 'testgroup',
@@ -1150,7 +1150,7 @@ describe 'apache::vhost', :type => :define do
           :wsgi_daemon_process_options => { 'processes' => '2', 'threads' => '15' },
         }) end
         it 'should set wsgi_daemon_process_options' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  WSGIDaemonProcess example.org processes=2 threads=15$/
           )
         end
@@ -1162,7 +1162,7 @@ describe 'apache::vhost', :type => :define do
           :wsgi_import_script_options => { 'application-group' => '%{GLOBAL}', 'process-group' => 'wsgi' },
         }) end
         it 'should set wsgi_import_script_options' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  WSGIImportScript \/var\/www\/demo.wsgi application-group=%{GLOBAL} process-group=wsgi$/
           )
         end
@@ -1180,22 +1180,22 @@ describe 'apache::vhost', :type => :define do
           ]
         }) end
         it 'should set RewriteConds and RewriteRules' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  #test rewrites$/
           )
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTP_USER_AGENT\} \^Lynx\/ \[OR\]$/
           )
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteBase \/mytestpath\/$/
           )
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTP_USER_AGENT\} \^Mozilla\/\[12\]$/
           )
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteRule \^index\\.html\$ welcome.html$/
           )
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteRule \^index\\.cgi\$ index.php$/
           )
         end
@@ -1207,7 +1207,7 @@ describe 'apache::vhost', :type => :define do
           :rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
         }) end
         it 'should set RewriteCond' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  RewriteCond %\{HTTPS\} off$/
           )
         end
@@ -1218,7 +1218,7 @@ describe 'apache::vhost', :type => :define do
           :action => 'php-fastcgi',
         }) end
         it 'should set Action' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  Action php-fastcgi \/cgi-bin virtual$/
           )
         end
@@ -1230,7 +1230,7 @@ describe 'apache::vhost', :type => :define do
           :suphp_configpath => '/etc/php5/apache2',
         }) end
         it 'should set suphp_configpath' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  suPHP_ConfigPath "\/etc\/php5\/apache2"$/
           )
         end
@@ -1242,7 +1242,7 @@ describe 'apache::vhost', :type => :define do
           :suphp_addhandler => 'x-httpd-php',
         }) end
         it 'should set suphp_addhandler' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^  suPHP_AddHandler x-httpd-php/
           )
         end
@@ -1256,7 +1256,7 @@ describe 'apache::vhost', :type => :define do
           }
         }) end
         it 'should set suphp_UserGroup' do
-          should contain_file("25-#{title}.conf").with_content(
+          is_expected.to contain_file("25-#{title}.conf").with_content(
             /^    suPHP_UserGroup myappuser myappgroup/
           )
         end
@@ -1265,7 +1265,7 @@ describe 'apache::vhost', :type => :define do
       describe 'priority/default settings' do
         describe 'when neither priority/default is specified' do
           let :params do default_params end
-          it { should contain_file("25-#{title}.conf").with_path(
+          it { is_expected.to contain_file("25-#{title}.conf").with_path(
             /25-#{title}.conf/
           ) }
         end
@@ -1276,7 +1276,7 @@ describe 'apache::vhost', :type => :define do
               :default_vhost => true,
             })
           end
-          it { should contain_file("15-#{title}.conf").with_path(
+          it { is_expected.to contain_file("15-#{title}.conf").with_path(
             /15-#{title}.conf/
           ) }
         end
@@ -1284,7 +1284,7 @@ describe 'apache::vhost', :type => :define do
           let :params do
             default_params.merge({ :priority => 14, })
           end
-          it { should contain_file("14-#{title}.conf").with_path(
+          it { is_expected.to contain_file("14-#{title}.conf").with_path(
             /14-#{title}.conf/
           ) }
         end
@@ -1292,7 +1292,7 @@ describe 'apache::vhost', :type => :define do
           let :params do
             default_params.merge({ :default_vhost => true, })
           end
-          it { should contain_file("10-#{title}.conf").with_path(
+          it { is_expected.to contain_file("10-#{title}.conf").with_path(
             /10-#{title}.conf/
           ) }
         end
@@ -1306,7 +1306,7 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should_not contain_file("25-#{title}.conf").with_content(%r{FcgidWrapper}) }
+          it { is_expected.not_to contain_file("25-#{title}.conf").with_content(%r{FcgidWrapper}) }
         end
 
         describe 'Only a command' do
@@ -1318,7 +1318,7 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper  $}) }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper  $}) }
         end
 
         describe 'All parameters' do
@@ -1330,7 +1330,7 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper .php virtual$}) }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content(%r{^    FcgidWrapper /usr/local/bin/fcgiwrapper .php virtual$}) }
         end
       end
 
@@ -1338,25 +1338,25 @@ describe 'apache::vhost', :type => :define do
         describe 'when ip_based is true' do
           let :params do default_params.merge({ :ip_based => true }) end
           it 'should not specify a NameVirtualHost' do
-            should contain_apache__listen(params[:port])
-            should_not contain_apache__namevirtualhost("*:#{params[:port]}")
+            is_expected.to contain_apache__listen(params[:port])
+            is_expected.not_to contain_apache__namevirtualhost("*:#{params[:port]}")
           end
         end
 
         describe 'when ip_based is default' do
           let :params do default_params end
           it 'should specify a NameVirtualHost' do
-            should contain_apache__listen(params[:port])
-            should contain_apache__namevirtualhost("*:#{params[:port]}")
+            is_expected.to contain_apache__listen(params[:port])
+            is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}")
           end
         end
 
         describe 'when an ip is set' do
           let :params do default_params.merge({ :ip => '10.0.0.1' }) end
           it 'should specify a NameVirtualHost for the ip' do
-            should_not contain_apache__listen(params[:port])
-            should contain_apache__listen("10.0.0.1:#{params[:port]}")
-            should contain_apache__namevirtualhost("10.0.0.1:#{params[:port]}")
+            is_expected.not_to contain_apache__listen(params[:port])
+            is_expected.to contain_apache__listen("10.0.0.1:#{params[:port]}")
+            is_expected.to contain_apache__namevirtualhost("10.0.0.1:#{params[:port]}")
           end
         end
 
@@ -1369,9 +1369,9 @@ describe 'apache::vhost', :type => :define do
             }
           end
           it 'should specify a NameVirtualHost for the ip' do
-            should_not contain_apache__listen(params[:ip])
-            should_not contain_apache__namevirtualhost(params[:ip])
-            should contain_file("25-#{title}.conf").with_content %r{<VirtualHost 10\.0\.0\.1>}
+            is_expected.not_to contain_apache__listen(params[:ip])
+            is_expected.not_to contain_apache__namevirtualhost(params[:ip])
+            is_expected.to contain_file("25-#{title}.conf").with_content %r{<VirtualHost 10\.0\.0\.1>}
           end
         end
       end
@@ -1383,7 +1383,7 @@ describe 'apache::vhost', :type => :define do
           })
         end
 
-        it { should contain_file("25-#{title}.conf").with_content %r{^  SuexecUserGroup nobody nogroup$} }
+        it { is_expected.to contain_file("25-#{title}.conf").with_content %r{^  SuexecUserGroup nobody nogroup$} }
       end
 
       describe 'redirect rules' do
@@ -1405,8 +1405,8 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/login} }
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/login} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
         end
         describe 'redirect match rules' do
           let :params do
@@ -1420,7 +1420,7 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content %r{  RedirectMatch 404 } }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  RedirectMatch 404 } }
         end
         describe 'without a status' do
           let :params do
@@ -1436,8 +1436,8 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /login http://10\.0\.0\.10/login} }
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect  /login http://10\.0\.0\.10/login} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect  /logout http://10\.0\.0\.10/logout} }
         end
         describe 'with a single status and dest' do
           let :params do
@@ -1451,8 +1451,8 @@ describe 'apache::vhost', :type => :define do
             })
           end
 
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/test} }
-          it { should contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /logout http://10\.0\.0\.10/test} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /login http://10\.0\.0\.10/test} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{  Redirect permanent /logout http://10\.0\.0\.10/test} }
         end
 
         describe 'with a directoryindex specified' do
@@ -1461,7 +1461,7 @@ describe 'apache::vhost', :type => :define do
               :directoryindex => 'index.php'
             })
           end
-          it { should contain_file("25-#{title}.conf").with_content %r{DirectoryIndex index.php} }
+          it { is_expected.to contain_file("25-#{title}.conf").with_content %r{DirectoryIndex index.php} }
 	end
       end
     end
