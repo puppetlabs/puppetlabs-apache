@@ -137,4 +137,88 @@ describe 'apache::mod::php', :type => :class do
       end
     end
   end
+  describe "OS independent tests" do
+    let :facts do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+      }
+    end
+    context 'with content param' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        { :content => 'somecontent' }
+      end
+      it { should contain_file('php5.conf').with(
+        :content => 'somecontent'
+      ) }
+    end
+    context 'with template param' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        { :template => 'apache/mod/php5.conf.erb' }
+      end
+      it { should contain_file('php5.conf').with(
+        :content => /^# PHP is an HTML-embedded scripting language which attempts to make it/
+      ) }
+    end
+    context 'with source param' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        { :source => 'some-path' }
+      end
+      it { should contain_file('php5.conf').with(
+        :source => 'some-path'
+      ) }
+    end
+    context 'content has priority over template' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        {
+          :template => 'apache/mod/php5.conf.erb',
+          :content  => 'somecontent'
+        }
+      end
+      it { should contain_file('php5.conf').with(
+        :content => 'somecontent'
+      ) }
+    end
+    context 'source has priority over template' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        {
+          :template => 'apache/mod/php5.conf.erb',
+          :source   => 'some-path'
+        }
+      end
+      it { should contain_file('php5.conf').with(
+        :source => 'some-path'
+      ) }
+    end
+    context 'source has priority over content' do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let :params do
+        {
+          :content => 'somecontent',
+          :source  => 'some-path'
+        }
+      end
+      it { should contain_file('php5.conf').with(
+        :source => 'some-path'
+      ) }
+    end
+  end
 end

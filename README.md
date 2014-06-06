@@ -554,6 +554,29 @@ Overriding the package name:
   }
 ```
 
+Overriding the default configuartion:
+```puppet
+  class {'::apache::mod::php':
+    source => 'puppet:///modules/apache/my_php.conf',
+  }
+```
+
+or 
+```puppet
+  class {'::apache::mod::php':
+    template => 'apache/php.conf.erb',
+  }
+```
+
+or
+
+```puppet
+  class {'::apache::mod::php':
+    content => '
+AddHandler php5-script .php
+AddType text/html .php',
+  }
+```
 ####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are the defaults:
