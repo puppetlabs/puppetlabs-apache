@@ -8,7 +8,6 @@
 <%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] %>   <%- if !proxy['params'].nil? -%> <%= proxy['params'] %> <%- end -%>
-
   <Location <%= proxy['path']%>>
   <%- if proxy['reverse_urls'].nil? -%>
     ProxyPassReverse <%= proxy['url'] %>
