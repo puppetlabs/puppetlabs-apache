@@ -8,7 +8,8 @@ group :development, :test do
   gem 'puppet-lint',             :require => false
   gem 'beaker',                  :require => false
   gem 'beaker-rspec',            :require => false
-end
+  gem 'rspec', '~> 2.11',        :require => false
+end  
 
 if facterversion = ENV['FACTER_GEM_VERSION']
   gem 'facter', facterversion, :require => false
