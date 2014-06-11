@@ -367,6 +367,9 @@ Changes the name of the file containing Apache ports configuration. Default is `
 
 Removes all other Apache configs and vhosts, defaults to 'true'. Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
 
+#####`purge_vhosts`
+
+Removes all vhosts, defaults to 'true'. Setting this to 'false' will allow you to manage the vhosts on your own and everything else with this puppet module.
 #####`sendfile`
 
 Makes Apache use the Linux kernel sendfile to serve static files. Defaults to 'On'.
