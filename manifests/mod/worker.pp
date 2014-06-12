@@ -6,6 +6,7 @@ class apache::mod::worker (
   $threadsperchild     = '25',
   $maxrequestsperchild = '0',
   $serverlimit         = '25',
+  $threadlimit         = '64',
   $apache_version      = $::apache::apache_version,
 ) {
   if defined(Class['apache::mod::event']) {
@@ -34,6 +35,7 @@ class apache::mod::worker (
   # - $threadsperchild
   # - $maxrequestsperchild
   # - $serverlimit
+  # - $threadLimit
   file { "${::apache::mod_dir}/worker.conf":
     ensure  => file,
     content => template('apache/mod/worker.conf.erb'),
