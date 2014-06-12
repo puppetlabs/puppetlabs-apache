@@ -77,6 +77,7 @@
 #
 define apache::vhost(
     $docroot,
+    $file_template               = 'apache/vhost.conf.erb',
     $virtual_docroot             = false,
     $port                        = undef,
     $ip                          = undef,
@@ -529,7 +530,7 @@ define apache::vhost(
   file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${::apache::vhost_dir}/${priority_real}-${filename}.conf",
-    content => template('apache/vhost.conf.erb'),
+    content => template($file_template),
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
