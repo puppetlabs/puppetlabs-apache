@@ -1413,6 +1413,20 @@ Sets the order of processing Allow and Deny statements as per [Apache core docum
     }
 ```
 
+######`satisfy`
+
+Sets a `Satisfy` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is being deprecated due to a change in Apache. It will only work with Apache 2.2 and lower.
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path    => '/path/to/directory',
+          satisfy => 'Any',
+        }
+      ],
+    }
+
 ######`sethandler`
 
 Sets a `SetHandler` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#sethandler). An example:
