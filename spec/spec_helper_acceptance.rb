@@ -41,5 +41,7 @@ RSpec.configure do |c|
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-concat'), { :acceptable_exit_codes => [0,1] }
     end
+    # Copy acceptance tests specific files onto the master
+    scp_to master, proj_root + '/spec/fixtures/modules/site_apache', '/etc/puppet/modules/site_apache'
   end
 end
