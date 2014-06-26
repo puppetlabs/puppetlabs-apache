@@ -20,6 +20,7 @@
         * [Class: apache::mod::ssl](#class-apachemodssl)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Class: apache::mod::fcgid](#class-apachemodfcgid)
+        * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
@@ -645,6 +646,28 @@ It is also possible to set the FcgidWrapper per directory per vhost. You must en
 ```
 
 See [FcgidWrapper documentation](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html#fcgidwrapper) for more information.
+
+####Class: `apache::mod::negotiation`
+
+Installs and configures mod_negotiation. If there are not provided any
+parameter, default apache mod_negotiation configuration is done.
+
+```puppet
+  class { '::apache::mod::negotiation':
+    force_language_priority => 'Prefer',
+    language_priority       => [ 'es', 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo' ],
+  }
+```
+
+**Parameters within `apache::mod::negotiation`:**
+
+#####`force_language_priority`
+
+A string that sets the `ForceLanguagePriority` option. Defaults to `Prefer Fallback`.
+
+#####`language_priority`
+
+An array of languages to set the `LanguagePriority` option of the module.
 
 ####Defined Type: `apache::vhost`
 
