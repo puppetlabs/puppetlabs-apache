@@ -63,6 +63,9 @@
       <%- else -%>
     Allow from all
       <%- end -%>
+      <%- if directory['satisfy'] and directory['satisfy'] != '' -%>
+    Satisfy <%= directory['satisfy'] %>
+      <%- end -%>
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- [directory['addhandlers']].flatten.compact.each do |addhandler| -%>

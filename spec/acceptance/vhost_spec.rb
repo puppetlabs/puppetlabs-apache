@@ -297,6 +297,84 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         expect(shell("/usr/bin/curl -sSf files.example.net:80/server-status?auto").stdout).to match(/Scoreboard: /)
       end
     end
+
+  describe 'Satisfy and Auth directive' do
+      it 'should configure a vhost with Satisfy and Auth directive' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'files.example.net': ip => '127.0.0.1', }
+          apache::vhost { 'files.example.net':
+            docroot     => '/var/www/files',
+            directories => [
+              {
+                path => '/var/www/files/foo',
+                auth_type => 'Basic',
+                auth_name => 'Basic Auth',
+                auth_user_file => '/var/www/htpasswd',
+                auth_require => "valid-user",
+              },
+              {
+                path => '/var/www/files/bar',
+                auth_type => 'Basic',
+                auth_name => 'Basic Auth',
+                auth_user_file => '/var/www/htpasswd',
+                auth_require => 'valid-user',
+                satisfy => 'Any',
+              },
+              {
+                path => '/var/www/files/baz',
+                allow => 'from 10.10.10.10',
+                auth_type => 'Basic',
+                auth_name => 'Basic Auth',
+                auth_user_file => '/var/www/htpasswd',
+                auth_require => 'valid-user',
+                satisfy => 'Any',
+              },
+            ],
+          }
+          file { '/var/www/files/foo':
+            ensure => directory,
+          }
+          file { '/var/www/files/bar':
+            ensure => directory,
+          }
+          file { '/var/www/files/baz':
+            ensure => directory,
+          }
+          file { '/var/www/files/foo/index.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          file { '/var/www/files/bar/index.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          file { '/var/www/files/baz/index.html':
+            ensure  => file,
+            content => "Hello World\\n",
+          }
+          file { '/var/www/htpasswd':
+            ensure  => file,
+            content => "login:IZ7jMcLSx0oQk", # "password" as password
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe service($service_name) do
+        it { should be_enabled }
+        it { should be_running }
+      end
+
+      it 'should answer to files.example.net' do
+        shell("/usr/bin/curl -sSf files.example.net:80/foo/index.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 401/)
+        shell("/usr/bin/curl -sSf -u login:password files.example.net:80/foo/index.html").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/bar/index.html").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf -u login:password files.example.net:80/bar/index.html").stdout.should eq("Hello World\n")
+        shell("/usr/bin/curl -sSf files.example.net:80/baz/index.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 401/)
+        shell("/usr/bin/curl -sSf -u login:password files.example.net:80/baz/index.html").stdout.should eq("Hello World\n")
+      end
+    end
   end
 
   case fact('lsbdistcodename')
