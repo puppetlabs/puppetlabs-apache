@@ -370,6 +370,7 @@ Removes all other Apache configs and vhosts, defaults to 'true'. Setting this to
 #####`purge_vhosts`
 
 Removes all vhosts, defaults to 'true'. Setting this to 'false' will allow you to manage the vhosts on your own and everything else with this puppet module.
+
 #####`sendfile`
 
 Makes Apache use the Linux kernel sendfile to serve static files. Defaults to 'On'.

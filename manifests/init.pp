@@ -127,6 +127,12 @@ class apache (
     $purge_confd = $purge_configs
   }
 
+  # fail on redhat systems when vhosts shouldn't be purged but are in the same
+  # dir as all conf files
+  if !$purge_vhosts and $confd_dir == $vhost_dir and $purge_configs{
+    fail('Class[\'apache\'] the confd_dir is the same as vhost_dir. All vhosts would be deleted by purge_configs!')
+  }
+
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }
