@@ -1128,6 +1128,18 @@ describe 'apache::vhost', :type => :define do
           expect { subject }.to raise_error(Puppet::Error, /'error_log_file' and 'error_log_pipe' cannot be defined at the same time/)
         end
       end
+      describe 'when logroot and logroot_mode are specified' do
+        let :params do default_params.merge({
+          :logroot       => '/rspec/logroot',
+          :logroot_mode  => '0755',
+        }) end
+        it 'should set logroot mode' do
+          should contain_file(params[:logroot]).with({
+            :ensure => :directory,
+            :mode   => '0755',
+          })
+        end
+      end
       describe 'when docroot owner and mode is specified' do
         let :params do default_params.merge({
           :docroot_owner => 'testuser',

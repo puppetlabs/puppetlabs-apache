@@ -110,6 +110,7 @@ define apache::vhost(
     $directoryindex              = '',
     $vhost_name                  = '*',
     $logroot                     = $::apache::logroot,
+    $logroot_mode                = undef,
     $log_level                   = undef,
     $access_log                  = true,
     $access_log_file             = undef,
@@ -274,6 +275,7 @@ define apache::vhost(
   if ! defined(File[$logroot]) {
     file { $logroot:
       ensure  => directory,
+      mode    => $logroot_mode,
       require => Package['httpd'],
     }
   }
