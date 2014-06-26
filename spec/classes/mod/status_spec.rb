@@ -3,7 +3,7 @@ require 'spec_helper'
 # Helper function for testing the contents of `status.conf`
 def status_conf_spec(allow_from, extended_status)
   it do
-    should contain_file("status.conf").with_content(
+    is_expected.to contain_file("status.conf").with_content(
       "<Location /server-status>\n"\
       "    SetHandler server-status\n"\
       "    Order deny,allow\n"\
@@ -39,16 +39,16 @@ describe 'apache::mod::status', :type => :class do
       }
     end
 
-    it { should contain_apache__mod("status") }
+    it { is_expected.to contain_apache__mod("status") }
 
     status_conf_spec(["127.0.0.1", "::1"], "On")
 
-    it { should contain_file("status.conf").with({
+    it { is_expected.to contain_file("status.conf").with({
       :ensure => 'file',
       :path   => '/etc/apache2/mods-available/status.conf',
     } ) }
 
-    it { should contain_file("status.conf symlink").with({
+    it { is_expected.to contain_file("status.conf symlink").with({
       :ensure => 'link',
       :path   => '/etc/apache2/mods-enabled/status.conf',
     } ) }
@@ -68,11 +68,11 @@ describe 'apache::mod::status', :type => :class do
       }
     end
 
-    it { should contain_apache__mod("status") }
+    it { is_expected.to contain_apache__mod("status") }
 
     status_conf_spec(["127.0.0.1", "::1"], "On")
 
-    it { should contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
+    it { is_expected.to contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
 
   end
 
@@ -118,7 +118,7 @@ describe 'apache::mod::status', :type => :class do
     end
     it 'should expect to succeed array validation' do
       expect {
-        should contain_file("status.conf")
+        is_expected.to contain_file("status.conf")
       }.not_to raise_error()
     end
   end
@@ -140,7 +140,7 @@ describe 'apache::mod::status', :type => :class do
     end
     it 'should expect to fail array validation' do
       expect {
-        should contain_file("status.conf")
+        is_expected.to contain_file("status.conf")
       }.to raise_error(Puppet::Error)
     end
   end
@@ -165,7 +165,7 @@ describe 'apache::mod::status', :type => :class do
       end
       it 'should expect to succeed regular expression validation' do
         expect {
-          should contain_file("status.conf")
+          is_expected.to contain_file("status.conf")
         }.not_to raise_error()
       end
     end
@@ -189,7 +189,7 @@ describe 'apache::mod::status', :type => :class do
       end
       it 'should expect to fail regular expression validation' do
         expect {
-          should contain_file("status.conf")
+          is_expected.to contain_file("status.conf")
         }.to raise_error(Puppet::Error)
       end
     end

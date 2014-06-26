@@ -20,7 +20,7 @@ describe 'apache::mod::dev', :type => :class do
           :operatingsystemrelease => operatingsystemrelease,
         }
       end
-      it { should contain_class('apache::dev') }
+      it { is_expected.to contain_class('apache::dev') }
     end
   end
 end

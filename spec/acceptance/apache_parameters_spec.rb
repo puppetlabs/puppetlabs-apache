@@ -12,7 +12,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     if fact('osfamily') == 'FreeBSD'
       describe file("#{confd_dir}/no-accf.conf.erb") do
-        it { should_not be_file }
+        it { is_expected.not_to be_file }
       end
     end
   end
@@ -24,7 +24,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     if fact('osfamily') == 'FreeBSD'
       describe file("#{$confd_dir}/no-accf.conf.erb") do
-        it { should be_file }
+        it { is_expected.to be_file }
       end
     end
   end
@@ -36,8 +36,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($ports_file) do
-      it { should be_file }
-      it { should contain 'Listen 10.1.1.1' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Listen 10.1.1.1' }
     end
   end
 
@@ -53,8 +53,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe service($service_name) do
-      it { should be_running }
-      it { should be_enabled }
+      it { is_expected.to be_running }
+      it { is_expected.to be_enabled }
     end
   end
 
@@ -70,8 +70,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe service($service_name) do
-      it { should_not be_running }
-      it { should_not be_enabled }
+      it { is_expected.not_to be_running }
+      it { is_expected.not_to be_enabled }
     end
   end
 
@@ -89,7 +89,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     # Ensure the file didn't disappear.
     describe file("#{$confd_dir}/test.conf") do
-      it { should be_file }
+      it { is_expected.to be_file }
     end
   end
 
@@ -108,7 +108,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
       # File should be gone
       describe file("#{$confd_dir}/test.conf") do
-        it { should_not be_file }
+        it { is_expected.not_to be_file }
       end
     end
   end
@@ -120,8 +120,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($vhost) do
-      it { should be_file }
-      it { should contain 'ServerAdmin test@example.com' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ServerAdmin test@example.com' }
     end
   end
 
@@ -134,8 +134,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'EnableSendfile On' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'EnableSendfile On' }
     end
 
     describe 'setup' do
@@ -146,8 +146,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'Sendfile Off' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Sendfile Off' }
     end
   end
 
@@ -160,8 +160,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'Alias /error/' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Alias /error/' }
     end
   end
 
@@ -174,8 +174,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'Timeout 1234' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Timeout 1234' }
     end
   end
 
@@ -191,8 +191,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file("#{$confd_dir}/mime.conf") do
-      it { should be_file }
-      it { should contain 'AddLanguage eo .eo' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'AddLanguage eo .eo' }
     end
   end
 
@@ -205,8 +205,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'ServerRoot "/tmp/root"' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ServerRoot "/tmp/root"' }
     end
   end
 
@@ -220,13 +220,13 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     if $apache_version == '2.4'
       describe file($conf_file) do
-        it { should be_file }
-        it { should contain 'IncludeOptional "/tmp/root/*.conf"' }
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'IncludeOptional "/tmp/root/*.conf"' }
       end
     else
       describe file($conf_file) do
-        it { should be_file }
-        it { should contain 'Include "/tmp/root/*.conf"' }
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'Include "/tmp/root/*.conf"' }
       end
     end
   end
@@ -242,8 +242,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'testcontent' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'testcontent' }
     end
   end
 
@@ -256,8 +256,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'ServerName "test.server"' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ServerName "test.server"' }
     end
   end
 
@@ -277,12 +277,12 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe user('testweb') do
-      it { should exist }
-      it { should belong_to_group 'testweb' }
+      it { is_expected.to exist }
+      it { is_expected.to belong_to_group 'testweb' }
     end
 
     describe group('testweb') do
-      it { should exist }
+      it { is_expected.to exist }
     end
   end
 
@@ -302,9 +302,9 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common' }
-      it { should contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common' }
+      it { is_expected.to contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined' }
     end
   end
 
@@ -318,10 +318,10 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'KeepAlive On' }
-      it { should contain 'KeepAliveTimeout 30' }
-      it { should contain 'MaxKeepAliveRequests 200' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'KeepAlive On' }
+      it { is_expected.to contain 'KeepAliveTimeout 30' }
+      it { is_expected.to contain 'MaxKeepAliveRequests 200' }
     end
   end
 
@@ -356,7 +356,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file("/apache_spec/#{$error_log}") do
-      it { should be_file }
+      it { is_expected.to be_file }
     end
   end
 
@@ -374,8 +374,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file('/apache_spec/ports_file') do
-      it { should be_file }
-      it { should contain 'Listen 10.1.1.1' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Listen 10.1.1.1' }
     end
   end
 
@@ -390,8 +390,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'ServerTokens Minor' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ServerTokens Minor' }
     end
   end
 
@@ -407,8 +407,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'ServerSignature testsig' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ServerSignature testsig' }
     end
   end
 
@@ -423,8 +423,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe file($conf_file) do
-      it { should be_file }
-      it { should contain 'TraceEnable Off' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'TraceEnable Off' }
     end
   end
 
@@ -439,7 +439,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     describe package($package_name) do
-      it { should be_installed }
+      it { is_expected.to be_installed }
     end
   end
 

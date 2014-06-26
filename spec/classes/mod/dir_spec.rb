@@ -20,22 +20,22 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should contain_class("apache::params") }
-      it { should contain_apache__mod('dir') }
-      it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html\.var /) }
-      it { should contain_file('dir.conf').with_content(/ index\.cgi /) }
-      it { should contain_file('dir.conf').with_content(/ index\.pl /) }
-      it { should contain_file('dir.conf').with_content(/ index\.php /) }
-      it { should contain_file('dir.conf').with_content(/ index\.xhtml$/) }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('dir') }
+      it { is_expected.to contain_file('dir.conf').with_content(/^DirectoryIndex /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html\.var /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.cgi /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.pl /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.php /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.xhtml$/) }
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         {:indexes => ['example.txt','fearsome.aspx']}
       end
-      it { should contain_file('dir.conf').with_content(/ example\.txt /) }
-      it { should contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ example\.txt /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
     end
   end
   context "on a RedHat OS" do
@@ -51,22 +51,22 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should contain_class("apache::params") }
-      it { should contain_apache__mod('dir') }
-      it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html\.var /) }
-      it { should contain_file('dir.conf').with_content(/ index\.cgi /) }
-      it { should contain_file('dir.conf').with_content(/ index\.pl /) }
-      it { should contain_file('dir.conf').with_content(/ index\.php /) }
-      it { should contain_file('dir.conf').with_content(/ index\.xhtml$/) }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('dir') }
+      it { is_expected.to contain_file('dir.conf').with_content(/^DirectoryIndex /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html\.var /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.cgi /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.pl /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.php /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.xhtml$/) }
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         {:indexes => ['example.txt','fearsome.aspx']}
       end
-      it { should contain_file('dir.conf').with_content(/ example\.txt /) }
-      it { should contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ example\.txt /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
     end
   end
   context "on a FreeBSD OS" do
@@ -82,22 +82,22 @@ describe 'apache::mod::dir', :type => :class do
       }
     end
     context "passing no parameters" do
-      it { should contain_class("apache::params") }
-      it { should contain_apache__mod('dir') }
-      it { should contain_file('dir.conf').with_content(/^DirectoryIndex /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html /) }
-      it { should contain_file('dir.conf').with_content(/ index\.html\.var /) }
-      it { should contain_file('dir.conf').with_content(/ index\.cgi /) }
-      it { should contain_file('dir.conf').with_content(/ index\.pl /) }
-      it { should contain_file('dir.conf').with_content(/ index\.php /) }
-      it { should contain_file('dir.conf').with_content(/ index\.xhtml$/) }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('dir') }
+      it { is_expected.to contain_file('dir.conf').with_content(/^DirectoryIndex /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.html\.var /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.cgi /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.pl /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.php /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ index\.xhtml$/) }
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         {:indexes => ['example.txt','fearsome.aspx']}
       end
-      it { should contain_file('dir.conf').with_content(/ example\.txt /) }
-      it { should contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ example\.txt /) }
+      it { is_expected.to contain_file('dir.conf').with_content(/ fearsome\.aspx$/) }
     end
   end
 end

@@ -17,9 +17,9 @@ describe 'apache::mod::dav_svn', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('dav_svn') }
-    it { should contain_package("libapache2-svn") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('dav_svn') }
+    it { is_expected.to contain_package("libapache2-svn") }
   end
   context "on a RedHat OS" do
     let :facts do
@@ -33,9 +33,9 @@ describe 'apache::mod::dav_svn', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('dav_svn') }
-    it { should contain_package("mod_dav_svn") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('dav_svn') }
+    it { is_expected.to contain_package("mod_dav_svn") }
   end
   context "on a FreeBSD OS" do
     let :facts do
@@ -49,8 +49,8 @@ describe 'apache::mod::dav_svn', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_class("apache::params") }
-    it { should contain_apache__mod('dav_svn') }
-    it { should contain_package("devel/subversion") }
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('dav_svn') }
+    it { is_expected.to contain_package("devel/subversion") }
   end
 end

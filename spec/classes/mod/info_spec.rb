@@ -2,10 +2,10 @@ require 'spec_helper'
 
 # This function is called inside the OS specific contexts
 def general_info_specs
-  it { should contain_apache__mod("info") }
+  it { is_expected.to contain_apache__mod("info") }
 
   it do
-    should contain_file("info.conf").with_content(
+    is_expected.to contain_file("info.conf").with_content(
       "<Location /server-info>\n"\
       "    SetHandler server-info\n"\
       "    Order deny,allow\n"\
@@ -38,11 +38,11 @@ describe 'apache::mod::info', :type => :class do
     # Load the more generic tests for this context
     general_info_specs()
 
-    it { should contain_file("info.conf").with({
+    it { is_expected.to contain_file("info.conf").with({
       :ensure => 'file',
       :path   => '/etc/apache2/mods-available/info.conf',
     } ) }
-    it { should contain_file("info.conf symlink").with({
+    it { is_expected.to contain_file("info.conf symlink").with({
       :ensure => 'link',
       :path   => '/etc/apache2/mods-enabled/info.conf',
     } ) }
@@ -64,7 +64,7 @@ describe 'apache::mod::info', :type => :class do
     # Load the more generic tests for this context
     general_info_specs()
 
-    it { should contain_file("info.conf").with_path("/etc/httpd/conf.d/info.conf") }
+    it { is_expected.to contain_file("info.conf").with_path("/etc/httpd/conf.d/info.conf") }
   end
 
   context "On a FreeBSD OS with default params" do
@@ -83,7 +83,7 @@ describe 'apache::mod::info', :type => :class do
     # Load the more generic tests for this context
     general_info_specs()
 
-    it { should contain_file("info.conf").with({
+    it { is_expected.to contain_file("info.conf").with({
       :ensure => 'file',
       :path   => '/usr/local/etc/apache22/Modules/info.conf',
     } ) }
@@ -106,7 +106,7 @@ describe 'apache::mod::info', :type => :class do
       { :allow_from => ['10.10.10.10','11.11.11.11'] }
     end
     it do
-      should contain_file("info.conf").with_content(
+      is_expected.to contain_file("info.conf").with_content(
         "<Location /server-info>\n"\
         "    SetHandler server-info\n"\
         "    Order deny,allow\n"\

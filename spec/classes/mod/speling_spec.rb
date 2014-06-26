@@ -17,7 +17,7 @@ describe 'apache::mod::speling', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_apache__mod('speling') }
+    it { is_expected.to contain_apache__mod('speling') }
   end
 
   context "on a RedHat OS" do
@@ -32,6 +32,6 @@ describe 'apache::mod::speling', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_apache__mod('speling') }
+    it { is_expected.to contain_apache__mod('speling') }
   end
 end

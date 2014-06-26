@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # This function is called inside the OS specific contexts
 def general_mime_magic_specs
-  it { should contain_apache__mod("mime_magic") }
+  it { is_expected.to contain_apache__mod("mime_magic") }
 end
 
 describe 'apache::mod::mime_magic', :type => :class do
@@ -27,16 +27,16 @@ describe 'apache::mod::mime_magic', :type => :class do
     general_mime_magic_specs()
 
     it do
-      should contain_file("mime_magic.conf").with_content(
+      is_expected.to contain_file("mime_magic.conf").with_content(
         "MIMEMagicFile \"/etc/apache2/magic\"\n"
       )
     end
 
-    it { should contain_file("mime_magic.conf").with({
+    it { is_expected.to contain_file("mime_magic.conf").with({
       :ensure => 'file',
       :path   => '/etc/apache2/mods-available/mime_magic.conf',
     } ) }
-    it { should contain_file("mime_magic.conf symlink").with({
+    it { is_expected.to contain_file("mime_magic.conf symlink").with({
       :ensure => 'link',
       :path   => '/etc/apache2/mods-enabled/mime_magic.conf',
     } ) }
@@ -47,7 +47,7 @@ describe 'apache::mod::mime_magic', :type => :class do
       end
 
       it do
-        should contain_file("mime_magic.conf").with_content(
+        is_expected.to contain_file("mime_magic.conf").with_content(
           "MIMEMagicFile \"/tmp/Debian_magic\"\n"
         )
       end
@@ -71,12 +71,12 @@ describe 'apache::mod::mime_magic', :type => :class do
     general_mime_magic_specs()
 
     it do
-      should contain_file("mime_magic.conf").with_content(
+      is_expected.to contain_file("mime_magic.conf").with_content(
         "MIMEMagicFile \"/etc/httpd/conf/magic\"\n"
       )
     end
 
-    it { should contain_file("mime_magic.conf").with_path("/etc/httpd/conf.d/mime_magic.conf") }
+    it { is_expected.to contain_file("mime_magic.conf").with_path("/etc/httpd/conf.d/mime_magic.conf") }
 
   end
 
@@ -99,7 +99,7 @@ describe 'apache::mod::mime_magic', :type => :class do
     end
 
     it do
-      should contain_file("mime_magic.conf").with_content(
+      is_expected.to contain_file("mime_magic.conf").with_content(
         "MIMEMagicFile \"/tmp/magic\"\n"
       )
     end
