@@ -24,6 +24,7 @@
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
+        * [Defined Type: apache::fastcgi::server](#defined-type-fastcgi-server)
     * [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
     * [Load Balancing](#load-balancing)
         * [Defined Type: apache::balancer](#defined-type-apachebalancer)
@@ -1627,6 +1628,56 @@ An array:
 
 Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Valid values are 'true' and 'false'. Defaults to 'false'.
 
+####Defined Type: FastCGI Server
+
+This type is intended for use with mod_fastcgi. It allows you to define one or more external FastCGI servers to handle specific file types.
+
+Ex:
+
+```puppet
+apache::fastcgi::server { 'php':
+  host      => '127.0.0.1:9000',
+  timeout   => 15,
+  flush     => false,
+  faux_path => '/var/www/php.fcgi',
+  alias     => '/php.fcgi',
+  file_type => 'application/x-httpd-php'
+}
+```
+
+Within your virtual host, you can then configure the specified file type to be handled by the fastcgi server specified above.
+
+```puppet
+apache::vhost { 'www':
+  ...
+  custom_fragment = 'AddType application/x-httpd-php .php'
+  ...
+}
+```
+
+#####`host`
+
+The hostname or IP address and TCP port number (1-65535) of the FastCGI server.
+
+#####`timeout`
+
+The number of seconds of FastCGI application inactivity allowed before the request is aborted and the event is logged (at the error LogLevel). The inactivity timer applies only as long as a connection is pending with the FastCGI application. If a request is queued to an application, but the application doesn't respond (by writing and flushing) within this period, the request will be aborted. If communication is complete with the application but incomplete with the client (the response is buffered), the timeout does not apply.
+
+#####`flush`
+
+Force a write to the client as data is received from the application. By default, mod_fastcgi buffers data in order to free the application as quickly as possible.
+
+#####`faux_path`
+
+`faux_path` does not have to exist in the local filesystem. URIs that Apache resolves to this filename will be handled by this external FastCGI application.
+
+#####`alias`
+
+A unique alias. This is used internally to link the action with the FastCGI server.
+
+#####`file_type`
+
+The MIME-type of the file's that will be processed by the FastCGI server. 
 
 ###Virtual Host Examples
 
