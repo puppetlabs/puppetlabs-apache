@@ -7,6 +7,8 @@ define apache::fastcgi::server (
   $file_type     = 'application/x-httpd-php'
 ) {
 
+  include ::apache::mod::fastcgi
+
   Apache::Mod['fastcgi'] -> Apache::Fastcgi::Server["$title"]
 
   file { "fastcgi-pool-$name.conf":
