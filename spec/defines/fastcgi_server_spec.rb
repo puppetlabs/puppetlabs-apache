@@ -12,7 +12,9 @@ describe 'apache::fastcgi::server', :type => :define do
       let :default_facts do
         {
           :osfamily               => 'RedHat',
+          :operatingsystem        => 'CentOS',
           :operatingsystemrelease => '6',
+          :id                     => 'root',
           :concat_basedir         => '/dne',
         }
       end
@@ -28,7 +30,10 @@ describe 'apache::fastcgi::server', :type => :define do
       let :default_facts do
         {
           :osfamily               => 'Debian',
+          :operatingsystem        => 'Debian',
           :operatingsystemrelease => '6',
+          :lsbdistcodename        => 'squeeze',
+          :id                     => 'root',
           :concat_basedir         => '/dne',
         }
       end
@@ -44,7 +49,9 @@ describe 'apache::fastcgi::server', :type => :define do
       let :default_facts do
         {
           :osfamily               => 'FreeBSD',
+          :operatingsystem        => 'FreeBSD',
           :operatingsystemrelease => '9',
+          :id                     => 'root',
           :concat_basedir         => '/dne',
         }
       end
@@ -61,7 +68,10 @@ describe 'apache::fastcgi::server', :type => :define do
     let :facts do
       {
         :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :lsbdistcodename        => 'squeeze',
+        :id                     => 'root',
         :concat_basedir         => '/dne',
       }
     end

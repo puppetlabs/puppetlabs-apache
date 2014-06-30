@@ -117,7 +117,9 @@ describe 'apache::mod::worker', :type => :class do
     let :facts do
       {
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'CentOS',
         :operatingsystemrelease => '6',
+        :id                     => 'root',
         :concat_basedir         => '/dne',
       }
     end

@@ -141,7 +141,9 @@ describe 'apache::mod::php', :type => :class do
     let :facts do
       {
         :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :lsbdistcodename        => 'squeeze',
         :concat_basedir         => '/dne',
       }
     end
