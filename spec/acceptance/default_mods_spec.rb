@@ -1,15 +1,15 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-case node.facts['osfamily']
+case fact('osfamily')
 when 'RedHat'
   servicename = 'httpd'
 when 'Debian'
   servicename = 'apache2'
-else
-  raise Error, "Unconfigured OS for apache service on #{node.facts['osfamily']}"
+when 'FreeBSD'
+  servicename = 'apache22'
 end
 
-describe 'apache::default_mods class' do
+describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   describe 'no default mods' do
     # Using puppet_apply as a helper
     it 'should apply with no errors' do
@@ -20,11 +20,8 @@ describe 'apache::default_mods class' do
       EOS
 
       # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [0,2].should include(r.exit_code)
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service(servicename) do
@@ -49,17 +46,16 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [4,6].should include(r.exit_code)
-      end
+      apply_manifest(pp, { :expect_failures => true })
     end
 
+    # Are these the same?
+    describe service(servicename) do
+      it { should_not be_running }
+    end
     describe "service #{servicename}" do
       it 'should not be running' do
-        shell("pidof #{servicename}") do |r|
-          r.exit_code.should eq(1)
-        end
+        shell("pidof #{servicename}", {:acceptable_exit_codes => 1})
       end
     end
   end
@@ -87,12 +83,9 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      # Run it twice and test for idempotency
-      puppet_apply(pp) do |r|
-        [0,2].should include(r.exit_code)
-        r.refresh
-        r.exit_code.should be_zero
-      end
+      apply_manifest(pp, :catch_failures => true)
+      shell('sleep 10')
+      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service(servicename) do

@@ -1,11 +1,11 @@
-require 'spec_helper_system'
+require 'spec_helper_acceptance'
 
-describe 'apache::mod::suphp class' do
-  case node.facts['osfamily']
+describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+  case fact('osfamily')
   when 'Debian'
     context "default suphp config" do
       it 'succeeds in puppeting suphp' do
-        puppet_apply(%{
+        pp = <<-EOS
           class { 'apache':
             mpm_module => 'prefork',
           }
@@ -18,11 +18,12 @@ describe 'apache::mod::suphp class' do
           host { 'suphp.example.com': ip => '127.0.0.1', }
           file { '/var/www/suphp/index.php':
             ensure  => file,
-            owner   => 'puppet',
-            group   => 'puppet',
+            owner   => 'daemon',
+            group   => 'daemon',
             content => "<?php echo get_current_user(); ?>\\n",
           }
-        }) { |r| [0,2].should include r.exit_code}
+        EOS
+        apply_manifest(pp, :catch_failures => true)
       end
 
       describe service('apache2') do
@@ -32,7 +33,7 @@ describe 'apache::mod::suphp class' do
 
       it 'should answer to suphp.example.com' do
         shell("/usr/bin/curl suphp.example.com:80") do |r|
-          r.stdout.should =~ /^puppet$/
+          r.stdout.should =~ /^daemon$/
           r.exit_code.should == 0
         end
       end

@@ -49,17 +49,21 @@ Sets how often Passenger performs file system checks, at most once every _x_ sec
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_passengerstatthrottlerate_lt_integer_gt
 
-## rack_auto_detect
+## rack_autodetect
 
 Should Passenger automatically detect if the document root of a virtual host is a Rack application. The default is `on`
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_rackautodetect_lt_on_off_gt
 
-## rails_auto_detect
+## rails_autodetect
 
 Should Passenger automatically detect if the document root of a virtual host is a Rails application. The default is on.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#_railsautodetect_lt_on_off_gt
+
+## passenger_use_global_queue
+
+Allows toggling of PassengerUseGlobalQueue.  NOTE: PassengerUseGlobalQueue is the default in Passenger 4.x and the versions >= 4.x have disabled this configuration option altogether.  Use with caution.
 
 # Attribution
 

@@ -10,14 +10,14 @@ describe 'apache::mod::passenger', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("libapache2-mod-passenger") }
     it { should contain_file('passenger.conf').with({
       'path' => '/etc/apache2/mods-available/passenger.conf',
     }) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRoot \/usr$/) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRuby \/usr\/bin\/ruby$/) }
+    it { should contain_file('passenger.conf').with_content(/^  PassengerRoot "\/usr"$/) }
+    it { should contain_file('passenger.conf').with_content(/^  PassengerRuby "\/usr\/bin\/ruby"$/) }
     describe "with passenger_high_performance => true" do
       let :params do
         { :passenger_high_performance => 'true' }
@@ -64,13 +64,19 @@ describe 'apache::mod::passenger', :type => :class do
       let :params do
         { :passenger_root => '/usr/lib/example' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerRoot \/usr\/lib\/example$/) }
+      it { should contain_file('passenger.conf').with_content(/^  PassengerRoot "\/usr\/lib\/example"$/) }
     end
     describe "with passenger_ruby => /user/lib/example/ruby" do
       let :params do
         { :passenger_ruby => '/user/lib/example/ruby' }
       end
-      it { should contain_file('passenger.conf').with_content(/^  PassengerRuby \/user\/lib\/example\/ruby$/) }
+      it { should contain_file('passenger.conf').with_content(/^  PassengerRuby "\/user\/lib\/example\/ruby"$/) }
+    end
+    describe "with passenger_use_global_queue => true" do
+      let :params do
+        { :passenger_use_global_queue => 'true' }
+      end
+      it { should contain_file('passenger.conf').with_content(/^  PassengerUseGlobalQueue true$/) }
     end
 
   end
@@ -82,13 +88,42 @@ describe 'apache::mod::passenger', :type => :class do
         :concat_basedir         => '/dne',
       }
     end
-    it { should include_class("apache::params") }
+    it { should contain_class("apache::params") }
     it { should contain_apache__mod('passenger') }
     it { should contain_package("mod_passenger") }
-    it { should contain_file('passenger.conf').with({
+    it { should contain_file('passenger_package.conf').with({
       'path' => '/etc/httpd/conf.d/passenger.conf',
     }) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRoot \/usr\/share\/rubygems\/gems\/passenger-3.0.17$/) }
-    it { should contain_file('passenger.conf').with_content(/^  PassengerRuby \/usr\/bin\/ruby$/) }
+    it { should contain_file('passenger_package.conf').without_content }
+    it { should contain_file('passenger_package.conf').without_source }
+    it { should contain_file('passenger.conf').with({
+      'path' => '/etc/httpd/conf.d/passenger_extra.conf',
+    }) }
+    it { should contain_file('passenger.conf').without_content(/PassengerRoot/) }
+    it { should contain_file('passenger.conf').without_content(/PassengerRuby/) }
+    describe "with passenger_root => '/usr/lib/example'" do
+      let :params do
+        { :passenger_root => '/usr/lib/example' }
+      end
+      it { should contain_file('passenger.conf').with_content(/^  PassengerRoot "\/usr\/lib\/example"$/) }
+    end
+    describe "with passenger_ruby => /user/lib/example/ruby" do
+      let :params do
+        { :passenger_ruby => '/user/lib/example/ruby' }
+      end
+      it { should contain_file('passenger.conf').with_content(/^  PassengerRuby "\/user\/lib\/example\/ruby"$/) }
+    end
+  end
+  context "on a FreeBSD OS" do
+    let :facts do
+      {
+        :osfamily               => 'FreeBSD',
+        :operatingsystemrelease => '9',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { should contain_class("apache::params") }
+    it { should contain_apache__mod('passenger') }
+    it { should contain_package("www/rubygem-passenger") }
   end
 end
