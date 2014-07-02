@@ -79,16 +79,22 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     it 'applies cleanly' do
       pp = <<-EOS
         class { 'apache':
-          purge_configs => false,
-          purge_vdir    => false,
+          purge_configs   => false,
+          purge_vdir      => false,
+          purge_vhost_dir => false,
+          vhost_dir       => "#{confd_dir}.vhosts"
         }
       EOS
       shell("touch #{$confd_dir}/test.conf")
+      shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
       apply_manifest(pp, :catch_failures => true)
     end
 
-    # Ensure the file didn't disappear.
+    # Ensure the files didn't disappear.
     describe file("#{$confd_dir}/test.conf") do
+      it { is_expected.to be_file }
+    end
+    describe file("#{$confd_dir}.vhosts/test.conf") do
       it { is_expected.to be_file }
     end
   end
@@ -98,16 +104,22 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       it 'applies cleanly' do
         pp = <<-EOS
           class { 'apache':
-            purge_configs => true,
-            purge_vdir    => true,
+            purge_configs   => true,
+            purge_vdir      => true,
+            purge_vhost_dir => true,
+            vhost_dir       => "#{confd_dir}.vhosts"
           }
         EOS
         shell("touch #{$confd_dir}/test.conf")
+        shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
         apply_manifest(pp, :catch_failures => true)
       end
 
       # File should be gone
       describe file("#{$confd_dir}/test.conf") do
+        it { is_expected.not_to be_file }
+      end
+      describe file("#{$confd_dir}.vhosts/test.conf") do
         it { is_expected.not_to be_file }
       end
     end
