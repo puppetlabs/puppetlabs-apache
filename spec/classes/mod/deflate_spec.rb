@@ -6,13 +6,10 @@ def general_deflate_specs
 
   it do
     is_expected.to contain_file("deflate.conf").with_content(
-      "AddOutputFilterByType DEFLATE text/html text/plain text/xml\n"\
       "AddOutputFilterByType DEFLATE text/css\n"\
-      "AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/ecmascript\n"\
-      "AddOutputFilterByType DEFLATE application/rss+xml\n"\
+      "AddOutputFilterByType DEFLATE text/html\n"\
       "\n"\
       "DeflateFilterNote Input instream\n"\
-      "DeflateFilterNote Output outstream\n"\
       "DeflateFilterNote Ratio ratio\n"
     )
   end
@@ -20,7 +17,17 @@ end
 
 describe 'apache::mod::deflate', :type => :class do
   let :pre_condition do
-    'include apache'
+    'class { "apache":
+      default_mods => false,
+    }
+    class { "apache::mod::deflate":
+      types => [ "text/html", "text/css" ],
+      notes => {
+        "Input" => "instream",
+        "Ratio" => "ratio",
+      }
+    }
+    '
   end
 
   context "On a Debian OS with default params" do
