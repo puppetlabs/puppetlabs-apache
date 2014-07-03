@@ -29,7 +29,6 @@ class apache (
   $service_ensure       = 'running',
   $purge_configs        = true,
   $purge_vhost_dir      = undef,
-  $purge_vdir           = false,
   $serveradmin          = 'root@localhost',
   $sendfile             = 'On',
   $error_documents      = false,
@@ -119,19 +118,11 @@ class apache (
     service_ensure => $service_ensure,
   }
 
-  # Deprecated backwards-compatibility
-  if $purge_vdir {
-    warning('Class[\'apache\'] parameter purge_vdir is deprecated in favor of purge_configs')
-    $purge_confd = $purge_vdir
-  } else {
-    $purge_confd = $purge_configs
-  }
-
   # Set purge vhostd appropriately
   if $purge_vhost_dir == undef {
-    $purge_vhostd = $purge_confd
+    $_purge_vhost_dir = $purge_configs
   } else {
-    $purge_vhostd = $purge_vhost_dir
+    $_purge_vhost_dir = $purge_vhost_dir
   }
 
   Exec {
@@ -145,7 +136,7 @@ class apache (
   file { $confd_dir:
     ensure  => directory,
     recurse => true,
-    purge   => $purge_confd,
+    purge   => $purge_configs,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
@@ -191,7 +182,7 @@ class apache (
     file { $vhost_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_vhostd,
+      purge   => $_purge_vhost_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
@@ -206,7 +197,7 @@ class apache (
     file { $vhost_enable_dir:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_vhostd,
+      purge   => $_purge_vhost_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }
