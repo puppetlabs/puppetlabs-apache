@@ -3,8 +3,8 @@ class apache::mod::dav_svn (
 ) {
     Class['::apache::mod::dav'] -> Class['::apache::mod::dav_svn']
     include ::apache::mod::dav
-    ::apache::mod { 'dav_svn': } 
-    
+    ::apache::mod { 'dav_svn': }
+
     if $authz_svn_enabled {
       ::apache::mod { 'authz_svn':
         loadfile_name => $::osfamily ? {
