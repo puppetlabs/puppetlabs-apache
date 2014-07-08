@@ -130,108 +130,110 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
     # no fedora 18 passenger package yet, and rhel5 packages only exist for ruby 1.8.5
     unless (fact('operatingsystem') == 'Fedora' and fact('operatingsystemrelease').to_f >= 18) or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5' and fact('rubyversion') != '1.8.5')
 
-      context "default passenger config" do
-        it 'succeeds in puppeting passenger' do
-          pp = <<-EOS
-            /* EPEL and passenger repositories */
-            class { 'epel': }
-            exec { 'passenger.repo GPG key':
-              command => '/usr/bin/curl -o /etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
-              creates => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
-            }
-            file { 'passenger.repo GPG key':
-              ensure  => file,
-              path    => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
-              require => Exec['passenger.repo GPG key'],
-            }
-            epel::rpm_gpg_key { 'passenger.stealthymonkeys.com':
-              path    => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
-              require => [
-                Class['epel'],
-                File['passenger.repo GPG key'],
-              ]
-            }
-            $releasever_string = $operatingsystem ? {
-              'Scientific' => '6',
-              default      => '$releasever',
-            }
-            yumrepo { 'passenger':
-              baseurl         => "http://passenger.stealthymonkeys.com/rhel/${releasever_string}/\\$basearch" ,
-              descr           => "Red Hat Enterprise ${releasever_string} - Phusion Passenger",
-              enabled         => 1,
-              gpgcheck        => 1,
-              gpgkey          => 'http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
-              mirrorlist      => 'http://passenger.stealthymonkeys.com/rhel/mirrors',
-              require => [
-                Epel::Rpm_gpg_key['passenger.stealthymonkeys.com'],
-              ],
-            }
-            /* apache and mod_passenger */
-            class { 'apache':
+      if fact('operatingsystem') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+        pending('test passenger - RHEL7 packages don\'t exist')
+      else
+        context "default passenger config" do
+          it 'succeeds in puppeting passenger' do
+            pp = <<-EOS
+              /* EPEL and passenger repositories */
+              class { 'epel': }
+              exec { 'passenger.repo GPG key':
+                command => '/usr/bin/curl -o /etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
+                creates => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
+              }
+              file { 'passenger.repo GPG key':
+                ensure  => file,
+                path    => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
+                require => Exec['passenger.repo GPG key'],
+              }
+              epel::rpm_gpg_key { 'passenger.stealthymonkeys.com':
+                path    => '/etc/yum.repos.d/RPM-GPG-KEY-stealthymonkeys.asc',
                 require => [
                   Class['epel'],
-              ],
-            }
-            class { 'apache::mod::passenger':
-              require => [
-                Yumrepo['passenger']
-              ],
-            }
-            #{pp_rackapp}
-          EOS
-          apply_manifest(pp, :catch_failures => true)
-        end
-
-        describe service(service_name) do
-          it { should be_enabled }
-          it { should be_running }
-        end
-
-        describe file(conf_file) do
-          it { should contain "PassengerRoot #{passenger_root}" }
-          it { should contain "PassengerRuby #{passenger_ruby}" }
-          it { should contain "PassengerTempDir #{passenger_tempdir}" }
-        end
-
-        describe file(load_file) do
-          it { should contain "LoadModule passenger_module #{passenger_module_path}" }
-        end
-
-        it 'should output status via passenger-memory-stats' do
-          shell("/usr/bin/passenger-memory-stats") do |r|
-            r.stdout.should =~ /Apache processes/
-            r.stdout.should =~ /Nginx processes/
-            r.stdout.should =~ /Passenger processes/
-            r.stdout.should =~ /### Processes: [0-9]+/
-            r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
-
-            r.exit_code.should == 0
+                  File['passenger.repo GPG key'],
+                ]
+              }
+              $releasever_string = $operatingsystem ? {
+                'Scientific' => '6',
+                default      => '$releasever',
+              }
+              yumrepo { 'passenger':
+                baseurl         => "http://passenger.stealthymonkeys.com/rhel/${releasever_string}/\\$basearch" ,
+                descr           => "Red Hat Enterprise ${releasever_string} - Phusion Passenger",
+                enabled         => 1,
+                gpgcheck        => 1,
+                gpgkey          => 'http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc',
+                mirrorlist      => 'http://passenger.stealthymonkeys.com/rhel/mirrors',
+                require => [
+                  Epel::Rpm_gpg_key['passenger.stealthymonkeys.com'],
+                ],
+              }
+              /* apache and mod_passenger */
+              class { 'apache':
+                  require => [
+                    Class['epel'],
+                ],
+              }
+              class { 'apache::mod::passenger':
+                require => [
+                  Yumrepo['passenger']
+                ],
+              }
+              #{pp_rackapp}
+            EOS
+            apply_manifest(pp, :catch_failures => true)
           end
-        end
 
-        it 'should output status via passenger-status' do
-          shell("PASSENGER_TMPDIR=/var/run/rubygem-passenger /usr/bin/passenger-status") do |r|
-            # spacing may vary
-            r.stdout.should =~ /[\-]+ General information [\-]+/
-            r.stdout.should =~ /max[ ]+= [0-9]+/
-            r.stdout.should =~ /count[ ]+= [0-9]+/
-            r.stdout.should =~ /active[ ]+= [0-9]+/
-            r.stdout.should =~ /inactive[ ]+= [0-9]+/
-            r.stdout.should =~ /Waiting on global queue: [0-9]+/
-
-            r.exit_code.should == 0
+          describe service(service_name) do
+            it { should be_enabled }
+            it { should be_running }
           end
-        end
 
-        it 'should answer to passenger.example.com' do
-          shell("/usr/bin/curl passenger.example.com:80") do |r|
-            r.stdout.should =~ /^hello <b>world<\/b>$/
-            r.exit_code.should == 0
+          describe file(conf_file) do
+            it { should contain "PassengerRoot #{passenger_root}" }
+            it { should contain "PassengerRuby #{passenger_ruby}" }
+            it { should contain "PassengerTempDir #{passenger_tempdir}" }
+          end
+
+          describe file(load_file) do
+            it { should contain "LoadModule passenger_module #{passenger_module_path}" }
+          end
+
+          it 'should output status via passenger-memory-stats' do
+            shell("/usr/bin/passenger-memory-stats") do |r|
+              r.stdout.should =~ /Apache processes/
+              r.stdout.should =~ /Nginx processes/
+              r.stdout.should =~ /Passenger processes/
+              r.stdout.should =~ /### Processes: [0-9]+/
+              r.stdout.should =~ /### Total private dirty RSS: [0-9\.]+ MB/
+
+              r.exit_code.should == 0
+            end
+          end
+
+          it 'should output status via passenger-status' do
+            shell("PASSENGER_TMPDIR=/var/run/rubygem-passenger /usr/bin/passenger-status") do |r|
+              # spacing may vary
+              r.stdout.should =~ /[\-]+ General information [\-]+/
+              r.stdout.should =~ /max[ ]+= [0-9]+/
+              r.stdout.should =~ /count[ ]+= [0-9]+/
+              r.stdout.should =~ /active[ ]+= [0-9]+/
+              r.stdout.should =~ /inactive[ ]+= [0-9]+/
+              r.stdout.should =~ /Waiting on global queue: [0-9]+/
+
+              r.exit_code.should == 0
+            end
+          end
+
+          it 'should answer to passenger.example.com' do
+            shell("/usr/bin/curl passenger.example.com:80") do |r|
+              r.stdout.should =~ /^hello <b>world<\/b>$/
+              r.exit_code.should == 0
+            end
           end
         end
       end
-
     end
-
   end
 end
