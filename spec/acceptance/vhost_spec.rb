@@ -814,29 +814,33 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
   # Passenger isn't even in EPEL on el-5
   if default['platform'] !~ /^el-5/
-    describe 'rack_base_uris' do
-      if fact('osfamily') == 'RedHat'
-        it 'adds epel' do
-          pp = "class { 'epel': }"
+    if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+      pending('Since we don\'t have passenger on RHEL7 rack_base_uris tests will fail')
+    else
+      describe 'rack_base_uris' do
+        if fact('osfamily') == 'RedHat'
+          it 'adds epel' do
+            pp = "class { 'epel': }"
+            apply_manifest(pp, :catch_failures => true)
+          end
+        end
+
+        it 'applies cleanly' do
+          pp = <<-EOS
+            class { 'apache': }
+            host { 'test.server': ip => '127.0.0.1' }
+            apache::vhost { 'test.server':
+              docroot          => '/tmp',
+              rack_base_uris  => ['/test'],
+            }
+          EOS
           apply_manifest(pp, :catch_failures => true)
         end
-      end
 
-      it 'applies cleanly' do
-        pp = <<-EOS
-          class { 'apache': }
-          host { 'test.server': ip => '127.0.0.1' }
-          apache::vhost { 'test.server':
-            docroot          => '/tmp',
-            rack_base_uris  => ['/test'],
-          }
-        EOS
-        apply_manifest(pp, :catch_failures => true)
-      end
-
-      describe file("#{$vhost_dir}/25-test.server.conf") do
-        it { should be_file }
-        it { should contain 'RackBaseURI /test' }
+        describe file("#{$vhost_dir}/25-test.server.conf") do
+          it { should be_file }
+          it { should contain 'RackBaseURI /test' }
+        end
       end
     end
   end
