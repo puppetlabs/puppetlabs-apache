@@ -59,6 +59,7 @@ class apache (
   $server_signature     = 'On',
   $trace_enable         = 'On',
   $package_ensure       = 'installed',
+  $apache_vhosts        = {},
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -336,4 +337,9 @@ class apache (
       ip              => $ip,
     }
   }
+
+  # Enable definition of vhost via hiera. No action if $apache_vhosts
+  # is empty.
+  validate_hash($apache_vhosts)
+  create_resources('apache::vhost', $apache_vhosts)
 }
