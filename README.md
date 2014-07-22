@@ -148,7 +148,7 @@ To set up a virtual host with a wildcard alias for the subdomain mapped to a sam
     apache::vhost { 'subdomain.loc':
       vhost_name       => '*',
       port             => '80',
-      virtual_docroot' => '/var/www/%-2+',
+      virtual_docroot  => '/var/www/%-2+',
       docroot          => '/var/www',
       serveraliases    => ['*.loc',],
     }
