@@ -1046,6 +1046,10 @@ Multiple rewrites and conditions are also possible
 
 Refer to the [`mod_rewrite` documentation](http://httpd.apache.org/docs/current/mod/mod_rewrite.html) for more details on what is possible with rewrite rules and conditions.
 
+#####`rewrite_options`
+
+Defines RewriteOptions to be used.  Refer to the [`mod_rewrite` RewriteOptions documentation](http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriteoptions) for valid options to set.
+
 #####`scriptalias`
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', for example: '/usr/scripts'. Defaults to 'undef'.

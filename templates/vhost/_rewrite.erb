@@ -1,6 +1,9 @@
 <%- if @rewrites -%>
   ## Rewrite rules
   RewriteEngine On
+  <%- if @rewrite_options -%>
+  RewriteOptions <%= @rewrite_options %>
+  <%- end -%>
   <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
   <%- end -%>
@@ -31,6 +34,9 @@
 <% if @rewrite_rule and !@rewrites -%>
   ## Rewrite rules
   RewriteEngine On
+<%- if @rewrite_options -%>
+  RewriteOptions <%= @rewrite_options %>
+<%- end -%>
 <% if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
 <% end -%>

@@ -45,10 +45,11 @@
 #    docroot => '/path/to/docroot',
 #  }
 #
-#  # Multiple Mod Rewrites:
+#  # Multiple Mod Rewrites with RewriteOptions set:
 #  apache::vhost { 'site.name.fqdn':
 #    port => '80',
 #    docroot => '/path/to/docroot',
+#    rewrite_options => 'Inherit',
 #    rewrites => [
 #      {
 #        comment       => 'force www domain',
@@ -146,6 +147,7 @@ define apache::vhost(
     $headers                     = undef,
     $request_headers             = undef,
     $rewrites                    = undef,
+    $rewrite_options             = undef,
     $rewrite_base                = undef,
     $rewrite_rule                = undef,
     $rewrite_cond                = undef,
@@ -497,6 +499,7 @@ define apache::vhost(
   #   - $request_headers
   # rewrite fragment:
   #   - $rewrites
+  #   - $rewrite_options
   # scriptalias fragment:
   #   - $scriptalias
   #   - $scriptaliases
