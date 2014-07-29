@@ -102,7 +102,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           proxy_pass => [
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
           ],
-    	  proxy_preserve_host   => true, 
+        proxy_preserve_host   => true,
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -214,7 +214,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           if versioncmp($apache::apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
-            $_files_match_directory = [ 
+            $_files_match_directory = [
               { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' },
               { 'path' => '/bar/bar.html', 'provider' => 'location', allow => [ 'from 127.0.0.1', ] },
             ]
@@ -298,7 +298,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       end
     end
 
-  describe 'Satisfy and Auth directive' do
+    describe 'Satisfy and Auth directive' do
       it 'should configure a vhost with Satisfy and Auth directive' do
         pp = <<-EOS
           class { 'apache': }
@@ -480,7 +480,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           ensure  => file,
           content => "Hello from localhost\\n",
         }
-      }, :catch_failures => true)
+                     }, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -666,7 +666,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           apache::vhost { 'test.server':
             docroot    => '/tmp',
             logroot    => '/tmp',
-            #{logtype}_log => false,
+        #{logtype}_log => false,
           }
         EOS
         apply_manifest(pp, :catch_failures => true)
@@ -686,7 +686,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           apache::vhost { 'test.server':
             docroot    => '/tmp',
             logroot    => '/tmp',
-            #{logtype}_log_pipe => '|/bin/sh',
+        #{logtype}_log_pipe => '|/bin/sh',
           }
         EOS
         apply_manifest(pp, :catch_failures => true)
@@ -706,7 +706,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           apache::vhost { 'test.server':
             docroot    => '/tmp',
             logroot    => '/tmp',
-            #{logtype}_log_syslog => 'syslog',
+        #{logtype}_log_syslog => 'syslog',
           }
         EOS
         apply_manifest(pp, :catch_failures => true)
@@ -905,29 +905,33 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
   # Passenger isn't even in EPEL on el-5
   if default['platform'] !~ /^el-5/
-    describe 'rack_base_uris' do
-      if fact('osfamily') == 'RedHat'
-        it 'adds epel' do
-          pp = "class { 'epel': }"
+    if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+      pending('Since we don\'t have passenger on RHEL7 rack_base_uris tests will fail')
+    else
+      describe 'rack_base_uris' do
+        if fact('osfamily') == 'RedHat'
+          it 'adds epel' do
+            pp = "class { 'epel': }"
+            apply_manifest(pp, :catch_failures => true)
+          end
+        end
+
+        it 'applies cleanly' do
+          pp = <<-EOS
+            class { 'apache': }
+            host { 'test.server': ip => '127.0.0.1' }
+            apache::vhost { 'test.server':
+              docroot          => '/tmp',
+              rack_base_uris  => ['/test'],
+            }
+          EOS
           apply_manifest(pp, :catch_failures => true)
         end
-      end
 
-      it 'applies cleanly' do
-        pp = <<-EOS
-          class { 'apache': }
-          host { 'test.server': ip => '127.0.0.1' }
-          apache::vhost { 'test.server':
-            docroot          => '/tmp',
-            rack_base_uris  => ['/test'],
-          }
-        EOS
-        apply_manifest(pp, :catch_failures => true)
-      end
-
-      describe file("#{$vhost_dir}/25-test.server.conf") do
-        it { is_expected.to be_file }
-        it { is_expected.to contain 'RackBaseURI /test' }
+        describe file("#{$vhost_dir}/25-test.server.conf") do
+          it { is_expected.to be_file }
+          it { is_expected.to contain 'RackBaseURI /test' }
+        end
       end
     end
   end
@@ -1031,7 +1035,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_daemon_process_options => {processes => '2'},
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
-	  wsgi_pass_authorization     => 'On',
+    wsgi_pass_authorization     => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1051,7 +1055,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
-	  wsgi_pass_authorization     => 'On',
+    wsgi_pass_authorization     => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1136,16 +1140,15 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     it 'applies cleanly' do
       pp = <<-EOS
         if $::osfamily == 'RedHat' and $::selinux == 'true' {
+          $semanage_package = $::operatingsystemmajrelease ? {
+            '5'     => 'policycoreutils',
+            default => 'policycoreutils-python',
+          }
           exec { 'set_apache_defaults':
             command => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
             path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
             require => Package[$semanage_package],
           }
-          $semanage_package = $::operatingsystemmajrelease ? {
-            '5'       => 'policycoreutils',
-            'default' => 'policycoreutils-python',
-          }
-
           package { $semanage_package: ensure => installed }
           exec { 'restorecon_apache':
             command => 'restorecon -Rv /apache_spec',

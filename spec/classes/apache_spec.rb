@@ -560,4 +560,18 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('present') }
     end
   end
+  context 'with unsupported osfamily' do
+    let :facts do
+      { :osfamily        => 'Darwin',
+        :operatingsystemrelease => '13.1.0',
+        :concat_basedir         => '/dne',
+      }
+    end
+
+    it do
+      expect {
+       should compile
+      }.to raise_error(Puppet::Error, /Unsupported osfamily/)
+    end
+  end
 end
