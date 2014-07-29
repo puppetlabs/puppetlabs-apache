@@ -10,6 +10,8 @@ describe 'apache::mod::negotiation', :type => :class do
         :lsbdistcodename        => 'squeeze',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 

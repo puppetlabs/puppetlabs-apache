@@ -16,6 +16,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :operatingsystemrelease => '6',
           :id                     => 'root',
           :concat_basedir         => '/dne',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :facts do default_facts end
@@ -35,6 +36,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :lsbdistcodename        => 'squeeze',
           :id                     => 'root',
           :concat_basedir         => '/dne',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :facts do default_facts end
@@ -53,6 +55,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :operatingsystemrelease => '9',
           :id                     => 'root',
           :concat_basedir         => '/dne',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :facts do default_facts end
@@ -73,6 +76,7 @@ describe 'apache::fastcgi::server', :type => :define do
         :lsbdistcodename        => 'squeeze',
         :id                     => 'root',
         :concat_basedir         => '/dne',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     describe ".conf content" do
