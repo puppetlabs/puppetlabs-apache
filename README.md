@@ -15,6 +15,7 @@
         * [Class: apache::default_mods](#class-apachedefault_mods)
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
+        * [Class: apache::mod::info](#class-apachemodinfo)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::php](#class-apachemodphp)
         * [Class: apache::mod::ssl](#class-apachemodssl)
@@ -465,7 +466,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `fcgid`
 * `headers`
 * `include`
-* `info`
+* `info`*
 * `itk`
 * `ldap`
 * `mime`
@@ -501,6 +502,53 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters will not require any configuration or attention.
 
 The modules mentioned above, and other Apache modules that have templates, will cause template files to be dropped along with the mod install and the module will not work without the template. Any module without a template will install the package but drop no files.
+
+####Class: `apache::mod::info`
+
+Installs and manages mod_info which provides a comprehensive overview of the server configuration. 
+
+Full documentation for mod_info is available from [Apache](http://httpd.apache.org/docs/2.2/mod/mod_info.html).
+
+These are the default settings:
+
+```puppet
+  $allow_from      = ['127.0.0.1','::1'],
+  $apache_version  = $::apache::apache_version,
+  $restrict_access = true,
+```
+
+To set the addresses that are allowed to access /server-info add the following:
+
+```puppet
+  class {'apache::mod::info':
+    allow_from      => [
+      '10.10.36',
+      '10.10.38',
+      '127.0.0.1',
+    ],
+  }
+```
+
+To disable the access restrictions add the following:
+
+```puppet
+  class {'apache::mod::info':
+    restrict_access => false,
+  }
+```
+
+It is not recommended to leave this set to false though it can be very useful for testing. For this reason, you can insert this setting in your normal code to temporarily disable the restrictions like so:
+
+```puppet
+  class {'apache::mod::info':
+    restrict_access => false, # false disables the block below
+    allow_from      => [
+      '10.10.36',
+      '10.10.38',
+      '127.0.0.1',
+    ],
+  }
+```
 
 ####Class: `apache::mod::pagespeed`
 
