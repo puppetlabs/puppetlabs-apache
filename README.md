@@ -22,6 +22,7 @@
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Class: apache::mod::fcgid](#class-apachemodfcgid)
         * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
+        * [Class: apache::mod::deflate](#class-apachemoddeflate)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
@@ -721,6 +722,28 @@ A string that sets the `ForceLanguagePriority` option. Defaults to `Prefer Fallb
 #####`language_priority`
 
 An array of languages to set the `LanguagePriority` option of the module.
+
+####Class: `apache::mod::deflate`
+
+Installs and configures mod_deflate. If no parameters are provided, a default configuration is applied.
+
+```puppet
+  class { '::apache::mod::deflate':
+    types => [ 'text/html', 'text/css' ],
+    notes => {
+      'Input' => 'instream',
+      'Ratio' => 'ratio',
+    },
+  }
+```
+
+#####`types`
+
+An array of mime types that will be deflated.
+
+#####`notes`
+
+A hash where the key represents the type and the value represents the note name.
 
 ####Defined Type: `apache::vhost`
 
