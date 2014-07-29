@@ -1,3 +1,44 @@
+##2014-07-15 - Supported Release 1.1.1
+###Summary
+
+This release merely updates metadata.json so the module can be uninstalled and
+upgraded via the puppet module command.
+
+## 2014-04-14 Supported Release 1.1.0
+
+###Summary
+
+This release primarily focuses on extending the httpd 2.4 support, tested
+through adding RHEL7 and Ubuntu 14.04 support.  It also includes Passenger 
+4 support, as well as several new modules and important bugfixes.
+
+####Features
+
+- Add support for RHEL7 and Ubuntu 14.04
+- More complete apache24 support
+- Passenger 4 support
+- Add support for max_keepalive_requests and log_formats parameters
+- Add mod_pagespeed support
+- Add mod_speling support
+- Added several parameters for mod_passenger
+- Added ssl_cipher parameter to apache::mod::ssl
+- Improved examples in documentation
+- Added docroot_mode, action, and suexec_user_group parameters to apache::vhost
+- Add support for custom extensions for mod_php
+- Improve proxy_html support for Debian
+
+####Bugfixes
+
+- Remove NameVirtualHost directive for apache >= 2.4
+- Order proxy_set option so it doesn't change between runs
+- Fix inverted SSL compression
+- Fix missing ensure on concat::fragment resources
+- Fix bad dependencies in apache::mod and apache::mod::mime
+
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+
 ## 2014-03-04 Supported Release 1.0.1
 ###Summary
 
