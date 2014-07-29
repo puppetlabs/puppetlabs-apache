@@ -121,6 +121,7 @@ describe 'apache::mod::worker', :type => :class do
         :operatingsystemrelease => '6',
         :id                     => 'root',
         :concat_basedir         => '/dne',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 

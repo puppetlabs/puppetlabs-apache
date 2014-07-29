@@ -145,6 +145,8 @@ describe 'apache::mod::php', :type => :class do
         :operatingsystemrelease => '6',
         :lsbdistcodename        => 'squeeze',
         :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     context 'with content param' do
