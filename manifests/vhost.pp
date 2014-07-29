@@ -77,6 +77,7 @@
 #
 define apache::vhost(
     $docroot,
+    $manage_docroot              = true,
     $virtual_docroot             = false,
     $port                        = undef,
     $ip                          = undef,
@@ -261,7 +262,7 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
+  if ! defined(File[$docroot]) and $manage_docroot {
     file { $docroot:
       ensure  => directory,
       owner   => $docroot_owner,
