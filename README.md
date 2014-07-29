@@ -827,6 +827,10 @@ Sets individual user access to the docroot directory. Defaults to 'root'.
 
 Sets access permissions of the docroot directory. Defaults to 'undef'.
 
+#####`manage_docroot`
+
+Whether to manage to docroot directory at all. Defaults to 'true'.
+
 #####`error_log`
 
 Specifies whether `*_error.log` directives should be configured. Defaults to 'true'.

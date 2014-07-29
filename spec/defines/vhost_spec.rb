@@ -1166,6 +1166,15 @@ describe 'apache::vhost', :type => :define do
         end
       end
 
+      describe 'when docroot is *not* managed' do
+        let :params do default_params.merge({
+          :manage_docroot=> false,
+        }) end
+        it 'should not contain docroot ' do
+          is_expected.not_to contain_file(params[:docroot])
+        end
+      end
+
       describe 'when wsgi_daemon_process and wsgi_daemon_process_options are specified' do
         let :params do default_params.merge({
           :wsgi_daemon_process         => 'example.org',
