@@ -273,7 +273,7 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
+  if ! defined(File[$logroot]) and $ensure == 'present' {
     file { $logroot:
       ensure  => directory,
       mode    => $logroot_mode,
