@@ -53,6 +53,7 @@ class apache (
   $keepalive_timeout    = $::apache::params::keepalive_timeout,
   $max_keepalive_requests = $apache::params::max_keepalive_requests,
   $logroot              = $::apache::params::logroot,
+  $logroot_mode         = $::apache::params::logroot_mode,
   $log_level            = $::apache::params::log_level,
   $log_formats          = {},
   $ports_file           = $::apache::params::ports_file,
@@ -321,6 +322,7 @@ class apache (
       access_log_file => $access_log_file,
       priority        => '15',
       ip              => $ip,
+      logroot_mode    => $logroot_mode,
     }
     $ssl_access_log_file = $::osfamily ? {
       'freebsd' => $access_log_file,
@@ -336,6 +338,7 @@ class apache (
       access_log_file => $ssl_access_log_file,
       priority        => '15',
       ip              => $ip,
+      logroot_mode    => $logroot_mode,
     }
   }
 }
