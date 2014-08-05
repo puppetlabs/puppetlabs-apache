@@ -26,6 +26,9 @@ class apache::mod::php (
     warning('content and template parameters are provided. content parameter will be used')
   }
 
+  $group = $::apache::group
+  $owner = $::apache::user
+
   $manage_content = $source ? {
     undef   => $content ? {
       undef   => template($template),
@@ -58,5 +61,13 @@ class apache::mod::php (
     ],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
+  }
+
+  file { ['/var/lib/php','/var/lib/php/session']:
+    ensure  => 'directory',
+    group   => $group,
+    owner   => $owner,
+    mode    => '0770',
+    notify  => Class['::apache::service'],
   }
 }
