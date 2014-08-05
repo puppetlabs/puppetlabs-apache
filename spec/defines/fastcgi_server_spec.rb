@@ -82,12 +82,12 @@ describe 'apache::fastcgi::server', :type => :define do
     describe ".conf content" do
       let :params do
         {
-          :host      => '127.0.0.1:9001',
-          :timeout   => 30,
-          :flush     => true,
-          :faux_path => '/var/www/php-www.fcgi',
-          :alias     => '/php-www.fcgi',
-          :file_type => 'application/x-httpd-php'
+          :host       => '127.0.0.1:9001',
+          :timeout    => 30,
+          :flush      => true,
+          :faux_path  => '/var/www/php-www.fcgi',
+          :fcgi_alias => '/php-www.fcgi',
+          :file_type  => 'application/x-httpd-php'
         }
       end
       let :expected do

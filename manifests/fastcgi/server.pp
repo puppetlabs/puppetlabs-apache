@@ -3,7 +3,7 @@ define apache::fastcgi::server (
   $timeout       = 15,
   $flush         = false,
   $faux_path     = "/var/www/${name}.fcgi",
-  $alias         = "/${name}.fcgi",
+  $fcgi_alias    = "/${name}.fcgi",
   $file_type     = 'application/x-httpd-php'
 ) {
   include apache::mod::fastcgi
