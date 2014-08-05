@@ -7,8 +7,14 @@ class apache::mod::php (
   $template       = 'apache/mod/php5.conf.erb',
   $source         = undef,
 ) {
-  if ! defined(Class['apache::mod::prefork']) {
-    fail('apache::mod::php requires apache::mod::prefork; please enable mpm_module => \'prefork\' on Class[\'apache\']')
+  if defined(Class['apache::mod::prefork']) {
+    Class['::apache::mod::prefork']->File['php5.conf']
+  }
+  elsif defined(Class['apache::mod::itk']) {
+    Class['::apache::mod::itk']->File['php5.conf']
+  }
+  else {
+    fail('apache::mod::php requires apache::mod::prefork or apache::mod::itk; please enable mpm_module => \'prefork\' or mpm_module => \'itk\' on Class[\'apache\']')
   }
   validate_array($extensions)
 
@@ -46,7 +52,6 @@ class apache::mod::php (
     content => $manage_content,
     source  => $source,
     require => [
-      Class['::apache::mod::prefork'],
       Exec["mkdir ${::apache::mod_dir}"],
     ],
     before  => File[$::apache::mod_dir],
