@@ -390,6 +390,33 @@ describe 'apache::vhost', :type => :define do
           :notmatch => [/ProxyPass .+!$/],
         },
         {
+          :title    => 'should accept reverse_urls string',
+          :attr     => 'proxy_pass',
+          :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a', 'reverse_urls' => 'http://127.0.0.1:8080' },
+          :match    => [
+            /^  ProxyPass \/path-a http:\/\/fake.com\/a$/,
+            /^  <Location \/path-a>$/,
+            /^    ProxyPassReverse http:\/\/127.0.0.1:8080$/,
+            /^  <\/Location>$/,
+
+          ],
+          :notmatch => [/^    ProxyPassReverse http:\/\/fake.com\/a$/],
+        },
+        {
+          :title    => 'should accept reverse_urls array',
+          :attr     => 'proxy_pass',
+          :value    => { 'path' => '/path-a', 'url' => 'http://fake.com/a', 'reverse_urls' => ['http://127.0.0.1:8080', 'http://127.0.0.1:8081'] },
+          :match    => [
+            /^  ProxyPass \/path-a http:\/\/fake.com\/a$/,
+            /^  <Location \/path-a>$/,
+            /^    ProxyPassReverse http:\/\/127.0.0.1:8080$/,
+            /^    ProxyPassReverse http:\/\/127.0.0.1:8081$/,
+            /^  <\/Location>$/,
+
+          ],
+          :notmatch => [/^    ProxyPassReverse http:\/\/fake.com\/a$/],
+        },
+        {
           :title    => 'should accept proxy_pass array of hash',
           :attr     => 'proxy_pass',
           :value    => [

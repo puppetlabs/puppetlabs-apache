@@ -991,9 +991,13 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
     { 'path' => '/c', 'url' => 'http://backend-a/c' },
+    { 'path' => '/l', 'url' => 'http://backend-xy',
+      'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
   ],
 }
 ```
+
+`reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 
 #####`rack_base_uris`
 
