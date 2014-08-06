@@ -140,7 +140,7 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
         }
         class {'apache::mod::php':
           content => '# somecontent',
-          source  => 'puppet:///modules/apache/spec',
+          source  => 'puppet:///modules/site_apache/spec',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -159,7 +159,7 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
         }
         class {'apache::mod::php':
           template => 'apache/mod/php5.conf.erb',
-          source   => 'puppet:///modules/apache/spec',
+          source   => 'puppet:///modules/site_apache/spec',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
