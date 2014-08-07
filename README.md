@@ -23,6 +23,7 @@
         * [Class: apache::mod::fcgid](#class-apachemodfcgid)
         * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
         * [Class: apache::mod::deflate](#class-apachemoddeflate)
+        * [Class: apache::mod::reqtimeout](#class-apachemodreqtimeout)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
@@ -744,6 +745,24 @@ An array of mime types that will be deflated.
 #####`notes`
 
 A hash where the key represents the type and the value represents the note name.
+
+
+####Class: `apache::mod::reqtimeout`
+
+Installs and configures mod_reqtimeout. Defaults to recommended apache
+mod_reqtimeout configuration.
+
+```puppet
+  class { '::apache::mod::reqtimeout':
+    timeouts => ['header=20-40,MinRate=500', 'body=20,MinRate=500'],
+  }
+```
+
+#####`timeouts`
+
+A string or an array that sets the `RequestReadTimeout` option. Defaults to
+`['header=20-40,MinRate=500', 'body=20,MinRate=500']`.
+
 
 ####Defined Type: `apache::vhost`
 
