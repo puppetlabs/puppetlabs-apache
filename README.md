@@ -1594,6 +1594,31 @@ Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/
 
 `php_admin_value` sets the value of the directory, and `php_admin_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
+######`rewrites`
+
+Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'.
+
+```puppet
+    apache::vhost { 'secure.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path        => '/path/to/directory',
+          rewrites => [ { comment      => 'Permalink Rewrites',
+                          rewrite_base => '/'
+                        },
+                        { rewrite_rule => [ '^index\.php$ - [L]' ]
+                        },
+                        { rewrite_cond => [ '%{REQUEST_FILENAME} !-f',
+                                            '%{REQUEST_FILENAME} !-d',
+                                          ],
+                          rewrite_rule => [ '. /index.php [L]' ],
+                        }
+                      ],
+        },
+      ],
+    }
+```
+
 ######`ssl_options`
 
 String or list of [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions), which configure SSL engine run-time options. This handler takes precedence over SSLOptions set in the parent block of the vhost.
