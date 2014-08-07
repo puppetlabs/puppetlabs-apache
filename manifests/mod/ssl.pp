@@ -12,7 +12,7 @@ class apache::mod::ssl (
 
   case $::osfamily {
     'debian': {
-      if versioncmp($apache_version, '2.4') >= 0 and $::operatingsystem == 'Ubuntu' {
+      if versioncmp($apache_version, '2.4') >= 0 {
         $ssl_mutex = 'default'
       } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
