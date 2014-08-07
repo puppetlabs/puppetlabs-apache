@@ -837,6 +837,31 @@ For `alias` and `aliasmatch` to work, each will need a corresponding context, su
 
 Specifies the list of things Apache will block access to. The default is an empty set, '[]'. Currently, the only option is 'scm', which blocks web access to .svn, .git and .bzr directories.
 
+#####`custom_blocks`
+
+Set a list of custom configuration blocks to use. Each value must be a valid path to an erb file. Defaults to an empty set, '[]'.
+
+Let imagine that we have the following template located in site_apache/custom_template.erb :
+```
+<% if @custom_blocks_parameters['some_var'] -%>
+
+  # A custom variable <%= @custom_blocks_parameters['some_var'] %>
+<% end -%>
+```
+To use this template, the following vhost definition is needed :
+```apache::vhost {
+        "website.mydomain.org_80":
+            servername => "website.mydomain.org",
+            port => 80,
+            custom_blocks => ["site_apache/custom_template.erb"],
+            custom_blocks_parameters => { 'some_var' => 'some_string' },
+}
+```
+
+#####`custom_blocks_parameters`
+
+Set a hash of parameters to be used by custom blocks defined by `custom_blocks_parameters`. Defaults to an empty hash, '{}'.
+
 #####`custom_fragment`
 
 Passes a string of custom configuration directives to be placed at the end of the vhost configuration. Defaults to 'undef'.

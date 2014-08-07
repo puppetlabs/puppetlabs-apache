@@ -1590,6 +1590,31 @@ describe 'apache::vhost', :type => :define do
           it { is_expected.to contain_file("25-#{title}.conf").with_content %r{DirectoryIndex index.php} }
 	end
       end
+      
+      describe 'when a single custom_block and its parameter are defined' do
+        let :params do default_params.merge({
+          :custom_blocks => ['site_apache/custom_template.erb'],
+          :custom_blocks_parameters => { 'some_var' => 'some_string' },
+        }) end
+        it 'should add the defined custom block with its parameters' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  # A custom variable : some_string$/
+          )
+        end
+      end
+
+      describe 'when multiple custom_blocks and their parameters are defined' do
+        let :params do default_params.merge({
+          :custom_blocks => ['site_apache/custom_template.erb', 'site_apache/custom_template2.erb'],
+          :custom_blocks_parameters => { 'some_var' => 'some_string', 'another_var' => 'another_string' },
+        }) end
+        it 'should add the defined custom block with its parameters' do
+          should contain_file("25-#{title}.conf").with_content(
+            /^  # A custom variable : some_string$/,
+            /^  # Another custom variable : another_string$/,
+          )
+        end
+      end
     end
   end
 end

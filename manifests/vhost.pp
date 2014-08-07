@@ -171,6 +171,8 @@ define apache::vhost(
     $additional_includes         = [],
     $apache_version              = $::apache::apache_version,
     $suexec_user_group           = undef,
+    $custom_blocks               = [],
+    $custom_blocks_parameters    = {},
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -446,6 +448,14 @@ define apache::vhost(
     }
 
     $_directories = [ merge($_directory, $_directory_version) ]
+  }
+
+  if $custom_blocks {
+      validate_array($custom_blocks)
+  }
+
+  if $custom_blocks_parameters {
+      validate_hash($custom_blocks_parameters)
   }
 
   # Template uses:
