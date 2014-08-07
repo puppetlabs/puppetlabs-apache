@@ -27,9 +27,9 @@
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>
 
   ## Load additional static includes
-<% Array(@additional_includes).each do |include| %>
+<% Array(@additional_includes).each do |include| -%>
   Include "<%= include %>"
-<% end %>
+<% end -%>
 
   ## Logging
 <% if @error_log -%>
