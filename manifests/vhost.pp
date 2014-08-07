@@ -242,6 +242,10 @@ define apache::vhost(
     validate_re($fallbackresource, '^/|disabled', 'Please make sure fallbackresource starts with a / (or is "disabled")')
   }
 
+  if $custom_fragment {
+    validate_string($custom_fragment)
+  }
+
   if $ssl and $ensure == 'present' {
     include ::apache::mod::ssl
     # Required for the AddType lines.
