@@ -3,16 +3,19 @@ require 'beaker-rspec/helpers/serverspec'
 
 
 unless ENV['RS_PROVISION'] == 'no'
+  foss_opts = { :version        => '3.6.2',
+                :facter_version => '2.1.0',
+                :hiera_version  => '1.3.4',
+                :default_action => 'gem_install' }
+
+  if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
+
   hosts.each do |host|
     if host['platform'] =~ /debian/
       on host, 'echo \'export PATH=/var/lib/gems/1.8/bin/:${PATH}\' >> ~/.bashrc'
     end
-    if host.is_pe?
-      install_pe
-    else
-      install_puppet
-      on host, "mkdir -p #{host['distmoduledir']}"
-    end
+
+    on host, "mkdir -p #{host['distmoduledir']}"
   end
 end
 
