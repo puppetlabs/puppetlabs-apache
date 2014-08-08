@@ -1287,7 +1287,7 @@ Each hash passed to `directories` must contain `path` as one of the keys.  You m
 
 *Note:* At least one directory should match the `docroot` parameter. Once you start declaring directories, `apache::vhost` assumes that all required Directory blocks will be declared. If not defined, a single default Directory block will be created that matches the `docroot` parameter.
 
-The `provider` key can be set to 'directory', 'files', or 'location'. If the path starts with a [~](https://httpd.apache.org/docs/current/mod/core.html#files), HTTPD will interpret this as the equivalent of DirectoryMatch, FilesMatch, or LocationMatch.
+The `provider` key can be set to 'directory', 'files', 'location', 'directorymatch', 'filesmatch', or 'locationmatch'. 
 
 ```puppet
     apache::vhost { 'files.example.net':
