@@ -264,6 +264,18 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
+  # Configure the defaultness of a vhost
+  if $priority {
+    $priority_real = $priority
+  } elsif $default_vhost {
+    $priority_real = '10'
+  } else {
+    $priority_real = '25'
+  }
+
+  ## Apache include does not always work with spaces in the filename
+  $filename = regsubst($name, ' ', '_', 'G')
+
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) and $manage_docroot {
@@ -273,6 +285,7 @@ define apache::vhost(
       group   => $docroot_group,
       mode    => $docroot_mode,
       require => Package['httpd'],
+      before  => File["${priority_real}-${filename}.conf"],
     }
   }
 
@@ -404,24 +417,12 @@ define apache::vhost(
     }
   }
 
-  # Configure the defaultness of a vhost
-  if $priority {
-    $priority_real = $priority
-  } elsif $default_vhost {
-    $priority_real = '10'
-  } else {
-    $priority_real = '25'
-  }
-
   # Check if mod_headers is required to process $headers/$request_headers
   if $headers or $request_headers {
     if ! defined(Class['apache::mod::headers']) {
       include ::apache::mod::headers
     }
   }
-
-  ## Apache include does not always work with spaces in the filename
-  $filename = regsubst($name, ' ', '_', 'G')
 
   ## Create a default directory list if none defined
   if $directories {
@@ -542,7 +543,6 @@ define apache::vhost(
     mode    => '0644',
     require => [
       Package['httpd'],
-      File[$docroot],
       File[$logroot],
     ],
     notify  => Service['httpd'],
