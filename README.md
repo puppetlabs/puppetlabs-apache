@@ -960,7 +960,11 @@ Specifies URLs you do not want to proxy. This parameter is meant to be used in c
 
 #####`proxy_preserve_host`
 
-Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxypreservehost).  true Enables the Host: line from an incoming request to be proxied to the host instead of hostname .  false sets this option to off (default).
+Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost).  true Enables the Host: line from an incoming request to be proxied to the host instead of hostname .  false sets this option to off (default).
+
+#####`proxy_via`
+
+Sets the [ProxyVia Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyvia).  true Enables Via, false sets this option to off (default).
 
 #####`options`
 
@@ -1009,7 +1013,7 @@ apache::vhost { 'site.name.fdqn':
   proxy_pass => [
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
-    { 'path' => '/c', 'url' => 'http://backend-a/c' },
+    { 'path' => '/c', 'url' => 'http://backend-a/c', 'args' => 'max=500 smax=100 ttl=120 retry=5' },
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
   ],

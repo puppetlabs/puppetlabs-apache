@@ -6,8 +6,11 @@
 <% if @proxy_preserve_host -%>
   ProxyPreserveHost On
 <%- end -%>
+<% if @proxy_via -%>
+  ProxyVia On
+<%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
-  ProxyPass <%= proxy['path'] %> <%= proxy['url'] %>
+  ProxyPass <%= proxy['path'] %> <%= proxy['url'] %> <%= proxy['args'] %>
   <Location <%= proxy['path']%>>
   <%- if proxy['reverse_urls'].nil? -%>
     ProxyPassReverse <%= proxy['url'] %>
