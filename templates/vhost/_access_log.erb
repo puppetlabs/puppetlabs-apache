@@ -1,0 +1,5 @@
+<% if @access_log and @_access_log_env_var -%>
+  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %> <%= @_access_log_env_var %>
+<% elsif @access_log -%>
+  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %>
+<% end -%>

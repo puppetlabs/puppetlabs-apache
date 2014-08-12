@@ -1,80 +1,4 @@
-# Definition: apache::vhost
-#
-# This class installs Apache Virtual Hosts
-#
-# Parameters:
-# - The $port to configure the host on
-# - The $docroot provides the DocumentRoot variable
-# - The $virtual_docroot provides VirtualDocumentationRoot variable
-# - The $serveradmin will specify an email address for Apache that it will
-#   display when it renders one of it's error pages
-# - The $ssl option is set true or false to enable SSL for this Virtual Host
-# - The $priority of the site
-# - The $servername is the primary name of the virtual host
-# - The $serveraliases of the site
-# - The $ip to configure the host on, defaulting to *
-# - The $options for the given vhost
-# - The $override for the given vhost (list of AllowOverride arguments)
-# - The $vhost_name for name based virtualhosting, defaulting to *
-# - The $logroot specifies the location of the virtual hosts logfiles, default
-#   to /var/log/<apache log location>/
-# - The $log_level specifies the verbosity of the error log for this vhost. Not
-#   set by default for the vhost, instead the global server configuration default
-#   of 'warn' is used.
-# - The $access_log specifies if *_access.log directives should be configured.
-# - The $ensure specifies if vhost file is present or absent.
-# - The $headers is a list of Header statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#header
-# - The $request_headers is a list of RequestHeader statement strings as per http://httpd.apache.org/docs/2.2/mod/mod_headers.html#requestheader
-# - $aliases is a list of Alias hashes for mod_alias as per http://httpd.apache.org/docs/current/mod/mod_alias.html
-#   each statement is a hash in the form of { alias => '/alias', path => '/real/path/to/directory' }
-# - $directories is a lost of hashes for creating <Directory> statements as per http://httpd.apache.org/docs/2.2/mod/core.html#directory
-#   each statement is a hash in the form of { path => '/path/to/directory', <directive> => <value>}
-#   see README.md for list of supported directives.
-#
-# Actions:
-# - Install Apache Virtual Hosts
-#
-# Requires:
-# - The apache class
-#
-# Sample Usage:
-#
-#  # Simple vhost definition:
-#  apache::vhost { 'site.name.fqdn':
-#    port => '80',
-#    docroot => '/path/to/docroot',
-#  }
-#
-#  # Multiple Mod Rewrites:
-#  apache::vhost { 'site.name.fqdn':
-#    port => '80',
-#    docroot => '/path/to/docroot',
-#    rewrites => [
-#      {
-#        comment       => 'force www domain',
-#        rewrite_cond => ['%{HTTP_HOST} ^([a-z.]+)?example.com$ [NC]', '%{HTTP_HOST} !^www. [NC]'],
-#        rewrite_rule => ['.? http://www.%1example.com%{REQUEST_URI} [R=301,L]']
-#      },
-#      {
-#        comment       => 'prevent image hotlinking',
-#        rewrite_cond => ['%{HTTP_REFERER} !^$', '%{HTTP_REFERER} !^http://(www.)?example.com/ [NC]'],
-#        rewrite_rule => ['.(gif|jpg|png)$ - [F]']
-#      },
-#    ]
-#  }
-#
-#  # SSL vhost with non-SSL rewrite:
-#  apache::vhost { 'site.name.fqdn':
-#    port    => '443',
-#    ssl     => true,
-#    docroot => '/path/to/docroot',
-#  }
-#  apache::vhost { 'site.name.fqdn':
-#    port            => '80',
-#    docroot         => '/path/to/other_docroot',
-#    custom_fragment => template("${module_name}/my_fragment.erb"),
-#  }
-#
+# See README.md for usage information
 define apache::vhost(
     $docroot,
     $manage_docroot              = true,
@@ -453,94 +377,13 @@ define apache::vhost(
     $_directories = [ merge($_directory, $_directory_version) ]
   }
 
-  # Template uses:
-  # - $nvh_addr_port
-  # - $servername
-  # - $serveradmin
-  # - $docroot
-  # - $virtual_docroot
-  # - $options
-  # - $override
-  # - $logroot
-  # - $name
-  # - $aliases
-  # - $_directories
-  # - $log_level
-  # - $access_log
-  # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
-  # - $error_log
-  # - $error_log_destination
-  # - $error_documents
-  # - $fallbackresource
-  # - $custom_fragment
-  # - $additional_includes
-  # block fragment:
-  #   - $block
-  # directories fragment:
-  #   - $passenger_enabled
-  #   - $php_admin_flags
-  #   - $php_admin_values
-  #   - $directories (a list of key-value hashes is expected)
-  # fastcgi fragment:
-  #   - $fastcgi_server
-  #   - $fastcgi_socket
-  #   - $fastcgi_dir
-  # proxy fragment:
-  #   - $proxy_dest
-  #   - $no_proxy_uris
-  #   - $proxy_preserve_host (true to set ProxyPreserveHost to on and false to off
-  # rack fragment:
-  #   - $rack_base_uris
-  # redirect fragment:
-  #   - $redirect_source
-  #   - $redirect_dest
-  #   - $redirect_status
-  # header fragment
-  #   - $headers
-  # requestheader fragment:
-  #   - $request_headers
-  # rewrite fragment:
-  #   - $rewrites
-  # scriptalias fragment:
-  #   - $scriptalias
-  #   - $scriptaliases
-  #   - $ssl
-  # serveralias fragment:
-  #   - $serveraliases
-  # setenv fragment:
-  #   - $setenv
-  #   - $setenvif
-  # ssl fragment:
-  #   - $ssl
-  #   - $ssl_cert
-  #   - $ssl_key
-  #   - $ssl_chain
-  #   - $ssl_certs_dir
-  #   - $ssl_ca
-  #   - $ssl_crl
-  #   - $ssl_crl_path
-  #   - $ssl_verify_client
-  #   - $ssl_verify_depth
-  #   - $ssl_options
-  # suphp fragment:
-  #   - $suphp_addhandler
-  #   - $suphp_engine
-  #   - $suphp_configpath
-  # wsgi fragment:
-  #   - $wsgi_application_group
-  #   - $wsgi_daemon_process
-  #   - $wsgi_import_script
-  #   - $wsgi_process_group
-  #   - $wsgi_script_aliases
-  file { "${priority_real}-${filename}.conf":
+  concat { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${::apache::vhost_dir}/${priority_real}-${filename}.conf",
-    content => template('apache/vhost.conf.erb'),
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
+    order   => 'numeric',
     require => [
       Package['httpd'],
       File[$logroot],
@@ -560,8 +403,182 @@ define apache::vhost(
       owner   => 'root',
       group   => $::apache::params::root_group,
       mode    => '0644',
-      require => File["${priority_real}-${filename}.conf"],
+      require => Concat["${priority_real}-${filename}.conf"],
       notify  => Service['httpd'],
     }
+  }
+
+  concat::fragment { "${name}-apache-header":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 0,
+    content => template('apache/vhost/_file_header.erb'),
+  }
+
+  concat::fragment { "${name}-docroot":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 10,
+    content => template('apache/vhost/_docroot.erb'),
+  }
+
+  concat::fragment { "${name}-aliases":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 20,
+    content => template('apache/vhost/_aliases.erb'),
+  }
+
+  concat::fragment { "${name}-itk":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 30,
+    content => template('apache/vhost/_itk.erb'),
+  }
+
+  concat::fragment { "${name}-fallbackresource":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 40,
+    content => template('apache/vhost/_fallbackresource.erb'),
+  }
+
+  concat::fragment { "${name}-directories":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 50,
+    content => template('apache/vhost/_directories.erb'),
+  }
+
+  concat::fragment { "${name}-additional_includes":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 60,
+    content => template('apache/vhost/_additional_includes.erb'),
+  }
+
+  concat::fragment { "${name}-logging":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 70,
+    content => template('apache/vhost/_logging.erb'),
+  }
+
+  concat::fragment { "${name}-access_log":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 80,
+    content => template('apache/vhost/_access_log.erb'),
+  }
+
+  concat::fragment { "${name}-action":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 90,
+    content => template('apache/vhost/_action.erb'),
+  }
+
+  concat::fragment { "${name}-block":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 100,
+    content => template('apache/vhost/_block.erb'),
+  }
+
+  concat::fragment { "${name}-error_document":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 110,
+    content => template('apache/vhost/_error_document.erb'),
+  }
+
+  concat::fragment { "${name}-proxy":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 120,
+    content => template('apache/vhost/_proxy.erb'),
+  }
+
+  concat::fragment { "${name}-rack":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 130,
+    content => template('apache/vhost/_rack.erb'),
+  }
+
+  concat::fragment { "${name}-redirect":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 140,
+    content => template('apache/vhost/_redirect.erb'),
+  }
+
+  concat::fragment { "${name}-rewrite":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 150,
+    content => template('apache/vhost/_rewrite.erb'),
+  }
+
+  concat::fragment { "${name}-scriptalias":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 160,
+    content => template('apache/vhost/_scriptalias.erb'),
+  }
+
+  concat::fragment { "${name}-serveralias":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 170,
+    content => template('apache/vhost/_serveralias.erb'),
+  }
+
+  concat::fragment { "${name}-setenv":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 180,
+    content => template('apache/vhost/_setenv.erb'),
+  }
+
+  concat::fragment { "${name}-ssl":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 190,
+    content => template('apache/vhost/_ssl.erb'),
+  }
+
+  concat::fragment { "${name}-suphp":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 200,
+    content => template('apache/vhost/_suphp.erb'),
+  }
+
+  concat::fragment { "${name}-php_admin":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 210,
+    content => template('apache/vhost/_php_admin.erb'),
+  }
+
+  concat::fragment { "${name}-header":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 220,
+    content => template('apache/vhost/_header.erb'),
+  }
+
+  concat::fragment { "${name}-requestheader":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 230,
+    content => template('apache/vhost/_requestheader.erb'),
+  }
+
+  concat::fragment { "${name}-wsgi":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 240,
+    content => template('apache/vhost/_wsgi.erb'),
+  }
+
+  concat::fragment { "${name}-custom_fragment":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 250,
+    content => template('apache/vhost/_custom_fragment.erb'),
+  }
+
+  concat::fragment { "${name}-fastcgi":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 260,
+    content => template('apache/vhost/_fastcgi.erb'),
+  }
+
+  concat::fragment { "${name}-suexec":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 270,
+    content => template('apache/vhost/_suexec.erb'),
+  }
+
+  concat::fragment { "${name}-file_footer":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 999,
+    content => template('apache/vhost/_file_footer.erb'),
   }
 }
