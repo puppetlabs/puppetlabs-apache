@@ -1,101 +1,101 @@
 # See README.md for usage information
 define apache::vhost(
-    $docroot,
-    $manage_docroot              = true,
-    $virtual_docroot             = false,
-    $port                        = undef,
-    $ip                          = undef,
-    $ip_based                    = false,
-    $add_listen                  = true,
-    $docroot_owner               = 'root',
-    $docroot_group               = $::apache::params::root_group,
-    $docroot_mode                = undef,
-    $serveradmin                 = undef,
-    $ssl                         = false,
-    $ssl_cert                    = $::apache::default_ssl_cert,
-    $ssl_key                     = $::apache::default_ssl_key,
-    $ssl_chain                   = $::apache::default_ssl_chain,
-    $ssl_ca                      = $::apache::default_ssl_ca,
-    $ssl_crl_path                = $::apache::default_ssl_crl_path,
-    $ssl_crl                     = $::apache::default_ssl_crl,
-    $ssl_certs_dir               = $::apache::params::ssl_certs_dir,
-    $ssl_protocol                = undef,
-    $ssl_cipher                  = undef,
-    $ssl_honorcipherorder        = undef,
-    $ssl_verify_client           = undef,
-    $ssl_verify_depth            = undef,
-    $ssl_options                 = undef,
-    $ssl_proxyengine             = false,
-    $priority                    = undef,
-    $default_vhost               = false,
-    $servername                  = $name,
-    $serveraliases               = [],
-    $options                     = ['Indexes','FollowSymLinks','MultiViews'],
-    $override                    = ['None'],
-    $directoryindex              = '',
-    $vhost_name                  = '*',
-    $logroot                     = $::apache::logroot,
-    $logroot_mode                = undef,
-    $log_level                   = undef,
-    $access_log                  = true,
-    $access_log_file             = undef,
-    $access_log_pipe             = undef,
-    $access_log_syslog           = undef,
-    $access_log_format           = undef,
-    $access_log_env_var          = undef,
-    $aliases                     = undef,
-    $directories                 = undef,
-    $error_log                   = true,
-    $error_log_file              = undef,
-    $error_log_pipe              = undef,
-    $error_log_syslog            = undef,
-    $error_documents             = [],
-    $fallbackresource            = undef,
-    $scriptalias                 = undef,
-    $scriptaliases               = [],
-    $proxy_dest                  = undef,
-    $proxy_pass                  = undef,
-    $suphp_addhandler            = $::apache::params::suphp_addhandler,
-    $suphp_engine                = $::apache::params::suphp_engine,
-    $suphp_configpath            = $::apache::params::suphp_configpath,
-    $php_admin_flags             = [],
-    $php_admin_values            = [],
-    $no_proxy_uris               = [],
-    $proxy_preserve_host         = false,
-    $redirect_source             = '/',
-    $redirect_dest               = undef,
-    $redirect_status             = undef,
-    $redirectmatch_status        = undef,
-    $redirectmatch_regexp        = undef,
-    $rack_base_uris              = undef,
-    $headers                     = undef,
-    $request_headers             = undef,
-    $rewrites                    = undef,
-    $rewrite_base                = undef,
-    $rewrite_rule                = undef,
-    $rewrite_cond                = undef,
-    $setenv                      = [],
-    $setenvif                    = [],
-    $block                       = [],
-    $ensure                      = 'present',
-    $wsgi_application_group      = undef,
-    $wsgi_daemon_process         = undef,
-    $wsgi_daemon_process_options = undef,
-    $wsgi_import_script          = undef,
-    $wsgi_import_script_options  = undef,
-    $wsgi_process_group          = undef,
-    $wsgi_script_aliases         = undef,
-    $wsgi_pass_authorization     = undef,
-    $custom_fragment             = undef,
-    $itk                         = undef,
-    $action                      = undef,
-    $fastcgi_server              = undef,
-    $fastcgi_socket              = undef,
-    $fastcgi_dir                 = undef,
-    $additional_includes         = [],
-    $apache_version              = $::apache::apache_version,
-    $suexec_user_group           = undef,
-  ) {
+  $docroot,
+  $manage_docroot              = true,
+  $virtual_docroot             = false,
+  $port                        = undef,
+  $ip                          = undef,
+  $ip_based                    = false,
+  $add_listen                  = true,
+  $docroot_owner               = 'root',
+  $docroot_group               = $::apache::params::root_group,
+  $docroot_mode                = undef,
+  $serveradmin                 = undef,
+  $ssl                         = false,
+  $ssl_cert                    = $::apache::default_ssl_cert,
+  $ssl_key                     = $::apache::default_ssl_key,
+  $ssl_chain                   = $::apache::default_ssl_chain,
+  $ssl_ca                      = $::apache::default_ssl_ca,
+  $ssl_crl_path                = $::apache::default_ssl_crl_path,
+  $ssl_crl                     = $::apache::default_ssl_crl,
+  $ssl_certs_dir               = $::apache::params::ssl_certs_dir,
+  $ssl_protocol                = undef,
+  $ssl_cipher                  = undef,
+  $ssl_honorcipherorder        = undef,
+  $ssl_verify_client           = undef,
+  $ssl_verify_depth            = undef,
+  $ssl_options                 = undef,
+  $ssl_proxyengine             = false,
+  $priority                    = undef,
+  $default_vhost               = false,
+  $servername                  = $name,
+  $serveraliases               = [],
+  $options                     = ['Indexes','FollowSymLinks','MultiViews'],
+  $override                    = ['None'],
+  $directoryindex              = '',
+  $vhost_name                  = '*',
+  $logroot                     = $::apache::logroot,
+  $logroot_mode                = undef,
+  $log_level                   = undef,
+  $access_log                  = true,
+  $access_log_file             = undef,
+  $access_log_pipe             = undef,
+  $access_log_syslog           = undef,
+  $access_log_format           = undef,
+  $access_log_env_var          = undef,
+  $aliases                     = undef,
+  $directories                 = undef,
+  $error_log                   = true,
+  $error_log_file              = undef,
+  $error_log_pipe              = undef,
+  $error_log_syslog            = undef,
+  $error_documents             = [],
+  $fallbackresource            = undef,
+  $scriptalias                 = undef,
+  $scriptaliases               = [],
+  $proxy_dest                  = undef,
+  $proxy_pass                  = undef,
+  $suphp_addhandler            = $::apache::params::suphp_addhandler,
+  $suphp_engine                = $::apache::params::suphp_engine,
+  $suphp_configpath            = $::apache::params::suphp_configpath,
+  $php_admin_flags             = [],
+  $php_admin_values            = [],
+  $no_proxy_uris               = [],
+  $proxy_preserve_host         = false,
+  $redirect_source             = '/',
+  $redirect_dest               = undef,
+  $redirect_status             = undef,
+  $redirectmatch_status        = undef,
+  $redirectmatch_regexp        = undef,
+  $rack_base_uris              = undef,
+  $headers                     = undef,
+  $request_headers             = undef,
+  $rewrites                    = undef,
+  $rewrite_base                = undef,
+  $rewrite_rule                = undef,
+  $rewrite_cond                = undef,
+  $setenv                      = [],
+  $setenvif                    = [],
+  $block                       = [],
+  $ensure                      = 'present',
+  $wsgi_application_group      = undef,
+  $wsgi_daemon_process         = undef,
+  $wsgi_daemon_process_options = undef,
+  $wsgi_import_script          = undef,
+  $wsgi_import_script_options  = undef,
+  $wsgi_process_group          = undef,
+  $wsgi_script_aliases         = undef,
+  $wsgi_pass_authorization     = undef,
+  $custom_fragment             = undef,
+  $itk                         = undef,
+  $action                      = undef,
+  $fastcgi_server              = undef,
+  $fastcgi_socket              = undef,
+  $fastcgi_dir                 = undef,
+  $additional_includes         = [],
+  $apache_version              = $::apache::apache_version,
+  $suexec_user_group           = undef,
+) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -209,7 +209,7 @@ define apache::vhost(
       group   => $docroot_group,
       mode    => $docroot_mode,
       require => Package['httpd'],
-      before  => File["${priority_real}-${filename}.conf"],
+      before  => Concat["${priority_real}-${filename}.conf"],
     }
   }
 
@@ -420,160 +420,218 @@ define apache::vhost(
     content => template('apache/vhost/_docroot.erb'),
   }
 
-  concat::fragment { "${name}-aliases":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 20,
-    content => template('apache/vhost/_aliases.erb'),
+  if $aliases and ! empty($aliases) {
+    concat::fragment { "${name}-aliases":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 20,
+      content => template('apache/vhost/_aliases.erb'),
+    }
   }
 
-  concat::fragment { "${name}-itk":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 30,
-    content => template('apache/vhost/_itk.erb'),
+  if $itk and ! empty($itk) {
+    concat::fragment { "${name}-itk":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 30,
+      content => template('apache/vhost/_itk.erb'),
+    }
   }
 
-  concat::fragment { "${name}-fallbackresource":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 40,
-    content => template('apache/vhost/_fallbackresource.erb'),
+  if $fallbackresource {
+    concat::fragment { "${name}-fallbackresource":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 40,
+      content => template('apache/vhost/_fallbackresource.erb'),
+    }
   }
 
-  concat::fragment { "${name}-directories":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 50,
-    content => template('apache/vhost/_directories.erb'),
+  if $_directories and ! empty($_directories) {
+    concat::fragment { "${name}-directories":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 50,
+      content => template('apache/vhost/_directories.erb'),
+    }
   }
 
-  concat::fragment { "${name}-additional_includes":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 60,
-    content => template('apache/vhost/_additional_includes.erb'),
+  if $additional_includes and ! empty($additional_includes) {
+    concat::fragment { "${name}-additional_includes":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 60,
+      content => template('apache/vhost/_additional_includes.erb'),
+    }
   }
 
-  concat::fragment { "${name}-logging":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 70,
-    content => template('apache/vhost/_logging.erb'),
+  if $error_log or $log_level {
+    concat::fragment { "${name}-logging":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 70,
+      content => template('apache/vhost/_logging.erb'),
+    }
   }
 
-  concat::fragment { "${name}-access_log":
+  concat::fragment { "${name}-serversignature":
     target  => "${priority_real}-${filename}.conf",
     order   => 80,
-    content => template('apache/vhost/_access_log.erb'),
+    content => template('apache/vhost/_serversignature.erb'),
   }
 
-  concat::fragment { "${name}-action":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 90,
-    content => template('apache/vhost/_action.erb'),
+  if $access_log {
+    concat::fragment { "${name}-access_log":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 90,
+      content => template('apache/vhost/_access_log.erb'),
+    }
   }
 
-  concat::fragment { "${name}-block":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 100,
-    content => template('apache/vhost/_block.erb'),
+  if $action {
+    concat::fragment { "${name}-action":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 100,
+      content => template('apache/vhost/_action.erb'),
+    }
   }
 
-  concat::fragment { "${name}-error_document":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 110,
-    content => template('apache/vhost/_error_document.erb'),
+  if $block and ! empty($block) {
+    concat::fragment { "${name}-block":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 110,
+      content => template('apache/vhost/_block.erb'),
+    }
   }
 
-  concat::fragment { "${name}-proxy":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 120,
-    content => template('apache/vhost/_proxy.erb'),
+  if $error_documents and ! empty($error_documents) {
+    concat::fragment { "${name}-error_document":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 120,
+      content => template('apache/vhost/_error_document.erb'),
+    }
   }
 
-  concat::fragment { "${name}-rack":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 130,
-    content => template('apache/vhost/_rack.erb'),
+  if $proxy_dest or $proxy_pass {
+    concat::fragment { "${name}-proxy":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 130,
+      content => template('apache/vhost/_proxy.erb'),
+    }
   }
 
-  concat::fragment { "${name}-redirect":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 140,
-    content => template('apache/vhost/_redirect.erb'),
+  if $rack_base_uris {
+    concat::fragment { "${name}-rack":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 140,
+      content => template('apache/vhost/_rack.erb'),
+    }
   }
 
-  concat::fragment { "${name}-rewrite":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 150,
-    content => template('apache/vhost/_rewrite.erb'),
+  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp) {
+    concat::fragment { "${name}-redirect":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 150,
+      content => template('apache/vhost/_redirect.erb'),
+    }
   }
 
-  concat::fragment { "${name}-scriptalias":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 160,
-    content => template('apache/vhost/_scriptalias.erb'),
+  if $rewrites or $rewrite_rule {
+    concat::fragment { "${name}-rewrite":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 160,
+      content => template('apache/vhost/_rewrite.erb'),
+    }
   }
 
-  concat::fragment { "${name}-serveralias":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 170,
-    content => template('apache/vhost/_serveralias.erb'),
+  if $scriptaliases and ! empty($scriptaliases) {
+    concat::fragment { "${name}-scriptalias":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 170,
+      content => template('apache/vhost/_scriptalias.erb'),
+    }
   }
 
-  concat::fragment { "${name}-setenv":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 180,
-    content => template('apache/vhost/_setenv.erb'),
+  if $serveraliases and ! empty($serveraliases) {
+    concat::fragment { "${name}-serveralias":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 180,
+      content => template('apache/vhost/_serveralias.erb'),
+    }
   }
 
-  concat::fragment { "${name}-ssl":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 190,
-    content => template('apache/vhost/_ssl.erb'),
+  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+    concat::fragment { "${name}-setenv":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 190,
+      content => template('apache/vhost/_setenv.erb'),
+    }
   }
 
-  concat::fragment { "${name}-suphp":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 200,
-    content => template('apache/vhost/_suphp.erb'),
+  if $ssl {
+    concat::fragment { "${name}-ssl":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 200,
+      content => template('apache/vhost/_ssl.erb'),
+    }
   }
 
-  concat::fragment { "${name}-php_admin":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 210,
-    content => template('apache/vhost/_php_admin.erb'),
+  if $suphp_engine == 'on' {
+    concat::fragment { "${name}-suphp":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 210,
+      content => template('apache/vhost/_suphp.erb'),
+    }
   }
 
-  concat::fragment { "${name}-header":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 220,
-    content => template('apache/vhost/_header.erb'),
+  if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
+    concat::fragment { "${name}-php_admin":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 220,
+      content => template('apache/vhost/_php_admin.erb'),
+    }
   }
 
-  concat::fragment { "${name}-requestheader":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 230,
-    content => template('apache/vhost/_requestheader.erb'),
+  if $headers and ! empty($headers) {
+    concat::fragment { "${name}-header":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 230,
+      content => template('apache/vhost/_header.erb'),
+    }
   }
 
-  concat::fragment { "${name}-wsgi":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 240,
-    content => template('apache/vhost/_wsgi.erb'),
+  if $request_headers and ! empty($request_headers) {
+    concat::fragment { "${name}-requestheader":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 240,
+      content => template('apache/vhost/_requestheader.erb'),
+    }
   }
 
-  concat::fragment { "${name}-custom_fragment":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 250,
-    content => template('apache/vhost/_custom_fragment.erb'),
+  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
+    concat::fragment { "${name}-wsgi":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 250,
+      content => template('apache/vhost/_wsgi.erb'),
+    }
   }
 
-  concat::fragment { "${name}-fastcgi":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 260,
-    content => template('apache/vhost/_fastcgi.erb'),
+  if $custom_fragment {
+    concat::fragment { "${name}-custom_fragment":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 260,
+      content => template('apache/vhost/_custom_fragment.erb'),
+    }
   }
 
-  concat::fragment { "${name}-suexec":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 270,
-    content => template('apache/vhost/_suexec.erb'),
+  if $fastcgi_server or $fastcgi_dir {
+    concat::fragment { "${name}-fastcgi":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 270,
+      content => template('apache/vhost/_fastcgi.erb'),
+    }
+  }
+
+  if $suexec_user_group {
+    concat::fragment { "${name}-suexec":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 280,
+      content => template('apache/vhost/_suexec.erb'),
+    }
   }
 
   concat::fragment { "${name}-file_footer":
