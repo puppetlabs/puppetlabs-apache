@@ -541,6 +541,18 @@ describe 'apache', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
+    context 'with a custom apache_name parameter' do
+      let :params do {
+        :apache_name => 'httpd24-httpd'
+      }
+      end
+      it { is_expected.to contain_package("httpd").with(
+        'notify' => 'Class[Apache::Service]',
+        'ensure' => 'installed',
+        'name'   => 'httpd24-httpd'
+        )
+      }
+    end
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }
