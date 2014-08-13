@@ -3,6 +3,7 @@ class apache::mod::ssl (
   $ssl_options     = [ 'StdEnvVars' ],
   $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
   $apache_version  = $::apache::apache_version,
+  $package_name    = undef,
 ) {
   $session_cache = $::osfamily ? {
     'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
@@ -31,7 +32,9 @@ class apache::mod::ssl (
     }
   }
 
-  ::apache::mod { 'ssl': }
+  ::apache::mod { 'ssl':
+    package => $package_name,
+  }
 
   if versioncmp($apache_version, '2.4') >= 0 {
     ::apache::mod { 'socache_shmcb': }
