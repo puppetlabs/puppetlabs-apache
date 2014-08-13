@@ -997,7 +997,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
               comment => 'Permalink Rewrites',
               rewrite_base => '/',
               },
-              { rewrite_rule => [ '^index\.php$ - [L]' ] },
+              { rewrite_rule => [ '^index\\.php$ - [L]' ] },
               { rewrite_cond => [
                 '%{REQUEST_FILENAME} !-f',
                 '%{REQUEST_FILENAME} !-d',                                                                                             ],                                                                                                                     rewrite_rule => [ '. /index.php [L]' ],                                                                              }
