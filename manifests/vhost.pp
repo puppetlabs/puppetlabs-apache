@@ -295,6 +295,7 @@ define apache::vhost(
       ensure  => directory,
       mode    => $logroot_mode,
       require => Package['httpd'],
+      before  => File["${priority_real}-${filename}.conf"],
     }
   }
 
@@ -541,10 +542,7 @@ define apache::vhost(
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
-    require => [
-      Package['httpd'],
-      File[$logroot],
-    ],
+    require => Package['httpd'],
     notify  => Service['httpd'],
   }
   if $::osfamily == 'Debian' {
