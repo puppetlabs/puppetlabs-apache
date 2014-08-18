@@ -34,6 +34,15 @@ describe 'apache::mod::ssl', :type => :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.to contain_package('mod_ssl') }
+    context 'with a custom package_name parameter' do
+      let :params do
+        { :package_name => 'httpd24-mod_ssl' }
+      end
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_apache__mod('ssl') }
+      it { is_expected.to contain_package('httpd24-mod_ssl') }
+      it { is_expected.not_to contain_package('mod_ssl') }
+    end
   end
 
   context 'on a Debian OS' do
