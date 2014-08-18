@@ -13,6 +13,7 @@
 # Sample Usage:
 #
 class apache (
+  $apache_name          = $::apache::params::apache_name,
   $service_name         = $::apache::params::service_name,
   $default_mods         = true,
   $default_vhost        = true,
@@ -83,7 +84,7 @@ class apache (
   if $::osfamily != 'FreeBSD' {
     package { 'httpd':
       ensure => $package_ensure,
-      name   => $::apache::params::apache_name,
+      name   => $apache_name,
       notify => Class['Apache::Service'],
     }
   }

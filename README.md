@@ -425,6 +425,10 @@ Controls how TRACE requests per RFC 2616 are handled. More information about [Tr
 
 Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, and '/usr/local/etc/apache22/Vhosts' on FreeBSD.
 
+#####`apache_name`
+
+The name of the Apache package to install. This is automatically detected in `::apache::params`. You may need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
+
 ####Class: `apache::default_mods`
 
 Installs default Apache modules based on what OS you are running.
