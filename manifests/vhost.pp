@@ -138,6 +138,7 @@ define apache::vhost(
     $php_admin_values            = [],
     $no_proxy_uris               = [],
     $proxy_preserve_host         = false,
+    $proxy_via                   = false,
     $redirect_source             = '/',
     $redirect_dest               = undef,
     $redirect_status             = undef,
@@ -492,6 +493,7 @@ define apache::vhost(
   #   - $proxy_dest
   #   - $no_proxy_uris
   #   - $proxy_preserve_host (true to set ProxyPreserveHost to on and false to off
+  #   - $proxy_via (true to set ProxyVia to on and false to off
   # rack fragment:
   #   - $rack_base_uris
   # redirect fragment:
