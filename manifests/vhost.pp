@@ -384,10 +384,7 @@ define apache::vhost(
     group   => $::apache::params::root_group,
     mode    => '0644',
     order   => 'numeric',
-    require => [
-      Package['httpd'],
-      File[$logroot],
-    ],
+    require => Package['httpd'],
     notify  => Service['httpd'],
   }
   if $::osfamily == 'Debian' {

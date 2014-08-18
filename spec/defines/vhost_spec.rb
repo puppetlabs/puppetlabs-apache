@@ -103,6 +103,7 @@ describe 'apache::vhost', :type => :define do
     context 'set everything!' do
       let :params do
         {
+          'ensure'  => 'present',
           'docroot' => '/var/www/foo',
           'manage_docroot' => false,
           'virtual_docroot' => true,
@@ -227,7 +228,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
 
-      it { is_expected.to compile }
+      it { should compile.with_all_deps }
     end
   end
   describe 'validation' do
