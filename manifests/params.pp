@@ -100,6 +100,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
+    $docroot              = '/var/www/html'
     if $::osfamily == "RedHat" {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
@@ -160,6 +161,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
+    $docroot              = '/var/www'
 
     #
     # Passenger-specific settings
@@ -270,6 +272,7 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
+    $docroot              = '/usr/local/www/apache22/data'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
