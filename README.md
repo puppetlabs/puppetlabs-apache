@@ -1139,7 +1139,9 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
     { 'path' => '/d', 'url' => 'http://backend-a/d',
-      'params' => ['retry=0', 'timeout=5'] },
+      'params' => { 'retry' => '0', 'timeout' => '5' }, },
+    { 'path' => '/e', 'url' => 'http://backend-a/e',
+      'keywords' => ['nocanon', 'interpolate'] },
   ],
 }
 ```
