@@ -1,4 +1,6 @@
 <% if @_directories and ! @_directories.empty? -%>
+
+  ## Directories, there should at least be a declaration for <%= @docroot %>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
   <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>

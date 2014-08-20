@@ -774,6 +774,20 @@ The Apache module allows a lot of flexibility in the setup and configuration of 
 
 The `vhost` defined type allows you to have specialized configurations for virtual hosts that have requirements outside the defaults. You can set up a default vhost within the base `::apache` class, as well as set a customized vhost as default. Your customized vhost (priority 10) will be privileged over the base class vhost (15).
 
+The `vhost` defined type uses `concat::fragment` to build the configuration file, so if you want to inject custom fragments for pieces of the configuration not supported by default by the defined type, you can simply add a custom fragment.  For the `order` parameter for the custom fragment, the `vhost` defined type uses multiples of 10, so any order that isn't a multiple of 10 should work.
+
+```puppet
+    apache::vhost { "example.com":
+      docroot  => '/var/www/html',
+      priority => '25',
+    }
+    concat::fragment { "example.com-my_custom_fragment":
+      target  => '25-example.com.conf',
+      order   => 11,
+      content => '# my custom comment',
+    }
+```
+
 If you have a series of specific configurations and do not want a base `::apache` class default vhost, make sure to set the base class `default_vhost` to 'false'.
 
 ```puppet
