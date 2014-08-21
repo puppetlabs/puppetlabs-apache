@@ -125,6 +125,12 @@ define apache::vhost(
     "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
   }
 
+  if $wsgi_pass_authorization {
+    validate_re(downcase($wsgi_pass_authorization), '^(on|off)$',
+    "${wsgi_pass_authorization} is not supported for wsgi_pass_authorization.
+    Allowed values are 'on' and 'off'.")
+  }
+
   # Deprecated backwards-compatibility
   if $rewrite_base {
     warning('Apache::Vhost: parameter rewrite_base is deprecated in favor of rewrites')
