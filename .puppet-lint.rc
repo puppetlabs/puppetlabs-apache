@@ -1,3 +1,4 @@
+--relative
 --no-single_quote_string_with_variables-check
 --no-80chars-check
 --no-class_inherits_from_params_class-check
