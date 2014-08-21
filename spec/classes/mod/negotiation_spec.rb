@@ -7,6 +7,7 @@ describe 'apache::mod::negotiation', :type => :class do
       {
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
+        :kernel                 => 'Linux',
         :lsbdistcodename        => 'squeeze',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',

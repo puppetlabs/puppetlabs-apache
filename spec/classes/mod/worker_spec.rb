@@ -119,6 +119,7 @@ describe 'apache::mod::worker', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystem        => 'CentOS',
         :operatingsystemrelease => '6',
+        :kernel                 => 'Linux',
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
