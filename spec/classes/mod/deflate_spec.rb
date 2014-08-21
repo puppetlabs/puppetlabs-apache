@@ -35,6 +35,7 @@ describe 'apache::mod::deflate', :type => :class do
       {
         :id                     => 'root',
         :lsbdistcodename        => 'squeeze',
+        :kernel                 => 'Linux',
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
@@ -60,6 +61,7 @@ describe 'apache::mod::deflate', :type => :class do
     let :facts do
       {
         :id                     => 'root',
+        :kernel                 => 'Linux',
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
@@ -78,6 +80,7 @@ describe 'apache::mod::deflate', :type => :class do
     let :facts do
       {
         :id                     => 'root',
+        :kernel                 => 'FreeBSD',
         :osfamily               => 'FreeBSD',
         :operatingsystem        => 'FreeBSD',
         :operatingsystemrelease => '9',

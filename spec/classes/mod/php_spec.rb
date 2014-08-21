@@ -158,6 +158,7 @@ describe 'apache::mod::php', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :kernel                 => 'Linux',
         :lsbdistcodename        => 'squeeze',
         :concat_basedir         => '/dne',
         :id                     => 'root',
