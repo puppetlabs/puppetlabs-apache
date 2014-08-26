@@ -1,5 +1,5 @@
 class apache::mod::mime_magic (
-  $magic_file = "${::apache::params::conf_dir}/magic"
+  $magic_file = "${::apache::conf_dir}/magic"
 ) {
   apache::mod { 'mime_magic': }
   # Template uses $magic_file

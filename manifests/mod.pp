@@ -64,7 +64,7 @@ define apache::mod (
     $package_before = $::osfamily ? {
       'freebsd' => [
         File[$_loadfile_name],
-        File["${::apache::params::conf_dir}/${::apache::params::conf_file}"]
+        File["${::apache::conf_dir}/${::apache::params::conf_file}"]
       ],
       default => File[$_loadfile_name],
     }

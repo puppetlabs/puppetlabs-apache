@@ -11,7 +11,10 @@ class apache::default_mods (
       ::apache::mod { 'log_config': }
       if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
-        ::apache::mod { 'systemd': }
+        # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
+        if !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) {
+          ::apache::mod { 'systemd': }
+        }
         ::apache::mod { 'unixd': }
       }
     }

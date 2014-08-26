@@ -310,6 +310,18 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
 
+    describe "Alternate conf directory" do
+      let :params do
+        { :conf_dir => '/opt/rh/root/etc/httpd/conf' }
+      end
+
+      it { is_expected.to contain_file("/opt/rh/root/etc/httpd/conf/httpd.conf").with(
+        'ensure'  => 'file',
+        'notify'  => 'Class[Apache::Service]',
+        'require' => 'Package[httpd]'
+      ) }
+    end
+
     describe "Alternate conf.d directory" do
       let :params do
         { :confd_dir => '/etc/httpd/special_conf.d' }
