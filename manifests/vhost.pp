@@ -225,7 +225,7 @@ define apache::vhost(
       ensure  => directory,
       mode    => $logroot_mode,
       require => Package['httpd'],
-      before  => File["${priority_real}-${filename}.conf"],
+      before  => Concat["${priority_real}-${filename}.conf"],
     }
   }
 
