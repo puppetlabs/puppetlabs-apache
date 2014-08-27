@@ -137,6 +137,7 @@ describe 'apache::vhost', :type => :define do
           'directoryindex'              => 'index.html',
           'vhost_name'                  => 'test',
           'logroot'                     => '/var/www/logs',
+          'logroot_ensure'              => 'directory',
           'logroot_mode'                => '0600',
           'log_level'                   => 'crit',
           'access_log'                  => false,
@@ -252,7 +253,11 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::vhost_alias') }
       it { is_expected.to contain_class('apache::mod::wsgi') }
       it { is_expected.to contain_class('apache::mod::suexec') }
-      it { is_expected.to contain_file('/var/www/logs') }
+      it { is_expected.to contain_file('/var/www/logs').with({
+        'ensure' => 'directory',
+        'mode'   => '0600',
+      })
+      }
       it { is_expected.to contain_class('apache::mod::rewrite') }
       it { is_expected.to contain_class('apache::mod::alias') }
       it { is_expected.to contain_class('apache::mod::proxy') }
@@ -308,6 +313,7 @@ describe 'apache::vhost', :type => :define do
           'ensure'          => 'absent',
           'manage_docroot'  => true,
           'logroot'         => '/tmp/logroot',
+          'logroot_ensure'  => 'absent',
         }
       end
       let :facts do
@@ -336,7 +342,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::headers') }
       it { is_expected.to contain_file('/var/www/foo') }
-      it { is_expected.to_not contain_file('/tmp/logroot') }
+      it { is_expected.to contain_file('/tmp/logroot').with({
+        'ensure' => 'absent',
+      })
+      }
       it { is_expected.to contain_concat('25-rspec.example.com.conf').with({
         'ensure' => 'absent',
       })
@@ -519,6 +528,16 @@ describe 'apache::vhost', :type => :define do
         {
           'docroot' => '/rspec/docroot',
           'itk'     => 'bogus',
+        }
+      end
+      let :facts do default_facts end
+      it { expect { is_expected.to compile }.to raise_error }
+    end
+    context 'bad logroot_ensure' do
+      let :params do
+        {
+          'docroot'   => '/rspec/docroot',
+          'log_level' => 'bogus',
         }
       end
       let :facts do default_facts end

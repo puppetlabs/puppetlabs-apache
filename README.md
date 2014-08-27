@@ -342,7 +342,7 @@ Changes the directory where Apache log files for the virtual host are placed. De
 
 #####`logroot_mode`
 
-Overrides the mode the logroot directory is set to. Defaults to undef. Do NOT give people write access to the directory the logs are stored
+Overrides the mode the default logroot directory is set to ($::apache::logroot). Defaults to undef. Do NOT give people write access to the directory the logs are stored
 in without being aware of the consequences; see http://httpd.apache.org/docs/2.4/logs.html#security for details.
 
 #####`manage_group`
@@ -971,6 +971,15 @@ Usage will typically look like:
 #####`logroot`
 
 Specifies the location of the virtual host's logfiles. Defaults to '/var/log/<apache log location>/'.
+
+#####`$logroot_ensure`
+
+Determines whether or not to remove the logroot directory for a virtual host. Valid values are 'directory', or 'absent'.
+
+#####`logroot_mode`
+
+Overrides the mode the logroot directory is set to. Defaults to undef. Do NOT give people write access to the directory the logs are stored
+in without being aware of the consequences; see http://httpd.apache.org/docs/2.4/logs.html#security for details.
 
 #####`log_level`
 

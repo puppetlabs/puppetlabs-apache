@@ -45,6 +45,7 @@ class apache::params inherits ::apache::version {
     $conf_file            = 'httpd.conf'
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'
+    $logroot_mode         = undef
     $lib_path             = 'modules'
     $mpm_module           = 'prefork'
     $dev_packages         = 'httpd-devel'
@@ -109,6 +110,7 @@ class apache::params inherits ::apache::version {
     $conf_file           = 'apache2.conf'
     $ports_file          = "${conf_dir}/ports.conf"
     $logroot             = '/var/log/apache2'
+    $logroot_mode        = undef
     $lib_path            = '/usr/lib/apache2/modules'
     $mpm_module          = 'worker'
     $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
@@ -209,6 +211,7 @@ class apache::params inherits ::apache::version {
     $conf_file        = 'httpd.conf'
     $ports_file       = "${conf_dir}/ports.conf"
     $logroot          = '/var/log/apache22'
+    $logroot_mode     = undef
     $lib_path         = '/usr/local/libexec/apache22'
     $mpm_module       = 'prefork'
     $dev_packages     = undef

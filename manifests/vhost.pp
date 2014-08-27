@@ -35,6 +35,7 @@ define apache::vhost(
   $directoryindex              = '',
   $vhost_name                  = '*',
   $logroot                     = $::apache::logroot,
+  $logroot_ensure              = 'directory',
   $logroot_mode                = undef,
   $log_level                   = undef,
   $access_log                  = true,
@@ -154,6 +155,10 @@ define apache::vhost(
   if $itk {
     validate_hash($itk)
   }
+  
+  validate_re($logroot_ensure, '^(directory|absent)$',
+  "${logroot_ensure} is not supported for logroot_ensure.
+  Allowed values are 'directory' and 'absent'.")
 
   if $log_level {
     validate_re($log_level, '^(emerg|alert|crit|error|warn|notice|info|debug)$',
@@ -220,9 +225,9 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) and $ensure == 'present' {
+  if ! defined(File[$logroot]) {
     file { $logroot:
-      ensure  => directory,
+      ensure  => $logroot_ensure,
       mode    => $logroot_mode,
       require => Package['httpd'],
       before  => Concat["${priority_real}-${filename}.conf"],
