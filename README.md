@@ -616,7 +616,7 @@ Full documentation for mod_pagespeed is available from [Google](http://modpagesp
 Installs and configures mod_php. The defaults are OS-dependant.
 
 Overriding the package name:
-```
+```puppet
   class {'::apache::mod::php':
     package_name => "php54-php",
     path         => "${::apache::params::lib_path}/libphp54-php5.so",
