@@ -45,7 +45,7 @@ define apache::balancermember(
   $options = [],
 ) {
 
-  concat::fragment { "BalancerMember ${url}":
+  concat::fragment { "BalancerMember ${name}":
     ensure  => present,
     target  => "${::apache::params::confd_dir}/balancer_${balancer_cluster}.conf",
     content => inline_template(" BalancerMember ${url} <%= @options.join ' ' %>\n"),
