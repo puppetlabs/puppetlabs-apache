@@ -39,7 +39,9 @@ class apache::params inherits ::apache::version {
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
     $mod_dir              = "${httpd_dir}/conf.d"
+    $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
+    $vhost_enable_dir     = undef
     $conf_file            = 'httpd.conf'
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'

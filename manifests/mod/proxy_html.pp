@@ -6,6 +6,7 @@ class apache::mod::proxy_html {
   case $::osfamily {
     /RedHat|FreeBSD/: {
       ::apache::mod { 'xml2enc': }
+      $loadfiles = undef
     }
     'Debian': {
       $gnu_path = $::hardwaremodel ? {
