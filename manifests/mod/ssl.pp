@@ -6,7 +6,7 @@ class apache::mod::ssl (
   $package_name    = undef,
 ) {
   $session_cache = $::osfamily ? {
-    'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
+    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
   }
@@ -18,7 +18,7 @@ class apache::mod::ssl (
       } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
       } else {
-        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex'
+        $ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
       }
     }
     'redhat': {

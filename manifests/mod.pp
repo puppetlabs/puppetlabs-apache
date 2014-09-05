@@ -76,7 +76,7 @@ define apache::mod (
     }
   }
 
-  file { "${_loadfile_name}":
+  file { $_loadfile_name:
     ensure  => file,
     path    => "${mod_dir}/${_loadfile_name}",
     owner   => 'root',
