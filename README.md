@@ -382,9 +382,9 @@ Changes the name of the file containing Apache ports configuration. Default is `
 
 Removes all other Apache configs and vhosts, defaults to 'true'. Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
 
-#####`purge_vhost_configs`
+#####`purge_vdir`
 
-If `vhost_dir` != `confd_dir`, this controls the removal of any configurations that are not managed by puppet within `vhost_dir`. It defaults to the value of `purge_configs`. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`
+If `vhost_dir` != `confd_dir`, this controls the removal of any configurations that are not managed by puppet within `vhost_dir`. It defaults to the value of `purge_configs`. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 
 #####`sendfile`
 
