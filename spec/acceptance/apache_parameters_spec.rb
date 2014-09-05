@@ -11,7 +11,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
 
     if fact('osfamily') == 'FreeBSD'
-      describe file("#{confd_dir}/no-accf.conf.erb") do
+      describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { is_expected.not_to be_file }
       end
     end
@@ -80,9 +80,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       pp = <<-EOS
         class { 'apache':
           purge_configs   => false,
-          purge_vdir      => false,
           purge_vhost_dir => false,
-          vhost_dir       => "#{confd_dir}.vhosts"
+          vhost_dir       => "#{$confd_dir}.vhosts"
         }
       EOS
       shell("touch #{$confd_dir}/test.conf")
@@ -105,9 +104,8 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
         pp = <<-EOS
           class { 'apache':
             purge_configs   => true,
-            purge_vdir      => true,
             purge_vhost_dir => true,
-            vhost_dir       => "#{confd_dir}.vhosts"
+            vhost_dir       => "#{$confd_dir}.vhosts"
           }
         EOS
         shell("touch #{$confd_dir}/test.conf")
@@ -202,7 +200,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       end
     end
 
-    describe file("#{$confd_dir}/mime.conf") do
+    describe file("#{$mod_dir}/mime.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AddLanguage eo .eo' }
     end

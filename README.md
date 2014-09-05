@@ -12,6 +12,7 @@
 4. [Usage - The classes and defined types available for configuration](#usage)
     * [Classes and Defined Types](#classes-and-defined-types)
         * [Class: apache](#class-apache)
+        * [Defined Type: apache::custom_config](#defined-type-apachecustom_config)
         * [Class: apache::default_mods](#class-apachedefault_mods)
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
@@ -432,6 +433,46 @@ Changes the location of the configuration directory your virtual host configurat
 #####`apache_name`
 
 The name of the Apache package to install. This is automatically detected in `::apache::params`. You may need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
+
+####Defined Type: `apache::custom_config`
+
+Allows you to create custom configs for Apache. The configuration files will only be added to the Apache confd dir if the file is valid. An error will be raised during the puppet run if the file is invalid and `$verify_config` is `true`.
+
+```puppet
+    apache::custom_config { 'test':
+        content => '# Test',
+    }
+```
+
+**Parameters within `apache::custom_config`:**
+
+#####`ensure`
+
+Specify whether the configuration file is present or absent. Defaults to 'present'. Valid values are 'present' and 'absent'.
+
+#####`confdir`
+
+The directory to place the configuration file in. Defaults to `$::apache::confd_dir`.
+
+#####`content`
+
+The content of the configuration file. Only one of `$content` and `$source` can be specified.
+
+#####`priority`
+
+The priority of the configuration file, used for ordering. Defaults to '25'.
+
+#####`source`
+
+The source of the configuration file. Only one of `$content` and `$source` can be specified.
+
+#####`verify_command`
+
+The command to use to verify the configuration file. It should use a fully qualified command. Defaults to '/usr/sbin/apachectl -t'. The `$verify_command` will only be used if `$verify_config` is `true`. If the `$verify_command` fails the configuration file will be deleted, the Apache service will not be notified, and an error will be raised during the puppet run.
+
+#####`verify_config`
+
+Boolean to specify whether the configuration file should be validated before the Apache service is notified. Defaults to `true`.
 
 ####Class: `apache::default_mods`
 
