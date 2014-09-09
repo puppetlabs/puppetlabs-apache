@@ -155,7 +155,7 @@ define apache::vhost(
   if $itk {
     validate_hash($itk)
   }
-  
+
   validate_re($logroot_ensure, '^(directory|absent)$',
   "${logroot_ensure} is not supported for logroot_ensure.
   Allowed values are 'directory' and 'absent'.")
