@@ -1629,6 +1629,7 @@ Sets a `Satisfy` directive as per the [Apache Core documentation](http://httpd.a
         }
       ],
     }
+```
 
 ######`sethandler`
 
