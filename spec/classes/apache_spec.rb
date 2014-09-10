@@ -98,7 +98,10 @@ describe 'apache', :type => :class do
 
     context "with Apache version >= 2.4" do
       let :params do
-        { :apache_version => '2.4' }
+        {
+          :apache_version => '2.4',
+          :use_optional_includes => true
+        }
       end
 
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^IncludeOptional "/etc/apache2/conf\.d/\*\.conf"$} }
@@ -327,7 +330,10 @@ describe 'apache', :type => :class do
 
       context "with Apache version >= 2.4" do
         let :params do
-          { :apache_version => '2.4' }
+          {
+            :apache_version => '2.4',
+            :use_optional_includes => true
+          }
         end
 
         it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
