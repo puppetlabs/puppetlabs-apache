@@ -39,7 +39,7 @@
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] and directory['require'] != '' -%>
     Require <%= Array(directory['require']).join(' ') %>
-      <%- else -%>
+      <%- elsif directory['require'].nil? -%>
     Require all granted
       <%- end -%>
     <%- else -%>
