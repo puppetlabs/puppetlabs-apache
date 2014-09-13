@@ -68,6 +68,8 @@ define apache::mod (
       ],
       default => File[$_loadfile_name],
     }
+    # if there are any packages, they should be installed before the associated conf file
+    Package[$_package] -> File<| title == "${mod}.conf" |>
     # $_package may be an array
     package { $_package:
       ensure  => $package_ensure,
