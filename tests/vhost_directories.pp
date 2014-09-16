@@ -42,3 +42,14 @@ apache::vhost { 'files.example.net':
   ],
 }
 
+# allow from test
+apache::vhost { 'allowtest.example.net':
+  docroot     => '/var/www/readme',
+  directories => [
+    {
+      'path'  => '/usr/share/empty',
+      'allow' => ['127.0.0.1', '10.0.0.1'],
+    },
+  ],
+}
+
