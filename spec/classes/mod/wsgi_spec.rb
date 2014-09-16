@@ -18,7 +18,10 @@ describe 'apache::mod::wsgi', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('wsgi') }
+    it { is_expected.to contain_class('apache::mod::wsgi').with(
+        'wsgi_socket_prefix' => nil
+      )
+    }
     it { is_expected.to contain_package("libapache2-mod-wsgi") }
   end
   context "on a RedHat OS" do
@@ -34,7 +37,10 @@ describe 'apache::mod::wsgi', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('wsgi') }
+    it { is_expected.to contain_class('apache::mod::wsgi').with(
+        'wsgi_socket_prefix' => '/var/run/wsgi'
+      )
+    }
     it { is_expected.to contain_package("mod_wsgi") }
 
     describe "with custom WSGISocketPrefix" do
@@ -63,7 +69,10 @@ describe 'apache::mod::wsgi', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('wsgi') }
+    it { is_expected.to contain_class('apache::mod::wsgi').with(
+        'wsgi_socket_prefix' => nil
+      )
+    }
     it { is_expected.to contain_package("www/mod_wsgi") }
   end
 end

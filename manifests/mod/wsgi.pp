@@ -1,5 +1,5 @@
 class apache::mod::wsgi (
-  $wsgi_socket_prefix = undef,
+  $wsgi_socket_prefix = $::apache::params::wsgi_socket_prefix,
   $wsgi_python_path   = undef,
   $wsgi_python_home   = undef,
 ){
