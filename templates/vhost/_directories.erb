@@ -138,6 +138,15 @@
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
     <%- end -%>
+    <%- if directory['auth_ldap_url'] -%>
+    AuthLDAPUrl <%= directory['auth_ldap_url'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute'] -%>
+    AuthLDAPGroupAttribute <%= directory['auth_ldap_group_attribute'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute_is_dn'] -%>
+    AuthLDAPGroupAttributeIsDN <%= directory['auth_ldap_group_attribute_is_dn'] %>
+    <%- end -%>
     <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
     <%- end -%>
