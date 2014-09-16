@@ -44,14 +44,14 @@ class apache::default_mods (
 
         if $apache_version >= 2.4 {
           # Lets fork it
-          ::apache::mod { 'systemd': }
+          ::apache::mod { 'systemd': prefix => '00-' }
 
-          ::apache::mod { 'unixd': }
-          ::apache::mod { 'authn_core': }
+          ::apache::mod { 'unixd': prefix => '00-' }
+          ::apache::mod { 'authn_core': prefix => '00-' }
         }
         else {
-          ::apache::mod { 'authn_alias': }
-          ::apache::mod { 'authn_default': }
+          ::apache::mod { 'authn_alias': prefix => '00-' }
+          ::apache::mod { 'authn_default': prefix => '00-' }
         }
       }
       'freebsd': {

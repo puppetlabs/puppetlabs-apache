@@ -1,5 +1,6 @@
 define apache::mod (
   $package = undef,
+  $prefix = '',
   $package_ensure = 'present',
   $lib = undef,
   $lib_path = $::apache::params::lib_path,
@@ -69,7 +70,7 @@ define apache::mod (
 
   file { "${mod}.load":
     ensure  => file,
-    path    => "${mod_dir}/${mod}.load",
+    path    => "${mod_dir}/${prefix}${mod}.load",
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
