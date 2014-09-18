@@ -93,6 +93,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
+    $docroot              = '/var/www/html'
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
     $group               = 'www-data'
@@ -147,6 +148,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
+    $docroot              = '/var/www'
 
     #
     # Passenger-specific settings
@@ -255,6 +257,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
+    $docroot              = '/usr/local/www/apache22/data'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
