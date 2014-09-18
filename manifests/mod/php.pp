@@ -7,10 +7,10 @@ class apache::mod::php (
   $template       = 'apache/mod/php5.conf.erb',
   $source         = undef,
 ) {
-  if defined(Class['apache::mod::prefork']) {
+  if defined(Class['::apache::mod::prefork']) {
     Class['::apache::mod::prefork']->File['php5.conf']
   }
-  elsif defined(Class['apache::mod::itk']) {
+  elsif defined(Class['::apache::mod::itk']) {
     Class['::apache::mod::itk']->File['php5.conf']
   }
   else {
