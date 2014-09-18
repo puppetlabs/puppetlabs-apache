@@ -618,7 +618,7 @@ These are the defaults:
       filter_xhtml                  => false,
       cache_path                    => '/var/cache/mod_pagespeed/',
       log_dir                       => '/var/log/pagespeed',
-      memache_servers               => [],
+      memcache_servers              => [],
       rewrite_level                 => 'CoreFilters',
       disable_filters               => [],
       enable_filters                => [],

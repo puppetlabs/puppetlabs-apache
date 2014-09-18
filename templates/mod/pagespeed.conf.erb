@@ -8,7 +8,7 @@ AddOutputFilterByType MOD_PAGESPEED_OUTPUT_FILTER application/xhtml+xml
 ModPagespeedFileCachePath "<%= @cache_path %>"
 ModPagespeedLogDir "<%= @log_dir %>"
     
-<% @memache_servers.each do |server| -%>
+<% @memcache_servers.each do |server| -%>
 ModPagespeedMemcachedServers <%= server -%>
 <% end -%>
 
