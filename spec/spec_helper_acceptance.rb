@@ -30,8 +30,8 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     # Install module and dependencies
-    puppet_module_install(:source => proj_root, :module_name => 'apache')
     hosts.each do |host|
+      copy_module_to(host, :source => proj_root, :module_name => 'apache')
       # Required for mod_passenger tests.
       if fact('osfamily') == 'RedHat'
         on host, puppet('module','install','stahnma/epel'), { :acceptable_exit_codes => [0,1] }

@@ -39,7 +39,11 @@
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] and directory['require'] != '' -%>
     Require <%= Array(directory['require']).join(' ') %>
-      <%- else -%>
+      <%- end -%>
+      <%- if directory['auth_require'] -%>
+    Require <%= directory['auth_require'] %>
+      <%- end -%>
+      <%- if !(directory['require'] and directory['require'] != '') && !(directory['auth_require']) -%>
     Require all granted
       <%- end -%>
     <%- else -%>
@@ -137,9 +141,6 @@
     <%- end -%>
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
-    <%- end -%>
-    <%- if directory['auth_require'] -%>
-    Require <%= directory['auth_require'] %>
     <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
