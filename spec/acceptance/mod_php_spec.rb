@@ -132,42 +132,4 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     end
   end
 
-  context "provide source has priority over content" do
-    it 'succeeds in puppeting php' do
-      pp= <<-EOS
-        class {'apache':
-          mpm_module => 'prefork',
-        }
-        class {'apache::mod::php':
-          content => '# somecontent',
-          source  => 'puppet:///modules/apache/spec',
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
-
-    describe file("#{mod_dir}/php5.conf") do
-      it { should contain "# This is a file only for spec testing" }
-    end
-  end
-
-  context "provide source has priority over template" do
-    it 'succeeds in puppeting php' do
-      pp= <<-EOS
-        class {'apache':
-          mpm_module => 'prefork',
-        }
-        class {'apache::mod::php':
-          template => 'apache/mod/php5.conf.erb',
-          source   => 'puppet:///modules/apache/spec',
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
-
-    describe file("#{mod_dir}/php5.conf") do
-      it { should contain "# This is a file only for spec testing" }
-    end
-  end
-
 end
