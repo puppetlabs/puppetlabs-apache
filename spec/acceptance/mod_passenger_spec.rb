@@ -191,7 +191,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
     # no fedora 18 passenger package yet, and rhel5 packages only exist for ruby 1.8.5
     unless (fact('operatingsystem') == 'Fedora' and fact('operatingsystemrelease').to_f >= 18) or (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '5' and fact('rubyversion') != '1.8.5')
 
-      if fact('operatingsystem') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+      if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
         pending('test passenger - RHEL7 packages don\'t exist')
       else
         context "default passenger config" do
