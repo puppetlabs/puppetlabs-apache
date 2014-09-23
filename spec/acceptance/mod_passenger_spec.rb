@@ -262,7 +262,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           end
 
           it 'should output status via passenger-memory-stats' do
-            shell("sudo /usr/bin/passenger-memory-stats") do |r|
+            shell("sudo /usr/bin/passenger-memory-stats", :pty => true) do |r|
               expect(r.stdout).to match(/Apache processes/)
               expect(r.stdout).to match(/Nginx processes/)
               expect(r.stdout).to match(/Passenger processes/)
