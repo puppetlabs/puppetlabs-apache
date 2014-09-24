@@ -47,6 +47,12 @@
     Require all granted
       <%- end -%>
     <%- else -%>
+      <%- if directory['auth_require'] -%>
+    Require <%= directory['auth_require'] %>
+      <%- end -%>
+      <%- if !(directory['require'] and directory['require'] != '') && !(directory['auth_require']) -%>
+    Require all granted
+      <%- end -%>
       <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
       <%- else -%>
