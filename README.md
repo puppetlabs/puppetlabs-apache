@@ -828,7 +828,7 @@ The `vhost` defined type uses `concat::fragment` to build the configuration file
     }
     concat::fragment { "example.com-my_custom_fragment":
       target  => '25-example.com.conf',
-      order   => 11,
+      order   => '011',
       content => '# my custom comment',
     }
 ```
