@@ -276,6 +276,10 @@ The default certificate revocation list to use, which is automatically set to 'u
 
 The default certificate revocation list path, which is automatically set to 'undef'. This default will work out of the box but must be updated with your specific certificate information before being used in production.
 
+#####`default_ssl_crl_check`
+
+Sets the default certificate revocation check level via the [SSLCARevocationCheck directive](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck), which is automatically set to 'undef'. This default will work out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher, the value will be ignored on older versions.
+
 #####`default_ssl_key`
 
 The default SSL key, which is automatically set based on your operating system ('/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, and '/usr/local/etc/apache22/server.key' for FreeBSD). This default will work out of the box but must be updated with your specific certificate information before being used in production.
@@ -1775,6 +1779,10 @@ Specifies the certificate revocation list to use. Defaults to 'undef'. (This def
 #####`ssl_crl_path`
 
 Specifies the location of the certificate revocation list. Defaults to 'undef'. (This default will work out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+
+#####`ssl_crl_check`
+
+Sets the certificate revocation check level via the [SSLCARevocationCheck directive](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck), defaults to 'undef'. This default will work out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher, the value will be ignored on older versions.
 
 #####`ssl_key`
 

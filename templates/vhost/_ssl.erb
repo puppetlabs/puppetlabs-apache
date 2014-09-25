@@ -19,6 +19,9 @@
   <%- if @ssl_crl -%>
   SSLCARevocationFile     "<%= @ssl_crl %>"
   <%- end -%>
+  <%- if @ssl_crl_check && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLCARevocationCheck    "<%= @ssl_crl_check %>"
+  <%- end -%>
   <%- if @ssl_proxyengine -%>
   SSLProxyEngine On
   <%- end -%>

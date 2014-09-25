@@ -18,6 +18,7 @@ define apache::vhost(
   $ssl_ca                      = $::apache::default_ssl_ca,
   $ssl_crl_path                = $::apache::default_ssl_crl_path,
   $ssl_crl                     = $::apache::default_ssl_crl,
+  $ssl_crl_check               = $::apache::default_ssl_crl_check,
   $ssl_certs_dir               = $::apache::params::ssl_certs_dir,
   $ssl_protocol                = undef,
   $ssl_cipher                  = undef,
@@ -651,6 +652,7 @@ define apache::vhost(
   # - $ssl_ca
   # - $ssl_crl_path
   # - $ssl_crl
+  # - $ssl_crl_check
   # - $ssl_proxyengine
   # - $ssl_protocol
   # - $ssl_cipher
@@ -658,6 +660,7 @@ define apache::vhost(
   # - $ssl_verify_client
   # - $ssl_verify_depth
   # - $ssl_options
+  # - $apache_version
   if $ssl {
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}-${filename}.conf",
