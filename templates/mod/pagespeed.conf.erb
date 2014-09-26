@@ -9,21 +9,21 @@ ModPagespeedFileCachePath "<%= @cache_path %>"
 ModPagespeedLogDir "<%= @log_dir %>"
     
 <% @memcache_servers.each do |server| -%>
-ModPagespeedMemcachedServers <%= server -%>
+ModPagespeedMemcachedServers <%= server %>
 <% end -%>
 
 ModPagespeedRewriteLevel <%= @rewrite_level -%>
 
 <% @disable_filters.each do |filter| -%>
-ModPagespeedDisableFilters <%= filter -%>
+ModPagespeedDisableFilters <%= filter %>
 <% end -%>
     
 <% @enable_filters.each do |filter| -%>
-ModPagespeedEnableFilters <%= filter -%>
+ModPagespeedEnableFilters <%= filter %>
 <% end -%>
 
 <% @forbid_filters.each do |filter| -%>
-ModPagespeedForbidFilters <%= filter -%>
+ModPagespeedForbidFilters <%= filter %>
 <% end -%>
 
 ModPagespeedRewriteDeadlinePerFlushMs <%= @rewrite_deadline_per_flush_ms %>
