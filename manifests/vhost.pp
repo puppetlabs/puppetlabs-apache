@@ -395,6 +395,7 @@ define apache::vhost(
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => '0644',
+    order   => 'numeric',
     require => Package['httpd'],
     notify  => Service['httpd'],
   }
