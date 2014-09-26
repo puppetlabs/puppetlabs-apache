@@ -93,6 +93,11 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
+    if $::osfamily == "RedHat" {
+      $wsgi_socket_prefix = '/var/run/wsgi'
+    } else {
+      $wsgi_socket_prefix = undef
+    }
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
     $group               = 'www-data'
@@ -194,6 +199,7 @@ class apache::params inherits ::apache::version {
         }
       }
     }
+    $wsgi_socket_prefix = undef
   } elsif $::osfamily == 'FreeBSD' {
     $user             = 'www'
     $group            = 'www'
@@ -255,6 +261,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
+    $wsgi_socket_prefix   = undef
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
