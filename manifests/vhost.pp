@@ -35,7 +35,6 @@ define apache::vhost(
   $directoryindex              = '',
   $vhost_name                  = '*',
   $logroot                     = $::apache::logroot,
-  $manage_logroot              = true,
   $logroot_ensure              = 'directory',
   $logroot_mode                = undef,
   $log_level                   = undef,
@@ -226,7 +225,7 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) and $manage_logroot {
+  if ! defined(File[$logroot]) {
     file { $logroot:
       ensure  => $logroot_ensure,
       mode    => $logroot_mode,
