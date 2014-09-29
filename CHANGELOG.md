@@ -1,3 +1,71 @@
+##2014-09-30 - Supported Release 1.2.0
+###Summary
+
+This release features many improvements and bugfixes, including several new defines, a reworking of apache::vhost for more extensibility, and many new parameters for more customization. This release also includes improved support for strict variables and the future parser.
+
+####Features
+- Convert apache::vhost to use concat for easier extensions
+- Test improvements
+- Added apache::custom_config defined type to allow validation of configs before they are created
+- Added bool2httpd function to convert true/false to apache 'On' and 'Off'. Intended for internal use in the module.
+- Added logroot_mode and logroot_ensure to apache::vhost
+- Improved SCL support
+  - added apache::conf_dir
+  - allow overriding of apache_name
+  - allow overriding of the mod_ssl package name
+- Add support for reverse_urls/ProxyPassReverse in apache::vhost
+- Add apache::vhost::manage_docroot
+- Add apache::purge_vhost_dir parameter
+- Add satisfy directive in apache::vhost::directories
+- Add apache::fastcgi::server defined type
+- Add apache::vhost::proxy_preserve_host
+- Add apache::vhost::wsgi_pass_authorization
+- Add support for rewrites in the apache::vhost::directories parameter
+- If the service_ensure parameter in apache::service is set to anything other than true, false, running, or stopped, ensure will not be passed to the service resource, allowing for the service to not be managed by puppet
+- Improvements to apache::mod*
+  - Add restrict_access parameter to apache::mod::info
+  - Add force_language_priority and language_priority parameters to apache::mod::negotiation
+  - Add threadlimit parameter to mod::worker
+  - Add content, template, and source parameters to apache::mod::php
+  - Add mod_authz_svn support via the authz_svn_enabled parameter in apache::mod::dav_svn
+  - Add loadfile_name parameter to apache::mod
+  - Add apache::mod::deflate class
+  - Add types and notes parameters to apache::mod::deflate
+  - Add options parameter to apache::mod::fcgid
+
+####Bugfixes
+- Set osfamily defaults for wsgi_socket_prefix
+- Support multiple balancermembers with the same url
+- Validate apache::vhost::wsgi_pass_authorization
+- Validate apache::vhost::custom_fragment
+- Add support for itk with mod_php
+- Allow apache::vhost::ssl_certs_dir to not be set
+- Improved passenger support for Debian
+- Improved 2.4 support without mod_access_compat
+- Support for more than one 'Allow from'-directive in _directories.erb
+- Don't load systemd on Amazon linux based on CentOS6 with apache 2.4
+- Fix missing newline in ModPagespeed filter and memcached servers directive
+- Use interpolated strings instead of numbers where required by future parser
+- Make auth_require take precedence over default with apache 2.4
+- Lint fixes
+- Set default for php_admin_flags and php_admin_values to be empty hash instead of empty array
+- Correct typo in mod::pagespeed
+- spec_helper fixes
+- Install mod packages before dealing with the configuration
+- Use absolute scope to check class definition in apache::mod::php
+- Fix dependency loop in apache::vhost
+- Properly scope variables in the inline template in apache::balancer
+- Documentation clarification, typos, and formatting
+- Set apache::mod::ssl::ssl_mutex to default for debian on apache >= 2.4
+- Strict variables fixes
+- Add authn_core mode to Ubuntu trusty defaults
+- Keep default loadfile for authz_svn on Debian
+- Remove '.conf' from the site-include regexp for better Ubuntu/Debian support
+
+####Known Bugs
+* By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
+* SLES is unsupported.
+
 ##2014-07-15 - Supported Release 1.1.1
 ###Summary
 
