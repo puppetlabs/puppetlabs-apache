@@ -231,6 +231,7 @@ describe 'apache::vhost', :type => :define do
           'additional_includes'         => '/custom/path/includes',
           'apache_version'              => '2.4',
           'suexec_user_group'           => 'root root',
+          'allow_encoded_slashes'       => 'nodecode'
         }
       end
       let :facts do

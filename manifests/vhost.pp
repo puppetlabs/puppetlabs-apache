@@ -96,6 +96,7 @@ define apache::vhost(
   $fastcgi_dir                 = undef,
   $additional_includes         = [],
   $apache_version              = $::apache::apache_version,
+  $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
@@ -121,6 +122,8 @@ define apache::vhost(
     validate_array($rewrites)
     validate_hash($rewrites[0])
   }
+
+  # Input validation begins
 
   if $suexec_user_group {
     validate_re($suexec_user_group, '^\w+ \w+$',
@@ -181,6 +184,12 @@ define apache::vhost(
   if $custom_fragment {
     validate_string($custom_fragment)
   }
+
+  if $allow_encoded_slashes {
+    validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
+  }
+
+  # Input validation ends
 
   if $ssl and $ensure == 'present' {
     include ::apache::mod::ssl

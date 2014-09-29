@@ -226,6 +226,10 @@ You may establish a default vhost in this class, the `vhost` class, or both. You
 
 **Parameters within `apache`:**
 
+#####`allow_encoded_slashes`
+
+This sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes) which modifies the responses to URLs with `\` and `/` characters. The default is undefined, which will omit the declaration from the server configuration and select the Apache default setting of `Off`. Allowed values are: `on`, `off` or `nodecode`.
+
 #####`apache_version`
 
 Configures the behavior of the module templates, package names, and default mods by setting the Apache version. Default is determined by the class `apache::version` using the OS family and release. It should not be configured manually without special reason.
@@ -901,6 +905,10 @@ aliases => [
 For `alias` and `aliasmatch` to work, each will need a corresponding context, such as '< Directory /path/to/directory>' or '<Location /path/to/directory>'. The Alias and AliasMatch directives are created in the order specified in the `aliases` parameter. As described in the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html), more specific `alias` or `aliasmatch` parameters should come before the more general ones to avoid shadowing.
 
 *Note:* If `apache::mod::passenger` is loaded and `PassengerHighPerformance => true` is set, then Alias may have issues honoring the `PassengerEnabled => off` statement. See [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
+
+#####`allow_encoded_slashes`
+
+This sets the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes) for the vhost, overriding the server default. This modifies the vhost responses to URLs with `\` and `/` characters. The default is undefined, which will omit the declaration from the server configuration and select the Apache default setting of `Off`. Allowed values are: `on`, `off` or `nodecode`.
 
 #####`block`
 
