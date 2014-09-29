@@ -1696,6 +1696,14 @@ Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array
     }
 ```
 
+***Note*** If you include rewrites in your directories make sure you are also including mod_rewrite.
+
+```pupppet
+    if ! defined(Class['apache::mod::rewrite']) {
+      include ::apache::mod::rewrite
+    }
+```
+
 ######`ssl_options`
 
 String or list of [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions), which configure SSL engine run-time options. This handler takes precedence over SSLOptions set in the parent block of the vhost.

@@ -987,6 +987,9 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       pp = <<-EOS
         class { 'apache': }
         host { 'test.server': ip => '127.0.0.1' }
+        if ! defined(Class['apache::mod::rewrite']) {
+          include ::apache::mod::rewrite
+        }
         apache::vhost { 'test.server':
           docroot      => '/tmp',
           directories  => [
