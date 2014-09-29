@@ -5,7 +5,11 @@ describe 'apache::mod::dav_svn class' do
   when 'Debian'
     mod_dir             = '/etc/apache2/mods-available'
     service_name        = 'apache2'
-    authz_svn_load_file = 'authz_svn.load'
+    if fact('operatingsystemmajrelease') == '6'
+      authz_svn_load_file = 'dav_svn_authz_svn.load'
+    else
+      authz_svn_load_file = 'authz_svn.load'
+    end
   when 'RedHat'
     mod_dir             = '/etc/httpd/conf.d'
     service_name        = 'httpd'
