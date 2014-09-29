@@ -113,8 +113,6 @@ A slightly more complicated example, changes the docroot owner/group from the de
       docroot_group => 'third',
     }
 ```
-For details on using the Shibboleth module (a.k.a. `mod_shib`) see [the Shibboleth README](README.mod_shib.md)
-
 
 To set up a virtual host with SSL and default SSL certificates
 
@@ -550,6 +548,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `rewrite`
 * `rpaf`*
 * `setenvif`
+* `shib`* (see [`apache::mod::shib`](#class-apachemodshib) below)
 * `speling`
 * `ssl`* (see [`apache::mod::ssl`](#class-apachemodssl) below)
 * `status`*
@@ -697,6 +696,12 @@ AddHandler php5-script .php
 AddType text/html .php',
   }
 ```
+####Class: `apache::mod::shib`
+
+Installs the [Shibboleth](http://shibboleth.net/) module for Apache which allows the use of SAML2 Single-Sign-On (SSO) authentication by Shibboleth Identity Providers and Shibboleth Federations. This class only installs and configures the Apache components of a Shibboleth Service Provider (a web application that consumes Shibboleth SSO identities). The Shibboleth configuration can be managed manually, with puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
+
+Defining this class enables the Shibboleth specific parameters in `apache::vhost` instances.
+
 ####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are the defaults:
@@ -1705,6 +1710,26 @@ Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array
       ],
     }
 ```
+
+######`shib_request_setting`
+
+Allows an valid content setting to be set or altered for the application request. This command takes two parameters, the name of the content setting, and the value to set it to.Check the Shibboleth [content setting documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPContentSettings) for valid settings. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
+
+```puppet
+    apache::vhost { 'secure.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path                  => '/path/to/directory',
+          shib_require_setting  => 'requiresession 1',
+          shib_use_headers      => 'On',
+        },
+      ],
+    }
+```
+
+######`shib_use_headers`
+
+When set to 'On' this turns on the use of request headers to publish attributes to applications. Valid values for this key is 'On' or 'Off', and the default value is 'Off'. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details. 
 
 ######`ssl_options`
 
