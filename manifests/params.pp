@@ -28,6 +28,11 @@ class apache::params inherits ::apache::version {
   # The default error log level
   $log_level = 'warn'
 
+  if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
+    $verify_command = '/usr/sbin/apache2ctl -t'
+  } else {
+    $verify_command = '/usr/sbin/apachectl -t'
+  }
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
     $group                = 'apache'
