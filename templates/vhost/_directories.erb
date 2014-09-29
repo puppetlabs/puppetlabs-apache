@@ -195,6 +195,14 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
+    <%- if @shibboleth_enabled -%>
+      <%- if directory['shib_require_setting'] and ! directory['shib_require_setting'].empty? -%>
+    ShibRequireSetting <%- directory['shib_require_setting'] -%>
+      <%- end -%>
+      <%- if directory['shib_use_headers'] and ! directory['shib_use_headers'].empty? -%>
+    ShibUseHeaders <%- directory['shib_use_headers'] -%>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>

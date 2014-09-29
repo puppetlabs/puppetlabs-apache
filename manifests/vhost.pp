@@ -248,6 +248,9 @@ define apache::vhost(
   # Is apache::mod::passenger enabled (or apache::mod['passenger'])
   $passenger_enabled = defined(Apache::Mod['passenger'])
 
+  # Is apache::mod::shib enabled (or apache::mod['shib2'])
+  $shibboleth_enabled = defined(Apache::Mod['shib2'])
+
   # Define log file names
   if $access_log_file {
     $access_log_destination = "${logroot}/${access_log_file}"
@@ -482,6 +485,7 @@ define apache::vhost(
   # - $docroot
   # - $apache_version
   # - $suphp_engine
+  # - $shibboleth_enabled
   if $_directories and ! empty($_directories) {
     concat::fragment { "${name}-directories":
       target  => "${priority_real}-${filename}.conf",
