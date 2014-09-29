@@ -5,7 +5,7 @@ define apache::custom_config (
   $content        = undef,
   $priority       = '25',
   $source         = undef,
-  $verify_command = '/usr/sbin/apachectl -t',
+  $verify_command = $::apache::params::verify_command,
   $verify_config  = true,
 ) {
 
