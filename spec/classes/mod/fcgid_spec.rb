@@ -8,14 +8,15 @@ describe 'apache::mod::fcgid', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
-        :osfamily               => 'Debian',
-        :operatingsystemrelease => '6',
-        :concat_basedir         => '/dne',
-        :lsbdistcodename        => 'squeeze',
-        :operatingsystem        => 'Debian',
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :osfamily                  => 'Debian',
+        :operatingsystemrelease    => '6',
+        :operatingsystemmajrelease => '6',
+        :concat_basedir            => '/dne',
+        :lsbdistcodename           => 'squeeze',
+        :operatingsystem           => 'Debian',
+        :id                        => 'root',
+        :kernel                    => 'Linux',
+        :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -26,13 +27,14 @@ describe 'apache::mod::fcgid', :type => :class do
   context "on a RedHat OS" do
     let :facts do
       {
-        :osfamily               => 'RedHat',
-        :operatingsystemrelease => '6',
-        :concat_basedir         => '/dne',
-        :operatingsystem        => 'RedHat',
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :osfamily                  => 'RedHat',
+        :operatingsystemrelease    => '6',
+        :operatingsystemmajrelease => '6',
+        :concat_basedir            => '/dne',
+        :operatingsystem           => 'RedHat',
+        :id                        => 'root',
+        :kernel                    => 'Linux',
+        :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
@@ -66,16 +68,41 @@ describe 'apache::mod::fcgid', :type => :class do
     end
   end
 
+  context "on RHEL7" do
+    let :facts do
+      {
+        :osfamily                  => 'RedHat',
+        :operatingsystemrelease    => '7',
+        :operatingsystemmajrelease => '7',
+        :concat_basedir            => '/dne',
+        :operatingsystem           => 'RedHat',
+        :id                        => 'root',
+        :kernel                    => 'Linux',
+        :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      }
+    end
+
+    describe 'without parameters' do
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_apache__mod('fcgid').with({
+        'loadfile_name' => 'unixd_fcgid.load'
+      })
+      }
+      it { is_expected.to contain_package("mod_fcgid") }
+    end
+  end
+
   context "on a FreeBSD OS" do
     let :facts do
       {
-        :osfamily               => 'FreeBSD',
-        :operatingsystemrelease => '9',
-        :concat_basedir         => '/dne',
-        :operatingsystem        => 'FreeBSD',
-        :id                     => 'root',
-        :kernel                 => 'FreeBSD',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :osfamily                  => 'FreeBSD',
+        :operatingsystemrelease    => '9',
+        :operatingsystemmajrelease => '9',
+        :concat_basedir            => '/dne',
+        :operatingsystem           => 'FreeBSD',
+        :id                        => 'root',
+        :kernel                    => 'FreeBSD',
+        :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
