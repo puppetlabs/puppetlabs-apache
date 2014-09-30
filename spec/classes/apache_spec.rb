@@ -23,6 +23,10 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_user("www-data") }
     it { is_expected.to contain_group("www-data") }
     it { is_expected.to contain_class("apache::service") }
+    it { is_expected.to contain_file("/var/www").with(
+      'ensure'  => 'directory',
+      )
+    }
     it { is_expected.to contain_file("/etc/apache2/sites-enabled").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
@@ -225,6 +229,10 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_user("apache") }
     it { is_expected.to contain_group("apache") }
     it { is_expected.to contain_class("apache::service") }
+    it { is_expected.to contain_file("/var/www/html").with(
+      'ensure'  => 'directory',
+      )
+    }
     it { is_expected.to contain_file("/etc/httpd/conf.d").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
@@ -498,6 +506,10 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_user("www") }
     it { is_expected.to contain_group("www") }
     it { is_expected.to contain_class("apache::service") }
+    it { is_expected.to contain_file("/usr/local/www/apache22/data").with(
+      'ensure'  => 'directory',
+      )
+    }
     it { is_expected.to contain_file("/usr/local/etc/apache22/Vhosts").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
