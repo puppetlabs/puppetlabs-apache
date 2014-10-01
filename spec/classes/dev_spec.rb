@@ -16,6 +16,16 @@ describe 'apache::dev', :type => :class do
     it { is_expected.to contain_package("libapr1-dev") }
     it { is_expected.to contain_package("apache2-prefork-dev") }
   end
+  context "on an Ubuntu 14 OS" do
+    let :facts do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystem        => 'Ubuntu',
+        :operatingsystemrelease => '14.04',
+      }
+    end
+    it { is_expected.to contain_package("apache2-dev") }
+  end
   context "on a RedHat OS" do
     let :facts do
       {

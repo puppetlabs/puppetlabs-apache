@@ -168,7 +168,6 @@ class apache::params inherits ::apache::version {
     $logroot_mode        = undef
     $lib_path            = '/usr/lib/apache2/modules'
     $mpm_module          = 'worker'
-    $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_certs_dir       = '/etc/ssl/certs'
@@ -234,6 +233,11 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_60_correlation.conf'
     ]
     $error_documents_path = '/usr/share/apache2/error'
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0) {
+      $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']
+    } else {
+      $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
+    }
 
     #
     # Passenger-specific settings
