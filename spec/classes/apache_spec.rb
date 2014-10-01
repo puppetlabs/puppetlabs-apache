@@ -94,6 +94,14 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^IncludeOptional "/etc/apache2/conf\.d/\*\.conf"$} }
     end
 
+    context "when specifying slash encoding behaviour" do
+      let :params do
+        { :allow_encoded_slashes => 'nodecode' }
+      end
+
+      it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^AllowEncodedSlashes nodecode$} }
+    end
+
     # Assert that both load files and conf files are placed and symlinked for these mods
     [
       'alias',
@@ -303,6 +311,14 @@ describe 'apache', :type => :class do
         end
 
         it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
+      end
+
+      context "when specifying slash encoding behaviour" do
+        let :params do
+          { :allow_encoded_slashes => 'nodecode' }
+        end
+
+        it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^AllowEncodedSlashes nodecode$} }
       end
 
       it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^Include "/etc/httpd/site\.d/\*"$} }

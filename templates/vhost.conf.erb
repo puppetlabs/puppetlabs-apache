@@ -22,6 +22,9 @@
 <% if @fallbackresource -%>
   FallbackResource <%= @fallbackresource %>
 <% end -%>
+<%- if @allow_encoded_slashes -%>
+  AllowEncodedSlashes <%= @allow_encoded_slashes %>
+<%- end -%>
 
   ## Directories, there should at least be a declaration for <%= @docroot %>
 <%= scope.function_template(['apache/vhost/_directories.erb']) -%>

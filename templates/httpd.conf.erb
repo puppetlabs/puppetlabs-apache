@@ -35,6 +35,9 @@ HostnameLookups Off
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
 LogLevel <%= @log_level %>
 EnableSendfile <%= @sendfile %>
+<%- if @allow_encoded_slashes -%>
+AllowEncodedSlashes <%= @allow_encoded_slashes %>
+<%- end -%>
 
 #Listen 80
 

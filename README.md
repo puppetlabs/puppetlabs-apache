@@ -224,6 +224,10 @@ You may establish a default vhost in this class, the `vhost` class, or both. You
 
 **Parameters within `apache`:**
 
+#####`allow_encoded_slashes`
+
+This sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes) which modifies the responses to URLs with `\` and `/` characters. The default is undefined, which will omit the declaration from the server configuration and select the Apache default setting of `Off`. Allowed values are: `on`, `off` or `nodecode`.
+
 #####`apache_version`
 
 Configures the behavior of the module templates, package names, and default mods by setting the Apache version. Default is determined by the class `apache::version` using the OS family and release. It should not be configured manually without special reason.
@@ -544,6 +548,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `rewrite`
 * `rpaf`*
 * `setenvif`
+* `shib`* (see [`apache::mod::shib`](#class-apachemodshib) below)
 * `speling`
 * `ssl`* (see [`apache::mod::ssl`](#class-apachemodssl) below)
 * `status`*
@@ -691,6 +696,12 @@ AddHandler php5-script .php
 AddType text/html .php',
   }
 ```
+####Class: `apache::mod::shib`
+
+Installs the [Shibboleth](http://shibboleth.net/) module for Apache which allows the use of SAML2 Single-Sign-On (SSO) authentication by Shibboleth Identity Providers and Shibboleth Federations. This class only installs and configures the Apache components of a Shibboleth Service Provider (a web application that consumes Shibboleth SSO identities). The Shibboleth configuration can be managed manually, with puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
+
+Defining this class enables the Shibboleth specific parameters in `apache::vhost` instances.
+
 ####Class: `apache::mod::ssl`
 
 Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are the defaults:
@@ -899,6 +910,10 @@ aliases => [
 For `alias` and `aliasmatch` to work, each will need a corresponding context, such as '< Directory /path/to/directory>' or '<Location /path/to/directory>'. The Alias and AliasMatch directives are created in the order specified in the `aliases` parameter. As described in the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html), more specific `alias` or `aliasmatch` parameters should come before the more general ones to avoid shadowing.
 
 *Note:* If `apache::mod::passenger` is loaded and `PassengerHighPerformance => true` is set, then Alias may have issues honoring the `PassengerEnabled => off` statement. See [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
+
+#####`allow_encoded_slashes`
+
+This sets the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes) for the vhost, overriding the server default. This modifies the vhost responses to URLs with `\` and `/` characters. The default is undefined, which will omit the declaration from the server configuration and select the Apache default setting of `Off`. Allowed values are: `on`, `off` or `nodecode`.
 
 #####`block`
 
@@ -1695,6 +1710,26 @@ Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array
       ],
     }
 ```
+
+######`shib_request_setting`
+
+Allows an valid content setting to be set or altered for the application request. This command takes two parameters, the name of the content setting, and the value to set it to.Check the Shibboleth [content setting documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPContentSettings) for valid settings. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
+
+```puppet
+    apache::vhost { 'secure.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path                  => '/path/to/directory',
+          shib_require_setting  => 'requiresession 1',
+          shib_use_headers      => 'On',
+        },
+      ],
+    }
+```
+
+######`shib_use_headers`
+
+When set to 'On' this turns on the use of request headers to publish attributes to applications. Valid values for this key is 'On' or 'Off', and the default value is 'Off'. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details. 
 
 ######`ssl_options`
 
