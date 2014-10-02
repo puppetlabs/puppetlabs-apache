@@ -15,6 +15,7 @@
 <% else -%>
   DocumentRoot "<%= @docroot %>"
 <% end -%>
+<%= scope.function_template(['apache/vhost/_scriptalias.erb']) -%>
 <%= scope.function_template(['apache/vhost/_aliases.erb']) -%>
 
 <%= scope.function_template(['apache/vhost/_itk.erb']) -%>
@@ -54,7 +55,6 @@
 <%= scope.function_template(['apache/vhost/_rack.erb']) -%>
 <%= scope.function_template(['apache/vhost/_redirect.erb']) -%>
 <%= scope.function_template(['apache/vhost/_rewrite.erb']) -%>
-<%= scope.function_template(['apache/vhost/_scriptalias.erb']) -%>
 <%= scope.function_template(['apache/vhost/_serveralias.erb']) -%>
 <%= scope.function_template(['apache/vhost/_setenv.erb']) -%>
 <%= scope.function_template(['apache/vhost/_ssl.erb']) -%>
