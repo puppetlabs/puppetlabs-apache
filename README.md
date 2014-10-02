@@ -1142,7 +1142,7 @@ Specifies the status to append to the redirect. Defaults to 'undef'.
 
 #####`redirectmatch_regexp` & `redirectmatch_status` & `redirectmatch_dest`
 
-Determines which server status should be raised for a given regular expression and where to forward teh user to. Entered as an arrays. Defaults to 'undef'.
+Determines which server status should be raised for a given regular expression and where to forward the user to. Entered as arrays. Defaults to 'undef'.
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
