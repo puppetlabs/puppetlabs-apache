@@ -188,6 +188,7 @@ describe 'apache::vhost', :type => :define do
           'redirect_status'             => 'temp',
           'redirectmatch_status'        => ['404'],
           'redirectmatch_regexp'        => ['\.git$'],
+          'redirectmatch_dest'          => ['http://www.example.com'],
           'rack_base_uris'              => ['/rackapp1'],
           'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
           'request_headers'             => ['append MirrorID "mirror 12"'],

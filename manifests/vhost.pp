@@ -69,6 +69,7 @@ define apache::vhost(
   $redirect_status             = undef,
   $redirectmatch_status        = undef,
   $redirectmatch_regexp        = undef,
+  $redirectmatch_dest          = undef,
   $rack_base_uris              = undef,
   $headers                     = undef,
   $request_headers             = undef,
@@ -601,9 +602,11 @@ define apache::vhost(
   # - $redirect_status_a
   # - $redirectmatch_status
   # - $redirectmatch_regexp
+  # - $redirectmatch_dest
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp) {
+  # - $redirectmatch_dest
+  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}-${filename}.conf",
       order   => 150,

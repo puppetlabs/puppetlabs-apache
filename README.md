@@ -1140,15 +1140,16 @@ Specifies the status to append to the redirect. Defaults to 'undef'.
     }
 ```
 
-#####`redirectmatch_regexp` & `redirectmatch_status`
+#####`redirectmatch_regexp` & `redirectmatch_status` & `redirectmatch_dest`
 
-Determines which server status should be raised for a given regular expression. Entered as an array. Defaults to 'undef'.
+Determines which server status should be raised for a given regular expression and where to forward teh user to. Entered as an arrays. Defaults to 'undef'.
 
 ```puppet
     apache::vhost { 'site.name.fdqn':
       …
       redirectmatch_status => ['404','404'],
       redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
+      redirectmatch_dest => ['http://www.example.com/1','http://www.example.com/2'],
     }
 ```
 
