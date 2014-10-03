@@ -14,8 +14,8 @@
 <% end -%>
 <% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
   <%- @wsgi_script_aliases.keys.sort.each do |key| -%>
-    <%- if key != '' and wsgi_script_aliases[key] != ''-%>
-  WSGIScriptAlias <%= key %> "<%= wsgi_script_aliases[key] %>"
+    <%- if @key != '' and @wsgi_script_aliases[key] != ''-%>
+  WSGIScriptAlias <%= @key %> "<%= @wsgi_script_aliases[key] %>"
     <%- end -%>
   <%- end -%>
 <% end -%>
