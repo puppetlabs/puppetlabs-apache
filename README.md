@@ -1623,7 +1623,7 @@ Lists the [Options](http://httpd.apache.org/docs/current/mod/core.html#options) 
 
 ######`order`
 
-Sets the order of processing Allow and Deny statements as per [Apache core documentation](httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). **Deprecated:** This parameter is being deprecated due to a change in Apache. It will only work with Apache 2.2 and lower.
+Sets the order of processing Allow and Deny statements as per [Apache core documentation](http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). **Deprecated:** This parameter is being deprecated due to a change in Apache. It will only work with Apache 2.2 and lower.
 
 ```puppet
     apache::vhost { 'sample.example.net':
