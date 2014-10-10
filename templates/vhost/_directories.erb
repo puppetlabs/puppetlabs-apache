@@ -196,8 +196,13 @@
       <%- end -%>
     <%- end -%>
     <%- if @shibboleth_enabled -%>
-      <%- if directory['shib_require_setting'] and ! directory['shib_require_setting'].empty? -%>
-    ShibRequireSetting <%= directory['shib_require_setting'] %>
+      <%- if directory['shib_require_session'] and ! directory['shib_require_session'].empty? -%>
+    ShibRequireSession <%= directory['shib_require_session'] %>
+      <%- end -%>
+      <%- if directory['shib_request_settings'] -%>
+        <%- Array(directory['shib_request_settings']).each do |setting| -%>
+    ShibRequestSetting <%= setting %>
+        <%- end -%>
       <%- end -%>
       <%- if directory['shib_use_headers'] and ! directory['shib_use_headers'].empty? -%>
     ShibUseHeaders <%= directory['shib_use_headers'] %>
