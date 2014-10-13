@@ -225,6 +225,7 @@ describe 'apache::vhost', :type => :define do
             'user'  => 'someuser',
             'group' => 'somegroup'
           },
+          'wsgi_chunked_request'        => 'On',
           'action'                      => 'foo',
           'fastcgi_server'              => 'localhost',
           'fastcgi_socket'              => '/tmp/fastcgi.socket',
