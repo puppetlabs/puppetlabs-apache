@@ -882,6 +882,10 @@ Specifies the use of either a LogFormat nickname or a custom format string for t
 
 Specifies that only requests with particular environment variables be logged. Defaults to 'undef'.
 
+#####`add_default_charset`
+
+Sets [AddDefaultCharset](http://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset), a default value for the media charset, which is added to text/plain and text/html responses.
+
 #####`add_listen`
 
 Determines whether the vhost creates a Listen statement. The default value is 'true'.

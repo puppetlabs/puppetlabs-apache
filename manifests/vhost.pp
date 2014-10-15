@@ -105,6 +105,7 @@ define apache::vhost(
   $passenger_min_instances     = undef,
   $passenger_start_timeout     = undef,
   $passenger_pre_start         = undef,
+  $add_default_charset         = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -798,6 +799,16 @@ define apache::vhost(
     target  => "${priority_real}-${filename}.conf",
     order   => 290,
     content => template('apache/vhost/_passenger.erb'),
+  }
+
+  # Template uses:
+  # - $add_default_charset
+  if $add_default_charset {
+    concat::fragment { "${name}-charsets":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 300,
+      content => template('apache/vhost/_charsets.erb'),
+    }
   }
 
   # Template uses no variables
