@@ -21,7 +21,9 @@
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
   SSLCipherSuite <%= @ssl_cipher %>
-  SSLProtocol all -SSLv2
+  # With new POODLE attack against SSLv3, should only use TLSv1 or higher
+  # SSLProtocol all -SSLv2
+  SSLProtocol TLSv1
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>

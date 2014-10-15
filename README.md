@@ -1801,13 +1801,15 @@ Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/ce
 
 Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Defaults to 'undef'. 
 
-If you do not use this parameter, it will use the HTTPD default from ssl.conf.erb, 'all -SSLv2'.
+If you do not use this parameter, it will use the HTTPD default from ssl.conf.erb, **'TLSv1'**.
 
 #####`ssl_cipher`
 
 Specifies [SSLCipherSuite](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite). Defaults to 'undef'.
 
-If you do not use this parameter, it will use the HTTPD default from ssl.conf.erb, 'HIGH:MEDIUM:!aNULL:!MD5'.
+If you do not use this parameter, it will use the HTTPD default from ssl.conf.erb which is the recommendation from the Mozilla Foundation (https://wiki.mozilla.org/Security/Server_Side_TLS), **'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA'**.
+
+The CipherSuite recommendation from Mozilla provides good backwards compatibility with web browsers but does not support IE6.
 
 #####`ssl_honorcipherorder`
 
