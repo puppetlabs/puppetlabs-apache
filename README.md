@@ -709,6 +709,8 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
 ```puppet
     class { 'apache::mod::ssl':
       ssl_compression => false,
+      ssl_cipher      => 'HIGH:MEDIUM:!aNULL:!MD5',
+      ssl_protocol    => 'all -SSLv2'
       ssl_options     => [ 'StdEnvVars' ],
   }
 ```
