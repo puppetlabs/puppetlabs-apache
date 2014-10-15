@@ -1283,6 +1283,19 @@ Sets the servername corresponding to the hostname you connect to the virtual hos
 
 Used by HTTPD to set environment variables for vhosts. Defaults to '[]'.
 
+Expects an array of the combined variables and their assigned values. For example:
+```puppet
+apache::vhost { 'railsapp':
+  vhost_name      => '*',
+  port            => '80',
+  ip              => '*',
+  docroot         => '/var/www/public',
+  setenv          => ['RAILS_ENV production']
+  access_log_file => "railsapp-access.log",
+  error_log_file  => "railsapp-error.log",
+} 
+```
+
 #####`setenvif`
 
 Used by HTTPD to conditionally set environment variables for vhosts. Defaults to '[]'.
