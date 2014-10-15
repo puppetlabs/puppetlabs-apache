@@ -232,7 +232,12 @@ describe 'apache::vhost', :type => :define do
           'additional_includes'         => '/custom/path/includes',
           'apache_version'              => '2.4',
           'suexec_user_group'           => 'root root',
-          'allow_encoded_slashes'       => 'nodecode'
+          'allow_encoded_slashes'       => 'nodecode',
+          'passenger_app_root'          => '/usr/share/myapp',
+          'passenger_ruby'              => '/usr/bin/ruby1.9.1',
+          'passenger_min_instances'     => '1',
+          'passenger_start_timeout'     => '600',
+          'passenger_pre_start'         => 'http://localhost/myapp'
         }
       end
       let :facts do
@@ -255,6 +260,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::vhost_alias') }
       it { is_expected.to contain_class('apache::mod::wsgi') }
       it { is_expected.to contain_class('apache::mod::suexec') }
+      it { is_expected.to contain_class('apache::mod::passenger') }
       it { is_expected.to contain_file('/var/www/logs').with({
         'ensure' => 'directory',
         'mode'   => '0600',
@@ -304,6 +310,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
     context 'not everything can be set together...' do
@@ -336,6 +343,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::mime') }
       it { is_expected.to_not contain_class('apache::mod::vhost_alias') }
       it { is_expected.to_not contain_class('apache::mod::wsgi') }
+      it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::suexec') }
       it { is_expected.to_not contain_class('apache::mod::rewrite') }
       it { is_expected.to contain_class('apache::mod::alias') }

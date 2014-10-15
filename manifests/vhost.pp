@@ -99,6 +99,11 @@ define apache::vhost(
   $apache_version              = $::apache::apache_version,
   $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,
+  $passenger_app_root          = undef,
+  $passenger_ruby              = undef,
+  $passenger_min_instances     = undef,
+  $passenger_start_timeout     = undef,
+  $passenger_pre_start         = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -208,6 +213,10 @@ define apache::vhost(
 
   if $suexec_user_group {
     include ::apache::mod::suexec
+  }
+
+  if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+    include ::apache::mod::passenger
   }
 
   # Configure the defaultness of a vhost
@@ -776,6 +785,18 @@ define apache::vhost(
       order   => 280,
       content => template('apache/vhost/_suexec.erb'),
     }
+  }
+
+  # Template uses:
+  # - $passenger_app_root
+  # - $passenger_ruby
+  # - $passenger_min_instances
+  # - $passenger_start_timeout
+  # - $passenger_pre_start
+  concat::fragment { "${name}-passenger":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 290,
+    content => template('apache/vhost/_passenger.erb'),
   }
 
   # Template uses no variables
