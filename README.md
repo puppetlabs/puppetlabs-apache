@@ -1781,7 +1781,7 @@ Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/ce
 
 Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Defaults to 'undef'. 
 
-If you do not use this parameter, it uses the HTTPD default from ssl.conf.erb, 'all -SSLv2'.
+If you do not use this parameter, it uses the HTTPD default from ssl.conf.erb, 'all -SSLv2 -SSLv3'.
 
 #####`ssl_cipher`
 
