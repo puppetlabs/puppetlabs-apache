@@ -21,7 +21,7 @@
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
   SSLCipherSuite <%= @ssl_cipher %>
-  SSLProtocol all -SSLv2 -SSLv3
+  SSLProtocol all -SSLv2 -SSLv3 <%= @ssl_protocol %>
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>
