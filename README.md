@@ -710,6 +710,8 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
     class { 'apache::mod::ssl':
       ssl_compression => false,
       ssl_options     => [ 'StdEnvVars' ],
+      ssl_cipher      => 'HIGH:MEDIUM:!aNULL:!MD5',
+      ssl_protocol    => 'All -SSLv2',
   }
 ```
 
