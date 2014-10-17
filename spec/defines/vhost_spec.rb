@@ -200,6 +200,7 @@ describe 'apache::vhost', :type => :define do
           'rewrite_base'                => '/',
           'rewrite_rule'                => '^index\.html$ welcome.html',
           'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
+          'rewrite_map'                 => '/etc/fail2ban/test.db',
           'setenv'                      => ['FOO=/bin/true'],
           'setenvif'                    => 'Request_URI "\.gif$" object_is_image=gif',
           'block'                       => 'scm',
