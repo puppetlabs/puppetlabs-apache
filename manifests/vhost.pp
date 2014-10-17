@@ -89,6 +89,7 @@ define apache::vhost(
   $wsgi_process_group          = undef,
   $wsgi_script_aliases         = undef,
   $wsgi_pass_authorization     = undef,
+  $wsgi_chunked_request        = undef,
   $custom_fragment             = undef,
   $itk                         = undef,
   $action                      = undef,

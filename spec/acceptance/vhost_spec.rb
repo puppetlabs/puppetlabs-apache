@@ -1074,7 +1074,8 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_daemon_process_options => {processes => '2'},
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
-    wsgi_pass_authorization     => 'On',
+          wsgi_pass_authorization     => 'On',
+          wsgi_chunked_request        => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1094,7 +1095,8 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
-    wsgi_pass_authorization     => 'On',
+          wsgi_pass_authorization     => 'On',
+          wsgi_chunked_request        => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1108,6 +1110,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.to contain 'WSGIProcessGroup nobody' }
       it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }
       it { is_expected.to contain 'WSGIPassAuthorization On' }
+      it { is_expected.to contain 'WSGIChunkedRequest On' }
     end
   end
 

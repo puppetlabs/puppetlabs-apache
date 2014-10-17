@@ -1344,6 +1344,8 @@ Set up a virtual host with [WSGI](https://code.google.com/p/modwsgi/).
 
 `wsgi_pass_authorization` the WSGI application handles authorisation instead of Apache when set to 'On'. For more information see [here] (http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).  Defaults to 'undef' where apache sets the defaults setting to 'Off'.
 
+`wsgi_chunked_request` enables support for chunked requests. Defaults to 'undef'.
+
 To set up a virtual host with WSGI
 
 ```puppet
@@ -1358,6 +1360,7 @@ To set up a virtual host with WSGI
          },
       wsgi_process_group          => 'wsgi',
       wsgi_script_aliases         => { '/' => '/var/www/demo.wsgi' },
+      wsgi_chunked_request        => 'On',
     }
 ```
 
