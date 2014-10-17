@@ -768,7 +768,10 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot    => '/tmp',
-          aliases => [{ alias => '/image', path => '/ftp/pub/image' }],
+          aliases => [
+            { alias       => '/image'    , path => '/ftp/pub/image' }   ,
+            { scriptalias => '/myscript' , path => '/usr/share/myscript' }
+          ],
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -777,6 +780,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
+      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
   end
 

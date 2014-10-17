@@ -894,20 +894,31 @@ Specifies paths to additional static, vhost-specific Apache configuration files.
 
 #####`aliases`
 
-Passes a list of hashes to the vhost to create Alias or AliasMatch directives as per the [mod_alias documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). These hashes are formatted as follows:
+Passes a list of hashes to the vhost to create Alias, AliasMatch, ScriptAlias or ScriptAliasMatch directives as per the [mod_alias documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). These hashes are formatted as follows:
 
 ```puppet
 aliases => [
-  { aliasmatch => '^/image/(.*)\.jpg$', 
-    path       => '/files/jpg.images/$1.jpg',
+  { aliasmatch       => '^/image/(.*)\.jpg$',
+    path             => '/files/jpg.images/$1.jpg',
   }
-  { alias      => '/image',
-    path       => '/ftp/pub/image', 
+  { alias            => '/image',
+    path             => '/ftp/pub/image',
+  },
+  { scriptaliasmatch => '^/cgi-bin(.*)',
+    path             => '/usr/local/share/cgi-bin$1',
+  },
+  { scriptalias      => '/nagios/cgi-bin/',
+    path             => '/usr/lib/nagios/cgi-bin/',
+  },
+  { alias            => '/nagios',
+    path             => '/usr/share/nagios/html',
   },
 ],
 ```
 
-For `alias` and `aliasmatch` to work, each needs a corresponding context, such as '< Directory /path/to/directory>' or '<Location /path/to/directory>'. The Alias and AliasMatch directives are created in the order specified in the `aliases` parameter. As described in the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html), more specific `alias` or `aliasmatch` parameters should come before the more general ones to avoid shadowing.
+For `alias`, `aliasmatch`, `scriptalias` and `scriptaliasmatch` to work, each needs a corresponding context, such as `<Directory /path/to/directory>` or `<Location /some/location/here>`. The directives are created in the order specified in the `aliases` parameter. As described in the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html), more specific `alias`, `aliasmatch`, `scriptalias` or `scriptaliasmatch` parameters should come before the more general ones to avoid shadowing.
+
+*Note*: Using the `aliases` parameter is preferred over the `scriptaliases` parameter since here the order of the various alias directives among each other can be controlled precisely. Defining ScriptAliases using the `scriptaliases` parameter means *all* ScriptAlias directives will come after *all* Alias directives, which can lead to Alias directives shadowing ScriptAlias directives. This is often problematic, for example in case of Nagios.
 
 *Note:* If `apache::mod::passenger` is loaded and `PassengerHighPerformance => true` is set, then Alias might have issues honoring the `PassengerEnabled => off` statement. See [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
 
@@ -1241,6 +1252,8 @@ Refer to the [`mod_rewrite` documentation](http://httpd.apache.org/docs/current/
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', for example: '/usr/scripts'. Defaults to 'undef'.
 
 #####`scriptaliases`
+
+*Note*: This parameter is deprecated in favour of the `aliases` parameter.
 
 Passes an array of hashes to the vhost to create either ScriptAlias or ScriptAliasMatch statements as per the [`mod_alias` documentation](http://httpd.apache.org/docs/current/mod/mod_alias.html). These hashes are formatted as follows:
 
