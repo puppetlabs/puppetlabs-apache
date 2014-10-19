@@ -238,7 +238,8 @@ describe 'apache::vhost', :type => :define do
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
           'passenger_min_instances'     => '1',
           'passenger_start_timeout'     => '600',
-          'passenger_pre_start'         => 'http://localhost/myapp'
+          'passenger_pre_start'         => 'http://localhost/myapp',
+          'add_default_charset'         => 'UTF-8',
         }
       end
       let :facts do
@@ -312,6 +313,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
     context 'not everything can be set together...' do
@@ -390,6 +392,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-fastcgi') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-suexec') }
+      it { is_expected.to_not contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
   end
