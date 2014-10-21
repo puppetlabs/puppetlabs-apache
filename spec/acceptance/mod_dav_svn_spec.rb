@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::dav_svn class' do
+describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7') do
   case fact('osfamily')
   when 'Debian'
     mod_dir             = '/etc/apache2/mods-available'
