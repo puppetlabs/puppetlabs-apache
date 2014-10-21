@@ -63,6 +63,7 @@ class apache (
   $server_tokens          = 'OS',
   $server_signature       = 'On',
   $trace_enable           = 'On',
+  $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
 ) inherits ::apache::params {
   validate_bool($default_vhost)
@@ -78,6 +79,10 @@ class apache (
 
   if $mpm_module {
     validate_re($mpm_module, $valid_mpms_re)
+  }
+
+  if $allow_encoded_slashes {
+    validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
   }
 
   # NOTE: on FreeBSD it's mpm module's responsibility to install httpd package.

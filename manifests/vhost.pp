@@ -69,6 +69,7 @@ define apache::vhost(
   $redirect_status             = undef,
   $redirectmatch_status        = undef,
   $redirectmatch_regexp        = undef,
+  $redirectmatch_dest          = undef,
   $rack_base_uris              = undef,
   $headers                     = undef,
   $request_headers             = undef,
@@ -88,6 +89,7 @@ define apache::vhost(
   $wsgi_process_group          = undef,
   $wsgi_script_aliases         = undef,
   $wsgi_pass_authorization     = undef,
+  $wsgi_chunked_request        = undef,
   $custom_fragment             = undef,
   $itk                         = undef,
   $action                      = undef,
@@ -96,7 +98,14 @@ define apache::vhost(
   $fastcgi_dir                 = undef,
   $additional_includes         = [],
   $apache_version              = $::apache::apache_version,
+  $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,
+  $passenger_app_root          = undef,
+  $passenger_ruby              = undef,
+  $passenger_min_instances     = undef,
+  $passenger_start_timeout     = undef,
+  $passenger_pre_start         = undef,
+  $add_default_charset         = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -121,6 +130,8 @@ define apache::vhost(
     validate_array($rewrites)
     validate_hash($rewrites[0])
   }
+
+  # Input validation begins
 
   if $suexec_user_group {
     validate_re($suexec_user_group, '^\w+ \w+$',
@@ -182,6 +193,12 @@ define apache::vhost(
     validate_string($custom_fragment)
   }
 
+  if $allow_encoded_slashes {
+    validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
+  }
+
+  # Input validation ends
+
   if $ssl and $ensure == 'present' {
     include ::apache::mod::ssl
     # Required for the AddType lines.
@@ -198,6 +215,10 @@ define apache::vhost(
 
   if $suexec_user_group {
     include ::apache::mod::suexec
+  }
+
+  if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+    include ::apache::mod::passenger
   }
 
   # Configure the defaultness of a vhost
@@ -238,6 +259,9 @@ define apache::vhost(
 
   # Is apache::mod::passenger enabled (or apache::mod['passenger'])
   $passenger_enabled = defined(Apache::Mod['passenger'])
+
+  # Is apache::mod::shib enabled (or apache::mod['shib2'])
+  $shibboleth_enabled = defined(Apache::Mod['shib2'])
 
   # Define log file names
   if $access_log_file {
@@ -473,6 +497,7 @@ define apache::vhost(
   # - $docroot
   # - $apache_version
   # - $suphp_engine
+  # - $shibboleth_enabled
   if $_directories and ! empty($_directories) {
     concat::fragment { "${name}-directories":
       target  => "${priority_real}-${filename}.conf",
@@ -588,9 +613,11 @@ define apache::vhost(
   # - $redirect_status_a
   # - $redirectmatch_status
   # - $redirectmatch_regexp
+  # - $redirectmatch_dest
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp) {
+  # - $redirectmatch_dest
+  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}-${filename}.conf",
       order   => 150,
@@ -759,6 +786,28 @@ define apache::vhost(
       target  => "${priority_real}-${filename}.conf",
       order   => 280,
       content => template('apache/vhost/_suexec.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $passenger_app_root
+  # - $passenger_ruby
+  # - $passenger_min_instances
+  # - $passenger_start_timeout
+  # - $passenger_pre_start
+  concat::fragment { "${name}-passenger":
+    target  => "${priority_real}-${filename}.conf",
+    order   => 290,
+    content => template('apache/vhost/_passenger.erb'),
+  }
+
+  # Template uses:
+  # - $add_default_charset
+  if $add_default_charset {
+    concat::fragment { "${name}-charsets":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 300,
+      content => template('apache/vhost/_charsets.erb'),
     }
   }
 

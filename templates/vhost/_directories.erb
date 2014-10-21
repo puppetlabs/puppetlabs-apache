@@ -195,6 +195,19 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
+    <%- if @shibboleth_enabled -%>
+      <%- if directory['shib_require_session'] and ! directory['shib_require_session'].empty? -%>
+    ShibRequireSession <%= directory['shib_require_session'] %>
+      <%- end -%>
+      <%- if directory['shib_request_settings'] and ! directory['shib_request_settings'].empty? -%>
+        <%- directory['shib_request_settings'].each do |key,value| -%>
+    ShibRequestSetting <%= key %> <%= value %>
+        <%- end -%>
+      <%- end -%>
+      <%- if directory['shib_use_headers'] and ! directory['shib_use_headers'].empty? -%>
+    ShibUseHeaders <%= directory['shib_use_headers'] %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>

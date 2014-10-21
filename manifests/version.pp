@@ -7,7 +7,7 @@ class apache::version {
   $osr_array = split($::operatingsystemrelease,'[\/\.]')
   $distrelease = $osr_array[0]
   if ! $distrelease {
-    fail("Class['apache::params']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
+    fail("Class['apache::version']: Unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
   }
 
   case $::osfamily {
