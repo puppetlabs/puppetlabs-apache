@@ -1135,7 +1135,7 @@ apache::vhost { 'site.name.fdqn':
   proxy_pass => [
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
-    { 'path' => '/c', 'url' => 'http://backend-a/c' },
+    { 'path' => '/c', 'url' => 'http://backend-a/c', 'params' => 'max=20 ttl=120 retry=300' },
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
   ],
@@ -1143,6 +1143,7 @@ apache::vhost { 'site.name.fdqn':
 ```
 
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
+`params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
 
 #####`rack_base_uris`
 
