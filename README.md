@@ -1105,6 +1105,10 @@ Sets [PassengerStartTimeout](https://www.phusionpassenger.com/documentation/User
 
 Sets [PassengerPreStart](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerPreStart), the URL of the application if pre-starting is required.
 
+#####`php_flags & values`
+
+Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '[]'.
+
 #####`php_admin_flags & values`
 
 Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '[]'.
@@ -1684,6 +1688,10 @@ Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/
 ```
 
 *Note:* Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the PassengerEnabled directive with the PassengerHighPerformance directive.
+ 
+######`php_value` and `php_flag`
+
+`php_value` sets the value of the directory, and `php_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
 ######`php_admin_value` and `php_admin_flag`
 
