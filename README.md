@@ -25,6 +25,7 @@
         * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
         * [Class: apache::mod::deflate](#class-apachemoddeflate)
         * [Class: apache::mod::reqtimeout](#class-apachemodreqtimeout)
+        * [Class: apache::mod::version](#class-apachemodversion)
         * [Defined Type: apache::vhost](#defined-type-apachevhost)
         * [Parameter: `directories` for apache::vhost](#parameter-directories-for-apachevhost)
         * [SSL parameters for apache::vhost](#ssl-parameters-for-apachevhost)
@@ -821,6 +822,15 @@ mod_reqtimeout configuration.
   class { '::apache::mod::reqtimeout':
     timeouts => ['header=20-40,MinRate=500', 'body=20,MinRate=500'],
   }
+```
+
+####Class: `apache::mod::reqtimeout`
+
+This wrapper around mod_version warns on Debian and Ubuntu systems with Apache httpd 2.4
+about loading mod_version, as on these platforms it's already built-in.
+
+```puppet
+  include '::apache::mod::version'
 ```
 
 #####`timeouts`
