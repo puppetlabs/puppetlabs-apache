@@ -1,8 +1,17 @@
 class apache::mod::disk_cache {
-  $cache_root = $::osfamily ? {
-    'debian'  => '/var/cache/apache2/mod_disk_cache',
-    'redhat'  => '/var/cache/mod_proxy',
-    'freebsd' => '/var/cache/mod_disk_cache',
+  if $::apache::apache_version >= 2.4 {
+    $cache_root = $::osfamily ? {
+      'debian'  => '/var/cache/apache2/mod_cache_disk',
+      'redhat'  => '/var/cache/httpd/proxy',
+      'freebsd' => '/var/cache/mod_disk_cache', # TODO: Confirm
+    }
+  }
+  else {
+    $cache_root = $::osfamily ? {
+      'debian'  => '/var/cache/apache2/mod_disk_cache',
+      'redhat'  => '/var/cache/mod_proxy',
+      'freebsd' => '/var/cache/mod_disk_cache',
+    }
   }
 
   $mod_name = $::osfamily ? {
