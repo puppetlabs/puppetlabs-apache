@@ -25,4 +25,12 @@
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>
+
+<% if @ssl_stapling -%>
+  SSLUseStapling on
+  SSLStaplingResponderTimeout 5
+  SSLStaplingReturnResponderErrors off
+  SSLStaplingCache "shmcb:<%= @stapling_cache %>"
+<% end %>
+
 </IfModule>

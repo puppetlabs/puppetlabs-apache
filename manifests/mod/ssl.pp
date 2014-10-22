@@ -2,6 +2,7 @@ class apache::mod::ssl (
   $ssl_compression = false,
   $ssl_options     = [ 'StdEnvVars' ],
   $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
+  $ssl_stapling    = false,
   $apache_version  = $::apache::apache_version,
   $package_name    = undef,
 ) {
@@ -9,6 +10,12 @@ class apache::mod::ssl (
     'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
+  }
+
+  $stapling_cache = $::osfamily ? {
+    'debian'  => "\${APACHE_RUN_DIR}/ocsp(128000)", # TODO: Better way?
+    'redhat'  => '/var/run/ocsp(128000)', # TODO: Confirm
+    'freebsd' => '/var/run/ocsp(128000)', # TODO: Confirm
   }
 
   case $::osfamily {
