@@ -12,7 +12,7 @@ class apache::mod::disk_cache {
   Class['::apache::mod::cache'] -> Class['::apache::mod::disk_cache']
 
   apache::mod { 'disk_cache': }
-  # Template uses $cache_proxy
+  # Template uses $cache_root
   file { 'disk_cache.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/disk_cache.conf",
