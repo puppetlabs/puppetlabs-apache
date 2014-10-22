@@ -1179,6 +1179,12 @@ Determines whether Puppet manages the HTTPD service's state. Valid options: Bool
 
 Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. Default: undef, which uses the [default Puppet behavior][Service attribute restart].
 
+##### `ssl_stapling`
+
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean. Default: false. It is possible to override this on a vhost level.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
 ##### `timeout`
 
 Sets Apache's [`TimeOut`][] directive, which defines the number of seconds Apache waits for certain events before failing a request. Default: 120.
@@ -3784,6 +3790,24 @@ Sets the [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.h
 ##### `ssl_proxyengine`
 
 Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Valid options: Boolean. Default: true.
+
+##### `ssl_stapling`
+
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean or undef. Default: undef, meaning use what is set globally.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `ssl_stapling_timeout`
+
+Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive. No default.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `ssl_stapling_return_errors`
+
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
 #### Defined type: FastCGI Server
 
