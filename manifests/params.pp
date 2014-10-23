@@ -68,7 +68,10 @@ class apache::params inherits ::apache::version {
     # NOTE: The module for Shibboleth is not available to RH/CentOS without an additional repository. http://wiki.aaf.edu.au/tech-info/sp-install-guide
     $mod_packages         = {
       'auth_kerb'   => 'mod_auth_kerb',
-      'authnz_ldap' => 'mod_authz_ldap',
+      'authnz_ldap' => $::apache::version::distrelease ? {
+        '7'     => 'mod_ldap',
+        default => 'mod_authz_ldap',
+      },
       'fastcgi'     => 'mod_fastcgi',
       'fcgid'       => 'mod_fcgid',
       'pagespeed'   => 'mod-pagespeed-stable',
