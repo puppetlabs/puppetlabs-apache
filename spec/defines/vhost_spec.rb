@@ -172,8 +172,13 @@ describe 'apache::vhost', :type => :define do
           'proxy_dest'                  => '/',
           'proxy_pass'                  => [
             {
-              'path' => '/a',
-              'url'  => 'http://backend-a/'
+              'path'     => '/a',
+              'url'      => 'http://backend-a/',
+              'keywords' => ['noquery', 'interpolate'],
+              'params'   => {
+                      'retry'   => '0',
+                      'timeout' => '5'
+              }
             }
           ],
           'suphp_addhandler'            => 'foo',
@@ -296,7 +301,12 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-action') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-block') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-error_document') }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /retry=0/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /timeout=5/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /noquery interpolate/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
