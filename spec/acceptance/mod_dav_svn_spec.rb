@@ -1,11 +1,15 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::dav_svn class' do
+describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7') do
   case fact('osfamily')
   when 'Debian'
     mod_dir             = '/etc/apache2/mods-available'
     service_name        = 'apache2'
-    authz_svn_load_file = 'authz_svn.load'
+    if fact('operatingsystemmajrelease') == '6' or fact('operatingsystemmajrelease') == '10.04'
+      authz_svn_load_file = 'dav_svn_authz_svn.load'
+    else
+      authz_svn_load_file = 'authz_svn.load'
+    end
   when 'RedHat'
     mod_dir             = '/etc/httpd/conf.d'
     service_name        = 'httpd'
