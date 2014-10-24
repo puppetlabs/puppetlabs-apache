@@ -795,10 +795,12 @@ define apache::vhost(
   # - $passenger_min_instances
   # - $passenger_start_timeout
   # - $passenger_pre_start
-  concat::fragment { "${name}-passenger":
-    target  => "${priority_real}-${filename}.conf",
-    order   => 290,
-    content => template('apache/vhost/_passenger.erb'),
+  if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+    concat::fragment { "${name}-passenger":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 290,
+      content => template('apache/vhost/_passenger.erb'),
+    }
   }
 
   # Template uses:
