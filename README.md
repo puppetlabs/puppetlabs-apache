@@ -1753,6 +1753,8 @@ Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array
     }
 ```
 
+***Note*** If you include rewrites in your directories make sure you are also including `apache::mod::rewrite`. You may also want to consider setting the rewrites using the `rewrites` parameter in `apache::vhost` rather than setting the rewrites in the vhost directories.
+
 ######`shib_request_setting`
 
 Allows an valid content setting to be set or altered for the application request. This command takes two parameters, the name of the content setting, and the value to set it to.Check the Shibboleth [content setting documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPContentSettings) for valid settings. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
