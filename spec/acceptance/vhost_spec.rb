@@ -1082,7 +1082,6 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
           wsgi_pass_authorization     => 'On',
-          wsgi_chunked_request        => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
