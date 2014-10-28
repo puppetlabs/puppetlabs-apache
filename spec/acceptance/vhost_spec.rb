@@ -298,7 +298,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       end
     end
 
-    describe 'Satisfy and Auth directive' do
+    describe 'Satisfy and Auth directive', :unless => $apache_version == '2.4' do
       it 'should configure a vhost with Satisfy and Auth directive' do
         pp = <<-EOS
           class { 'apache': }
