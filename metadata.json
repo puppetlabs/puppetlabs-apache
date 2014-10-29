@@ -6,7 +6,7 @@
   "license": "Apache 2.0",
   "source": "git://github.com/puppetlabs/puppetlabs-apache.git",
   "project_page": "https://github.com/puppetlabs/puppetlabs-apache",
-  "issues_url": "https://github.com/puppetlabs/puppetlabs-apache/issues",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -67,13 +67,7 @@
   ],
   "description": "Module for Apache configuration",
   "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 2.4.0"
-    },
-    {
-      "name": "puppetlabs/concat",
-      "version_requirement": ">= 1.1.1"
-    }
+    {"name":"puppetlabs/stdlib","version_requirement":">= 2.4.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.1.1"}
   ]
 }
