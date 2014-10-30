@@ -120,7 +120,7 @@ class apache::default_mods (
     ::apache::mod { 'auth_basic': }
     ::apache::mod { 'authn_file': }
 
-      if versioncmp($apache_version, '2.4') >= 0 {
+    if versioncmp($apache_version, '2.4') >= 0 {
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
