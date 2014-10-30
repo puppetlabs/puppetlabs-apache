@@ -520,6 +520,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `actions`
 * `alias`
 * `auth_basic`
+* `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas) below)
 * `auth_kerb`
 * `authnz_ldap`*
 * `autoindex`
@@ -578,7 +579,7 @@ Modules noted with a * indicate that the module has settings and, thus, a templa
 
 The modules mentioned above, and other Apache modules that have templates, cause template files to be dropped along with the mod install. The module will not work without the template. Any module without a template installs the package but drops no files.
 
-####Class:  `apache::mod::event
+####Class:  `apache::mod::event`
 
 Installs and manages mpm_event module.
 
@@ -592,6 +593,11 @@ To configure the event thread limit:
   }
 ```
 
+####Class: `apache::mod::auth_cas`
+
+Installs and manages mod_auth_cas. The parameters `cas_login_url` and `cas_validate_url` are required.
+
+Full documentation on mod_auth_cas is available from [JASIG](https://github.com/Jasig/mod_auth_cas).
 
 ####Class: `apache::mod::info`
 
