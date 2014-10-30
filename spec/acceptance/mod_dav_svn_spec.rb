@@ -5,7 +5,7 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
   when 'Debian'
     mod_dir             = '/etc/apache2/mods-available'
     service_name        = 'apache2'
-    if fact('operatingsystemmajrelease') == '6' or fact('operatingsystemmajrelease') == '10.04'
+    if fact('operatingsystemmajrelease') == '6' or fact('operatingsystemmajrelease') == '10.04' or fact('operatingsystemrelease') == '10.04'
       authz_svn_load_file = 'dav_svn_authz_svn.load'
     else
       authz_svn_load_file = 'authz_svn.load'
