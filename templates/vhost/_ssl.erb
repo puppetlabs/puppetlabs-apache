@@ -43,4 +43,7 @@
   <%- if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>
   <%- end -%>
+  <%- if @ssl_stapling && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLUseStapling On
+  <%- end -%>
 <% end -%>

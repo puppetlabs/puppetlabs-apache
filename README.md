@@ -1905,6 +1905,10 @@ An array:
 
 Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Valid values are 'true' and 'false'. Defaults to 'false'.
 
+#####`ssl_stapling`
+
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid values are 'true' and 'false'. Defaults to 'true'.
+
 ####Defined Type: FastCGI Server
 
 This type is intended for use with mod_fastcgi. It allows you to define one or more external FastCGI servers to handle specific file types.
