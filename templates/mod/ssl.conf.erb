@@ -10,6 +10,9 @@
   SSLPassPhraseDialog  builtin
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
+<% if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLStaplingCache "shmcb:<%= @stapling_cache %>"
+<% end -%>
 <% if @ssl_compression -%>
   SSLCompression On
 <% end -%>
@@ -25,12 +28,5 @@
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>
-
-<% if @ssl_stapling -%>
-  SSLUseStapling on
-  SSLStaplingResponderTimeout 5
-  SSLStaplingReturnResponderErrors off
-  SSLStaplingCache "shmcb:<%= @stapling_cache %>"
-<% end %>
 
 </IfModule>

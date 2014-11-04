@@ -2,7 +2,6 @@ class apache::mod::ssl (
   $ssl_compression = false,
   $ssl_options     = [ 'StdEnvVars' ],
   $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
-  $ssl_stapling    = false,
   $apache_version  = $::apache::apache_version,
   $package_name    = undef,
 ) {
@@ -52,6 +51,7 @@ class apache::mod::ssl (
   # $ssl_compression
   # $ssl_options
   # $session_cache,
+  # $stapling_cache,
   # $ssl_mutex
   # $apache_version
   #
