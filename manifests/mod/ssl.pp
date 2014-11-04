@@ -13,9 +13,9 @@ class apache::mod::ssl (
   }
 
   $stapling_cache = $::osfamily ? {
-    'debian'  => "\${APACHE_RUN_DIR}/ocsp(128000)", # TODO: Better way?
-    'redhat'  => '/var/run/ocsp(128000)', # TODO: Confirm
-    'freebsd' => '/var/run/ocsp(128000)', # TODO: Confirm
+    'debian'  => "\${APACHE_RUN_DIR}/ocsp(128000)",
+    'redhat'  => '/var/cache/mod_ssl/ocsp(128000)',
+    'freebsd' => '/var/run/ocsp(128000)',
   }
 
   case $::osfamily {
