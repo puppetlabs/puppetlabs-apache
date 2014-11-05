@@ -1138,7 +1138,7 @@ Specifies the destination address of a [ProxyPass](http://httpd.apache.org/docs/
 
 #####`proxy_pass`
 
-Specifies an array of `path => URI` for a [ProxyPass](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to 'undef'.
+Specifies an array of `path => URI` for a [ProxyPass](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to 'undef'. Optionally parameters can be added as an array.
 
 ```puppet
 apache::vhost { 'site.name.fdqn':
@@ -1149,6 +1149,10 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/c', 'url' => 'http://backend-a/c', 'params' => 'max=20 ttl=120 retry=300' },
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
+    { 'path' => '/d', 'url' => 'http://backend-a/d',
+      'params' => { 'retry' => '0', 'timeout' => '5' }, },
+    { 'path' => '/e', 'url' => 'http://backend-a/e',
+      'keywords' => ['nocanon', 'interpolate'] },
   ],
 }
 ```
