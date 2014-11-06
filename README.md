@@ -1220,7 +1220,7 @@ Modifies collected [request headers](http://httpd.apache.org/docs/current/mod/mo
 
 #####`rewrites`
 
-Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'. Defaults to 'undef'. 
+Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_map', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'. Defaults to 'undef'. 
 
 For example, you can specify that anyone trying to access index.html is served welcome.html
 

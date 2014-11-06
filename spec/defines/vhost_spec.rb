@@ -199,7 +199,8 @@ describe 'apache::vhost', :type => :define do
           'request_headers'             => ['append MirrorID "mirror 12"'],
           'rewrites'                    => [
             {
-              'rewrite_rule' => ['^index\.html$ welcome.html']
+              'rewrite_rule' => ['^index\.html$ welcome.html'],
+              'rewrite_map'  => '/etc/fail2ban/test.db'
             }
           ],
           'rewrite_base'                => '/',

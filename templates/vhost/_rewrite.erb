@@ -12,6 +12,9 @@
     <%- if rewrite_details['rewrite_base'] -%>
   RewriteBase <%= rewrite_details['rewrite_base'] %>
     <%- end -%>
+    <%- if rewrite_details['rewrite_map'] -%>
+  RewriteMap <%= rewrite_details['rewrite_map'] %>
+    <%- end -%>
     <%- if rewrite_details['rewrite_cond'] -%>
       <%- Array(rewrite_details['rewrite_cond']).each do |commands| -%>
         <%- Array(commands).each do |command| -%>
@@ -31,6 +34,9 @@
 <% if @rewrite_rule and !@rewrites -%>
   ## Rewrite rules
   RewriteEngine On
+  <%- if @rewrite_map -%>
+  RewriteMap <%= @rewrite_map %>
+  <%- end -%>
   <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
   <%- end -%>
