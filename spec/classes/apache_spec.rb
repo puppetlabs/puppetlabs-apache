@@ -24,7 +24,7 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_group("www-data") }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/var/www").with(
-      'ensure'  => 'directory',
+      'ensure'  => 'directory'
       )
     }
     it { is_expected.to contain_file("/etc/apache2/sites-enabled").with(
@@ -168,7 +168,7 @@ describe 'apache', :type => :class do
         end
 
         it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common\n} }
-        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined\n} }
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" vhost_combined\n} }
       end
     end
 
@@ -230,7 +230,7 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_group("apache") }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/var/www/html").with(
-      'ensure'  => 'directory',
+      'ensure'  => 'directory'
       )
     }
     it { is_expected.to contain_file("/etc/httpd/conf.d").with(
@@ -507,7 +507,7 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_group("www") }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/usr/local/www/apache22/data").with(
-      'ensure'  => 'directory',
+      'ensure'  => 'directory'
       )
     }
     it { is_expected.to contain_file("/usr/local/etc/apache22/Vhosts").with(
