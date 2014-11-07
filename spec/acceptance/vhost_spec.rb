@@ -298,7 +298,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       end
     end
 
-    describe 'Satisfy and Auth directive' do
+    describe 'Satisfy and Auth directive', :unless => $apache_version == '2.4' do
       it 'should configure a vhost with Satisfy and Auth directive' do
         pp = <<-EOS
           class { 'apache': }
@@ -1082,7 +1082,6 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           wsgi_process_group          => 'nobody',
           wsgi_script_aliases         => { '/test' => '/test1' },
           wsgi_pass_authorization     => 'On',
-          wsgi_chunked_request        => 'On',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)

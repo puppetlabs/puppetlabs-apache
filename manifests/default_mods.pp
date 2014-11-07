@@ -36,10 +36,11 @@ class apache::default_mods (
         include ::apache::mod::cache
         include ::apache::mod::mime
         include ::apache::mod::mime_magic
-        include ::apache::mod::vhost_alias
-        include ::apache::mod::suexec
         include ::apache::mod::rewrite
         include ::apache::mod::speling
+        include ::apache::mod::suexec
+        include ::apache::mod::version
+        include ::apache::mod::vhost_alias
         ::apache::mod { 'auth_digest': }
         ::apache::mod { 'authn_anon': }
         ::apache::mod { 'authn_dbm': }
@@ -51,7 +52,6 @@ class apache::default_mods (
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
-        ::apache::mod { 'version': }
 
         if versioncmp($apache_version, '2.4') >= 0 {
           ::apache::mod { 'authn_core': }
@@ -71,6 +71,7 @@ class apache::default_mods (
         include ::apache::mod::reqtimeout
         include ::apache::mod::rewrite
         include ::apache::mod::userdir
+        include ::apache::mod::version
         include ::apache::mod::vhost_alias
         include ::apache::mod::speling
 
@@ -93,7 +94,6 @@ class apache::default_mods (
         ::apache::mod { 'logio': }
         ::apache::mod { 'unique_id': }
         ::apache::mod { 'usertrack': }
-        ::apache::mod { 'version': }
       }
       default: {}
     }
@@ -120,7 +120,7 @@ class apache::default_mods (
     ::apache::mod { 'auth_basic': }
     ::apache::mod { 'authn_file': }
 
-      if versioncmp($apache_version, '2.4') >= 0 {
+    if versioncmp($apache_version, '2.4') >= 0 {
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
