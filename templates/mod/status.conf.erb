@@ -1,4 +1,4 @@
-<Location /server-status>
+<Location <%= @status_path %>>
     SetHandler server-status
     Order deny,allow
     Deny from all

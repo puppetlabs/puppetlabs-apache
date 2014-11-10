@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 # Helper function for testing the contents of `status.conf`
-def status_conf_spec(allow_from, extended_status)
+def status_conf_spec(allow_from, extended_status, status_path)
   it do
     should contain_file("status.conf").with_content(
-      "<Location /server-status>\n"\
+      "<Location #{status_path}>\n"\
       "    SetHandler server-status\n"\
       "    Order deny,allow\n"\
       "    Deny from all\n"\
@@ -36,7 +36,7 @@ describe 'apache::mod::status', :type => :class do
 
     it { should contain_apache__mod("status") }
 
-    status_conf_spec(["127.0.0.1", "::1"], "On")
+    status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
     it { should contain_file("status.conf").with({
       :ensure => 'file',
@@ -61,13 +61,13 @@ describe 'apache::mod::status', :type => :class do
 
     it { should contain_apache__mod("status") }
 
-    status_conf_spec(["127.0.0.1", "::1"], "On")
+    status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
     it { should contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
 
   end
 
-  context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off'" do
+  context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
     let :facts do
       {
         :osfamily               => 'Debian',
@@ -79,10 +79,11 @@ describe 'apache::mod::status', :type => :class do
       {
         :allow_from => ['10.10.10.10','11.11.11.11'],
         :extended_status => 'Off',
+        :status_path => '/custom-status',
       }
     end
 
-    status_conf_spec(["10.10.10.10", "11.11.11.11"], "Off")
+    status_conf_spec(["10.10.10.10", "11.11.11.11"], "Off", "/custom-status")
 
   end
 
