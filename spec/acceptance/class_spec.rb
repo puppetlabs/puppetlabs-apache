@@ -25,12 +25,12 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     end
 
     describe package(package_name) do
-      it { should be_installed }
+      it { is_expected.to be_installed }
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
   end
 
@@ -38,10 +38,33 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      file { '/tmp/apache_custom': ensure => directory, }
+      if $::osfamily == 'RedHat' and $::selinux == 'true' {
+        $semanage_package = $::operatingsystemmajrelease ? {
+          '5'     => 'policycoreutils',
+          default => 'policycoreutils-python',
+        }
+
+        package { $semanage_package: ensure => installed }
+        exec { 'set_apache_defaults':
+          command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
+          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+          subscribe   => Package[$semanage_package],
+          refreshonly => true,
+        }
+        exec { 'restorecon_apache':
+          command     => 'restorecon -Rv /apache_spec',
+          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+          before      => Service['httpd'],
+          require     => Class['apache'],
+          subscribe   => Exec['set_apache_defaults'],
+          refreshonly => true,
+        }
+      }
+      file { '/apache_spec': ensure => directory, }
+      file { '/apache_spec/apache_custom': ensure => directory, }
       class { 'apache':
-        mod_dir   => '/tmp/apache_custom/mods',
-        vhost_dir => '/tmp/apache_custom/vhosts',
+        mod_dir   => '/apache_spec/apache_custom/mods',
+        vhost_dir => '/apache_spec/apache_custom/vhosts',
       }
       EOS
 
@@ -51,8 +74,8 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
   end
 end

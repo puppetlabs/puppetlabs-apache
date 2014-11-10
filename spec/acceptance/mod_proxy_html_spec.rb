@@ -11,7 +11,7 @@ describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.inclu
   end
 
   context "default proxy_html config" do
-    if fact('osfamily') == 'RedHat'
+    if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
         pp = "class { 'epel': }"
         apply_manifest(pp, :catch_failures => true)
@@ -23,14 +23,17 @@ describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.inclu
         class { 'apache': }
         class { 'apache::mod::proxy': }
         class { 'apache::mod::proxy_http': }
-        class { 'apache::mod::proxy_html': }
+        # mod_proxy_html doesn't exist in RHEL5
+        if $::osfamily == 'RedHat' and $::operatingsystemmajrelease != '5' {
+          class { 'apache::mod::proxy_html': }
+        }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
   end
 end

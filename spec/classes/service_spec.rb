@@ -10,9 +10,14 @@ describe 'apache::service', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_service("httpd").with(
+    it { is_expected.to contain_service("httpd").with(
       'name'      => 'apache2',
       'ensure'    => 'running',
       'enable'    => 'true'
@@ -21,7 +26,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_name => 'foo'" do
       let (:params) {{ :service_name => 'foo' }}
-      it { should contain_service("httpd").with(
+      it { is_expected.to contain_service("httpd").with(
         'name'      => 'foo'
         )
       }
@@ -29,7 +34,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_enable => true" do
       let (:params) {{ :service_enable => true }}
-      it { should contain_service("httpd").with(
+      it { is_expected.to contain_service("httpd").with(
         'name'      => 'apache2',
         'ensure'    => 'running',
         'enable'    => 'true'
@@ -39,7 +44,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_enable => false" do
       let (:params) {{ :service_enable => false }}
-      it { should contain_service("httpd").with(
+      it { is_expected.to contain_service("httpd").with(
         'name'      => 'apache2',
         'ensure'    => 'running',
         'enable'    => 'false'
@@ -57,7 +62,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_ensure => 'running'" do
       let (:params) {{ :service_ensure => 'running', }}
-      it { should contain_service("httpd").with(
+      it { is_expected.to contain_service("httpd").with(
         'ensure'    => 'running',
         'enable'    => 'true'
         )
@@ -66,11 +71,16 @@ describe 'apache::service', :type => :class do
 
     context "with $service_ensure => 'stopped'" do
       let (:params) {{ :service_ensure => 'stopped', }}
-      it { should contain_service("httpd").with(
+      it { is_expected.to contain_service("httpd").with(
         'ensure'    => 'stopped',
         'enable'    => 'true'
         )
       }
+    end
+
+    context "with $service_ensure => 'UNDEF'" do
+      let (:params) {{ :service_ensure => 'UNDEF' }}
+      it { is_expected.to contain_service("httpd").without_ensure }
     end
   end
 
@@ -81,9 +91,13 @@ describe 'apache::service', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '5',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_service("httpd").with(
+    it { is_expected.to contain_service("httpd").with(
       'name'      => 'httpd',
       'ensure'    => 'running',
       'enable'    => 'true'
@@ -97,9 +111,13 @@ describe 'apache::service', :type => :class do
         :osfamily               => 'FreeBSD',
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'FreeBSD',
+        :id                     => 'root',
+        :kernel                 => 'FreeBSD',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { should contain_service("httpd").with(
+    it { is_expected.to contain_service("httpd").with(
       'name'      => 'apache22',
       'ensure'    => 'running',
       'enable'    => 'true'

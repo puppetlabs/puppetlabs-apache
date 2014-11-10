@@ -27,17 +27,17 @@
     <%- end -%>
   <%- end -%>
 <%- end -%>
-<%# reverse compatibility %>
+<%# reverse compatibility -%>
 <% if @rewrite_rule and !@rewrites -%>
   ## Rewrite rules
   RewriteEngine On
-<% if @rewrite_base -%>
+  <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
-<% end -%>
-<% if @rewrite_cond -%>
-<% Array(@rewrite_cond).each do |cond| -%>
+  <%- end -%>
+  <%- if @rewrite_cond -%>
+    <%- Array(@rewrite_cond).each do |cond| -%>
   RewriteCond <%= cond %>
-<% end -%>
-<% end -%>
+    <%- end -%>
+  <%- end -%>
   RewriteRule <%= @rewrite_rule %>
 <%- end -%>

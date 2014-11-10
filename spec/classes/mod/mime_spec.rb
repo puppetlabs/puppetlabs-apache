@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # This function is called inside the OS specific conte, :compilexts
 def general_mime_specs
-  it { should contain_apache__mod("mime") }
+  it { is_expected.to contain_apache__mod("mime") }
 end
 
 describe 'apache::mod::mime', :type => :class do
@@ -16,12 +16,17 @@ describe 'apache::mod::mime', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
     general_mime_specs()
 
-    it { should contain_file("mime.conf").with_path('/etc/apache2/mods-available/mime.conf') }
+    it { is_expected.to contain_file("mime.conf").with_path('/etc/apache2/mods-available/mime.conf') }
 
   end
 
@@ -31,12 +36,16 @@ describe 'apache::mod::mime', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
     general_mime_specs()
 
-    it { should contain_file("mime.conf").with_path("/etc/httpd/conf.d/mime.conf") }
+    it { is_expected.to contain_file("mime.conf").with_path("/etc/httpd/conf.d/mime.conf") }
 
   end
 

@@ -28,8 +28,8 @@ when 'FreeBSD'
     end
 
     describe service(servicename) do
-      it { should be_running }
-      it { should be_enabled }
+      it { is_expected.to be_running }
+      it { is_expected.to be_enabled }
     end
   end
 end
@@ -51,8 +51,8 @@ describe 'apache::mod::worker class', :unless => UNSUPPORTED_PLATFORMS.include?(
   end
 
   describe service(servicename) do
-    it { should be_running }
-    it { should be_enabled }
+    it { is_expected.to be_running }
+    it { is_expected.to be_enabled }
   end
 end
 
@@ -73,7 +73,7 @@ describe 'apache::mod::prefork class', :unless => UNSUPPORTED_PLATFORMS.include?
   end
 
   describe service(servicename) do
-    it { should be_running }
-    it { should be_enabled }
+    it { is_expected.to be_running }
+    it { is_expected.to be_enabled }
   end
 end

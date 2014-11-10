@@ -6,6 +6,7 @@ class apache::mod::proxy_html {
   case $::osfamily {
     /RedHat|FreeBSD/: {
       ::apache::mod { 'xml2enc': }
+      $loadfiles = undef
     }
     'Debian': {
       $gnu_path = $::hardwaremodel ? {
@@ -14,6 +15,7 @@ class apache::mod::proxy_html {
       }
       $loadfiles = $::apache::params::distrelease ? {
         '6'     => ['/usr/lib/libxml2.so.2'],
+        '10'    => ['/usr/lib/libxml2.so.2'],
         default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
       }
     }

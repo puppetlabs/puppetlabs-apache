@@ -1,4 +1,5 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 case fact('osfamily')
 when 'RedHat'
@@ -13,27 +14,33 @@ describe 'apache ssl', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
     it 'runs without error' do
       pp = <<-EOS
         class { 'apache':
-          service_ensure       => stopped,
-          default_ssl_vhost    => true,
-          default_ssl_cert     => '/tmp/ssl_cert',
-          default_ssl_key      => '/tmp/ssl_key',
-          default_ssl_chain    => '/tmp/ssl_chain',
-          default_ssl_ca       => '/tmp/ssl_ca',
-          default_ssl_crl_path => '/tmp/ssl_crl_path',
-          default_ssl_crl      => '/tmp/ssl_crl',
+          service_ensure        => stopped,
+          default_ssl_vhost     => true,
+          default_ssl_cert      => '/tmp/ssl_cert',
+          default_ssl_key       => '/tmp/ssl_key',
+          default_ssl_chain     => '/tmp/ssl_chain',
+          default_ssl_ca        => '/tmp/ssl_ca',
+          default_ssl_crl_path  => '/tmp/ssl_crl_path',
+          default_ssl_crl       => '/tmp/ssl_crl',
+          default_ssl_crl_check => 'chain',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{vhostd}/15-default-ssl.conf") do
-      it { should be_file }
-      it { should contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
-      it { should contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
-      it { should contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
-      it { should contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
-      it { should contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
-      it { should contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
+      it { is_expected.to contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
+      it { is_expected.to contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
+      it { is_expected.to contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
+      it { is_expected.to contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
+      it { is_expected.to contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
+      if $apache_version == '2.4'
+        it { is_expected.to contain 'SSLCARevocationCheck    "chain"' }
+      else
+        it { is_expected.not_to contain 'SSLCARevocationCheck' }
+      end
     end
   end
 
@@ -53,6 +60,7 @@ describe 'apache ssl', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
           ssl_ca               => '/tmp/ssl_ca',
           ssl_crl_path         => '/tmp/ssl_crl_path',
           ssl_crl              => '/tmp/ssl_crl',
+          ssl_crl_check        => 'chain',
           ssl_certs_dir        => '/tmp',
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
@@ -67,20 +75,25 @@ describe 'apache ssl', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
     end
 
     describe file("#{vhostd}/25-test_ssl.conf") do
-      it { should be_file }
-      it { should contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
-      it { should contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
-      it { should contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
-      it { should contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
-      it { should contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
-      it { should contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
-      it { should contain 'SSLProxyEngine On' }
-      it { should contain 'SSLProtocol             test' }
-      it { should contain 'SSLCipherSuite          test' }
-      it { should contain 'SSLHonorCipherOrder     test' }
-      it { should contain 'SSLVerifyClient         test' }
-      it { should contain 'SSLVerifyDepth          test' }
-      it { should contain 'SSLOptions test test1' }
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
+      it { is_expected.to contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
+      it { is_expected.to contain 'SSLCertificateChainFile "/tmp/ssl_chain"' }
+      it { is_expected.to contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
+      it { is_expected.to contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
+      it { is_expected.to contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
+      it { is_expected.to contain 'SSLProxyEngine On' }
+      it { is_expected.to contain 'SSLProtocol             test' }
+      it { is_expected.to contain 'SSLCipherSuite          test' }
+      it { is_expected.to contain 'SSLHonorCipherOrder     test' }
+      it { is_expected.to contain 'SSLVerifyClient         test' }
+      it { is_expected.to contain 'SSLVerifyDepth          test' }
+      it { is_expected.to contain 'SSLOptions test test1' }
+      if $apache_version == '2.4'
+        it { is_expected.to contain 'SSLCARevocationCheck    "chain"' }
+      else
+        it { is_expected.not_to contain 'SSLCARevocationCheck' }
+      end
     end
   end
 

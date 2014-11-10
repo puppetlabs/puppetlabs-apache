@@ -1,4 +1,6 @@
 <% if @_directories and ! @_directories.empty? -%>
+
+  ## Directories, there should at least be a declaration for <%= @docroot %>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
   <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
@@ -10,7 +12,7 @@
   <%- else -%>
     <%- provider = 'Directory' -%>
   <%- end -%>
-  <%- path = directory['path'] %>
+  <%- path = directory['path'] -%>
 
   <<%= provider %> "<%= path %>">
     <%- if directory['headers'] -%>
@@ -34,13 +36,20 @@
     AllowOverride None
       <%- end -%>
     <%- end -%>
-    <%- if @apache_version == '2.4' -%>
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] and directory['require'] != '' -%>
     Require <%= Array(directory['require']).join(' ') %>
-      <%- else -%>
+      <%- end -%>
+      <%- if directory['auth_require'] -%>
+    Require <%= directory['auth_require'] %>
+      <%- end -%>
+      <%- if !(directory['require'] and directory['require'] != '') && !(directory['auth_require']) -%>
     Require all granted
       <%- end -%>
     <%- else -%>
+      <%- if directory['auth_require'] -%>
+    Require <%= directory['auth_require'] %>
+      <%- end -%>
       <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
       <%- else -%>
@@ -50,12 +59,21 @@
     Deny <%= directory['deny'] %>
       <%- end -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
+        <%- if directory['allow'].kind_of?(Array) -%>
+          <%- Array(directory['allow']).each do |access| -%>
+    Allow <%=  access %>
+        <%- end -%>
+      <%- else -%>
     Allow <%= directory['allow'] %>
+      <%- end -%>
       <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
       <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
     Deny from all
       <%- else -%>
     Allow from all
+      <%- end -%>
+      <%- if directory['satisfy'] and directory['satisfy'] != '' -%>
+    Satisfy <%= directory['satisfy'] %>
       <%- end -%>
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
@@ -127,9 +145,6 @@
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
     <%- end -%>
-    <%- if directory['auth_require'] -%>
-    Require <%= directory['auth_require'] %>
-    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
@@ -152,6 +167,46 @@
     <%- end -%>
     <%- if directory['suphp'] and @suphp_engine == 'on' -%>
     suPHP_UserGroup <%= directory['suphp']['user'] %> <%= directory['suphp']['group'] %>
+    <%- end -%>
+    <%- if directory['fcgiwrapper'] -%>
+    FcgidWrapper <%= directory['fcgiwrapper']['command'] %> <%= directory['fcgiwrapper']['suffix'] %> <%= directory['fcgiwrapper']['virtual'] %>
+    <%- end -%>
+    <%- if directory['rewrites'] -%>
+    # Rewrite rules
+    RewriteEngine On
+      <%- directory['rewrites'].flatten.compact.each do |rewrite_details| -%>
+        <%- if rewrite_details['comment'] -%>
+    #<%= rewrite_details['comment'] %>
+        <%- end -%>
+        <%- if rewrite_details['rewrite_base'] -%>
+    RewriteBase <%= rewrite_details['rewrite_base'] %>
+        <%- end -%>
+        <%- if rewrite_details['rewrite_cond'] -%>
+          <%- Array(rewrite_details['rewrite_cond']).each do |commands| -%>
+            <%- Array(commands).each do |command| -%>
+    RewriteCond <%= command %>
+            <%- end -%>
+          <%- end -%>
+        <%- end -%>
+        <%- Array(rewrite_details['rewrite_rule']).each do |commands| -%>
+          <%- Array(commands).each do |command| -%>
+    RewriteRule <%= command %>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+    <%- end -%>
+    <%- if @shibboleth_enabled -%>
+      <%- if directory['shib_require_session'] and ! directory['shib_require_session'].empty? -%>
+    ShibRequireSession <%= directory['shib_require_session'] %>
+      <%- end -%>
+      <%- if directory['shib_request_settings'] and ! directory['shib_request_settings'].empty? -%>
+        <%- directory['shib_request_settings'].each do |key,value| -%>
+    ShibRequestSetting <%= key %> <%= value %>
+        <%- end -%>
+      <%- end -%>
+      <%- if directory['shib_use_headers'] and ! directory['shib_use_headers'].empty? -%>
+    ShibUseHeaders <%= directory['shib_use_headers'] %>
+      <%- end -%>
     <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>

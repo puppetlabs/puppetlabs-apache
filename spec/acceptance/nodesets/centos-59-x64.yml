@@ -7,5 +7,4 @@ HOSTS:
     box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-59-x64-vbox4210-nocm.box
     hypervisor : vagrant
 CONFIG:
-  log_level: debug
   type: git

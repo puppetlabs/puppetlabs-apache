@@ -11,7 +11,7 @@ describe provider_class do
 
   [:conf_file, :instances, :modules, :initvars, :conf_file, :clear].each do |method|
     it "should respond to the class method #{method}" do
-      provider_class.should respond_to(method)
+      expect(provider_class).to respond_to(method)
     end
   end
 
@@ -24,21 +24,21 @@ describe provider_class do
       @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n})
       provider_class.expects(:filetype).returns(@filetype)
 
-      provider_class.modules.should == %w{bar baz foo}
+      expect(provider_class.modules).to eq(%w{bar baz foo})
     end
 
     it "should cache the module list" do
       @filetype.expects(:read).once.returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n})
       provider_class.expects(:filetype).once.returns(@filetype)
 
-      2.times { provider_class.modules.should == %w{bar baz foo} }
+      2.times { expect(provider_class.modules).to eq(%w{bar baz foo}) }
     end
 
     it "should normalize parameters" do
       @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n})
       provider_class.expects(:filetype).returns(@filetype)
 
-      provider_class.modules.should == %w{bar foo}
+      expect(provider_class.modules).to eq(%w{bar foo})
     end
   end
 

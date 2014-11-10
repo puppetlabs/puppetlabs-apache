@@ -13,7 +13,7 @@ define apache::mpm (
   $_path = "${lib_path}/${_lib}"
   $_id   = "mpm_${mpm}_module"
 
-  if $apache_version >= 2.4 {
+  if versioncmp($apache_version, '2.4') >= 0 {
     file { "${mod_dir}/${mpm}.load":
       ensure  => file,
       path    => "${mod_dir}/${mpm}.load",
@@ -37,7 +37,7 @@ define apache::mpm (
         notify  => Service['httpd'],
       }
 
-      if $apache_version >= 2.4 {
+      if versioncmp($apache_version, '2.4') >= 0 {
         file { "${::apache::mod_enable_dir}/${mpm}.load":
           ensure  => link,
           target  => "${::apache::mod_dir}/${mpm}.load",
@@ -47,7 +47,7 @@ define apache::mpm (
         }
       }
 
-      if $apache_version < 2.4 {
+      if versioncmp($apache_version, '2.4') < 0 {
         package { "apache2-mpm-${mpm}":
           ensure => present,
         }

@@ -3,8 +3,13 @@ require 'spec_helper'
 # Helper function for testing the contents of `status.conf`
 def status_conf_spec(allow_from, extended_status, status_path)
   it do
+<<<<<<< HEAD
     should contain_file("status.conf").with_content(
       "<Location #{status_path}>\n"\
+=======
+    is_expected.to contain_file("status.conf").with_content(
+      "<Location /server-status>\n"\
+>>>>>>> refs/remotes/upstream/master
       "    SetHandler server-status\n"\
       "    Order deny,allow\n"\
       "    Deny from all\n"\
@@ -31,19 +36,24 @@ describe 'apache::mod::status', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
-    it { should contain_apache__mod("status") }
+    it { is_expected.to contain_apache__mod("status") }
 
     status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
-    it { should contain_file("status.conf").with({
+    it { is_expected.to contain_file("status.conf").with({
       :ensure => 'file',
       :path   => '/etc/apache2/mods-available/status.conf',
     } ) }
 
-    it { should contain_file("status.conf symlink").with({
+    it { is_expected.to contain_file("status.conf symlink").with({
       :ensure => 'link',
       :path   => '/etc/apache2/mods-enabled/status.conf',
     } ) }
@@ -56,14 +66,18 @@ describe 'apache::mod::status', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
 
-    it { should contain_apache__mod("status") }
+    it { is_expected.to contain_apache__mod("status") }
 
     status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
-    it { should contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
+    it { is_expected.to contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
 
   end
 
@@ -73,6 +87,11 @@ describe 'apache::mod::status', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     let :params do
@@ -93,6 +112,11 @@ describe 'apache::mod::status', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :lsbdistcodename        => 'squeeze',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     let :params do
@@ -100,7 +124,7 @@ describe 'apache::mod::status', :type => :class do
     end
     it 'should expect to succeed array validation' do
       expect {
-        should contain_file("status.conf")
+        is_expected.to contain_file("status.conf")
       }.not_to raise_error()
     end
   end
@@ -111,6 +135,10 @@ describe 'apache::mod::status', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
+        :operatingsystem        => 'Debian',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
     let :params do
@@ -118,7 +146,7 @@ describe 'apache::mod::status', :type => :class do
     end
     it 'should expect to fail array validation' do
       expect {
-        should contain_file("status.conf")
+        is_expected.to contain_file("status.conf")
       }.to raise_error(Puppet::Error)
     end
   end
@@ -131,6 +159,11 @@ describe 'apache::mod::status', :type => :class do
           :osfamily               => 'Debian',
           :operatingsystemrelease => '6',
           :concat_basedir         => '/dne',
+          :lsbdistcodename        => 'squeeze',
+          :operatingsystem        => 'Debian',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :params do
@@ -138,7 +171,7 @@ describe 'apache::mod::status', :type => :class do
       end
       it 'should expect to succeed regular expression validation' do
         expect {
-          should contain_file("status.conf")
+          is_expected.to contain_file("status.conf")
         }.not_to raise_error()
       end
     end
@@ -151,6 +184,10 @@ describe 'apache::mod::status', :type => :class do
           :osfamily               => 'Debian',
           :operatingsystemrelease => '6',
           :concat_basedir         => '/dne',
+          :operatingsystem        => 'Debian',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         }
       end
       let :params do
@@ -158,7 +195,7 @@ describe 'apache::mod::status', :type => :class do
       end
       it 'should expect to fail regular expression validation' do
         expect {
-          should contain_file("status.conf")
+          is_expected.to contain_file("status.conf")
         }.to raise_error(Puppet::Error)
       end
     end

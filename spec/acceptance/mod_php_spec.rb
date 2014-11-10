@@ -37,29 +37,31 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     describe file("#{mod_dir}/php5.conf") do
-      it { should contain "DirectoryIndex index.php" }
+      it { is_expected.to contain "DirectoryIndex index.php" }
     end
 
     it 'should answer to php.example.com' do
       shell("/usr/bin/curl php.example.com:80") do |r|
-        r.stdout.should =~ /PHP Version/
-        r.exit_code.should == 0
+        expect(r.stdout).to match(/PHP Version/)
+        expect(r.exit_code).to eq(0)
       end
     end
   end
 
-  context "custom php admin_flag and php_admin_value" do
+  context "custom extensions, php_admin_flag, and php_admin_value" do
     it 'succeeds in puppeting php' do
       pp= <<-EOS
         class { 'apache':
           mpm_module => 'prefork',
         }
-        class { 'apache::mod::php': }
+        class { 'apache::mod::php':
+          extensions => ['.php','.php5'],
+        }
         apache::vhost { 'php.example.com':
           port             => '80',
           docroot          => '/var/www/php',
@@ -67,7 +69,7 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
           php_admin_flags  => { 'engine' => 'on', },
         }
         host { 'php.example.com': ip => '127.0.0.1', }
-        file { '/var/www/php/index.php':
+        file { '/var/www/php/index.php5':
           ensure  => file,
           content => "<?php phpinfo(); ?>\\n",
         }
@@ -76,20 +78,58 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     end
 
     describe service(service_name) do
-      it { should be_enabled }
-      it { should be_running }
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     describe file("#{vhost_dir}/25-php.example.com.conf") do
-      it { should contain "  php_admin_flag engine on" }
-      it { should contain "  php_admin_value open_basedir /var/www/php/:/usr/share/pear/" }
+      it { is_expected.to contain "  php_admin_flag engine on" }
+      it { is_expected.to contain "  php_admin_value open_basedir /var/www/php/:/usr/share/pear/" }
     end
 
     it 'should answer to php.example.com' do
       shell("/usr/bin/curl php.example.com:80") do |r|
-        r.stdout.should =~ /\/usr\/share\/pear\//
-        r.exit_code.should == 0
+        expect(r.stdout).to match(/\/usr\/share\/pear\//)
+        expect(r.exit_code).to eq(0)
       end
     end
   end
+
+  context "provide custom config file" do
+    it 'succeeds in puppeting php' do
+      pp= <<-EOS
+        class {'apache':
+          mpm_module => 'prefork',
+        }
+        class {'apache::mod::php':
+          content => '# somecontent',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{mod_dir}/php5.conf") do
+      it { should contain "# somecontent" }
+    end
+  end
+
+  context "provide content and template config file" do
+    it 'succeeds in puppeting php' do
+      pp= <<-EOS
+        class {'apache':
+          mpm_module => 'prefork',
+        }
+        class {'apache::mod::php':
+          content  => '# somecontent',
+          template => 'apache/mod/php5.conf.erb',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{mod_dir}/php5.conf") do
+      it { should contain "# somecontent" }
+    end
+  end
+
 end

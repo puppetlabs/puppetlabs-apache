@@ -27,14 +27,14 @@ describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(f
       end
 
       describe service('apache2') do
-        it { should be_enabled }
-        it { should be_running }
+        it { is_expected.to be_enabled }
+        it { is_expected.to be_running }
       end
 
       it 'should answer to suphp.example.com' do
         shell("/usr/bin/curl suphp.example.com:80") do |r|
-          r.stdout.should =~ /^daemon$/
-          r.exit_code.should == 0
+          expect(r.stdout).to match(/^daemon$/)
+          expect(r.exit_code).to eq(0)
         end
       end
     end

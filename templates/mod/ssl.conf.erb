@@ -13,7 +13,7 @@
 <% if @ssl_compression -%>
   SSLCompression On
 <% end -%>
-  <% if @apache_version >= '2.4' -%>
+  <% if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Mutex <%= @ssl_mutex %>
   <% else -%>
   SSLMutex <%= @ssl_mutex %>
@@ -21,7 +21,7 @@
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
   SSLCipherSuite <%= @ssl_cipher %>
-  SSLProtocol all -SSLv2
+  SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>

@@ -2,22 +2,24 @@ class apache::mod::ssl (
   $ssl_compression = false,
   $ssl_options     = [ 'StdEnvVars' ],
   $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
+  $ssl_protocol    = [ 'all', '-SSLv2', '-SSLv3' ],
   $apache_version  = $::apache::apache_version,
+  $package_name    = undef,
 ) {
   $session_cache = $::osfamily ? {
-    'debian'  => '${APACHE_RUN_DIR}/ssl_scache(512000)',
+    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
   }
 
   case $::osfamily {
     'debian': {
-      if $apache_version >= 2.4 and $::operatingsystem == 'Ubuntu' {
+      if versioncmp($apache_version, '2.4') >= 0 {
         $ssl_mutex = 'default'
       } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
       } else {
-        $ssl_mutex = 'file:${APACHE_RUN_DIR}/ssl_mutex'
+        $ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
       }
     }
     'redhat': {
@@ -31,9 +33,11 @@ class apache::mod::ssl (
     }
   }
 
-  ::apache::mod { 'ssl': }
+  ::apache::mod { 'ssl':
+    package => $package_name,
+  }
 
-  if $apache_version >= 2.4 {
+  if versioncmp($apache_version, '2.4') >= 0 {
     ::apache::mod { 'socache_shmcb': }
   }
 

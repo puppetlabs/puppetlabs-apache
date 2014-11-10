@@ -19,3 +19,9 @@
     <%- end -%>
   <%- end -%>
 <% end -%>
+<% if @wsgi_pass_authorization -%>
+  WSGIPassAuthorization <%= @wsgi_pass_authorization %>
+<% end -%>
+<% if @wsgi_chunked_request -%>
+  WSGIChunkedRequest <%= @wsgi_chunked_request %>
+<% end -%>
