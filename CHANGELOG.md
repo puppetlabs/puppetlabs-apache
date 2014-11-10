@@ -6,37 +6,69 @@ This release features many improvements and bugfixes, including several new defi
 ####Features
 - Convert apache::vhost to use concat for easier extensions
 - Test improvements
+- Synchronize files with modulesync
+- Strict variable and future parser support
 - Added apache::custom_config defined type to allow validation of configs before they are created
 - Added bool2httpd function to convert true/false to apache 'On' and 'Off'. Intended for internal use in the module.
-- Added logroot_mode and logroot_ensure to apache::vhost
 - Improved SCL support
-  - added apache::conf_dir
-  - allow overriding of apache_name
   - allow overriding of the mod_ssl package name
 - Add support for reverse_urls/ProxyPassReverse in apache::vhost
-- Add apache::vhost::manage_docroot
-- Add apache::purge_vhost_dir parameter
 - Add satisfy directive in apache::vhost::directories
 - Add apache::fastcgi::server defined type
-- Add apache::vhost::proxy_preserve_host
-- Add apache::vhost::wsgi_pass_authorization
+- New parameters - apache
+  - allow_encoded_slashes
+  - apache_name
+  - conf_dir
+  - default_ssl_crl_check
+  - docroot
+  - logroot_mode
+  - purge_vhost_dir
+- New parameters - apache::vhost
+  - add_default_charset
+  - allow_encoded_slashes
+  - logroot_ensure
+  - logroot_mode
+  - manage_docroot
+  - passenger_app_root
+  - passenger_min_instances
+  - passenger_pre_start
+  - passenger_ruby
+  - passenger_start_timeout
+  - proxy_preserve_host
+  - redirectmatch_dest
+  - ssl_crl_check
+  - wsgi_chunked_request
+  - wsgi_pass_authorization
+- Add support for ScriptAlias and ScriptAliasMatch in the apache::vhost::aliases parameter
 - Add support for rewrites in the apache::vhost::directories parameter
 - If the service_ensure parameter in apache::service is set to anything other than true, false, running, or stopped, ensure will not be passed to the service resource, allowing for the service to not be managed by puppet
+- Turn of SSLv3 by default
 - Improvements to apache::mod*
   - Add restrict_access parameter to apache::mod::info
   - Add force_language_priority and language_priority parameters to apache::mod::negotiation
-  - Add threadlimit parameter to mod::worker
+  - Add threadlimit parameter to apache::mod::worker
   - Add content, template, and source parameters to apache::mod::php
   - Add mod_authz_svn support via the authz_svn_enabled parameter in apache::mod::dav_svn
   - Add loadfile_name parameter to apache::mod
   - Add apache::mod::deflate class
-  - Add types and notes parameters to apache::mod::deflate
   - Add options parameter to apache::mod::fcgid
+  - Add timeouts parameter to apache::mod::reqtimeout
+  - Add apache::mod::shib
+  - Add apache_version parameter to apache::mod::ldap
+  - Add magic_file parameter to apache::mod::mime_magic
+  - Add apache_version parameter to apache::mod::pagespeed
+  - Add passenger_default_ruby parameter to apache::mod::passenger
+  - Add content, template, and source parameters to apache::mod::php
+  - Add apache_version parameter to apache::mod::proxy
+  - Add loadfiles parameter to apache::mod::proxy_html
+  - Add ssl_protocol and package_name parameters to apache::mod::ssl
+  - Add apache_version parameter to apache::mod::status
+  - Add apache_version parameter to apache::mod::userdir
+  - Add apache::mod::version class
 
 ####Bugfixes
 - Set osfamily defaults for wsgi_socket_prefix
 - Support multiple balancermembers with the same url
-- Validate apache::vhost::wsgi_pass_authorization
 - Validate apache::vhost::custom_fragment
 - Add support for itk with mod_php
 - Allow apache::vhost::ssl_certs_dir to not be set
@@ -61,6 +93,9 @@ This release features many improvements and bugfixes, including several new defi
 - Add authn_core mode to Ubuntu trusty defaults
 - Keep default loadfile for authz_svn on Debian
 - Remove '.conf' from the site-include regexp for better Ubuntu/Debian support
+- Load unixd before fcgid for EL7
+- Fix RedirectMatch rules
+- Fix misleading error message in apache::version
 
 ####Known Bugs
 * By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
