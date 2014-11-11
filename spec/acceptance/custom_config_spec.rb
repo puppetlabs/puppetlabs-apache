@@ -35,4 +35,21 @@ describe 'apache::custom_config define', :unless => UNSUPPORTED_PLATFORMS.includ
       it { is_expected.to contain '# just a comment' }
     end
   end
+
+  describe 'custom_config without priority prefix' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        apache::custom_config { 'prefix_test':
+          priority => false,
+          content => '# just a comment',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/prefix_test.conf") do
+      it { is_expected.to be_file }
+    end
+  end
 end

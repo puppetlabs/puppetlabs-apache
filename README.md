@@ -477,6 +477,8 @@ The content of the configuration file. Only one of `$content` and `$source` can 
 
 The priority of the configuration file, used for ordering. Defaults to '25'.
 
+Pass priority `false` to omit the priority prefix in file names.
+
 #####`source`
 
 The source of the configuration file. Only one of `$content` and `$source` can be specified.
@@ -1169,6 +1171,8 @@ Sets the relative load-order for Apache HTTPD VirtualHost configuration files. D
 If nothing matches the priority, the first name-based vhost is used. Likewise, passing a higher priority causes the alphabetically first name-based vhost to be used if no other names match.
 
 *Note:* You should not need to use this parameter. However, if you do use it, be aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'.
+
+Pass priority `false` to omit the priority prefix in file names.
 
 #####`proxy_dest`
 
