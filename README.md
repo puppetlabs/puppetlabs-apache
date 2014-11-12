@@ -20,6 +20,7 @@
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::php](#class-apachemodphp)
         * [Class: apache::mod::ssl](#class-apachemodssl)
+        * [Class: apache::mod::status](#class-apachemodstatus)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Class: apache::mod::fcgid](#class-apachemodfcgid)
         * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
@@ -556,7 +557,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `shib`* (see [`apache::mod::shib`](#class-apachemodshib) below)
 * `speling`
 * `ssl`* (see [`apache::mod::ssl`](#class-apachemodssl) below)
-* `status`*
+* `status`* (see [`apache::mod::status`](#class-apachemodstatus) below)
 * `suphp`
 * `userdir`*
 * `vhost_alias`
@@ -720,6 +721,21 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
 ```
 
 To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `::apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
+
+####Class: `apache::mod::status`
+
+Installs Apache mod_status and uses the status.conf.erb template. These are the defaults:
+
+```puppet
+    class { 'apache::mod::status':
+      allow_from      = ['127.0.0.1','::1'],
+      extended_status = 'On',
+      status_path     = '/server-status',
+){
+      
+      
+  }
+```
 
 ####Class: `apache::mod::wsgi`
 
