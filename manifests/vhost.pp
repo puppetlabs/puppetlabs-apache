@@ -491,6 +491,16 @@ define apache::vhost(
       content => template('apache/vhost/_fallbackresource.erb'),
     }
   }
+  
+  # Template uses:
+  # - $allow_encoded_slashes
+  if $allow_encoded_slashes {
+    concat::fragment { "${name}-allow_encoded_slashes":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 50,
+      content => template('apache/vhost/_allow_encoded_slashes.erb'),
+    }
+  }
 
   # Template uses:
   # - $_directories
@@ -501,7 +511,7 @@ define apache::vhost(
   if $_directories and ! empty($_directories) {
     concat::fragment { "${name}-directories":
       target  => "${priority_real}-${filename}.conf",
-      order   => 50,
+      order   => 60,
       content => template('apache/vhost/_directories.erb'),
     }
   }
@@ -511,7 +521,7 @@ define apache::vhost(
   if $additional_includes and ! empty($additional_includes) {
     concat::fragment { "${name}-additional_includes":
       target  => "${priority_real}-${filename}.conf",
-      order   => 60,
+      order   => 70,
       content => template('apache/vhost/_additional_includes.erb'),
     }
   }
@@ -524,7 +534,7 @@ define apache::vhost(
   if $error_log or $log_level {
     concat::fragment { "${name}-logging":
       target  => "${priority_real}-${filename}.conf",
-      order   => 70,
+      order   => 80,
       content => template('apache/vhost/_logging.erb'),
     }
   }
@@ -532,7 +542,7 @@ define apache::vhost(
   # Template uses no variables
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}-${filename}.conf",
-    order   => 80,
+    order   => 90,
     content => template('apache/vhost/_serversignature.erb'),
   }
 
@@ -545,7 +555,7 @@ define apache::vhost(
   if $access_log {
     concat::fragment { "${name}-access_log":
       target  => "${priority_real}-${filename}.conf",
-      order   => 90,
+      order   => 100,
       content => template('apache/vhost/_access_log.erb'),
     }
   }
@@ -555,7 +565,7 @@ define apache::vhost(
   if $action {
     concat::fragment { "${name}-action":
       target  => "${priority_real}-${filename}.conf",
-      order   => 100,
+      order   => 110,
       content => template('apache/vhost/_action.erb'),
     }
   }
@@ -566,7 +576,7 @@ define apache::vhost(
   if $block and ! empty($block) {
     concat::fragment { "${name}-block":
       target  => "${priority_real}-${filename}.conf",
-      order   => 110,
+      order   => 120,
       content => template('apache/vhost/_block.erb'),
     }
   }
@@ -576,7 +586,7 @@ define apache::vhost(
   if $error_documents and ! empty($error_documents) {
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}-${filename}.conf",
-      order   => 120,
+      order   => 130,
       content => template('apache/vhost/_error_document.erb'),
     }
   }
@@ -589,7 +599,7 @@ define apache::vhost(
   if $proxy_dest or $proxy_pass {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}-${filename}.conf",
-      order   => 130,
+      order   => 140,
       content => template('apache/vhost/_proxy.erb'),
     }
   }
@@ -599,7 +609,7 @@ define apache::vhost(
   if $rack_base_uris {
     concat::fragment { "${name}-rack":
       target  => "${priority_real}-${filename}.conf",
-      order   => 140,
+      order   => 150,
       content => template('apache/vhost/_rack.erb'),
     }
   }
@@ -620,7 +630,7 @@ define apache::vhost(
   if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}-${filename}.conf",
-      order   => 150,
+      order   => 160,
       content => template('apache/vhost/_redirect.erb'),
     }
   }
@@ -633,7 +643,7 @@ define apache::vhost(
   if $rewrites or $rewrite_rule {
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}-${filename}.conf",
-      order   => 160,
+      order   => 170,
       content => template('apache/vhost/_rewrite.erb'),
     }
   }
@@ -644,7 +654,7 @@ define apache::vhost(
   if $scriptaliases and ! empty($scriptaliases) {
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}-${filename}.conf",
-      order   => 170,
+      order   => 180,
       content => template('apache/vhost/_scriptalias.erb'),
     }
   }
@@ -654,7 +664,7 @@ define apache::vhost(
   if $serveraliases and ! empty($serveraliases) {
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}-${filename}.conf",
-      order   => 180,
+      order   => 190,
       content => template('apache/vhost/_serveralias.erb'),
     }
   }
@@ -665,7 +675,7 @@ define apache::vhost(
   if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}-${filename}.conf",
-      order   => 190,
+      order   => 200,
       content => template('apache/vhost/_setenv.erb'),
     }
   }
@@ -691,7 +701,7 @@ define apache::vhost(
   if $ssl {
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}-${filename}.conf",
-      order   => 200,
+      order   => 210,
       content => template('apache/vhost/_ssl.erb'),
     }
   }
@@ -703,7 +713,7 @@ define apache::vhost(
   if $suphp_engine == 'on' {
     concat::fragment { "${name}-suphp":
       target  => "${priority_real}-${filename}.conf",
-      order   => 210,
+      order   => 220,
       content => template('apache/vhost/_suphp.erb'),
     }
   }
@@ -714,7 +724,7 @@ define apache::vhost(
   if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
     concat::fragment { "${name}-php_admin":
       target  => "${priority_real}-${filename}.conf",
-      order   => 220,
+      order   => 230,
       content => template('apache/vhost/_php_admin.erb'),
     }
   }
@@ -724,7 +734,7 @@ define apache::vhost(
   if $headers and ! empty($headers) {
     concat::fragment { "${name}-header":
       target  => "${priority_real}-${filename}.conf",
-      order   => 230,
+      order   => 240,
       content => template('apache/vhost/_header.erb'),
     }
   }
@@ -734,7 +744,7 @@ define apache::vhost(
   if $request_headers and ! empty($request_headers) {
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}-${filename}.conf",
-      order   => 240,
+      order   => 250,
       content => template('apache/vhost/_requestheader.erb'),
     }
   }
@@ -751,7 +761,7 @@ define apache::vhost(
   if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
     concat::fragment { "${name}-wsgi":
       target  => "${priority_real}-${filename}.conf",
-      order   => 250,
+      order   => 260,
       content => template('apache/vhost/_wsgi.erb'),
     }
   }
@@ -761,7 +771,7 @@ define apache::vhost(
   if $custom_fragment {
     concat::fragment { "${name}-custom_fragment":
       target  => "${priority_real}-${filename}.conf",
-      order   => 260,
+      order   => 270,
       content => template('apache/vhost/_custom_fragment.erb'),
     }
   }
@@ -774,7 +784,7 @@ define apache::vhost(
   if $fastcgi_server or $fastcgi_dir {
     concat::fragment { "${name}-fastcgi":
       target  => "${priority_real}-${filename}.conf",
-      order   => 270,
+      order   => 280,
       content => template('apache/vhost/_fastcgi.erb'),
     }
   }
@@ -784,7 +794,7 @@ define apache::vhost(
   if $suexec_user_group {
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}-${filename}.conf",
-      order   => 280,
+      order   => 290,
       content => template('apache/vhost/_suexec.erb'),
     }
   }
@@ -798,7 +808,7 @@ define apache::vhost(
   if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}-${filename}.conf",
-      order   => 290,
+      order   => 300,
       content => template('apache/vhost/_passenger.erb'),
     }
   }
@@ -808,7 +818,7 @@ define apache::vhost(
   if $add_default_charset {
     concat::fragment { "${name}-charsets":
       target  => "${priority_real}-${filename}.conf",
-      order   => 300,
+      order   => 310,
       content => template('apache/vhost/_charsets.erb'),
     }
   }
