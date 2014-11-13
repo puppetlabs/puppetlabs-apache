@@ -28,6 +28,8 @@ define apache::vhost(
   $ssl_options                 = undef,
   $ssl_proxyengine             = false,
   $ssl_stapling                = true,
+  $ssl_stapling_timeout        = undef,
+  $ssl_stapling_return_errors  = undef,
   $priority                    = undef,
   $default_vhost               = false,
   $servername                  = $name,

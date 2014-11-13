@@ -46,4 +46,10 @@
   <%- if @ssl_stapling && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   SSLUseStapling On
   <%- end -%>
+  <%- if @ssl_stapling_timeout && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLStaplingResponderTimeout <%= @ssl_stapling_timeout %>
+  <%- end -%>
+  <%- if @ssl_stapling_return_errors && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLStaplingReturnResponderErrors <%= @ssl_stapling_return_errors %>
+  <%- end -%>
 <% end -%>

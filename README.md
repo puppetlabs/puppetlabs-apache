@@ -1909,6 +1909,14 @@ Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/cu
 
 Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid values are 'true' and 'false'. Defaults to 'true'.
 
+#####`ssl_stapling_timeout`
+
+Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive. No default.
+
+#####`ssl_stapling_return_errors`
+
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default.
+
 ####Defined Type: FastCGI Server
 
 This type is intended for use with mod_fastcgi. It allows you to define one or more external FastCGI servers to handle specific file types.
