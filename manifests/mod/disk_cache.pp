@@ -1,5 +1,5 @@
 class apache::mod::disk_cache {
-  if $::apache::apache_version >= 2.4 {
+  if versioncmp($::apache::apache_version, '2.4') >= 0 {
     $cache_root = $::osfamily ? {
       'debian'  => '/var/cache/apache2/mod_cache_disk',
       'redhat'  => '/var/cache/httpd/proxy',
