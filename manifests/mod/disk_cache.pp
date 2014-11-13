@@ -3,7 +3,7 @@ class apache::mod::disk_cache {
     $cache_root = $::osfamily ? {
       'debian'  => '/var/cache/apache2/mod_cache_disk',
       'redhat'  => '/var/cache/httpd/proxy',
-      'freebsd' => '/var/cache/mod_disk_cache', # TODO: Confirm
+      'freebsd' => '/var/cache/mod_cache_disk', # TODO: Confirm
     }
   }
   else {
