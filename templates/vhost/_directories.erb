@@ -195,6 +195,11 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
+    <%- if directory['setenv'] -%>
+      <%- Array(directory['setenv']).each do |setenv| -%>
+    SetEnv <%= setenv %>
+      <%- end -%>
+    <%- end -%>
     <%- if @shibboleth_enabled -%>
       <%- if directory['shib_require_session'] and ! directory['shib_require_session'].empty? -%>
     ShibRequireSession <%= directory['shib_require_session'] %>
