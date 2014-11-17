@@ -1582,7 +1582,10 @@ Pass a string of custom configuration directives to be placed at the end of the 
 ```puppet
   apache::vhost { 'monitor':
     …
-    custom_fragment => '
+    directories => [
+      {
+        path => '/path/to/directory',
+        custom_fragment => '
   <Location /balancer-manager>
     SetHandler balancer-manager
     Order allow,deny
@@ -1594,7 +1597,9 @@ Pass a string of custom configuration directives to be placed at the end of the 
     Allow from all
   </Location>
   ProxyStatus On',
-}
+      },
+    ]
+  }
 ```
 
 ######`deny`
