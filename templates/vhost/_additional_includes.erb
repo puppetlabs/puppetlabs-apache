@@ -1,5 +1,10 @@
 <% Array(@additional_includes).each do |include| -%>
   
   ## Load additional static includes
-  Include "<%= include %>"
+  <IfVersion < 2.4>
+    Include "<%= include %>"
+  </IfVersion>
+  <IfVersion >= 2.4>
+    IncludeOptional "<%= include %>"
+  </IfVersion>
 <% end -%>
