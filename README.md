@@ -16,6 +16,7 @@
         * [Class: apache::default_mods](#class-apachedefault_mods)
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
+        * [Class: apache::mod::event](#class-apachemodevent)
         * [Class: apache::mod::info](#class-apachemodinfo)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::php](#class-apachemodphp)
@@ -525,7 +526,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `dev`
 * `dir`*
 * `disk_cache`
-* `event`
+* `event`(see [`apache::mod::event`](#class-apachemodevent) below)
 * `expires`
 * `fastcgi`
 * `fcgid`
@@ -569,11 +570,26 @@ Modules noted with a * indicate that the module has settings and, thus, a templa
 
 The modules mentioned above, and other Apache modules that have templates, cause template files to be dropped along with the mod install. The module will not work without the template. Any module without a template installs the package but drops no files.
 
+####Class:  `apache::mod::event
+
+Installs and manages mpm_event module.
+
+Full Documentation for mpm_event is available from [Apache](https://httpd.apache.org/docs/current/mod/event.html).
+
+To configure the event thread limit:
+
+```puppet
+  class {'apache::mod::event':
+    $threadlimit      => '128',
+  }
+```
+  
+
 ####Class: `apache::mod::info`
 
 Installs and manages mod_info which provides a comprehensive overview of the server configuration.
 
-Full documentation for mod_info is available from [Apache](http://httpd.apache.org/docs/2.2/mod/mod_info.html).
+Full documentation for mod_info is available from [Apache](https://httpd.apache.org/docs/current/mod/mod_info.html).
 
 These are the default settings:
 
