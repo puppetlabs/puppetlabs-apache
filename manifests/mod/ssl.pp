@@ -1,10 +1,11 @@
 class apache::mod::ssl (
-  $ssl_compression = false,
-  $ssl_options     = [ 'StdEnvVars' ],
-  $ssl_cipher      = 'HIGH:MEDIUM:!aNULL:!MD5',
-  $ssl_protocol    = [ 'all', '-SSLv2', '-SSLv3' ],
-  $apache_version  = $::apache::apache_version,
-  $package_name    = undef,
+  $ssl_compression        = false,
+  $ssl_options            = [ 'StdEnvVars' ],
+  $ssl_cipher             = 'HIGH:MEDIUM:!aNULL:!MD5',
+  $ssl_protocol           = [ 'all', '-SSLv2', '-SSLv3' ],
+  $ssl_pass_phrase_dialog = 'builtin',
+  $apache_version         = $::apache::apache_version,
+  $package_name           = undef,
 ) {
   $session_cache = $::osfamily ? {
     'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",

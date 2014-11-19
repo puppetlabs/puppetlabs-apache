@@ -7,7 +7,7 @@
   AddType application/x-x509-ca-cert .crt
   AddType application/x-pkcs7-crl    .crl
 
-  SSLPassPhraseDialog  builtin
+  SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
 <% if @ssl_compression -%>

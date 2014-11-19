@@ -78,4 +78,33 @@ describe 'apache::mod::ssl', :type => :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
   end
+
+  # Template config doesn't vary by distro
+  context "on all distros" do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystem        => 'CentOS',
+        :operatingsystemrelease => '6',
+        :kernel                 => 'Linux',
+        :id                     => 'root',
+        :concat_basedir         => '/dne',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      }
+    end
+
+    context 'not setting ssl_pass_phrase_dialog' do
+      it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog builtin$/)}
+    end
+
+    context 'setting ssl_pass_phrase_dialog' do
+      let :params do
+        {
+          :ssl_pass_phrase_dialog => 'exec:/path/to/program',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog exec:\/path\/to\/program$/)}
+    end
+
+  end
 end
