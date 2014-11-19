@@ -1575,6 +1575,10 @@ Sets the value for [AuthType](http://httpd.apache.org/docs/current/mod/mod_authn
 
 Sets the value for [AuthUserFile](http://httpd.apache.org/docs/current/mod/mod_authn_file.html#authuserfile), which sets the name of the text file containing the users/passwords for authentication.
 
+######`auth_external`
+
+Sets the value for [AuthExternal](https://code.google.com/p/mod-auth-external/wiki/ModAuthzUnixGroup), which sets an external module to authenticate users. 
+
 ######`custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the directory configuration.
