@@ -104,7 +104,7 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
-    if $::osfamily == "RedHat" {
+    if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
       $wsgi_socket_prefix = undef
