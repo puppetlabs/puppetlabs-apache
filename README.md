@@ -14,6 +14,7 @@
         * [Class: apache::default_mods](#class-apachedefault_mods)
         * [Defined Type: apache::mod](#defined-type-apachemod)
         * [Classes: apache::mod::*](#classes-apachemodname)
+        * [Class: apache::mod::alias](#class-apachemodalias)
         * [Class: apache::mod::event](#class-apachemodevent)
         * [Class: apache::mod::info](#class-apachemodinfo)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
@@ -517,7 +518,7 @@ Used to enable arbitrary Apache HTTPD modules for which there is no specific `ap
 There are many `apache::mod::[name]` classes within this module that can be declared using `include`:
 
 * `actions`
-* `alias`
+* `alias`(see [`apache::mod::alias`](#class-apachemodalias) below)
 * `auth_basic`
 * `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas) below)
 * `auth_kerb`
@@ -578,6 +579,19 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 Modules noted with a * indicate that the module has settings and, thus, a template that includes parameters. These parameters control the module's configuration. Most of the time, these parameters do not require any configuration or attention.
 
 The modules mentioned above, and other Apache modules that have templates, cause template files to be dropped along with the mod install. The module will not work without the template. Any module without a template installs the package but drops no files.
+
+###Class: `apache::mod::alias`
+
+Installs and manages the alias module.
+
+Full Documentation for alias is available from [Apache](https://httpd.apache.org/docs/current/mod/mod_alias.html).
+
+To disable directory listing for the icons directory:
+```puppet
+  class { 'apache::mod::alias':
+    icons_options => 'None',
+  }
+```
 
 ####Class:  `apache::mod::event`
 

@@ -1,5 +1,6 @@
 class apache::mod::alias(
-  $apache_version = $apache::apache_version
+  $apache_version = $apache::apache_version,
+  $icons_options  = 'Indexes MultiViews',
 ) {
   $ver24 = versioncmp($apache_version, '2.4') >= 0
 
