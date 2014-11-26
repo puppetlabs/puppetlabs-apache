@@ -10,8 +10,10 @@ class apache::mod::prefork (
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
   }
-  if defined(Class['apache::mod::itk']) {
-    fail('May not include both apache::mod::prefork and apache::mod::itk on the same node')
+  if versioncmp($apache_version, '2.4') < 0 {
+    if defined(Class['apache::mod::itk']) {
+      fail('May not include both apache::mod::prefork and apache::mod::itk on the same node')
+    }
   }
   if defined(Class['apache::mod::peruser']) {
     fail('May not include both apache::mod::prefork and apache::mod::peruser on the same node')
