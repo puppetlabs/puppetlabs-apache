@@ -66,6 +66,8 @@ class apache (
   $trace_enable           = 'On',
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
+  $default_vhost_options  = ['Indexes','FollowSymLinks','MultiViews'],
+  $default_vhost_override = ['None'],
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
