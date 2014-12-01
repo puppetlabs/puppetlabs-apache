@@ -45,6 +45,13 @@ define apache::mpm (
           before  => File[$::apache::mod_enable_dir],
           notify  => Service['httpd'],
         }
+        
+        if $mpm == 'itk' {
+            file { "${lib_path}/mod_mpm_itk.so":
+              ensure  => link,
+              target  => "${lib_path}/mpm_itk.so"
+            }
+        }
       }
 
       if versioncmp($apache_version, '2.4') < 0 {
