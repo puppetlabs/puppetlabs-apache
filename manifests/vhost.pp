@@ -106,6 +106,10 @@ define apache::vhost(
   $passenger_start_timeout     = undef,
   $passenger_pre_start         = undef,
   $add_default_charset         = undef,
+  $modsec_disable_vhost        = undef,
+  $modsec_disable_ids          = undef,
+  $modsec_disable_ips          = undef,
+  $modsec_body_limit           = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -414,6 +418,17 @@ define apache::vhost(
     $_directories = [ merge($_directory, $_directory_version) ]
   }
 
+  ## Create a global LocationMatch if locations aren't defined
+  if $modsec_disable_ids {
+    if is_hash($modsec_disable_ids) {
+      $_modsec_disable_ids = $modsec_disable_ids
+    } elsif is_array($modsec_disable_ids) {
+      $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
+    } else {
+      fail("Apache::Vhost[${name}]: 'modsec_disable_ids' must be either a Hash of location/IDs or an Array of IDs")
+    }
+  }
+
   concat { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${::apache::vhost_dir}/${priority_real}-${filename}.conf",
@@ -491,7 +506,7 @@ define apache::vhost(
       content => template('apache/vhost/_fallbackresource.erb'),
     }
   }
-  
+
   # Template uses:
   # - $allow_encoded_slashes
   if $allow_encoded_slashes {
@@ -820,6 +835,19 @@ define apache::vhost(
       target  => "${priority_real}-${filename}.conf",
       order   => 310,
       content => template('apache/vhost/_charsets.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $modsec_disable_vhost
+  # - $modsec_disable_ids
+  # - $modsec_disable_ips
+  # - $modsec_body_limit
+  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips {
+    concat::fragment { "${name}-security":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 320,
+      content => template('apache/vhost/_security.erb')
     }
   }
 
