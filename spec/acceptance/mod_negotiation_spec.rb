@@ -14,6 +14,10 @@ describe 'apache::mod::negotiation class', :unless => UNSUPPORTED_PLATFORMS.incl
     vhost_dir    = '/usr/local/etc/apache22/Vhosts'
     mod_dir      = '/usr/local/etc/apache22/Modules'
     service_name = 'apache22'
+  when 'Gentoo'
+    vhost_dir    = '/etc/apache2/vhosts.d'
+    mod_dir      = '/etc/apache2/modules.d'
+    service_name = 'apache2'
   end
 
   context "default negotiation config" do

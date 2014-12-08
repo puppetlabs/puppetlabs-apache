@@ -124,4 +124,21 @@ describe 'apache::service', :type => :class do
       )
     }
   end
+  context "on a Gentoo OS" do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      }
+    end
+    it { is_expected.to contain_service("httpd").with(
+      'name'      => 'apache2',
+      'ensure'    => 'running',
+      'enable'    => 'true'
+      )
+    }
+  end
 end

@@ -18,6 +18,10 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
     mod_dir             = '/usr/local/etc/apache22/Modules'
     service_name        = 'apache22'
     authz_svn_load_file = 'dav_svn_authz_svn.load'
+  when 'FreeBSD'
+    mod_dir             = '/etc/apache2/modules.d'
+    service_name        = 'apache2'
+    authz_svn_load_file = 'dav_svn_authz_svn.load'
   end
 
   context "default dav_svn config" do

@@ -138,4 +138,23 @@ describe 'apache::mod::info', :type => :class do
     } ) }
   end
 
+  context 'on a Gentoo OS' do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      }
+    end
+
+    # Load the more generic tests for this context
+    general_info_specs()
+
+    it { is_expected.to contain_file('info.conf').with({
+      :ensure => 'file',
+      :path   => '/etc/apache2/modules.d/info.conf',
+    } ) }
+  end
 end
