@@ -266,7 +266,7 @@ class apache (
         $scriptalias          = '/var/www/localhost/cgi-bin'
         $access_log_file      = 'access.log'
 
-        portage::makeconf { 'apache2_modules':
+        ::portage::makeconf { 'apache2_modules':
           content => $default_mods,
           notify  => Package['httpd'],
         }
