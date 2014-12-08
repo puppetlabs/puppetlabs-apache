@@ -22,7 +22,7 @@ class apache::default_mods (
   }
   case $::osfamily {
     'gentoo': {}
-    'default': {
+    default: {
       ::apache::mod { 'authz_host': }
     }
   }
