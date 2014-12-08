@@ -61,7 +61,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :concat_basedir         => '/dne',
+        :operatingsystemrelease => '3.16.1-gentoo',
       }
     end
     it { is_expected.to contain_class("apache::params") }

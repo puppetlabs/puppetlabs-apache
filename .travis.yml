@@ -1,5 +1,7 @@
 ---
 language: ruby
+before_script:
+  - 'git clone git://github.com/gentoo/puppet-portage.git spec/fixtures/modules/portage'
 bundler_args: --without development
 script: "bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'"
 matrix:
