@@ -306,11 +306,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine     = 'off'
     $suphp_configpath = '/etc/php5/apache2'
     $mod_packages     = {
-      # NOTE: I list here only modules that are not included in www/apache22
-      # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
-      # NOTE: 'php' needs to enable APACHE option in make config
-      # NOTE: 'dav_svn' needs to enable MOD_DAV_SVN make config
-      # NOTE: not sure where the shibboleth should come from
+      # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'  => 'www-apache/mod_auth_kerb',
       'fcgid'      => 'www-apache/mod_fcgid',
       'passenger'  => 'www-apache/passenger',
