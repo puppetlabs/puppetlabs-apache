@@ -84,6 +84,7 @@ describe 'apache::vhost', :type => :define do
         {
           :osfamily               => 'Gentoo',
           :operatingsystem        => 'Gentoo',
+          :operatingsystemrelease => '3.16.1-gentoo',
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',

@@ -60,6 +60,7 @@ describe 'apache::mod::dav_svn', :type => :class do
     let :facts do
       {
         :id                     => 'root',
+        :operatingsystemrelease => '3.16.1-gentoo',
         :kernel                 => 'Linux',
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',

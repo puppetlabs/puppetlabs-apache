@@ -47,6 +47,7 @@ describe 'apache::dev', :type => :class do
       {
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
       }
     end
     it { is_expected.to contain_class("apache::params") }

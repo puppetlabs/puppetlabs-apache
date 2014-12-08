@@ -57,8 +57,7 @@ describe 'apache::mod::perl', :type => :class do
     let :facts do
       {
         :osfamily               => 'Gentoo',
-        :operatingsystemrelease => '9',
-        :concat_basedir         => '/dne',
+        :operatingsystemrelease => '3.16.1-gentoo',
         :operatingsystem        => 'Gentoo',
         :id                     => 'root',
         :kernel                 => 'Linux',

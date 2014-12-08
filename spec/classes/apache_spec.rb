@@ -576,6 +576,7 @@ describe 'apache', :type => :class do
         :kernel                 => 'Linux',
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
       }
     end
