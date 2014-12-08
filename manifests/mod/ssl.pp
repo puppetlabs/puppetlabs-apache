@@ -10,6 +10,7 @@ class apache::mod::ssl (
     'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
     'redhat'  => '/var/cache/mod_ssl/scache(512000)',
     'freebsd' => '/var/run/ssl_scache(512000)',
+    'gentoo'  => '/var/run/ssl_scache(512000)',
   }
 
   case $::osfamily {
@@ -26,6 +27,9 @@ class apache::mod::ssl (
       $ssl_mutex = 'default'
     }
     'freebsd': {
+      $ssl_mutex = 'default'
+    }
+    'gentoo': {
       $ssl_mutex = 'default'
     }
     default: {

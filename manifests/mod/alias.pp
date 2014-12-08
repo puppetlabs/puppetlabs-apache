@@ -5,6 +5,7 @@ class apache::mod::alias(
     'debian'  => '/usr/share/apache2/icons',
     'redhat'  => '/var/www/icons',
     'freebsd' => '/usr/local/www/apache22/icons',
+    'gentoo' => '/usr/share/apache2/icons',
   }
   apache::mod { 'alias': }
   # Template uses $icons_path

@@ -65,6 +65,7 @@ class apache::mod::prefork (
         apache_version => $apache_version,
       }
     }
+    'gentoo': {}
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
