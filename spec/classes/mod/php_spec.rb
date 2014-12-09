@@ -182,36 +182,6 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_package("lang/php5") }
       it { is_expected.to contain_file('php5.load') }
     end
-    context "with mpm_module => worker" do
-      let :pre_condition do
-        'class { "apache": mpm_module => worker, }'
-      end
-      it { is_expected.to contain_class('apache::params') }
-      it { is_expected.to contain_class('apache::mod::worker') }
-      it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
-      it { is_expected.to contain_file('php5.load') }
-    end
-    context "with mpm_module => peruser" do
-      let :pre_condition do
-        'class { "apache": mpm_module => peruser, }'
-      end
-      it { is_expected.to contain_class('apache::params') }
-      it { is_expected.to contain_class('apache::mod::peruser') }
-      it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
-      it { is_expected.to contain_file('php5.load') }
-    end
-    context "with mpm_module => event" do
-      let :pre_condition do
-        'class { "apache": mpm_module => event, }'
-      end
-      it { is_expected.to contain_class('apache::params') }
-      it { is_expected.to contain_class('apache::mod::event') }
-      it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
-      it { is_expected.to contain_file('php5.load') }
-    end
   end
   describe "OS independent tests" do
     let :facts do
