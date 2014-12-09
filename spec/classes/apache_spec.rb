@@ -582,7 +582,6 @@ describe 'apache', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_class("apache::package").with({'ensure' => 'present'}) }
     it { is_expected.to contain_user("apache") }
     it { is_expected.to contain_group("apache") }
     it { is_expected.to contain_class("apache::service") }
