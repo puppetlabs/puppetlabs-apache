@@ -302,6 +302,8 @@ class apache::params inherits ::apache::version {
     $ssl_certs_dir    = '/etc/ssl/apache2'
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
+    $passenger_conf_file = 'passenger.conf'
+    $passenger_conf_package_file = undef
     $suphp_addhandler = 'x-httpd-php'
     $suphp_engine     = 'off'
     $suphp_configpath = '/etc/php5/apache2'
@@ -319,6 +321,7 @@ class apache::params inherits ::apache::version {
       'dav_svn'    => 'dev-vcs/subversion',
       'xsendfile'  => 'www-apache/mod_xsendfile',
       'rpaf'       => 'www-apache/mod_rpaf',
+      'xml2enc'    => 'www-apache/mod_xml2enc',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
