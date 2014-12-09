@@ -61,6 +61,7 @@ describe 'apache::mod::dav_svn', :type => :class do
       {
         :id                     => 'root',
         :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
         :kernel                 => 'Linux',
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',

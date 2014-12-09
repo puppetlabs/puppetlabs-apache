@@ -158,6 +158,7 @@ describe 'apache::mod::php', :type => :class do
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',
         :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',

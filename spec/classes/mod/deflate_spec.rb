@@ -107,6 +107,7 @@ describe 'apache::mod::deflate', :type => :class do
         :operatingsystem        => 'Gentoo',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
         :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
       }
     end
 
