@@ -39,4 +39,18 @@ describe 'apache::dev', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
   end
+  context "on a Gentoo OS" do
+    let :pre_condition do
+      'include apache::package'
+    end
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+  end
 end

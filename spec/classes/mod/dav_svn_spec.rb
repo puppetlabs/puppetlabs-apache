@@ -56,4 +56,20 @@ describe 'apache::mod::dav_svn', :type => :class do
     it { is_expected.to contain_apache__mod('dav_svn') }
     it { is_expected.to contain_package("devel/subversion") }
   end
+  context "on a Gentoo OS", :compile do
+    let :facts do
+      {
+        :id                     => 'root',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :kernel                 => 'Linux',
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('dav_svn') }
+    it { is_expected.to contain_package("dev-vcs/subversion") }
+  end
 end

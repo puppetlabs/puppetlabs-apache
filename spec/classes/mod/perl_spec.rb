@@ -53,4 +53,20 @@ describe 'apache::mod::perl', :type => :class do
     it { is_expected.to contain_apache__mod('perl') }
     it { is_expected.to contain_package("www/mod_perl2") }
   end
+  context "on a Gentoo OS" do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'Gentoo',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod('perl') }
+    it { is_expected.to contain_package("www-apache/mod_perl") }
+  end
 end

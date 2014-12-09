@@ -111,6 +111,22 @@ describe 'apache::mod::worker', :type => :class do
     it { is_expected.not_to contain_apache__mod('worker') }
     it { is_expected.to contain_file("/usr/local/etc/apache22/Modules/worker.conf").with_ensure('file') }
   end
+  context "on a Gentoo OS" do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.not_to contain_apache__mod('worker') }
+    it { is_expected.to contain_file("/etc/apache2/modules.d/worker.conf").with_ensure('file') }
+  end
 
   # Template config doesn't vary by distro
   context "on all distros" do

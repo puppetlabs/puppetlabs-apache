@@ -66,6 +66,12 @@ class apache::mod::peruser (
         mpm_module => 'peruser'
       }
     }
+    'gentoo': {
+      ::portage::makeconf { 'apache2_mpms':
+        content => 'peruser',
+        notify  => Package['httpd'],
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
