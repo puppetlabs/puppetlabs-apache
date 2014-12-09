@@ -311,6 +311,7 @@ class apache::params inherits ::apache::version {
       'fcgid'      => 'www-apache/mod_fcgid',
       'passenger'  => 'www-apache/passenger',
       'perl'       => 'www-apache/mod_perl',
+      'php5'       => 'dev-lang/php',
       'proxy_html' => 'www-apache/mod_proxy_html',
       'proxy_fcgi' => 'www-apache/mod_proxy_fcgi',
       'python'     => 'www-apache/mod_python',

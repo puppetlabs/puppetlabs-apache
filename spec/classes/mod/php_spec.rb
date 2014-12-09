@@ -170,7 +170,7 @@ describe 'apache::mod::php', :type => :class do
       end
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
+      it { is_expected.to contain_package("dev-lang/php") }
       it { is_expected.to contain_file('php5.load') }
     end
     context "with mpm_module => itk" do
@@ -180,7 +180,7 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_class('apache::mod::itk') }
       it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
+      it { is_expected.to contain_package("dev-lang/php") }
       it { is_expected.to contain_file('php5.load') }
     end
   end
