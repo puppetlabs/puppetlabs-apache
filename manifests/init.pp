@@ -50,7 +50,9 @@ class apache (
   $manage_user            = true,
   $manage_group           = true,
   $user                   = $::apache::params::user,
+  $uid                    = $::apache::params::uid,
   $group                  = $::apache::params::group,
+  $gid                    = $::apache::params::gid,
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
   $max_keepalive_requests = $apache::params::max_keepalive_requests,
@@ -105,15 +107,18 @@ class apache (
   validate_bool($manage_user)
   if $manage_user {
     user { $user:
-      ensure  => present,
-      gid     => $group,
-      require => Package['httpd'],
+      ensure    => present,
+      uid       => $uid,
+      allowdupe => true,
+      gid       => $group,
+      require   => Package['httpd'],
     }
   }
   validate_bool($manage_group)
   if $manage_group {
     group { $group:
       ensure  => present,
+      gid     => $gid,
       require => Package['httpd']
     }
   }

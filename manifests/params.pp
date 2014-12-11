@@ -35,7 +35,9 @@ class apache::params inherits ::apache::version {
   }
   if $::osfamily == 'RedHat' or $::operatingsystem == 'amazon' {
     $user                 = 'apache'
+    $uid                  = 48
     $group                = 'apache'
+    $gid                  = 48
     $root_group           = 'root'
     $apache_name          = 'httpd'
     $service_name         = 'httpd'
@@ -138,7 +140,9 @@ class apache::params inherits ::apache::version {
     ]
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
+    $uid                 = 33
     $group               = 'www-data'
+    $gid                 = 33
     $root_group          = 'root'
     $apache_name         = 'apache2'
     $service_name        = 'apache2'
@@ -269,7 +273,9 @@ class apache::params inherits ::apache::version {
     $wsgi_socket_prefix = undef
   } elsif $::osfamily == 'FreeBSD' {
     $user             = 'www'
+    $uid              = 80
     $group            = 'www'
+    $gid              = 80
     $root_group       = 'wheel'
     $apache_name      = 'apache22'
     $service_name     = 'apache22'
