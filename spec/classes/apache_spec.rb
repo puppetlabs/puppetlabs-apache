@@ -516,11 +516,11 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_class("apache::package").with({'ensure' => 'present'}) }
     it { is_expected.to contain_user("www").with(
-      'uid' => 80,
+      'uid' => 80
       )
     }
     it { is_expected.to contain_group("www").with(
-      'gid' => 80,
+      'gid' => 80
       )
     }
     it { is_expected.to contain_class("apache::service") }
