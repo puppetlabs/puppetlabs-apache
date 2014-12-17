@@ -860,7 +860,7 @@ mod_reqtimeout configuration.
   }
 ```
 
-####Class: `apache::mod::reqtimeout`
+####Class: `apache::mod::version`
 
 This wrapper around mod_version warns on Debian and Ubuntu systems with Apache httpd 2.4
 about loading mod_version, as on these platforms it's already built-in.
