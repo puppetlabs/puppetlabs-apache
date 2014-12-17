@@ -32,6 +32,10 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
+
+    describe port(80) do
+      it { should be_listening }
+    end
   end
 
   context 'custom site/mod dir parameters' do
