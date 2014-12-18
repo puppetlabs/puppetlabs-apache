@@ -20,8 +20,14 @@ describe 'apache', :type => :class do
       'ensure' => 'installed'
       )
     }
-    it { is_expected.to contain_user("www-data") }
-    it { is_expected.to contain_group("www-data") }
+    it { is_expected.to contain_user("www-data").with(
+      'uid' => 33
+      )
+    }
+    it { is_expected.to contain_group("www-data").with(
+      'gid' => 33
+      )
+    }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/var/www").with(
       'ensure'  => 'directory'
@@ -226,8 +232,14 @@ describe 'apache', :type => :class do
       'ensure' => 'installed'
       )
     }
-    it { is_expected.to contain_user("apache") }
-    it { is_expected.to contain_group("apache") }
+    it { is_expected.to contain_user("apache").with(
+      'uid' => 48
+      )
+    }
+    it { is_expected.to contain_group("apache").with(
+      'gid' => 48
+      )
+    }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/var/www/html").with(
       'ensure'  => 'directory'
@@ -503,8 +515,14 @@ describe 'apache', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_class("apache::package").with({'ensure' => 'present'}) }
-    it { is_expected.to contain_user("www") }
-    it { is_expected.to contain_group("www") }
+    it { is_expected.to contain_user("www").with(
+      'uid' => 80
+      )
+    }
+    it { is_expected.to contain_group("www").with(
+      'gid' => 80
+      )
+    }
     it { is_expected.to contain_class("apache::service") }
     it { is_expected.to contain_file("/usr/local/www/apache22/data").with(
       'ensure'  => 'directory'
