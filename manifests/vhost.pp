@@ -60,6 +60,8 @@ define apache::vhost(
   $suphp_addhandler            = $::apache::params::suphp_addhandler,
   $suphp_engine                = $::apache::params::suphp_engine,
   $suphp_configpath            = $::apache::params::suphp_configpath,
+  $php_flags                   = {},
+  $php_values                  = {},
   $php_admin_flags             = {},
   $php_admin_values            = {},
   $no_proxy_uris               = [],
@@ -730,6 +732,17 @@ define apache::vhost(
       target  => "${priority_real}-${filename}.conf",
       order   => 220,
       content => template('apache/vhost/_suphp.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $php_values
+  # - $php_flags
+  if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
+    concat::fragment { "${name}-php":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 220,
+      content => template('apache/vhost/_php.erb'),
     }
   }
 
