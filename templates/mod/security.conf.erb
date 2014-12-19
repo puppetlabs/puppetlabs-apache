@@ -54,7 +54,7 @@
     SecAuditLogType Serial
     SecArgumentSeparator &
     SecCookieFormat 0
-<%- if scope.lookupvar('::operatingsystem') == 'Ubuntu' -%>
+<%- if scope.lookupvar('::osfamily') == 'Debian' -%>
     SecDebugLog /var/log/apache2/modsec_debug.log
     SecAuditLog /var/log/apache2/modsec_audit.log
     SecTmpDir /var/cache/modsecurity
