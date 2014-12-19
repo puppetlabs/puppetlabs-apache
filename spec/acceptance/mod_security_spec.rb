@@ -101,7 +101,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
         apache::vhost { 'modsec.example.com':
           port                 => '80',
           docroot              => '/var/www/html',
-          modsec_disable_vhost => false,
+          modsec_disable_vhost => true,
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
