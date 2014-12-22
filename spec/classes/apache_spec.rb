@@ -488,6 +488,42 @@ describe 'apache', :type => :class do
         it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^EnableSendfile Off\n} }
       end
     end
+    context "on Fedora" do
+      let :facts do
+        super().merge({
+          :operatingsystem => 'Fedora'
+        })
+      end
+
+      context "21" do
+        let :facts do
+          super().merge({
+            :lsbdistrelease         => '21',
+            :operatingsystemrelease => '21'
+          })
+        end
+        it { is_expected.to contain_class('apache').with_apache_version('2.4') }
+      end
+      context "Rawhide" do
+        let :facts do
+          super().merge({
+            :lsbdistrelease         => 'Rawhide',
+            :operatingsystemrelease => 'Rawhide'
+          })
+        end
+        it { is_expected.to contain_class('apache').with_apache_version('2.4') }
+      end
+      # kinda obsolete
+      context "17" do
+        let :facts do
+          super().merge({
+            :lsbdistrelease         => '17',
+            :operatingsystemrelease => '17'
+          })
+        end
+        it { is_expected.to contain_class('apache').with_apache_version('2.2') }
+      end
+    end
   end
   context "on a FreeBSD OS" do
     let :facts do
