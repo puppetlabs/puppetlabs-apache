@@ -6,7 +6,9 @@ class apache::mod::php (
   $content        = undef,
   $template       = 'apache/mod/php5.conf.erb',
   $source         = undef,
-) {
+  $root_group     = $::apache::params::root_group,
+) inherits apache::params {
+
   if defined(Class['::apache::mod::prefork']) {
     Class['::apache::mod::prefork']->File['php5.conf']
   }
@@ -47,7 +49,7 @@ class apache::mod::php (
     ensure  => file,
     path    => "${::apache::mod_dir}/php5.conf",
     owner   => 'root',
-    group   => 'root',
+    group   => $root_group,
     mode    => '0644',
     content => $manage_content,
     source  => $source,

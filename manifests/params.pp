@@ -309,7 +309,7 @@ class apache::params inherits ::apache::version {
       'fcgid'      => 'www/mod_fcgid',
       'passenger'  => 'www/rubygem-passenger',
       'perl'       => 'www/mod_perl2',
-      'php5'       => 'lang/php5',
+      'php5'       => 'www/mod_php5',
       'proxy_html' => 'www/mod_proxy_html',
       'python'     => 'www/mod_python3',
       'wsgi'       => 'www/mod_wsgi',

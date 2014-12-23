@@ -126,9 +126,6 @@ class apache::default_mods (
         id => 'authz_core_module',
       }
 
-      # filter is needed by mod_deflate
-      ::apache::mod { 'filter': }
-
       # lots of stuff seems to break without access_compat
       ::apache::mod { 'access_compat': }
     } else {
