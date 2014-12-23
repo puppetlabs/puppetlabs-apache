@@ -9,8 +9,8 @@ describe 'apache::mod::deflate class' do
     mod_dir      = '/etc/httpd/conf.d'
     service_name = 'httpd'
   when 'FreeBSD'
-    mod_dir      = '/usr/local/etc/apache22/Modules'
-    service_name = 'apache22'
+    mod_dir      = '/usr/local/etc/apache24/Modules'
+    service_name = 'apache24'
   end
 
   context "default deflate config" do

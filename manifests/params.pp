@@ -110,7 +110,7 @@ class apache::params inherits ::apache::version {
       '7'     => '/usr/share/httpd/error',
       default => '/var/www/error'
     }
-    if $::osfamily == "RedHat" {
+    if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
       $wsgi_socket_prefix = undef
@@ -282,9 +282,9 @@ class apache::params inherits ::apache::version {
     $user             = 'www'
     $group            = 'www'
     $root_group       = 'wheel'
-    $apache_name      = 'apache22'
-    $service_name     = 'apache22'
-    $httpd_dir        = '/usr/local/etc/apache22'
+    $apache_name      = 'apache24'
+    $service_name     = 'apache24'
+    $httpd_dir        = '/usr/local/etc/apache24'
     $server_root      = '/usr/local'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/Includes"
@@ -294,14 +294,14 @@ class apache::params inherits ::apache::version {
     $vhost_enable_dir = undef
     $conf_file        = 'httpd.conf'
     $ports_file       = "${conf_dir}/ports.conf"
-    $logroot          = '/var/log/apache22'
+    $logroot          = '/var/log/apache24'
     $logroot_mode     = undef
-    $lib_path         = '/usr/local/libexec/apache22'
+    $lib_path         = '/usr/local/libexec/apache24'
     $mpm_module       = 'prefork'
     $dev_packages     = undef
-    $default_ssl_cert = '/usr/local/etc/apache22/server.crt'
-    $default_ssl_key  = '/usr/local/etc/apache22/server.key'
-    $ssl_certs_dir    = '/usr/local/etc/apache22'
+    $default_ssl_cert = '/usr/local/etc/apache24/server.crt'
+    $default_ssl_key  = '/usr/local/etc/apache24/server.key'
+    $ssl_certs_dir    = '/usr/local/etc/apache24'
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
     $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
@@ -311,7 +311,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine     = 'off'
     $suphp_configpath = undef
     $mod_packages     = {
-      # NOTE: I list here only modules that are not included in www/apache22
+      # NOTE: I list here only modules that are not included in www/apache24
       # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
       # NOTE: 'php' needs to enable APACHE option in make config
       # NOTE: 'dav_svn' needs to enable MOD_DAV_SVN make config
@@ -320,7 +320,7 @@ class apache::params inherits ::apache::version {
       'fcgid'      => 'www/mod_fcgid',
       'passenger'  => 'www/rubygem-passenger',
       'perl'       => 'www/mod_perl2',
-      'php5'       => 'lang/php5',
+      'php5'       => 'www/mod_php5',
       'proxy_html' => 'www/mod_proxy_html',
       'python'     => 'www/mod_python3',
       'wsgi'       => 'www/mod_wsgi',
@@ -340,8 +340,8 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
-    $docroot              = '/usr/local/www/apache22/data'
-    $error_documents_path = '/usr/local/www/apache22/error'
+    $docroot              = '/usr/local/www/apache24/data'
+    $error_documents_path = '/usr/local/www/apache24/error'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

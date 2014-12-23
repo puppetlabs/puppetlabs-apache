@@ -8,8 +8,8 @@ when 'Debian'
   mod_dir     = '/etc/apache2/mods-available'
   servicename = 'apache2'
 when 'FreeBSD'
-  mod_dir     = '/usr/local/etc/apache22/Modules'
-  servicename = 'apache22'
+  mod_dir     = '/usr/local/etc/apache24/Modules'
+  servicename = 'apache24'
 end
 
 describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do

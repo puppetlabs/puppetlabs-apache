@@ -4,6 +4,12 @@ class apache::mod::disk_cache {
     'redhat'  => '/var/cache/mod_proxy',
     'freebsd' => '/var/cache/mod_disk_cache',
   }
+
+  $mod_name = $::osfamily ? {
+    'FreeBSD' => 'cache_disk',
+    default   => 'disk_cache',
+  }
+
   if $::osfamily != 'FreeBSD' {
     # FIXME: investigate why disk_cache was dependent on proxy
     # NOTE: on FreeBSD disk_cache is compiled by default but proxy is not
@@ -11,7 +17,7 @@ class apache::mod::disk_cache {
   }
   Class['::apache::mod::cache'] -> Class['::apache::mod::disk_cache']
 
-  apache::mod { 'disk_cache': }
+  apache::mod { $mod_name: }
   # Template uses $cache_proxy
   file { 'disk_cache.conf':
     ensure  => file,

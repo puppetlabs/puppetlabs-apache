@@ -540,7 +540,7 @@ describe 'apache', :type => :class do
         :kernel                 => 'FreeBSD',
         :osfamily               => 'FreeBSD',
         :operatingsystem        => 'FreeBSD',
-        :operatingsystemrelease => '9',
+        :operatingsystemrelease => '10',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :is_pe                  => false,
@@ -551,25 +551,25 @@ describe 'apache', :type => :class do
     it { is_expected.to contain_user("www") }
     it { is_expected.to contain_group("www") }
     it { is_expected.to contain_class("apache::service") }
-    it { is_expected.to contain_file("/usr/local/www/apache22/data").with(
+    it { is_expected.to contain_file("/usr/local/www/apache24/data").with(
       'ensure'  => 'directory'
       )
     }
-    it { is_expected.to contain_file("/usr/local/etc/apache22/Vhosts").with(
+    it { is_expected.to contain_file("/usr/local/etc/apache24/Vhosts").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
       'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
     ) }
-    it { is_expected.to contain_file("/usr/local/etc/apache22/Modules").with(
+    it { is_expected.to contain_file("/usr/local/etc/apache24/Modules").with(
       'ensure'  => 'directory',
       'recurse' => 'true',
       'purge'   => 'true',
       'notify'  => 'Class[Apache::Service]',
       'require' => 'Package[httpd]'
     ) }
-    it { is_expected.to contain_concat("/usr/local/etc/apache22/ports.conf").with(
+    it { is_expected.to contain_concat("/usr/local/etc/apache24/ports.conf").with(
       'owner'   => 'root',
       'group'   => 'wheel',
       'mode'    => '0644',
@@ -579,7 +579,6 @@ describe 'apache', :type => :class do
     [
       'auth_basic',
       'authn_file',
-      'authz_default',
       'authz_groupfile',
       'authz_host',
       'authz_user',
@@ -587,7 +586,7 @@ describe 'apache', :type => :class do
       'env'
     ].each do |modname|
       it { is_expected.to contain_file("#{modname}.load").with(
-        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.load",
+        'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
         'ensure' => 'file'
       ) }
       it { is_expected.not_to contain_file("#{modname}.conf") }
@@ -605,11 +604,11 @@ describe 'apache', :type => :class do
       'setenvif',
     ].each do |modname|
       it { is_expected.to contain_file("#{modname}.load").with(
-        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.load",
+        'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
         'ensure' => 'file'
       ) }
       it { is_expected.to contain_file("#{modname}.conf").with(
-        'path'   => "/usr/local/etc/apache22/Modules/#{modname}.conf",
+        'path'   => "/usr/local/etc/apache24/Modules/#{modname}.conf",
         'ensure' => 'file'
       ) }
     end

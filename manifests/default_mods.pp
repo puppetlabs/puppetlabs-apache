@@ -7,7 +7,7 @@ class apache::default_mods (
   # They are not configurable at this time, so we just include
   # them to make sure it works.
   case $::osfamily {
-    'redhat', 'freebsd': {
+    'redhat': {
       ::apache::mod { 'log_config': }
       if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
@@ -17,6 +17,10 @@ class apache::default_mods (
         }
         ::apache::mod { 'unixd': }
       }
+    }
+    'freebsd': {
+      ::apache::mod { 'log_config': }
+      ::apache::mod { 'unixd': }
     }
     default: {}
   }
@@ -74,26 +78,27 @@ class apache::default_mods (
         include ::apache::mod::version
         include ::apache::mod::vhost_alias
         include ::apache::mod::speling
+        include ::apache::mod::filter
 
         ::apache::mod { 'asis': }
         ::apache::mod { 'auth_digest': }
-        ::apache::mod { 'authn_alias': }
+        ::apache::mod { 'auth_form': }
         ::apache::mod { 'authn_anon': }
+        ::apache::mod { 'authn_core': }
         ::apache::mod { 'authn_dbm': }
-        ::apache::mod { 'authn_default': }
+        ::apache::mod { 'authn_socache': }
+        ::apache::mod { 'authz_dbd': }
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
-        ::apache::mod { 'cern_meta': }
-        ::apache::mod { 'charset_lite': }
         ::apache::mod { 'dumpio': }
         ::apache::mod { 'expires': }
         ::apache::mod { 'file_cache': }
-        ::apache::mod { 'filter':}
         ::apache::mod { 'imagemap':}
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
+        ::apache::mod { 'request': }
+        ::apache::mod { 'session': }
         ::apache::mod { 'unique_id': }
-        ::apache::mod { 'usertrack': }
       }
       default: {}
     }
@@ -125,9 +130,6 @@ class apache::default_mods (
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
       }
-
-      # filter is needed by mod_deflate
-      ::apache::mod { 'filter': }
 
       # lots of stuff seems to break without access_compat
       ::apache::mod { 'access_compat': }

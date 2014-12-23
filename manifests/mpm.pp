@@ -13,7 +13,10 @@ define apache::mpm (
   $_path = "${lib_path}/${_lib}"
   $_id   = "mpm_${mpm}_module"
 
-  if versioncmp($apache_version, '2.4') >= 0 {
+  if versioncmp($apache_version, '2.4') >= 0 and
+    (($::osfamily != 'FreeBSD') or
+    ($::osfamily == 'FreeBSD' and $mpm == 'itk')) {
+
     file { "${mod_dir}/${mpm}.load":
       ensure  => file,
       path    => "${mod_dir}/${mpm}.load",

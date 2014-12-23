@@ -60,13 +60,13 @@ describe 'apache::mod::alias', :type => :class do
         :kernel                 => 'FreeBSD',
         :osfamily               => 'FreeBSD',
         :operatingsystem        => 'FreeBSD',
-        :operatingsystemrelease => '9',
+        :operatingsystemrelease => '10',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
         :is_pe                  => false,
       }
     end
     it { is_expected.to contain_apache__mod("alias") }
-    it { is_expected.to contain_file("alias.conf").with(:content => /Alias \/icons\/ "\/usr\/local\/www\/apache22\/icons\/"/) }
+    it { is_expected.to contain_file("alias.conf").with(:content => /Alias \/icons\/ "\/usr\/local\/www\/apache24\/icons\/"/) }
   end
 end

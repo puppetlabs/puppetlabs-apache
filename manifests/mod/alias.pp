@@ -9,7 +9,7 @@ class apache::mod::alias(
       true    => '/usr/share/httpd/icons',
       default => '/var/www/icons',
     },
-    'freebsd' => '/usr/local/www/apache22/icons',
+    'freebsd' => '/usr/local/www/apache24/icons',
   }
   apache::mod { 'alias': }
   # Template uses $icons_path
