@@ -6,6 +6,7 @@ class apache::mod::php (
   $content        = undef,
   $template       = 'apache/mod/php5.conf.erb',
   $source         = undef,
+  $root_group     = $::apache::params::root_group,
 ) inherits apache::params {
 
   if defined(Class['::apache::mod::prefork']) {
