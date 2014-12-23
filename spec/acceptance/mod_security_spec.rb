@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise'))) do
   case fact('osfamily')
   when 'Debian'
     mod_dir      = '/etc/apache2/mods-available'
@@ -22,13 +22,13 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
 
     it 'succeeds in puppeting mod_security' do
       pp= <<-EOS
+        host { 'modsec.example.com': ip => '127.0.0.1', }
         class { 'apache': }
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
           docroot => '/var/www/html',
         }
-        host { 'modsec.example.com': ip => '127.0.0.1', }
         file { '/var/www/html/index.html':
           ensure  => file,
           content => 'Index page',
@@ -51,14 +51,14 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should return index page' do
-      shell('/usr/bin/curl -H"User-Agent: beaker" modsec.example.com:80') do |r|
+      shell('/usr/bin/curl -A beaker modsec.example.com:80') do |r|
         expect(r.stdout).to match(/Index page/)
         expect(r.exit_code).to eq(0)
       end
     end
 
     it 'should block query with SQL' do
-      shell '/usr/bin/curl -H"User-Agent beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
     end
 
   end #default mod_security config
@@ -66,16 +66,16 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
   context "mod_security should allow disabling by vhost" do
     it 'succeeds in puppeting mod_security' do
       pp= <<-EOS
+        host { 'modsec.example.com': ip => '127.0.0.1', }
         class { 'apache': }
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
-          port           => '80',
-          docroot        => '/var/www/html',
+          port    => '80',
+          docroot => '/var/www/html',
         }
-        host { 'modsec.example.com': ip => '127.0.0.1', }
         file { '/var/www/html/index.html':
           ensure  => file,
-          content => "Index page\\n",
+          content => 'Index page',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -91,7 +91,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should block query with SQL' do
-      shell '/usr/bin/curl -H"User-Agent: beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
     end
 
     it 'should disable mod_security per vhost' do
@@ -108,7 +108,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should return index page' do
-      shell('/usr/bin/curl -H"User-Agent: beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users') do |r|
+      shell('/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users') do |r|
         expect(r.stdout).to match(/Index page/)
         expect(r.exit_code).to eq(0)
       end
@@ -118,16 +118,16 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
   context "mod_security should allow disabling by ip" do
     it 'succeeds in puppeting mod_security' do
       pp= <<-EOS
+        host { 'modsec.example.com': ip => '127.0.0.1', }
         class { 'apache': }
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
-          port           => '80',
-          docroot        => '/var/www/html',
+          port    => '80',
+          docroot => '/var/www/html',
         }
-        host { 'modsec.example.com': ip => '127.0.0.1', }
         file { '/var/www/html/index.html':
           ensure  => file,
-          content => "Index page\\n",
+          content => 'Index page',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -143,7 +143,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should block query with SQL' do
-      shell '/usr/bin/curl -H"User-Agent: beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
     end
 
     it 'should disable mod_security per vhost' do
@@ -160,7 +160,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should return index page' do
-      shell('/usr/bin/curl -H"User-Agent: beaker" modsec.example.com:80') do |r|
+      shell('/usr/bin/curl -A beaker modsec.example.com:80') do |r|
         expect(r.stdout).to match(/Index page/)
         expect(r.exit_code).to eq(0)
       end
@@ -170,13 +170,13 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
   context "mod_security should allow disabling by id" do
     it 'succeeds in puppeting mod_security' do
       pp= <<-EOS
+        host { 'modsec.example.com': ip => '127.0.0.1', }
         class { 'apache': }
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
-          port           => '80',
-          docroot        => '/var/www/html',
+          port    => '80',
+          docroot => '/var/www/html',
         }
-        host { 'modsec.example.com': ip => '127.0.0.1', }
         file { '/var/www/html/index.html':
           ensure  => file,
           content => 'Index page',
@@ -199,7 +199,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should block query with SQL' do
-      shell '/usr/bin/curl -H"User-Agent: beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
     end
 
     it 'should disable mod_security per vhost' do
@@ -216,7 +216,7 @@ describe 'apache::mod::security class', :unless => UNSUPPORTED_PLATFORMS.include
     end
 
     it 'should return index page' do
-      shell('/usr/bin/curl -H"User-Agent: beaker" -f modsec.example.com:80?SELECT%20*FROM%20mysql.users') do |r|
+      shell('/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users') do |r|
         expect(r.stdout).to match(/Index page/)
         expect(r.exit_code).to eq(0)
       end
