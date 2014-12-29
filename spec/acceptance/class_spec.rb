@@ -42,7 +42,7 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOS
-      if $::osfamily == 'RedHat' and $::selinux == 'true' {
+      if $::osfamily == 'RedHat' and $::selinux {
         $semanage_package = $::operatingsystemmajrelease ? {
           '5'     => 'policycoreutils',
           default => 'policycoreutils-python',

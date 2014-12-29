@@ -1187,7 +1187,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
   describe 'additional_includes' do
     it 'applies cleanly' do
       pp = <<-EOS
-        if $::osfamily == 'RedHat' and $::selinux == 'true' {
+        if $::osfamily == 'RedHat' and $::selinux {
           $semanage_package = $::operatingsystemmajrelease ? {
             '5'     => 'policycoreutils',
             default => 'policycoreutils-python',
