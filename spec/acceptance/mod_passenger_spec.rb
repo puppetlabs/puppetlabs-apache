@@ -137,7 +137,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       end
 
       it 'should output status via passenger-memory-stats' do
-        shell("/usr/sbin/passenger-memory-stats") do |r|
+        shell("PATH=/usr/bin:$PATH /usr/sbin/passenger-memory-stats") do |r|
           expect(r.stdout).to match(/Apache processes/)
           expect(r.stdout).to match(/Nginx processes/)
           expect(r.stdout).to match(/Passenger processes/)
@@ -158,7 +158,7 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '12.04'
         it 'should output status via passenger-status' do
           # xml output not available on ubunutu <= 10.04, so sticking with default pool output
-          shell("/usr/sbin/passenger-status") do |r|
+          shell("PATH=/usr/bin:$PATH /usr/sbin/passenger-status") do |r|
             # spacing may vary
             expect(r.stdout).to match(/[\-]+ General information [\-]+/)
             if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
