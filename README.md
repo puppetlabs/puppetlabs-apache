@@ -1429,9 +1429,9 @@ Used by HTTPD to set environment variables for vhosts. Defaults to '[]'.
 Example:
 
 ```puppet
-     apache::vhost {'setenv.example.com':
-         setenv  => ['SPECIAL_PATH /foo/bin'],
-      }
+    apache::vhost { 'setenv.example.com':
+      setenv => ['SPECIAL_PATH /foo/bin'],
+    }
 ```
 
 #####`setenvif`
