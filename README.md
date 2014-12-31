@@ -1427,6 +1427,14 @@ Sets the servername corresponding to the hostname you connect to the virtual hos
 
 Used by HTTPD to set environment variables for vhosts. Defaults to '[]'.
 
+Example:
+
+```puppet
+    apache::vhost { 'setenv.example.com':
+      setenv => ['SPECIAL_PATH /foo/bin'],
+    }
+```
+
 #####`setenvif`
 
 Used by HTTPD to conditionally set environment variables for vhosts. Defaults to '[]'.
