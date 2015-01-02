@@ -38,6 +38,8 @@ when 'Debian'
 
   if _operatingsystem == 'Ubuntu' and _operatingsystemrelease >= 13.10
     $apache_version = '2.4'
+  elsif _operatingsystem == 'Debian' and _operatingsystemrelease >= 8.0
+    $apache_version = '2.4'
   else
     $apache_version = '2.2'
   end
