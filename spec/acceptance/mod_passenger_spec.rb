@@ -31,6 +31,10 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
       when 'wheezy'
         passenger_root = '/usr'
         passenger_ruby = '/usr/bin/ruby'
+      when 'jessie'
+        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+        passenger_ruby         = '/usr/bin/ruby'
+        passenger_default_ruby = '/usr/bin/ruby'
       else
         # This may or may not work on Debian releases other than the above
         passenger_root = '/usr'
@@ -124,6 +128,9 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           when 'wheezy'
             it { is_expected.to contain "PassengerRuby \"#{passenger_ruby}\"" }
             it { is_expected.not_to contain "/PassengerDefaultRuby/" }
+          when 'jessie'
+            it { is_expected.to contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
+            it { is_expected.not_to contain "/PassengerRuby/" }
           else
             # This may or may not work on Debian releases other than the above
             it { is_expected.to contain "PassengerRuby \"#{passenger_ruby}\"" }
@@ -142,9 +149,10 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           expect(r.stdout).to match(/Nginx processes/)
           expect(r.stdout).to match(/Passenger processes/)
 
-          # passenger-memory-stats output on Ubuntu 14.04 does not contain
+          # passenger-memory-stats output on newer Debian/Ubuntu verions do not contain
           # these two lines
-          unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
+          unless ((fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') or
+                 (fact('operatingsystem') == 'Debian' && fact('operatingsystemrelease') == '8.0'))
             expect(r.stdout).to match(/### Processes: [0-9]+/)
             expect(r.stdout).to match(/### Total private dirty RSS: [0-9\.]+ MB/)
           end
