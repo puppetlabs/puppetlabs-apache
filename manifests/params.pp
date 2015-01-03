@@ -98,7 +98,7 @@ class apache::params inherits ::apache::version {
       'nss'  => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
-    $keepalive            = 'Off'
+    $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef
@@ -186,7 +186,7 @@ class apache::params inherits ::apache::version {
       'php5' => 'libphp5.so',
     }
     $conf_template          = 'apache/httpd.conf.erb'
-    $keepalive              = 'Off'
+    $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
@@ -322,7 +322,7 @@ class apache::params inherits ::apache::version {
       'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
-    $keepalive            = 'Off'
+    $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef # TODO: revisit
