@@ -770,6 +770,22 @@ For customized parameters, which tell Apache how Python is currently configured 
     }
 ```
 
+To specify an alternate mod\_wsgi package name to install and the name of the module .so it provides,
+(e.g. a "python27-mod\_wsgi" package that provides "python27-mod_wsgi.so" in the default module directory):
+
+```puppet
+    class { 'apache::mod::wsgi':
+      wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+      wsgi_python_home   => '/path/to/venv',
+      wsgi_python_path   => '/path/to/venv/site-packages',
+	  package_name       => 'python27-mod_wsgi',
+	  mod_path           => 'python27-mod_wsgi.so',
+    }
+```
+
+If ``mod_path`` does not contain "/", it will be prefixed by the default module path
+for your OS; otherwise, it will be used literally.
+
 More information about [WSGI](http://modwsgi.readthedocs.org/en/latest/).
 
 ####Class: `apache::mod::fcgid`
