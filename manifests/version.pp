@@ -21,7 +21,7 @@ class apache::version {
     'Debian': {
       if $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0 {
         $default = '2.4'
-      } elsif $::operatingsystem == 'Debian' and $::operatingsystemrelease == 'jessie/sid' {
+      } elsif $::operatingsystem == 'Debian' and versioncmp($distrelease, '8') >= 0 {
         $default = '2.4'
       } else {
         $default = '2.2'
