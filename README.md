@@ -2069,7 +2069,7 @@ Within your virtual host, you can then configure the specified file type to be h
 ```puppet
 apache::vhost { 'www':
   ...
-  custom_fragment = 'AddType application/x-httpd-php .php'
+  custom_fragment => 'AddType application/x-httpd-php .php'
   ...
 }
 ```
