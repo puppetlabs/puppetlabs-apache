@@ -25,6 +25,9 @@
   <%- if @passenger_stat_throttle_rate -%>
   PassengerStatThrottleRate <%= @passenger_stat_throttle_rate %>
   <%- end -%>
+  <%- if @passenger_enabled -%>
+  PassengerEnabled <%= @passenger_enabled %>
+  <%- end -%>
   <%- if @rack_autodetect -%>
   RackAutoDetect <%= @rack_autodetect %>
   <%- end -%>
