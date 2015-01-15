@@ -407,6 +407,63 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
   end
+  describe 'access logs' do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      }
+    end
+    context 'single log file' do
+      let(:params) do
+        {
+          'docroot'         => '/rspec/docroot',
+          'access_log_file' => 'my_log_file',
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
+        :content => /^\s+CustomLog.*my_log_file" combined\s*$/
+      )}
+    end
+    context 'single log file with environment' do
+      let(:params) do
+        {
+          'docroot'            => '/rspec/docroot',
+          'access_log_file'    => 'my_log_file',
+          'access_log_env_var' => 'prod'
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
+        :content => /^\s+CustomLog.*my_log_file" combined\s+env=prod$/
+      )}
+    end
+    context 'multiple log files' do
+      let(:params) do
+        {
+          'docroot'     => '/rspec/docroot',
+          'access_logs' => [
+            { 'file' => '/tmp/log1', 'env' => 'dev' },
+            { 'file' => 'log2' },
+            { 'syslog' => 'syslog', 'format' => '%h %l' }
+          ],
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
+        :content => /^\s+CustomLog "\/tmp\/log1"\s+combined\s+env=dev$/
+      )}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
+        :content => /^\s+CustomLog "\/var\/log\/httpd\/log2"\s+combined\s*$/
+      )}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
+        :content => /^\s+CustomLog "syslog" "%h %l"\s*$/
+      )}
+    end
+  end # access logs
   describe 'validation' do
     context 'bad ensure' do
       let :params do
@@ -615,6 +672,16 @@ describe 'apache::vhost', :type => :define do
         {
           'docroot'         => '/rspec/docroot',
           'custom_fragment' => true,
+        }
+      end
+      let :facts do default_facts end
+      it { expect { is_expected.to compile }.to raise_error }
+    end
+    context 'bad access_logs' do
+      let :params do
+        {
+          'docroot'     => '/rspec/docroot',
+          'access_logs' => '/var/log/somewhere',
         }
       end
       let :facts do default_facts end
