@@ -105,7 +105,11 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
-    if $::osfamily == 'RedHat' {
+    $error_documents_path = $::apache::version::distrelease ? {
+      '7'     => '/usr/share/httpd/error',
+      default => '/var/www/error'
+    }
+    if $::osfamily == "RedHat" {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
       $wsgi_socket_prefix = undef
@@ -219,6 +223,7 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
       'base_rules/modsecurity_crs_60_correlation.conf'
     ]
+    $error_documents_path = '/usr/share/apache2/error'
 
     #
     # Passenger-specific settings
@@ -335,6 +340,7 @@ class apache::params inherits ::apache::version {
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
     $docroot              = '/usr/local/www/apache22/data'
+    $error_documents_path = '/usr/local/www/apache22/error'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

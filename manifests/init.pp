@@ -242,21 +242,18 @@ class apache (
       'debian': {
         $pidfile              = "\${APACHE_PID_FILE}"
         $error_log            = 'error.log'
-        $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
       }
       'redhat': {
         $pidfile              = 'run/httpd.pid'
         $error_log            = 'error_log'
-        $error_documents_path = '/var/www/error'
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
       }
       'freebsd': {
         $pidfile              = '/var/run/httpd.pid'
         $error_log            = 'httpd-error.log'
-        $error_documents_path = '/usr/local/www/apache22/error'
         $scriptalias          = '/usr/local/www/apache22/cgi-bin'
         $access_log_file      = 'httpd-access.log'
       }
