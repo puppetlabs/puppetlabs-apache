@@ -761,6 +761,34 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  describe 'multiple access_logs' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot            => '/tmp',
+          logroot            => '/tmp',
+          access_logs => [
+            {'file' => 'log1'},
+            {'file' => 'log2', 'env' => 'admin' },
+            {'file' => '/var/tmp/log3', 'format' => '%h %l'},
+            {'syslog' => 'syslog' }
+          ]
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
+      it { is_expected.to contain 'CustomLog "/tmp/log2" combined env=admin' }
+      it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
+      it { is_expected.to contain 'CustomLog "syslog" combined' }
+    end
+  end
+
   describe 'aliases' do
     it 'applies cleanly' do
       pp = <<-EOS
