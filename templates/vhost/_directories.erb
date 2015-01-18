@@ -55,8 +55,14 @@
       <%- else -%>
     Order allow,deny
       <%- end -%>
-      <%- if directory['deny'] and directory['deny'] != '' -%>
+      <%- if directory['deny'] and ! [ false, 'false', '' ].include?(directory['deny']) -%>
+        <%- if directory['deny'].kind_of?(Array) -%>
+          <%- Array(directory['deny']).each do |restrict| -%>
+    Deny <%=  restrict %>
+          <%- end -%>
+        <%- else -%>
     Deny <%= directory['deny'] %>
+        <%- end -%>
       <%- end -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
         <%- if directory['allow'].kind_of?(Array) -%>

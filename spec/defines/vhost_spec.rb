@@ -147,11 +147,20 @@ describe 'apache::vhost', :type => :define do
           'access_log_format'           => '%h %l %u %t \"%r\" %>s %b',
           'access_log_env_var'          => '',
           'aliases'                     => '/image',
-          'directories'                 => {
-            'path'     => '/var/www/files',
-            'provider' => 'files',
-            'deny'     => 'from all'
-          },
+          'directories'                 => [
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'allow'    => [ 'from 127.0.0.1', 'from 127.0.0.2', ],
+              'deny'     => [ 'from 127.0.0.3', 'from 127.0.0.4', ],
+            },
+            {
+              'path'     => '/var/www/foo',
+              'provider' => 'files',
+              'allow'    => 'from 127.0.0.1',
+              'deny'     => 'from all',
+            },
+          ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
           'error_log_pipe'              => '',
