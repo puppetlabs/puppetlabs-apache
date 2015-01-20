@@ -242,7 +242,7 @@ Changes the location of the configuration directory the main configuration file 
 
 #####`confd_dir`
 
-Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
+Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
 
 #####`conf_template`
 
