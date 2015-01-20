@@ -1,0 +1,21 @@
+# Declare the header field which should be parsed for useragent IP addresses
+RemoteIPHeader <%= @header %>
+
+# Declare client intranet IP addresses trusted to present
+# the RemoteIPHeader value
+<%- @proxy_ips.each do |proxy| -%>
+RemoteIPInternalProxy <%= proxy %>
+<%- end -%>
+
+# Declare the header field which will record all intermediate IP addresses
+<%- if @proxies_header -%>
+RemoteIPProxiesHeader <%= @proxies_header %>
+<%- end -%>
+
+# Declare client intranet IP addresses trusted to present
+# the RemoteIPHeader value
+<%- if @trusted_proxy_ips -%>
+  <%- @trusted_proxy_ips.each do |proxy| -%>
+RemoteIPTrustedProxy <%= proxy %>
+  <%- end -%>
+<%- end -%>
