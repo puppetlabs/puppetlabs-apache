@@ -46,6 +46,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
       pp = <<-EOS
         class { 'apache':
           service_enable => true,
+          service_manage => true,
           service_ensure => running,
         }
       EOS
@@ -64,6 +65,24 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
         class { 'apache':
           service_enable => false,
           service_ensure => stopped,
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      it { is_expected.not_to be_running }
+      it { is_expected.not_to be_enabled }
+    end
+  end
+
+  describe 'service manage => false' do
+    it 'we dont manage the service, so it shouldnt start the service' do
+      pp = <<-EOS
+        class { 'apache':
+          service_enable => true,
+          service_manage => false,
+          service_ensure => true,
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
