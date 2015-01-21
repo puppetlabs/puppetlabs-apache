@@ -657,6 +657,7 @@ define apache::vhost(
   # - $rewrite_base
   # - $rewrite_rule
   # - $rewrite_cond
+  # - $rewrite_map
   if $rewrites or $rewrite_rule {
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}-${filename}.conf",

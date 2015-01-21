@@ -19,6 +19,13 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
+    <%- if rewrite_details['rewrite_map'] -%>
+      <%- Array(rewrite_details['rewrite_map']).each do |commands| -%>
+        <%- Array(commands).each do |command| -%>
+  RewriteMap <%= command %>
+        <%- end -%>
+      <%- end -%>
+    <%- end -%>
     <%- Array(rewrite_details['rewrite_rule']).each do |commands| -%>
       <%- Array(commands).each do |command| -%>
   RewriteRule <%= command %>
