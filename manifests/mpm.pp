@@ -23,7 +23,7 @@ define apache::mpm (
         Exec["mkdir ${mod_dir}"],
       ],
       before  => File[$mod_dir],
-      notify  => Service['httpd'],
+      notify  => Class['apache::service'],
     }
   }
 
@@ -34,7 +34,7 @@ define apache::mpm (
         target  => "${::apache::mod_dir}/${mpm}.conf",
         require => Exec["mkdir ${::apache::mod_enable_dir}"],
         before  => File[$::apache::mod_enable_dir],
-        notify  => Service['httpd'],
+        notify  => Class['apache::service'],
       }
 
       if versioncmp($apache_version, '2.4') >= 0 {
@@ -43,7 +43,7 @@ define apache::mpm (
           target  => "${::apache::mod_dir}/${mpm}.load",
           require => Exec["mkdir ${::apache::mod_enable_dir}"],
           before  => File[$::apache::mod_enable_dir],
-          notify  => Service['httpd'],
+          notify  => Class['apache::service'],
         }
 
         if $mpm == 'itk' {

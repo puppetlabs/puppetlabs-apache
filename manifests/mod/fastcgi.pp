@@ -17,7 +17,7 @@ class apache::mod::fastcgi {
       content => template('apache/mod/fastcgi.conf.erb'),
       require => Exec["mkdir ${::apache::mod_dir}"],
       before  => File[$::apache::mod_dir],
-      notify  => Service['httpd'],
+      notify  => Class['apache::service'],
     }
   }
 

@@ -16,6 +16,6 @@ class apache::mod::dir (
     content => template('apache/mod/dir.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }
