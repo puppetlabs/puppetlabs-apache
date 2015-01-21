@@ -438,6 +438,10 @@ Determines whether the service should be running. Valid values are 'true', 'fals
 
 Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on Debian, and 'apache22' on FreeBSD.
 
+#####`service_manage`
+
+Determines whether the HTTPD service state is managed by Puppet . Defaults to 'true'.
+
 #####`trace_enable`
 
 Controls how TRACE requests per RFC 2616 are handled. More information about [TraceEnable](http://httpd.apache.org/docs/current/mod/core.html#traceenable). Defaults to 'On'.

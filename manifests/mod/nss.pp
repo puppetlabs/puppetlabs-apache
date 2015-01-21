@@ -20,6 +20,6 @@ class apache::mod::nss (
     content => template('apache/mod/nss.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

@@ -28,6 +28,7 @@ class apache (
   $default_ssl_crl_check  = undef,
   $ip                     = undef,
   $service_enable         = true,
+  $service_manage         = true,
   $service_ensure         = 'running',
   $purge_configs          = true,
   $purge_vhost_dir        = undef,
@@ -72,6 +73,7 @@ class apache (
   validate_bool($default_confd_files)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
+  validate_bool($service_manage)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -126,6 +128,7 @@ class apache (
   class { '::apache::service':
     service_name   => $service_name,
     service_enable => $service_enable,
+    service_manage => $service_manage,
     service_ensure => $service_ensure,
   }
 
