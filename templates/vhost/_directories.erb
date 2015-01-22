@@ -3,20 +3,20 @@
   ## Directories, there should at least be a declaration for <%= @docroot %>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
-  <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
-    <%- if /^(.*)match$/ =~ directory['provider'] -%>
-      <%- provider = $1.capitalize + 'Match' -%>
-    <%- else -%>
-      <%- provider = directory['provider'].capitalize -%>
-    <%- end -%>
-  <%- else -%>
-    <%- provider = 'Directory' -%>
-  <%- end -%>
-  <%- path = directory['path'] -%>
+      <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
+        <%- if /^(.*)match$/ =~ directory['provider'] -%>
+          <%- provider = $1.capitalize + 'Match' -%>
+        <%- else -%>
+          <%- provider = directory['provider'].capitalize -%>
+        <%- end -%>
+      <%- else -%>
+        <%- provider = 'Directory' -%>
+      <%- end -%>
+      <%- path = directory['path'] -%>
 
   <<%= provider %> "<%= path %>">
-    <%- if directory['headers'] -%>
-      <%- Array(directory['headers']).each do |header| -%>
+      <%- if directory['headers'] -%>
+        <%- Array(directory['headers']).each do |header| -%>
     Header <%= header %>
       <%- end -%>
     <%- end -%>
@@ -89,7 +89,7 @@
     <%- end -%>
     <%- if directory['php_flags'] and ! directory['php_flags'].empty? -%>
       <%- directory['php_flags'].sort.each do |flag,value| -%>
-      <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
+        <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
     php_flag <%= "#{flag} #{value}" %>
       <%- end -%>
     <%- end -%>
@@ -100,7 +100,7 @@
     <%- end -%>
     <%- if directory['php_admin_flags'] and ! directory['php_admin_flags'].empty? -%>
       <%- directory['php_admin_flags'].sort.each do |flag,value| -%>
-      <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
+        <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
     php_admin_flag <%= "#{flag} #{value}" %>
       <%- end -%>
     <%- end -%>
