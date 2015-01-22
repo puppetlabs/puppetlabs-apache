@@ -9,6 +9,6 @@ class apache::mod::ldap (
     content => template('apache/mod/ldap.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

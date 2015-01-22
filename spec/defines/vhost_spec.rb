@@ -285,7 +285,7 @@ describe 'apache::vhost', :type => :define do
         'owner'   => 'root',
         'mode'    => '0644',
         'require' => 'Package[httpd]',
-        'notify'  => 'Service[httpd]',
+        'notify'  => 'Class[Apache::Service]',
       })
       }
       it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }

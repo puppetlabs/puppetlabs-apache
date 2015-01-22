@@ -33,7 +33,7 @@ class apache::mod::security (
     path    => "${::apache::mod_dir}/security.conf",
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   file { $modsec_dir:
@@ -56,7 +56,7 @@ class apache::mod::security (
     ensure  => file,
     content => template('apache/mod/security_crs.conf.erb'),
     require => File[$modsec_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   apache::security::rule_link { $activated_rules: }

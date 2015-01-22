@@ -15,6 +15,6 @@ class apache::mod::rpaf (
     content => template('apache/mod/rpaf.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

@@ -43,7 +43,7 @@ class apache::mod::event (
     content => template('apache/mod/event.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   case $::osfamily {
