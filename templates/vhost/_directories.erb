@@ -88,24 +88,24 @@
     PassengerEnabled <%= directory['passenger_enabled'] %>
     <%- end -%>
     <%- if directory['php_flags'] and ! directory['php_flags'].empty? -%>
-      <%- directory['php_flags'].each do |flag,value| -%>
+      <%- directory['php_flags'].sort.each do |flag,value| -%>
       <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
     php_flag <%= "#{flag} #{value}" %>
       <%- end -%>
     <%- end -%>
     <%- if directory['php_values'] and ! directory['php_values'].empty? -%>
-      <%- directory['php_values'].each do |key,value| -%>
+      <%- directory['php_values'].sort.each do |key,value| -%>
     php_value <%= "#{key} #{value}" %>
       <%- end -%>
     <%- end -%>
     <%- if directory['php_admin_flags'] and ! directory['php_admin_flags'].empty? -%>
-      <%- directory['php_admin_flags'].each do |flag,value| -%>
+      <%- directory['php_admin_flags'].sort.each do |flag,value| -%>
       <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
     php_admin_flag <%= "#{flag} #{value}" %>
       <%- end -%>
     <%- end -%>
     <%- if directory['php_admin_values'] and ! directory['php_admin_values'].empty? -%>
-      <%- directory['php_admin_values'].each do |key,value| -%>
+      <%- directory['php_admin_values'].sort.each do |key,value| -%>
     php_admin_value <%= "#{key} #{value}" %>
       <%- end -%>
     <%- end -%>
