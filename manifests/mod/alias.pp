@@ -1,7 +1,7 @@
 class apache::mod::alias(
   $apache_version = $apache::apache_version
 ) {
-  $ver24 = versioncmp($apache_version, 2.4) >= 0
+  $ver24 = versioncmp($apache_version, '2.4') >= 0
 
   $icons_path = $::osfamily ? {
     'debian'  => '/usr/share/apache2/icons',
