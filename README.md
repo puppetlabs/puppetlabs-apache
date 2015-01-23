@@ -907,6 +907,10 @@ vhosts.
   include '::apache::mod::security'
 ```
 
+#####`crs_package`
+
+Name of package to install containing crs rules
+
 #####`modsec_dir`
 
 Directory to install the modsec configuration and activated rules links into
@@ -915,6 +919,23 @@ Directory to install the modsec configuration and activated rules links into
 
 Array of rules from the modsec_crs_path to activate by symlinking to
 ${modsec_dir}/activated_rules.
+
+#####`allowed_methods`
+
+HTTP methods allowed by mod_security
+
+#####`content_types`
+
+Content-types allowed by mod_security
+
+#####`restricted_extensions`
+
+Extensions prohibited by mod_security
+
+#####`restricted_headers`
+
+Headers restricted by mod_security
+
 
 ####Defined Type: `apache::vhost`
 
@@ -1824,7 +1845,7 @@ Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/
 ```
 
 *Note:* Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the PassengerEnabled directive with the PassengerHighPerformance directive.
- 
+
 ######`php_value` and `php_flag`
 
 `php_value` sets the value of the directory, and `php_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
