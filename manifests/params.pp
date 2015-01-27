@@ -43,6 +43,7 @@ class apache::params inherits ::apache::version {
     $server_root          = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
+    $conf_enable_dir      = undef
     $mod_dir              = "${httpd_dir}/conf.d"
     $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
@@ -150,6 +151,7 @@ class apache::params inherits ::apache::version {
     $server_root         = '/etc/apache2'
     $conf_dir            = $httpd_dir
     $confd_dir           = "${httpd_dir}/conf.d"
+    $conf_enable_dir     = "${httpd_dir}/conf-enabled"
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
     $vhost_dir           = "${httpd_dir}/sites-available"
@@ -286,6 +288,7 @@ class apache::params inherits ::apache::version {
     $httpd_dir        = '/usr/local/etc/apache22'
     $server_root      = '/usr/local'
     $conf_dir         = $httpd_dir
+    $conf_enable_dir  = undef
     $confd_dir        = "${httpd_dir}/Includes"
     $mod_dir          = "${httpd_dir}/Modules"
     $mod_enable_dir   = undef

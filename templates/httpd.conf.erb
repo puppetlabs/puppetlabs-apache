@@ -76,6 +76,9 @@ IncludeOptional "<%= @vhost_load_dir %>/*"
 Include "<%= @vhost_load_dir %>/*"
 <%- end -%>
 <% end -%>
+<% if @conf_enable_dir %>
+IncludeOptional "<%= @conf_enable_dir %>/*.conf"
+<%- end -%>
 
 <% if @error_documents -%>
 # /usr/share/apache2/error on debian

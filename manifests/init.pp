@@ -40,6 +40,7 @@ class apache (
   $httpd_dir              = $::apache::params::httpd_dir,
   $server_root            = $::apache::params::server_root,
   $conf_dir               = $::apache::params::conf_dir,
+  $conf_enable_dir        = $::apache::params::conf_enable_dir,
   $confd_dir              = $::apache::params::confd_dir,
   $vhost_dir              = $::apache::params::vhost_dir,
   $vhost_enable_dir       = $::apache::params::vhost_enable_dir,
