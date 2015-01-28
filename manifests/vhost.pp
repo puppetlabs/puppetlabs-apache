@@ -440,7 +440,7 @@ define apache::vhost(
     require => Package['httpd'],
     notify  => Class['apache::service'],
   }
-  if $::osfamily == 'Debian' {
+  if $::apache::vhost_enable_dir {
     $vhost_enable_dir = $::apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
       present => link,
