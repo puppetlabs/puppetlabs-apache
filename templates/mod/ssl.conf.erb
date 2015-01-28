@@ -25,4 +25,10 @@
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>
+
+<% if @hsts_options %>
+  <IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "<%= @hsts_options %>"
+  </IfModule>
+<% end -%>
 </IfModule>

@@ -4,6 +4,7 @@ class apache::mod::ssl (
   $ssl_cipher             = 'HIGH:MEDIUM:!aNULL:!MD5',
   $ssl_protocol           = [ 'all', '-SSLv2', '-SSLv3' ],
   $ssl_pass_phrase_dialog = 'builtin',
+  $hsts_options           = undef,
   $apache_version         = $::apache::apache_version,
   $package_name           = undef,
 ) {
@@ -46,9 +47,10 @@ class apache::mod::ssl (
   #
   # $ssl_compression
   # $ssl_options
-  # $session_cache,
+  # $session_cache
   # $ssl_mutex
   # $apache_version
+  # $hsts_options
   #
   file { 'ssl.conf':
     ensure  => file,
