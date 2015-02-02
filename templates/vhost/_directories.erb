@@ -38,7 +38,9 @@
     <%- end -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] and directory['require'] != '' -%>
-    Require <%= Array(directory['require']).join(' ') %>
+        <%- Array(directory['require']).each do |require| -%>
+    Require <%= require %>
+        <%- end -%>
       <%- end -%>
       <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
