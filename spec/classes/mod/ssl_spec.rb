@@ -106,5 +106,14 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog exec:\/path\/to\/program$/)}
     end
 
+    context 'setting ssl_random_seed_bytes' do
+      let :params do
+        {
+          :ssl_random_seed_bytes => '1024',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLRandomSeed startup file:/dev/urandom 1024$})}
+    end
+
   end
 end
