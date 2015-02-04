@@ -26,3 +26,13 @@ variables that are exchanged.
 `mod_macro` allows for these templates to be self-defined, and reused in any
 context they fit. Our module should allow the declaration of custom macros,
 and their use in `apache::vhost`. Nice to have: generate vhosts from macros.
+
+Auto-tuning performance parameters
+----------------------------------
+
+Apache's various performance parameters could be auto-tuned using facts to use
+the full capacity of the host, and no more.  Items such as MaxClients, or
+Passenger pool sizes are candidates.
+
+We could assume that Apache is the primary application, and perhaps provide a
+parameter to scale the performance parameters up or down for shared hosts?
