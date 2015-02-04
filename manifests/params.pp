@@ -107,6 +107,10 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
+    $error_documents_path = $::apache::version::distrelease ? {
+      '7'     => '/usr/share/httpd/error',
+      default => '/var/www/error'
+    }
     if $::osfamily == "RedHat" {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
@@ -223,6 +227,7 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
       'base_rules/modsecurity_crs_60_correlation.conf'
     ]
+    $error_documents_path = '/usr/share/apache2/error'
 
     #
     # Passenger-specific settings
@@ -259,6 +264,11 @@ class apache::params inherits ::apache::version {
             $passenger_root         = '/usr'
             $passenger_ruby         = '/usr/bin/ruby'
             $passenger_default_ruby = undef
+          }
+          'jessie': {
+            $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+            $passenger_ruby         = undef
+            $passenger_default_ruby = '/usr/bin/ruby'
           }
           default: {
             # The following settings may or may not work on Debian releases not
@@ -336,6 +346,7 @@ class apache::params inherits ::apache::version {
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
     $docroot              = '/usr/local/www/apache22/data'
+    $error_documents_path = '/usr/local/www/apache22/error'
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

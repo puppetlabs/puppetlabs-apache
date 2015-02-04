@@ -8,5 +8,6 @@ define apache::security::rule_link () {
     path    => "${::apache::mod::security::modsec_dir}/activated_rules/${filename}",
     target  => "${::apache::params::modsec_crs_path}/${title}",
     require => File["${::apache::mod::security::modsec_dir}/activated_rules"],
+    notify  => Class['apache::service'],
   }
 }

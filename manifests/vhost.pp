@@ -40,11 +40,12 @@ define apache::vhost(
   $logroot_mode                = undef,
   $log_level                   = undef,
   $access_log                  = true,
-  $access_log_file             = undef,
-  $access_log_pipe             = undef,
-  $access_log_syslog           = undef,
-  $access_log_format           = undef,
-  $access_log_env_var          = undef,
+  $access_log_file             = false,
+  $access_log_pipe             = false,
+  $access_log_syslog           = false,
+  $access_log_format           = false,
+  $access_log_env_var          = false,
+  $access_logs                 = undef,
   $aliases                     = undef,
   $directories                 = undef,
   $error_log                   = true,
@@ -60,6 +61,8 @@ define apache::vhost(
   $suphp_addhandler            = $::apache::params::suphp_addhandler,
   $suphp_engine                = $::apache::params::suphp_engine,
   $suphp_configpath            = $::apache::params::suphp_configpath,
+  $php_flags                   = {},
+  $php_values                  = {},
   $php_admin_flags             = {},
   $php_admin_values            = {},
   $no_proxy_uris               = [],
@@ -267,19 +270,28 @@ define apache::vhost(
   # Is apache::mod::shib enabled (or apache::mod['shib2'])
   $shibboleth_enabled = defined(Apache::Mod['shib2'])
 
-  # Define log file names
-  if $access_log_file {
-    $access_log_destination = "${logroot}/${access_log_file}"
-  } elsif $access_log_pipe {
-    $access_log_destination = $access_log_pipe
-  } elsif $access_log_syslog {
-    $access_log_destination = $access_log_syslog
-  } else {
-    if $ssl {
-      $access_log_destination = "${logroot}/${name}_access_ssl.log"
+  if $access_log and !$access_logs {
+    if $access_log_file {
+      $_logs_dest = "${logroot}/${access_log_file}"
+    } elsif $access_log_pipe {
+      $_logs_dest = $access_log_pipe
+    } elsif $access_log_syslog {
+      $_logs_dest = $access_log_syslog
     } else {
-      $access_log_destination = "${logroot}/${name}_access.log"
+      $_logs_dest = undef
     }
+    $_access_logs = [{
+      'file'        => $access_log_file,
+      'pipe'        => $access_log_pipe,
+      'syslog'      => $access_log_syslog,
+      'format'      => $access_log_format,
+      'env'         => $access_log_env_var
+    }]
+  } elsif $access_logs {
+    if !is_array($access_logs) {
+      fail("Apache::Vhost[${name}]: access_logs must be an array of hashes")
+    }
+    $_access_logs = $access_logs
   }
 
   if $error_log_file {
@@ -294,17 +306,6 @@ define apache::vhost(
     } else {
       $error_log_destination = "${logroot}/${name}_error.log"
     }
-  }
-
-  # Set access log format
-  if $access_log_format {
-    $_access_log_format = "\"${access_log_format}\""
-  } else {
-    $_access_log_format = 'combined'
-  }
-
-  if $access_log_env_var {
-    $_access_log_env_var = "env=${access_log_env_var}"
   }
 
   if $ip {
@@ -437,7 +438,7 @@ define apache::vhost(
     mode    => '0644',
     order   => 'numeric',
     require => Package['httpd'],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
   if $::osfamily == 'Debian' {
     $vhost_enable_dir = $::apache::vhost_enable_dir
@@ -453,7 +454,7 @@ define apache::vhost(
       group   => $::apache::params::root_group,
       mode    => '0644',
       require => Concat["${priority_real}-${filename}.conf"],
-      notify  => Service['httpd'],
+      notify  => Class['apache::service'],
     }
   }
 
@@ -567,7 +568,8 @@ define apache::vhost(
   # - $access_log_destination
   # - $_access_log_format
   # - $_access_log_env_var
-  if $access_log {
+  # - $access_logs
+  if $access_log or $access_logs {
     concat::fragment { "${name}-access_log":
       target  => "${priority_real}-${filename}.conf",
       order   => 100,
@@ -730,6 +732,17 @@ define apache::vhost(
       target  => "${priority_real}-${filename}.conf",
       order   => 220,
       content => template('apache/vhost/_suphp.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $php_values
+  # - $php_flags
+  if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
+    concat::fragment { "${name}-php":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 220,
+      content => template('apache/vhost/_php.erb'),
     }
   }
 

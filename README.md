@@ -242,7 +242,7 @@ Changes the location of the configuration directory the main configuration file 
 
 #####`confd_dir`
 
-Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
+Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
 
 #####`conf_template`
 
@@ -437,6 +437,10 @@ Determines whether the service should be running. Valid values are 'true', 'fals
 #####`service_name`
 
 Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on Debian, and 'apache22' on FreeBSD.
+
+#####`service_manage`
+
+Determines whether the HTTPD service state is managed by Puppet . Defaults to 'true'.
 
 #####`trace_enable`
 
@@ -732,9 +736,10 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
 
 ```puppet
     class { 'apache::mod::ssl':
-      ssl_compression => false,
-      ssl_options     => [ 'StdEnvVars' ],
-      ssl_protocol    => [ 'all', '-SSLv2', '-SSLv3'],
+      ssl_compression        => false,
+      ssl_options            => [ 'StdEnvVars' ],
+      ssl_pass_phrase_dialog => 'builtin',
+      ssl_protocol           => 'all -SSLv2 -SSLv3',
   }
 ```
 
@@ -768,6 +773,22 @@ For customized parameters, which tell Apache how Python is currently configured 
       wsgi_python_path   => '/path/to/venv/site-packages',
     }
 ```
+
+To specify an alternate mod\_wsgi package name to install and the name of the module .so it provides,
+(e.g. a "python27-mod\_wsgi" package that provides "python27-mod_wsgi.so" in the default module directory):
+
+```puppet
+    class { 'apache::mod::wsgi':
+      wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+      wsgi_python_home   => '/path/to/venv',
+      wsgi_python_path   => '/path/to/venv/site-packages',
+	  package_name       => 'python27-mod_wsgi',
+	  mod_path           => 'python27-mod_wsgi.so',
+    }
+```
+
+If ``mod_path`` does not contain "/", it will be prefixed by the default module path
+for your OS; otherwise, it will be used literally.
 
 More information about [WSGI](http://modwsgi.readthedocs.org/en/latest/).
 
@@ -886,6 +907,10 @@ vhosts.
   include '::apache::mod::security'
 ```
 
+#####`crs_package`
+
+Name of package to install containing crs rules
+
 #####`modsec_dir`
 
 Directory to install the modsec configuration and activated rules links into
@@ -894,6 +919,22 @@ Directory to install the modsec configuration and activated rules links into
 
 Array of rules from the modsec_crs_path to activate by symlinking to
 ${modsec_dir}/activated_rules.
+
+#####`allowed_methods`
+
+HTTP methods allowed by mod_security
+
+#####`content_types`
+
+Content-types allowed by mod_security
+
+#####`restricted_extensions`
+
+Extensions prohibited by mod_security
+
+#####`restricted_headers`
+
+Headers restricted by mod_security
 
 ####Defined Type: `apache::vhost`
 
@@ -1202,6 +1243,10 @@ Sets [PassengerStartTimeout](https://www.phusionpassenger.com/documentation/User
 
 Sets [PassengerPreStart](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerPreStart), the URL of the application if pre-starting is required.
 
+#####`php_flags & values`
+
+Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '[]'.
+
 #####`php_admin_flags & values`
 
 Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '[]'.
@@ -1421,6 +1466,14 @@ Sets the servername corresponding to the hostname you connect to the virtual hos
 #####`setenv`
 
 Used by HTTPD to set environment variables for vhosts. Defaults to '[]'.
+
+Example:
+
+```puppet
+    apache::vhost { 'setenv.example.com':
+      setenv => ['SPECIAL_PATH /foo/bin'],
+    }
+```
 
 #####`setenvif`
 
@@ -1792,6 +1845,10 @@ Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/
 
 *Note:* Be aware that there is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the PassengerEnabled directive with the PassengerHighPerformance directive.
 
+######`php_value` and `php_flag`
+
+`php_value` sets the value of the directory, and `php_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
+
 ######`php_admin_value` and `php_admin_flag`
 
 `php_admin_value` sets the value of the directory, and `php_admin_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
@@ -2036,7 +2093,7 @@ Within your virtual host, you can then configure the specified file type to be h
 ```puppet
 apache::vhost { 'www':
   ...
-  custom_fragment = 'AddType application/x-httpd-php .php'
+  custom_fragment => 'AddType application/x-httpd-php .php'
   ...
 }
 ```

@@ -15,6 +15,6 @@ class apache::mod::dav_fs {
     content => template('apache/mod/dav_fs.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

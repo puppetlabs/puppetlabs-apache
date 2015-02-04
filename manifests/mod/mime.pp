@@ -10,7 +10,7 @@ class apache::mod::mime (
     content => template('apache/mod/mime.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
   if $mime_support_package {
     package { $mime_support_package:

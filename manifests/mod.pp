@@ -88,7 +88,7 @@ define apache::mod (
       Exec["mkdir ${mod_dir}"],
     ],
     before  => File[$mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   if $::osfamily == 'Debian' {
@@ -105,7 +105,7 @@ define apache::mod (
         Exec["mkdir ${enable_dir}"],
       ],
       before  => File[$enable_dir],
-      notify  => Service['httpd'],
+      notify  => Class['apache::service'],
     }
     # Each module may have a .conf file as well, which should be
     # defined in the class apache::mod::module
@@ -123,7 +123,7 @@ define apache::mod (
           Exec["mkdir ${enable_dir}"],
         ],
         before  => File[$enable_dir],
-        notify  => Service['httpd'],
+        notify  => Class['apache::service'],
       }
     }
   }
