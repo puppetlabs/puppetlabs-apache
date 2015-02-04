@@ -1,9 +1,14 @@
 class apache::mod::alias(
   $apache_version = $apache::apache_version
 ) {
+  $ver24 = versioncmp($apache_version, '2.4') >= 0
+
   $icons_path = $::osfamily ? {
     'debian'  => '/usr/share/apache2/icons',
-    'redhat'  => '/var/www/icons',
+    'redhat'  => $ver24 ? {
+      true    => '/usr/share/httpd/icons',
+      default => '/var/www/icons',
+    },
     'freebsd' => '/usr/local/www/apache22/icons',
   }
   apache::mod { 'alias': }
@@ -14,6 +19,6 @@ class apache::mod::alias(
     content => template('apache/mod/alias.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

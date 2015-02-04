@@ -1,7 +1,11 @@
 class apache::mod::security (
-  $crs_package     = $::apache::params::modsec_crs_package,
-  $activated_rules = $::apache::params::modsec_default_rules,
-  $modsec_dir      = $::apache::params::modsec_dir,
+  $crs_package           = $::apache::params::modsec_crs_package,
+  $activated_rules       = $::apache::params::modsec_default_rules,
+  $modsec_dir            = $::apache::params::modsec_dir,
+  $allowed_methods       = 'GET HEAD POST OPTIONS',
+  $content_types         = 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf',
+  $restricted_extensions = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
+  $restricted_headers    = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
 ){
 
   if $::osfamily == 'FreeBSD' {
@@ -31,9 +35,11 @@ class apache::mod::security (
     ensure  => file,
     content => template('apache/mod/security.conf.erb'),
     path    => "${::apache::mod_dir}/security.conf",
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   file { $modsec_dir:
@@ -42,21 +48,26 @@ class apache::mod::security (
     group   => $::apache::params::group,
     mode    => '0555',
     purge   => true,
+    force   => true,
     recurse => true,
   }
 
   file { "${modsec_dir}/activated_rules":
-    ensure => directory,
-    owner  => $::apache::params::user,
-    group  => $::apache::params::group,
-    mode   => '0555',
+    ensure  => directory,
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
+    mode    => '0555',
+    purge   => true,
+    force   => true,
+    recurse => true,
+    notify  => Class['apache::service'],
   }
 
   file { "${modsec_dir}/security_crs.conf":
     ensure  => file,
     content => template('apache/mod/security_crs.conf.erb'),
     require => File[$modsec_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   apache::security::rule_link { $activated_rules: }

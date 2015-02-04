@@ -7,6 +7,6 @@ class apache::mod::setenvif {
     content => template('apache/mod/setenvif.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

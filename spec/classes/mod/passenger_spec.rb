@@ -175,6 +175,25 @@ describe 'apache::mod::passenger', :type => :class do
       it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/bin/ruby"}) }
       it { is_expected.to contain_file('passenger.conf').without_content(/PassengerDefaultRuby/) }
     end
+
+    context "with Debian 8 defaults" do
+      let :facts do
+        {
+          :osfamily               => 'Debian',
+          :operatingsystemrelease => '8.0',
+          :operatingsystem        => 'Debian',
+          :kernel                 => 'Linux',
+          :lsbdistcodename        => 'jessie',
+          :concat_basedir         => '/dne',
+          :id                     => 'root',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        }
+      end
+
+      it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"}) }
+      it { is_expected.to contain_file('passenger.conf').without_content(/PassengerRuby/) }
+      it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerDefaultRuby "/usr/bin/ruby"}) }
+    end
   end
 
   context "on a RedHat OS" do

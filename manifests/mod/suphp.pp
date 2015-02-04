@@ -8,7 +8,7 @@ class apache::mod::suphp (
     content => template('apache/mod/suphp.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd']
+    notify  => Class['apache::service'],
   }
 }
 

@@ -41,7 +41,7 @@ class apache::mod::worker (
     content => template('apache/mod/worker.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 
   case $::osfamily {
@@ -58,7 +58,7 @@ class apache::mod::worker (
           line    => 'HTTPD=/usr/sbin/httpd.worker',
           match   => '#?HTTPD=/usr/sbin/httpd.worker',
           require => Package['httpd'],
-          notify  => Service['httpd'],
+          notify  => Class['apache::service'],
         }
       }
     }

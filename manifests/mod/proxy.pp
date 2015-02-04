@@ -11,6 +11,6 @@ class apache::mod::proxy (
     content => template('apache/mod/proxy.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['apache::service'],
   }
 }

@@ -55,6 +55,52 @@ describe 'apache::mod::wsgi', :type => :class do
       end
       it {is_expected.to contain_file('wsgi.conf').with_content(/^  WSGIPythonHome "\/path\/to\/virtenv"$/)}
     end
+    describe "with custom package_name and mod_path" do
+      let :params do
+        {
+          :package_name => 'mod_wsgi_package',
+          :mod_path     => '/foo/bar/baz',
+        }
+      end
+      it { is_expected.to contain_apache__mod('wsgi').with({
+          'package' => 'mod_wsgi_package',
+          'path'    => '/foo/bar/baz',
+        })
+      }
+      it { is_expected.to contain_package("mod_wsgi_package") }
+      it { is_expected.to contain_file('wsgi.load').with_content(%r"LoadModule wsgi_module /foo/bar/baz") }
+    end
+    describe "with custom mod_path not containing /" do
+      let :params do
+        {
+          :package_name => 'mod_wsgi_package',
+          :mod_path     => 'wsgi_mod_name.so',
+        }
+      end
+      it { is_expected.to contain_apache__mod('wsgi').with({
+          'path'     => 'modules/wsgi_mod_name.so',
+          'package'  => 'mod_wsgi_package',
+        })
+      }
+      it { is_expected.to contain_file('wsgi.load').with_content(%r"LoadModule wsgi_module modules/wsgi_mod_name.so") }
+
+    end
+    describe "with package_name but no mod_path" do
+      let :params do
+        {
+          :mod_path => '/foo/bar/baz',
+        }
+      end
+      it { expect { subject }.to raise_error Puppet::Error, /apache::mod::wsgi - both package_name and mod_path must be specified!/ }
+    end
+    describe "with mod_path but no package_name" do
+      let :params do
+        {
+          :package_name => '/foo/bar/baz',
+        }
+      end
+      it { expect { subject }.to raise_error Puppet::Error, /apache::mod::wsgi - both package_name and mod_path must be specified!/ }
+    end
   end
   context "on a FreeBSD OS" do
     let :facts do

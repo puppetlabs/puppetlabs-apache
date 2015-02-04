@@ -1,5 +1,21 @@
-<% if @access_log and @_access_log_env_var -%>
-  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %> <%= @_access_log_env_var %>
-<% elsif @access_log -%>
-  CustomLog "<%= @access_log_destination %>" <%= @_access_log_format %>
+<% @_access_logs.each do |log| -%>
+<%   env ||= "env=#{log['env']}" if log['env'] -%>
+<%   env ||= '' -%>
+<%   format ||= "\"#{log['format']}\"" if log['format'] -%>
+<%   format ||= 'combined' -%>
+<%   if log['file'] -%>
+<%     if log['file'].chars.first == '/' -%>
+<%       destination = "#{log['file']}" -%>
+<%     else -%>
+<%       destination = "#{@logroot}/#{log['file']}" -%>
+<%     end -%>
+<%   elsif log['syslog'] -%>
+<%     destination = "syslog" -%>
+<%   elsif log['pipe'] -%>
+<%     destination = log['pipe'] -%>
+<%   else -%>
+<%     destination ||= "#{@logroot}/#{@name}_access_ssl.log" if @ssl -%>
+<%     destination ||= "#{@logroot}/#{@name}_access.log" -%>
+<%   end -%>
+  CustomLog "<%= destination %>" <%= format %> <%= env %>
 <% end -%>

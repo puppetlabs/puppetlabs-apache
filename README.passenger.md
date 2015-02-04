@@ -27,6 +27,7 @@ puppetlabs-apache:
 OS               | Passenger version  | `PassengerRoot` 
 ---------------- | ------------------ | ----------------
 Debian 7         | 3.0.13             | /usr
+Debian 8         | 4.0.53             | /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
 Ubuntu 12.04     | 2.2.11             | /usr
 Ubuntu 14.04     | 4.0.37             | /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini 
 RHEL with EPEL6  | 3.0.21             | /usr/lib/ruby/gems/1.8/gems/passenger-3.0.21 
