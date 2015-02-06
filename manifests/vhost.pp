@@ -390,6 +390,12 @@ define apache::vhost(
     }
   }
 
+  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+    if ! defined(Class['apache::mod::setenvif']) {
+      include ::apache::mod::setenvif
+    }
+  }
+
   ## Create a default directory list if none defined
   if $directories {
     if !is_hash($directories) and !(is_array($directories) and is_hash($directories[0])) {
