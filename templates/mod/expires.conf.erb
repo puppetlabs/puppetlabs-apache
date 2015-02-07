@@ -1,0 +1,11 @@
+<%- if @expiresactive -%>
+ExpiresActive <%= @expiresactive %>
+<%- end -%>
+
+<%- if @expiresdefault -%>
+ExpiresDefault <%= @expiresdefault %>
+<%- end -%>
+
+<%- @types.each do |type,value| -%>
+ExpiresByType <%= type %> <%= value %>
+<%- end -%>
