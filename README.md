@@ -1003,6 +1003,10 @@ Determines whether the vhost creates a Listen statement. The default value is 't
 
 Setting `add_listen` to 'false' stops the vhost from creating a Listen statement, and this is important when you combine vhosts that are not passed an `ip` parameter with vhosts that *are* passed the `ip` parameter.
 
+#####`use_optional_includes`
+
+Specifies if for apache > 2.4 it should use IncludeOptional instead of Include.
+
 #####`additional_includes`
 
 Specifies paths to additional static, vhost-specific Apache configuration files. Useful for implementing a unique, custom configuration not supported by this module. Can be an array. Defaults to '[]'.

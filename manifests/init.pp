@@ -67,6 +67,7 @@ class apache (
   $trace_enable           = 'On',
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
+  $use_optional_includes  = $::apache::params::use_optional_includes,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -74,6 +75,7 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
   validate_bool($service_manage)
+  validate_bool($use_optional_includes)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
