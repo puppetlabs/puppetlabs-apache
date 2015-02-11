@@ -16,6 +16,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -130,6 +131,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
 
@@ -149,6 +151,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
 
@@ -168,6 +171,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
 
@@ -187,6 +191,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
 
@@ -206,6 +211,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -244,6 +250,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }

@@ -16,6 +16,7 @@ describe 'apache::mod::authnz_ldap', :type => :class do
         :kernel                 => 'Linux',
         :operatingsystem        => 'Debian',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -49,6 +50,7 @@ describe 'apache::mod::authnz_ldap', :type => :class do
         :kernel                 => 'Linux',
         :operatingsystem        => 'RedHat',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }

@@ -14,6 +14,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { expect { subject }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
@@ -29,6 +30,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -56,6 +58,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -73,6 +76,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -90,6 +94,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
 

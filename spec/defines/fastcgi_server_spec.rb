@@ -18,6 +18,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :id                     => 'root',
           :concat_basedir         => '/dne',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :facts do default_facts end
@@ -39,6 +40,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :id                     => 'root',
           :concat_basedir         => '/dne',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :facts do default_facts end
@@ -59,6 +61,7 @@ describe 'apache::fastcgi::server', :type => :define do
           :id                     => 'root',
           :concat_basedir         => '/dne',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :facts do default_facts end
@@ -81,6 +84,7 @@ describe 'apache::fastcgi::server', :type => :define do
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     describe ".conf content" do
