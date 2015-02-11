@@ -1005,7 +1005,7 @@ Setting `add_listen` to 'false' stops the vhost from creating a Listen statement
 
 #####`use_optional_includes`
 
-Specifies if for apache > 2.4 it should use IncludeOptional instead of Include.
+Specifies if for apache > 2.4 it should use IncludeOptional instead of Include for `additional_includes`. Defaults to 'false'.
 
 #####`additional_includes`
 
