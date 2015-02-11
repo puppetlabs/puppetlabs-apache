@@ -7,6 +7,7 @@ class apache::mod::passenger (
   $passenger_stat_throttle_rate   = undef,
   $rack_autodetect                = undef,
   $rails_autodetect               = undef,
+  $passenger_enabled              = undef,
   $passenger_root                 = $::apache::params::passenger_root,
   $passenger_ruby                 = $::apache::params::passenger_ruby,
   $passenger_default_ruby         = $::apache::params::passenger_default_ruby,
@@ -73,6 +74,7 @@ class apache::mod::passenger (
   # - $passenger_max_requests
   # - $passenger_stat_throttle_rate
   # - $passenger_use_global_queue
+  # - $passenger_enabled
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':
