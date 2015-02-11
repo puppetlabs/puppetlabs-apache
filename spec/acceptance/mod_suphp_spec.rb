@@ -32,6 +32,7 @@ describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(f
       end
 
       it 'should answer to suphp.example.com' do
+        shell("/bin/sleep 10")
         shell("/usr/bin/curl suphp.example.com:80") do |r|
           expect(r.stdout).to match(/^daemon$/)
           expect(r.exit_code).to eq(0)
