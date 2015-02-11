@@ -17,6 +17,7 @@ describe 'apache::mod::dir', :type => :class do
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :lsbdistcodename        => 'squeeze',
+        :is_pe                  => false,
       }
     end
     context "passing no parameters" do
@@ -48,6 +49,7 @@ describe 'apache::mod::dir', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context "passing no parameters" do
@@ -79,6 +81,7 @@ describe 'apache::mod::dir', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context "passing no parameters" do

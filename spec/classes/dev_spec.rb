@@ -8,6 +8,7 @@ describe 'apache::dev', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -21,6 +22,7 @@ describe 'apache::dev', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -35,6 +37,7 @@ describe 'apache::dev', :type => :class do
         :osfamily               => 'FreeBSD',
         :operatingsystem        => 'FreeBSD',
         :operatingsystemrelease => '9',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
