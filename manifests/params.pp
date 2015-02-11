@@ -109,7 +109,7 @@ class apache::params inherits ::apache::version {
       '7'     => '/usr/share/httpd/error',
       default => '/var/www/error'
     }
-    if $::osfamily == "RedHat" {
+    if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
       $wsgi_socket_prefix = undef
