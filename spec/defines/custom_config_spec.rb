@@ -109,15 +109,15 @@ describe 'apache::custom_config', :type => :define do
       end
       it do
         expect {
-          should compile
-        }.to raise_error(Puppet::Error, /Only one of \$content and \$source can be specified\./)
+          is_expected.to compile
+        }.to raise_error(/Only one of \$content and \$source can be specified\./)
       end
     end
     context 'neither content nor source' do
       it do
         expect {
-          should compile
-        }.to raise_error(Puppet::Error, /One of \$content and \$source must be specified\./)
+          is_expected.to compile
+        }.to raise_error(/One of \$content and \$source must be specified\./)
       end
     end
     context 'bad ensure' do
@@ -129,8 +129,8 @@ describe 'apache::custom_config', :type => :define do
       end
       it do
         expect {
-          should compile
-        }.to raise_error(Puppet::Error, /is not supported for ensure/)
+          is_expected.to compile
+        }.to raise_error(/is not supported for ensure/)
       end
     end
   end

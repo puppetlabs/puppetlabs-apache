@@ -16,7 +16,7 @@ describe 'apache::mod::ssl', :type => :class do
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       }
     end
-    it { expect { subject }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
+    it { expect { is_expected.to compile }.to raise_error(/Unsupported osfamily:/) }
   end
 
   context 'on a RedHat OS' do
