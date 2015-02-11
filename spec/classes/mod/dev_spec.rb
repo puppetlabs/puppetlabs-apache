@@ -18,6 +18,7 @@ describe 'apache::mod::dev', :type => :class do
           :osfamily               => osfamily,
           :operatingsystem        => osfamily,
           :operatingsystemrelease => operatingsystemrelease,
+          :is_pe                  => false,
         }
       end
       it { is_expected.to contain_class('apache::dev') }

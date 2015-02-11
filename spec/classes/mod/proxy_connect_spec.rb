@@ -16,6 +16,7 @@ describe 'apache::mod::proxy_connect', :type => :class do
         :id              => 'root',
         :kernel          => 'Linux',
         :path            => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context 'with Apache version < 2.4' do

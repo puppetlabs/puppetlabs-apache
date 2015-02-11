@@ -15,6 +15,7 @@ describe 'apache::mod::alias', :type => :class do
         :operatingsystemrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_apache__mod("alias") }
@@ -30,6 +31,7 @@ describe 'apache::mod::alias', :type => :class do
         :operatingsystemrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_apache__mod("alias") }
@@ -45,6 +47,7 @@ describe 'apache::mod::alias', :type => :class do
         :operatingsystemrelease => '7',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_apache__mod("alias") }
@@ -60,6 +63,7 @@ describe 'apache::mod::alias', :type => :class do
         :operatingsystemrelease => '9',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_apache__mod("alias") }

@@ -12,6 +12,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -221,6 +222,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '5',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -541,6 +543,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -621,6 +624,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context 'with a custom apache_name parameter' do
@@ -659,6 +663,7 @@ describe 'apache', :type => :class do
       { :osfamily        => 'Darwin',
         :operatingsystemrelease => '13.1.0',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
 

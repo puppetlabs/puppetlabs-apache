@@ -17,6 +17,7 @@ describe 'apache::custom_config', :type => :define do
       :id                     => 'root',
       :kernel                 => 'Linux',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      :is_pe                  => false,
     }
   end
   context 'defaults with content' do

@@ -13,6 +13,7 @@ describe 'apache::mod::negotiation', :type => :class do
         :concat_basedir         => '/dne',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
 

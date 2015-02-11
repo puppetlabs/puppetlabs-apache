@@ -21,6 +21,7 @@ describe 'apache::security::rule_link', :type => :define do
         :id                     => 'root',
         :concat_basedir         => '/',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { should contain_file('modsecurity_35_bad_robots.data').with(
@@ -39,7 +40,8 @@ describe 'apache::security::rule_link', :type => :define do
         :lsbdistcodename        => 'squeeze',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :kernel                 => 'Linux'
+        :kernel                 => 'Linux',
+        :is_pe                  => false,
       }
     end
     it { should contain_file('modsecurity_35_bad_robots.data').with(
