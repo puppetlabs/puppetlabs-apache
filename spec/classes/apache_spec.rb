@@ -405,7 +405,7 @@ describe 'apache', :type => :class do
         let :params do
           { :mpm_module => 'breakme' }
         end
-        it { expect { subject }.to raise_error Puppet::Error, /does not match/ }
+        it { expect { is_expected.to compile }.to raise_error /does not match/ }
       end
     end
 
@@ -479,8 +479,8 @@ describe 'apache', :type => :class do
         end
         it "should fail" do
           expect do
-            subject
-          end.to raise_error(Puppet::Error, /"foo" does not match/)
+            is_expected.to compile
+          end.to raise_error(/"foo" does not match/)
         end
       end
       context "On" do
@@ -668,8 +668,8 @@ describe 'apache', :type => :class do
 
     it do
       expect {
-       should compile
-      }.to raise_error(Puppet::Error, /Unsupported osfamily/)
+       is_expected.to compile
+      }.to raise_error(/Unsupported osfamily/)
     end
   end
 end
