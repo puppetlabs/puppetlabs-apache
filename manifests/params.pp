@@ -67,7 +67,9 @@ class apache::params inherits ::apache::version {
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
     # NOTE: The module for Shibboleth is not available to RH/CentOS without an additional repository. http://wiki.aaf.edu.au/tech-info/sp-install-guide
+    # NOTE: The auth_cas module isn't available to RH/CentOS without enabling EPEL.
     $mod_packages         = {
+      'auth_cas'    => 'mod_auth_cas',
       'auth_kerb'   => 'mod_auth_kerb',
       'authnz_ldap' => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
@@ -110,11 +112,12 @@ class apache::params inherits ::apache::version {
       '7'     => '/usr/share/httpd/error',
       default => '/var/www/error'
     }
-    if $::osfamily == "RedHat" {
+    if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
       $wsgi_socket_prefix = undef
     }
+    $cas_cookie_path      = '/var/cache/mod_auth_cas/'
     $modsec_crs_package   = 'mod_security_crs'
     $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
@@ -169,6 +172,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $mod_packages        = {
+      'auth_cas'    => 'libapache2-mod-auth-cas',
       'auth_kerb'   => 'libapache2-mod-auth-kerb',
       'dav_svn'     => 'libapache2-svn',
       'fastcgi'     => 'libapache2-mod-fastcgi',
@@ -198,6 +202,7 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www'
+    $cas_cookie_path      = '/var/cache/apache2/mod_auth_cas/'
     $modsec_crs_package   = 'modsecurity-crs'
     $modsec_crs_path      = '/usr/share/modsecurity-crs'
     $modsec_dir           = '/etc/modsecurity'
