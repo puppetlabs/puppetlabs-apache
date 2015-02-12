@@ -92,6 +92,39 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  context 'new vhost with enable symlink' do
+    it 'should configure an apache vhost and symlink it from $vhost_enable_dir' do
+      pp = <<-EOS
+        class { 'apache':
+          vhost_enable_dir => "#{$httpd_dir}/sites-enabled",
+        }
+        file { '#{$run_dir}':
+          ensure  => 'directory',
+          recurse => true,
+        }
+
+        apache::vhost { 'first.example.com':
+          port    => '80',
+          docroot => '/var/www/first',
+          require => File['#{$run_dir}'],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-first.example.com.conf") do
+      it { is_expected.to contain '<VirtualHost \*:80>' }
+      it { is_expected.to contain "ServerName first.example.com" }
+    end
+    describe file("#{$httpd_dir}/sites-enabled") do
+      it { is_expected.to contain_file("25-first.example.com.conf").with(
+        :ensure => 'link',
+        :path   => "#{$httpd_dir}/sites-enabled/25-first.example.com.conf",
+        :target => "#{$vhost_dir}/25-first.example.com.conf"
+      ) }
+    end
+  end
+
   context 'new proxy vhost on port 80' do
     it 'should configure an apache proxy vhost' do
       pp = <<-EOS
