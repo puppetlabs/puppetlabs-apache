@@ -33,13 +33,13 @@ class apache::package (
           'apache SET options in /etc/make.conf':
             ensure => $ensure,
             path   => '/etc/make.conf',
-            line   => "apache24_SET_FORCE= ${SET}",
+            line   => "apache24_SET_FORCE=${SET}",
             match  => '^apache24_SET_FORCE=.*',
             before => Package['httpd'];
           'apache UNSET options in /etc/make.conf':
             ensure => $ensure,
             path   => '/etc/make.conf',
-            line   => "apache24_UNSET_FORCE= ${UNSET}",
+            line   => "apache24_UNSET_FORCE=${UNSET}",
             match  => '^apache24_UNSET_FORCE=.*',
             before => Package['httpd'];
         }
