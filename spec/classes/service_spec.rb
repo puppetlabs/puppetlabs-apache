@@ -129,7 +129,7 @@ describe 'apache::service', :type => :class do
       }
     end
     it { is_expected.to contain_service("httpd").with(
-      'name'      => 'apache22',
+      'name'      => 'apache24',
       'ensure'    => 'running',
       'enable'    => 'true'
       )

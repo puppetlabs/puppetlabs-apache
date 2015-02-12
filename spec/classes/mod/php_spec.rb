@@ -126,7 +126,7 @@ describe 'apache::mod::php', :type => :class do
     let :facts do
       {
         :osfamily               => 'FreeBSD',
-        :operatingsystemrelease => '9',
+        :operatingsystemrelease => '10',
         :concat_basedir         => '/dne',
         :operatingsystem        => 'FreeBSD',
         :id                     => 'root',
@@ -141,7 +141,7 @@ describe 'apache::mod::php', :type => :class do
       end
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
+      it { is_expected.to contain_package("www/mod_php5") }
       it { is_expected.to contain_file('php5.load') }
     end
     context "with mpm_module => itk" do
@@ -151,7 +151,7 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_class('apache::mod::itk') }
       it { is_expected.to contain_apache__mod('php5') }
-      it { is_expected.to contain_package("lang/php5") }
+      it { is_expected.to contain_package("www/mod_php5") }
       it { is_expected.to contain_file('php5.load') }
     end
   end

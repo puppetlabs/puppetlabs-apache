@@ -79,7 +79,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class("apache::params") }
       it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
-        :path   => '/usr/local/etc/apache22/Vhosts/25-rspec.example.com.conf'
+        :path   => '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf'
       ) }
     end
   end

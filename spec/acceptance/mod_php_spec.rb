@@ -11,9 +11,9 @@ describe 'apache::mod::php class', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     mod_dir      = '/etc/httpd/conf.d'
     service_name = 'httpd'
   when 'FreeBSD'
-    vhost_dir    = '/usr/local/etc/apache22/Vhosts'
-    mod_dir      = '/usr/local/etc/apache22/Modules'
-    service_name = 'apache22'
+    vhost_dir    = '/usr/local/etc/apache24/Vhosts'
+    mod_dir      = '/usr/local/etc/apache24/Modules'
+    service_name = 'apache24'
   end
 
   context "default php config" do

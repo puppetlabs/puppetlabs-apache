@@ -19,7 +19,7 @@ describe 'apache::mod::event', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.not_to contain_apache__mod('event') }
-    it { is_expected.to contain_file("/usr/local/etc/apache22/Modules/event.conf").with_ensure('file') }
+    it { is_expected.to contain_file("/usr/local/etc/apache24/Modules/event.conf").with_ensure('file') }
   end
   context "on a Debian OS" do
     let :facts do

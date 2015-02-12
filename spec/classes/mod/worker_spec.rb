@@ -112,7 +112,7 @@ describe 'apache::mod::worker', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.not_to contain_apache__mod('worker') }
-    it { is_expected.to contain_file("/usr/local/etc/apache22/Modules/worker.conf").with_ensure('file') }
+    it { is_expected.to contain_file("/usr/local/etc/apache24/Modules/worker.conf").with_ensure('file') }
   end
 
   # Template config doesn't vary by distro

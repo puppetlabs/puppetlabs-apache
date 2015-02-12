@@ -259,7 +259,7 @@ class apache (
       'freebsd': {
         $pidfile              = '/var/run/httpd.pid'
         $error_log            = 'httpd-error.log'
-        $scriptalias          = '/usr/local/www/apache22/cgi-bin'
+        $scriptalias          = '/usr/local/www/apache24/cgi-bin'
         $access_log_file      = 'httpd-access.log'
       }
       default: {
