@@ -28,6 +28,7 @@ describe 'apache::balancermember', :type => :define do
       :concat_basedir         => '/dne',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       :kernel                 => 'Linux',
+      :is_pe                  => false,
     }
   end
   describe "allows multiple balancermembers with the same url" do

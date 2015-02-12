@@ -738,9 +738,11 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
     class { 'apache::mod::ssl':
       ssl_compression        => false,
       ssl_options            => [ 'StdEnvVars' ],
+      ssl_cipher             => 'HIGH:MEDIUM:!aNULL:!MD5',
+      ssl_protocol           => ['all','-SSLv2','-SSLv3'],
       ssl_pass_phrase_dialog => 'builtin',
-      ssl_protocol           => 'all -SSLv2 -SSLv3',
-  }
+      ssl_random_seed_bytes  => '512',
+    }
 ```
 
 To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `::apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
@@ -999,6 +1001,10 @@ Sets [AddDefaultCharset](http://httpd.apache.org/docs/current/mod/core.html#addd
 Determines whether the vhost creates a Listen statement. The default value is 'true'.
 
 Setting `add_listen` to 'false' stops the vhost from creating a Listen statement, and this is important when you combine vhosts that are not passed an `ip` parameter with vhosts that *are* passed the `ip` parameter.
+
+#####`use_optional_includes`
+
+Specifies if for apache > 2.4 it should use IncludeOptional instead of Include for `additional_includes`. Defaults to 'false'.
 
 #####`additional_includes`
 

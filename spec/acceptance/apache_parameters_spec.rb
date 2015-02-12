@@ -242,7 +242,7 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
   describe 'confd_dir' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': confd_dir => '/tmp/root', service_ensure => stopped }"
+        pp = "class { 'apache': confd_dir => '/tmp/root', service_ensure => stopped, use_optional_includes => true }"
         apply_manifest(pp, :catch_failures => true)
       end
     end

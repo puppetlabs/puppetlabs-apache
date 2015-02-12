@@ -12,6 +12,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -98,7 +99,10 @@ describe 'apache', :type => :class do
 
     context "with Apache version >= 2.4" do
       let :params do
-        { :apache_version => '2.4' }
+        {
+          :apache_version => '2.4',
+          :use_optional_includes => true
+        }
       end
 
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^IncludeOptional "/etc/apache2/conf\.d/\*\.conf"$} }
@@ -224,6 +228,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '5',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -327,7 +332,10 @@ describe 'apache', :type => :class do
 
       context "with Apache version >= 2.4" do
         let :params do
-          { :apache_version => '2.4' }
+          {
+            :apache_version => '2.4',
+            :use_optional_includes => true
+          }
         end
 
         it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
@@ -547,6 +555,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '9',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -633,6 +642,7 @@ describe 'apache', :type => :class do
         :operatingsystemrelease => '6',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context 'with a custom apache_name parameter' do
@@ -671,6 +681,7 @@ describe 'apache', :type => :class do
       { :osfamily        => 'Darwin',
         :operatingsystemrelease => '13.1.0',
         :concat_basedir         => '/dne',
+        :is_pe                  => false,
       }
     end
 

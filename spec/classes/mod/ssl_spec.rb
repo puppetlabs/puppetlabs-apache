@@ -14,6 +14,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { expect { subject }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
@@ -29,6 +30,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -56,6 +58,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -73,6 +76,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -90,6 +94,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
 
@@ -104,6 +109,15 @@ describe 'apache::mod::ssl', :type => :class do
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog exec:\/path\/to\/program$/)}
+    end
+
+    context 'setting ssl_random_seed_bytes' do
+      let :params do
+        {
+          :ssl_random_seed_bytes => '1024',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLRandomSeed startup file:/dev/urandom 1024$})}
     end
 
   end

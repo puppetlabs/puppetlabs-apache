@@ -15,6 +15,7 @@ describe 'apache::mod::security', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     it { should contain_apache__mod('security').with(
@@ -57,7 +58,8 @@ describe 'apache::mod::security', :type => :class do
         :lsbdistcodename        => 'squeeze',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :kernel                 => 'Linux'
+        :kernel                 => 'Linux',
+        :is_pe                  => false,
       }
     end
     it { should contain_apache__mod('security').with(

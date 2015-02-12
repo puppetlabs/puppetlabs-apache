@@ -24,6 +24,7 @@ describe 'apache::vhost', :type => :define do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :params do default_params end
@@ -42,6 +43,7 @@ describe 'apache::vhost', :type => :define do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :params do default_params end
@@ -68,6 +70,7 @@ describe 'apache::vhost', :type => :define do
           :id                     => 'root',
           :kernel                 => 'FreeBSD',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
         }
       end
       let :params do default_params end
@@ -91,6 +94,7 @@ describe 'apache::vhost', :type => :define do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     describe 'basic assumptions' do
@@ -257,6 +261,7 @@ describe 'apache::vhost', :type => :define do
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :kernelversion          => '3.6.2',
+          :is_pe                  => false,
         }
       end
 
@@ -281,6 +286,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::passenger') }
       it { is_expected.to contain_class('apache::mod::fastcgi') }
       it { is_expected.to contain_class('apache::mod::headers') }
+      it { is_expected.to contain_class('apache::mod::setenvif') }
       it { is_expected.to contain_concat('30-rspec.example.com.conf').with({
         'owner'   => 'root',
         'mode'    => '0644',
@@ -349,6 +355,7 @@ describe 'apache::vhost', :type => :define do
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :kernelversion          => '3.6.2',
+          :is_pe                  => false,
         }
       end
 
@@ -417,6 +424,7 @@ describe 'apache::vhost', :type => :define do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
       }
     end
     context 'single log file' do
