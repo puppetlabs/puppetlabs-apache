@@ -17,6 +17,7 @@ class apache (
   $service_name           = $::apache::params::service_name,
   $default_mods           = true,
   $default_vhost          = true,
+  $default_charset        = undef,
   $default_confd_files    = true,
   $default_ssl_vhost      = false,
   $default_ssl_cert       = $::apache::params::default_ssl_cert,
@@ -69,6 +70,7 @@ class apache (
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
 ) inherits ::apache::params {
+
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
   validate_bool($default_confd_files)
