@@ -6,20 +6,20 @@ class apache::package (
     'FreeBSD': {
       case $mpm_module {
         'prefork': {
-          $SET = 'MPM_PREFORK'
-          $UNSET = 'MPM_WORKER MPM_EVENT'
+          $set = 'MPM_PREFORK'
+          $unset = 'MPM_WORKER MPM_EVENT'
         }
         'worker': {
-          $SET = 'MPM_WORKER'
-          $UNSET = 'MPM_PERFORK MPM_EVENT'
+          $set = 'MPM_WORKER'
+          $unset = 'MPM_PERFORK MPM_EVENT'
         }
         'event': {
-          $SET = 'MPM_EVENT'
-          $UNSET = 'MPM_PERFORK MPM_WORKER'
+          $set = 'MPM_EVENT'
+          $unset = 'MPM_PERFORK MPM_WORKER'
         }
         'itk': {
-          $SET = nil
-          $UNSET = nil
+          $set = undef
+          $unset = undef
           package { 'www/mod_mpm_itk':
             ensure => installed,
           }
@@ -28,20 +28,20 @@ class apache::package (
       }
 
       # Configure ports to have apache build options set correctly
-      if $SET {
-        file_line {
-          'apache SET options in /etc/make.conf':
-            ensure => $ensure,
-            path   => '/etc/make.conf',
-            line   => "apache24_SET_FORCE=${SET}",
-            match  => '^apache24_SET_FORCE=.*',
-            before => Package['httpd'];
-          'apache UNSET options in /etc/make.conf':
-            ensure => $ensure,
-            path   => '/etc/make.conf',
-            line   => "apache24_UNSET_FORCE=${UNSET}",
-            match  => '^apache24_UNSET_FORCE=.*',
-            before => Package['httpd'];
+      if $set {
+        file_line { 'apache SET options in /etc/make.conf':
+          ensure => $ensure,
+          path   => '/etc/make.conf',
+          line   => "apache24_SET_FORCE=${set}",
+          match  => '^apache24_SET_FORCE=.*',
+          before => Package['httpd'],
+        }
+        file_line { 'apache UNSET options in /etc/make.conf':
+          ensure => $ensure,
+          path   => '/etc/make.conf',
+          line   => "apache24_UNSET_FORCE=${unset}",
+          match  => '^apache24_UNSET_FORCE=.*',
+          before => Package['httpd'],
         }
       }
       $apache_package = $::apache::params::apache_name
