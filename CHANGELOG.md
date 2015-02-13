@@ -1,3 +1,62 @@
+##2015-02-17 - Supported Release 1.3.0
+###Summary
+
+This release has many new features and bugfixes, including the ability to optionally not trigger service restarts on config changes.
+
+####Features
+- New parameters - `apache`
+  - `service_manage`
+  - `use_optional_includes`
+- New parameters - `apache::service`
+  - `service_manage`
+- New parameters - `apache::vhost`
+  - `access_logs`
+  - `php_flags`
+  - `php_values`
+  - `modsec_disable_vhost`
+  - `modsec_disable_ids`
+  - `modsec_disable_ips`
+  - `modsec_body_limit`
+- Improved FreeBSD support
+- Add ability to omit priority prefix if `$priority` is set to false
+- Add `apache::security::rule_link` define
+- Improvements to `apache::mod::*`
+  - Add `apache::mod::auth_cass` class
+  - Add `threadlimit`, `listenbacklog`, `maxrequestworkers`, `maxconnectionsperchild` parameters to `apache::mod::event`
+  - Add `apache::mod::filter` class
+  - Add `root_group` to `apache::mod::php`
+  - Add `apache::mod::proxy_connect` class
+  - Add `apache::mod::security` class
+  - Add `ssl_pass_phrase_dialog` and `ssl_random_seed_bytes parameters to `apache::mod::ssl` (MODULES-1719)
+  - Add `status_path` parameter to `apache::mod::status`
+  - Add `apache_version` parameter to `apache::mod::version`
+  - Add `package_name` and `mod_path` parameters to `apache::mod::wsgi` (MODULES-1458)
+- Improved SCL support
+  - Add support for specifying the docroot
+- Updated `_directories.erb` to add support for SetEnv
+- Support multiple access log directives (MODULES-1382)
+- Add passenger support for Debian Jessie
+- Add support for not having puppet restart the apache service (MODULES-1559)
+
+####Bugfixes
+- For apache 2.4 `mod_itk` requires `mod_prefork` (MODULES-825)
+- Allow SSLCACertificatePath to be unset in `apache::vhost` (MODULES-1457)
+- Load fcgid after unixd on RHEL7
+- Allow disabling default vhost for Apache 2.4
+- Test fixes
+- `mod_version` is now built-in (MODULES-1446)
+- Sort LogFormats for idempotency
+- `allow_encoded_slashes` was omitted from `apache::vhost`
+- Fix documentation bug (MODULES-1403, MODULES-1510)
+- Sort `wsgi_script_aliases` for idempotency (MODULES-1384)
+- lint fixes
+- Fix automatic version detection for Debian Jessie
+- Fix error docs and icons path for RHEL7-based systems (MODULES-1554)
+- Sort php_* hashes for idempotency (MODULES-1680)
+- Ensure `mod::setenvif` is included if needed (MODULES-1696)
+- Fix indentation in `vhost/_directories.erb` template (MODULES-1688)
+- Create symlinks on all distros if `vhost_enable_dir` is specified
+
 ##2014-09-30 - Supported Release 1.2.0
 ###Summary
 
