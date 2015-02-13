@@ -126,6 +126,9 @@ class apache::default_mods (
     ::apache::mod { 'authn_file': }
 
     if versioncmp($apache_version, '2.4') >= 0 {
+      # filter is needed by mod_deflate
+      include ::apache::mod::filter
+
       # authz_core is needed for 'Require' directive
       ::apache::mod { 'authz_core':
         id => 'authz_core_module',
