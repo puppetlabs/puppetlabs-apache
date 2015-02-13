@@ -6,6 +6,9 @@
 <% if @proxy_preserve_host -%>
   ProxyPreserveHost On
 <%- end -%>
+<% if @proxy_error_override -%>
+  ProxyErrorOverride On
+<%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>

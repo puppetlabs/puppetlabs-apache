@@ -103,6 +103,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
             { 'path' => '/foo', 'url' => 'http://backend-foo/'},
           ],
         proxy_preserve_host   => true,
+        proxy_error_override  => true,
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -113,6 +114,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.to contain "ServerName proxy.example.com" }
       it { is_expected.to contain "ProxyPass" }
       it { is_expected.to contain "ProxyPreserveHost On" }
+      it { is_expected.to contain "ProxyErrorOverride On" }
       it { is_expected.not_to contain "<Proxy \*>" }
     end
   end
