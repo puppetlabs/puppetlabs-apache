@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'apache::vhost', :type => :define do
   let :pre_condition do
-    'class { "apache": default_vhost => false, default_mods => false, }'
+    'class { "apache": default_vhost => false, default_mods => false, vhost_enable_dir => "/etc/apache2/sites-enabled"}'
   end
   let :title do
     'rspec.example.com'
@@ -292,6 +292,11 @@ describe 'apache::vhost', :type => :define do
         'mode'    => '0644',
         'require' => 'Package[httpd]',
         'notify'  => 'Class[Apache::Service]',
+      })
+      }
+      it { is_expected.to contain_file('30-rspec.example.com.conf symlink').with({
+        'ensure' => 'link',
+        'path'   => '/etc/apache2/sites-enabled/30-rspec.example.com.conf',
       })
       }
       it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
