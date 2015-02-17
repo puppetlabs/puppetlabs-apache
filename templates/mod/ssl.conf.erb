@@ -1,8 +1,9 @@
 <IfModule mod_ssl.c>
-  SSLRandomSeed startup builtin
-  SSLRandomSeed startup file:/dev/urandom <%= @ssl_random_seed_bytes %>
-  SSLRandomSeed connect builtin
-  SSLRandomSeed connect file:/dev/urandom <%= @ssl_random_seed_bytes %>
+  <%- Array(@ssl_random_seeds).each do |ssl_random_seed| -%>
+    <%- if ssl_random_seed != '' -%>
+  SSLRandomSeed <%= ssl_random_seed %>
+    <%- end -%>
+  <%- end -%>
 
   AddType application/x-x509-ca-cert .crt
   AddType application/x-pkcs7-crl    .crl

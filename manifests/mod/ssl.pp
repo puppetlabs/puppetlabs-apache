@@ -4,7 +4,12 @@ class apache::mod::ssl (
   $ssl_cipher             = 'HIGH:MEDIUM:!aNULL:!MD5',
   $ssl_protocol           = [ 'all', '-SSLv2', '-SSLv3' ],
   $ssl_pass_phrase_dialog = 'builtin',
-  $ssl_random_seed_bytes  = '512',
+  $ssl_random_seeds = [
+    'startup builtin',
+    'startup file:/dev/urandom 512',
+    'connect builtin',
+    'connect file:/dev/urandom 512',
+  ],
   $apache_version         = $::apache::apache_version,
   $package_name           = undef,
 ) {
@@ -49,6 +54,7 @@ class apache::mod::ssl (
   # $ssl_options
   # $session_cache,
   # $ssl_mutex
+  # $ssl_random_seeds
   # $apache_version
   #
   file { 'ssl.conf':
