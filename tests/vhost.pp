@@ -154,6 +154,21 @@ apache::vhost { 'sixteenth.example.com non-ssl':
     }
   ]
 }
+
+# Rewrite a URL to lower case
+apache::vhost { 'sixteenth.example.com non-ssl':
+  servername => 'sixteenth.example.com',
+  port       => '80',
+  docroot    => '/var/www/sixteenth',
+  rewrites   => [
+    { comment      => 'Rewrite to lower case',
+      rewrite_cond => ['%{REQUEST_URI} [A-Z]'],
+      rewrite_map  => ['lc int:tolower'],
+      rewrite_rule => ['(.*) ${lc:$1} [R=301,L]'],
+    }
+  ]
+}
+
 apache::vhost { 'sixteenth.example.com ssl':
   servername => 'sixteenth.example.com',
   port       => '443',

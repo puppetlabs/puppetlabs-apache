@@ -1369,7 +1369,7 @@ Modifies collected [request headers](http://httpd.apache.org/docs/current/mod/mo
 
 #####`rewrites`
 
-Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'. Defaults to 'undef'.
+Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule' or 'rewrite_map'. Defaults to 'undef'.
 
 For example, you can specify that anyone trying to access index.html is served welcome.html
 
@@ -1429,6 +1429,11 @@ Multiple rewrites and conditions are also possible
         {
           rewrite_base => /apps/,
           rewrite_rule => ['^index\.cgi$ index.php', '^index\.html$ index.php', '^index\.asp$ index.html'],
+        },
+        { comment      => 'Rewrite to lower case',
+          rewrite_cond => ['%{REQUEST_URI} [A-Z]'],
+          rewrite_map  => ['lc int:tolower'],
+          rewrite_rule => ['(.*) ${lc:$1} [R=301,L]'],
         },
      ],
     }

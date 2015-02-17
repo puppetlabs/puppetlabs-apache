@@ -999,6 +999,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
             { comment => 'test',
               rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
               rewrite_rule => ['^index\.html$ welcome.html'],
+              rewrite_map  => ['lc int:tolower'],
             }
           ],
         }
@@ -1011,6 +1012,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.to contain '#test' }
       it { is_expected.to contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
       it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
+      it { is_expected.to contain 'RewriteMap lc int:tolower' }
     end
   end
 
