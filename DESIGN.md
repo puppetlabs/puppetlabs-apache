@@ -36,3 +36,34 @@ Passenger pool sizes are candidates.
 
 We could assume that Apache is the primary application, and perhaps provide a
 parameter to scale the performance parameters up or down for shared hosts?
+
+More Readable, Easier Debuggable Templates
+------------------------------------------
+
+There are a number of patterns that we use in Templates which make them quite
+hard to read, and hard to debug. Wittness, in horror, this:
+
+```erb
+  ## Directories, there should at least be a declaration for <%= @docroot %>
+  <%- [@_directories].flatten.compact.each do |directory| -%>
+    <%- if directory['path'] and directory['path'] != '' -%>
+      <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
+        <%- if /^(.*)match$/ =~ directory['provider'] -%>
+          <%- provider = $1.capitalize + 'Match' -%>
+        <%- else -%>
+          <%- provider = directory['provider'].capitalize -%>
+        <%- end -%>
+      <%- else -%>
+        <%- provider = 'Directory' -%>
+      <%- end -%>
+      <%- path = directory['path'] -%>
+
+  <<%= provider %> "<%= path %>">
+```
+
+We should provide a couple of standard functions for doing this such as:
+
+* compact, flatten an array, reject all (forms of) empty fields, and
+* iterate over it, doing stuff
+
+We should also evaluate in how far we are able to use epp templates for this.
