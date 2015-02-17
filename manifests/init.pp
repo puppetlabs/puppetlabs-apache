@@ -54,7 +54,7 @@ class apache (
   $group                  = $::apache::params::group,
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
-  $max_keepalive_requests = $apache::params::max_keepalive_requests,
+  $max_keepalive_requests = $::apache::params::max_keepalive_requests,
   $logroot                = $::apache::params::logroot,
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,
