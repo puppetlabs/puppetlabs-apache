@@ -1222,6 +1222,10 @@ Specifies URLs you do not want to proxy. This parameter is meant to be used in c
 
 Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxypreservehost).  true Enables the Host: line from an incoming request to be proxied to the host instead of hostname .  false sets this option to off (default).
 
+#####`proxy_error_override`
+
+Sets the [ProxyErrorOverride Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxyerroroverride). This directive controls whether apache should override error pages for proxied content. This option is off by default.
+
 #####`options`
 
 Sets the [Options](http://httpd.apache.org/docs/current/mod/core.html#options) for the specified virtual host. Defaults to '['Indexes','FollowSymLinks','MultiViews']', as demonstrated below:

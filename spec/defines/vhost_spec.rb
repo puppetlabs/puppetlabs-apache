@@ -192,6 +192,7 @@ describe 'apache::vhost', :type => :define do
           'php_admin_values'            => ['true', 'false'],
           'no_proxy_uris'               => '/foo',
           'proxy_preserve_host'         => true,
+          'proxy_error_override'        => true,
           'redirect_source'             => '/bar',
           'redirect_dest'               => '/',
           'redirect_status'             => 'temp',
