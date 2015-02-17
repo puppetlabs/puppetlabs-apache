@@ -48,7 +48,7 @@ describe 'apache::custom_config define', :unless => UNSUPPORTED_PLATFORMS.includ
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{$vhost_dir}/prefix_test.conf") do
+    describe file("#{$confd_dir}/prefix_test.conf") do
       it { is_expected.to be_file }
     end
   end
