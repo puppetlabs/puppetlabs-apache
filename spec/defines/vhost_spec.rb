@@ -147,20 +147,10 @@ describe 'apache::vhost', :type => :define do
           'access_log_format'           => '%h %l %u %t \"%r\" %>s %b',
           'access_log_env_var'          => '',
           'aliases'                     => '/image',
-          'directories'                 => [
-            {
-              'path'     => '/var/www/files',
-              'provider' => 'files',
-              'allow'    => [ 'from 127.0.0.1', 'from 127.0.0.2', ],
-              'deny'     => [ 'from 127.0.0.3', 'from 127.0.0.4', ],
-            },
-            {
-              'path'     => '/var/www/foo',
-              'provider' => 'files',
-              'allow'    => 'from 127.0.0.1',
-              'deny'     => 'from all',
-            },
-          ],
+          'directories'                 => {
+            'path'     => '/var/www/files',
+            'provider' => 'files',
+          },
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
           'error_log_pipe'              => '',
@@ -346,6 +336,21 @@ describe 'apache::vhost', :type => :define do
           'manage_docroot'  => true,
           'logroot'         => '/tmp/logroot',
           'logroot_ensure'  => 'absent',
+          'directories'     => [
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'allow'    => [ 'from 127.0.0.1', 'from 127.0.0.2', ],
+              'deny'     => [ 'from 127.0.0.3', 'from 127.0.0.4', ],
+            },
+            {
+              'path'     => '/var/www/foo',
+              'provider' => 'files',
+              'allow'    => 'from 127.0.0.5',
+              'deny'     => 'from all',
+            },
+          ],
+
         }
       end
       let :facts do
@@ -389,6 +394,18 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-itk') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-fallbackresource') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Allow from 127\.0\.0\.1$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Allow from 127\.0\.0\.2$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Allow from 127\.0\.0\.5$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Deny from 127\.0\.0\.3$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Deny from 127\.0\.0\.4$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Deny from all$/ ) }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
