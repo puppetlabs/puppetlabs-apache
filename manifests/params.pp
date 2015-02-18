@@ -309,8 +309,8 @@ class apache::params inherits ::apache::version {
     $ssl_certs_dir    = '/usr/local/etc/apache24'
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
-    $passenger_root   = '/usr/local/lib/ruby/gems/1.9/gems/passenger-4.0.10'
-    $passenger_ruby   = '/usr/bin/ruby'
+    $passenger_root   = '/usr/local/lib/ruby/gems/2.0/gems/passenger-4.0.58'
+    $passenger_ruby   = '/usr/local/bin/ruby'
     $passenger_default_ruby = undef
     $suphp_addhandler = 'php5-script'
     $suphp_engine     = 'off'
