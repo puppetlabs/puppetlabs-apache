@@ -1,7 +1,5 @@
 #apache
 
-[![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-apache.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-apache)
-
 ####Table of Contents
 
 1. [Overview - What is the apache module?](#overview)
