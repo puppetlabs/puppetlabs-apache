@@ -6,22 +6,24 @@ describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(f
       context "default suphp config" do
         it 'succeeds in puppeting suphp' do
           pp = <<-EOS
-          class { 'apache':
-            mpm_module => 'prefork',
-          }
-          class { 'apache::mod::php': }
-          class { 'apache::mod::suphp': }
-          apache::vhost { 'suphp.example.com':
-            port    => '80',
-            docroot => '/var/www/suphp',
-          }
-          host { 'suphp.example.com': ip => '127.0.0.1', }
-          file { '/var/www/suphp/index.php':
-            ensure  => file,
-            owner   => 'daemon',
-            group   => 'daemon',
-            content => "<?php echo get_current_user(); ?>\\n",
-          }
+class { 'apache':
+  mpm_module => 'prefork',
+}
+host { 'suphp.example.com': ip => '127.0.0.1', }
+apache::vhost { 'suphp.example.com':
+  port    => '80',
+  docroot => '/var/www/suphp',
+}
+file { '/var/www/suphp/index.php':
+  ensure  => file,
+  owner   => 'daemon',
+  group   => 'daemon',
+  content => "<?php echo get_current_user(); ?>\\n",
+  require => File['/var/www/suphp'],
+  before  => Class['apache::mod::php'],
+}
+class { 'apache::mod::php': }
+class { 'apache::mod::suphp': }
           EOS
           apply_manifest(pp, :catch_failures => true)
         end
@@ -36,7 +38,11 @@ describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(f
           loop do
             r = shell('curl suphp.example.com:80')
             timeout += 1
-            break if timeout > 20 || r.stdout =~ /^daemon$/
+            break if r.stdout =~ /^daemon$/
+            if timeout > 40
+              expect(timeout < 40).to be true
+              break
+            end
             sleep(1)
           end
           shell("/usr/bin/curl suphp.example.com:80") do |r|
