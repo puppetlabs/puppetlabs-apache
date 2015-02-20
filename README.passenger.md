@@ -201,6 +201,14 @@ Allows toggling of PassengerUseGlobalQueue.  NOTE: PassengerUseGlobalQueue is
 the default in Passenger 4.x and the versions >= 4.x have disabled this
 configuration option altogether.  Use with caution.
 
+### passenger_app_env
+
+Sets the global default `PassengerAppEnv` for Passenger applications. Not set by
+default (`undef`) and thus defaults to Passenger's built-in value of 'production'.
+This directive can be overridden in an `apache::vhost` resource.
+
+https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppEnv
+
 ## Parameters used to load the module
 
 Unlike the tuning parameters specified above, the following parameters are only

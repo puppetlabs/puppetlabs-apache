@@ -1252,6 +1252,10 @@ Sets the overrides for the specified virtual host. Accepts an array of [AllowOve
 
 Sets [PassengerRoot](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppRoot), the location of the Passenger application root if different from the DocumentRoot.
 
+#####`passenger_app_env`
+
+Sets [PassengerAppEnv](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppEnv), the environment for the Passenger application. If not specifies, defaults to the global setting or 'production'.
+
 #####`passenger_ruby`
 
 Sets [PassengerRuby](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerRuby) on this virtual host, the Ruby interpreter to use for the application.
