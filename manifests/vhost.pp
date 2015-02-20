@@ -678,7 +678,7 @@ define apache::vhost(
   # Template uses:
   # - $scriptaliases
   # - $scriptalias
-  if $scriptaliases and ! empty($scriptaliases) {
+  if ( $scriptalias or $scriptaliases != [] ) {
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 180,
