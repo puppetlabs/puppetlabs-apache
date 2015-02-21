@@ -531,7 +531,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `deflate`
 * `dev`
 * `dir`*
-* `disk_cache`
+* `disk_cache` (see [`apache::mod::disk_cache`](#class-apachemoddisk_cache) below)
 * `event`(see [`apache::mod::event`](#class-apachemodevent) below)
 * `expires`
 * `fastcgi`
@@ -642,6 +642,17 @@ It is not recommended to leave this set to false though it can be very useful fo
       '10.10.38',
       '127.0.0.1',
     ],
+  }
+```
+
+####Class: `apache::mod::disk_cache`
+
+Installs and configures mod_disk_cache. The cache root is determined based on apache version and OS. It can be specified directly as well.
+
+Specifying the cache root:
+```puppet
+  class {'::apache::mod::disk_cache':
+    cache_root => '/path/to/cache',
   }
 ```
 
