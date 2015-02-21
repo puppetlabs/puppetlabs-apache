@@ -77,6 +77,10 @@ class apache::params inherits ::apache::version {
       },
       'fastcgi'     => 'mod_fastcgi',
       'fcgid'       => 'mod_fcgid',
+      'ldap'        => $::apache::version::distrelease ? {
+        '7'     => 'mod_ldap',
+        default => undef,
+      },
       'pagespeed'   => 'mod-pagespeed-stable',
       'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
