@@ -105,6 +105,7 @@ define apache::vhost(
   $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,
   $passenger_app_root          = undef,
+  $passenger_app_env           = undef,
   $passenger_ruby              = undef,
   $passenger_min_instances     = undef,
   $passenger_start_timeout     = undef,
@@ -225,7 +226,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
     include ::apache::mod::passenger
   }
 
@@ -839,11 +840,12 @@ define apache::vhost(
 
   # Template uses:
   # - $passenger_app_root
+  # - $passenger_app_env
   # - $passenger_ruby
   # - $passenger_min_instances
   # - $passenger_start_timeout
   # - $passenger_pre_start
-  if $passenger_app_root or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,

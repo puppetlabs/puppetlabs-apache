@@ -12,6 +12,7 @@ class apache::mod::passenger (
   $passenger_default_ruby         = $::apache::params::passenger_default_ruby,
   $passenger_max_pool_size        = undef,
   $passenger_use_global_queue     = undef,
+  $passenger_app_env              = undef,
   $mod_package                    = undef,
   $mod_package_ensure             = undef,
   $mod_lib                        = undef,
@@ -73,6 +74,7 @@ class apache::mod::passenger (
   # - $passenger_max_requests
   # - $passenger_stat_throttle_rate
   # - $passenger_use_global_queue
+  # - $passenger_app_env
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':

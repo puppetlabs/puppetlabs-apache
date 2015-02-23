@@ -95,6 +95,12 @@ describe 'apache::mod::passenger', :type => :class do
       end
       it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerUseGlobalQueue on$/) }
     end
+    describe "with passenger_app_env => 'foo'" do
+      let :params do
+        { :passenger_app_env => 'foo' }
+      end
+      it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerAppEnv foo$/) }
+    end
     describe "with mod_path => '/usr/lib/foo/mod_foo.so'" do
       let :params do
         { :mod_path => '/usr/lib/foo/mod_foo.so' }

@@ -244,6 +244,7 @@ describe 'apache::vhost', :type => :define do
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'passenger_app_root'          => '/usr/share/myapp',
+          'passenger_app_env'           => 'test',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
           'passenger_min_instances'     => '1',
           'passenger_start_timeout'     => '600',

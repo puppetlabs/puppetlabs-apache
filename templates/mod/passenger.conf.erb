@@ -34,4 +34,7 @@
   <%- if @passenger_use_global_queue -%>
   PassengerUseGlobalQueue <%= @passenger_use_global_queue %>
   <%- end -%>
+  <%- if @passenger_app_env -%>
+  PassengerAppEnv <%= @passenger_app_env %>
+  <%- end -%>
 </IfModule>
