@@ -1,9 +1,9 @@
 class apache::mod::deflate (
   $types = [
-    'text/html text/plain text/xml',
+    'text/html text/plain text/xml text/x-js',
     'text/css',
     'application/x-javascript application/javascript application/ecmascript',
-    'application/rss+xml'
+    'application/json application/rss+xml application/xhtml+xml'
   ],
   $notes = {
     'Input'  => 'instream',
