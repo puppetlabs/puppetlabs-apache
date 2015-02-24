@@ -65,6 +65,11 @@ class apache::mod::prefork (
         apache_version => $apache_version,
       }
     }
+    'gentoo': {
+      ::portage::makeconf { 'apache2_mpms':
+        content => 'prefork',
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

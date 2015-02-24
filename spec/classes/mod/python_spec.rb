@@ -56,4 +56,21 @@ describe 'apache::mod::python', :type => :class do
     it { is_expected.to contain_apache__mod("python") }
     it { is_expected.to contain_package("www/mod_python3") }
   end
+  context "on a Gentoo OS" do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+        :is_pe                  => false,
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_apache__mod("python") }
+    it { is_expected.to contain_package("www-apache/mod_python") }
+  end
 end

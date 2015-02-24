@@ -261,6 +261,23 @@ class apache (
         $error_log            = 'httpd-error.log'
         $scriptalias          = '/usr/local/www/apache24/cgi-bin'
         $access_log_file      = 'httpd-access.log'
+      } 'gentoo': {
+        $pidfile              = '/run/apache2.pid'
+        $error_log            = 'error.log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/var/www/localhost/cgi-bin'
+        $access_log_file      = 'access.log'
+
+        ::portage::makeconf { 'apache2_modules':
+          content => $default_mods,
+        }
+        file { [
+          '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+          '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+        ]:
+          ensure  => absent,
+          require => Package['httpd'],
+        }
       }
       default: {
         fail("Unsupported osfamily ${::osfamily}")

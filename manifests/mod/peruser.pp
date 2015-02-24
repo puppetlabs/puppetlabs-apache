@@ -14,6 +14,12 @@ class apache::mod::peruser (
       fail("Unsupported osfamily ${::osfamily}")
     }
     default: {
+      if $::osfamily == 'gentoo' {
+        ::portage::makeconf { 'apache2_mpms':
+          content => 'peruser',
+        }
+      }
+
       if defined(Class['apache::mod::event']) {
         fail('May not include both apache::mod::peruser and apache::mod::event on the same node')
       }

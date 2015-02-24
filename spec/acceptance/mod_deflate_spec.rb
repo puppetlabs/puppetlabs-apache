@@ -11,6 +11,9 @@ describe 'apache::mod::deflate class' do
   when 'FreeBSD'
     mod_dir      = '/usr/local/etc/apache24/Modules'
     service_name = 'apache24'
+  when 'Gentoo'
+    mod_dir      = '/etc/apache2/modules.d'
+    service_name = 'apache2'
   end
 
   context "default deflate config" do

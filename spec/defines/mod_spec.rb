@@ -118,4 +118,35 @@ describe 'apache::mod', :type => :define do
       end
     end
   end
+
+  context "on a Gentoo osfamily" do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+        :is_pe                  => false,
+      }
+    end
+
+    describe "for non-special modules" do
+      let :title do
+        'spec_m'
+      end
+      it { is_expected.to contain_class("apache::params") }
+      it "should manage the module load file" do
+        is_expected.to contain_file('spec_m.load').with({
+          :path    => '/etc/apache2/modules.d/spec_m.load',
+          :content => "LoadModule spec_m_module /usr/lib/apache2/modules/mod_spec_m.so\n",
+          :owner   => 'root',
+          :group   => 'wheel',
+          :mode    => '0644',
+        } )
+      end
+    end
+  end
 end

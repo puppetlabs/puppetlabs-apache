@@ -3,6 +3,7 @@ class apache::mod::disk_cache {
     'debian'  => '/var/cache/apache2/mod_disk_cache',
     'redhat'  => '/var/cache/mod_proxy',
     'freebsd' => '/var/cache/mod_disk_cache',
+    'gentoo'  => '/var/cache/apache2/mod_disk_cache',
   }
 
   $mod_name = $::osfamily ? {

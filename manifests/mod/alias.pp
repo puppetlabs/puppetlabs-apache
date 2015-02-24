@@ -10,6 +10,7 @@ class apache::mod::alias(
       default => '/var/www/icons',
     },
     'freebsd' => '/usr/local/www/apache24/icons',
+    'gentoo'  => '/usr/share/apache2/icons',
   }
   apache::mod { 'alias': }
   # Template uses $icons_path

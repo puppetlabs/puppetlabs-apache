@@ -67,7 +67,8 @@ Apache is a widely-used web server, and this module provides a simplified way of
 * Apache modules
 * virtual hosts
 * listened-to ports
-* `/etc/make.conf` on FreeBSD
+* `/etc/make.conf` on FreeBSD and Gentoo
+* depends on module 'gentoo/puppet-portage' for Gentoo
 
 ###Beginning with Apache
 
@@ -77,7 +78,7 @@ To install Apache with the default parameters
     class { 'apache':  }
 ```
 
-The defaults are determined by your operating system (e.g. Debian systems have one set of defaults, and RedHat systems have another, as do FreeBSD systems). These defaults work well in a testing environment, but are not suggested for production. To establish customized parameters
+The defaults are determined by your operating system (e.g. Debian systems have one set of defaults, and RedHat systems have another, as do FreeBSD and Gentoo systems). These defaults work well in a testing environment, but are not suggested for production. To establish customized parameters
 
 ```puppet
     class { 'apache':
@@ -236,11 +237,11 @@ Configures the behavior of the module templates, package names, and default mods
 
 #####`conf_dir`
 
-Changes the location of the configuration directory the main configuration file is placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
+Changes the location of the configuration directory the main configuration file is placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2' on Gentoo.
 
 #####`confd_dir`
 
-Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
+Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2/conf.d' on Gentoo.
 
 #####`conf_template`
 
@@ -268,7 +269,7 @@ The default certificate authority, which is automatically set to 'undef'. This d
 
 #####`default_ssl_cert`
 
-The default SSL certification, which is automatically set based on your operating system  ('/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, and '/usr/local/etc/apache22/server.crt' for FreeBSD). This default works out of the box but must be updated with your specific certificate information before being used in production.
+The default SSL certification, which is automatically set based on your operating system  ('/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
 
 #####`default_ssl_chain`
 
@@ -288,7 +289,7 @@ Sets the default certificate revocation check level via the [SSLCARevocationChec
 
 #####`default_ssl_key`
 
-The default SSL key, which is automatically set based on your operating system ('/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, and '/usr/local/etc/apache22/server.key' for FreeBSD). This default works out of the box but must be updated with your specific certificate information before being used in production.
+The default SSL key, which is automatically set based on your operating system ('/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
 
 #####`default_ssl_vhost`
 
@@ -313,7 +314,7 @@ Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [cu
 
 #####`docroot`
 
-Changes the location of the default [Documentroot](https://httpd.apache.org/docs/current/mod/core.html#documentroot). Defaults to '/var/www/html' on RedHat, '/var/www' on Debian, and '/usr/local/www/apache22/data' on FreeBSD.
+Changes the location of the default [Documentroot](https://httpd.apache.org/docs/current/mod/core.html#documentroot). Defaults to '/var/www/html' on RedHat, '/var/www' on Debian, '/usr/local/www/apache22/data' on FreeBSD, and '/var/www/localhost/htdocs' on Gentoo.
 
 #####`error_documents`
 
@@ -321,7 +322,7 @@ Enables custom error documents. Defaults to 'false'.
 
 #####`httpd_dir`
 
-Changes the base location of the configuration directories used for the apache service. This is useful for specially repackaged HTTPD builds, but might have unintended consequences when used in combination with the default distribution packages. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, and '/usr/local/etc/apache22' on FreeBSD.
+Changes the base location of the configuration directories used for the apache service. This is useful for specially repackaged HTTPD builds, but might have unintended consequences when used in combination with the default distribution packages. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2' on Gentoo.
 
 #####`keepalive`
 
@@ -353,7 +354,7 @@ Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log
 
 #####`logroot`
 
-Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, and '/var/log/apache22' on FreeBSD.
+Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, '/var/log/apache22' on FreeBSD, and '/var/log/apache2' on Gentoo.
 
 #####`logroot_mode`
 
@@ -370,11 +371,11 @@ Setting this to 'false' stops the user resource from being created. This is for 
 
 #####`mod_dir`
 
-Changes the location of the configuration directory your Apache modules configuration files are placed in. Defaults to '/etc/httpd/conf.d' for RedHat, '/etc/apache2/mods-available' for Debian, and '/usr/local/etc/apache22/Modules' for FreeBSD.
+Changes the location of the configuration directory your Apache modules configuration files are placed in. Defaults to '/etc/httpd/conf.d' for RedHat, '/etc/apache2/mods-available' for Debian, '/usr/local/etc/apache22/Modules' for FreeBSD, and '/etc/apache2/modules.d' on Gentoo.
 
 #####`mpm_module`
 
-Determines which MPM is loaded and configured for the HTTPD process. Valid values are 'event', 'itk', 'peruser', 'prefork', 'worker', or 'false'. Defaults to 'prefork' on RedHat and FreeBSD, and 'worker' on Debian. Must be set to 'false' to explicitly declare the following classes with custom parameters:
+Determines which MPM is loaded and configured for the HTTPD process. Valid values are 'event', 'itk', 'peruser', 'prefork', 'worker', or 'false'. Defaults to 'prefork' on RedHat, FreeBSD and Gentoo, and 'worker' on Debian. Must be set to 'false' to explicitly declare the following classes with custom parameters:
 
 * `apache::mod::event`
 * `apache::mod::itk`
@@ -414,7 +415,7 @@ Sets the server name. Defaults to `fqdn` provided by Facter.
 
 #####`server_root`
 
-Sets the root directory in which the server resides. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, and '/usr/local' on FreeBSD.
+Sets the root directory in which the server resides. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, '/usr/local' on FreeBSD, and '/var/www' on Gentoo.
 
 #####`server_signature`
 
@@ -434,7 +435,7 @@ Determines whether the service should be running. Valid values are 'true', 'fals
 
 #####`service_name`
 
-Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on Debian, and 'apache22' on FreeBSD.
+Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on Debian and Gentoo, and 'apache22' on FreeBSD.
 
 #####`service_manage`
 
@@ -446,7 +447,7 @@ Controls how TRACE requests per RFC 2616 are handled. More information about [Tr
 
 #####`vhost_dir`
 
-Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, and '/usr/local/etc/apache22/Vhosts' on FreeBSD.
+Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, '/usr/local/etc/apache22/Vhosts' on FreeBSD, and '/etc/apache2/vhosts.d' on Gentoo.
 
 #####`apache_name`
 
@@ -1517,9 +1518,9 @@ Used by HTTPD to conditionally set environment variables for vhosts. Defaults to
 
 Set up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG).
 
-`suphp_addhandler` defaults to 'php5-script' on RedHat and FreeBSD, and 'x-httpd-php' on Debian.
+`suphp_addhandler` defaults to 'php5-script' on RedHat and FreeBSD, and 'x-httpd-php' on Debian and Gentoo.
 
-`suphp_configpath` defaults to 'undef' on RedHat and FreeBSD, and '/etc/php5/apache2' on Debian.
+`suphp_configpath` defaults to 'undef' on RedHat and FreeBSD, and '/etc/php5/apache2' on Debian and Gentoo.
 
 `suphp_engine` allows values 'on' or 'off'. Defaults to 'off'
 
@@ -2015,7 +2016,7 @@ Specifies the SSL certificate authority. Defaults to 'undef'.
 
 #####`ssl_cert`
 
-Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, and '/usr/local/etc/apache22/server.crt' for FreeBSD.
+Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' on Gentoo.
 
 #####`ssl_protocol`
 
@@ -2035,7 +2036,7 @@ Sets [SSLHonorCipherOrder](http://httpd.apache.org/docs/current/mod/mod_ssl.html
 
 #####`ssl_certs_dir`
 
-Specifies the location of the SSL certification directory. Defaults to '/etc/ssl/certs' on Debian, '/etc/pki/tls/certs' on RedHat, and '/usr/local/etc/apache22' on FreeBSD.
+Specifies the location of the SSL certification directory. Defaults to '/etc/ssl/certs' on Debian, '/etc/pki/tls/certs' on RedHat, '/usr/local/etc/apache22' on FreeBSD, and '/etc/ssl/apache2' on Gentoo.
 
 #####`ssl_chain`
 
@@ -2055,7 +2056,7 @@ Sets the certificate revocation check level via the [SSLCARevocationCheck direct
 
 #####`ssl_key`
 
-Specifies the SSL key. Defaults are based on your operating system: '/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, and '/usr/local/etc/apache22/server.key' for FreeBSD. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+Specifies the SSL key. Defaults are based on your operating system: '/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' on Gentoo. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
 
 #####`ssl_verify_client`
 
@@ -2473,7 +2474,7 @@ The `apache::mod::passenger` class is untested as the repository does not have p
 
 This module is CI tested on Centos 5 & 6, Ubuntu 12.04 & 14.04, Debian 7, and RHEL 5, 6 & 7 platforms against both the OSS and Enterprise version of Puppet.
 
-The module contains support for other distributions and operating systems, such as FreeBSD and Amazon Linux, but is not formally tested on those and regressions can occur.
+The module contains support for other distributions and operating systems, such as FreeBSD, Gentoo and Amazon Linux, but is not formally tested on those and regressions can occur.
 
 ###SELinux and Custom Paths
 

@@ -59,6 +59,11 @@ class apache::mod::event (
         apache_version => $apache_version,
       }
     }
+    'gentoo': {
+      ::portage::makeconf { 'apache2_mpms':
+        content => 'event',
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

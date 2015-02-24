@@ -30,6 +30,9 @@ class apache::version {
     'FreeBSD': {
       $default = '2.4'
     }
+    'Gentoo': {
+      $default = '2.4'
+    }
     default: {
       fail("Class['apache::version']: Unsupported osfamily: ${::osfamily}")
     }

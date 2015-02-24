@@ -613,6 +613,48 @@ describe 'apache', :type => :class do
       ) }
     end
   end
+  context "on a Gentoo OS" do
+    let :facts do
+      {
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+        :is_pe                  => false,
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.to contain_user("apache") }
+    it { is_expected.to contain_group("apache") }
+    it { is_expected.to contain_class("apache::service") }
+    it { is_expected.to contain_file("/var/www/localhost/htdocs").with(
+      'ensure'  => 'directory'
+      )
+    }
+    it { is_expected.to contain_file("/etc/apache2/vhosts.d").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Class[Apache::Service]',
+      'require' => 'Package[httpd]'
+    ) }
+    it { is_expected.to contain_file("/etc/apache2/modules.d").with(
+      'ensure'  => 'directory',
+      'recurse' => 'true',
+      'purge'   => 'true',
+      'notify'  => 'Class[Apache::Service]',
+      'require' => 'Package[httpd]'
+    ) }
+    it { is_expected.to contain_concat("/etc/apache2/ports.conf").with(
+      'owner'   => 'root',
+      'group'   => 'wheel',
+      'mode'    => '0644',
+      'notify'  => 'Class[Apache::Service]'
+    ) }
+  end
   context 'on all OSes' do
     let :facts do
       {

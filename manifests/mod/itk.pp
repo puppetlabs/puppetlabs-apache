@@ -48,6 +48,11 @@ class apache::mod::itk (
         apache_version => $apache_version,
       }
     }
+    'gentoo': {
+      ::portage::makeconf { 'apache2_mpms':
+        content => 'itk',
+      }
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
