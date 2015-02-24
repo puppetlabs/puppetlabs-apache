@@ -4,7 +4,7 @@ class apache::mod::proxy_html {
 
   # Add libxml2
   case $::osfamily {
-    /RedHat|FreeBSD/: {
+    /RedHat|FreeBSD|Gentoo/: {
       ::apache::mod { 'xml2enc': }
       $loadfiles = undef
     }

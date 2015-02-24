@@ -24,8 +24,12 @@ class apache::default_mods (
     }
     default: {}
   }
-  ::apache::mod { 'authz_host': }
-
+  case $::osfamily {
+    'gentoo': {}
+    default: {
+      ::apache::mod { 'authz_host': }
+    }
+  }
   # The rest of the modules only get loaded if we want all modules enabled
   if $all {
     case $::osfamily {

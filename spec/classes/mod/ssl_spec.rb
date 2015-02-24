@@ -83,6 +83,23 @@ describe 'apache::mod::ssl', :type => :class do
     it { is_expected.to contain_apache__mod('ssl') }
   end
 
+  context 'on a Gentoo OS' do
+    let :facts do
+      {
+        :osfamily               => 'Gentoo',
+        :operatingsystem        => 'Gentoo',
+        :operatingsystemrelease => '3.16.1-gentoo',
+        :concat_basedir         => '/dne',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+        :is_pe                  => false,
+      }
+    end
+    it { is_expected.to contain_class('apache::params') }
+    it { is_expected.to contain_apache__mod('ssl') }
+  end
+
   # Template config doesn't vary by distro
   context "on all distros" do
     let :facts do
@@ -123,6 +140,5 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLRandomSeed startup file:\/dev\/random 256$/)}
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLRandomSeed connect file:\/dev\/urandom 1024$/)}
     end
-
   end
 end

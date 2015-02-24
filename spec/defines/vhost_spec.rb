@@ -82,6 +82,28 @@ describe 'apache::vhost', :type => :define do
         :path   => '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf'
       ) }
     end
+    context "on Gentoo systems" do
+      let :default_facts do
+        {
+          :osfamily               => 'Gentoo',
+          :operatingsystem        => 'Gentoo',
+          :operatingsystemrelease => '3.16.1-gentoo',
+          :concat_basedir         => '/dne',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+          :is_pe                  => false,
+        }
+      end
+      let :params do default_params end
+      let :facts do default_facts end
+      it { is_expected.to contain_class("apache") }
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
+        :ensure => 'present',
+        :path   => '/etc/apache2/vhosts.d/25-rspec.example.com.conf'
+      ) }
+    end
   end
   describe 'os-independent items' do
     let :facts do

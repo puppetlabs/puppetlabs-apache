@@ -11,6 +11,9 @@ describe 'apache class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamil
   when 'FreeBSD'
     package_name = 'apache24'
     service_name = 'apache24'
+  when 'Gentoo'
+    package_name = 'www-servers/apache'
+    service_name = 'apache2'
   end
 
   context 'default parameters' do

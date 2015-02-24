@@ -10,6 +10,9 @@ when 'Debian'
 when 'FreeBSD'
   mod_dir     = '/usr/local/etc/apache24/Modules'
   servicename = 'apache24'
+when 'Gentoo'
+  mod_dir     = '/etc/apache2/modules.d'
+  servicename = 'apache2'
 end
 
 describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
@@ -100,7 +103,7 @@ describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?
     it 'should apply with no errors' do
       pp = <<-EOS
         class { 'apache': default_mods => false }
-        ::apache::mod { 'auth_basic': 
+        ::apache::mod { 'auth_basic':
           loadfile_name => 'zz_auth_basic.load',
         }
       EOS

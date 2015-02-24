@@ -7,6 +7,8 @@ when 'Debian'
   servicename = 'apache2'
 when 'FreeBSD'
   servicename = 'apache24'
+when 'Gentoo'
+  servicename = 'apache2'
 end
 
 case fact('osfamily')
