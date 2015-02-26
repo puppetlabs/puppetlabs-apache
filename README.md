@@ -521,7 +521,10 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `auth_basic`
 * `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas) below)
 * `auth_kerb`
+* `authn_file`
 * `authnz_ldap`*
+* `authz_default`
+* `authz_user`
 * `autoindex`
 * `cache`
 * `cgi`

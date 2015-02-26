@@ -118,6 +118,7 @@ class apache::default_mods (
       }
     }
     include ::apache::mod::alias
+    include ::apache::mod::authn_file
     include ::apache::mod::autoindex
     include ::apache::mod::dav
     include ::apache::mod::dav_fs
@@ -127,7 +128,6 @@ class apache::default_mods (
     include ::apache::mod::negotiation
     include ::apache::mod::setenvif
     ::apache::mod { 'auth_basic': }
-    ::apache::mod { 'authn_file': }
 
     if versioncmp($apache_version, '2.4') >= 0 {
       # filter is needed by mod_deflate
@@ -141,11 +141,12 @@ class apache::default_mods (
       # lots of stuff seems to break without access_compat
       ::apache::mod { 'access_compat': }
     } else {
-      ::apache::mod { 'authz_default': }
+      include ::apache::mod::authz_default
     }
 
+    include ::apache::mod::authz_user
+
     ::apache::mod { 'authz_groupfile': }
-    ::apache::mod { 'authz_user': }
     ::apache::mod { 'env': }
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
