@@ -173,10 +173,18 @@ describe 'apache::vhost', :type => :define do
           'access_log_format'           => '%h %l %u %t \"%r\" %>s %b',
           'access_log_env_var'          => '',
           'aliases'                     => '/image',
-          'directories'                 => {
-            'path'     => '/var/www/files',
-            'provider' => 'files',
-          },
+          'directories'                 => [
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'require'  => [ 'valid-user', 'all denied', ],
+            },
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'require'  => 'all granted',
+            },
+          ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
           'error_log_pipe'              => '',
@@ -277,7 +285,7 @@ describe 'apache::vhost', :type => :define do
       let :facts do
         {
           :osfamily               => 'RedHat',
-          :operatingsystemrelease => '6',
+          :operatingsystemrelease => '7',
           :concat_basedir         => '/dne',
           :operatingsystem        => 'RedHat',
           :id                     => 'root',
@@ -328,6 +336,12 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require valid-user$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all denied$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all granted$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
