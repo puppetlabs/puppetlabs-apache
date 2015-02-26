@@ -19,9 +19,12 @@ describe 'apache::dev', :type => :class do
   context "on an Ubuntu 14 OS" do
     let :facts do
       {
+        :lsbdistrelease         => '14.04',
+        :lsbdistcodename        => 'trusty',
         :osfamily               => 'Debian',
         :operatingsystem        => 'Ubuntu',
         :operatingsystemrelease => '14.04',
+        :is_pe                  => false,
       }
     end
     it { is_expected.to contain_package("apache2-dev") }
