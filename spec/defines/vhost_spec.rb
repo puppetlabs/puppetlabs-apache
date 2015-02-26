@@ -354,12 +354,14 @@ describe 'apache::vhost', :type => :define do
               'provider' => 'files',
               'allow'    => [ 'from 127.0.0.1', 'from 127.0.0.2', ],
               'deny'     => [ 'from 127.0.0.3', 'from 127.0.0.4', ],
+              'satisfy'  => 'any',
             },
             {
               'path'     => '/var/www/foo',
               'provider' => 'files',
               'allow'    => 'from 127.0.0.5',
               'deny'     => 'from all',
+              'order'    => 'deny,allow',
             },
           ],
 
@@ -419,6 +421,10 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Deny from 127\.0\.0\.4$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Deny from all$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Satisfy any$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Order deny,allow$/ ) }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -726,6 +732,96 @@ describe 'apache::vhost', :type => :define do
       end
       let :facts do default_facts end
       it { expect { is_expected.to compile }.to raise_error }
+    end
+  end
+  describe 'allow/deny/order/satisfy deprecation validation' do
+    let :default_facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
+      }
+    end
+    context 'bad allow parameter' do
+      let :params do
+        {
+          'docroot'        => '/var/www/files',
+          'apache_version' => '2.4',
+          'directories'    => {
+            'path'     => '/var/www/files',
+            'provider' => 'files',
+            'allow'    => 'from 127.0.0.1',
+          },
+        }
+      end
+      let :facts do default_facts end
+      it do
+        expect {
+          should contain_concat__fragment('rspec.example.com-directories')
+        }.to raise_error(Puppet::Error)
+      end
+    end
+    context 'bad deny parameter' do
+      let :params do
+        {
+          'docroot'        => '/var/www/files',
+          'apache_version' => '2.4',
+          'directories'    => {
+            'path'     => '/var/www/files',
+            'provider' => 'files',
+            'deny'     => 'from 127.0.0.1',
+          },
+        }
+      end
+      let :facts do default_facts end
+      it do
+        expect {
+          should contain_concat__fragment('rspec.example.com-directories')
+        }.to raise_error(Puppet::Error)
+      end
+    end
+    context 'bad satisfy parameter' do
+      let :params do
+        {
+          'docroot'        => '/var/www/files',
+          'apache_version' => '2.4',
+          'directories'    => {
+            'path'     => '/var/www/files',
+            'provider' => 'files',
+            'satisfy'  => 'any',
+          },
+        }
+      end
+      let :facts do default_facts end
+      it do
+        expect {
+          should contain_concat__fragment('rspec.example.com-directories')
+        }.to raise_error(Puppet::Error)
+      end
+    end
+    context 'bad order parameter' do
+      let :params do
+        {
+          'docroot'        => '/var/www/files',
+          'apache_version' => '2.4',
+          'directories'    => {
+            'path'     => '/var/www/files',
+            'provider' => 'files',
+            'order'    => 'deny,allow',
+          },
+        }
+      end
+      let :facts do default_facts end
+      it do
+        expect {
+          should contain_concat__fragment('rspec.example.com-directories')
+        }.to raise_error(Puppet::Error)
+      end
     end
   end
 end
