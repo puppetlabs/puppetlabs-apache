@@ -747,7 +747,7 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
       ssl_compression        => false,
       ssl_options            => [ 'StdEnvVars' ],
       ssl_cipher             => 'HIGH:MEDIUM:!aNULL:!MD5',
-      ssl_protocol           => 'all -SSLv2 -SSLv3',
+      ssl_protocol           => [ 'all', '-SSLv2', '-SSLv3' ],
       ssl_pass_phrase_dialog => 'builtin',
       ssl_random_seeds       => [
         'startup builtin',
@@ -2020,15 +2020,11 @@ Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/ce
 
 #####`ssl_protocol`
 
-Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Defaults to 'undef'.
-
-If you do not use this parameter, it uses the HTTPD default from ssl.conf.erb, 'all -SSLv2 -SSLv3'.
+Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array of accepted protocols. Defaults to 'all', '-SSLv2', '-SSLv3'.
 
 #####`ssl_cipher`
 
-Specifies [SSLCipherSuite](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite). Defaults to 'undef'.
-
-If you do not use this parameter, it uses the HTTPD default from ssl.conf.erb, 'HIGH:MEDIUM:!aNULL:!MD5'.
+Specifies [SSLCipherSuite](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite). Defaults to 'HIGH:MEDIUM:!aNULL:!MD5'.
 
 #####`ssl_honorcipherorder`
 
