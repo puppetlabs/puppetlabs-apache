@@ -690,6 +690,7 @@ describe 'apache', :type => :class do
       }
       end
       it { is_expected.to contain_apache__vhost('default').with_ensure('absent') }
+      it { is_expected.not_to contain_file('/var/www/html') }
     end
     context 'with default ssl vhost' do
       let :params do {
@@ -697,6 +698,7 @@ describe 'apache', :type => :class do
         }
       end
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('present') }
+      it { is_expected.to contain_file('/var/www/html') }
     end
   end
   context 'with unsupported osfamily' do

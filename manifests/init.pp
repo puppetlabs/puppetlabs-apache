@@ -355,6 +355,7 @@ class apache (
       priority        => '15',
       ip              => $ip,
       logroot_mode    => $logroot_mode,
+      manage_docroot  => $default_vhost,
     }
     $ssl_access_log_file = $::osfamily ? {
       'freebsd' => $access_log_file,
@@ -371,6 +372,7 @@ class apache (
       priority        => '15',
       ip              => $ip,
       logroot_mode    => $logroot_mode,
+      manage_docroot  => $default_ssl_vhost,
     }
   }
 }
