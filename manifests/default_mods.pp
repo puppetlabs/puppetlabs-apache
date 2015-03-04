@@ -158,7 +158,7 @@ class apache::default_mods (
       }
 
       # filter is needed by mod_deflate
-      ::apache::mod { 'filter': }
+      include ::apache::mod::filter
     }
   } else {
     if versioncmp($apache_version, '2.4') >= 0 {
@@ -168,7 +168,7 @@ class apache::default_mods (
       }
 
       # filter is needed by mod_deflate
-      ::apache::mod { 'filter': }
+      include ::apache::mod::filter
     }
   }
 }
