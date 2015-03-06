@@ -50,7 +50,7 @@ define apache::balancer (
     owner  => '0',
     group  => '0',
     mode   => '0644',
-    notify => Service['httpd'],
+    notify => Class['Apache::Service'],
   }
 
   concat::fragment { "00-${name}-header":

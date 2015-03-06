@@ -34,7 +34,7 @@ define apache::custom_config (
   $filename = "${priority_prefix}${filename_middle}.conf"
 
   if ! $verify_config or $ensure == 'absent' {
-    $notifies = Service['httpd']
+    $notifies = Class['Apache::Service']
   } else {
     $notifies = undef
   }
@@ -53,7 +53,7 @@ define apache::custom_config (
       command     => $verify_command,
       subscribe   => File["apache_${name}"],
       refreshonly => true,
-      notify      => Service['httpd'],
+      notify      => Class['Apache::Service'],
       before      => Exec["remove ${name} if invalid"],
     }
 
