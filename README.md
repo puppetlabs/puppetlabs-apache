@@ -250,6 +250,10 @@ Overrides the template used for the main apache configuration file. Defaults to 
 
 *Note:* Using this parameter is potentially risky, as the module has been built for a minimal configuration file with the configuration primarily coming from conf.d/ entries.
 
+#####`default_charset`
+
+If defined, the value will be set as `AddDefaultCharset` in the main configuration file. It is undefined by default.
+
 #####`default_confd_files`
 
 Generates default set of include-able Apache configuration files under  `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on a given platform.
