@@ -2535,9 +2535,14 @@ Read the complete module [contribution guide](https://docs.puppetlabs.com/forge/
 This project contains tests for both [rspec-puppet](http://rspec-puppet.com/) and [beaker-rspec](https://github.com/puppetlabs/beaker-rspec) to verify functionality. For in-depth information please see their respective documentation.
 
 Quickstart:
-
+  Ruby > 1.8.7
     gem install bundler
     bundle install
     bundle exec rake spec
     bundle exec rspec spec/acceptance
     RS_DEBUG=yes bundle exec rspec spec/acceptance
+
+  Ruby = 1.8.7
+    gem install bundler
+    bundle install --without system_tests
+    bundle exec rake spec
