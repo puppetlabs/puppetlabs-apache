@@ -30,7 +30,13 @@ AccessFileName .htaccess
   AllowOverride None
 </Directory>
 
-DefaultType none
+<% if @default_charset -%>
+AddDefaultCharset <%= @default_charset %>
+<% end -%>
+
+<%- if scope.function_versioncmp([@apache_version, '2.4']) < 0 -%>
+DefaultType <%= @default_type %>
+<%- end -%>
 HostnameLookups Off
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
 LogLevel <%= @log_level %>

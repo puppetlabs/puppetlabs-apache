@@ -58,6 +58,7 @@ define apache::vhost(
   $scriptaliases               = [],
   $proxy_dest                  = undef,
   $proxy_pass                  = undef,
+  $proxy_pass_match            = undef,
   $suphp_addhandler            = $::apache::params::suphp_addhandler,
   $suphp_engine                = $::apache::params::suphp_engine,
   $suphp_configpath            = $::apache::params::suphp_configpath,
@@ -364,7 +365,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass) {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match) {
     if ! defined(Class['apache::mod::proxy']) {
       include ::apache::mod::proxy
     }

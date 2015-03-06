@@ -25,6 +25,9 @@
     ProxyPassReverse <%= reverse_url %>
     <%- end -%>
   <%- end -%>
+  <%- if proxy['nokeepalive'] -%>
+    SetEnv proxy-nokeepalive 1
+  <%- end -%>
   </Location>
 <% end -%>
 <% if @proxy_dest -%>
@@ -35,4 +38,7 @@
   <Location          />
     ProxyPassReverse <%= @proxy_dest %>/
   </Location>
+<% end -%>
+<% [@proxy_pass_match].flatten.compact.each do |proxy| %>
+  ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] %>
 <% end -%>
