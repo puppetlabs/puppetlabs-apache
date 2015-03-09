@@ -381,7 +381,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
   case fact('lsbdistcodename')
   when 'precise', 'wheezy'
-    context 'vhost fallbackresouce example' do
+    context 'vhost fallbackresource example' do
       it 'should configure a vhost with Fallbackresource' do
         pp = <<-EOS
         class { 'apache': }
