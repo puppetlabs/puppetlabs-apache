@@ -30,6 +30,10 @@ AccessFileName .htaccess
   AllowOverride None
 </Directory>
 
+<% if @default_charset -%>
+AddDefaultCharset <%= @default_charset %>
+<% end -%>
+
 DefaultType none
 HostnameLookups Off
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
