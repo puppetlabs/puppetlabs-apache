@@ -44,10 +44,10 @@ class apache::package (
           before => Package['httpd'],
         }
       }
-      $apache_package = $::apache::params::apache_name
+      $apache_package = $::apache::apache_name
     }
     default: {
-      $apache_package = $::apache::params::apache_name
+      $apache_package = $::apache::apache_name
     }
   }
 

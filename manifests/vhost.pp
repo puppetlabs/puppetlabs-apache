@@ -125,7 +125,7 @@ define apache::vhost(
     fail('You must include the apache base class before using any apache defined resources')
   }
 
-  $apache_name = $::apache::params::apache_name
+  $apache_name = $::apache::apache_name
 
   validate_re($ensure, '^(present|absent)$',
   "${ensure} is not supported for ensure.
