@@ -42,7 +42,7 @@ class apache::mod::auth_cas (
     content => template('apache/mod/auth_cas.conf.erb'),
     require => [ Exec["mkdir ${::apache::mod_dir}"], ],
     before  => File[$::apache::mod_dir],
-    notify  => Service['httpd'],
+    notify  => Class['Apache::Service'],
   }
 
 }

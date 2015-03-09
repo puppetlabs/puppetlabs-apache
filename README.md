@@ -2509,7 +2509,7 @@ Something along the lines of:
         exec { 'restorecon_apache':
           command => 'restorecon -Rv /apache_spec',
           path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          before  => Service['httpd'],
+          before  => Class['Apache::Service'],
           require => Class['apache'],
         }
         class { 'apache': }
