@@ -48,6 +48,7 @@ class apache (
   $mod_dir                = $::apache::params::mod_dir,
   $mod_enable_dir         = $::apache::params::mod_enable_dir,
   $mpm_module             = $::apache::params::mpm_module,
+  $lib_path               = $::apache::params::lib_path,
   $conf_template          = $::apache::params::conf_template,
   $servername             = $::apache::params::servername,
   $manage_user            = true,

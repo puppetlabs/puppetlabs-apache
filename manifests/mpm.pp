@@ -1,5 +1,5 @@
 define apache::mpm (
-  $lib_path       = $::apache::params::lib_path,
+  $lib_path       = $::apache::lib_path,
   $apache_version = $::apache::apache_version,
 ) {
   if ! defined(Class['apache']) {
