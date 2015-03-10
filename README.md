@@ -1053,7 +1053,7 @@ Passes a list of hashes to the vhost to create Alias, AliasMatch, ScriptAlias or
 aliases => [
   { aliasmatch       => '^/image/(.*)\.jpg$',
     path             => '/files/jpg.images/$1.jpg',
-  }
+  },
   { alias            => '/image',
     path             => '/ftp/pub/image',
   },
