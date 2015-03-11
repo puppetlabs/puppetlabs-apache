@@ -1329,6 +1329,7 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
     { 'path' => '/c', 'url' => 'http://backend-a/c', 'params' => {'max'=>20, 'ttl'=>120, 'retry'=>300}},
+    { 'path' => '/e', 'url' => 'http://backend-a/e', nokeepalive => true },
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
     { 'path' => '/d', 'url' => 'http://backend-a/d',
@@ -1341,6 +1342,7 @@ apache::vhost { 'site.name.fdqn':
 
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
+`nokeepalive` is optional and is a boolean, it is needed for some backend servers that don't properly implement HTTP/1.1, this forces the requests to use HTTP/1.0.
 
 #####`rack_base_uris`
 

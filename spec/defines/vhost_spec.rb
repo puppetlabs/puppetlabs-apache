@@ -205,10 +205,11 @@ describe 'apache::vhost', :type => :define do
           'proxy_dest'                  => '/',
           'proxy_pass'                  => [
             {
-              'path'     => '/a',
-              'url'      => 'http://backend-a/',
-              'keywords' => ['noquery', 'interpolate'],
-              'params'   => {
+              'path'        => '/a',
+              'url'         => 'http://backend-a/',
+              'keywords'    => ['noquery', 'interpolate'],
+              'nokeepalive' => true,
+              'params'      => {
                       'retry'   => '0',
                       'timeout' => '5'
               }
