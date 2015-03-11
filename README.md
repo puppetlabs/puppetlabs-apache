@@ -1342,6 +1342,7 @@ apache::vhost { 'site.name.fdqn':
 
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
+`nokeepalive` is optional and is a boolean, it is needed for some backend servers that don't properly implement HTTP/1.1, this forces the requests to use HTTP/1.0.
 
 #####`rack_base_uris`
 
