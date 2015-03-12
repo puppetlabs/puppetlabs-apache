@@ -1335,12 +1335,15 @@ apache::vhost { 'site.name.fdqn':
       'params' => { 'retry' => '0', 'timeout' => '5' }, },
     { 'path' => '/e', 'url' => 'http://backend-a/e',
       'keywords' => ['nocanon', 'interpolate'] },
+    { 'path' => '/f', 'url' => 'http://backend-f/',
+      'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
   ],
 }
 ```
 
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
+`setenv` is optional and is an array to set environment variables for the proxy directive, for details see http://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings
 
 #####`rack_base_uris`
 

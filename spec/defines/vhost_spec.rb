@@ -211,7 +211,8 @@ describe 'apache::vhost', :type => :define do
               'params'   => {
                       'retry'   => '0',
                       'timeout' => '5'
-              }
+              },
+              'setenv'   => ['proxy-nokeepalive 1','force-proxy-request-1.0 1'],
             }
           ],
           'suphp_addhandler'            => 'foo',
@@ -353,6 +354,10 @@ describe 'apache::vhost', :type => :define do
               /retry=0/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /timeout=5/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /SetEnv force-proxy-request-1.0 1/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /SetEnv proxy-nokeepalive 1/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /noquery interpolate/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }

@@ -25,6 +25,11 @@
     ProxyPassReverse <%= reverse_url %>
     <%- end -%>
   <%- end -%>
+  <%- if proxy['setenv'] -%>
+    <%- Array(proxy['setenv']).each do |setenv_var| -%>
+    SetEnv <%= setenv_var -%>
+    <%- end -%>
+  <%- end -%>
   </Location>
 <% end -%>
 <% if @proxy_dest -%>
