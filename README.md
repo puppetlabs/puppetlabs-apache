@@ -313,6 +313,10 @@ Sets up a default SSL virtual host. Defaults to 'false'. If set to 'true', sets 
 
 SSL vhosts only respond to HTTPS queries.
 
+#####`default_type`
+
+(Apache httpd 2.2 only) MIME content-type that will be sent if the server cannot determine a type in any other way. This directive has been deprecated in Apache httpd 2.4, and only exists there for backwards compatibility of configuration files.
+
 #####`default_vhost`
 
 Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
