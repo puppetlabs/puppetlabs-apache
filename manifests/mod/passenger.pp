@@ -25,20 +25,6 @@ class apache::mod::passenger (
     file { 'passenger_package.conf':
       path => "${::apache::mod_dir}/${passenger_conf_package_file}",
     }
-  } else {
-    # Remove passenger_extra.conf left over from before Passenger support was
-    # reworked for Debian. This is a temporary fix for users running this
-    # module from master after release 1.0.1 It will be removed in two
-    # releases from now.
-    $passenger_package_conf_ensure = $::osfamily ? {
-      'Debian' => 'absent',
-      default  => undef,
-    }
-
-    file { 'passenger_package.conf':
-      ensure => $passenger_package_conf_ensure,
-      path   => "${::apache::mod_dir}/passenger_extra.conf",
-    }
   }
 
   $_package = $mod_package

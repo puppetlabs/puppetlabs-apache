@@ -28,7 +28,6 @@ describe 'apache::mod::passenger', :type => :class do
     it { is_expected.to contain_file('passenger.conf').with({
       'path' => '/etc/apache2/mods-available/passenger.conf',
     }) }
-    it { is_expected.to contain_file('passenger_package.conf').with_ensure('absent') }
     describe "with passenger_root => '/usr/lib/example'" do
       let :params do
         { :passenger_root => '/usr/lib/example' }
