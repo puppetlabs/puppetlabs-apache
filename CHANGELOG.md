@@ -1,3 +1,46 @@
+##2015-03-17 - Supported Release 1.4.0
+###Summary
+
+This release fixes the issue where the docroot was still managed even if the default vhosts were disabled and has many other features and bugfixes including improved support for 'deny' and 'require' as arrays in the 'directories' parameter under `apache::vhost`
+
+####Features
+- New parameters to `apache`
+  - `default_charset`
+  - `default_type`
+- New parameters to `apache::vhost`
+  - `proxy_error_override`
+  - `passenger_app_env` (MODULES-1776)
+  - `proxy_dest_match`
+  - `proxy_dest_reverse_match`
+  - `proxy_pass_match`
+  - `no_proxy_uris_match`
+- New parameters to `apache::mod::passenger`
+  - `passenger_app_env`
+  - `passenger_min_instances`
+- New parameter to `apache::mod::alias`
+  - `icons_options`
+- New classes added under `apache::mod::*`
+  - `authn_file`
+  - `authz_default`
+  - `authz_user`
+- Added support for 'deny' as an array in 'directories' under `apache::vhost`
+- Added support for RewriteMap
+- Improved support for FreeBSD. (Note: If using apache < 2.4.12, see the discussion [here](https://github.com/puppetlabs/puppetlabs-apache/pull/1030))
+- Added check for deprecated options in directories and fail when they are unsupported
+- Added gentoo compatibility
+- Added proper array support for `require` in the `directories` parameter in `apache::vhost`
+- Added support for `setenv` inside proxy locations
+
+###Bugfixes
+- Fix issue in `apache::vhost` that was preventing the scriptalias fragment from being included (MODULES-1784)
+- Install required `mod_ldap` package for EL7 (MODULES-1779)
+- Change default value of `maxrequestworkers` in `apache::mod::event` to be a multiple of the default `ThreadsPerChild` of 25.
+- Use the correct `mod_prefork` package name for trusty and jessie
+- Don't manage docroot when default vhosts are disabled
+- Ensure resources notify `Class['Apache::Service']` instead of `Service['httpd']` (MODULES-1829)
+- Change the loadfile name for `mod_passenger` so `mod_proxy` will load by default before `mod_passenger`
+- Remove old Debian work-around that removed `passenger_extra.conf`
+
 ##2015-02-17 - Supported Release 1.3.0
 ###Summary
 
