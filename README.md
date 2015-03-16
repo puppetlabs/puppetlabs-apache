@@ -16,6 +16,7 @@
         * [Classes: apache::mod::*](#classes-apachemodname)
         * [Class: apache::mod::alias](#class-apachemodalias)
         * [Class: apache::mod::event](#class-apachemodevent)
+        * [Class: apache::mod::geoip](#class-apachemodgeoip)
         * [Class: apache::mod::info](#class-apachemodinfo)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::php](#class-apachemodphp)
@@ -617,6 +618,12 @@ To configure the event thread limit:
     $threadlimit      => '128',
   }
 ```
+
+####Class:  `apache::mod::geoip`
+
+Installs and manages geoip module.
+
+Full Documentation for geoip is available from [maxmind](http://dev.maxmind.com/geoip/legacy/mod_geoip2/).
 
 ####Class: `apache::mod::auth_cas`
 

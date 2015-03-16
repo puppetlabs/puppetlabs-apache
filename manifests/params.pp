@@ -77,6 +77,7 @@ class apache::params inherits ::apache::version {
       },
       'fastcgi'     => 'mod_fastcgi',
       'fcgid'       => 'mod_fcgid',
+      'geoip'       => 'mod_geoip',
       'ldap'        => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
         default => undef,
@@ -180,6 +181,7 @@ class apache::params inherits ::apache::version {
       'dav_svn'     => 'libapache2-svn',
       'fastcgi'     => 'libapache2-mod-fastcgi',
       'fcgid'       => 'libapache2-mod-fcgid',
+      'geoip'       => 'libapache2-mod_geoip',
       'nss'         => 'libapache2-mod-nss',
       'pagespeed'   => 'mod-pagespeed-stable',
       'zpassenger'  => 'libapache2-mod-passenger',
@@ -331,6 +333,7 @@ class apache::params inherits ::apache::version {
       # NOTE: not sure where the shibboleth should come from
       'auth_kerb'  => 'www/mod_auth_kerb2',
       'fcgid'      => 'www/mod_fcgid',
+      'geoip'      => 'www/mod_geoip',
       'zpassenger' => 'www/rubygem-passenger',
       'perl'       => 'www/mod_perl2',
       'php5'       => 'www/mod_php5',
@@ -391,6 +394,7 @@ class apache::params inherits ::apache::version {
       # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'  => 'www-apache/mod_auth_kerb',
       'fcgid'      => 'www-apache/mod_fcgid',
+      'geoip'      => 'www/mod_geoip',
       'zpassenger' => 'www-apache/passenger',
       'perl'       => 'www-apache/mod_perl',
       'php5'       => 'dev-lang/php',
