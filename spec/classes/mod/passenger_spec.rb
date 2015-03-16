@@ -76,6 +76,12 @@ describe 'apache::mod::passenger', :type => :class do
       end
       it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerMaxPoolSize 16$/) }
     end
+    describe "with passenger_min_instances => 5" do
+      let :params do
+        { :passenger_min_instances => 5 }
+      end
+      it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerMinInstances 5$/) }
+    end
     describe "with rack_autodetect => on" do
       let :params do
         { :rack_autodetect => 'on' }
