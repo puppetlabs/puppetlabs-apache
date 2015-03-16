@@ -20,7 +20,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('zpassenger') }
+    it { is_expected.to contain_apache__mod('passenger') }
     it { is_expected.to contain_package("libapache2-mod-passenger") }
     it { is_expected.to contain_file('zpassenger.load').with({
       'path' => '/etc/apache2/mods-available/zpassenger.load',
@@ -221,7 +221,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('zpassenger') }
+    it { is_expected.to contain_apache__mod('passenger') }
     it { is_expected.to contain_package("mod_passenger") }
     it { is_expected.to contain_file('passenger_package.conf').with({
       'path' => '/etc/httpd/conf.d/passenger.conf',
@@ -260,7 +260,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('zpassenger') }
+    it { is_expected.to contain_apache__mod('passenger') }
     it { is_expected.to contain_package("www/rubygem-passenger") }
   end
   context "on a Gentoo OS" do
@@ -277,7 +277,7 @@ describe 'apache::mod::passenger', :type => :class do
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('zpassenger') }
+    it { is_expected.to contain_apache__mod('passenger') }
     it { is_expected.to contain_package("www-apache/passenger") }
   end
 end

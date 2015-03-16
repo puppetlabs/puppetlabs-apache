@@ -82,7 +82,7 @@ class apache::params inherits ::apache::version {
         default => undef,
       },
       'pagespeed'   => 'mod-pagespeed-stable',
-      'zpassenger'   => 'mod_passenger',
+      'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
       'php5'        => $::apache::version::distrelease ? {
         '5'     => 'php53',
@@ -182,7 +182,7 @@ class apache::params inherits ::apache::version {
       'fcgid'       => 'libapache2-mod-fcgid',
       'nss'         => 'libapache2-mod-nss',
       'pagespeed'   => 'mod-pagespeed-stable',
-      'zpassenger'  => 'libapache2-mod-passenger',
+      'passenger'   => 'libapache2-mod-passenger',
       'perl'        => 'libapache2-mod-perl2',
       'php5'        => 'libapache2-mod-php5',
       'proxy_html'  => 'libapache2-mod-proxy-html',
@@ -331,7 +331,7 @@ class apache::params inherits ::apache::version {
       # NOTE: not sure where the shibboleth should come from
       'auth_kerb'  => 'www/mod_auth_kerb2',
       'fcgid'      => 'www/mod_fcgid',
-      'zpassenger' => 'www/rubygem-passenger',
+      'passenger'  => 'www/rubygem-passenger',
       'perl'       => 'www/mod_perl2',
       'php5'       => 'www/mod_php5',
       'proxy_html' => 'www/mod_proxy_html',
@@ -391,7 +391,7 @@ class apache::params inherits ::apache::version {
       # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'  => 'www-apache/mod_auth_kerb',
       'fcgid'      => 'www-apache/mod_fcgid',
-      'zpassenger' => 'www-apache/passenger',
+      'passenger'  => 'www-apache/passenger',
       'perl'       => 'www-apache/mod_perl',
       'php5'       => 'dev-lang/php',
       'proxy_html' => 'www-apache/mod_proxy_html',
