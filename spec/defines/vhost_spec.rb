@@ -215,12 +215,25 @@ describe 'apache::vhost', :type => :define do
               'setenv'   => ['proxy-nokeepalive 1','force-proxy-request-1.0 1'],
             }
           ],
+          'proxy_pass_match'            => [
+            {
+              'path'     => '/a',
+              'url'      => 'http://backend-a/',
+              'keywords' => ['noquery', 'interpolate'],
+              'params'   => {
+                      'retry'   => '0',
+                      'timeout' => '5'
+              },
+              'setenv'   => ['proxy-nokeepalive 1','force-proxy-request-1.0 1'],
+            }
+          ],
           'suphp_addhandler'            => 'foo',
           'suphp_engine'                => 'on',
           'suphp_configpath'            => '/var/www/html',
           'php_admin_flags'             => ['foo', 'bar'],
           'php_admin_values'            => ['true', 'false'],
           'no_proxy_uris'               => '/foo',
+          'no_proxy_uris_match'         => '/foomatch',
           'proxy_preserve_host'         => true,
           'proxy_error_override'        => true,
           'redirect_source'             => '/bar',
