@@ -774,12 +774,7 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
       ssl_cipher             => 'HIGH:MEDIUM:!aNULL:!MD5',
       ssl_protocol           => [ 'all', '-SSLv2', '-SSLv3' ],
       ssl_pass_phrase_dialog => 'builtin',
-      ssl_random_seeds       => [
-        'startup builtin',
-        'startup file:/dev/urandom 512',
-        'connect builtin',
-        'connect file:/dev/urandom 512',
-      ],
+      ssl_random_seed_bytes  => '512',
     }
 ```
 
