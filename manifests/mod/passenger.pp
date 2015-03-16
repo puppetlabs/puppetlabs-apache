@@ -16,9 +16,9 @@ class apache::mod::passenger (
   $passenger_app_env              = undef,
   $mod_package                    = undef,
   $mod_package_ensure             = undef,
-  $mod_lib                        = 'mod_passenger.so',
+  $mod_lib                        = undef,
   $mod_lib_path                   = undef,
-  $mod_id                         = 'passenger_module',
+  $mod_id                         = undef,
   $mod_path                       = undef,
 ) {
   # Managed by the package, but declare it to avoid purging
@@ -43,13 +43,14 @@ class apache::mod::passenger (
 
   $_id = $mod_id
   $_path = $mod_path
-  ::apache::mod { 'zpassenger':
+  ::apache::mod { 'passenger':
     package        => $_package,
     package_ensure => $_package_ensure,
     lib            => $_lib,
     lib_path       => $_lib_path,
     id             => $_id,
     path           => $_path,
+    loadfile_name  => 'zpassenger.load',
   }
 
   # Template uses:
