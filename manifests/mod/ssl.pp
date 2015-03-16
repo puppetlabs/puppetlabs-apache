@@ -20,6 +20,12 @@ class apache::mod::ssl (
     'gentoo'  => '/var/run/ssl_scache(512000)',
   }
 
+  $stapling_cache = $::osfamily ? {
+    'debian'  => "\${APACHE_RUN_DIR}/ocsp(128000)",
+    'redhat'  => '/var/cache/mod_ssl/ocsp(128000)',
+    'freebsd' => '/var/run/ocsp(128000)',
+  }
+
   case $::osfamily {
     'debian': {
       if versioncmp($apache_version, '2.4') >= 0 {
@@ -57,6 +63,7 @@ class apache::mod::ssl (
   # $ssl_compression
   # $ssl_options
   # $session_cache,
+  # $stapling_cache,
   # $ssl_mutex
   # $ssl_random_seeds
   # $apache_version

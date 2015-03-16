@@ -27,6 +27,9 @@ define apache::vhost(
   $ssl_verify_depth            = undef,
   $ssl_options                 = undef,
   $ssl_proxyengine             = false,
+  $ssl_stapling                = true,
+  $ssl_stapling_timeout        = undef,
+  $ssl_stapling_return_errors  = undef,
   $priority                    = undef,
   $default_vhost               = false,
   $servername                  = $name,
@@ -135,6 +138,7 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  validate_bool($ssl_stapling)
   if $rewrites {
     validate_array($rewrites)
     validate_hash($rewrites[0])
@@ -725,6 +729,7 @@ define apache::vhost(
   # - $ssl_verify_client
   # - $ssl_verify_depth
   # - $ssl_options
+  # - $ssl_stapling
   # - $apache_version
   if $ssl {
     concat::fragment { "${name}-ssl":

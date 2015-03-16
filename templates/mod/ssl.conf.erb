@@ -11,6 +11,9 @@
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout 300
+<% if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  SSLStaplingCache "shmcb:<%= @stapling_cache %>"
+<% end -%>
 <% if @ssl_compression -%>
   SSLCompression On
 <% end -%>
@@ -26,4 +29,5 @@
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>
+
 </IfModule>
