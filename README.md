@@ -572,6 +572,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `proxy_http`
 * `python`
 * `reqtimeout`
+* `remoteip`*
 * `rewrite`
 * `rpaf`*
 * `setenvif`
