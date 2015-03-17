@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe 'apache::mod::suphp class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
-  case fact('osfamily')
-    when 'Debian'
+  case fact('operatingsystem')
+    when 'Ubuntu'
       context "default suphp config" do
         it 'succeeds in puppeting suphp' do
           pp = <<-EOS
