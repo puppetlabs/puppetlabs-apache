@@ -313,6 +313,12 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to compile }
       it { is_expected.to_not contain_file('/var/www/foo') }
       it { is_expected.to contain_class('apache::mod::ssl') }
+      it { is_expected.to contain_file('ssl.conf').with(
+        :content => /^\s+SSLHonorCipherOrder On$/ ) }
+      it { is_expected.to contain_file('ssl.conf').with(
+        :content => /^\s+SSLPassPhraseDialog builtin$/ ) }
+      it { is_expected.to contain_file('ssl.conf').with(
+        :content => /^\s+SSLSessionCacheTimeout 300$/ ) }
       it { is_expected.to contain_class('apache::mod::mime') }
       it { is_expected.to contain_class('apache::mod::vhost_alias') }
       it { is_expected.to contain_class('apache::mod::wsgi') }
