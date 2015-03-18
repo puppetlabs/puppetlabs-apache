@@ -2542,6 +2542,10 @@ Something along the lines of:
 
 You need to set the contexts using `semanage fcontext` not `chcon` because `file {...}` resources reset the context to the values in the database if the resource isn't specifying the context.
 
+###FreeBSD
+
+In order to use this module on FreeBSD, you *must* use apache24-2.4.12 (www/apache24) or newer.
+
 ##Development
 
 ###Contributing
