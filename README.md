@@ -774,12 +774,7 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
       ssl_cipher             => 'HIGH:MEDIUM:!aNULL:!MD5',
       ssl_protocol           => [ 'all', '-SSLv2', '-SSLv3' ],
       ssl_pass_phrase_dialog => 'builtin',
-      ssl_random_seeds       => [
-        'startup builtin',
-        'startup file:/dev/urandom 512',
-        'connect builtin',
-        'connect file:/dev/urandom 512',
-      ],
+      ssl_random_seed_bytes  => '512',
     }
 ```
 
@@ -1352,6 +1347,14 @@ apache::vhost { 'site.name.fdqn':
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
 `setenv` is optional and is an array to set environment variables for the proxy directive, for details see http://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings
+
+#####`proxy_dest_match`
+
+This directive is equivalent to proxy_dest, but takes regular expressions, see [ProxyPassMatch](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch) for details.
+
+#####`proxy_dest_reverse_match`
+
+Allows you to pass a ProxyPassReverse if `proxy_dest_match` is specified. See [ProxyPassReverse](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse) for details.
 
 #####`proxy_pass_match`
 
