@@ -211,6 +211,10 @@ define apache::vhost(
     validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
   }
 
+  if $trace_enable {
+    validate_re($trace_enable, '(^on$|^off$|^extended$)', "${trace_enable} is not permitted for trace_enable. Allowed values are 'on', 'off' or 'extended'.")
+  }
+
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
