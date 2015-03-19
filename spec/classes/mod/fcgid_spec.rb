@@ -57,7 +57,7 @@ describe 'apache::mod::fcgid', :type => :class do
       } end
 
       it 'should contain the correct config' do
-        content = subject.resource('file', 'fcgid.conf').send(:parameters)[:content]
+        content = catalogue.resource('file', 'fcgid.conf').send(:parameters)[:content]
         expect(content.split("\n").reject { |c| c =~ /(^#|^$)/ }).to eq([
           '<IfModule mod_fcgid.c>',
           '  AddHandler fcgid-script .fcgi',

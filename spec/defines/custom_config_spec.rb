@@ -110,14 +110,14 @@ describe 'apache::custom_config', :type => :define do
       end
       it do
         expect {
-          should compile
+          catalogue
         }.to raise_error(Puppet::Error, /Only one of \$content and \$source can be specified\./)
       end
     end
     context 'neither content nor source' do
       it do
         expect {
-          should compile
+          catalogue
         }.to raise_error(Puppet::Error, /One of \$content and \$source must be specified\./)
       end
     end
@@ -130,7 +130,7 @@ describe 'apache::custom_config', :type => :define do
       end
       it do
         expect {
-          should compile
+          catalogue
         }.to raise_error(Puppet::Error, /is not supported for ensure/)
       end
     end
