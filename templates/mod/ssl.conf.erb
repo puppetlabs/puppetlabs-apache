@@ -9,17 +9,17 @@
 
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @session_cache %>"
-  SSLSessionCacheTimeout 300
+  SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
 <% if @ssl_compression -%>
   SSLCompression On
 <% end -%>
-  <% if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Mutex <%= @ssl_mutex %>
-  <% else -%>
+  <%- else -%>
   SSLMutex <%= @ssl_mutex %>
-  <% end -%>
-  SSLCryptoDevice builtin
-  SSLHonorCipherOrder On
+  <%- end -%>
+  SSLCryptoDevice <%= @ssl_cryptodevice %>
+  SSLHonorCipherOrder <%= @ssl_honorcipherorder %>
   SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
 <% if @ssl_options -%>
