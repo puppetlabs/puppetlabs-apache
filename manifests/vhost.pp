@@ -119,6 +119,7 @@ define apache::vhost(
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
   $modsec_body_limit           = undef,
+  $trace_enable                = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -880,6 +881,15 @@ define apache::vhost(
     }
   }
 
+  # Template uses:
+  # - $trace_enable
+  if $trace_enable {
+    concat::fragment { "${name}-trace_enable":
+      target  => "${priority_real}${filename}.conf",
+      order   => 310,
+      content => template('apache/vhost/_trace_enable.erb'),
+    }
+  }
   # Template uses no variables
   concat::fragment { "${name}-file_footer":
     target  => "${priority_real}${filename}.conf",
