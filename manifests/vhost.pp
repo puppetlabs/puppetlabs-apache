@@ -119,6 +119,18 @@ define apache::vhost(
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
   $modsec_body_limit           = undef,
+  $perl                        = undef,
+  $perl_postconfigrequire      = [],
+  $perl_status                 = false,
+  $perl_status_path            = "/perl-status",
+  $perl_status_allow_from      = ["127.0.0.1"],
+  $perl_options                = [],
+  $perl_interpstart            = '20',
+  $perl_interpmax              = '30',
+  $perl_interpminspare         = '3',
+  $perl_interpmaxspare         = '3',
+  $perl_interpmaxrequests      = '500',
+  $perl_interpscope            = 'request',
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -232,6 +244,10 @@ define apache::vhost(
 
   if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
     include ::apache::mod::passenger
+  }
+  
+  if $perl {
+    include ::apache::mod::perl
   }
 
   # Configure the defaultness of a vhost
@@ -854,6 +870,26 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 300,
       content => template('apache/vhost/_passenger.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $perl_postconfigrequire
+  # - $perl_status
+  # - $perl_status_path
+  # - $perl_status_allow_from
+  # - $perl_options
+  # - $perl_interpstart
+  # - $perl_interpmax
+  # - $perl_interpminspare
+  # - $perl_interpmaxspare
+  # - $perl_interpmaxrequests
+  # - $perl_interpscope
+  if $perl {
+    concat::fragment { "${name}-perl":
+      target  => "${priority_real}-${filename}.conf",
+      order   => 305,
+      content => template('apache/vhost/_perl.erb'),
     }
   }
 
