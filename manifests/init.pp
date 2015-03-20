@@ -41,6 +41,7 @@ class apache (
   $timeout                = '120',
   $httpd_dir              = $::apache::params::httpd_dir,
   $server_root            = $::apache::params::server_root,
+  $conf_file              = $::apache::params::conf_file,
   $conf_dir               = $::apache::params::conf_dir,
   $confd_dir              = $::apache::params::confd_dir,
   $vhost_dir              = $::apache::params::vhost_dir,
@@ -244,11 +245,11 @@ class apache (
     content => template('apache/ports_header.erb')
   }
 
-  if $::apache::conf_dir and $::apache::params::conf_file {
+  if $::apache::conf_dir and $::apache::conf_file {
     case $::osfamily {
       'debian': {
         $pidfile              = "\${APACHE_PID_FILE}"
-        $error_log            = 'error.log'
+        $error_log            = 'error_log'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
       }
@@ -312,7 +313,7 @@ class apache (
     # - $server_tokens
     # - $server_signature
     # - $trace_enable
-    file { "${::apache::conf_dir}/${::apache::params::conf_file}":
+    file { "${::apache::conf_dir}/${::apache::conf_file}":
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
