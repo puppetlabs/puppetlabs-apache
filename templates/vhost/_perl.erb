@@ -1,0 +1,40 @@
+# mod_perl configuration
+<% if @perl_postconfigrequire and ! @perl_postconfigrequire.empty? -%>
+<% Array(@perl_postconfigrequire).each do |script| -%>
+  PerlPostConfigRequire <%= script %>
+<% end -%>
+<% end -%>
+<% if @perl_status -%>
+  <Location <%= @perl_status_path %>>
+    SetHandler perl-script
+    PerlResponseHandler Apache2::Status
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    Require ip <%= Array(@perl_status_allow_from).join(" ") %>
+    <%- else -%>
+    Order deny,allow
+    Deny from all
+    Allow from <%= Array(@perl_status_allow_from).join(" ") %>
+    <%- end -%>
+  </Location>
+<% end -%>
+<% if @perl_options and ! @perl_options.empty? -%>
+  PerlOptions <%= Array(@perl_options).join(" ") %>
+<% end -%>
+<% if @perl_interpstart -%>
+  PerlInterpStart <%= @perl_interpstart %>
+<% end -%>
+<% if @perl_interpmax -%>
+  PerlInterpMax <%= @perl_interpmax %>
+<% end -%>
+<% if @perl_interpminspare -%>
+  PerlInterpMinSpare <%= @perl_interpminspare %>
+<% end -%>
+<% if @perl_interpmaxspare -%>
+  PerlInterpMaxSpare <%= @perl_interpmaxspare %>
+<% end -%>
+<% if @perl_interpmaxrequests -%>
+  PerlInterpMaxRequests <%= @perl_interpmaxrequests %>
+<% end -%>
+<% if @perl_interpscope -%>
+  PerlInterpScope <%= @perl_interpscope %>
+<% end -%>
