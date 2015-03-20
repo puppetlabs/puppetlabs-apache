@@ -29,6 +29,10 @@ class apache::params inherits ::apache::version {
   $log_level = 'warn'
   $use_optional_includes = false
 
+
+  # Do we want to manage the $conf_file or keep the existing one intact?
+  $manage_conf_file     = true
+
   if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } else {

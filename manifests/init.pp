@@ -42,6 +42,7 @@ class apache (
   $httpd_dir              = $::apache::params::httpd_dir,
   $server_root            = $::apache::params::server_root,
   $conf_file              = $::apache::params::conf_file,
+  $manage_conf_file       = $::apache::params::manage_conf_file,
   $conf_dir               = $::apache::params::conf_dir,
   $confd_dir              = $::apache::params::confd_dir,
   $vhost_dir              = $::apache::params::vhost_dir,
@@ -245,6 +246,7 @@ class apache (
     content => template('apache/ports_header.erb')
   }
 
+if $::apache::manage_conf_file {
   if $::apache::conf_dir and $::apache::conf_file {
     case $::osfamily {
       'debian': {
@@ -378,4 +380,5 @@ class apache (
       manage_docroot  => $default_ssl_vhost,
     }
   }
+}
 }
