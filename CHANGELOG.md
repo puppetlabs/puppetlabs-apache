@@ -64,7 +64,7 @@ This release has many new features and bugfixes, including the ability to option
 - Add ability to omit priority prefix if `$priority` is set to false
 - Add `apache::security::rule_link` define
 - Improvements to `apache::mod::*`
-  - Add `apache::mod::auth_cass` class
+  - Add `apache::mod::auth_cas` class
   - Add `threadlimit`, `listenbacklog`, `maxrequestworkers`, `maxconnectionsperchild` parameters to `apache::mod::event`
   - Add `apache::mod::filter` class
   - Add `root_group` to `apache::mod::php`
