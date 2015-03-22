@@ -1,0 +1,22 @@
+GeoIPEnable <%= @enable %>
+
+<%- if @dbfile and ! [ false, 'false', '' ].include?(@dbfile) -%>
+    <%- if @dbfile.kind_of?(Array) -%>
+      <%- Array(@dbfile).each do |file| -%>
+GeoIPDBFile <%= file %> <%= @flag %>
+      <%- end -%>
+    <%- else -%>
+GeoIPDBFile <%= @dbfile %> <%= @flag %>
+    <%- end -%>
+<%- end -%>
+GeoIPOutput <%= @output %>
+<% if @enableutf8 -%>
+GeoIPEnableUTF8 <%= @enableutf8 %>
+<% end -%>
+<% if @scanproxyheaders -%>
+GeoIPScanProxyHeaders <%= @scanproxyheaders %>
+<% end -%>
+<% if @uselastxforwarededforip -%>
+GeoIPUseLastXForwardedForIP <%= @uselastxforwarededforip %>
+<% end -%>
+

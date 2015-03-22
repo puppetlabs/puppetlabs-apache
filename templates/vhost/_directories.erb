@@ -34,6 +34,9 @@
     Header <%= header %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['geoip_enable'] and directory['geoip_enable'] != '' -%>
+    GeoIPEnable <%= directory['geoip_enable'] %>
+    <%- end -%>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>

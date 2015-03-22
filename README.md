@@ -16,6 +16,7 @@
         * [Classes: apache::mod::*](#classes-apachemodname)
         * [Class: apache::mod::alias](#class-apachemodalias)
         * [Class: apache::mod::event](#class-apachemodevent)
+        * [Class: apache::mod::geoip](#class-apachemodgeoip)
         * [Class: apache::mod::info](#class-apachemodinfo)
         * [Class: apache::mod::pagespeed](#class-apachemodpagespeed)
         * [Class: apache::mod::php](#class-apachemodphp)
@@ -623,6 +624,25 @@ To configure the event thread limit:
 Installs and manages mod_auth_cas. The parameters `cas_login_url` and `cas_validate_url` are required.
 
 Full documentation on mod_auth_cas is available from [JASIG](https://github.com/Jasig/mod_auth_cas).
+
+####Class: `apache::mod::geoip`
+
+Installs and manages mod_geoip.
+
+Full documentation on mod_geoip is available from [MaxMind](http://dev.maxmind.com/geoip/legacy/mod_geoip2/).
+
+These are the default settings:
+
+```puppet
+  class {'apache::mod::geoip':
+    $enable => 'Off',
+    $dbfile => '/usr/share/GeoIP/GeoIP.dat',
+    $flag   => 'Standard',
+    $output => 'All',
+  }
+```
+
+The parameter `dbfile` can be a single directory or a hash of directories.
 
 ####Class: `apache::mod::info`
 
@@ -1824,6 +1844,22 @@ An array of hashes used to override the [ErrorDocument](https://httpd.apache.org
               'document'   => '/service-unavail',
             },
           ],
+        },
+      ],
+    }
+```
+
+######`geoip_enable`
+
+Sets the [GeoIPEnable](http://dev.maxmind.com/geoip/legacy/mod_geoip2/#Configuration) directive.
+Note that you must declare `class {'apache::mod::geoip': }` before using this directive.
+
+```puppet
+    apache::vhost { 'first.example.com':
+      docroot     => '/var/www/first',
+      directories => [
+        { path         => '/var/www/first',
+          geoip_enable => 'On',
         },
       ],
     }
