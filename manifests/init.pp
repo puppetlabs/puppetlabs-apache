@@ -73,6 +73,7 @@ class apache (
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
   $use_canonical_name     = undef,
+  $extended_status        = undef,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -81,6 +82,11 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+  
+  # Case insensitive regex check.
+  if $extended_status{
+  validate_re($extended_status, '^(?i:on|off)$', "${extended_status} is not permitted for extended_status. Allowed values are 'on', 'off'.")
+  }
 
   # Case insensitive regex check.
   if $trace_enable {
@@ -327,6 +333,7 @@ if $::apache::manage_conf_file {
     # - $server_signature
     # - $trace_enable
     # - $use_canonical_name
+    # - $extended_status
     file { "${::apache::conf_dir}/${::apache::conf_file}":
       ensure  => file,
       content => template($conf_template),

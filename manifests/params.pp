@@ -29,7 +29,7 @@ class apache::params inherits ::apache::version {
   $log_level = 'warn'
   $use_optional_includes = false
   $use_canonical_name = 'on'
-
+  $extended_status = 'off'
 
   # Do we want to manage the $conf_file or keep the existing one intact?
   $manage_conf_file     = true
