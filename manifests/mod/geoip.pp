@@ -1,22 +1,22 @@
 class apache::mod::geoip (
-  $enable                  = 'Off',
-  $dbfile                  = '/usr/share/GeoIP/GeoIP.dat',
-  $flag                    = 'Standard',
-  $output                  = 'All',
-  $enableutf8              = undef,
-  $scanproxyheaders        = undef,
-  $uselastxforwarededforip = undef,
+  $enable                     = false,
+  $db_file                    = '/usr/share/GeoIP/GeoIP.dat',
+  $flag                       = 'Standard',
+  $output                     = 'All',
+  $enable_utf8                = undef,
+  $scan_proxy_headers         = undef,
+  $use_last_xforwarededfor_ip = undef,
 ) {
   ::apache::mod { 'geoip': }
 
   # Template uses:
   # - enable
-  # - dbfile
+  # - db_file
   # - flag
   # - output
-  # - enableutf8
-  # - scanproxyheaders
-  # - uselastxforwarededforip
+  # - enable_utf8
+  # - scan_proxy_headers
+  # - use_last_xforwarededfor_ip
   file { 'geoip.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/geoip.conf",

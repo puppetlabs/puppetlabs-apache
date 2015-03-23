@@ -635,14 +635,14 @@ These are the default settings:
 
 ```puppet
   class {'apache::mod::geoip':
-    $enable => 'Off',
-    $dbfile => '/usr/share/GeoIP/GeoIP.dat',
-    $flag   => 'Standard',
-    $output => 'All',
+    $enable  => false,
+    $db_file => '/usr/share/GeoIP/GeoIP.dat',
+    $flag    => 'Standard',
+    $output  => 'All',
   }
 ```
 
-The parameter `dbfile` can be a single directory or a hash of directories.
+The parameter `db_file` can be a single directory or a hash of directories.
 
 ####Class: `apache::mod::info`
 
@@ -1859,7 +1859,7 @@ Note that you must declare `class {'apache::mod::geoip': }` before using this di
       docroot     => '/var/www/first',
       directories => [
         { path         => '/var/www/first',
-          geoip_enable => 'On',
+          geoip_enable => true,
         },
       ],
     }
