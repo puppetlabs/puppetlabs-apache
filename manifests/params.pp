@@ -28,6 +28,7 @@ class apache::params inherits ::apache::version {
   # The default error log level
   $log_level = 'warn'
   $use_optional_includes = false
+  $use_canonical_name = 'on'
 
 
   # Do we want to manage the $conf_file or keep the existing one intact?

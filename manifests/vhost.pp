@@ -120,6 +120,7 @@ define apache::vhost(
   $modsec_disable_ips          = undef,
   $modsec_body_limit           = undef,
   $trace_enable                = undef,
+  $use_canonical_name          = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -213,6 +214,11 @@ define apache::vhost(
 
   if $trace_enable {
     validate_re($trace_enable, '(^on$|^off$|^extended$)', "${trace_enable} is not permitted for trace_enable. Allowed values are 'on', 'off' or 'extended'.")
+  }
+
+  # Case insensitive regex check.
+  if $use_canonical_name {
+  validate_re($use_canonical_name, '^(?i:on|off|dns)$', "${use_canonical_name} is not permitted for use_canonical_name. Allowed values are 'on', 'off' or 'dns'.")
   }
 
   # Input validation ends
@@ -892,6 +898,15 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 310,
       content => template('apache/vhost/_trace_enable.erb'),
+    }
+  }
+  # Template uses:
+  # - $use_canonical_name
+  if $use_canonical_name {
+    concat::fragment { "${name}-use_canonical_name":
+      target  => "${priority_real}${filename}.conf",
+      order   => 311,
+      content => template('apache/vhost/_use_canonical_name.erb'),
     }
   }
   # Template uses no variables

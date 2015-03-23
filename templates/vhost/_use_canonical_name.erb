@@ -1,0 +1,5 @@
+<% if @use_canonical_name -%>
+
+  ## UseCanonicalName Directive
+  UseCanonicalName <%= scope.function_bool2httpd([@use_canonical_name]).downcase %>
+<% end -%>

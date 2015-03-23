@@ -68,10 +68,11 @@ class apache (
   $apache_version         = $::apache::version::default,
   $server_tokens          = 'OS',
   $server_signature       = 'On',
-  $trace_enable           = 'On',
+  $trace_enable           = undef,
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
+  $use_canonical_name     = undef,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -80,6 +81,16 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+
+  # Case insensitive regex check.
+  if $trace_enable {
+  validate_re($trace_enable, '^(?i:on|off|extended)$', "${trace_enable} is not permitted for trace_enable. Allowed values are 'on', 'off' or 'extented'.")
+  }
+ 
+  # Case insensitive regex check.
+  if $use_canonical_name {
+  validate_re($use_canonical_name, '^(?i:on|off|dns)$', "${use_canonical_name} is not permitted for use_canonical_name. Allowed values are 'on', 'off' or 'dns'.")
+  }
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -315,6 +326,7 @@ if $::apache::manage_conf_file {
     # - $server_tokens
     # - $server_signature
     # - $trace_enable
+    # - $use_canonical_name
     file { "${::apache::conf_dir}/${::apache::conf_file}":
       ensure  => file,
       content => template($conf_template),
