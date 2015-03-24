@@ -57,7 +57,7 @@ describe 'apache::service', :type => :class do
       let (:params) {{ :service_enable => 'not-a-boolean' }}
 
       it 'should fail' do
-        expect { subject }.to raise_error(Puppet::Error, /is not a boolean/)
+        expect { catalogue }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
 
@@ -65,7 +65,7 @@ describe 'apache::service', :type => :class do
       let (:params) {{ :service_manage => 'not-a-boolean' }}
 
       it 'should fail' do
-        expect { subject }.to raise_error(Puppet::Error, /is not a boolean/)
+        expect { catalogue }.to raise_error(Puppet::Error, /is not a boolean/)
       end
     end
 
