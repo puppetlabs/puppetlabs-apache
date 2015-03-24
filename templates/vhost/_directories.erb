@@ -34,6 +34,9 @@
     Header <%= header %>
       <%- end -%>
     <%- end -%>
+    <%- if ! directory['geoip_enable'].nil? -%>
+    GeoIPEnable <%= scope.function_bool2httpd([directory['geoip_enable']]) %>
+    <%- end -%>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
