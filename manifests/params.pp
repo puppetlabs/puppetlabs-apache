@@ -259,6 +259,7 @@ class apache::params inherits ::apache::version {
             $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
             $passenger_ruby         = undef
             $passenger_default_ruby = '/usr/bin/ruby'
+            $docroot                = '/var/www/html'
           }
           default: {
             # The following settings may or may not work on Ubuntu releases not
