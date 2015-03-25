@@ -240,6 +240,13 @@ class apache::params inherits ::apache::version {
       $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     }
 
+    if ($::operatingsystem == 'Ubuntu') {
+      $docroot = '/var/www/html'
+    }
+    else {
+      $docroot = '/var/www'
+    }
+
     #
     # Passenger-specific settings
     #
