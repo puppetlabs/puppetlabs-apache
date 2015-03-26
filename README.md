@@ -22,6 +22,7 @@
         * [Class: apache::mod::php](#class-apachemodphp)
         * [Class: apache::mod::ssl](#class-apachemodssl)
         * [Class: apache::mod::status](#class-apachemodstatus)
+        * [Class: apache::mod::expires](#class-apachemodexpires)
         * [Class: apache::mod::wsgi](#class-apachemodwsgi)
         * [Class: apache::mod::fcgid](#class-apachemodfcgid)
         * [Class: apache::mod::negotiation](#class-apachemodnegotiation)
@@ -816,6 +817,32 @@ Installs Apache mod_status and uses the status.conf.erb template. These are the 
 ){
 
 
+  }
+```
+
+####Class: `apache::mod::expires`
+
+Installs Apache mod_expires and uses the expires.conf.erb template. These are the defaults:
+
+```puppet
+    class { 'apache::mod::expires':
+      expires_active  = true,
+      expires_default = undef,
+      expires_by_type = undef,
+){
+
+
+  }
+```
+
+`expires_by_type` is an array of Hashes, describing a set of types and their expire times:
+
+```puppet
+  class { 'apache::mod::expires':
+    expires_by_type = [
+      { 'text/json' => 'access plus 1 month' },
+      { 'text/html' => 'access plus 1 year' },
+    ]
   }
 ```
 
