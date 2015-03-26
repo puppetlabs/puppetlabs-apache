@@ -46,7 +46,7 @@ describe 'apache::mod::remoteip', :type => :class do
         { :apache_version => '2.2' }
       end
       it 'should fail' do
-        expect { subject }.to raise_error(Puppet::Error, /mod_remoteip is only available in Apache 2.4/)
+        expect { catalogue }.to raise_error(Puppet::Error, /mod_remoteip is only available in Apache 2.4/)
       end
     end
   end
