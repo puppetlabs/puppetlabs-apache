@@ -52,6 +52,7 @@ class apache::params inherits ::apache::version {
     $ports_file           = "${conf_dir}/ports.conf"
     $logroot              = '/var/log/httpd'
     $logroot_mode         = undef
+    $error_log            = 'error_log'
     $lib_path             = 'modules'
     $mpm_module           = 'prefork'
     $dev_packages         = 'httpd-devel'
@@ -167,6 +168,7 @@ class apache::params inherits ::apache::version {
     $ports_file          = "${conf_dir}/ports.conf"
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
+    $error_log           = 'error.log'
     $lib_path            = '/usr/lib/apache2/modules'
     $mpm_module          = 'worker'
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
@@ -310,6 +312,7 @@ class apache::params inherits ::apache::version {
     $ports_file       = "${conf_dir}/ports.conf"
     $logroot          = '/var/log/apache24'
     $logroot_mode     = undef
+    $error_log        = 'httpd-error.log'
     $lib_path         = '/usr/local/libexec/apache24'
     $mpm_module       = 'prefork'
     $dev_packages     = undef
@@ -374,6 +377,7 @@ class apache::params inherits ::apache::version {
     $ports_file       = "${conf_dir}/ports.conf"
     $logroot          = '/var/log/apache2'
     $logroot_mode     = undef
+    $error_log        = 'error.log'
     $lib_path         = '/usr/lib/apache2/modules'
     $mpm_module       = 'prefork'
     $dev_packages     = undef

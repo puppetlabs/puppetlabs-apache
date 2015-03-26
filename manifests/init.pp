@@ -61,6 +61,7 @@ class apache (
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,
   $log_formats            = {},
+  $error_log              = $::apache::params::error_log,
   $ports_file             = $::apache::params::ports_file,
   $docroot                = $::apache::params::docroot,
   $apache_version         = $::apache::version::default,
@@ -248,24 +249,25 @@ class apache (
     case $::osfamily {
       'debian': {
         $pidfile              = "\${APACHE_PID_FILE}"
-        $error_log            = 'error.log'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
       }
       'redhat': {
         $pidfile              = 'run/httpd.pid'
-        $error_log            = 'error_log'
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
+        if $::operatingsystem == 'CentOS' and $::operatingsystemmajrelease == '7' {
+          $error_documents_path = '/usr/share/httpd/error'
+        } else {
+          $error_documents_path = '/var/www/error'
+        }
       }
       'freebsd': {
         $pidfile              = '/var/run/httpd.pid'
-        $error_log            = 'httpd-error.log'
         $scriptalias          = '/usr/local/www/apache24/cgi-bin'
         $access_log_file      = 'httpd-access.log'
       } 'gentoo': {
         $pidfile              = '/run/apache2.pid'
-        $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/var/www/localhost/cgi-bin'
         $access_log_file      = 'access.log'
