@@ -1797,6 +1797,10 @@ Sets the value for [AuthDigestQop](http://httpd.apache.org/docs/current/mod/mod_
 
 Sets the value for [AuthAuthDigestShmemSize](http://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestshmemsize), which defines the amount of shared memory allocated to the server for keeping track of clients.
 
+######`auth_external`
+
+Sets the value for [AuthExternal](https://code.google.com/p/mod-auth-external/wiki/ModAuthzUnixGroup), which sets an external module to authenticate users. 
+
 ######`auth_group_file`
 
 Sets the value for [AuthGroupFile](https://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html#authgroupfile), which sets the name of the text file containing the list of user groups for authorization.

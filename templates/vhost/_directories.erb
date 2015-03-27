@@ -181,6 +181,9 @@
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
     <%- end -%>
+    <%- if directory['auth_external'] -%>
+    AuthExternal <%= directory['auth_external'] %>
+    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
