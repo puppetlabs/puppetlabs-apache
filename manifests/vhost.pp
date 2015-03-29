@@ -119,6 +119,8 @@ define apache::vhost(
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
   $modsec_body_limit           = undef,
+  $trace_enable                = undef,
+  $use_canonical_name          = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -208,6 +210,15 @@ define apache::vhost(
 
   if $allow_encoded_slashes {
     validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
+  }
+
+  if $trace_enable {
+    validate_re($trace_enable, '(^on$|^off$|^extended$)', "${trace_enable} is not permitted for trace_enable. Allowed values are 'on', 'off' or 'extended'.")
+  }
+
+  # Case insensitive regex check.
+  if $use_canonical_name {
+  validate_re($use_canonical_name, '^(?i:on|off|dns)$', "${use_canonical_name} is not permitted for use_canonical_name. Allowed values are 'on', 'off' or 'dns'.")
   }
 
   # Input validation ends
@@ -880,6 +891,24 @@ define apache::vhost(
     }
   }
 
+  # Template uses:
+  # - $trace_enable
+  if $trace_enable {
+    concat::fragment { "${name}-trace_enable":
+      target  => "${priority_real}${filename}.conf",
+      order   => 310,
+      content => template('apache/vhost/_trace_enable.erb'),
+    }
+  }
+  # Template uses:
+  # - $use_canonical_name
+  if $use_canonical_name {
+    concat::fragment { "${name}-use_canonical_name":
+      target  => "${priority_real}${filename}.conf",
+      order   => 311,
+      content => template('apache/vhost/_use_canonical_name.erb'),
+    }
+  }
   # Template uses no variables
   concat::fragment { "${name}-file_footer":
     target  => "${priority_real}${filename}.conf",

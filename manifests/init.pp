@@ -41,6 +41,8 @@ class apache (
   $timeout                = '120',
   $httpd_dir              = $::apache::params::httpd_dir,
   $server_root            = $::apache::params::server_root,
+  $conf_file              = $::apache::params::conf_file,
+  $manage_conf_file       = $::apache::params::manage_conf_file,
   $conf_dir               = $::apache::params::conf_dir,
   $confd_dir              = $::apache::params::confd_dir,
   $vhost_dir              = $::apache::params::vhost_dir,
@@ -66,10 +68,12 @@ class apache (
   $apache_version         = $::apache::version::default,
   $server_tokens          = 'OS',
   $server_signature       = 'On',
-  $trace_enable           = 'On',
+  $trace_enable           = undef,
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
+  $use_canonical_name     = undef,
+  $extended_status        = undef,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -78,6 +82,21 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+  
+  # Case insensitive regex check.
+  if $extended_status{
+  validate_re($extended_status, '^(?i:on|off)$', "${extended_status} is not permitted for extended_status. Allowed values are 'on', 'off'.")
+  }
+
+  # Case insensitive regex check.
+  if $trace_enable {
+  validate_re($trace_enable, '^(?i:on|off|extended)$', "${trace_enable} is not permitted for trace_enable. Allowed values are 'on', 'off' or 'extented'.")
+  }
+ 
+  # Case insensitive regex check.
+  if $use_canonical_name {
+  validate_re($use_canonical_name, '^(?i:on|off|dns)$', "${use_canonical_name} is not permitted for use_canonical_name. Allowed values are 'on', 'off' or 'dns'.")
+  }
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -244,11 +263,12 @@ class apache (
     content => template('apache/ports_header.erb')
   }
 
-  if $::apache::conf_dir and $::apache::params::conf_file {
+if $::apache::manage_conf_file {
+  if $::apache::conf_dir and $::apache::conf_file {
     case $::osfamily {
       'debian': {
         $pidfile              = "\${APACHE_PID_FILE}"
-        $error_log            = 'error.log'
+        $error_log            = 'error_log'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
       }
@@ -312,7 +332,9 @@ class apache (
     # - $server_tokens
     # - $server_signature
     # - $trace_enable
-    file { "${::apache::conf_dir}/${::apache::params::conf_file}":
+    # - $use_canonical_name
+    # - $extended_status
+    file { "${::apache::conf_dir}/${::apache::conf_file}":
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
@@ -377,4 +399,5 @@ class apache (
       manage_docroot  => $default_ssl_vhost,
     }
   }
+}
 }

@@ -1,0 +1,5 @@
+<% if @trace_enable -%>
+
+  ## TraceEnable Directive
+  TraceEnable <%= scope.function_bool2httpd([@trace_enable]).downcase %>
+<% end -%>
