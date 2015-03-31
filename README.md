@@ -1705,7 +1705,7 @@ General `directories` usage looks something like
 
 *Note:* At least one directory should match the `docroot` parameter. After you start declaring directories, `apache::vhost` assumes that all required Directory blocks will be declared. If not defined, a single default Directory block is created that matches the `docroot` parameter.
 
-Available handlers, represented as keys, should be placed within the `directory`,`'files`, or `location` hashes.  This looks like
+Available handlers, represented as keys, should be placed within the `directory`, `files`, or `location` hashes.  This looks like
 
 ```puppet
     apache::vhost { 'sample.example.net':
