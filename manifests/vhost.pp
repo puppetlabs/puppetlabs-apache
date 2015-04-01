@@ -251,8 +251,12 @@ define apache::vhost(
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if ! defined(File[$docroot]) and $manage_docroot {
+    $docroot_ensure = $ensure? {
+      present => 'directory',
+      default => 'absent',
+    }
     file { $docroot:
-      ensure  => directory,
+      ensure  => $docroot_ensure,
       owner   => $docroot_owner,
       group   => $docroot_group,
       mode    => $docroot_mode,
@@ -263,8 +267,12 @@ define apache::vhost(
 
   # Same as above, but for logroot
   if ! defined(File[$logroot]) {
+    $logroot_ensure_real = $ensure? {
+      present => $logroot_ensure,
+      default => 'absent',
+    }
     file { $logroot:
-      ensure  => $logroot_ensure,
+      ensure  => $logroot_ensure_real,
       mode    => $logroot_mode,
       require => Package['httpd'],
       before  => Concat["${priority_real}${filename}.conf"],
