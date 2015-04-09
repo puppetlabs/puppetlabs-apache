@@ -218,6 +218,23 @@ describe 'apache', :type => :class do
       end
     end
 
+    describe "Override existing LogFormats" do
+      context "When parameter log_formats is a hash" do
+        let :params do
+          { :log_formats => {
+            'common'   => "%v %h %l %u %t \"%r\" %>s %b",
+            'combined' => "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
+          } }
+        end
+
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" common\n} }
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").without_content %r{^LogFormat "%h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n} }
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" common\n} }
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n} }
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").without_content %r{^LogFormat "%h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n} }
+      end
+    end
+
     context "on Ubuntu" do
       let :facts do
         super().merge({

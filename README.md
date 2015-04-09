@@ -357,7 +357,7 @@ Specifies the location where apache module files are stored. It should not be co
 
 #####`loadfile_name`
 
-Sets the file name for the module loadfile. Should be in the format *.load.  This can be used to set the module load order.
+Sets the file name for the module loadfile. Should be in the format \*.load.  This can be used to set the module load order.
 
 #####`log_level`
 
@@ -370,6 +370,17 @@ Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log
 ```puppet
   $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
 ```
+
+There are a number of predefined LogFormats in the httpd.conf that Puppet writes out:
+
+```httpd
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+LogFormat "%{Referer}i -> %U" referer
+LogFormat "%{User-agent}i" agent
+```
+
+If your `$log_formats` contains one of those, they will be overwritten with **your** definition.
 
 #####`logroot`
 
