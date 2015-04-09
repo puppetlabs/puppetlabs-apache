@@ -186,8 +186,7 @@ define apache::vhost(
   Allowed values are 'directory' and 'absent'.")
 
   if $log_level {
-    validate_re($log_level, '^(emerg|alert|crit|error|warn|notice|info|debug)$',
-    "Log level '${log_level}' is not one of the supported Apache HTTP Server log levels.")
+    validate_apache_log_level($log_level)
   }
 
   if $access_log_file and $access_log_pipe {
