@@ -2,7 +2,7 @@ define apache::mod (
   $package        = undef,
   $package_ensure = 'present',
   $lib            = undef,
-  $lib_path       = $::apache::params::lib_path,
+  $lib_path       = $::apache::lib_path,
   $id             = undef,
   $path           = undef,
   $loadfile_name  = undef,

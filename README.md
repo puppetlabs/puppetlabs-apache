@@ -347,6 +347,10 @@ Sets the amount of time the server waits for subsequent requests on a persistent
 
 Sets the limit of the number of requests allowed per connection when KeepAlive is on. Defaults to '100'.
 
+#####`lib_path`
+
+Specifies the location where apache module files are stored. It should not be configured manually without special reason.
+
 #####`loadfile_name`
 
 Sets the file name for the module loadfile. Should be in the format *.load.  This can be used to set the module load order.
