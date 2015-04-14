@@ -448,7 +448,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::suexec') }
       it { is_expected.to_not contain_class('apache::mod::rewrite') }
-      it { is_expected.to contain_class('apache::mod::alias') }
+      it { is_expected.to_not contain_class('apache::mod::alias') }
       it { is_expected.to_not contain_class('apache::mod::proxy') }
       it { is_expected.to_not contain_class('apache::mod::proxy_http') }
       it { is_expected.to_not contain_class('apache::mod::passenger') }
