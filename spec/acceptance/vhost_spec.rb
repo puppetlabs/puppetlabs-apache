@@ -139,7 +139,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
       it { is_expected.to contain '<VirtualHost \*:80>' }
       it { is_expected.to contain "ServerName proxy.example.com" }
-      it { is_expected.to contain "ProxyPassMatch" }
+      it { is_expected.to contain "ProxyPassMatch\s+/foo http://backend-foo/" }
       it { is_expected.to contain "ProxyPreserveHost On" }
       it { is_expected.to contain "ProxyErrorOverride On" }
       it { is_expected.not_to contain "<Proxy \*>" }
