@@ -6,9 +6,9 @@ class apache::mod::expires (
   ::apache::mod { 'expires': }
 
   # Template uses
-  # $expries_active
-  # $expries_default
-  # $expries_by_type
+  # $expires_active
+  # $expires_default
+  # $expires_by_type
   file { 'expires.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/expires.conf",
