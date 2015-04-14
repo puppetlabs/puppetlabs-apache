@@ -624,9 +624,10 @@ define apache::vhost(
   # Template uses:
   # - $proxy_dest
   # - $proxy_pass
+  # - $proxy_pass_match
   # - $proxy_preserve_host
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass {
+  if $proxy_dest or $proxy_pass or $proxy_pass_match {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 140,

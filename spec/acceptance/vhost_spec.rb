@@ -119,6 +119,33 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
   end
 
+  context 'new proxy vhost on port 80' do
+    it 'should configure an apache proxy vhost' do
+      pp = <<-EOS
+        class { 'apache': }
+        apache::vhost { 'proxy.example.com':
+          port    => '80',
+          docroot => '/var/www/proxy',
+          proxy_pass_match => [
+            { 'path' => '/foo', 'url' => 'http://backend-foo/'},
+          ],
+        proxy_preserve_host   => true,
+        proxy_error_override  => true,
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
+      it { is_expected.to contain '<VirtualHost \*:80>' }
+      it { is_expected.to contain "ServerName proxy.example.com" }
+      it { is_expected.to contain "ProxyPassMatch" }
+      it { is_expected.to contain "ProxyPreserveHost On" }
+      it { is_expected.to contain "ProxyErrorOverride On" }
+      it { is_expected.not_to contain "<Proxy \*>" }
+    end
+  end
+
   context 'new vhost on port 80' do
     it 'should configure two apache vhosts' do
       pp = <<-EOS
@@ -472,6 +499,47 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           port       => '80',
           add_listen => false,
           proxy_pass => {
+            'path' => '/',
+            'url'  => 'http://localhost:8888/subdir/',
+          },
+        }
+        host { 'proxy.example.com': ip => '127.0.0.1', }
+        file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
+        file { '/var/www/local/subdir/index.html':
+          ensure  => file,
+          content => "Hello from localhost\\n",
+        }
+                     }, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    it 'should get a response from the back end' do
+      shell("/usr/bin/curl --max-redirs 0 proxy.example.com:80") do |r|
+        expect(r.stdout).to eq("Hello from localhost\n")
+        expect(r.exit_code).to eq(0)
+      end
+    end
+  end
+
+  context 'proxy_pass_match for alternative vhost' do
+    it 'should configure a local vhost and a proxy vhost' do
+      apply_manifest(%{
+        class { 'apache': default_vhost => false, }
+        apache::vhost { 'localhost':
+          docroot => '/var/www/local',
+          ip      => '127.0.0.1',
+          port    => '8888',
+        }
+        apache::listen { '*:80': }
+        apache::vhost { 'proxy.example.com':
+          docroot    => '/var/www',
+          port       => '80',
+          add_listen => false,
+          proxy_pass_match => {
             'path' => '/',
             'url'  => 'http://localhost:8888/subdir/',
           },
