@@ -1,3 +1,7 @@
+##2015-04-28 - Supported Release 1.4.1
+
+This release corrects a metadata issue that has been present since release 1.2.0. The refactoring of `apache::vhost` to use `puppetlabs-concat` requires a version of concat newer than the version required in PE. If you are using PE 3.3.0 or earlier you will need to use version 1.1.1 or earlier of the `puppetlabs-apache` module.
+
 ##2015-03-17 - Supported Release 1.4.0
 ###Summary
 
