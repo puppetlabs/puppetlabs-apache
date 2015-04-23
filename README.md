@@ -456,6 +456,11 @@ Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on 
 
 Determines whether the HTTPD service state is managed by Puppet . Defaults to 'true'.
 
+#####`service_restart`
+
+Determines whether the HTTPD service restart command should be anything other than the default managed by Puppet.  Defaults to undef.
+
+
 #####`trace_enable`
 
 Controls how TRACE requests per RFC 2616 are handled. More information about [TraceEnable](http://httpd.apache.org/docs/current/mod/core.html#traceenable). Defaults to 'On'.
