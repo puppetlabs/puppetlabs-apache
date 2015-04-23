@@ -91,6 +91,18 @@ describe 'apache::service', :type => :class do
       let (:params) {{ :service_ensure => 'UNDEF' }}
       it { is_expected.to contain_service("httpd").without_ensure }
     end
+
+    context "with $service_restart unset" do
+      it { is_expected.to contain_service("httpd").without_restart }
+    end
+
+    context "with $service_restart => '/usr/sbin/apachectl graceful'" do
+     let (:params) {{ :service_restart => '/usr/sbin/apachectl graceful' }}
+     it { is_expected.to contain_service("httpd").with(
+        'restart' => '/usr/sbin/apachectl graceful'
+      )
+     }
+    end
   end
 
 
