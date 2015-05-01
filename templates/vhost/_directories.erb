@@ -4,16 +4,16 @@
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
-        <%- scope.function_fail(["Apache::Vhost: Using allow is not supported in your Apache version"]) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using allow is deprecated in your Apache version"]) -%>
       <%- end -%>
       <%- if directory['deny'] and ! [ false, 'false', '' ].include?(directory['deny']) -%>
-        <%- scope.function_fail(["Apache::Vhost: Using deny is not supported in your Apache version"]) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using deny is deprecated in your Apache version"]) -%>
       <%- end -%>
       <%- if directory['order'] and ! [ false, 'false', '' ].include?(directory['order']) -%>
-        <%- scope.function_fail(["Apache::Vhost: Using order is not supported in your Apache version"]) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using order is deprecated in your Apache version"]) -%>
       <%- end -%>
       <%- if directory['satisfy'] and ! [ false, 'false', '' ].include?(directory['satisfy']) -%>
-        <%- scope.function_fail(["Apache::Vhost: Using satisfy is not supported in your Apache version"]) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using satisfy is deprecated in your Apache version"]) -%>
       <%- end -%>
     <%- end -%>
     <%- if directory['path'] and directory['path'] != '' -%>
