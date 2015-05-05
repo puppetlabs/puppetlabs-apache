@@ -1215,7 +1215,7 @@ Specifies if the vhost file is present or absent. Defaults to 'present'.
 
 #####`fallbackresource`
 
-Sets the [FallbackResource](http://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) directive, which specifies an action to take for any URL that doesn't map to anything in your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Valid values must either begin with a / or be 'disabled'. Defaults to 'undef'.
+Sets the [FallbackResource](http://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) directive, which specifies an action to take for any URL that doesn't map to anything in your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Valid values must either begin with a / or be 'disabled'. Defaults to 'undef'. This is not applicable to Apache 2.2 configurations and error_documents should be used instead.
 
 #####`headers`
 
