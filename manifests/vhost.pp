@@ -82,6 +82,7 @@ define apache::vhost(
   $headers                     = undef,
   $request_headers             = undef,
   $rewrites                    = undef,
+  $rewrite_options             = undef,
   $rewrite_base                = undef,
   $rewrite_rule                = undef,
   $rewrite_cond                = undef,
@@ -139,6 +140,10 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  if $rewrite_options {
+    validate_array($rewrite_options)
+    validate_string($rewrite_options[0])
+  }
   if $rewrites {
     validate_array($rewrites)
     validate_hash($rewrites[0])

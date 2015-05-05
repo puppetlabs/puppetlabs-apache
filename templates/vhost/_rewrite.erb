@@ -1,6 +1,9 @@
 <%- if @rewrites -%>
   ## Rewrite rules
   RewriteEngine On
+  <%- if @rewrite_options %>
+  RewriteOptions <%- [@rewrite_options].flatten.join(' ') %>
+  <%- end -%>
   <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
   <%- end -%>
