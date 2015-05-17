@@ -1924,9 +1924,10 @@ Allows configuration settings for [directory indexing](http://httpd.apache.org/d
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
       directories => [
-        { path          => '/path/to/directory',
-          options       => ['Indexes','FollowSymLinks','MultiViews'],
-          index_options => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'],
+        { path           => '/path/to/directory',
+          directoryindex => 'disabled', # this is needed on Apache 2.4 or mod_autoindex doesn't work
+          options        => ['Indexes','FollowSymLinks','MultiViews'],
+          index_options  => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'],
         },
       ],
     }
@@ -1943,6 +1944,23 @@ Sets the [default ordering](http://httpd.apache.org/docs/current/mod/mod_autoind
         { path                => '/path/to/directory',
           order               => 'Allow,Deny',
           index_order_default => ['Descending', 'Date'],
+        },
+      ],
+    }
+```
+
+######`index_style_sheet`
+
+Sets the [IndexStyleSheet](http://httpd.apache.org/docs/current/mod/mod_autoindex.html#indexstylesheet) which adds a CSS stylesheet to the directory index.
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path              => '/path/to/directory',
+          options           => ['Indexes','FollowSymLinks','MultiViews'],
+          index_options     => ['FancyIndexing'],
+          index_style_sheet => '/styles/style.css',
         },
       ],
     }
