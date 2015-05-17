@@ -48,6 +48,7 @@ define apache::vhost(
   $access_logs                 = undef,
   $aliases                     = undef,
   $directories                 = undef,
+  $files                       = undef,
   $error_log                   = true,
   $error_log_file              = undef,
   $error_log_pipe              = undef,
@@ -432,6 +433,14 @@ define apache::vhost(
     $_directories = [ merge($_directory, $_directory_version) ]
   }
 
+  ## Create a default directory list if none defined
+  if $files {
+    if !is_hash($files) and !(is_array($files) and is_hash($files[0])) {
+      fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
+    }
+    $_files = $files
+  }
+
   ## Create a global LocationMatch if locations aren't defined
   if $modsec_disable_ids {
     if is_hash($modsec_disable_ids) {
@@ -542,6 +551,19 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 60,
       content => template('apache/vhost/_directories.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $_files
+  # - $docroot
+  # - $apache_version
+  # - $suphp_engine
+  if $_files and ! empty($_files) {
+    concat::fragment { "${name}-files":
+      target  => "${priority_real}${filename}.conf",
+      order   => 65,
+      content => template('apache/vhost/_files.erb'),
     }
   }
 
