@@ -64,7 +64,6 @@ define apache::balancer (
   }
 
   concat::fragment { "00-${name}-header":
-    ensure  => present,
     target  => "apache_balancer_${name}",
     order   => '01',
     content => "<Proxy balancer://${name}>\n",
@@ -77,14 +76,12 @@ define apache::balancer (
   # concat fragments. We don't have to do anything about them.
 
   concat::fragment { "01-${name}-proxyset":
-    ensure  => present,
     target  => "apache_balancer_${name}",
     order   => '19',
     content => inline_template("<% @proxy_set.keys.sort.each do |key| %> Proxyset <%= key %>=<%= @proxy_set[key] %>\n<% end %>"),
   }
 
   concat::fragment { "01-${name}-footer":
-    ensure  => present,
     target  => "apache_balancer_${name}",
     order   => '20',
     content => "</Proxy>\n",
