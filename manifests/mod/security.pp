@@ -6,6 +6,8 @@ class apache::mod::security (
   $content_types         = 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf',
   $restricted_extensions = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
   $restricted_headers    = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
+  $template              = 'apache/mod/security.conf.erb',
+  $crs_template          = 'apache/mod/security_crs.conf.erb',
 ){
 
   if $::osfamily == 'FreeBSD' {
@@ -33,7 +35,7 @@ class apache::mod::security (
   # - $modsec_dir
   file { 'security.conf':
     ensure  => file,
-    content => template('apache/mod/security.conf.erb'),
+    content => template($template),
     path    => "${::apache::mod_dir}/security.conf",
     owner   => $::apache::params::user,
     group   => $::apache::params::group,
@@ -65,7 +67,7 @@ class apache::mod::security (
 
   file { "${modsec_dir}/security_crs.conf":
     ensure  => file,
-    content => template('apache/mod/security_crs.conf.erb'),
+    content => template($crs_template),
     require => File[$modsec_dir],
     notify  => Class['apache::service'],
   }
