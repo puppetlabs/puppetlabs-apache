@@ -43,4 +43,7 @@
   <%- if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>
   <%- end -%>
+  <%- if @ssl_openssl_conf_cmd -%>
+  SSLOpenSSLConfCmd       <%= @ssl_openssl_conf_cmd %>
+  <%- end -%>
 <% end -%>

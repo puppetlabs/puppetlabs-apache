@@ -2,6 +2,7 @@ class apache::mod::ssl (
   $ssl_compression         = false,
   $ssl_cryptodevice        = 'builtin',
   $ssl_options             = [ 'StdEnvVars' ],
+  $ssl_openssl_conf_cmd    = undef,
   $ssl_cipher              = 'HIGH:MEDIUM:!aNULL:!MD5',
   $ssl_honorcipherorder    = 'On',
   $ssl_protocol            = [ 'all', '-SSLv2', '-SSLv3' ],
@@ -57,6 +58,7 @@ class apache::mod::ssl (
   # $ssl_cipher
   # $ssl_honorcipherorder
   # $ssl_options
+  # $ssl_openssl_conf_cmd
   # $session_cache
   # $ssl_mutex
   # $ssl_random_seed_bytes

@@ -136,5 +136,14 @@ describe 'apache::mod::ssl', :type => :class do
       end
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLRandomSeed startup file:/dev/urandom 1024$})}
     end
+
+    context 'setting ssl_openssl_conf_cmd' do
+      let :params do
+        {
+          :ssl_openssl_conf_cmd => 'DHParameters "foo.pem"',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(/^\s+SSLOpenSSLConfCmd DHParameters "foo.pem"$/)}
+    end
   end
 end
