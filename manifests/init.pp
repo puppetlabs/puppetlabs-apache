@@ -281,6 +281,12 @@ class apache (
           require => Package['httpd'],
         }
       }
+      'Suse': {
+        $pidfile              = '/var/run/httpd2.pid'
+        $error_log            = 'error.log'
+        $scriptalias          = '/usr/lib/cgi-bin'
+        $access_log_file      = 'access.log'
+      }
       default: {
         fail("Unsupported osfamily ${::osfamily}")
       }

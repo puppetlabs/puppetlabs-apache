@@ -22,6 +22,9 @@ class apache::default_mods (
       ::apache::mod { 'log_config': }
       ::apache::mod { 'unixd': }
     }
+    'Suse': {
+      ::apache::mod { 'log_config': }
+    }
     default: {}
   }
   case $::osfamily {
