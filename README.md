@@ -1365,11 +1365,11 @@ Sets [PassengerPreStart](https://www.phusionpassenger.com/documentation/Users%20
 
 #####`php_flags & values`
 
-Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '[]'.
+Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '{}'.
 
 #####`php_admin_flags & values`
 
-Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '[]'.
+Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '{}'.
 
 #####`port`
 
