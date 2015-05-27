@@ -47,6 +47,9 @@
       <%- if directory['index_order_default'] -%>
     IndexOrderDefault <%= Array(directory['index_order_default']).join(' ') %>
       <%- end -%>
+      <%- if directory['index_style_sheet'] -%>
+    IndexStyleSheet '<%= directory['index_style_sheet'] %>'
+      <%- end -%>
       <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
       <%- elsif provider == 'Directory' -%>
