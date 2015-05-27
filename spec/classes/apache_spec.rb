@@ -677,6 +677,7 @@ describe 'apache', :type => :class do
     # Assert that load files are placed for these mods, but no conf file.
     [
       'auth_basic',
+      'authn_core',
       'authn_file',
       'authz_groupfile',
       'authz_host',
