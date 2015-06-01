@@ -331,6 +331,10 @@ Changes the location of the default [Documentroot](https://httpd.apache.org/docs
 
 Enables custom error documents. Defaults to 'false'.
 
+#####`group`
+
+Changes the group that Apache will answer requests as. The parent process will continue to be run as root, but resource accesses by child processes will be done under this group. By default, puppet will attempt to manage this group as a resource under `::apache`. If this is not what you want, set [`manage_group`](#manage_group) to 'false'. Defaults to the OS-specific default user for apache, as detected in `::apache::params`.
+
 #####`httpd_dir`
 
 Changes the base location of the configuration directories used for the apache service. This is useful for specially repackaged HTTPD builds, but might have unintended consequences when used in combination with the default distribution packages. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2' on Gentoo.
@@ -353,7 +357,7 @@ Specifies the location where apache module files are stored. It should not be co
 
 #####`loadfile_name`
 
-Sets the file name for the module loadfile. Should be in the format *.load.  This can be used to set the module load order.
+Sets the file name for the module loadfile. Should be in the format \*.load.  This can be used to set the module load order.
 
 #####`log_level`
 
@@ -366,6 +370,17 @@ Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log
 ```puppet
   $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
 ```
+
+There are a number of predefined LogFormats in the httpd.conf that Puppet writes out:
+
+```httpd
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+LogFormat "%{Referer}i -> %U" referer
+LogFormat "%{User-agent}i" agent
+```
+
+If your `$log_formats` contains one of those, they will be overwritten with **your** definition.
 
 #####`logroot`
 
@@ -469,6 +484,10 @@ Controls how TRACE requests per RFC 2616 are handled. More information about [Tr
 
 Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, '/usr/local/etc/apache22/Vhosts' on FreeBSD, and '/etc/apache2/vhosts.d' on Gentoo.
 
+#####`user`
+
+Changes the user that Apache will answer requests as. The parent process will continue to be run as root, but resource accesses by child processes will be done under this user. By default, puppet will attept to manage this user as a resource under `::apache`. If this is not what you want, set [`manage_user`](#manage_user) to 'false'. Defaults to the OS-specific default user for apache, as detected in `::apache::params`.
+
 #####`apache_name`
 
 The name of the Apache package to install. This is automatically detected in `::apache::params`. You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
@@ -541,6 +560,7 @@ There are many `apache::mod::[name]` classes within this module that can be decl
 * `auth_basic`
 * `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas) below)
 * `auth_kerb`
+* `authn_core`
 * `authn_file`
 * `authnz_ldap`*
 * `authz_default`
@@ -1357,11 +1377,11 @@ Sets [PassengerPreStart](https://www.phusionpassenger.com/documentation/Users%20
 
 #####`php_flags & values`
 
-Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '[]'.
+Allows per-vhost setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Defaults to '{}'.
 
 #####`php_admin_flags & values`
 
-Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '[]'.
+Allows per-vhost setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Defaults to '{}'.
 
 #####`port`
 
@@ -1924,9 +1944,10 @@ Allows configuration settings for [directory indexing](http://httpd.apache.org/d
     apache::vhost { 'sample.example.net':
       docroot     => '/path/to/directory',
       directories => [
-        { path          => '/path/to/directory',
-          options       => ['Indexes','FollowSymLinks','MultiViews'],
-          index_options => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'],
+        { path           => '/path/to/directory',
+          directoryindex => 'disabled', # this is needed on Apache 2.4 or mod_autoindex doesn't work
+          options        => ['Indexes','FollowSymLinks','MultiViews'],
+          index_options  => ['IgnoreCase', 'FancyIndexing', 'FoldersFirst', 'NameWidth=*', 'DescriptionWidth=*', 'SuppressHTMLPreamble'],
         },
       ],
     }
@@ -1943,6 +1964,23 @@ Sets the [default ordering](http://httpd.apache.org/docs/current/mod/mod_autoind
         { path                => '/path/to/directory',
           order               => 'Allow,Deny',
           index_order_default => ['Descending', 'Date'],
+        },
+      ],
+    }
+```
+
+######`index_style_sheet`
+
+Sets the [IndexStyleSheet](http://httpd.apache.org/docs/current/mod/mod_autoindex.html#indexstylesheet) which adds a CSS stylesheet to the directory index.
+
+```puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path              => '/path/to/directory',
+          options           => ['Indexes','FollowSymLinks','MultiViews'],
+          index_options     => ['FancyIndexing'],
+          index_style_sheet => '/styles/style.css',
         },
       ],
     }

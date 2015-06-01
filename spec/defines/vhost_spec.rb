@@ -183,6 +183,12 @@ describe 'apache::vhost', :type => :define do
               'provider' => 'files',
               'require'  => 'all granted',
             },
+            { 'path'              => '/var/www/files/indexed_directory',
+              'directoryindex'    => 'disabled',
+              'options'           => ['Indexes','FollowSymLinks','MultiViews'],
+              'index_options'     => ['FancyIndexing'],
+              'index_style_sheet' => '/styles/style.css',
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -360,6 +366,14 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Require all denied$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Require all granted$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+IndexOptions\sFancyIndexing$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+IndexStyleSheet\s'\/styles\/style\.css'$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DirectoryIndex\sdisabled$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -448,7 +462,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::suexec') }
       it { is_expected.to_not contain_class('apache::mod::rewrite') }
-      it { is_expected.to contain_class('apache::mod::alias') }
+      it { is_expected.to_not contain_class('apache::mod::alias') }
       it { is_expected.to_not contain_class('apache::mod::proxy') }
       it { is_expected.to_not contain_class('apache::mod::proxy_http') }
       it { is_expected.to_not contain_class('apache::mod::passenger') }

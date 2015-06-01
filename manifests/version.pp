@@ -35,6 +35,9 @@ class apache::version {
     'Gentoo': {
       $default = '2.4'
     }
+    'Suse': {
+      $default = '2.2'
+    }
     default: {
       fail("Class['apache::version']: Unsupported osfamily: ${::osfamily}")
     }

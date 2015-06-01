@@ -6,6 +6,7 @@ class apache::mod::alias(
 
   $icons_path = $::osfamily ? {
     'debian'  => '/usr/share/apache2/icons',
+    'Suse'    => '/usr/share/apache2/icons',
     'redhat'  => $ver24 ? {
       true    => '/usr/share/httpd/icons',
       default => '/var/www/icons',

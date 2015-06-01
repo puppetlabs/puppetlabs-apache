@@ -417,6 +417,66 @@ class apache::params inherits ::apache::version {
     $wsgi_socket_prefix   = undef
     $docroot              = '/var/www/localhost/htdocs'
     $error_documents_path = '/usr/share/apache2/error'
+  } elsif $::osfamily == 'Suse' {
+    $user                = 'wwwrun'
+    $group               = 'wwwrun'
+    $root_group          = 'root'
+    $apache_name         = 'apache2'
+    $service_name        = 'apache2'
+    $httpd_dir           = '/etc/apache2'
+    $server_root         = '/etc/apache2'
+    $conf_dir            = $httpd_dir
+    $confd_dir           = "${httpd_dir}/conf.d"
+    $mod_dir             = "${httpd_dir}/mods-available"
+    $mod_enable_dir      = "${httpd_dir}/mods-enabled"
+    $vhost_dir           = "${httpd_dir}/sites-available"
+    $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
+    $conf_file           = 'httpd.conf'
+    $ports_file          = "${conf_dir}/ports.conf"
+    $logroot             = '/var/log/apache2'
+    $logroot_mode        = undef
+    $lib_path            = '/usr/lib64/apache2-prefork/'
+    $mpm_module          = 'prefork'
+    $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+    $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
+    $ssl_certs_dir       = '/etc/ssl/certs'
+    $suphp_addhandler    = 'x-httpd-php'
+    $suphp_engine        = 'off'
+    $suphp_configpath    = '/etc/php5/apache2'
+    $mod_packages        = {
+      'auth_kerb'   => 'apache2-mod_auth_kerb',
+      'fcgid'       => 'apache2-mod_fcgid',
+      'perl'        => 'apache2-mod_perl',
+      'php5'        => 'apache2-mod_php53',
+      'python'      => 'apache2-mod_python',
+    }
+    $mod_libs             = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template          = 'apache/httpd.conf.erb'
+    $keepalive              = 'Off'
+    $keepalive_timeout      = 15
+    $max_keepalive_requests = 100
+    $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
+    $mime_support_package = 'aaa_base'
+    $mime_types_config    = '/etc/mime.types'
+    $docroot              = '/srv/www'
+    $cas_cookie_path      = '/var/cache/apache2/mod_auth_cas/'
+    $error_documents_path = '/usr/share/apache2/error'
+    $dev_packages        = ['libapr-util1-devel', 'libapr1-devel']
+
+    #
+    # Passenger-specific settings
+    #
+
+    $passenger_conf_file          = 'passenger.conf'
+    $passenger_conf_package_file  = undef
+
+    $passenger_root               = '/usr'
+    $passenger_ruby               = '/usr/bin/ruby'
+    $passenger_default_ruby       = undef
+    $wsgi_socket_prefix           = undef
+
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
