@@ -666,14 +666,44 @@ These are the default settings:
 
 ```puppet
   class {'apache::mod::geoip':
-    $enable  => false,
-    $db_file => '/usr/share/GeoIP/GeoIP.dat',
-    $flag    => 'Standard',
-    $output  => 'All',
+    enable  => false,
+    db_file => '/usr/share/GeoIP/GeoIP.dat',
+    flag    => 'Standard',
+    output  => 'All',
   }
 ```
 
-The parameter `db_file` can be a single directory or a hash of directories.
+#####`enable`
+
+Boolean. Enable or Disable mod_geoip globally. Defaults to false.
+
+#####`db_file`
+
+The full path to your GeoIP database file. Defaults to `/usr/share/GeoIP/GeoIP.dat`. This parameter optionally takes an array of paths for multiple GeoIP database files.
+
+#####`flag`
+
+GeoIP Flag. Defaults to 'Standard'.
+
+#####`output`
+
+Defines which output variables to use. Defaults to 'All'.
+
+#####`enable_utf8`
+
+Boolean. Changes the output from ISO-8859-1 (Latin-1) to UTF-8.
+
+#####`scan_proxy_headers`
+
+Boolean. Enables the GeoIPScanProxyHeaders option. More information can be found [here](http://dev.maxmind.com/geoip/legacy/mod_geoip2/#Proxy-Related_Directives).
+
+#####`scan_proxy_header_field`
+
+Specifies which header that mod_geoip should look at to determine the client's IP address.
+
+#####`use_last_xforwarededfor_ip`
+
+Boolean. If a comma-separated list of IP addresses is found, use the last IP address for the client's IP.
 
 ####Class: `apache::mod::info`
 
