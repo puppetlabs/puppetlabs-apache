@@ -1,3 +1,35 @@
+##2015-06-16 - Supported Release 1.5.0
+### Summary
+This release primarily adds Suse compatibility. It also adds a handful of other
+parameters for greater configuration control.
+
+### Features
+- Now compatible with concat 1.x and 2.x
+- Add `apache::lib_path` parameter
+- Add `apache::service_restart` parameter
+- Add `apache::vhost::geoip_enable` parameter
+- Add `apache::mod::geoip` class
+- Add `apache::mod::remoteip` class
+- Add parameters to `apache::mod::expires` class
+- Add `index_style_sheet` handling to `apache::vhost::directories`
+- Add some compatibility for SLES 11
+- Add `apache::mod::ssl::ssl_sessioncachetimeout` parameter
+- Add `apache::mod::ssl::ssl_cryptodevice` parameter
+- Add `apache::mod::ssl::ssl_honorcipherorder` parameter
+- Add `apache::mod::userdir::options` parameter
+
+### Bugfixes
+- Document `apache::user` parameter
+- Document `apache::group` parameter
+- Fix apache::dev on FreeBSD
+- Fix proxy\_connect on apache >= 2.2
+- Validate log levels better
+- Fix `apache::apache_name` for package and vhost
+- Fix Debian Jessie mod\_prefork package name
+- Fix alias module being declared even when vhost is absent
+- Fix proxy\_pass\_match handling in vhost's proxy template
+- Fix userdir access permissions
+
 ##2015-04-28 - Supported Release 1.4.1
 
 This release corrects a metadata issue that has been present since release 1.2.0. The refactoring of `apache::vhost` to use `puppetlabs-concat` requires a version of concat newer than the version required in PE. If you are using PE 3.3.0 or earlier you will need to use version 1.1.1 or earlier of the `puppetlabs-apache` module.
