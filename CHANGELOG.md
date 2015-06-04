@@ -1,4 +1,4 @@
-##2015-06-16 - Supported Release 1.5.0
+##2015-06-09 - Supported Release 1.5.0
 ### Summary
 This release primarily adds Suse compatibility. It also adds a handful of other
 parameters for greater configuration control.
