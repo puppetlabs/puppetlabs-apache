@@ -50,7 +50,7 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { is_expected.to contain_class("apache") }
       it { is_expected.to contain_class("apache::params") }
-      it { is_expected.to contain_concat("25-rspec.example.com.conf").with(
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/etc/apache2/sites-available/25-rspec.example.com.conf'
       ) }
@@ -77,7 +77,7 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { is_expected.to contain_class("apache") }
       it { is_expected.to contain_class("apache::params") }
-      it { is_expected.to contain_concat("25-rspec.example.com.conf").with(
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf'
       ) }
@@ -99,7 +99,7 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { is_expected.to contain_class("apache") }
       it { is_expected.to contain_class("apache::params") }
-      it { is_expected.to contain_concat("25-rspec.example.com.conf").with(
+      it { is_expected.to contain_file("25-rspec.example.com.conf").with(
         :ensure => 'present',
         :path   => '/etc/apache2/vhosts.d/25-rspec.example.com.conf'
       ) }
