@@ -5,7 +5,10 @@ require 'beaker-rspec/helpers/serverspec'
 unless ENV['RS_PROVISION'] == 'no'
   # This will install the latest available package on el and deb based
   # systems fail on windows and osx, and install via gem on other *nixes
-  foss_opts = { :default_action => 'gem_install' }
+  foss_opts = {
+    :default_action => 'gem_install',
+    :version        => (ENV['PUPPET_VERSION'] || '3.8.1'),
+  }
 
   if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
 
