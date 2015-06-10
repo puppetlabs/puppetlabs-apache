@@ -1,10 +1,9 @@
-##2015-06-09 - Supported Release 1.5.0
+##2015-06-11 - Supported Release 1.5.0
 ### Summary
 This release primarily adds Suse compatibility. It also adds a handful of other
 parameters for greater configuration control.
 
 ### Features
-- Now compatible with concat 1.x and 2.x
 - Add `apache::lib_path` parameter
 - Add `apache::service_restart` parameter
 - Add `apache::vhost::geoip_enable` parameter
@@ -29,6 +28,7 @@ parameters for greater configuration control.
 - Fix alias module being declared even when vhost is absent
 - Fix proxy\_pass\_match handling in vhost's proxy template
 - Fix userdir access permissions
+- Fix issue where the module was trying to use systemd on Amazon Linux.
 
 ##2015-04-28 - Supported Release 1.4.1
 
