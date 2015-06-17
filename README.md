@@ -823,6 +823,7 @@ Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are t
       ssl_compression         => false,
       ssl_cryptodevice        => 'builtin',
       ssl_options             => [ 'StdEnvVars' ],
+      ssl_openssl_conf_cmd    => undef,
       ssl_cipher              => 'HIGH:MEDIUM:!aNULL:!MD5',
       ssl_honorcipherorder    => 'On',
       ssl_protocol            => [ 'all', '-SSLv2', '-SSLv3' ],
@@ -2250,6 +2251,10 @@ An array:
       ssl_options => [ '+StrictRequire', '+ExportCertData' ],
     }
 ```
+
+#####`ssl_openssl_conf_cmd`
+
+Sets the [SSLOpenSSLConfCmd](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslopensslconfcmd) directive, which provides direct configuration of OpenSSL parameters. Defaults to 'undef'.
 
 #####`ssl_proxyengine`
 
