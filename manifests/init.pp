@@ -72,6 +72,15 @@ class apache (
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
+
+  ### START Hiera Lookups ###
+  $vhosts                 = {},
+  $balancers              = {},
+  $mods                   = {},
+  $npms                   = {},
+  $custom_configs         = {},
+  ### END Hiera Lookups ###
+
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -382,5 +391,13 @@ class apache (
       logroot_mode    => $logroot_mode,
       manage_docroot  => $default_ssl_vhost,
     }
+  
+    # Create resources from hiera lookups
+    create_resources('::apache::vhost', $vhosts)
+    create_resources('::apache::balancer', $balancers)
+    create_resources('::apache::mod', $mods)
+    create_resources('::apache::npms', $npms)
+    create_resources('::apache::custom_config', $custom_configs)
+
   }
 }
