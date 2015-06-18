@@ -216,10 +216,10 @@ To set up a virtual host with filter rules
     apache::vhost { 'subdomain.loc':
       port             => '80',
       filters          => [
-        'FilterDeclare COMPRESS',
-        'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/html',
-        'FilterChain COMPRESS',
-        'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
+        'FilterDeclare  COMPRESS',
+        'FilterProvider COMPRESS DEFLATE resp=Content-Type $text/html',
+        'FilterChain    COMPRESS',
+        'FilterProtocol COMPRESS DEFLATE change=yes;byteranges=no',
       ],
       docroot          => '/var/www/html',
     }
@@ -1283,6 +1283,21 @@ Specifies if the vhost file is present or absent. Defaults to 'present'.
 
 Sets the [FallbackResource](http://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) directive, which specifies an action to take for any URL that doesn't map to anything in your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Valid values must either begin with a / or be 'disabled'. Defaults to 'undef'.
 
+#####`filters`
+
+[Filters](http://httpd.apache.org/docs/2.2/mod/mod_filter.html) enable smart, context-sensitive configuration of output content filters.
+
+```puppet
+    apache::vhost { "$::fqdn":
+      filters => [
+        'FilterDeclare   COMPRESS',
+        'FilterProvider  COMPRESS DEFLATE resp=Content-Type $text/html',
+        'FilterChain     COMPRESS',
+        'FilterProtocol  COMPRESS DEFLATE change=yes;byteranges=no',
+      ],
+    }
+```
+
 #####`headers`
 
 Adds lines to replace, merge, or remove response headers. See [Header](http://httpd.apache.org/docs/current/mod/mod_headers.html#header) for more information. Can be an array. Defaults to 'undef'.
@@ -1543,22 +1558,6 @@ Modifies collected [request headers](http://httpd.apache.org/docs/current/mod/mo
       ],
     }
 ```
-
-#####`filters`
-
-[Filters](http://httpd.apache.org/docs/2.2/mod/mod_filter.html) enable smart, context-sensitive configuration of output content filters.
-
-```puppet
-    apache::vhost { "$::fqdn":
-      filters => [
-        'FilterDeclare   COMPRESS',
-        'FilterProvider  COMPRESS DEFLATE resp=Content-Type $text/html',
-        'FilterChain     COMPRESS',
-        'FilterProtocol  COMPRESS DEFLATE change=yes;byteranges=no',
-      ],
-    }
-```
-
 #####`rewrites`
 
 Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule' or 'rewrite_map'. Defaults to 'undef'.

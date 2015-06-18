@@ -401,8 +401,8 @@ define apache::vhost(
 
   # Check if mod_headers is required to process $headers/$request_headers
   if $filters {
-    if ! defined(Class['apache::mod::filters']) {
-      include ::apache::mod::filters
+    if ! defined(Class['apache::mod::filter']) {
+      include ::apache::mod::filter
     }
   }
 
