@@ -399,7 +399,7 @@ define apache::vhost(
     }
   }
 
-  # Check if mod_headers is required to process $headers/$request_headers
+  # Check if mod_filter is required to process $filters
   if $filters {
     if ! defined(Class['apache::mod::filter']) {
       include ::apache::mod::filter
