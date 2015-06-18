@@ -5,6 +5,7 @@ class apache::mod::geoip (
   $output                     = 'All',
   $enable_utf8                = undef,
   $scan_proxy_headers         = undef,
+  $scan_proxy_header_field    = undef,
   $use_last_xforwarededfor_ip = undef,
 ) {
   ::apache::mod { 'geoip': }
@@ -16,6 +17,7 @@ class apache::mod::geoip (
   # - output
   # - enable_utf8
   # - scan_proxy_headers
+  # - scan_proxy_header_field
   # - use_last_xforwarededfor_ip
   file { 'geoip.conf':
     ensure  => file,
