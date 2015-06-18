@@ -210,6 +210,21 @@ Starting in Apache 2.2.16, HTTPD supports [FallbackResource](https://httpd.apach
     }
 ```
 
+To set up a virtual host with filter rules
+
+```puppet
+    apache::vhost { 'subdomain.loc':
+      port             => '80',
+      filters          => [
+        'FilterDeclare COMPRESS',
+        'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/html',
+        'FilterChain COMPRESS',
+        'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
+      ],
+      docroot          => '/var/www/html',
+    }
+```
+
 Please note that the 'disabled' argument to FallbackResource is only supported since Apache 2.2.24.
 
 See a list of all [virtual host parameters](#defined-type-apachevhost). See an extensive list of [virtual host examples](#virtual-host-examples).
@@ -1525,6 +1540,21 @@ Modifies collected [request headers](http://httpd.apache.org/docs/current/mod/mo
       request_headers => [
         'append MirrorID "mirror 12"',
         'unset MirrorID',
+      ],
+    }
+```
+
+#####`filters`
+
+[Filters](http://httpd.apache.org/docs/2.2/mod/mod_filter.html) enable smart, context-sensitive configuration of output content filters.
+
+```puppet
+    apache::vhost { "$::fqdn":
+      filters => [
+        'FilterDeclare   COMPRESS',
+        'FilterProvider  COMPRESS DEFLATE resp=Content-Type $text/html',
+        'FilterChain     COMPRESS',
+        'FilterProtocol  COMPRESS DEFLATE change=yes;byteranges=no',
       ],
     }
 ```
