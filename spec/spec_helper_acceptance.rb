@@ -21,6 +21,7 @@ RSpec.configure do |c|
       # Required for mod_passenger tests.
       if fact('osfamily') == 'RedHat'
         on host, puppet('module','install','stahnma/epel'), { :acceptable_exit_codes => [0,1] }
+        on host, puppet('module','install','puppetlabs/inifile'), { :acceptable_exit_codes => [0,1] }
       end
       # Required for manifest to make mod_pagespeed repository available
       if fact('osfamily') == 'Debian'
