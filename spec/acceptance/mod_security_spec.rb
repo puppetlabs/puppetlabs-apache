@@ -18,6 +18,18 @@ describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.includ
         pp = "class { 'epel': }"
         apply_manifest(pp, :catch_failures => true)
       end
+    elsif fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
+      it 'changes obsoletes, per PUP-4497' do
+        pp = <<-EOS
+          ini_setting { 'obsoletes':
+            path    => '/etc/yum.conf',
+            section => 'main',
+            setting => 'obsoletes',
+            value   => '0',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
     end
 
     it 'succeeds in puppeting mod_security' do
