@@ -628,7 +628,7 @@ define apache::vhost(
   # - $proxy_pass_match
   # - $proxy_preserve_host
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match {
+  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
