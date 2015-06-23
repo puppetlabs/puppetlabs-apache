@@ -1,4 +1,4 @@
-# Base class. Declares default vhost on port 80 with filers.
+# Base class. Declares default vhost on port 80 with filters.
 class { 'apache': }
 
 # Example from README adapted.
