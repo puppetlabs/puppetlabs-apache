@@ -475,6 +475,9 @@ Determines whether the HTTPD service state is managed by Puppet . Defaults to 't
 
 Determines whether the HTTPD service restart command should be anything other than the default managed by Puppet.  Defaults to undef.
 
+#####`timeout`
+
+Sets the amount of seconds the server will wait for certain events before failing a request. Defaults to 120.
 
 #####`trace_enable`
 
