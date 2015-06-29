@@ -1531,6 +1531,9 @@ Modifies collected [request headers](http://httpd.apache.org/docs/current/mod/mo
       ],
     }
 ```
+#####`rewrite_options`
+
+Modifies the RewriteOptions parameter on per Vhost level. [RewriteOptions Directive](http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriteoptions). Valid options are: Inherit, InheritBefore, InheritDown, InheritDownBefore, IgnoreInherit, AllowNoSlash, AllowAnyURI, MergeBase, IgnoreContextInfo. Defaults to 'undef'.
 
 #####`rewrites`
 
