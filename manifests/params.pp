@@ -181,6 +181,7 @@ class apache::params inherits ::apache::version {
       'dav_svn'     => 'libapache2-svn',
       'fastcgi'     => 'libapache2-mod-fastcgi',
       'fcgid'       => 'libapache2-mod-fcgid',
+      'geoip'       => 'libapache2-mod-geoip',
       'nss'         => 'libapache2-mod-nss',
       'pagespeed'   => 'mod-pagespeed-stable',
       'passenger'   => 'libapache2-mod-passenger',
