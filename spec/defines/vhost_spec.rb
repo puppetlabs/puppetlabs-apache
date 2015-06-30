@@ -255,6 +255,15 @@ describe 'apache::vhost', :type => :define do
               'rewrite_rule' => ['^index\.html$ welcome.html']
             }
           ],
+          'filters'                     => [
+            'FilterDeclare COMPRESS',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/html',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/css',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/plain',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/xml',
+            'FilterChain COMPRESS',
+            'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
+          ],
           'rewrite_base'                => '/',
           'rewrite_rule'                => '^index\.html$ welcome.html',
           'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
@@ -342,6 +351,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::passenger') }
       it { is_expected.to contain_class('apache::mod::fastcgi') }
       it { is_expected.to contain_class('apache::mod::headers') }
+      it { is_expected.to contain_class('apache::mod::filter') }
       it { is_expected.to contain_class('apache::mod::setenvif') }
       it { is_expected.to contain_concat('30-rspec.example.com.conf').with({
         'owner'   => 'root',
@@ -404,6 +414,8 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-header') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-filters').with(
+        :content => /^\s+FilterDeclare COMPRESS$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
