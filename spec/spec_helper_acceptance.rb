@@ -15,6 +15,15 @@ RSpec.configure do |c|
 
   # Configure all nodes in nodeset
   c.before :suite do
+    # net-tools required for netstat utility being used by be_listening
+    if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7'
+      pp = <<-EOS
+        package { 'net-tools': ensure => installed }
+      EOS
+
+      apply_manifest_on(agents, pp, :catch_failures => false)
+    end
+
     # Install module and dependencies
     hosts.each do |host|
       copy_module_to(host, :source => proj_root, :module_name => 'apache')
