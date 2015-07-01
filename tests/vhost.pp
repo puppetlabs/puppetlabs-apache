@@ -206,9 +206,10 @@ apache::vhost { 'eighteenth.example.com':
 }
 
 apache::vhost { 'nineteenth.example.com':
-  port     => '80',
-  docroot  => '/var/www/nineteenth',
-  setenvif => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
+  port           => '80',
+  docroot        => '/var/www/nineteenth',
+  setenvif       => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
+  setenvifnocase => 'Host "^([^\.]*)\.website\.com$" CLIENT_NAME=$1',
 }
 
 # Vhost with additional include files
