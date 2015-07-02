@@ -1696,6 +1696,10 @@ Example:
 
 Used by HTTPD to conditionally set environment variables for vhosts. Defaults to '[]'.
 
+#####`setenvifnocase`
+
+Used by HTTPD to conditionally set environment variables for vhosts. Unlike setenvif, the comparison is case insensitive. Defaults to '[]'.
+
 #####`suphp_addhandler`, `suphp_configpath`, & `suphp_engine`
 
 Set up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG).
