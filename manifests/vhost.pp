@@ -80,6 +80,7 @@ define apache::vhost(
   $redirectmatch_regexp        = undef,
   $redirectmatch_dest          = undef,
   $rack_base_uris              = undef,
+  $passenger_base_uris         = undef,
   $headers                     = undef,
   $request_headers             = undef,
   $filters                     = undef,
@@ -386,6 +387,11 @@ define apache::vhost(
     }
   }
 
+  # Load mod_passenger if needed and not yet loaded
+  if $passenger_base_uris {
+      include ::apache::mod::passenger
+  }
+
   # Load mod_fastci if needed and not yet loaded
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
@@ -652,6 +658,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 150,
       content => template('apache/vhost/_rack.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $passenger_base_uris
+  if $passenger_base_uris {
+    concat::fragment { "${name}-passenger_uris":
+      target  => "${priority_real}${filename}.conf",
+      order   => 155,
+      content => template('apache/vhost/_passenger_base_uris.erb'),
     }
   }
 
