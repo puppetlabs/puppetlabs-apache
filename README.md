@@ -208,18 +208,18 @@ Please note that the 'disabled' argument to `FallbackResource` is only supported
 
 ## Reference
 
-* **Public Classes**
+* [**Public Classes**](#public-classes)
     * [Class: apache](#class-apache)
     * [Class: apache::dev](#class-apachedev)
     * [Classes: apache::mod::*](#classes-apachemodname)
-* **Private Classes**
+* [**Private Classes**](#private-classes)
     * [Class: apache::confd::no_accf](#class-apacheconfdno_accf)
     * [Class: apache::default_confd_files](#class-apachedefault_confd_files)
     * [Class: apache::default_mods](#class-apachedefault_mods)
     * [Class: apache::package](#class-apachepackage)
     * [Class: apache::params](#class-apacheparams)
     * [Class: apache::service](#class-apacheservice)
-* **Public Defines**
+* [**Public Defines**](#public-defines)
     * [Define: apache::balancer](#define-apachebalancer)
     * [Define: apache::balancermember](#define-apachebalancermember)
     * [Define: apache::custom_config](#define-apachecustom_config)
@@ -228,13 +228,22 @@ Please note that the 'disabled' argument to `FallbackResource` is only supported
     * [Define: apache::mod](#define-apachemod)
     * [Define: apache::namevirtualhost](#define-apachenamevirtualhost)
     * [Define: apache:vhost](#define-apachevhost)
-* **Private Defines**
+* [**Private Defines**](#private-defines)
     * [Define: apache::peruser::multiplexer](#define-apacheperusermultiplexer)
     * [Define: apache::peruser::processor](#define-apacheperuserprocessor)
     * [Define: apache::security::file_link](#define-apachesecurityfile_link)
 * [**Templates**](#templates)
 
-### Class: `apache`
+### Public Classes
+
+<!--
+    TODO: 
+    - Define public classes here.
+    - Alphabetize classes.
+    - Confirm all classes listed are in the section TOC.
+-->
+
+#### Class: `apache`
 
 This public class guides the basic setup of Apache on your system. <!-- What does it do? Should we detail that here? -->
 
@@ -248,11 +257,32 @@ You can establish a default virtual host in this class, the `vhost` class, or bo
 
 **Parameters within `apache`:**
 
-#### `allow_encoded_slashes`
+##### `allow_encoded_slashes`
 
 This parameter sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes), which modifies the responses to URLs containing `\` and `/` characters. The default is undefined,<!-- Does this mean the default is `undef`? --> which omits the declaration from the server configuration and selects the Apache default setting of `Off`. The allowed values are `on`, `off`, or `nodecode`.
 
-#### `apache_version`
+##### `apache_version`
+
+This parameter configures module template behavior, package names, and default Apache modules by defining the version of Apache to use. The default version is determined by the OS family and release via the `apache::version` class, and Puppet does not recommend manually configuring this parameter.
+
+##### `conf_dir`
+
+This parameter sets the directory where the Apache server's main configuration file is located. The default locations include:
+
+* `/etc/httpd/conf` on Red Hat
+* `/etc/apache2` on Debian
+* `/usr/local/etc/apache22` on FreeBSD
+* `/etc/apache2` on Gentoo
+
+##### `confd_dir`
+
+This parameter sets the location of the Apache server's custom configuration directory. The default locations include:
+
+* `/etc/httpd/conf` on Red Hat
+* `/etc/apache2/conf.d` on Debian
+* `/usr/local/etc/apache22` on FreeBSD
+* `/etc/apache2/conf.d` on Gentoo
+
 <!--
     Cont.
     
@@ -268,31 +298,21 @@ This parameter sets the server default for the [`AllowEncodedSlashes` declaratio
         materials in the Usage section.
 -->
 
-This parameter configures module template behavior, package names, and default Apache modules by defining the Apache version. Default is determined by the class `apache::version` using the OS family and release. It should not be configured manually without special reason.
-
-#### `conf_dir`
-
-Changes the location of the configuration directory the main configuration file is placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2' on Gentoo.
-
-#### `confd_dir`
-
-Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2/conf.d' on Gentoo.
-
-#### `conf_template`
+##### `conf_template`
 
 Overrides the template used for the main apache configuration file. Defaults to 'apache/httpd.conf.erb'.
 
 *Note:* Using this parameter is potentially risky, as the module has been built for a minimal configuration file with the configuration primarily coming from conf.d/ entries.
 
-#### `default_charset`
+##### `default_charset`
 
 If defined, the value will be set as `AddDefaultCharset` in the main configuration file. It is undefined by default.
 
-#### `default_confd_files`
+##### `default_confd_files`
 
 Generates default set of include-able Apache configuration files under  `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on a given platform.
 
-#### `default_mods`
+##### `default_mods`
 
 Sets up Apache with default settings based on your OS. Valid values are 'true', 'false', or an array of mod names.
 
@@ -302,35 +322,35 @@ If false, it only includes the mods required to make HTTPD work, and any other m
 
 If an array, the apache module includes the array of mods listed.
 
-#### `default_ssl_ca`
+##### `default_ssl_ca`
 
 The default certificate authority, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_cert`
+##### `default_ssl_cert`
 
 The default SSL certification, which is automatically set based on your operating system  ('/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_chain`
+##### `default_ssl_chain`
 
 The default SSL chain, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_crl`
+##### `default_ssl_crl`
 
 The default certificate revocation list to use, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_crl_path`
+##### `default_ssl_crl_path`
 
 The default certificate revocation list path, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_crl_check`
+##### `default_ssl_crl_check`
 
 Sets the default certificate revocation check level via the [SSLCARevocationCheck directive](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck), which is automatically set to 'undef'. This default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher, the value is ignored on older versions.
 
-#### `default_ssl_key`
+##### `default_ssl_key`
 
 The default SSL key, which is automatically set based on your operating system ('/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
 
-#### `default_ssl_vhost`
+##### `default_ssl_vhost`
 
 Sets up a default SSL virtual host. Defaults to 'false'. If set to 'true', sets up the following vhost:
 
@@ -347,55 +367,55 @@ Sets up a default SSL virtual host. Defaults to 'false'. If set to 'true', sets 
 
 SSL vhosts only respond to HTTPS queries.
 
-#### `default_type`
+##### `default_type`
 
 (Apache httpd 2.2 only) MIME content-type that will be sent if the server cannot determine a type in any other way. This directive has been deprecated in Apache httpd 2.4, and only exists there for backwards compatibility of configuration files.
 
-#### `default_vhost`
+##### `default_vhost`
 
 Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
 
-#### `docroot`
+##### `docroot`
 
 Changes the location of the default [Documentroot](https://httpd.apache.org/docs/current/mod/core.html#documentroot). Defaults to '/var/www/html' on RedHat, '/var/www' on Debian, '/usr/local/www/apache22/data' on FreeBSD, and '/var/www/localhost/htdocs' on Gentoo.
 
-#### `error_documents`
+##### `error_documents`
 
 Enables custom error documents. Defaults to 'false'.
 
-#### `group`
+##### `group`
 
 Changes the group that Apache will answer requests as. The parent process will continue to be run as root, but resource accesses by child processes will be done under this group. By default, puppet will attempt to manage this group as a resource under `::apache`. If this is not what you want, set [`manage_group`](#manage_group) to 'false'. Defaults to the OS-specific default user for apache, as detected in `::apache::params`.
 
-#### `httpd_dir`
+##### `httpd_dir`
 
 Changes the base location of the configuration directories used for the apache service. This is useful for specially repackaged HTTPD builds, but might have unintended consequences when used in combination with the default distribution packages. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2' on Gentoo.
 
-#### `keepalive`
+##### `keepalive`
 
 Enables persistent connections.
 
-#### `keepalive_timeout`
+##### `keepalive_timeout`
 
 Sets the amount of time the server waits for subsequent requests on a persistent connection. Defaults to '15'.
 
-#### `max_keepalive_requests`
+##### `max_keepalive_requests`
 
 Sets the limit of the number of requests allowed per connection when KeepAlive is on. Defaults to '100'.
 
-#### `lib_path`
+##### `lib_path`
 
 Specifies the location where apache module files are stored. It should not be configured manually without special reason.
 
-#### `loadfile_name`
+##### `loadfile_name`
 
 Sets the file name for the module loadfile. Should be in the format \*.load.  This can be used to set the module load order.
 
-#### `log_level`
+##### `log_level`
 
 Changes the verbosity level of the error log. Defaults to 'warn'. Valid values are 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info', or 'debug'.
 
-#### `log_formats`
+##### `log_formats`
 
 Define additional [LogFormats](https://httpd.apache.org/docs/current/mod/mod_log_config.html#logformat). This is done in a Hash:
 
@@ -414,28 +434,28 @@ LogFormat "%{User-agent}i" agent
 
 If your `$log_formats` contains one of those, they will be overwritten with **your** definition.
 
-#### `logroot`
+##### `logroot`
 
 Changes the directory where Apache log files for the virtual host are placed. Defaults to '/var/log/httpd' on RedHat, '/var/log/apache2' on Debian, '/var/log/apache22' on FreeBSD, and '/var/log/apache2' on Gentoo.
 
-#### `logroot_mode`
+##### `logroot_mode`
 
 Overrides the mode the default logroot directory is set to ($::apache::logroot). Defaults to undef. Do NOT give people write access to the directory the logs are stored
 in without being aware of the consequences; see http://httpd.apache.org/docs/2.4/logs.html#security for details.
 
-#### `manage_group`
+##### `manage_group`
 
 Setting this to 'false' stops the group resource from being created. This is for when you have a group, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established group would result in a duplicate resource error.
 
-#### `manage_user`
+##### `manage_user`
 
 Setting this to 'false' stops the user resource from being created. This is for instances when you have a user, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established user would result in a duplicate resource error.
 
-#### `mod_dir`
+##### `mod_dir`
 
 Changes the location of the configuration directory your Apache modules configuration files are placed in. Defaults to '/etc/httpd/conf.d' for RedHat, '/etc/apache2/mods-available' for Debian, '/usr/local/etc/apache22/Modules' for FreeBSD, and '/etc/apache2/modules.d' on Gentoo.
 
-#### `mpm_module`
+##### `mpm_module`
 
 Determines which MPM is loaded and configured for the HTTPD process. Valid values are 'event', 'itk', 'peruser', 'prefork', 'worker', or 'false'. Defaults to 'prefork' on RedHat, FreeBSD and Gentoo, and 'worker' on Debian. Must be set to 'false' to explicitly declare the following classes with custom parameters:
 
@@ -447,166 +467,166 @@ Determines which MPM is loaded and configured for the HTTPD process. Valid value
 
 *Note:* Switching between different MPMs on FreeBSD is possible but quite difficult. Before changing `$mpm_module` you must uninstall all packages that depend on your currently-installed Apache.
 
-#### `package_ensure`
+##### `package_ensure`
 
 Allows control over the package ensure attribute. Can be 'present','absent', or a version string.
 
-#### `ports_file`
+##### `ports_file`
 
 Changes the name of the file containing Apache ports configuration. Default is `${conf_dir}/ports.conf`.
 
-#### `purge_configs`
+##### `purge_configs`
 
 Removes all other Apache configs and vhosts, defaults to 'true'. Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
 
-#### `purge_vhost_configs`
+##### `purge_vhost_configs`
 
 If `vhost_dir` != `confd_dir`, this controls the removal of any configurations that are not managed by Puppet within `vhost_dir`. It defaults to the value of `purge_configs`. Setting this to false is a stopgap measure to allow the apache module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`
 
-#### `sendfile`
+##### `sendfile`
 
 Makes Apache use the Linux kernel sendfile to serve static files. Defaults to 'On'.
 
-#### `serveradmin`
+##### `serveradmin`
 
 Sets the server administrator. Defaults to 'root@localhost'.
 
-#### `servername`
+##### `servername`
 
 Sets the server name. Defaults to `fqdn` provided by Facter.
 
-#### `server_root`
+##### `server_root`
 
 Sets the root directory in which the server resides. Defaults to '/etc/httpd' on RedHat, '/etc/apache2' on Debian, '/usr/local' on FreeBSD, and '/var/www' on Gentoo.
 
-#### `server_signature`
+##### `server_signature`
 
 Configures a trailing footer line under server-generated documents. More information about [ServerSignature](http://httpd.apache.org/docs/current/mod/core.html#serversignature). Defaults to 'On'.
 
-#### `server_tokens`
+##### `server_tokens`
 
 Controls how much information Apache sends to the browser about itself and the operating system. More information about [ServerTokens](http://httpd.apache.org/docs/current/mod/core.html#servertokens). Defaults to 'OS'.
 
-#### `service_enable`
+##### `service_enable`
 
 Determines whether the HTTPD service is enabled when the machine is booted. Defaults to 'true'.
 
-#### `service_ensure`
+##### `service_ensure`
 
 Determines whether the service should be running. Valid values are 'true', 'false', 'running', or 'stopped' when Puppet should manage the service. Any other value sets ensure to 'false' for the Apache service, which is useful when you want to let the service be managed by some other application like Pacemaker. Defaults to 'running'.
 
-#### `service_name`
+##### `service_name`
 
 Name of the Apache service to run. Defaults to: 'httpd' on RedHat, 'apache2' on Debian and Gentoo, and 'apache22' on FreeBSD.
 
-#### `service_manage`
+##### `service_manage`
 
 Determines whether the HTTPD service state is managed by Puppet . Defaults to 'true'.
 
-#### `service_restart`
+##### `service_restart`
 
 Determines whether the HTTPD service restart command should be anything other than the default managed by Puppet.  Defaults to undef.
 
-#### `timeout`
+##### `timeout`
 
 Sets the amount of seconds the server will wait for certain events before failing a request. Defaults to 120.
 
-#### `trace_enable`
+##### `trace_enable`
 
 Controls how TRACE requests per RFC 2616 are handled. More information about [TraceEnable](http://httpd.apache.org/docs/current/mod/core.html#traceenable). Defaults to 'On'.
 
-#### `vhost_dir`
+##### `vhost_dir`
 
 Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, '/usr/local/etc/apache22/Vhosts' on FreeBSD, and '/etc/apache2/vhosts.d' on Gentoo.
 
-#### `user`
+##### `user`
 
 Changes the user that Apache will answer requests as. The parent process will continue to be run as root, but resource accesses by child processes will be done under this user. By default, puppet will attept to manage this user as a resource under `::apache`. If this is not what you want, set [`manage_user`](#manage_user) to 'false'. Defaults to the OS-specific default user for apache, as detected in `::apache::params`.
 
-#### `apache_name`
+##### `apache_name`
 
 The name of the Apache package to install. This is automatically detected in `::apache::params`. You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
 
-### Class: apache::dev
+#### Class: `apache::dev`
 
 Installs Apache development libraries.
 
 *Note:* On FreeBSD, you must declare `apache::package` or `apache` before `apache::dev`.
 
-### Classes: apache::mod::*
+#### Classes: `apache::mod::*`
 
 Enables specific Apache HTTP Server modules.
 
-#### Class: apache::mod::alias
-#### Class: apache::mod::deflate
-#### Class: apache::mod::event
-#### Class: apache::mod::expires
-#### Class: apache::mod::fcgid
-#### Class: apache::mod::geoip
-#### Class: apache::mod::info
-#### Class: apache::mod::negotiation
-#### Class: apache::mod::pagespeed
-#### Class: apache::mod::php
-#### Class: apache::mod::reqtimeout
-#### Class: apache::mod::security
-#### Class: apache::mod::ssl
-#### Class: apache::mod::status
-#### Class: apache::mod::version
-#### Class: apache::mod::wsgi
+#### Class: `apache::mod::alias`
+#### Class: `apache::mod::deflate`
+#### Class: `apache::mod::event`
+#### Class: `apache::mod::expires`
+#### Class: `apache::mod::fcgid`
+#### Class: `apache::mod::geoip`
+#### Class: `apache::mod::info`
+#### Class: `apache::mod::negotiation`
+#### Class: `apache::mod::pagespeed`
+#### Class: `apache::mod::php`
+#### Class: `apache::mod::reqtimeout`
+#### Class: `apache::mod::security`
+#### Class: `apache::mod::ssl`
+#### Class: `apache::mod::status`
+#### Class: `apache::mod::version`
+#### Class: `apache::mod::wsgi`
 
 ### Private Classes
 
-### Class: apache::confd::no_accf
+#### Class: `apache::confd::no_accf`
 
 Creates the `no-accf.conf` configuration file in `conf.d`, required by FreeBSD's Apache 2.4.
 
-### Class: apache::default_confd_files
+#### Class: `apache::default_confd_files`
 
 Includes `conf.d` files for FreeBSD.
 
-### Class: apache::default_mods
+#### Class: `apache::default_mods`
 
 Installs the Apache modules required to run the default configuration.
 
-### Class: apache::package
+#### Class: `apache::package`
 
 Installs and configures basic Apache packages.
 
-### Class: apache::params
+#### Class: `apache::params`
 
 Manages Apache parameters.
 
-### Class: apache::service
+#### Class: `apache::service`
 
 Manages the Apache daemon.
 
 ### Public Defines
 
-### Define: apache::balancer
+#### Define: `apache::balancer`
 
 Creates an Apache balancer cluster.
 
-### Define: apache::balancermember
+#### Define: `apache::balancermember`
 
 Defines members of [mod_proxy_balancer](http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
-### Define: apache::custom_config
+#### Define: `apache::custom_config`
 
 Based on the title, controls which ports Apache binds to for listening. Adds [Listen](http://httpd.apache.org/docs/current/bind.html) directives to ports.conf in the Apache HTTPD configuration directory. Titles take the form '<port>', '<ipv4>:<port>', or '<ipv6>:<port>'.
 
-### Define: apache::fastcgi::server
+#### Define: `apache::fastcgi::server`
 
 Used to enable arbitrary Apache HTTPD modules for which there is no specific `apache::mod::[name]` class.
 
-### Define: apache::listen
+#### Define: `apache::listen`
 
-### Define: apache::mod
+#### Define: `apache::mod`
 
-### Define: apache::namevirtualhost
+#### Define: `apache::namevirtualhost`
 
 Enables name-based hosting of a virtual host. Adds all [NameVirtualHost](http://httpd.apache.org/docs/current/vhosts/name-based.html) directives to the `ports.conf` file in the Apache HTTPD configuration directory. Titles take the form '\*', '*:<port>', '\_default_:<port>, '<ip>', or '<ip>:<port>'.
 
-### Define: apache:vhost
+#### Define: `apache:vhost`
 
 Allows specialized configurations for virtual hosts that have requirements outside the defaults.
 
@@ -616,15 +636,15 @@ Allows specialized configurations for virtual hosts that have requirements outsi
 
 ### Private Defines
 
-### Define: apache::peruser::multiplexer
+#### Define: `apache::peruser::multiplexer`
 
 Enables the [Peruser](http://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr) module for FreeBSD only.
 
-### Define: apache::peruser::processor
+#### Define: `apache::peruser::processor`
 
 Enables the [Peruser](http://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr) module for FreeBSD only.
 
-### Class: apache::security::file_link
+#### Define: `apache::security::file_link`
 
 Links the activated_rules from [apache::mod::security](#apache-modsecurity) to the respective CRS rules on disk.
 
