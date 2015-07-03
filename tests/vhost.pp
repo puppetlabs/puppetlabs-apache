@@ -141,6 +141,7 @@ apache::vhost { 'fifteenth.example.com':
   rack_base_uris => ['/rackapp1', '/rackapp2'],
 }
 
+
 # Vhost to redirect non-ssl to ssl
 apache::vhost { 'sixteenth.example.com non-ssl':
   servername => 'sixteenth.example.com',
@@ -249,5 +250,12 @@ apache::vhost { 'twentyfirst.example.com':
   port               => '80',
   docroot            => '/var/www/twentyfirst',
   access_log_env_var => 'admin',
+}
+
+# Vhost with a passenger_base configuration
+apache::vhost { 'twentysecond.example.com':
+  port           => '80',
+  docroot        => '/var/www/twentysecond',
+  rack_base_uris => ['/passengerapp1', '/passengerapp2'],
 }
 

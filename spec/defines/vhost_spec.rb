@@ -252,6 +252,7 @@ describe 'apache::vhost', :type => :define do
           'redirectmatch_regexp'        => ['\.git$'],
           'redirectmatch_dest'          => ['http://www.example.com'],
           'rack_base_uris'              => ['/rackapp1'],
+          'passenger_base_uris'         => ['/passengerapp1'],
           'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
           'request_headers'             => ['append MirrorID "mirror 12"'],
           'rewrites'                    => [

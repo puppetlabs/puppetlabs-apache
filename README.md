@@ -2185,6 +2185,10 @@ This directive is equivalent to proxy_pass, but takes regular expressions, see [
 
 Specifies the resource identifiers for a rack configuration. The file paths specified are listed as rack application roots for [Phusion Passenger](http://www.modrails.com/documentation/Users%20guide%20Apache.html#_railsbaseuri_and_rackbaseuri) in the _rack.erb template. Defaults to 'undef'.
 
+#####`passenger_base_uris`
+
+Used to specify that the given URI is a Phusion Passenger-served application. The file paths specified are listed as passenger application roots for [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerBaseURI) in the _passenger_base_uris.erb template. Defaults to 'undef'.
+
 ##### `redirect_dest`
 
 Specifies the address to redirect to. Defaults to 'undef'.
