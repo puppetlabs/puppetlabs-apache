@@ -1231,7 +1231,8 @@ Sets the list of resources to look for when a client requests an index of the di
 
 Provides the
 [DocumentRoot](http://httpd.apache.org/docs/current/mod/core.html#documentroot)
-directive, which identifies the directory Apache serves files from. Required.
+directive, which identifies the directory Apache serves files from. Can be
+'undef' if your additional_includes contain the DocumentRoot. Required.
 
 #####`docroot_group`
 

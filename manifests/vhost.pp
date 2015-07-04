@@ -145,6 +145,12 @@ define apache::vhost(
     validate_array($rewrites)
     validate_hash($rewrites[0])
   }
+  # Validate the docroot as a string if any of the following are true:
+  # - $manage_docroot is true
+  # - $additional_includes is undefined or empty
+  if $manage_docroot or ! $additional_includes or empty($additional_includes) {
+	  validate_string($docroot)
+  }
 
   # Input validation begins
 
@@ -418,7 +424,7 @@ define apache::vhost(
       fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
     }
     $_directories = $directories
-  } else {
+  } elsif $docroot {
     $_directory = {
       provider       => 'directory',
       path           => $docroot,
@@ -439,6 +445,8 @@ define apache::vhost(
     }
 
     $_directories = [ merge($_directory, $_directory_version) ]
+  } else {
+    $_directories = []
   }
 
   ## Create a global LocationMatch if locations aren't defined
