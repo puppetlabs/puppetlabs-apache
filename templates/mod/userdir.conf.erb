@@ -2,7 +2,7 @@
 <% if @disable_root -%>
   UserDir disabled root
 <% end -%>
-  UserDir <%= @dir %>
+  UserDir <%= @home %>/*/<%= @dir %>
 
   <Directory "<%= @home %>/*/<%= @dir %>">
     AllowOverride FileInfo AuthConfig Limit Indexes
