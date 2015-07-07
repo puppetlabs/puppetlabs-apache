@@ -52,7 +52,7 @@ To install Apache with the default parameters, use this Puppet code:
 
 The Puppet module applies a default configuration based on your operating system. For example, Debian, Red Hat, FreeBSD, and Gentoo systems each have unique default configurations. These defaults work in testing environments but are not suggested for production; Puppet recommends customizing parameters to suit your site. Use the [Reference](#reference) section to find default parameter values.
 
-You can customize parameters when declaring the `apache` class. For instance, this declaration installs Apache without the apache module's [default virtual host configuration](#configuring_a_virtual_host), allowing you to customize all Apache virtual hosts:
+You can customize parameters when declaring the `apache` class. For instance, this declaration installs Apache without the apache module's [default virtual host configuration](#configuring-a-virtual-host), allowing you to customize all Apache virtual hosts:
 
 ~~~ puppet
     class { 'apache':
@@ -230,7 +230,6 @@ To set up a virtual host with [filter rules](http://httpd.apache.org/docs/2.2/fi
 Please note that the 'disabled' argument to `FallbackResource` is only supported since Apache 2.2.24.
 
 [//]: # (END COVERAGE)
-
 
 Configure a virtual host with a cgi-bin:
 
@@ -530,6 +529,7 @@ This parameter sets the location of the Apache server's custom configuration dir
 ##### `conf_template`
 
 You can use this parameter to define the [template](/guides/templating.md) used for the main Apache configuration file. The default value is `apache/httpd.conf.erb`. 
+
 [//]: # (Is this correct? It's at `template/httpd.conf.erb` in the module; are there weird path modifications happening?)
 
 *Note:* Modifying this parameter is potentially risky, as the apache Puppet module is designed to use a minimal configuration file customized by `conf.d/` entries.
@@ -550,22 +550,97 @@ If this parameter is `false`, Puppet only includes the Apache modules required t
 
 If `false`, the minimum default Apache modules installed for the following operating systems are:
 
-* '''Red Hat''': `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
-* '''FreeBSD''': `log_config`, `unixd`
-* '''Suse''': `log_config`
-* '''Gentoo''': No default modules 
-* '''All other operating systems''': `authz_host`
+* **Red Hat**: `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
+* **FreeBSD**: `log_config`, `unixd`
+* **Suse**: `log_config`
+* **Gentoo**: No default modules 
+* **All other operating systems**: `authz_host`
 
 [//]: # (Gentoo really doesn't apply any default modules?)
 
 If `true`, these additional modules are installed accordingly:
 
-* '''Debian''': `authn_core`, `reqtimeout`
-* '''Red Hat''': `actions`, `authn_core`, `cache`, `mime`, `mime_magic`, `rewrite`, `speling`, `suexec`, `version`, `vhost_alias`, `auth_digest`, `authn_anon`, `authn_dbm`, `authz_dbm`, `authz_owner`, `expires`, `ext_filter`, `include`, `logio`, `substitute`, and `usertrack`; if the Apache version is less than 2.4, it also installs `authn_alias` and `authn_default`.
-* '''FreeBSD''': `actions`, `asis`, `auth_digest`, `auth_form`, `authn_anon`, `authn_core`, `authn_dbm`, `authn_socache`, `authz_dbd`, `authz_dbm`, `authz_owner`, `cache`, `disk_cache`, `dumpio`, `expires`, `file_cache`, `filter`, `headers`, `imagemap`, `include`, `info`, `logio`, `mime_magic`, `reqtimeout`, `request`, `rewrite`, `session`, `speling`, `unique_id`, `userdir`, `version`, and `vhost_alias`
-* '''All operating systems''': `alias`, `authn_file`, `autoindex`, `dav`, `dav_fs`, `deflate`, `dir`, `mime`, `negotiation`, `setenvif`, and `auth_basic`.
+* **Debian**: `authn_core`, `reqtimeout`
+* **Red Hat**: `actions`, `authn_core`, `cache`, `mime`, `mime_magic`, `rewrite`, `speling`, `suexec`, `version`, `vhost_alias`, `auth_digest`, `authn_anon`, `authn_dbm`, `authz_dbm`, `authz_owner`, `expires`, `ext_filter`, `include`, `logio`, `substitute`, and `usertrack`; if the Apache version is less than 2.4, it also installs `authn_alias` and `authn_default`.
+* **FreeBSD**: `actions`, `asis`, `auth_digest`, `auth_form`, `authn_anon`, `authn_core`, `authn_dbm`, `authn_socache`, `authz_dbd`, `authz_dbm`, `authz_owner`, `cache`, `disk_cache`, `dumpio`, `expires`, `file_cache`, `filter`, `headers`, `imagemap`, `include`, `info`, `logio`, `mime_magic`, `reqtimeout`, `request`, `rewrite`, `session`, `speling`, `unique_id`, `userdir`, `version`, and `vhost_alias`
+* **All operating systems**: `alias`, `authn_file`, `autoindex`, `dav`, `dav_fs`, `deflate`, `dir`, `mime`, `negotiation`, `setenvif`, and `auth_basic`.
   * If the Apache version is at least 2.4, it also installs ``filter`, `authz_core`, and `access_compat`
   * If the Apache version is less than 2.4, it also installs `authz_default`.
+
+If the `prefork` MPM module is installed and this parameter's value is `true`, it also includes `::apache::mod::cgi`. If the `worker` MPM module is installed, it includes `::apache::mod::cgid`.
+
+If this parameter contains an array, the apache Puppet module enables all Apache modules in the array.
+
+##### `default_ssl_ca`
+
+This parameter sets the default certificate authority for the Apache server. The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your certificate authority before deploying this server in a production environment.
+
+##### `default_ssl_cert`
+
+This parameter sets the SSL certificate location. The default value is determined by your operating system:
+
+* **Debian**: `/etc/ssl/certs/ssl-cert-snakeoil.pem`
+* **FreeBSD**: `/usr/local/etc/apache22/server.crt`
+* **Gentoo*: `/etc/ssl/apache2/server.crt`
+* **Red Hat**: `/etc/pki/tls/certs/localhost.crt`
+
+While the default value results in a functioning Apache server, you *must* update this parameter with your certificate location before deploying this server in a production environment.
+
+##### `default_ssl_chain`
+
+This parameter sets the SSL chain. The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your SSL chain before deploying this server in a production environment.
+
+##### `default_ssl_crl`
+
+This parameter sets the name of the server's SSL certificate revocation list (CRL). The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your CRL's name before deploying this server in a production environment.
+
+##### `default_ssl_crl_path`
+
+This parameter sets the path to the server's SSL certificate revocation list (CRL). The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your CRL's location before deploying this server in a production environment.
+
+##### `default_ssl_crl_check`
+
+This parameter sets the default certificate revocation check level via the [SSLCARevocationCheck directive](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). The default value is `undef`; while this default value results in a functioning Apache server, you *must* specify this parameter when using certificate revocation lists in a production environment.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `default_ssl_key`
+
+This parameter sets the SSL key location. The default value is determined by your operating system:
+
+* **Debian**: `/etc/ssl/private/ssl-cert-snakeoil.key`
+* **FreeBSD**: `/usr/local/etc/apache22/server.key`
+* **Gentoo**: `/etc/ssl/apache2/server.key`
+* **Red Hat**: `/etc/pki/tls/private/localhost.key`
+
+While these default values result in a functioning Apache server, you *must* update this parameter with your SSL key's location before deploying this server in a production environment.
+
+##### `default_ssl_vhost`
+
+This Boolean parameter configures a default SSL virtual host. The default value is `false`. 
+
+If set to `true`, Puppet configures the following virtual host using the [`apache::vhost`](#define-apache-vhost) define:
+
+~~~ puppet
+    apache::vhost { 'default-ssl':
+      port            => 443,
+      ssl             => true,
+      docroot         => $docroot,
+      scriptalias     => $scriptalias,
+      serveradmin     => $serveradmin,
+      access_log_file => "ssl_${access_log_file}",
+      }
+~~~
+
+**Note:** SSL virtual hosts only respond to HTTPS queries.
+
+##### `default_type`
+
+On Apache 2.2 only, this parameter sets the MIME `content-type` sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer and only exists for backwards compatibility in configuration files. The default value is `undef`.
+
+##### `default_vhost`
+
+This Boolean parameter configures a default virtual host when the class is declared. The default value is `true`. To configure [customized virtual hosts](#configuring-a-virtual-host), set this parameter to `false`.
 
 [//]: # (END COVERAGE)
 
@@ -580,63 +655,6 @@ If `true`, these additional modules are installed accordingly:
 [//]: # (TO DO:)
 [//]: # (  - Move reference materials in the Usage section to the Reference section.)
 [//]: # (  - Consolidate usage materials in the Setup section with the usage materials in the Usage section.)
-
-If the `prefork` MPM module is installed and this parameter's value is `true`, it also includes `::apache::mod::cgi`. If the `worker` MPM module is installed, it includes `::apache::mod::cgid`.
-
-If this parameter contains an array, the apache Puppet module enables all Apache modules in the array.
-
-##### `default_ssl_ca`
-
-The default certificate authority, which is automatically set to `undef`. While this default value works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_cert`
-
-The default SSL certification, which is automatically set based on your operating system  ('/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_chain`
-
-The default SSL chain, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_crl`
-
-The default certificate revocation list to use, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_crl_path`
-
-The default certificate revocation list path, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_crl_check`
-
-Sets the default certificate revocation check level via the [SSLCARevocationCheck directive](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck), which is automatically set to 'undef'. This default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher, the value is ignored on older versions.
-
-##### `default_ssl_key`
-
-The default SSL key, which is automatically set based on your operating system ('/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' for Gentoo). This default works out of the box but must be updated with your specific certificate information before being used in production.
-
-##### `default_ssl_vhost`
-
-Sets up a default SSL virtual host. Defaults to 'false'. If set to 'true', sets up the following vhost:
-
-~~~ puppet
-    apache::vhost { 'default-ssl':
-      port            => 443,
-      ssl             => true,
-      docroot         => $docroot,
-      scriptalias     => $scriptalias,
-      serveradmin     => $serveradmin,
-      access_log_file => "ssl_${access_log_file}",
-      }
-~~~
-
-SSL vhosts only respond to HTTPS queries.
-
-##### `default_type`
-
-(Apache httpd 2.2 only) MIME content-type that will be sent if the server cannot determine a type in any other way. This directive has been deprecated in Apache httpd 2.4, and only exists there for backwards compatibility of configuration files.
-
-##### `default_vhost`
-
-Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
 
 ##### `docroot`
 
@@ -1005,7 +1023,7 @@ This define attempts to install packages for and enable arbitrary Apache modules
 
 Enables name-based hosting of a virtual host. Adds all [NameVirtualHost](http://httpd.apache.org/docs/current/vhosts/name-based.html) directives to the `ports.conf` file in the Apache HTTPD configuration directory. Titles take the form '\*', '*:<port>', '\_default_:<port>, '<ip>', or '<ip>:<port>'.
 
-#### Define: `apache:vhost`
+#### Define: `apache::vhost`
 
 Allows specialized configurations for virtual hosts that have requirements outside the defaults.
 
