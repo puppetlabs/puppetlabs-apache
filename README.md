@@ -266,7 +266,7 @@ apache::vhost { 'www':
 [//]: # (TODO:)
 [//]: # (  - Define public classes here.)
 [//]: # (  - Alphabetize and/or reorder classes.)
-[//]: # (  - Confirm all classes listed are in the section TOC.)_
+[//]: # (  - Confirm all classes listed are in the section TOC.)
 
 #### Class: `apache`
 
