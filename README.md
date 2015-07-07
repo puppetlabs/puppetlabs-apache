@@ -92,6 +92,16 @@ To configure user and group ownership for `docroot`, use the `[docroot_owner](#d
     }
 ~~~
 
+To configure a virtual host with a designated server administrator:
+
+~~~ puppet
+    apache::vhost { 'third.example.com':
+      port        => '80',
+      docroot     => '/var/www/third',
+      serveradmin => 'admin@example.com',
+    }
+~~~
+
 To configure a virtual host to use SSL and default SSL certificates, use the `[ssl](#ssl)` parameter and set the `[port](#port)` parameter appropriately:
 
 ~~~ puppet
@@ -121,6 +131,19 @@ Virtual hosts listen on all IP addresses ('*') by default. To listen on a specif
       ip      => '127.0.0.1',
       port    => '80',
       docroot => '/var/www/subdomain',
+    }
+~~~
+
+Set up a virtual host with aliased servers:
+
+~~~ puppet
+    apache::vhost { 'sixth.example.com':
+      serveraliases => [
+        'sixth.example.org',
+        'sixth.example.net',
+      ],
+      port          => '80',
+      docroot       => '/var/www/fifth',
     }
 ~~~
 
@@ -208,34 +231,8 @@ Please note that the 'disabled' argument to `FallbackResource` is only supported
 
 [//]: # (END COVERAGE)
 
-To configure a vhost with a server administrator:
 
-~~~ puppet
-    apache::vhost { 'third.example.com':
-      port        => '80',
-      docroot     => '/var/www/third',
-      serveradmin => 'admin@example.com',
-    }
-~~~
-
-- - -
-
-Set up a vhost with aliased servers
-
-~~~ puppet
-    apache::vhost { 'sixth.example.com':
-      serveraliases => [
-        'sixth.example.org',
-        'sixth.example.net',
-      ],
-      port          => '80',
-      docroot       => '/var/www/fifth',
-    }
-~~~
-
-- - -
-
-Configure a vhost with a cgi-bin
+Configure a virtual host with a cgi-bin:
 
 ~~~ puppet
     apache::vhost { 'eleventh.example.com':
