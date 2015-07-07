@@ -363,7 +363,7 @@ define apache::vhost(
   }
 
   # Load mod_alias if needed and not yet loaded
-  if ($scriptalias or $scriptaliases != []) or ($redirect_source and $redirect_dest) {
+  if ($scriptalias and $scriptaliases != []) or ($aliases and $aliases != []) or ($redirect_source and $redirect_dest) {
     if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
       include ::apache::mod::alias
     }
