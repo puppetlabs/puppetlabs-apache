@@ -1,5 +1,5 @@
 # apache
-
+<!-- START COVERAGE -->
 #### Table of Contents
 
 1. [Overview - What is the apache module?](#overview)
@@ -37,7 +37,7 @@ Apache HTTP Server (also simply called "Apache") is a widely used web server. Th
 * Listened-to ports
 * `/etc/make.conf` on FreeBSD and Gentoo
 
-On Gentoo, this module depends on the 'gentoo/puppet-portage' Puppet module. <!-- Should we link to the [GitHub repo](https://github.com/gentoo/puppet-portage) for this module? -->
+On Gentoo, this module depends on the ['gentoo/puppet-portage'](https://github.com/gentoo/puppet-portage) Puppet module.
 
 *Note:* This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Configuration of Apache should be managed by Puppet, as non-Puppet configuration files can cause unexpected failures.
 
@@ -53,12 +53,11 @@ To install Apache with the default parameters, use this Puppet code:
 
 The Puppet module applies a default configuration based on your operating system. For example, Debian, Red Hat, FreeBSD, and Gentoo systems each have unique default configurations. These defaults work in testing environments but are not suggested for production; Puppet recommends customizing parameters to suit your site. Use the [Reference](#reference) section to find default parameter values.
 
-You can customize parameters when declaring the `apache` class:
+You can customize parameters when declaring the `apache` class. For instance, this declaration installs Apache without the apache module's [default virtual host configuration](#configuring_a_virtual_host), allowing you to customize all Apache virtual hosts:
 
 ~~~ puppet
     class { 'apache':
-      default_mods        => false,
-      default_confd_files => false,
+      default_vhosts => false,
     }
 ~~~
 
@@ -79,7 +78,7 @@ To configure a basic name-based virtual host, specify the `port` and `docroot` u
     }
 ~~~
 
-*Note:* The `apache::vhost` define's default `[priority](#defines-apachevhost)` value is 15. If nothing matches this priority, or if you pass a higher priority value than the default and no names match anything else, Apache prioritizes them in alphabetical order. <!-- What is going on here? Should this be "if multiple vhosts have the same priority, Puppet (or Apache?) prioritizes them in alphabetical order"? -->
+*Note:* The `apache::vhost` define creates virtual hosts with a default `[priority](#defines-apachevhost)` of 15. If nothing matches this priority, or if you pass a higher priority value than the default and no names match anything else, Apache prioritizes them in alphabetical order. <!-- What is going on here? Should this be "if you declare multiple virtual hosts with the same priority, or don't apply a priority to any virtual hosts, Puppet (or Apache?) prioritizes them in alphabetical order"? -->
 
 To configure user and group ownership for `docroot`, use the `[docroot_owner](#docroot_owner)` and `[docroot_group](#docroot_group)` parameters:
 
@@ -206,6 +205,31 @@ To set up a virtual host with [filter rules](http://httpd.apache.org/docs/2.2/fi
 
 Please note that the 'disabled' argument to `FallbackResource` is only supported since Apache 2.2.24.
 
+### Configuring FastCGI servers to handle PHP files
+
+Add the [`apache::fastcgi::server`](#define-apache-fastcgi-server) define to allow FastCGI servers to handle requests for specific files. For example, the following defines a FastCGI server at `127.0.0.1` (localhost) on port 9000 to handle PHP requests:
+
+~~~ puppet
+apache::fastcgi::server { 'php':
+  host       => '127.0.0.1:9000',
+  timeout    => 15,
+  flush      => false,
+  faux_path  => '/var/www/php.fcgi',
+  fcgi_alias => '/php.fcgi',
+  file_type  => 'application/x-httpd-php'
+}
+~~~
+
+Within your virtual host, you can then configure the specified file type to be handled by the fastcgi server specified above.
+
+~~~ puppet
+apache::vhost { 'www':
+  ...
+  custom_fragment => 'AddType application/x-httpd-php .php'
+  ...
+}
+~~~
+
 ## Reference
 
 * [**Public Classes**](#public-classes)
@@ -229,6 +253,7 @@ Please note that the 'disabled' argument to `FallbackResource` is only supported
     * [Define: apache::namevirtualhost](#define-apachenamevirtualhost)
     * [Define: apache:vhost](#define-apachevhost)
 * [**Private Defines**](#private-defines)
+    * [Define: apache::default_mods::load](#define-default_mods-load)
     * [Define: apache::peruser::multiplexer](#define-apacheperusermultiplexer)
     * [Define: apache::peruser::processor](#define-apacheperuserprocessor)
     * [Define: apache::security::file_link](#define-apachesecurityfile_link)
@@ -239,21 +264,31 @@ Please note that the 'disabled' argument to `FallbackResource` is only supported
 <!--
     TODO: 
     - Define public classes here.
-    - Alphabetize classes.
+    - Alphabetize and/or reorder classes.
     - Confirm all classes listed are in the section TOC.
 -->
 
 #### Class: `apache`
 
-This public class guides the basic setup of Apache on your system. <!-- What does it do? Should we detail that here? -->
+This public class guides the basic setup and installation of Apache on your system. <!-- What does it do? Should we detail that here? -->
 
-Include the `apache` class for nodes that need to use the resources in this module:
+When this class is declared with the default options, Puppet:
+
+* Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
+* Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
+* Configures the server with a default virtual host and standard port (80) and address (`*`) bindings.
+* Creates a document root directory determined by your operating system, typically `/var/www`.
+* Starts the Apache service.
+
+To declare the default apache class:
 
 ~~~ puppet
     class { 'apache': }
 ~~~
 
 You can establish a default virtual host in this class, the `vhost` class, or both. You can add additional configurations for specific virtual hosts by declaring the `vhost` type. <!-- Type? Define? Class? Parameter? -->
+
+We recommend customizing this declaration with the following parameters, as these default settings are not optimized for production.
 
 **Parameters within `apache`:**
 
@@ -269,19 +304,27 @@ This parameter configures module template behavior, package names, and default A
 
 This parameter sets the directory where the Apache server's main configuration file is located. The default locations include:
 
-* `/etc/httpd/conf` on Red Hat
 * `/etc/apache2` on Debian
 * `/usr/local/etc/apache22` on FreeBSD
 * `/etc/apache2` on Gentoo
+* `/etc/httpd/conf` on Red Hat
 
 ##### `confd_dir`
 
 This parameter sets the location of the Apache server's custom configuration directory. The default locations include:
 
-* `/etc/httpd/conf` on Red Hat
 * `/etc/apache2/conf.d` on Debian
 * `/usr/local/etc/apache22` on FreeBSD
 * `/etc/apache2/conf.d` on Gentoo
+* `/etc/httpd/conf` on Red Hat
+
+##### `conf_template`
+
+You can use this parameter to define the [template](/guides/templating.md) used for the main Apache configuration file. The default value is `apache/httpd.conf.erb`. <!-- Is this correct? They're it's at `template/httpd.conf.erb` in the module; are there weird path modifications happening? -->
+
+*Note:* Modifying this parameter is potentially risky, as the apache Puppet module is designed to use a minimal configuration file customized by `conf.d/` entries.
+
+<!-- END COVERAGE -->
 
 <!--
     Cont.
@@ -298,33 +341,31 @@ This parameter sets the location of the Apache server's custom configuration dir
         materials in the Usage section.
 -->
 
-##### `conf_template`
-
-Overrides the template used for the main apache configuration file. Defaults to 'apache/httpd.conf.erb'.
-
-*Note:* Using this parameter is potentially risky, as the module has been built for a minimal configuration file with the configuration primarily coming from conf.d/ entries.
-
 ##### `default_charset`
 
 If defined, the value will be set as `AddDefaultCharset` in the main configuration file. It is undefined by default.
 
 ##### `default_confd_files`
 
-Generates default set of include-able Apache configuration files under  `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on a given platform.
+Generates default set of include-able Apache configuration files under `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on a given platform.
 
 ##### `default_mods`
 
-Sets up Apache with default settings based on your OS. Valid values are 'true', 'false', or an array of mod names.
+This parameter determines whether to configure a set of default Apache modules depending on your operating system. Valid values are `true`, `false`, or an array of Apache module names. The default value is `true`, which includes the default [HTTPD mods](https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp).
 
-Defaults to 'true', which includes the default [HTTPD mods](https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp).
+If this parameter is `false`, Puppet only includes the Apache modules required to make the HTTP daemon work, and any other mods can be declared on their own. The default modules for the following operating systems are:
 
-If false, it only includes the mods required to make HTTPD work, and any other mods can be declared on their own.
+* '''Red Hat''': `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
+* '''FreeBSD''': `log_config`, `unixd`
+* '''Suse''': `log_config`
+* '''Gentoo''': No default modules <!-- really? -->
+* '''All other operating systems''': `authz_host`
 
-If an array, the apache module includes the array of mods listed.
+If this parameter contains an array, the apache Puppet module includes all Apache modules in the array.
 
 ##### `default_ssl_ca`
 
-The default certificate authority, which is automatically set to 'undef'. This default works out of the box but must be updated with your specific certificate information before being used in production.
+The default certificate authority, which is automatically set to `undef`. While this default value works out of the box but must be updated with your specific certificate information before being used in production.
 
 ##### `default_ssl_cert`
 
@@ -409,7 +450,7 @@ Specifies the location where apache module files are stored. It should not be co
 
 ##### `loadfile_name`
 
-Sets the file name for the module loadfile. Should be in the format \*.load.  This can be used to set the module load order.
+Sets the filename for the module loadfile. Should be in the format \*.load.  This can be used to set the module load order.
 
 ##### `log_level`
 
@@ -555,7 +596,7 @@ Installs Apache development libraries.
 
 #### Classes: `apache::mod::*`
 
-Enables specific Apache HTTP Server modules.
+Enables specific Apache HTTP Server modules. The following Apache modules have supported classes that allow for parameterized configuration; other Apache modules can be installed using the `apache::mod` define.
 
 #### Class: `apache::mod::alias`
 #### Class: `apache::mod::deflate`
@@ -610,17 +651,85 @@ Creates an Apache balancer cluster.
 
 Defines members of [mod_proxy_balancer](http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
+<!-- START COVERAGE -->
+
 #### Define: `apache::custom_config`
 
-Based on the title, controls which ports Apache binds to for listening. Adds [Listen](http://httpd.apache.org/docs/current/bind.html) directives to ports.conf in the Apache HTTPD configuration directory. Titles take the form '<port>', '<ipv4>:<port>', or '<ipv6>:<port>'.
+This define allows you to create a custom configuration file for Apache. The file is only added to the Apache `conf.d` directory if it is valid; a Puppet run raises an error if the file is invalid and the define's `$verify_config` parameter is `true`.
+
+**Parameters within `apache::custom_config`:**
+
+#### `ensure`
+
+This parameter specifies whether the configuration file should be present. The default value is `present`, and valid values are `present` and `absent`.
+
+#### `confdir`
+
+This parameter sets the directory in which Puppet places the configuration files. The default value is `$::apache::confd_dir`.
+
+#### `content`
+
+This parameter sets the content of the configuration file. The `$content` and [`$source`]($source) parameters are exclusive of each other.
+
+#### `priority`
+
+This parameter sets the priority of the configuration file by prefixing its filename with this number. Apache uses this prefix to determine the order in which it applies configuration files. The default value is `25`.
+
+To omit the priority prefix in the configuration file's name, pass the `false` value to this parameter.
+
+#### `source`
+
+This parameter points to the configuration file's source. The `$content` and `$source` parameters are exclusive of each other.
+
+#### `verify_command`
+
+This parameter specifies the command to use to verify the configuration file. It should use a fully qualified command. The default command is `/usr/sbin/apachectl -t`. 
+
+The `$verify_command` parameter is only used if `$verify_config` is `true`. If the `$verify_command` fails, the configuration file is deleted, the Apache service is not notified, and the Puppet run raises an error.
+
+#### `verify_config`
+
+This Boolean parameter specifies whether the configuration file should be validated before the Apache service is notified. The default value is `true`.
 
 #### Define: `apache::fastcgi::server`
 
-Used to enable arbitrary Apache HTTPD modules for which there is no specific `apache::mod::[name]` class.
+Designed for use with `mod_fastcgi`, `apache::fastcgi::server` defines one or more external FastCGI servers to handle specific file types.
+
+**Parameters within `apache::fastcgi::server`:**
+
+#### `host`
+
+This parameter determines the hostname or IP address and TCP port number (1-65535) of the FastCGI server.
+
+#### `timeout`
+
+This parameter sets the number of seconds of FastCGI application inactivity allowed before aborting the request and logging the event at the error LogLevel. The inactivity timer applies only as long as a connection is pending with the FastCGI application. If a request is queued to an application, but the application doesn't respond by writing and flushing within this period, the request is aborted. If communication is complete with the application but incomplete with the client (the response is buffered), the timeout does not apply.
+
+#### `flush`
+
+This parameter forces `mod_fastcgi` to write to the client as data is received from the application. By default, `mod_fastcgi` buffers data in order to free the application as quickly as possible.
+
+#### `faux_path`
+
+URIs that Apache resolves to this filename are handled by this external FastCGI application. The path set in this parameter does not have to exist in the local filesystem. 
+
+#### `alias`
+
+This unique alias is used internally to link actions with the FastCGI server.
+
+#### `file_type`
+
+This parameter sets the MIME type of the file to be processed by the FastCGI server.
 
 #### Define: `apache::listen`
 
+This define adds [Listen](http://httpd.apache.org/docs/current/bind.html) directives to `ports.conf` in the Apache configuration directory that define the Apache server's or a virtual host's listening address and port. The [`apache::vhost`](#class-apache-vhost) class uses this define, and titles take the form '<port>', '<ipv4>:<port>', or '<ipv6>:<port>'.
+
 #### Define: `apache::mod`
+
+This define attempts to install packages for and enable arbitrary Apache modules that do not have a corresponding `apache::mod::(name)` class. If it can, the `apache::mod` define also places or checks for the existence of default configuration files for those modules in the Apache server's module and enable directories; the precise locations are determined based on the operating system.
+
+<!-- END COVERAGE -->
 
 #### Define: `apache::namevirtualhost`
 
@@ -635,6 +744,10 @@ Allows specialized configurations for virtual hosts that have requirements outsi
 ##### Parameters: `ssl`
 
 ### Private Defines
+
+#### Define: `apache::peruser::multiplexer`
+
+This define checks if an Apache module has a class. If it does, it includes that class. If it does not, it passes the module name to the [`apache::mod`](#define-apache-mod) define.
 
 #### Define: `apache::peruser::multiplexer`
 
