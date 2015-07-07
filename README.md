@@ -2,26 +2,25 @@
 [//]: # (START COVERAGE)
 #### Table of Contents
 
-1. [Overview - What is the apache module?](#overview)
-2. [Module Description - What does the module do?](#module-description)
-3. [Setup - The basics of getting started with apache](#setup)
+1. [Module description - What is the apache module, and what does it do?](#module-description)
+2. [Setup - The basics of getting started with apache](#setup)
     * [Beginning with Apache - Installation](#beginning-with-apache)
-4. [Usage - The classes and defined types available for configuration](#usage)
-    * [Configure a virtual host - Basic options for getting started](#configure-a-virtual-host)
-        * [Virtual Host Examples - Demonstrations of some configuration options](#virtual-host-examples)
+3. [Usage - The classes and defined types available for configuration](#usage)
+    * [Configuring a virtual host - Examples to help get started](#configuring-a-virtual-host)
+    * [Configuring FastCGI servers to handle PHP files](#configuring-fastcgi-servers-to-handle-php-files)
     * [Load balancing with exported and non-exported resources](#load-balancing-examples)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Public Classes](#public-classes)
     * [Private Classes](#private-classes)
     * [Public Defines](#public-defines)
     * [Private Defines](#private-defines)
     * [Templates](#templates)
-6. [Limitations - OS compatibility, etc.](#limitations)
-7. [Development - Guide for contributing to the module](#development)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
     * [Contributing to the apache module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
-## Module Description
+## Module description
 
 Apache HTTP Server (also simply called "Apache") is a widely used web server. This Puppet module simplifies the task of creating configurations to manage Apache servers in your infrastructure. It includes the ability to configure and manage a range of virtual host setups, as well as a streamlined way to install and configure Apache modules.
 
@@ -207,6 +206,176 @@ To set up a virtual host with [filter rules](http://httpd.apache.org/docs/2.2/fi
 
 Please note that the 'disabled' argument to `FallbackResource` is only supported since Apache 2.2.24.
 
+[//]: # (END COVERAGE)
+
+To configure a vhost with a server administrator:
+
+~~~ puppet
+    apache::vhost { 'third.example.com':
+      port        => '80',
+      docroot     => '/var/www/third',
+      serveradmin => 'admin@example.com',
+    }
+~~~
+
+- - -
+
+Set up a vhost with aliased servers
+
+~~~ puppet
+    apache::vhost { 'sixth.example.com':
+      serveraliases => [
+        'sixth.example.org',
+        'sixth.example.net',
+      ],
+      port          => '80',
+      docroot       => '/var/www/fifth',
+    }
+~~~
+
+- - -
+
+Configure a vhost with a cgi-bin
+
+~~~ puppet
+    apache::vhost { 'eleventh.example.com':
+      port        => '80',
+      docroot     => '/var/www/eleventh',
+      scriptalias => '/usr/lib/cgi-bin',
+    }
+~~~
+
+- - -
+
+Set up a vhost with a rack configuration
+
+~~~ puppet
+    apache::vhost { 'fifteenth.example.com':
+      port           => '80',
+      docroot        => '/var/www/fifteenth',
+      rack_base_uris => ['/rackapp1', '/rackapp2'],
+    }
+~~~
+
+- - -
+
+Set up a mix of SSL and non-SSL vhosts at the same domain
+
+~~~ puppet
+    #The non-ssl vhost
+    apache::vhost { 'first.example.com non-ssl':
+      servername => 'first.example.com',
+      port       => '80',
+      docroot    => '/var/www/first',
+    }
+
+    #The SSL vhost at the same domain
+    apache::vhost { 'first.example.com ssl':
+      servername => 'first.example.com',
+      port       => '443',
+      docroot    => '/var/www/first',
+      ssl        => true,
+    }
+~~~
+
+- - -
+
+Configure a vhost to redirect non-SSL connections to SSL
+
+~~~ puppet
+    apache::vhost { 'sixteenth.example.com non-ssl':
+      servername      => 'sixteenth.example.com',
+      port            => '80',
+      docroot         => '/var/www/sixteenth',
+      redirect_status => 'permanent',
+      redirect_dest   => 'https://sixteenth.example.com/'
+    }
+    apache::vhost { 'sixteenth.example.com ssl':
+      servername => 'sixteenth.example.com',
+      port       => '443',
+      docroot    => '/var/www/sixteenth',
+      ssl        => true,
+    }
+~~~
+
+- - -
+
+Set up IP-based vhosts on any listen port and have them respond to requests on specific IP addresses. In this example, we set listening on ports 80 and 81. This is required because the example vhosts are not declared with a port parameter.
+
+~~~ puppet
+    apache::listen { '80': }
+    apache::listen { '81': }
+~~~
+
+Then we set up the IP-based vhosts
+
+~~~ puppet
+    apache::vhost { 'first.example.com':
+      ip       => '10.0.0.10',
+      docroot  => '/var/www/first',
+      ip_based => true,
+    }
+    apache::vhost { 'second.example.com':
+      ip       => '10.0.0.11',
+      docroot  => '/var/www/second',
+      ip_based => true,
+    }
+~~~
+
+- - -
+
+Configure a mix of name-based and IP-based vhosts. First, we add two IP-based vhosts on 10.0.0.10, one SSL and one non-SSL
+
+~~~ puppet
+    apache::vhost { 'The first IP-based vhost, non-ssl':
+      servername => 'first.example.com',
+      ip         => '10.0.0.10',
+      port       => '80',
+      ip_based   => true,
+      docroot    => '/var/www/first',
+    }
+    apache::vhost { 'The first IP-based vhost, ssl':
+      servername => 'first.example.com',
+      ip         => '10.0.0.10',
+      port       => '443',
+      ip_based   => true,
+      docroot    => '/var/www/first-ssl',
+      ssl        => true,
+    }
+~~~
+
+Then, we add two name-based vhosts listening on 10.0.0.20
+
+~~~ puppet
+    apache::vhost { 'second.example.com':
+      ip      => '10.0.0.20',
+      port    => '80',
+      docroot => '/var/www/second',
+    }
+    apache::vhost { 'third.example.com':
+      ip      => '10.0.0.20',
+      port    => '80',
+      docroot => '/var/www/third',
+    }
+~~~
+
+If you want to add two name-based vhosts so that they answer on either 10.0.0.10 or 10.0.0.20, you **MUST** declare `add_listen => 'false'` to disable the otherwise automatic 'Listen 80', as it conflicts with the preceding IP-based vhosts.
+
+~~~ puppet
+    apache::vhost { 'fourth.example.com':
+      port       => '80',
+      docroot    => '/var/www/fourth',
+      add_listen => false,
+    }
+    apache::vhost { 'fifth.example.com':
+      port       => '80',
+      docroot    => '/var/www/fifth',
+      add_listen => false,
+    }
+~~~
+
+[//]: # (START COVERAGE)
+
 ### Configuring FastCGI servers to handle PHP files
 
 Add the [`apache::fastcgi::server`](#define-apache-fastcgi-server) define to allow FastCGI servers to handle requests for specific files. For example, the following defines a FastCGI server at `127.0.0.1` (localhost) on port 9000 to handle PHP requests:
@@ -230,6 +399,45 @@ apache::vhost { 'www':
   custom_fragment => 'AddType application/x-httpd-php .php'
   ...
 }
+~~~
+
+### Load balancing examples
+
+To load balance with [exported resources](/guides/exported_resources.md), export the `balancermember` from the balancer member.
+
+~~~ puppet
+      @@apache::balancermember { "${::fqdn}-puppet00":
+        balancer_cluster => 'puppet00',
+        url              => "ajp://${::fqdn}:8009"
+        options          => ['ping=5', 'disablereuse=on', 'retry=5', 'ttl=120'],
+      }
+~~~
+
+Then, on the proxy server, create the balancer cluster
+
+~~~ puppet
+      apache::balancer { 'puppet00': }
+~~~
+
+To load balance without exported resources, declare the following on the proxy
+
+~~~ puppet
+    apache::balancer { 'puppet00': }
+    apache::balancermember { "${::fqdn}-puppet00":
+        balancer_cluster => 'puppet00',
+        url              => "ajp://${::fqdn}:8009"
+        options          => ['ping=5', 'disablereuse=on', 'retry=5', 'ttl=120'],
+      }
+~~~
+
+Then declare `apache::balancer` and `apache::balancermember` on the proxy server.
+
+If you need to use ProxySet in the balancer config
+
+~~~ puppet
+      apache::balancer { 'puppet01':
+        proxy_set => {'stickysession' => 'JSESSIONID'},
+      }
 ~~~
 
 ## Reference
@@ -329,6 +537,39 @@ You can use this parameter to define the [template](/guides/templating.md) used 
 
 *Note:* Modifying this parameter is potentially risky, as the apache Puppet module is designed to use a minimal configuration file customized by `conf.d/` entries.
 
+##### `default_charset`
+
+If defined, this parameter's value will be used as the `AddDefaultCharset` in the main configuration file. Its value is undefined by default.
+
+##### `default_confd_files`
+
+This Boolean parameter determines whether Puppet generates a default set of includable Apache configuration files in the `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on the operating system. This parameter's default value is `true`.
+
+##### `default_mods`
+
+This parameter determines whether to configure and enable a set of default Apache modules depending on your operating system. Valid values are `true`, `false`, or an array of Apache module names. The default value is `true`, which includes the default [HTTPD mods](https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp).
+
+If this parameter is `false`, Puppet only includes the Apache modules required to make the HTTP daemon work, and any other mods can be declared on their own. 
+
+If `false`, the minimum default Apache modules installed for the following operating systems are:
+
+* '''Red Hat''': `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
+* '''FreeBSD''': `log_config`, `unixd`
+* '''Suse''': `log_config`
+* '''Gentoo''': No default modules 
+* '''All other operating systems''': `authz_host`
+
+[//]: # (Gentoo really doesn't apply any default modules?)
+
+If `true`, these additional modules are installed accordingly:
+
+* '''Debian''': `authn_core`, `reqtimeout`
+* '''Red Hat''': `actions`, `authn_core`, `cache`, `mime`, `mime_magic`, `rewrite`, `speling`, `suexec`, `version`, `vhost_alias`, `auth_digest`, `authn_anon`, `authn_dbm`, `authz_dbm`, `authz_owner`, `expires`, `ext_filter`, `include`, `logio`, `substitute`, and `usertrack`; if the Apache version is less than 2.4, it also installs `authn_alias` and `authn_default`.
+* '''FreeBSD''': `actions`, `asis`, `auth_digest`, `auth_form`, `authn_anon`, `authn_core`, `authn_dbm`, `authn_socache`, `authz_dbd`, `authz_dbm`, `authz_owner`, `cache`, `disk_cache`, `dumpio`, `expires`, `file_cache`, `filter`, `headers`, `imagemap`, `include`, `info`, `logio`, `mime_magic`, `reqtimeout`, `request`, `rewrite`, `session`, `speling`, `unique_id`, `userdir`, `version`, and `vhost_alias`
+* '''All operating systems''': `alias`, `authn_file`, `autoindex`, `dav`, `dav_fs`, `deflate`, `dir`, `mime`, `negotiation`, `setenvif`, and `auth_basic`.
+  * If the Apache version is at least 2.4, it also installs ``filter`, `authz_core`, and `access_compat`
+  * If the Apache version is less than 2.4, it also installs `authz_default`.
+
 [//]: # (END COVERAGE)
 
 [//]: # (Cont.)
@@ -343,29 +584,9 @@ You can use this parameter to define the [template](/guides/templating.md) used 
 [//]: # (  - Move reference materials in the Usage section to the Reference section.)
 [//]: # (  - Consolidate usage materials in the Setup section with the usage materials in the Usage section.)
 
-##### `default_charset`
+If the `prefork` MPM module is installed and this parameter's value is `true`, it also includes `::apache::mod::cgi`. If the `worker` MPM module is installed, it includes `::apache::mod::cgid`.
 
-If defined, the value will be set as `AddDefaultCharset` in the main configuration file. It is undefined by default.
-
-##### `default_confd_files`
-
-Generates default set of include-able Apache configuration files under `${apache::confd_dir}` directory. These configuration files correspond to what is usually installed with the Apache package on a given platform.
-
-##### `default_mods`
-
-This parameter determines whether to configure a set of default Apache modules depending on your operating system. Valid values are `true`, `false`, or an array of Apache module names. The default value is `true`, which includes the default [HTTPD mods](https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp).
-
-If this parameter is `false`, Puppet only includes the Apache modules required to make the HTTP daemon work, and any other mods can be declared on their own. The default modules for the following operating systems are:
-
-* '''Red Hat''': `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
-* '''FreeBSD''': `log_config`, `unixd`
-* '''Suse''': `log_config`
-* '''Gentoo''': No default modules 
-* '''All other operating systems''': `authz_host`
-
-[//]: # (Gentoo really doesn't apply any default modules?)
-
-If this parameter contains an array, the apache Puppet module includes all Apache modules in the array.
+If this parameter contains an array, the apache Puppet module enables all Apache modules in the array.
 
 ##### `default_ssl_ca`
 
@@ -647,19 +868,67 @@ Manages the Apache daemon.
 
 ### Public Defines
 
+[//]: # (START COVERAGE)
+
 #### Define: `apache::balancer`
 
-Creates an Apache balancer cluster.
+This define creates an Apache balancer cluster. Each balancer cluster needs one or more balancer members, which are declared with [`apache::balancermember`](#define-apachebalancermember).
+
+[//]: # (What is the preferred term for a balancer cluster? The Apache docs use "load balancing group", ie. http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#balancermember. We need to use consistent terms for balancers and balancer members throughout.)
+
+One `apache::balancer` should be defined for each Apache load-balanced set of servers. The `apache::balancermember` defines for all balancer members can be exported and collected on a single Apache load balancer server using [exported resources](/guides/exported_resources.md).
+
+**Parameters within `apache::balancer`:**
+
+#### `name`
+
+This parameter sets the title of the balancer cluster and name of the `conf.d` file containing its configuration.
+
+#### `proxy_set`
+
+This parameter configures key-value pairs as [ProxySet](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyset) lines. It accepts a [hash](/latest/reference/lang_data_hash.html) and defaults to `{}`.
+
+#### `collect_exported`
+
+This parameter determines whether or not to use [exported resources](/guides/exported_resources.md). Valid values are `true` and `false`, and the default value is `true`.
+
+If you statically declare all of your backend servers, set this parameter to `false` to rely on existing, declared balancer member resources. Also, make sure to use `apache::balancermember` with array arguments.
+
+To dynamically declare backend servers via exported resources collected on a central node, set this parameter to `true` to collect the balancer member resources exported by the balancer member nodes.
+
+If you do not use exported resources, a single Puppet run configures all balancer members. If you use exported resources, Puppet has to run on the balanced nodes first, then run on the balancer.
 
 #### Define: `apache::balancermember`
 
-Defines members of [mod_proxy_balancer](http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
+This defines members of [`mod_proxy_balancer`](http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html), which sets up a balancer member inside a listening service configuration block in `/etc/apache/apache.cfg` on the load balancer.
 
-[//]: # (START COVERAGE)
+[//]: # (Do we need to generalize the directory reference here? It might be at /etc/httpd, /etc/apache2...)
+
+**Parameters within `apache::balancermember`:**
+
+#### `name`
+
+This parameter sets the title of the resource and the name of the concat fragment.
+
+[//]: # (NEEDS DEFAULTS)
+
+#### `balancer_cluster`
+
+This required parameter sets the Apache service's instance name and must match the name of a declared `apache::balancer` resource.
+
+#### `url`
+
+This parameter specifies the URL used to contact the balancer member server. The default value is 'http://${::fqdn}/'.
+
+#### `options`
+
+This array of [options](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#balancermember) is specified after the URL and accepts any key-value pairs available to [ProxyPass](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxypass).
+
+[//]: # (NEEDS DEFAULTS)
 
 #### Define: `apache::custom_config`
 
-This define allows you to create a custom configuration file for Apache. The file is only added to the Apache `conf.d` directory if it is valid; a Puppet run raises an error if the file is invalid and the define's `$verify_config` parameter is `true`.
+This define allows you to add a custom configuration file to the Apache server. The file is only added to the Apache `conf.d` directory if it is valid; a Puppet run raises an error if the file is invalid and the define's `$verify_config` parameter is `true`.
 
 **Parameters within `apache::custom_config`:**
 
@@ -683,7 +952,7 @@ To omit the priority prefix in the configuration file's name, pass the `false` v
 
 #### `source`
 
-This parameter points to the configuration file's source. The `$content` and `$source` parameters are exclusive of each other.
+This parameter points to the configuration file's source. The [`$content`](#content) and `$source` parameters are exclusive of each other.
 
 #### `verify_command`
 
