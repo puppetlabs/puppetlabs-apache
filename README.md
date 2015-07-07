@@ -1,5 +1,5 @@
 # apache
-<!-- START COVERAGE -->
+[//]: # (START COVERAGE)
 #### Table of Contents
 
 1. [Overview - What is the apache module?](#overview)
@@ -78,7 +78,9 @@ To configure a basic name-based virtual host, specify the `port` and `docroot` u
     }
 ~~~
 
-*Note:* The `apache::vhost` define creates virtual hosts with a default `[priority](#defines-apachevhost)` of 15. If nothing matches this priority, or if you pass a higher priority value than the default and no names match anything else, Apache prioritizes them in alphabetical order. <!-- What is going on here? Should this be "if you declare multiple virtual hosts with the same priority, or don't apply a priority to any virtual hosts, Puppet (or Apache?) prioritizes them in alphabetical order"? -->
+*Note:* The `apache::vhost` define creates virtual hosts with a default `[priority](#defines-apachevhost)` of 15. If nothing matches this priority, or if you pass a higher priority value than the default and no names match anything else, Apache prioritizes them in alphabetical order. 
+
+[//]: # (What is going on here? Should this be "if you declare multiple virtual hosts with the same priority, or don't apply a priority to any virtual hosts, Puppet (or Apache?) prioritizes them in alphabetical order"?)
 
 To configure user and group ownership for `docroot`, use the `[docroot_owner](#docroot_owner)` and `[docroot_group](#docroot_group)` parameters:
 
@@ -261,16 +263,15 @@ apache::vhost { 'www':
 
 ### Public Classes
 
-<!--
-    TODO: 
-    - Define public classes here.
-    - Alphabetize and/or reorder classes.
-    - Confirm all classes listed are in the section TOC.
--->
+[//]: # (TODO:)
+[//]: # (  - Define public classes here.)
+[//]: # (  - Alphabetize and/or reorder classes.)
+[//]: # (  - Confirm all classes listed are in the section TOC.)_
 
 #### Class: `apache`
 
-This public class guides the basic setup and installation of Apache on your system. <!-- What does it do? Should we detail that here? -->
+This public class guides the basic setup and installation of Apache on your system. 
+[//]: # (What does it do? Should we detail that here?)
 
 When this class is declared with the default options, Puppet:
 
@@ -286,7 +287,8 @@ To declare the default apache class:
     class { 'apache': }
 ~~~
 
-You can establish a default virtual host in this class, the `vhost` class, or both. You can add additional configurations for specific virtual hosts by declaring the `vhost` type. <!-- Type? Define? Class? Parameter? -->
+You can establish a default virtual host in this class, the `vhost` class, or both. You can add additional configurations for specific virtual hosts by declaring the `vhost` type.
+[//]: # (Type? Define? Class? Parameter?)
 
 We recommend customizing this declaration with the following parameters, as these default settings are not optimized for production.
 
@@ -294,7 +296,9 @@ We recommend customizing this declaration with the following parameters, as thes
 
 ##### `allow_encoded_slashes`
 
-This parameter sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes), which modifies the responses to URLs containing `\` and `/` characters. The default is undefined,<!-- Does this mean the default is `undef`? --> which omits the declaration from the server configuration and selects the Apache default setting of `Off`. The allowed values are `on`, `off`, or `nodecode`.
+This parameter sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes), which modifies the responses to URLs containing `\` and `/` characters. The default is undefined, which omits the declaration from the server configuration and selects the Apache default setting of `Off`. The allowed values are `on`, `off`, or `nodecode`.
+
+[//]: # (Does this mean the default is `undef`?)
 
 ##### `apache_version`
 
@@ -320,26 +324,24 @@ This parameter sets the location of the Apache server's custom configuration dir
 
 ##### `conf_template`
 
-You can use this parameter to define the [template](/guides/templating.md) used for the main Apache configuration file. The default value is `apache/httpd.conf.erb`. <!-- Is this correct? They're it's at `template/httpd.conf.erb` in the module; are there weird path modifications happening? -->
+You can use this parameter to define the [template](/guides/templating.md) used for the main Apache configuration file. The default value is `apache/httpd.conf.erb`. 
+[//]: # (Is this correct? It's at `template/httpd.conf.erb` in the module; are there weird path modifications happening?)
 
 *Note:* Modifying this parameter is potentially risky, as the apache Puppet module is designed to use a minimal configuration file customized by `conf.d/` entries.
 
-<!-- END COVERAGE -->
+[//]: # (END COVERAGE)
 
-<!--
-    Cont.
+[//]: # (Cont.)
     
-    DID: 
-      - Reorganized the Reference section and headers.
-      - Removed old Usage section to separate doc to reflow into reorganized 
-        Reference and Usage sections.
-    IN PROGRESS:
-      - Clean up reorganized Reference section material.
-    TO DO: 
-      - Move reference materials in the Usage section to the Reference section.
-      - Consolidate usage materials in the Setup section with the usage 
-        materials in the Usage section.
--->
+[//]: # (DID:)
+[//]: # (  - Reorganized the Reference section and headers.)
+[//]: # (  - Removed old Usage section to separate doc to reflow into reorganized.)
+[//]: # (  - Reference and Usage sections.)
+[//]: # (IN PROGRESS:)
+[//]: # (  - Clean up reorganized Reference section material.)
+[//]: # (TO DO:)
+[//]: # (  - Move reference materials in the Usage section to the Reference section.)
+[//]: # (  - Consolidate usage materials in the Setup section with the usage materials in the Usage section.)
 
 ##### `default_charset`
 
@@ -358,8 +360,10 @@ If this parameter is `false`, Puppet only includes the Apache modules required t
 * '''Red Hat''': `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
 * '''FreeBSD''': `log_config`, `unixd`
 * '''Suse''': `log_config`
-* '''Gentoo''': No default modules <!-- really? -->
+* '''Gentoo''': No default modules 
 * '''All other operating systems''': `authz_host`
+
+[//]: # (Gentoo really doesn't apply any default modules?)
 
 If this parameter contains an array, the apache Puppet module includes all Apache modules in the array.
 
@@ -651,7 +655,7 @@ Creates an Apache balancer cluster.
 
 Defines members of [mod_proxy_balancer](http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
-<!-- START COVERAGE -->
+[//]: # (START COVERAGE)
 
 #### Define: `apache::custom_config`
 
@@ -729,7 +733,7 @@ This define adds [Listen](http://httpd.apache.org/docs/current/bind.html) direct
 
 This define attempts to install packages for and enable arbitrary Apache modules that do not have a corresponding `apache::mod::(name)` class. If it can, the `apache::mod` define also places or checks for the existence of default configuration files for those modules in the Apache server's module and enable directories; the precise locations are determined based on the operating system.
 
-<!-- END COVERAGE -->
+[//]: # (END COVERAGE)
 
 #### Define: `apache::namevirtualhost`
 
