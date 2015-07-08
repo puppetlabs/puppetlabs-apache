@@ -525,34 +525,13 @@ This Boolean parameter determines whether Puppet generates a default set of incl
 
 This parameter determines whether to configure and enable a set of default Apache modules depending on your operating system. Valid values are `true`, `false`, or an array of Apache module names. The default value is `true`, which includes the default [HTTPD mods](https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp).
 
-If this parameter is `false`, Puppet only includes the Apache modules required to make the HTTP daemon work, and any other mods can be declared on their own. 
+If this parameter is `false`, Puppet only includes the Apache modules required to make the HTTP daemon work on the installed operating system, and any other mods can be declared separately. If `true`, Puppet installs additional modules, again depending on the operating system. The values of [`apache_version`](#apache_version) and [`mpm_module`](#mpm_module) also modify the list of modules installed on a `true` value.
 
-If `false`, the minimum default Apache modules installed for the following operating systems are:
-
-* **Red Hat**: `log_config`; if [`apache_version`](#apache_version) is greater than 2.4, `unixd` and, except on RHEL/CentOS 6 SCL, `systemd`
-* **FreeBSD**: `log_config`, `unixd`
-* **Suse**: `log_config`
-* **Gentoo**: No default modules 
-* **All other operating systems**: `authz_host`
-
-[//]: # (Gentoo really doesn't apply any default modules?)
-
-If `true`, these additional modules are installed accordingly:
-
-* **Debian**: `authn_core`, `reqtimeout`
-* **Red Hat**: `actions`, `authn_core`, `cache`, `mime`, `mime_magic`, `rewrite`, `speling`, `suexec`, `version`, `vhost_alias`, `auth_digest`, `authn_anon`, `authn_dbm`, `authz_dbm`, `authz_owner`, `expires`, `ext_filter`, `include`, `logio`, `substitute`, and `usertrack`; if the Apache version is less than 2.4, it also installs `authn_alias` and `authn_default`.
-* **FreeBSD**: `actions`, `asis`, `auth_digest`, `auth_form`, `authn_anon`, `authn_core`, `authn_dbm`, `authn_socache`, `authz_dbd`, `authz_dbm`, `authz_owner`, `cache`, `disk_cache`, `dumpio`, `expires`, `file_cache`, `filter`, `headers`, `imagemap`, `include`, `info`, `logio`, `mime_magic`, `reqtimeout`, `request`, `rewrite`, `session`, `speling`, `unique_id`, `userdir`, `version`, and `vhost_alias`
-* **All operating systems**: `alias`, `authn_file`, `autoindex`, `dav`, `dav_fs`, `deflate`, `dir`, `mime`, `negotiation`, `setenvif`, and `auth_basic`.
-  * If the Apache version is at least 2.4, it also installs ``filter`, `authz_core`, and `access_compat`
-  * If the Apache version is less than 2.4, it also installs `authz_default`.
-
-If the `prefork` MPM module is installed and this parameter's value is `true`, it also includes `::apache::mod::cgi`. If the `worker` MPM module is installed, it includes `::apache::mod::cgid`.
-
-If this parameter contains an array, the apache Puppet module enables all Apache modules in the array.
+If this parameter contains an array, Puppet enables all Apache modules in the array.
 
 ##### `default_ssl_ca`
 
-This parameter sets the default certificate authority for the Apache server. The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your certificate authority before deploying this server in a production environment.
+This parameter sets the default certificate authority for the Apache server. The default value is `undef`; while this default value results in a functioning Apache server, you *must* update this parameter with your certificate authority information before deploying this server in a production environment.
 
 ##### `default_ssl_cert`
 
@@ -628,12 +607,15 @@ This Boolean parameter configures a default virtual host when the class is decla
 [//]: # (DID:)
 [//]: # (  - Reorganized the Reference section and headers.)
 [//]: # (  - Removed old Usage section to separate doc to reflow into reorganized.)
-[//]: # (  - Reference and Usage sections.)
 [//]: # (IN PROGRESS:)
 [//]: # (  - Clean up reorganized Reference section material.)
-[//]: # (TO DO:)
 [//]: # (  - Move reference materials in the Usage section to the Reference section.)
 [//]: # (  - Consolidate usage materials in the Setup section with the usage materials in the Usage section.)
+[//]: # (TO DO:)
+[//]: # (  - Fold README.passenger.md into README.me per Morgan.)
+[//]: # (  - Proof changes and ensure nothing has been unintentionally removed.)
+[//]: # (  - Make a style and proofreading pass on the updated copy.)
+[//]: # (  - Check documentation against code and actual use to confirm existing functionality and find undocumented features.)
 
 ##### `docroot`
 
