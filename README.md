@@ -6,7 +6,7 @@
 2. [Setup - The basics of getting started with apache](#setup)
     * [Beginning with Apache - Installation](#beginning-with-apache)
 3. [Usage - The classes and defined types available for configuration](#usage)
-    * [Configuring a virtual host - Examples to help get started](#configuring-a-virtual-host)
+    * [Configuring virtual hosts - Examples to help get started](#configuring-virtual-hosts)
     * [Configuring FastCGI servers to handle PHP files](#configuring-fastcgi-servers-to-handle-php-files)
     * [Load balancing with exported and non-exported resources](#load-balancing-examples)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
@@ -22,7 +22,7 @@
 
 ## Module description
 
-Apache HTTP Server (also simply called "Apache") is a widely used web server. This Puppet module simplifies the task of creating configurations to manage Apache servers in your infrastructure. It includes the ability to configure and manage a range of virtual host setups, as well as a streamlined way to install and configure Apache modules.
+Apache HTTP Server (also called Apache HTTPD, or simply Apache) is a widely used web server. This Puppet module simplifies the task of creating configurations to manage Apache servers in your infrastructure. It includes the ability to configure and manage a range of virtual host setups, as well as a streamlined way to install and configure Apache modules.
 
 ## Setup
 
@@ -36,11 +36,11 @@ Apache HTTP Server (also simply called "Apache") is a widely used web server. Th
 * Listened-to ports
 * `/etc/make.conf` on FreeBSD and Gentoo
 
-On Gentoo, this module depends on the ['gentoo/puppet-portage'](https://github.com/gentoo/puppet-portage) Puppet module.
+On Gentoo, this module depends on the [`gentoo/puppet-portage`](https://github.com/gentoo/puppet-portage) Puppet module. Note that while several options apply or enable certain features and settings for Gentoo, it is not a [supported operating system](https://forge.puppetlabs.com/supported#puppet-supported-modules-compatibility-matrix) for this module.
 
 *Note:* This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Configuration of Apache should be managed by Puppet, as non-Puppet configuration files can cause unexpected failures.
 
-To temporarily disable full Puppet management, set the [`purge_configs`](#purge_configs) parameter in the base `apache` class to 'false'. We recommend using this only as a temporary means of saving and relocating customized configurations. See the [`purge_configs`](#purge_configs) parameter for more information.
+To temporarily disable full Puppet management, set the `purge_configs` parameter in the `apache` class declaration to `false`. We recommend using this only as a temporary means of saving and relocating customized configurations. See the [`purge_configs`](#purge_configs) parameter for more information.
 
 ### Beginning with Apache
 
@@ -71,36 +71,26 @@ The default `apache` class sets up a virtual host on port 80, listening on all i
 To configure a basic name-based virtual host, specify the `port` and `docroot` using the `apache::vhost` define:
 
 ~~~ puppet
-    apache::vhost { 'first.example.com':
+    apache::vhost { 'vhost.example.com':
       port    => '80',
-      docroot => '/var/www/first',
+      docroot => '/var/www/vhost',
     }
 ~~~
 
-*Note:* The `apache::vhost` define creates virtual hosts with a default `[priority](#defines-apachevhost)` of 15. If nothing matches this priority, or if you pass a higher priority value than the default and no names match anything else, Apache prioritizes them in alphabetical order. 
-
-[//]: # (What is going on here? Should this be "if you declare multiple virtual hosts with the same priority, or don't apply a priority to any virtual hosts, Puppet (or Apache?) prioritizes them in alphabetical order"?)
+*Note:* Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing the virtual host's file name with a numeric priority. The `apache::vhost` define applies a default `[priority](#defines-apachevhost)` of 15. In Apache's terms, Puppet prefixes the virtual host's file name with `15-`. If multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter to `false`, Apache processes those virtual hosts in alphabetical order.
 
 To configure user and group ownership for `docroot`, use the `[docroot_owner](#docroot_owner)` and `[docroot_group](#docroot_group)` parameters:
 
 ~~~ puppet
-    apache::vhost { 'second.example.com':
+    apache::vhost { 'user.example.com':
       port          => '80',
-      docroot       => '/var/www/second',
+      docroot       => '/var/www/user',
       docroot_owner => 'www-data',
       docroot_group => 'www-data',
     }
 ~~~
 
-To configure a virtual host with a designated server administrator:
-
-~~~ puppet
-    apache::vhost { 'third.example.com':
-      port        => '80',
-      docroot     => '/var/www/third',
-      serveradmin => 'admin@example.com',
-    }
-~~~
+#### Configuring virtual hosts with SSL
 
 To configure a virtual host to use SSL and default SSL certificates, use the `[ssl](#ssl)` parameter and set the `[port](#port)` parameter appropriately:
 
@@ -115,35 +105,74 @@ To configure a virtual host to use SSL and default SSL certificates, use the `[s
 To configure a virtual host with SSL and specific SSL certificates, use the paths to the certificate and key in the `[ssl_cert](#ssl_cert)` and `[ssl_key](#ssl_key)` parameters, respectively:
 
 ~~~ puppet
-    apache::vhost { 'fourth.example.com':
+    apache::vhost { 'cert.example.com':
       port     => '443',
-      docroot  => '/var/www/fourth',
+      docroot  => '/var/www/cert',
       ssl      => true,
       ssl_cert => '/etc/ssl/fourth.example.com.cert',
       ssl_key  => '/etc/ssl/fourth.example.com.key',
     }
 ~~~
 
-Virtual hosts listen on all IP addresses ('*') by default. To listen on a specific IP address, use the `[ip](#ip)` parameter:
+To configure a mix of SSL and non-SSL virtual hosts at the same domain:
 
 ~~~ puppet
-    apache::vhost { 'subdomain.example.com':
-      ip      => '127.0.0.1',
-      port    => '80',
-      docroot => '/var/www/subdomain',
+    # The non-ssl virtual host
+    apache::vhost { 'mix.example.com non-ssl':
+      servername => 'mix.example.com',
+      port       => '80',
+      docroot    => '/var/www/mix',
+    }
+
+    # The SSL virtual host at the same domain
+    apache::vhost { 'mix.example.com ssl':
+      servername => 'mix.example.com',
+      port       => '443',
+      docroot    => '/var/www/mix',
+      ssl        => true,
     }
 ~~~
 
-Set up a virtual host with aliased servers:
+To configure a virtual host to redirect non-SSL connections to SSL:
 
 ~~~ puppet
-    apache::vhost { 'sixth.example.com':
+    apache::vhost { 'redirect.example.com non-ssl':
+      servername      => 'redirect.example.com',
+      port            => '80',
+      docroot         => '/var/www/redirect',
+      redirect_status => 'permanent',
+      redirect_dest   => 'https://redirect.example.com/'
+    }
+    apache::vhost { 'redirect.example.com ssl':
+      servername => 'redirect.example.com',
+      port       => '443',
+      docroot    => '/var/www/redirect',
+      ssl        => true,
+    }
+~~~
+
+#### Configuring virtual host port and address bindings
+
+Virtual hosts listen on all IP addresses ('*') by default. To configure the virtual host to listen on a specific IP address, use the `[ip](#ip)` parameter:
+
+~~~ puppet
+    apache::vhost { 'ip.example.com':
+      ip      => '127.0.0.1',
+      port    => '80',
+      docroot => '/var/www/ip',
+    }
+~~~
+
+To configure a virtual host with aliased servers:
+
+~~~ puppet
+    apache::vhost { 'aliases.example.com':
       serveraliases => [
-        'sixth.example.org',
-        'sixth.example.net',
+        'aliases.example.org',
+        'aliases.example.net',
       ],
       port          => '80',
-      docroot       => '/var/www/fifth',
+      docroot       => '/var/www/aliases',
     }
 ~~~
 
@@ -158,6 +187,23 @@ To set up a virtual host with a wildcard alias for the subdomain mapped to a sam
       serveraliases   => ['*.loc',],
     }
 ~~~
+
+To configure a virtual host with [filter rules](http://httpd.apache.org/docs/2.2/filter.html), pass the filter directives as an array using the `[filters](#filters)` parameter:
+
+~~~ puppet
+    apache::vhost { 'subdomain.loc':
+      port    => '80',
+      filters => [
+        'FilterDeclare  COMPRESS',
+        'FilterProvider COMPRESS DEFLATE resp=Content-Type $text/html',
+        'FilterChain    COMPRESS',
+        'FilterProtocol COMPRESS DEFLATE change=yes;byteranges=no',
+      ],
+      docroot => '/var/www/html',
+    }
+~~~
+
+#### Configuring virtual hosts for apps and processors
 
 To set up a virtual host with [suPHP](http://www.suphp.org/Home.html), use the `[suphp_engine](#suphp_engine)` parameter to enable the suPHP engine, `[suphp_addhandler](#suphp_addhandler)` parameter to define a MIME type, `[suphp_configpath](#suphp_configpath)` to set which path suPHP passes to the PHP interpreter, and the `[directory](#directory)` parameter to configure Directory, File, and Location directive blocks:
 
@@ -212,98 +258,38 @@ Starting in Apache 2.2.16, HTTPD supports [FallbackResource](https://httpd.apach
     }
 ~~~
 
-To set up a virtual host with [filter rules](http://httpd.apache.org/docs/2.2/filter.html), pass the filter directives as an array using the `[filters](#filters)` parameter:
+**Note:** The `disabled` argument to `FallbackResource` is only supported since Apache 2.2.24.
+
+To configure a virtual host with a designated directory for [common gateway interface](http://httpd.apache.org/docs/2.4/howto/cgi.html) (CGI) files:
 
 ~~~ puppet
-    apache::vhost { 'subdomain.loc':
-      port    => '80',
-      filters => [
-        'FilterDeclare  COMPRESS',
-        'FilterProvider COMPRESS DEFLATE resp=Content-Type $text/html',
-        'FilterChain    COMPRESS',
-        'FilterProtocol COMPRESS DEFLATE change=yes;byteranges=no',
-      ],
-      docroot => '/var/www/html',
-    }
-~~~
-
-Please note that the 'disabled' argument to `FallbackResource` is only supported since Apache 2.2.24.
-
-[//]: # (END COVERAGE)
-
-Configure a virtual host with a cgi-bin:
-
-~~~ puppet
-    apache::vhost { 'eleventh.example.com':
+    apache::vhost { 'twelfth.example.com':
       port        => '80',
-      docroot     => '/var/www/eleventh',
+      docroot     => '/var/www/twelfth',
       scriptalias => '/usr/lib/cgi-bin',
     }
 ~~~
 
-- - -
-
-Set up a vhost with a rack configuration
+To configure a virtual host for [Rack](http://rack.github.io/):
 
 ~~~ puppet
-    apache::vhost { 'fifteenth.example.com':
+    apache::vhost { 'rack.example.com':
       port           => '80',
-      docroot        => '/var/www/fifteenth',
+      docroot        => '/var/www/rack',
       rack_base_uris => ['/rackapp1', '/rackapp2'],
     }
 ~~~
 
-- - -
+#### Configuring IP-based virtual hosts
 
-Set up a mix of SSL and non-SSL vhosts at the same domain
-
-~~~ puppet
-    #The non-ssl vhost
-    apache::vhost { 'first.example.com non-ssl':
-      servername => 'first.example.com',
-      port       => '80',
-      docroot    => '/var/www/first',
-    }
-
-    #The SSL vhost at the same domain
-    apache::vhost { 'first.example.com ssl':
-      servername => 'first.example.com',
-      port       => '443',
-      docroot    => '/var/www/first',
-      ssl        => true,
-    }
-~~~
-
-- - -
-
-Configure a vhost to redirect non-SSL connections to SSL
-
-~~~ puppet
-    apache::vhost { 'sixteenth.example.com non-ssl':
-      servername      => 'sixteenth.example.com',
-      port            => '80',
-      docroot         => '/var/www/sixteenth',
-      redirect_status => 'permanent',
-      redirect_dest   => 'https://sixteenth.example.com/'
-    }
-    apache::vhost { 'sixteenth.example.com ssl':
-      servername => 'sixteenth.example.com',
-      port       => '443',
-      docroot    => '/var/www/sixteenth',
-      ssl        => true,
-    }
-~~~
-
-- - -
-
-Set up IP-based vhosts on any listen port and have them respond to requests on specific IP addresses. In this example, we set listening on ports 80 and 81. This is required because the example vhosts are not declared with a port parameter.
+You can configure [IP-based virtual hosts](http://httpd.apache.org/docs/2.2/vhosts/ip-based.html) to listen on any port and have them respond to requests on specific IP addresses. In this example, we set the server to listen on ports 80 and 81 because the example virtual hosts are not declared with a [`port`](#port) parameter:
 
 ~~~ puppet
     apache::listen { '80': }
     apache::listen { '81': }
 ~~~
 
-Then we set up the IP-based vhosts
+Then we configure the IP-based virtual hosts:
 
 ~~~ puppet
     apache::vhost { 'first.example.com':
@@ -318,12 +304,10 @@ Then we set up the IP-based vhosts
     }
 ~~~
 
-- - -
-
-Configure a mix of name-based and IP-based vhosts. First, we add two IP-based vhosts on 10.0.0.10, one SSL and one non-SSL
+You can also configure a mix of IP- and name-based virtual hosts, in a mix of SSL and non-SSL configurations. First, we add two IP-based vhosts on 10.0.0.10, one SSL and one non-SSL:
 
 ~~~ puppet
-    apache::vhost { 'The first IP-based vhost, non-ssl':
+    apache::vhost { 'The first IP-based virtual host, non-ssl':
       servername => 'first.example.com',
       ip         => '10.0.0.10',
       port       => '80',
@@ -340,7 +324,7 @@ Configure a mix of name-based and IP-based vhosts. First, we add two IP-based vh
     }
 ~~~
 
-Then, we add two name-based vhosts listening on 10.0.0.20
+Then, we add two name-based virtual hosts listening on 10.0.0.20:
 
 ~~~ puppet
     apache::vhost { 'second.example.com':
@@ -355,7 +339,7 @@ Then, we add two name-based vhosts listening on 10.0.0.20
     }
 ~~~
 
-If you want to add two name-based vhosts so that they answer on either 10.0.0.10 or 10.0.0.20, you **MUST** declare `add_listen => 'false'` to disable the otherwise automatic 'Listen 80', as it conflicts with the preceding IP-based vhosts.
+To add name-based virtual hosts that answer on either 10.0.0.10 or 10.0.0.20, you **must** set the `add_listen` parameter to `false` to disable the default Apache setting of `Listen 80`, as it conflicts with the preceding IP-based virtual hosts.
 
 ~~~ puppet
     apache::vhost { 'fourth.example.com':
@@ -369,8 +353,6 @@ If you want to add two name-based vhosts so that they answer on either 10.0.0.10
       add_listen => false,
     }
 ~~~
-
-[//]: # (START COVERAGE)
 
 ### Configuring FastCGI servers to handle PHP files
 
@@ -491,31 +473,28 @@ To declare the default apache class:
     class { 'apache': }
 ~~~
 
-You can establish a default virtual host in this class, the `vhost` class, or both. You can add additional configurations for specific virtual hosts by declaring the `vhost` type.
-[//]: # (Type? Define? Class? Parameter?)
+You can establish a default virtual host in this class, by using the `vhost` define, or both. You can also add additional configurations for specific virtual hosts with the `vhost` define.
 
-We recommend customizing this declaration with the following parameters, as these default settings are not optimized for production.
+We recommend customizing this class's declaration with the following parameters, as its default settings are not optimized for production.
 
 **Parameters within `apache`:**
 
 ##### `allow_encoded_slashes`
 
-This parameter sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes), which modifies the responses to URLs containing `\` and `/` characters. The default is undefined, which omits the declaration from the server configuration and selects the Apache default setting of `Off`. The allowed values are `on`, `off`, or `nodecode`.
-
-[//]: # (Does this mean the default is `undef`?)
+This parameter sets the server default for the [`AllowEncodedSlashes` declaration](http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes), which modifies the responses to URLs containing `\` and `/` characters. The default is `undef`, which omits the declaration from the server's configuration and uses Apache's default setting of `off`. The allowed values are `on`, `off`, or `nodecode`.
 
 ##### `apache_version`
 
-This parameter configures module template behavior, package names, and default Apache modules by defining the version of Apache to use. The default version is determined by the OS family and release via the `apache::version` class, and Puppet does not recommend manually configuring this parameter.
+This parameter configures module template behavior, package names, and default Apache modules by defining the version of Apache to use. The default version is determined by the OS family and release via the `apache::version` class, and Puppet recommends against manually configuring this parameter without reason.
 
 ##### `conf_dir`
 
 This parameter sets the directory where the Apache server's main configuration file is located. The default locations include:
 
-* `/etc/apache2` on Debian
-* `/usr/local/etc/apache22` on FreeBSD
-* `/etc/apache2` on Gentoo
-* `/etc/httpd/conf` on Red Hat
+* **Debian**: `/etc/apache2`
+* **FreeBSD**: `/usr/local/etc/apache22`
+* **Gentoo**: `/etc/apache2`
+* **Red Hat**: `/etc/httpd/conf`
 
 ##### `confd_dir`
 
