@@ -607,6 +607,8 @@ This Boolean parameter configures a default virtual host when the class is decla
 [//]: # (DID:)
 [//]: # (  - Reorganized the Reference section and headers.)
 [//]: # (  - Removed old Usage section to separate doc to reflow into reorganized.)
+[//]: # (  - Update the link in the Contributing section to point here: https://docs.puppetlabs.com/forge/contributing.html)
+[//]: # (    - Was already done!)
 [//]: # (IN PROGRESS:)
 [//]: # (  - Clean up reorganized Reference section material.)
 [//]: # (  - Move reference materials in the Usage section to the Reference section.)
@@ -614,6 +616,9 @@ This Boolean parameter configures a default virtual host when the class is decla
 [//]: # (TO DO:)
 [//]: # (  - Fold README.passenger.md into README.me per Morgan.)
 [//]: # (  - Proof changes and ensure nothing has been unintentionally removed.)
+[//]: # (  - Make sure that for each parameter, where applicable, there is a default value.)
+[//]: # (  - Make sure that for each parameter, where applicable, there is a note if the parameter is optional.)
+[//]: # (  - Make sure the links in the README work and are accurate.)
 [//]: # (  - Make a style and proofreading pass on the updated copy.)
 [//]: # (  - Check documentation against code and actual use to confirm existing functionality and find undocumented features.)
 
@@ -1087,7 +1092,7 @@ Puppet Labs modules on the Puppet Forge are open projects, and community contrib
 
 We want to keep it as easy as possible to contribute changes so that our modules work in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
 
-Read the complete module [contribution guide](https://docs.puppetlabs.com/forge/contributing.html)
+Read the complete module [contribution guide](https://docs.puppetlabs.com/forge/contributing.html).
 
 ### Running tests
 
