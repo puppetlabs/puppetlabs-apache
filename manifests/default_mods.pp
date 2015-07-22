@@ -1,7 +1,8 @@
 class apache::default_mods (
   $all            = true,
   $mods           = undef,
-  $apache_version = $::apache::apache_version
+  $apache_version = $::apache::apache_version,
+  $use_systemd    = $::apache::use_systemd,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include
@@ -13,7 +14,9 @@ class apache::default_mods (
         # Lets fork it
         # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
         if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) and !($::operatingsystem == 'Amazon') ) {
-          ::apache::mod { 'systemd': }
+          if ($use_systemd) {
+            ::apache::mod { 'systemd': }
+          }
         }
         ::apache::mod { 'unixd': }
       }

@@ -52,6 +52,7 @@ class apache (
   $lib_path               = $::apache::params::lib_path,
   $conf_template          = $::apache::params::conf_template,
   $servername             = $::apache::params::servername,
+  $pidfile                = $::apache::params::pidfile,
   $manage_user            = true,
   $manage_group           = true,
   $user                   = $::apache::params::user,
@@ -72,6 +73,7 @@ class apache (
   $allow_encoded_slashes  = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
+  $use_systemd            = $::apache::params::use_systemd,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -247,24 +249,20 @@ class apache (
   if $::apache::conf_dir and $::apache::params::conf_file {
     case $::osfamily {
       'debian': {
-        $pidfile              = "\${APACHE_PID_FILE}"
         $error_log            = 'error.log'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
       }
       'redhat': {
-        $pidfile              = 'run/httpd.pid'
         $error_log            = 'error_log'
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
       }
       'freebsd': {
-        $pidfile              = '/var/run/httpd.pid'
         $error_log            = 'httpd-error.log'
         $scriptalias          = '/usr/local/www/apache24/cgi-bin'
         $access_log_file      = 'httpd-access.log'
       } 'gentoo': {
-        $pidfile              = '/run/apache2.pid'
         $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/var/www/localhost/cgi-bin'
@@ -282,7 +280,6 @@ class apache (
         }
       }
       'Suse': {
-        $pidfile              = '/var/run/httpd2.pid'
         $error_log            = 'error.log'
         $scriptalias          = '/usr/lib/cgi-bin'
         $access_log_file      = 'access.log'
