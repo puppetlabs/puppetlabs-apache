@@ -62,15 +62,17 @@ describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.includ
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should return index page' do
-      shell('/usr/bin/curl -A beaker modsec.example.com:80') do |r|
-        expect(r.stdout).to match(/Index page/)
-        expect(r.exit_code).to eq(0)
+    describe 'should be listening on port 80' do
+      it 'should return index page' do
+        shell('/usr/bin/curl -A beaker modsec.example.com:80') do |r|
+          expect(r.stdout).to match(/Index page/)
+          expect(r.exit_code).to eq(0)
+        end
       end
-    end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
   end #default mod_security config
