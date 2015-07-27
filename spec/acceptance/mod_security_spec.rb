@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise'))) do
+describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise' or fact('lsbdistcodename') == 'wheezy'))) do
   case fact('osfamily')
   when 'Debian'
     mod_dir      = '/etc/apache2/mods-available'
@@ -47,6 +47,11 @@ describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.includ
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
+
+      #Need to add a short sleep here because on RHEL6 the service takes a bit longer to init
+      if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
+        sleep 5
+      end
     end
 
     describe service(service_name) do
