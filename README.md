@@ -35,7 +35,7 @@
 [`AddDefaultCharset`]: http://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
 [`add_listen`]: #add_listen
 [aliased servers]: https://httpd.apache.org/docs/current/urlmapping.html
-[`AllowedEncodedSlashes`]: http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes
+[`AllowEncodedSlashes`]: http://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes
 [`apache`]: #class-apache
 [`apache_version`]: #apache_version
 [`apache::balancer`]: #define-apachebalancer
@@ -43,9 +43,15 @@
 [`apache::fastcgi::server`]: #define-apachefastcgiserver
 [`apache::mod`]: #define-apachemod
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
+[`apache::mod::event`]: #apachemodevent
+[`apache::mod::itk`]: #apachemoditk
 [`apache::mod::passenger`]: #apachemodpassenger
+[`apache::mod::peruser`]: #apachemodperuser
+[`apache::mod::prefork`]: #apachemodprefork
 [`apache::mod::proxy_html`]: #apachemodproxy_html
 [`apache::mod::security`]: #apachemodsecurity
+[`apache::mod::ssl`]: #apachemodssl
+[`apache::mod::worker`]: #apachemodworker
 [`apache::params`]: #class-apacheparams
 [`apache::version`]: #class-apacheversion
 [`apache::vhost`]: #define-apachevhost
@@ -69,6 +75,7 @@
 [`Documentroot`]: https://httpd.apache.org/docs/current/mod/core.html#documentroot
 
 [enforcing mode]: http://selinuxproject.org/page/Guide/Mode
+[`ensure`]: https://docs.puppetlabs.com/references/latest/type.html#package-attribute-ensure
 [exported resources]: http://docs.puppetlabs.com/latest/reference/lang_exported.md
 
 [Facter]: http://docs.puppetlabs.com/facter/
@@ -87,7 +94,7 @@
 [IP-based virtual hosts]: http://httpd.apache.org/docs/current/vhosts/ip-based.html
 
 [`KeepAlive`]: http://httpd.apache.org/docs/current/mod/core.html#keepalive
-['KeepAliveTimeout`]: http://httpd.apache.org/docs/current/mod/core.html#keepalivetimeout
+[`KeepAliveTimeout`]: http://httpd.apache.org/docs/current/mod/core.html#keepalivetimeout
 [`keepalive` parameter]: #keepalive
 [`keepalive_timeout`]: #keepalive_timeout
 
@@ -103,13 +110,14 @@
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [module contribution guide]: http://docs.puppetlabs.com/forge/contributing.html
 [`mpm_module`]: #mpm_module
+[multi-processing module]: http://httpd.apache.org/docs/current/mpm.html
 
 [name-based virtual hosts]: https://httpd.apache.org/docs/current/vhosts/name-based.html
 
 [open source Puppet]: http://docs.puppetlabs.com/puppet/
 
-[`Peruser`]: http://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr
 [`path`]: #path
+[`Peruser`]: http://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr
 [`port`]: #port
 [`priority`]: #defines-apachevhost
 [`ProxySet`]: http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyset
@@ -154,21 +162,21 @@
 
 1. [Module description - What is the apache module, and what does it do?][Module description]
 2. [Setup - The basics of getting started with apache][Setup]
-    * [Beginning with Apache - Installation][Beginning with Apache]
+    - [Beginning with Apache - Installation][Beginning with Apache]
 3. [Usage - The classes and defined types available for configuration][Usage]
-    * [Configuring virtual hosts - Examples to help get started][Configuring virtual hosts]
-    * [Configuring FastCGI servers to handle PHP files][Configuring FastCGI servers]
-    * [Load balancing with exported and non-exported resources][Load balancing examples]
+    - [Configuring virtual hosts - Examples to help get started][Configuring virtual hosts]
+    - [Configuring FastCGI servers to handle PHP files][Configuring FastCGI servers]
+    - [Load balancing with exported and non-exported resources][Load balancing examples]
 4. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
-    * [Public classes][]
-    * [Private classes][]
-    * [Public defines][]
-    * [Private defines][]
-    * [Templates][]
+    - [Public classes][]
+    - [Private classes][]
+    - [Public defines][]
+    - [Private defines][]
+    - [Templates][]
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
-    * [Contributing to the apache module][Contributing]
-    * [Running tests - A quick guide][Running tests]
+    - [Contributing to the apache module][Contributing]
+    - [Running tests - A quick guide][Running tests]
 
 ## Module description
 
@@ -178,19 +186,19 @@
 
 **What the apache Puppet module affects:**
 
-* Configuration files and directories (created and written to)
-    * **WARNING**: Configurations *not* managed by Puppet will be purged.
-* Package/service/configuration files for Apache
-* Apache modules
-* Virtual hosts
-* Listened-to ports
-* `/etc/make.conf` on FreeBSD and Gentoo
+- Configuration files and directories (created and written to)
+  - **WARNING**: Configurations *not* managed by Puppet will be purged.
+- Package/service/configuration files for Apache
+- Apache modules
+- Virtual hosts
+- Listened-to ports
+- `/etc/make.conf` on FreeBSD and Gentoo
 
 On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module. Note that while several options apply or enable certain features and settings for Gentoo, it is not a [supported operating system][] for this module.
 
-> **Note**: This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Apache configuration should be managed by Puppet, as unmanaged configuration files can cause unexpected failures.
-> 
-> To temporarily disable full Puppet management, set the [`purge_configs`][] parameter in the [`apache`][] class declaration to 'false'. We recommend using this only as a temporary means of saving and relocating customized configurations.
+**Note**: This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Apache configuration should be managed by Puppet, as unmanaged configuration files can cause unexpected failures.
+
+To temporarily disable full Puppet management, set the [`purge_configs`][] parameter in the [`apache`][] class declaration to 'false'. We recommend using this only as a temporary means of saving and relocating customized configurations.
 
 ### Beginning with Apache
 
@@ -216,7 +224,7 @@ class { 'apache':
 
 The default [`apache`][] class sets up a virtual host on port 80, listening on all interfaces and serving the [`docroot`][] parameter's default directory of `/var/www`.
 
-> **Note**: See the [`apache::vhost`][] define's reference for a list of all virtual host parameters.
+**Note**: See the [`apache::vhost`][] define's reference for a list of all virtual host parameters.
 
 To configure basic [name-based virtual hosts][], specify the [`port`][] and [`docroot`][] parameters in the [`apache::vhost`][] define:
 
@@ -227,7 +235,7 @@ apache::vhost { 'vhost.example.com':
 }
 ~~~
 
-> **Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] define applies a default [`priority`][] of 15, which Puppet interprets by prefixing the virtual host's file name with `15-`. This all means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to 'false', Apache still processes virtual hosts in alphabetical order.
+**Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] define applies a default [`priority`][] of 15, which Puppet interprets by prefixing the virtual host's file name with `15-`. This all means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to 'false', Apache still processes virtual hosts in alphabetical order.
 
 To configure user and group ownership for `docroot`, use the [`docroot_owner`][] and [`docroot_group`][] parameters:
 
@@ -409,7 +417,7 @@ apache::vhost { 'wordpress.example.com':
 }
 ~~~
 
-> **Note**: The `fallbackresource` parameter only supports the 'disabled' value since Apache 2.2.24.
+**Note**: The `fallbackresource` parameter only supports the 'disabled' value since Apache 2.2.24.
 
 To configure a virtual host with a designated directory for [Common Gateway Interface][] (CGI) files, use the [`scriptalias`][] parameter to define the `cgi-bin` path:
 
@@ -514,8 +522,8 @@ apache::vhost { 'fifth.example.com':
 
 There's two ways to install [Apache modules][] using the Puppet apache module:
 
-* Use the [`apache::mod::<MODULE NAME>`][] classes to [install specific Apache modules with parameters][Installing specific modules].
-* Use the [`apache::mod`][] define to [install arbitrary Apache modules][Installing arbitrary modules].
+- Use the [`apache::mod::<MODULE NAME>`][] classes to [install specific Apache modules with parameters][Installing specific modules].
+- Use the [`apache::mod`][] define to [install arbitrary Apache modules][Installing arbitrary modules].
 
 #### Installing specific modules
 
@@ -622,33 +630,33 @@ apache::balancer { 'puppet01':
 
 ## Reference
 
-* [**Public Classes**](#public-classes)
-    * [Class: apache](#class-apache)
-    * [Class: apache::dev](#class-apachedev)
-    * [Classes: apache::mod::*](#classes-apachemodname)
-* [**Private Classes**](#private-classes)
-    * [Class: apache::confd::no_accf](#class-apacheconfdno_accf)
-    * [Class: apache::default_confd_files](#class-apachedefault_confd_files)
-    * [Class: apache::default_mods](#class-apachedefault_mods)
-    * [Class: apache::package](#class-apachepackage)
-    * [Class: apache::params](#class-apacheparams)
-    * [Class: apache::service](#class-apacheservice)
-    * [Class: apache::version](#class-apacheversion)
-* [**Public Defines**](#public-defines)
-    * [Define: apache::balancer](#define-apachebalancer)
-    * [Define: apache::balancermember](#define-apachebalancermember)
-    * [Define: apache::custom_config](#define-apachecustom_config)
-    * [Define: apache::fastcgi::server](#define-fastcgi-server)
-    * [Define: apache::listen](#define-apachelisten)
-    * [Define: apache::mod](#define-apachemod)
-    * [Define: apache::namevirtualhost](#define-apachenamevirtualhost)
-    * [Define: apache::vhost](#define-apachevhost)
-* [**Private Defines**](#private-defines)
-    * [Define: apache::default_mods::load](#define-default_mods-load)
-    * [Define: apache::peruser::multiplexer](#define-apacheperusermultiplexer)
-    * [Define: apache::peruser::processor](#define-apacheperuserprocessor)
-    * [Define: apache::security::file_link](#define-apachesecurityfile_link)
-* [**Templates**](#templates)
+- [**Public Classes**](#public-classes)
+    - [Class: apache](#class-apache)
+    - [Class: apache::dev](#class-apachedev)
+    - [Classes: apache::mod::*](#classes-apachemodname)
+- [**Private Classes**](#private-classes)
+    - [Class: apache::confd::no_accf](#class-apacheconfdno_accf)
+    - [Class: apache::default_confd_files](#class-apachedefault_confd_files)
+    - [Class: apache::default_mods](#class-apachedefault_mods)
+    - [Class: apache::package](#class-apachepackage)
+    - [Class: apache::params](#class-apacheparams)
+    - [Class: apache::service](#class-apacheservice)
+    - [Class: apache::version](#class-apacheversion)
+- [**Public Defines**](#public-defines)
+    - [Define: apache::balancer](#define-apachebalancer)
+    - [Define: apache::balancermember](#define-apachebalancermember)
+    - [Define: apache::custom_config](#define-apachecustom_config)
+    - [Define: apache::fastcgi::server](#define-fastcgi-server)
+    - [Define: apache::listen](#define-apachelisten)
+    - [Define: apache::mod](#define-apachemod)
+    - [Define: apache::namevirtualhost](#define-apachenamevirtualhost)
+    - [Define: apache::vhost](#define-apachevhost)
+- [**Private Defines**](#private-defines)
+    - [Define: apache::default_mods::load](#define-default_mods-load)
+    - [Define: apache::peruser::multiplexer](#define-apacheperusermultiplexer)
+    - [Define: apache::peruser::processor](#define-apacheperuserprocessor)
+    - [Define: apache::security::file_link](#define-apachesecurityfile_link)
+- [**Templates**](#templates)
 
 ### Public Classes
 
@@ -663,11 +671,11 @@ Guides the basic setup and installation of Apache on your system.
 
 When this class is declared with the default options, Puppet:
 
-* Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
-* Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
-* Configures the server with a default virtual host and standard port ('80') and address ('*') bindings.
-* Creates a document root directory determined by your operating system, typically `/var/www`.
-* Starts the Apache service.
+- Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
+- Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
+- Configures the server with a default virtual host and standard port ('80') and address ('*') bindings.
+- Creates a document root directory determined by your operating system, typically `/var/www`.
+- Starts the Apache service.
 
 You can simply declare the default `apache` class:
 
@@ -691,10 +699,10 @@ Configures module template behavior, package names, and default Apache modules b
 
 Sets the directory where the Apache server's main configuration file is located. Default: Depends on your operating system.
 
-* **Debian**: `/etc/apache2`
-* **FreeBSD**: `/usr/local/etc/apache22`
-* **Gentoo**: `/etc/apache2`
-* **Red Hat**: `/etc/httpd/conf`
+- **Debian**: `/etc/apache2`
+- **FreeBSD**: `/usr/local/etc/apache22`
+- **Gentoo**: `/etc/apache2`
+- **Red Hat**: `/etc/httpd/conf`
 
 ##### `conf_template`
 
@@ -704,10 +712,10 @@ Defines the [template][] used for the main Apache configuration file. Default: `
 
 Sets the location of the Apache server's custom configuration directory. Default: Depends on your operating system.
 
-* **Debian**: `/etc/apache2/conf.d`
-* **FreeBSD**: `/usr/local/etc/apache22`
-* **Gentoo**: `/etc/apache2/conf.d`
-* **Red Hat**: `/etc/httpd/conf`
+- **Debian**: `/etc/apache2/conf.d`
+- **FreeBSD**: `/usr/local/etc/apache22`
+- **Gentoo**: `/etc/apache2/conf.d`
+- **Red Hat**: `/etc/httpd/conf`
 
 ##### `default_charset`
 
@@ -737,10 +745,10 @@ While this default value results in a functioning Apache server, you **must** up
 
 Sets the [SSL encryption][] certificate location. Default: Determined by your operating system.
 
-* **Debian**: `/etc/ssl/certs/ssl-cert-snakeoil.pem`
-* **FreeBSD**: `/usr/local/etc/apache22/server.crt`
-* **Gentoo**: `/etc/ssl/apache2/server.crt`
-* **Red Hat**: `/etc/pki/tls/certs/localhost.crt`
+- **Debian**: `/etc/ssl/certs/ssl-cert-snakeoil.pem`
+- **FreeBSD**: `/usr/local/etc/apache22/server.crt`
+- **Gentoo**: `/etc/ssl/apache2/server.crt`
+- **Red Hat**: `/etc/pki/tls/certs/localhost.crt`
 
 While the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
 
@@ -774,10 +782,10 @@ This parameter only applies to Apache 2.4 or higher and is ignored on older vers
 
 Sets the [SSL certificate key file][] location. Default: Determined by your operating system.
 
-* **Debian**: `/etc/ssl/private/ssl-cert-snakeoil.key`
-* **FreeBSD**: `/usr/local/etc/apache22/server.key`
-* **Gentoo**: `/etc/ssl/apache2/server.key`
-* **Red Hat**: `/etc/pki/tls/private/localhost.key`
+- **Debian**: `/etc/ssl/private/ssl-cert-snakeoil.key`
+- **FreeBSD**: `/usr/local/etc/apache22/server.key`
+- **Gentoo**: `/etc/ssl/apache2/server.key`
+- **Red Hat**: `/etc/pki/tls/private/localhost.key`
 
 While these default values result in a functioning Apache server, you **must** update this parameter with your SSL key's location before deploying this server in a production environment.
 
@@ -798,7 +806,7 @@ apache::vhost { 'default-ssl':
   }
 ~~~
 
-> **Note**: SSL virtual hosts only respond to HTTPS queries.
+**Note**: SSL virtual hosts only respond to HTTPS queries.
 
 ##### `default_type`
 
@@ -814,10 +822,10 @@ To configure [customized virtual hosts][Configuring virtual hosts], set this par
 
 Sets the default [`Documentroot`][] location. Default: Determined by your operating system.
 
-* **Debian**: `/var/www`
-* **FreeBSD**: `/usr/local/www/apache22/data`
-* **Gentoo**: `/var/www/localhost/htdocs`
-* **Red Hat**: `/var/www/html`
+- **Debian**: `/var/www`
+- **FreeBSD**: `/usr/local/www/apache22/data`
+- **Gentoo**: `/var/www/localhost/htdocs`
+- **Red Hat**: `/var/www/html`
 
 ##### `error_documents`
 
@@ -829,16 +837,16 @@ Sets the group ID that owns any Apache processes spawned to answer requests.
 
 By default, Puppet attempts to manage this group as a resource under the `apache` class, determining the group based on the operating system as detected by the [`apache::params`][] class. To to prevent the group resource from being created and use a group created by another Puppet module, set the [`manage_group`][] parameter's value to 'false'.
 
-> **Note**: Modifying this parameter only changes the group ID that Apache uses to spawn child processes to access resources. It does not change the user that owns the parent server process.
+**Note**: Modifying this parameter only changes the group ID that Apache uses to spawn child processes to access resources. It does not change the user that owns the parent server process.
 
 ##### `httpd_dir`
 
 Sets the Apache server's base configuration directory. This is useful for specially repackaged Apache server builds but might have unintended consequences when combined with the default distribution packages. Default: Determined by your operating system.
 
-* **Debian**: `/etc/apache2`
-* **FreeBSD**: `/usr/local/etc/apache22`
-* **Gentoo**: `/etc/apache2`
-* **Red Hat**: `/etc/httpd`
+- **Debian**: `/etc/apache2`
+- **FreeBSD**: `/usr/local/etc/apache22`
+- **Gentoo**: `/etc/apache2`
+- **Red Hat**: `/etc/httpd`
 
 ##### `keepalive`
 
@@ -864,9 +872,9 @@ Specifies the location where [Apache module][] files are stored. Default: Depend
 - **FreeBSD**: `/usr/local/libexec/apache24`
 - **Red Hat**: `modules`
 
-(//): # (Can't tell the absolute path for Red Hat from the code.)
+[//]: # (Can't tell the absolute path for Red Hat from the code.)
 
-> **Note**: Do not configure this parameter manually without special reason.
+**Note**: Do not configure this parameter manually without special reason.
 
 ##### `loadfile_name`
 
@@ -901,16 +909,58 @@ If your `log_formats` parameter contains one of those, it will be overwritten wi
 
 Changes the directory of Apache log files for the virtual host. Default: Determined by your operating system.
 
-* **Debian**: `/var/log/apache2`
-* **FreeBSD**: `/var/log/apache22`
-* **Gentoo**: `/var/log/apache2`
-* **Red Hat**: `/var/log/httpd`
+- **Debian**: `/var/log/apache2`
+- **FreeBSD**: `/var/log/apache22`
+- **Gentoo**: `/var/log/apache2`
+- **Red Hat**: `/var/log/httpd`
 
 ##### `logroot_mode`
 
 Overrides the default [`logroot`][] directory's mode. Default: 'undef'. 
 
-> **Note**: Do _not_ give write access to the directory where the logs are stored without being aware of the consequences. See the [Apache documentation][Log security] for details.
+**Note**: Do _not_ grant write access to the directory where the logs are stored without being aware of the consequences. See the [Apache documentation][Log security] for details.
+
+##### `manage_group`
+
+When 'false', stops Puppet from creating the group resource. Valid options: Boolean. Default: 'true'. 
+
+If you have a group created from another Puppet module that you want to use to run Apache, set this to 'false'. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
+
+##### `manage_user`
+
+When 'false', stops Puppet from creating the user resource. Valid options: Boolean. Default: 'true'.
+
+This is for instances when you have a user, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established user would result in a duplicate resource error.
+
+##### `mod_dir`
+
+Sets where Puppet places configuration files for your [Apache modules][]. Default: Determined by your operating system.
+
+- **Debian**: `/etc/apache2/mods-available`
+- **FreeBSD**: `/usr/local/etc/apache22/Modules`
+- **Gentoo**: `/etc/apache2/modules.d`
+- **Red Hat**: `/etc/httpd/conf.d`
+
+##### `mpm_module`
+
+Determines which [multi-processing module][] (MPM) is loaded and configured for the HTTPD process. Valid options: 'event', 'itk', 'peruser', 'prefork', 'worker', or 'false'. Default: Determined by your operating system.
+
+- **Debian**: `worker`
+- **FreeBSD, Gentoo, and Red Hat**: `prefork`
+
+You must set this to 'false' to explicitly declare the following classes with custom parameters:
+
+- [`apache::mod::event`][]
+- [`apache::mod::itk`][]
+- [`apache::mod::peruser`][]
+- [`apache::mod::prefork`][]
+- [`apache::mod::worker`][]
+
+**Note**: Switching between different MPMs on FreeBSD is possible but quite difficult. Before changing `mpm_module`, you must uninstall all packages that depend on your installed Apache server.
+
+##### `package_ensure`
+
+Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
 
 [//]: # (END COVERAGE)
 
@@ -938,55 +988,15 @@ Overrides the default [`logroot`][] directory's mode. Default: 'undef'.
 [//]: # (  - Make sure that for each parameter, where applicable, there is a note if the parameter is optional.)
 [//]: # (  - Make sure the links in the README work and are accurate.)
 
-##### `manage_group`
-
-Setting this to 'false' stops the group resource from being created. This is for when you have a group, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established group would result in a duplicate resource error.
-
-##### `manage_user`
-
-Setting this to 'false' stops the user resource from being created. This is for instances when you have a user, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established user would result in a duplicate resource error.
-
-##### `mod_dir`
-
-Changes the location of the configuration directory your Apache modules configuration files are placed in. The default value is determined by your operating system:
-
-* **Debian**: `/etc/apache2/mods-available`
-* **FreeBSD**: `/usr/local/etc/apache22/Modules`
-* **Gentoo**: `/etc/apache2/modules.d`
-* **Red Hat**: `/etc/httpd/conf.d`
-
-##### `mpm_module`
-
-Determines which [multi-processing module](http://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the HTTPD process. Valid values are 'event', 'itk', 'peruser', 'prefork', 'worker', or 'false'. 
-
-The default value is determined by your operating system:
-
-* **Debian**: `worker`
-* **FreeBSD, Gentoo, and Red Hat**: `prefork`
-
-Must be set to 'false' to explicitly declare the following classes with custom parameters:
-
-* `apache::mod::event`
-* `apache::mod::itk`
-* `apache::mod::peruser`
-* `apache::mod::prefork`
-* `apache::mod::worker`
-
-**Note**: Switching between different MPMs on FreeBSD is possible but quite difficult. Before changing `mpm_module`, you must uninstall all packages that depend on your currently-installed Apache.
-
-##### `package_ensure`
-
-Allows control over the package ensure attribute. Can be 'present','absent', or a version string.
-
 ##### `ports_file`
 
 Changes the name of the file containing Apache ports configuration. The default value is '`{conf_dir}`/ports.conf'.
 
 ##### `purge_configs`
 
-Removes all other Apache configs and virtual hosts, defaults to 'true'. Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
+Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'. 
 
-[//]: # (START COVERAGE)
+Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
 
 ##### `purge_vhost_configs`
 
@@ -1008,10 +1018,10 @@ Sets the Apache server name. The default value is the value of 'fqdn' provided b
 
 Sets the Apache server software's root directory. The default value is determined by your operating system:
 
-* **Debian**: `/etc/apache2`
-* **FreeBSD**: `/usr/local`
-* **Gentoo**: `/var/www`
-* **Red Hat**: `/etc/httpd`
+- **Debian**: `/etc/apache2`
+- **FreeBSD**: `/usr/local`
+- **Gentoo**: `/var/www`
+- **Red Hat**: `/etc/httpd`
 
 [//]: # (END COVERAGE)
 
@@ -1035,9 +1045,9 @@ Determines whether the service should be running. Valid values are 'true', 'fals
 
 Sets the name of the Apache service. The default value is determined by your operating system:
 
-* **Debian and Gentoo**: `apache2`
-* **FreeBSD**: `apache22`
-* **Red Hat**: `httpd`
+- **Debian and Gentoo**: `apache2`
+- **FreeBSD**: `apache22`
+- **Red Hat**: `httpd`
 
 ##### `service_manage`
 
@@ -1059,10 +1069,10 @@ Controls how TRACE requests per RFC 2616 are handled. More information about [Tr
 
 Changes the location of the configuration directory your virtual host configuration files are placed in. The default value is determined by your operating system:
 
-* **Debian**: `/etc/apache2/sites-available`
-* **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
-* **Gentoo**: `/etc/apache2/vhosts.d`
-* **Red Hat**: `etc/httpd/conf.d`
+- **Debian**: `/etc/apache2/sites-available`
+- **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
+- **Gentoo**: `/etc/apache2/vhosts.d`
+- **Red Hat**: `etc/httpd/conf.d`
 
 ##### `user`
 
