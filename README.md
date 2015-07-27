@@ -43,22 +43,24 @@
 [`apache::fastcgi::server`]: #define-apachefastcgiserver
 [`apache::mod`]: #define-apachemod
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
-[`apache::mod::event`]: #apachemodevent
-[`apache::mod::itk`]: #apachemoditk
-[`apache::mod::passenger`]: #apachemodpassenger
-[`apache::mod::peruser`]: #apachemodperuser
-[`apache::mod::prefork`]: #apachemodprefork
-[`apache::mod::proxy_html`]: #apachemodproxy_html
-[`apache::mod::security`]: #apachemodsecurity
-[`apache::mod::ssl`]: #apachemodssl
-[`apache::mod::worker`]: #apachemodworker
+[`apache::mod::event`]: #class-apachemodevent
+[`apache::mod::itk`]: #class-apachemoditk
+[`apache::mod::passenger`]: #class-apachemodpassenger
+[`apache::mod::peruser`]: #class-apachemodperuser
+[`apache::mod::prefork`]: #class-apachemodprefork
+[`apache::mod::proxy_html`]: #class-apachemodproxy_html
+[`apache::mod::security`]: #class-apachemodsecurity
+[`apache::mod::ssl`]: #class-apachemodssl
+[`apache::mod::worker`]: #class-apachemodworker
 [`apache::params`]: #class-apacheparams
 [`apache::version`]: #class-apacheversion
 [`apache::vhost`]: #define-apachevhost
 [`apache::vhost::WSGIImportScript`]: #wsgiimportscript
 [Apache HTTP Server]: http://httpd.apache.org
 [Apache modules]: http://httpd.apache.org/docs/current/mod/
-[array]: 
+[array]: https://docs.puppetlabs.com/puppet/latest/reference/lang_data_array.html
+
+[beaker-rspec]: https://github.com/puppetlabs/beaker-rspec
 
 [certificate revocation list]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationfile
 [certificate revocation list path]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationpath
@@ -74,6 +76,7 @@
 [`docroot_group`]: #docroot_group
 [`Documentroot`]: https://httpd.apache.org/docs/current/mod/core.html#documentroot
 
+[`EnableSendfile`]: http://httpd.apache.org/docs/current/mod/core.html#enablesendfile
 [enforcing mode]: http://selinuxproject.org/page/Guide/Mode
 [`ensure`]: https://docs.puppetlabs.com/references/latest/type.html#package-attribute-ensure
 [exported resources]: http://docs.puppetlabs.com/latest/reference/lang_exported.md
@@ -85,6 +88,7 @@
 [filter rules]: http://httpd.apache.org/docs/current/filter.html
 [`filters`]: #filters
 
+[GeoIPScanProxyHeaders]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/#Proxy-Related_Directives
 [`gentoo/puppet-portage`]: https://github.com/gentoo/puppet-portage
 
 [Hash]: https://docs.puppetlabs.com/puppet/latest/reference/lang_data_hash.html
@@ -99,14 +103,26 @@
 [`keepalive_timeout`]: #keepalive_timeout
 
 [`lib_path`]: #lib_path
+[`ListenBackLog`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#listenbacklog
 [`LoadFile`]: https://httpd.apache.org/docs/current/mod/mod_so.html#loadfile
 [`LogFormat`]: https://httpd.apache.org/docs/current/mod/mod_log_config.html#logformat
 [`logroot`]: #logroot
 [Log security]: http://httpd.apache.org/docs/current/logs.html#security
 
+[`manage_user`]: #manage_user
 [`manage_group`]: #manage_group
+[`MaxConnectionsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxconnectionsperchild
 [`max_keepalive_requests`]: #max_keepalive_requests
+[`MaxRequestWorkers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxrequestworkers
+[`MaxSpareThreads`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxsparethreads
+[MIME `content-type`]: https://www.iana.org/assignments/media-types/media-types.xhtml
+[`MinSpareThreads`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#minsparethreads
+[`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
+[`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_authnz_external`]: https://code.google.com/p/mod-auth-external/
+[`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
+[`mod_info`]: https://httpd.apache.org/docs/current/mod/mod_info.html
+[`mod_mpm_event`]: https://httpd.apache.org/docs/current/mod/event.html
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [module contribution guide]: http://docs.puppetlabs.com/forge/contributing.html
 [`mpm_module`]: #mpm_module
@@ -115,6 +131,7 @@
 [name-based virtual hosts]: https://httpd.apache.org/docs/current/vhosts/name-based.html
 
 [open source Puppet]: http://docs.puppetlabs.com/puppet/
+[`Options`]: https://httpd.apache.org/docs/current/mod/core.html#options
 
 [`path`]: #path
 [`Peruser`]: http://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr
@@ -127,16 +144,24 @@
 [Puppet module]: http://docs.puppetlabs.com/puppet/latest/reference/modules_fundamentals.html
 [Puppet module's code]: https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp
 [`purge_configs`]: #purge_configs
+[`purge_vhost_configs`]: #purge_vhost_configs
 [Python]: https://www.python.org/
 
 [Rack]: http://rack.github.io/
 [`rack_base_uris`]: #rack_base_uris
+[RFC 2616]: https://www.ietf.org/rfc/rfc2616.txt
 [rspec-puppet]: http://rspec-puppet.com/
-[beaker-rspec]: https://github.com/puppetlabs/beaker-rspec
 
 [`scriptalias`]: #scriptalias
 [SELinux]: http://selinuxproject.org/
+[`ServerAdmin`]: http://httpd.apache.org/docs/current/mod/core.html#serveradmin
 [`serveraliases`]: #serveraliases
+[`ServerLimit`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#serverlimit
+[`ServerName`]: http://httpd.apache.org/docs/current/mod/core.html#servername
+[`ServerRoot`]: http://httpd.apache.org/docs/current/mod/core.html#serverroot
+[`ServerTokens`]: http://httpd.apache.org/docs/current/mod/core.html#servertokens
+[`ServerSignature`]: http://httpd.apache.org/docs/current/mod/core.html#serversignature
+[Service attribute restart]: http://docs.puppetlabs.com/references/latest/type.html#service-attribute-restart
 [SSLCARevocationCheck]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck
 [SSL certificate key file]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatekeyfile
 [SSL chain]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatechainfile
@@ -145,15 +170,21 @@
 [`ssl_cert`]: #ssl_cert
 [`ssl_compression`]: #ssl_compression
 [`ssl_key`]: #ssl_key
+[`StartServers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#startservers
 [suPHP]: http://www.suphp.org/Home.html
 [`suphp_addhandler`]: #suphp_addhandler
 [`suphp_configpath`]: #suphp_configpath
 [`suphp_engine`]: #suphp_engine
 [supported operating system]: https://forge.puppetlabs.com/supported#puppet-supported-modules-compatibility-matrix
 
+[`ThreadLimit`]: http://httpd.apache.org/docs/current/mod/mpm_common.html#threadlimit
+[`ThreadsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#threadsperchild
+[`TimeOut`]: http://httpd.apache.org/docs/current/mod/core.html#timeout
 [template]: http://docs.puppetlabs.com/puppet/latest/reference/lang_template.html
+[`TraceEnable`]: http://httpd.apache.org/docs/current/mod/core.html#traceenable
 
 [`vhost`]: #define-apachevhost
+[`vhost_dir`]: #vhost_dir
 [`virtual_docroot`]: #virtual_docroot
 
 [Web Server Gateway Interface]: https://www.python.org/dev/peps/pep-3333/#abstract
@@ -810,7 +841,7 @@ apache::vhost { 'default-ssl':
 
 ##### `default_type`
 
-_Apache 2.2 only_. Sets the [MIME `content-type`](https://www.iana.org/assignments/media-types/media-types.xhtml) sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer and only exists for backwards compatibility in configuration files. Default: 'undef'.
+_Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer and only exists for backwards compatibility in configuration files. Default: 'undef'.
 
 ##### `default_vhost`
 
@@ -962,6 +993,285 @@ You must set this to 'false' to explicitly declare the following classes with cu
 
 Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
 
+##### `ports_file`
+
+Sets the path to the file containing Apache ports configuration. Default: `{$conf_dir}/ports.conf`.
+
+##### `purge_configs`
+
+Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'. 
+
+Setting this to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_configs`][].
+
+##### `purge_vhost_configs`
+
+If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parameter's, the Boolean parameter `purge_vhost_configs` determines whether Puppet removes any configurations inside `vhost_dir` _not_ managed by Puppet. Default: same as [`purge_configs`][].
+
+Setting `purge_vhost_configs` to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
+
+##### `sendfile`
+
+Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the [`EnableSendfile`][] directive. Valid options: 'On', 'Off'. Default: 'On'.
+
+##### `serveradmin`
+
+Sets the Apache server administrator's contact information via Apache's [`ServerAdmin`][] directive. Default: 'root@localhost'.
+
+##### `servername`
+
+Sets the Apache server name via Apache's [`ServerName`][] directive. Default: the 'fqdn' fact reported by [Facter][].
+
+##### `server_root`
+
+Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive. Default: determined by your operating system.
+
+- **Debian**: `/etc/apache2`
+- **FreeBSD**: `/usr/local`
+- **Gentoo**: `/var/www`
+- **Red Hat**: `/etc/httpd`
+
+##### `server_signature`
+
+Configures a trailing footer line to display at the bottom of server-generated documents, such as error documents and output of certain [Apache modules][], via Apache's [`ServerSignature`][] directive. Valid options: 'Off', 'On'. Default: 'On'.
+
+##### `server_tokens`
+
+Controls how much information Apache sends to the browser about itself and the operating system, via Apache's [`ServerTokens`][] directive. Defaults to 'OS'.
+
+##### `service_enable`
+
+Determines whether Puppet enables the Apache HTTPD service when the system is booted. Valid options: Boolean. Default: 'true'.
+
+##### `service_ensure`
+
+Determines whether Puppet should make sure the service is running. Valid options: 'true' (equivalent to 'running'), 'false' (equivalent to 'stopped'). Default: 'running'.
+
+The 'false' or 'stopped' values set the 'httpd' service resource's `ensure` parameter to 'false', which is useful when you want to let the service be managed by another application, such as Pacemaker. 
+
+[//]: # (Is this last paragraph correct? Does false/stopped means Puppet doesn't monitor the service, or does it mean Puppet monitors the service and makes sure it's stopped?)
+
+##### `service_name`
+
+Sets the name of the Apache service. Default: determined by your operating system.
+
+- **Debian and Gentoo**: `apache2`
+- **FreeBSD**: `apache22`
+- **Red Hat**: `httpd`
+
+##### `service_manage`
+
+Determines whether Puppet manages the HTTPD service's state. Default: 'true'.
+
+##### `service_restart`
+
+Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. Default: 'undef', which uses the [default Puppet behavior][Service attribute restart].
+
+##### `timeout`
+
+Sets Apache's [`TimeOut`][] directive, which defines the number of seconds Apache waits for certain events before failing a request. Defaults to 120.
+
+##### `trace_enable`
+
+Controls how Apache handles `TRACE` requests (per [RFC 2616][]) via the [`TraceEnable`][] directive. Valid options: 'Off', 'On'. Default: 'On'.
+
+##### `vhost_dir`
+
+Changes your virtual host configuration files' location. Default: determined by your operating system.
+
+- **Debian**: `/etc/apache2/sites-available`
+- **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
+- **Gentoo**: `/etc/apache2/vhosts.d`
+- **Red Hat**: `etc/httpd/conf.d`
+
+##### `user`
+
+Changes the user Apache uses to answer requests. Apache's parent process will continue to be run as root, but child processes will access resources as the user defined by this parameter. 
+
+Default: Puppet sets the default value via the [`apache::params`][] class, which manages the user based on your operating system:
+
+- **Debian**: 'www-data'
+- **FreeBSD**: 'www'
+- **Gentoo** and **Red Hat**: 'apache'
+
+To prevent Puppet from managing the user, set the [`manage_user`][] parameter to 'false'.
+
+[//]: # (I'm not entirely clear what's going on here and with `manage_group`. You have to both set `manage_user` to 'false' AND set `user` to a username? What happens if you only change one of those two parameters?)
+
+##### `apache_name`
+
+The name of the Apache package to install. Default: Puppet sets the default value via the [`apache::params`][] class, which manages the user based on your operating system:
+
+The default value is determined by your operating system:
+
+- **Debian**: 'apache2'
+- **FreeBSD**: 'apache24'
+- **Gentoo**: 'www-servers/apache'
+- **Red Hat**: 'httpd'
+
+You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
+
+#### Class: `apache::dev`
+
+Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`] parameter of the [`apache::params`] class based on your operating system:
+
+The default value is determined by your operating system:
+
+- **Debian** : 'libaprutil1-dev', 'libapr1-dev'; 'apache2-dev' on Ubuntu 13.10 and Debian 8; 'apache2-prefork-dev' on other versions
+- **FreeBSD**: 'undef'; see note below 
+- **Gentoo**: 'undef'
+- **Red Hat**: 'httpd-devel'
+
+**Note**: On FreeBSD, you must declare the `apache::package` or `apache` classes before declaring `apache::dev`.
+
+#### Classes: `apache::mod::<MODULE NAME>`
+
+Enables specific [Apache modules][]. You can enable and configure an Apache module by declaring its class. For example, to install and enable [`mod_alias`][] with no icons, you can declare the [`apache::mod::alias`][] class with the `icons_options` parameter set to 'None':
+
+~~~ puppet
+class { 'apache::mod::alias':
+  icons_options => 'None',
+}
+~~~
+
+The following Apache modules have supported classes, many of which allow for parameterized configuration. You can install other Apache modules with the [`apache::mod`][] define.
+
+* `actions`
+* `alias` (see [`apache::mod::alias`](#class-apachemodalias))
+* `auth_basic`
+* `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas))
+* `auth_kerb`
+* `authn_core`
+* `authn_file`
+* `authnz_ldap`*
+* `authz_default`
+* `authz_user`
+* `autoindex`
+* `cache`
+* `cgi`
+* `cgid`
+* `dav`
+* `dav_fs`
+* `dav_svn`*
+* `deflate`
+* `dev`
+* `dir`*
+* `disk_cache`
+* `event` (see [`apache::mod::event`](#class-apachemodevent))
+* `expires`
+* `fastcgi`
+* `fcgid`
+* `filter`
+* `geoip` (see [`apache::mod::geoip`][])
+* `headers`
+* `include`
+* `info`*
+* `itk`
+* `ldap`
+* `mime`
+* `mime_magic`*
+* `negotiation`
+* `nss`*
+* `pagespeed` (see [`apache::mod::pagespeed`](#class-apachemodpagespeed))
+* `passenger`*
+* `perl`
+* `peruser`
+* `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
+* `prefork`*
+* `proxy`*
+* `proxy_ajp`
+* `proxy_balancer`
+* `proxy_html`
+* `proxy_http`
+* `python`
+* `reqtimeout`
+* `remoteip`*
+* `rewrite`
+* `rpaf`*
+* `setenvif`
+* `security`
+* `shib`* (see [`apache::mod::shib`](#class-apachemodshib))
+* `speling`
+* `ssl`* (see [`apache::mod::ssl`](#class-apachemodssl))
+* `status`* (see [`apache::mod::status`](#class-apachemodstatus))
+* `suphp`
+* `userdir`*
+* `version`
+* `vhost_alias`
+* `worker`*
+* `wsgi` (see [`apache::mod::wsgi`](#class-apachemodwsgi))
+* `xsendfile`
+
+Modules noted with a * indicate that the module has settings and a template that includes parameters to configure the module. Most Apache module class parameters have default values and don't require configuration. For modules with templates, Puppet installs template files with the module; these template files are required for the module to work.
+
+##### Class: `apache::mod::alias`
+
+Installs and manages [`mod_alias`][].
+
+**Parameters within `apache::mod::alias`**:
+
+* `icons_options`: Disables directory listings for the icons directory, via Apache [`Options`] directive. Default: 'Indexes MultiViews'.
+* `icons_path`: Sets the local path for an `/icons/` Alias. Default: depends on your operating system.
+
+- **Debian**: `/usr/share/apache2/icons`
+- **FreeBSD**: `/usr/local/www/apache24/icons`
+- **Gentoo**: `/var/www/icons`
+- **Red Hat**: `/var/www/icons`, except on Apache 2.4, where it's `/usr/share/httpd/icons`
+
+##### Class: `apache::mod::event`
+
+Installs and manages [`mod_mpm_event`][]. You can't include both `apache::mod::event` and [`apache::mod::itk`][], [`apache::mod::peruser`][], [`apache::mod::prefork`][], or [`apache::mod::worker`][] on the same server.
+
+**Parameters within `apache::mod::event`**:
+
+- `listenbacklog`: Sets the maximum length of the pending connections queue via the module's [`ListenBackLog`][] directive. Default: '511'.
+- `maxclients` (_Apache 2.3.12 or older_: `maxrequestworkers`): Sets the maximum number of connections Apache can simultaneously process, via the module's [`MaxRequestWorkers`][] directive. Default: '150'.
+- `maxconnectionsperchild` (_Apache 2.3.8 or older_: `maxrequestsperchild`): Limits the number of connections a child server handles during its life, via the module's [`MaxConnectionsPerChild`][] directive. Default: '0'.
+- `maxsparethreads` and `minsparethreads`: Sets the maximum and minimum number of idle threads, via the [`MaxSpareThreads`][] and [`MinSpareThreads`][] directives. Default: '75' and '25', respectively.
+- `serverlimit`: Limits the configurable number of processes via the [`ServerLimit`][] directive. Default: '25'.
+- `startservers`: Sets the number of child server processes created at startup, via the module's [`StartServers`][] directive. Default: '2'.
+- `threadlimit`: Limits the number of event threads via the module's [`ThreadLimit`][] directive. Default: '64'.
+- `threadsperchild`: Sets the number of threads created by each child process, via the [`ThreadsPerChild`][] directive. Default: '25'.
+
+##### Class: `apache::mod::auth_cas`
+
+Installs and manages [`mod_auth_cas`][]. Its parameters share names with the Apache module's directives.
+
+The `cas_login_url` and `cas_validate_url` parameters are required; several other parameters have 'undef' default values.
+
+**Parameters within `apache::mod::auth_cas`**:
+
+- `cas_authoritative`: Determines whether an optional authorization directive is authoritative and binding. Default: 'undef'.
+- `cas_certificate_path`: Sets the path to the X509 certificate of the Certificate Authority for the server in `cas_login_url` and `cas_validate_url`. Default: 'undef'.
+- `cas_cache_clean_interval`: Sets the minimum number of seconds that must pass between cache cleanings. Default: 'undef'.
+- `cas_cookie_domain`: Sets the value of the `Domain=` parameter in the `Set-Cookie` HTTP header. Default: 'undef'.
+- `cas_cookie_entropy`: Sets the number of bytes to use when creating session identifiers. Default: 'undef'.
+- `cas_cookie_http_only`: Sets the optional `HttpOnly` flag when `mod_auth_cas` issues cookies. Default: 'undef'.
+- `cas_debug`: Determines whether to enable the module's debugging mode. Default: 'Off'.
+- `cas_idle_timeout`: Default: 'undef'.
+- `cas_login_url`: **Required**. Sets the URL to which the module redirects users when they attempt to access a CAS-protected resource and don't have an active session.
+- `cas_root_proxied_as`: Sets the URL end users see when access to this Apache server is proxied. Default: 'undef'.
+- `cas_timeout`: Limits the number of seconds a `mod_auth_cas` session can remain active. Default: 'undef'.
+- `cas_validate_depth`: Limits the depth for chained certificate validation. Default: 'undef'.
+- `cas_validate_url`: **Required**. Sets the URL to use when validating a client-presented ticket in an HTTP query string.
+- `cas_version`: The CAS protocol version to adhere to. Valid options: '1', '2'. Default: '2'.
+
+[//]: # (Each of these is a black hole; come back later.)
+
+##### Class: `apache::mod::geoip`
+
+Installs and manages [`mod_geoip`][].
+
+**Parameters within `apache::mod::geoip`**:
+
+- `db_file`: Sets the path to your GeoIP database file. Valid options: a path, or an [array][] paths for multiple GeoIP database files. Default: `/usr/share/GeoIP/GeoIP.dat`.
+- `enable`: Determines whether to globally enable [`mod_geoip`][]. Valid options: Boolean. Default: 'false'.
+- `flag`: Sets the GeoIP flag. Valid options: 'CheckCache', 'IndexCache', 'MemoryCache', 'Standard'. Default: 'Standard'.
+- `output`: Defines which output variables to use. Valid options: 'All', 'Env', 'Request', 'Notes'. Default: 'All'.
+- `enable_utf8`: Changes the output from ISO-8859-1 (Latin-1) to UTF-8. Valid options: Boolean. Default: 'undef'.
+- `scan_proxy_headers`: Enables the [GeoIPScanProxyHeaders][] option. Valid options: Boolean. Default: 'undef'.
+- `scan_proxy_header_field`: Specifies which header [`mod_geoip`][] should look at to determine the client's IP address. Default: 'undef'.
+- `use_last_xforwarededfor_ip` (sic): Determines whether to use the first or last IP address for the client's IP if a comma-separated list of IP addresses is found. Valid options: Boolean. Default: 'undef'.
+
 [//]: # (END COVERAGE)
 
 [//]: # (Cont.)
@@ -988,126 +1298,379 @@ Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent
 [//]: # (  - Make sure that for each parameter, where applicable, there is a note if the parameter is optional.)
 [//]: # (  - Make sure the links in the README work and are accurate.)
 
-##### `ports_file`
-
-Changes the name of the file containing Apache ports configuration. The default value is '`{conf_dir}`/ports.conf'.
-
-##### `purge_configs`
-
-Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'. 
-
-Setting this to 'false' is a stopgap measure to allow the apache module to coexist with existing or otherwise-managed configuration. It is recommended that you move your configuration entirely to resources within this module.
-
-##### `purge_vhost_configs`
-
-If the `vhost_dir` parameter's value differs from the `confd_dir` parameter's, the Boolean parameter `purge_vhost_configs` determines whether to remove any configurations inside `vhost_dir` that are _not_ managed by Puppet. The default value is the same as the value of the `purge_configs` parameter. Setting `purge_vhost_configs` to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
-
-##### `sendfile`
-
-Forces Apache to use the Linux kernel's sendfile to serve static files. The default value is 'On'.
-
-##### `serveradmin`
-
-Sets the Apache server administrator's contact information. The default value is 'root@localhost'.
-
-##### `servername`
-
-Sets the Apache server name. The default value is the value of 'fqdn' provided by [Facter](/facter/latest/).
-
-##### `server_root`
-
-Sets the Apache server software's root directory. The default value is determined by your operating system:
-
-- **Debian**: `/etc/apache2`
-- **FreeBSD**: `/usr/local`
-- **Gentoo**: `/var/www`
-- **Red Hat**: `/etc/httpd`
-
-[//]: # (END COVERAGE)
-
-##### `server_signature`
-
-Configures a trailing footer line under server-generated documents. More information about [ServerSignature](http://httpd.apache.org/docs/current/mod/core.html#serversignature). Defaults to 'On'.
-
-##### `server_tokens`
-
-Controls how much information Apache sends to the browser about itself and the operating system. More information about [ServerTokens](http://httpd.apache.org/docs/current/mod/core.html#servertokens). Defaults to 'OS'.
-
-##### `service_enable`
-
-Determines whether the HTTPD service is enabled when the machine is booted. Defaults to 'true'.
-
-##### `service_ensure`
-
-Determines whether the service should be running. Valid values are 'true', 'false', 'running', or 'stopped' when Puppet should manage the service. Any other value sets ensure to 'false' for the Apache service, which is useful when you want to let the service be managed by some other application like Pacemaker. Defaults to 'running'.
-
-##### `service_name`
-
-Sets the name of the Apache service. The default value is determined by your operating system:
-
-- **Debian and Gentoo**: `apache2`
-- **FreeBSD**: `apache22`
-- **Red Hat**: `httpd`
-
-##### `service_manage`
-
-Determines whether the HTTPD service state is managed by Puppet. The default value is 'true'.
-
-##### `service_restart`
-
-Determines whether the HTTPD service restart command should be anything other than the default managed by Puppet.  Defaults to undef.
-
-##### `timeout`
-
-Sets the amount of seconds the server will wait for certain events before failing a request. Defaults to 120.
-
-##### `trace_enable`
-
-Controls how TRACE requests per RFC 2616 are handled. More information about [TraceEnable](http://httpd.apache.org/docs/current/mod/core.html#traceenable). Defaults to 'On'.
-
-##### `vhost_dir`
-
-Changes the location of the configuration directory your virtual host configuration files are placed in. The default value is determined by your operating system:
-
-- **Debian**: `/etc/apache2/sites-available`
-- **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
-- **Gentoo**: `/etc/apache2/vhosts.d`
-- **Red Hat**: `etc/httpd/conf.d`
-
-##### `user`
-
-Changes the user that Apache will answer requests as. The parent process will continue to be run as root, but resource accesses by child processes will be done under this user. By default, puppet will attept to manage this user as a resource under `::apache`. If this is not what you want, set [`manage_user`](#manage_user) to 'false'. Defaults to the OS-specific default user for apache, as detected in `::apache::params`.
-
-##### `apache_name`
-
-The name of the Apache package to install. This is automatically detected in `::apache::params`. You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
-
-#### Class: `apache::dev`
-
-Installs Apache development libraries.
-
-**Note**: On FreeBSD, you must declare `apache::package` or `apache` before `apache::dev`.
-
-#### Classes: `apache::mod::<MODULE NAME>`
-
-Enables specific Apache HTTP Server modules. The following Apache modules have supported classes that allow for parameterized configuration; other Apache modules can be installed using the [`apache::mod`][] define.
-
-##### Class: `apache::mod::alias`
-##### Class: `apache::mod::deflate`
-##### Class: `apache::mod::event`
-##### Class: `apache::mod::expires`
-##### Class: `apache::mod::fcgid`
-##### Class: `apache::mod::geoip`
 ##### Class: `apache::mod::info`
-##### Class: `apache::mod::negotiation`
+
+Installs and manages [`mod_info`], which provides a comprehensive overview of the server configuration.
+
+These are the default settings:
+
+~~~ puppet
+  $allow_from      = ['127.0.0.1','::1'],
+  $apache_version  = $::apache::apache_version,
+  $restrict_access = true,
+~~~
+
+To set the addresses that are allowed to access /server-info add the following:
+
+~~~ puppet
+  class {'apache::mod::info':
+    allow_from      => [
+      '10.10.36',
+      '10.10.38',
+      '127.0.0.1',
+    ],
+  }
+~~~
+
+To disable the access restrictions add the following:
+
+~~~ puppet
+  class {'apache::mod::info':
+    restrict_access => false,
+  }
+~~~
+
+It is not recommended to leave this set to false though it can be very useful for testing. For this reason, you can insert this setting in your normal code to temporarily disable the restrictions like so:
+
+~~~ puppet
+  class {'apache::mod::info':
+    restrict_access => false, # false disables the block below
+    allow_from      => [
+      '10.10.36',
+      '10.10.38',
+      '127.0.0.1',
+    ],
+  }
+~~~
+
 ##### Class: `apache::mod::pagespeed`
+
+Installs and manages mod_pagespeed, which is a Google module that rewrites web pages to reduce latency and bandwidth.
+
+This module does *not* manage the software repositories needed to automatically install the
+mod-pagespeed-stable package. The module does however require that the package be installed,
+or be installable using the system's default package provider.  You should ensure that this
+pre-requisite is met or declaring `apache::mod::pagespeed` causes the Puppet run to fail.
+
+These are the defaults:
+
+~~~ puppet
+    class { 'apache::mod::pagespeed':
+      inherit_vhost_config          => 'on',
+      filter_xhtml                  => false,
+      cache_path                    => '/var/cache/mod_pagespeed/',
+      log_dir                       => '/var/log/pagespeed',
+      memcache_servers              => [],
+      rewrite_level                 => 'CoreFilters',
+      disable_filters               => [],
+      enable_filters                => [],
+      forbid_filters                => [],
+      rewrite_deadline_per_flush_ms => 10,
+      additional_domains            => undef,
+      file_cache_size_kb            => 102400,
+      file_cache_clean_interval_ms  => 3600000,
+      lru_cache_per_process         => 1024,
+      lru_cache_byte_limit          => 16384,
+      css_flatten_max_bytes         => 2048,
+      css_inline_max_bytes          => 2048,
+      css_image_inline_max_bytes    => 2048,
+      image_inline_max_bytes        => 2048,
+      js_inline_max_bytes           => 2048,
+      css_outline_min_bytes         => 3000,
+      js_outline_min_bytes          => 3000,
+      inode_limit                   => 500000,
+      image_max_rewrites_at_once    => 8,
+      num_rewrite_threads           => 4,
+      num_expensive_rewrite_threads => 4,
+      collect_statistics            => 'on',
+      statistics_logging            => 'on',
+      allow_view_stats              => [],
+      allow_pagespeed_console       => [],
+      allow_pagespeed_message       => [],
+      message_buffer_size           => 100000,
+      additional_configuration      => { }
+    }
+~~~
+
+Full documentation for mod_pagespeed is available from [Google](http://modpagespeed.com).
+
 ##### Class: `apache::mod::php`
-##### Class: `apache::mod::reqtimeout`
-##### Class: `apache::mod::security`
+
+Installs and configures mod_php. The defaults are OS-dependant.
+
+Overriding the package name:
+~~~ puppet
+  class {'::apache::mod::php':
+    package_name => "php54-php",
+    path         => "${::apache::params::lib_path}/libphp54-php5.so",
+  }
+~~~
+
+Overriding the default configuartion:
+~~~ puppet
+  class {'::apache::mod::php':
+    source => 'puppet:///modules/apache/my_php.conf',
+  }
+~~~
+
+or
+~~~ puppet
+  class {'::apache::mod::php':
+    template => 'apache/php.conf.erb',
+  }
+~~~
+
+or
+
+~~~ puppet
+  class {'::apache::mod::php':
+    content => '
+AddHandler php5-script .php
+AddType text/html .php',
+  }
+~~~
+##### Class: `apache::mod::shib`
+
+Installs the [Shibboleth](http://shibboleth.net/) module for Apache which allows the use of SAML2 Single-Sign-On (SSO) authentication by Shibboleth Identity Providers and Shibboleth Federations. This class only installs and configures the Apache components of a Shibboleth Service Provider (a web application that consumes Shibboleth SSO identities). The Shibboleth configuration can be managed manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
+
+Defining this class enables the Shibboleth specific parameters in `apache::vhost` instances.
+
 ##### Class: `apache::mod::ssl`
+
+Installs Apache SSL capabilities and uses the ssl.conf.erb template. These are the defaults:
+
+~~~ puppet
+    class { 'apache::mod::ssl':
+      ssl_compression         => false,
+      ssl_cryptodevice        => 'builtin',
+      ssl_options             => [ 'StdEnvVars' ],
+      ssl_openssl_conf_cmd    => undef,
+      ssl_cipher              => 'HIGH:MEDIUM:!aNULL:!MD5',
+      ssl_honorcipherorder    => 'On',
+      ssl_protocol            => [ 'all', '-SSLv2', '-SSLv3' ],
+      ssl_pass_phrase_dialog  => 'builtin',
+      ssl_random_seed_bytes   => '512',
+      ssl_sessioncachetimeout => '300',
+    }
+~~~
+
+To *use* SSL with a virtual host, you must either set the`default_ssl_vhost` parameter in `::apache` to 'true' or set the `ssl` parameter in `apache::vhost` to 'true'.
+
 ##### Class: `apache::mod::status`
-##### Class: `apache::mod::version`
+
+Installs Apache mod_status and uses the status.conf.erb template. These are the defaults:
+
+~~~ puppet
+    class { 'apache::mod::status':
+      allow_from      => ['127.0.0.1','::1'],
+      extended_status => 'On',
+      status_path     => '/server-status',
+){
+
+
+  }
+~~~
+
+##### Class: `apache::mod::expires`
+
+Installs Apache mod_expires and uses the expires.conf.erb template. These are the defaults:
+
+~~~ puppet
+    class { 'apache::mod::expires':
+      expires_active  => true,
+      expires_default => undef,
+      expires_by_type => undef,
+){
+
+
+  }
+~~~
+
+`expires_by_type` is an array of Hashes, describing a set of types and their expire times:
+
+~~~ puppet
+  class { 'apache::mod::expires':
+    expires_by_type => [
+      { 'text/json' => 'access plus 1 month' },
+      { 'text/html' => 'access plus 1 year' },
+    ]
+  }
+~~~
+
 ##### Class: `apache::mod::wsgi`
+
+Enables Python support in the WSGI module. To use, simply `include 'apache::mod::wsgi'`.
+
+For customized parameters, which tell Apache how Python is currently configured on the operating system,
+
+~~~ puppet
+    class { 'apache::mod::wsgi':
+      wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+      wsgi_python_home   => '/path/to/venv',
+      wsgi_python_path   => '/path/to/venv/site-packages',
+    }
+~~~
+
+To specify an alternate mod\_wsgi package name to install and the name of the module .so it provides,
+(e.g. a "python27-mod\_wsgi" package that provides "python27-mod_wsgi.so" in the default module directory):
+
+~~~ puppet
+    class { 'apache::mod::wsgi':
+      wsgi_socket_prefix => "\${APACHE_RUN_DIR}WSGI",
+      wsgi_python_home   => '/path/to/venv',
+      wsgi_python_path   => '/path/to/venv/site-packages',
+      package_name       => 'python27-mod_wsgi',
+      mod_path           => 'python27-mod_wsgi.so',
+    }
+~~~
+
+If ``mod_path`` does not contain "/", it will be prefixed by the default module path
+for your OS; otherwise, it will be used literally.
+
+More information about [WSGI](http://modwsgi.readthedocs.org/en/latest/).
+
+##### Class: `apache::mod::fcgid`
+
+Installs and configures mod_fcgid.
+
+The class makes no effort to list all available options, but rather uses an options hash to allow for ultimate flexibility:
+
+~~~ puppet
+    class { 'apache::mod::fcgid':
+      options => {
+        'FcgidIPCDir'  => '/var/run/fcgidsock',
+        'SharememPath' => '/var/run/fcgid_shm',
+        'AddHandler'   => 'fcgid-script .fcgi',
+      },
+    }
+~~~
+
+For a full list op options, see the [official mod_fcgid documentation](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html).
+
+It is also possible to set the FcgidWrapper per directory per vhost. You must ensure the fcgid module is loaded because there is no auto loading.
+
+~~~ puppet
+    include apache::mod::fcgid
+    apache::vhost { 'example.org':
+      docroot     => '/var/www/html',
+      directories => {
+        path        => '/var/www/html',
+        fcgiwrapper => {
+          command => '/usr/local/bin/fcgiwrapper',
+        }
+      },
+    }
+~~~
+
+See [FcgidWrapper documentation](https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html#fcgidwrapper) for more information.
+
+##### Class: `apache::mod::negotiation`
+
+Installs and configures mod_negotiation. If there are not provided any
+parameter, default apache mod_negotiation configuration is done.
+
+~~~ puppet
+  class { '::apache::mod::negotiation':
+    force_language_priority => 'Prefer',
+    language_priority       => [ 'es', 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo' ],
+  }
+~~~
+
+**Parameters within `apache::mod::negotiation`:**
+
+#####`force_language_priority`
+
+A string that sets the `ForceLanguagePriority` option. Defaults to `Prefer Fallback`.
+
+#####`language_priority`
+
+An array of languages to set the `LanguagePriority` option of the module.
+
+##### Class: `apache::mod::deflate`
+
+Installs and configures mod_deflate. If no parameters are provided, a default configuration is applied.
+
+~~~ puppet
+  class { '::apache::mod::deflate':
+    types => [ 'text/html', 'text/css' ],
+    notes => {
+      'Input' => 'instream',
+      'Ratio' => 'ratio',
+    },
+  }
+~~~
+
+#####`types`
+
+An [array][] of [MIME types][MIME `content-type`] to be deflated.
+
+#####`notes`
+
+A [Hash][] where the key represents the type and the value represents the note name.
+
+##### Class: `apache::mod::reqtimeout`
+
+Installs and configures mod_reqtimeout. Defaults to recommended apache
+mod_reqtimeout configuration.
+
+~~~ puppet
+class { '::apache::mod::reqtimeout':
+  timeouts => ['header=20-40,MinRate=500', 'body=20,MinRate=500'],
+}
+~~~
+
+##### Class: `apache::mod::version`
+
+This wrapper around mod_version warns on Debian and Ubuntu systems with Apache httpd 2.4
+about loading mod_version, as on these platforms it's already built-in.
+
+~~~ puppet
+include '::apache::mod::version'
+~~~
+
+#####`timeouts`
+
+A string or an array that sets the `RequestReadTimeout` option. Defaults to
+`['header=20-40,MinRate=500', 'body=20,MinRate=500']`.
+
+
+##### Class: `apache::mod::security`
+
+Installs and configures mod_security.  Defaults to enabled and running on all
+vhosts.
+
+~~~ puppet
+include '::apache::mod::security'
+~~~
+
+#####`crs_package`
+
+Name of package to install containing crs rules
+
+#####`modsec_dir`
+
+Directory to install the modsec configuration and activated rules links into
+
+#####`activated_rules`
+
+Array of rules from the modsec_crs_path to activate by symlinking to
+${modsec_dir}/activated_rules.
+
+#####`allowed_methods`
+
+HTTP methods allowed by mod_security
+
+#####`content_types`
+
+Content-types allowed by mod_security
+
+#####`restricted_extensions`
+
+Extensions prohibited by mod_security
+
+#####`restricted_headers`
+
+Headers restricted by mod_security
 
 ### Private Classes
 
