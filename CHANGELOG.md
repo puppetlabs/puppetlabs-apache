@@ -1,9 +1,23 @@
+##2015-07-28 - Supported Release 1.6.0
+###Summary
+This release includes a couple of new features, along with test and documentation updates, and support for the latest AIO puppet builds.
+
+####Features
+- Add `scan_proxy_header_field` parameter to `apache::mod::geoip`
+- Add `ssl_openssl_conf_cmd` parameter to `apache::vhost` and `apache::mod::ssl`
+- Add `filters` parameter to `apache::vhost`
+
+####Bugfixes
+- Test updates
+- Do not use systemd on Amazon Linux
+- Add missing docs for `timeout` parameter (MODULES-2148)
+
 ##2015-06-11 - Supported Release 1.5.0
-### Summary
+###Summary
 This release primarily adds Suse compatibility. It also adds a handful of other
 parameters for greater configuration control.
 
-### Features
+####Features
 - Add `apache::lib_path` parameter
 - Add `apache::service_restart` parameter
 - Add `apache::vhost::geoip_enable` parameter
@@ -17,7 +31,7 @@ parameters for greater configuration control.
 - Add `apache::mod::ssl::ssl_honorcipherorder` parameter
 - Add `apache::mod::userdir::options` parameter
 
-### Bugfixes
+####Bugfixes
 - Document `apache::user` parameter
 - Document `apache::group` parameter
 - Fix apache::dev on FreeBSD
