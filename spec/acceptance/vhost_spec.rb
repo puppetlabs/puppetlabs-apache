@@ -1135,8 +1135,21 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         host { 'test.server': ip => '127.0.0.1' }
         apache::vhost { 'test.server':
           docroot  => '/tmp',
-          setenv   => ['TEST /test'],
-          setenvif => ['Request_URI "\.gif$" object_is_image=gif']
+          setenv         => ['TEST /test'],
+          setenvif       => ['Request_URI "\.gif$" object_is_image=gif']
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+  describe 'setenvifnocase' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot  => '/tmp',
+          setenvifnocase => ['Request_URI "\.gif$" object_is_image=gif']
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1146,6 +1159,7 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.to be_file }
       it { is_expected.to contain 'SetEnv TEST /test' }
       it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
+      it { is_expected.to contain 'SetEnvIfNoCase Request_URI "\.gif$" object_is_image=gif' }
     end
   end
 

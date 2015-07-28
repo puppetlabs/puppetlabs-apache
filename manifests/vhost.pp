@@ -89,6 +89,7 @@ define apache::vhost(
   $rewrite_cond                = undef,
   $setenv                      = [],
   $setenvif                    = [],
+  $setenvifnocase              = [],
   $block                       = [],
   $ensure                      = 'present',
   $wsgi_application_group      = undef,
@@ -406,7 +407,11 @@ define apache::vhost(
     }
   }
 
-  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+  # Check if mod_setenvif is required and not yet loaded.
+  # create an expression to simplify the conditional check
+  $use_setenv_mod = ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
+
+  if ($use_setenv_mod) {
     if ! defined(Class['apache::mod::setenvif']) {
       include ::apache::mod::setenvif
     }
@@ -636,7 +641,7 @@ define apache::vhost(
   # - $proxy_pass_match
   # - $proxy_preserve_host
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
+  if $proxy_dest or $proxy_pass or $proxy_pass_match  or $proxy_dest_match {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
@@ -713,7 +718,8 @@ define apache::vhost(
   # Template uses:
   # - $setenv
   # - $setenvif
-  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+  # - $setenvifnocase
+  if ($use_setenv_mod) {
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
