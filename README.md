@@ -1305,6 +1305,10 @@ Sets the [FallbackResource](http://httpd.apache.org/docs/current/mod/mod_dir.htm
     }
 ```
 
+#####`force_type`
+
+Sets the [ForceType](http://httpd.apache.org/docs/2.2/mod/core.html#forcetype) directive, to force all matching files to be served with the specified MIME content-type.
+
 #####`headers`
 
 Adds lines to replace, merge, or remove response headers. See [Header](http://httpd.apache.org/docs/current/mod/mod_headers.html#header) for more information. Can be an array. Defaults to 'undef'.
