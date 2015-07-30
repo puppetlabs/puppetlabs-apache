@@ -259,7 +259,7 @@ Changes the location of the configuration directory the main configuration file 
 
 #####`confd_dir`
 
-Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf' on RedHat, '/etc/apache2/conf.d' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2/conf.d' on Gentoo.
+Changes the location of the configuration directory your custom configuration files are placed in. Defaults to '/etc/httpd/conf.d' on RedHat, '/etc/apache2/conf.d' on Debian, '/usr/local/etc/apache22' on FreeBSD, and '/etc/apache2/conf.d' on Gentoo.
 
 #####`conf_template`
 
@@ -500,7 +500,7 @@ Controls how TRACE requests per RFC 2616 are handled. More information about [Tr
 
 #####`vhost_dir`
 
-Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to 'etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, '/usr/local/etc/apache22/Vhosts' on FreeBSD, and '/etc/apache2/vhosts.d' on Gentoo.
+Changes the location of the configuration directory your virtual host configuration files are placed in. Defaults to '/etc/httpd/conf.d' on RedHat, '/etc/apache2/sites-available' on Debian, '/usr/local/etc/apache22/Vhosts' on FreeBSD, and '/etc/apache2/vhosts.d' on Gentoo.
 
 #####`user`
 
