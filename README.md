@@ -416,7 +416,7 @@ Setting this to 'false' stops the user resource from being created. This is for 
 
 #####`mod_dir`
 
-Changes the location of the configuration directory your Apache modules configuration files are placed in. Defaults to '/etc/httpd/conf.d' for RedHat, '/etc/apache2/mods-available' for Debian, '/usr/local/etc/apache22/Modules' for FreeBSD, and '/etc/apache2/modules.d' on Gentoo.
+Changes the location of the configuration directory your Apache modules configuration files are placed in. Defaults to '/etc/httpd/conf.d' for RedHat 6 and earlier, '/etc/httpd/conf.modules.d' for RedHat 7, '/etc/apache2/mods-available' for Debian, '/usr/local/etc/apache22/Modules' for FreeBSD, and '/etc/apache2/modules.d' on Gentoo.
 
 #####`mpm_module`
 
