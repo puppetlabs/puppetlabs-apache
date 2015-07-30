@@ -149,7 +149,7 @@ define apache::vhost(
   # Input validation begins
 
   if $suexec_user_group {
-    validate_re($suexec_user_group, '^\w+ \w+$',
+    validate_re($suexec_user_group, '^[\w-]+ [\w-]+$',
     "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
   }
 
