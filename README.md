@@ -1079,6 +1079,10 @@ Name of package to install containing crs rules
 
 Directory to install the modsec configuration and activated rules links into
 
+#####`modsec_secruleengine`
+
+Configures the rules engine. Valid vaules are On, Off, and DetectionOnly
+
 #####`activated_rules`
 
 Array of rules from the modsec_crs_path to activate by symlinking to
