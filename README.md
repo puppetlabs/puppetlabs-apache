@@ -1047,6 +1047,11 @@ mod_reqtimeout configuration.
   }
 ```
 
+#####`timeouts`
+
+A string or an array that sets the `RequestReadTimeout` option. Defaults to
+`['header=20-40,MinRate=500', 'body=20,MinRate=500']`.
+
 ####Class: `apache::mod::version`
 
 This wrapper around mod_version warns on Debian and Ubuntu systems with Apache httpd 2.4
@@ -1055,12 +1060,6 @@ about loading mod_version, as on these platforms it's already built-in.
 ```puppet
   include '::apache::mod::version'
 ```
-
-#####`timeouts`
-
-A string or an array that sets the `RequestReadTimeout` option. Defaults to
-`['header=20-40,MinRate=500', 'body=20,MinRate=500']`.
-
 
 ####Class: `apache::mod::security`
 
