@@ -43,15 +43,21 @@
 [`apache::fastcgi::server`]: #define-apachefastcgiserver
 [`apache::mod`]: #define-apachemod
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
+[`apache::mod::alias`]: #class-apachemodalias
+[`apache::mod::auth_cas`]: #class-apachemodauth_cas
 [`apache::mod::event`]: #class-apachemodevent
+[`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
 [`apache::mod::security`]: #class-apachemodsecurity
+[`apache::mod::shib`]: #class-apachemodshib
 [`apache::mod::ssl`]: #class-apachemodssl
+[`apache::mod::status`]: #class-apachemodstatus
 [`apache::mod::worker`]: #class-apachemodworker
+[`apache::mod::wsgi`]: #class-apachemodwsgi
 [`apache::params`]: #class-apacheparams
 [`apache::version`]: #class-apacheversion
 [`apache::vhost`]: #define-apachevhost
@@ -74,7 +80,9 @@
 [`default_ssl_crl`]: #default_ssl_crl
 [`default_ssl_crl_path`]: #default_ssl_crl_path
 [`default_ssl_vhost`]: #default_ssl_vhost
+[`dev_packages`]: #dev_packages
 [`directory`]: #directory
+[`directories`]: #parameter-directories-for-apachevhost
 [`DirectoryIndex`]: http://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
 [`docroot`]: #docroot
 [`docroot_owner`]: #docroot_owner
@@ -192,7 +200,7 @@
 [`ServerSignature`]: http://httpd.apache.org/docs/current/mod/core.html#serversignature
 [Service attribute restart]: http://docs.puppetlabs.com/references/latest/type.html#service-attribute-restart
 [`source`]: #source
-[SSLCARevocationCheck]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck
+[`SSLCARevocationCheck`]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck
 [SSL certificate key file]: http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatekeyfile
 [SSL chain]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatechainfile
 [SSL encryption]: https://httpd.apache.org/docs/current/ssl/index.html
@@ -829,7 +837,7 @@ While this default value results in a functioning Apache server, you **must** up
 
 ##### `default_ssl_crl_check`
 
-Sets the default certificate revocation check level via the [`SSLCARevocationCheck`] directive. Default: 'undef'.
+Sets the default certificate revocation check level via the [`SSLCARevocationCheck`][] directive. Default: 'undef'.
 
 While this default value results in a functioning Apache server, you **must** specify this parameter when using certificate revocation lists in a production environment.
 
@@ -923,7 +931,7 @@ Limits the number of requests allowed per connection when the [`keepalive` param
 
 ##### `lib_path`
 
-Specifies the location where [Apache module][] files are stored. Default: Depends on the operating system.
+Specifies the location where [Apache module][Apache modules] files are stored. Default: Depends on the operating system.
 
 - **Debian** and **Gentoo**: `/usr/lib/apache2/modules`
 - **FreeBSD**: `/usr/local/libexec/apache24`
@@ -1132,7 +1140,7 @@ You might need to override this if you are using a non-standard Apache package, 
 
 #### Class: `apache::dev`
 
-Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`] parameter of the [`apache::params`] class based on your operating system:
+Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`][] parameter of the [`apache::params`][] class based on your operating system:
 
 The default value is determined by your operating system:
 
@@ -1156,9 +1164,9 @@ class { 'apache::mod::alias':
 The following Apache modules have supported classes, many of which allow for parameterized configuration. You can install other Apache modules with the [`apache::mod`][] define.
 
 * `actions`
-* `alias` (see [`apache::mod::alias`](#class-apachemodalias))
+* `alias` (see [`apache::mod::alias`][])
 * `auth_basic`
-* `auth_cas`* (see [`apache::mod::auth_cas`](#class-apachemodauthcas))
+* `auth_cas`* (see [`apache::mod::auth_cas`][])
 * `auth_kerb`
 * `authn_core`
 * `authn_file`
@@ -1176,7 +1184,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dev`
 * `dir`*
 * `disk_cache`
-* `event` (see [`apache::mod::event`](#class-apachemodevent))
+* `event` (see [`apache::mod::event`][])
 * `expires`
 * `fastcgi`
 * `fcgid`
@@ -1191,11 +1199,11 @@ The following Apache modules have supported classes, many of which allow for par
 * `mime_magic`*
 * `negotiation`
 * `nss`*
-* `pagespeed` (see [`apache::mod::pagespeed`](#class-apachemodpagespeed))
+* `pagespeed` (see [`apache::mod::pagespeed`][])
 * `passenger`*
 * `perl`
 * `peruser`
-* `php` (requires [`mpm_module`](#mpm_module) set to `prefork`)
+* `php` (requires [`mpm_module`][] set to `prefork`)
 * `prefork`*
 * `proxy`*
 * `proxy_ajp`
@@ -1209,16 +1217,16 @@ The following Apache modules have supported classes, many of which allow for par
 * `rpaf`*
 * `setenvif`
 * `security`
-* `shib`* (see [`apache::mod::shib`](#class-apachemodshib))
+* `shib`* (see [`apache::mod::shib`])
 * `speling`
-* `ssl`* (see [`apache::mod::ssl`](#class-apachemodssl))
-* `status`* (see [`apache::mod::status`](#class-apachemodstatus))
+* `ssl`* (see [`apache::mod::ssl`][])
+* `status`* (see [`apache::mod::status`][])
 * `suphp`
 * `userdir`*
 * `version`
 * `vhost_alias`
 * `worker`*
-* `wsgi` (see [`apache::mod::wsgi`](#class-apachemodwsgi))
+* `wsgi` (see [`apache::mod::wsgi`][])
 * `xsendfile`
 
 Modules noted with a * indicate that the module has settings and a template that includes parameters to configure the module. Most Apache module class parameters have default values and don't require configuration. For modules with templates, Puppet installs template files with the module; these template files are required for the module to work.
@@ -1968,15 +1976,17 @@ This directive is equivalent to `no_proxy_uris`, but takes regular expressions.
 
 ##### `proxy_preserve_host`
 
-Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxypreservehost).  true Enables the Host: line from an incoming request to be proxied to the host instead of hostname .  false sets this option to off (default).
+Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost). Valid options: Boolean. Default: 'false'. 
+
+Setting this parameter to 'true' enables the `Host:` line from an incoming request to be proxied to the host instead of hostname. 'false' sets this option to 'Off'.
 
 ##### `proxy_error_override`
 
-Sets the [ProxyErrorOverride Directive](http://httpd.apache.org/docs/2.2/mod/mod_proxy.html#proxyerroroverride). This directive controls whether apache should override error pages for proxied content. This option is off by default.
+Sets the [ProxyErrorOverride Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride). This directive controls whether apache should override error pages for proxied content. This option is off by default.
 
 ##### `options`
 
-Sets the [Options](http://httpd.apache.org/docs/current/mod/core.html#options) for the specified virtual host. Defaults to '['Indexes','FollowSymLinks','MultiViews']', as demonstrated below:
+Sets the [`Options`][] for the specified virtual host. Default: ['Indexes','FollowSymLinks','MultiViews'], as demonstrated below:
 
 ~~~ puppet
     apache::vhost { 'site.name.fdqn':
@@ -1985,7 +1995,7 @@ Sets the [Options](http://httpd.apache.org/docs/current/mod/core.html#options) f
     }
 ~~~
 
-*Note:* If you use [`directories`](#parameter-directories-for-apachevhost), 'Options', 'Override', and 'DirectoryIndex' are ignored because they are parameters within `directories`.
+**Note**: If you use the [`directories`][] parameter of [`apache::vhost`][], 'Options', 'Override', and 'DirectoryIndex' are ignored because they are parameters within `directories`.
 
 ##### `override`
 
@@ -2983,7 +2993,7 @@ The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are u
 
 ### RHEL/CentOS 7
 
-The [`apache::mod::passenger`][] class is untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] define's [`rack_base_uri`][] parameter.
+The [`apache::mod::passenger`][] class is untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] define's [`rack_base_uris`][] parameter.
 
 ### General
 
