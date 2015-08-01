@@ -107,6 +107,7 @@ define apache::vhost(
   $fastcgi_socket              = undef,
   $fastcgi_dir                 = undef,
   $additional_includes         = [],
+  $use_optional_includes       = $::apache::use_optional_includes,
   $apache_version              = $::apache::apache_version,
   $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,

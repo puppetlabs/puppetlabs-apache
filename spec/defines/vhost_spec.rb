@@ -299,6 +299,7 @@ describe 'apache::vhost', :type => :define do
           'fastcgi_dir'                 => '/tmp',
           'additional_includes'         => '/custom/path/includes',
           'apache_version'              => '2.4',
+          'use_optional_includes'       => true,
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'passenger_app_root'          => '/usr/share/myapp',
