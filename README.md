@@ -323,6 +323,10 @@ SSL vhosts only respond to HTTPS queries.
 
 Sets up a default virtual host. Defaults to 'true', set to 'false' to set up [customized virtual hosts](#configure-a-virtual-host).
 
+#####`disable_indexes`
+
+Disables indexes globally unless they're explicitly enabled by directory options or .htaccess. Defaults to 'false'.
+
 #####`docroot`
 
 Changes the location of the default [Documentroot](https://httpd.apache.org/docs/current/mod/core.html#documentroot). Defaults to '/var/www/html' on RedHat, '/var/www' on Debian, '/usr/local/www/apache22/data' on FreeBSD, and '/var/www/localhost/htdocs' on Gentoo.
