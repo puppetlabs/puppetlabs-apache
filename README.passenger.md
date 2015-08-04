@@ -170,6 +170,15 @@ shut down if the Pool Idle Time (see above) expires.
 
 http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerMaxRequests
 
+#### passenger_spawn_method
+
+Sets the method by which Ruby application processes are spawned.  Default is `smart`
+which caches code using the app preloader.
+
+Passenger >= 4.0 renamed `conservative` to `direct` and `smart-lv2` to `smart`.
+
+https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerSpawnMethod
+
 #### passenger_stat_throttle_rate
 
 Sets how often Passenger performs file system checks, at most once every _x_
