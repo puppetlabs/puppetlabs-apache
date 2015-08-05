@@ -507,7 +507,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::proxy_http') }
       it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::headers') }
-      it { is_expected.to contain_file('/var/www/foo') }
+      it { is_expected.to contain_file('/var/www/foo').with({
+        'ensure' => 'absent',
+      })
+      }
       it { is_expected.to contain_file('/tmp/logroot').with({
         'ensure' => 'absent',
       })
