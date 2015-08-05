@@ -564,6 +564,21 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
+    context 'with use_optional_includes' do
+      let :pre_condition do
+        'class { "apache": default_vhost => false, default_mods => false, vhost_enable_dir => "/etc/apache2/sites-enabled", apache_version => "2.4", use_optional_includes => true }'
+      end
+      let(:params) do
+        {
+          :docroot             => '/rspec/docroot',
+          :port                => '80',
+          :additional_includes => '/my_optional_include_dir',
+        }
+      end
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes').with(
+        :content => /^\s+IncludeOptional "\/my_optional_include_dir"$/ ) }
+    end
   end
   describe 'access logs' do
     let :facts do
