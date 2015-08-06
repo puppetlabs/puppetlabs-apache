@@ -56,7 +56,6 @@ class apache::default_mods (
         ::apache::mod { 'authn_dbm': }
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
-        ::apache::mod { 'expires': }
         ::apache::mod { 'ext_filter': }
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
@@ -94,7 +93,6 @@ class apache::default_mods (
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
         ::apache::mod { 'dumpio': }
-        ::apache::mod { 'expires': }
         ::apache::mod { 'file_cache': }
         ::apache::mod { 'imagemap':}
         ::apache::mod { 'include': }
