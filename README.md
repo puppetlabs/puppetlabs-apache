@@ -780,7 +780,7 @@ Sets the location of the Apache server's custom configuration directory. Default
 - **Debian**: `/etc/apache2/conf.d`
 - **FreeBSD**: `/usr/local/etc/apache22`
 - **Gentoo**: `/etc/apache2/conf.d`
-- **Red Hat**: `/etc/httpd/conf`
+- **Red Hat**: `/etc/httpd/conf.d`
 
 ##### `default_charset`
 
@@ -1111,7 +1111,7 @@ Changes your virtual host configuration files' location. Default: determined by 
 - **Debian**: `/etc/apache2/sites-available`
 - **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
 - **Gentoo**: `/etc/apache2/vhosts.d`
-- **Red Hat**: `etc/httpd/conf.d`
+- **Red Hat**: `/etc/httpd/conf.d`
 
 ##### `user`
 
