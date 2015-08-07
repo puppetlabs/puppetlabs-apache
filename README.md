@@ -45,6 +45,7 @@
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
 [`apache::mod::alias`]: #class-apachemodalias
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
+[`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
@@ -1183,7 +1184,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `deflate`
 * `dev`
 * `dir`*
-* `disk_cache`
+* `disk_cache` (see [`apache::mod::disk_cache`][])
 * `event` (see [`apache::mod::event`][])
 * `expires`
 * `fastcgi`
@@ -1244,6 +1245,17 @@ Installs and manages [`mod_alias`][].
 - **FreeBSD**: `/usr/local/www/apache24/icons`
 - **Gentoo**: `/var/www/icons`
 - **Red Hat**: `/var/www/icons`, except on Apache 2.4, where it's `/usr/share/httpd/icons`
+
+####Class: `apache::mod::disk_cache`
+
+Installs and configures mod_disk_cache. The cache root is determined based on apache version and OS. It can be specified directly as well.
+
+Specifying the cache root:
+```puppet
+  class {'::apache::mod::disk_cache':
+    cache_root => '/path/to/cache',
+  }
+```
 
 ##### Class: `apache::mod::event`
 
