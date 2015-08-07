@@ -427,6 +427,20 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
+    context 'set only aliases' do
+      let :params do
+        {
+          'docroot' => '/rspec/docroot',
+          'aliases' => [
+            {
+              'alias' => '/alias',
+              'path'  => '/rspec/docroot',
+            },
+          ]
+        }
+      end
+      it { is_expected.to contain_class('apache::mod::alias')}
+    end
     context 'proxy_pass_match' do
       let :params do
         {
