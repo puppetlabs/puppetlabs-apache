@@ -846,8 +846,6 @@ This parameter only applies to Apache 2.4 or higher and is ignored on older vers
 
 ##### `default_ssl_key`
 
-Sets the [SSL certificate key file][] location. Default: Determined by your operating system.
-
 - **Debian**: `/etc/ssl/private/ssl-cert-snakeoil.key`
 - **FreeBSD**: `/usr/local/etc/apache22/server.key`
 - **Gentoo**: `/etc/ssl/apache2/server.key`
@@ -883,6 +881,10 @@ _Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot ot
 Configures a default virtual host when the class is declared. Valid options: Boolean. Default: 'true'. 
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to 'false'.
+
+#####`disable_indexes`
+
+Disables indexes globally unless they're explicitly enabled by directory options or .htaccess. Defaults to 'false'.
 
 ##### `docroot`
 

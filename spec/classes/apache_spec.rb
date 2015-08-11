@@ -204,6 +204,16 @@ describe 'apache', :type => :class do
       end
     end
 
+    describe "Disable indexes" do
+      context "when parameter disable_indexes is true" do
+        let :params do
+          { :disable_indexes => true }
+        end
+
+        it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^Options -Indexes\n} }
+      end
+    end
+
     describe "Add extra LogFormats" do
       context "When parameter log_formats is a hash" do
         let :params do

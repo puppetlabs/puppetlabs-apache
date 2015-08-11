@@ -30,6 +30,10 @@ AccessFileName .htaccess
   AllowOverride None
 </Directory>
 
+<% if @disable_indexes == true -%>
+Options -Indexes
+<% end -%>
+
 <% if @default_charset -%>
 AddDefaultCharset <%= @default_charset %>
 <% end -%>
