@@ -882,6 +882,10 @@ Configures a default virtual host when the class is declared. Valid options: Boo
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to 'false'.
 
+#####`disable_indexes`
+
+Disables indexes globally unless they're explicitly enabled by directory options or .htaccess. Defaults to 'false'.
+
 ##### `docroot`
 
 Sets the default [`DocumentRoot`][] location. Default: Determined by your operating system.
