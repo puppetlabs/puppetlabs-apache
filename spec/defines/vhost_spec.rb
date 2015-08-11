@@ -153,6 +153,7 @@ describe 'apache::vhost', :type => :define do
           'ssl_verify_client'           => 'optional',
           'ssl_verify_depth'            => '3',
           'ssl_options'                 => '+ExportCertData',
+          'ssl_openssl_conf_cmd'        => 'DHParameters "foo.pem"',
           'ssl_proxyengine'             => true,
           'priority'                    => '30',
           'default_vhost'               => true,
@@ -182,6 +183,12 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/var/www/files',
               'provider' => 'files',
               'require'  => 'all granted',
+            },
+            { 'path'              => '/var/www/files/indexed_directory',
+              'directoryindex'    => 'disabled',
+              'options'           => ['Indexes','FollowSymLinks','MultiViews'],
+              'index_options'     => ['FancyIndexing'],
+              'index_style_sheet' => '/styles/style.css',
             },
           ],
           'error_log'                   => false,
@@ -248,6 +255,15 @@ describe 'apache::vhost', :type => :define do
               'rewrite_rule' => ['^index\.html$ welcome.html']
             }
           ],
+          'filters'                     => [
+            'FilterDeclare COMPRESS',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/html',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/css',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/plain',
+            'FilterProvider COMPRESS  DEFLATE resp=Content-Type $text/xml',
+            'FilterChain COMPRESS',
+            'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
+          ],
           'rewrite_base'                => '/',
           'rewrite_rule'                => '^index\.html$ welcome.html',
           'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
@@ -283,6 +299,7 @@ describe 'apache::vhost', :type => :define do
           'fastcgi_dir'                 => '/tmp',
           'additional_includes'         => '/custom/path/includes',
           'apache_version'              => '2.4',
+          'use_optional_includes'       => true,
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'passenger_app_root'          => '/usr/share/myapp',
@@ -335,6 +352,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::passenger') }
       it { is_expected.to contain_class('apache::mod::fastcgi') }
       it { is_expected.to contain_class('apache::mod::headers') }
+      it { is_expected.to contain_class('apache::mod::filter') }
       it { is_expected.to contain_class('apache::mod::setenvif') }
       it { is_expected.to contain_concat('30-rspec.example.com.conf').with({
         'owner'   => 'root',
@@ -360,6 +378,14 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Require all denied$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Require all granted$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+IndexOptions\sFancyIndexing$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+IndexStyleSheet\s'\/styles\/style\.css'$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DirectoryIndex\sdisabled$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -384,9 +410,13 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-setenv') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+        :content => /^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-header') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-filters').with(
+        :content => /^\s+FilterDeclare COMPRESS$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
@@ -396,6 +426,44 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
+    end
+    context 'set only aliases' do
+      let :params do
+        {
+          'docroot' => '/rspec/docroot',
+          'aliases' => [
+            {
+              'alias' => '/alias',
+              'path'  => '/rspec/docroot',
+            },
+          ]
+        }
+      end
+      it { is_expected.to contain_class('apache::mod::alias')}
+    end
+    context 'proxy_pass_match' do
+      let :params do
+        {
+          'docroot'          => '/rspec/docroot',
+          'proxy_pass_match'            => [
+            {
+              'path'     => '.*',
+              'url'      => 'http://backend-a/',
+            }
+          ],
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /ProxyPassMatch .* http:\/\/backend-a\//).with_content(/## Proxy rules/) }
+    end
+    context 'proxy_dest_match' do
+      let :params do
+        {
+          'docroot'          => '/rspec/docroot',
+          'proxy_dest_match' => '/'
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(/## Proxy rules/) }
     end
     context 'not everything can be set together...' do
       let :params do
@@ -448,7 +516,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_class('apache::mod::passenger') }
       it { is_expected.to_not contain_class('apache::mod::suexec') }
       it { is_expected.to_not contain_class('apache::mod::rewrite') }
-      it { is_expected.to contain_class('apache::mod::alias') }
+      it { is_expected.to_not contain_class('apache::mod::alias') }
       it { is_expected.to_not contain_class('apache::mod::proxy') }
       it { is_expected.to_not contain_class('apache::mod::proxy_http') }
       it { is_expected.to_not contain_class('apache::mod::passenger') }

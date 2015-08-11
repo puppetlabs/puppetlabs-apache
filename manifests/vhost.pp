@@ -26,6 +26,7 @@ define apache::vhost(
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
   $ssl_options                 = undef,
+  $ssl_openssl_conf_cmd        = undef,
   $ssl_proxyengine             = false,
   $priority                    = undef,
   $default_vhost               = false,
@@ -81,6 +82,7 @@ define apache::vhost(
   $rack_base_uris              = undef,
   $headers                     = undef,
   $request_headers             = undef,
+  $filters                     = undef,
   $rewrites                    = undef,
   $rewrite_base                = undef,
   $rewrite_rule                = undef,
@@ -105,6 +107,7 @@ define apache::vhost(
   $fastcgi_socket              = undef,
   $fastcgi_dir                 = undef,
   $additional_includes         = [],
+  $use_optional_includes       = $::apache::use_optional_includes,
   $apache_version              = $::apache::apache_version,
   $allow_encoded_slashes       = undef,
   $suexec_user_group           = undef,
@@ -147,7 +150,7 @@ define apache::vhost(
   # Input validation begins
 
   if $suexec_user_group {
-    validate_re($suexec_user_group, '^\w+ \w+$',
+    validate_re($suexec_user_group, '^[\w-]+ [\w-]+$',
     "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
   }
 
@@ -360,8 +363,8 @@ define apache::vhost(
   }
 
   # Load mod_alias if needed and not yet loaded
-  if ($scriptalias or $scriptaliases != []) or ($redirect_source and $redirect_dest) {
-    if ! defined(Class['apache::mod::alias']) {
+  if ($scriptalias and $scriptaliases != []) or ($aliases and $aliases != []) or ($redirect_source and $redirect_dest) {
+    if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
       include ::apache::mod::alias
     }
   }
@@ -394,6 +397,13 @@ define apache::vhost(
   if $headers or $request_headers {
     if ! defined(Class['apache::mod::headers']) {
       include ::apache::mod::headers
+    }
+  }
+
+  # Check if mod_filter is required to process $filters
+  if $filters {
+    if ! defined(Class['apache::mod::filter']) {
+      include ::apache::mod::filter
     }
   }
 
@@ -627,7 +637,7 @@ define apache::vhost(
   # - $proxy_pass_match
   # - $proxy_preserve_host
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match {
+  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
@@ -729,6 +739,7 @@ define apache::vhost(
   # - $ssl_verify_client
   # - $ssl_verify_depth
   # - $ssl_options
+  # - $ssl_openssl_conf_cmd
   # - $apache_version
   if $ssl {
     concat::fragment { "${name}-ssl":
@@ -877,6 +888,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 320,
       content => template('apache/vhost/_security.erb')
+    }
+  }
+
+  # Template uses:
+  # - $filters
+  if $filters and ! empty($filters) {
+    concat::fragment { "${name}-filters":
+      target  => "${priority_real}${filename}.conf",
+      order   => 330,
+      content => template('apache/vhost/_filters.erb'),
     }
   }
 

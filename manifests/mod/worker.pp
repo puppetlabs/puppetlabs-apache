@@ -62,7 +62,7 @@ class apache::mod::worker (
         }
       }
     }
-    'debian', 'freebsd': {
+    'debian', 'freebsd', 'Suse': {
       ::apache::mpm{ 'worker':
         apache_version => $apache_version,
       }

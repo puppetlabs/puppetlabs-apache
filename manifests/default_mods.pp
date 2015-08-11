@@ -12,7 +12,7 @@ class apache::default_mods (
       if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
         # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
-        if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) and !($::operatingsystem == 'Amazon' and versioncmp($::operatingsystemrelease, '2014.09') <= 0  ) ) {
+        if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) and !($::operatingsystem == 'Amazon') ) {
           ::apache::mod { 'systemd': }
         }
         ::apache::mod { 'unixd': }
@@ -21,6 +21,9 @@ class apache::default_mods (
     'freebsd': {
       ::apache::mod { 'log_config': }
       ::apache::mod { 'unixd': }
+    }
+    'Suse': {
+      ::apache::mod { 'log_config': }
     }
     default: {}
   }
@@ -34,13 +37,12 @@ class apache::default_mods (
   if $all {
     case $::osfamily {
       'debian': {
+        include ::apache::mod::authn_core
         include ::apache::mod::reqtimeout
-        if versioncmp($apache_version, '2.4') >= 0 {
-          ::apache::mod { 'authn_core': }
-        }
       }
       'redhat': {
         include ::apache::mod::actions
+        include ::apache::mod::authn_core
         include ::apache::mod::cache
         include ::apache::mod::mime
         include ::apache::mod::mime_magic
@@ -61,16 +63,14 @@ class apache::default_mods (
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
 
-        if versioncmp($apache_version, '2.4') >= 0 {
-          ::apache::mod { 'authn_core': }
-        }
-        else {
+        if versioncmp($apache_version, '2.4') < 0 {
           ::apache::mod { 'authn_alias': }
           ::apache::mod { 'authn_default': }
         }
       }
       'freebsd': {
         include ::apache::mod::actions
+        include ::apache::mod::authn_core
         include ::apache::mod::cache
         include ::apache::mod::disk_cache
         include ::apache::mod::headers
@@ -88,7 +88,6 @@ class apache::default_mods (
         ::apache::mod { 'auth_digest': }
         ::apache::mod { 'auth_form': }
         ::apache::mod { 'authn_anon': }
-        ::apache::mod { 'authn_core': }
         ::apache::mod { 'authn_dbm': }
         ::apache::mod { 'authn_socache': }
         ::apache::mod { 'authz_dbd': }
