@@ -448,7 +448,7 @@ apache::vhost { 'suphp.example.com':
   suphp_configpath => '/etc/php5/apache2',
   directories      => [
     { 'path'  => '/home/appuser/myphpapp',
-      'suphp' => { 
+      'suphp' => {
         user  => 'myappuser',
         group => 'myappgroup',
       },
@@ -620,7 +620,7 @@ Note that some modules have prerequisites, which are documented in their referen
 
 #### Installing arbitrary modules
 
-You can pass the name of any module that your operating system's package manager can install to the [`apache::mod`][] define to install it. Unlike the specific-module classes, the [`apache::mod`][] define doesn't tailor the installation based on other installed modules or with specific parameters---Puppet only grabs and installs the module's package, leaving detailed configuration up to you. 
+You can pass the name of any module that your operating system's package manager can install to the [`apache::mod`][] define to install it. Unlike the specific-module classes, the [`apache::mod`][] define doesn't tailor the installation based on other installed modules or with specific parameters---Puppet only grabs and installs the module's package, leaving detailed configuration up to you.
 
 For example, to install the [`mod_authnz_external`][] Apache module, declare the define with the 'mod_authnz_external' name:
 
@@ -795,7 +795,7 @@ Determines whether Puppet generates a default set of includable Apache configura
 
 Determines whether to configure and enable a set of default [Apache modules][] depending on your operating system. Valid options: 'true', 'false', or an array of Apache module names. Default: 'true'.
 
-If this parameter's value is 'false', Puppet only includes the Apache modules required to make the HTTP daemon work on your operating system, and you can declare any other modules separately using the [`apache::mod::<MODULE NAME>`][] class or [`apache::mod`][] define. 
+If this parameter's value is 'false', Puppet only includes the Apache modules required to make the HTTP daemon work on your operating system, and you can declare any other modules separately using the [`apache::mod::<MODULE NAME>`][] class or [`apache::mod`][] define.
 
 If 'true', Puppet installs additional modules, the list of which depends on the operating system as well as the [`apache_version`][] and [`mpm_module`][] parameters' values. As these lists of modules can change frequently, consult the [Puppet module's code][] for up-to-date lists.
 
@@ -803,7 +803,7 @@ If this parameter contains an array, Puppet instead enables all passed Apache mo
 
 ##### `default_ssl_ca`
 
-Sets the default certificate authority for the Apache server. Default: 'undef'. 
+Sets the default certificate authority for the Apache server. Default: 'undef'.
 
 While this default value results in a functioning Apache server, you **must** update this parameter with your certificate authority information before deploying this server in a production environment.
 
@@ -820,7 +820,7 @@ While the default value results in a functioning Apache server, you **must** upd
 
 ##### `default_ssl_chain`
 
-Sets the default [SSL chain][] location. Default: 'undef'. 
+Sets the default [SSL chain][] location. Default: 'undef'.
 
 While this default value results in a functioning Apache server, you **must** update this parameter with your SSL chain before deploying this server in a production environment.
 
@@ -832,7 +832,7 @@ While this default value results in a functioning Apache server, you **must** up
 
 ##### `default_ssl_crl_path`
 
-Sets the server's [certificate revocation list path][], which contains your CRLs. Default: 'undef'. 
+Sets the server's [certificate revocation list path][], which contains your CRLs. Default: 'undef'.
 
 While this default value results in a functioning Apache server, you **must** update this parameter with the CRL path before deploying this server in a production environment.
 
@@ -857,7 +857,7 @@ While these default values result in a functioning Apache server, you **must** u
 
 ##### `default_ssl_vhost`
 
-Configures a default [SSL][SSL encryption] virtual host. Valid options: Boolean. Default: 'false'. 
+Configures a default [SSL][SSL encryption] virtual host. Valid options: Boolean. Default: 'false'.
 
 If 'true', Puppet automatically configures the following virtual host using the [`apache::vhost`][] define:
 
@@ -880,7 +880,7 @@ _Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot ot
 
 ##### `default_vhost`
 
-Configures a default virtual host when the class is declared. Valid options: Boolean. Default: 'true'. 
+Configures a default virtual host when the class is declared. Valid options: Boolean. Default: 'true'.
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to 'false'.
 
@@ -899,7 +899,7 @@ Determines whether to enable [custom error documents][] on the Apache server. Va
 
 ##### `group`
 
-Sets the group ID that owns any Apache processes spawned to answer requests. 
+Sets the group ID that owns any Apache processes spawned to answer requests.
 
 By default, Puppet attempts to manage this group as a resource under the `apache` class, determining the group based on the operating system as detected by the [`apache::params`][] class. To to prevent the group resource from being created and use a group created by another Puppet module, set the [`manage_group`][] parameter's value to 'false'.
 
@@ -922,7 +922,7 @@ If 'On', use the [`keepalive_timeout`][] and [`max_keepalive_requests`][] parame
 
 ##### `keepalive_timeout`
 
-Sets the [`KeepAliveTimeout`] directive, which determines the amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. Default: '15'. 
+Sets the [`KeepAliveTimeout`] directive, which determines the amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. Default: '15'.
 
 This parameter is only relevant if the [`keepalive` parameter][] is enabled.
 
@@ -942,7 +942,7 @@ Specifies the location where [Apache module][Apache modules] files are stored. D
 
 ##### `loadfile_name`
 
-Sets the [`LoadFile`] directive's filename. Valid options: Filenames in the format `\*.load`. 
+Sets the [`LoadFile`] directive's filename. Valid options: Filenames in the format `\*.load`.
 
 This can be used to set the module load order.
 
@@ -980,13 +980,13 @@ Changes the directory of Apache log files for the virtual host. Default: Determi
 
 ##### `logroot_mode`
 
-Overrides the default [`logroot`][] directory's mode. Default: 'undef'. 
+Overrides the default [`logroot`][] directory's mode. Default: 'undef'.
 
 **Note**: Do _not_ grant write access to the directory where the logs are stored without being aware of the consequences. See the [Apache documentation][Log security] for details.
 
 ##### `manage_group`
 
-When 'false', stops Puppet from creating the group resource. Valid options: Boolean. Default: 'true'. 
+When 'false', stops Puppet from creating the group resource. Valid options: Boolean. Default: 'true'.
 
 If you have a group created from another Puppet module that you want to use to run Apache, set this to 'false'. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
 
@@ -1026,13 +1026,17 @@ You must set this to 'false' to explicitly declare the following classes with cu
 
 Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
 
+##### `pidfile`
+
+Allows settting a custom location for the pid file - useful if using a custom built Apache rpm. Defaults to 'run/httpd.pid' on RedHat, '/var/run/httpd.pid on FreeBSD and '\${APACHE_PID_FILE}' on Debian.
+
 ##### `ports_file`
 
 Sets the path to the file containing Apache ports configuration. Default: `{$conf_dir}/ports.conf`.
 
 ##### `purge_configs`
 
-Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'. 
+Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'.
 
 Setting this to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_configs`][].
 
@@ -1079,7 +1083,7 @@ Determines whether Puppet enables the Apache HTTPD service when the system is bo
 
 Determines whether Puppet should make sure the service is running. Valid options: 'true' (equivalent to 'running'), 'false' (equivalent to 'stopped'). Default: 'running'.
 
-The 'false' or 'stopped' values set the 'httpd' service resource's `ensure` parameter to 'false', which is useful when you want to let the service be managed by another application, such as Pacemaker. 
+The 'false' or 'stopped' values set the 'httpd' service resource's `ensure` parameter to 'false', which is useful when you want to let the service be managed by another application, such as Pacemaker.
 
 ##### `service_name`
 
@@ -1105,6 +1109,10 @@ Sets Apache's [`TimeOut`][] directive, which defines the number of seconds Apach
 
 Controls how Apache handles `TRACE` requests (per [RFC 2616][]) via the [`TraceEnable`][] directive. Valid options: 'Off', 'On'. Default: 'On'.
 
+##### `use_systemd`
+
+Controls whether the systemd module should be installed on Centos 7 servers, this is especially useful if using custom built rpms. This can either be 'true' or 'false, defaults to 'true'.
+
 ##### `vhost_dir`
 
 Changes your virtual host configuration files' location. Default: determined by your operating system.
@@ -1116,7 +1124,7 @@ Changes your virtual host configuration files' location. Default: determined by 
 
 ##### `user`
 
-Changes the user Apache uses to answer requests. Apache's parent process will continue to be run as root, but child processes will access resources as the user defined by this parameter. 
+Changes the user Apache uses to answer requests. Apache's parent process will continue to be run as root, but child processes will access resources as the user defined by this parameter.
 
 Default: Puppet sets the default value via the [`apache::params`][] class, which manages the user based on your operating system:
 
@@ -1146,7 +1154,7 @@ Installs Apache development libraries. By default, the package name is defined b
 The default value is determined by your operating system:
 
 - **Debian** : 'libaprutil1-dev', 'libapr1-dev'; 'apache2-dev' on Ubuntu 13.10 and Debian 8; 'apache2-prefork-dev' on other versions
-- **FreeBSD**: 'undef'; see note below 
+- **FreeBSD**: 'undef'; see note below
 - **Gentoo**: 'undef'
 - **Red Hat**: 'httpd-devel'
 
@@ -1428,7 +1436,7 @@ The class's parameters correspond to the module's directives. See the [module's 
 
 ##### Class: `apache::mod::php`
 
-Installs and configures [`mod_php`][]. 
+Installs and configures [`mod_php`][].
 
 **Parameters within `apache::mod::php`**:
 
@@ -1438,7 +1446,7 @@ Default values depend on your operating system.
 
 - `package_name`: Names the package that installs `php_mod`.
 - `path`: Defines the path to the `mod_php` shared object (`.so`) file.
-- `source`: Defines the path to the default configuration. Valid options include a `puppet:///` paths. 
+- `source`: Defines the path to the default configuration. Valid options include a `puppet:///` paths.
 - `template`: Defines the path to the `php.conf` template Puppet uses to generate the configuration file.
 - `content`: Adds arbitrary content to `php.conf`.
 
@@ -1458,7 +1466,7 @@ Defining this class enables Shibboleth-specific parameters in `apache::vhost` in
 
 ##### Class: `apache::mod::ssl`
 
-Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration. 
+Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.
 
 **Parameters within `apache::mod::ssl`**:
 
@@ -1619,7 +1627,7 @@ Sets the configuration file's content. The `content` and [`source`][] parameters
 
 ##### `priority`
 
-Sets the configuration file's priority by prefixing its filename with this parameter's numeric value, as Apache processes configuration files in alphanumeric order. The default value is `25`. 
+Sets the configuration file's priority by prefixing its filename with this parameter's numeric value, as Apache processes configuration files in alphanumeric order. The default value is `25`.
 
 To omit the priority prefix in the configuration file's name, set this parameter to `false`.
 
@@ -1675,7 +1683,7 @@ Adds [`Listen`][] directives to `ports.conf` in the Apache configuration directo
 
 Installs packages for an Apache module that doesn't have a corresponding [`apache::mod::<MODULE NAME>`][] class, and checks for or places the module's default configuration files in the Apache server's `module` and `enable` directories. The default locations depend on your operating system.
 
-**Parameters within `apache::mod`**: 
+**Parameters within `apache::mod`**:
 
 ##### `package`
 
@@ -1691,7 +1699,7 @@ Defines the module's shared object name. Its default value is `mod_$name.so`, an
 
 ##### `lib_path`
 
-Specifies a path to the module's libraries. Default: the `apache` class's [`lib_path`][] parameter. 
+Specifies a path to the module's libraries. Default: the `apache` class's [`lib_path`][] parameter.
 
 Don't manually set this parameter without special reason. The [`path`][] parameter overrides this value.
 
@@ -1717,7 +1725,7 @@ The Apache module allows a lot of flexibility in the setup and configuration of 
 
 The `apache::vhost` define allows you to have specialized configurations for virtual hosts that have requirements outside the defaults. You can set up a default virtual host within the base `::apache` class, as well as set a customized virtual host as the default. Customized virtual hosts have a lower numeric [`priority`][] than the base class's, causing Apache to process the customized virtual host first.
 
-The `apache::vhost` define uses `concat::fragment` to build the configuration file. To inject custom fragments for pieces of the configuration that the define doesn't inherently support, add a custom fragment. 
+The `apache::vhost` define uses `concat::fragment` to build the configuration file. To inject custom fragments for pieces of the configuration that the define doesn't inherently support, add a custom fragment.
 
 For the custom fragment's `order` parameter, the `apache::vhost` define uses multiples of 10, so any `order` that isn't a multiple of 10 should work.
 
@@ -1799,7 +1807,7 @@ If [`apache::mod::passenger`][] is loaded and `PassengerHighPerformance` is 'tru
 
 ##### `allow_encoded_slashes`
 
-Sets the [`AllowEncodedSlashes`][] declaration for the virtual host, overriding the server default. This modifies the virtual host responses to URLs with `\` and `/` characters. Valid options: 'nodecode', 'off', 'on'. Default: undef, which omits the declaration from the server configuration and selects the Apache default setting of `Off`. 
+Sets the [`AllowEncodedSlashes`][] declaration for the virtual host, overriding the server default. This modifies the virtual host responses to URLs with `\` and `/` characters. Valid options: 'nodecode', 'off', 'on'. Default: undef, which omits the declaration from the server configuration and selects the Apache default setting of `Off`.
 
 ##### `block`
 
@@ -1988,7 +1996,7 @@ This directive is equivalent to `no_proxy_uris`, but takes regular expressions.
 
 ##### `proxy_preserve_host`
 
-Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost). Valid options: Boolean. Default: 'false'. 
+Sets the [ProxyPreserveHost Directive](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost). Valid options: Boolean. Default: 'false'.
 
 Setting this parameter to 'true' enables the `Host:` line from an incoming request to be proxied to the host instead of hostname. 'false' sets this option to 'Off'.
 
@@ -3052,8 +3060,8 @@ file { '/custom/path':
   ensure => directory,
 }
 
-file { '/custom/path/include': 
-  ensure  => present, 
+file { '/custom/path/include':
+  ensure  => present,
   content => '#additional_includes',
 }
 
