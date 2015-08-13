@@ -2,11 +2,10 @@ class apache::mod::cgid {
   case $::osfamily {
     'FreeBSD': {}
     default: {
-      if defined(Class['::apache::mod::worker']) {
-        Class['::apache::mod::worker'] -> Class['::apache::mod::cgid']
-      }
-      elsif defined(Class['::apache::mod::event']) {
+      if defined(Class['::apache::mod::event']) {
         Class['::apache::mod::event'] -> Class['::apache::mod::cgid']
+      } else {
+        Class['::apache::mod::worker'] -> Class['::apache::mod::cgid']
       }
     }
   }
