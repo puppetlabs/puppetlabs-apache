@@ -313,6 +313,13 @@ describe 'apache::vhost', :type => :define do
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
           'add_default_charset'         => 'UTF-8',
+          'auth_kerb'                   => true,
+          'krb_method_negotiate'        => 'off',
+          'krb_method_k5passwd'         => 'off',
+          'krb_authoritative'           => 'off',
+          'krb_auth_realms'             => ['EXAMPLE.ORG','EXAMPLE.NET'],
+          'krb_5keytab'                 => '/tmp/keytab5',
+          'krb_local_user_mapping'      => 'off',
         }
       end
       let :facts do
@@ -432,6 +439,16 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbMethodNegotiate\soff$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbAuthoritative\soff$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbAuthRealms\sEXAMPLE.ORG\sEXAMPLE.NET$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+Krb5Keytab\s\/tmp\/keytab5$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbLocalUserMapping\soff$/)}
     end
     context 'set only aliases' do
       let :params do

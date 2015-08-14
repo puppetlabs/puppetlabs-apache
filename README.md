@@ -1964,6 +1964,51 @@ Usage typically looks like:
     }
 ~~~
 
+##### `auth_kerb`
+
+Enable mod_auth_kerb parameters for a virtual host. Valid values are 'true' or 'false'. Defaults to 'false'.
+
+Usage typically looks like:
+
+~~~ puppet
+    apache::vhost {'sample.example.net':
+      auth_kerb              => true,
+      krb_method_negotiate   => 'on',
+      krb_auth_realms        => ['EXAMPLE.ORG'],
+      krb_local_user_mapping => 'on',
+      directories            => { 
+        path         => '/var/www/html',
+        auth_name    => 'Kerberos Login',
+        auth_type    => 'Kerberos',
+        auth_require => 'valid-user',
+      }
+    }
+~~~
+
+##### `krb_method_negotiate`
+
+To enable or disable the use of the Negotiate method. Defaults is 'on'
+
+##### `krb_method_k5passwd`
+
+To enable or disable the use of password based authentication for Kerberos v5. Default is 'on'
+
+##### `krb_authoritative`
+
+If set to off this directive allow authentication controls to be pass on to another modules.  Default is 'on'
+
+##### `krb_auth_realms`
+
+Specifies an array Kerberos realm(s) to be used for authentication. Default is []
+
+##### `krb_5keytab`
+
+Location of the Kerberos V5 keytab file. Not set by default.
+
+##### `krb_local_user_mapping`
+
+Strips @REALM from username for further use. Not set by default.
+
 ##### `logroot`
 
 Specifies the location of the virtual host's logfiles. Defaults to '/var/log/<apache log location>/'.
