@@ -40,6 +40,9 @@
   <%- if @ssl_verify_depth -%>
   SSLVerifyDepth          <%= @ssl_verify_depth %>
   <%- end -%>
+  <%- if @ssl_proxy_machine_cert -%>
+  SSLProxyMachineCertificateFile "<%= @ssl_proxy_machine_cert %>"
+  <%- end -%>
   <%- if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>
   <%- end -%>

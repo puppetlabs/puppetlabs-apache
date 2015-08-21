@@ -2898,6 +2898,17 @@ Sets the [SSLVerifyDepth](http://httpd.apache.org/docs/current/mod/mod_ssl.html#
     }
 ~~~
 
+##### `ssl_proxy_machine_cert`
+
+Sets the [SSLProxyMachineCertificateFile](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatefile) directive, which specifies an all-in-one file where you keep the certs and keys used for this server to authenticate itself to remote servers.  This file should be a concatenation of the PEM-encoded certificate files in order of preference.  Defaults to 'undef'.
+
+~~~ puppet
+    apache::vhost { 'sample.example.net':
+      …
+      ssl_proxy_machine_cert => '/etc/httpd/ssl/client_certificate.pem',
+    }
+~~~
+
 ##### `ssl_options`
 
 Sets the [SSLOptions](http://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions) directive, which configures various SSL engine run-time options. This is the global setting for the given vhost and can be a string or an array. Defaults to 'undef'.
