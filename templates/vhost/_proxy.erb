@@ -33,7 +33,7 @@
   </Location>
 <% end -%>
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
-  ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] %>
+  ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
     <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%>
     <%- end -%>

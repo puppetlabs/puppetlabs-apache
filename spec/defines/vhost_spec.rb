@@ -449,12 +449,13 @@ describe 'apache::vhost', :type => :define do
             {
               'path'     => '.*',
               'url'      => 'http://backend-a/',
+              'params'   => { 'timeout' => 300 },
             }
           ],
         }
       end
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              /ProxyPassMatch .* http:\/\/backend-a\//).with_content(/## Proxy rules/) }
+              /ProxyPassMatch .* http:\/\/backend-a\/ timeout=300/).with_content(/## Proxy rules/) }
     end
     context 'proxy_dest_match' do
       let :params do
