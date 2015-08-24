@@ -179,7 +179,7 @@
 [Puppet module]: http://docs.puppetlabs.com/puppet/latest/reference/modules_fundamentals.html
 [Puppet module's code]: https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp
 [`purge_configs`]: #purge_configs
-[`purge_vhost_configs`]: #purge_vhost_configs
+[`purge_vhost_dir`]: #purge_vhost_dir
 [Python]: https://www.python.org/
 
 [Rack]: http://rack.github.io/
@@ -1038,13 +1038,13 @@ Sets the path to the file containing Apache ports configuration. Default: `{$con
 
 Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: 'true'.
 
-Setting this to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_configs`][].
+Setting this to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_dir`][].
 
-##### `purge_vhost_configs`
+##### `purge_vhost_dir`
 
-If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parameter's, the Boolean parameter `purge_vhost_configs` determines whether Puppet removes any configurations inside `vhost_dir` _not_ managed by Puppet. Default: same as [`purge_configs`][].
+If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parameter's, the Boolean parameter `purge_vhost_dir` determines whether Puppet removes any configurations inside `vhost_dir` _not_ managed by Puppet. Default: same as [`purge_configs`][].
 
-Setting `purge_vhost_configs` to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
+Setting `purge_vhost_dir` to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 
 ##### `sendfile`
 
