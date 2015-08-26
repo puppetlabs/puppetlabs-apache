@@ -1,5 +1,6 @@
 class apache::mod::geoip (
   $enable                     = false,
+  $package_name               = undef,
   $db_file                    = '/usr/share/GeoIP/GeoIP.dat',
   $flag                       = 'Standard',
   $output                     = 'All',
@@ -8,7 +9,9 @@ class apache::mod::geoip (
   $scan_proxy_header_field    = undef,
   $use_last_xforwarededfor_ip = undef,
 ) {
-  ::apache::mod { 'geoip': }
+  ::apache::mod { 'geoip':
+    package => $package_name,
+  }
 
   # Template uses:
   # - enable

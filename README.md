@@ -1363,6 +1363,7 @@ Installs and manages [`mod_geoip`][].
 **Parameters within `apache::mod::geoip`**:
 
 - `db_file`: Sets the path to your GeoIP database file. Valid options: a path, or an [array][] paths for multiple GeoIP database files. Default: `/usr/share/GeoIP/GeoIP.dat`.
+- `package_name`: Specify any package(s) needed for this to work.
 - `enable`: Determines whether to globally enable [`mod_geoip`][]. Valid options: Boolean. Default: 'false'.
 - `flag`: Sets the GeoIP flag. Valid options: 'CheckCache', 'IndexCache', 'MemoryCache', 'Standard'. Default: 'Standard'.
 - `output`: Defines which output variables to use. Valid options: 'All', 'Env', 'Request', 'Notes'. Default: 'All'.
