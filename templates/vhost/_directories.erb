@@ -252,6 +252,37 @@
     ShibUseHeaders <%= directory['shib_use_headers'] %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['mellon_enable'] -%>
+    MellonEnable "<%= directory['mellon_enable'] %>"
+      <%- if directory['mellon_endpoint_path'] -%>
+    MellonEndpointPath "<%= directory['mellon_endpoint_path'] %>"
+      <%- end -%>
+      <%- if directory['mellon_sp_private_key_file'] -%>
+    MellonSPPrivateKeyFile "<%= directory['mellon_sp_private_key_file'] %>"
+      <%- end -%>
+      <%- if directory['mellon_sp_cert_file'] -%>
+    MellonSPCertFile "<%= directory['mellon_sp_cert_file'] %>"
+      <%- end -%>
+      <%- if directory['mellon_idp_metadata_file'] -%>
+    MellonIDPMetadataFile "<%= directory['mellon_idp_metadata_file'] %>"
+      <%- end -%>
+      <%- if directory['mellon_set_env_no_prefix'] -%>
+        <%- directory['mellon_set_env_no_prefix'].each do |key, value| -%>
+    MellonSetEnvNoPrefix "<%= key %>" "<%= value %>"
+        <%- end -%>
+      <%- end -%>
+      <%- if directory['mellon_user'] -%>
+    MellonUser "<%= directory['mellon_user'] %>"
+      <%- end -%>
+      <%- if directory['mellon_saml_response_dump'] -%>
+    MellonSamlResponseDump "<%= directory['mellon_saml_response_dump'] %>"
+      <%- end -%>
+      <%- if directory['mellon_cond'] -%>
+        <%- Array(directory['mellon_cond']).each do |cond| -%>
+    MellonCond <%= cond %>
+         <%- end -%>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>

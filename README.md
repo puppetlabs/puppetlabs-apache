@@ -45,6 +45,7 @@
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
 [`apache::mod::alias`]: #class-apachemodalias
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
+[`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::geoip`]: #class-apachemodgeoip
@@ -142,6 +143,7 @@
 [`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_authnz_external`]: https://code.google.com/p/mod-auth-external/
+[`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
 [`mod_expires`]: http://httpd.apache.org/docs/current/mod/mod_expires.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
 [`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
@@ -1176,6 +1178,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `alias` (see [`apache::mod::alias`][])
 * `auth_basic`
 * `auth_cas`* (see [`apache::mod::auth_cas`][])
+* `auth_mellon`* (see [`apache::mod::auth_mellon`][])
 * `auth_kerb`
 * `authn_core`
 * `authn_file`
@@ -1302,6 +1305,26 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 - `cas_validate_depth`: Limits the depth for chained certificate validation. Default: 'undef'.
 - `cas_validate_url`: **Required**. Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 - `cas_version`: The CAS protocol version to adhere to. Valid options: '1', '2'. Default: '2'.
+
+##### Class: `apache::mod::auth_mellon`
+
+Installs and manages [`mod_auth_mellon`][]. It's parameters share names with the Apache module's directives.
+
+~~~puppet
+class{'apache::mod::auth_mellon':
+  mellon_cache_size => 101
+}
+~~~
+
+**Parameters within `apache::mod::auth_mellon`**:
+
+- `mellon_cache_size`: Size in megabytes of mellon cache.
+- `mellon_cache_entry_size`: Maximum size for single session.
+- `mellon_lock_file`: Location of lock file.
+- `mellon_post_directory`: Full path where post requests are saved.
+- `mellon_post_ttl`: Time to keep post requests.
+- `mellon_post_size`: Maximum size of post requests.
+- `mellon_post_count`: Maxmum number of post requests.
 
 ##### Class: `apache::mod::deflate`
 
@@ -2654,6 +2677,69 @@ Sets the [IndexStyleSheet](http://httpd.apache.org/docs/current/mod/mod_autoinde
       ],
     }
 ~~~
+
+###### `mellon_enable`
+
+Sets the [MellonEnable](https://github.com/UNINETT/mod_auth_mellon) to enable auth_melon on a location.
+
+~~~ puppet
+apache::vhost{'sample.example.net':
+  docroot => '/path/to/directory',
+  directories => [
+    { path                       => '/',
+      provider                   => 'directory',
+      mellon_enable              => 'info',
+      mellon_sp_private_key_file => '/etc/certs/${::fqdn}.key,
+      mellon_endpoint_path       => '/mellon',
+      mellon_set_env_no_prefix   => { 'ADFS_GROUP' => 'http://schemas.xmlsoap.org/claims/Group',
+                                      'ADFS_EMAIL' => 'http://schemas.xmlsoap.org/claims/EmailAddress'},
+      mellon_user => 'ADFS_LOGIN'
+    },
+    { path => '/protected',
+      provider => 'location',
+      mellon_enable => 'auth',
+      auth_type => 'Mellon',
+      auth_require => 'valid-user',
+      mellon_cond => ['ADFS_LOGIN userA [MAP]','ADFS_LOGIN userB [MAP]']
+    }
+  ]
+}
+
+###### `mellon_cond`
+
+Sets the [MellonCond](https://github.com/UNINETT/mod_auth_mellon) is an array of mellon conditions that must
+be met to grant access.
+
+
+###### `mellon_endpoint_path`
+
+Sets the [MellonEndpointPath](https://github.com/UNINETT/mod_auth_mellon) to set melon endpoint path.
+
+###### `mellon_idp_metadata_file`
+
+Sets the [MellonIDPMetadataFile](https://github.com/UNINETT/mod_auth_mellon) location of idp metadata file.
+
+###### `mellon_saml_rsponse_dump`
+
+Sets the [MellonSamlRepsponseDump](https://github.com/UNINETT/mod_auth_mellon) to enable debug of SAML.
+
+###### `mellon_set_env_no_prefix`
+
+Sets the [MellonSetEnvNoPrefix](https://github.com/UNINETT/mod_auth_mellon) is a hash of attribute names to map
+to environment variables.
+
+
+###### `mellon_sp_private_key_file`
+
+Sets the [MellonSPPrivateKeyFile](https://github.com/UNINETT/mod_auth_mellon) private key location of service provider.
+
+###### `mellon_sp_cert_file`
+
+Sets the [MellonSPCertFile](https://github.com/UNINETT/mod_auth_mellon) public key location of service provider.
+
+###### `mellon_user`
+
+Sets the [MellonUser](https://github.com/UNINETT/mod_auth_mellon) attribute we should use for the username.
 
 ###### `options`
 
