@@ -2101,6 +2101,10 @@ Sets [PassengerRoot](https://www.phusionpassenger.com/documentation/Users%20guid
 
 Sets [PassengerAppEnv](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppEnv), the environment for the Passenger application. If not specifies, defaults to the global setting or 'production'.
 
+##### `passenger_log_file`
+
+By default Passenger log messages are written to the Apache global error log. With [PassengerLogFile](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlogfile), you can have those messages logged to a different file instead. n.b.: This option is only available since Passenger 5.0.5
+
 ##### `passenger_ruby`
 
 Sets [PassengerRuby](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerRuby) on this virtual host, the Ruby interpreter to use for the application.
