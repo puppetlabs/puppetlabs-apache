@@ -210,10 +210,14 @@ describe 'apache::vhost', :type => :define do
           'proxy_dest'                  => '/',
           'proxy_pass'                  => [
             {
-              'path'     => '/a',
-              'url'      => 'http://backend-a/',
-              'keywords' => ['noquery', 'interpolate'],
-              'params'   => {
+              'path'            => '/a',
+              'url'             => 'http://backend-a/',
+              'keywords'        => ['noquery', 'interpolate'],
+              'reverse_cookies' => [{
+                'path'          => '/a',
+                'url'           => 'http://backend-a/',
+              }],
+              'params'          => {
                       'retry'   => '0',
                       'timeout' => '5'
               },
@@ -403,6 +407,8 @@ describe 'apache::vhost', :type => :define do
               /SetEnv proxy-nokeepalive 1/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /noquery interpolate/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /ProxyPassReverseCookiePath\s+\/a\s+http:\/\//) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }

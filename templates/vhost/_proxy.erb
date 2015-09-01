@@ -18,6 +18,11 @@
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
   <%- end %>
   <Location <%= proxy['path']%>>
+  <%- if not proxy['reverse_cookies'].nil? -%>
+    <%- Array(proxy['reverse_cookies']).each do |reverse_cookies| -%>
+    ProxyPassReverseCookiePath <%= reverse_cookies['path'] %> <%= reverse_cookies['url'] %>
+    <%- end -%>
+  <%- end -%>
   <%- if proxy['reverse_urls'].nil? -%>
     ProxyPassReverse <%= proxy['url'] %>
   <%- else -%>
