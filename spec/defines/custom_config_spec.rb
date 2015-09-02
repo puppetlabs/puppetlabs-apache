@@ -61,12 +61,12 @@ describe 'apache::custom_config', :type => :define do
     })
     }
     it { is_expected.to contain_exec("remove rspec if invalid").with({
-      'command'     => '/bin/rm /dne/30-rspec.conf',
+      'command'     => '/bin/rm /dne/30-rspec',
       'unless'      => '/bin/true',
     })
     }
     it { is_expected.to contain_file("apache_rspec").with({
-      'path'   => '/dne/30-rspec.conf',
+      'path'   => '/dne/30-rspec',
       'ensure'  => 'present',
       'source' => 'puppet:///modules/apache/test',
       'require' => 'Package[httpd]',
