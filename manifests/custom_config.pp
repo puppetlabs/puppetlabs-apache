@@ -7,6 +7,7 @@ define apache::custom_config (
   $source         = undef,
   $verify_command = $::apache::params::verify_command,
   $verify_config  = true,
+  $default_ext    = '.conf',
 ) {
 
   if $content and $source {
@@ -28,10 +29,11 @@ define apache::custom_config (
   } else {
     $priority_prefix = ''
   }
-
+  
+  
   ## Apache include does not always work with spaces in the filename
   $filename_middle = regsubst($name, ' ', '_', 'G')
-  $filename = "${priority_prefix}${filename_middle}.conf"
+  $filename = "${priority_prefix}${filename_middle}${default_ext}"
 
   if ! $verify_config or $ensure == 'absent' {
     $notifies = Class['Apache::Service']
