@@ -1632,7 +1632,7 @@ Specifies an [array][] of [options](http://httpd.apache.org/docs/current/mod/mod
 
 #### Define: `apache::custom_config`
 
-Adds a custom configuration file to the Apache server's `conf.d` directory. If the file is invalid and this define's `$verify_config` parameter is 'true', Puppet throws an error during a Puppet run.
+Adds a custom configuration file to the Apache server's `conf.d` directory. If the file is invalid and this define's `$verify_config` parameter is 'true', Puppet throws an error during a Puppet run. Uses extension from name and does not change it .conf
 
 **Parameters within `apache::custom_config`**:
 

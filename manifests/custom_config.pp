@@ -31,7 +31,7 @@ define apache::custom_config (
 
   ## Apache include does not always work with spaces in the filename
   $filename_middle = regsubst($name, ' ', '_', 'G')
-  $filename = "${priority_prefix}${filename_middle}.conf"
+  $filename = "${priority_prefix}${filename_middle}"
 
   if ! $verify_config or $ensure == 'absent' {
     $notifies = Class['Apache::Service']
