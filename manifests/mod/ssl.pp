@@ -12,12 +12,6 @@ class apache::mod::ssl (
   $apache_version          = $::apache::apache_version,
   $package_name            = undef,
 ) {
-  $session_cache = $::osfamily ? {
-    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
-    'redhat'  => '/var/cache/mod_ssl/scache(512000)',
-    'freebsd' => '/var/run/ssl_scache(512000)',
-    'gentoo'  => '/var/run/ssl_scache(512000)',
-  }
 
   case $::osfamily {
     'debian': {
@@ -38,9 +32,20 @@ class apache::mod::ssl (
     'gentoo': {
       $ssl_mutex = 'default'
     }
+    'Suse': {
+      $ssl_mutex = 'default'
+    }
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
+  }
+
+  $session_cache = $::osfamily ? {
+    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
+    'redhat'  => '/var/cache/mod_ssl/scache(512000)',
+    'freebsd' => '/var/run/ssl_scache(512000)',
+    'gentoo'  => '/var/run/ssl_scache(512000)',
+    'Suse'    => '/var/lib/apache2/ssl_scache(512000)'
   }
 
   ::apache::mod { 'ssl':
