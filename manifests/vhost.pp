@@ -25,6 +25,7 @@ define apache::vhost(
   $ssl_honorcipherorder        = undef,
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
+  $ssl_proxy_machine_cert      = undef,
   $ssl_options                 = undef,
   $ssl_openssl_conf_cmd        = undef,
   $ssl_proxyengine             = false,
@@ -738,6 +739,7 @@ define apache::vhost(
   # - $ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
+  # - $ssl_proxy_machine_cert
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
   # - $apache_version
