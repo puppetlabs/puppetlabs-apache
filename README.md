@@ -2707,6 +2707,7 @@ apache::vhost{'sample.example.net':
     }
   ]
 }
+~~~
 
 ###### `mellon_cond`
 
