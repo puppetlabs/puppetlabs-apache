@@ -1332,7 +1332,7 @@ Installs and configures [`mod_deflate`][].
 
 **Parameters within `apache::mod::deflate`:**
 
-- `types`: An [array][] of [MIME types][MIME `content-type`] to be deflated. Default: [ 'text/html text/plain text/xml', 'text/css', 'application/x-javascript application/javascript application/ecmascript', 'application/rss+xml' ].
+- `types`: An [array][] of [MIME types][MIME `content-type`] to be deflated. Default: [ 'text/html text/plain text/xml', 'text/css', 'application/x-javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json' ].
 - `notes`: A [Hash][] where the key represents the type and the value represents the note name. Default: { 'Input'  => 'instream', 'Output' => 'outstream', 'Ratio'  => 'ratio' }
 
 ##### Class: `apache::mod::expires`
