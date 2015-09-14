@@ -17,11 +17,11 @@ class apache::package (
         }
         'worker': {
           $set = 'MPM_WORKER'
-          $unset = 'MPM_PERFORK MPM_EVENT'
+          $unset = 'MPM_PREFORK MPM_EVENT'
         }
         'event': {
           $set = 'MPM_EVENT'
-          $unset = 'MPM_PERFORK MPM_WORKER'
+          $unset = 'MPM_PREFORK MPM_WORKER'
         }
         'itk': {
           $set = undef
