@@ -992,6 +992,12 @@ When 'false', stops Puppet from creating the group resource. Valid options: Bool
 
 If you have a group created from another Puppet module that you want to use to run Apache, set this to 'false'. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
 
+##### `manage_conf_file`
+
+When 'false', stops Puppet from managing the main Apache configuration file (typically, `httpd.conf`).
+
+This is for instances when you have an existing environment that you would like to manage but you don't want Puppet to modify your existing httpd.conf file.
+
 ##### `manage_user`
 
 When 'false', stops Puppet from creating the user resource. Valid options: Boolean. Default: 'true'.
