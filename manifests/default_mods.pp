@@ -42,6 +42,9 @@ class apache::default_mods (
       'debian': {
         include ::apache::mod::authn_core
         include ::apache::mod::reqtimeout
+        if versioncmp($apache_version, '2.4') < 0 {
+          ::apache::mod { 'authn_alias': }
+        }
       }
       'redhat': {
         include ::apache::mod::actions
