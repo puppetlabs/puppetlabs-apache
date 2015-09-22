@@ -2916,7 +2916,7 @@ Allows an valid content setting to be set or altered for the application request
       docroot     => '/path/to/directory',
       directories => [
         { path                  => '/path/to/directory',
-          shib_require_setting  => 'requiresession 1',
+          shib_request_settings => { 'requiresession' => 'On' },
           shib_use_headers      => 'On',
         },
       ],
