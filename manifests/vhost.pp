@@ -131,6 +131,7 @@ define apache::vhost(
   $krb_auth_realms             = [],
   $krb_5keytab                 = undef,
   $krb_local_user_mapping      = undef,
+  $limit_request_field_size    = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -222,6 +223,10 @@ define apache::vhost(
   }
 
   validate_bool($auth_kerb)
+
+  if $limit_request_field_size {
+    validate_integer($limit_request_field_size)
+  }
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
@@ -944,6 +949,15 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 330,
       content => template('apache/vhost/_filters.erb'),
+    }
+  }
+  # Template uses:
+  # - $limit_request_field_size
+  if $limit_request_field_size {
+    concat::fragment { "${name}-limits":
+      target  => "${priority_real}${filename}.conf",
+      order   => 330,
+      content => template('apache/vhost/_limits.erb'),
     }
   }
 
