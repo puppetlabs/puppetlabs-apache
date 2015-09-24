@@ -289,7 +289,7 @@ You can customize parameters when declaring the `apache` class. For instance, th
 
 ~~~ puppet
 class { 'apache':
-  default_vhosts => false,
+  default_vhost => false,
 }
 ~~~
 
