@@ -3,3 +3,6 @@ LDAPVerifyServerCert On
 <% else -%>
 LDAPVerifyServerCert Off
 <% end -%>
+<% if scope.lookupvar('::apache::version::distrelease') == '7' -%>
+LoadModule ldap_module modules/mod_ldap.so
+<% end -%>
