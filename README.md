@@ -1854,7 +1854,7 @@ Sets the list of resources to look for when a client requests an index of the di
 
 ##### `docroot`
 
-**Required**. Sets the [`DocumentRoot`][] location, from which Apache serves files.
+**Required**. Sets the [`DocumentRoot`][] location, from which Apache serves files. Can be explicitly set to undef if additional_includes is defined.
 
 ##### `docroot_group`
 
