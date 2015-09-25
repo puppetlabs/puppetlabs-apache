@@ -50,6 +50,7 @@ class apache::default_mods (
         include ::apache::mod::actions
         include ::apache::mod::authn_core
         include ::apache::mod::cache
+        include ::apache::mod::ext_filter
         include ::apache::mod::mime
         include ::apache::mod::mime_magic
         include ::apache::mod::rewrite
@@ -63,7 +64,6 @@ class apache::default_mods (
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
         ::apache::mod { 'expires': }
-        ::apache::mod { 'ext_filter': }
         ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }

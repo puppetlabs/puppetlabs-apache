@@ -48,6 +48,7 @@
 [`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::event`]: #class-apachemodevent
+[`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
 [`apache::mod::passenger`]: #class-apachemodpassenger
@@ -145,6 +146,7 @@
 [`mod_authnz_external`]: https://code.google.com/p/mod-auth-external/
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
 [`mod_expires`]: http://httpd.apache.org/docs/current/mod/mod_expires.html
+[`mod_ext_filter`]: http://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
 [`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
 [`mod_info`]: https://httpd.apache.org/docs/current/mod/mod_info.html
@@ -1198,6 +1200,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `disk_cache` (see [`apache::mod::disk_cache`][])
 * `event` (see [`apache::mod::event`][])
 * `expires`
+* `ext_filter` (see [`apache::mod::ext_filter`][])
 * `fastcgi`
 * `fcgid`
 * `filter`
@@ -1344,6 +1347,23 @@ Installs [`mod_expires`][] and uses the `expires.conf.erb` template to generate 
 - `expires_active`: Enables generation of `Expires` headers for a document realm. Default: 'true'.
 - `expires_default`: Default algorithm for calculating expiration time using [`ExpiresByType`][] syntax or [interval syntax][]. Default: undef.
 - `expires_by_type`: Describes a set of [MIME `content-type`][] and their expiration times. Valid options: An [array][] of [Hashes][Hash], with each Hash's key a valid MIME `content-type` (i.e. 'text/json') and its value following valid [interval syntax][]. Default: undef.
+
+##### Class: `apache::mod::ext_filter`
+
+Installs and configures [`mod_ext_filter`][].
+
+~~~ puppet
+class{'apache::mod::ext_filter':
+  ext_filter_define => {
+    'slowdown'       => 'mode=output cmd=/bin/cat preservescontentlength',
+    'puppetdb-strip' => 'mode=output outtype=application/json cmd="pdb-resource-filter"',
+  },
+}
+~~~
+
+**Parameters within `apache::mod::ext_filter`**:
+
+- `ext_filter_define`: A hash of filter names and their parameters. Default: undef.
 
 ##### Class: `apache::mod::fcgid`
 
@@ -2649,6 +2669,22 @@ An array of hashes used to override the [ErrorDocument](https://httpd.apache.org
               'document'   => '/service-unavail',
             },
           ],
+        },
+      ],
+    }
+~~~
+
+###### `ext_filter_options`
+
+Sets the [ExtFilterOptions](http://httpd.apache.org/docs/current/mod/mod_ext_filter.html) directive.
+Note that you must delcare `class {'apache::mod::ext_filter': }` before using this directive.
+
+~~~ puppet
+    apache::vhost{ 'filter.example.org':
+      docroot => '/var/www/filter',
+      directories => [
+        { path               => '/var/www/filter',
+          ext_filter_options => 'LogStderr Onfail=abort',
         },
       ],
     }
