@@ -239,6 +239,9 @@
     SetEnv <%= setenv %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['set_output_filter'] -%>
+    SetOutputFilter <%= directory['set_output_filter'] %>
+    <%- end -%>
     <%- if @shibboleth_enabled -%>
       <%- if directory['shib_require_session'] and ! directory['shib_require_session'].empty? -%>
     ShibRequireSession <%= directory['shib_require_session'] %>
