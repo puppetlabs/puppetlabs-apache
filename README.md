@@ -2884,6 +2884,21 @@ Sets a `SetHandler` directive as per the [Apache Core documentation](http://http
     }
 ~~~
 
+###### `set_output_filter`
+
+Sets a `SetOutputFilter` directive as per [Apache Core documentation](http://httpd.apache.org/docs/current/mod/core.html#setoutputfilter). An example:
+
+~~~ puppet
+    apache::vhost{ 'filter.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path              => '/path/to/directory',
+          set_output_filter => puppetdb-strip-resource-params,
+        },
+      ],
+    }
+~~~
+
 ###### `rewrites`
 
 Creates URL [`rewrites`](#rewrites) rules in vhost directories. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'.

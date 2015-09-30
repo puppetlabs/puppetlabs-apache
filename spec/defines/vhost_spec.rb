@@ -190,6 +190,9 @@ describe 'apache::vhost', :type => :define do
               'index_options'     => ['FancyIndexing'],
               'index_style_sheet' => '/styles/style.css',
             },
+            { 'path'              => '/var/www/files/output_filtered',
+              'set_output_filter' => 'output_filter',
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -399,6 +402,8 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+IndexStyleSheet\s'\/styles\/style\.css'$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+DirectoryIndex\sdisabled$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+SetOutputFilter\soutput_filter$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
