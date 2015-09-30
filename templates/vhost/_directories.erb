@@ -198,6 +198,9 @@
     ExpiresByType <%= rule %>
     <%- end -%>
     <%- end -%>
+    <%- if directory['ext_filter_options'] -%>
+    ExtFilterOptions <%= directory['ext_filter_options'] %>
+    <%- end -%>
     <%- if directory['force_type'] -%>
     ForceType <%= directory['force_type'] %>
     <%- end -%>
