@@ -327,7 +327,7 @@ apache::vhost { 'user.example.com':
 
 #### Configuring virtual hosts with SSL
 
-To configure a virtual host to use [SSL encryption][] and default SSL certificates, set the [`ssl`][] parameter. You must also specify the [`port`][] parameter, typically with a value of '443', to accomodate HTTPS requests:
+To configure a virtual host to use [SSL encryption][] and default SSL certificates, set the [`ssl`][] parameter. You must also specify the [`port`][] parameter, typically with a value of '443', to accommodate HTTPS requests:
 
 ~~~ puppet
 apache::vhost { 'ssl.example.com':
