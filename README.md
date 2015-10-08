@@ -1126,7 +1126,7 @@ Changes your virtual host configuration files' location. Default: determined by 
 - **Gentoo**: `/etc/apache2/vhosts.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
-##### `vhost_enable_pattern`
+##### `vhost_include_pattern`
 
 Defines the pattern for files included from the `vhost_dir`. This defaults to '*', also for BC with previous versions of this module.
 

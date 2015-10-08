@@ -32,7 +32,7 @@ class apache::params inherits ::apache::version {
   # should we use systemd module?
   $use_systemd = true
 
-  $vhost_enable_pattern = '*'
+  $vhost_include_pattern = '*'
 
   if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
     $verify_command = '/usr/sbin/apache2ctl -t'
