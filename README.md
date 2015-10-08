@@ -1513,7 +1513,7 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 
 **Parameters within `apache::mod::ssl`**:
 
-- `ssl_cipher`: Default: 'HIGH:MEDIUM:!aNULL:!MD5'.
+- `ssl_cipher`: Default: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'.
 - `ssl_compression`: Default: 'false'.
 - `ssl_cryptodevice`: Default: 'builtin'.
 - `ssl_honorcipherorder`: Default: 'On'.
