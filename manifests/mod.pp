@@ -162,4 +162,6 @@ define apache::mod (
       }
     }
   }
+
+  Apache::Mod[$name] -> Anchor['::apache::modules_set_up']
 }

@@ -381,4 +381,8 @@ class apache (
       manage_docroot  => $default_ssl_vhost,
     }
   }
+
+  # This anchor can be used as a reference point for things that need to happen *after*
+  # all modules have been put in place.
+  anchor { '::apache::modules_set_up': }
 }
