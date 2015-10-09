@@ -1126,6 +1126,16 @@ Changes your virtual host configuration files' location. Default: determined by 
 - **Gentoo**: `/etc/apache2/vhosts.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
+##### `vhost_include_pattern`
+
+Defines the pattern for files included from the `vhost_dir`. This defaults to '*', also for BC with previous versions of this module.
+
+However, you may want to set this to a value like '[^.#]\*.conf[^~]' to make sure files accidentally created in this directory (from version
+control systems, editor backups or the like) are *not* included in your server configuration.
+
+A value of '*.conf' is what is shipped by some operating systems. Also note that this module will, by default, create config files ending
+in '.conf'.
+
 ##### `user`
 
 Changes the user Apache uses to answer requests. Apache's parent process will continue to be run as root, but child processes will access resources as the user defined by this parameter.
