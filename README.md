@@ -3046,7 +3046,7 @@ Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/ce
 
 ##### `ssl_protocol`
 
-Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array of accepted protocols. Defaults to 'all', '-SSLv2', '-SSLv3'.
+Specifies [SSLProtocol](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array or space separated string of accepted protocols. Defaults to 'all', '-SSLv2', '-SSLv3'.
 
 ##### `ssl_cipher`
 

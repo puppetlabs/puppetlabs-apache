@@ -1339,4 +1339,31 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.to be_file }
     end
   end
+
+  describe 'SSLProtocol directive' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        apache::vhost { 'test.server':
+          docroot => '/tmp',
+          ssl_protocol => ['All', '-SSLv2'],
+        }
+        apache::vhost { 'test2.server':
+          docroot => '/tmp',
+          ssl_protocol => 'All -SSLv2',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SSLProtocol All -SSLv2' }
+    end
+
+    describe file("#{$vhost_dir}/25-test2.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SSLProtocol All -SSLv2' }
+    end
+  end
 end
