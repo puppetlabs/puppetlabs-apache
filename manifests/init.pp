@@ -28,6 +28,7 @@ class apache (
   $default_ssl_crl        = undef,
   $default_ssl_crl_check  = undef,
   $default_type           = 'none',
+  $dev_packages           = $::apache::params::dev_packages,
   $ip                     = undef,
   $service_enable         = true,
   $service_manage         = true,

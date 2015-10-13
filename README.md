@@ -889,6 +889,20 @@ Configures a default virtual host when the class is declared. Valid options: Boo
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to 'false'.
 
+##### `dev_packages`
+
+Configures a specific dev package to use. Valid options: String.  Default: 'OS default httpd dev package'.
+
+Example for using httpd 2.4 from the IUS yum repo:
+
+~~~ puppet
+include ::apache::dev
+class { 'apache':
+  apache_name  => 'httpd24u',
+  dev_packages => 'httpd24u-devel',
+}
+~~~
+
 ##### `docroot`
 
 Sets the default [`DocumentRoot`][] location. Default: Determined by your operating system.
