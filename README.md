@@ -133,6 +133,7 @@
 [`logroot`]: #logroot
 [Log security]: http://httpd.apache.org/docs/current/logs.html#security
 
+[`manage_docroot`]: #manage_docroot
 [`manage_user`]: #manage_user
 [`manage_group`]: #manage_group
 [`MaxConnectionsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxconnectionsperchild
@@ -1885,6 +1886,8 @@ Sets the list of resources to look for when a client requests an index of the di
 ##### `docroot`
 
 **Required**. Sets the [`DocumentRoot`][] location, from which Apache serves files.
+
+If `docroot` and [`manage_docroot`][] are both set to `false`, no [`DocumentRoot`][] will be set and the accompanying `<Directory /path/to/directory>` block will not be created.
 
 ##### `docroot_group`
 

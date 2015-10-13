@@ -227,6 +227,12 @@ define apache::vhost(
   if $limit_request_field_size {
     validate_integer($limit_request_field_size)
   }
+
+  # Validate the docroot as a string if:
+  # - $manage_docroot is true
+  if $manage_docroot {
+    validate_string($docroot)
+  }
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
@@ -271,7 +277,7 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) and $manage_docroot {
+  if $manage_docroot and $docroot and ! defined(File[$docroot]) {
     file { $docroot:
       ensure  => directory,
       owner   => $docroot_owner,
@@ -443,7 +449,7 @@ define apache::vhost(
       fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
     }
     $_directories = $directories
-  } else {
+  } elsif $docroot {
     $_directory = {
       provider       => 'directory',
       path           => $docroot,
@@ -518,10 +524,12 @@ define apache::vhost(
   # Template uses:
   # - $virtual_docroot
   # - $docroot
-  concat::fragment { "${name}-docroot":
-    target  => "${priority_real}${filename}.conf",
-    order   => 10,
-    content => template('apache/vhost/_docroot.erb'),
+  if $docroot {
+    concat::fragment { "${name}-docroot":
+      target  => "${priority_real}${filename}.conf",
+      order   => 10,
+      content => template('apache/vhost/_docroot.erb'),
+    }
   }
 
   # Template uses:

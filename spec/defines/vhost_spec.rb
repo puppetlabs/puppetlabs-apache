@@ -612,6 +612,16 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-limits') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
     end
+    context 'when not setting nor managing the docroot' do
+      let :params do
+        {
+          'docroot'                     => false,
+          'manage_docroot'              => false,
+        }
+      end
+      it { is_expected.to compile }
+      it { is_expected.not_to contain_concat__fragment('rspec.example.com-docroot') }
+    end
   end
   describe 'access logs' do
     let :facts do
