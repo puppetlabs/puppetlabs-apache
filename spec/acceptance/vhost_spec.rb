@@ -1345,11 +1345,13 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'test.server':
-          docroot => '/tmp',
+          docroot      => '/tmp',
+          ssl          => true,
           ssl_protocol => ['All', '-SSLv2'],
         }
         apache::vhost { 'test2.server':
-          docroot => '/tmp',
+          docroot      => '/tmp',
+          ssl          => true,
           ssl_protocol => 'All -SSLv2',
         }
       EOS
@@ -1358,12 +1360,12 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'SSLProtocol All -SSLv2' }
+      it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
     end
 
     describe file("#{$vhost_dir}/25-test2.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'SSLProtocol All -SSLv2' }
+      it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
     end
   end
 end
