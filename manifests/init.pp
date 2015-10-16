@@ -55,7 +55,7 @@ class apache (
   $conf_template          = $::apache::params::conf_template,
   $servername             = $::apache::params::servername,
   $pidfile                = $::apache::params::pidfile,
-  $rewrite_lock           = false,
+  $rewrite_lock           = undef,
   $manage_user            = true,
   $manage_group           = true,
   $user                   = $::apache::params::user,
@@ -297,6 +297,10 @@ class apache (
       default   => false
     }
 
+    if $rewrite_lock {
+      validate_absolute_path($rewrite_lock)
+    }
+
     # Template uses:
     # - $pidfile
     # - $user
@@ -318,6 +322,7 @@ class apache (
     # - $server_tokens
     # - $server_signature
     # - $trace_enable
+    # - $rewrite_lock
     file { "${::apache::conf_dir}/${::apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
