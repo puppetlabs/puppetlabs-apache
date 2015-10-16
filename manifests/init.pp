@@ -55,6 +55,7 @@ class apache (
   $conf_template          = $::apache::params::conf_template,
   $servername             = $::apache::params::servername,
   $pidfile                = $::apache::params::pidfile,
+  $rewrite_lock           = false,
   $manage_user            = true,
   $manage_group           = true,
   $user                   = $::apache::params::user,
