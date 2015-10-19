@@ -11,6 +11,10 @@ KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
 
+<%- if @rewrite_lock and scope.function_versioncmp([@apache_version, '2.2']) <= 0 -%>
+RewriteLock <%= @rewrite_lock %>
+<%- end -%>
+
 User <%= @user %>
 Group <%= @group %>
 

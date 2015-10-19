@@ -1065,6 +1065,12 @@ If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parame
 
 Setting `purge_vhost_dir` to 'false' is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 
+##### `rewrite_lock`
+
+Allows setting a custom location for a rewrite lock - considered best practice if using a RewriteMap of type prg in the [`rewrites`][] parameter of your vhost. Default: 'undef'.
+
+This parameter only applies to Apache version 2.2 or lower and is ignored on newer versions.
+
 ##### `sendfile`
 
 Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the [`EnableSendfile`][] directive. Valid options: 'On', 'Off'. Default: 'On'.
@@ -2023,7 +2029,7 @@ Usage typically looks like:
       krb_method_negotiate   => 'on',
       krb_auth_realms        => ['EXAMPLE.ORG'],
       krb_local_user_mapping => 'on',
-      directories            => { 
+      directories            => {
         path         => '/var/www/html',
         auth_name    => 'Kerberos Login',
         auth_type    => 'Kerberos',
