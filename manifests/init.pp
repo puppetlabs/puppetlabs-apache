@@ -327,7 +327,7 @@ class apache (
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
-      require => Package['httpd'],
+      require => [Package['httpd'], File[$ports_file]],
     }
 
     # preserve back-wards compatibility to the times when default_mods was
