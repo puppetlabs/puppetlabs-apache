@@ -36,6 +36,24 @@ describe 'apache::custom_config define', :unless => UNSUPPORTED_PLATFORMS.includ
     end
   end
 
+  context 'with a custom filename' do
+    it 'should store content in the described file' do
+      pp = <<-EOS
+        class { 'apache': }
+        apache::custom_config { 'filename_test':
+          filename => 'custom_filename',
+          content  => '# just another comment',
+        }
+      EOS
+
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$confd_dir}/custom_filename") do
+      it { is_expected.to contain '# just another comment' }
+    end
+  end
+
   describe 'custom_config without priority prefix' do
     it 'applies cleanly' do
       pp = <<-EOS

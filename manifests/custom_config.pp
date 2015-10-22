@@ -7,6 +7,7 @@ define apache::custom_config (
   $source         = undef,
   $verify_command = $::apache::params::verify_command,
   $verify_config  = true,
+  $filename       = undef,
 ) {
 
   if $content and $source {
@@ -23,15 +24,19 @@ define apache::custom_config (
 
   validate_bool($verify_config)
 
-  if $priority {
-    $priority_prefix = "${priority}-"
+  if $filename {
+    $_filename = $filename
   } else {
-    $priority_prefix = ''
-  }
+    if $priority {
+      $priority_prefix = "${priority}-"
+    } else {
+      $priority_prefix = ''
+    }
 
-  ## Apache include does not always work with spaces in the filename
-  $filename_middle = regsubst($name, ' ', '_', 'G')
-  $filename = "${priority_prefix}${filename_middle}.conf"
+    ## Apache include does not always work with spaces in the filename
+    $filename_middle = regsubst($name, ' ', '_', 'G')
+    $_filename = "${priority_prefix}${filename_middle}.conf"
+  }
 
   if ! $verify_config or $ensure == 'absent' {
     $notifies = Class['Apache::Service']
@@ -41,7 +46,7 @@ define apache::custom_config (
 
   file { "apache_${name}":
     ensure  => $ensure,
-    path    => "${confdir}/${filename}",
+    path    => "${confdir}/${_filename}",
     content => $content,
     source  => $source,
     require => Package['httpd'],
@@ -59,7 +64,7 @@ define apache::custom_config (
     }
 
     exec { "remove ${name} if invalid":
-      command     => "/bin/rm ${confdir}/${filename}",
+      command     => "/bin/rm ${confdir}/${_filename}",
       unless      => $verify_command,
       subscribe   => File["apache_${name}"],
       refreshonly => true,
