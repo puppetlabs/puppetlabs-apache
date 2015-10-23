@@ -66,7 +66,7 @@ describe 'apache::custom_config define', :unless => UNSUPPORTED_PLATFORMS.includ
         # ports.conf is written. This should trigger a dependency cycle
         File["#{$conf_file}"] -> Apache::Custom_config['ordering_test'] -> File["#{$ports_file}"]
       EOS
-      expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/Failed to apply catalog: Found 1 dependency cycle/i)
+      expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/Found 1 dependency cycle/i)
     end
 
     describe file("#{$confd_dir}/25-ordering_test.conf") do
