@@ -95,6 +95,15 @@ Include "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
 <%- end -%>
 <% end -%>
 
+<% if @additional_include_dir -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+IncludeOptional "<%= @additional_include_dir %>/<%= @additional_include_pattern %>"
+<%- else -%>
+Include "<%= @additional_include_dir %>/<%= @additional_include_pattern %>"
+<%- end -%>
+<% end -%>
+
+
 <% if @error_documents -%>
 # /usr/share/apache2/error on debian
 Alias /error/ "<%= @error_documents_path %>/"
