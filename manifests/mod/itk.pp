@@ -43,6 +43,29 @@ class apache::mod::itk (
   }
 
   case $::osfamily {
+    'redhat': {
+      package { 'httpd-itk':
+        ensure => present,
+      }
+      if versioncmp($apache_version, '2.4') >= 0 {
+        ::apache::mpm{ 'prefork':
+          apache_version => $apache_version,
+        }
+        ::apache::mpm{ 'itk':
+          apache_version => $apache_version,
+        }
+      }
+      else {
+        file_line { '/etc/sysconfig/httpd itk enable':
+          ensure  => present,
+          path    => '/etc/sysconfig/httpd',
+          line    => 'HTTPD=/usr/sbin/httpd.itk',
+          match   => '#?HTTPD=/usr/sbin/httpd.itk',
+          require => Package['httpd'],
+          notify  => Class['apache::service'],
+        }
+      }
+    }
     'debian', 'freebsd': {
       apache::mpm{ 'itk':
         apache_version => $apache_version,
