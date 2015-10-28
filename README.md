@@ -907,7 +907,7 @@ class { 'apache':
 
 Sets the default [`DocumentRoot`][] location. Default: Determined by your operating system.
 
-- **Debian**: `/var/www`
+- **Debian**: `/var/www/html`
 - **FreeBSD**: `/usr/local/www/apache22/data`
 - **Gentoo**: `/var/www/localhost/htdocs`
 - **Red Hat**: `/var/www/html`
