@@ -43,6 +43,16 @@ class apache::mod::itk (
   }
 
   case $::osfamily {
+    'redhat': {
+      file { '/etc/sysconfig/httpd':
+        ensure  => file,
+        content => 'HTTPD=/usr/sbin/httpd.itk',
+        notify  => Service['httpd'],
+      }
+      package { 'httpd-itk':
+        ensure => $::apache::package_ensure,
+      }
+    }
     'debian', 'freebsd': {
       apache::mpm{ 'itk':
         apache_version => $apache_version,
