@@ -1533,6 +1533,7 @@ Default values depend on your operating system.
 - `source`: Defines the path to the default configuration. Valid options include a `puppet:///` paths.
 - `template`: Defines the path to the `php.conf` template Puppet uses to generate the configuration file.
 - `content`: Adds arbitrary content to `php.conf`.
+- `additional_packages`: Takes an array of arbitrary package names to install. For example, `additional_packages => ["php-mysql", "php-pdo"]`.
 
 ##### Class: `apache::mod::reqtimeout`
 
