@@ -3352,7 +3352,7 @@ RS_DEBUG=yes bundle exec rspec spec/acceptance
 #### Testing quickstart: Ruby = 1.8.7
 
 ~~~
-gem install bundler
+gem install bundler --version 1.10.5
 bundle install --without system_tests
 bundle exec rake spec
 ~~~
