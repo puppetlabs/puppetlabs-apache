@@ -3,8 +3,8 @@ class { 'apache': }
 
 # Example from README adapted.
 apache::vhost { 'readme.example.net':
-  docroot     => '/var/www/html',
-  filters             => [
+  docroot => '/var/www/html',
+  filters => [
     'FilterDeclare   COMPRESS',
     'FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/html',
     'FilterProvider  COMPRESS  DEFLATE resp=Content-Type $text/css',
