@@ -345,8 +345,8 @@ define apache::vhost(
 
   if $ip {
     if $port {
-      $listen_addr_port = "${ip}:${port}"
-      $nvh_addr_port = "${ip}:${port}"
+      $listen_addr_port = suffix(any2array($ip),":${port}")
+      $nvh_addr_port = suffix(any2array($ip),":${port}")
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $ip
@@ -370,13 +370,13 @@ define apache::vhost(
     if $ip and defined(Apache::Listen["${port}"]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
-    if ! defined(Apache::Listen["${listen_addr_port}"]) and $listen_addr_port and $ensure == 'present' {
-      ::apache::listen { "${listen_addr_port}": }
+    if $listen_addr_port and $ensure == 'present' {
+      ensure_resource('apache::listen', $listen_addr_port)
     }
   }
   if ! $ip_based {
-    if ! defined(Apache::Namevirtualhost[$nvh_addr_port]) and $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
-      ::apache::namevirtualhost { $nvh_addr_port: }
+    if $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
+      ensure_resource('apache::namevirtualhost', $nvh_addr_port)
     }
   }
 

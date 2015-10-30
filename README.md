@@ -400,6 +400,16 @@ apache::vhost { 'ip.example.com':
 }
 ~~~
 
+It is also possible to configure more than one IP address per vhost by using an array of IP addresses for the [`ip`][] parameter:
+
+~~~ puppet
+apache::vhost { 'ip.example.com':
+  ip      => ['127.0.0.1','169.254.1.1'],
+  port    => '80',
+  docroot => '/var/www/ip',
+}
+~~~
+
 To configure a virtual host with [aliased servers][], refer to the aliases using the [`serveraliases`][] parameter:
 
 ~~~ puppet
@@ -907,7 +917,7 @@ class { 'apache':
 
 Sets the default [`DocumentRoot`][] location. Default: Determined by your operating system.
 
-- **Debian**: `/var/www`
+- **Debian**: `/var/www/html`
 - **FreeBSD**: `/usr/local/www/apache22/data`
 - **Gentoo**: `/var/www/localhost/htdocs`
 - **Red Hat**: `/var/www/html`

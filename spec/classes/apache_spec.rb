@@ -235,6 +235,18 @@ describe 'apache', :type => :class do
       end
     end
 
+    context "8" do
+      let :facts do
+        super().merge({
+          :lsbdistcodename        => 'jessie',
+          :operatingsystemrelease => '8'
+        })
+      end
+      it { is_expected.to contain_file("/var/www/html").with(
+        'ensure'  => 'directory'
+         )
+        }
+      end
     context "on Ubuntu" do
       let :facts do
         super().merge({
@@ -242,6 +254,18 @@ describe 'apache', :type => :class do
         })
       end
 
+      context "14.04" do
+        let :facts do
+          super().merge({
+            :lsbdistrelease         => '14.04',
+            :operatingsystemrelease => '14.04'
+          })
+        end
+        it { is_expected.to contain_file("/var/www/html").with(
+          'ensure'  => 'directory'
+          )
+        }
+      end
       context "13.10" do
         let :facts do
           super().merge({
