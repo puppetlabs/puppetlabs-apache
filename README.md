@@ -1093,6 +1093,8 @@ Sets the Apache server administrator's contact information via Apache's [`Server
 
 Sets the Apache server name via Apache's [`ServerName`][] directive. Default: the 'fqdn' fact reported by [Facter][].
 
+Setting to false will not set ServerName at all.
+
 ##### `server_root`
 
 Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive. Default: determined by your operating system.

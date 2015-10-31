@@ -4,7 +4,9 @@
 # ************************************
 
 <VirtualHost <%= [@nvh_addr_port].flatten.compact.join(' ') %>>
+<% if @servername -%>
   ServerName <%= @servername %>
+<% end -%>
 <% if @serveradmin -%>
   ServerAdmin <%= @serveradmin %>
 <% end -%>
