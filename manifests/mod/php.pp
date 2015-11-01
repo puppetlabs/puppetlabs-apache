@@ -63,7 +63,7 @@ class apache::mod::php (
 
   if $additional_packages {
     package { $additional_packages:
-      ensure => "installed",
+      ensure => 'installed',
       notify => Class['apache::service'],
     }
   }
