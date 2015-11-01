@@ -218,22 +218,66 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
 
     describe file("#{$vhost_dir}/25-example.com.conf") do
-      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 ::1:80>' }
+      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 [::1]:80>' }
       it { is_expected.to contain "ServerName example.com" }
     end
 
     describe file($ports_file) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Listen 127.0.0.1:80' }
-      it { is_expected.to contain 'Listen ::1:80' }
+      it { is_expected.to contain 'Listen [::1]:80' }
       it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
-      it { is_expected.not_to contain 'NameVirtualHost ::1:80' }
+      it { is_expected.not_to contain 'NameVirtualHost [::1]:80' }
     end
 
     it 'should answer to ipv4.example.com' do
       shell("/usr/bin/curl ipv4.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         expect(r.stdout).to eq("Hello from vhost\n")
       end
+    end
+
+    it 'should answer to ipv6.example.com' do
+      shell("/usr/bin/curl ipv6.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+  end
+
+  context 'new vhost with IPv6 address on port 80' do
+    it 'should configure one apache vhost with an ipv6 address' do
+      pp = <<-EOS
+        class { 'apache':
+          default_vhost  => false,
+        }
+        apache::vhost { 'example.com':
+          port           => '80',
+          ip             => '::1',
+          ip_based       => true,
+          docroot        => '/var/www/html',
+        }
+        host { 'ipv6.example.com': ip => '::1', }
+        file { '/var/www/html/index.html':
+          ensure  => file,
+          content => "Hello from vhost\\n",
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe file("#{$vhost_dir}/25-example.com.conf") do
+      it { is_expected.to contain '<VirtualHost [::1]:80>' }
+      it { is_expected.to contain "ServerName example.com" }
+    end
+
+    describe file($ports_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Listen [::1]:80' }
+      it { is_expected.not_to contain 'NameVirtualHost [::1]:80' }
     end
 
     it 'should answer to ipv6.example.com' do

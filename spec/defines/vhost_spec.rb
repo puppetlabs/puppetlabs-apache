@@ -487,12 +487,46 @@ describe 'apache::vhost', :type => :define do
 
       it { is_expected.to compile }
       it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-        :content => /[.\/m]*<VirtualHost 127.0.0.1:80 ::1:80>[.\/m]*$/ ) }
+        :content => /[.\/m]*<VirtualHost 127.0.0.1:80 \[::1\]:80>[.\/m]*$/ ) }
       it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
-      it { is_expected.to contain_concat__fragment('Listen ::1:80') }
+      it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
       it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
-      it { is_expected.to_not contain_concat__fragment('NameVirtualHost ::1:80') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost [::1]:80') }
     end
+
+    context 'vhost with ipv6 address' do
+      let :params do
+        {
+          'port'                        => '80',
+          'ip'                          => '::1',
+          'ip_based'                    => true,
+          'servername'                  => 'example.com',
+          'docroot'                     => '/var/www/html',
+          'add_listen'                  => true,
+          'ensure'                      => 'present'
+        }
+      end
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :kernelversion          => '3.6.2',
+          :is_pe                  => false,
+        }
+      end
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+        :content => /[.\/m]*<VirtualHost \[::1\]:80>[.\/m]*$/ ) }
+      it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost [::1]:80') }
+    end
+
     context 'set only aliases' do
       let :params do
         {

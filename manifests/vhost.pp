@@ -344,12 +344,13 @@ define apache::vhost(
   }
 
   if $ip {
+    $_ip = enclose_ipv6($ip)
     if $port {
-      $listen_addr_port = suffix(any2array($ip),":${port}")
-      $nvh_addr_port = suffix(any2array($ip),":${port}")
+      $listen_addr_port = suffix(any2array($_ip),":${port}")
+      $nvh_addr_port = suffix(any2array($_ip),":${port}")
     } else {
       $listen_addr_port = undef
-      $nvh_addr_port = $ip
+      $nvh_addr_port = $_ip
       if ! $servername and ! $ip_based {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
       }
@@ -798,7 +799,7 @@ define apache::vhost(
   # - $krb_method_k5passwd
   # - $krb_authoritative
   # - $krb_auth_realms
-  # - $krb_5keytab 
+  # - $krb_5keytab
   # - $krb_local_user_mapping
   if $auth_kerb {
     concat::fragment { "${name}-auth_kerb":
