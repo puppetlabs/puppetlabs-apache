@@ -26,6 +26,22 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_file("php5.load").with(
         :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
       ) }
+      context 'with additional php packages' do
+        let :params do {
+          :additional_packages => ['php-http', 'php-pear' ]
+        }
+        end
+        it { is_expected.to contain_package("php-http").with(
+          'notify' => 'Class[Apache::Service]',
+          'ensure' => 'installed'
+          )
+        }
+        it { is_expected.to contain_package("php-pear").with(
+          'notify' => 'Class[Apache::Service]',
+          'ensure' => 'installed'
+          )
+        }
+      end
     end
     context "with mpm_module => itk" do
       let :pre_condition do
@@ -88,7 +104,7 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :extensions => ['.php','.php5']}
       end
-      it { is_expected.to contain_file("php5.conf").with_content(/AddHandler php5-script .php .php5\n/) }
+      it { is_expected.to contain_file("php5.conf").with_content %r{<FilesMatch \"\.\+\\\.\(php\|php5\)\$\">} }
     end
     context "with specific version" do
       let :pre_condition do
