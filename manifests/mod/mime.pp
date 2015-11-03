@@ -1,6 +1,7 @@
 class apache::mod::mime (
   $mime_support_package = $::apache::params::mime_support_package,
   $mime_types_config    = $::apache::params::mime_types_config,
+  $mime_types_additional = $::apache::mime_types_additional,
 ) {
   apache::mod { 'mime': }
   # Template uses $mime_types_config

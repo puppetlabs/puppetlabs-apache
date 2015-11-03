@@ -29,6 +29,19 @@ class apache::params inherits ::apache::version {
   $log_level = 'warn'
   $use_optional_includes = false
 
+  # Default mime types settings
+  $mime_types_additional = {
+    'AddHandler' => {
+      'type-map' => 'var'
+      },
+    'AddType'    => {
+      'type-map' => '.shtml'
+      },
+    'AddOutputFilter' => {
+      'INCLUDES'      => '.shtml'
+      },
+  }
+
   # should we use systemd module?
   $use_systemd = true
 
