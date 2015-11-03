@@ -93,6 +93,6 @@ ModPagespeedMessageBufferSize <%= @message_buffer_size %>
     SetHandler mod_pagespeed_message
 </Location>
 
-<% @additional_configuration.each_pair do |key, value| -%>
-<%= key %> <%= value %>
+<% @additional_configuration.each do |entry| -%>
+<%= entry %>
 <% end -%>
