@@ -2,7 +2,7 @@ class apache::mod::nss (
   $transfer_log = "${::apache::params::logroot}/access.log",
   $error_log    = "${::apache::params::logroot}/error.log",
   $passwd_file  = undef,
-  $nss_port	= 8443
+  $nss_port     = 8443
 ) {
   include ::apache::mod::mime
 
