@@ -10,6 +10,11 @@ Takes an array of ip addresses and encloses the ipv6 addresses with square brack
 
     require 'ipaddr'
 
+    rescuable_exceptions = [ ArgumentError ]
+    if defined?(IPAddr::InvalidAddressError)
+	    rescuable_exceptions << IPAddr::InvalidAddressError
+    end
+
     if (arguments.size != 1) then
       raise(Puppet::ParseError, "enclose_ipv6(): Wrong number of arguments "+
         "given #{arguments.size} for 1")
@@ -25,7 +30,7 @@ Takes an array of ip addresses and encloses the ipv6 addresses with square brack
     input.each do |val|
       begin
         ip = IPAddr.new(val)
-      rescue ArgumentError
+      rescue *rescuable_exceptions
         raise(Puppet::ParseError, "enclose_ipv6(): Wrong argument "+
           "given #{val} is not an ip address.")
       end
