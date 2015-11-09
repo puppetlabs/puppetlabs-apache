@@ -131,6 +131,9 @@ define apache::vhost(
   $krb_auth_realms             = [],
   $krb_5keytab                 = undef,
   $krb_local_user_mapping      = undef,
+  $krb_verify_kdc              = 'on',
+  $krb_servicename             = 'HTTP',
+  $krb_save_credentials        = 'off',
   $limit_request_field_size    = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
