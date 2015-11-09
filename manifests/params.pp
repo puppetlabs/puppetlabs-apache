@@ -35,7 +35,7 @@ class apache::params inherits ::apache::version {
       'type-map' => 'var'
       },
     'AddType'    => {
-      'type-map' => '.shtml'
+      'text/html' => '.shtml'
       },
     'AddOutputFilter' => {
       'INCLUDES'      => '.shtml'
