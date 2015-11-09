@@ -33,7 +33,7 @@ describe 'apache::mod::mime class', :unless => UNSUPPORTED_PLATFORMS.include?(fa
     describe file("#{mod_dir}/mime.conf") do
       it { is_expected.to contain "AddType application/x-compress .Z" }
       it { is_expected.to contain "AddHandler type-map var\n" }
-      it { is_expected.to contain "AddType type-map .shtml\n" }
+      it { is_expected.to contain "AddType text/html .shtml\n" }
       it { is_expected.to contain "AddOutputFilter INCLUDES .shtml\n" }
     end
   end
