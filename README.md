@@ -2074,6 +2074,18 @@ Location of the Kerberos V5 keytab file. Not set by default.
 
 Strips @REALM from username for further use. Not set by default.
 
+##### `krb_verify_kdc`
+
+This option can be used to disable the verification tickets against local keytab to prevent KDC spoofing attacks. Default is 'on'
+
+##### `krb_servicename`
+
+Specifies the service name that will be used by Apache for authentication. Corresponding key of this name must be stored in the keytab. Default is 'HTTP'
+
+##### `krb_save_credentials`
+
+This option enables credential saving functionality. Default is 'off'
+
 ##### `limit_request_field_size`
 
 [Limits](http://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize) the size of the HTTP request header allowed from the client. Default is 'undef'.

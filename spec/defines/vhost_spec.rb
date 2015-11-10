@@ -456,6 +456,12 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Krb5Keytab\s\/tmp\/keytab5$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbLocalUserMapping\soff$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbServiceName\sHTTP$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbSaveCredentials\soff$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
+        :content => /^\s+KrbVerifyKDC\son$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-limits').with(
         :content => /^\s+LimitRequestFieldSize\s54321$/)}
     end
