@@ -709,7 +709,7 @@ define apache::vhost(
 
     # Template uses:
     # - $rack_base_uris
-     if $rack_base_uris {
+    if $rack_base_uris {
       concat::fragment { "${name}-rack":
         target  => "${priority_real}${filename}.conf",
         order   => 150,
