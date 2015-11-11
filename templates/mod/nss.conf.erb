@@ -17,7 +17,7 @@
 # Note: Configurations that use IPv6 but not IPv4-mapped addresses need two
 #       Listen directives: "Listen [::]:8443" and "Listen 0.0.0.0:443"
 #
-Listen 8443
+Listen <%= @port %>
 
 ##
 ##  SSL Global Context
@@ -84,7 +84,7 @@ NSSRequireSafeNegotiation off
 ## SSL Virtual Host Context
 ##
 
-<VirtualHost _default_:8443>
+<VirtualHost _default_:<%= @nss_port %>>
 
 #   General setup for the virtual host
 #DocumentRoot "/etc/httpd/htdocs"
