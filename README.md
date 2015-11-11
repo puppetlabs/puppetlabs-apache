@@ -78,6 +78,7 @@
 [`content`]: #content
 [custom error documents]: http://httpd.apache.org/docs/current/custom-error.html
 [`custom_fragment`]: #custom_fragment
+[`raw_vhost`]: #raw_vhost
 
 [`default_mods`]: #default_mods
 [`default_ssl_crl`]: #default_ssl_crl
@@ -1902,6 +1903,10 @@ Specifies the list of things to which Apache blocks access. Valid option: 'scm',
 ##### `custom_fragment`
 
 Passes a string of custom configuration directives to place at the end of the virtual host configuration. Default: 'undef'.
+
+##### `custom_fragment`
+
+Passes a string that contains raw content to generate vhost. It will be mutually exclusive with the other options for parameterizing vhost template. Default: 'undef'.
 
 ##### `default_vhost`
 
