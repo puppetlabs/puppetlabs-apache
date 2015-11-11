@@ -462,7 +462,7 @@ define apache::vhost(
 
   # if raw vhost, just define the final content of vhost
   if $raw_vhost {
-    file { "${priority_real}{$filename}.conf":
+    file { "${priority_real}${filename}.conf":
       ensure  => $ensure,
       content => $raw_vhost,
       owner   => 'root',
