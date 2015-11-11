@@ -103,6 +103,7 @@ define apache::vhost(
   $wsgi_pass_authorization     = undef,
   $wsgi_chunked_request        = undef,
   $custom_fragment             = undef,
+  $raw_vhost                   = undef,
   $itk                         = undef,
   $action                      = undef,
   $fastcgi_server              = undef,
@@ -221,6 +222,10 @@ define apache::vhost(
     validate_string($custom_fragment)
   }
 
+  if $raw_vhost {
+    validate_string($raw_vhost)
+  }
+
   if $allow_encoded_slashes {
     validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
   }
@@ -278,6 +283,15 @@ define apache::vhost(
   ## Apache include does not always work with spaces in the filename
   $filename = regsubst($name, ' ', '_', 'G')
 
+  # if we use raw vhost option, we do not need to depend
+  # on concat, because we have the final content already on place
+  if $raw_vhost {
+    $before_dependency = []
+  }
+  else {
+    $before_dependency = Concat["${priority_real}${filename}.conf"]
+  }
+
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
   if $manage_docroot and $docroot and ! defined(File[$docroot]) {
@@ -287,7 +301,7 @@ define apache::vhost(
       group   => $docroot_group,
       mode    => $docroot_mode,
       require => Package['httpd'],
-      before  => Concat["${priority_real}${filename}.conf"],
+      before  => $before_dependency,
     }
   }
 
@@ -297,7 +311,7 @@ define apache::vhost(
       ensure  => $logroot_ensure,
       mode    => $logroot_mode,
       require => Package['httpd'],
-      before  => Concat["${priority_real}${filename}.conf"],
+      before  => $before_dependency,
     }
   }
 
@@ -446,536 +460,550 @@ define apache::vhost(
     }
   }
 
-  ## Create a default directory list if none defined
-  if $directories {
-    if !is_hash($directories) and !(is_array($directories) and is_hash($directories[0])) {
-      fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
-    }
-    $_directories = $directories
-  } elsif $docroot {
-    $_directory = {
-      provider       => 'directory',
-      path           => $docroot,
-      options        => $options,
-      allow_override => $override,
-      directoryindex => $directoryindex,
-    }
-
-    if versioncmp($apache_version, '2.4') >= 0 {
-      $_directory_version = {
-        require => 'all granted',
-      }
-    } else {
-      $_directory_version = {
-        order => 'allow,deny',
-        allow => 'from all',
-      }
-    }
-
-    $_directories = [ merge($_directory, $_directory_version) ]
-  }
-
-  ## Create a global LocationMatch if locations aren't defined
-  if $modsec_disable_ids {
-    if is_hash($modsec_disable_ids) {
-      $_modsec_disable_ids = $modsec_disable_ids
-    } elsif is_array($modsec_disable_ids) {
-      $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
-    } else {
-      fail("Apache::Vhost[${name}]: 'modsec_disable_ids' must be either a Hash of location/IDs or an Array of IDs")
-    }
-  }
-
-  concat { "${priority_real}${filename}.conf":
-    ensure  => $ensure,
-    path    => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
-    owner   => 'root',
-    group   => $::apache::params::root_group,
-    mode    => '0644',
-    order   => 'numeric',
-    require => Package['httpd'],
-    notify  => Class['apache::service'],
-  }
-  if $::apache::vhost_enable_dir {
-    $vhost_enable_dir = $::apache::vhost_enable_dir
-    $vhost_symlink_ensure = $ensure ? {
-      present => link,
-      default => $ensure,
-    }
-    file{ "${priority_real}${filename}.conf symlink":
-      ensure  => $vhost_symlink_ensure,
-      path    => "${vhost_enable_dir}/${priority_real}${filename}.conf",
-      target  => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
+  # if raw vhost, just define the final content of vhost
+  if $raw_vhost {
+    file { "${priority_real}{$filename}.conf":
+      ensure  => $ensure,
+      content => $raw_vhost,
       owner   => 'root',
       group   => $::apache::params::root_group,
       mode    => '0644',
-      require => Concat["${priority_real}${filename}.conf"],
+      require => Package['httpd'],
       notify  => Class['apache::service'],
     }
   }
+  else {
+    ## Create a default directory list if none defined
+    if $directories {
+      if !is_hash($directories) and !(is_array($directories) and is_hash($directories[0])) {
+        fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
+      }
+      $_directories = $directories
+    } elsif $docroot {
+      $_directory = {
+        provider       => 'directory',
+        path           => $docroot,
+        options        => $options,
+        allow_override => $override,
+        directoryindex => $directoryindex,
+      }
 
-  # Template uses:
-  # - $nvh_addr_port
-  # - $servername
-  # - $serveradmin
-  concat::fragment { "${name}-apache-header":
-    target  => "${priority_real}${filename}.conf",
-    order   => 0,
-    content => template('apache/vhost/_file_header.erb'),
-  }
+      if versioncmp($apache_version, '2.4') >= 0 {
+        $_directory_version = {
+          require => 'all granted',
+        }
+      } else {
+        $_directory_version = {
+          order => 'allow,deny',
+          allow => 'from all',
+        }
+      }
 
-  # Template uses:
-  # - $virtual_docroot
-  # - $docroot
-  if $docroot {
-    concat::fragment { "${name}-docroot":
-      target  => "${priority_real}${filename}.conf",
-      order   => 10,
-      content => template('apache/vhost/_docroot.erb'),
+      $_directories = [ merge($_directory, $_directory_version) ]
     }
-  }
 
-  # Template uses:
-  # - $aliases
-  if $aliases and ! empty($aliases) {
-    concat::fragment { "${name}-aliases":
-      target  => "${priority_real}${filename}.conf",
-      order   => 20,
-      content => template('apache/vhost/_aliases.erb'),
+    ## Create a global LocationMatch if locations aren't defined
+    if $modsec_disable_ids {
+      if is_hash($modsec_disable_ids) {
+        $_modsec_disable_ids = $modsec_disable_ids
+      } elsif is_array($modsec_disable_ids) {
+        $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
+      } else {
+        fail("Apache::Vhost[${name}]: 'modsec_disable_ids' must be either a Hash of location/IDs or an Array of IDs")
+      }
     }
-  }
 
-  # Template uses:
-  # - $itk
-  # - $::kernelversion
-  if $itk and ! empty($itk) {
-    concat::fragment { "${name}-itk":
-      target  => "${priority_real}${filename}.conf",
-      order   => 30,
-      content => template('apache/vhost/_itk.erb'),
+    concat { "${priority_real}${filename}.conf":
+      ensure  => $ensure,
+      path    => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
+      owner   => 'root',
+      group   => $::apache::params::root_group,
+      mode    => '0644',
+      order   => 'numeric',
+      require => Package['httpd'],
+      notify  => Class['apache::service'],
     }
-  }
-
-  # Template uses:
-  # - $fallbackresource
-  if $fallbackresource {
-    concat::fragment { "${name}-fallbackresource":
-      target  => "${priority_real}${filename}.conf",
-      order   => 40,
-      content => template('apache/vhost/_fallbackresource.erb'),
+    if $::apache::vhost_enable_dir {
+      $vhost_enable_dir = $::apache::vhost_enable_dir
+      $vhost_symlink_ensure = $ensure ? {
+        present => link,
+        default => $ensure,
+      }
+      file{ "${priority_real}${filename}.conf symlink":
+        ensure  => $vhost_symlink_ensure,
+        path    => "${vhost_enable_dir}/${priority_real}${filename}.conf",
+        target  => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
+        owner   => 'root',
+        group   => $::apache::params::root_group,
+        mode    => '0644',
+        require => Concat["${priority_real}${filename}.conf"],
+        notify  => Class['apache::service'],
+      }
     }
-  }
 
-  # Template uses:
-  # - $allow_encoded_slashes
-  if $allow_encoded_slashes {
-    concat::fragment { "${name}-allow_encoded_slashes":
+    # Template uses:
+    # - $nvh_addr_port
+    # - $servername
+    # - $serveradmin
+    concat::fragment { "${name}-apache-header":
       target  => "${priority_real}${filename}.conf",
-      order   => 50,
-      content => template('apache/vhost/_allow_encoded_slashes.erb'),
+      order   => 0,
+      content => template('apache/vhost/_file_header.erb'),
     }
-  }
 
-  # Template uses:
-  # - $_directories
-  # - $docroot
-  # - $apache_version
-  # - $suphp_engine
-  # - $shibboleth_enabled
-  if $_directories and ! empty($_directories) {
-    concat::fragment { "${name}-directories":
+    # Template uses:
+    # - $virtual_docroot
+    # - $docroot
+    if $docroot {
+      concat::fragment { "${name}-docroot":
+        target  => "${priority_real}${filename}.conf",
+        order   => 10,
+        content => template('apache/vhost/_docroot.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $aliases
+    if $aliases and ! empty($aliases) {
+      concat::fragment { "${name}-aliases":
+        target  => "${priority_real}${filename}.conf",
+        order   => 20,
+        content => template('apache/vhost/_aliases.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $itk
+    # - $::kernelversion
+    if $itk and ! empty($itk) {
+      concat::fragment { "${name}-itk":
+        target  => "${priority_real}${filename}.conf",
+        order   => 30,
+        content => template('apache/vhost/_itk.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $fallbackresource
+    if $fallbackresource {
+      concat::fragment { "${name}-fallbackresource":
+        target  => "${priority_real}${filename}.conf",
+        order   => 40,
+        content => template('apache/vhost/_fallbackresource.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $allow_encoded_slashes
+    if $allow_encoded_slashes {
+      concat::fragment { "${name}-allow_encoded_slashes":
+        target  => "${priority_real}${filename}.conf",
+        order   => 50,
+        content => template('apache/vhost/_allow_encoded_slashes.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $_directories
+    # - $docroot
+    # - $apache_version
+    # - $suphp_engine
+    # - $shibboleth_enabled
+    if $_directories and ! empty($_directories) {
+      concat::fragment { "${name}-directories":
+        target  => "${priority_real}${filename}.conf",
+        order   => 60,
+        content => template('apache/vhost/_directories.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $additional_includes
+    if $additional_includes and ! empty($additional_includes) {
+      concat::fragment { "${name}-additional_includes":
+        target  => "${priority_real}${filename}.conf",
+        order   => 70,
+        content => template('apache/vhost/_additional_includes.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $error_log
+    # - $log_level
+    # - $error_log_destination
+    # - $log_level
+    if $error_log or $log_level {
+      concat::fragment { "${name}-logging":
+        target  => "${priority_real}${filename}.conf",
+        order   => 80,
+        content => template('apache/vhost/_logging.erb'),
+      }
+    }
+
+    # Template uses no variables
+    concat::fragment { "${name}-serversignature":
       target  => "${priority_real}${filename}.conf",
-      order   => 60,
-      content => template('apache/vhost/_directories.erb'),
+      order   => 90,
+      content => template('apache/vhost/_serversignature.erb'),
     }
-  }
 
-  # Template uses:
-  # - $additional_includes
-  if $additional_includes and ! empty($additional_includes) {
-    concat::fragment { "${name}-additional_includes":
+    # Template uses:
+    # - $access_log
+    # - $_access_log_env_var
+    # - $access_log_destination
+    # - $_access_log_format
+    # - $_access_log_env_var
+    # - $access_logs
+    if $access_log or $access_logs {
+      concat::fragment { "${name}-access_log":
+        target  => "${priority_real}${filename}.conf",
+        order   => 100,
+        content => template('apache/vhost/_access_log.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $action
+    if $action {
+      concat::fragment { "${name}-action":
+        target  => "${priority_real}${filename}.conf",
+        order   => 110,
+        content => template('apache/vhost/_action.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $block
+    # - $apache_version
+    if $block and ! empty($block) {
+      concat::fragment { "${name}-block":
+        target  => "${priority_real}${filename}.conf",
+        order   => 120,
+        content => template('apache/vhost/_block.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $error_documents
+    if $error_documents and ! empty($error_documents) {
+      concat::fragment { "${name}-error_document":
+        target  => "${priority_real}${filename}.conf",
+        order   => 130,
+        content => template('apache/vhost/_error_document.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $proxy_dest
+    # - $proxy_pass
+    # - $proxy_pass_match
+    # - $proxy_preserve_host
+    # - $no_proxy_uris
+    if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
+      concat::fragment { "${name}-proxy":
+        target  => "${priority_real}${filename}.conf",
+        order   => 140,
+        content => template('apache/vhost/_proxy.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $rack_base_uris
+     if $rack_base_uris {
+      concat::fragment { "${name}-rack":
+        target  => "${priority_real}${filename}.conf",
+        order   => 150,
+        content => template('apache/vhost/_rack.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $passenger_base_uris
+    if $passenger_base_uris {
+      concat::fragment { "${name}-passenger_uris":
+        target  => "${priority_real}${filename}.conf",
+        order   => 155,
+        content => template('apache/vhost/_passenger_base_uris.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $redirect_source
+    # - $redirect_dest
+    # - $redirect_status
+    # - $redirect_dest_a
+    # - $redirect_source_a
+    # - $redirect_status_a
+    # - $redirectmatch_status
+    # - $redirectmatch_regexp
+    # - $redirectmatch_dest
+    # - $redirectmatch_status_a
+    # - $redirectmatch_regexp_a
+    # - $redirectmatch_dest
+    if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
+      concat::fragment { "${name}-redirect":
+        target  => "${priority_real}${filename}.conf",
+        order   => 160,
+        content => template('apache/vhost/_redirect.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $rewrites
+    # - $rewrite_base
+    # - $rewrite_rule
+    # - $rewrite_cond
+    # - $rewrite_map
+    if $rewrites or $rewrite_rule {
+      concat::fragment { "${name}-rewrite":
+        target  => "${priority_real}${filename}.conf",
+        order   => 170,
+        content => template('apache/vhost/_rewrite.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $scriptaliases
+    # - $scriptalias
+    if ( $scriptalias or $scriptaliases != [] ) {
+      concat::fragment { "${name}-scriptalias":
+        target  => "${priority_real}${filename}.conf",
+        order   => 180,
+        content => template('apache/vhost/_scriptalias.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $serveraliases
+    if $serveraliases and ! empty($serveraliases) {
+      concat::fragment { "${name}-serveralias":
+        target  => "${priority_real}${filename}.conf",
+        order   => 190,
+        content => template('apache/vhost/_serveralias.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $setenv
+    # - $setenvif
+    if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+      concat::fragment { "${name}-setenv":
+        target  => "${priority_real}${filename}.conf",
+        order   => 200,
+        content => template('apache/vhost/_setenv.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $ssl
+    # - $ssl_cert
+    # - $ssl_key
+    # - $ssl_chain
+    # - $ssl_certs_dir
+    # - $ssl_ca
+    # - $ssl_crl_path
+    # - $ssl_crl
+    # - $ssl_crl_check
+    # - $ssl_proxyengine
+    # - $ssl_protocol
+    # - $ssl_cipher
+    # - $ssl_honorcipherorder
+    # - $ssl_verify_client
+    # - $ssl_verify_depth
+    # - $ssl_proxy_machine_cert
+    # - $ssl_options
+    # - $ssl_openssl_conf_cmd
+    # - $apache_version
+    if $ssl {
+      concat::fragment { "${name}-ssl":
+        target  => "${priority_real}${filename}.conf",
+        order   => 210,
+        content => template('apache/vhost/_ssl.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $auth_kerb
+    # - $krb_method_negotiate
+    # - $krb_method_k5passwd
+    # - $krb_authoritative
+    # - $krb_auth_realms
+    # - $krb_5keytab 
+    # - $krb_local_user_mapping
+    if $auth_kerb {
+      concat::fragment { "${name}-auth_kerb":
+        target  => "${priority_real}${filename}.conf",
+        order   => 210,
+        content => template('apache/vhost/_auth_kerb.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $suphp_engine
+    # - $suphp_addhandler
+    # - $suphp_configpath
+    if $suphp_engine == 'on' {
+      concat::fragment { "${name}-suphp":
+        target  => "${priority_real}${filename}.conf",
+        order   => 220,
+        content => template('apache/vhost/_suphp.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $php_values
+    # - $php_flags
+    if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
+      concat::fragment { "${name}-php":
+        target  => "${priority_real}${filename}.conf",
+        order   => 220,
+        content => template('apache/vhost/_php.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $php_admin_values
+    # - $php_admin_flags
+    if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
+      concat::fragment { "${name}-php_admin":
+        target  => "${priority_real}${filename}.conf",
+        order   => 230,
+        content => template('apache/vhost/_php_admin.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $headers
+    if $headers and ! empty($headers) {
+      concat::fragment { "${name}-header":
+        target  => "${priority_real}${filename}.conf",
+        order   => 240,
+        content => template('apache/vhost/_header.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $request_headers
+    if $request_headers and ! empty($request_headers) {
+      concat::fragment { "${name}-requestheader":
+        target  => "${priority_real}${filename}.conf",
+        order   => 250,
+        content => template('apache/vhost/_requestheader.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $wsgi_application_group
+    # - $wsgi_daemon_process
+    # - $wsgi_daemon_process_options
+    # - $wsgi_import_script
+    # - $wsgi_import_script_options
+    # - $wsgi_process_group
+    # - $wsgi_script_aliases
+    # - $wsgi_pass_authorization
+    if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
+      concat::fragment { "${name}-wsgi":
+        target  => "${priority_real}${filename}.conf",
+        order   => 260,
+        content => template('apache/vhost/_wsgi.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $custom_fragment
+    if $custom_fragment {
+      concat::fragment { "${name}-custom_fragment":
+        target  => "${priority_real}${filename}.conf",
+        order   => 270,
+        content => template('apache/vhost/_custom_fragment.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $fastcgi_server
+    # - $fastcgi_socket
+    # - $fastcgi_dir
+    # - $apache_version
+    if $fastcgi_server or $fastcgi_dir {
+      concat::fragment { "${name}-fastcgi":
+        target  => "${priority_real}${filename}.conf",
+        order   => 280,
+        content => template('apache/vhost/_fastcgi.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $suexec_user_group
+    if $suexec_user_group {
+      concat::fragment { "${name}-suexec":
+        target  => "${priority_real}${filename}.conf",
+        order   => 290,
+        content => template('apache/vhost/_suexec.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $passenger_app_root
+    # - $passenger_app_env
+    # - $passenger_ruby
+    # - $passenger_min_instances
+    # - $passenger_start_timeout
+    # - $passenger_pre_start
+    if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+      concat::fragment { "${name}-passenger":
+        target  => "${priority_real}${filename}.conf",
+        order   => 300,
+        content => template('apache/vhost/_passenger.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $add_default_charset
+    if $add_default_charset {
+      concat::fragment { "${name}-charsets":
+        target  => "${priority_real}${filename}.conf",
+        order   => 310,
+        content => template('apache/vhost/_charsets.erb'),
+      }
+    }
+
+    # Template uses:
+    # - $modsec_disable_vhost
+    # - $modsec_disable_ids
+    # - $modsec_disable_ips
+    # - $modsec_body_limit
+    if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips {
+      concat::fragment { "${name}-security":
+        target  => "${priority_real}${filename}.conf",
+        order   => 320,
+        content => template('apache/vhost/_security.erb')
+      }
+    }
+
+    # Template uses:
+    # - $filters
+    if $filters and ! empty($filters) {
+      concat::fragment { "${name}-filters":
+        target  => "${priority_real}${filename}.conf",
+        order   => 330,
+        content => template('apache/vhost/_filters.erb'),
+      }
+    }
+    # Template uses:
+    # - $limit_request_field_size
+    if $limit_request_field_size {
+      concat::fragment { "${name}-limits":
+        target  => "${priority_real}${filename}.conf",
+        order   => 330,
+        content => template('apache/vhost/_limits.erb'),
+      }
+    }
+
+    # Template uses no variables
+    concat::fragment { "${name}-file_footer":
       target  => "${priority_real}${filename}.conf",
-      order   => 70,
-      content => template('apache/vhost/_additional_includes.erb'),
+      order   => 999,
+      content => template('apache/vhost/_file_footer.erb'),
     }
-  }
-
-  # Template uses:
-  # - $error_log
-  # - $log_level
-  # - $error_log_destination
-  # - $log_level
-  if $error_log or $log_level {
-    concat::fragment { "${name}-logging":
-      target  => "${priority_real}${filename}.conf",
-      order   => 80,
-      content => template('apache/vhost/_logging.erb'),
-    }
-  }
-
-  # Template uses no variables
-  concat::fragment { "${name}-serversignature":
-    target  => "${priority_real}${filename}.conf",
-    order   => 90,
-    content => template('apache/vhost/_serversignature.erb'),
-  }
-
-  # Template uses:
-  # - $access_log
-  # - $_access_log_env_var
-  # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
-  # - $access_logs
-  if $access_log or $access_logs {
-    concat::fragment { "${name}-access_log":
-      target  => "${priority_real}${filename}.conf",
-      order   => 100,
-      content => template('apache/vhost/_access_log.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $action
-  if $action {
-    concat::fragment { "${name}-action":
-      target  => "${priority_real}${filename}.conf",
-      order   => 110,
-      content => template('apache/vhost/_action.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $block
-  # - $apache_version
-  if $block and ! empty($block) {
-    concat::fragment { "${name}-block":
-      target  => "${priority_real}${filename}.conf",
-      order   => 120,
-      content => template('apache/vhost/_block.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $error_documents
-  if $error_documents and ! empty($error_documents) {
-    concat::fragment { "${name}-error_document":
-      target  => "${priority_real}${filename}.conf",
-      order   => 130,
-      content => template('apache/vhost/_error_document.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $proxy_dest
-  # - $proxy_pass
-  # - $proxy_pass_match
-  # - $proxy_preserve_host
-  # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
-    concat::fragment { "${name}-proxy":
-      target  => "${priority_real}${filename}.conf",
-      order   => 140,
-      content => template('apache/vhost/_proxy.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $rack_base_uris
-  if $rack_base_uris {
-    concat::fragment { "${name}-rack":
-      target  => "${priority_real}${filename}.conf",
-      order   => 150,
-      content => template('apache/vhost/_rack.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $passenger_base_uris
-  if $passenger_base_uris {
-    concat::fragment { "${name}-passenger_uris":
-      target  => "${priority_real}${filename}.conf",
-      order   => 155,
-      content => template('apache/vhost/_passenger_base_uris.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $redirect_source
-  # - $redirect_dest
-  # - $redirect_status
-  # - $redirect_dest_a
-  # - $redirect_source_a
-  # - $redirect_status_a
-  # - $redirectmatch_status
-  # - $redirectmatch_regexp
-  # - $redirectmatch_dest
-  # - $redirectmatch_status_a
-  # - $redirectmatch_regexp_a
-  # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
-    concat::fragment { "${name}-redirect":
-      target  => "${priority_real}${filename}.conf",
-      order   => 160,
-      content => template('apache/vhost/_redirect.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $rewrites
-  # - $rewrite_base
-  # - $rewrite_rule
-  # - $rewrite_cond
-  # - $rewrite_map
-  if $rewrites or $rewrite_rule {
-    concat::fragment { "${name}-rewrite":
-      target  => "${priority_real}${filename}.conf",
-      order   => 170,
-      content => template('apache/vhost/_rewrite.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $scriptaliases
-  # - $scriptalias
-  if ( $scriptalias or $scriptaliases != [] ) {
-    concat::fragment { "${name}-scriptalias":
-      target  => "${priority_real}${filename}.conf",
-      order   => 180,
-      content => template('apache/vhost/_scriptalias.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $serveraliases
-  if $serveraliases and ! empty($serveraliases) {
-    concat::fragment { "${name}-serveralias":
-      target  => "${priority_real}${filename}.conf",
-      order   => 190,
-      content => template('apache/vhost/_serveralias.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $setenv
-  # - $setenvif
-  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
-    concat::fragment { "${name}-setenv":
-      target  => "${priority_real}${filename}.conf",
-      order   => 200,
-      content => template('apache/vhost/_setenv.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $ssl
-  # - $ssl_cert
-  # - $ssl_key
-  # - $ssl_chain
-  # - $ssl_certs_dir
-  # - $ssl_ca
-  # - $ssl_crl_path
-  # - $ssl_crl
-  # - $ssl_crl_check
-  # - $ssl_proxyengine
-  # - $ssl_protocol
-  # - $ssl_cipher
-  # - $ssl_honorcipherorder
-  # - $ssl_verify_client
-  # - $ssl_verify_depth
-  # - $ssl_proxy_machine_cert
-  # - $ssl_options
-  # - $ssl_openssl_conf_cmd
-  # - $apache_version
-  if $ssl {
-    concat::fragment { "${name}-ssl":
-      target  => "${priority_real}${filename}.conf",
-      order   => 210,
-      content => template('apache/vhost/_ssl.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $auth_kerb
-  # - $krb_method_negotiate
-  # - $krb_method_k5passwd
-  # - $krb_authoritative
-  # - $krb_auth_realms
-  # - $krb_5keytab 
-  # - $krb_local_user_mapping
-  if $auth_kerb {
-    concat::fragment { "${name}-auth_kerb":
-      target  => "${priority_real}${filename}.conf",
-      order   => 210,
-      content => template('apache/vhost/_auth_kerb.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $suphp_engine
-  # - $suphp_addhandler
-  # - $suphp_configpath
-  if $suphp_engine == 'on' {
-    concat::fragment { "${name}-suphp":
-      target  => "${priority_real}${filename}.conf",
-      order   => 220,
-      content => template('apache/vhost/_suphp.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $php_values
-  # - $php_flags
-  if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
-    concat::fragment { "${name}-php":
-      target  => "${priority_real}${filename}.conf",
-      order   => 220,
-      content => template('apache/vhost/_php.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $php_admin_values
-  # - $php_admin_flags
-  if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
-    concat::fragment { "${name}-php_admin":
-      target  => "${priority_real}${filename}.conf",
-      order   => 230,
-      content => template('apache/vhost/_php_admin.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $headers
-  if $headers and ! empty($headers) {
-    concat::fragment { "${name}-header":
-      target  => "${priority_real}${filename}.conf",
-      order   => 240,
-      content => template('apache/vhost/_header.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $request_headers
-  if $request_headers and ! empty($request_headers) {
-    concat::fragment { "${name}-requestheader":
-      target  => "${priority_real}${filename}.conf",
-      order   => 250,
-      content => template('apache/vhost/_requestheader.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $wsgi_application_group
-  # - $wsgi_daemon_process
-  # - $wsgi_daemon_process_options
-  # - $wsgi_import_script
-  # - $wsgi_import_script_options
-  # - $wsgi_process_group
-  # - $wsgi_script_aliases
-  # - $wsgi_pass_authorization
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
-    concat::fragment { "${name}-wsgi":
-      target  => "${priority_real}${filename}.conf",
-      order   => 260,
-      content => template('apache/vhost/_wsgi.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $custom_fragment
-  if $custom_fragment {
-    concat::fragment { "${name}-custom_fragment":
-      target  => "${priority_real}${filename}.conf",
-      order   => 270,
-      content => template('apache/vhost/_custom_fragment.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $fastcgi_server
-  # - $fastcgi_socket
-  # - $fastcgi_dir
-  # - $apache_version
-  if $fastcgi_server or $fastcgi_dir {
-    concat::fragment { "${name}-fastcgi":
-      target  => "${priority_real}${filename}.conf",
-      order   => 280,
-      content => template('apache/vhost/_fastcgi.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $suexec_user_group
-  if $suexec_user_group {
-    concat::fragment { "${name}-suexec":
-      target  => "${priority_real}${filename}.conf",
-      order   => 290,
-      content => template('apache/vhost/_suexec.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $passenger_app_root
-  # - $passenger_app_env
-  # - $passenger_ruby
-  # - $passenger_min_instances
-  # - $passenger_start_timeout
-  # - $passenger_pre_start
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
-    concat::fragment { "${name}-passenger":
-      target  => "${priority_real}${filename}.conf",
-      order   => 300,
-      content => template('apache/vhost/_passenger.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $add_default_charset
-  if $add_default_charset {
-    concat::fragment { "${name}-charsets":
-      target  => "${priority_real}${filename}.conf",
-      order   => 310,
-      content => template('apache/vhost/_charsets.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $modsec_disable_vhost
-  # - $modsec_disable_ids
-  # - $modsec_disable_ips
-  # - $modsec_body_limit
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips {
-    concat::fragment { "${name}-security":
-      target  => "${priority_real}${filename}.conf",
-      order   => 320,
-      content => template('apache/vhost/_security.erb')
-    }
-  }
-
-  # Template uses:
-  # - $filters
-  if $filters and ! empty($filters) {
-    concat::fragment { "${name}-filters":
-      target  => "${priority_real}${filename}.conf",
-      order   => 330,
-      content => template('apache/vhost/_filters.erb'),
-    }
-  }
-  # Template uses:
-  # - $limit_request_field_size
-  if $limit_request_field_size {
-    concat::fragment { "${name}-limits":
-      target  => "${priority_real}${filename}.conf",
-      order   => 330,
-      content => template('apache/vhost/_limits.erb'),
-    }
-  }
-
-  # Template uses no variables
-  concat::fragment { "${name}-file_footer":
-    target  => "${priority_real}${filename}.conf",
-    order   => 999,
-    content => template('apache/vhost/_file_footer.erb'),
   }
 }
