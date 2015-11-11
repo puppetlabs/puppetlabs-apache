@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 # This function is called inside the OS specific contexts
 def general_info_specs_22
   it { is_expected.to contain_apache__mod('info') }
