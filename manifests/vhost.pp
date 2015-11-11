@@ -286,7 +286,7 @@ define apache::vhost(
   # if we use raw vhost option, we do not need to depend
   # on concat, because we have the final content already on place
   if $raw_vhost {
-    $before_dependency = []
+    $before_dependency = File["${priority_real}${filename}.conf"]
   }
   else {
     $before_dependency = Concat["${priority_real}${filename}.conf"]
