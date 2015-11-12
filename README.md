@@ -2172,27 +2172,31 @@ Sets the overrides for the specified virtual host. Accepts an array of [AllowOve
 
 ##### `passenger_app_root`
 
-Sets [PassengerRoot](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppRoot), the location of the Passenger application root if different from the DocumentRoot.
+Sets [PassengerRoot](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapproot), the location of the Passenger application root if different from the DocumentRoot.
 
 ##### `passenger_app_env`
 
-Sets [PassengerAppEnv](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerAppEnv), the environment for the Passenger application. If not specifies, defaults to the global setting or 'production'.
+Sets [PassengerAppEnv](https://www.phusionpassenger.com/library/config/apache/reference/#passengerappenv), the environment for the Passenger application. If not specifies, defaults to the global setting or 'production'.
+
+##### `passenger_log_file`
+
+By default Passenger log messages are written to the Apache global error log. With [PassengerLogFile](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlogfile), you can have those messages logged to a different file instead. n.b.: This option is only available since Passenger 5.0.5
 
 ##### `passenger_ruby`
 
-Sets [PassengerRuby](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerRuby) on this virtual host, the Ruby interpreter to use for the application.
+Sets [PassengerRuby](https://www.phusionpassenger.com/library/config/apache/reference/#passengerruby) on this virtual host, the Ruby interpreter to use for the application.
 
 ##### `passenger_min_instances`
 
-Sets [PassengerMinInstances](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerMinInstances), the minimum number of application processes to run.
+Sets [PassengerMinInstances](https://www.phusionpassenger.com/library/config/apache/reference/#passengermininstances), the minimum number of application processes to run.
 
 ##### `passenger_start_timeout`
 
-Sets [PassengerStartTimeout](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#_passengerstarttimeout_lt_seconds_gt), the timeout for the application startup.
+Sets [PassengerStartTimeout](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstarttimeout), the timeout for the application startup.
 
 ##### `passenger_pre_start`
 
-Sets [PassengerPreStart](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerPreStart), the URL of the application if pre-starting is required.
+Sets [PassengerPreStart](https://www.phusionpassenger.com/library/config/apache/reference/#passengerprestart), the URL of the application if pre-starting is required.
 
 ##### `php_flags & values`
 
