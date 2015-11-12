@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::shib', :type => :class do
   let :pre_condition do
     'include apache'

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'apache::mod::ext_filter', :type => :class do
   let :pre_condition do
     'class { "apache":

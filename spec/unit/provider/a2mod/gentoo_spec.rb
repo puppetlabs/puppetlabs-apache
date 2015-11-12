@@ -1,5 +1,3 @@
-#!/usr/bin/env rspec
-
 require 'spec_helper'
 
 provider_class = Puppet::Type.type(:a2mod).provider(:gentoo)
