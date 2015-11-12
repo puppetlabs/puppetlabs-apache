@@ -3,6 +3,12 @@ require_relative './version.rb'
 
 describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
+  describe 'manage_conf_file => true' do
+    it 'doesnt do anything' do
+      pp = "class { 'apache': manage_conf_file => true }"
+      apply_manifest(pp, :catch_failures => true)
+    end
+
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do
     it 'doesnt do anything' do

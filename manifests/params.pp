@@ -25,6 +25,9 @@ class apache::params inherits ::apache::version {
     $servername = $::hostname
   }
 
+  # Do we want to manage the $conf_file or keep the existing one intact?
+  $manage_conf_file = true
+
   # The default error log level
   $log_level = 'warn'
   $use_optional_includes = false

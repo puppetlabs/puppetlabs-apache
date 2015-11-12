@@ -43,6 +43,7 @@ class apache (
   $timeout                = '120',
   $httpd_dir              = $::apache::params::httpd_dir,
   $server_root            = $::apache::params::server_root,
+  $manage_conf_file       = $::apache::params::manage_conf_file,
   $conf_dir               = $::apache::params::conf_dir,
   $confd_dir              = $::apache::params::confd_dir,
   $vhost_dir              = $::apache::params::vhost_dir,
@@ -86,6 +87,7 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+  validate_bool($manage_conf_file)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -250,7 +252,7 @@ class apache (
     content => template('apache/ports_header.erb')
   }
 
-  if $::apache::conf_dir and $::apache::params::conf_file {
+  if $::apache::manage_conf_file and $::apache::conf_dir and $::apache::params::conf_file {
     case $::osfamily {
       'debian': {
         $error_log            = 'error.log'
