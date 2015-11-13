@@ -51,6 +51,7 @@
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
+[`apache::mod::ldap`]: #class-apachemodldap
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
@@ -151,6 +152,7 @@
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
 [`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
 [`mod_info`]: https://httpd.apache.org/docs/current/mod/mod_info.html
+[`mod_ldap`]: https://httpd.apache.org/docs/2.2/mod/mod_ldap.html
 [`mod_mpm_event`]: https://httpd.apache.org/docs/current/mod/event.html
 [`mod_negotiation`]: http://httpd.apache.org/docs/current/mod/mod_negotiation.html
 [`mod_pagespeed`]: https://developers.google.com/speed/pagespeed/module/?hl=en
@@ -1467,6 +1469,23 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 - `apache_version`: Default: `$::apache::apache_version`,
 - `restrict_access`: Determines whether to enable access restrictions. If 'false', the `allow_from` whitelist is ignored and any IP address can access `/server-info`. Valid options: Boolean. Default: 'true'.
 
+##### Class: `apache::mod::ldap`
+
+Installs and configures [`mod_ldap`][]. Allows you to modify the
+[`LDAPTrustedGlobalCert`](https://httpd.apache.org/docs/2.2/mod/mod_ldap.html#ldaptrustedglobalcert) Directive:
+
+~~~puppet
+class { 'apache::mod::ldap':
+  ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt'
+  ldap_trusted_global_cert_type => 'CA_DER',
+}
+~~~
+
+**Parameters within `apache::mod::ldap`:**
+
+- `ldap_trusted_global_cert_file`: Path and file name of the trusted CA certificates to use when establishing SSL or TLS connections to an LDAP server.
+- `ldap_trusted_global_cert_type`: The global trust certificate format. Defaults to 'CA_BASE64'.
+
 ##### Class: `apache::mod::negotiation`
 
 Installs and configures [`mod_negotiation`][].
@@ -1482,7 +1501,7 @@ Installs and manages [`mod_pagespeed`], a Google module that rewrites web pages 
 
 While this Apache module requires the `mod-pagespeed-stable` package, Puppet **doesn't** manage the software repositories required to automatically install the package. If you declare this class when the package is either not installed or not available to your package manager, your Puppet run will fail.
 
-**Parameters within `apache::mod::info`**:
+**Parameters within `apache::mod::pagespeed`**:
 
 - `inherit_vhost_config`: Default: 'on'.
 - `filter_xhtml`: Default: false.
