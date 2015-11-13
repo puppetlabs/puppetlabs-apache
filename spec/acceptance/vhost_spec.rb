@@ -198,12 +198,12 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         }
         apache::vhost { 'example.com':
           port     => '80',
-          ip       => ['127.0.0.1','::1'],
+          ip       => ['127.0.0.1','127.0.0.2'],
           ip_based => true,
           docroot  => '/var/www/html',
         }
         host { 'ipv4.example.com': ip => '127.0.0.1', }
-        host { 'ipv6.example.com': ip => '::1', }
+        host { 'ipv6.example.com': ip => '127.0.0.2', }
         file { '/var/www/html/index.html':
           ensure  => file,
           content => "Hello from vhost\\n",
@@ -218,16 +218,16 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
     end
 
     describe file("#{$vhost_dir}/25-example.com.conf") do
-      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 [::1]:80>' }
+      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.2:80>' }
       it { is_expected.to contain "ServerName example.com" }
     end
 
     describe file($ports_file) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Listen 127.0.0.1:80' }
-      it { is_expected.to contain 'Listen [::1]:80' }
+      it { is_expected.to contain 'Listen 127.0.0.2:80' }
       it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
-      it { is_expected.not_to contain 'NameVirtualHost [::1]:80' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:80' }
     end
 
     it 'should answer to ipv4.example.com' do
