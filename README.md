@@ -3259,6 +3259,10 @@ The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside t
 
 The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested since repositories are missing compatible packages.
 
+### RHEL/CentOS 6
+
+The [`apache::mod::passenger`][] class is not installing as the the EL6 repository is missing compatible packages.
+
 ### RHEL/CentOS 7
 
 The [`apache::mod::passenger`][] class is untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] define's [`rack_base_uris`][] parameter.
