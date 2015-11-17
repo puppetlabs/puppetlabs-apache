@@ -2659,6 +2659,18 @@ Sets the value for [AuthAuthDigestShmemSize](http://httpd.apache.org/docs/curren
 
 Sets the value for [AuthGroupFile](https://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html#authgroupfile), which sets the name of the text file containing the list of user groups for authorization.
 
+###### `auth_ldap_bind_dn`
+
+Sets the value for [AuthLDAPBindDN](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbinddn), which sets an optional DN to use in binding to the LDAP server.
+
+###### `auth_ldap_bind_password`
+
+Sets the value for [AuthLDAPBindPassword](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbindpassword), which sets the password used in conjuction with the bind DN.
+
+###### `auth_ldap_url`
+
+Sets the value for [AuthLDAPURL](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapurl), which sets the URL specifying the LDAP search parameters.
+
 ###### `auth_name`
 
 Sets the value for [AuthName](http://httpd.apache.org/docs/current/mod/mod_authn_core.html#authname), which sets the name of the authorization realm.
