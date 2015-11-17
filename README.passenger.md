@@ -172,7 +172,7 @@ http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerMaxRe
 
 #### passenger_spawn_method
 
-Sets the method by which Ruby application processes are spawned.  Default is `smart`
+Sets the method by which Ruby application processes are spawned. Default is 'smart',
 which caches code using the app preloader.
 
 Passenger >= 4.0 renamed `conservative` to `direct` and `smart-lv2` to `smart`.
