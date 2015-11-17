@@ -492,6 +492,43 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
         it { should be_running }
       end
 
+  context 'new proxy vhost on port 80' do
+    it 'should configure an apache proxy vhost' do
+      pp = <<-EOS
+        class { 'apache': }
+	apache::vhost { 'location.example.net':
+	  port        => '80', 
+	  docroot     => '/var/www/location',
+	  directories => [ 
+	    { 
+	      'path'                     => '/location',
+	      'provider'                 => 'location',
+	      'auth_require'             => 'ldap-group cn=Administrators, o=Example',
+	      'auth_type'                => 'Basic',
+	      'auth_basic_provider'      => 'ldap', 
+	      'auth_ldap_bind_dn'        => 'apache@example.com',
+	      'auth_ldap_bind_password'  => 'password', 
+	      'auth_ldap_url'            => 'ldap://ldap.example.com/?userPrincipalName?sub',
+	    },
+	  ],
+	}
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file("#{$vhost_dir}/25-location.example.com.conf") do
+      it { is_expected.to contain '<VirtualHost \*:80>' }
+      it { is_expected.to contain 'ServerName location.example.com' }
+      it { is_expected.to contain '<Location "/location">' }
+      it { is_expected.to contain 'Require ldap-group cn=Administrators, o=Example' }
+      it { is_expected.to contain 'AuthType Basic' }
+      it { is_expected.to contain 'AuthBasicProvider ldap' }
+      it { is_expected.to contain 'AuthLDAPBindDN apache@example.com' }
+      it { is_expected.to contain 'AuthLDAPBindPassword password' }
+      it { is_expected.to contain 'AuthLDAPURL ldap://ldap.example.com/?userPrincipalName?sub' }
+    end
+  end
+
       it 'should answer to files.example.net' do
         shell("/usr/bin/curl -sSf files.example.net:80/foo/index.html", {:acceptable_exit_codes => 22}).stderr.should match(/curl: \(22\) The requested URL returned error: 401/)
         shell("/usr/bin/curl -sSf -u login:password files.example.net:80/foo/index.html").stdout.should eq("Hello World\n")

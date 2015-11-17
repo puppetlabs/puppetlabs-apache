@@ -10,7 +10,7 @@ apache::vhost { 'location.example.net':
     {
       'path'                     => '/location',
       'provider'                 => 'location',
-      'auth_require'             => 'ldap-group cn=Administrators, o=Example'
+      'auth_require'             => 'ldap-group cn=Administrators, o=Example',
       'auth_type'                => 'Basic',
       'auth_basic_provider'      => 'ldap',
       'auth_ldap_bind_dn'        => 'apache@example.com',
