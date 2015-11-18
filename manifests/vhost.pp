@@ -25,6 +25,8 @@ define apache::vhost(
   $ssl_honorcipherorder        = undef,
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
+  $ssl_proxy_check_peer_cn     = undef,
+  $ssl_proxy_check_peer_name   = undef,
   $ssl_proxy_machine_cert      = undef,
   $ssl_options                 = undef,
   $ssl_openssl_conf_cmd        = undef,
@@ -236,6 +238,14 @@ define apache::vhost(
   if $manage_docroot {
     validate_string($docroot)
   }
+
+  if $ssl_proxy_check_peer_cn {
+    validate_re($ssl_proxy_check_peer_cn,'(^on$|^off$)',"${ssl_proxy_check_peer_cn} is not permitted for ssl_proxy_check_peer_cn. Allowed values are 'on' or 'off'.")
+  }
+  if $ssl_proxy_check_peer_name {
+    validate_re($ssl_proxy_check_peer_name,'(^on$|^off$)',"${ssl_proxy_check_peer_name} is not permitted for ssl_proxy_check_peer_name. Allowed values are 'on' or 'off'.")
+  }
+
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
@@ -784,6 +794,8 @@ define apache::vhost(
   # - $ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
+  # - $ssl_proxy_check_peer_cn
+  # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_machine_cert
   # - $ssl_options
   # - $ssl_openssl_conf_cmd

@@ -40,6 +40,12 @@
   <%- if @ssl_verify_depth -%>
   SSLVerifyDepth          <%= @ssl_verify_depth %>
   <%- end -%>
+  <%- if @ssl_proxy_check_peer_cn -%>
+  SSLProxyCheckPeerCN     <%= @ssl_proxy_check_peer_cn %>
+  <%- end -%>
+  <%- if @ssl_proxy_check_peer_name -%>
+  SSLProxyCheckPeerName   <%= @ssl_proxy_check_peer_name %>
+  <%- end -%>
   <%- if @ssl_proxy_machine_cert -%>
   SSLProxyMachineCertificateFile "<%= @ssl_proxy_machine_cert %>"
   <%- end -%>

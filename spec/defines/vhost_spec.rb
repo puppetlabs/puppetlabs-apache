@@ -154,7 +154,10 @@ describe 'apache::vhost', :type => :define do
           'ssl_verify_depth'            => '3',
           'ssl_options'                 => '+ExportCertData',
           'ssl_openssl_conf_cmd'        => 'DHParameters "foo.pem"',
+          'ssl_proxy_check_peer_cn'     => 'on',
+          'ssl_proxy_check_peer_name'   => 'on',
           'ssl_proxyengine'             => true,
+
           'priority'                    => '30',
           'default_vhost'               => true,
           'servername'                  => 'example.com',
@@ -432,6 +435,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
         :content => /^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+        :content => /^\s+SSLProxyCheckPeerCN\s+on$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+        :content => /^\s+SSLProxyCheckPeerName\s+on$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-header') }
