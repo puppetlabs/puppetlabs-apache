@@ -2951,6 +2951,35 @@ Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/
 `php_admin_value` sets the value of the directory, and `php_admin_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
 
+###### `require`
+
+
+Sets a `Require` directive as per the [Apache Authz documentation](http://httpd.apache.org/docs/current/mod/mod_authz_core.html#require). If no `require` is set, it will default to `Require all granted`.
+
+~~~ puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path    => '/path/to/directory',
+          require => 'IP 10.17.42.23',
+        }
+      ],
+    }
+~~~
+
+If `require` is set to `unmanaged` it will not be set at all. This is useful for complex authentication/authorization requirements which are handled in a custom fragment.
+
+~~~ puppet
+    apache::vhost { 'sample.example.net':
+      docroot     => '/path/to/directory',
+      directories => [
+        { path    => '/path/to/directory',
+          require => 'unmanaged',
+        }
+      ],
+    }
+~~~
+
 ###### `satisfy`
 
 Sets a `Satisfy` directive as per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower.

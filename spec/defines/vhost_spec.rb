@@ -978,5 +978,72 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { expect { is_expected.to compile }.to raise_error }
     end
+    context 'default of require all granted' do
+      let :params do
+        {
+          'docroot'         => '/var/www/foo',
+          'directories'     => [
+            {
+              'path'     => '/var/www/foo/files',
+              'provider' => 'files',
+            },
+          ],
+
+        }
+      end
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :kernelversion          => '3.19.2',
+          :is_pe                  => false,
+        }
+      end
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_file('25-rspec.example.com.conf') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all granted$/ ) }
+    end
+    context 'require unmanaged' do
+      let :params do
+        {
+          'docroot'         => '/var/www/foo',
+          'directories'     => [
+            {
+              'path'     => '/var/www/foo',
+              'require'  => 'unmanaged',
+            },
+          ],
+
+        }
+      end
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :kernelversion          => '3.19.2',
+          :is_pe                  => false,
+        }
+      end
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_file('25-rspec.example.com.conf') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+      it { is_expected.to_not contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all granted$/ )
+      }
+    end
   end
 end

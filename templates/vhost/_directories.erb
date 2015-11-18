@@ -57,7 +57,7 @@
       <%- end -%>
     <%- end -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-      <%- if directory['require'] and directory['require'] != '' -%>
+      <%- if directory['require'] && directory['require'] != '' && directory['require'] !~ /unmanaged/i -%>
         <%- Array(directory['require']).each do |req| -%>
     Require <%= req %>
         <%- end -%>
@@ -65,7 +65,7 @@
       <%- if directory['auth_require'] -%>
     Require <%= directory['auth_require'] %>
       <%- end -%>
-      <%- if !(directory['require'] and directory['require'] != '') && !(directory['auth_require']) -%>
+      <%- if !(directory['require'] && directory['require'] != '') && directory['require'] !~ /unmanaged/i && !(directory['auth_require']) -%>
     Require all granted
       <%- end -%>
     <%- else -%>
