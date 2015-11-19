@@ -497,6 +497,8 @@ define apache::vhost(
     require => Package['httpd'],
     notify  => Class['apache::service'],
   }
+  # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
+  # needs to be converted into something generic.
   if $::apache::vhost_enable_dir {
     $vhost_enable_dir = $::apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
