@@ -1740,6 +1740,10 @@ This parameter is only used if the [`verify_config`][] parameter's value is 'tru
 
 Specifies whether to validate the configuration file before notifying the Apache service. Valid options: Boolean. Default: `true`.
 
+##### `default_ext`
+
+Specifies what extension to append on end of custom config file. Set to '' to keep original extension. Default: `.conf`.
+
 #### Define: `apache::fastcgi::server`
 
 Defines one or more external FastCGI servers to handle specific file types. Use this define with [`mod_fastcgi`][FastCGI].
