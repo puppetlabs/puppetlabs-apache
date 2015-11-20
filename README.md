@@ -1720,6 +1720,10 @@ Sets the directory in which Puppet places configuration files. Default: '$::apac
 
 Sets the configuration file's content. The `content` and [`source`][] parameters are exclusive of each other.
 
+##### `filename`
+
+Sets the name of the file under `confdir` in which Puppet stores the configuration.  The default behavior is to generate the file name from the `priority` parameter and the resource name.
+
 ##### `priority`
 
 Sets the configuration file's priority by prefixing its filename with this parameter's numeric value, as Apache processes configuration files in alphanumeric order. The default value is `25`.
