@@ -1,3 +1,8 @@
+## Supported Release 1.7.1
+###Summary
+
+Small release for support of newer Puppet versions.
+
 ## 2015-11-17 - Supported Release 1.7.0
 ### Summary
 This release includes many new features and bugfixes. There are test, documentation and misc improvements.
