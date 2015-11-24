@@ -1,7 +1,7 @@
 ## Supported Release 1.7.1
 ###Summary
 
-Small release for support of newer Puppet versions.
+Small release for support of newer PE versions. This increments the version of PE in the metadata.json file.
 
 ## 2015-11-17 - Supported Release 1.7.0
 ### Summary
