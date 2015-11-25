@@ -788,15 +788,11 @@ define apache::vhost(
   # - $ssl_crl_path
   # - $ssl_crl
   # - $ssl_crl_check
-  # - $ssl_proxyengine
   # - $ssl_protocol
   # - $ssl_cipher
   # - $ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
-  # - $ssl_proxy_check_peer_cn
-  # - $ssl_proxy_check_peer_name
-  # - $ssl_proxy_machine_cert
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
   # - $apache_version
@@ -805,6 +801,19 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 210,
       content => template('apache/vhost/_ssl.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $ssl_proxyengine
+  # - $ssl_proxy_check_peer_cn
+  # - $ssl_proxy_check_peer_name
+  # - $ssl_proxy_machine_cert
+  if $ssl_proxyengine {
+    concat::fragment { "${name}-sslproxy":
+      target  => "${priority_real}${filename}.conf",
+      order   => 210,
+      content => template('apache/vhost/_sslproxy.erb'),
     }
   }
 
