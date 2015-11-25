@@ -1,6 +1,11 @@
 class apache::mod::ldap (
-  $apache_version = $::apache::apache_version,
+  $apache_version                = $::apache::apache_version,
+  $ldap_trusted_global_cert_file = undef,
+  $ldap_trusted_global_cert_type = 'CA_BASE64',
 ){
+  if ($ldap_trusted_global_cert_file) {
+    validate_string($ldap_trusted_global_cert_type)
+  }
   ::apache::mod { 'ldap': }
   # Template uses $apache_version
   file { 'ldap.conf':
