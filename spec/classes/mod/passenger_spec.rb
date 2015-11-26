@@ -14,7 +14,6 @@ describe 'apache::mod::passenger', :type => :class do
         :lsbdistcodename        => 'squeeze',
         :operatingsystem        => 'Debian',
         :id                     => 'root',
-        :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :is_pe                  => false,
       }
