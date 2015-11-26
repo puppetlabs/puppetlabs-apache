@@ -1,3 +1,14 @@
+## UNRELEASED
+### Summary
+
+TODO
+
+###
+
+#### Security
+
+* apache::mod::php now uses FilesMatch to configure the php handler. This is following the recommended upstream configuration guidelines (http://php.net/manual/en/install.unix.apache2.php#example-20) and distribution's default config (e.g.: http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/vivid/php5/vivid/view/head:/debian/php5.conf). It avoids inadvertently exposing the PHP handler to executing uploads with names like 'file.php.jpg', but might impact setups with unusual requirements.
+
 ## 2015-11-17 - Supported Release 1.7.0
 ### Summary
 This release includes many new features and bugfixes. There are test, documentation and misc improvements.

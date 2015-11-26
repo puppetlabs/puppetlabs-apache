@@ -88,7 +88,7 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :extensions => ['.php','.php5']}
       end
-      it { is_expected.to contain_file("php5.conf").with_content(/AddHandler php5-script .php .php5\n/) }
+      it { is_expected.to contain_file("php5.conf").with_content(Regexp.new(Regexp.escape('<FilesMatch ".+(\.php|\.php5)$">'))) }
     end
     context "with specific version" do
       let :pre_condition do
