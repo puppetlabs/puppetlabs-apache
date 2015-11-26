@@ -1310,7 +1310,7 @@ Installs and manages [`mod_alias`][].
 
 #### Class: `apache::mod::disk_cache`
 
-Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system: 
+Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system:
 
 - **Debian**: `/var/cache/apache2/mod_cache_disk`
 - **FreeBSD**: `/var/cache/mod_cache_disk`
