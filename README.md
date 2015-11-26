@@ -1310,7 +1310,7 @@ Installs and manages [`mod_alias`][].
 
 #### Class: `apache::mod::disk_cache`
 
-Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system: 
+Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system:
 
 - **Debian**: `/var/cache/apache2/mod_cache_disk`
 - **FreeBSD**: `/var/cache/mod_cache_disk`
@@ -1544,7 +1544,7 @@ While this Apache module requires the `mod-pagespeed-stable` package, Puppet **d
 - `allow_pagespeed_console`: Default: [].
 - `allow_pagespeed_message`: Default: [].
 - `message_buffer_size`: Default: 100000.
-- `additional_configuration`: Default: { }.
+- `additional_configuration`: Default: { }. A hash of directive/value pairs or an array of lines to insert at the end of the pagespeed configuration.
 
 The class's parameters correspond to the module's directives. See the [module's documentation][`mod_pagespeed`] for details.
 
