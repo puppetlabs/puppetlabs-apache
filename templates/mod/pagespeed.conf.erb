@@ -93,6 +93,10 @@ ModPagespeedMessageBufferSize <%= @message_buffer_size %>
     SetHandler mod_pagespeed_message
 </Location>
 
+<% if @additional_configuration.is_a? Array -%>
+<%= @additional_configuration.join('\n') %>
+<% else -%>
 <% @additional_configuration.each_pair do |key, value| -%>
 <%= key %> <%= value %>
+<% end -%>
 <% end -%>
