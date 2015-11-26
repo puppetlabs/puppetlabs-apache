@@ -237,6 +237,13 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
+    <% if directory['request_headers'] -%>
+      <%- Array(directory['request_headers']).each do |request_statement| -%>
+        <%- if request_statement != '' -%>
+      RequestHeader <%= request_statement %>
+        <%- end -%>
+      <%- end -%>
+    <% end -%>
     <%- if directory['setenv'] -%>
       <%- Array(directory['setenv']).each do |setenv| -%>
     SetEnv <%= setenv %>
