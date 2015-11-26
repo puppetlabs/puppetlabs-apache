@@ -77,7 +77,6 @@ describe 'apache::dev', :type => :class do
         :osfamily               => 'Gentoo',
         :operatingsystem        => 'Gentoo',
         :operatingsystemrelease => '3.16.1-gentoo',
-        :concat_basedir         => '/dne',
         :is_pe                  => false,
         :concat_basedir         => '/foo',
         :id                     => 'root',
