@@ -106,7 +106,9 @@
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- [directory['addhandlers']].flatten.compact.each do |addhandler| -%>
-    AddHandler <%= addhandler['handler'] %> <%= Array(addhandler['extensions']).join(' ') %>
+    <FilesMatch ".+(<%= Array(addhandler['extensions']).collect { |s| Regexp.escape(s) }.join('|') %>)$">
+        SetHandler <%= addhandler['handler'] %>
+    </FilesMatch>
       <%- end -%>
     <%- end -%>
     <%- if directory['sethandler'] and directory['sethandler'] != '' -%>
