@@ -244,6 +244,11 @@
     SetEnv <%= setenv %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['setenvif'] -%>
+      <%- Array(directory['setenvif']).each do |setenvif| -%>
+    SetEnvIf <%= setenvif %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['set_output_filter'] -%>
     SetOutputFilter <%= directory['set_output_filter'] %>
     <%- end -%>

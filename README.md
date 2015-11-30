@@ -3031,6 +3031,14 @@ apache::vhost { 'sample.example.net':
 }
 ~~~
 
+###### `setenv`
+
+Sets a `SetEnv` directive as per the [Apache `env` Module documentation](https://httpd.apache.org/docs/current/mod/mod_env.html#setenv).
+
+###### `setenvif`
+
+Sets a `SetEnvIf` directive as per the [Apache `setenvif` Module documentation](https://httpd.apache.org/docs/current/mod/mod_setenvif.html#setenvif).
+
 ###### `sethandler`
 
 Sets a `SetHandler` directive per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#sethandler).
