@@ -1,6 +1,8 @@
 # The Fastcgi Apache module configuration file is being
 # managed by Puppet and changes will be overwritten.
 <IfModule mod_fastcgi.c>
-  AddHandler fastcgi-script .fcgi
+  <FilesMatch ".+(\.fcgi)$">
+    SetHandler fastcgi-script
+  </FilesMatch>
   FastCgiIpcDir "<%= @fastcgi_lib_path %>"
 </IfModule>
