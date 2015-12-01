@@ -5,12 +5,9 @@ when 'Debian'
   service_name = 'apache2'
 when 'FreeBSD'
   service_name = 'apache24'
-else
-  # Not implemented yet
-  service_name = :skip
 end
 
-describe 'apache::mod::itk class', :unless => service_name.equal? :skip do
+describe 'apache::mod::itk class', :if => service_name do
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do

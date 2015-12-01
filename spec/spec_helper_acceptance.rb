@@ -6,8 +6,8 @@ run_puppet_install_helper
 
 RSpec.configure do |c|
   # apache on Ubuntu 10.04 and 12.04 doesn't like IPv6 VirtualHosts, so we skip ipv6 tests on those systems
-  unless fact('operatingsystem') == 'Ubuntu' and (fact('operatingsystemrelease') == '10.04' or fact('operatingsystemrelease') == '12.04')
-    c.filter_run_including :ipv6 => true
+  if fact('operatingsystem') == 'Ubuntu' and (fact('operatingsystemrelease') == '10.04' or fact('operatingsystemrelease') == '12.04')
+    c.filter_run_excluding :ipv6 => true
   end
 
   # Project root
