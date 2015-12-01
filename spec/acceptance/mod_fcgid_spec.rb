@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5') or (fact('operatingsystem') != 'OracleLinux' and fact('operatingsystemmajrelease') != '7')) do
+describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5') and !(fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7')) do
   context "default fcgid config" do
     it 'succeeds in puppeting fcgid' do
       pp = <<-EOS
