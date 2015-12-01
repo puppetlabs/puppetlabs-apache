@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::negotiation class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::negotiation class' do
   case fact('osfamily')
   when 'Debian'
     vhost_dir    = '/etc/apache2/sites-enabled'

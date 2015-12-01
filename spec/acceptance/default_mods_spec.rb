@@ -15,7 +15,7 @@ when 'Gentoo'
   servicename = 'apache2'
 end
 
-describe 'apache::default_mods class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::default_mods class' do
   describe 'no default mods' do
     # Using puppet_apply as a helper
     it 'should apply with no errors' do
