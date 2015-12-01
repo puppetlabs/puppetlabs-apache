@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::service class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::service class' do
   describe 'adding dependencies in between the base class and service class' do
     it 'should work with no errors' do
       pp = <<-EOS

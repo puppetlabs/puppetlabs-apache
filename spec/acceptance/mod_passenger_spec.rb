@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::passenger class' do
   case fact('osfamily')
   when 'Debian'
     service_name = 'apache2'

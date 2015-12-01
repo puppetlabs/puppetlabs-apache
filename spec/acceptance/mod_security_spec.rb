@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::security class', :unless => (UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise' or fact('lsbdistcodename') == 'wheezy'))) do
+describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise' or fact('lsbdistcodename') == 'wheezy')) do
   case fact('osfamily')
   when 'Debian'
     mod_dir      = '/etc/apache2/mods-available'

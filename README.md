@@ -1310,11 +1310,7 @@ Installs and manages [`mod_alias`][].
 
 #### Class: `apache::mod::disk_cache`
 
-<<<<<<< HEAD
 Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system:
-=======
-Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4. The default cache root depends on the Apache version and operating system: 
->>>>>>> upstream/1.7.x
 
 - **Debian**: `/var/cache/apache2/mod_cache_disk`
 - **FreeBSD**: `/var/cache/mod_cache_disk`
@@ -2087,7 +2083,6 @@ apache::vhost { 'sample.example.net':
 ~~~
 
 Related parameters follow the names of `mod_auth_kerb` directives:
-<<<<<<< HEAD
 
 - `krb_method_negotiate`: Determines whether to use the Negotiate method. Default: 'on'.
 - `krb_method_k5passwd`: Determines whether to use password-based authentication for Kerberos v5. Default: 'on'.
@@ -2107,15 +2102,6 @@ Specifies the service name that will be used by Apache for authentication. Corre
 ##### `krb_save_credentials`
 
 This option enables credential saving functionality. Default is 'off'
-=======
-
-- `krb_method_negotiate`: Determines whether to use the Negotiate method. Default: 'on'.
-- `krb_method_k5passwd`: Determines whether to use password-based authentication for Kerberos v5. Default: 'on'.
-- `krb_authoritative`: If set to 'off', authentication controls can be passed on to another module. Default: 'on'.
-- `krb_auth_realms`: Specifies an array of Kerberos realms to use for authentication. Default: `[]`.
-- `krb_5keytab`: Specifies the Kerberos v5 keytab file's location. Default: undef.
-- `krb_local_user_mapping`: Strips @REALM from usernames for further use. Default: undef.
->>>>>>> upstream/1.7.x
 
 ##### `limit_request_field_size`
 
@@ -2960,7 +2946,6 @@ apache::vhost { 'sample.example.net':
 
 ###### `require`
 
-<<<<<<< HEAD
 
 Sets a `Require` directive as per the [Apache Authz documentation](http://httpd.apache.org/docs/current/mod/mod_authz_core.html#require). If no `require` is set, it will default to `Require all granted`.
 
@@ -2972,22 +2957,9 @@ Sets a `Require` directive as per the [Apache Authz documentation](http://httpd.
           require => 'IP 10.17.42.23',
         }
       ],
-=======
-Sets a `Satisfy` directive per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is deprecated due to a change in Apache and only works with Apache 2.2 and lower.
-
-~~~ puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path    => '/path/to/directory',
-      satisfy => 'Any',
->>>>>>> upstream/1.7.x
     }
-  ],
-}
 ~~~
 
-<<<<<<< HEAD
 If `require` is set to `unmanaged` it will not be set at all. This is useful for complex authentication/authorization requirements which are handled in a custom fragment.
 
 ~~~ puppet
@@ -2998,26 +2970,11 @@ If `require` is set to `unmanaged` it will not be set at all. This is useful for
           require => 'unmanaged',
         }
       ],
-=======
-###### `sethandler`
-
-Sets a `SetHandler` directive per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#sethandler).
-
-~~~ puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path       => '/path/to/directory',
-      sethandler => 'None',
->>>>>>> upstream/1.7.x
     }
-  ],
-}
 ~~~
 
 ###### `satisfy`
 
-<<<<<<< HEAD
 Sets a `Satisfy` directive per the [Apache Core documentation](http://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is deprecated due to a change in Apache and only works with Apache 2.2 and lower.
 
 ~~~ puppet
@@ -3051,11 +3008,6 @@ apache::vhost { 'sample.example.net':
 Sets a `SetOutputFilter` directive per the [Apache Core documentation](http://httpd.apache.org/docs/current/mod/core.html#setoutputfilter).
 
 ~~~ puppet
-=======
-Sets a `SetOutputFilter` directive per the [Apache Core documentation](http://httpd.apache.org/docs/current/mod/core.html#setoutputfilter).
-
-~~~ puppet
->>>>>>> upstream/1.7.x
 apache::vhost{ 'filter.example.net':
   docroot     => '/path/to/directory',
   directories => [

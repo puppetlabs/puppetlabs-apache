@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache::custom_config define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::custom_config define' do
   context 'invalid config' do
     it 'should not add the config' do
       pp = <<-EOS

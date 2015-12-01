@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::mime class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::mime class' do
   case fact('osfamily')
   when 'Debian'
     mod_dir      = '/etc/apache2/mods-available'

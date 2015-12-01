@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::vhost define' do
   context 'no default vhosts' do
     it 'should create no default vhosts' do
       pp = <<-EOS
@@ -202,8 +202,8 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
           ip_based => true,
           docroot  => '/var/www/html',
         }
-        host { 'ipv4.example.com': ip => '127.0.0.1', }
-        host { 'ipv6.example.com': ip => '127.0.0.2', }
+        host { 'host1.example.com': ip => '127.0.0.1', }
+        host { 'host2.example.com': ip => '127.0.0.2', }
         file { '/var/www/html/index.html':
           ensure  => file,
           content => "Hello from vhost\\n",
@@ -230,20 +230,20 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
       it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:80' }
     end
 
-    it 'should answer to ipv4.example.com' do
-      shell("/usr/bin/curl ipv4.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+    it 'should answer to host1.example.com' do
+      shell("/usr/bin/curl host1.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         expect(r.stdout).to eq("Hello from vhost\n")
       end
     end
 
-    it 'should answer to ipv6.example.com' do
-      shell("/usr/bin/curl ipv6.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+    it 'should answer to host2.example.com' do
+      shell("/usr/bin/curl host2.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         expect(r.stdout).to eq("Hello from vhost\n")
       end
     end
   end
 
-  context 'new vhost with IPv6 address on port 80' do
+  context 'new vhost with IPv6 address on port 80', :ipv6 do
     it 'should configure one apache vhost with an ipv6 address' do
       pp = <<-EOS
         class { 'apache':
@@ -505,8 +505,8 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
 
   case fact('lsbdistcodename')
   when 'precise', 'wheezy'
-    context 'vhost fallbackresource example' do
-      it 'should configure a vhost with Fallbackresource' do
+    context 'vhost FallbackResource example' do
+      it 'should configure a vhost with FallbackResource' do
         pp = <<-EOS
         class { 'apache': }
         apache::vhost { 'fallback.example.net':
@@ -1232,54 +1232,58 @@ describe 'apache::vhost define', :unless => UNSUPPORTED_PLATFORMS.include?(fact(
   end
 
   describe 'wsgi' do
-    it 'import_script applies cleanly' do
-      pp = <<-EOS
-        class { 'apache': }
-        class { 'apache::mod::wsgi': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot                     => '/tmp',
-          wsgi_application_group      => '%{GLOBAL}',
-          wsgi_daemon_process         => 'wsgi',
-          wsgi_daemon_process_options => {processes => '2'},
-          wsgi_process_group          => 'nobody',
-          wsgi_script_aliases         => { '/test' => '/test1' },
-          wsgi_pass_authorization     => 'On',
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    context 'on lucid', :if => fact('lsbdistcodename') == 'lucid' do
+      it 'import_script applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          class { 'apache::mod::wsgi': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot                     => '/tmp',
+            wsgi_application_group      => '%{GLOBAL}',
+            wsgi_daemon_process         => 'wsgi',
+            wsgi_daemon_process_options => {processes => '2'},
+            wsgi_process_group          => 'nobody',
+            wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_pass_authorization     => 'On',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
     end
 
-    it 'import_script applies cleanly', :unless => (fact('lsbdistcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
-      pp = <<-EOS
-        class { 'apache': }
-        class { 'apache::mod::wsgi': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot                     => '/tmp',
-          wsgi_application_group      => '%{GLOBAL}',
-          wsgi_daemon_process         => 'wsgi',
-          wsgi_daemon_process_options => {processes => '2'},
-          wsgi_import_script          => '/test1',
-          wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
-          wsgi_process_group          => 'nobody',
-          wsgi_script_aliases         => { '/test' => '/test1' },
-          wsgi_pass_authorization     => 'On',
-          wsgi_chunked_request        => 'On',
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
+    context 'on everything but lucid', :unless => fact('lsbdistcodename') == 'lucid' do
+      it 'import_script applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          class { 'apache::mod::wsgi': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot                     => '/tmp',
+            wsgi_application_group      => '%{GLOBAL}',
+            wsgi_daemon_process         => 'wsgi',
+            wsgi_daemon_process_options => {processes => '2'},
+            wsgi_import_script          => '/test1',
+            wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
+            wsgi_process_group          => 'nobody',
+            wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_pass_authorization     => 'On',
+            wsgi_chunked_request        => 'On',
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
 
-    describe file("#{$vhost_dir}/25-test.server.conf"), :unless => (fact('lsbdistcodename') == 'lucid' or UNSUPPORTED_PLATFORMS.include?(fact('osfamily'))) do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
-      it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }
-      it { is_expected.to contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
-      it { is_expected.to contain 'WSGIProcessGroup nobody' }
-      it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }
-      it { is_expected.to contain 'WSGIPassAuthorization On' }
-      it { is_expected.to contain 'WSGIChunkedRequest On' }
+      describe file("#{$vhost_dir}/25-test.server.conf") do
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
+        it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }
+        it { is_expected.to contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
+        it { is_expected.to contain 'WSGIProcessGroup nobody' }
+        it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }
+        it { is_expected.to contain 'WSGIPassAuthorization On' }
+        it { is_expected.to contain 'WSGIChunkedRequest On' }
+      end
     end
   end
 

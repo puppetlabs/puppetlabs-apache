@@ -36,7 +36,7 @@ when 'FreeBSD'
   end
 end
 
-describe 'apache::mod::worker class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::worker class' do
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
@@ -58,7 +58,7 @@ describe 'apache::mod::worker class', :unless => UNSUPPORTED_PLATFORMS.include?(
   end
 end
 
-describe 'apache::mod::prefork class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::prefork class' do
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do

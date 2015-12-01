@@ -10,7 +10,7 @@ else
   service_name = :skip
 end
 
-describe 'apache::mod::itk class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or service_name.equal? :skip do
+describe 'apache::mod::itk class', :unless => service_name.equal? :skip do
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do

@@ -8,7 +8,7 @@ when 'Debian'
   vhostd = '/etc/apache2/sites-available'
 end
 
-describe 'apache ssl', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache ssl' do
 
   describe 'ssl parameters' do
     it 'runs without error' do
