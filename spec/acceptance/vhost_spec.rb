@@ -202,8 +202,8 @@ describe 'apache::vhost define' do
           ip_based => true,
           docroot  => '/var/www/html',
         }
-        host { 'ipv4.example.com': ip => '127.0.0.1', }
-        host { 'ipv6.example.com': ip => '127.0.0.2', }
+        host { 'host1.example.com': ip => '127.0.0.1', }
+        host { 'host2.example.com': ip => '127.0.0.2', }
         file { '/var/www/html/index.html':
           ensure  => file,
           content => "Hello from vhost\\n",
@@ -230,20 +230,20 @@ describe 'apache::vhost define' do
       it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:80' }
     end
 
-    it 'should answer to ipv4.example.com' do
-      shell("/usr/bin/curl ipv4.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+    it 'should answer to host1.example.com' do
+      shell("/usr/bin/curl host1.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         expect(r.stdout).to eq("Hello from vhost\n")
       end
     end
 
-    it 'should answer to ipv6.example.com' do
-      shell("/usr/bin/curl ipv6.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+    it 'should answer to host2.example.com' do
+      shell("/usr/bin/curl host2.example.com:80", {:acceptable_exit_codes => 0}) do |r|
         expect(r.stdout).to eq("Hello from vhost\n")
       end
     end
   end
 
-  context 'new vhost with IPv6 address on port 80' do
+  context 'new vhost with IPv6 address on port 80', :ipv6 do
     it 'should configure one apache vhost with an ipv6 address' do
       pp = <<-EOS
         class { 'apache':
