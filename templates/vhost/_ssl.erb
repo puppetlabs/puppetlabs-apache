@@ -22,9 +22,6 @@
   <%- if @ssl_crl_check && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   SSLCARevocationCheck    "<%= @ssl_crl_check %>"
   <%- end -%>
-  <%- if @ssl_proxyengine -%>
-  SSLProxyEngine On
-  <%- end -%>
   <%- if @ssl_protocol -%>
   SSLProtocol             <%= [@ssl_protocol].flatten.compact.join(' ') %>
   <%- end -%>
@@ -39,15 +36,6 @@
   <%- end -%>
   <%- if @ssl_verify_depth -%>
   SSLVerifyDepth          <%= @ssl_verify_depth %>
-  <%- end -%>
-  <%- if @ssl_proxy_check_peer_cn -%>
-  SSLProxyCheckPeerCN     <%= @ssl_proxy_check_peer_cn %>
-  <%- end -%>
-  <%- if @ssl_proxy_check_peer_name -%>
-  SSLProxyCheckPeerName   <%= @ssl_proxy_check_peer_name %>
-  <%- end -%>
-  <%- if @ssl_proxy_machine_cert -%>
-  SSLProxyMachineCertificateFile "<%= @ssl_proxy_machine_cert %>"
   <%- end -%>
   <%- if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>

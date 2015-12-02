@@ -435,9 +435,12 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
         :content => /^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$/ ) }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+      it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
+        :content => /^\s+SSLProxyEngine On$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
         :content => /^\s+SSLProxyCheckPeerCN\s+on$/ ) }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+      it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
         :content => /^\s+SSLProxyCheckPeerName\s+on$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
@@ -681,6 +684,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-serveralias') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-setenv') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-ssl') }
+      it { is_expected.to_not contain_concat__fragment('rspec.example.com-sslproxy') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-suphp') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-php_admin') }
       it { is_expected.to_not contain_concat__fragment('rspec.example.com-header') }
@@ -702,6 +706,18 @@ describe 'apache::vhost', :type => :define do
       end
       it { is_expected.to compile }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-docroot') }
+    end
+    context 'ssl_proxyengine without ssl' do
+      let :params do
+        {
+          'docroot'         => '/rspec/docroot',
+          'ssl'             => false,
+          'ssl_proxyengine' => true,
+        }
+      end
+      it { is_expected.to compile }
+      it { is_expected.not_to contain_concat__fragment('rspec.example.com-ssl') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy') }
     end
   end
   describe 'access logs' do
