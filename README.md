@@ -3186,6 +3186,15 @@ Sets the [SSLProxyMachineCertificateFile](http://httpd.apache.org/docs/current/m
     }
 ~~~
 
+##### `ssl_proxy_check_peer_cn`
+ 
+Sets the [SSLProxyMachinePeerCN](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
+
+
+##### `ssl_proxy_check_peer_name`
+ 
+Sets the [SSLProxyMachinePeerName](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
+
 ##### `ssl_options`
 
 Sets the [SSLOptions](http://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions) directive, which configures various SSL engine run-time options. This is the global setting for the given vhost and can be a string or an array. Defaults to 'undef'.
