@@ -17,6 +17,17 @@ class apache::mod::itk (
     if defined(Class['apache::mod::prefork']) {
       fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
     }
+  } else {
+    # prefork is a requirement for itk in 2.4; except on FreeBSD, which is special
+    if $::osfamily == 'FreeBSD' {
+      if defined(Class['apache::mod::prefork']) {
+        fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
+      }
+    } else {
+      if ! defined(Class['apache::mod::prefork']) {
+        fail('apache::mod::prefork is a prerequisite for apache::mod::itk, please arrange for it to be included.')
+      }
+    }
   }
   if defined(Class['apache::mod::worker']) {
     fail('May not include both apache::mod::itk and apache::mod::worker on the same node')
