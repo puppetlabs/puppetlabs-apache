@@ -77,6 +77,9 @@ define apache::mpm (
         mpm_module => $mpm
       }
     }
+    'gentoo': {
+      # so we don't fail
+    }
     'redhat': {
       # so we don't fail
     }
