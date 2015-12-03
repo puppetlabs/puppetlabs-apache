@@ -37,6 +37,10 @@ describe 'apache::mod::itk', :type => :class do
     end
 
     context "with Apache version >= 2.4" do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+
       let :params do
         {
           :apache_version => '2.4',
@@ -52,6 +56,10 @@ describe 'apache::mod::itk', :type => :class do
     end
   end
   context "on a FreeBSD OS" do
+    let :pre_condition do
+      'class { "apache": mpm_module => false, }'
+    end
+
     let :facts do
       {
         :osfamily               => 'FreeBSD',
