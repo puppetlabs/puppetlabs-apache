@@ -69,7 +69,11 @@ define apache::mpm (
       if versioncmp($apache_version, '2.4') < 0 or $mpm == 'itk' {
         package { "apache2-mpm-${mpm}":
           ensure => present,
-          before => File[$::apache::mod_dir],
+        }
+        if $::apache::mod_enable_dir {
+          Package["apache2-mpm-${mpm}"] {
+            before => File[$::apache::mod_enable_dir],
+          }
         }
       }
     }
