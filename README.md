@@ -1273,6 +1273,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `proxy_balancer`
 * `proxy_html`
 * `proxy_http`
+* `proxy_wstunnel`
 * `python`
 * `reqtimeout`
 * `remoteip`*
@@ -3187,12 +3188,12 @@ Sets the [SSLProxyMachineCertificateFile](http://httpd.apache.org/docs/current/m
 ~~~
 
 ##### `ssl_proxy_check_peer_cn`
- 
+
 Sets the [SSLProxyMachinePeerCN](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
 
 
 ##### `ssl_proxy_check_peer_name`
- 
+
 Sets the [SSLProxyMachinePeerName](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
 
 ##### `ssl_options`
