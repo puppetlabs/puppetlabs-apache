@@ -63,6 +63,7 @@ class apache (
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
   $max_keepalive_requests = $::apache::params::max_keepalive_requests,
+  $limitreqfieldsize      = '8190',
   $logroot                = $::apache::params::logroot,
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,

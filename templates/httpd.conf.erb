@@ -10,6 +10,7 @@ Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
+LimitRequestFieldSize <%= @limitreqfieldsize %>
 
 <%- if @rewrite_lock and scope.function_versioncmp([@apache_version, '2.2']) <= 0 -%>
 RewriteLock <%= @rewrite_lock %>
