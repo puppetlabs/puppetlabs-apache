@@ -326,8 +326,7 @@ describe 'apache::vhost', :type => :define do
           'krb_authoritative'           => 'off',
           'krb_auth_realms'             => ['EXAMPLE.ORG','EXAMPLE.NET'],
           'krb_5keytab'                 => '/tmp/keytab5',
-          'krb_local_user_mapping'      => 'off',
-          'limit_request_field_size'    => '54321',
+          'krb_local_user_mapping'      => 'off'
         }
       end
       let :facts do
@@ -472,8 +471,6 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+KrbSaveCredentials\soff$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbVerifyKDC\son$/)}
-      it { is_expected.to contain_concat__fragment('rspec.example.com-limits').with(
-        :content => /^\s+LimitRequestFieldSize\s54321$/)}
     end
     context 'vhost with multiple ip addresses' do
       let :params do

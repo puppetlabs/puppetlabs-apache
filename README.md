@@ -124,6 +124,7 @@
 [`KeepAliveTimeout`]: http://httpd.apache.org/docs/current/mod/core.html#keepalivetimeout
 [`keepalive` parameter]: #keepalive
 [`keepalive_timeout`]: #keepalive_timeout
+[`limitreqfieldsize`]: https://httpd.apache.org/docs/current/mod/core.html#limitrequestfieldsize
 
 [`lib`]: #lib
 [`lib_path`]: #lib_path
@@ -2102,10 +2103,6 @@ Specifies the service name that will be used by Apache for authentication. Corre
 ##### `krb_save_credentials`
 
 This option enables credential saving functionality. Default is 'off'
-
-##### `limit_request_field_size`
-
-[Limits](http://httpd.apache.org/docs/2.4/mod/core.html#limitrequestfieldsize) the size of the HTTP request header allowed from the client. Default is 'undef'.
 
 ##### `logroot`
 
