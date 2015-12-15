@@ -1326,7 +1326,8 @@ describe 'apache::vhost define' do
   end
 
   # So what does this work on?
-  if default['platform'] !~ /^(debian-(6|7)|el-(5|6|7))/
+  # Skip Centos-7 not fastcgi packaging
+  if default['platform'] !~ /^(debian-(6|7)|el-(5|6))/
     describe 'fastcgi' do
       it 'applies cleanly' do
         pp = <<-EOS
