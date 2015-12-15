@@ -27,6 +27,11 @@ RSpec.configure do |c|
       apply_manifest_on(agents, pp, :catch_failures => false)
     end
 
+    if fact('osfamily') == 'Debian'
+      # Make sure snake-oil certs are installed.
+      shell 'apt-get install -y ssl-cert'
+    end
+
     # Install module and dependencies
     hosts.each do |host|
       copy_module_to(host, :source => proj_root, :module_name => 'apache')
