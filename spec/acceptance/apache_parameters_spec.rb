@@ -354,6 +354,20 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'limitrequestfieldsize' do
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': limitreqfieldsize => '16830' }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'LimitRequestFieldSize 16830' }
+    end
+  end
+
   describe 'logging' do
     describe 'setup' do
       it 'applies cleanly' do

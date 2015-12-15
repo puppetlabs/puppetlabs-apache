@@ -136,7 +136,6 @@ define apache::vhost(
   $krb_verify_kdc              = 'on',
   $krb_servicename             = 'HTTP',
   $krb_save_credentials        = 'off',
-  $limit_request_field_size    = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -228,10 +227,6 @@ define apache::vhost(
   }
 
   validate_bool($auth_kerb)
-
-  if $limit_request_field_size {
-    validate_integer($limit_request_field_size)
-  }
 
   # Validate the docroot as a string if:
   # - $manage_docroot is true
@@ -982,15 +977,6 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 330,
       content => template('apache/vhost/_filters.erb'),
-    }
-  }
-  # Template uses:
-  # - $limit_request_field_size
-  if $limit_request_field_size {
-    concat::fragment { "${name}-limits":
-      target  => "${priority_real}${filename}.conf",
-      order   => 330,
-      content => template('apache/vhost/_limits.erb'),
     }
   }
 
