@@ -65,6 +65,7 @@
 [`apache::params`]: #class-apacheparams
 [`apache::version`]: #class-apacheversion
 [`apache::vhost`]: #define-apachevhost
+[`apache::vhost::custom`]: #define-apachevhostcustom
 [`apache::vhost::WSGIImportScript`]: #wsgiimportscript
 [Apache HTTP Server]: http://httpd.apache.org
 [Apache modules]: http://httpd.apache.org/docs/current/mod/
@@ -743,6 +744,7 @@ apache::balancer { 'puppet01':
     - [Define: apache::mod](#define-apachemod)
     - [Define: apache::namevirtualhost](#define-apachenamevirtualhost)
     - [Define: apache::vhost](#define-apachevhost)
+    - [Define: apache::vhost::custom](#define-apachevhostcustom)
 - [**Private Defines**](#private-defines)
     - [Define: apache::default_mods::load](#define-default_mods-load)
     - [Define: apache::peruser::multiplexer](#define-apacheperusermultiplexer)
@@ -3272,6 +3274,26 @@ A unique alias. This is used internally to link the action with the FastCGI serv
 ##### `file_type`
 
 The MIME-type of the file to be processed by the FastCGI server.
+
+#### Define: `apache::vhost::custom`
+
+The `apache::vhost::custom` is a thin wrapper to the `apache::custom_config``
+define. We are simply overriding some of the default settings specifc to the
+vhost directory in Apache.
+
+**Parameters within `apache::vhost::custom`**:
+
+##### `content`
+
+Sets the configuration file's content.
+
+##### `ensure`
+
+Specifies if the vhost file is present or absent. Defaults to 'present'.
+
+##### `priority`
+
+Sets the relative load-order for Apache HTTPD VirtualHost configuration files. Defaults to '25'.
 
 ### Private Defines
 
