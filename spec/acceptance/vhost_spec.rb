@@ -1330,6 +1330,13 @@ describe 'apache::vhost define' do
     describe 'fastcgi' do
       it 'applies cleanly' do
         pp = <<-EOS
+          if ($::operatingsystem == 'Ubuntu' and versioncpm($::operatingsystemrelease, '10.04' >= 0)) {
+            include ::apt
+            apt::ppa { 'multiverse':
+              before => Class['Apache::Mod::Fastcgi'],
+            }
+          }
+
           class { 'apache': }
           class { 'apache::mod::fastcgi': }
           host { 'test.server': ip => '127.0.0.1' }
