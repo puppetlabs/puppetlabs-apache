@@ -158,7 +158,9 @@ define apache::vhost(
   validate_bool($ssl_proxyengine)
   if $rewrites {
     validate_array($rewrites)
-    validate_hash($rewrites[0])
+    unless empty($rewrites) {
+      validate_hash($rewrites[0])
+    }
   }
 
   # Input validation begins

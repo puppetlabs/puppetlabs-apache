@@ -776,6 +776,18 @@ describe 'apache::vhost', :type => :define do
     end
   end # access logs
   describe 'validation' do
+    let :default_facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
+      }
+    end
     context 'bad ensure' do
       let :params do
         {
@@ -875,6 +887,16 @@ describe 'apache::vhost', :type => :define do
       end
       let :facts do default_facts end
       it { expect { is_expected.to compile }.to raise_error }
+    end
+    context 'empty rewrites' do
+      let :params do
+        {
+          'docroot'  => '/rspec/docroot',
+          'rewrites' => [],
+        }
+      end
+      let :facts do default_facts end
+      it { is_expected.to compile }
     end
     context 'bad suexec_user_group' do
       let :params do
