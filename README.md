@@ -3228,6 +3228,8 @@ Specifies whether or not to use [SSLProxyEngine](http://httpd.apache.org/docs/cu
 
 This type is intended for use with mod_fastcgi. It allows you to define one or more external FastCGI servers to handle specific file types.
 
+** Note ** If using Ubuntu 10.04+, you'll need to manually enable the multiverse repository.
+
 Ex:
 
 ~~~ puppet
