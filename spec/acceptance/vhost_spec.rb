@@ -1325,9 +1325,9 @@ describe 'apache::vhost define' do
     end
   end
 
-  # So what does this work on?
-  # Skip Centos-7 not fastcgi packaging
-  if default['platform'] !~ /^(debian-(6|7)|el-(5|6))/
+  # Limit testing to Debian, since Centos does not have fastcgi package.
+  case fact('osfamily')
+  when 'Debian'
     describe 'fastcgi' do
       it 'applies cleanly' do
         pp = <<-EOS
