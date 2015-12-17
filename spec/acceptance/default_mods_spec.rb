@@ -1,19 +1,5 @@
 require 'spec_helper_acceptance'
-
-case fact('osfamily')
-when 'RedHat'
-  mod_dir     = '/etc/httpd/conf.d'
-  servicename = 'httpd'
-when 'Debian'
-  mod_dir     = '/etc/apache2/mods-available'
-  servicename = 'apache2'
-when 'FreeBSD'
-  mod_dir     = '/usr/local/etc/apache24/Modules'
-  servicename = 'apache24'
-when 'Gentoo'
-  mod_dir     = '/etc/apache2/modules.d'
-  servicename = 'apache2'
-end
+require_relative './version.rb'
 
 describe 'apache::default_mods class' do
   describe 'no default mods' do
@@ -30,7 +16,7 @@ describe 'apache::default_mods class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe service(servicename) do
+    describe service($service_name) do
       it { is_expected.to be_running }
     end
   end
@@ -56,12 +42,12 @@ describe 'apache::default_mods class' do
     end
 
     # Are these the same?
-    describe service(servicename) do
+    describe service($service_name) do
       it { is_expected.not_to be_running }
     end
-    describe "service #{servicename}" do
+    describe "service #{$service_name}" do
       it 'should not be running' do
-        shell("pidof #{servicename}", {:acceptable_exit_codes => 1})
+        shell("pidof #{$service_name}", {:acceptable_exit_codes => 1})
       end
     end
   end
@@ -94,7 +80,7 @@ describe 'apache::default_mods class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe service(servicename) do
+    describe service($service_name) do
       it { is_expected.to be_running }
     end
   end
@@ -112,11 +98,11 @@ describe 'apache::default_mods class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe service(servicename) do
+    describe service($service_name) do
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/zz_auth_basic.load") do
+    describe file("#{$mod_dir}/zz_auth_basic.load") do
       it { is_expected.to be_file }
     end
   end

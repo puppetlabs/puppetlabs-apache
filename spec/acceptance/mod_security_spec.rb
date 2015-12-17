@@ -1,17 +1,7 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise' or fact('lsbdistcodename') == 'wheezy')) do
-  case fact('osfamily')
-  when 'Debian'
-    mod_dir      = '/etc/apache2/mods-available'
-    service_name = 'apache2'
-    package_name = 'apache2'
-  when 'RedHat'
-    mod_dir      = '/etc/httpd/conf.d'
-    service_name = 'httpd'
-    package_name = 'httpd'
-  end
-
   context "default mod_security config" do
     if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
@@ -54,16 +44,16 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       end
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe package(package_name) do
+    describe package($package_name) do
       it { is_expected.to be_installed }
     end
 
-    describe file("#{mod_dir}/security.conf") do
+    describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain "mod_security2.c" }
     end
 
@@ -100,12 +90,12 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/security.conf") do
+    describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain "mod_security2.c" }
     end
 
@@ -152,12 +142,12 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/security.conf") do
+    describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain "mod_security2.c" }
     end
 
@@ -208,12 +198,12 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/security.conf") do
+    describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain "mod_security2.c" }
     end
 

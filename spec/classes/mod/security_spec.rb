@@ -28,7 +28,7 @@ describe 'apache::mod::security', :type => :class do
     ) }
     it { should contain_package('mod_security_crs') }
     it { should contain_file('security.conf').with(
-      :path => '/etc/httpd/conf.d/security.conf'
+      :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',

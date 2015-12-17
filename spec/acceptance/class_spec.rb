@@ -1,21 +1,7 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache class' do
-  case fact('osfamily')
-  when 'RedHat'
-    package_name = 'httpd'
-    service_name = 'httpd'
-  when 'Debian'
-    package_name = 'apache2'
-    service_name = 'apache2'
-  when 'FreeBSD'
-    package_name = 'apache24'
-    service_name = 'apache24'
-  when 'Gentoo'
-    package_name = 'www-servers/apache'
-    service_name = 'apache2'
-  end
-
   context 'default parameters' do
     it 'should work with no errors' do
       pp = <<-EOS
@@ -27,11 +13,11 @@ describe 'apache class' do
       expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
-    describe package(package_name) do
+    describe package($package_name) do
       it { is_expected.to be_installed }
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -80,7 +66,7 @@ describe 'apache class' do
       apply_manifest(pp, :catch_changes => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
