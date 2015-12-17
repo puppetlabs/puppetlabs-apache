@@ -1370,7 +1370,12 @@ describe 'apache::vhost define' do
               include_src => false,
             }
           }
+        EOS
 
+        #apt-get update may not run clean here. Should be OK.
+        apply_manifest(pp, :catch_failures => false)
+
+        pp2 = <<-EOS
           class { 'apache': }
           class { 'apache::mod::fastcgi': }
           host { 'test.server': ip => '127.0.0.1' }
@@ -1381,7 +1386,7 @@ describe 'apache::vhost define' do
             fastcgi_dir    => '/tmp/fast',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true, :acceptable_exit_codes => [0, 2])
+        apply_manifest(pp2, :catch_failures => true, :acceptable_exit_codes => [0, 2])
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
