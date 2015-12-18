@@ -2,6 +2,9 @@
 
   # SSL Proxy directives
   SSLProxyEngine On
+  <%- if @ssl_proxy_verify -%>
+  SSLProxyVerify <%= @ssl_proxy_verify %>
+  <%- end -%>
   <%- if @ssl_proxy_check_peer_cn -%>
   SSLProxyCheckPeerCN     <%= @ssl_proxy_check_peer_cn %>
   <%- end -%>

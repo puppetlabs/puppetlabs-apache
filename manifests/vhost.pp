@@ -25,6 +25,7 @@ define apache::vhost(
   $ssl_honorcipherorder        = undef,
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
+  $ssl_proxy_verify            = undef,
   $ssl_proxy_check_peer_cn     = undef,
   $ssl_proxy_check_peer_name   = undef,
   $ssl_proxy_machine_cert      = undef,
@@ -232,6 +233,10 @@ define apache::vhost(
   # - $manage_docroot is true
   if $manage_docroot {
     validate_string($docroot)
+  }
+
+  if $ssl_proxy_verify {
+    validate_re($ssl_proxy_verify,'^(none|optional|require|optional_no_ca)$',"${ssl_proxy_verify} is not permitted for ssl_proxy_verify. Allowed values are 'none', 'optional', 'require' or 'optional_no_ca'.")
   }
 
   if $ssl_proxy_check_peer_cn {
@@ -803,6 +808,7 @@ define apache::vhost(
 
   # Template uses:
   # - $ssl_proxyengine
+  # - $ssl_proxy_verify
   # - $ssl_proxy_check_peer_cn
   # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_machine_cert
