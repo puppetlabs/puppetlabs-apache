@@ -187,6 +187,10 @@ describe 'apache::vhost', :type => :define do
               'provider' => 'files',
               'require'  => 'all granted',
             },
+            {
+              'path'     => '*',
+              'provider' => 'proxy',
+            },
             { 'path'              => '/var/www/files/indexed_directory',
               'directoryindex'    => 'disabled',
               'options'           => ['Indexes','FollowSymLinks','MultiViews'],
@@ -390,6 +394,8 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<Proxy "\*">$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Require valid-user$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(

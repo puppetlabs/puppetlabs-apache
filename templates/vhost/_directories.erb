@@ -17,7 +17,7 @@
       <%- end -%>
     <%- end -%>
     <%- if directory['path'] and directory['path'] != '' -%>
-      <%- if directory['provider'] and directory['provider'].match('(directory|location|files)') -%>
+      <%- if directory['provider'] and directory['provider'].match('(directory|location|files|proxy)') -%>
         <%- if /^(.*)match$/ =~ directory['provider'] -%>
           <%- provider = $1.capitalize + 'Match' -%>
         <%- else -%>
