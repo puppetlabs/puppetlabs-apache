@@ -219,10 +219,16 @@ describe 'apache::vhost', :type => :define do
               'path'            => '/a',
               'url'             => 'http://backend-a/',
               'keywords'        => ['noquery', 'interpolate'],
-              'reverse_cookies' => [{
-                'path'          => '/a',
-                'url'           => 'http://backend-a/',
-              }],
+              'reverse_cookies' => [
+								{
+                  'path'          => '/a',
+                  'url'           => 'http://backend-a/',
+                },
+                {
+                  'domain' => 'foo',
+                  'url'    => 'http://foo',
+                }
+              ],
               'params'          => {
                       'retry'   => '0',
                       'timeout' => '5'
@@ -425,6 +431,8 @@ describe 'apache::vhost', :type => :define do
               /noquery interpolate/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /ProxyPassReverseCookiePath\s+\/a\s+http:\/\//) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
