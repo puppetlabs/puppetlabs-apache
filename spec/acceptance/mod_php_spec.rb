@@ -1,25 +1,7 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache::mod::php class' do
-  case fact('osfamily')
-  when 'Debian'
-    vhost_dir    = '/etc/apache2/sites-enabled'
-    mod_dir      = '/etc/apache2/mods-available'
-    service_name = 'apache2'
-  when 'RedHat'
-    vhost_dir    = '/etc/httpd/conf.d'
-    mod_dir      = '/etc/httpd/conf.d'
-    service_name = 'httpd'
-  when 'FreeBSD'
-    vhost_dir    = '/usr/local/etc/apache24/Vhosts'
-    mod_dir      = '/usr/local/etc/apache24/Modules'
-    service_name = 'apache24'
-  when 'Gentoo'
-    vhost_dir    = '/etc/apache2/vhosts.d'
-    mod_dir      = '/etc/apache2/modules.d'
-    service_name = 'apache2'
-  end
-
   context "default php config" do
     it 'succeeds in puppeting php' do
       pp= <<-EOS
@@ -40,12 +22,12 @@ describe 'apache::mod::php class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/php5.conf") do
+    describe file("#{$mod_dir}/php5.conf") do
       it { is_expected.to contain "DirectoryIndex index.php" }
     end
 
@@ -83,12 +65,12 @@ describe 'apache::mod::php class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
+    describe service($service_name) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
-    describe file("#{vhost_dir}/25-php.example.com.conf") do
+    describe file("#{$vhost_dir}/25-php.example.com.conf") do
       it { is_expected.to contain "  php_flag display_errors on" }
       it { is_expected.to contain "  php_value include_path .:/usr/share/pear:/usr/bin/php" }
       it { is_expected.to contain "  php_admin_flag engine on" }
@@ -116,7 +98,7 @@ describe 'apache::mod::php class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{mod_dir}/php5.conf") do
+    describe file("#{$mod_dir}/php5.conf") do
       it { should contain "# somecontent" }
     end
   end
@@ -135,7 +117,7 @@ describe 'apache::mod::php class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe file("#{mod_dir}/php5.conf") do
+    describe file("#{$mod_dir}/php5.conf") do
       it { should contain "# somecontent" }
     end
   end

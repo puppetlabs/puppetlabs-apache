@@ -5,7 +5,6 @@ _operatingsystemrelease = fact('operatingsystemrelease').to_f
 case _osfamily
 when 'RedHat'
   $confd_dir        = '/etc/httpd/conf.d'
-  $mod_dir          = '/etc/httpd/conf.d'
   $conf_file        = '/etc/httpd/conf/httpd.conf'
   $ports_file       = '/etc/httpd/conf/ports.conf'
   $vhost_dir        = '/etc/httpd/conf.d'
@@ -19,8 +18,10 @@ when 'RedHat'
 
   if (_operatingsystem == 'Fedora' and _operatingsystemrelease >= 18) or (_operatingsystem != 'Fedora' and _operatingsystemrelease >= 7)
     $apache_version = '2.4'
+    $mod_dir        = '/etc/httpd/conf.modules.d'
   else
     $apache_version = '2.2'
+    $mod_dir        = '/etc/httpd/conf.d'
   end
 when 'Debian'
   $confd_dir        = '/etc/apache2/conf.d'

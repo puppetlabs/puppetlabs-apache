@@ -1,15 +1,5 @@
 require 'spec_helper_acceptance'
-
-case fact('osfamily')
-when 'RedHat'
-  servicename = 'httpd'
-when 'Debian'
-  servicename = 'apache2'
-when 'FreeBSD'
-  servicename = 'apache24'
-when 'Gentoo'
-  servicename = 'apache2'
-end
+require_relative './version.rb'
 
 case fact('osfamily')
 when 'FreeBSD'
@@ -29,7 +19,7 @@ when 'FreeBSD'
       end
     end
 
-    describe service(servicename) do
+    describe service($service_name) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -52,7 +42,7 @@ describe 'apache::mod::worker class' do
     end
   end
 
-  describe service(servicename) do
+  describe service($service_name) do
     it { is_expected.to be_running }
     it { is_expected.to be_enabled }
   end
@@ -74,7 +64,7 @@ describe 'apache::mod::prefork class' do
     end
   end
 
-  describe service(servicename) do
+  describe service($service_name) do
     it { is_expected.to be_running }
     it { is_expected.to be_enabled }
   end

@@ -62,7 +62,10 @@ class apache::params inherits ::apache::version {
     $server_root          = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
-    $mod_dir              = "${httpd_dir}/conf.d"
+    $mod_dir              = $::apache::version::distrelease ? {
+      '7'     => "${httpd_dir}/conf.modules.d",
+      default => "${httpd_dir}/conf.d",
+    }
     $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef

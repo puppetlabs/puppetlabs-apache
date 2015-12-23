@@ -1,12 +1,12 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache::mod::passenger class' do
   case fact('osfamily')
   when 'Debian'
-    service_name = 'apache2'
     mod_dir = '/etc/apache2/mods-available/'
-    conf_file = "#{mod_dir}passenger.conf"
-    load_file = "#{mod_dir}zpassenger.load"
+    conf_file = "#{$mod_dir}/passenger.conf"
+    load_file = "#{$mod_dir}/zpassenger.load"
 
     case fact('operatingsystem')
     when 'Ubuntu'
@@ -46,10 +46,8 @@ describe 'apache::mod::passenger class' do
     rackapp_user = 'www-data'
     rackapp_group = 'www-data'
   when 'RedHat'
-    service_name = 'httpd'
-    mod_dir = '/etc/httpd/conf.d/'
-    conf_file = "#{mod_dir}passenger.conf"
-    load_file = "#{mod_dir}zpassenger.load"
+    conf_file = "#{$mod_dir}/passenger.conf"
+    load_file = "#{$mod_dir}/zpassenger.load"
     # sometimes installs as 3.0.12, sometimes as 3.0.19 - so just check for the stable part
     passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.1'
     passenger_ruby = '/usr/bin/ruby'
@@ -98,7 +96,7 @@ describe 'apache::mod::passenger class' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe service(service_name) do
+      describe service($service_name) do
         it { is_expected.to be_enabled }
         it { is_expected.to be_running }
       end
