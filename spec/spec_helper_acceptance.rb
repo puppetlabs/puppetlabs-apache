@@ -2,7 +2,29 @@ require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
 
-run_puppet_install_helper
+if ! ENV["PUPPET_DEV_GIT"].nil?
+  pr = ENV["PUPPET_DEV_GIT"]
+  h = hosts[0]
+  configure_foss_defaults_on(h)
+  install_package h, 'git'
+  if h['platform'] =~ /debian|ubuntu|cumulus/
+    install_package h, 'ruby-dev'
+    install_package h, 'bundler'
+  else
+    install_package h, 'ruby-devel'
+    install_package h, 'rubygem-bundler'
+  end
+  on h, "git clone https://github.com/puppetlabs/hiera /tmp/hiera"
+  on h, "sudo /tmp/hiera/install.rb --full"
+  on h, "gem install facter"
+  on h, "git clone https://github.com/puppetlabs/puppet /tmp/puppet"
+  on h, "git --git-dir=/tmp/puppet/.git fetch origin pull/#{pr}/head:pr_#{pr}"
+  on h, "git --git-dir=/tmp/puppet/.git checkout pr_#{pr}"
+  on h, "cd /tmp/puppet; bundle install --path /tmp/puppet/.bundle/gems/"
+  on h, "cd /tmp/puppet; bundle exec /tmp/puppet/install.rb --full"
+else
+  run_puppet_install_helper
+end
 
 RSpec.configure do |c|
   # apache on Ubuntu 10.04 and 12.04 doesn't like IPv6 VirtualHosts, so we skip ipv6 tests on those systems
@@ -34,7 +56,7 @@ RSpec.configure do |c|
 
     # Install module and dependencies
     hosts.each do |host|
-      copy_module_to(host, :source => proj_root, :module_name => 'apache')
+      puppet_module_install(:source => proj_root, :module_name => 'apache', :target_module_path => '/etc/puppetlabs/code/modules')
 
       on host, puppet('module','install','puppetlabs-stdlib')
       on host, puppet('module','install','puppetlabs-concat', '--version 1.1.1', '--force')
