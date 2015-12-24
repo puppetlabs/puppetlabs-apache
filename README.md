@@ -2260,13 +2260,13 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/f', 'url' => 'http://backend-f/',
       'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
     { 'path' => '/g', 'url' => 'http://backend-g/',
-      'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}], },
+      'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
   ],
 }
 ~~~
 
 `reverse_urls` is optional and can be an array or a string. It is useful when used with `mod_proxy_balancer`.
-`reverse_cookies` is optional and is used to set ProxyPassReverseCookiePath.
+`reverse_cookies` is optional and is used to set ProxyPassReverseCookiePath and/or ProxyPassReverseCookieDomain.
 `params` is an optional parameter. It allows to provide the ProxyPass key=value parameters (Connection settings).
 `setenv` is optional and is an array to set environment variables for the proxy directive, for details see http://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings
 
