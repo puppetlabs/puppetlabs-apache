@@ -5,6 +5,8 @@
 <%- end -%>
 <% if @proxy_preserve_host -%>
   ProxyPreserveHost On
+<% else -%>
+  ProxyPreserveHost Off
 <%- end -%>
 <% if @proxy_error_override -%>
   ProxyErrorOverride On
