@@ -154,6 +154,7 @@ describe 'apache::vhost', :type => :define do
           'ssl_verify_depth'            => '3',
           'ssl_options'                 => '+ExportCertData',
           'ssl_openssl_conf_cmd'        => 'DHParameters "foo.pem"',
+          'ssl_proxy_verify'            => 'require',
           'ssl_proxy_check_peer_cn'     => 'on',
           'ssl_proxy_check_peer_name'   => 'on',
           'ssl_proxyengine'             => true,
