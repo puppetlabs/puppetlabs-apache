@@ -4,7 +4,15 @@ case fact('osfamily')
 when 'Debian'
   service_name = 'apache2'
   majrelease = fact('operatingsystemmajrelease')
-  if [ '6', '7', '10.04', '12.04'].include?(majrelease)
+  if ['6', '7', '10.04', '12.04'].include?(majrelease)
+    variant = :itk_only
+  else
+    variant = :prefork
+  end
+when 'RedHat'
+  service_name = 'httpd'
+  majrelease = fact('operatingsystemmajrelease')
+  if ['5', '6'].include?(majrelease)
     variant = :itk_only
   else
     variant = :prefork
