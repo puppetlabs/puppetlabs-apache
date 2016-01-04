@@ -77,6 +77,9 @@ LogFormat "%{Referer}i -> %U" referer
 <% unless @log_formats.has_key?('agent') -%>
 LogFormat "%{User-agent}i" agent
 <% end -%>
+<% unless @log_formats.has_key?('forwarded') -%>
+LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"" forwarded
+<% end -%>
 <% if @log_formats and !@log_formats.empty? -%>
   <%- @log_formats.sort.each do |nickname,format| -%>
 LogFormat "<%= format -%>" <%= nickname %>
