@@ -1,12 +1,13 @@
 class apache::mod::php (
-  $package_name   = undef,
-  $package_ensure = 'present',
-  $path           = undef,
-  $extensions     = ['.php'],
-  $content        = undef,
-  $template       = 'apache/mod/php5.conf.erb',
-  $source         = undef,
-  $root_group     = $::apache::params::root_group,
+  $package_name        = undef,
+  $package_ensure      = 'present',
+  $path                = undef,
+  $extensions          = ['.php'],
+  $content             = undef,
+  $template            = 'apache/mod/php5.conf.erb',
+  $source              = undef,
+  $root_group          = $::apache::params::root_group,
+  $additional_packages = undef,
 ) inherits apache::params {
 
   if defined(Class['::apache::mod::prefork']) {
@@ -58,5 +59,12 @@ class apache::mod::php (
     ],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
+  }
+
+  if $additional_packages {
+    package { $additional_packages:
+    ensure => 'installed',
+    notify => Class['apache::service'],
+    }
   }
 }
