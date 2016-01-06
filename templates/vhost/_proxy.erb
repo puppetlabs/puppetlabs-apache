@@ -14,7 +14,7 @@
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%>
+    <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
     <%- end -%>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
@@ -47,7 +47,7 @@
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
   ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].each_pair do |key, value| -%> <%= key %>=<%= value -%>
+    <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
     <%- end -%>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
