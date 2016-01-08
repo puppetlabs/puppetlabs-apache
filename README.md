@@ -2242,7 +2242,7 @@ Specifies the destination address of a [ProxyPass](http://httpd.apache.org/docs/
 
 ##### `proxy_pass`
 
-Specifies an array of `path => URI` for a [ProxyPass](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to 'undef'. Optionally parameters can be added as an array.
+Specifies an array of `path => URI` for a [ProxyPass](http://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to 'undef'. Optionally parameters and location options can be added as an array.
 
 ~~~ puppet
 apache::vhost { 'site.name.fdqn':
@@ -2251,6 +2251,8 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
     { 'path' => '/c', 'url' => 'http://backend-a/c', 'params' => {'max'=>20, 'ttl'=>120, 'retry'=>300}},
+    { 'path' => '/c', 'url' => 'http://backend-a/c',
+      'options' => {'Require'=>'valid-user', 'AuthType'=>'Kerberos', 'AuthName'=>'Kerberos Login'}},
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
     { 'path' => '/d', 'url' => 'http://backend-a/d',
@@ -3190,12 +3192,12 @@ Sets the [SSLProxyMachineCertificateFile](http://httpd.apache.org/docs/current/m
 ~~~
 
 ##### `ssl_proxy_check_peer_cn`
- 
+
 Sets the [SSLProxyMachinePeerCN](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
 
 
 ##### `ssl_proxy_check_peer_name`
- 
+
 Sets the [SSLProxyMachinePeerName](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specified whether the remote server certificate's CN field is compared against the hostname of the request URL .  Defaults to 'undef'.
 
 ##### `ssl_options`
