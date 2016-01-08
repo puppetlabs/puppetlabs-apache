@@ -117,9 +117,13 @@ describe 'apache::mod::php', :type => :class do
       let :pre_condition do
         'class { "apache": mpm_module => itk, }'
       end
-      it 'should raise an error' do
-        expect { expect(subject).to contain_class("apache::mod::itk") }.to raise_error Puppet::Error, /Unsupported osfamily RedHat/
-      end
+      it { is_expected.to contain_class("apache::params") }
+      it { is_expected.to contain_class("apache::mod::itk") }
+      it { is_expected.to contain_apache__mod('php5') }
+      it { is_expected.to contain_package("php") }
+      it { is_expected.to contain_file("php5.load").with(
+        :content => "LoadModule php5_module modules/libphp5.so\n"
+      ) }
     end
   end
   describe "on a FreeBSD OS" do
