@@ -26,7 +26,7 @@ class apache::mod::security (
   if $crs_package  {
     package { $crs_package:
       ensure => 'latest',
-      before => File['security.conf'],
+      before => File[$::apache::confd_dir],
     }
   }
 
