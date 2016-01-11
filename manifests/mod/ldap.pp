@@ -2,6 +2,11 @@ class apache::mod::ldap (
   $apache_version                = $::apache::apache_version,
   $ldap_trusted_global_cert_file = undef,
   $ldap_trusted_global_cert_type = 'CA_BASE64',
+  $ldap_shared_cache_size        = 500000,
+  $ldap_cache_entries            = 1024,
+  $ldap_cache_ttl                = 600,
+  $ldap_opcache_entries          = 1024,
+  $ldap_opcache_ttl              = 600,
 ){
   if ($ldap_trusted_global_cert_file) {
     validate_string($ldap_trusted_global_cert_type)
