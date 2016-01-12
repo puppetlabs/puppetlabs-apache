@@ -1491,6 +1491,7 @@ Installs and manages [`mod_passenger`][].
 - `passenger_high_performance` Sets the [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance). Valid options: on, off. Default: undef.
 - `passenger_pool_idle_time` Sets the [`PassengerPoolIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerpoolidletime). Default: undef
 - `passenger_max_pool_size` Sets the [`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpoolsize). Default: undef.
+- `passenger_max_request_queue_size` Sets the [`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize). Default: undef.
 - `passenger_max_requests` Sets the [`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests). Default: undef.
 - ...
 

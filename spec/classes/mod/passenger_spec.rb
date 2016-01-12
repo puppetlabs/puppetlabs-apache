@@ -57,6 +57,13 @@ describe 'apache::mod::passenger', :type => :class do
       end
       it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerPoolIdleTime 1200$/) }
     end
+    describe "with passenger_max_request_queue_size => 100" do
+      let :params do
+        { :passenger_max_request_queue_size => 100 }
+      end
+      it { is_expected.to contain_file('passenger.conf').with_content(/^  PassengerMaxRequestQueueSize 100$/) }
+    end
+
     describe "with passenger_max_requests => 20" do
       let :params do
         { :passenger_max_requests => 20 }
