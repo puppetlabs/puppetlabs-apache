@@ -161,6 +161,7 @@
 [`mod_mpm_event`]: https://httpd.apache.org/docs/current/mod/event.html
 [`mod_negotiation`]: http://httpd.apache.org/docs/current/mod/mod_negotiation.html
 [`mod_pagespeed`]: https://developers.google.com/speed/pagespeed/module/?hl=en
+[`mod_passenger`]: https://www.phusionpassenger.com/library/config/apache/reference/
 [`mod_php`]: http://php.net/manual/en/book.apache.php
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [`mod_proxy_balancer`]: http://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
@@ -1267,7 +1268,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `negotiation`
 * `nss`*
 * `pagespeed` (see [`apache::mod::pagespeed`][])
-* `passenger`*
+* `passenger`* (see [`apache::mod::passenger`][])
 * `perl`
 * `peruser`
 * `php` (requires [`mpm_module`][] set to `prefork`)
@@ -1481,6 +1482,17 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 - `allow_from`: Whitelist of IPv4 or IPv6 addresses or ranges that can access `/server-info`. Valid options: One or more octets of an IPv4 address, an IPv6 address or range, or an array of either. Default: ['127.0.0.1','::1']
 - `apache_version`: Default: `$::apache::apache_version`,
 - `restrict_access`: Determines whether to enable access restrictions. If 'false', the `allow_from` whitelist is ignored and any IP address can access `/server-info`. Valid options: Boolean. Default: 'true'.
+
+##### Class: `apache::mod::passenger`
+
+Installs and manages [`mod_passenger`][].
+
+**Parameters within `apache::mod::passenger`**:
+- `passenger_high_performance` Sets the [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance). Valid options: on, off. Default: undef.
+- `passenger_pool_idle_time` Sets the [`PassengerPoolIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerpoolidletime). Default: undef
+- `passenger_max_pool_size` Sets the [`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpoolsize). Default: undef.
+- `passenger_max_requests` Sets the [`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests). Default: undef.
+- ...
 
 ##### Class: `apache::mod::ldap`
 
