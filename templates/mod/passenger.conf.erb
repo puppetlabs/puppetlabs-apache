@@ -22,6 +22,9 @@
   <%- if @passenger_pool_idle_time -%>
   PassengerPoolIdleTime <%= @passenger_pool_idle_time %>
   <%- end -%>
+  <%- if @passenger_max_request_queue_size -%>
+  PassengerMaxRequestQueueSize <%= @passenger_max_request_queue_size %>
+  <%- end -%>
   <%- if @passenger_max_requests -%>
   PassengerMaxRequests <%= @passenger_max_requests %>
   <%- end -%>
