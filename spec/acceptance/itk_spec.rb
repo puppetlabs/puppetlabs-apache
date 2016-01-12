@@ -24,6 +24,14 @@ when 'FreeBSD'
 end
 
 describe 'apache::mod::itk class', :if => service_name do
+  describe 'setting up epel(for itk) for redhat' do
+    if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6|7)/
+      it 'adds epel' do
+        pp = "class { 'epel': }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+  end
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
