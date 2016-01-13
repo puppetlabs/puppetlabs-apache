@@ -75,7 +75,7 @@ describe 'apache::mod::worker', :type => :class do
         }
       end
 
-      it { is_expected.to contain_file_line("/etc/sysconfig/httpd worker enable").with({
+      it { is_expected.to contain_file_line("/etc/sysconfig/${service_name} worker enable").with({
         'require' => 'Package[httpd]',
         })
       }
