@@ -18,7 +18,7 @@ describe 'apache::service', :type => :class do
         :is_pe                  => false,
       }
     end
-    it { is_expected.to contain_service("httpd").with(
+    it { is_expected.to contain_service("$service_name").with(
       'name'      => 'apache2',
       'ensure'    => 'running',
       'enable'    => 'true'
@@ -27,7 +27,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_name => 'foo'" do
       let (:params) {{ :service_name => 'foo' }}
-      it { is_expected.to contain_service("httpd").with(
+      it { is_expected.to contain_service("$service_name").with(
         'name'      => 'foo'
         )
       }
@@ -35,7 +35,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_enable => true" do
       let (:params) {{ :service_enable => true }}
-      it { is_expected.to contain_service("httpd").with(
+      it { is_expected.to contain_service("$service_name").with(
         'name'      => 'apache2',
         'ensure'    => 'running',
         'enable'    => 'true'
@@ -45,7 +45,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_enable => false" do
       let (:params) {{ :service_enable => false }}
-      it { is_expected.to contain_service("httpd").with(
+      it { is_expected.to contain_service("$service_name").with(
         'name'      => 'apache2',
         'ensure'    => 'running',
         'enable'    => 'false'
@@ -71,7 +71,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_ensure => 'running'" do
       let (:params) {{ :service_ensure => 'running', }}
-      it { is_expected.to contain_service("httpd").with(
+      it { is_expected.to contain_service("$service_name").with(
         'ensure'    => 'running',
         'enable'    => 'true'
         )
@@ -80,7 +80,7 @@ describe 'apache::service', :type => :class do
 
     context "with $service_ensure => 'stopped'" do
       let (:params) {{ :service_ensure => 'stopped', }}
-      it { is_expected.to contain_service("httpd").with(
+      it { is_expected.to contain_service("$service_name").with(
         'ensure'    => 'stopped',
         'enable'    => 'true'
         )
@@ -89,17 +89,17 @@ describe 'apache::service', :type => :class do
 
     context "with $service_ensure => 'UNDEF'" do
       let (:params) {{ :service_ensure => 'UNDEF' }}
-      it { is_expected.to contain_service("httpd").without_ensure }
+      it { is_expected.to contain_service("$service_name").without_ensure }
     end
 
     context "with $service_restart unset" do
-      it { is_expected.to contain_service("httpd").without_restart }
+      it { is_expected.to contain_service("$service_name").without_restart }
     end
 
-    context "with $service_restart => '/usr/sbin/apachectl graceful'" do
-     let (:params) {{ :service_restart => '/usr/sbin/apachectl graceful' }}
-     it { is_expected.to contain_service("httpd").with(
-        'restart' => '/usr/sbin/apachectl graceful'
+    context "with $service_restart => '/usr/sbin/apachectl graceful -f ${conf_dir}'" do
+     let (:params) {{ :service_restart => '/usr/sbin/apachectl graceful -f ${conf_dir}' }}
+     it { is_expected.to contain_service("$service_name").with(
+        'restart' => '/usr/sbin/apachectl graceful -f ${conf_dir}'
       )
      }
     end
@@ -126,7 +126,7 @@ describe 'apache::service', :type => :class do
         'service_manage' => false
       }
     end
-    it { is_expected.not_to contain_service('httpd') }
+    it { is_expected.not_to contain_service('$service_name') }
   end
 
   context "on a FreeBSD 5 OS" do
@@ -142,7 +142,7 @@ describe 'apache::service', :type => :class do
         :is_pe                  => false,
       }
     end
-    it { is_expected.to contain_service("httpd").with(
+    it { is_expected.to contain_service("$service_name").with(
       'name'      => 'apache24',
       'ensure'    => 'running',
       'enable'    => 'true'
@@ -163,7 +163,7 @@ describe 'apache::service', :type => :class do
         :is_pe                  => false,
       }
     end
-    it { is_expected.to contain_service("httpd").with(
+    it { is_expected.to contain_service("$service_name").with(
       'name'      => 'apache2',
       'ensure'    => 'running',
       'enable'    => 'true'
