@@ -25,7 +25,7 @@ describe 'apache::mod', :type => :define do
       it { is_expected.to contain_class("apache::params") }
       it "should manage the module load file" do
         is_expected.to contain_file('spec_m.load').with({
-          :path    => '/etc/httpd/conf.d/spec_m.load',
+          :path    => '${conf_dir}/conf.d/spec_m.load',
           :content => "LoadModule spec_m_module modules/mod_spec_m.so\n",
           :owner   => 'root',
           :group   => 'root',
@@ -69,7 +69,7 @@ describe 'apache::mod', :type => :define do
       it { is_expected.to contain_class("apache::params") }
       it "should manage the module load file" do
         is_expected.to contain_file('spec_m.load').with({
-          :path    => '/etc/apache2/mods-available/spec_m.load',
+          :path    => '${conf_dir}/mods-available/spec_m.load',
           :content => "LoadModule spec_m_module /usr/lib/apache2/modules/mod_spec_m.so\n",
           :owner   => 'root',
           :group   => 'root',
@@ -78,8 +78,8 @@ describe 'apache::mod', :type => :define do
       end
       it "should link the module load file" do
         is_expected.to contain_file('spec_m.load symlink').with({
-          :path   => '/etc/apache2/mods-enabled/spec_m.load',
-          :target => '/etc/apache2/mods-available/spec_m.load',
+          :path   => '${conf_dir}/mods-enabled/spec_m.load',
+          :target => '${conf_dir}/mods-available/spec_m.load',
           :owner   => 'root',
           :group   => 'root',
           :mode    => '0644',
@@ -140,7 +140,7 @@ describe 'apache::mod', :type => :define do
       it { is_expected.to contain_class("apache::params") }
       it "should manage the module load file" do
         is_expected.to contain_file('spec_m.load').with({
-          :path    => '/etc/apache2/modules.d/spec_m.load',
+          :path    => '${conf_dir}/modules.d/spec_m.load',
           :content => "LoadModule spec_m_module /usr/lib/apache2/modules/mod_spec_m.so\n",
           :owner   => 'root',
           :group   => 'wheel',
