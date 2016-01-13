@@ -63,6 +63,9 @@ Include "<%= @mod_load_dir %>/*.load"
 <% if @mod_load_dir != @confd_dir and @mod_load_dir != @vhost_load_dir -%>
 Include "<%= @mod_load_dir %>/*.conf"
 <% end -%>
+<% if @server_root != @confd_dir -%>
+Include "<%= @server_root %>/conf.d/*.conf"
+<% end -%>
 Include "<%= @ports_file %>"
 
 <% unless @log_formats.has_key?('combined') -%>
