@@ -19,27 +19,26 @@
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
   <%- end %>
-  <Location <%= proxy['path']%>>
   <%- if not proxy['reverse_cookies'].nil? -%>
     <%- Array(proxy['reverse_cookies']).each do |reverse_cookies| -%>
       <%- if reverse_cookies['path'] -%>
-        ProxyPassReverseCookiePath <%= reverse_cookies['path'] %> <%= reverse_cookies['url'] %>
+  ProxyPassReverseCookiePath <%= reverse_cookies['path'] %> <%= reverse_cookies['url'] %>
       <%- end -%>
       <%- if reverse_cookies['domain'] -%>
-        ProxyPassReverseCookieDomain <%= reverse_cookies['domain'] %> <%= reverse_cookies['url'] %>
+  ProxyPassReverseCookieDomain <%= reverse_cookies['domain'] %> <%= reverse_cookies['url'] %>
       <%- end -%>
     <%- end -%>
   <%- end -%>
   <%- if proxy['reverse_urls'].nil? -%>
-    ProxyPassReverse <%= proxy['url'] %>
+  ProxyPassReverse <%= proxy['url'] %>
   <%- else -%>
     <%- Array(proxy['reverse_urls']).each do |reverse_url| -%>
-    ProxyPassReverse <%= reverse_url %>
+  ProxyPassReverse <%= reverse_url %>
     <%- end -%>
   <%- end -%>
   <%- if proxy['setenv'] -%>
     <%- Array(proxy['setenv']).each do |setenv_var| -%>
-    SetEnv <%= setenv_var %>
+  SetEnv <%= setenv_var %>
     <%- end -%>
   <%- end -%>
   <%- if proxy['options'] -%>
@@ -47,7 +46,6 @@
     <%= key %> <%= proxy['options'][key] %>
     <%- end -%>
   <%- end -%>
-  </Location>
 <% end -%>
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
   ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
@@ -57,36 +55,30 @@
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
   <%- end %>
-  <Location <%= proxy['path']%>>
   <%- if proxy['reverse_urls'].nil? -%>
-    ProxyPassReverse <%= proxy['url'] %>
+  ProxyPassReverse <%= proxy['url'] %>
   <%- else -%>
     <%- Array(proxy['reverse_urls']).each do |reverse_url| -%>
-    ProxyPassReverse <%= reverse_url %>
+  ProxyPassReverse <%= reverse_url %>
     <%- end -%>
   <%- end -%>
   <%- if proxy['setenv'] -%>
     <%- Array(proxy['setenv']).each do |setenv_var| -%>
-    SetEnv <%= setenv_var %>
+  SetEnv <%= setenv_var %>
     <%- end -%>
   <%- end -%>
-  </Location>
 <% end -%>
 <% if @proxy_dest -%>
 <%- Array(@no_proxy_uris).each do |uri| -%>
   ProxyPass        <%= uri %> !
 <% end -%>
-  ProxyPass          / <%= @proxy_dest %>/
-  <Location          />
-    ProxyPassReverse <%= @proxy_dest %>/
-  </Location>
+  ProxyPass        / <%= @proxy_dest %>/
+  ProxyPassReverse / <%= @proxy_dest %>/
 <% end -%>
 <% if @proxy_dest_match -%>
 <%- Array(@no_proxy_uris_match).each do |uri| -%>
-  ProxyPassMatch        <%= uri %> !
+  ProxyPassMatch   <%= uri %> !
 <% end -%>
-  ProxyPassMatch          / <%= @proxy_dest_match %>/
-  <Location          />
-    ProxyPassReverse <%= @proxy_dest_reverse_match %>/
-  </Location>
+  ProxyPassMatch   / <%= @proxy_dest_match %>/
+  ProxyPassReverse / <%= @proxy_dest_reverse_match %>/
 <% end -%>
