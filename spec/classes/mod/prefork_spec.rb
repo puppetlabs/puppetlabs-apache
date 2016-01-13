@@ -75,7 +75,7 @@ describe 'apache::mod::prefork', :type => :class do
         }
       end
 
-      it { is_expected.to contain_file_line("/etc/sysconfig/httpd prefork enable").with({
+      it { is_expected.to contain_file_line("/etc/sysconfig/${service_name} prefork enable").with({
         'require' => 'Package[httpd]',
         })
       }
