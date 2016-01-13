@@ -85,7 +85,7 @@ define apache::mod (
     content => template('apache/mod/load.erb'),
     require => [
       Package['httpd'],
-      Exec["mkdir ${mod_dir}"],
+      Exec["mkdir -p ${mod_dir}"],
     ],
     before  => File[$mod_dir],
     notify  => Class['apache::service'],
