@@ -17,7 +17,11 @@ ForceLanguagePriority Prefer Fallback" }
     end
 
     describe service($service_name) do
-      it { should be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { should be_running }
     end
   end
@@ -38,7 +42,11 @@ ForceLanguagePriority Prefer Fallback" }
     end
 
     describe service($service_name) do
-      it { should be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { should be_running }
     end
   end
@@ -59,7 +67,11 @@ ForceLanguagePriority Prefer Fallback" }
     end
 
     describe service($service_name) do
-      it { should be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { should be_running }
     end
   end

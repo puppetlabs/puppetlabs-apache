@@ -173,7 +173,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -213,7 +217,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -265,7 +273,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -322,7 +334,11 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        it { is_expected.to be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -380,7 +396,11 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        it { is_expected.to be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -414,7 +434,11 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        it { is_expected.to be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -488,7 +512,11 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        it { should be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { should be_running }
       end
 
@@ -523,7 +551,11 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        it { is_expected.to be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -564,7 +596,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -610,7 +646,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -651,7 +691,11 @@ describe 'apache::vhost define' do
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -749,6 +793,8 @@ describe 'apache::vhost define' do
       if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10)/
+        it { is_expected.not_to contain 'NameVirtualHost test.server' }
+      elsif fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '8'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
