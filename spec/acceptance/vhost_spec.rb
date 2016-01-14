@@ -1013,7 +1013,7 @@ describe 'apache::vhost define' do
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'ProxyPass          / test2/' }
+      it { is_expected.to contain 'ProxyPass        / test2/' }
     end
   end
 
@@ -1076,8 +1076,8 @@ describe 'apache::vhost define' do
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'ProxyPass          / http://test2/' }
       it { is_expected.to contain 'ProxyPass        http://test2/test !' }
+      it { is_expected.to contain 'ProxyPass        / http://test2/' }
     end
   end
 
