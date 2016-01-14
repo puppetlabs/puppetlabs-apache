@@ -21,7 +21,11 @@ when 'FreeBSD'
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
     end
   end
 end
@@ -44,7 +48,11 @@ describe 'apache::mod::worker class' do
 
   describe service($service_name) do
     it { is_expected.to be_running }
-    it { is_expected.to be_enabled }
+    if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      pending 'Should be enabled - Bug 760616 on Debian 8'
+    else
+      it { should be_enabled }
+    end
   end
 end
 
@@ -66,6 +74,10 @@ describe 'apache::mod::prefork class' do
 
   describe service($service_name) do
     it { is_expected.to be_running }
-    it { is_expected.to be_enabled }
+    if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      pending 'Should be enabled - Bug 760616 on Debian 8'
+    else
+      it { should be_enabled }
+    end
   end
 end

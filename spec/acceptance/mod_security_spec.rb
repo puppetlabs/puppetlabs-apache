@@ -45,7 +45,11 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -91,7 +95,11 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -143,7 +151,11 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
@@ -199,7 +211,11 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
     end
 
     describe service($service_name) do
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 

@@ -97,7 +97,11 @@ describe 'apache::mod::passenger class' do
       end
 
       describe service($service_name) do
-        it { is_expected.to be_enabled }
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -150,7 +154,7 @@ describe 'apache::mod::passenger class' do
           # passenger-memory-stats output on newer Debian/Ubuntu verions do not contain
           # these two lines
           unless ((fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') or
-                 (fact('operatingsystem') == 'Debian' && fact('operatingsystemrelease') == '8.0'))
+                 (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'))
             expect(r.stdout).to match(/### Processes: [0-9]+/)
             expect(r.stdout).to match(/### Total private dirty RSS: [0-9\.]+ MB/)
           end
@@ -167,7 +171,8 @@ describe 'apache::mod::passenger class' do
           shell("PATH=/usr/bin:$PATH /usr/sbin/passenger-status") do |r|
             # spacing may vary
             expect(r.stdout).to match(/[\-]+ General information [\-]+/)
-            if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
+            if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04' or
+               fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
               expect(r.stdout).to match(/Max pool size[ ]+: [0-9]+/)
               expect(r.stdout).to match(/Processes[ ]+: [0-9]+/)
               expect(r.stdout).to match(/Requests in top-level queue[ ]+: [0-9]+/)
