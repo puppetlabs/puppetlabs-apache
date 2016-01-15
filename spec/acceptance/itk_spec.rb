@@ -10,12 +10,14 @@ when 'Debian'
     variant = :prefork
   end
 when 'RedHat'
-  service_name = 'httpd'
-  majrelease = fact('operatingsystemmajrelease')
-  if ['5', '6'].include?(majrelease)
-    variant = :itk_only
-  else
-    variant = :prefork
+  unless fact('operatingsystemmajrelease') == '5'
+    service_name = 'httpd'
+    majrelease = fact('operatingsystemmajrelease')
+    if ['6'].include?(majrelease)
+      variant = :itk_only
+    else
+      variant = :prefork
+    end
   end
 when 'FreeBSD'
   service_name = 'apache24'
@@ -24,14 +26,6 @@ when 'FreeBSD'
 end
 
 describe 'apache::mod::itk class', :if => service_name do
-  describe 'setting up epel(for itk) for redhat' do
-    if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6|7)/
-      it 'adds epel' do
-        pp = "class { 'epel': }"
-        apply_manifest(pp, :catch_failures => true)
-      end
-    end
-  end
   describe 'running puppet code' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
