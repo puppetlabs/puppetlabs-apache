@@ -43,6 +43,12 @@ RSpec.configure do |c|
       if fact('osfamily') == 'RedHat'
         on host, puppet('module','install','stahnma/epel')
         on host, puppet('module','install','puppetlabs/inifile')
+        #we need epel installed, so we can get plugins, wsgi, mime ...
+        pp = <<-EOS
+          class { 'epel': }
+        EOS
+
+        apply_manifest_on(host, pp, :catch_failures => true)
       end
 
       # Required for manifest to make mod_pagespeed repository available
