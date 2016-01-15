@@ -15,7 +15,7 @@ define apache::fastcgi::server (
     path    => "${::apache::confd_dir}/fastcgi-pool-${name}.conf",
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     content => template('apache/fastcgi/server.erb'),
     require => Exec["mkdir ${::apache::confd_dir}"],
     before  => File[$::apache::confd_dir],

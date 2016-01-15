@@ -27,7 +27,7 @@ class apache::mod::event (
   File {
     owner => 'root',
     group => $::apache::params::root_group,
-    mode  => '0644',
+    mode  => $::apache::file_mode,
   }
 
   # Template uses:

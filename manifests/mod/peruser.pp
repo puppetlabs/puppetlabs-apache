@@ -35,7 +35,7 @@ class apache::mod::peruser (
       File {
         owner => 'root',
         group => $::apache::params::root_group,
-        mode  => '0644',
+        mode  => $::apache::file_mode,
       }
 
       $mod_dir = $::apache::mod_dir
