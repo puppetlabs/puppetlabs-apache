@@ -136,14 +136,14 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $sites_root           = '/var/www'
-    $docroot              = "$sites_root/html"
+    $docroot              = "${sites_root}/html"
     $alias_icons_path     = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/icons',
-      default => "$sites_root/icons",
+      default => "${sites_root}/icons",
     }
     $error_documents_path = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/error',
-      default => "$sites_root/error"
+      default => "${sites_root}/error"
     }
     if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
@@ -249,7 +249,7 @@ class apache::params inherits ::apache::version {
     $mime_types_config    = '/etc/mime.types'
     $sites_root             = '/var/www'
     if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') >= 0) {
-      $docroot              = "$sites_root/html"
+      $docroot              = "${sites_root}/html"
     } else {
       $docroot              = $sites_root
     }
@@ -470,7 +470,7 @@ class apache::params inherits ::apache::version {
     $mime_types_config    = '/etc/mime.types'
     $wsgi_socket_prefix   = undef
     $sites_root           = '/var/www'
-    $docroot              = "$sites_root/localhost/htdocs"
+    $docroot              = "${sites_root}/localhost/htdocs"
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
   } elsif $::osfamily == 'Suse' {
