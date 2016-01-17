@@ -93,7 +93,7 @@ describe 'apache::mod::passenger class' do
           class { 'apache::mod::passenger': }
           #{pp_rackapp}
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do

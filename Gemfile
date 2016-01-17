@@ -29,6 +29,7 @@ group :system_tests do
   end
   gem 'serverspec',    :require => false
   gem 'beaker-puppet_install_helper', :require => false
+  gem 'beaker-testmode_switcher'
 end
 
 

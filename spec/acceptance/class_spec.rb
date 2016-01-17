@@ -9,8 +9,8 @@ describe 'apache class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      execute_manifest(pp, :catch_failures => true)
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe package($package_name) do
@@ -66,8 +66,8 @@ describe 'apache class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      execute_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_changes => true)
     end
 
     describe service($service_name) do

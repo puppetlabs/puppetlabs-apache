@@ -6,7 +6,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
     if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
         pp = "class { 'epel': }"
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
     elsif fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
       it 'changes obsoletes, per PUP-4497' do
@@ -18,7 +18,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
             value   => '0',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
     end
 
@@ -36,7 +36,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           content => 'Index page',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
 
       #Need to add a short sleep here because on RHEL6 the service takes a bit longer to init
       if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
@@ -91,7 +91,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           content => 'Index page',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -121,7 +121,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           modsec_disable_vhost => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     it 'should return index page' do
@@ -147,7 +147,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           content => 'Index page',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -177,7 +177,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           modsec_disable_ips => [ '127.0.0.1' ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     it 'should return index page' do
@@ -207,7 +207,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           content => 'Page 2',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -237,7 +237,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
           modsec_disable_ids => [ '950007' ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     it 'should return index page' do

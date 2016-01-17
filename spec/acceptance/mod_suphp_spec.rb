@@ -23,7 +23,7 @@ file { '/var/www/suphp/index.php':
 class { 'apache::mod::php': }
 class { 'apache::mod::suphp': }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service('apache2') do

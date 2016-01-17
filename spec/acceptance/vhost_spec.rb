@@ -12,7 +12,7 @@ describe 'apache::vhost define' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/15-default.conf") do
@@ -30,7 +30,7 @@ describe 'apache::vhost define' do
         class { 'apache': }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/15-default.conf") do
@@ -55,7 +55,7 @@ describe 'apache::vhost define' do
           require => File['#{$run_dir}'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/15-default.conf") do
@@ -83,7 +83,7 @@ describe 'apache::vhost define' do
           require => File['#{$run_dir}'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-first.example.com.conf") do
@@ -106,7 +106,7 @@ describe 'apache::vhost define' do
         proxy_error_override  => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
@@ -133,7 +133,7 @@ describe 'apache::vhost define' do
         proxy_error_override  => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
@@ -169,7 +169,7 @@ describe 'apache::vhost define' do
           content => "Hello from second\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -213,7 +213,7 @@ describe 'apache::vhost define' do
           content => "Hello from vhost\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -269,7 +269,7 @@ describe 'apache::vhost define' do
           content => "Hello from vhost\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -330,7 +330,7 @@ describe 'apache::vhost define' do
           }
           host { 'files.example.net': ip => '127.0.0.1', }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do
@@ -392,7 +392,7 @@ describe 'apache::vhost define' do
           }
           host { 'files.example.net': ip => '127.0.0.1', }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do
@@ -430,7 +430,7 @@ describe 'apache::vhost define' do
             content => "Hello World\\n",
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do
@@ -508,7 +508,7 @@ describe 'apache::vhost define' do
             content => "login:IZ7jMcLSx0oQk", # "password" as password
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do
@@ -547,7 +547,7 @@ describe 'apache::vhost define' do
         }
         host { 'fallback.example.net': ip => '127.0.0.1', }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe service($service_name) do
@@ -592,7 +592,7 @@ describe 'apache::vhost define' do
         file { '/var/www/virt/a/index.html': ensure  => file, content => "Hello from a.virt\\n", }
         file { '/var/www/virt/b/index.html': ensure  => file, content => "Hello from b.virt\\n", }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -619,7 +619,7 @@ describe 'apache::vhost define' do
 
   context 'proxy_pass for alternative vhost' do
     it 'should configure a local vhost and a proxy vhost' do
-      apply_manifest(%{
+      execute_manifest(%{
         class { 'apache': default_vhost => false, }
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
@@ -664,7 +664,7 @@ describe 'apache::vhost define' do
 
   context 'proxy_pass_match for alternative vhost' do
     it 'should configure a local vhost and a proxy vhost' do
-      apply_manifest(%{
+      execute_manifest(%{
         class { 'apache': default_vhost => false, }
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
@@ -718,7 +718,7 @@ describe 'apache::vhost define' do
           servername => 'test.server',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file($ports_file) do
@@ -740,7 +740,7 @@ describe 'apache::vhost define' do
           servername => 'testlisten.server',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file($ports_file) do
@@ -764,7 +764,7 @@ describe 'apache::vhost define' do
           docroot_mode  => '0750',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file('/tmp/test') do
@@ -785,7 +785,7 @@ describe 'apache::vhost define' do
           default_vhost => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file($ports_file) do
@@ -816,7 +816,7 @@ describe 'apache::vhost define' do
           options    => ['Indexes','FollowSymLinks', 'ExecCGI'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -835,7 +835,7 @@ describe 'apache::vhost define' do
           override   => ['All'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -854,7 +854,7 @@ describe 'apache::vhost define' do
           logroot    => '/tmp',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -882,7 +882,7 @@ describe 'apache::vhost define' do
         #{logtype}_log => false,
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -902,7 +902,7 @@ describe 'apache::vhost define' do
         #{logtype}_log_pipe => '|/bin/sh',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -922,7 +922,7 @@ describe 'apache::vhost define' do
         #{logtype}_log_syslog => 'syslog',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -944,7 +944,7 @@ describe 'apache::vhost define' do
           access_log_format => '%h %l',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -965,7 +965,7 @@ describe 'apache::vhost define' do
           access_log_env_var => 'admin',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -990,7 +990,7 @@ describe 'apache::vhost define' do
           ]
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1015,7 +1015,7 @@ describe 'apache::vhost define' do
           ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1035,7 +1035,7 @@ describe 'apache::vhost define' do
           scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1054,7 +1054,7 @@ describe 'apache::vhost define' do
           proxy_dest => 'test2',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1074,7 +1074,7 @@ describe 'apache::vhost define' do
         }
       EOS
       pp = pp + "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian'
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1095,7 +1095,7 @@ describe 'apache::vhost define' do
           suphp_configpath => '#{$suphp_configpath}',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1117,7 +1117,7 @@ describe 'apache::vhost define' do
           no_proxy_uris    => [ 'http://test2/test' ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1139,7 +1139,7 @@ describe 'apache::vhost define' do
           redirect_status  => ['permanent'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1158,7 +1158,7 @@ describe 'apache::vhost define' do
           request_headers  => ['append MirrorID "mirror 12"'],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1183,7 +1183,7 @@ describe 'apache::vhost define' do
           ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1222,7 +1222,7 @@ describe 'apache::vhost define' do
             ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1248,7 +1248,7 @@ describe 'apache::vhost define' do
           setenvif => ['Request_URI "\.gif$" object_is_image=gif']
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1268,7 +1268,7 @@ describe 'apache::vhost define' do
           block    => 'scm',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1294,7 +1294,7 @@ describe 'apache::vhost define' do
             wsgi_pass_authorization     => 'On',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
     end
 
@@ -1317,7 +1317,7 @@ describe 'apache::vhost define' do
             wsgi_chunked_request        => 'On',
           }
         EOS
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1343,7 +1343,7 @@ describe 'apache::vhost define' do
           custom_fragment => inline_template('#weird test string'),
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1362,7 +1362,7 @@ describe 'apache::vhost define' do
           itk      => { user => 'nobody', group => 'nobody' }
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1419,7 +1419,7 @@ describe 'apache::vhost define' do
         EOS
 
         #apt-get update may not run clean here. Should be OK.
-        apply_manifest(pp, :catch_failures => false)
+        execute_manifest(pp, :catch_failures => false)
 
         pp2 = <<-EOS
           class { 'apache': }
@@ -1432,7 +1432,7 @@ describe 'apache::vhost define' do
             fastcgi_dir    => '/tmp/fast',
           }
         EOS
-        apply_manifest(pp2, :catch_failures => true, :acceptable_exit_codes => [0, 2])
+        execute_manifest(pp2, :catch_failures => true, :acceptable_exit_codes => [0, 2])
       end
 
       describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1473,7 +1473,7 @@ describe 'apache::vhost define' do
           additional_includes => '/apache_spec/include',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
@@ -1491,7 +1491,7 @@ describe 'apache::vhost define' do
           docroot => '/tmp'
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/test.server.conf") do
@@ -1514,7 +1514,7 @@ describe 'apache::vhost define' do
           ssl_protocol => 'All -SSLv2',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test.server.conf") do

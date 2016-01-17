@@ -14,8 +14,8 @@ when 'FreeBSD'
         EOS
 
         # Run it twice and test for idempotency
-        apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        execute_manifest(pp, :catch_failures => true)
+        expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
       end
     end
 
@@ -41,8 +41,8 @@ describe 'apache::mod::worker class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      execute_manifest(pp, :catch_failures => true)
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
   end
 
@@ -67,8 +67,8 @@ describe 'apache::mod::prefork class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      execute_manifest(pp, :catch_failures => true)
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
   end
 

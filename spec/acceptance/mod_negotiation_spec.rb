@@ -8,7 +8,7 @@ describe 'apache::mod::negotiation class' do
         class { '::apache': default_mods => false }
         class { '::apache::mod::negotiation': }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$mod_dir}/negotiation.conf") do
@@ -34,7 +34,7 @@ ForceLanguagePriority Prefer Fallback" }
           force_language_priority => 'Prefer',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$mod_dir}/negotiation.conf") do
@@ -59,7 +59,7 @@ ForceLanguagePriority Prefer Fallback" }
           language_priority => [ 'en', 'es' ],
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$mod_dir}/negotiation.conf") do

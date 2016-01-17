@@ -35,7 +35,7 @@ describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and f
           content => "<?php echo 'Hello world'; ?>\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service('httpd') do

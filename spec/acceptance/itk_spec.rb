@@ -46,8 +46,8 @@ describe 'apache::mod::itk class', :if => service_name do
            end
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      execute_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_changes => true)
     end
   end
 
