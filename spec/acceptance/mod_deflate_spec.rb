@@ -8,7 +8,7 @@ describe 'apache::mod::deflate class' do
         class { 'apache': }
         include apache::mod::deflate
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do

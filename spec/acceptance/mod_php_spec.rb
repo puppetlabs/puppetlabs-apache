@@ -19,7 +19,7 @@ describe 'apache::mod::php class' do
           content => "<?php phpinfo(); ?>\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -66,7 +66,7 @@ describe 'apache::mod::php class' do
           content => "<?php phpinfo(); ?>\\n",
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -103,7 +103,7 @@ describe 'apache::mod::php class' do
           content => '# somecontent',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$mod_dir}/php5.conf") do
@@ -122,7 +122,7 @@ describe 'apache::mod::php class' do
           template => 'apache/mod/php5.conf.erb',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$mod_dir}/php5.conf") do

@@ -6,7 +6,7 @@ describe 'apache::mod::proxy_html class' do
     if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
         pp = "class { 'epel': }"
-        apply_manifest(pp, :catch_failures => true)
+        execute_manifest(pp, :catch_failures => true)
       end
     end
 
@@ -20,7 +20,7 @@ describe 'apache::mod::proxy_html class' do
           class { 'apache::mod::proxy_html': }
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do

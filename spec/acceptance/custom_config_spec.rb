@@ -11,7 +11,7 @@ describe 'apache::custom_config define' do
         }
       EOS
 
-      apply_manifest(pp, :expect_failures => true)
+      execute_manifest(pp, :expect_failures => true)
     end
 
     describe file("#{$confd_dir}/25-acceptance_test.conf") do
@@ -28,7 +28,7 @@ describe 'apache::custom_config define' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$confd_dir}/25-acceptance_test.conf") do
@@ -46,7 +46,7 @@ describe 'apache::custom_config define' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$confd_dir}/custom_filename") do
@@ -63,7 +63,7 @@ describe 'apache::custom_config define' do
           content => '# just a comment',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$confd_dir}/prefix_test.conf") do
@@ -84,7 +84,7 @@ describe 'apache::custom_config define' do
         # ports.conf is written. This should trigger a dependency cycle
         File["#{$conf_file}"] -> Apache::Custom_config['ordering_test'] -> File["#{$ports_file}"]
       EOS
-      expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/Found 1 dependency cycle/i)
+      expect(execute_manifest(pp, :expect_failures => true).stderr).to match(/Found 1 dependency cycle/i)
     end
 
     describe file("#{$confd_dir}/25-ordering_test.conf") do

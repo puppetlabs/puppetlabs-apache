@@ -21,7 +21,7 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
         class { 'apache': }
         include apache::mod::dav_svn
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do
@@ -46,7 +46,7 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
             authz_svn_enabled => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do

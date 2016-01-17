@@ -8,7 +8,7 @@ describe 'apache::mod::mime class' do
         class { 'apache': }
         include apache::mod::mime
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe service($service_name) do

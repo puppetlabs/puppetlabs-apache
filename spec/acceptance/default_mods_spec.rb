@@ -12,8 +12,8 @@ describe 'apache::default_mods class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      execute_manifest(pp, :catch_failures => true)
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service($service_name) do
@@ -38,7 +38,7 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      apply_manifest(pp, { :expect_failures => true })
+      execute_manifest(pp, { :expect_failures => true })
     end
 
     # Are these the same?
@@ -75,9 +75,9 @@ describe 'apache::default_mods class' do
         }
       EOS
 
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
       shell('sleep 10')
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service($service_name) do
@@ -94,8 +94,8 @@ describe 'apache::default_mods class' do
         }
       EOS
       # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+      execute_manifest(pp, :catch_failures => true)
+      expect(execute_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
     describe service($service_name) do

@@ -18,7 +18,7 @@ describe 'apache ssl' do
           default_ssl_crl_check => 'chain',
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/15-default-ssl.conf") do
@@ -64,7 +64,7 @@ describe 'apache ssl' do
           ssl_proxyengine      => true,
         }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      execute_manifest(pp, :catch_failures => true)
     end
 
     describe file("#{$vhost_dir}/25-test_ssl.conf") do
