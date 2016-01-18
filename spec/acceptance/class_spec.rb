@@ -3,15 +3,13 @@ require_relative './version.rb'
 
 describe 'apache class' do
   context 'default parameters' do
-    it 'should work with no errors' do
-      pp = <<-EOS
-      class { 'apache': }
+    let(:pp) do
+      <<-EOS
+        class { 'apache': }
       EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
+    # Run it twice and test for idempotency
+    it_behaves_like "a idempotent resource"
 
     describe package($package_name) do
       it { is_expected.to be_installed }
@@ -33,42 +31,41 @@ describe 'apache class' do
 
   context 'custom site/mod dir parameters' do
     # Using puppet_apply as a helper
-    it 'should work with no errors' do
-      pp = <<-EOS
-      if $::osfamily == 'RedHat' and "$::selinux" == "true" {
-        $semanage_package = $::operatingsystemmajrelease ? {
-          '5'     => 'policycoreutils',
-          default => 'policycoreutils-python',
-        }
+    let(:pp) do
+      <<-EOS
+        if $::osfamily == 'RedHat' and "$::selinux" == "true" {
+          $semanage_package = $::operatingsystemmajrelease ? {
+            '5'     => 'policycoreutils',
+            default => 'policycoreutils-python',
+          }
 
-        package { $semanage_package: ensure => installed }
-        exec { 'set_apache_defaults':
-          command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
-          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          subscribe   => Package[$semanage_package],
-          refreshonly => true,
+          package { $semanage_package: ensure => installed }
+          exec { 'set_apache_defaults':
+            command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
+            path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+            subscribe   => Package[$semanage_package],
+            refreshonly => true,
+          }
+          exec { 'restorecon_apache':
+            command     => 'restorecon -Rv /apache_spec',
+            path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+            before      => Service['httpd'],
+            require     => Class['apache'],
+            subscribe   => Exec['set_apache_defaults'],
+            refreshonly => true,
+          }
         }
-        exec { 'restorecon_apache':
-          command     => 'restorecon -Rv /apache_spec',
-          path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
-          before      => Service['httpd'],
-          require     => Class['apache'],
-          subscribe   => Exec['set_apache_defaults'],
-          refreshonly => true,
+        file { '/apache_spec': ensure => directory, }
+        file { '/apache_spec/apache_custom': ensure => directory, }
+        class { 'apache':
+          mod_dir   => '/apache_spec/apache_custom/mods',
+          vhost_dir => '/apache_spec/apache_custom/vhosts',
         }
-      }
-      file { '/apache_spec': ensure => directory, }
-      file { '/apache_spec/apache_custom': ensure => directory, }
-      class { 'apache':
-        mod_dir   => '/apache_spec/apache_custom/mods',
-        vhost_dir => '/apache_spec/apache_custom/vhosts',
-      }
       EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
     end
+
+    # Run it twice and test for idempotency
+    it_behaves_like "a idempotent resource"
 
     describe service($service_name) do
       if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
