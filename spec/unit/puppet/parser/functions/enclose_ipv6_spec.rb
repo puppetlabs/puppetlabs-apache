@@ -28,6 +28,10 @@ describe "the enclose_ipv6 function" do
     expect { scope.function_enclose_ipv6(['127.0.0.1']) }.to_not raise_error
   end
 
+  it "should not raise a ParseError when given * as ip string" do
+    expect { scope.function_enclose_ipv6(['*']) }.to_not raise_error
+  end
+
   it "should not raise a ParseError when given an array of ip strings" do
     expect { scope.function_enclose_ipv6([['127.0.0.1','fe80::1']]) }.to_not raise_error
   end
@@ -49,8 +53,8 @@ describe "the enclose_ipv6 function" do
   end
 
   it "should embrace ipv6 adresses within an array of ip addresses" do
-    result = scope.function_enclose_ipv6([['127.0.0.1','fe80::1','[fe80::1]']])
-    expect(result).to(eq(['127.0.0.1','[fe80::1]','[fe80::1]']))
+    result = scope.function_enclose_ipv6([['127.0.0.1','fe80::1','[fe80::2]']])
+    expect(result).to(eq(['127.0.0.1','[fe80::1]','[fe80::2]']))
   end
 
   it "should embrace a single ipv6 adresse" do
