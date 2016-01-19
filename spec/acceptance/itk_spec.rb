@@ -28,27 +28,25 @@ end
 describe 'apache::mod::itk class', :if => service_name do
   describe 'running puppet code' do
     # Using puppet_apply as a helper
-    it 'should work with no errors' do
-      pp = case variant
-           when :prefork
-             <<-EOS
-               class { 'apache':
-                 mpm_module => 'prefork',
-               }
-               class { 'apache::mod::itk': }
-             EOS
-           when :itk_only
-             <<-EOS
-               class { 'apache':
-                 mpm_module => 'itk',
-               }
-             EOS
-           end
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+    let(:pp) do
+      case variant
+        when :prefork
+          <<-EOS
+            class { 'apache':
+              mpm_module => 'prefork',
+            }
+            class { 'apache::mod::itk': }
+          EOS
+        when :itk_only
+          <<-EOS
+            class { 'apache':
+              mpm_module => 'itk',
+            }
+          EOS
+        end
     end
+    # Run it twice and test for idempotency
+    it_behaves_like "a idempotent resource"
   end
 
   describe service(service_name) do

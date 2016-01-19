@@ -4,18 +4,16 @@ require_relative './version.rb'
 describe 'apache::default_mods class' do
   describe 'no default mods' do
     # Using puppet_apply as a helper
-    it 'should apply with no errors' do
-      pp = <<-EOS
+    let(:pp) do
+      <<-EOS
         class { 'apache':
           default_mods => false,
         }
       EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
 
+    # Run it twice and test for idempotency
+    it_behaves_like "a idempotent resource"
     describe service($service_name) do
       it { is_expected.to be_running }
     end
@@ -54,8 +52,8 @@ describe 'apache::default_mods class' do
 
   describe 'alternative default mods' do
     # Using puppet_apply as a helper
-    it 'should apply with no errors' do
-      pp = <<-EOS
+    let(:pp) do
+      <<-EOS
         class { 'apache':
           default_mods => [
             'info',
@@ -74,11 +72,8 @@ describe 'apache::default_mods class' do
           setenv  => 'TEST1 one',
         }
       EOS
-
-      apply_manifest(pp, :catch_failures => true)
-      shell('sleep 10')
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
+    it_behaves_like "a idempotent resource"
 
     describe service($service_name) do
       it { is_expected.to be_running }
@@ -86,18 +81,16 @@ describe 'apache::default_mods class' do
   end
 
   describe 'change loadfile name' do
-    it 'should apply with no errors' do
-      pp = <<-EOS
+    let(:pp) do
+      <<-EOS
         class { 'apache': default_mods => false }
         ::apache::mod { 'auth_basic':
           loadfile_name => 'zz_auth_basic.load',
         }
       EOS
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
     end
-
+    # Run it twice and test for idempotency
+    it_behaves_like "a idempotent resource"
     describe service($service_name) do
       it { is_expected.to be_running }
     end
