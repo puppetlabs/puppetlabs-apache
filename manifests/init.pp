@@ -273,9 +273,24 @@ class apache (
         $scriptalias          = '/var/www/localhost/cgi-bin'
         $access_log_file      = 'access.log'
 
-        ::portage::makeconf { 'apache2_modules':
-          content => $default_mods,
+        if is_array($default_mods) {
+          if versioncmp($apache_version, '2.4') >= 0 {
+            if defined('apache::mod::ssl') {
+              ::portage::makeconf { 'apache2_modules':
+                content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
+              }
+            } else {
+              ::portage::makeconf { 'apache2_modules':
+                content => concat($default_mods, 'authz_core'),
+              }
+            }
+          } else {
+            ::portage::makeconf { 'apache2_modules':
+              content => $default_mods,
+            }
+          }
         }
+
         file { [
           '/etc/apache2/modules.d/.keep_www-servers_apache-2',
           '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'

@@ -442,19 +442,20 @@ class apache::params inherits ::apache::version {
     $suphp_configpath = '/etc/php5/apache2'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www-servers/apache
-      'auth_kerb'  => 'www-apache/mod_auth_kerb',
-      'fcgid'      => 'www-apache/mod_fcgid',
-      'passenger'  => 'www-apache/passenger',
-      'perl'       => 'www-apache/mod_perl',
-      'php5'       => 'dev-lang/php',
-      'proxy_html' => 'www-apache/mod_proxy_html',
-      'proxy_fcgi' => 'www-apache/mod_proxy_fcgi',
-      'python'     => 'www-apache/mod_python',
-      'wsgi'       => 'www-apache/mod_wsgi',
-      'dav_svn'    => 'dev-vcs/subversion',
-      'xsendfile'  => 'www-apache/mod_xsendfile',
-      'rpaf'       => 'www-apache/mod_rpaf',
-      'xml2enc'    => 'www-apache/mod_xml2enc',
+      'auth_kerb'       => 'www-apache/mod_auth_kerb',
+      'authnz_external' => 'www-apache/mod_authnz_external',
+      'fcgid'           => 'www-apache/mod_fcgid',
+      'passenger'       => 'www-apache/passenger',
+      'perl'            => 'www-apache/mod_perl',
+      'php5'            => 'dev-lang/php',
+      'proxy_html'      => 'www-apache/mod_proxy_html',
+      'proxy_fcgi'      => 'www-apache/mod_proxy_fcgi',
+      'python'          => 'www-apache/mod_python',
+      'wsgi'            => 'www-apache/mod_wsgi',
+      'dav_svn'         => 'dev-vcs/subversion',
+      'xsendfile'       => 'www-apache/mod_xsendfile',
+      'rpaf'            => 'www-apache/mod_rpaf',
+      'xml2enc'         => 'www-apache/mod_xml2enc',
     }
     $mod_libs         = {
       'php5' => 'libphp5.so',
