@@ -28,16 +28,18 @@ Takes an array of ip addresses and encloses the ipv6 addresses with square brack
     result = []
 
     input.each do |val|
-      begin
-        ip = IPAddr.new(val)
-      rescue *rescuable_exceptions
-        raise(Puppet::ParseError, "enclose_ipv6(): Wrong argument "+
-          "given #{val} is not an ip address.")
+      unless val == '*'
+        begin
+          ip = IPAddr.new(val)
+        rescue *rescuable_exceptions
+          raise(Puppet::ParseError, "enclose_ipv6(): Wrong argument "+
+                "given #{val} is not an ip address.")
+        end
+        val = "[#{ip.to_s}]" if ip.ipv6?
       end
-      val = "[#{ip.to_s}]" if ip.ipv6?
-      result = [result,val]
+      result << val
     end
 
-    return result.flatten.compact
+    return result.uniq
   end
 end
