@@ -81,7 +81,7 @@ define apache::mod (
     path    => "${mod_dir}/${_loadfile_name}",
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     content => template('apache/mod/load.erb'),
     require => [
       Package['httpd'],
@@ -99,7 +99,7 @@ define apache::mod (
       target  => "${mod_dir}/${_loadfile_name}",
       owner   => 'root',
       group   => $::apache::params::root_group,
-      mode    => '0644',
+      mode    => $::apache::file_mode,
       require => [
         File[$_loadfile_name],
         Exec["mkdir ${enable_dir}"],
@@ -117,7 +117,7 @@ define apache::mod (
         target  => "${mod_dir}/${mod}.conf",
         owner   => 'root',
         group   => $::apache::params::root_group,
-        mode    => '0644',
+        mode    => $::apache::file_mode,
         require => [
           File["${mod}.conf"],
           Exec["mkdir ${enable_dir}"],
@@ -134,7 +134,7 @@ define apache::mod (
       target  => "${mod_dir}/${_loadfile_name}",
       owner   => 'root',
       group   => $::apache::params::root_group,
-      mode    => '0644',
+      mode    => $::apache::file_mode,
       require => [
         File[$_loadfile_name],
         Exec["mkdir ${enable_dir}"],
@@ -152,7 +152,7 @@ define apache::mod (
         target  => "${mod_dir}/${mod}.conf",
         owner   => 'root',
         group   => $::apache::params::root_group,
-        mode    => '0644',
+        mode    => $::apache::file_mode,
         require => [
           File["${mod}.conf"],
           Exec["mkdir ${enable_dir}"],

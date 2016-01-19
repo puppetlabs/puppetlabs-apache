@@ -79,7 +79,7 @@ class apache::mod::worker (
   File {
     owner => 'root',
     group => $::apache::params::root_group,
-    mode  => '0644',
+    mode  => $::apache::file_mode,
   }
 
   # Template uses:

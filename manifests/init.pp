@@ -79,6 +79,7 @@ class apache (
   $use_optional_includes  = $::apache::params::use_optional_includes,
   $use_systemd            = $::apache::params::use_systemd,
   $mime_types_additional  = $::apache::params::mime_types_additional,
+  $file_mode              = $::apache::params::file_mode,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -241,7 +242,7 @@ class apache (
   concat { $ports_file:
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }

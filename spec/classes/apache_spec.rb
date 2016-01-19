@@ -835,6 +835,16 @@ describe 'apache', :type => :class do
         )
       }
     end
+    context 'with a custom file_mode parameter' do
+      let :params do {
+        :file_mode => '0640'
+      }
+      end
+      it { is_expected.to contain_concat("/etc/httpd/conf/ports.conf").with(
+        'mode' => '0640',
+      )
+      }
+    end
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }

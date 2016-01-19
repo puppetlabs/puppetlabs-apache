@@ -504,7 +504,7 @@ define apache::vhost(
     path    => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     order   => 'numeric',
     require => Package['httpd'],
     notify  => Class['apache::service'],
@@ -523,7 +523,7 @@ define apache::vhost(
       target  => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
       owner   => 'root',
       group   => $::apache::params::root_group,
-      mode    => '0644',
+      mode    => $::apache::file_mode,
       require => Concat["${priority_real}${filename}.conf"],
       notify  => Class['apache::service'],
     }

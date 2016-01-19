@@ -1160,6 +1160,10 @@ Controls how Apache handles `TRACE` requests (per [RFC 2616][]) via the [`TraceE
 
 Controls whether the systemd module should be installed on Centos 7 servers, this is especially useful if using custom built rpms. This can either be 'true' or 'false, defaults to 'true'.
 
+##### `file_mode`
+
+The desired permissions mode for config files, in symbolic or numeric notation. This value must be a string. Defaults to '0644'.
+
 ##### `vhost_dir`
 
 Changes your virtual host configuration files' location. Default: determined by your operating system.

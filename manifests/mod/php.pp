@@ -50,7 +50,7 @@ class apache::mod::php (
     path    => "${::apache::mod_dir}/php5.conf",
     owner   => 'root',
     group   => $root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     content => $manage_content,
     source  => $source,
     require => [

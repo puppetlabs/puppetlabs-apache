@@ -30,7 +30,7 @@ define apache::vhost::custom(
       target  => "${::apache::vhost_dir}/${priority}-${filename}.conf",
       owner   => 'root',
       group   => $::apache::params::root_group,
-      mode    => '0644',
+      mode    => $::apache::file_mode,
       require => Apache::Custom_config[$filename],
     }
   }

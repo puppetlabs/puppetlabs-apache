@@ -49,7 +49,7 @@ define apache::balancer (
   concat { $target:
     owner  => '0',
     group  => '0',
-    mode   => '0644',
+    mode   => $::apache::file_mode,
     notify => Class['Apache::Service'],
   }
 
