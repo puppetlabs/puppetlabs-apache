@@ -2137,6 +2137,14 @@ Determines whether or not to remove the logroot directory for a virtual host. Va
 Overrides the mode the logroot directory is set to. Defaults to undef. Do NOT give people write access to the directory the logs are stored
 in without being aware of the consequences; see http://httpd.apache.org/docs/2.4/logs.html#security for details.
 
+##### `logroot_owner`
+
+Sets individual user access to the logroot directory. Defaults to 'undef'.
+
+##### `logroot_group`
+
+Sets group access to the [`logroot`][] directory. Defaults to 'undef'.
+
 ##### `log_level`
 
 Specifies the verbosity of the error log. Defaults to 'warn' for the global server configuration and can be overridden on a per-vhost basis. Valid values are 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info' or 'debug'.
