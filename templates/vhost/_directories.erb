@@ -62,15 +62,19 @@
     Require <%= req %>
         <%- end -%>
       <%- end -%>
-      <%- if directory['auth_require'] -%>
+      <%- if directory['auth_require'] && directory['auth_require'] != '' -%>
+        <%- Array(directory['auth_require']).each do |auth_req| -%>
     Require <%= directory['auth_require'] %>
+        <%- end -%>
       <%- end -%>
       <%- if !(directory['require'] && directory['require'] != '') && directory['require'] !~ /unmanaged/i && !(directory['auth_require']) -%>
     Require all granted
       <%- end -%>
     <%- else -%>
-      <%- if directory['auth_require'] -%>
+      <%- if directory['auth_require'] && directory['auth_require'] != '' -%>
+        <%- Array(directory['auth_require']).each do |auth_req| -%>
     Require <%= directory['auth_require'] %>
+        <%- end -%>
       <%- end -%>
       <%- if directory['order'] and directory['order'] != '' -%>
     Order <%= Array(directory['order']).join(',') %>
