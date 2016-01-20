@@ -80,6 +80,7 @@ class apache (
   $use_systemd            = $::apache::params::use_systemd,
   $mime_types_additional  = $::apache::params::mime_types_additional,
   $file_mode              = $::apache::params::file_mode,
+  $root_directory_options = $::apache::params::root_directory_options,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)

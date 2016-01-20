@@ -48,6 +48,9 @@ class apache::params inherits ::apache::version {
   # Default mode for files
   $file_mode = '0644'
 
+  # Default options for / directory
+  $root_directory_options = ['FollowSymLinks']
+
   $vhost_include_pattern = '*'
 
   if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
