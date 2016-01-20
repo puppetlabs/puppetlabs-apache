@@ -19,6 +19,7 @@ class apache::mod::remoteip (
   file { 'remoteip.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/remoteip.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/remoteip.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

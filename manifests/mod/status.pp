@@ -11,7 +11,7 @@
 #   values are 'On' or 'Off'.  Defaults to 'On'.
 # - $status_path is the path assigned to the Location directive which
 #   defines the URL to access the server status. Defaults to '/server-status'.
-# 
+#
 # Actions:
 # - Enable and configure Apache mod_status
 #
@@ -38,6 +38,7 @@ class apache::mod::status (
   file { 'status.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/status.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/status.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

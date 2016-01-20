@@ -8,6 +8,7 @@ class apache::mod::proxy (
   file { 'proxy.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/proxy.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/proxy.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

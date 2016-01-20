@@ -6,6 +6,7 @@ class apache::mod::mime_magic (
   file { 'mime_magic.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/mime_magic.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/mime_magic.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

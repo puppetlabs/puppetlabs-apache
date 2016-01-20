@@ -11,6 +11,7 @@ class apache::mod::fcgid(
   file { 'unixd_fcgid.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/unixd_fcgid.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/unixd_fcgid.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

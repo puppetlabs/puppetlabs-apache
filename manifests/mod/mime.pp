@@ -8,6 +8,7 @@ class apache::mod::mime (
   file { 'mime.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/mime.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/mime.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

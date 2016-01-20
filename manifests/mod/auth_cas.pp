@@ -39,6 +39,7 @@ class apache::mod::auth_cas (
   file { 'auth_cas.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/auth_cas.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/auth_cas.conf.erb'),
     require => [ Exec["mkdir ${::apache::mod_dir}"], ],
     before  => File[$::apache::mod_dir],
