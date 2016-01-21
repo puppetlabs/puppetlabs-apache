@@ -33,7 +33,7 @@ class apache::mod::wsgi (
     ensure  => file,
     path    => "${::apache::mod_dir}/wsgi.conf",
     content => template('apache/mod/wsgi.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
