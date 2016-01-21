@@ -38,7 +38,7 @@ class apache::mod::security (
     path    => "${::apache::mod_dir}/security.conf",
     owner   => $::apache::params::user,
     group   => $::apache::params::group,
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
