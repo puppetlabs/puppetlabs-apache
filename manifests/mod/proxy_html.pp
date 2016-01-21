@@ -30,7 +30,7 @@ class apache::mod::proxy_html {
     ensure  => file,
     path    => "${::apache::mod_dir}/proxy_html.conf",
     content => template('apache/mod/proxy_html.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
