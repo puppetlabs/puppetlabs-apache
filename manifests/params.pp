@@ -47,11 +47,6 @@ class apache::params inherits ::apache::version {
 
   $vhost_include_pattern = '*'
 
-  if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
-    $verify_command = '/usr/sbin/apache2ctl -t'
-  } else {
-    $verify_command = '/usr/sbin/apachectl -t'
-  }
   if $::osfamily == 'RedHat' or $::operatingsystem =~ /^[Aa]mazon$/ {
     $user                 = 'apache'
     $group                = 'apache'
@@ -71,7 +66,6 @@ class apache::params inherits ::apache::version {
     $vhost_enable_dir     = undef
     $conf_file            = 'httpd.conf'
     $ports_file           = "${conf_dir}/ports.conf"
-    $pidfile              = 'run/httpd.pid'
     $logroot              = '/var/log/httpd'
     $logroot_mode         = undef
     $lib_path             = 'modules'
@@ -196,7 +190,6 @@ class apache::params inherits ::apache::version {
     $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
     $conf_file           = 'apache2.conf'
     $ports_file          = "${conf_dir}/ports.conf"
-    $pidfile             = "\${APACHE_PID_FILE}"
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
     $lib_path            = '/usr/lib/apache2/modules'
@@ -358,7 +351,6 @@ class apache::params inherits ::apache::version {
     $vhost_enable_dir = undef
     $conf_file        = 'httpd.conf'
     $ports_file       = "${conf_dir}/ports.conf"
-    $pidfile          = '/var/run/httpd.pid'
     $logroot          = '/var/log/apache24'
     $logroot_mode     = undef
     $lib_path         = '/usr/local/libexec/apache24'
@@ -486,7 +478,6 @@ class apache::params inherits ::apache::version {
     $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
     $conf_file           = 'httpd.conf'
     $ports_file          = "${conf_dir}/ports.conf"
-    $pidfile             = '/var/run/httpd2.pid'
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
     $lib_path            = '/usr/lib64/apache2-prefork/'
