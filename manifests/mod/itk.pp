@@ -48,7 +48,7 @@ class apache::mod::itk (
   file { "${::apache::mod_dir}/itk.conf":
     ensure  => file,
     content => template('apache/mod/itk.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
