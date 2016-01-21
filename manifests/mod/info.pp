@@ -11,7 +11,7 @@ class apache::mod::info (
     ensure  => file,
     path    => "${::apache::mod_dir}/info.conf",
     content => template('apache/mod/info.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
