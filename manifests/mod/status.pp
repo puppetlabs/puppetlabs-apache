@@ -39,7 +39,7 @@ class apache::mod::status (
     ensure  => file,
     path    => "${::apache::mod_dir}/status.conf",
     content => template('apache/mod/status.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
