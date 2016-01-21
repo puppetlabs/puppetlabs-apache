@@ -83,7 +83,7 @@ class apache::mod::passenger (
     ensure  => file,
     path    => "${::apache::mod_dir}/${passenger_conf_file}",
     content => template('apache/mod/passenger.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
+    require => Exec["mkdir -p ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
   }
