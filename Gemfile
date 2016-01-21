@@ -1,7 +1,7 @@
 source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 def location_for(place, fake_version = nil)
-  if place =~ /^(git:[^#]*)#(.*)/
+  if place =~ /^(git[:@][^#]*)#(.*)/
     [fake_version, { :git => $1, :branch => $2, :require => false }].compact
   elsif place =~ /^file:\/\/(.*)/
     ['>= 0', { :path => File.expand_path($1), :require => false }]
@@ -11,14 +11,23 @@ def location_for(place, fake_version = nil)
 end
 
 group :development, :unit_tests do
-  gem 'rspec-core', '3.1.7',     :require => false
-  gem 'puppetlabs_spec_helper',  :require => false
-  gem 'simplecov',               :require => false
-  gem 'puppet_facts',            :require => false
   gem 'json',                    :require => false
+  gem 'metadata-json-lint',      :require => false
+  gem 'puppet_facts',            :require => false
+  gem 'puppet-blacksmith',       :require => false
+  gem 'puppetlabs_spec_helper',  :require => false
+  # rspec-core 3.1.7 is the last version to support ruby 1.8
+  if RUBY_VERSION < '1.9'
+    gem 'rspec-core', '3.1.7'
+  else
+    # newer version required to avoid BKR-537
+    gem 'rspec-core', '>= 3.4'
+  end
+  gem 'simplecov',               :require => false
 end
 
 group :system_tests do
+  gem 'beaker-puppet_install_helper',  :require => false
   if beaker_version = ENV['BEAKER_VERSION']
     gem 'beaker', *location_for(beaker_version)
   end
@@ -27,8 +36,8 @@ group :system_tests do
   else
     gem 'beaker-rspec',  :require => false
   end
-  gem 'serverspec',    :require => false
-  gem 'beaker-puppet_install_helper', :require => false
+  gem 'master_manipulator',            :require => false
+  gem 'serverspec',                    :require => false
 end
 
 
