@@ -38,12 +38,32 @@ class apache::service (
       $_service_ensure = undef
     }
   }
+
+  ###################################################################
+  # Now, that it should be, lets get out version of the /etc/init.d
+  # file put out and ready to define out version of the service
+  ###################################################################
+  case $operatingsystem {
+    centos, redhat: {
+	    file { "/etc/init.d/$service_name":
+  		  content => template('apache/httpd_init.d.erb'),
+  		  mode    => 0755,
+	    }
+    }
+  }
+
   if $service_manage {
-    service { 'httpd':
+    service { $service_name:
       ensure  => $_service_ensure,
       name    => $service_name,
       enable  => $service_enable,
-      restart => $service_restart
+      restart => $service_restart,
+
+      case $operatingsystem {
+        centos, redhat: {
+          require => File["/etc/init.d/$service_name"]
+        }
+      }
     }
   }
 }
