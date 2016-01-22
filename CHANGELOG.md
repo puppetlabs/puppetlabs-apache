@@ -1,13 +1,43 @@
-## UNRELEASED
+## 2016-01-26 - Supported Release 1.8.0
 ### Summary
+This release includes a lot of bug fixes and feature updates, including support for Debian 8, as well as many test improvements.
 
-TODO
+#### Features
+- Debian 8 Support.
+- Added the 'file_mode' property to allow a custom permission setting for config files.
+- Enable 'PassengerMaxRequestQueueSize' to be set for mod_passenger.
+- MODULES-2956: Enable options within location block on proxy_match.
+- Support itk on redhat.
+- Support the mod_ssl SSLProxyVerify directive.
+- Support ProxPassReverseCookieDomain directive (mod_proxy).
+- Support proxy provider for vhost directories.
+- Added new 'apache::vhost::custom' resource.
 
-###
+#### Bugfixes
+- Fixed ProxyPassReverse configuration.
+- Fixed error in Amazon operatingsystem detection.
+- Fixed mod_security catalog ordering issues for RedHat 7.
+- Fixed paths and packages for the shib2 apache module on Debian pre Jessie.
+- Fixed EL7 directory path for apache modules.
+- Fixed validation error when empty array is passed for the rewrites parameter.
+- Idempotency fixes with regards to '::apache::mod_enable_dir'.
+- ITK fixes.
+- (MODULES-2865) fix $mpm_module logic for 'false'.
+- Set SSLProxy directives even if ssl is false, due to issue with RewriteRules and ProxyPass directives.
+- Enable setting LimitRequestFieldSize globally, and remove it from vhost.
 
-#### Security
-
-* apache::mod::php now uses FilesMatch to configure the php handler. This is following the recommended upstream configuration guidelines (http://php.net/manual/en/install.unix.apache2.php#example-20) and distribution's default config (e.g.: http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/vivid/php5/vivid/view/head:/debian/php5.conf). It avoids inadvertently exposing the PHP handler to executing uploads with names like 'file.php.jpg', but might impact setups with unusual requirements.
+#### Improvements
+- apache::mod::php now uses FilesMatch to configure the php handler. This is following the recommended upstream configuration guidelines (http://php.net/manual/en/install.unix.apache2.php#example-20) and distribution's default config (e.g.: http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/vivid/php5/vivid/view/head:/debian/php5.conf). It avoids inadvertently exposing the PHP handler to executing uploads with names like 'file.php.jpg', but might impact setups with unusual requirements.
+- Improved compatibility for Gentoo.
+- Vhosts can now be supplied with a wildcard listen value.
+- Numerous test improvements.
+- Removed workarounds for https://bz.apache.org/bugzilla/show_bug.cgi?id=38864 as the issues have been fixed in Apache.
+- Documentation updates.
+- Ensureed order of ProxyPass and ProxyPassMatch parameters.
+- Ensure that ProxyPreserveHost is set to off mode explicitly if not set in manifest.
+- Put headers and request headers before proxy with regards to template generation.
+- Added X-Forwarded-For into log_formats defaults.
+- (MODULES-2703) Allow mod pagespeed to take an array of lines as additional_configuration.
 
 ## Supported Release 1.7.1
 ###Summary
