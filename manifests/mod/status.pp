@@ -11,7 +11,7 @@
 #   values are 'On' or 'Off'.  Defaults to 'On'.
 # - $status_path is the path assigned to the Location directive which
 #   defines the URL to access the server status. Defaults to '/server-status'.
-# 
+#
 # Actions:
 # - Enable and configure Apache mod_status
 #
