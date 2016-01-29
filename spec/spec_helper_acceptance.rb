@@ -43,7 +43,7 @@ RSpec.configure do |c|
       copy_module_to(host, :source => proj_root, :module_name => 'apache')
 
       on host, puppet('module','install','puppetlabs-stdlib')
-      on host, puppet('module','install','puppetlabs-concat', '--version 1.1.1', '--force')
+      on host, puppet('module','install','puppetlabs-concat')
 
       # Required for mod_passenger tests.
       if fact('osfamily') == 'RedHat'
@@ -59,7 +59,7 @@ RSpec.configure do |c|
 
       # Required for manifest to make mod_pagespeed repository available
       if fact('osfamily') == 'Debian'
-        on host, puppet('module','install','puppetlabs-apt', '--version 1.8.0', '--force')
+        on host, puppet('module','install','puppetlabs-apt')
       end
 
       # Make sure selinux is disabled so the tests work.
