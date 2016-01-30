@@ -1282,6 +1282,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `proxy_balancer`
 * `proxy_html`
 * `proxy_http`
+* `proxy_wstunnel`
 * `python`
 * `reqtimeout`
 * `remoteip`*
