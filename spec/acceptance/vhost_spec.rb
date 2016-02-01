@@ -1394,7 +1394,10 @@ describe 'apache::vhost define' do
               $_repos = "main contrib non-free"
             }
 
-            include ::apt
+            class { '::apt':
+              update => { 'frequency' => 'always' },
+            }
+
             apt::source { "${_os}_${_release}":
               location    => $_location,
               release     => $_release,
@@ -1415,6 +1418,7 @@ describe 'apache::vhost define' do
               repos       => $_repos,
               include_src => false,
             }
+
           }
         EOS
 
