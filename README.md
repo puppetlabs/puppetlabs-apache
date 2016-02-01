@@ -1508,6 +1508,11 @@ Installs and configures [`mod_ldap`][]. Allows you to modify the
 class { 'apache::mod::ldap':
   ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt'
   ldap_trusted_global_cert_type => 'CA_DER',
+  ldap_shared_cache_size        => '500000',
+  ldap_cache_entries            => '1024',
+  ldap_cache_ttl                => '600',
+  ldap_opcache_entries          => '1024',
+  ldap_opcache_ttl              => '600',
 }
 ~~~
 
@@ -1515,6 +1520,11 @@ class { 'apache::mod::ldap':
 
 - `ldap_trusted_global_cert_file`: Path and file name of the trusted CA certificates to use when establishing SSL or TLS connections to an LDAP server.
 - `ldap_trusted_global_cert_type`: The global trust certificate format. Defaults to 'CA_BASE64'.
+- `ldap_shared_cache_size`: Size in bytes of the shared-memory cache.
+- `ldap_cache_entries`: Maximum number of entries in the primary LDAP cache.
+- `ldap_cache_ttl`: Time that cached items remain valid.
+- `ldap_opcache_entries`: Number of entries used to cache LDAP compare operations.
+- `ldap_opcache_ttl`: Time that entries in the operation cache remain valid.
 
 ##### Class: `apache::mod::negotiation`
 
