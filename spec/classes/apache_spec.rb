@@ -504,7 +504,7 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/opt/rh/root/etc/httpd/conf/httpd.conf").with(
         'ensure'  => 'file',
         'notify'  => 'Class[Apache::Service]',
-        'require' => ['Package[httpd]', 'File[/etc/httpd/conf/ports.conf]'],
+        'require' => ['Package[httpd]', 'Concat[/etc/httpd/conf/ports.conf]'],
       ) }
     end
 
