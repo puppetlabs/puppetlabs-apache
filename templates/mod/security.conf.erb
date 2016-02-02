@@ -37,8 +37,8 @@
     SecRule MULTIPART_UNMATCHED_BOUNDARY "!@eq 0" \
       "id:'200003',phase:2,t:none,log,deny,status:44,msg:'Multipart parser detected a possible unmatched boundary.'"
 
-    SecPcreMatchLimit 1000
-    SecPcreMatchLimitRecursion 1000
+    SecPcreMatchLimit <%= @secpcrematchlimit %>
+    SecPcreMatchLimitRecursion <%= @secpcrematchlimitrecursion %>
 
     SecRule TX:/^MSC_/ "!@streq 0" \
       "id:'200004',phase:2,t:none,deny,msg:'ModSecurity internal error flagged: %{MATCHED_VAR_NAME}'"
