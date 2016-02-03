@@ -31,15 +31,9 @@ class apache::params inherits ::apache::version {
 
   # Default mime types settings
   $mime_types_additional = {
-    'AddHandler' => {
-      'type-map' => 'var'
-      },
-    'AddType'    => {
-      'text/html' => '.shtml'
-      },
-    'AddOutputFilter' => {
-      'INCLUDES'      => '.shtml'
-      },
+    'AddHandler'      => { 'type-map'  => 'var', },
+    'AddType'         => { 'text/html' => '.shtml', },
+    'AddOutputFilter' => { 'INCLUDES'  => '.shtml', },
   }
 
   # should we use systemd module?
@@ -91,9 +85,8 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
-    # NOTE: The module for Shibboleth is not available to RH/CentOS without an additional repository. http://wiki.aaf.edu.au/tech-info/sp-install-guide
-    # NOTE: The auth_cas module isn't available to RH/CentOS without enabling EPEL.
     $mod_packages         = {
+      # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
       'auth_cas'    => 'mod_auth_cas',
       'auth_kerb'   => 'mod_auth_kerb',
       'auth_mellon' => 'mod_auth_mellon',
@@ -109,6 +102,10 @@ class apache::params inherits ::apache::version {
         default => undef,
       },
       'pagespeed'   => 'mod-pagespeed-stable',
+      # NOTE: The passenger module isn't available on RH/CentOS without
+      # providing dependency packages provided by EPEL and passenger
+      # repositories. See
+      # https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
       'passenger'   => 'mod_passenger',
       'perl'        => 'mod_perl',
       'php5'        => $::apache::version::distrelease ? {
@@ -118,6 +115,9 @@ class apache::params inherits ::apache::version {
       'proxy_html'  => 'mod_proxy_html',
       'python'      => 'mod_python',
       'security'    => 'mod_security',
+      # NOTE: The module for Shibboleth is not available on RH/CentOS without
+      # providing dependency packages provided by Shibboleth's repositories.
+      # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
       'shibboleth'  => 'shibboleth',
       'ssl'         => 'mod_ssl',
       'wsgi'        => 'mod_wsgi',
@@ -183,7 +183,7 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_49_inbound_blocking.conf',
       'base_rules/modsecurity_crs_50_outbound.conf',
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf'
+      'base_rules/modsecurity_crs_60_correlation.conf',
     ]
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
@@ -287,7 +287,7 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_49_inbound_blocking.conf',
       'base_rules/modsecurity_crs_50_outbound.conf',
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf'
+      'base_rules/modsecurity_crs_60_correlation.conf',
     ]
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
