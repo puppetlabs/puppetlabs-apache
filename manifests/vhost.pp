@@ -748,7 +748,7 @@ define apache::vhost(
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
   # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
+  if ($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest) {
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}${filename}.conf",
       order   => 180,

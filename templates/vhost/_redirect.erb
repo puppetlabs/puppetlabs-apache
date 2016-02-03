@@ -22,4 +22,14 @@
 <% @redirectmatch_dest_a[i] ||= @redirectmatch_dest_a[0] -%>
   RedirectMatch <%= "#{@redirectmatch_status_a[i]} " %> <%= @redirectmatch_regexp_a[i] %> <%= @redirectmatch_dest_a[i] %>
   <%- end -%>
+<%- elsif @redirectmatch_regexp and @redirectmatch_dest -%>
+<% @redirectmatch_regexp_a = Array(@redirectmatch_regexp) -%>
+<% @redirectmatch_dest_a = Array(@redirectmatch_dest) -%>
+
+  ## RedirectMatch rules
+  <%- @redirectmatch_regexp_a.each_with_index do |status, i| -%>
+<% @redirectmatch_regexp_a[i] ||= @redirectmatch_regexp_a[0] -%>
+<% @redirectmatch_dest_a[i] ||= @redirectmatch_dest_a[0] -%>
+  RedirectMatch <%= @redirectmatch_regexp_a[i] %> <%= @redirectmatch_dest_a[i] %>
+  <%- end -%>
 <% end -%>
