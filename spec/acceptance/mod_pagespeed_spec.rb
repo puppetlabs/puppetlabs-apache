@@ -1,4 +1,5 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache::mod::pagespeed class' do
   context "default pagespeed config" do
