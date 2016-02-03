@@ -1106,6 +1106,33 @@ describe 'apache::vhost define' do
     end
   end
 
+  # Passenger isn't even in EPEL on el-5
+  if (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5')
+    describe 'rack_base_uris' do
+      before :all do
+        pp = "if $::osfamily == 'RedHat' { include epel }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      it 'applies cleanly' do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot          => '/tmp',
+            rack_base_uris  => ['/test'],
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file("#{$vhost_dir}/25-test.server.conf") do
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'RackBaseURI /test' }
+      end
+    end
+  end
+
   describe 'no_proxy_uris' do
     it 'applies cleanly' do
       pp = <<-EOS

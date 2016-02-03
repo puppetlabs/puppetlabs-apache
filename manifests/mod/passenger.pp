@@ -17,6 +17,7 @@ class apache::mod::passenger (
   $passenger_use_global_queue       = undef,
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
+  $manage_repo                      = true,
   $mod_package                      = undef,
   $mod_package_ensure               = undef,
   $mod_lib                          = undef,
@@ -50,6 +51,21 @@ class apache::mod::passenger (
     }
   } else {
     $_lib_path = $mod_lib_path
+  }
+
+  if $::osfamily == 'RedHat' and $manage_repo {
+    yumrepo { 'passenger':
+      ensure        => 'present',
+      baseurl       => 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch',
+      descr         => 'passenger',
+      enabled       => '1',
+      gpgcheck      => '0',
+      gpgkey        => 'https://packagecloud.io/gpg.key',
+      repo_gpgcheck => '1',
+      sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
+      sslverify     => '1',
+      before        => Apache::Mod['passenger'],
+    }
   }
 
   $_id = $mod_id

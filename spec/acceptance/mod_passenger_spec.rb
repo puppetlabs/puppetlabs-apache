@@ -49,38 +49,34 @@ describe 'apache::mod::passenger class' do
     conf_file = "#{$mod_dir}/passenger.conf"
     load_file = "#{$mod_dir}/zpassenger.load"
     # sometimes installs as 3.0.12, sometimes as 3.0.19 - so just check for the stable part
-    passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.1'
+    passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
     passenger_ruby = '/usr/bin/ruby'
-    passenger_tempdir = '/var/run/rubygem-passenger'
     passenger_module_path = 'modules/mod_passenger.so'
     rackapp_user = 'apache'
     rackapp_group = 'apache'
   end
 
   pp_rackapp = <<-EOS
-          /* a simple ruby rack 'hellow world' app */
-          file { '/var/www/passenger':
-            ensure  => directory,
-            owner   => '#{rackapp_user}',
-            group   => '#{rackapp_group}',
-            require => Class['apache::mod::passenger'],
-          }
-          file { '/var/www/passenger/config.ru':
-            ensure  => file,
-            owner   => '#{rackapp_user}',
-            group   => '#{rackapp_group}',
-            content => "app = proc { |env| [200, { \\"Content-Type\\" => \\"text/html\\" }, [\\"hello <b>world</b>\\"]] }\\nrun app",
-            require => File['/var/www/passenger'] ,
-          }
-          apache::vhost { 'passenger.example.com':
-            port    => '80',
-            docroot => '/var/www/passenger/public',
-            docroot_group => '#{rackapp_group}' ,
-            docroot_owner => '#{rackapp_user}' ,
-            custom_fragment => "PassengerRuby  #{passenger_ruby}\\nRailsEnv  development" ,
-            require => File['/var/www/passenger/config.ru'] ,
-          }
-          host { 'passenger.example.com': ip => '127.0.0.1', }
+    /* a simple ruby rack 'hello world' app */
+    file { '/var/www/passenger':
+      ensure => directory,
+      owner  => '#{rackapp_user}',
+      group  => '#{rackapp_group}',
+    }
+    file { '/var/www/passenger/config.ru':
+      ensure  => file,
+      owner   => '#{rackapp_user}',
+      group   => '#{rackapp_group}',
+      content => "app = proc { |env| [200, { \\"Content-Type\\" => \\"text/html\\" }, [\\"hello <b>world</b>\\"]] }\\nrun app",
+    }
+    apache::vhost { 'passenger.example.com':
+      port          => '80',
+      docroot       => '/var/www/passenger/public',
+      docroot_group => '#{rackapp_group}',
+      docroot_owner => '#{rackapp_user}',
+      require       => File['/var/www/passenger/config.ru'],
+    }
+    host { 'passenger.example.com': ip => '127.0.0.1', }
   EOS
 
   case fact('osfamily')
