@@ -845,9 +845,17 @@ describe 'apache', :type => :class do
       )
       }
     end
+    context 'with a custom root_directory_options parameter' do
+      let :params do {
+        :root_directory_options => ['-Indexes', '-FollowSymLinks']
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options -Indexes -FollowSymLinks} }
+    end
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks} }
     end
     context 'without default non-ssl vhost' do
       let :params do {

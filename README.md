@@ -1163,6 +1163,10 @@ Controls whether the systemd module should be installed on Centos 7 servers, thi
 
 The desired permissions mode for config files, in symbolic or numeric notation. This value must be a string. Defaults to '0644'.
 
+##### `root_directory_options`
+
+Array of the desired options for the / directory in httpd.conf. Defaults to 'FollowSymLinks'.
+
 ##### `vhost_dir`
 
 Changes your virtual host configuration files' location. Default: determined by your operating system.
