@@ -16,6 +16,7 @@ class apache::mod::negotiation (
   # Template uses no variables
   file { 'negotiation.conf':
     ensure  => file,
+    mode    => $::apache::file_mode,
     path    => "${::apache::mod_dir}/negotiation.conf",
     content => template('apache/mod/negotiation.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],

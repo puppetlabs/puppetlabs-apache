@@ -39,6 +39,7 @@ class apache::mod::security (
   file { 'security.conf':
     ensure  => file,
     content => template('apache/mod/security.conf.erb'),
+    mode    => $::apache::file_mode,
     path    => "${::apache::mod_dir}/security.conf",
     owner   => $::apache::params::user,
     group   => $::apache::params::group,

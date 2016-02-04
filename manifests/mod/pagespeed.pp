@@ -47,6 +47,7 @@ class apache::mod::pagespeed (
   file { 'pagespeed.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/pagespeed.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/pagespeed.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

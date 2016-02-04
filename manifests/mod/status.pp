@@ -38,6 +38,7 @@ class apache::mod::status (
   file { 'status.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/status.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/status.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

@@ -13,6 +13,7 @@ class apache::mod::dir (
   file { 'dir.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/dir.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/dir.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

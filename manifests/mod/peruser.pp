@@ -52,6 +52,7 @@ class apache::mod::peruser (
       # - $mod_dir
       file { "${::apache::mod_dir}/peruser.conf":
         ensure  => file,
+        mode    => $::apache::file_mode,
         content => template('apache/mod/peruser.conf.erb'),
         require => Exec["mkdir ${::apache::mod_dir}"],
         before  => File[$::apache::mod_dir],
