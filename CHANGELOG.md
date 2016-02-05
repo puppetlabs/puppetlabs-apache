@@ -1,3 +1,12 @@
+## Supported Release 1.8.1
+### Summary
+This release includes bug fixes and a documentation update.
+
+#### Bugfixes
+- Fixes a bug that occurs when using the module in combination with puppetlabs-concat 2.x.
+- Fixes a bug where passenger.conf was vulnerable to purging.
+- Removes the pin of the concat module dependency.
+
 ## 2016-01-26 - Supported Release 1.8.0
 ### Summary
 This release includes a lot of bug fixes and feature updates, including support for Debian 8, as well as many test improvements.
