@@ -36,7 +36,7 @@ class apache::mod::passenger (
   # Managed by the package, but declare it to avoid purging
   if $passenger_conf_package_file {
     file { 'passenger_package.conf':
-      path => "${::apache::mod_dir}/${passenger_conf_package_file}",
+      path => "${::apache::confd_dir}/${passenger_conf_package_file}",
     }
   }
 
