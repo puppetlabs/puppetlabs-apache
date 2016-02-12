@@ -314,7 +314,7 @@ class { 'apache':
 
 ## Usage
 
-### Configuring a virtual host
+### Configuring virtual hosts
 
 The default [`apache`][] class sets up a virtual host on port 80, listening on all interfaces and serving the [`docroot`][] parameter's default directory of `/var/www`.
 
