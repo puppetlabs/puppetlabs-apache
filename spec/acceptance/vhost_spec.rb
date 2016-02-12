@@ -1106,8 +1106,8 @@ describe 'apache::vhost define' do
     end
   end
 
-  # Passenger isn't even in EPEL on el-5
-  if (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5')
+  # Passenger isn't even in EPEL on el-5 and needs a kernel update on el-6
+  if (fact('osfamily') == 'RedHat' and ! ['6','5'].include?(fact('operatingsystemmajrelease')))
     describe 'rack_base_uris' do
       before :all do
         pp = "if $::osfamily == 'RedHat' { include epel }"
