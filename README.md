@@ -1511,7 +1511,7 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 
 ##### Class: `apache::mod::passenger`
 
-Installs and manages [`mod_passenger`][].
+Installs and manages [`mod_passenger`][]. For RedHat based systems, please ensure that you meet the minimum requirements as described in the [passenger docs](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux)
 
 **Parameters within `apache::mod::passenger`**:
 
