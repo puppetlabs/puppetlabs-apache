@@ -133,8 +133,7 @@ Action application/x-httpd-php /php-www.fcgi
     describe ".conf content using socket communication" do
       let :params do
         {
-          :host       => :undef,
-          :socket     => '/var/run/fcgi.sock',
+          :host       => '/var/run/fcgi.sock',
           :timeout    => 30,
           :flush      => true,
           :faux_path  => '/var/www/php-www.fcgi',
@@ -143,7 +142,7 @@ Action application/x-httpd-php /php-www.fcgi
         }
       end
       let :expected do
-        'FastCGIExternalServer /var/www/php-www.fcgi -idle-timeout 30 -flush -socket /var/run/fcgi.sock
+'FastCGIExternalServer /var/www/php-www.fcgi -idle-timeout 30 -flush -socket /var/run/fcgi.sock
 Alias /php-www.fcgi /var/www/php-www.fcgi
 Action application/x-httpd-php /php-www.fcgi
 '
