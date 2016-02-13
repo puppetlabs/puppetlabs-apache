@@ -9,34 +9,39 @@ class apache::mod::ssl (
   $ssl_pass_phrase_dialog  = 'builtin',
   $ssl_random_seed_bytes   = '512',
   $ssl_sessioncachetimeout = '300',
+  $mutex                   = undef,
   $apache_version          = $::apache::apache_version,
   $package_name            = undef,
 ) {
 
-  case $::osfamily {
-    'debian': {
-      if versioncmp($apache_version, '2.4') >= 0 {
-        $ssl_mutex = 'default'
-      } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
-        $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
-      } else {
-        $ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
+  if $mutex != undef {
+    $ssl_mutex = $mutex
+  } else {
+    case $::osfamily {
+      'debian': {
+        if versioncmp($apache_version, '2.4') >= 0 {
+          $ssl_mutex = 'default'
+        } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
+          $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
+        } else {
+          $ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
+        }
       }
-    }
-    'redhat': {
-      $ssl_mutex = 'default'
-    }
-    'freebsd': {
-      $ssl_mutex = 'default'
-    }
-    'gentoo': {
-      $ssl_mutex = 'default'
-    }
-    'Suse': {
-      $ssl_mutex = 'default'
-    }
-    default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      'redhat': {
+        $ssl_mutex = 'default'
+      }
+      'freebsd': {
+        $ssl_mutex = 'default'
+      }
+      'gentoo': {
+        $ssl_mutex = 'default'
+      }
+      'Suse': {
+        $ssl_mutex = 'default'
+      }
+      default: {
+        fail("Unsupported osfamily ${::osfamily}")
+      }
     }
   }
 
