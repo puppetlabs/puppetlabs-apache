@@ -14,9 +14,9 @@
   SSLCompression On
 <% end -%>
   <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-  Mutex <%= @ssl_mutex %>
+  Mutex <%= @_ssl_mutex %>
   <%- else -%>
-  SSLMutex <%= @ssl_mutex %>
+  SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
   SSLHonorCipherOrder <%= @ssl_honorcipherorder %>

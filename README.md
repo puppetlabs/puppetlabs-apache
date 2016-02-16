@@ -1665,6 +1665,11 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 - `ssl_protocol`: Default: [ 'all', '-SSLv2', '-SSLv3' ].
 - `ssl_random_seed_bytes`: Valid options: A string. Default: '512'.
 - `ssl_sessioncachetimeout`: Valid options: A string. Default: '300'.
+- `ssl_mutex`: Default: Determined based on the OS. Valid options: See [mod_ssl][mod_ssl] documentation.
+  - RedHat/FreeBSD/Suse/Gentoo: 'default'
+  - Debian/Ubuntu + Apache >= 2.4: 'default'
+  - Debian/Ubuntu + Apache < 2.4: 'file:\${APACHE_RUN_DIR}/ssl_mutex'
+  - Ubuntu 10.04: 'file:/var/run/apache2/ssl_mutex'
 
 To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] parameter in `::apache` to true **or** the [`ssl`][] parameter in [`apache::vhost`][] to true.
 

@@ -161,5 +161,14 @@ describe 'apache::mod::ssl', :type => :class do
       end
       it { is_expected.to contain_file('ssl.conf').with_content(/^\s+SSLOpenSSLConfCmd DHParameters "foo.pem"$/)}
     end
+
+    context 'setting ssl_mutex' do
+      let :params do
+        {
+          :ssl_mutex => 'posixsem',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$})}
+    end
   end
 end
