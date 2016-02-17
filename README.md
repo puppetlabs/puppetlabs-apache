@@ -2947,7 +2947,7 @@ apache::vhost { 'sample.example.net':
     { path                       => '/',
       provider                   => 'directory',
       mellon_enable              => 'info',
-      mellon_sp_private_key_file => '/etc/certs/${::fqdn}.key,
+      mellon_sp_private_key_file => '/etc/certs/${::fqdn}.key',
       mellon_endpoint_path       => '/mellon',
       mellon_set_env_no_prefix   => { 'ADFS_GROUP' => 'http://schemas.xmlsoap.org/claims/Group',
                                       'ADFS_EMAIL' => 'http://schemas.xmlsoap.org/claims/EmailAddress', },
