@@ -1113,32 +1113,30 @@ describe 'apache::vhost define' do
     end
 
     it 'applies cleanly' do
-      if (fact('osfamily') == 'RedHat' and ! ['7','6','5'].include?(fact('operatingsystemmajrelease')))
-        pending("Passenger isn't even in EPEL on el-5, needs a kernel update on el-6, and needs selinux-policy >= 3.13.1-60 on el7 which is not available in official repos")
+      test = lambda do
+        pp = <<-EOS
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            docroot          => '/tmp',
+            rack_base_uris  => ['/test'],
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
       end
-      pp = <<-EOS
-        class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot          => '/tmp',
-          rack_base_uris  => ['/test'],
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+      if (fact('osfamily') == 'RedHat' and ! ['7','6','5'].include?(fact('operatingsystemmajrelease')))
+        pending("Passenger isn't even in EPEL on el-5, needs a kernel update on el-6, and needs selinux-policy >= 3.13.1-60 on el7 which is not available in official repos") do
+          test.call
+        end
+      else
+        test.call
+      end
     end
 
-    describe file("#{$vhost_dir}/25-test.server.conf") do
-      it do
-        if (fact('osfamily') == 'RedHat' and ! ['7','6','5'].include?(fact('operatingsystemmajrelease')))
-          pending("Passenger isn't even in EPEL on el-5, needs a kernel update on el-6, and needs selinux-policy >= 3.13.1-60 on el7 which is not available in official repos")
-        end
-        is_expected.to be_file
-      end
-      it do
-        if (fact('osfamily') == 'RedHat' and ! ['7','6','5'].include?(fact('operatingsystemmajrelease')))
-          pending("Passenger isn't even in EPEL on el-5, needs a kernel update on el-6, and needs selinux-policy >= 3.13.1-60 on el7 which is not available in official repos")
-        end
-        is_expected.to contain 'RackBaseURI /test'
+    if (fact('osfamily') == 'RedHat' and ! ['7','6','5'].include?(fact('operatingsystemmajrelease')))
+      describe file("#{$vhost_dir}/25-test.server.conf") do
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'RackBaseURI /test' }
       end
     end
   end
