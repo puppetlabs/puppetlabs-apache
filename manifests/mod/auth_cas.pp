@@ -16,7 +16,7 @@ class apache::mod::auth_cas (
   $cas_cookie_http_only     = undef,
   $cas_authoritative        = undef,
   $suppress_warning         = false,
-) {
+) inherits ::apache::params {
 
   validate_string($cas_login_url, $cas_validate_url, $cas_cookie_path)
 
@@ -24,6 +24,7 @@ class apache::mod::auth_cas (
     warning('RedHat distributions do not have Apache mod_auth_cas in their default package repositories.')
   }
 
+  include ::apache
   ::apache::mod { 'auth_cas': }
 
   file { $cas_cookie_path:

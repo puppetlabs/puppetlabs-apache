@@ -16,111 +16,112 @@ def general_deflate_specs
 end
 
 describe 'apache::mod::deflate', :type => :class do
-  let :pre_condition do
-    'class { "apache":
-      default_mods => false,
-    }
-    class { "apache::mod::deflate":
-      types => [ "text/html", "text/css" ],
-      notes => {
-        "Input" => "instream",
-        "Ratio" => "ratio",
-      }
-    }
-    '
-  end
+  it_behaves_like "a mod class, without including apache"
 
-  context "On a Debian OS with default params" do
-    let :facts do
-      {
-        :id                     => 'root',
-        :lsbdistcodename        => 'squeeze',
-        :kernel                 => 'Linux',
-        :osfamily               => 'Debian',
-        :operatingsystem        => 'Debian',
-        :operatingsystemrelease => '6',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :concat_basedir         => '/dne',
-        :is_pe                  => false,
+  context "default configuration with parameters" do
+    let :pre_condition do
+      'class { "apache::mod::deflate":
+        types => [ "text/html", "text/css" ],
+        notes => {
+          "Input" => "instream",
+          "Ratio" => "ratio",
+        }
       }
+      '
     end
 
-    # Load the more generic tests for this context
-    general_deflate_specs()
+    context "On a Debian OS with default params" do
+      let :facts do
+        {
+          :id                     => 'root',
+          :lsbdistcodename        => 'squeeze',
+          :kernel                 => 'Linux',
+          :osfamily               => 'Debian',
+          :operatingsystem        => 'Debian',
+          :operatingsystemrelease => '6',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :concat_basedir         => '/dne',
+          :is_pe                  => false,
+        }
+      end
 
-    it { is_expected.to contain_file("deflate.conf").with({
-      :ensure => 'file',
-      :path   => '/etc/apache2/mods-available/deflate.conf',
-    } ) }
-    it { is_expected.to contain_file("deflate.conf symlink").with({
-      :ensure => 'link',
-      :path   => '/etc/apache2/mods-enabled/deflate.conf',
-    } ) }
-  end
+      # Load the more generic tests for this context
+      general_deflate_specs()
 
-  context "on a RedHat OS with default params" do
-    let :facts do
-      {
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :osfamily               => 'RedHat',
-        :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => '6',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :concat_basedir         => '/dne',
-        :is_pe                  => false,
-      }
+      it { is_expected.to contain_file("deflate.conf").with({
+        :ensure => 'file',
+        :path   => '/etc/apache2/mods-available/deflate.conf',
+      } ) }
+      it { is_expected.to contain_file("deflate.conf symlink").with({
+        :ensure => 'link',
+        :path   => '/etc/apache2/mods-enabled/deflate.conf',
+      } ) }
     end
 
-    # Load the more generic tests for this context
-    general_deflate_specs()
+    context "on a RedHat OS with default params" do
+      let :facts do
+        {
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemrelease => '6',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :concat_basedir         => '/dne',
+          :is_pe                  => false,
+        }
+      end
 
-    it { is_expected.to contain_file("deflate.conf").with_path("/etc/httpd/conf.d/deflate.conf") }
-  end
+      # Load the more generic tests for this context
+      general_deflate_specs()
 
-  context "On a FreeBSD OS with default params" do
-    let :facts do
-      {
-        :id                     => 'root',
-        :kernel                 => 'FreeBSD',
-        :osfamily               => 'FreeBSD',
-        :operatingsystem        => 'FreeBSD',
-        :operatingsystemrelease => '9',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :concat_basedir         => '/dne',
-        :is_pe                  => false,
-      }
+      it { is_expected.to contain_file("deflate.conf").with_path("/etc/httpd/conf.d/deflate.conf") }
     end
 
-    # Load the more generic tests for this context
-    general_deflate_specs()
+    context "On a FreeBSD OS with default params" do
+      let :facts do
+        {
+          :id                     => 'root',
+          :kernel                 => 'FreeBSD',
+          :osfamily               => 'FreeBSD',
+          :operatingsystem        => 'FreeBSD',
+          :operatingsystemrelease => '9',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :concat_basedir         => '/dne',
+          :is_pe                  => false,
+        }
+      end
 
-    it { is_expected.to contain_file("deflate.conf").with({
-      :ensure => 'file',
-      :path   => '/usr/local/etc/apache24/Modules/deflate.conf',
-    } ) }
-  end
+      # Load the more generic tests for this context
+      general_deflate_specs()
 
-  context "On a Gentoo OS with default params" do
-    let :facts do
-      {
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :osfamily               => 'Gentoo',
-        :operatingsystem        => 'Gentoo',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :operatingsystemrelease => '3.16.1-gentoo',
-        :concat_basedir         => '/dne',
-        :is_pe                  => false,
-      }
+      it { is_expected.to contain_file("deflate.conf").with({
+        :ensure => 'file',
+        :path   => '/usr/local/etc/apache24/Modules/deflate.conf',
+      } ) }
     end
 
-    # Load the more generic tests for this context
-    general_deflate_specs()
+    context "On a Gentoo OS with default params" do
+      let :facts do
+        {
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :osfamily               => 'Gentoo',
+          :operatingsystem        => 'Gentoo',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+          :operatingsystemrelease => '3.16.1-gentoo',
+          :concat_basedir         => '/dne',
+          :is_pe                  => false,
+        }
+      end
 
-    it { is_expected.to contain_file("deflate.conf").with({
-      :ensure => 'file',
-      :path   => '/etc/apache2/modules.d/deflate.conf',
-    } ) }
+      # Load the more generic tests for this context
+      general_deflate_specs()
+
+      it { is_expected.to contain_file("deflate.conf").with({
+        :ensure => 'file',
+        :path   => '/etc/apache2/modules.d/deflate.conf',
+      } ) }
+    end
   end
 end

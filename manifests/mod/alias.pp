@@ -1,11 +1,13 @@
 class apache::mod::alias(
-  $apache_version = $apache::apache_version,
+  $apache_version = undef,
   $icons_options  = 'Indexes MultiViews',
   # set icons_path to false to disable the alias
   $icons_path     = $::apache::params::alias_icons_path,
-
-) {
+) inherits ::apache::params {
+  include ::apache
+  $real_apache_version = pick($apache_version, $apache::apache_version)
   apache::mod { 'alias': }
+
   # Template uses $icons_path
   if $icons_path {
     file { 'alias.conf':

@@ -2,6 +2,7 @@ class apache::mod::dav_svn (
   $authz_svn_enabled = false,
 ) {
   Class['::apache::mod::dav'] -> Class['::apache::mod::dav_svn']
+  include ::apache
   include ::apache::mod::dav
   ::apache::mod { 'dav_svn': }
 
