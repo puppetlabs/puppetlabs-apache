@@ -64,7 +64,10 @@ define apache::mod (
         File[$_loadfile_name],
         File["${::apache::conf_dir}/${::apache::params::conf_file}"]
       ],
-      default => File[$_loadfile_name],
+      default => [
+        File[$_loadfile_name],
+        File[$::apache::confd_dir],
+      ],
     }
     # if there are any packages, they should be installed before the associated conf file
     Package[$_package] -> File<| title == "${mod}.conf" |>
