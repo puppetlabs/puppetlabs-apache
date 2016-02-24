@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 describe 'apache::mod::security', :type => :class do
-  let :pre_condition do
-    'include apache'
-  end
-
+  it_behaves_like "a mod class, without including apache"
   context "on RedHat based systems" do
     let :facts do
       {

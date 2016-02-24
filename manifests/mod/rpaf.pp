@@ -3,6 +3,7 @@ class apache::mod::rpaf (
   $proxy_ips   = [ '127.0.0.1' ],
   $header      = 'X-Forwarded-For'
 ) {
+  include ::apache
   ::apache::mod { 'rpaf': }
 
   # Template uses:

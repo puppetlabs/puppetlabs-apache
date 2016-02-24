@@ -1,4 +1,5 @@
 class apache::mod::proxy_html {
+  include ::apache
   Class['::apache::mod::proxy'] -> Class['::apache::mod::proxy_html']
   Class['::apache::mod::proxy_http'] -> Class['::apache::mod::proxy_html']
 

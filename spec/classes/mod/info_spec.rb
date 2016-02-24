@@ -121,9 +121,7 @@ def general_info_specs_24
 end
 
 describe 'apache::mod::info', :type => :class do
-  let :pre_condition do
-    "class { 'apache': default_mods => false, }"
-  end
+  it_behaves_like "a mod class, without including apache"
 
   context 'On a Debian OS' do
     let :facts do

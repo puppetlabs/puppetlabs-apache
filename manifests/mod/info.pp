@@ -1,12 +1,12 @@
 class apache::mod::info (
   $allow_from      = ['127.0.0.1','::1'],
-  $apache_version  = $::apache::apache_version,
+  $apache_version  = undef,
   $restrict_access = true,
 ){
+  include ::apache
+  $_apache_version = pick($apache_version, $apache::apache_version)
   apache::mod { 'info': }
-  # Template uses
-  # $allow_from
-  # $apache_version
+  # Template uses $allow_from, $_apache_version
   file { 'info.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/info.conf",

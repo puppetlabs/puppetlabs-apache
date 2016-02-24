@@ -1,10 +1,12 @@
 class apache::mod::proxy (
   $proxy_requests = 'Off',
   $allow_from = undef,
-  $apache_version = $::apache::apache_version,
+  $apache_version = undef,
 ) {
+  include ::apache
+  $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'proxy': }
-  # Template uses $proxy_requests, $apache_version
+  # Template uses $proxy_requests, $_apache_version
   file { 'proxy.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/proxy.conf",

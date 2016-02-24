@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'apache::mod::python', :type => :class do
-  let :pre_condition do
-    'include apache'
-  end
+  it_behaves_like "a mod class, without including apache"
+
   context "on a Debian OS" do
     let :facts do
       {
