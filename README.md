@@ -3133,7 +3133,7 @@ apache::vhost { 'secure.example.net':
 
 > **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite` and consider setting the rewrites using the `rewrites` parameter in `apache::vhost` rather than setting the rewrites in the virtual host's directories.
 
-###### `shib_request_setting`
+###### `shib_request_settings`
 
 Allows a valid content setting to be set or altered for the application request. This command takes two parameters: the name of the content setting, and the value to set it to. Check the Shibboleth [content setting documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPContentSettings) for valid settings. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
 
