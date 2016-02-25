@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'apache::mod::proxy_html', :type => :class do
   let :pre_condition do
     [
-      'include apache',
       'include apache::mod::proxy',
       'include apache::mod::proxy_http',
     ]
   end
+  it_behaves_like "a mod class, without including apache"
   context "on a Debian OS" do
     shared_examples "debian" do |loadfiles|
       it { is_expected.to contain_class("apache::params") }

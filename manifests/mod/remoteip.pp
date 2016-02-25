@@ -3,9 +3,11 @@ class apache::mod::remoteip (
   $proxy_ips         = [ '127.0.0.1' ],
   $proxies_header    = undef,
   $trusted_proxy_ips = undef,
-  $apache_version    = $::apache::apache_version
+  $apache_version    = undef,
 ) {
-  if versioncmp($apache_version, '2.4') < 0 {
+  include ::apache
+  $_apache_version = pick($apache_version, $apache::apache_version)
+  if versioncmp($_apache_version, '2.4') < 0 {
     fail('mod_remoteip is only available in Apache 2.4')
   }
 
