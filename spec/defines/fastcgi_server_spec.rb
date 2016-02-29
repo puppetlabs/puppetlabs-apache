@@ -116,11 +116,12 @@ describe 'apache::fastcgi::server', :type => :define do
           :flush      => true,
           :faux_path  => '/var/www/php-www.fcgi',
           :fcgi_alias => '/php-www.fcgi',
-          :file_type  => 'application/x-httpd-php'
+          :file_type  => 'application/x-httpd-php',
+          :pass_header => 'Authorization'
         }
       end
       let :expected do
-'FastCGIExternalServer /var/www/php-www.fcgi -idle-timeout 30 -flush -host 127.0.0.1:9001
+'FastCGIExternalServer /var/www/php-www.fcgi -idle-timeout 30 -flush -host 127.0.0.1:9001 -pass-header Authorization
 Alias /php-www.fcgi /var/www/php-www.fcgi
 Action application/x-httpd-php /php-www.fcgi
 '

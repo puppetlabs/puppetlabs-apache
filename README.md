@@ -3331,12 +3331,13 @@ Ex:
 
 ``` puppet
 apache::fastcgi::server { 'php':
-  host       => '127.0.0.1:9000',
-  timeout    => 15,
-  flush      => false,
-  faux_path  => '/var/www/php.fcgi',
-  fcgi_alias => '/php.fcgi',
-  file_type  => 'application/x-httpd-php'
+  host        => '127.0.0.1:9000',
+  timeout     => 15,
+  flush       => false,
+  faux_path   => '/var/www/php.fcgi',
+  fcgi_alias  => '/php.fcgi',
+  file_type   => 'application/x-httpd-php',
+  pass_header => ''
 }
 ```
 
@@ -3373,6 +3374,10 @@ A unique alias. This is used internally to link the action with the FastCGI serv
 ##### `file_type`
 
 The MIME-type of the file to be processed by the FastCGI server.
+
+##### `pass_header`
+
+The name of an HTTP Request Header to be passed in the request environment. This option makes available the contents of headers which are normally not available (e.g. Authorization) to a CGI environment.
 
 #### Defined type: `apache::vhost::custom`
 
