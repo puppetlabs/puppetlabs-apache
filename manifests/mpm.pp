@@ -20,7 +20,7 @@ define apache::mpm (
       content => "LoadModule ${_id} ${_path}\n",
       require => [
         Package['httpd'],
-        Exec["mkdir ${mod_dir}"],
+        Exec["mkdir -p ${mod_dir}"],
       ],
       before  => File[$mod_dir],
       notify  => Class['apache::service'],
