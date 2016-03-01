@@ -3355,6 +3355,14 @@ apache::vhost { 'www':
 
 The hostname or IP address and TCP port number (1-65535) of the FastCGI server.
 
+It is also possible to pass a unix socket:
+
+``` puppet
+apache::fastcgi::server { 'php':
+  host        => '/var/run/fcgi.sock',
+}
+```
+
 ##### `timeout`
 
 The number of seconds of FastCGI application inactivity allowed before the request is aborted and the event is logged (at the error LogLevel). The inactivity timer applies only as long as a connection is pending with the FastCGI application. If a request is queued to an application, but the application doesn't respond (by writing and flushing) within this period, the request is aborted. If communication is complete with the application but incomplete with the client (the response is buffered), the timeout does not apply.

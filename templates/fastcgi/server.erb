@@ -4,13 +4,18 @@
   if @flush
     flush = " -flush"
   end
-  host = " -host #{@host}"
+  if @socket
+    host_or_socket = " -socket #{@socket}"
+  else
+    host_or_socket = " -host #{@host}"
+  end
+
   pass_header = ""
   if @pass_header and ! @pass_header.empty?
     pass_header = " -pass-header #{@pass_header}"
   end
 
-  options = timeout + flush + host + pass_header
+  options = timeout + flush + host_or_socket + pass_header
 -%>
 FastCGIExternalServer <%= @faux_path %><%= options %>
 Alias <%= @fcgi_alias %> <%= @faux_path %>
