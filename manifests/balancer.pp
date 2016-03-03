@@ -23,6 +23,10 @@
 # Hash, default empty. If given, each key-value pair will be used as a ProxySet
 # line in the configuration.
 #
+# [*target*]
+# String, default undef. If given, path to the file the balancer definition will
+# be written.
+#
 # [*collect_exported*]
 # Boolean, default 'true'. True means 'collect exported @@balancermember
 # resources' (for the case when every balancermember node exports itself),
@@ -41,21 +45,27 @@
 define apache::balancer (
   $proxy_set = {},
   $collect_exported = true,
+  $target = undef,
 ) {
   include ::apache::mod::proxy_balancer
 
-  $target = "${::apache::params::confd_dir}/balancer_${name}.conf"
+  if $target {
+    $_target = $target
+  } else {
+    $_target = "${::apache::params::confd_dir}/balancer_${name}.conf"
+  }
 
-  concat { $target:
+  concat { "apache_balancer_${name}":
     owner  => '0',
     group  => '0',
+    path   => $_target,
     mode   => $::apache::file_mode,
     notify => Class['Apache::Service'],
   }
 
   concat::fragment { "00-${name}-header":
     ensure  => present,
-    target  => $target,
+    target  => "apache_balancer_${name}",
     order   => '01',
     content => "<Proxy balancer://${name}>\n",
   }
@@ -68,14 +78,14 @@ define apache::balancer (
 
   concat::fragment { "01-${name}-proxyset":
     ensure  => present,
-    target  => $target,
+    target  => "apache_balancer_${name}",
     order   => '19',
     content => inline_template("<% @proxy_set.keys.sort.each do |key| %> Proxyset <%= key %>=<%= @proxy_set[key] %>\n<% end %>"),
   }
 
   concat::fragment { "01-${name}-footer":
     ensure  => present,
-    target  => $target,
+    target  => "apache_balancer_${name}",
     order   => '20',
     content => "</Proxy>\n",
   }
