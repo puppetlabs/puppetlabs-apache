@@ -3389,7 +3389,7 @@ The name of an HTTP Request Header to be passed in the request environment. This
 
 #### Defined type: `apache::vhost::custom`
 
-The `apache::vhost::custom` defined type is a thin wrapper around the `apache::custom_config` defined type, and simply overrides some of its default settings specifc to the virtual host directory in Apache.
+The `apache::vhost::custom` defined type is a thin wrapper around the `apache::custom_config` defined type, and simply overrides some of its default settings specific to the virtual host directory in Apache.
 
 **Parameters within `apache::vhost::custom`**:
 
