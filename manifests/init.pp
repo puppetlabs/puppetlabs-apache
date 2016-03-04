@@ -189,6 +189,7 @@ class apache (
       purge   => $purge_mod_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
+      before  => Anchor['::apache::modules_set_up'],
     }
   }
 
