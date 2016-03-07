@@ -29,6 +29,7 @@ define apache::vhost(
   $ssl_proxy_check_peer_cn     = undef,
   $ssl_proxy_check_peer_name   = undef,
   $ssl_proxy_machine_cert      = undef,
+  $ssl_proxy_protocol          = undef,
   $ssl_options                 = undef,
   $ssl_openssl_conf_cmd        = undef,
   $ssl_proxyengine             = false,
@@ -838,6 +839,7 @@ define apache::vhost(
   # - $ssl_proxy_check_peer_cn
   # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_machine_cert
+  # - $ssl_proxy_protocol
   if $ssl_proxyengine {
     concat::fragment { "${name}-sslproxy":
       target  => "${priority_real}${filename}.conf",

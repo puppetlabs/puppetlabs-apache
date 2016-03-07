@@ -14,4 +14,7 @@
   <%- if @ssl_proxy_machine_cert -%>
   SSLProxyMachineCertificateFile "<%= @ssl_proxy_machine_cert %>"
   <%- end -%>
+  <%- if @ssl_proxy_protocol -%>
+  SSLProxyProtocol  "<%= @ssl_proxy_protocol %>"
+  <%- end -%>
 <% end -%>
