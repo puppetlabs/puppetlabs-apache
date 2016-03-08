@@ -27,6 +27,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
+    it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABJDEFHZ$") }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
       :path => '/etc/httpd/modsecurity.d',
@@ -43,6 +44,13 @@ describe 'apache::mod::security', :type => :class do
       :path => '/etc/httpd/modsecurity.d/security_crs.conf'
     ) }
     it { should contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
+
+    describe 'with parameters' do
+      let :params do
+        { :modsec_audit_log_parts => "ABCDZ"
+        }
+      end
+      it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABCDZ$") }
   end
 
   context "on Debian based systems" do

@@ -159,6 +159,7 @@ class apache::params inherits ::apache::version {
     $mellon_lock_file     = '/run/mod_auth_mellon/lock'
     $mellon_cache_size    = 100
     $mellon_post_directory = undef
+    $modsec_audit_log_parts = 'ABIJDEFHZ'
     $modsec_crs_package   = 'mod_security_crs'
     $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
