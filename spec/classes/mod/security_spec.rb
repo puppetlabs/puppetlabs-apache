@@ -51,6 +51,7 @@ describe 'apache::mod::security', :type => :class do
         }
       end
       it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABCDZ$") }
+    end
   end
 
   context "on Debian based systems" do
@@ -79,6 +80,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/apache2/mods-available/security.conf'
     ) }
+    it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABJDEFHZ$") }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
       :path => '/etc/modsecurity',
@@ -95,6 +97,14 @@ describe 'apache::mod::security', :type => :class do
       :path => '/etc/modsecurity/security_crs.conf'
     ) }
     it { should contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
+
+    describe 'with parameters' do
+      let :params do
+        { :modsec_audit_log_parts => "ACEZ"
+        }
+      end
+      it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ACEZ$") }
+    end
   end
 
 end
