@@ -124,6 +124,7 @@ define apache::vhost(
   $passenger_min_instances     = undef,
   $passenger_start_timeout     = undef,
   $passenger_pre_start         = undef,
+  $passenger_user              = undef,
   $add_default_charset         = undef,
   $modsec_disable_vhost        = undef,
   $modsec_disable_ids          = undef,
@@ -274,7 +275,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user {
     include ::apache::mod::passenger
   }
 
@@ -953,7 +954,8 @@ define apache::vhost(
   # - $passenger_min_instances
   # - $passenger_start_timeout
   # - $passenger_pre_start
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  # - $passenger_user
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,

@@ -2306,6 +2306,10 @@ Sets [PassengerStartTimeout](https://www.phusionpassenger.com/library/config/apa
 
 Sets [PassengerPreStart](https://www.phusionpassenger.com/library/config/apache/reference/#passengerprestart), the URL of the application if pre-starting is required.
 
+##### `passenger_user`
+
+Sets [PassengerUser](https://www.phusionpassenger.com/library/config/apache/reference/#passengeruser), the running user for sandboxing applications.
+
 ##### `php_flags & values`
 
 Allows per-virtual host setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Default: '{}'.

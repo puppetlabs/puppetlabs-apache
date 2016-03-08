@@ -337,6 +337,7 @@ describe 'apache::vhost', :type => :define do
           'passenger_min_instances'     => '1',
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
+          'passenger_user'              => 'sandbox',
           'add_default_charset'         => 'UTF-8',
           'auth_kerb'                   => true,
           'krb_method_negotiate'        => 'off',
