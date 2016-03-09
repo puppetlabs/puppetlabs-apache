@@ -27,7 +27,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
-    it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABJDEFHZ$") }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
       :path => '/etc/httpd/modsecurity.d',
@@ -50,7 +50,7 @@ describe 'apache::mod::security', :type => :class do
         { :audit_log_parts => "ABCDZ"
         }
       end
-      it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABCDZ$") }
+      it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
     end
   end
 
@@ -80,7 +80,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/apache2/mods-available/security.conf'
     ) }
-    it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABJDEFHZ$") }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
       :path => '/etc/modsecurity',
@@ -103,7 +103,7 @@ describe 'apache::mod::security', :type => :class do
         { :audit_log_parts => "ACEZ"
         }
       end
-      it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ACEZ$") }
+      it { should contain_file('security.conf').with_content  %r{^\s+SecAuditLogParts ACEZ$} }
     end
   end
 
