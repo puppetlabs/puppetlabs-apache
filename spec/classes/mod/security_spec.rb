@@ -47,7 +47,7 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :modsec_audit_log_parts => "ABCDZ"
+        { :audit_log_parts => "ABCDZ"
         }
       end
       it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ABCDZ$") }
@@ -100,7 +100,7 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :modsec_audit_log_parts => "ACEZ"
+        { :audit_log_parts => "ACEZ"
         }
       end
       it { should contain_file('security.conf').with_content("^\s*SecAuditLogParts ACEZ$") }
