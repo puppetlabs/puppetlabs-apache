@@ -2968,6 +2968,7 @@ Related parameters follow the names of `mod_auth_mellon` directives:
 
 - `mellon_cond`: Takes an array of mellon conditions that must be met to grant access, and creates a [MellonCond][`mod_auth_mellon`] directive for each item in the array.
 - `mellon_endpoint_path`: Sets the [MellonEndpointPath][`mod_auth_mellon`] to set the mellon endpoint path.
+- `mellon_sp_metadata_file`: Sets the [MellonSPMetadataFile][`mod_auth_mellon`] location of the SP metadata file.
 - `mellon_idp_metadata_file`: Sets the [MellonIDPMetadataFile][`mod_auth_mellon`] location of the IDP metadata file.
 - `mellon_saml_rsponse_dump`: Sets the [MellonSamlResponseDump][`mod_auth_mellon`] directive to enable debug of SAML.
 - `mellon_set_env_no_prefix`: Sets the [MellonSetEnvNoPrefix][`mod_auth_mellon`] directive to a hash of attribute names to map
