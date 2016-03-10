@@ -3285,6 +3285,10 @@ apache::vhost { 'sample.example.net':
   ssl_verify_depth => 1,
 }
 ```
+##### `ssl_proxy_protocol`
+
+Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyprotocol) directive, which controls the SSL protocol flavors mod_ssl should use when establishing its server environment for proxy. It will only connect to servers using one of the provided protocols. Default: undef.
+
 
 ##### `ssl_proxy_verify`
 
