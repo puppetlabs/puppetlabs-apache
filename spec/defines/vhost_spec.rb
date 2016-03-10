@@ -338,6 +338,10 @@ describe 'apache::vhost', :type => :define do
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
           'add_default_charset'         => 'UTF-8',
+          'jk_mounts'                   => [
+            { 'mount'   => '/*',     'worker' => 'tcnode1', },
+            { 'unmount' => '/*.jpg', 'worker' => 'tcnode1', },
+          ],
           'auth_kerb'                   => true,
           'krb_method_negotiate'        => 'off',
           'krb_method_k5passwd'         => 'off',
@@ -484,6 +488,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts').with(
+        :content => /^\s+JkMount\s+\/\*\s+tcnode1$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts').with(
+        :content => /^\s+JkUnMount\s+\/\*\.jpg\s+tcnode1$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbMethodNegotiate\soff$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(

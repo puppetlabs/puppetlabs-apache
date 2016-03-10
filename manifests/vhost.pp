@@ -129,6 +129,7 @@ define apache::vhost(
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
   $modsec_body_limit           = undef,
+  $jk_mounts                   = undef,
   $auth_kerb                   = false,
   $krb_method_negotiate        = 'on',
   $krb_method_k5passwd         = 'on',
@@ -991,6 +992,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 330,
       content => template('apache/vhost/_filters.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $jk_mounts
+  if $jk_mounts and ! empty($jk_mounts) {
+    concat::fragment { "${name}-jk_mounts":
+      target  => "${priority_real}${filename}.conf",
+      order   => 340,
+      content => template('apache/vhost/_jk_mounts.erb'),
     }
   }
 

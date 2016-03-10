@@ -2149,6 +2149,23 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+##### `jk_mounts`
+
+Sets up a virtual host with 'JkMount' and 'JkUnMount' directives to handle the paths for URL mapping between Tomcat and Apache. Default: undef.
+
+The parameter must be an array of hashes where each hash must contain the 'worker' and either the 'mount' or 'unmount' keys.
+
+Usage typically looks like:
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  jk_mounts => [
+    { mount   => '/*',     worker => 'tcnode1', },
+    { unmount => '/*.jpg', worker => 'tcnode1', },
+  ],
+}
+```
+
 ##### `auth_kerb`
 
 Enable [`mod_auth_kerb`][] parameters for a virtual host. Valid options: Boolean. Default: false.
