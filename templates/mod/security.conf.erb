@@ -50,7 +50,7 @@
     SecDebugLogLevel 0
     SecAuditEngine RelevantOnly
     SecAuditLogRelevantStatus "^(?:5|4(?!04))"
-    SecAuditLogParts ABIJDEFHZ
+    SecAuditLogParts <%= @audit_log_parts %>
     SecAuditLogType Serial
     SecArgumentSeparator &
     SecCookieFormat 0

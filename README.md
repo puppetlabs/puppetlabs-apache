@@ -71,6 +71,8 @@
 [Apache modules]: https://httpd.apache.org/docs/current/mod/
 [array]: https://docs.puppetlabs.com/puppet/latest/reference/lang_data_array.html
 
+[audit log]: https://github.com/SpiderLabs/ModSecurity/wiki/ModSecurity-2-Data-Formats#audit-log
+
 [beaker-rspec]: https://github.com/puppetlabs/beaker-rspec
 
 [certificate revocation list]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationfile
@@ -1706,6 +1708,7 @@ ${modsec\_dir}/activated\_rules.
 - `restricted_headers`: A list of restricted headers separated by slashes and spaces. Default: 'Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'.
 - `secpcrematchlimit`: Sets the number for the match limit in the PCRE library. Default: '1500'
 - `secpcrematchlimitrecursion`: Sets the number for the match limit recursion in the PCRE library. Default: '1500'
+- `audit_log_parts`: Sets the sections to be put in the [audit log][]. Default: 'ABIJDEFHZ'
 
 ##### Class: `apache::mod::wsgi`
 

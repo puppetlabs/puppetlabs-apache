@@ -47,6 +47,8 @@ class apache::params inherits ::apache::version {
 
   $vhost_include_pattern = '*'
 
+  $modsec_audit_log_parts = 'ABIJDEFHZ'
+
   if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } else {
