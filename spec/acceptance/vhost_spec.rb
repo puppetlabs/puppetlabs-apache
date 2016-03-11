@@ -1396,44 +1396,42 @@ describe 'apache::vhost define' do
     describe 'fastcgi' do
       it 'applies cleanly' do
         pp = <<-EOS
-          unless $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '12.04') >= 0 {
-            $_os = $::operatingsystem
+          $_os = $::operatingsystem
 
-            if $_os == 'Ubuntu' {
-              $_location = "http://archive.ubuntu.com/"
-              $_security_location = "http://archive.ubuntu.com/"
-              $_release = $::lsbdistcodename
-              $_release_security = "${_release}-security"
-              $_repos = "main universe multiverse"
-            } else {
-              $_location = "http://httpredir.debian.org/debian/"
-              $_security_location = "http://security.debian.org/"
-              $_release = $::lsbdistcodename
-              $_release_security = "${_release}/updates"
-              $_repos = "main contrib non-free"
-            }
+          if $_os == 'Ubuntu' {
+            $_location = "http://archive.ubuntu.com/ubuntu/"
+            $_security_location = "http://archive.ubuntu.com/ubuntu/"
+            $_release = $::lsbdistcodename
+            $_release_security = "${_release}-security"
+            $_repos = "main universe multiverse"
+          } else {
+            $_location = "http://httpredir.debian.org/debian/"
+            $_security_location = "http://security.debian.org/"
+            $_release = $::lsbdistcodename
+            $_release_security = "${_release}/updates"
+            $_repos = "main contrib non-free"
+          }
 
-            include ::apt
-            apt::source { "${_os}_${_release}":
-              location    => $_location,
-              release     => $_release,
-              repos       => $_repos,
-              include_src => false,
-            }
+          include ::apt
+          apt::source { "${_os}_${_release}":
+            location    => $_location,
+            release     => $_release,
+            repos       => $_repos,
+            include_src => false,
+          }
 
-            apt::source { "${_os}_${_release}-updates":
-              location    => $_location,
-              release     => "${_release}-updates",
-              repos       => $_repos,
-              include_src => false,
-            }
+          apt::source { "${_os}_${_release}-updates":
+            location    => $_location,
+            release     => "${_release}-updates",
+            repos       => $_repos,
+            include_src => false,
+          }
 
-            apt::source { "${_os}_${_release}-security":
-              location    => $_security_location,
-              release     => $_release_security,
-              repos       => $_repos,
-              include_src => false,
-            }
+          apt::source { "${_os}_${_release}-security":
+            location    => $_security_location,
+            release     => $_release_security,
+            repos       => $_repos,
+            include_src => false,
           }
         EOS
 
