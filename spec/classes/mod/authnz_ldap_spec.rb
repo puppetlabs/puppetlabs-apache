@@ -22,17 +22,17 @@ describe 'apache::mod::authnz_ldap', :type => :class do
       it { is_expected.to contain_class("apache::mod::ldap") }
       it { is_expected.to contain_apache__mod('authnz_ldap') }
 
-      context 'default verifyServerCert' do
+      context 'default verify_server_cert' do
         it { is_expected.to contain_file('authnz_ldap.conf').with_content(/^LDAPVerifyServerCert On$/) }
       end
 
-      context 'verifyServerCert = false' do
-        let(:params) { { :verifyServerCert => false } }
+      context 'verify_server_cert = false' do
+        let(:params) { { :verify_server_cert => false } }
         it { is_expected.to contain_file('authnz_ldap.conf').with_content(/^LDAPVerifyServerCert Off$/) }
       end
 
-      context 'verifyServerCert = wrong' do
-        let(:params) { { :verifyServerCert => 'wrong' } }
+      context 'verify_server_cert = wrong' do
+        let(:params) { { :verify_server_cert => 'wrong' } }
         it 'should raise an error' do
           expect { is_expected.to raise_error Puppet::Error }
         end
@@ -56,17 +56,17 @@ describe 'apache::mod::authnz_ldap', :type => :class do
       it { is_expected.to contain_class("apache::mod::ldap") }
       it { is_expected.to contain_apache__mod('authnz_ldap') }
 
-      context 'default verifyServerCert' do
+      context 'default verify_server_cert' do
         it { is_expected.to contain_file('authnz_ldap.conf').with_content(/^LDAPVerifyServerCert On$/) }
       end
 
-      context 'verifyServerCert = false' do
-        let(:params) { { :verifyServerCert => false } }
+      context 'verify_server_cert = false' do
+        let(:params) { { :verify_server_cert => false } }
         it { is_expected.to contain_file('authnz_ldap.conf').with_content(/^LDAPVerifyServerCert Off$/) }
       end
 
-      context 'verifyServerCert = wrong' do
-        let(:params) { { :verifyServerCert => 'wrong' } }
+      context 'verify_server_cert = wrong' do
+        let(:params) { { :verify_server_cert => 'wrong' } }
         it 'should raise an error' do
           expect { is_expected.to raise_error Puppet::Error }
         end
