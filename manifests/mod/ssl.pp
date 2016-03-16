@@ -14,6 +14,7 @@ class apache::mod::ssl (
   $package_name            = undef,
 ) {
   include ::apache
+  include ::apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
   if $ssl_mutex {
     $_ssl_mutex = $ssl_mutex
