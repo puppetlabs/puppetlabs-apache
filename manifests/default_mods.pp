@@ -131,7 +131,7 @@ class apache::default_mods (
     include ::apache::mod::dir
     include ::apache::mod::mime
     include ::apache::mod::negotiation
-    include ::apache::mod::setenvif
+    #include ::apache::mod::setenvif
     ::apache::mod { 'auth_basic': }
 
     if versioncmp($apache_version, '2.4') >= 0 {
