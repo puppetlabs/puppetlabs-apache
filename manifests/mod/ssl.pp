@@ -4,7 +4,7 @@ class apache::mod::ssl (
   $ssl_options             = [ 'StdEnvVars' ],
   $ssl_openssl_conf_cmd    = undef,
   $ssl_cipher              = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
-  $ssl_honorcipherorder    = 'On',
+  $ssl_honorcipherorder    = true,
   $ssl_protocol            = [ 'all', '-SSLv2', '-SSLv3' ],
   $ssl_pass_phrase_dialog  = 'builtin',
   $ssl_random_seed_bytes   = '512',
@@ -44,6 +44,18 @@ class apache::mod::ssl (
       default: {
         fail("Unsupported osfamily ${::osfamily}, please explicitly pass in \$ssl_mutex")
       }
+    }
+  }
+
+  validate_bool($ssl_compression)
+
+  if is_bool($ssl_honorcipherorder) {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder
+  } else {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder ? {
+      'on'    => true,
+      'off'   => false,
+      default => true,
     }
   }
 
