@@ -19,7 +19,11 @@
   SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
-  SSLHonorCipherOrder <%= @ssl_honorcipherorder %>
+<% if @_ssl_honorcipherorder -%>
+  SSLHonorCipherOrder On
+<% else -%>
+  SSLHonorCipherOrder Off
+<% end -%>
   SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
 <% if @ssl_options -%>
