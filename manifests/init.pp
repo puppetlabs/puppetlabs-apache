@@ -242,6 +242,7 @@ class apache (
   }
 
   concat { $ports_file:
+    ensure  => present,
     owner   => 'root',
     group   => $::apache::params::root_group,
     mode    => $::apache::file_mode,
@@ -249,7 +250,6 @@ class apache (
     require => Package['httpd'],
   }
   concat::fragment { 'Apache ports header':
-    ensure  => present,
     target  => $ports_file,
     content => template('apache/ports_header.erb')
   }
