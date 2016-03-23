@@ -114,6 +114,7 @@ define apache::vhost(
   $fastcgi_server              = undef,
   $fastcgi_socket              = undef,
   $fastcgi_dir                 = undef,
+  $fastcgi_idle_timeout        = undef,
   $additional_includes         = [],
   $use_optional_includes       = $::apache::use_optional_includes,
   $apache_version              = $::apache::apache_version,
@@ -933,6 +934,7 @@ define apache::vhost(
   # - $fastcgi_server
   # - $fastcgi_socket
   # - $fastcgi_dir
+  # - $fastcgi_idle_timeout
   # - $apache_version
   if $fastcgi_server or $fastcgi_dir {
     concat::fragment { "${name}-fastcgi":

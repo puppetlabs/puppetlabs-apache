@@ -327,6 +327,7 @@ describe 'apache::vhost', :type => :define do
           'fastcgi_server'              => 'localhost',
           'fastcgi_socket'              => '/tmp/fastcgi.socket',
           'fastcgi_dir'                 => '/tmp',
+          'fastcgi_idle_timeout'        => '120',
           'additional_includes'         => '/custom/path/includes',
           'apache_version'              => '2.4',
           'use_optional_includes'       => true,
