@@ -1660,7 +1660,7 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 - `ssl_cipher`: Default: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'.
 - `ssl_compression`: Default: false.
 - `ssl_cryptodevice`: Default: 'builtin'.
-- `ssl_honorcipherorder`: Default: 'On'.
+- `ssl_honorcipherorder`: Default: true.
 - `ssl_openssl_conf_cmd`: Default: undef.
 - `ssl_options`: Default: [ 'StdEnvVars' ]
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
@@ -3240,7 +3240,7 @@ Specifies [SSLCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.htm
 
 ##### `ssl_honorcipherorder`
 
-Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslhonorcipherorder), which is used to prefer the server's cipher preference order. Default: 'On' in the base `apache` config.
+Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslhonorcipherorder), to cause Apache to use the server's preferred order of ciphers rather than the client's preferred order. Default: true. In addition to true/false Boolean values, will also accept case-insensitive Strings 'on' or 'off'.
 
 ##### `ssl_certs_dir`
 
