@@ -18,6 +18,11 @@ RSpec.configure do |c|
   end
 end
 
+RSpec.configure do |config|
+    config.filter_run focus: true
+    config.run_all_when_everything_filtered = true
+end
+
 shared_examples :compile, :compile => true do
   it { should compile.with_all_deps }
 end

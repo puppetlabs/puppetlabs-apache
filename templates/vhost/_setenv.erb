@@ -10,3 +10,8 @@
   SetEnvIf <%= envifvar %>
   <%- end -%>
 <% end -%>
+<% if @setenvifnocase and ! @setenvifnocase.empty? -%>
+  <%- Array(@setenvifnocase).each do |envifncvar| -%>
+  SetEnvIfNoCase <%= envifncvar %>
+  <%- end -%>
+<% end -%>

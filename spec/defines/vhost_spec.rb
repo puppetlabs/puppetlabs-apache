@@ -299,6 +299,7 @@ describe 'apache::vhost', :type => :define do
           'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
           'setenv'                      => ['FOO=/bin/true'],
           'setenvif'                    => 'Request_URI "\.gif$" object_is_image=gif',
+          'setenvifnocase'              => 'REMOTE_ADDR ^127.0.0.1 localhost=true',
           'block'                       => 'scm',
           'wsgi_application_group'      => '%{GLOBAL}',
           'wsgi_daemon_process'         => 'wsgi',
@@ -465,7 +466,12 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-setenv') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
+              %r{SetEnv FOO=/bin/true}) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
+              %r{SetEnvIf Request_URI "\\.gif\$" object_is_image=gif}) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
+              %r{SetEnvIfNoCase REMOTE_ADDR \^127.0.0.1 localhost=true}) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
         :content => /^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$/ ) }

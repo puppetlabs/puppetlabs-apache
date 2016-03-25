@@ -2596,6 +2596,10 @@ apache::vhost { 'setenv.example.com':
 
 Used by HTTPD to conditionally set environment variables for virtual hosts. Default: '[]'.
 
+##### `setenvifnocase`
+
+Used by HTTPD to conditionally set environment variables for virtual hosts (caseless matching). Default: '[]'.
+
 ##### `suphp_addhandler`, `suphp_configpath`, & `suphp_engine`
 
 Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG).
