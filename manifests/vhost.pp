@@ -130,6 +130,7 @@ define apache::vhost(
   $modsec_disable_vhost        = undef,
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
+  $modsec_disable_tags         = undef,
   $modsec_body_limit           = undef,
   $jk_mounts                   = undef,
   $auth_kerb                   = false,
@@ -505,6 +506,16 @@ define apache::vhost(
       $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
     } else {
       fail("Apache::Vhost[${name}]: 'modsec_disable_ids' must be either a Hash of location/IDs or an Array of IDs")
+    }
+  }
+
+  if $modsec_disable_tags {
+    if is_hash($modsec_disable_tags) {
+      $_modsec_disable_tags = $modsec_disable_tags
+    } elsif is_array($modsec_disable_tags) {
+      $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
+    } else {
+      fail("Apache::Vhost[${name}]: 'modsec_disable_tags' must be either a Hash of location/Tags or an Array of Tags")
     }
   }
 
@@ -982,8 +993,9 @@ define apache::vhost(
   # - $modsec_disable_vhost
   # - $modsec_disable_ids
   # - $modsec_disable_ips
+  # - $modsec_disable_tags
   # - $modsec_body_limit
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips {
+  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_tags {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,

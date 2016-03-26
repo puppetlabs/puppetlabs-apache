@@ -2263,6 +2263,22 @@ apache::vhost { 'sample.example.net':
 
 Specifies an array of IP addresses to exclude from [`mod_security`][] rule matching. Default: undef.
 
+###### `modsec_disable_tags`
+
+Array of mod_security Tags to remove from the virtual host. Also takes a hash allowing removal of an Tag from a specific location. Default: undef.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  modsec_disable_tags => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ],
+}
+```
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  modsec_disable_tags => { '/location1' => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ] },
+}
+```
+
 ##### `no_proxy_uris`
 
 Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with [`proxy_dest`](#proxy_dest).
