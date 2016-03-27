@@ -143,11 +143,11 @@ SecAction \
 #
 # If you want to use anomaly scoring mode, then uncomment this line.
 #
-#SecAction \
+SecAction \
   "id:'900004', \
   phase:1, \
   t:none, \
-  setvar:tx.anomaly_score_blocking=on, \
+  setvar:tx.anomaly_score_blocking=<%= @anomaly_score_blocking -%>, \
   nolog, \
   pass"
 
