@@ -25,7 +25,7 @@ describe 'apache::mod::proxy_html', :type => :class do
         :kernel          => 'Linux',
         :path            => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :hardwaremodel   => 'i386',
-        :is_pe                  => false,
+        :is_pe           => false,
       }
     end
 
