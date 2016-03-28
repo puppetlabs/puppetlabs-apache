@@ -1,6 +1,8 @@
 require 'puppet_blacksmith/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppetlabs_spec_helper/rake_tasks'
+require 'parallel_tests'
+require 'parallel_tests/cli'
 
 PuppetLint.configuration.fail_on_warnings = true
 PuppetLint.configuration.send('relative')
@@ -40,4 +42,11 @@ task :gen_nodeset do
     fh.print(cli.execute)
   end
   puts nodeset
+end
+
+desc "Parallel spec tests"
+task :parallel_spec do
+  Rake::Task[:spec_prep].invoke
+  ParallelTests::CLI.new.run('--type test -t rspec spec/classes spec/defines spec/unit'.split)
+  Rake::Task[:spec_clean].invoke
 end
