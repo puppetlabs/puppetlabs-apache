@@ -3073,6 +3073,23 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+When more complex sets of requirement are needed, apache >= 2.4 provides the use of [RequireAll](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#requireall), [RequireNone](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#requirenone) or [RequireAny](https://httpd.apache.org/docs/2.4/mod/mod_authz_core.html#requireany) directives.
+Using the 'enforce' key, which only supports 'any','none','all' (other values are silently ignored), this could be established like:
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/directory',
+  directories => [
+    { path    => '/path/to/directory',
+      require => { 
+        enforce => 'all',
+        require => ['group', 'not host host.example.com'],
+      },
+    },
+  ],
+}
+```
+
 If `require` is set to `unmanaged` it will not be set at all. This is useful for complex authentication/authorization requirements which are handled in a custom fragment.
 
 ``` puppet
@@ -3085,6 +3102,8 @@ apache::vhost { 'sample.example.net':
   ],
 }
 ```
+
+
 
 ###### `satisfy`
 
