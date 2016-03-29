@@ -2804,6 +2804,10 @@ Sets the value for [AuthType](https://httpd.apache.org/docs/current/mod/mod_auth
 
 Sets the value for [AuthUserFile](https://httpd.apache.org/docs/current/mod/mod_authn_file.html#authuserfile), which sets the name of the text file containing the users/passwords for authentication.
 
+###### `auth_merging`
+
+Sets the value for [AuthMerging](https://httpd.apache.org/docs/current/mod/mod_authz_core.html#authmerging), which determines if authorization logic should be combined
+
 ###### `custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the directory configuration.

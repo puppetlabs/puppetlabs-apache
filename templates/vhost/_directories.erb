@@ -186,6 +186,9 @@
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
     <%- end -%>
+    <%- if directory['auth_merging'] -%>
+    AuthMerging <%= directory['auth_merging'] %>
+    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
