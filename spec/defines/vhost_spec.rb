@@ -237,6 +237,14 @@ describe 'apache::vhost', :type => :define do
             { 'path'              => '/var/www/files/output_filtered',
               'set_output_filter' => 'output_filter',
             },
+            { 'path'     => '/var/www/files',
+              'provider' => 'location',
+              'limit'    => [
+                { 'methods' => 'GET HEAD',
+                  'require' => ['valid-user']
+                },
+              ],
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -496,6 +504,10 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+DirectoryIndex\sdisabled$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+SetOutputFilter\soutput_filter$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<Limit GET HEAD>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
