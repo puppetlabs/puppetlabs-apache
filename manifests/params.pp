@@ -488,6 +488,7 @@ class apache::params inherits ::apache::version {
     $docroot              = '/var/www/localhost/htdocs'
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
+    $pidfile              = '/var/run/apache2.pid'
   } elsif $::osfamily == 'Suse' {
     $user                = 'wwwrun'
     $group               = 'wwwrun'

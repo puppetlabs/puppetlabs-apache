@@ -493,6 +493,8 @@ define apache::vhost(
     }
 
     $_directories = [ merge($_directory, $_directory_version) ]
+  } else {
+    $_directories = undef
   }
 
   ## Create a global LocationMatch if locations aren't defined
