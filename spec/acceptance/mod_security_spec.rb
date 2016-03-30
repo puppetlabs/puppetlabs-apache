@@ -249,6 +249,67 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
 
   end #mod_security should allow disabling by id
 
+  context "mod_security should allow disabling by msg" do
+    it 'succeeds in puppeting mod_security' do
+      pp= <<-EOS
+        host { 'modsec.example.com': ip => '127.0.0.1', }
+        class { 'apache': }
+        class { 'apache::mod::security': }
+        apache::vhost { 'modsec.example.com':
+          port    => '80',
+          docroot => '/var/www/html',
+        }
+        file { '/var/www/html/index.html':
+          ensure  => file,
+          content => 'Index page',
+        }
+        file { '/var/www/html/index2.html':
+          ensure  => file,
+          content => 'Page 2',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
+    describe file("#{$mod_dir}/security.conf") do
+      it { is_expected.to contain "mod_security2.c" }
+    end
+
+    it 'should block query with SQL' do
+      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    end
+
+    it 'should disable mod_security per vhost' do
+      pp= <<-EOS
+        class { 'apache': }
+        class { 'apache::mod::security': }
+        apache::vhost { 'modsec.example.com':
+          port               => '80',
+          docroot            => '/var/www/html',
+          modsec_disable_msgs => [ 'Blind SQL Injection Attack' ],
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    it 'should return index page' do
+      shell('/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users') do |r|
+        expect(r.stdout).to match(/Index page/)
+        expect(r.exit_code).to eq(0)
+      end
+    end
+
+  end #mod_security should allow disabling by msg
+
   context "mod_security should allow disabling by tag" do
     it 'succeeds in puppeting mod_security' do
       pp= <<-EOS

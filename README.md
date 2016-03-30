@@ -2263,6 +2263,22 @@ apache::vhost { 'sample.example.net':
 
 Specifies an array of IP addresses to exclude from [`mod_security`][] rule matching. Default: undef.
 
+###### `modsec_disable_msgs`
+
+Array of mod_security Msgs to remove from the virtual host. Also takes a hash allowing removal of an Msg from a specific location. Default: undef.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  modsec_disable_msgs => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ],
+}
+```
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  modsec_disable_msgs => { '/location1' => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ] },
+}
+```
+
 ###### `modsec_disable_tags`
 
 Array of mod_security Tags to remove from the virtual host. Also takes a hash allowing removal of an Tag from a specific location. Default: undef.
