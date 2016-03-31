@@ -3314,11 +3314,11 @@ apache::vhost { 'sample.example.net':
 
 ##### `ssl_proxy_check_peer_cn`
 
-Sets the [SSLProxyMachinePeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Valid options: 'on', 'off'. Default: undef.
+Sets the [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Valid options: 'on', 'off'. Default: undef.
 
 ##### `ssl_proxy_check_peer_name`
 
-Sets the [SSLProxyMachinePeerName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Valid options: 'on', 'off'. Default: undef.
+Sets the [SSLProxyCheckPeerName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Valid options: 'on', 'off'. Default: undef.
 
 ##### `ssl_proxy_check_peer_expire`
 
