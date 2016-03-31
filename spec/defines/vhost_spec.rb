@@ -310,6 +310,7 @@ describe 'apache::vhost', :type => :define do
           'no_proxy_uris'               => '/foo',
           'no_proxy_uris_match'         => '/foomatch',
           'proxy_preserve_host'         => true,
+          'proxy_add_headers'           => true,
           'proxy_error_override'        => true,
           'redirect_source'             => '/bar',
           'redirect_dest'               => '/',
@@ -525,6 +526,10 @@ describe 'apache::vhost', :type => :define do
               /SetEnv proxy-nokeepalive 1/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /noquery interpolate/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /ProxyPreserveHost On/) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              /ProxyAddHeaders On/) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /ProxyPassReverseCookiePath\s+\/a\s+http:\/\//) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(

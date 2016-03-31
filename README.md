@@ -2342,6 +2342,12 @@ Sets the [ProxyPreserveHost Directive](https://httpd.apache.org/docs/current/mod
 
 Setting this parameter to true enables the `Host:` line from an incoming request to be proxied to the host instead of hostname. Setting it to false sets this directive to 'Off'.
 
+##### `proxy_add_headers`
+
+Sets the [ProxyAddHeaders Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyaddheaders). Valid Options: Boolean. Default: false.
+
+This parameter controlls whether proxy-related HTTP headers (X-Forwarded-For, X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
+
 ##### `proxy_error_override`
 
 Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride). This directive controls whether Apache should override error pages for proxied content. Default: false.

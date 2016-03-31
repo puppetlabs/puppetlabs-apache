@@ -8,6 +8,13 @@
 <% else -%>
   ProxyPreserveHost Off
 <%- end -%>
+<%- if defined?(@proxy_add_headers) -%>
+  <%- if @proxy_add_headers -%>
+  ProxyAddHeaders On
+  <%- else -%>
+  ProxyAddHeaders Off
+  <%- end -%>
+<%- end -%>
 <% if @proxy_error_override -%>
   ProxyErrorOverride On
 <%- end -%>
