@@ -3320,6 +3320,10 @@ Sets the [SSLProxyMachinePeerCN](https://httpd.apache.org/docs/current/mod/mod_s
 
 Sets the [SSLProxyMachinePeerName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Valid options: 'on', 'off'. Default: undef.
 
+##### `ssl_proxy_check_peer_expire`
+
+Sets the [SSLProxyCheckPeerExpire](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeerexpire) directive, which specifies whether the remote server certificate is checked for expiration or not. Valid options: 'on', 'off'. Default: undef.
+
 ##### `ssl_options`
 
 Sets the [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions) directive, which configures various SSL engine run-time options. This is the global setting for the given virtual host and can be a string or an array. Default: undef.

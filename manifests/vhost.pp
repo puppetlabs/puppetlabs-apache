@@ -28,6 +28,7 @@ define apache::vhost(
   $ssl_proxy_verify            = undef,
   $ssl_proxy_check_peer_cn     = undef,
   $ssl_proxy_check_peer_name   = undef,
+  $ssl_proxy_check_peer_expire = undef,
   $ssl_proxy_machine_cert      = undef,
   $ssl_proxy_protocol          = undef,
   $ssl_options                 = undef,
@@ -251,6 +252,10 @@ define apache::vhost(
   }
   if $ssl_proxy_check_peer_name {
     validate_re($ssl_proxy_check_peer_name,'(^on$|^off$)',"${ssl_proxy_check_peer_name} is not permitted for ssl_proxy_check_peer_name. Allowed values are 'on' or 'off'.")
+  }
+
+  if $ssl_proxy_check_peer_expire {
+    validate_re($ssl_proxy_check_peer_expire,'(^on$|^off$)',"${ssl_proxy_check_peer_expire} is not permitted for ssl_proxy_check_peer_expire. Allowed values are 'on' or 'off'.")
   }
 
   # Input validation ends
@@ -842,6 +847,7 @@ define apache::vhost(
   # - $ssl_proxy_verify
   # - $ssl_proxy_check_peer_cn
   # - $ssl_proxy_check_peer_name
+  # - $ssl_proxy_check_peer_expire
   # - $ssl_proxy_machine_cert
   # - $ssl_proxy_protocol
   if $ssl_proxyengine {
