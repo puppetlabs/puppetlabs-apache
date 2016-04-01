@@ -2311,6 +2311,10 @@ Sets [PassengerAppEnv](https://www.phusionpassenger.com/library/config/apache/re
 
 By default, Passenger log messages are written to the Apache global error log. With [PassengerLogFile](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlogfile), you can configure those messages to be logged to a different file. This option is only available since Passenger 5.0.5.
 
+##### `passenger_log_level`
+
+This option allows to specify how much information should be written to the log file. If not set, [PassengerLogLevel](https://www.phusionpassenger.com/library/config/apache/reference/#passengerloglevel) will not show up in the configuration file and the defaults are used. For Passenger > 3.0.0 the default is '0', since 5.0.0 it's '3'.
+
 ##### `passenger_ruby`
 
 Sets [PassengerRuby](https://www.phusionpassenger.com/library/config/apache/reference/#passengerruby), the Ruby interpreter to use for the application, on this virtual host.
