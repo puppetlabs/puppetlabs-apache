@@ -126,6 +126,7 @@ define apache::vhost(
   $passenger_start_timeout     = undef,
   $passenger_pre_start         = undef,
   $passenger_user              = undef,
+  $passenger_high_performance  = undef,
   $add_default_charset         = undef,
   $modsec_disable_vhost        = undef,
   $modsec_disable_ids          = undef,
@@ -277,7 +278,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance {
     include ::apache::mod::passenger
   }
 

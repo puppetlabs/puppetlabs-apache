@@ -338,6 +338,7 @@ describe 'apache::vhost', :type => :define do
           'passenger_min_instances'     => '1',
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
+          'passenger_high_performance'  => true,
           'passenger_user'              => 'sandbox',
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
