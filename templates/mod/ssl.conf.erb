@@ -10,9 +10,9 @@
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
-  SSLCompression <%= scope.function_bool2httpd([@ssl_compression]) %>
   <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
+  SSLCompression <%= scope.function_bool2httpd([@ssl_compression]) %>
   <%- else -%>
   SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
