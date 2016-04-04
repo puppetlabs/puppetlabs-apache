@@ -17,6 +17,7 @@ class apache::mod::passenger (
   $passenger_use_global_queue       = undef,
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
+  $passenger_log_level              = undef,
   $manage_repo                      = true,
   $mod_package                      = undef,
   $mod_package_ensure               = undef,
@@ -92,6 +93,7 @@ class apache::mod::passenger (
   # - $passenger_stat_throttle_rate
   # - $passenger_use_global_queue
   # - $passenger_log_file
+  # - $passenger_log_level
   # - $passenger_app_env
   # - $rack_autodetect
   # - $rails_autodetect
