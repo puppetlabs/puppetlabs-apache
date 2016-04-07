@@ -188,6 +188,11 @@ describe 'apache::vhost', :type => :define do
               'require'  => [ 'valid-user', 'all denied', ],
             },
             {
+                'path'     => '/var/www/files',
+                'provider' => 'files',
+                'additional_includes'  => [ '/custom/path/includes', '/custom/path/another_includes', ],
+            },
+            {
               'path'     => '/var/www/files',
               'provider' => 'files',
               'require'  => 'all granted',
@@ -418,6 +423,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+<Proxy "\*">$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Include\s'\/custom\/path\/includes'$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          :content => /^\s+Include\s'\/custom\/path\/another_includes'$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Require valid-user$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(

@@ -142,6 +142,11 @@
     <%- if directory['directoryindex'] and directory['directoryindex'] != '' -%>
     DirectoryIndex <%= directory['directoryindex'] %>
     <%- end -%>
+    <%- if directory['additional_includes'] and ! directory['additional_includes'].empty? -%>
+      <%- directory['additional_includes'].each do |include| -%>
+    Include '<%= "#{include}" %>'
+      <%- end -%>
+    <%- end -%>
     <%- if directory['error_documents'] and ! directory['error_documents'].empty? -%>
       <%- [directory['error_documents']].flatten.compact.each do |error_document| -%>
     ErrorDocument <%= error_document['error_code'] %> <%= error_document['document'] %>

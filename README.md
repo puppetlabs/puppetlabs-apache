@@ -3226,6 +3226,20 @@ apache::vhost { 'secure.example.net':
   ],
 }
 ```
+###### `additional_includes`
+
+Specifies paths to additional static, specific Apache configuration files in virtual host directories. Valid options: a array of string path.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/directory',
+  directories => [
+    { path  => '/path/to/different/dir',
+      additional_includes => [ '/custom/path/includes', '/custom/path/another_includes', ],
+    },
+  ],
+}
+```
 
 #### SSL parameters for `apache::vhost`
 
