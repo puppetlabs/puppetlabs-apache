@@ -1,3 +1,4 @@
+<IfModule mod_security2.c>
 <% if @modsec_disable_vhost -%>
   SecRuleEngine Off
 <% end -%>
@@ -36,3 +37,4 @@
 <% if @modsec_body_limit -%>
   SecRequestBodyLimit <%= @modsec_body_limit %>
 <% end -%>
+</IfModule>
