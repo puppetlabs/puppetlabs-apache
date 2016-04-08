@@ -76,6 +76,7 @@ define apache::mod (
       ensure  => $package_ensure,
       require => Package['httpd'],
       before  => $package_before,
+      notify  => Class['apache::service'],
     }
   }
 

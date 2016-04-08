@@ -33,6 +33,7 @@ class apache::mod::pagespeed (
   $message_buffer_size           = 100000,
   $additional_configuration      = {},
   $apache_version                = undef,
+  $package_ensure                = undef,
 ){
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -42,7 +43,8 @@ class apache::mod::pagespeed (
   }
 
   apache::mod { 'pagespeed':
-    lib => $_lib,
+    lib            => $_lib,
+    package_ensure => $package_ensure,
   }
 
   # Template uses $_apache_version
