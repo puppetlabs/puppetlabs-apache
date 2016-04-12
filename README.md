@@ -55,6 +55,7 @@
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
+[`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
 [`apache::mod::security`]: #class-apachemodsecurity
 [`apache::mod::shib`]: #class-apachemodshib
