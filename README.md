@@ -1712,6 +1712,8 @@ ${modsec\_dir}/activated\_rules.
 - `secpcrematchlimitrecursion`: Sets the number for the match limit recursion in the PCRE library. Default: '1500'
 - `audit_log_parts`: Sets the sections to be put in the [audit log][]. Default: 'ABIJDEFHZ'
 - `anomaly_score_blocking`: De-/Activates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set. Default: off.
+- `inbound_anomaly_threshold`: Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '5'.
+- `outbound_anomaly_threshold`: Sets the scoring threshold level of the outbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
 
 ##### Class: `apache::mod::wsgi`
 

@@ -12,6 +12,8 @@ class apache::mod::security (
   $restricted_headers    = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
   $secdefaultaction           = 'deny',
   $anomaly_score_blocking     = 'off',
+  $inbound_anomaly_threshold  = '5',
+  $outbound_anomaly_threshold = '4',
 ) inherits ::apache::params {
   include ::apache
 
