@@ -19,6 +19,9 @@ class apache::mod::proxy_html {
         '10'    => ['/usr/lib/libxml2.so.2'],
         default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
       }
+      if versioncmp($::apache::apache_version, '2.4') >= 0 {
+        ::apache::mod { 'xml2enc': }
+      }
     }
   }
 
