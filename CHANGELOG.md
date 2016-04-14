@@ -1,3 +1,78 @@
+## Supported Release 1.9.0
+### Summary
+
+
+#### Features
+- Added `apache_version` fact
+- Added `apache::balancer::target` attribute
+- Added `apache::fastcgi::server::pass_header` attribute
+- Added ability for `apache::fastcgi::server::host` using sockets
+- Added `apache::root_directory_options` attribute
+- Added for `apache::mod::ldap`:
+  - `ldap_shared_cache_size`
+  - `ldap_cache_entries`
+  - `ldap_cache_ttl`
+  - `ldap_opcache_entries`
+  - `ldap_opcache_ttl`
+- Added `apache::mod::pagespeed::package_ensure` attribute
+- Added `apache::mod::passenger` attributes:
+  - `passenger_log_level`
+  - `manage_repo`
+- Added upstream repo for `apache::mod::passenger`
+- Added `apache::mod::proxy_fcgi` class
+- Added `apache::mod::security` attributes:
+  - `audit_log_parts`
+  - `secpcrematchlimit`
+  - `secpcrematchlimitrecursion`
+  - `secdefaultaction`
+  - `anomaly_score_blocking`
+  - `inbound_anomaly_threshold`
+  - `outbound_anomaly_threshold`
+- Added `apache::mod::ssl` attributes:
+  - `ssl_mutex`
+  - `apache_version`
+- Added ubuntu 16.04 support
+- Added `apache::mod::authnz_ldap::package_name` attribute
+- Added `apache::mod::ldap::package_name` attribute
+- Added `apache::mod::proxy::package_name` attribute
+- Added `apache::vhost` attributes:
+  - `ssl_proxy_check_peen_expire`
+  - `ssl_proxy_protocol`
+  - `logroot_owner`
+  - `logroot_group`
+  - `setenvifnocase`
+  - `passenger_user`
+  - `passenger_high_performance`
+  - `jk_mounts`
+  - `fastcgi_idle_timeout`
+  - `modsec_disable_msgs`
+  - `modsec_disable_tags`
+- Added ability for 2.4-style `RequireAll|RequireNone|RequireAny` directory permissions
+- Added ability for includes in vhost directory
+- Added directory values:
+  - `AuthMerging`
+  - `MellonSPMetadataFile`
+
+#### Bugfixes
+- Fixed apache mod setup for event/worker failing syntax
+- Fixed concat deprecation warnings
+- Fixed pagespeed mod
+- Fixed service restart on mod update
+- Fixed mod dir purging to happen after package installs
+- Fixed various `apache::mod::*` file modes
+- Fixed `apache::mod::authnz_ldap` parameter `verifyServerCert` to be `verify_server_cert`
+- Fixed loadfile name in `apache::mod::fcgid`
+- Fixed `apache::mod::remoteip` to fail on apache < 2.4 (because it is not available)
+- Fixed `apache::mod::ssl::ssl_honorcipherorder` interpolation
+- Lint fixes
+- Strict variable fixes
+- Fixed `apache::vhost` attribute `redirectmatch_status` to be optional
+- Fixed SSLv3 on by default in mod\_nss
+- Fixed mod\_rpaf directive names in template
+- Fixed mod\_worker needing MaxClients with ThreadLimit
+- Fixed quoting on vhost php\_value
+- Fixed xml2enc for proxy\_html on debian
+
 ## Supported Release 1.8.1
 ### Summary
 This release includes bug fixes and a documentation update.
