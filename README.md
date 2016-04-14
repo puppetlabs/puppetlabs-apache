@@ -2100,6 +2100,10 @@ Specifies if the virtual host is present or absent. Valid options: 'absent', 'pr
 
 Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) directive, which specifies an action to take for any URL that doesn't map to anything in your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Valid options must either begin with a '/' or be 'disabled'. Default: undef.
 
+#####`fastcgi_idle_timeout`
+
+If using fastcgi, this option sets the timeout for the server to respond.
+
 ##### `filters`
 
 [Filters](https://httpd.apache.org/docs/current/mod/mod_filter.html) enable smart, context-sensitive configuration of output content filters.
