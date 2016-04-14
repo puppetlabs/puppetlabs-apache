@@ -1,10 +1,13 @@
 class apache::mod::authnz_ldap (
   $verify_server_cert = true,
   $verifyServerCert   = undef,
+  $package_name       = undef,
 ) {
   include ::apache
   include '::apache::mod::ldap'
-  ::apache::mod { 'authnz_ldap': }
+  ::apache::mod { 'authnz_ldap':
+    package => $package_name,
+  }
 
   if $verifyServerCert {
     warning('Class[\'apache::mod::authnz_ldap\'] parameter verifyServerCert is deprecated in favor of verify_server_cert')

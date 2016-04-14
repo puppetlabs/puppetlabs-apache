@@ -46,6 +46,7 @@
 [`apache::mod::alias`]: #class-apachemodalias
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
 [`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
+[`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
@@ -55,6 +56,7 @@
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
+[`apache::mod::proxy`]: #class-apachemodproxy
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
 [`apache::mod::security`]: #class-apachemodsecurity
@@ -1264,7 +1266,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `auth_kerb`
 * `authn_core`
 * `authn_file`
-* `authnz_ldap`\*
+* `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
 * `authz_default`
 * `authz_user`
 * `autoindex`
@@ -1289,7 +1291,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `include`
 * `info`\*
 * `itk`
-* `ldap`
+* `ldap` (see [`apache::mod::ldap`][])
 * `mime`
 * `mime_magic`\*
 * `negotiation`
@@ -1300,7 +1302,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `peruser`
 * `php` (requires [`mpm_module`][] set to `prefork`)
 * `prefork`\*
-* `proxy`\*
+* `proxy`\* (see [`apache::mod::proxy`][])
 * `proxy_ajp`
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
@@ -1416,6 +1418,15 @@ class{ 'apache::mod::auth_mellon':
 - `mellon_post_ttl`: Time to keep post requests. Default: undef.
 - `mellon_post_size`: Maximum size of post requests. Default: undef.
 - `mellon_post_count`: Maximum number of post requests. Default: undef.
+
+##### Class: `apache::mod::authnz_ldap`
+
+Installs `mod_authnz_ldap` and uses the `authnz_ldap.conf.erb` template to generate its configuration.
+
+**Parameters within `apache::mod::authnz_ldap`**:
+
+- `package_name`: Default: `undef`.
+- `verify_server_cert`: Default: `undef`.
 
 ##### Class: `apache::mod::deflate`
 
@@ -1543,6 +1554,7 @@ class { 'apache::mod::ldap':
 
 **Parameters within `apache::mod::ldap`:**
 
+- `apache_version`: The installed Apache version. Defaults to `undef`.
 - `ldap_trusted_global_cert_file`: Path and file name of the trusted CA certificates to use when establishing SSL or TLS connections to an LDAP server.
 - `ldap_trusted_global_cert_type`: The global trust certificate format. Default: 'CA_BASE64'.
 - `ldap_shared_cache_size`: Size in bytes of the shared-memory cache.
@@ -1550,6 +1562,7 @@ class { 'apache::mod::ldap':
 - `ldap_cache_ttl`: Time that cached items remain valid.
 - `ldap_opcache_entries`: Number of entries used to cache LDAP compare operations.
 - `ldap_opcache_ttl`: Time that entries in the operation cache remain valid.
+- `package_name`: Custom package name. Defaults to `undef`.
 
 ##### Class: `apache::mod::negotiation`
 
@@ -1615,6 +1628,17 @@ Installs and configures mod\_passenger
 TODO: The parameters section is incomplete.
 
 **Note**: The passenger module isn't available on RH/CentOS without providing dependency packages provided by EPEL and mod\_passengers own custom repository. See the `manage_repo` parameter above and [https://www.phusionpassenger.com/library/install/apache/install/oss/el7/]()
+
+##### Class: `apache::mod::proxy`
+
+Installs `mod_proxy` and uses the `proxy.conf.erb` template to generate its configuration.
+
+**Parameters within `apache::mod::proxy`**:
+
+- `allow_from`: Default: `undef`.
+- `apache_version`: Default: `undef`.
+- `package_name`: Default: `undef`.
+- `proxy_requests`: Default: 'Off'.
 
 ##### Class: `apache::mod::php`
 
