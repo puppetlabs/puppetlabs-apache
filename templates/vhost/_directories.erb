@@ -58,8 +58,21 @@
     <%- end -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['require'] && directory['require'] != '' && directory['require'] !~ /unmanaged/i -%>
-        <%- Array(directory['require']).each do |req| -%>
+        <%- if directory['require'].is_a?(Hash) -%>
+          <%- case directory['require']['enforce'].downcase -%>
+          <%- when 'all','none','any' then -%>
+    <Require<%= directory['require']['enforce'].capitalize %>>
+            <%- Array(directory['require']['requires']).each do |req| -%>
+      Require <%= req.strip %>
+            <%- end -%>
+    </Require<%= directory['require']['enforce'].capitalize %>>
+          <%- else -%>
+            <%- scope.function_warning(["Apache::Vhost: Require can only overwritten with all, none or any."]) -%>
+          <%- end -%>
+        <%- else -%>
+          <%- Array(directory['require']).each do |req| -%>
     Require <%= req %>
+          <%- end -%>
         <%- end -%>
       <%- end -%>
       <%- if directory['auth_require'] -%>

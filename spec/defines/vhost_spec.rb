@@ -198,6 +198,33 @@ describe 'apache::vhost', :type => :define do
               'require'  => 'all granted',
             },
             {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'require'  =>
+              { 
+                'enforce'  => 'all',
+                'requires' => ['all-valid1', 'all-valid2'],
+              },
+            },
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'require'  =>
+              { 
+                'enforce'  => 'none',
+                'requires' => ['none-valid1', 'none-valid2'],
+              },
+            },
+            {
+              'path'     => '/var/www/files',
+              'provider' => 'files',
+              'require'  =>
+              { 
+                'enforce'  => 'any',
+                'requires' => ['any-valid1', 'any-valid2'],
+              },
+            },
+            {
               'path'     => '*',
               'provider' => 'proxy',
             },
@@ -435,6 +462,30 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Require all denied$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Require all granted$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<RequireAll>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<\/RequireAll>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all-valid1$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require all-valid2$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<RequireNone>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<\/RequireNone>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require none-valid1$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require none-valid2$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<RequireAny>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<\/RequireAny>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require any-valid1$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Require any-valid2$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
