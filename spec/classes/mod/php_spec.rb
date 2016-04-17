@@ -39,6 +39,18 @@ describe 'apache::mod::php', :type => :class do
         :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
       ) }
     end
+    context "on jessie" do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+      let(:facts) { super().merge({
+        :operatingsystemrelease => '8',
+        :lsbdistcodename        => 'jessie',
+      }) }
+      it { is_expected.to contain_file("php5.load").with(
+        :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
+      ) }
+    end
   end
   describe "on a RedHat OS" do
     let :facts do
