@@ -222,7 +222,7 @@ describe 'apache::mod::php', :type => :class do
         'class { "apache": mpm_module => prefork, }'
       end
       let :params do
-        { :template => 'apache/mod/php5.conf.erb' }
+        { :template => 'apache/mod/php.conf.erb' }
       end
       it { should contain_file('php5.conf').with(
         :content => /^# PHP is an HTML-embedded scripting language which attempts to make it/
