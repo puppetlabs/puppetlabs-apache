@@ -218,7 +218,13 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
-    $php_version         = '5'
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '16.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') < 0) {
+      # Only the major version is used here
+      $php_version = '5'
+    } else {
+      # major.minor version used since Debian stretch and Ubuntu Xenial
+      $php_version = '7.0'
+    }
     $mod_packages        = {
       'auth_cas'    => 'libapache2-mod-auth-cas',
       'auth_kerb'   => 'libapache2-mod-auth-kerb',
