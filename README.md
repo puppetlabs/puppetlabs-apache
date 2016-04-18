@@ -1738,6 +1738,10 @@ ${modsec\_dir}/activated\_rules.
 - `anomaly_score_blocking`: De-/Activates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set. Default: off.
 - `inbound_anomaly_threshold`: Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '5'.
 - `outbound_anomaly_threshold`: Sets the scoring threshold level of the outbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
+- `critical_anomaly_score`: Sets the scoring points of the critical severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '5'.
+- `error_anomaly_score`: Sets the scoring points of the error severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
+- `warning_anomaly_score`: Sets the scoring points of the warning severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '3'.
+- `notice_anomaly_score`: Sets the scoring points of the notice severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '2'.
 
 ##### Class: `apache::mod::wsgi`
 
