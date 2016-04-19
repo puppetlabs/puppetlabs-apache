@@ -3556,6 +3556,11 @@ Specifies if the virtual host file is present or absent. Valid options: 'absent'
 
 Sets the relative load order for Apache HTTPD VirtualHost configuration files. Default: '25'.
 
+##### `verify_config`
+
+Specifies whether to validate the configuration file before notifying the Apache service. Valid options: Boolean. Default: true.
+
+
 ### Private defined types
 
 #### Defined type: `apache::peruser::multiplexer`
