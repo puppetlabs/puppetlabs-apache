@@ -3,6 +3,7 @@ define apache::vhost::custom(
   $content,
   $ensure = 'present',
   $priority = '25',
+  $verify_config = true,
 ) {
   include ::apache
 
@@ -10,10 +11,11 @@ define apache::vhost::custom(
   $filename = regsubst($name, ' ', '_', 'G')
 
   ::apache::custom_config { $filename:
-    ensure   => $ensure,
-    confdir  => $::apache::vhost_dir,
-    content  => $content,
-    priority => $priority,
+    ensure        => $ensure,
+    confdir       => $::apache::vhost_dir,
+    content       => $content,
+    priority      => $priority,
+    verify_config => $verify_config,
   }
 
   # NOTE(pabelanger): This code is duplicated in ::apache::vhost and needs to
