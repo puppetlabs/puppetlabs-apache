@@ -137,7 +137,7 @@ class apache::params inherits ::apache::version {
       'nss'  => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
-    $keepalive            = 'Off'
+    $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef
