@@ -52,6 +52,13 @@
 - Added directory values:
   - `AuthMerging`
   - `MellonSPMetadataFile`
+- Adds Configurability of Collaborative Detection Severity Levels for OWASP Core Rule Set to `apache::mod::security` class
+  - `critical_anomaly_score`
+  - `error_anomaly_score`
+  - `warning_anomaly_score`
+  - `notice_anomaly_score`
+- Adds ability to configure `info_path` in `apache::mod::info` class
+- Adds ability to configure `verify_config` in `apache::vhost::custom`
 
 #### Bugfixes
 - Fixed apache mod setup for event/worker failing syntax
@@ -72,6 +79,7 @@
 - Fixed mod\_worker needing MaxClients with ThreadLimit
 - Fixed quoting on vhost php\_value
 - Fixed xml2enc for proxy\_html on debian
+- Fixed a problem where the apache service restarts too fast
 
 ## Supported Release 1.8.1
 ### Summary
