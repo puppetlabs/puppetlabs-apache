@@ -2938,6 +2938,18 @@ ProxyStatus On',
 }
 ```
 
+###### `dav`
+
+Sets the value for [Dav](http://httpd.apache.org/docs/current/mod/mod_dav.html#dav), which determines if the WebDAV HTTP methods should be enabled. The value can be either `On`, `Off` or the name of the provider. A value of `On` enables the default filesystem provider implemented by the `mod_dav_fs` module.
+
+###### `dav_depth_infinity`
+
+Sets the value for [DavDepthInfinity](http://httpd.apache.org/docs/current/mod/mod_dav.html#davdepthinfinity), which is used to enable the processing of `PROPFIND` requests having a `Depth: Infinity` header.
+
+###### `dav_min_timeout`
+
+Sets the value for [DavMinTimeout](http://httpd.apache.org/docs/current/mod/mod_dav.html#davmintimeout), which sets the time the server holds a lock on a DAV resource. The value should be the number of seconds to set.
+
 ###### `deny`
 
 Sets a [Deny](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny) directive, specifying which hosts are denied access to the server. **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.

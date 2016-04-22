@@ -115,6 +115,15 @@
     ErrorDocument <%= error_document['error_code'] %> <%= error_document['document'] %>
       <%- end -%>
     <%- end -%>
+    <%- if directory['dav'] -%>
+    Dav <%= directory['dav'] %>
+    <%- if directory['dav_depth_infinity'] -%>
+    DavDepthInfinity <%= scope.function_bool2httpd([directory['dav_depth_infinity']]) %>
+    <%- end -%>
+    <%- if directory['dav_min_timeout'] -%>
+    DavMinTimeout <%= directory['dav_min_timeout'] %>
+    <%- end -%>
+    <%- end -%>
     <%- if directory['auth_type'] -%>
     AuthType <%= directory['auth_type'] %>
     <%- end -%>
