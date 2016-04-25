@@ -1,14 +1,14 @@
 class apache::mod::cluster (
+  $allowed_network,
+  $balancer_name,
+  $ip,
+  $version,
   $enable_mcpm_receive = true,
   $port = '6666',
   $keep_alive_timeout = 60,
   $manager_allowed_network = '127.0.0.1',
   $max_keep_alive_requests = 0,
   $server_advertise = true,
-  $allowed_network,
-  $balancer_name,
-  $ip,
-  $version,
 ) {
 
   include ::apache
