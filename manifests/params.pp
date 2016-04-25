@@ -90,6 +90,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
+    $php_version          = '5'
     $mod_packages         = {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
       'auth_cas'    => 'mod_auth_cas',
@@ -117,6 +118,7 @@ class apache::params inherits ::apache::version {
         '5'     => 'php53',
         default => 'php',
       },
+      'phpXXX'      => 'php',
       'proxy_html'  => 'mod_proxy_html',
       'python'      => 'mod_python',
       'security'    => 'mod_security',
@@ -133,8 +135,7 @@ class apache::params inherits ::apache::version {
       'shib2'       => 'shibboleth',
     }
     $mod_libs             = {
-      'php5' => 'libphp5.so',
-      'nss'  => 'libmodnss.so',
+      'nss' => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
@@ -217,6 +218,13 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '16.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') < 0) {
+      # Only the major version is used here
+      $php_version = '5'
+    } else {
+      # major.minor version used since Debian stretch and Ubuntu Xenial
+      $php_version = '7.0'
+    }
     $mod_packages        = {
       'auth_cas'    => 'libapache2-mod-auth-cas',
       'auth_kerb'   => 'libapache2-mod-auth-kerb',
@@ -229,7 +237,7 @@ class apache::params inherits ::apache::version {
       'pagespeed'   => 'mod-pagespeed-stable',
       'passenger'   => 'libapache2-mod-passenger',
       'perl'        => 'libapache2-mod-perl2',
-      'php5'        => 'libapache2-mod-php5',
+      'phpXXX'      => 'libapache2-mod-phpXXX',
       'proxy_html'  => 'libapache2-mod-proxy-html',
       'python'      => 'libapache2-mod-python',
       'rpaf'        => 'libapache2-mod-rpaf',
@@ -246,7 +254,6 @@ class apache::params inherits ::apache::version {
       $shib2_lib = 'mod_shib2.so'
     }
     $mod_libs             = {
-      'php5'  => 'libphp5.so',
       'shib2' => $shib2_lib
     }
     $conf_template          = 'apache/httpd.conf.erb'
@@ -392,6 +399,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler = 'php5-script'
     $suphp_engine     = 'off'
     $suphp_configpath = undef
+    $php_version      = '5'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www/apache24
       # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
@@ -402,7 +410,7 @@ class apache::params inherits ::apache::version {
       'fcgid'      => 'www/mod_fcgid',
       'passenger'  => 'www/rubygem-passenger',
       'perl'       => 'www/mod_perl2',
-      'php5'       => 'www/mod_php5',
+      'phpXXX'     => 'www/mod_phpXXX',
       'proxy_html' => 'www/mod_proxy_html',
       'python'     => 'www/mod_python3',
       'wsgi'       => 'www/mod_wsgi',
@@ -412,7 +420,6 @@ class apache::params inherits ::apache::version {
       'shib2'      => 'security/shibboleth2-sp',
     }
     $mod_libs         = {
-      'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
@@ -457,6 +464,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler = 'x-httpd-php'
     $suphp_engine     = 'off'
     $suphp_configpath = '/etc/php5/apache2'
+    $php_version      = '5'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'       => 'www-apache/mod_auth_kerb',
@@ -464,7 +472,7 @@ class apache::params inherits ::apache::version {
       'fcgid'           => 'www-apache/mod_fcgid',
       'passenger'       => 'www-apache/passenger',
       'perl'            => 'www-apache/mod_perl',
-      'php5'            => 'dev-lang/php',
+      'phpXXX'          => 'dev-lang/php',
       'proxy_html'      => 'www-apache/mod_proxy_html',
       'proxy_fcgi'      => 'www-apache/mod_proxy_fcgi',
       'python'          => 'www-apache/mod_python',
@@ -475,7 +483,6 @@ class apache::params inherits ::apache::version {
       'xml2enc'         => 'www-apache/mod_xml2enc',
     }
     $mod_libs         = {
-      'php5' => 'libphp5.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $keepalive            = 'Off'
@@ -516,6 +523,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
+    $php_version         = '5'
     $mod_packages        = {
       'auth_kerb'   => 'apache2-mod_auth_kerb',
       'fcgid'       => 'apache2-mod_fcgid',
@@ -524,7 +532,6 @@ class apache::params inherits ::apache::version {
       'python'      => 'apache2-mod_python',
     }
     $mod_libs             = {
-      'php5' => 'libphp5.so',
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $keepalive              = 'Off'
