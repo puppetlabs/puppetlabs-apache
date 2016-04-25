@@ -2889,6 +2889,26 @@ Sets the value for [AuthUserFile](https://httpd.apache.org/docs/current/mod/mod_
 
 Sets the value for [AuthMerging](https://httpd.apache.org/docs/current/mod/mod_authz_core.html#authmerging), which determines if authorization logic should be combined
 
+###### `auth_ldap_url`
+
+Sets the value for [AuthLDAPURL](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapurl), which determines URL of LDAP-server(s) if AuthBasicProvider 'ldap' is used
+
+###### `auth_ldap_bind_dn`
+
+Sets the value for [AuthLDAPBindDN](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbinddn), which allows use of an optional DN used to bind to the LDAP-server when searching for entries if AuthBasicProvider 'ldap' is used
+
+###### `auth_ldap_bind_password`
+
+Sets the value for [AuthLDAPBindPassword](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbindpassword), which allows use of an optional bind password to use in conjunction with the bind DN if AuthBasicProvider 'ldap' is used
+
+###### `auth_ldap_group_attribute`
+
+Array of values for [AuthLDAPGroupAttribute](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapgroupattribute), specifies which LDAP attributes are used to check for user members within ldap-groups. defaults are: "member" and "uniquemember"
+
+###### `auth_ldap_group_attribute_is_dn`
+
+Sets value for [AuthLDAPGroupAttributeIsDN](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapgroupattributeisdn), specifies if member of a ldapgroup is a dn or simple username. When set on, this directive says to use the distinguished name of the client username when checking for group membership. Otherwise, the username will be used. valid values are: "on" or "off"
+
 ###### `custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the directory configuration.
