@@ -237,6 +237,11 @@ describe 'apache::vhost', :type => :define do
             { 'path'              => '/var/www/files/output_filtered',
               'set_output_filter' => 'output_filter',
             },
+            { 'path'               => '/var/www/dav',
+              'dav'                => 'filesystem',
+              'dav_depth_infinity' => true,
+              'dav_min_timeout'    => '600',
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -496,6 +501,12 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+DirectoryIndex\sdisabled$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+SetOutputFilter\soutput_filter$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Dav\sfilesystem$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DavDepthInfinity\sOn$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DavMinTimeout\s600$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
