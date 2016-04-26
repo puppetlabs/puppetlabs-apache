@@ -274,11 +274,6 @@ describe 'apache::vhost', :type => :define do
                       'retry'   => '0',
                       'timeout' => '5'
               },
-              'options'         => {
-                'Require'  =>'valid-user',
-                'AuthType' =>'Kerberos',
-                'AuthName' =>'"Kerberos Login"'
-              },
               'setenv'   => ['proxy-nokeepalive 1','force-proxy-request-1.0 1'],
             }
           ],
@@ -517,13 +512,6 @@ describe 'apache::vhost', :type => :define do
               /ProxyPassReverseCookiePath\s+\/a\s+http:\/\//) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
               /ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo/) }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              /Require valid-user/) }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              /AuthType Kerberos/) }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              /AuthName "Kerberos Login"/) }
-
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }

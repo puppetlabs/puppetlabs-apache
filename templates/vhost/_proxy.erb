@@ -41,11 +41,6 @@
   SetEnv <%= setenv_var %>
     <%- end -%>
   <%- end -%>
-  <%- if proxy['options'] -%>
-    <%- proxy['options'].keys.sort.each do |key| -%>
-    <%= key %> <%= proxy['options'][key] %>
-    <%- end -%>
-  <%- end -%>
 <% end -%>
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
   ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
