@@ -1366,7 +1366,7 @@ Installs and manages [`mod_mpm_event`][]. You can't include both `apache::mod::e
 **Parameters within `apache::mod::event`**:
 
 - `listenbacklog`: Sets the maximum length of the pending connections queue via the module's [`ListenBackLog`][] directive. Default: '511'.
-- `maxclients` (_Apache 2.3.12 or older_: `maxrequestworkers`): Sets the maximum number of connections Apache can simultaneously process, via the module's [`MaxRequestWorkers`][] directive. Default: '150'.
+- `maxrequestworkers` (_Apache 2.3.12 or older_: `maxclients`): Sets the maximum number of connections Apache can simultaneously process, via the module's [`MaxRequestWorkers`][] directive. Default: '150'.
 - `maxconnectionsperchild` (_Apache 2.3.8 or older_: `maxrequestsperchild`): Limits the number of connections a child server handles during its life, via the module's [`MaxConnectionsPerChild`][] directive. Default: '0'.
 - `maxsparethreads` and `minsparethreads`: Sets the maximum and minimum number of idle threads, via the [`MaxSpareThreads`][] and [`MinSpareThreads`][] directives. Default: '75' and '25', respectively.
 - `serverlimit`: Limits the configurable number of processes via the [`ServerLimit`][] directive. Default: '25'.
