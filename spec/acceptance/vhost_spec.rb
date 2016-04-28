@@ -115,6 +115,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain "ProxyPass" }
       it { is_expected.to contain "ProxyPreserveHost On" }
       it { is_expected.to contain "ProxyErrorOverride On" }
+      it { is_expected.not_to contain "ProxyAddHeaders" }
       it { is_expected.not_to contain "<Proxy \*>" }
     end
   end
@@ -142,6 +143,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain "ProxyPassMatch /foo http://backend-foo/" }
       it { is_expected.to contain "ProxyPreserveHost On" }
       it { is_expected.to contain "ProxyErrorOverride On" }
+      it { is_expected.not_to contain "ProxyAddHeaders" }
       it { is_expected.not_to contain "<Proxy \*>" }
     end
   end

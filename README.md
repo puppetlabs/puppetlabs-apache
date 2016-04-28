@@ -2346,6 +2346,12 @@ Sets the [ProxyPreserveHost Directive](https://httpd.apache.org/docs/current/mod
 
 Setting this parameter to true enables the `Host:` line from an incoming request to be proxied to the host instead of hostname. Setting it to false sets this directive to 'Off'.
 
+##### `proxy_add_headers`
+
+Sets the [ProxyAddHeaders Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyaddheaders). Valid Options: Boolean. Default: false.
+
+This parameter controlls whether proxy-related HTTP headers (X-Forwarded-For, X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
+
 ##### `proxy_error_override`
 
 Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride). This directive controls whether Apache should override error pages for proxied content. Default: false.
@@ -3040,6 +3046,26 @@ apache::vhost { 'sample.example.net':
       options           => ['Indexes','FollowSymLinks','MultiViews'],
       index_options     => ['FancyIndexing'],
       index_style_sheet => '/styles/style.css',
+    },
+  ],
+}
+```
+
+###### `limit`
+
+Creates a [Limit](https://httpd.apache.org/docs/current/mod/core.html#limit) block inside the Directory block, which can also contain `require` directives.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/docroot',
+  directories => [
+    { path     => '/',
+      provider => 'location',
+      limit    => [
+        { methods => 'GET HEAD'
+          require => ['valid-user']
+        },
+      ],
     },
   ],
 }

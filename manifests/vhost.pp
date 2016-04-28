@@ -80,6 +80,7 @@ define apache::vhost(
   $no_proxy_uris               = [],
   $no_proxy_uris_match         = [],
   $proxy_preserve_host         = false,
+  $proxy_add_headers           = undef,
   $proxy_error_override        = false,
   $redirect_source             = '/',
   $redirect_dest               = undef,
@@ -749,6 +750,7 @@ define apache::vhost(
   # - $proxy_pass
   # - $proxy_pass_match
   # - $proxy_preserve_host
+  # - $proxy_add_headers
   # - $no_proxy_uris
   if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
     concat::fragment { "${name}-proxy":
