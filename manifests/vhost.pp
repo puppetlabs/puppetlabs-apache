@@ -149,6 +149,9 @@ define apache::vhost(
   $krb_verify_kdc              = 'on',
   $krb_servicename             = 'HTTP',
   $krb_save_credentials        = 'off',
+  $keepalive                   = undef,
+  $keepalive_timeout           = undef,
+  $max_keepalive_requests      = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -262,6 +265,10 @@ define apache::vhost(
 
   if $ssl_proxy_check_peer_expire {
     validate_re($ssl_proxy_check_peer_expire,'(^on$|^off$)',"${ssl_proxy_check_peer_expire} is not permitted for ssl_proxy_check_peer_expire. Allowed values are 'on' or 'off'.")
+  }
+
+  if $keepalive {
+    validate_re($keepalive,'(^on$|^off$)',"${keepalive} is not permitted for keepalive. Allowed values are 'on' or 'off'.")
   }
 
   # Input validation ends
@@ -1048,6 +1055,18 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 340,
       content => template('apache/vhost/_jk_mounts.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $keepalive
+  # - $keepalive_timeout
+  # - $max_keepalive_requests
+  if $keepalive or $keepalive_timeout or $max_keepalive_requests {
+    concat::fragment { "${name}-keepalive_options":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_keepalive_options.erb'),
     }
   }
 
