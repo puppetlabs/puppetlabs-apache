@@ -22,25 +22,25 @@ describe 'apache::mod::rpaf', :type => :class do
     it { is_expected.to contain_file('rpaf.conf').with({
       'path' => '/etc/apache2/mods-available/rpaf.conf',
     }) }
-    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_enable On$/) }
+    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do
       let :params do
         { :sethostname => 'true' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_sethostname On$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFsethostname On$/) }
     end
     describe "with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]" do
       let :params do
         { :proxy_ips => [ '10.42.17.8', '10.42.18.99' ] }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_proxyIPs 10.42.17.8 10.42.18.99$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFproxy_ips 10.42.17.8 10.42.18.99$/) }
     end
     describe "with header => X-Real-IP" do
       let :params do
         { :header => 'X-Real-IP' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_header X-Real-IP$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFheader X-Real-IP$/) }
     end
   end
   context "on a FreeBSD OS" do
@@ -62,25 +62,25 @@ describe 'apache::mod::rpaf', :type => :class do
     it { is_expected.to contain_file('rpaf.conf').with({
       'path' => '/usr/local/etc/apache24/Modules/rpaf.conf',
     }) }
-    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_enable On$/) }
+    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do
       let :params do
         { :sethostname => 'true' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_sethostname On$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFsethostname On$/) }
     end
     describe "with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]" do
       let :params do
         { :proxy_ips => [ '10.42.17.8', '10.42.18.99' ] }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_proxyIPs 10.42.17.8 10.42.18.99$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFproxy_ips 10.42.17.8 10.42.18.99$/) }
     end
     describe "with header => X-Real-IP" do
       let :params do
         { :header => 'X-Real-IP' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_header X-Real-IP$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFheader X-Real-IP$/) }
     end
   end
   context "on a Gentoo OS" do
@@ -102,25 +102,25 @@ describe 'apache::mod::rpaf', :type => :class do
     it { is_expected.to contain_file('rpaf.conf').with({
       'path' => '/etc/apache2/modules.d/rpaf.conf',
     }) }
-    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_enable On$/) }
+    it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do
       let :params do
         { :sethostname => 'true' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_sethostname On$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFsethostname On$/) }
     end
     describe "with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]" do
       let :params do
         { :proxy_ips => [ '10.42.17.8', '10.42.18.99' ] }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_proxyIPs 10.42.17.8 10.42.18.99$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFproxy_ips 10.42.17.8 10.42.18.99$/) }
     end
     describe "with header => X-Real-IP" do
       let :params do
         { :header => 'X-Real-IP' }
       end
-      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAF_header X-Real-IP$/) }
+      it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFheader X-Real-IP$/) }
     end
   end
 end
