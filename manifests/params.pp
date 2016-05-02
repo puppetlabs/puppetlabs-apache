@@ -515,7 +515,7 @@ class apache::params inherits ::apache::version {
     $pidfile             = '/var/run/httpd2.pid'
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
-    $lib_path            = '/usr/lib64/apache2-prefork/'
+    $lib_path            = '/usr/lib64/apache2-prefork'
     $mpm_module          = 'prefork'
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
