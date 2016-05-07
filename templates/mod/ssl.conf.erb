@@ -12,7 +12,9 @@
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
   <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
+    <%- if @ssl_compression -%>
   SSLCompression <%= scope.function_bool2httpd([@ssl_compression]) %>
+    <%- end -%>
   <%- else -%>
   SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
