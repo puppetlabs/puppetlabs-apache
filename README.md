@@ -2441,7 +2441,7 @@ Specifies the destination address of a [ProxyPass](https://httpd.apache.org/docs
 
 ##### `proxy_pass`
 
-Specifies an array of `path => URI` values for a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Default: undef. Parameters and location options can optionally be added as an array.
+Specifies an array of `path => URI` values for a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to 'undef'. Optionally parameters can be added as an array.
 
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -2450,8 +2450,6 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
     { 'path' => '/c', 'url' => 'http://backend-a/c', 'params' => {'max'=>20, 'ttl'=>120, 'retry'=>300}},
-    { 'path' => '/c', 'url' => 'http://backend-a/c',
-      'options' => {'Require'=>'valid-user', 'AuthType'=>'Kerberos', 'AuthName'=>'Kerberos Login'}},
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
     { 'path' => '/d', 'url' => 'http://backend-a/d',
