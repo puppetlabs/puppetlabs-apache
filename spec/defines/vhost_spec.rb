@@ -201,7 +201,7 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/var/www/files',
               'provider' => 'files',
               'require'  =>
-              { 
+              {
                 'enforce'  => 'all',
                 'requires' => ['all-valid1', 'all-valid2'],
               },
@@ -210,7 +210,7 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/var/www/files',
               'provider' => 'files',
               'require'  =>
-              { 
+              {
                 'enforce'  => 'none',
                 'requires' => ['none-valid1', 'none-valid2'],
               },
@@ -219,7 +219,7 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/var/www/files',
               'provider' => 'files',
               'require'  =>
-              { 
+              {
                 'enforce'  => 'any',
                 'requires' => ['any-valid1', 'any-valid2'],
               },
@@ -390,7 +390,10 @@ describe 'apache::vhost', :type => :define do
           'krb_authoritative'           => 'off',
           'krb_auth_realms'             => ['EXAMPLE.ORG','EXAMPLE.NET'],
           'krb_5keytab'                 => '/tmp/keytab5',
-          'krb_local_user_mapping'      => 'off'
+          'krb_local_user_mapping'      => 'off',
+          'keepalive'                   => 'on',
+          'keepalive_timeout'           => '100',
+          'max_keepalive_requests'      => '1000',
         }
       end
       let :facts do
@@ -588,6 +591,12 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+KrbSaveCredentials\soff$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbVerifyKDC\son$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
+        :content => /^\s+KeepAlive\son$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
+        :content => /^\s+KeepAliveTimeout\s100$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
+        :content => /^\s+MaxKeepAliveRequests\s1000$/)}
     end
     context 'vhost with multiple ip addresses' do
       let :params do

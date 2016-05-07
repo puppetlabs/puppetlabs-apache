@@ -2206,6 +2206,24 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+##### `keepalive`
+
+Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive for the virtual host. Valid options: 'Off', 'On' and `undef`. Default: `undef`, meaning the global, server-wide [`KeepAlive`][] setting is in effect.
+
+Use the `keepalive_timeout` and `max_keepalive_requests` parameters to set relevant options for the virtual host.
+
+##### `keepalive_timeout`
+
+Sets the [`KeepAliveTimeout`] directive for the virtual host, which determines the amount of time to wait for subsequent requests on a persistent HTTP connection. Default: `undef`, meaning the global, server-wide [`KeepAlive`][] setting is in effect.
+
+This parameter is only relevant if either the global, server-wide [`keepalive` parameter][] or the per-vhost `keepalive` parameter is enabled.
+
+##### `max_keepalive_requests`
+
+Limits the number of requests allowed per connection to the virtual host. Default: `undef`, meaning the global, server-wide [`KeepAlive`][] setting is in effect.
+
+This parameter is only relevant if either the global, server-wide [`keepalive` parameter][] or the per-vhost `keepalive` parameter is enabled.
+
 ##### `auth_kerb`
 
 Enable [`mod_auth_kerb`][] parameters for a virtual host. Valid options: Boolean. Default: false.
@@ -3190,7 +3208,7 @@ apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
   directories => [
     { path    => '/path/to/directory',
-      require => { 
+      require => {
         enforce => 'all',
         require => ['group', 'not host host.example.com'],
       },
