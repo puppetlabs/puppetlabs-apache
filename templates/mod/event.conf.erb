@@ -8,6 +8,10 @@
   MaxRequestsPerChild    <%= @maxrequestsperchild %>
   ThreadLimit            <%= @threadlimit %>
   ListenBacklog          <%= @listenbacklog %>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   MaxRequestWorkers      <%= @maxrequestworkers %>
+<%- else -%>
+  MaxClients             <%= @maxrequestworkers %>
+<%- end -%>
   MaxConnectionsPerChild <%= @maxconnectionsperchild %>
 </IfModule>
