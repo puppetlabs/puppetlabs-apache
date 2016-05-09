@@ -47,6 +47,7 @@
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
 [`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
+[`apache::mod::cluster`]: #class-apachemodcluster
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
@@ -1273,6 +1274,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `cache`
 * `cgi`
 * `cgid`
+* `cluster` (see [`apache::mod::cluster`][])
 * `dav`
 * `dav_fs`
 * `dav_svn`\*
@@ -1427,6 +1429,31 @@ Installs `mod_authnz_ldap` and uses the `authnz_ldap.conf.erb` template to gener
 
 - `package_name`: Default: `undef`.
 - `verify_server_cert`: Default: `undef`.
+
+##### Class: `apache::mod::cluster`
+
+**Note**: There is no official package available for mod\_cluster and thus it must be made available by means outside of the control of the apache module. Binaries can be found at http://mod-cluster.jboss.org/
+
+``` puppet
+class { '::apache::mod::cluster':
+  ip                      => '172.17.0.1',
+  allowed_network         => '172.17.0.',
+  balancer_name           => 'mycluster',
+  version                 => '1.3.1'
+}
+```
+
+**Parameters within `apache::mod::cluster`**:
+
+- `port`: mod_cluster listen port. Default: '6666'.
+- `server_advertise`: Whether the server should advertise. Default: true.
+- `manager_allowed_network`: Network allowed to access the mod_cluster_manager. Default: '127.0.0.1'.
+- `keep_alive_timeout`: Keep-alive timeout. Default: 60.
+- `max_keep_alive_requests`: Max number of requests kept alive. Default: 0
+- `enable_mcpm_receive`: Whether MCPM should be enabled: Default: true.
+- `ip`: Listen ip address..
+- `allowed_network`: Balanced members network.
+- `version`: mod_cluster version. >= 1.3.0 is required for httpd 2.4.
 
 ##### Class: `apache::mod::deflate`
 
