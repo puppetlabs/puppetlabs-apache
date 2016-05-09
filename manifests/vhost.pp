@@ -108,6 +108,7 @@ define apache::vhost(
   $wsgi_import_script          = undef,
   $wsgi_import_script_options  = undef,
   $wsgi_process_group          = undef,
+  $wsgi_script_aliases_match   = undef,
   $wsgi_script_aliases         = undef,
   $wsgi_pass_authorization     = undef,
   $wsgi_chunked_request        = undef,
@@ -212,6 +213,9 @@ define apache::vhost(
 
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
+  }
+  if $wsgi_script_aliases_match {
+    validate_hash($wsgi_script_aliases_match)
   }
   if $wsgi_daemon_process_options {
     validate_hash($wsgi_daemon_process_options)

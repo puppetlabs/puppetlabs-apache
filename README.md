@@ -2846,6 +2846,7 @@ Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi).
 * `wsgi_daemon_process_options`. _Optional._ Default: undef.
 * `wsgi_process_group`: Sets the group ID that the virtual host runs under. Default: undef.
 * `wsgi_script_aliases`: Requires a hash of web paths to filesystem .wsgi paths. Default: undef.
+* `wsgi_script_aliases_match`: Requires a hash of web path regexes to filesystem .wsgi paths. Default: undef
 * `wsgi_pass_authorization`: Uses the WSGI application to handle authorization instead of Apache when set to 'On'. For more information, see [mod_wsgi's WSGIPassAuthorization documentation] (https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html). Default: undef, leading Apache to use its default value of 'Off'.
 * `wsgi_chunked_request`: Enables support for chunked requests. Default: undef.
 
