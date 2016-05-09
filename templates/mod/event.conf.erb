@@ -1,13 +1,19 @@
 <IfModule mpm_event_module>
   ServerLimit            <%= @serverlimit %>
   StartServers           <%= @startservers %>
+  <%- if @maxrequestworkers -%>
+  MaxRequestWorkers      <%= @maxrequestworkers %>
+  <%- else -%>
   MaxClients             <%= @maxclients %>
+  <%- end -%>
   MinSpareThreads        <%= @minsparethreads %>
   MaxSpareThreads        <%= @maxsparethreads %>
   ThreadsPerChild        <%= @threadsperchild %>
+  <%- if @maxconnectionsperchild -%>
+  MaxConnectionsPerChild <%= @maxconnectionsperchild %>
+  <%- else -%>
   MaxRequestsPerChild    <%= @maxrequestsperchild %>
+  <%- end -%>
   ThreadLimit            <%= @threadlimit %>
   ListenBacklog          <%= @listenbacklog %>
-  MaxRequestWorkers      <%= @maxrequestworkers %>
-  MaxConnectionsPerChild <%= @maxconnectionsperchild %>
 </IfModule>
