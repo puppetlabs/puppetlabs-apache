@@ -245,6 +245,11 @@ describe 'apache::vhost', :type => :define do
                 },
               ],
             },
+            { 'path'               => '/var/www/dav',
+              'dav'                => 'filesystem',
+              'dav_depth_infinity' => true,
+              'dav_min_timeout'    => '600',
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -507,6 +512,12 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+<Limit GET HEAD>$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+Dav\sfilesystem$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DavDepthInfinity\sOn$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+DavMinTimeout\s600$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
