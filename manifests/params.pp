@@ -51,6 +51,8 @@ class apache::params inherits ::apache::version {
 
   if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
     $verify_command = '/usr/sbin/apache2ctl -t'
+  } elsif $::operatingsystem == 'FreeBSD' {
+    $verify_command = '/usr/local/sbin/apachectl -t'
   } else {
     $verify_command = '/usr/sbin/apachectl -t'
   }
