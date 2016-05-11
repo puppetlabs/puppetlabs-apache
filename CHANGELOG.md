@@ -1,7 +1,25 @@
-## Supported Release 1.9.0
-### Summary
+## Supported Release 1.10.0
+#### Summary
+This release fixes backwards compatibilty bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
 
+#### Features
+- Allow setting KeepAlive related options per vhost
+  - `apache::vhost::keepalive`
+  - `apache::vhost::keepalive_timeout`
+  - `apache::vhost::max_keepalive_requests`
+- Adds new class `apache::mod::cluster`
 
+#### Bugfixes
+- MODULES-2890: Allow php_version != 5
+- MODULES-2890: mod::php: Explicit test on jessie
+- MODULES-2890: Fix PHP on Debian stretch and Ubuntu Xenial
+- MODULES-2890: Fix mod_php SetHandler and cleanup
+- Fixed trailing slash in lib_path on Suse
+- Revert "MODULES-2956: Enable options within location block on proxy_match". Bug introduced in release 1.9.0.
+- Revert "changed rpaf Configuration Directives: RPAF -> RPAF_". Bug introduced in release 1.9.0.
+- Set actual path to apachectl on FreeBSD. Fixes snippets verification.
+
+## Supported Release 1.9.0 [DELETED]
 #### Features
 - Added `apache_version` fact
 - Added `apache::balancer::target` attribute
