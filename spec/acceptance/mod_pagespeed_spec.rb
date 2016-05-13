@@ -1,7 +1,8 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache::mod::pagespeed class' do
+# Don't run this test on Debian < 8, because Debian doesn't like updating packages and Pagespeed doesn't like old packages.
+describe 'apache::mod::pagespeed class', :unless => (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') < '8') do
   context "default pagespeed config" do
     it 'succeeds in puppeting pagespeed' do
       pp= <<-EOS
