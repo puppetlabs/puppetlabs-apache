@@ -78,11 +78,11 @@ describe 'apache::mod::event', :type => :class do
 
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ServerLimit\s*0/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*StartServers\s*1/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxClients\s*2/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MinSpareThreads\s*3/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxSpareThreads\s*4/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadsPerChild\s*5/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild\s*6/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxRequestWorkers\s*9/) }
@@ -115,8 +115,38 @@ describe 'apache::mod::event', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxRequestsPerChild\s*6/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
       it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers\s*9/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild\s*10/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
+    end
+
+    context "Test mpm_event false params" do
+      let :params do
+        {
+          :serverlimit            => false,
+          :startservers           => false,
+          :maxclients             => false,
+          :minsparethreads        => false,
+          :maxsparethreads        => false,
+          :threadsperchild        => false,
+          :maxrequestsperchild    => false,
+          :threadlimit            => false,
+          :listenbacklog          => false,
+          :maxrequestworkers      => false,
+          :maxconnectionsperchild => false,
+        }
+      end
+
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ServerLimit/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*StartServers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MinSpareThreads/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxSpareThreads/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ThreadsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ThreadLimit/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ListenBacklog/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
     end
 
     context "with Apache version < 2.4" do

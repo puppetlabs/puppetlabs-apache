@@ -1367,14 +1367,14 @@ Installs and manages [`mod_mpm_event`][]. You can't include both `apache::mod::e
 
 **Parameters within `apache::mod::event`**:
 
-- `listenbacklog`: Sets the maximum length of the pending connections queue via the module's [`ListenBackLog`][] directive. Default: '511'.
-- `maxrequestworkers` (_Apache 2.3.12 or older_: `maxclients`): Sets the maximum number of connections Apache can simultaneously process, via the module's [`MaxRequestWorkers`][] directive. Default: '150'.
-- `maxconnectionsperchild` (_Apache 2.3.8 or older_: `maxrequestsperchild`): Limits the number of connections a child server handles during its life, via the module's [`MaxConnectionsPerChild`][] directive. Default: '0'.
-- `maxsparethreads` and `minsparethreads`: Sets the maximum and minimum number of idle threads, via the [`MaxSpareThreads`][] and [`MinSpareThreads`][] directives. Default: '75' and '25', respectively.
-- `serverlimit`: Limits the configurable number of processes via the [`ServerLimit`][] directive. Default: '25'.
-- `startservers`: Sets the number of child server processes created at startup, via the module's [`StartServers`][] directive. Default: '2'.
-- `threadlimit`: Limits the number of event threads via the module's [`ThreadLimit`][] directive. Default: '64'.
-- `threadsperchild`: Sets the number of threads created by each child process, via the [`ThreadsPerChild`][] directive. Default: '25'.
+- `listenbacklog`: Sets the maximum length of the pending connections queue via the module's [`ListenBackLog`][] directive. Default: '511'. Setting this to 'false' removes the parameter.
+- `maxrequestworkers` (_Apache 2.3.12 or older_: `maxclients`): Sets the maximum number of connections Apache can simultaneously process, via the module's [`MaxRequestWorkers`][] directive. Default: '150'. Setting these to 'false' removes the parameters.
+- `maxconnectionsperchild` (_Apache 2.3.8 or older_: `maxrequestsperchild`): Limits the number of connections a child server handles during its life, via the module's [`MaxConnectionsPerChild`][] directive. Default: '0'. Setting these to 'false' removes the parameters.
+- `maxsparethreads` and `minsparethreads`: Sets the maximum and minimum number of idle threads, via the [`MaxSpareThreads`][] and [`MinSpareThreads`][] directives. Default: '75' and '25', respectively. Setting these to 'false' removes the parameters.
+- `serverlimit`: Limits the configurable number of processes via the [`ServerLimit`][] directive. Default: '25'. Setting this to 'false' removes the parameter.
+- `startservers`: Sets the number of child server processes created at startup, via the module's [`StartServers`][] directive. Default: '2'. Setting this to 'false' removes the parameter.
+- `threadlimit`: Limits the number of event threads via the module's [`ThreadLimit`][] directive. Default: '64'. Setting this to 'false' removes the parameter.
+- `threadsperchild`: Sets the number of threads created by each child process, via the [`ThreadsPerChild`][] directive. Default: '25'. Setting this to 'false' removes the parameter.
 
 ##### Class: `apache::mod::auth_cas`
 
