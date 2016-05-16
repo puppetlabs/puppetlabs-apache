@@ -133,6 +133,46 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog builtin$/)}
     end
 
+    context "with Apache version < 2.4" do
+      let :params do
+        {
+          :apache_version => '2.2',
+        }
+      end
+      context 'ssl_compression with default value' do
+        it { is_expected.not_to contain_file('ssl.conf').with_content(/^  SSLCompression Off$/)}
+      end
+
+      context 'setting ssl_compression to true' do
+        let :params do
+          {
+            :ssl_compression => true,
+          }
+        end
+        it { is_expected.not_to contain_file('ssl.conf').with_content(/^  SSLCompression On$/)}
+      end
+    end
+    context "with Apache version >= 2.4" do
+      let :params do
+        {
+          :apache_version => '2.4',
+        }
+      end
+      context 'ssl_compression with default value' do
+        it { is_expected.not_to contain_file('ssl.conf').with_content(/^  SSLCompression Off$/)}
+      end
+
+      context 'setting ssl_compression to true' do
+        let :params do
+          {
+            :apache_version => '2.4',
+            :ssl_compression => true,
+          }
+        end
+        it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLCompression On$/)}
+      end
+    end
+
     context 'setting ssl_pass_phrase_dialog' do
       let :params do
         {
