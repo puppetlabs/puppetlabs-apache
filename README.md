@@ -3682,7 +3682,7 @@ The [`apache::mod::passenger`][] class is not installing as the the EL6 reposito
 
 ### RHEL/CentOS 7
 
-The [`apache::mod::passenger`][] class is untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uris`][] parameter.
+The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uris`][] parameter.
 
 ### General
 
