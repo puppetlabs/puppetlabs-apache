@@ -741,6 +741,7 @@ apache::balancer { 'puppet01':
 - [**Public classes**](#public-classes)
     - [Class: apache](#class-apache)
     - [Class: apache::dev](#class-apachedev)
+    - [Class: apache::vhosts](#class-apachevhosts)
     - [Classes: apache::mod::\*](#classes-apachemodname)
 - [**Private classes**](#private-classes)
     - [Class: apache::confd::no_accf](#class-apacheconfdno_accf)
@@ -1246,6 +1247,29 @@ The default value is determined by your operating system:
 - **Red Hat**: 'httpd-devel'
 
 > **Note**: On FreeBSD, you must declare the `apache::package` or `apache` classes before declaring `apache::dev`.
+
+#### Class: `apache::vhosts`
+
+Creates [`apache::vhost`][] defined types.
+
+**Parameters within `apache::vhosts`**:
+
+- `vhosts`: A [hash][] where the key represents the name and the value represents a [hash][] of [`apache::vhost`][] defined type's parameters. Default: '{}'
+
+> **Note**: See the [`apache::vhost`][] defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
+
+For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1, you can declare the class with the `vhosts` parameter set to '{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
+
+``` puppet
+class { 'apache::vhosts':
+  vhosts => {
+    'custom_vhost_1' => {
+      'docroot' => '/var/www/custom_vhost_1',
+      'port'    => '81',
+    },
+  },
+}
+```
 
 #### Classes: `apache::mod::<MODULE NAME>`
 
