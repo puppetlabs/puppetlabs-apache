@@ -1630,6 +1630,8 @@ Installs and manages [`mod_pagespeed`][], a Google module that rewrites web page
 
 While this Apache module requires the `mod-pagespeed-stable` package, Puppet **doesn't** manage the software repositories required to automatically install the package. If you declare this class when the package is either not installed or not available to your package manager, your Puppet run will fail.
 
+**Note:** Verify that your system is compatible with the latest Google Pagespeed requirements.
+
 **Parameters within `apache::mod::pagespeed`**:
 
 - `inherit_vhost_config`: Default: 'on'.
@@ -3704,7 +3706,7 @@ The [`apache::mod::passenger`][] class is not installing as the the EL6 reposito
 
 ### RHEL/CentOS 7
 
-The [`apache::mod::passenger`][] class is untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uris`][] parameter.
+The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested as the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uris`][] parameter.
 
 ### General
 
