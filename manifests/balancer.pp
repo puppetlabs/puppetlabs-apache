@@ -52,7 +52,7 @@ define apache::balancer (
   if $target {
     $_target = $target
   } else {
-    $_target = "${::apache::params::confd_dir}/balancer_${name}.conf"
+    $_target = "${::apache::confd_dir}/balancer_${name}.conf"
   }
 
   concat { "apache_balancer_${name}":
