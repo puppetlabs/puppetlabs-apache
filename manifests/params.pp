@@ -248,7 +248,6 @@ class apache::params inherits ::apache::version {
       'suphp'       => 'libapache2-mod-suphp',
       'wsgi'        => 'libapache2-mod-wsgi',
       'xsendfile'   => 'libapache2-mod-xsendfile',
-      'shib2'       => 'libapache2-mod-shib2',
     }
     if $::osfamily == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0 {
       $shib2_lib = 'mod_shib_22.so'
