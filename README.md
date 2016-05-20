@@ -49,6 +49,7 @@
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::cluster`]: #class-apachemodcluster
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
+[`apache::mod::dumpio`]: #class-apachemoddumpio
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
@@ -160,7 +161,7 @@
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
-[`mod_cache_disk`]: https://httpd.apache.org/docs/current/mod/mod_cache_disk.html
+[`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
@@ -1306,6 +1307,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dev`
 * `dir`\*
 * `disk_cache` (see [`apache::mod::disk_cache`][])
+* `dumpio` (see [`apache::mod::dumpio`][])
 * `event` (see [`apache::mod::event`][])
 * `expires`
 * `ext_filter` (see [`apache::mod::ext_filter`][])
@@ -1384,6 +1386,26 @@ class {'::apache::mod::disk_cache':
   cache_root => '/path/to/cache',
 }
 ```
+##### Class: `apache::mod::diskio`
+
+Installs and configures [`mod_diskio`][].
+
+```puppet
+class{'apache':
+  default_mods => false,
+  log_level    => 'dumpio:trace7',
+}
+class{'apache::mod::diskio':
+  disk_io_input  => 'On',
+  disk_io_output => 'Off',
+}
+```
+
+
+**Parameters withing `apache::mod::diskio`**:
+
+- `dump_io_input`: Dump all input data to the error log. Must be `On` or `Off`, defaults to `Off`
+- `dump_io_output`: Dump all output data to the error log. Must be `On` or `Off`, defaults to `Off`
 
 ##### Class: `apache::mod::event`
 
