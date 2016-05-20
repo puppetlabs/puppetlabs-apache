@@ -366,7 +366,7 @@ class apache (
       all => $default_confd_files
     }
     if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
-      class { "::apache::mod::${mpm_module}": }
+      include "::apache::mod::${mpm_module}"
     }
 
     $default_vhost_ensure = $default_vhost ? {
