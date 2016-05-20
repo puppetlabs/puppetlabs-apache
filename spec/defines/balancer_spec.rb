@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'apache::balancer', :type => :define do
-  let :pre_condition do
-    'include apache'
+  let :title do
+    'myapp'
   end
   let :facts do
     {
@@ -17,17 +17,29 @@ describe 'apache::balancer', :type => :define do
       :is_pe                  => false,
     }
   end
-  describe "accept a target parameter and use it" do
-    let :title do
-      'myapp'
+  describe 'apache pre_condition with defaults' do
+    let :pre_condition do
+      'include apache'
     end
-    let :params do
-      {
-        :target => '/tmp/myapp.conf'
-      }
+    describe "accept a target parameter and use it" do
+      let :params do
+        {
+          :target => '/tmp/myapp.conf'
+        }
+      end
+      it { should contain_concat('apache_balancer_myapp').with({
+        :path => "/tmp/myapp.conf",
+      })}
+    end
+  end
+  describe 'apache pre_condition with conf_dir set' do 
+    let :pre_condition do
+      'class{"apache":
+          confd_dir => "/junk/path"
+       }'
     end
     it { should contain_concat('apache_balancer_myapp').with({
-      :path => "/tmp/myapp.conf",
+      :path => "/junk/path/balancer_myapp.conf",
     })}
   end
 end
