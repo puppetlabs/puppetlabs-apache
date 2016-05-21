@@ -1333,6 +1333,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
 * `proxy_http`
+* `proxy_wstunnel`
 * `python`
 * `reqtimeout`
 * `remoteip`\*
@@ -1712,6 +1713,9 @@ Default values depend on your operating system.
 ##### Class: `apache::mod::proxy_html`
 
 **Note**: There is no official package available for mod\_proxy\_html and thus it must be made available by means outside of the control of the apache module.
+
+##### Class: `apache::mod::proxy_wstunnel`
+Includes the mod\_proxy_\wstunnel module on Apache versions >= 2.4. For versions below, no action is taken.
 
 ##### Class: `apache::mod::reqtimeout`
 
