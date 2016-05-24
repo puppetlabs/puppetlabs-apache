@@ -3274,8 +3274,12 @@ apache::vhost { 'sample.example.net':
   directories => [
     { path    => '/path/to/directory',
       require => {
-        enforce => 'all',
-        require => ['group', 'not host host.example.com'],
+        enforce  => 'any',
+        requires => [
+          'ip 1.2.3.4',
+          'not host host.example.com',
+          'user xyz',
+        ],
       },
     },
   ],
