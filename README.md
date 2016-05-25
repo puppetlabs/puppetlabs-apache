@@ -1193,6 +1193,10 @@ Sets the desired permissions mode for config files, in symbolic or numeric notat
 
 Array of the desired options for the / directory in httpd.conf. Defaults to 'FollowSymLinks'.
 
+##### `root_directory_secured`
+
+Sets the default access policy for the / directory in httpd.conf. A value of 'false' allows access to all resources that are missing a more specific access policy. A value of 'true' denies access to all resources by default. In this case more specific rules must be used to allow access to these resources (e.g. in a directory block using the [`directories`](#parameter-directories-for-apachevhost) parameter). Valid options: Boolean. Default: false.
+
 ##### `vhost_dir`
 
 Changes your virtual host configuration files' location. Default: determined by your operating system.

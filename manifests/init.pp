@@ -81,6 +81,7 @@ class apache (
   $mime_types_additional  = $::apache::params::mime_types_additional,
   $file_mode              = $::apache::params::file_mode,
   $root_directory_options = $::apache::params::root_directory_options,
+  $root_directory_secured = false,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -89,6 +90,7 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+  validate_bool($root_directory_secured)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -343,6 +345,7 @@ class apache (
     # - $server_signature
     # - $trace_enable
     # - $rewrite_lock
+    # - $root_directory_secured
     file { "${::apache::conf_dir}/${::apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
