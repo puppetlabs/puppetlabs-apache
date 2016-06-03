@@ -188,6 +188,7 @@ class apache (
     file { $mod_dir:
       ensure  => directory,
       recurse => true,
+      links   => 'follow',
       purge   => $purge_mod_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
