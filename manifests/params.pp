@@ -57,6 +57,12 @@ class apache::params inherits ::apache::version {
     $verify_command = '/usr/sbin/apachectl -t'
   }
   if $::osfamily == 'RedHat' or $::operatingsystem =~ /^[Aa]mazon$/ {
+    if (hiera(apache::apache_version) == '2.4' and $::operatingsystem =~ /^[Aa]mazon$/) {
+      $mod_prefix = 'mod24'
+    } else {
+      $mod_prefix = 'mod'
+    }
+
     $user                 = 'apache'
     $group                = 'apache'
     $root_group           = 'root'
@@ -95,18 +101,18 @@ class apache::params inherits ::apache::version {
     $php_version          = '5'
     $mod_packages         = {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
-      'auth_cas'    => 'mod_auth_cas',
-      'auth_kerb'   => 'mod_auth_kerb',
-      'auth_mellon' => 'mod_auth_mellon',
+      'auth_cas'    => "${mod_prefix}_auth_cas",
+      'auth_kerb'   => "${mod_prefix}_auth_kerb",
+      'auth_mellon' => "${mod_prefix}_auth_mellon",
       'authnz_ldap' => $::apache::version::distrelease ? {
-        '7'     => 'mod_ldap',
-        default => 'mod_authz_ldap',
+        '7'     => "${mod_prefix}_ldap",
+        default => "${mod_prefix}_authz_ldap",
       },
-      'fastcgi'     => 'mod_fastcgi',
-      'fcgid'       => 'mod_fcgid',
-      'geoip'       => 'mod_geoip',
+      'fastcgi'     => "${mod_prefix}_fastcgi",
+      'fcgid'       => "${mod_prefix}_fcgid",
+      'geoip'       => "${mod_prefix}_geoip",
       'ldap'        => $::apache::version::distrelease ? {
-        '7'     => 'mod_ldap',
+        '7'     => "${mod_prefix}_ldap",
         default => undef,
       },
       'pagespeed'   => 'mod-pagespeed-stable',
@@ -114,26 +120,26 @@ class apache::params inherits ::apache::version {
       # providing dependency packages provided by EPEL and passenger
       # repositories. See
       # https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
-      'passenger'   => 'mod_passenger',
-      'perl'        => 'mod_perl',
+      'passenger'   => "${mod_prefix}_passenger",
+      'perl'        => "${mod_prefix}_perl",
       'php5'        => $::apache::version::distrelease ? {
         '5'     => 'php53',
         default => 'php',
       },
       'phpXXX'      => 'php',
-      'proxy_html'  => 'mod_proxy_html',
-      'python'      => 'mod_python',
-      'security'    => 'mod_security',
+      'proxy_html'  => "${mod_prefix}_proxy_html",
+      'python'      => "${mod_prefix}_python",
+      'security'    => "${mod_prefix}_security",
       # NOTE: The module for Shibboleth is not available on RH/CentOS without
       # providing dependency packages provided by Shibboleth's repositories.
       # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
       'shibboleth'  => 'shibboleth',
-      'ssl'         => 'mod_ssl',
-      'wsgi'        => 'mod_wsgi',
-      'dav_svn'     => 'mod_dav_svn',
-      'suphp'       => 'mod_suphp',
-      'xsendfile'   => 'mod_xsendfile',
-      'nss'         => 'mod_nss',
+      'ssl'         => "${mod_prefix}_ssl",
+      'wsgi'        => "${mod_prefix}_wsgi",
+      'dav_svn'     => "${mod_prefix}_dav_svn",
+      'suphp'       => "${mod_prefix}_suphp",
+      'xsendfile'   => "${mod_prefix}_xsendfile",
+      'nss'         => "${mod_prefix}_nss",
       'shib2'       => 'shibboleth',
     }
     $mod_libs             = {
