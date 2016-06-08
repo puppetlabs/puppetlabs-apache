@@ -2,8 +2,10 @@ class apache::mod::auth_cas (
   $cas_login_url,
   $cas_validate_url,
   $cas_cookie_path           = $::apache::params::cas_cookie_path,
+  $cas_cookie_path_mode      = '0750',
   $cas_version               = 2,
   $cas_debug                 = 'Off',
+  $cas_validate_server       = undef,
   $cas_validate_depth        = undef,
   $cas_certificate_path      = undef,
   $cas_proxy_validate_url    = undef,
@@ -35,7 +37,7 @@ class apache::mod::auth_cas (
   file { $cas_cookie_path:
     ensure => directory,
     before => File['auth_cas.conf'],
-    mode   => '0750',
+    mode   => $cas_cookie_path_mode,
     owner  => $apache::user,
     group  => $apache::group,
   }

@@ -1424,17 +1424,22 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 - `cas_cookie_domain`: Sets the value of the `Domain=` parameter in the `Set-Cookie` HTTP header. Default: undef.
 - `cas_cookie_entropy`: Sets the number of bytes to use when creating session identifiers. Default: undef.
 - `cas_cookie_http_only`: Sets the optional `HttpOnly` flag when `mod_auth_cas` issues cookies. Default: undef.
+- `cas_cookie_path`: Where cas cookie session data is stored. Should be writable by web server user. Default: OS dependent.
+- `cas_cookie_path_mode`: The mode of `cas_cookie_path`. Default: '0750'.
 - `cas_debug`: Determines whether to enable the module's debugging mode. Default: 'Off'.
 - `cas_idle_timeout`: Default: undef.
 - `cas_login_url`: **Required**. Sets the URL to which the module redirects users when they attempt to access a CAS-protected resource and don't have an active session.
+- `cas_proxy_validate_url`: The URL to use when performing a proxy validation. Default: undef.
 - `cas_root_proxied_as`: Sets the URL end users see when access to this Apache server is proxied. Default: undef.
 - `cas_scrub_request_headers`: Remove inbound request headers that may have special meaning within mod_auth_cas.
 - `cas_sso_enabled`: Enables experimental support for single sign out (may mangle POST data). Default: off
 - `cas_timeout`: Limits the number of seconds a `mod_auth_cas` session can remain active. Default: undef.
 - `cas_validate_depth`: Limits the depth for chained certificate validation. Default: undef.
 - `cas_validate_saml`: Parse response from CAS server for SAML. Default: Off
+- `cas_validate_server`: Should we validate the cert of the CAS server (depreciated in 1.1 - RedHat 7). Default: undef.
 - `cas_validate_url`: **Required**. Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 - `cas_version`: The CAS protocol version to adhere to. Valid options: '1', '2'. Default: '2'.
+- `suppress_warning`: Don't wine about being on RedHat (Hint: mod_auth_cas package is now available in epel-testing repo). Default: false.
 
 ##### Class: `apache::mod::auth_mellon`
 
