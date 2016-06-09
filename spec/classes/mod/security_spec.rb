@@ -28,6 +28,7 @@ describe 'apache::mod::security', :type => :class do
       :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "^(?:5|4(?!04))"$} }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
       :path => '/etc/httpd/modsecurity.d',
@@ -47,10 +48,13 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :audit_log_parts => "ABCDZ"
+        {
+          :audit_log_parts           => "ABCDZ",
+          :audit_log_relevant_status => "^50"
         }
       end
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
+      it { should contain_file('security.conf').with_content  %r{^\s+SecAuditLogRelevantStatus "^50"$} }
     end
   end
 
@@ -81,6 +85,7 @@ describe 'apache::mod::security', :type => :class do
       :path => '/etc/apache2/mods-available/security.conf'
     ) }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "^(?:5|4(?!04))"$} }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
       :path => '/etc/modsecurity',
@@ -100,10 +105,13 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :audit_log_parts => "ACEZ"
+        {
+          :audit_log_parts           => "ACEZ",
+          :audit_log_relevant_status => "^5"
         }
       end
       it { should contain_file('security.conf').with_content  %r{^\s+SecAuditLogParts ACEZ$} }
+      it { should contain_file('security.conf').with_content  %r{^\s+SecAuditLogRelevantStatus "^5"$} }
     end
   end
 
