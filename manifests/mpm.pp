@@ -66,12 +66,18 @@ define apache::mpm (
         }
       }
 
+      if $mpm == 'itk' and $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '16.04' {
+        $packagename = 'libapache2-mpm-itk'
+      } else {
+        $packagename = "apache2-mpm-${mpm}"
+      }
+
       if versioncmp($apache_version, '2.4') < 0 or $mpm == 'itk' {
-        package { "apache2-mpm-${mpm}":
+        package { $packagename:
           ensure => present,
         }
         if $::apache::mod_enable_dir {
-          Package["apache2-mpm-${mpm}"] {
+          Package[$packagename] {
             before => File[$::apache::mod_enable_dir],
           }
         }

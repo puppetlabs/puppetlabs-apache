@@ -794,7 +794,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
-      elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10)/
+      elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10|16\.04)/
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       elsif fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '8'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }

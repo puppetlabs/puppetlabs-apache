@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::suphp class', :if => fact('operatingsystem') == 'Ubuntu' do
+describe 'apache::mod::suphp class', :if => (fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemmajrelease') != '16.04') do
   context "default suphp config" do
     it 'succeeds in puppeting suphp' do
       pp = <<-EOS
