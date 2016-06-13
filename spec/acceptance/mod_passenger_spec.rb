@@ -23,6 +23,10 @@ describe 'apache::mod::passenger class' do
         passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
         passenger_ruby         = '/usr/bin/ruby'
         passenger_default_ruby = '/usr/bin/ruby'
+      when '16.04'
+        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+        passenger_ruby         = '/usr/bin/ruby'
+        passenger_default_ruby = '/usr/bin/ruby'
       else
         # This may or may not work on Ubuntu releases other than the above
         passenger_root = '/usr'
@@ -118,6 +122,9 @@ describe 'apache::mod::passenger class' do
           when '14.04'
             it { is_expected.to contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
             it { is_expected.not_to contain "/PassengerRuby/" }
+          when '16.04'
+            it { is_expected.to contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
+            it { is_expected.not_to contain "/PassengerRuby/" }
           else
             # This may or may not work on Ubuntu releases other than the above
             it { is_expected.to contain "PassengerRuby \"#{passenger_ruby}\"" }
@@ -152,6 +159,7 @@ describe 'apache::mod::passenger class' do
           # passenger-memory-stats output on newer Debian/Ubuntu verions do not contain
           # these two lines
           unless ((fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') or
+                 (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') or
                  (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'))
             expect(r.stdout).to match(/### Processes: [0-9]+/)
             expect(r.stdout).to match(/### Total private dirty RSS: [0-9\.]+ MB/)
@@ -170,6 +178,7 @@ describe 'apache::mod::passenger class' do
             # spacing may vary
             expect(r.stdout).to match(/[\-]+ General information [\-]+/)
             if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04' or
+               (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') or
                fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
               expect(r.stdout).to match(/Max pool size[ ]+: [0-9]+/)
               expect(r.stdout).to match(/Processes[ ]+: [0-9]+/)

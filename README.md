@@ -3704,6 +3704,9 @@ The Apache module relies heavily on templates to enable the [`apache::vhost`][] 
 
 The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside the virtual host that is unsupported on older versions of Apache, causing it to fail. This will be remedied in a future refactoring.
 
+### Ubuntu 16.04
+The [`apache::mod::suphp`][] class is untested since repositories are missing compatible packages.
+
 ### RHEL/CentOS 5
 
 The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested since repositories are missing compatible packages.
