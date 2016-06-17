@@ -47,10 +47,13 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :audit_log_parts => "ABCDZ"
+        {
+          :audit_log_parts  => "ABCDZ",
+          :secdefaultaction => "deny,status:406,nolog,auditlog"
         }
       end
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
+      it { should contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
     end
   end
 
@@ -100,10 +103,13 @@ describe 'apache::mod::security', :type => :class do
 
     describe 'with parameters' do
       let :params do
-        { :audit_log_parts => "ACEZ"
+        {
+          :audit_log_parts  => "ABCDZ",
+          :secdefaultaction => "deny,status:406,nolog,auditlog"
         }
       end
-      it { should contain_file('security.conf').with_content  %r{^\s+SecAuditLogParts ACEZ$} }
+      it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
+      it { should contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
     end
   end
 
