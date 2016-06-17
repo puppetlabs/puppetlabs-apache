@@ -3797,7 +3797,6 @@ In order to use this module on FreeBSD, you _must_ use apache24-2.4.12 (www/apac
 [Puppet Labs][] modules on the [Puppet Forge][] are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve.
 
 We want to make it as easy as possible to contribute changes so our modules work in your environment, but we also need contributors to follow a few guidelines to help us maintain and improve the modules' quality.
-
 For more information, please read the complete [module contribution guide][].
 
 ### Running tests
