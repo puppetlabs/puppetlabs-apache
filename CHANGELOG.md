@@ -1,6 +1,6 @@
 ## Supported Release 1.10.0
 #### Summary
-This release fixes backwards compatibilty bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
+This release fixes backwards compatibility bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
 
 #### Features
 - Allow setting KeepAlive related options per vhost
