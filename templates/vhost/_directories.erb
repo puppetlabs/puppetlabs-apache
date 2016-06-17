@@ -166,6 +166,26 @@
     <%- if directory['auth_merging'] -%>
     AuthMerging <%= directory['auth_merging'] %>
     <%- end -%>
+    <%- if directory['auth_ldap_url'] -%>
+    AuthLDAPURL <%= directory['auth_ldap_url'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_dn'] -%>
+    AuthLDAPBindDN <%= directory['auth_ldap_bind_dn'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_password'] -%>
+    AuthLDAPBindPassword <%= directory['auth_ldap_bind_password'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute'] -%>
+      <%- Array(directory['auth_ldap_group_attribute']).each do |groupattr| -%>
+    AuthLDAPGroupAttribute <%= groupattr %>
+      <%- end -%>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'off' -%>
+    AuthLDAPGroupAttributeIsDN Off
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'on' -%>
+    AuthLDAPGroupAttributeIsDN On
+    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
