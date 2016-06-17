@@ -324,7 +324,7 @@ This release has many new features and bugfixes, including the ability to option
   - Add `root_group` to `apache::mod::php`
   - Add `apache::mod::proxy_connect` class
   - Add `apache::mod::security` class
-  - Add `ssl_pass_phrase_dialog` and `ssl_random_seed_bytes parameters to `apache::mod::ssl` (MODULES-1719)
+  - Add `ssl_pass_phrase_dialog` and `ssl_random_seed_bytes` parameters to `apache::mod::ssl` (MODULES-1719)
   - Add `status_path` parameter to `apache::mod::status`
   - Add `apache_version` parameter to `apache::mod::version`
   - Add `package_name` and `mod_path` parameters to `apache::mod::wsgi` (MODULES-1458)
