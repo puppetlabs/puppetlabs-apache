@@ -3,6 +3,7 @@ class apache::mod::security (
   $activated_rules            = $::apache::params::modsec_default_rules,
   $modsec_dir                 = $::apache::params::modsec_dir,
   $modsec_secruleengine       = $::apache::params::modsec_secruleengine,
+  $audit_log_relevant_status  = '^(?:5|4(?!04))',
   $audit_log_parts            = $::apache::params::modsec_audit_log_parts,
   $secpcrematchlimit          = $::apache::params::secpcrematchlimit,
   $secpcrematchlimitrecursion = $::apache::params::secpcrematchlimitrecursion,
