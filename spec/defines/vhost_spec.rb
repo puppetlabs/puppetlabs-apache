@@ -359,6 +359,9 @@ describe 'apache::vhost', :type => :define do
           'wsgi_script_aliases'         => {
             '/' => '/var/www/demo.wsgi'
           },
+          'wsgi_script_aliases_match'   => {
+            '^/test/(^[/*)' => '/var/www/demo.wsgi'
+          },
           'wsgi_pass_authorization'     => 'On',
           'custom_fragment'             => '#custom string',
           'itk'                         => {

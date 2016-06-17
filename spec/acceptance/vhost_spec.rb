@@ -1312,6 +1312,7 @@ describe 'apache::vhost define' do
             wsgi_daemon_process_options => {processes => '2'},
             wsgi_process_group          => 'nobody',
             wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_script_aliases_match   => { '/test/([^/*])' => '/test1' },
             wsgi_pass_authorization     => 'On',
           }
         EOS
@@ -1334,6 +1335,7 @@ describe 'apache::vhost define' do
             wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
             wsgi_process_group          => 'nobody',
             wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_script_aliases_match   => { '/test/([^/*])' => '/test1' },
             wsgi_pass_authorization     => 'On',
             wsgi_chunked_request        => 'On',
           }
