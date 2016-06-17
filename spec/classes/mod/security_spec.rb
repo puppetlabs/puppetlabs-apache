@@ -27,6 +27,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
@@ -48,10 +49,12 @@ describe 'apache::mod::security', :type => :class do
     describe 'with parameters' do
       let :params do
         {
-          :audit_log_parts  => "ABCDZ",
-          :secdefaultaction => "deny,status:406,nolog,auditlog"
+          :audit_log_relevant_status => "^(?:5|4(?!01|04))",
+          :audit_log_parts           => "ABCDZ",
+          :secdefaultaction          => "deny,status:406,nolog,auditlog",
         }
       end
+      it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
       it { should contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
     end
@@ -83,6 +86,7 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/apache2/mods-available/security.conf'
     ) }
+    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
@@ -104,10 +108,12 @@ describe 'apache::mod::security', :type => :class do
     describe 'with parameters' do
       let :params do
         {
-          :audit_log_parts  => "ABCDZ",
-          :secdefaultaction => "deny,status:406,nolog,auditlog"
+          :audit_log_relevant_status => "^(?:5|4(?!01|04))",
+          :audit_log_parts           => "ABCDZ",
+          :secdefaultaction          => "deny,status:406,nolog,auditlog",
         }
       end
+      it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
       it { should contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
     end

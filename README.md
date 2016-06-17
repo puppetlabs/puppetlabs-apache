@@ -1820,6 +1820,7 @@ ${modsec\_dir}/activated\_rules.
 - `secdefaultaction`: Configures the Mode of Operation, Self-Contained ('deny') vs. Collaborative Detection ('pass'), for the OWASP ModSecurity Core Rule Set. Default: 'deny'. Fuller values can be set too like "log,auditlog,deny,status:406,tag:'SLA 24/7'"
 - `secpcrematchlimit`: Sets the number for the match limit in the PCRE library. Default: '1500'
 - `secpcrematchlimitrecursion`: Sets the number for the match limit recursion in the PCRE library. Default: '1500'
+- `audit_log_releavant_status`: Configures which response status code is to be considered relevant for the purpose of audit logging. Defaults: '^(?:5|4(?!04))'.
 - `audit_log_parts`: Sets the sections to be put in the [audit log][]. Default: 'ABIJDEFHZ'
 - `anomaly_score_blocking`: De-/Activates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set. Default: off.
 - `inbound_anomaly_threshold`: Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '5'.
