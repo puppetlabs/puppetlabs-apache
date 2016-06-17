@@ -30,9 +30,10 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
-      :path => '/etc/httpd/modsecurity.d',
-      :owner => 'apache',
-      :group => 'apache'
+      :path   => '/etc/httpd/modsecurity.d',
+      :owner  => 'root',
+      :group  => 'root',
+      :mode   => '0755',
     ) }
     it { should contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
       :ensure => 'directory',
@@ -83,9 +84,10 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
-      :path => '/etc/modsecurity',
-      :owner => 'www-data',
-      :group => 'www-data'
+      :path   => '/etc/modsecurity',
+      :owner  => 'root',
+      :group  => 'root',
+      :mode   => '0755',
     ) }
     it { should contain_file('/etc/modsecurity/activated_rules').with(
       :ensure => 'directory',

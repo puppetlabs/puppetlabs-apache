@@ -61,9 +61,9 @@ class apache::mod::security (
 
   file { $modsec_dir:
     ensure  => directory,
-    owner   => $::apache::params::user,
-    group   => $::apache::params::group,
-    mode    => '0555',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
     purge   => true,
     force   => true,
     recurse => true,
