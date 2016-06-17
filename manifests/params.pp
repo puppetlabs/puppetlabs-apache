@@ -317,54 +317,14 @@ class apache::params inherits ::apache::version {
     $passenger_conf_file         = 'passenger.conf'
     $passenger_conf_package_file = undef
 
-    case $::operatingsystem {
-      'Ubuntu': {
-        case $::lsbdistrelease {
-          '12.04': {
-            $passenger_root         = '/usr'
-            $passenger_ruby         = '/usr/bin/ruby'
-            $passenger_default_ruby = undef
-          }
-          '14.04': {
-            $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-            $passenger_ruby         = undef
-            $passenger_default_ruby = '/usr/bin/ruby'
-          }
-          '16.04': {
-            $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-            $passenger_ruby         = undef
-            $passenger_default_ruby = '/usr/bin/ruby'
-          }
-          default: {
-            # The following settings may or may not work on Ubuntu releases not
-            # supported by this module.
-            $passenger_root         = '/usr'
-            $passenger_ruby         = '/usr/bin/ruby'
-            $passenger_default_ruby = undef
-          }
-        }
-      }
-      'Debian': {
-        case $::lsbdistcodename {
-          'wheezy': {
-            $passenger_root         = '/usr'
-            $passenger_ruby         = '/usr/bin/ruby'
-            $passenger_default_ruby = undef
-          }
-          'jessie': {
-            $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-            $passenger_ruby         = undef
-            $passenger_default_ruby = '/usr/bin/ruby'
-          }
-          default: {
-            # The following settings may or may not work on Debian releases not
-            # supported by this module.
-            $passenger_root         = '/usr'
-            $passenger_ruby         = '/usr/bin/ruby'
-            $passenger_default_ruby = undef
-          }
-        }
-      }
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '14.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0) {
+      $passenger_root         = '/usr'
+      $passenger_ruby         = '/usr/bin/ruby'
+      $passenger_default_ruby = undef
+    } else {
+      $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+      $passenger_ruby         = undef
+      $passenger_default_ruby = '/usr/bin/ruby'
     }
     $wsgi_socket_prefix = undef
   } elsif $::osfamily == 'FreeBSD' {
