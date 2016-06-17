@@ -152,6 +152,13 @@ define apache::vhost(
   $keepalive                   = undef,
   $keepalive_timeout           = undef,
   $max_keepalive_requests      = undef,
+  $cas_attribute_prefix        = undef,
+  $cas_attribute_delimiter     = undef,
+  $cas_scrub_request_headers   = undef,
+  $cas_sso_enabled             = undef,
+  $cas_login_url               = undef,
+  $cas_validate_url            = undef,
+  $cas_validate_saml           = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -344,6 +351,9 @@ define apache::vhost(
 
   # Is apache::mod::shib enabled (or apache::mod['shib2'])
   $shibboleth_enabled = defined(Apache::Mod['shib2'])
+
+  # Is apache::mod::cas enabled (or apache::mod['cas'])
+  $cas_enabled = defined(Apache::Mod['auth_cas'])
 
   if $access_log and !$access_logs {
     if $access_log_file {
@@ -1067,6 +1077,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_keepalive_options.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $cas_*
+  if $cas_enabled {
+    concat::fragment { "${name}-auth_cas":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_auth_cas.erb'),
     }
   }
 

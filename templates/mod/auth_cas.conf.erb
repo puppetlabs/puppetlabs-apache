@@ -38,3 +38,18 @@ CASCookieHttpOnly <%= @cas_cookie_http_only %>
 <% if @cas_authoritative -%>
 CASAuthoritative <%= @cas_authoritative %>
 <% end -%>
+<%- if @cas_sso_enabled -%>
+CASSSOEnabled On
+<%- end -%>
+<%- if @cas_validate_saml -%>
+CASValidateSAML On
+<%- end -%>
+<%- if @cas_attribute_prefix -%>
+CASAttributePrefix <%= @cas_attribute_prefix %>
+<%- end -%>
+<%- if @cas_attribute_delimiter -%>
+CASAttributeDelimiter <%= @cas_attribute_delimiter %>
+<%- end -%>
+<%- if @cas_scrub_request_headers -%>
+CASAttributeDelimiter On
+<%- end -%>

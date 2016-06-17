@@ -1414,6 +1414,10 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 
 **Parameters within `apache::mod::auth_cas`**:
 
+- `cas_attribute_prefix`: Adds a header with the value of this header being the attribute values when SAML
+  validation is enabled. Default: CAS_
+- `cas_attribute_delimiter`: The delimiter between attribute values in the header created by `cas_attribute_prefix`.
+  Default: ,
 - `cas_authoritative`: Determines whether an optional authorization directive is authoritative and binding. Default: undef.
 - `cas_certificate_path`: Sets the path to the X509 certificate of the Certificate Authority for the server in `cas_login_url` and `cas_validate_url`. Default: undef.
 - `cas_cache_clean_interval`: Sets the minimum number of seconds that must pass between cache cleanings. Default: undef.
@@ -1424,8 +1428,11 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 - `cas_idle_timeout`: Default: undef.
 - `cas_login_url`: **Required**. Sets the URL to which the module redirects users when they attempt to access a CAS-protected resource and don't have an active session.
 - `cas_root_proxied_as`: Sets the URL end users see when access to this Apache server is proxied. Default: undef.
+- `cas_scrub_request_headers`: Remove inbound request headers that may have special meaning within mod_auth_cas.
+- `cas_sso_enabled`: Enables experimental support for single sign out (may mangle POST data). Default: off
 - `cas_timeout`: Limits the number of seconds a `mod_auth_cas` session can remain active. Default: undef.
 - `cas_validate_depth`: Limits the depth for chained certificate validation. Default: undef.
+- `cas_validate_saml`: Parse response from CAS server for SAML. Default: Off
 - `cas_validate_url`: **Required**. Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 - `cas_version`: The CAS protocol version to adhere to. Valid options: '1', '2'. Default: '2'.
 
@@ -2103,6 +2110,40 @@ Sets the [`AllowEncodedSlashes`][] declaration for the virtual host, overriding 
 ##### `block`
 
 Specifies the list of things to which Apache blocks access. Valid option: 'scm', which blocks web access to `.svn`, `.git`, and `.bzr` directories. Default: an empty [array][].
+
+##### `cas_attribute_prefix`
+
+Adds a header with the value of this header being the attribute values when SAML validation is enabled. Defaults to
+the value set by [`apache::mod::auth_cas`][]
+
+##### `cas_attribute_delimiter`
+
+The delimiter between attribute values in the header created by `cas_attribute_prefix`.  Defaults to the value
+set by [`apache::mod::auth_cas`][]
+
+##### `cas_login_url`
+
+Sets the URL to which the module redirects users when they attempt to access a CAS-protected resource and
+don't have an active session. Defaults to the value set by [`apache::mod::auth_cas`][]
+
+##### `cas_scrub_request_headers`
+
+Remove inbound request headers that may have special meaning within mod_auth_cas. Defaults to the value
+set by [`apache::mod::auth_cas`][]
+
+##### `cas_sso_enabled`
+
+Enables experimental support for single sign out (may mangle POST data). Defaults to the value
+set by [`apache::mod::auth_cas`][]
+
+##### `cas_validate_saml`
+
+Parse response from CAS server for SAML. Defaults to the value set by [`apache::mod::auth_cas`][]
+
+##### `cas_validate_url`
+
+Sets the URL to use when validating a client-presented ticket in an HTTP query string. Defaults to the value set by
+[`apache::mod::auth_cas`][]
 
 ##### `custom_fragment`
 

@@ -240,6 +240,29 @@
     ShibUseHeaders <%= directory['shib_use_headers'] %>
       <%- end -%>
     <%- end -%>
+    <%- if @cas_enabled -%>
+      <%- if directory['cas_scope'] -%>
+    CASScope <%= directory['cas_scope'] %>
+      <%- end -%>
+      <%- if directory['cas_renew'] -%>
+    CASRenew <%= directory['cas_renew'] %>
+      <%- end -%>
+      <%- if directory['cas_gateway'] -%>
+    CASGateway <%= directory['cas_gateway'] %>
+      <%- end -%>
+      <%- if directory['cas_cookie'] -%>
+    CASCookie <%= directory['cas_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_secure_cookie'] -%>
+    CASSecureCookie <%= directory['cas_secure_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_gateway_cookie'] -%>
+    CASGatewayCookie <%= directory['cas_gateway_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_authn_header'] -%>
+    CASAuthNHeader <%= directory['cas_authn_header'] %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['mellon_enable'] -%>
     MellonEnable "<%= directory['mellon_enable'] %>"
       <%- if directory['mellon_endpoint_path'] -%>
