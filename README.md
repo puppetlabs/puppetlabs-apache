@@ -1808,7 +1808,7 @@ Installs and configures Trustwave's [`mod_security`][]. It is enabled and runs b
 
 **Parameters within `apache::mod::security`**:
 
-- `activated_rules`: An [array][] of rules from the `modsec_crs_path` to activate via symlinks. Default: `modsec_default_rules` in [`apache::params`][].
+- `activated_rules`: An [array][] of rules from the `modsec_crs_path` or absolute to activate via symlinks. Default: `modsec_default_rules` in [`apache::params`][].
 - `allowed_methods`: A space-separated list of allowed HTTP methods. Default: 'GET HEAD POST OPTIONS'.
 - `content_types`: A list of one or more allowed [MIME types][MIME `content-type`]. Default: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'
 - `crs_package`: Names the package that installs CRS rules. Default: `modsec_crs_package` in [`apache::params`][].
