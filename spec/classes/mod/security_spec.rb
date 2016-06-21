@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 describe 'apache::mod::security', :type => :class do

@@ -2470,6 +2470,18 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+##### `modsec_audit_log` & `modsec_audit_log_file` & `modsec_audit_log_pipe`
+
+Determines how to send mod_security audit log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
+
+If `modsec_audit_log_file` is set, it is relative to [`logroot`][]. Default: undef.
+
+If `modsec_audit_log_pipe` is set, it should start with a pipe. Example '|/path/to/mlogc /path/to/mlogc.conf'. Default: undef.
+
+If `modsec_audit_log` is true, given a virtual host---for instance, example.com---it defaults to 'example.com\_security\_ssl.log' for [SSL-encrypted][SSL encryption] virtual hosts and 'example.com\_security.log' for unencrypted virtual hosts. Default: false.
+
+When none of those parameters is set, the global audit log is used (i.e. ''/var/log/apache2/modsec\_audit.log'' on Debian and derivatives, ''/var/log/httpd/modsec\_audit.log'' on others).
+
 ##### `no_proxy_uris`
 
 Specifies URLs you do not want to proxy. This parameter is meant to be used in combination with [`proxy_dest`](#proxy_dest).
