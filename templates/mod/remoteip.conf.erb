@@ -3,7 +3,7 @@ RemoteIPHeader <%= @header %>
 
 <%- if @proxy_ips -%>
 # Declare client intranet IP addresses trusted to present
-# the RemoteIPHeader value
+# the RemoteIPHeader value
 <%-   [@proxy_ips].flatten.each do |proxy| -%>
 RemoteIPInternalProxy <%= proxy %>
 <%-   end -%>
