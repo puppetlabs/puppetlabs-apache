@@ -3,6 +3,7 @@ class apache::mod::security (
   $activated_rules            = $::apache::params::modsec_default_rules,
   $modsec_dir                 = $::apache::params::modsec_dir,
   $modsec_secruleengine       = $::apache::params::modsec_secruleengine,
+  $audit_log_relevant_status  = '^(?:5|4(?!04))',
   $audit_log_parts            = $::apache::params::modsec_audit_log_parts,
   $secpcrematchlimit          = $::apache::params::secpcrematchlimit,
   $secpcrematchlimitrecursion = $::apache::params::secpcrematchlimitrecursion,
@@ -20,6 +21,11 @@ class apache::mod::security (
   $notice_anomaly_score       = '2',
 ) inherits ::apache::params {
   include ::apache
+
+  $_secdefaultaction = $secdefaultaction ? {
+    /log/   => $secdefaultaction, # it has log or nolog,auditlog or log,noauditlog
+    default => "${secdefaultaction},log",
+  }
 
   if $::osfamily == 'FreeBSD' {
     fail('FreeBSD is not currently supported')
@@ -80,6 +86,19 @@ class apache::mod::security (
     notify  => Class['apache::service'],
   }
 
+  # Template uses:
+  # - $_secdefaultaction
+  # - $critical_anomaly_score
+  # - $error_anomaly_score
+  # - $warning_anomaly_score
+  # - $notice_anomaly_score
+  # - $inbound_anomaly_threshold
+  # - $outbound_anomaly_threshold
+  # - $anomaly_score_blocking
+  # - $allowed_methods
+  # - $content_types
+  # - $restricted_extensions
+  # - $restricted_headers
   file { "${modsec_dir}/security_crs.conf":
     ensure  => file,
     content => template('apache/mod/security_crs.conf.erb'),
