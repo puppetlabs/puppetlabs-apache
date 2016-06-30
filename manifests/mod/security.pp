@@ -4,6 +4,7 @@ class apache::mod::security (
   $modsec_dir                 = $::apache::params::modsec_dir,
   $modsec_secruleengine       = $::apache::params::modsec_secruleengine,
   $audit_log_parts            = $::apache::params::modsec_audit_log_parts,
+  $audit_log_relevant_status  = $::apache::params::modsec_audit_log_relevant_status,
   $secpcrematchlimit          = $::apache::params::secpcrematchlimit,
   $secpcrematchlimitrecursion = $::apache::params::secpcrematchlimitrecursion,
   $allowed_methods            = 'GET HEAD POST OPTIONS',
