@@ -72,7 +72,7 @@ class apache::mod::ssl (
   }
 
   if versioncmp($_apache_version, '2.4') >= 0 {
-    ::apache::mod { 'socache_shmcb': }
+    include ::apache::mod::socache_shmcb
   }
 
   # Template uses
