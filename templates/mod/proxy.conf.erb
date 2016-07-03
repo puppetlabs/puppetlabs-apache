@@ -24,8 +24,8 @@
   # ("Full" adds the server version; "Block" removes all outgoing Via: headers)
   # Set to one of: Off | On | Full | Block
   
-  <% if @proxyvia_header_mod == 'Off' or @proxyvia_header_mod == 'On' or @proxyvia_header_mod == 'Full' or @proxyvia_header_mod == 'Block' (%>
-    ProxyVia @proxyvia_header_mod 
+  <% if @proxyvia_header_mod == 'Off' or @proxyvia_header_mod == 'On' or @proxyvia_header_mod == 'Full' or @proxyvia_header_mod == 'Block' -%>
+    ProxyVia <%= @proxyvia_header_mod %>
   <%- else -%>
     ProxyVia On
   <% end -%>
