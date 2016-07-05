@@ -27,7 +27,7 @@ describe 'apache::mod::deflate', :type => :class do
           "Input" => "instream",
           "Ratio" => "ratio",
         },
-	compression_level => '6'
+        compression_level => "6"
       }
       '
     end
