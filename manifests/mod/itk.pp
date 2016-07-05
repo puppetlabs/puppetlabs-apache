@@ -25,7 +25,7 @@ class apache::mod::itk (
       }
     } else {
       if ! defined(Class['apache::mod::prefork']) {
-        fail('apache::mod::prefork is a prerequisite for apache::mod::itk, please arrange for it to be included.')
+        include ::apache::mod::prefork
       }
     }
   }

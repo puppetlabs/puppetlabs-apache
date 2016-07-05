@@ -1,5 +1,6 @@
 class apache::mod::suphp (
 ){
+  include ::apache
   ::apache::mod { 'suphp': }
 
   file {'suphp.conf':

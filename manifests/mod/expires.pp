@@ -3,6 +3,7 @@ class apache::mod::expires (
   $expires_default = undef,
   $expires_by_type = undef,
 ) {
+  include ::apache
   ::apache::mod { 'expires': }
 
   # Template uses

@@ -2,20 +2,12 @@
 # PHP is an HTML-embedded scripting language which attempts to make it
 # easy for developers to write dynamically generated webpages.
 #
-#<IfModule prefork.c>
-#  LoadModule php5_module modules/libphp5.so
-#</IfModule>
-#<IfModule worker.c>
-#  # Use of the "ZTS" build with worker is experimental, and no shared
-#  # modules are supported.
-#  LoadModule php5_module modules/libphp5-zts.so
-#</IfModule>
 
 #
 # Cause the PHP interpreter to handle files with a .php extension.
 #
 <FilesMatch ".+(<%= @extensions.flatten.compact.collect { |s| Regexp.escape(s) }.join('|') %>)$">
-    SetHandler php5-script
+    SetHandler application/x-httpd-php
 </FilesMatch>
 
 #

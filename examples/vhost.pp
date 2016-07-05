@@ -151,7 +151,7 @@ apache::vhost { 'sixteenth.example.com non-ssl':
     {
       comment      => 'redirect non-SSL traffic to SSL site',
       rewrite_cond => ['%{HTTPS} off'],
-      rewrite_rule => ['(.*) https://%{HTTPS_HOST}%{REQUEST_URI}'],
+      rewrite_rule => ['(.*) https://%{HTTP_HOST}%{REQUEST_URI}'],
     }
   ]
 }
@@ -183,7 +183,7 @@ apache::vhost { 'sixteenth.example.com non-ssl old rewrite':
   port         => '80',
   docroot      => '/var/www/sixteenth',
   rewrite_cond => '%{HTTPS} off',
-  rewrite_rule => '(.*) https://%{HTTPS_HOST}%{REQUEST_URI}',
+  rewrite_rule => '(.*) https://%{HTTP_HOST}%{REQUEST_URI}',
 }
 apache::vhost { 'sixteenth.example.com ssl old rewrite':
   servername => 'sixteenth.example.com',
@@ -239,7 +239,7 @@ apache::vhost { 'securedomain.com':
         ssl_cert             => '/etc/ssl/securedomain.cert',
         ssl_key              => '/etc/ssl/securedomain.key',
         ssl_chain            => '/etc/ssl/securedomain.crt',
-        ssl_protocol         => '-ALL +SSLv3 +TLSv1',
+        ssl_protocol         => '-ALL +TLSv1',
         ssl_cipher           => 'ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
         ssl_honorcipherorder => 'On',
         add_listen           => false,

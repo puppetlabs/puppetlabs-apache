@@ -852,6 +852,22 @@ describe 'apache', :type => :class do
       end
       it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options -Indexes -FollowSymLinks} }
     end
+    context 'with a custom root_directory_secured parameter and Apache < 2.4' do
+      let :params do {
+        :apache_version => '2.2',
+        :root_directory_secured => true
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Order deny,allow\n\s+Deny from all} }
+    end
+    context 'with a custom root_directory_secured parameter and Apache >= 2.4' do
+      let :params do {
+        :apache_version => '2.4',
+        :root_directory_secured => true
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Require all denied} }
+    end
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }

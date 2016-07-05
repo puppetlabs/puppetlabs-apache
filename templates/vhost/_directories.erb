@@ -1,5 +1,6 @@
 <% if @_directories and ! @_directories.empty? -%>
 
+  <%- scope.setvar('_template_scope', {}) -%>
   ## Directories, there should at least be a declaration for <%= @docroot %>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
@@ -56,52 +57,14 @@
     AllowOverride None
       <%- end -%>
     <%- end -%>
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-      <%- if directory['require'] && directory['require'] != '' && directory['require'] !~ /unmanaged/i -%>
-        <%- Array(directory['require']).each do |req| -%>
-    Require <%= req %>
-        <%- end -%>
-      <%- end -%>
-      <%- if directory['auth_require'] -%>
-    Require <%= directory['auth_require'] %>
-      <%- end -%>
-      <%- if !(directory['require'] && directory['require'] != '') && directory['require'] !~ /unmanaged/i && !(directory['auth_require']) -%>
-    Require all granted
-      <%- end -%>
-    <%- else -%>
-      <%- if directory['auth_require'] -%>
-    Require <%= directory['auth_require'] %>
-      <%- end -%>
-      <%- if directory['order'] and directory['order'] != '' -%>
-    Order <%= Array(directory['order']).join(',') %>
-      <%- else -%>
-    Order allow,deny
-      <%- end -%>
-      <%- if directory['deny'] and ! [ false, 'false', '' ].include?(directory['deny']) -%>
-        <%- if directory['deny'].kind_of?(Array) -%>
-          <%- Array(directory['deny']).each do |restrict| -%>
-    Deny <%=  restrict %>
-          <%- end -%>
-        <%- else -%>
-    Deny <%= directory['deny'] %>
-        <%- end -%>
-      <%- end -%>
-      <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
-        <%- if directory['allow'].kind_of?(Array) -%>
-          <%- Array(directory['allow']).each do |access| -%>
-    Allow <%=  access %>
-        <%- end -%>
-      <%- else -%>
-    Allow <%= directory['allow'] %>
-      <%- end -%>
-      <%- elsif [ 'from all', 'from All' ].include?(directory['deny']) -%>
-      <%- elsif ! directory['deny'] and [ false, 'false', '' ].include?(directory['allow']) -%>
-    Deny from all
-      <%- else -%>
-    Allow from all
-      <%- end -%>
-      <%- if directory['satisfy'] and directory['satisfy'] != '' -%>
-    Satisfy <%= directory['satisfy'] %>
+    <%- scope.lookupvar('_template_scope')[:item] = directory -%>
+<%= scope.function_template(["apache/vhost/_require.erb"]) -%>
+    <%- if directory['limit'] && directory['limit'] != '' -%>
+      <%- Array(directory['limit']).each do |lim| -%>
+    <Limit <%= lim['methods'] %>>
+    <%- scope.lookupvar('_template_scope')[:item] = lim -%>
+    <%= scope.function_template(["apache/vhost/_require.erb"]) -%>
+    </Limit>
       <%- end -%>
     <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
@@ -142,10 +105,24 @@
     <%- if directory['directoryindex'] and directory['directoryindex'] != '' -%>
     DirectoryIndex <%= directory['directoryindex'] %>
     <%- end -%>
+    <%- if directory['additional_includes'] and ! directory['additional_includes'].empty? -%>
+      <%- directory['additional_includes'].each do |include| -%>
+    Include '<%= "#{include}" %>'
+      <%- end -%>
+    <%- end -%>
     <%- if directory['error_documents'] and ! directory['error_documents'].empty? -%>
       <%- [directory['error_documents']].flatten.compact.each do |error_document| -%>
     ErrorDocument <%= error_document['error_code'] %> <%= error_document['document'] %>
       <%- end -%>
+    <%- end -%>
+    <%- if directory['dav'] -%>
+    Dav <%= directory['dav'] %>
+    <%- if directory['dav_depth_infinity'] -%>
+    DavDepthInfinity <%= scope.function_bool2httpd([directory['dav_depth_infinity']]) %>
+    <%- end -%>
+    <%- if directory['dav_min_timeout'] -%>
+    DavMinTimeout <%= directory['dav_min_timeout'] %>
+    <%- end -%>
     <%- end -%>
     <%- if directory['auth_type'] -%>
     AuthType <%= directory['auth_type'] %>
@@ -185,6 +162,29 @@
     <%- end -%>
     <%- if directory['auth_group_file'] -%>
     AuthGroupFile <%= directory['auth_group_file'] %>
+    <%- end -%>
+    <%- if directory['auth_merging'] -%>
+    AuthMerging <%= directory['auth_merging'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_url'] -%>
+    AuthLDAPURL <%= directory['auth_ldap_url'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_dn'] -%>
+    AuthLDAPBindDN <%= directory['auth_ldap_bind_dn'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_password'] -%>
+    AuthLDAPBindPassword <%= directory['auth_ldap_bind_password'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute'] -%>
+      <%- Array(directory['auth_ldap_group_attribute']).each do |groupattr| -%>
+    AuthLDAPGroupAttribute <%= groupattr %>
+      <%- end -%>
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'off' -%>
+    AuthLDAPGroupAttributeIsDN Off
+    <%- end -%>
+    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'on' -%>
+    AuthLDAPGroupAttributeIsDN On
     <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
@@ -260,6 +260,29 @@
     ShibUseHeaders <%= directory['shib_use_headers'] %>
       <%- end -%>
     <%- end -%>
+    <%- if @cas_enabled -%>
+      <%- if directory['cas_scope'] -%>
+    CASScope <%= directory['cas_scope'] %>
+      <%- end -%>
+      <%- if directory['cas_renew'] -%>
+    CASRenew <%= directory['cas_renew'] %>
+      <%- end -%>
+      <%- if directory['cas_gateway'] -%>
+    CASGateway <%= directory['cas_gateway'] %>
+      <%- end -%>
+      <%- if directory['cas_cookie'] -%>
+    CASCookie <%= directory['cas_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_secure_cookie'] -%>
+    CASSecureCookie <%= directory['cas_secure_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_gateway_cookie'] -%>
+    CASGatewayCookie <%= directory['cas_gateway_cookie'] %>
+      <%- end -%>
+      <%- if directory['cas_authn_header'] -%>
+    CASAuthNHeader <%= directory['cas_authn_header'] %>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['mellon_enable'] -%>
     MellonEnable "<%= directory['mellon_enable'] %>"
       <%- if directory['mellon_endpoint_path'] -%>
@@ -270,6 +293,9 @@
       <%- end -%>
       <%- if directory['mellon_sp_cert_file'] -%>
     MellonSPCertFile "<%= directory['mellon_sp_cert_file'] %>"
+      <%- end -%>
+      <%- if directory['mellon_sp_metadata_file'] -%>
+    MellonSPMetadataFile "<%= directory['mellon_sp_metadata_file'] %>"
       <%- end -%>
       <%- if directory['mellon_idp_metadata_file'] -%>
     MellonIDPMetadataFile "<%= directory['mellon_idp_metadata_file'] %>"

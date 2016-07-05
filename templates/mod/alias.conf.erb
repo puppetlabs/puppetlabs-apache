@@ -3,7 +3,7 @@ Alias /icons/ "<%= @icons_path %>/"
 <Directory "<%= @icons_path %>">
     Options <%= @icons_options %>
     AllowOverride None
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+<%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require all granted
 <%- else -%>
      Order allow,deny

@@ -1,10 +1,10 @@
 HOSTS:
-  centos-66-x64:
+  ubuntu-1404-x64:
     roles:
-      - master
-    platform: el-6-x86_64
-    box : puppetlabs/centos-6.6-64-nocm
-    hypervisor : vagrant
+      - agent
+      - default
+    platform: ubuntu-14.04-amd64
+    hypervisor: vagrant
+    box: puppetlabs/ubuntu-14.04-64-nocm
 CONFIG:
-  log_level: debug
-  type: git
+  type: foss

@@ -62,6 +62,7 @@ describe 'apache ssl' do
           ssl_verify_depth     => 'test',
           ssl_options          => ['test', 'test1'],
           ssl_proxyengine      => true,
+          ssl_proxy_protocol   => 'TLSv1.2',
         }
       EOS
       apply_manifest(pp, :catch_failures => true)

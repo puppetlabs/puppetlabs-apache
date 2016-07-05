@@ -1,3 +1,104 @@
+## Supported Release 1.10.0
+#### Summary
+This release fixes backwards compatibility bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
+
+#### Features
+- Allow setting KeepAlive related options per vhost
+  - `apache::vhost::keepalive`
+  - `apache::vhost::keepalive_timeout`
+  - `apache::vhost::max_keepalive_requests`
+- Adds new class `apache::mod::cluster`
+
+#### Bugfixes
+- MODULES-2890: Allow php_version != 5
+- MODULES-2890: mod::php: Explicit test on jessie
+- MODULES-2890: Fix PHP on Debian stretch and Ubuntu Xenial
+- MODULES-2890: Fix mod_php SetHandler and cleanup
+- Fixed trailing slash in lib_path on Suse
+- Revert "MODULES-2956: Enable options within location block on proxy_match". Bug introduced in release 1.9.0.
+- Revert "changed rpaf Configuration Directives: RPAF -> RPAF_". Bug introduced in release 1.9.0.
+- Set actual path to apachectl on FreeBSD. Fixes snippets verification.
+
+## Supported Release 1.9.0 [DELETED]
+#### Features
+- Added `apache_version` fact
+- Added `apache::balancer::target` attribute
+- Added `apache::fastcgi::server::pass_header` attribute
+- Added ability for `apache::fastcgi::server::host` using sockets
+- Added `apache::root_directory_options` attribute
+- Added for `apache::mod::ldap`:
+  - `ldap_shared_cache_size`
+  - `ldap_cache_entries`
+  - `ldap_cache_ttl`
+  - `ldap_opcache_entries`
+  - `ldap_opcache_ttl`
+- Added `apache::mod::pagespeed::package_ensure` attribute
+- Added `apache::mod::passenger` attributes:
+  - `passenger_log_level`
+  - `manage_repo`
+- Added upstream repo for `apache::mod::passenger`
+- Added `apache::mod::proxy_fcgi` class
+- Added `apache::mod::security` attributes:
+  - `audit_log_parts`
+  - `secpcrematchlimit`
+  - `secpcrematchlimitrecursion`
+  - `secdefaultaction`
+  - `anomaly_score_blocking`
+  - `inbound_anomaly_threshold`
+  - `outbound_anomaly_threshold`
+- Added `apache::mod::ssl` attributes:
+  - `ssl_mutex`
+  - `apache_version`
+- Added ubuntu 16.04 support
+- Added `apache::mod::authnz_ldap::package_name` attribute
+- Added `apache::mod::ldap::package_name` attribute
+- Added `apache::mod::proxy::package_name` attribute
+- Added `apache::vhost` attributes:
+  - `ssl_proxy_check_peen_expire`
+  - `ssl_proxy_protocol`
+  - `logroot_owner`
+  - `logroot_group`
+  - `setenvifnocase`
+  - `passenger_user`
+  - `passenger_high_performance`
+  - `jk_mounts`
+  - `fastcgi_idle_timeout`
+  - `modsec_disable_msgs`
+  - `modsec_disable_tags`
+- Added ability for 2.4-style `RequireAll|RequireNone|RequireAny` directory permissions
+- Added ability for includes in vhost directory
+- Added directory values:
+  - `AuthMerging`
+  - `MellonSPMetadataFile`
+- Adds Configurability of Collaborative Detection Severity Levels for OWASP Core Rule Set to `apache::mod::security` class
+  - `critical_anomaly_score`
+  - `error_anomaly_score`
+  - `warning_anomaly_score`
+  - `notice_anomaly_score`
+- Adds ability to configure `info_path` in `apache::mod::info` class
+- Adds ability to configure `verify_config` in `apache::vhost::custom`
+
+#### Bugfixes
+- Fixed apache mod setup for event/worker failing syntax
+- Fixed concat deprecation warnings
+- Fixed pagespeed mod
+- Fixed service restart on mod update
+- Fixed mod dir purging to happen after package installs
+- Fixed various `apache::mod::*` file modes
+- Fixed `apache::mod::authnz_ldap` parameter `verifyServerCert` to be `verify_server_cert`
+- Fixed loadfile name in `apache::mod::fcgid`
+- Fixed `apache::mod::remoteip` to fail on apache < 2.4 (because it is not available)
+- Fixed `apache::mod::ssl::ssl_honorcipherorder` interpolation
+- Lint fixes
+- Strict variable fixes
+- Fixed `apache::vhost` attribute `redirectmatch_status` to be optional
+- Fixed SSLv3 on by default in mod\_nss
+- Fixed mod\_rpaf directive names in template
+- Fixed mod\_worker needing MaxClients with ThreadLimit
+- Fixed quoting on vhost php\_value
+- Fixed xml2enc for proxy\_html on debian
+- Fixed a problem where the apache service restarts too fast
+
 ## Supported Release 1.8.1
 ### Summary
 This release includes bug fixes and a documentation update.
@@ -223,7 +324,7 @@ This release has many new features and bugfixes, including the ability to option
   - Add `root_group` to `apache::mod::php`
   - Add `apache::mod::proxy_connect` class
   - Add `apache::mod::security` class
-  - Add `ssl_pass_phrase_dialog` and `ssl_random_seed_bytes parameters to `apache::mod::ssl` (MODULES-1719)
+  - Add `ssl_pass_phrase_dialog` and `ssl_random_seed_bytes` parameters to `apache::mod::ssl` (MODULES-1719)
   - Add `status_path` parameter to `apache::mod::status`
   - Add `apache_version` parameter to `apache::mod::version`
   - Add `package_name` and `mod_path` parameters to `apache::mod::wsgi` (MODULES-1458)

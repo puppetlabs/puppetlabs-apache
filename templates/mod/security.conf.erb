@@ -49,8 +49,8 @@
     SecResponseBodyLimitAction ProcessPartial
     SecDebugLogLevel 0
     SecAuditEngine RelevantOnly
-    SecAuditLogRelevantStatus "^(?:5|4(?!04))"
-    SecAuditLogParts ABIJDEFHZ
+    SecAuditLogRelevantStatus "<%= @audit_log_relevant_status %>"
+    SecAuditLogParts <%= @audit_log_parts %>
     SecAuditLogType Serial
     SecArgumentSeparator &
     SecCookieFormat 0

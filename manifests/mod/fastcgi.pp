@@ -1,4 +1,5 @@
 class apache::mod::fastcgi {
+  include ::apache
 
   # Debian specifies it's fastcgi lib path, but RedHat uses the default value
   # with no config file

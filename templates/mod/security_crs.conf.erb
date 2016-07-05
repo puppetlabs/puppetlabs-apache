@@ -63,8 +63,8 @@ SecComponentSignature "OWASP_CRS/2.2.6"
 # Ref: http://blog.spiderlabs.com/2010/11/advanced-topic-of-the-week-traditional-vs-anomaly-scoring-detection-modes.html
 # Ref: https://sourceforge.net/apps/mediawiki/mod-security/index.php?title=Reference_Manual#SecDefaultAction
 #
-SecDefaultAction "phase:1,deny,log"
-
+SecDefaultAction "phase:1,<%= @_secdefaultaction -%>"
+SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
 
 #
 # -- [[ Collaborative Detection Severity Levels ]] ----------------------------------------
@@ -89,10 +89,10 @@ SecAction \
   "id:'900001', \
   phase:1, \
   t:none, \
-  setvar:tx.critical_anomaly_score=5, \
-  setvar:tx.error_anomaly_score=4, \
-  setvar:tx.warning_anomaly_score=3, \
-  setvar:tx.notice_anomaly_score=2, \
+  setvar:tx.critical_anomaly_score=<%= @critical_anomaly_score -%>, \
+  setvar:tx.error_anomaly_score=<%= @error_anomaly_score -%>, \
+  setvar:tx.warning_anomaly_score=<%= @warning_anomaly_score -%>, \
+  setvar:tx.notice_anomaly_score=<%= @notice_anomaly_score -%>, \
   nolog, \
   pass"
 
@@ -118,7 +118,7 @@ SecAction \
   "id:'900002', \
   phase:1, \
   t:none, \
-  setvar:tx.inbound_anomaly_score_level=5, \
+  setvar:tx.inbound_anomaly_score_level=<%= @inbound_anomaly_threshold -%>, \
   nolog, \
   pass"
 
@@ -127,7 +127,7 @@ SecAction \
   "id:'900003', \
   phase:1, \
   t:none, \
-  setvar:tx.outbound_anomaly_score_level=4, \
+  setvar:tx.outbound_anomaly_score_level=<%= @outbound_anomaly_threshold -%>, \
   nolog, \
   pass"
 
@@ -143,11 +143,11 @@ SecAction \
 #
 # If you want to use anomaly scoring mode, then uncomment this line.
 #
-#SecAction \
+SecAction \
   "id:'900004', \
   phase:1, \
   t:none, \
-  setvar:tx.anomaly_score_blocking=on, \
+  setvar:tx.anomaly_score_blocking=<%= @anomaly_score_blocking -%>, \
   nolog, \
   pass"
 
