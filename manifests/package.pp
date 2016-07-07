@@ -24,17 +24,14 @@ class apache::package (
         }
         default: { fail("MPM module ${mpm_module} not supported on FreeBSD") }
       }
-
-      $apache_package = $::apache::apache_name
     }
     default: {
-      $apache_package = $::apache::apache_name
     }
   }
 
   package { 'httpd':
     ensure => $ensure,
-    name   => $apache_package,
+    name   => $::apache::apache_name,
     notify => Class['Apache::Service'],
   }
 }
