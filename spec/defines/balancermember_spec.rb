@@ -19,7 +19,8 @@ describe 'apache::balancermember', :type => :define do
   end
   describe "allows multiple balancermembers with the same url" do
     let :pre_condition do
-      'apache::balancer {"balancer":}
+      'include apache
+      apache::balancer {"balancer":}
       apache::balancer {"balancer-external":}
       apache::balancermember {"http://127.0.0.1:8080-external": url => "http://127.0.0.1:8080/", balancer_cluster => "balancer-external"}
       '
@@ -38,7 +39,8 @@ describe 'apache::balancermember', :type => :define do
   end
   describe "allows balancermember with a different target" do
     let :pre_condition do
-      'apache::balancer {"balancername": target => "/etc/apache/balancer.conf"}
+      'include apache
+      apache::balancer {"balancername": target => "/etc/apache/balancer.conf"}
       apache::balancermember {"http://127.0.0.1:8080-external": url => "http://127.0.0.1:8080/", balancer_cluster => "balancername"}
       '
     end

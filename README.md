@@ -59,6 +59,7 @@
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
 [`apache::mod::proxy`]: #class-apachemodproxy
+[`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
 [`apache::mod::security`]: #class-apachemodsecurity
@@ -733,9 +734,12 @@ If you need to use the [ProxySet](https://httpd.apache.org/docs/current/mod/mod_
 apache::balancer { 'puppet01':
   proxy_set => {
     'stickysession' => 'JSESSIONID',
+    'lbmethod'      => 'bytraffic',
   },
 }
 ```
+
+Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balancer documentation](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
 ## Reference
 
@@ -1336,6 +1340,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `prefork`\*
 * `proxy`\* (see [`apache::mod::proxy`][])
 * `proxy_ajp`
+* `proxy_balancer`\* (see [`apache::mod::proxy_balancer`][])
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
 * `proxy_http`
@@ -1730,6 +1735,15 @@ Installs `mod_proxy` and uses the `proxy.conf.erb` template to generate its conf
 - `apache_version`: Default: `undef`.
 - `package_name`: Default: `undef`.
 - `proxy_requests`: Default: 'Off'.
+
+##### Class: `apache::mod::proxy_balancer`
+
+Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
+
+**Parameters within `apache::mod::proxy_balancer`**:
+
+- `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'. Default: the value of [`$::apache::apache_version`][`apache_version`].
+   - On Apache >= 2.4, `mod_slotmem_shm` is loaded.
 
 ##### Class: `apache::mod::php`
 
