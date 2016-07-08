@@ -16,10 +16,11 @@ group :development, :unit_tests do
   gem 'json',                      :require => false
   gem 'metadata-json-lint',        :require => false
   gem 'puppet_facts',              :require => false
-  gem 'puppet-blacksmith',         :require => false
   gem 'puppetlabs_spec_helper',    :require => false
   gem 'rspec-puppet', '>= 2.3.2',  :require => false
   gem 'simplecov',                 :require => false
+  gem 'puppet-blacksmith',         :require => false
+  gem 'rest-client', '~> 1.8.0',   :require => false
 end
 group :system_tests do
   gem 'beaker-rspec',                  *location_for(ENV['BEAKER_RSPEC_VERSION'] || '>= 3.4')
