@@ -14,6 +14,7 @@ class apache::mod::passenger (
   $passenger_default_ruby           = $::apache::params::passenger_default_ruby,
   $passenger_max_pool_size          = undef,
   $passenger_min_instances          = undef,
+  $passenger_max_instances_per_app  = undef,
   $passenger_use_global_queue       = undef,
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
@@ -87,6 +88,7 @@ class apache::mod::passenger (
   # - $passenger_default_ruby
   # - $passenger_max_pool_size
   # - $passenger_min_instances
+  # - $passenger_max_instances_per_app
   # - $passenger_high_performance
   # - $passenger_max_requests
   # - $passenger_spawn_method

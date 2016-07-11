@@ -19,6 +19,9 @@
   <%- if @passenger_min_instances -%>
   PassengerMinInstances <%= @passenger_min_instances %>
   <%- end -%>
+  <%- if @passenger_max_instances_per_app -%>
+  PassengerMaxInstancesPerApp <%= @passenger_max_instances_per_app %>
+  <%- end -%>
   <%- if @passenger_pool_idle_time -%>
   PassengerPoolIdleTime <%= @passenger_pool_idle_time %>
   <%- end -%>
