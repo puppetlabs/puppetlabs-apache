@@ -5,5 +5,4 @@ AddOutputFilterByType DEFLATE <%= type %>
 <%- @notes.sort.each do |type,note| -%>
 DeflateFilterNote <%= type %> <%=note %>
 <%- end -%>
-
 DeflateCompressionLevel <%= @compression_level %>
