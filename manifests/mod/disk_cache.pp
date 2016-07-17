@@ -3,6 +3,20 @@ class apache::mod::disk_cache (
 ) {
   if $cache_root {
     $_cache_root = $cache_root
+    if versioncmp($::apache::apache_version, '2.4') >= 0 {
+      $_cache_root = $::osfamily ? {
+        'debian'  => "$cache_root/apache2/mod_cache_disk",
+        'redhat'  => "$cache_root/httpd/proxy",
+        'freebsd' => "$cache_root/mod_cache_disk",
+      }
+    }
+    else {
+      $_cache_root = $::osfamily ? {
+        'debian'  => "$cache_root/apache2/mod_disk_cache",
+        'redhat'  => "$cache_root/mod_proxy",
+        'freebsd' => "$cache_root/mod_disk_cache",
+      }
+    }
   }
   elsif versioncmp($::apache::apache_version, '2.4') >= 0 {
     $_cache_root = $::osfamily ? {
