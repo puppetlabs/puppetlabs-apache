@@ -34,6 +34,9 @@
       IH %{MULTIPART_INVALID_HEADER_FOLDING}, \
       FL %{MULTIPART_FILE_LIMIT_EXCEEDED}'"
 
+    SecRule &REQUEST_HEADERS:Proxy "@gt 0" "id:1000005,log,deny,msg:'httpoxy denied'"
+
+
     SecRule MULTIPART_UNMATCHED_BOUNDARY "!@eq 0" \
       "id:'200003',phase:2,t:none,log,deny,status:44,msg:'Multipart parser detected a possible unmatched boundary.'"
 
