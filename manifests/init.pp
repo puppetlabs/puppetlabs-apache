@@ -174,6 +174,7 @@ class apache (
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
+    force   => $purge_confd,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
