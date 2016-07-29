@@ -46,6 +46,7 @@
 [`apache::mod::alias`]: #class-apachemodalias
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
 [`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
+[`apache::mod::authn_dbd`]: #class-apachemodauthn_dbd
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::cluster`]: #class-apachemodcluster
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
@@ -159,7 +160,9 @@
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
+[`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
+[`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
@@ -1295,6 +1298,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `auth_mellon`\* (see [`apache::mod::auth_mellon`][])
 * `auth_kerb`
 * `authn_core`
+* `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
 * `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
 * `authz_default`
@@ -1307,6 +1311,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dav`
 * `dav_fs`
 * `dav_svn`\*
+* `dbd`
 * `deflate\`
 * `dev`
 * `dir`\*
@@ -1482,6 +1487,29 @@ class{ 'apache::mod::auth_mellon':
 - `mellon_post_ttl`: Time to keep post requests. Default: undef.
 - `mellon_post_size`: Maximum size of post requests. Default: undef.
 - `mellon_post_count`: Maximum number of post requests. Default: undef.
+
+##### Class: `apache::mod::authn_dbd`
+
+Installs `mod_authn_dbd` and uses `authn_dbd.conf.erb` template to generate its configuration.  Optionally creates AuthnProviderAlias.
+
+``` puppet
+class { 'apache::mod::authn_dbd':
+  $authn_dbd_params =>
+    'host=db01 port=3306 user=apache password=xxxxxx dbname=apacheauth',
+  $authn_dbd_query  => 'SELECT password FROM authn WHERE user = %s',
+  $authn_dbd_alias  => 'db_auth',
+}
+```
+
+** Parameters within `apache::mod::authn_dbd`
+- `authn_dbd_alias`: Name for the AuthnProviderAlias.
+- `authn_dbd_dbdriver`: Which db driver to use.  Default: mysql.
+- `authn_dbd_exptime`: corresponds to DBDExptime.  Default: 300.
+- `authn_dbd_keep`: corresponds to DBDKeep.  Default: 8.
+- `authn_dbd_max`: corresponds to DBDMax.  Default: 20.
+- `authn_dbd_min`: corresponds to DBDMin.  Default: 4.
+- `authn_dbd_params`: **Required**. Corresponds to DBDParams for the connection string.
+- `authn_dbd_query`: is the query used to test a user and password for authentication.
 
 ##### Class: `apache::mod::authnz_ldap`
 
