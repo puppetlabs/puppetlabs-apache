@@ -2573,6 +2573,18 @@ Sets [PassengerUser](https://www.phusionpassenger.com/library/config/apache/refe
 
 Sets the [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance) parameter. Valid options: 'true', 'false'. Default: undef.
 
+##### `passenger_nodejs`
+
+Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#passengernodejs), the NodeJS interpreter to use for the application, on this virtual host.
+
+##### `passenger_sticky_sessions`
+
+Sets the [`PassengerStickySessions`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessions) parameter. Valid options: 'true', 'false'. Default: undef.
+
+##### `passenger_startup_file`
+
+Sets the [`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile) path. This path is relative to the application root.
+
 ##### `php_flags & values`
 
 Allows per-virtual host setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Default: '{}'.
