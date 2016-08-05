@@ -3353,7 +3353,7 @@ apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
   directories => [
     { path    => '/path/to/directory',
-      require => 'IP 10.17.42.23',
+      require => 'ip 10.17.42.23',
     }
   ],
 }
