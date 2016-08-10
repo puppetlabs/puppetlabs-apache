@@ -70,7 +70,19 @@ when 'Gentoo'
   $error_log        = 'http-error.log'
 
   $apache_version = '2.4'
+when 'Suse'
+  $confd_dir        = '/etc/apache2/conf.d'
+  $mod_dir          = '/etc/apache2/mods-available'
+  $conf_file        = '/etc/apache2/httpd.conf'
+  $ports_file       = '/etc/apache2/ports.conf'
+  $vhost            = '/etc/apache2/sites-available/15-default.conf'
+  $vhost_dir        = '/etc/apache2/sites-available'
+  $run_dir          = '/var/run/apache2'
+  $service_name     = 'apache2'
+  $package_name     = 'apache2'
+  $error_log        = 'http-error.log'
+
+  $apache_version = '2.4'
 else
   $apache_version = '0'
 end
-

@@ -49,7 +49,7 @@ class apache::params inherits ::apache::version {
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
 
-  if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
+  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::osfamily == 'Suse') {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
     $verify_command = '/usr/local/sbin/apachectl -t'
