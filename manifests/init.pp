@@ -82,6 +82,9 @@ class apache (
   $file_mode              = $::apache::params::file_mode,
   $root_directory_options = $::apache::params::root_directory_options,
   $root_directory_secured = false,
+  $error_log              = $::apache::params::error_log,
+  $scriptalias            = $::apache::params::scriptalias,
+  $access_log_file        = $::apache::params::access_log_file,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -258,60 +261,32 @@ class apache (
   }
 
   if $::apache::conf_dir and $::apache::params::conf_file {
-    case $::osfamily {
-      'debian': {
-        $error_log            = 'error.log'
-        $scriptalias          = '/usr/lib/cgi-bin'
-        $access_log_file      = 'access.log'
-      }
-      'redhat': {
-        $error_log            = 'error_log'
-        $scriptalias          = '/var/www/cgi-bin'
-        $access_log_file      = 'access_log'
-      }
-      'freebsd': {
-        $error_log            = 'httpd-error.log'
-        $scriptalias          = '/usr/local/www/apache24/cgi-bin'
-        $access_log_file      = 'httpd-access.log'
-      } 'gentoo': {
-        $error_log            = 'error.log'
-        $error_documents_path = '/usr/share/apache2/error'
-        $scriptalias          = '/var/www/localhost/cgi-bin'
-        $access_log_file      = 'access.log'
-
-        if is_array($default_mods) {
-          if versioncmp($apache_version, '2.4') >= 0 {
-            if defined('apache::mod::ssl') {
-              ::portage::makeconf { 'apache2_modules':
-                content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
-              }
-            } else {
-              ::portage::makeconf { 'apache2_modules':
-                content => concat($default_mods, 'authz_core'),
-              }
+    if $::osfamily == 'gentoo' {
+      $error_documents_path = '/usr/share/apache2/error'
+      if is_array($default_mods) {
+        if versioncmp($apache_version, '2.4') >= 0 {
+          if defined('apache::mod::ssl') {
+            ::portage::makeconf { 'apache2_modules':
+              content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
             }
           } else {
             ::portage::makeconf { 'apache2_modules':
-              content => $default_mods,
+              content => concat($default_mods, 'authz_core'),
             }
           }
+        } else {
+          ::portage::makeconf { 'apache2_modules':
+            content => $default_mods,
+          }
         }
+      }
 
-        file { [
-          '/etc/apache2/modules.d/.keep_www-servers_apache-2',
-          '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
-        ]:
-          ensure  => absent,
-          require => Package['httpd'],
-        }
-      }
-      'Suse': {
-        $error_log            = 'error.log'
-        $scriptalias          = '/usr/lib/cgi-bin'
-        $access_log_file      = 'access.log'
-      }
-      default: {
-        fail("Unsupported osfamily ${::osfamily}")
+      file { [
+        '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+        '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+      ]:
+        ensure  => absent,
+        require => Package['httpd'],
       }
     }
 
