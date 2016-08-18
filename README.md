@@ -2553,6 +2553,10 @@ Sets [PassengerRuby](https://www.phusionpassenger.com/library/config/apache/refe
 
 Sets [PassengerMinInstances](https://www.phusionpassenger.com/library/config/apache/reference/#passengermininstances), the minimum number of application processes to run.
 
+##### `passenger_max_instances_per_app`
+
+Sets [PassengerMaxInstancesPerApp](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxinstancesperapp), the maximum number of application processes that may simultaneously exist for a single application.
+
 ##### `passenger_start_timeout`
 
 Sets [PassengerStartTimeout](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstarttimeout), the timeout for the application startup.
