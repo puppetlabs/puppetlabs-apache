@@ -1,20 +1,20 @@
 # ---------------------------------------------------------------
-# Core ModSecurity Rule Set ver.2.2.6
+# Core ModSecurity Rule Set ver.2.2.9
 # Copyright (C) 2006-2012 Trustwave All rights reserved.
 #
-# The OWASP ModSecurity Core Rule Set is distributed under
+# The OWASP ModSecurity Core Rule Set is distributed under 
 # Apache Software License (ASL) version 2
 # Please see the enclosed LICENCE file for full details.
 # ---------------------------------------------------------------
 
 
 #
-# -- [[ Recommended Base Configuration ]] -------------------------------------------------
+# -- [[ Recommended Base Configuration ]] ------------------------------------------------- 
 #
 # The configuration directives/settings in this file are used to control
 # the OWASP ModSecurity CRS. These settings do **NOT** configure the main
 # ModSecurity settings such as:
-#
+# 
 # - SecRuleEngine
 # - SecRequestBodyAccess
 # - SecAuditEngine
@@ -23,7 +23,7 @@
 # You should use the modsecurity.conf-recommended file that comes with the
 # ModSecurity source code archive.
 #
-# Ref: http://mod-security.svn.sourceforge.net/viewvc/mod-security/m2/trunk/modsecurity.conf-recommended
+# Ref: https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended 
 #
 
 
@@ -34,9 +34,9 @@
 #
 # - Producer: ModSecurity for Apache/2.7.0-rc1 (http://www.modsecurity.org/); OWASP_CRS/2.2.4.
 #
-# Ref: https://sourceforge.net/apps/mediawiki/mod-security/index.php?title=Reference_Manual#SecComponentSignature
+# Ref: https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#wiki-SecComponentSignature 
 #
-SecComponentSignature "OWASP_CRS/2.2.6"
+SecComponentSignature "OWASP_CRS/2.2.9"
 
 
 #
@@ -51,7 +51,7 @@ SecComponentSignature "OWASP_CRS/2.2.6"
 # -- [[ Collaborative Detection Mode ]] --
 # This is a "delayed blocking" mode of operation where each matching rule will inherit
 # the "pass" action and will only contribute to anomaly scores.  Transactional blocking
-# can be applied
+# can be applied 
 #
 # -- [[ Alert Logging Control ]] --
 # You have three options -
@@ -61,7 +61,7 @@ SecComponentSignature "OWASP_CRS/2.2.6"
 # - To log *only* to the Apache error_log file use: "log,noauditlog"
 #
 # Ref: http://blog.spiderlabs.com/2010/11/advanced-topic-of-the-week-traditional-vs-anomaly-scoring-detection-modes.html
-# Ref: https://sourceforge.net/apps/mediawiki/mod-security/index.php?title=Reference_Manual#SecDefaultAction
+# Ref: https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#wiki-SecDefaultAction 
 #
 SecDefaultAction "phase:1,<%= @_secdefaultaction -%>"
 SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
@@ -98,7 +98,7 @@ SecAction \
 
 
 #
-# -- [[ Collaborative Detection Scoring Threshold Levels ]] ------------------------------
+# -- [[ Collaborative Detection Scoring Initialization and Threshold Levels ]] ------------------------------
 #
 # These variables are used in macro expansion in the 49 inbound blocking and 59
 # outbound blocking files.
@@ -107,18 +107,23 @@ SecAction \
 # operators.  If you have an earlier version, edit the 49/59 files directly to
 # set the appropriate anomaly score levels.
 #
-# You should set the score to the proper threshold you would prefer. If set to "5"
-# it will work similarly to previous Mod CRS rules and will create an event in the error_log
-# file if there are any rules that match.  If you would like to lessen the number of events
-# generated in the error_log file, you should increase the anomaly score threshold to
-# something like "20".  This would only generate an event in the error_log file if
-# there are multiple lower severity rule matches or if any 1 higher severity item matches.
+# You should set the score level (rule 900003) to the proper threshold you 
+# would prefer.  If set to "5" it will work similarly to previous Mod CRS rules
+# and will create an event in the error_log file if there are any rules that
+# match.  If you would like to lessen the number of events generated in the 
+# error_log file, you should increase the anomaly score threshold to something 
+# like "20".  This would only generate an event in the error_log file if there
+# are multiple lower severity rule matches or if any 1 higher severity item matches.
 #
 SecAction \
   "id:'900002', \
   phase:1, \
   t:none, \
-  setvar:tx.inbound_anomaly_score_level=<%= @inbound_anomaly_threshold -%>, \
+  setvar:tx.anomaly_score=0, \
+  setvar:tx.sql_injection_score=0, \
+  setvar:tx.xss_score=0, \
+  setvar:tx.inbound_anomaly_score=0, \
+  setvar:tx.outbound_anomaly_score=0, \
   nolog, \
   pass"
 
@@ -127,12 +132,13 @@ SecAction \
   "id:'900003', \
   phase:1, \
   t:none, \
+  setvar:tx.inbound_anomaly_score_level=<%= @inbound_anomaly_threshold -%>, \
   setvar:tx.outbound_anomaly_score_level=<%= @outbound_anomaly_threshold -%>, \
   nolog, \
   pass"
 
 
-#
+# 
 # -- [[ Collaborative Detection Blocking ]] -----------------------------------------------
 #
 # This is a collaborative detection mode where each rule will increment an overall
@@ -156,7 +162,7 @@ SecAction \
 # -- [[ GeoIP Database ]] -----------------------------------------------------------------
 #
 # There are some rulesets that need to inspect the GEO data of the REMOTE_ADDR data.
-#
+# 
 # You must first download the MaxMind GeoIP Lite City DB -
 #
 #       http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
@@ -193,12 +199,12 @@ SecAction \
 # -- [[ HTTP Policy Settings ]] ----------------------------------------------------------
 #
 # Set the following policy settings here and they will be propagated to the 23 rules
-# file (modsecurity_common_23_request_limits.conf) by using macro expansion.
+# file (modsecurity_common_23_request_limits.conf) by using macro expansion.  
 # If you run into false positives, you can adjust the settings here.
 #
 # Only the max number of args is uncommented by default as there are a high rate
 # of false positives.  Uncomment the items you wish to set.
-#
+# 
 #
 # -- Maximum number of arguments in request limited
 SecAction \
@@ -262,7 +268,7 @@ SecAction \
 
 #
 # Set the following policy settings here and they will be propagated to the 30 rules
-# file (modsecurity_crs_30_http_policy.conf) by using macro expansion.
+# file (modsecurity_crs_30_http_policy.conf) by using macro expansion.  
 # If you run into false positves, you can adjust the settings here.
 #
 SecAction \
@@ -284,7 +290,7 @@ SecAction \
 # The purpose of these settings is to send CSP response headers to
 # Mozilla FireFox users so that you can enforce how dynamic content
 # is used. CSP usage helps to prevent XSS attacks against your users.
-#
+#  
 # Reference Link:
 #
 #	https://developer.mozilla.org/en/Security/CSP
@@ -292,7 +298,7 @@ SecAction \
 # Uncomment this SecAction line if you want use CSP enforcement.
 # You need to set the appropriate directives and settings for your site/domain and
 # and activate the CSP file in the experimental_rules directory.
-#
+# 
 # Ref: http://blog.spiderlabs.com/2011/04/modsecurity-advanced-topic-of-the-week-integrating-content-security-policy-csp.html
 #
 #SecAction \
@@ -320,7 +326,7 @@ SecAction \
   "id:'900014', \
   phase:1, \
   t:none, \
-  setvar:'tx.brute_force_protected_urls=/login.jsp /partner_login.php', \
+  setvar:'tx.brute_force_protected_urls=#/login.jsp# #/partner_login.php#', \
   setvar:'tx.brute_force_burst_time_slice=60', \
   setvar:'tx.brute_force_counter_threshold=10', \
   setvar:'tx.brute_force_block_timeout=300', \
@@ -337,7 +343,7 @@ SecAction \
 # - Request Threshold: request # threshold to trigger a burst
 # - Block Period: temporary block timeout
 #
-#SecAction \
+SecAction \
   "id:'900015', \
   phase:1, \
   t:none, \
@@ -424,5 +430,7 @@ SecRule &TX:REAL_IP "@eq 0" \
   t:none, \
   initcol:global=global, \
   initcol:ip=%{remote_addr}_%{tx.ua_hash}, \
+  setvar:tx.real_ip=%{remote_addr}, \
   nolog, \
   pass"
+
