@@ -584,6 +584,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-allow_encoded_slashes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
+      it { is_expected.to_not contain_concat__fragment('rspec.example.com-security') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts').with(
         :content => /^\s+JkMount\s+\/\*\s+tcnode1$/)}
@@ -713,6 +714,28 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to_not contain_concat__fragment('NameVirtualHost *:80') }
     end
 
+    context 'modsec_audit_log' do
+      let :params do
+        {
+          'docroot'          => '/rspec/docroot',
+          'modsec_audit_log' => true,
+        }
+      end
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-security').with(
+        :content => /^\s*SecAuditLog "\/var\/log\/apache2\/rspec\.example\.com_security\.log"$/ ) }
+    end
+    context 'modsec_audit_log_file' do
+      let :params do
+        {
+          'docroot'               => '/rspec/docroot',
+          'modsec_audit_log_file' => 'foo.log',
+        }
+      end
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-security').with(
+        :content => /\s*SecAuditLog "\/var\/log\/apache2\/foo.log"$/ ) }
+    end
     context 'set only aliases' do
       let :params do
         {

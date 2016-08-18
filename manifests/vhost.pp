@@ -61,6 +61,9 @@ define apache::vhost(
   $error_log_file              = undef,
   $error_log_pipe              = undef,
   $error_log_syslog            = undef,
+  $modsec_audit_log            = undef,
+  $modsec_audit_log_file       = undef,
+  $modsec_audit_log_pipe       = undef,
   $error_documents             = [],
   $fallbackresource            = undef,
   $scriptalias                 = undef,
@@ -177,6 +180,9 @@ define apache::vhost(
   validate_bool($ip_based)
   validate_bool($access_log)
   validate_bool($error_log)
+  if $modsec_audit_log != undef {
+    validate_bool($modsec_audit_log)
+  }
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
@@ -241,6 +247,10 @@ define apache::vhost(
 
   if $error_log_file and $error_log_pipe {
     fail("Apache::Vhost[${name}]: 'error_log_file' and 'error_log_pipe' cannot be defined at the same time")
+  }
+
+  if $modsec_audit_log_file and $modsec_audit_log_pipe {
+    fail("Apache::Vhost[${name}]: 'modsec_audit_log_file' and 'modsec_audit_log_pipe' cannot be defined at the same time")
   }
 
   if $fallbackresource {
@@ -396,6 +406,23 @@ define apache::vhost(
       $error_log_destination = "${logroot}/${name}_error.log"
     }
   }
+
+  if $modsec_audit_log == false {
+    $modsec_audit_log_destination = undef
+  } elsif $modsec_audit_log_file {
+    $modsec_audit_log_destination = "${logroot}/${modsec_audit_log_file}"
+  } elsif $modsec_audit_log_pipe {
+    $modsec_audit_log_destination = $modsec_audit_log_pipe
+  } elsif $modsec_audit_log {
+    if $ssl {
+      $modsec_audit_log_destination = "${logroot}/${name}_security_ssl.log"
+    } else {
+      $modsec_audit_log_destination = "${logroot}/${name}_security.log"
+    }
+  } else {
+    $modsec_audit_log_destination = undef
+  }
+
 
   if $ip {
     $_ip = enclose_ipv6($ip)
@@ -1044,7 +1071,8 @@ define apache::vhost(
   # - $modsec_disable_msgs
   # - $modsec_disable_tags
   # - $modsec_body_limit
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags {
+  # - $modsec_audit_log_destination
+  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
