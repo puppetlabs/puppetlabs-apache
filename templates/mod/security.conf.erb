@@ -1,13 +1,4 @@
 <IfModule mod_security2.c>
-    # ModSecurity Core Rules Set configuration
-<%- if scope.function_versioncmp([scope.lookupvar('::apache::apache_version'), '2.4']) >= 0 -%>
-    IncludeOptional <%= @modsec_dir %>/*.conf
-    IncludeOptional <%= @modsec_dir %>/activated_rules/*.conf
-<%- else -%>
-    Include <%= @modsec_dir %>/*.conf
-    Include <%= @modsec_dir %>/activated_rules/*.conf
-<%- end -%>
-
     # Default recommended configuration
     SecRuleEngine <%= @modsec_secruleengine %>
     SecRequestBodyAccess On
@@ -71,4 +62,13 @@
     SecUploadDir /var/lib/mod_security
 <% end -%>
     SecUploadKeepFiles Off
+
+    # ModSecurity Core Rules Set configuration
+<%- if scope.function_versioncmp([scope.lookupvar('::apache::apache_version'), '2.4']) >= 0 -%>
+    IncludeOptional <%= @modsec_dir %>/*.conf
+    IncludeOptional <%= @modsec_dir %>/activated_rules/*.conf
+<%- else -%>
+    Include <%= @modsec_dir %>/*.conf
+    Include <%= @modsec_dir %>/activated_rules/*.conf
+<%- end -%>
 </IfModule>
