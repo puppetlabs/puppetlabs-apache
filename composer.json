@@ -1,0 +1,13 @@
+{
+    "name": "puppetlabs/apache",
+    "description": "Puppet Labs Apache module",
+    "homepage": "https://github.com/puppetlabs/puppetlabs-apache",
+    "type": "library",
+    "license": "Apache License, Version 2.0",
+    "authors": [
+        {
+            "name": "PuppetLabs",
+            "homepage": "http://www.puppetlabs.com/"
+        }
+    ]
+}
