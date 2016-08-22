@@ -10,7 +10,8 @@ class apache::mod::deflate (
     'Input'  => 'instream',
     'Output' => 'outstream',
     'Ratio'  => 'ratio'
-  }
+  },
+  $compression_level = 6
 ) {
   include ::apache
   ::apache::mod { 'deflate': }

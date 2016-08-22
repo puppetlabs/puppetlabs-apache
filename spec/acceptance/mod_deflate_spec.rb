@@ -28,6 +28,7 @@ describe 'apache::mod::deflate class' do
       it { is_expected.to contain "DeflateFilterNote Input instream" }
       it { is_expected.to contain "DeflateFilterNote Output outstream" }
       it { is_expected.to contain "DeflateFilterNote Ratio ratio" }
+      it { is_expected.to contain "DeflateCompressionLevel 6" }
     end
   end
 end

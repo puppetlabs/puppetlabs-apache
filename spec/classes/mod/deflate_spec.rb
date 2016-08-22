@@ -10,7 +10,8 @@ def general_deflate_specs
       "AddOutputFilterByType DEFLATE text/html\n"\
       "\n"\
       "DeflateFilterNote Input instream\n"\
-      "DeflateFilterNote Ratio ratio\n"
+      "DeflateFilterNote Ratio ratio\n"\
+      "DeflateCompressionLevel 6\n"
     )
   end
 end
@@ -25,7 +26,8 @@ describe 'apache::mod::deflate', :type => :class do
         notes => {
           "Input" => "instream",
           "Ratio" => "ratio",
-        }
+        },
+        compression_level => "6"
       }
       '
     end
