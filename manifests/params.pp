@@ -143,6 +143,7 @@ class apache::params inherits ::apache::version {
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
+    $contentdigest        = 'Off'
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
@@ -260,6 +261,7 @@ class apache::params inherits ::apache::version {
     $keepalive              = 'Off'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
+    $contentdigest          = 'Off'
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
@@ -384,6 +386,7 @@ class apache::params inherits ::apache::version {
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
+    $contentdigest        = 'Off'
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
@@ -447,6 +450,7 @@ class apache::params inherits ::apache::version {
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
+    $contentdigest        = 'Off'
     $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'app-misc/mime-types'
     $mime_types_config    = '/etc/mime.types'
@@ -496,6 +500,7 @@ class apache::params inherits ::apache::version {
     $keepalive              = 'Off'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
+    $contentdigest          = 'Off'
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'aaa_base'
     $mime_types_config    = '/etc/mime.types'
