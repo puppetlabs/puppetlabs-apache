@@ -7,13 +7,13 @@ script: "bundle exec rake validate lint spec"
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.1.6
+  - rvm: 2.3.1
     dist: trusty
     env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/ubuntu-14.04
     script: bundle exec rake beaker
     services: docker
     sudo: required
-  - rvm: 2.1.6
+  - rvm: 2.3.1
     dist: trusty
     env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
     script: bundle exec rake beaker
