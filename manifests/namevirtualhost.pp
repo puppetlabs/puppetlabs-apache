@@ -1,4 +1,4 @@
-define apache::namevirtualhost {
+define apache::namevirtualhost (
   $addr_port = $name
 
   # Template uses: $addr_port
@@ -6,4 +6,4 @@ define apache::namevirtualhost {
     target  => $::apache::ports_file,
     content => template('apache/namevirtualhost.erb'),
   }
-}
+)
