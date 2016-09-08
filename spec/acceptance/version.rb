@@ -81,8 +81,11 @@ when 'Suse'
   $service_name     = 'apache2'
   $package_name     = 'apache2'
   $error_log        = 'http-error.log'
-
-  $apache_version = '2.4'
+  if _operatingsystemrelease <= 11
+    $apache_version = '2.2'
+  else
+    $apache_version = '2.4'
+  end
 else
   $apache_version = '0'
 end
