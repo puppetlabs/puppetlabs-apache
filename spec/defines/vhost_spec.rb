@@ -273,6 +273,8 @@ describe 'apache::vhost', :type => :define do
               'path'            => '/a',
               'url'             => 'http://backend-a/',
               'keywords'        => ['noquery', 'interpolate'],
+              'no_proxy_uris'       => ['/a/foo', '/a/bar'],
+              'no_proxy_uris_match' => ['/a/foomatch'],
               'reverse_cookies' => [
 								{
                   'path'          => '/a',
@@ -295,6 +297,8 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/a',
               'url'      => 'http://backend-a/',
               'keywords' => ['noquery', 'interpolate'],
+              'no_proxy_uris'       => ['/a/foo', '/a/bar'],
+              'no_proxy_uris_match' => ['/a/foomatch'],
               'params'   => {
                       'retry'   => '0',
                       'timeout' => '5'

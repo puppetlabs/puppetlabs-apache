@@ -2620,6 +2620,8 @@ apache::vhost { 'site.name.fdqn':
       'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
     { 'path' => '/g', 'url' => 'http://backend-g/',
       'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
+    { 'path' => '/h', 'url' => 'http://backend-h/h',
+      'no_proxy_uris' => ['/h/admin', '/h/server-status'] },
   ],
 }
 ```
