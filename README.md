@@ -1834,6 +1834,10 @@ ${modsec\_dir}/activated\_rules.
 - `error_anomaly_score`: Sets the scoring points of the error severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
 - `warning_anomaly_score`: Sets the scoring points of the warning severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '3'.
 - `notice_anomaly_score`: Sets the scoring points of the notice severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '2'.
+- `secrequestmaxnumargs`: Sets the Maximum number of arguments in the request. Default: '255'.
+- `secrequestbodylimit`:  Sets the maximum request body size ModSecurity will accept for buffering.. Default: '13107200'.
+- `secrequestbodynofileslimit`: Sets the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported in the request. Default: '131072'.
+- `secrequestbodyinmemorylimit`: Sets the maximum request body size that ModSecurity will store in memory. Default: '131072'
 
 ##### Class: `apache::mod::wsgi`
 
