@@ -727,6 +727,34 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain "ServerName test.server" }
+    end
+  end
+
+  describe 'ip_based and no servername' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot    => '/tmp',
+          ip_based   => true,
+          servername => '',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file($ports_file) do
+      it { is_expected.to be_file }
+      it { is_expected.not_to contain 'NameVirtualHost test.server' }
+    end
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.not_to contain "ServerName" }
+    end
   end
 
   describe 'add_listen' do
