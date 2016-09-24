@@ -1240,6 +1240,44 @@ The default value is determined by your operating system:
 
 You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
 
+##### `error_log`
+
+The name of the error log file for the main server instance
+
+The default value is determined by your operating system:
+
+- **Debian**: 'error.log'
+- **FreeBSD**: 'httpd-error.log'
+- **Gentoo**: 'error.log'
+- **Red Hat**: 'error_log'
+- **Suse**: 'error.log'
+
+If the string starts with / or | or syslog: the full path will be set. Otherwise the filename will be prefixed with $logroot
+
+##### `scriptalias`
+
+Directory to use for global script alias 
+
+The default value is determined by your operating system:
+
+- **Debian**: '/usr/lib/cgi-bin'
+- **FreeBSD**: '/usr/local/www/apache24/cgi-bin'
+- **Gentoo**: 'var/www/localhost/cgi-bin'
+- **Red Hat**: '/var/www/cgi-bin'
+- **Suse**: '/usr/lib/cgi-bin'
+
+##### `access_log_file`
+
+The name of the access log file for the main server instance
+
+The default value is determined by your operating system:
+
+- **Debian**: 'error.log'
+- **FreeBSD**: 'httpd-access.log'
+- **Gentoo**: 'access.log'
+- **Red Hat**: 'access_log'
+- **Suse**: 'access.log'
+
 #### Class: `apache::dev`
 
 Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`][] parameter of the [`apache::params`][] class based on your operating system:
