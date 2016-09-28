@@ -16,8 +16,8 @@ describe 'apache class' do
         @result = apply_manifest(version_check_pp, :catch_failures => true)
       end
 
-      fit {
-        expect(@result.output).to match(/"apache_version = >#{$apache_version}<"/)
+      it {
+        expect(@result.output).to match(/apache_version = >#{$apache_version}.*</)
       }
     end
 

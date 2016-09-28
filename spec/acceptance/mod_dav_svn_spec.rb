@@ -13,6 +13,8 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
     authz_svn_load_file = 'dav_svn_authz_svn.load'
   when 'FreeBSD'
     authz_svn_load_file = 'dav_svn_authz_svn.load'
+  when 'Suse'
+    authz_svn_load_file = 'dav_svn_authz_svn.load'
   end
 
   context "default dav_svn config" do

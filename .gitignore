@@ -4,6 +4,8 @@ Gemfile.lock
 vendor/
 spec/fixtures/manifests/
 spec/fixtures/modules/
+spec/acceptance/nodesets/
+tmp/
 .vagrant/
 .bundle/
 coverage/

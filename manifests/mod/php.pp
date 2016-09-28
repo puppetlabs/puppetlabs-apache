@@ -52,13 +52,26 @@ class apache::mod::php (
   $_lib = "libphp${php_version}.so"
   $_php_major = regsubst($php_version, '^(\d+)\..*$', '\1')
 
-  ::apache::mod { $mod:
-    package        => $_package_name,
-    package_ensure => $package_ensure,
-    lib            => $_lib,
-    id             => "php${_php_major}_module",
-    path           => $path,
-  }
+  if $::osfamily == 'Suse' {
+    $suse_lib_path = $::apache::params::suse_lib_path
+      ::apache::mod { $mod:
+        package        => $_package_name,
+        package_ensure => $package_ensure,
+        lib            => 'mod_php5.so',
+        id             => "php${_php_major}_module",
+        path           => "${suse_lib_path}/mod_php5.so",
+      }
+    } else {
+      ::apache::mod { $mod:
+        package        => $_package_name,
+        package_ensure => $package_ensure,
+        lib            => $_lib,
+        id             => "php${_php_major}_module",
+        path           => $path,
+      }
+
+    }
+
 
   include ::apache::mod::mime
   include ::apache::mod::dir

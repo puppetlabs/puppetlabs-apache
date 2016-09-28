@@ -60,6 +60,8 @@ describe 'apache::mod::passenger class' do
     passenger_module_path = 'modules/mod_passenger.so'
     rackapp_user = 'apache'
     rackapp_group = 'apache'
+  when 'SLES'
+    conf_file = "#{$mod_dir}/passenger.conf"
   end
 
   pp_rackapp = <<-EOS

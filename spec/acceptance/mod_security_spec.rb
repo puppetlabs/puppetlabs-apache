@@ -2,6 +2,13 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian' and (fact('lsbdistcodename') == 'squeeze' or fact('lsbdistcodename') == 'lucid' or fact('lsbdistcodename') == 'precise' or fact('lsbdistcodename') == 'wheezy')) do
+
+  if fact('osfamily') == 'Suse'
+    $docroot = "/srv/www"
+  else
+    $docroot = "/var/www"
+  end
+
   context "default mod_security config" do
     if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
@@ -29,9 +36,9 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
@@ -69,8 +76,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         end
       end
 
-      it 'should block query with SQL' do
-        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      unless fact('osfamily') == 'Suse'
+        it 'should block query with SQL' do
+          shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+        end
       end
     end
 
@@ -84,9 +93,9 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
@@ -107,8 +116,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    unless fact('osfamily') == 'Suse'
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
     it 'should disable mod_security per vhost' do
@@ -117,7 +128,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port                 => '80',
-          docroot              => '/var/www/html',
+          docroot              => '#{$docroot}/html',
           modsec_disable_vhost => true,
         }
       EOS
@@ -140,9 +151,9 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
@@ -163,8 +174,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    unless fact('osfamily') == 'Suse'
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
     it 'should disable mod_security per vhost' do
@@ -173,7 +186,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port               => '80',
-          docroot            => '/var/www/html',
+          docroot            => '#{$docroot}/html',
           modsec_disable_ips => [ '127.0.0.1' ],
         }
       EOS
@@ -196,13 +209,13 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
-        file { '/var/www/html/index2.html':
+        file { '#{$docroot}/html/index2.html':
           ensure  => file,
           content => 'Page 2',
         }
@@ -223,8 +236,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    unless fact('osfamily') == 'Suse'
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
     it 'should disable mod_security per vhost' do
@@ -233,7 +248,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port               => '80',
-          docroot            => '/var/www/html',
+          docroot            => '#{$docroot}/html',
           modsec_disable_ids => [ '950007' ],
         }
       EOS
@@ -257,13 +272,13 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
-        file { '/var/www/html/index2.html':
+        file { '#{$docroot}/html/index2.html':
           ensure  => file,
           content => 'Page 2',
         }
@@ -284,8 +299,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    unless fact('osfamily') == 'Suse'
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
     it 'should disable mod_security per vhost' do
@@ -294,7 +311,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port               => '80',
-          docroot            => '/var/www/html',
+          docroot            => '#{$docroot}/html',
           modsec_disable_msgs => [ 'Blind SQL Injection Attack' ],
         }
       EOS
@@ -318,13 +335,13 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port    => '80',
-          docroot => '/var/www/html',
+          docroot => '#{$docroot}/html',
         }
-        file { '/var/www/html/index.html':
+        file { '#{$docroot}/html/index.html':
           ensure  => file,
           content => 'Index page',
         }
-        file { '/var/www/html/index2.html':
+        file { '#{$docroot}/html/index2.html':
           ensure  => file,
           content => 'Page 2',
         }
@@ -345,8 +362,10 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
       it { is_expected.to contain "mod_security2.c" }
     end
 
-    it 'should block query with SQL' do
-      shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+    unless fact('osfamily') == 'Suse'
+      it 'should block query with SQL' do
+        shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', :acceptable_exit_codes => [22]
+      end
     end
 
     it 'should disable mod_security per vhost' do
@@ -355,7 +374,7 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         class { 'apache::mod::security': }
         apache::vhost { 'modsec.example.com':
           port                => '80',
-          docroot             => '/var/www/html',
+          docroot             => '#{$docroot}/html',
           modsec_disable_tags => [ 'WEB_ATTACK/SQL_INJECTION' ],
         }
       EOS
