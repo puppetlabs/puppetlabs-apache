@@ -42,10 +42,10 @@ describe 'apache::mod::pagespeed class', :unless =>
         }
         apache::vhost { 'pagespeed.example.com':
           port    => '80',
-          docroot => '#{$docroot}/pagespeed',
+          docroot => '#{$doc_root}/pagespeed',
         }
         host { 'pagespeed.example.com': ip => '127.0.0.1', }
-        file { '#{$docroot}/pagespeed/index.html':
+        file { '#{$doc_root}/pagespeed/index.html':
           ensure  => file,
           content => "<html>\n<!-- comment -->\n<body>\n<p>Hello World!</p>\n</body>\n</html>",
         }

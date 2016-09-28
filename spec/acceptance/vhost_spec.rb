@@ -45,14 +45,14 @@ describe 'apache::vhost define' do
   context 'default vhost with ssl' do
     it 'should create default vhost configs' do
       pp = <<-EOS
-        file { '#{$vhost_dir}':
+        file { '#{$run_dir}':
           ensure  => 'directory',
           recurse => true,
         }
 
         class { 'apache':
           default_ssl_vhost => true,
-          require => File['#{$vhost_dir}'],
+          require => File['#{$run_dir}'],
         }
       EOS
       apply_manifest(pp, :catch_failures => true)

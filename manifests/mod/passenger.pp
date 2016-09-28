@@ -55,57 +55,6 @@ class apache::mod::passenger (
     $_lib_path = $mod_lib_path
   }
 
-  if $::osfamily == 'Suse' {
-    package {'rack':
-      provider => 'gem',
-      ensure => "1.6.4",
-      before => Exec['passenger']
-    }
-    package {'rake':
-      provider => 'gem',
-      ensure => '10.5.0',
-      before => Exec['passenger']
-    }
-    package {'passenger':
-      provider => 'gem',
-      ensure => 'installed',
-      before => Exec['passenger']
-    }
-    package {'gcc':
-      provider => 'zypper',
-      before => Package['gcc-c++']
-    }
-    package {'gcc43-c++':
-      provider => 'zypper',
-      before => Package['gcc-c++']
-    }
-    package {'gcc-c++':
-      provider => 'rpm',
-      source => 'http://download.opensuse.org/repositories/home:/zhy20120210:/SLES-11-SP1-x86-64/SLE_11/x86_64/gcc-c++-4.3-62.8.x86_64.rpm',
-      before => Exec['passenger'],
-    }
-    package {'apache2-devel':
-      provider => 'zypper',
-      before => Exec['passenger'],
-    }
-    package {'libcurl-devel':
-      provider => 'zypper',
-      before => Exec['passenger'],
-    }
-    exec {'passenger':
-      command => '/usr/bin/passenger-install-apache2-module -a',
-    }
-    file {'/etc/apache2/mods-available/passenger.load':
-      ensure => present,
-      content => 'LoadModule passenger_module /usr/lib64/apache2/mod_passenger.so'
-    }
-    file {'/usr/lib64/apache2/mod_passenger.so':
-      target => "/usr/lib64/ruby/gems/1.8/gems/passenger-5.0.30/buildout/apache2/mod_passenger.so"
-
-    }
-
-  }
-
   if $::osfamily == 'RedHat' and $manage_repo {
     yumrepo { 'passenger':
       ensure        => 'present',

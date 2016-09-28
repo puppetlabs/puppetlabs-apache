@@ -52,7 +52,7 @@ class apache::mod::php (
   $_lib = "libphp${php_version}.so"
   $_php_major = regsubst($php_version, '^(\d+)\..*$', '\1')
 
-  if $::osfamily == 'Suse' {
+  if $::operatingsystem == 'SLES' {
     $suse_lib_path = $::apache::params::suse_lib_path
       ::apache::mod { $mod:
         package        => $_package_name,

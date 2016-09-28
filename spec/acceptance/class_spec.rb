@@ -21,7 +21,6 @@ describe 'apache class' do
       }
     end
 
-
     describe package($package_name) do
       it { is_expected.to be_installed }
     end

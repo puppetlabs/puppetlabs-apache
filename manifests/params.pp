@@ -49,7 +49,7 @@ class apache::params inherits ::apache::version {
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
 
-  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::osfamily == 'Suse') {
+  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::operatingsystem == 'SLES') {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
     $verify_command = '/usr/local/sbin/apachectl -t'
@@ -489,7 +489,6 @@ class apache::params inherits ::apache::version {
       'perl'        => 'apache2-mod_perl',
       'php5'        => 'apache2-mod_php53',
       'python'      => 'apache2-mod_python',
-      'passenger'   => 'apache2-mod_passenger',
       'security'    => 'apache2-mod_security2',
     }
     $mod_libs             = {

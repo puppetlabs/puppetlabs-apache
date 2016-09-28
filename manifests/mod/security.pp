@@ -32,7 +32,7 @@ class apache::mod::security (
     fail('FreeBSD is not currently supported')
   }
 
-  if $::osfamily == 'Suse' {
+  if $::operatingsystem == 'SLES' {
       ::apache::mod { 'security':
         id  => 'security2_module',
         lib_path => $suse_lib_path,
@@ -116,6 +116,6 @@ class apache::mod::security (
     notify  => Class['apache::service'],
   }
 
-  unless $::osfamily == "Suse" { apache::security::rule_link { $activated_rules: } }
+  unless $::operatingsystem == "SLES" { apache::security::rule_link { $activated_rules: } }
 
 }
