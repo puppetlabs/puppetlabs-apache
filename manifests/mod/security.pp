@@ -31,10 +31,20 @@ class apache::mod::security (
     fail('FreeBSD is not currently supported')
   }
 
-  ::apache::mod { 'security':
-    id  => 'security2_module',
-    lib => 'mod_security2.so',
-  }
+  if $::operatingsystem == 'SLES' {
+    $suse_lib_path  = $::apache::params::suse_lib_path
+      ::apache::mod { 'security':
+        id       => 'security2_module',
+        lib_path => $suse_lib_path,
+        lib      => 'mod_security2.so',
+      }
+    } else {
+      ::apache::mod { 'security':
+        id  => 'security2_module',
+        lib => 'mod_security2.so',
+      }
+    }
+
 
   ::apache::mod { 'unique_id_module':
     id  => 'unique_id_module',
@@ -106,6 +116,6 @@ class apache::mod::security (
     notify  => Class['apache::service'],
   }
 
-  apache::security::rule_link { $activated_rules: }
+  unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }
 
 }

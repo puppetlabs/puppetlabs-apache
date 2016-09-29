@@ -63,6 +63,12 @@
     SecTmpDir /var/cache/modsecurity
     SecDataDir /var/cache/modsecurity
     SecUploadDir /var/cache/modsecurity
+<%- elsif scope.lookupvar('::osfamily') == 'Suse' -%>
+    SecDebugLog /var/log/apache2/modsec_debug.log
+    SecAuditLog /var/log/apache2/modsec_audit.log
+    SecTmpDir /var/lib/mod_security
+    SecDataDir /var/lib/mod_security
+    SecUploadDir /var/lib/mod_security
 <% else -%>
     SecDebugLog /var/log/httpd/modsec_debug.log
     SecAuditLog /var/log/httpd/modsec_audit.log

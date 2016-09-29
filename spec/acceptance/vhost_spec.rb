@@ -72,7 +72,7 @@ describe 'apache::vhost define' do
     it 'should configure an apache vhost' do
       pp = <<-EOS
         class { 'apache': }
-        file { '#{$run_dir}':
+        file { '/var/www':
           ensure  => 'directory',
           recurse => true,
         }
@@ -80,7 +80,7 @@ describe 'apache::vhost define' do
         apache::vhost { 'first.example.com':
           port    => '80',
           docroot => '/var/www/first',
-          require => File['#{$run_dir}'],
+          require => File['/var/www'],
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
@@ -1103,7 +1103,7 @@ describe 'apache::vhost define' do
           action  => 'php-fastcgi',
         }
       EOS
-      pp = pp + "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian'
+      pp = pp + "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian' || fact('osfamily') == 'Suse'
       apply_manifest(pp, :catch_failures => true)
     end
 
@@ -1137,7 +1137,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'rack_base_uris' do
-    if (fact('osfamily') != 'RedHat')
+    unless fact('osfamily') == 'RedHat' or (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')
       it 'applies cleanly' do
         test = lambda do
           pp = <<-EOS
@@ -1348,7 +1348,7 @@ describe 'apache::vhost define' do
       end
     end
 
-    context 'on everything but lucid', :unless => fact('lsbdistcodename') == 'lucid' do
+    context 'on everything but lucid', :unless => (fact('lsbdistcodename') == 'lucid' or (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')) do
       it 'import_script applies cleanly' do
         pp = <<-EOS
           class { 'apache': }

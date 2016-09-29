@@ -11,10 +11,10 @@ describe 'apache::mod::php class' do
         class { 'apache::mod::php': }
         apache::vhost { 'php.example.com':
           port    => '80',
-          docroot => '/var/www/php',
+          docroot => '#{$doc_root}/php',
         }
         host { 'php.example.com': ip => '127.0.0.1', }
-        file { '/var/www/php/index.php':
+        file { '#{$doc_root}/php/index.php':
           ensure  => file,
           content => "<?php phpinfo(); ?>\\n",
         }
@@ -60,14 +60,14 @@ describe 'apache::mod::php class' do
         }
         apache::vhost { 'php.example.com':
           port             => '80',
-          docroot          => '/var/www/php',
+          docroot          => '#{$doc_root}/php',
           php_values       => { 'include_path' => '.:/usr/share/pear:/usr/bin/php', },
           php_flags        => { 'display_errors' => 'on', },
           php_admin_values => { 'open_basedir' => '/var/www/php/:/usr/share/pear/', },
           php_admin_flags  => { 'engine' => 'on', },
         }
         host { 'php.example.com': ip => '127.0.0.1', }
-        file { '/var/www/php/index.php5':
+        file { '#{$doc_root}/php/index.php5':
           ensure  => file,
           content => "<?php phpinfo(); ?>\\n",
         }

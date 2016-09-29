@@ -70,16 +70,18 @@ class apache::mod::passenger (
     }
   }
 
-  $_id = $mod_id
-  $_path = $mod_path
-  ::apache::mod { 'passenger':
-    package        => $_package,
-    package_ensure => $_package_ensure,
-    lib            => $_lib,
-    lib_path       => $_lib_path,
-    id             => $_id,
-    path           => $_path,
-    loadfile_name  => 'zpassenger.load',
+  unless ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12') {
+    $_id = $mod_id
+    $_path = $mod_path
+    ::apache::mod { 'passenger':
+      package        => $_package,
+      package_ensure => $_package_ensure,
+      lib            => $_lib,
+      lib_path       => $_lib_path,
+      id             => $_id,
+      path           => $_path,
+      loadfile_name  => 'zpassenger.load',
+    }
   }
 
   # Template uses:
