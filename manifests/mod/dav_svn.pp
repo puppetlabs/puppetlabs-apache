@@ -1,14 +1,14 @@
 class apache::mod::dav_svn (
   $authz_svn_enabled = false,
-  $suse_lib_path = $::apache::params::suse_lib_path
 ) {
   Class['::apache::mod::dav'] -> Class['::apache::mod::dav_svn']
   include ::apache
   include ::apache::mod::dav
   if($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12'){
+    $suse_lib_path = $::apache::params::suse_lib_path
     package { 'subversion-server':
+      ensure   => 'installed',
       provider => 'zypper',
-      ensure => 'installed',
     }
     ::apache::mod {'dav_svn':
       lib_path => $suse_lib_path
@@ -27,7 +27,7 @@ class apache::mod::dav_svn (
     if ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12'){
       ::apache::mod { 'authz_svn':
         loadfile_name => $loadfile_name,
-        lib_path => $suse_lib_path,
+        lib_path      => $suse_lib_path,
         require       => Apache::Mod['dav_svn'],
       }
       } else {

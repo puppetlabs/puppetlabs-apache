@@ -19,7 +19,6 @@ class apache::mod::security (
   $error_anomaly_score        = '4',
   $warning_anomaly_score      = '3',
   $notice_anomaly_score       = '2',
-  $suse_lib_path              = $::apache::params::suse_lib_path,
 ) inherits ::apache::params {
   include ::apache
 
@@ -33,10 +32,11 @@ class apache::mod::security (
   }
 
   if $::operatingsystem == 'SLES' {
+    $suse_lib_path  = $::apache::params::suse_lib_path
       ::apache::mod { 'security':
-        id  => 'security2_module',
+        id       => 'security2_module',
         lib_path => $suse_lib_path,
-        lib => 'mod_security2.so',
+        lib      => 'mod_security2.so',
       }
     } else {
       ::apache::mod { 'security':
@@ -116,6 +116,6 @@ class apache::mod::security (
     notify  => Class['apache::service'],
   }
 
-  unless $::operatingsystem == "SLES" { apache::security::rule_link { $activated_rules: } }
+  unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }
 
 }
