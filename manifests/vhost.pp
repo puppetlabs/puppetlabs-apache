@@ -135,6 +135,9 @@ define apache::vhost(
   $passenger_pre_start         = undef,
   $passenger_user              = undef,
   $passenger_high_performance  = undef,
+  $passenger_nodejs            = undef,
+  $passenger_sticky_sessions   = undef,
+  $passenger_startup_file      = undef,
   $add_default_charset         = undef,
   $modsec_disable_vhost        = undef,
   $modsec_disable_ids          = undef,
@@ -292,6 +295,10 @@ define apache::vhost(
     validate_re($keepalive,'(^on$|^off$)',"${keepalive} is not permitted for keepalive. Allowed values are 'on' or 'off'.")
   }
 
+  if $passenger_sticky_sessions {
+    validate_bool($passenger_sticky_sessions)
+  }
+
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
@@ -316,7 +323,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
     include ::apache::mod::passenger
   }
 
@@ -1046,7 +1053,10 @@ define apache::vhost(
   # - $passenger_start_timeout
   # - $passenger_pre_start
   # - $passenger_user
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user {
+  # - $passenger_nodejs
+  # - $passenger_sticky_sessions
+  # - $passenger_startup_file
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
