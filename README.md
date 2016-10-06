@@ -1761,6 +1761,7 @@ Installs `mod_proxy` and uses the `proxy.conf.erb` template to generate its conf
 - `apache_version`: Default: `undef`.
 - `package_name`: Default: `undef`.
 - `proxy_requests`: Default: 'Off'.
+- `proxy_via`: Default: 'On'.
 
 ##### Class: `apache::mod::proxy_balancer`
 
