@@ -1081,8 +1081,6 @@ You must set this to false to explicitly declare the following classes with cust
 - [`apache::mod::prefork`][]
 - [`apache::mod::worker`][]
 
-> **Note**: Switching between different MPMs on FreeBSD is possible but quite difficult. Before changing `mpm_module`, you must uninstall all packages that depend on your installed Apache server.
-
 ##### `package_ensure`
 
 Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
