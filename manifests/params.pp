@@ -192,6 +192,9 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
       'base_rules/modsecurity_crs_60_correlation.conf',
     ]
+    $error_log           = 'error_log'
+    $scriptalias         = '/var/www/cgi-bin'
+    $access_log_file     = 'access_log'
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
     $group               = 'www-data'
@@ -248,6 +251,9 @@ class apache::params inherits ::apache::version {
       'wsgi'        => 'libapache2-mod-wsgi',
       'xsendfile'   => 'libapache2-mod-xsendfile',
     }
+    $error_log           = 'error.log'
+    $scriptalias         = '/usr/lib/cgi-bin'
+    $access_log_file     = 'access.log'
     if $::osfamily == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0 {
       $shib2_lib = 'mod_shib_22.so'
     } else {
@@ -391,6 +397,9 @@ class apache::params inherits ::apache::version {
     $docroot              = '/usr/local/www/apache24/data'
     $alias_icons_path     = '/usr/local/www/apache24/icons'
     $error_documents_path = '/usr/local/www/apache24/error'
+    $error_log            = 'httpd-error.log'
+    $scriptalias          = '/usr/local/www/apache24/cgi-bin'
+    $access_log_file      = 'httpd-access.log'
   } elsif $::osfamily == 'Gentoo' {
     $user             = 'apache'
     $group            = 'apache'
@@ -455,6 +464,9 @@ class apache::params inherits ::apache::version {
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
     $pidfile              = '/var/run/apache2.pid'
+    $error_log            = 'error.log'
+    $scriptalias          = '/var/www/localhost/cgi-bin'
+    $access_log_file      = 'access.log'
   } elsif $::osfamily == 'Suse' {
     $user                = 'wwwrun'
     $group               = 'wwwrun'
@@ -517,6 +529,9 @@ class apache::params inherits ::apache::version {
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
+    $error_log           = 'error.log'
+    $scriptalias         = '/usr/lib/cgi-bin'
+    $access_log_file     = 'access.log'
 
     #
     # Passenger-specific settings
