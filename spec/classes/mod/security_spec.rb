@@ -28,8 +28,12 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/httpd/conf.modules.d/security.conf'
     ) }
-    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
-    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
+    it { should contain_file('security.conf')
+      .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})
+      .with_content(%r{^\s+SecAuditLogParts ABIJDEFHZ$})
+      .with_content(%r{^\s+SecDebugLog /var/log/httpd/modsec_debug.log$})
+      .with_content(%r{^\s+SecAuditLog /var/log/httpd/modsec_audit.log$})
+    }
     it { should contain_file('/etc/httpd/modsecurity.d').with(
       :ensure => 'directory',
       :path   => '/etc/httpd/modsecurity.d',
@@ -99,8 +103,12 @@ describe 'apache::mod::security', :type => :class do
     it { should contain_file('security.conf').with(
       :path => '/etc/apache2/mods-available/security.conf'
     ) }
-    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
-    it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
+    it { should contain_file('security.conf')
+      .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})
+      .with_content(%r{^\s+SecAuditLogParts ABIJDEFHZ$})
+      .with_content(%r{^\s+SecDebugLog /var/log/apache2/modsec_debug.log$})
+      .with_content(%r{^\s+SecAuditLog /var/log/apache2/modsec_audit.log$})
+    }
     it { should contain_file('/etc/modsecurity').with(
       :ensure => 'directory',
       :path   => '/etc/modsecurity',
