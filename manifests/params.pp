@@ -355,7 +355,7 @@ class apache::params inherits ::apache::version {
     $dev_packages     = undef
     $default_ssl_cert = '/usr/local/etc/apache24/server.crt'
     $default_ssl_key  = '/usr/local/etc/apache24/server.key'
-    $ssl_certs_dir    = '/usr/local/etc/apache24'
+    $ssl_certs_dir    = undef
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
     $passenger_root   = '/usr/local/lib/ruby/gems/2.0/gems/passenger-4.0.58'
