@@ -83,6 +83,7 @@ class apache::mod::security (
     purge   => true,
     force   => true,
     recurse => true,
+    require => Package['httpd'],
   }
 
   file { "${modsec_dir}/activated_rules":
