@@ -8,10 +8,14 @@ class apache::mod::event (
   $maxrequestsperchild    = '0',
   $maxconnectionsperchild = undef,
   $serverlimit            = '25',
-  $apache_version         = $::apache::apache_version,
+  $apache_version         = undef,
   $threadlimit            = '64',
   $listenbacklog          = '511',
 ) {
+  include ::apache
+
+  $_apache_version = pick($apache_version, $apache::apache_version)
+
   if defined(Class['apache::mod::itk']) {
     fail('May not include both apache::mod::event and apache::mod::itk on the same node')
   }
@@ -49,15 +53,15 @@ class apache::mod::event (
 
   case $::osfamily {
     'redhat': {
-      if versioncmp($apache_version, '2.4') >= 0 {
+      if versioncmp($_apache_version, '2.4') >= 0 {
         apache::mpm{ 'event':
-          apache_version => $apache_version,
+          apache_version => $_apache_version,
         }
       }
     }
     'debian','freebsd' : {
       apache::mpm{ 'event':
-        apache_version => $apache_version,
+        apache_version => $_apache_version,
       }
     }
     'gentoo': {
