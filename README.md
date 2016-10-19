@@ -3678,7 +3678,7 @@ Specifies the location of the SSL certification directory. Default: Depends on t
 
 - **Debian:** '/etc/ssl/certs'
 - **Red Hat:** '/etc/pki/tls/certs'
-- **FreeBSD:** '/usr/local/etc/apache22'
+- **FreeBSD:** undef
 - **Gentoo:** '/etc/ssl/apache2'
 
 ##### `ssl_chain`
