@@ -36,12 +36,11 @@ class apache::version {
       $default = '2.4'
     }
     'Suse': {
-      if ($::operatingsystemmajrelease == '12') {
+      if $::operatingsystem == 'SLES' and $::operatingsystemrelease == '12' {
         $default = '2.4'
       } else {
         $default = '2.2'
       }
-
     }
     default: {
       fail("Class['apache::version']: Unsupported osfamily: ${::osfamily}")

@@ -103,7 +103,7 @@ describe 'apache::mod::ssl', :type => :class do
       {
         :osfamily               => 'Suse',
         :operatingsystem        => 'SLES',
-        :operatingsystemrelease => '11.2',
+        :operatingsystemrelease => '12',
         :concat_basedir         => '/dne',
         :id                     => 'root',
         :kernel                 => 'Linux',
