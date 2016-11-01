@@ -34,10 +34,10 @@ describe 'apache::default_mods class' do
           default_mods => false,
         }
         apache::vhost { 'defaults.example.com':
-          docroot => '/var/www/defaults',
+          docroot => '#{$doc_root}/defaults',
           aliases => {
             alias => '/css',
-            path  => '/var/www/css',
+            path  => '#{$doc_root}/css',
           },
           setenv  => 'TEST1 one',
         }
@@ -65,10 +65,10 @@ describe 'apache::default_mods class' do
           ],
         }
         apache::vhost { 'defaults.example.com':
-          docroot => '/var/www/defaults',
+          docroot => '#{$doc_root}/defaults',
           aliases => {
             alias => '/css',
-            path  => '/var/www/css',
+            path  => '#{$doc_root}/css',
           },
           setenv  => 'TEST1 one',
         }

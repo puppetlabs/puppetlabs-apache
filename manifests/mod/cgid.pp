@@ -17,7 +17,14 @@ class apache::mod::cgid {
     'freebsd' => 'cgisock',
     default   => undef,
   }
-  ::apache::mod { 'cgid': }
+
+  if $::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12' {
+    ::apache::mod { 'cgid':
+      lib_path => '/usr/lib64/apache2-worker',
+    }
+    } else {
+      ::apache::mod { 'cgid': }
+    }
   if $cgisock_path {
     # Template uses $cgisock_path
     file { 'cgid.conf':

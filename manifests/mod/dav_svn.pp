@@ -4,7 +4,18 @@ class apache::mod::dav_svn (
   Class['::apache::mod::dav'] -> Class['::apache::mod::dav_svn']
   include ::apache
   include ::apache::mod::dav
-  ::apache::mod { 'dav_svn': }
+  if($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12'){
+    $suse_lib_path = $::apache::params::suse_lib_path
+    package { 'subversion-server':
+      ensure   => 'installed',
+      provider => 'zypper',
+    }
+    ::apache::mod {'dav_svn':
+      lib_path => $suse_lib_path
+    }
+    } else {
+      ::apache::mod { 'dav_svn': }
+    }
 
   if $::osfamily == 'Debian' and ($::operatingsystemmajrelease != '6' and $::operatingsystemmajrelease != '10.04' and $::operatingsystemrelease != '10.04' and $::operatingsystemmajrelease != '16.04') {
     $loadfile_name = undef
@@ -13,9 +24,17 @@ class apache::mod::dav_svn (
   }
 
   if $authz_svn_enabled {
-    ::apache::mod { 'authz_svn':
-      loadfile_name => $loadfile_name,
-      require       => Apache::Mod['dav_svn'],
-    }
+    if ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12'){
+      ::apache::mod { 'authz_svn':
+        loadfile_name => $loadfile_name,
+        lib_path      => $suse_lib_path,
+        require       => Apache::Mod['dav_svn'],
+      }
+      } else {
+        ::apache::mod { 'authz_svn':
+          loadfile_name => $loadfile_name,
+          require       => Apache::Mod['dav_svn'],
+        }
+      }
   }
 }

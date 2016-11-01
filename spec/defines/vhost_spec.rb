@@ -387,6 +387,9 @@ describe 'apache::vhost', :type => :define do
           'passenger_pre_start'         => 'http://localhost/myapp',
           'passenger_high_performance'  => true,
           'passenger_user'              => 'sandbox',
+          'passenger_nodejs'            => '/usr/bin/node',
+          'passenger_sticky_sessions'   => true,
+          'passenger_startup_file'      => 'bin/www',
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
             { 'mount'   => '/*',     'worker' => 'tcnode1', },

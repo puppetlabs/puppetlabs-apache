@@ -49,7 +49,7 @@ class apache::params inherits ::apache::version {
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
 
-  if $::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04' {
+  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::operatingsystem == 'SLES') {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
     $verify_command = '/usr/local/sbin/apachectl -t'
@@ -192,6 +192,9 @@ class apache::params inherits ::apache::version {
       'base_rules/modsecurity_crs_59_outbound_blocking.conf',
       'base_rules/modsecurity_crs_60_correlation.conf',
     ]
+    $error_log           = 'error_log'
+    $scriptalias         = '/var/www/cgi-bin'
+    $access_log_file     = 'access_log'
   } elsif $::osfamily == 'Debian' {
     $user                = 'www-data'
     $group               = 'www-data'
@@ -248,6 +251,9 @@ class apache::params inherits ::apache::version {
       'wsgi'        => 'libapache2-mod-wsgi',
       'xsendfile'   => 'libapache2-mod-xsendfile',
     }
+    $error_log           = 'error.log'
+    $scriptalias         = '/usr/lib/cgi-bin'
+    $access_log_file     = 'access.log'
     if $::osfamily == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0 {
       $shib2_lib = 'mod_shib_22.so'
     } else {
@@ -349,7 +355,7 @@ class apache::params inherits ::apache::version {
     $dev_packages     = undef
     $default_ssl_cert = '/usr/local/etc/apache24/server.crt'
     $default_ssl_key  = '/usr/local/etc/apache24/server.key'
-    $ssl_certs_dir    = '/usr/local/etc/apache24'
+    $ssl_certs_dir    = undef
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
     $passenger_root   = '/usr/local/lib/ruby/gems/2.0/gems/passenger-4.0.58'
@@ -391,6 +397,9 @@ class apache::params inherits ::apache::version {
     $docroot              = '/usr/local/www/apache24/data'
     $alias_icons_path     = '/usr/local/www/apache24/icons'
     $error_documents_path = '/usr/local/www/apache24/error'
+    $error_log            = 'httpd-error.log'
+    $scriptalias          = '/usr/local/www/apache24/cgi-bin'
+    $access_log_file      = 'httpd-access.log'
   } elsif $::osfamily == 'Gentoo' {
     $user             = 'apache'
     $group            = 'apache'
@@ -455,6 +464,9 @@ class apache::params inherits ::apache::version {
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
     $pidfile              = '/var/run/apache2.pid'
+    $error_log            = 'error.log'
+    $scriptalias          = '/var/www/localhost/cgi-bin'
+    $access_log_file      = 'access.log'
   } elsif $::osfamily == 'Suse' {
     $user                = 'wwwrun'
     $group               = 'wwwrun'
@@ -475,9 +487,10 @@ class apache::params inherits ::apache::version {
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
     $lib_path            = '/usr/lib64/apache2-prefork'
+    $suse_lib_path       = '/usr/lib64/apache2'
     $mpm_module          = 'prefork'
-    $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-    $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
+    $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
+    $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
     $ssl_certs_dir       = '/etc/ssl/certs'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
@@ -485,12 +498,14 @@ class apache::params inherits ::apache::version {
     $php_version         = '5'
     $mod_packages        = {
       'auth_kerb'   => 'apache2-mod_auth_kerb',
-      'fcgid'       => 'apache2-mod_fcgid',
       'perl'        => 'apache2-mod_perl',
       'php5'        => 'apache2-mod_php53',
       'python'      => 'apache2-mod_python',
+      'security'    => 'apache2-mod_security2',
     }
     $mod_libs             = {
+      'security'       => '/usr/lib64/apache2/mod_security2.so',
+      'php53'          => '/usr/lib64/apache2/mod_php5.so',
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $keepalive              = 'Off'
@@ -506,7 +521,17 @@ class apache::params inherits ::apache::version {
     $mellon_post_directory = undef
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
-    $dev_packages        = ['libapr-util1-devel', 'libapr1-devel']
+    $dev_packages        = ['libapr-util1-devel', 'libapr1-devel', 'libcurl-devel']
+    $modsec_crs_package   = undef
+    $modsec_crs_path      = undef
+    $modsec_default_rules = undef
+    $modsec_dir           = '/etc/apache2/modsecurity'
+    $secpcrematchlimit = 1500
+    $secpcrematchlimitrecursion = 1500
+    $modsec_secruleengine = 'On'
+    $error_log           = 'error.log'
+    $scriptalias         = '/usr/lib/cgi-bin'
+    $access_log_file     = 'access.log'
 
     #
     # Passenger-specific settings
@@ -515,9 +540,9 @@ class apache::params inherits ::apache::version {
     $passenger_conf_file          = 'passenger.conf'
     $passenger_conf_package_file  = undef
 
-    $passenger_root               = '/usr'
+    $passenger_root               = '/usr/lib64/ruby/gems/1.8/gems/passenger-5.0.30'
     $passenger_ruby               = '/usr/bin/ruby'
-    $passenger_default_ruby       = undef
+    $passenger_default_ruby       = '/usr/bin/ruby'
     $wsgi_socket_prefix           = undef
 
   } else {

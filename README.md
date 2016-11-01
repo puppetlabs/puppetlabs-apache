@@ -46,6 +46,7 @@
 [`apache::mod::alias`]: #class-apachemodalias
 [`apache::mod::auth_cas`]: #class-apachemodauth_cas
 [`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
+[`apache::mod::authn_dbd`]: #class-apachemodauthn_dbd
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::cluster`]: #class-apachemodcluster
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
@@ -59,6 +60,7 @@
 [`apache::mod::peruser`]: #class-apachemodperuser
 [`apache::mod::prefork`]: #class-apachemodprefork
 [`apache::mod::proxy`]: #class-apachemodproxy
+[`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
 [`apache::mod::security`]: #class-apachemodsecurity
@@ -159,7 +161,9 @@
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
+[`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
+[`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
@@ -733,9 +737,12 @@ If you need to use the [ProxySet](https://httpd.apache.org/docs/current/mod/mod_
 apache::balancer { 'puppet01':
   proxy_set => {
     'stickysession' => 'JSESSIONID',
+    'lbmethod'      => 'bytraffic',
   },
 }
 ```
+
+Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balancer documentation](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
 ## Reference
 
@@ -1081,8 +1088,6 @@ You must set this to false to explicitly declare the following classes with cust
 - [`apache::mod::prefork`][]
 - [`apache::mod::worker`][]
 
-> **Note**: Switching between different MPMs on FreeBSD is possible but quite difficult. Before changing `mpm_module`, you must uninstall all packages that depend on your installed Apache server.
-
 ##### `package_ensure`
 
 Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
@@ -1240,6 +1245,44 @@ The default value is determined by your operating system:
 
 You might need to override this if you are using a non-standard Apache package, such as those from Red Hat's software collections.
 
+##### `error_log`
+
+The name of the error log file for the main server instance
+
+The default value is determined by your operating system:
+
+- **Debian**: 'error.log'
+- **FreeBSD**: 'httpd-error.log'
+- **Gentoo**: 'error.log'
+- **Red Hat**: 'error_log'
+- **Suse**: 'error.log'
+
+If the string starts with / or | or syslog: the full path will be set. Otherwise the filename will be prefixed with $logroot
+
+##### `scriptalias`
+
+Directory to use for global script alias 
+
+The default value is determined by your operating system:
+
+- **Debian**: '/usr/lib/cgi-bin'
+- **FreeBSD**: '/usr/local/www/apache24/cgi-bin'
+- **Gentoo**: 'var/www/localhost/cgi-bin'
+- **Red Hat**: '/var/www/cgi-bin'
+- **Suse**: '/usr/lib/cgi-bin'
+
+##### `access_log_file`
+
+The name of the access log file for the main server instance
+
+The default value is determined by your operating system:
+
+- **Debian**: 'error.log'
+- **FreeBSD**: 'httpd-access.log'
+- **Gentoo**: 'access.log'
+- **Red Hat**: 'access_log'
+- **Suse**: 'access.log'
+
 #### Class: `apache::dev`
 
 Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`][] parameter of the [`apache::params`][] class based on your operating system:
@@ -1295,6 +1338,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `auth_mellon`\* (see [`apache::mod::auth_mellon`][])
 * `auth_kerb`
 * `authn_core`
+* `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
 * `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
 * `authz_default`
@@ -1307,6 +1351,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dav`
 * `dav_fs`
 * `dav_svn`\*
+* `dbd`
 * `deflate\`
 * `dev`
 * `dir`\*
@@ -1336,6 +1381,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `prefork`\*
 * `proxy`\* (see [`apache::mod::proxy`][])
 * `proxy_ajp`
+* `proxy_balancer`\* (see [`apache::mod::proxy_balancer`][])
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
 * `proxy_http`
@@ -1482,6 +1528,29 @@ class{ 'apache::mod::auth_mellon':
 - `mellon_post_ttl`: Time to keep post requests. Default: undef.
 - `mellon_post_size`: Maximum size of post requests. Default: undef.
 - `mellon_post_count`: Maximum number of post requests. Default: undef.
+
+##### Class: `apache::mod::authn_dbd`
+
+Installs `mod_authn_dbd` and uses `authn_dbd.conf.erb` template to generate its configuration.  Optionally creates AuthnProviderAlias.
+
+``` puppet
+class { 'apache::mod::authn_dbd':
+  $authn_dbd_params =>
+    'host=db01 port=3306 user=apache password=xxxxxx dbname=apacheauth',
+  $authn_dbd_query  => 'SELECT password FROM authn WHERE user = %s',
+  $authn_dbd_alias  => 'db_auth',
+}
+```
+
+** Parameters within `apache::mod::authn_dbd`
+- `authn_dbd_alias`: Name for the AuthnProviderAlias.
+- `authn_dbd_dbdriver`: Which db driver to use.  Default: mysql.
+- `authn_dbd_exptime`: corresponds to DBDExptime.  Default: 300.
+- `authn_dbd_keep`: corresponds to DBDKeep.  Default: 8.
+- `authn_dbd_max`: corresponds to DBDMax.  Default: 20.
+- `authn_dbd_min`: corresponds to DBDMin.  Default: 4.
+- `authn_dbd_params`: **Required**. Corresponds to DBDParams for the connection string.
+- `authn_dbd_query`: is the query used to test a user and password for authentication.
 
 ##### Class: `apache::mod::authnz_ldap`
 
@@ -1730,6 +1799,16 @@ Installs `mod_proxy` and uses the `proxy.conf.erb` template to generate its conf
 - `apache_version`: Default: `undef`.
 - `package_name`: Default: `undef`.
 - `proxy_requests`: Default: 'Off'.
+- `proxy_via`: Default: 'On'.
+
+##### Class: `apache::mod::proxy_balancer`
+
+Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
+
+**Parameters within `apache::mod::proxy_balancer`**:
+
+- `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'. Default: the value of [`$::apache::apache_version`][`apache_version`].
+   - On Apache >= 2.4, `mod_slotmem_shm` is loaded.
 
 ##### Class: `apache::mod::php`
 
@@ -2572,6 +2651,18 @@ Sets [PassengerUser](https://www.phusionpassenger.com/library/config/apache/refe
 ##### `passenger_high_performance`
 
 Sets the [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance) parameter. Valid options: 'true', 'false'. Default: undef.
+
+##### `passenger_nodejs`
+
+Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#passengernodejs), the NodeJS interpreter to use for the application, on this virtual host.
+
+##### `passenger_sticky_sessions`
+
+Sets the [`PassengerStickySessions`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessions) parameter. Valid options: 'true', 'false'. Default: undef.
+
+##### `passenger_startup_file`
+
+Sets the [`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile) path. This path is relative to the application root.
 
 ##### `php_flags & values`
 
@@ -3587,7 +3678,7 @@ Specifies the location of the SSL certification directory. Default: Depends on t
 
 - **Debian:** '/etc/ssl/certs'
 - **Red Hat:** '/etc/pki/tls/certs'
-- **FreeBSD:** '/usr/local/etc/apache22'
+- **FreeBSD:** undef
 - **Gentoo:** '/etc/ssl/apache2'
 
 ##### `ssl_chain`

@@ -51,7 +51,11 @@ AddDefaultCharset <%= @default_charset %>
 DefaultType <%= @default_type %>
 <%- end -%>
 HostnameLookups Off
+<%- if /^[|\/]/.match(@error_log) || /^syslog:/.match(@error_log) -%>
+ErrorLog "<%= @error_log %>"
+<%- else -%>
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
+<%- end -%>
 LogLevel <%= @log_level %>
 EnableSendfile <%= @sendfile %>
 <%- if @allow_encoded_slashes -%>

@@ -1,5 +1,6 @@
 class apache::mod::shib (
   $suppress_warning = false,
+  $mod_full_path = undef,
 ) {
   include ::apache
   if $::osfamily == 'RedHat' and ! $suppress_warning {
@@ -9,7 +10,7 @@ class apache::mod::shib (
   $mod_shib = 'shib2'
 
   apache::mod {$mod_shib:
-    id => 'mod_shib',
+    id   => 'mod_shib',
+    path => $mod_full_path,
   }
-
 }

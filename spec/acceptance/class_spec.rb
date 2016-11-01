@@ -3,13 +3,23 @@ require_relative './version.rb'
 
 describe 'apache class' do
   context 'default parameters' do
-    let(:pp) do
-      <<-EOS
-        class { 'apache': }
-      EOS
-    end
-    # Run it twice and test for idempotency
+    let(:pp) { "class { 'apache': }" }
+
     it_behaves_like "a idempotent resource"
+
+    describe 'apache_version fact' do
+      before :all do
+        apply_manifest("include apache", :catch_failures => true)
+        version_check_pp = <<-EOS
+        notice("apache_version = >${apache_version}<")
+        EOS
+        @result = apply_manifest(version_check_pp, :catch_failures => true)
+      end
+
+      it {
+        expect(@result.output).to match(/apache_version = >#{$apache_version}.*</)
+      }
+    end
 
     describe package($package_name) do
       it { is_expected.to be_installed }
