@@ -19,6 +19,7 @@ class apache::mod::passenger (
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
   $passenger_log_level              = undef,
+  $passenger_data_buffer_dir        = undef,
   $manage_repo                      = true,
   $mod_package                      = undef,
   $mod_package_ensure               = undef,
