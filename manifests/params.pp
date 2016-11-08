@@ -496,13 +496,23 @@ class apache::params inherits ::apache::version {
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $php_version         = '5'
-    $mod_packages        = {
-      'auth_kerb'   => 'apache2-mod_auth_kerb',
-      'perl'        => 'apache2-mod_perl',
-      'php5'        => 'apache2-mod_php53',
-      'python'      => 'apache2-mod_python',
-      'security'    => 'apache2-mod_security2',
-    }
+    if $::operatingsystemrelease < '11' {
+      $mod_packages      = {
+        'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'perl'        => 'apache2-mod_perl',
+        'php5'        => 'apache2-mod_php5',
+        'python'      => 'apache2-mod_python',
+        'security'    => 'apache2-mod_security2',
+        }
+      } else {
+          $mod_packages        = {
+            'auth_kerb'   => 'apache2-mod_auth_kerb',
+            'perl'        => 'apache2-mod_perl',
+            'php5'        => 'apache2-mod_php53',
+            'python'      => 'apache2-mod_python',
+            'security'    => 'apache2-mod_security2',
+          }
+      }
     $mod_libs             = {
       'security'       => '/usr/lib64/apache2/mod_security2.so',
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
