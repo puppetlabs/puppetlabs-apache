@@ -489,8 +489,13 @@ class apache::params inherits ::apache::version {
     $lib_path            = '/usr/lib64/apache2-prefork'
     $suse_lib_path       = '/usr/lib64/apache2'
     $mpm_module          = 'prefork'
-    $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
-    $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
+    if $::operatingsystemrelease < '11' {
+      $default_ssl_cert    = '/etc/apache2/ssl.crt/snakeoil-rsa.crt'
+      $default_ssl_key     = '/etc/apache2/ssl.key/snakeoil-rsa.key'
+      } else {
+        $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
+        $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
+      }
     $ssl_certs_dir       = '/etc/ssl/certs'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
@@ -502,7 +507,6 @@ class apache::params inherits ::apache::version {
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
         'python'      => 'apache2-mod_python',
-        'security'    => 'apache2-mod_security2',
         }
       } else {
           $mod_packages        = {
