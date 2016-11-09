@@ -489,20 +489,34 @@ class apache::params inherits ::apache::version {
     $lib_path            = '/usr/lib64/apache2-prefork'
     $suse_lib_path       = '/usr/lib64/apache2'
     $mpm_module          = 'prefork'
-    $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
-    $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
+    if $::operatingsystemrelease < '11' {
+      $default_ssl_cert    = '/etc/apache2/ssl.crt/snakeoil-rsa.crt'
+      $default_ssl_key     = '/etc/apache2/ssl.key/snakeoil-rsa.key'
+      } else {
+        $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
+        $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
+      }
     $ssl_certs_dir       = '/etc/ssl/certs'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $php_version         = '5'
-    $mod_packages        = {
-      'auth_kerb'   => 'apache2-mod_auth_kerb',
-      'perl'        => 'apache2-mod_perl',
-      'php5'        => 'apache2-mod_php53',
-      'python'      => 'apache2-mod_python',
-      'security'    => 'apache2-mod_security2',
-    }
+    if $::operatingsystemrelease < '11' {
+      $mod_packages      = {
+        'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'perl'        => 'apache2-mod_perl',
+        'php5'        => 'apache2-mod_php5',
+        'python'      => 'apache2-mod_python',
+        }
+      } else {
+          $mod_packages        = {
+            'auth_kerb'   => 'apache2-mod_auth_kerb',
+            'perl'        => 'apache2-mod_perl',
+            'php5'        => 'apache2-mod_php53',
+            'python'      => 'apache2-mod_python',
+            'security'    => 'apache2-mod_security2',
+          }
+      }
     $mod_libs             = {
       'security'       => '/usr/lib64/apache2/mod_security2.so',
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
