@@ -57,14 +57,14 @@ class apache::mod::passenger (
 
   if $::osfamily == 'RedHat' and $manage_repo {
     if $::operatingsystem == 'Amazon' {
-      $baseURL = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6Server/$basearch'
+      $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6Server/$basearch'
     } else {
-      $baseURL = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
+      $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
     }
 
     yumrepo { 'passenger':
       ensure        => 'present',
-      baseurl       => $baseURL,
+      baseurl       => $baseurl,
       descr         => 'passenger',
       enabled       => '1',
       gpgcheck      => '0',
