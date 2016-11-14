@@ -100,6 +100,7 @@ class apache::mod::passenger (
   # - $passenger_log_file
   # - $passenger_log_level
   # - $passenger_app_env
+  # - $passenger_data_buffer_dir
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':
