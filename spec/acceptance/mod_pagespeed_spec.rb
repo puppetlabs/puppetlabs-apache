@@ -6,7 +6,7 @@ require_relative './version.rb'
 describe 'apache::mod::pagespeed class', :unless =>
   ((fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') < '8') or
    (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') < '12') or
-   (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')) do
+   (fact('operatingsystem') == 'SLES' )) do
   context "default pagespeed config" do
     it 'succeeds in puppeting pagespeed' do
       pp= <<-EOS

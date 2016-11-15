@@ -486,37 +486,33 @@ class apache::params inherits ::apache::version {
     $pidfile             = '/var/run/httpd2.pid'
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
-    $lib_path            = '/usr/lib64/apache2-prefork'
-    $suse_lib_path       = '/usr/lib64/apache2'
+    $lib_path            = '/usr/lib64/apache2' #changes for some modules based on mpm
     $mpm_module          = 'prefork'
-    if $::operatingsystemrelease < '11' {
-      $default_ssl_cert    = '/etc/apache2/ssl.crt/snakeoil-rsa.crt'
-      $default_ssl_key     = '/etc/apache2/ssl.key/snakeoil-rsa.key'
-      } else {
-        $default_ssl_cert    = '/etc/ssl/servercerts/servercert.pem'
-        $default_ssl_key     = '/etc/ssl/servercerts/serverkey.pem'
-      }
+    $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
+    $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
     $ssl_certs_dir       = '/etc/ssl/certs'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $php_version         = '5'
-    if $::operatingsystemrelease < '11' {
+    if $::operatingsystemrelease < '11' or $::operatingsystemrelease >= '12' {
       $mod_packages      = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
         'python'      => 'apache2-mod_python',
+        'security'    => 'apache2-mod_security2',
+        'worker'      => 'apache2-worker'
         }
-      } else {
-          $mod_packages        = {
-            'auth_kerb'   => 'apache2-mod_auth_kerb',
-            'perl'        => 'apache2-mod_perl',
-            'php5'        => 'apache2-mod_php53',
-            'python'      => 'apache2-mod_python',
-            'security'    => 'apache2-mod_security2',
-          }
+    } else {
+      $mod_packages        = {
+        'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'perl'        => 'apache2-mod_perl',
+        'php5'        => 'apache2-mod_php53',
+        'python'      => 'apache2-mod_python',
+        'security'    => 'apache2-mod_security2',
       }
+    }
     $mod_libs             = {
       'security'       => '/usr/lib64/apache2/mod_security2.so',
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
