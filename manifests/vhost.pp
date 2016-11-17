@@ -209,6 +209,12 @@ define apache::vhost(
     Allowed values are 'on' and 'off'.")
   }
 
+  if $wsgi_chunked_request {
+    validate_re(downcase($wsgi_chunked_request), '^(on|off)$',
+    "${wsgi_chunked_request} is not supported for wsgi_chunked_request.
+    Allowed values are 'on' and 'off'.")
+  }
+
   # Deprecated backwards-compatibility
   if $rewrite_base {
     warning('Apache::Vhost: parameter rewrite_base is deprecated in favor of rewrites')
