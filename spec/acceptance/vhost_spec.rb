@@ -10,6 +10,9 @@ describe 'apache::vhost define' do
           default_ssl_vhost => false,
           service_ensure => stopped
         }
+        if ($::osfamily == 'Suse') {
+          exec { '/usr/bin/gensslcert': }
+         }
       EOS
 
       apply_manifest(pp, :catch_failures => true)
@@ -830,6 +833,8 @@ describe 'apache::vhost define' do
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       elsif fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '8'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
+      elsif fact('operatingsystem') == 'SLES' and fact('operatingsystemrelease') >= '12'
+        it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
       end
@@ -1141,7 +1146,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'rack_base_uris' do
-    unless fact('osfamily') == 'RedHat' or (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')
+    unless fact('osfamily') == 'RedHat' or fact('operatingsystem') == 'SLES'
       it 'applies cleanly' do
         test = lambda do
           pp = <<-EOS

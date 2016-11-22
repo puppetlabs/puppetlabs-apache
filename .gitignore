@@ -10,3 +10,4 @@ coverage/
 log/
 .idea/
 *.iml
+tmp/

@@ -71,7 +71,7 @@ class apache::mod::passenger (
     }
   }
 
-  unless ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12') {
+  unless ($::operatingsystem == 'SLES') {
     $_id = $mod_id
     $_path = $mod_path
     ::apache::mod { 'passenger':

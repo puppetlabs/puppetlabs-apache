@@ -31,19 +31,14 @@ class apache::mod::security (
     fail('FreeBSD is not currently supported')
   }
 
-  if $::operatingsystem == 'SLES' {
-    $suse_lib_path  = $::apache::params::suse_lib_path
-      ::apache::mod { 'security':
-        id       => 'security2_module',
-        lib_path => $suse_lib_path,
-        lib      => 'mod_security2.so',
-      }
-    } else {
-      ::apache::mod { 'security':
-        id  => 'security2_module',
-        lib => 'mod_security2.so',
-      }
-    }
+  if ($::osfamily == 'Suse' and $::operatingsystemrelease < '11') {
+    fail('SLES 10 is not currently supported.')
+  }
+
+  ::apache::mod { 'security':
+    id  => 'security2_module',
+    lib => 'mod_security2.so',
+  }
 
 
   ::apache::mod { 'unique_id_module':
