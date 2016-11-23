@@ -8,10 +8,12 @@ describe 'apache::vhost define' do
         class { 'apache':
           default_vhost => false,
           default_ssl_vhost => false,
-          service_ensure => stopped
+          service_ensure => stopped,
         }
         if ($::osfamily == 'Suse') {
-          exec { '/usr/bin/gensslcert': }
+          exec { '/usr/bin/gensslcert':
+            require => Class['apache'],
+          }
          }
       EOS
 
@@ -312,7 +314,7 @@ describe 'apache::vhost define' do
         pp = <<-EOS
           class { 'apache': }
 
-          if versioncmp($apache::apache_version, '2.4') >= 0 {
+          if versioncmp($apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
           } else {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
@@ -360,7 +362,7 @@ describe 'apache::vhost define' do
         pp = <<-EOS
           class { 'apache': }
 
-          if versioncmp($apache::apache_version, '2.4') >= 0 {
+          if versioncmp($apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
             $_files_match_directory = [
