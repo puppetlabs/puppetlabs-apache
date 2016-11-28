@@ -68,6 +68,7 @@ class apache (
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,
   $log_formats            = {},
+  $ssl_file               = $::apache::params::ssl_file,
   $ports_file             = $::apache::params::ports_file,
   $docroot                = $::apache::params::docroot,
   $apache_version         = $::apache::version::default,
