@@ -450,7 +450,7 @@ define apache::vhost(
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
-      if ! $servername {
+      if ! $servername and $servername != '' {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
       }
     }

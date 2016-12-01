@@ -19,6 +19,7 @@ class apache::mod::passenger (
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
   $passenger_log_level              = undef,
+  $passenger_data_buffer_dir        = undef,
   $manage_repo                      = true,
   $mod_package                      = undef,
   $mod_package_ensure               = undef,
@@ -70,7 +71,7 @@ class apache::mod::passenger (
     }
   }
 
-  unless ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12') {
+  unless ($::operatingsystem == 'SLES') {
     $_id = $mod_id
     $_path = $mod_path
     ::apache::mod { 'passenger':
@@ -99,6 +100,7 @@ class apache::mod::passenger (
   # - $passenger_log_file
   # - $passenger_log_level
   # - $passenger_app_env
+  # - $passenger_data_buffer_dir
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':

@@ -18,13 +18,14 @@ class apache::mod::cgid {
     default   => undef,
   }
 
-  if $::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12' {
+  if $::osfamily == 'Suse' {
     ::apache::mod { 'cgid':
-      lib_path => '/usr/lib64/apache2-worker',
+      lib_path => '/usr/lib64/apache2-worker'
     }
-    } else {
-      ::apache::mod { 'cgid': }
-    }
+  } else {
+    ::apache::mod { 'cgid': }
+  }
+
   if $cgisock_path {
     # Template uses $cgisock_path
     file { 'cgid.conf':

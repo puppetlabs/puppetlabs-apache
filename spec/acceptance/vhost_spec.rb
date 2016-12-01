@@ -8,8 +8,13 @@ describe 'apache::vhost define' do
         class { 'apache':
           default_vhost => false,
           default_ssl_vhost => false,
-          service_ensure => stopped
+          service_ensure => stopped,
         }
+        if ($::osfamily == 'Suse') {
+          exec { '/usr/bin/gensslcert':
+            require => Class['apache'],
+          }
+         }
       EOS
 
       apply_manifest(pp, :catch_failures => true)
@@ -120,31 +125,33 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'new proxy vhost on port 80' do
-    it 'should configure an apache proxy vhost' do
-      pp = <<-EOS
-        class { 'apache': }
-        apache::vhost { 'proxy.example.com':
-          port    => '80',
-          docroot => '/var/www/proxy',
-          proxy_pass_match => [
-            { 'path' => '/foo', 'url' => 'http://backend-foo/'},
-          ],
-        proxy_preserve_host   => true,
-        proxy_error_override  => true,
-        }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-    end
+  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajorrelease') <= '10')
+    context 'new proxy vhost on port 80' do
+      it 'should configure an apache proxy vhost' do
+        pp = <<-EOS
+          class { 'apache': }
+          apache::vhost { 'proxy.example.com':
+            port    => '80',
+            docroot => '#{$docroot}/proxy',
+            proxy_pass_match => [
+              { 'path' => '/foo', 'url' => 'http://backend-foo/'},
+            ],
+          proxy_preserve_host   => true,
+          proxy_error_override  => true,
+          }
+        EOS
+        apply_manifest(pp, :catch_failures => true)
+      end
 
-    describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
-      it { is_expected.to contain '<VirtualHost \*:80>' }
-      it { is_expected.to contain "ServerName proxy.example.com" }
-      it { is_expected.to contain "ProxyPassMatch /foo http://backend-foo/" }
-      it { is_expected.to contain "ProxyPreserveHost On" }
-      it { is_expected.to contain "ProxyErrorOverride On" }
-      it { is_expected.not_to contain "ProxyAddHeaders" }
-      it { is_expected.not_to contain "<Proxy \*>" }
+      describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
+        it { is_expected.to contain '<VirtualHost \*:80>' }
+        it { is_expected.to contain "ServerName proxy.example.com" }
+        it { is_expected.to contain "ProxyPassMatch /foo http://backend-foo/" }
+        it { is_expected.to contain "ProxyPreserveHost On" }
+        it { is_expected.to contain "ProxyErrorOverride On" }
+        it { is_expected.not_to contain "ProxyAddHeaders" }
+        it { is_expected.not_to contain "<Proxy \*>" }
+      end
     end
   end
 
@@ -307,7 +314,7 @@ describe 'apache::vhost define' do
         pp = <<-EOS
           class { 'apache': }
 
-          if versioncmp($apache::apache_version, '2.4') >= 0 {
+          if versioncmp($apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
           } else {
             $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
@@ -355,7 +362,7 @@ describe 'apache::vhost define' do
         pp = <<-EOS
           class { 'apache': }
 
-          if versioncmp($apache::apache_version, '2.4') >= 0 {
+          if versioncmp($apache_version, '2.4') >= 0 {
             $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
           } else {
             $_files_match_directory = [
@@ -664,47 +671,49 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'proxy_pass_match for alternative vhost' do
-    it 'should configure a local vhost and a proxy vhost' do
-      apply_manifest(%{
-        class { 'apache': default_vhost => false, }
-        apache::vhost { 'localhost':
-          docroot => '/var/www/local',
-          ip      => '127.0.0.1',
-          port    => '8888',
-        }
-        apache::listen { '*:80': }
-        apache::vhost { 'proxy.example.com':
-          docroot    => '/var/www',
-          port       => '80',
-          add_listen => false,
-          proxy_pass_match => {
-            'path' => '/',
-            'url'  => 'http://localhost:8888/subdir/',
-          },
-        }
-        host { 'proxy.example.com': ip => '127.0.0.1', }
-        file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
-        file { '/var/www/local/subdir/index.html':
-          ensure  => file,
-          content => "Hello from localhost\\n",
-        }
-                     }, :catch_failures => true)
-    end
-
-    describe service($service_name) do
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      else
-        it { should be_enabled }
+  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajorrelease') <= '10')
+    context 'proxy_pass_match for alternative vhost' do
+      it 'should configure a local vhost and a proxy vhost' do
+        apply_manifest(%{
+          class { 'apache': default_vhost => false, }
+          apache::vhost { 'localhost':
+            docroot => '/var/www/local',
+            ip      => '127.0.0.1',
+            port    => '8888',
+          }
+          apache::listen { '*:80': }
+          apache::vhost { 'proxy.example.com':
+            docroot    => '/var/www',
+            port       => '80',
+            add_listen => false,
+            proxy_pass_match => {
+              'path' => '/',
+              'url'  => 'http://localhost:8888/subdir/',
+            },
+          }
+          host { 'proxy.example.com': ip => '127.0.0.1', }
+          file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
+          file { '/var/www/local/subdir/index.html':
+            ensure  => file,
+            content => "Hello from localhost\\n",
+          }
+                      }, :catch_failures => true)
       end
-      it { is_expected.to be_running }
-    end
 
-    it 'should get a response from the back end' do
-      shell("/usr/bin/curl --max-redirs 0 proxy.example.com:80") do |r|
-        expect(r.stdout).to eq("Hello from localhost\n")
-        expect(r.exit_code).to eq(0)
+      describe service($service_name) do
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
+        it { is_expected.to be_running }
+      end
+
+      it 'should get a response from the back end' do
+        shell("/usr/bin/curl --max-redirs 0 proxy.example.com:80") do |r|
+          expect(r.stdout).to eq("Hello from localhost\n")
+          expect(r.exit_code).to eq(0)
+        end
       end
     end
   end
@@ -825,6 +834,8 @@ describe 'apache::vhost define' do
       elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10|16\.04)/
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       elsif fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '8'
+        it { is_expected.not_to contain 'NameVirtualHost test.server' }
+      elsif fact('operatingsystem') == 'SLES' and fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
@@ -1137,7 +1148,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'rack_base_uris' do
-    unless fact('osfamily') == 'RedHat' or (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')
+    unless fact('osfamily') == 'RedHat' or fact('operatingsystem') == 'SLES'
       it 'applies cleanly' do
         test = lambda do
           pp = <<-EOS
@@ -1348,7 +1359,7 @@ describe 'apache::vhost define' do
       end
     end
 
-    context 'on everything but lucid', :unless => (fact('lsbdistcodename') == 'lucid' or (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') < '12')) do
+    context 'on everything but lucid', :unless => (fact('lsbdistcodename') == 'lucid' or fact('operatingsystem') == 'SLES') do
       it 'import_script applies cleanly' do
         pp = <<-EOS
           class { 'apache': }

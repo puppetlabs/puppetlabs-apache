@@ -13,19 +13,36 @@ define apache::mpm (
   $_path = "${lib_path}/${_lib}"
   $_id   = "mpm_${mpm}_module"
 
-  if versioncmp($apache_version, '2.4') >= 0 {
-    file { "${mod_dir}/${mpm}.load":
-      ensure  => file,
-      path    => "${mod_dir}/${mpm}.load",
-      content => "LoadModule ${_id} ${_path}\n",
-      require => [
-        Package['httpd'],
-        Exec["mkdir ${mod_dir}"],
-      ],
-      before  => File[$mod_dir],
-      notify  => Class['apache::service'],
+  if $::osfamily == 'Suse' {
+    #mpms on Suse 12 don't use .so libraries so create a placeholder load file
+    if versioncmp($apache_version, '2.4') >= 0 {
+      file { "${mod_dir}/${mpm}.load":
+        ensure  => file,
+        path    => "${mod_dir}/${mpm}.load",
+        content => '',
+        require => [
+          Package['httpd'],
+          Exec["mkdir ${mod_dir}"],
+        ],
+        before  => File[$mod_dir],
+        notify  => Class['apache::service'],
+      }
     }
-  }
+  } else {
+      if versioncmp($apache_version, '2.4') >= 0 {
+        file { "${mod_dir}/${mpm}.load":
+          ensure  => file,
+          path    => "${mod_dir}/${mpm}.load",
+          content => "LoadModule ${_id} ${_path}\n",
+          require => [
+            Package['httpd'],
+            Exec["mkdir ${mod_dir}"],
+          ],
+          before  => File[$mod_dir],
+          notify  => Class['apache::service'],
+        }
+      }
+    }
 
   case $::osfamily {
     'debian': {
@@ -120,10 +137,8 @@ define apache::mpm (
         }
       }
 
-      if versioncmp($apache_version, '2.4') < 0 {
-        package { "apache2-${mpm}":
-          ensure => present,
-        }
+      package { "apache2-${mpm}":
+        ensure => present,
       }
     }
     default: {

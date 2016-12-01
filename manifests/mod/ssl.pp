@@ -67,8 +67,20 @@ class apache::mod::ssl (
     'Suse'    => '/var/lib/apache2/ssl_scache(512000)'
   }
 
-  ::apache::mod { 'ssl':
-    package => $package_name,
+  if $::osfamily == 'Suse' {
+    if defined(Class['::apache::mod::worker']){
+      $suse_path = '/usr/lib64/apache2-worker'
+    } else {
+      $suse_path = '/usr/lib64/apache2-worker'
+    }
+    ::apache::mod { 'ssl':
+      package  => $package_name,
+      lib_path => $suse_path
+    }
+  } else {
+    ::apache::mod { 'ssl':
+      package => $package_name,
+    }
   }
 
   if versioncmp($_apache_version, '2.4') >= 0 {
@@ -90,7 +102,7 @@ class apache::mod::ssl (
   # $_apache_version
   file { 'ssl.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/ssl.conf",
+    path    => $::apache::ssl_file,
     mode    => $::apache::file_mode,
     content => template('apache/mod/ssl.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
