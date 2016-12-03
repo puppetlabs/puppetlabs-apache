@@ -4,7 +4,7 @@
 
 # Base class. Turn off the default vhosts; we will be declaring
 # all vhosts below.
-class { 'apache':
+class { '::apache':
   default_vhost => false,
 }
 
