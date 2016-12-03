@@ -20,7 +20,7 @@ class apache::mod::cgid {
 
   if $::osfamily == 'Suse' {
     ::apache::mod { 'cgid':
-      lib_path => '/usr/lib64/apache2-worker'
+      lib_path => '/usr/lib64/apache2-worker',
     }
   } else {
     ::apache::mod { 'cgid': }

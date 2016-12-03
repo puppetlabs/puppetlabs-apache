@@ -1086,7 +1086,7 @@ define apache::vhost(
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb')
+      content => template('apache/vhost/_security.erb'),
     }
   }
 

@@ -137,7 +137,7 @@ class apache (
   if $manage_group {
     group { $group:
       ensure  => present,
-      require => Package['httpd']
+      require => Package['httpd'],
     }
   }
 
@@ -258,7 +258,7 @@ class apache (
   }
   concat::fragment { 'Apache ports header':
     target  => $ports_file,
-    content => template('apache/ports_header.erb')
+    content => template('apache/ports_header.erb'),
   }
 
   if $::apache::conf_dir and $::apache::params::conf_file {
@@ -284,7 +284,7 @@ class apache (
 
       file { [
         '/etc/apache2/modules.d/.keep_www-servers_apache-2',
-        '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+        '/etc/apache2/vhosts.d/.keep_www-servers_apache-2',
       ]:
         ensure  => absent,
         require => Package['httpd'],
@@ -343,7 +343,7 @@ class apache (
       }
     }
     class { '::apache::default_confd_files':
-      all => $default_confd_files
+      all => $default_confd_files,
     }
     if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
       include "::apache::mod::${mpm_module}"
