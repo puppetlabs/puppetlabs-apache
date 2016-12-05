@@ -57,17 +57,32 @@ class apache::mod::passenger (
   }
 
   if $::osfamily == 'RedHat' and $manage_repo {
-    yumrepo { 'passenger':
-      ensure        => 'present',
-      baseurl       => 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch',
-      descr         => 'passenger',
-      enabled       => '1',
-      gpgcheck      => '0',
-      gpgkey        => 'https://packagecloud.io/gpg.key',
-      repo_gpgcheck => '1',
-      sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
-      sslverify     => '1',
-      before        => Apache::Mod['passenger'],
+    if $::operatingsystem == 'Amazon' {
+      yumrepo { 'passenger':
+        ensure        => 'present',
+        baseurl       => 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6Server/$basearch',
+        descr         => 'passenger',
+        enabled       => '1',
+        gpgcheck      => '0',
+        gpgkey        => 'https://packagecloud.io/gpg.key',
+        repo_gpgcheck => '1',
+        sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
+        sslverify     => '1',
+        before        => Apache::Mod['passenger'],
+      }
+    } else {
+      yumrepo { 'passenger':
+        ensure        => 'present',
+        baseurl       => 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch',
+        descr         => 'passenger',
+        enabled       => '1',
+        gpgcheck      => '0',
+        gpgkey        => 'https://packagecloud.io/gpg.key',
+        repo_gpgcheck => '1',
+        sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
+        sslverify     => '1',
+        before        => Apache::Mod['passenger'],
+      }
     }
   }
 
