@@ -14,7 +14,7 @@ class apache::mod::info (
       $suse_path = '/usr/lib64/apache2-prefork'
     }
     ::apache::mod { 'info':
-      lib_path => $suse_path
+      lib_path => $suse_path,
     }
   } else {
     ::apache::mod { 'info': }

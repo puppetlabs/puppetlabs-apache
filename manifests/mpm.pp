@@ -102,7 +102,7 @@ define apache::mpm (
     }
     'freebsd': {
       class { '::apache::package':
-        mpm_module => $mpm
+        mpm_module => $mpm,
       }
     }
     'gentoo': {
@@ -132,7 +132,7 @@ define apache::mpm (
         if $mpm == 'itk' {
           file { "${lib_path}/mod_mpm_itk.so":
             ensure => link,
-            target => "${lib_path}/mpm_itk.so"
+            target => "${lib_path}/mpm_itk.so",
           }
         }
       }

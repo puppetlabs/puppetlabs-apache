@@ -75,7 +75,7 @@ class apache::mod::ssl (
     }
     ::apache::mod { 'ssl':
       package  => $package_name,
-      lib_path => $suse_path
+      lib_path => $suse_path,
     }
   } else {
     ::apache::mod { 'ssl':

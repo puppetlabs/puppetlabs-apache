@@ -262,7 +262,7 @@ class apache::params inherits ::apache::version {
       $shib2_lib = 'mod_shib2.so'
     }
     $mod_libs             = {
-      'shib2' => $shib2_lib
+      'shib2' => $shib2_lib,
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $keepalive              = 'Off'
@@ -507,7 +507,7 @@ class apache::params inherits ::apache::version {
         'php5'        => 'apache2-mod_php5',
         'python'      => 'apache2-mod_python',
         'security'    => 'apache2-mod_security2',
-        'worker'      => 'apache2-worker'
+        'worker'      => 'apache2-worker',
         }
     } else {
       $mod_packages        = {
