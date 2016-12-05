@@ -5,7 +5,7 @@
 # Base class. Declares default vhost on port 80 and default ssl
 # vhost on port 443 listening on all interfaces and serving
 # $apache::docroot
-class { 'apache': }
+class { '::apache': }
 
 # Most basic vhost with proxy_pass
 apache::vhost { 'first.example.com':
