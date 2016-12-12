@@ -192,7 +192,8 @@ define apache::vhost(
   if $rewrites {
     validate_array($rewrites)
     unless empty($rewrites) {
-      validate_hash($rewrites[0])
+      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
+      validate_hash($rewrites_flattened[0])
     }
   }
 
@@ -206,6 +207,12 @@ define apache::vhost(
   if $wsgi_pass_authorization {
     validate_re(downcase($wsgi_pass_authorization), '^(on|off)$',
     "${wsgi_pass_authorization} is not supported for wsgi_pass_authorization.
+    Allowed values are 'on' and 'off'.")
+  }
+
+  if $wsgi_chunked_request {
+    validate_re(downcase($wsgi_chunked_request), '^(on|off)$',
+    "${wsgi_chunked_request} is not supported for wsgi_chunked_request.
     Allowed values are 'on' and 'off'.")
   }
 
