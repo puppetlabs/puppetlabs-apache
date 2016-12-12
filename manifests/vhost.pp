@@ -192,7 +192,8 @@ define apache::vhost(
   if $rewrites {
     validate_array($rewrites)
     unless empty($rewrites) {
-      validate_hash($rewrites[0])
+      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
+      validate_hash($rewrites_flattened[0])
     }
   }
 
