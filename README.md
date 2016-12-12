@@ -1849,7 +1849,7 @@ Defining this class enables Shibboleth-specific parameters in `apache::vhost` in
 
 ##### Class: `apache::mod::ssl`
 
-Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.
+Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.  On most operating systems, this ssl.conf is placed in the module configuration directory, however on Red Hat-based operating systems it is placed in the confd directory (/etc/httpd/conf.d), the same location the RPM stores the configuration.
 
 **Parameters within `apache::mod::ssl`**:
 
