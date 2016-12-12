@@ -1,6 +1,9 @@
 <%- if @rewrites -%>
   ## Rewrite rules
   RewriteEngine On
+  <%- if @rewrite_inherit -%>
+  RewriteOptions Inherit
+  <%- end -%>
   <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
   <%- end -%>

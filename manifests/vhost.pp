@@ -100,6 +100,7 @@ define apache::vhost(
   $rewrite_base                = undef,
   $rewrite_rule                = undef,
   $rewrite_cond                = undef,
+  $rewrite_inherit             = false,
   $setenv                      = [],
   $setenvif                    = [],
   $setenvifnocase              = [],
