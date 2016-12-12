@@ -1814,8 +1814,12 @@ Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
 
 **Parameters within `apache::mod::proxy_balancer`**:
 
+- `manager`: Determines whether to enable balancer manager support. Default: `false`.
+- `manager_path`: The server location of the balancer manager. Default: '/balancer-manager'.
+- `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer-manager`. Default: ['127.0.0.1','::1'].
 - `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'. Default: the value of [`$::apache::apache_version`][`apache_version`].
    - On Apache >= 2.4, `mod_slotmem_shm` is loaded.
+
 
 ##### Class: `apache::mod::php`
 
