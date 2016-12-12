@@ -105,6 +105,7 @@ class apache::mod::worker (
 
   case $::osfamily {
     'redhat': {
+
       if versioncmp($_apache_version, '2.4') >= 0 {
         ::apache::mpm{ 'worker':
           apache_version => $_apache_version,
@@ -121,11 +122,19 @@ class apache::mod::worker (
         }
       }
     }
-    'debian', 'freebsd', 'Suse': {
+
+    'debian', 'freebsd': {
       ::apache::mpm{ 'worker':
         apache_version => $_apache_version,
       }
     }
+    'Suse': {
+      ::apache::mpm { 'worker':
+        apache_version => $apache_version,
+        lib_path       => '/usr/lib64/apache2-worker',
+      }
+    }
+
     'gentoo': {
       ::portage::makeconf { 'apache2_mpms':
         content => 'worker',

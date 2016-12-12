@@ -209,6 +209,12 @@ define apache::vhost(
     Allowed values are 'on' and 'off'.")
   }
 
+  if $wsgi_chunked_request {
+    validate_re(downcase($wsgi_chunked_request), '^(on|off)$',
+    "${wsgi_chunked_request} is not supported for wsgi_chunked_request.
+    Allowed values are 'on' and 'off'.")
+  }
+
   # Deprecated backwards-compatibility
   if $rewrite_base {
     warning('Apache::Vhost: parameter rewrite_base is deprecated in favor of rewrites')
@@ -450,7 +456,7 @@ define apache::vhost(
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
-      if ! $servername {
+      if ! $servername and $servername != '' {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
       }
     }
@@ -1086,7 +1092,7 @@ define apache::vhost(
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb')
+      content => template('apache/vhost/_security.erb'),
     }
   }
 

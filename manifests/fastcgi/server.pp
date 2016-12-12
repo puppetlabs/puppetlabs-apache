@@ -7,7 +7,7 @@ define apache::fastcgi::server (
   $file_type     = 'application/x-httpd-php',
   $pass_header   = undef,
 ) {
-  include apache::mod::fastcgi
+  include ::apache::mod::fastcgi
 
   Apache::Mod['fastcgi'] -> Apache::Fastcgi::Server[$title]
 

@@ -62,9 +62,15 @@ class apache::mod::prefork (
         }
       }
     }
-    'debian', 'freebsd', 'Suse' : {
+    'debian', 'freebsd': {
       ::apache::mpm{ 'prefork':
         apache_version => $_apache_version,
+      }
+    }
+    'Suse': {
+      ::apache::mpm{ 'prefork':
+        apache_version => $apache_version,
+        lib_path       => '/usr/lib64/apache2-prefork',
       }
     }
     'gentoo': {

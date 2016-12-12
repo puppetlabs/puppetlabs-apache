@@ -1692,6 +1692,7 @@ Installs and manages [`mod_passenger`][]. For RedHat based systems, please ensur
 - `passenger_max_pool_size` Sets the [`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpoolsize). Default: undef.
 - `passenger_max_request_queue_size` Sets the [`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize). Default: undef.
 - `passenger_max_requests` Sets the [`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests). Default: undef.
+- `passenger_data_buffer_dir` Sets the [`PassengerDataBufferDir`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdatabufferdir). Default: undef.
 
 ##### Class: `apache::mod::ldap`
 
@@ -1848,7 +1849,7 @@ Defining this class enables Shibboleth-specific parameters in `apache::vhost` in
 
 ##### Class: `apache::mod::ssl`
 
-Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.
+Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.  On most operating systems, this ssl.conf is placed in the module configuration directory, however on Red Hat-based operating systems it is placed in the confd directory (/etc/httpd/conf.d), the same location the RPM stores the configuration.
 
 **Parameters within `apache::mod::ssl`**:
 
@@ -1913,6 +1914,10 @@ ${modsec\_dir}/activated\_rules.
 - `error_anomaly_score`: Sets the scoring points of the error severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
 - `warning_anomaly_score`: Sets the scoring points of the warning severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '3'.
 - `notice_anomaly_score`: Sets the scoring points of the notice severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '2'.
+- `secrequestmaxnumargs`: Sets the Maximum number of arguments in the request. Default: '255'.
+- `secrequestbodylimit`:  Sets the maximum request body size ModSecurity will accept for buffering.. Default: '13107200'.
+- `secrequestbodynofileslimit`: Sets the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported in the request. Default: '131072'.
+- `secrequestbodyinmemorylimit`: Sets the maximum request body size that ModSecurity will store in memory. Default: '131072'
 
 ##### Class: `apache::mod::wsgi`
 
@@ -2711,6 +2716,8 @@ apache::vhost { 'site.name.fdqn':
       'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
     { 'path' => '/g', 'url' => 'http://backend-g/',
       'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
+    { 'path' => '/h', 'url' => 'http://backend-h/h',
+      'no_proxy_uris' => ['/h/admin', '/h/server-status'] },
   ],
 }
 ```
@@ -3678,7 +3685,7 @@ Specifies the location of the SSL certification directory. Default: Depends on t
 
 - **Debian:** '/etc/ssl/certs'
 - **Red Hat:** '/etc/pki/tls/certs'
-- **FreeBSD:** '/usr/local/etc/apache22'
+- **FreeBSD:** undef
 - **Gentoo:** '/etc/ssl/apache2'
 
 ##### `ssl_chain`

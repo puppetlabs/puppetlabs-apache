@@ -19,6 +19,12 @@
   ProxyErrorOverride On
 <%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
+  <%- Array(proxy['no_proxy_uris']).each do |uri| -%>
+  ProxyPass <%= uri %> !
+  <%- end -%>
+  <%- Array(proxy['no_proxy_uris_match']).each do |uri| -%>
+  ProxyPassMatch <%= uri %> !
+  <%- end -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
     <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
@@ -50,6 +56,12 @@
   <%- end -%>
 <% end -%>
 <% [@proxy_pass_match].flatten.compact.each do |proxy| %>
+  <%- Array(proxy['no_proxy_uris']).each do |uri| -%>
+  ProxyPass <%= uri %> !
+  <%- end -%>
+  <%- Array(proxy['no_proxy_uris_match']).each do |uri| -%>
+  ProxyPassMatch <%= uri %> !
+  <%- end -%>
   ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
     <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>

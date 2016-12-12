@@ -19,6 +19,7 @@ class apache::mod::passenger (
   $passenger_app_env                = undef,
   $passenger_log_file               = undef,
   $passenger_log_level              = undef,
+  $passenger_data_buffer_dir        = undef,
   $manage_repo                      = true,
   $mod_package                      = undef,
   $mod_package_ensure               = undef,
@@ -56,9 +57,15 @@ class apache::mod::passenger (
   }
 
   if $::osfamily == 'RedHat' and $manage_repo {
+    if $::operatingsystem == 'Amazon' {
+      $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6Server/$basearch'
+    } else {
+      $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
+    }
+
     yumrepo { 'passenger':
       ensure        => 'present',
-      baseurl       => 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch',
+      baseurl       => $baseurl,
       descr         => 'passenger',
       enabled       => '1',
       gpgcheck      => '0',
@@ -70,7 +77,7 @@ class apache::mod::passenger (
     }
   }
 
-  unless ($::operatingsystem == 'SLES' and $::operatingsystemmajrelease < '12') {
+  unless ($::operatingsystem == 'SLES') {
     $_id = $mod_id
     $_path = $mod_path
     ::apache::mod { 'passenger':
@@ -99,6 +106,7 @@ class apache::mod::passenger (
   # - $passenger_log_file
   # - $passenger_log_level
   # - $passenger_app_env
+  # - $passenger_data_buffer_dir
   # - $rack_autodetect
   # - $rails_autodetect
   file { 'passenger.conf':

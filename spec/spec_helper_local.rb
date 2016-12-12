@@ -11,6 +11,8 @@ end
 RSpec.configure do |config|
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
+  #as soon as psh is updated, the following line can be removed
+  config.mock_with :rspec
 end
 
 shared_examples :compile, :compile => true do
