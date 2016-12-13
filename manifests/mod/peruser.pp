@@ -8,7 +8,7 @@ class apache::mod::peruser (
   $expiretimeout = '120',
   $keepalive = 'Off',
 ) {
-
+  include ::apache
   case $::osfamily {
     'freebsd' : {
       fail("Unsupported osfamily ${::osfamily}")

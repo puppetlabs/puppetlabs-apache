@@ -62,8 +62,11 @@ class apache::mod::worker (
   $serverlimit         = '25',
   $threadlimit         = '64',
   $listenbacklog       = '511',
-  $apache_version      = $::apache::apache_version,
+  $apache_version      = undef,
 ) {
+  include ::apache
+  $_apache_version = pick($apache_version, $apache::apache_version)
+
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::worker and apache::mod::event on the same node')
   }
@@ -102,9 +105,10 @@ class apache::mod::worker (
 
   case $::osfamily {
     'redhat': {
-      if versioncmp($apache_version, '2.4') >= 0 {
-        ::apache::mpm { 'worker':
-          apache_version => $apache_version,
+
+      if versioncmp($_apache_version, '2.4') >= 0 {
+        ::apache::mpm{ 'worker':
+          apache_version => $_apache_version,
         }
       }
       else {
@@ -118,9 +122,10 @@ class apache::mod::worker (
         }
       }
     }
+
     'debian', 'freebsd': {
-      ::apache::mpm { 'worker':
-        apache_version => $apache_version,
+      ::apache::mpm{ 'worker':
+        apache_version => $_apache_version,
       }
     }
     'Suse': {

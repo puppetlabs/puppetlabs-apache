@@ -1,4 +1,5 @@
 class apache::mod::cgid {
+  include ::apache
   case $::osfamily {
     'FreeBSD': {}
     default: {

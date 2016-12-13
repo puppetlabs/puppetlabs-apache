@@ -9,7 +9,7 @@ class apache::mod::php (
   $root_group     = $::apache::params::root_group,
   $php_version    = $::apache::params::php_version,
 ) inherits apache::params {
-
+  include ::apache
   $mod = "php${php_version}"
 
   if defined(Class['::apache::mod::prefork']) {

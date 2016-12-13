@@ -8,6 +8,7 @@ class apache::mod::geoip (
   $scan_proxy_header_field    = undef,
   $use_last_xforwarededfor_ip = undef,
 ) {
+  include ::apache
   ::apache::mod { 'geoip': }
 
   # Template uses:

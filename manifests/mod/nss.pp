@@ -4,6 +4,7 @@ class apache::mod::nss (
   $passwd_file  = undef,
   $port     = 8443,
 ) {
+  include ::apache
   include ::apache::mod::mime
 
   apache::mod { 'nss': }
