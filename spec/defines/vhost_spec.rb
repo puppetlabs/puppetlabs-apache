@@ -1110,6 +1110,21 @@ describe 'apache::vhost', :type => :define do
       let :facts do default_facts end
       it { is_expected.to compile }
     end
+    context 'inherit global rewrite rules' do
+      let :params do
+        {
+          'docroot'  => '/rspec/docroot',
+          'rewrites'                    => [
+            {
+              'rewrite_rule' => ['^index\.html$ welcome.html']
+            }
+          'rewrite_inherit' => true,
+        }
+      end
+      it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
+        :content => /^RewriteOptions Inherit$/
+      )}
+    end
     context 'bad suexec_user_group' do
       let :params do
         {
