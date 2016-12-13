@@ -1123,7 +1123,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
-        :content => /^RewriteOptions Inherit$/
+        :content => /RewriteOptions Inherit/
       )}
     end
     context 'bad suexec_user_group' do
