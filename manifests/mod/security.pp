@@ -1,4 +1,5 @@
 class apache::mod::security (
+  $logroot                    = $::apache::params::logroot,
   $crs_package                 = $::apache::params::modsec_crs_package,
   $activated_rules             = $::apache::params::modsec_default_rules,
   $modsec_dir                  = $::apache::params::modsec_dir,
@@ -61,6 +62,7 @@ class apache::mod::security (
   }
 
   # Template uses:
+  # - logroot
   # - $modsec_dir
   # - $audit_log_parts
   # - secpcrematchlimit
