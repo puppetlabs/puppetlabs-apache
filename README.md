@@ -323,6 +323,8 @@ class { 'apache':
 }
 ```
 
+> **Note**: When `default_vhost` is set to `false` you have to add at least one `apache::vhost` resource or Apache will not start.
+
 ## Usage
 
 ### Configuring virtual hosts
@@ -930,6 +932,8 @@ _Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot ot
 Configures a default virtual host when the class is declared. Valid options: Boolean. Default: true.
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to false.
+
+> **Note**: Apache will not start without at least one virtual host. If you set this to false be sure to configure one elsewhere.
 
 ##### `dev_packages`
 
