@@ -1185,6 +1185,12 @@ Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/cu
 
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
+##### `ssl_stapling_return_errors`
+
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default. It is possible to override this on a vhost level.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
 ##### `timeout`
 
 Sets Apache's [`TimeOut`][] directive, which defines the number of seconds Apache waits for certain events before failing a request. Default: 120.
