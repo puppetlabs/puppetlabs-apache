@@ -1,3 +1,73 @@
+## Supported Release 1.11.0
+#### Summary
+This release adds SLES12 Support and many more features and bugfixes.
+
+#### Features
+- (MODULES-4049) Adds SLES 12 Support
+- Adds additional directories options for LDAP Auth
+  - `auth_ldap_url`
+  - `auth_ldap_bind_dn`
+  - `auth_ldap_bind_password`
+  - `auth_ldap_group_attribute`
+  - `auth_ldap_group_attribute_is_dn`
+- Allows `mod_event` parameters to be unset
+- Allows management of default root directory access rights
+- Adds class `apache::vhosts` to create apache::vhost resources
+- Adds class `apache::mod::proxy_wstunnel`
+- Adds class `apache::mod::dumpio`
+- Adds class `apache::mod::socache_shmcb`
+- Adds class `apache::mod::authn_dbd`
+- Adds support for apache 2.4 on Amazon Linux
+- Support the newer `mod_auth_cas` config options
+- Adds `wsgi_script_aliases_match` parameter to `apache::vhost`
+- Allow to override all SecDefaultAction attributes
+- Add audit_log_relevant_status parameter to apache::mod::security
+- Allow absolute path to $apache::mod::security::activated_rules
+- Allow setting SecAuditLog
+- Adds `passenger_max_instances_per_app` to `mod::passenger`
+- Allow the proxy_via setting to be configured
+- Allow no_proxy_uris to be used within proxy_pass
+- Add rpaf.conf template parameter to `mod::rpaf`
+- Allow user to specify alternative package and library names for shibboleth module
+- Allows configuration of shibboleth lib path
+- Adds parameter `passenger_data_buffer_dir` to `mod::passenger`
+- Adds SSL stapling 
+- Allows use of `balance_manager` with `mod_proxy_balancer`
+- Raises lower bound of `stdlib` dependency to version 4.2
+- Adds support for Passenger repo on Amazon Linux
+- Add ability to set SSLStaplingReturnResponderErrors on server level 
+- (MODULES-4213) Allow global rewrite rules inheritance in vhosts
+- Moves `mod_env` to its own class and load it when required
+
+#### Bugfixes
+- Deny access to .ht and .hg, which are created by mercurial hg.
+- Instead of failing, include apache::mod::prefork in manifests/mod/itk.pp instead.
+- Only set SSLCompression when it is set to true.
+- Remove duplicate shib2 hash element
+- (MODULES-3388) Include mpm_module classes instead of class declaration
+- Updates `apache::balancer` to respect `apache::confd_dir`
+- Wrap mod_security directives in an IfModule
+- Fixes to various mods for Ubuntu Xenial
+- Fix /etc/modsecurity perms to match package
+- Fix PassengerRoot under Debian stretch
+- (MODULES-3476) Updates regex in apache_version custom fact to work with EL5
+- Dont sql_injection_attacks.data
+- Add force option to confd file resource to purge directory without warnings
+- Patch httpoxy through mod_security
+- Fixes config ordering of IncludeOptional
+- Fixes bug where port numbers were unquoted
+- Fixes bug where empty servername for vhost were written to template
+- Auto-load `slotmem_shm` and `lbmethod_byrequests` with `proxy_balancer` on 2.4
+- Simplify MPM setup on FreeBSD
+- Adds requirement for httpd package
+- Do not set ssl_certs_dir on FreeBSD
+- Fixes bug that produces a duplicate `Listen 443` after a package update on EL7
+- Fixes bug where custom facts break structured facts
+- Avoid relative classname inclusion
+- Fixes a failure in `vhost` if the first element of `$rewrites` is not a hash
+- (MODULES-3744) Process $crs_package before $modsec_dir
+- (MODULES-1491) Adds `::apache` include to mods that need it
+
 ## Supported Release 1.10.0
 #### Summary
 This release fixes backwards compatibility bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
