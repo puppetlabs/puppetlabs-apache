@@ -1118,6 +1118,7 @@ describe 'apache::vhost', :type => :define do
             {
               'rewrite_rule' => ['^index\.html$ welcome.html']
             }
+          ],
           'rewrite_inherit' => true,
         }
       end
