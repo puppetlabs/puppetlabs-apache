@@ -317,6 +317,14 @@
          <%- end -%>
       <%- end -%>
     <%- end -%>
+    <% if directory['request_headers'] and ! directory['request_headers'].empty? -%>
+      ## Request Header rules
+      <%- Array(directory['request_headers']).each do |request_statement| -%>
+        <%- if request_statement != '' -%>
+            RequestHeader <%= request_statement %>
+        <%- end -%>
+      <%- end -%>
+    <% end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>
