@@ -1113,8 +1113,8 @@ describe 'apache::vhost', :type => :define do
     context 'inherit global rewrite rules' do
       let :params do
         {
-          'docroot'  => '/rspec/docroot',
-          'rewrites'                    => [
+          'docroot'         => '/rspec/docroot',
+          'rewrites'        => [
             {
               'rewrite_rule' => ['^index\.html$ welcome.html']
             }
