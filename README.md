@@ -2889,6 +2889,35 @@ apache::vhost { 'site.name.fdqn':
 
 Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on what is possible with rewrite rules and conditions.
 
+##### `rewrite_inherit`
+
+Determines whether the virtual host inherits global rewrite rules. Default: false.
+
+Rewrite rules may be specified globally (in `$conf_file` or `$confd_dir`) or inside the virtual host `.conf` file. By default, virtual hosts do not inherit global settings. To activate inheritance, specify the `rewrites` parameter and set `rewrite_inherit` parameter to `true`:
+
+``` puppet
+apache::vhost { 'site.name.fdqn':
+  …
+  rewrites => [
+    <rules>,
+  ],
+  rewrite_inherit => true,
+}
+```
+
+> **Note**: The `rewrites` parameter is **required** for this to have effect
+
+###### Some background
+
+Apache activates global `Rewrite` rules inheritance if the virtual host files contains the following directives:
+
+``` ApacheConf
+RewriteEngine On
+RewriteOptions Inherit
+```
+
+Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html), section "Rewriting in Virtual Hosts".
+
 ##### `scriptalias`
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as '/usr/scripts'. Default: undef.
