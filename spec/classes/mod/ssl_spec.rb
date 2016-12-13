@@ -188,6 +188,15 @@ describe 'apache::mod::ssl', :type => :class do
         end
         it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLUseStapling On$/)}
       end
+      context 'setting ssl_stapling_return_errors to true' do
+        let :params do
+          {
+            :apache_version => '2.4',
+            :ssl_stapling_return_errors => true,
+          }
+        end
+        it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLStaplingReturnResponderErrors On$/)}
+      end
     end
 
     context 'setting ssl_pass_phrase_dialog' do
