@@ -43,7 +43,7 @@
   <%- if @ssl_openssl_conf_cmd -%>
   SSLOpenSSLConfCmd       <%= @ssl_openssl_conf_cmd %>
   <%- end -%>
-  <%- if not @ssl_stapling.nil? && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- if (not @ssl_stapling.nil?) && (scope.function_versioncmp([@apache_version, '2.4']) >= 0) -%>
   SSLUseStapling <%= scope.function_bool2httpd([@ssl_stapling]) %>
   <%- end -%>
   <%- if @ssl_stapling_timeout && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>

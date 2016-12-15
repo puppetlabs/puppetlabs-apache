@@ -166,6 +166,7 @@
 [`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
+[`mod_env`]: http://httpd.apache.org/docs/current/mod/mod_env.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
@@ -322,6 +323,8 @@ class { 'apache':
   default_vhost => false,
 }
 ```
+
+> **Note**: When `default_vhost` is set to `false` you have to add at least one `apache::vhost` resource or Apache will not start.
 
 ## Usage
 
@@ -931,6 +934,8 @@ Configures a default virtual host when the class is declared. Valid options: Boo
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to false.
 
+> **Note**: Apache will not start without at least one virtual host. If you set this to false be sure to configure one elsewhere.
+
 ##### `dev_packages`
 
 Configures a specific dev package to use. Valid options: A string or array of strings. Default: Depends on the operating system.
@@ -1369,6 +1374,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dir`\*
 * `disk_cache` (see [`apache::mod::disk_cache`][])
 * `dumpio` (see [`apache::mod::dumpio`][])
+* `env`
 * `event` (see [`apache::mod::event`][])
 * `expires`
 * `ext_filter` (see [`apache::mod::ext_filter`][])
@@ -2890,6 +2896,35 @@ apache::vhost { 'site.name.fdqn':
 ```
 
 Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on what is possible with rewrite rules and conditions.
+
+##### `rewrite_inherit`
+
+Determines whether the virtual host inherits global rewrite rules. Default: false.
+
+Rewrite rules may be specified globally (in `$conf_file` or `$confd_dir`) or inside the virtual host `.conf` file. By default, virtual hosts do not inherit global settings. To activate inheritance, specify the `rewrites` parameter and set `rewrite_inherit` parameter to `true`:
+
+``` puppet
+apache::vhost { 'site.name.fdqn':
+  …
+  rewrites => [
+    <rules>,
+  ],
+  rewrite_inherit => true,
+}
+```
+
+> **Note**: The `rewrites` parameter is **required** for this to have effect
+
+###### Some background
+
+Apache activates global `Rewrite` rules inheritance if the virtual host files contains the following directives:
+
+``` ApacheConf
+RewriteEngine On
+RewriteOptions Inherit
+```
+
+Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html), section "Rewriting in Virtual Hosts".
 
 ##### `scriptalias`
 
