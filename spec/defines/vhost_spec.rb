@@ -454,6 +454,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::fastcgi') }
       it { is_expected.to contain_class('apache::mod::headers') }
       it { is_expected.to contain_class('apache::mod::filter') }
+      it { is_expected.to contain_class('apache::mod::env') }
       it { is_expected.to contain_class('apache::mod::setenvif') }
       it { is_expected.to contain_concat('30-rspec.example.com.conf').with({
         'owner'   => 'root',

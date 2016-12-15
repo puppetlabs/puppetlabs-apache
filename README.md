@@ -166,6 +166,7 @@
 [`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
+[`mod_env`]: http://httpd.apache.org/docs/current/mod/mod_env.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
@@ -1367,6 +1368,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dir`\*
 * `disk_cache` (see [`apache::mod::disk_cache`][])
 * `dumpio` (see [`apache::mod::dumpio`][])
+* `env`
 * `event` (see [`apache::mod::event`][])
 * `expires`
 * `ext_filter` (see [`apache::mod::ext_filter`][])
