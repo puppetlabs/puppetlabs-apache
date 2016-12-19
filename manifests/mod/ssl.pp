@@ -1,18 +1,19 @@
 class apache::mod::ssl (
-  $ssl_compression         = false,
-  $ssl_cryptodevice        = 'builtin',
-  $ssl_options             = [ 'StdEnvVars' ],
-  $ssl_openssl_conf_cmd    = undef,
-  $ssl_cipher              = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
-  $ssl_honorcipherorder    = true,
-  $ssl_protocol            = [ 'all', '-SSLv2', '-SSLv3' ],
-  $ssl_pass_phrase_dialog  = 'builtin',
-  $ssl_random_seed_bytes   = '512',
-  $ssl_sessioncachetimeout = '300',
-  $ssl_stapling            = false,
-  $ssl_mutex               = undef,
-  $apache_version          = undef,
-  $package_name            = undef,
+  $ssl_compression            = false,
+  $ssl_cryptodevice           = 'builtin',
+  $ssl_options                = [ 'StdEnvVars' ],
+  $ssl_openssl_conf_cmd       = undef,
+  $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
+  $ssl_honorcipherorder       = true,
+  $ssl_protocol               = [ 'all', '-SSLv2', '-SSLv3' ],
+  $ssl_pass_phrase_dialog     = 'builtin',
+  $ssl_random_seed_bytes      = '512',
+  $ssl_sessioncachetimeout    = '300',
+  $ssl_stapling               = false,
+  $ssl_stapling_return_errors = undef,
+  $ssl_mutex                  = undef,
+  $apache_version             = undef,
+  $package_name               = undef,
 ) {
   include ::apache
   include ::apache::mod::mime
@@ -69,6 +70,10 @@ class apache::mod::ssl (
   }
 
   validate_bool($ssl_stapling)
+
+  if $ssl_stapling_return_errors != undef {
+    validate_bool($ssl_stapling_return_errors)
+  }
 
   $stapling_cache = $::osfamily ? {
     'debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
