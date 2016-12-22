@@ -61,6 +61,9 @@ EnableSendfile <%= @sendfile %>
 <%- if @allow_encoded_slashes -%>
 AllowEncodedSlashes <%= @allow_encoded_slashes %>
 <%- end -%>
+<%- if @file_e_tag -%>
+FileETag <%= @file_e_tag %>
+<%- end -%>
 
 #Listen 80
 

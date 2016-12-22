@@ -76,6 +76,7 @@ class apache (
   $server_signature       = 'On',
   $trace_enable           = 'On',
   $allow_encoded_slashes  = undef,
+  $file_e_tag             = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
   $use_systemd            = $::apache::params::use_systemd,
