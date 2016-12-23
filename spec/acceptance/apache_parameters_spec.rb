@@ -483,6 +483,22 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'file_e_tag' do
+    it 'applys cleanly' do
+      pp = <<-EOS
+        class { 'apache':
+          file_e_tag  => 'None',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'FileETag None' }
+    end
+  end
+
   describe 'package_ensure' do
     it 'applys cleanly' do
       pp = <<-EOS
