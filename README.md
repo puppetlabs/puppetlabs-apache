@@ -2396,6 +2396,11 @@ apache::vhost { "$::fqdn":
 
 Sets the [`ForceType`][] directive, which forces Apache to serve all matching files with a [MIME `content-type`][] matching this parameter's value.
 
+#### `add_charset`
+
+Lets Apache set custom content character sets per directory and/or file extension
+
+
 ##### `headers`
 
 Adds lines to replace, merge, or remove response headers. See [Apache's mod_headers documentation](https://httpd.apache.org/docs/current/mod/mod_headers.html#header) for more information. Valid options: A string, an array of strings, or undef. Default: undef.
