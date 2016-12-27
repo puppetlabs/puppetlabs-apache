@@ -76,6 +76,7 @@ define apache::vhost(
   $proxy_dest_reverse_match    = undef,
   $proxy_pass                  = undef,
   $proxy_pass_match            = undef,
+  $proxy_pass_reverse          = undef,
   $suphp_addhandler            = $::apache::params::suphp_addhandler,
   $suphp_engine                = $::apache::params::suphp_engine,
   $suphp_configpath            = $::apache::params::suphp_configpath,
@@ -498,7 +499,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_pass_reverse) {
     if ! defined(Class['apache::mod::proxy']) {
       include ::apache::mod::proxy
     }
@@ -829,7 +830,8 @@ define apache::vhost(
   # - $proxy_preserve_host
   # - $proxy_add_headers
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
+  # - $proxy_pass_reverse
+  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_pass_reverse {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 160,
