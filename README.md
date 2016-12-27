@@ -2757,7 +2757,7 @@ Specifies an array of `path => URI` values for a [ProxyPassReverse](https://http
 ``` puppet
 apache::vhost { 'site.name.fdqn':
   …
-  proxy_pass => [
+  proxy_pass_reverse => [
     { 'path' => '/a', 'url' => 'http://backend-a/' },
     { 'path' => '/b', 'url' => 'http://backend-b/' },
   ],
