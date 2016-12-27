@@ -260,6 +260,135 @@ describe 'apache::vhost define' do
     end
   end
 
+  context 'new vhost with multiple ports on 1 IP address' do
+    it 'should configure one apache vhost with 2 ports' do
+      pp = <<-EOS
+        class { 'apache':
+          default_vhost => false,
+        }
+        apache::vhost { 'example.com':
+          port     => ['80','8080'],
+          ip       => '127.0.0.1',
+          ip_based => true,
+          docroot  => '/var/www/html',
+        }
+        host { 'host1.example.com': ip => '127.0.0.1', }
+        file { '/var/www/html/index.html':
+          ensure  => file,
+          content => "Hello from vhost\\n",
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
+    describe file("#{$vhost_dir}/25-example.com.conf") do
+      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.1:8080>' }
+      it { is_expected.to contain "ServerName example.com" }
+    end
+
+    describe file($ports_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Listen 127.0.0.1:80' }
+      it { is_expected.to contain 'Listen 127.0.0.1:8080' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:8080' }
+    end
+
+    it 'should answer to host1.example.com port 80' do
+      shell("/usr/bin/curl host1.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+
+    it 'should answer to host1.example.com port 8080' do
+      shell("/usr/bin/curl host1.example.com:8080", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+  end
+
+  context 'new vhost with multiple IP addresses on multiple ports' do
+    it 'should configure one apache vhost with 2 ip addresses and 2 ports' do
+      pp = <<-EOS
+        class { 'apache':
+          default_vhost => false,
+        }
+        apache::vhost { 'example.com':
+          port     => ['80', '8080'],
+          ip       => ['127.0.0.1','127.0.0.2'],
+          ip_based => true,
+          docroot  => '/var/www/html',
+        }
+        host { 'host1.example.com': ip => '127.0.0.1', }
+        host { 'host2.example.com': ip => '127.0.0.2', }
+        file { '/var/www/html/index.html':
+          ensure  => file,
+          content => "Hello from vhost\\n",
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
+    describe file("#{$vhost_dir}/25-example.com.conf") do
+      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.1:8080 127.0.0.2:80 127.0.0.2:8080>' }
+      it { is_expected.to contain "ServerName example.com" }
+    end
+
+    describe file($ports_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Listen 127.0.0.1:80' }
+      it { is_expected.to contain 'Listen 127.0.0.1:8080' }
+      it { is_expected.to contain 'Listen 127.0.0.2:80' }
+      it { is_expected.to contain 'Listen 127.0.0.2:8080' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:8080' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:80' }
+      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:8080' }
+    end
+
+    it 'should answer to host1.example.com port 80' do
+      shell("/usr/bin/curl host1.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+
+    it 'should answer to host1.example.com port 8080' do
+      shell("/usr/bin/curl host1.example.com:8080", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+
+    it 'should answer to host2.example.com port 80' do
+      shell("/usr/bin/curl host2.example.com:80", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+
+    it 'should answer to host2.example.com port 8080' do
+      shell("/usr/bin/curl host2.example.com:8080", {:acceptable_exit_codes => 0}) do |r|
+        expect(r.stdout).to eq("Hello from vhost\n")
+      end
+    end
+  end
+
   context 'new vhost with IPv6 address on port 80', :ipv6 do
     it 'should configure one apache vhost with an ipv6 address' do
       pp = <<-EOS

@@ -440,6 +440,16 @@ apache::vhost { 'ip.example.com':
 }
 ```
 
+You can configure multiple ports per virtual host by using an array of ports for the [`port`][] parameter:
+
+``` puppet
+apache::vhost { 'ip.example.com':
+  ip      => ['127.0.0.1'],
+  port    => ['80','8080']
+  docroot => '/var/www/ip',
+}
+```
+
 To configure a virtual host with [aliased servers][], refer to the aliases using the [`serveraliases`][] parameter:
 
 ``` puppet

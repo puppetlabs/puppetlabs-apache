@@ -446,10 +446,11 @@ define apache::vhost(
 
 
   if $ip {
-    $_ip = enclose_ipv6($ip)
+    $_ip = any2array(enclose_ipv6($ip))
     if $port {
-      $listen_addr_port = suffix(any2array($_ip),":${port}")
-      $nvh_addr_port = suffix(any2array($_ip),":${port}")
+      $_port = any2array($port)
+      $listen_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
+      $nvh_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $_ip
@@ -460,7 +461,7 @@ define apache::vhost(
   } else {
     if $port {
       $listen_addr_port = $port
-      $nvh_addr_port = "${vhost_name}:${port}"
+      $nvh_addr_port = prefix(any2array($port),"${vhost_name}:")
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
