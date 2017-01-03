@@ -117,6 +117,7 @@
 [FastCGI]: http://www.fastcgi.com/
 [FallbackResource]: https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource
 [`fallbackresource`]: #fallbackresource
+[`FileETag`]: https://httpd.apache.org/docs/current/mod/core.html#fileetag
 [filter rules]: https://httpd.apache.org/docs/current/filter.html
 [`filters`]: #filters
 [`ForceType`]: https://httpd.apache.org/docs/current/mod/core.html#forcetype
@@ -2376,6 +2377,12 @@ Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.ht
 #####`fastcgi_idle_timeout`
 
 If using fastcgi, this option sets the timeout for the server to respond.
+
+##### `file_e_tag`
+
+Sets the server default for the [`FileETag`][] declaration, which modifies the response header field for static files.
+Valid options: 'INode', 'MTime', 'Size', 'All', 'None'. 
+Default: undef, which uses Apache's default setting of 'MTime Size'.
 
 ##### `filters`
 
