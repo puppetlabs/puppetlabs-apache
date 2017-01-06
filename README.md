@@ -1408,6 +1408,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `headers`
 * `include`
 * `info`\*
+* `intercept_form_submit`
 * `itk`
 * `ldap` (see [`apache::mod::ldap`][])
 * `mime`

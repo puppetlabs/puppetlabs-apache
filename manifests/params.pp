@@ -97,47 +97,48 @@ class apache::params inherits ::apache::version {
     $php_version          = '5'
     $mod_packages         = {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
-      'auth_cas'    => 'mod_auth_cas',
-      'auth_kerb'   => 'mod_auth_kerb',
-      'auth_mellon' => 'mod_auth_mellon',
-      'authnz_ldap' => $::apache::version::distrelease ? {
+      'auth_cas'              => 'mod_auth_cas',
+      'auth_kerb'             => 'mod_auth_kerb',
+      'auth_mellon'           => 'mod_auth_mellon',
+      'authnz_ldap'           => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
         default => 'mod_authz_ldap',
       },
-      'authnz_pam'  => 'mod_authnz_pam',
-      'fastcgi'     => 'mod_fastcgi',
-      'fcgid'       => 'mod_fcgid',
-      'geoip'       => 'mod_geoip',
-      'ldap'        => $::apache::version::distrelease ? {
+      'authnz_pam'            => 'mod_authnz_pam',
+      'fastcgi'               => 'mod_fastcgi',
+      'fcgid'                 => 'mod_fcgid',
+      'geoip'                 => 'mod_geoip',
+      'intercept_form_submit' => 'mod_intercept_form_submit',
+      'ldap'                  => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
         default => undef,
       },
-      'pagespeed'   => 'mod-pagespeed-stable',
+      'pagespeed'             => 'mod-pagespeed-stable',
       # NOTE: The passenger module isn't available on RH/CentOS without
       # providing dependency packages provided by EPEL and passenger
       # repositories. See
       # https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
-      'passenger'   => 'mod_passenger',
-      'perl'        => 'mod_perl',
-      'php5'        => $::apache::version::distrelease ? {
+      'passenger'             => 'mod_passenger',
+      'perl'                  => 'mod_perl',
+      'php5'                  => $::apache::version::distrelease ? {
         '5'     => 'php53',
         default => 'php',
       },
-      'phpXXX'      => 'php',
-      'proxy_html'  => 'mod_proxy_html',
-      'python'      => 'mod_python',
-      'security'    => 'mod_security',
+      'phpXXX'                => 'php',
+      'proxy_html'            => 'mod_proxy_html',
+      'python'                => 'mod_python',
+      'security'              => 'mod_security',
       # NOTE: The module for Shibboleth is not available on RH/CentOS without
       # providing dependency packages provided by Shibboleth's repositories.
       # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
-      'shibboleth'  => 'shibboleth',
-      'ssl'         => 'mod_ssl',
-      'wsgi'        => 'mod_wsgi',
-      'dav_svn'     => 'mod_dav_svn',
-      'suphp'       => 'mod_suphp',
-      'xsendfile'   => 'mod_xsendfile',
-      'nss'         => 'mod_nss',
-      'shib2'       => 'shibboleth',
+      'shibboleth'            => 'shibboleth',
+      'ssl'                   => 'mod_ssl',
+      'wsgi'                  => 'mod_wsgi',
+      'dav_svn'               => 'mod_dav_svn',
+      'suphp'                 => 'mod_suphp',
+      'xsendfile'             => 'mod_xsendfile',
+      'nss'                   => 'mod_nss',
+      'shib2'                 => 'shibboleth',
     }
     $mod_libs             = {
       'nss' => 'libmodnss.so',
@@ -235,27 +236,28 @@ class apache::params inherits ::apache::version {
       $php_version = '7.0'
     }
     $mod_packages        = {
-      'auth_cas'    => 'libapache2-mod-auth-cas',
-      'auth_kerb'   => 'libapache2-mod-auth-kerb',
-      'auth_mellon' => 'libapache2-mod-auth-mellon',
-      'authnz_pam'  => 'libapache2-mod-authnz-pam',
-      'dav_svn'     => 'libapache2-svn',
-      'fastcgi'     => 'libapache2-mod-fastcgi',
-      'fcgid'       => 'libapache2-mod-fcgid',
-      'geoip'       => 'libapache2-mod-geoip',
-      'nss'         => 'libapache2-mod-nss',
-      'pagespeed'   => 'mod-pagespeed-stable',
-      'passenger'   => 'libapache2-mod-passenger',
-      'perl'        => 'libapache2-mod-perl2',
-      'phpXXX'      => 'libapache2-mod-phpXXX',
-      'proxy_html'  => 'libapache2-mod-proxy-html',
-      'python'      => 'libapache2-mod-python',
-      'rpaf'        => 'libapache2-mod-rpaf',
-      'security'    => 'libapache2-modsecurity',
-      'shib2'       => 'libapache2-mod-shib2',
-      'suphp'       => 'libapache2-mod-suphp',
-      'wsgi'        => 'libapache2-mod-wsgi',
-      'xsendfile'   => 'libapache2-mod-xsendfile',
+      'auth_cas'              => 'libapache2-mod-auth-cas',
+      'auth_kerb'             => 'libapache2-mod-auth-kerb',
+      'auth_mellon'           => 'libapache2-mod-auth-mellon',
+      'authnz_pam'            => 'libapache2-mod-authnz-pam',
+      'dav_svn'               => 'libapache2-svn',
+      'fastcgi'               => 'libapache2-mod-fastcgi',
+      'fcgid'                 => 'libapache2-mod-fcgid',
+      'geoip'                 => 'libapache2-mod-geoip',
+      'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
+      'nss'                   => 'libapache2-mod-nss',
+      'pagespeed'             => 'mod-pagespeed-stable',
+      'passenger'             => 'libapache2-mod-passenger',
+      'perl'                  => 'libapache2-mod-perl2',
+      'phpXXX'                => 'libapache2-mod-phpXXX',
+      'proxy_html'            => 'libapache2-mod-proxy-html',
+      'python'                => 'libapache2-mod-python',
+      'rpaf'                  => 'libapache2-mod-rpaf',
+      'security'              => 'libapache2-modsecurity',
+      'shib2'                 => 'libapache2-mod-shib2',
+      'suphp'                 => 'libapache2-mod-suphp',
+      'wsgi'                  => 'libapache2-mod-wsgi',
+      'xsendfile'             => 'libapache2-mod-xsendfile',
     }
     $error_log           = 'error.log'
     $scriptalias         = '/usr/lib/cgi-bin'
