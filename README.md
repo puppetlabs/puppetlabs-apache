@@ -1380,6 +1380,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
 * `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
+* `authnz_pam`
 * `authz_default`
 * `authz_user`
 * `autoindex`
