@@ -1411,6 +1411,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `intercept_form_submit`
 * `itk`
 * `ldap` (see [`apache::mod::ldap`][])
+* `lookup_identity`
 * `mime`
 * `mime_magic`\*
 * `negotiation`

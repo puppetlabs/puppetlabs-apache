@@ -113,6 +113,7 @@ class apache::params inherits ::apache::version {
         '7'     => 'mod_ldap',
         default => undef,
       },
+      'lookup_identity'       => 'mod_lookup_identity',
       'pagespeed'             => 'mod-pagespeed-stable',
       # NOTE: The passenger module isn't available on RH/CentOS without
       # providing dependency packages provided by EPEL and passenger
@@ -245,6 +246,7 @@ class apache::params inherits ::apache::version {
       'fcgid'                 => 'libapache2-mod-fcgid',
       'geoip'                 => 'libapache2-mod-geoip',
       'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
+      'lookup_identity'       => 'libapache2-mod-lookup-identity',
       'nss'                   => 'libapache2-mod-nss',
       'pagespeed'             => 'mod-pagespeed-stable',
       'passenger'             => 'libapache2-mod-passenger',
