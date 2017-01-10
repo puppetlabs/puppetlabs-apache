@@ -1595,6 +1595,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `jk` (see [`apache::mod::jk`])
 * `ldap` (see [`apache::mod::ldap`][])
 * `lookup_identity`
+* `macro` (see [`apache:mod:macro`][])
 * `mime`
 * `mime_magic`\*
 * `negotiation`
