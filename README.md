@@ -2642,7 +2642,7 @@ apache::vhost { 'site.name.fdqn':
 
 > **Note**: If you use the [`directories`][] parameter of [`apache::vhost`][], 'Options', 'Override', and 'DirectoryIndex' are ignored because they are parameters within `directories`.
 
-##### `override`
+##### `allow_override`
 
 Sets the overrides for the specified virtual host. Accepts an array of [AllowOverride](https://httpd.apache.org/docs/current/mod/core.html#allowoverride) arguments. Default: '[none]'.
 
