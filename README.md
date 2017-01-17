@@ -5067,6 +5067,13 @@ Links the `activated_rules` from [`apache::mod::security`][] to the respective C
 
 The Apache module relies heavily on templates to enable the [`apache::vhost`][] and [`apache::mod`][] defined types. These templates are built based on [Facter][] facts specific to your operating system. Unless explicitly called out, most templates are not meant for configuration.
 
+### Functions
+#### apache_pw_hash
+Hashes a password in a format suitable for htpasswd files read by apache.
+
+Currently uses SHA-hashes, because although this format is considered insecure, its the
+most secure format supported by the most platforms.
+
 ## Limitations
 
 ### General
