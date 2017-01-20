@@ -1,4 +1,6 @@
 ---
+appveyor.yml:
+  delete: true
 Rakefile:
   extra_disabled_lint_checks:
   - 'disable_only_variable_string'
