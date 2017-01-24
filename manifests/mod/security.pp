@@ -53,7 +53,7 @@ class apache::mod::security (
 
   if $crs_package  {
     package { $crs_package:
-      ensure => 'latest',
+      ensure => 'installed',
       before => [
         File[$::apache::confd_dir],
         File[$modsec_dir],
