@@ -1871,6 +1871,10 @@ Installs and configures [`mod_reqtimeout`][].
 
 - `timeouts`: A string or [array][] that sets the [`RequestReadTimeout`][] option. Default: ['header=20-40,MinRate=500', 'body=20,MinRate=500'].
 
+##### Class: `apache::mod::rewrite`
+
+Installs and enables the Apache module `mod_rewrite`.
+
 ##### Class: `apache::mod::shib`
 
 Installs the [Shibboleth](http://shibboleth.net/) Apache module `mod_shib`, which enables SAML2 single sign-on (SSO) authentication by Shibboleth Identity Providers and Shibboleth Federations. This class only installs and configures the Apache components of a web application that consumes Shibboleth SSO identities, also known as a Shibboleth Service Provider. You can manage the Shibboleth configuration manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
