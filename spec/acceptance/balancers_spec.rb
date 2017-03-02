@@ -23,6 +23,7 @@ describe 'apache::balancers class' do
         }
 
         class { 'apache::balancermembers':
+	  balancermembers => {  
             'spechost00-puppet00' => {
                  'balancer_cluster' => 'puppet00',
                  'url' => 'ajp://spechost00:8009',
@@ -31,6 +32,7 @@ describe 'apache::balancers class' do
                  'balancer_cluster' => 'puppet01',
                  'url' => 'ajp://spechost01:8009',
             },
+	  },
         }
       EOS
       apply_manifest(pp, :catch_failures => true)
