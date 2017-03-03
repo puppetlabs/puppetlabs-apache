@@ -273,6 +273,8 @@ describe 'apache::vhost', :type => :define do
               'path'            => '/a',
               'url'             => 'http://backend-a/',
               'keywords'        => ['noquery', 'interpolate'],
+              'no_proxy_uris'       => ['/a/foo', '/a/bar'],
+              'no_proxy_uris_match' => ['/a/foomatch'],
               'reverse_cookies' => [
 								{
                   'path'          => '/a',
@@ -295,6 +297,8 @@ describe 'apache::vhost', :type => :define do
               'path'     => '/a',
               'url'      => 'http://backend-a/',
               'keywords' => ['noquery', 'interpolate'],
+              'no_proxy_uris'       => ['/a/foo', '/a/bar'],
+              'no_proxy_uris_match' => ['/a/foomatch'],
               'params'   => {
                       'retry'   => '0',
                       'timeout' => '5'
@@ -339,6 +343,7 @@ describe 'apache::vhost', :type => :define do
           'rewrite_base'                => '/',
           'rewrite_rule'                => '^index\.html$ welcome.html',
           'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
+          'rewrite_inherit'             => true,
           'setenv'                      => ['FOO=/bin/true'],
           'setenvif'                    => 'Request_URI "\.gif$" object_is_image=gif',
           'setenvifnocase'              => 'REMOTE_ADDR ^127.0.0.1 localhost=true',
@@ -449,6 +454,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_class('apache::mod::fastcgi') }
       it { is_expected.to contain_class('apache::mod::headers') }
       it { is_expected.to contain_class('apache::mod::filter') }
+      it { is_expected.to contain_class('apache::mod::env') }
       it { is_expected.to contain_class('apache::mod::setenvif') }
       it { is_expected.to contain_concat('30-rspec.example.com.conf').with({
         'owner'   => 'root',
@@ -552,6 +558,8 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
+        :content => /^\s+RewriteOptions Inherit$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
@@ -649,6 +657,80 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
       it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
       it { is_expected.to_not contain_concat__fragment('NameVirtualHost [::1]:80') }
+    end
+
+    context 'vhost with multiple ports' do
+      let :params do
+        {
+          'port'                        => ['80', '8080'],
+          'ip'                          => '127.0.0.1',
+          'ip_based'                    => true,
+          'servername'                  => 'example.com',
+          'docroot'                     => '/var/www/html',
+          'add_listen'                  => true,
+          'ensure'                      => 'present'
+        }
+      end
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :kernelversion          => '3.6.2',
+          :is_pe                  => false,
+        }
+      end
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+        :content => /[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080>[.\/m]*$/ ) }
+      it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
+      it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:8080') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:8080') }
+    end
+
+    context 'vhost with multiple ip addresses, multiple ports' do
+      let :params do
+        {
+          'port'                        => ['80', '8080'],
+          'ip'                          => ['127.0.0.1','::1'],
+          'ip_based'                    => true,
+          'servername'                  => 'example.com',
+          'docroot'                     => '/var/www/html',
+          'add_listen'                  => true,
+          'ensure'                      => 'present'
+        }
+      end
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :kernelversion          => '3.6.2',
+          :is_pe                  => false,
+        }
+      end
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+        :content => /[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080 \[::1\]:80 \[::1\]:8080>[.\/m]*$/ ) }
+      it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
+      it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:8080') }
+      it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
+      it { is_expected.to contain_concat__fragment('Listen [::1]:8080') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost 127.0.0.1:8080') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost [::1]:80') }
+      it { is_expected.to_not contain_concat__fragment('NameVirtualHost [::1]:8080') }
     end
 
     context 'vhost with ipv6 address' do

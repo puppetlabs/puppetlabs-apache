@@ -152,7 +152,7 @@ class apache::default_mods (
     include ::apache::mod::authz_user
 
     ::apache::mod { 'authz_groupfile': }
-    ::apache::mod { 'env': }
+    include ::apache::mod::env
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
 

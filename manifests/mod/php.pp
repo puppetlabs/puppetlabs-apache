@@ -9,7 +9,7 @@ class apache::mod::php (
   $root_group     = $::apache::params::root_group,
   $php_version    = $::apache::params::php_version,
 ) inherits apache::params {
-
+  include ::apache
   $mod = "php${php_version}"
 
   if defined(Class['::apache::mod::prefork']) {
@@ -53,13 +53,12 @@ class apache::mod::php (
   $_php_major = regsubst($php_version, '^(\d+)\..*$', '\1')
 
   if $::operatingsystem == 'SLES' {
-    $suse_lib_path = $::apache::params::suse_lib_path
       ::apache::mod { $mod:
         package        => $_package_name,
         package_ensure => $package_ensure,
         lib            => 'mod_php5.so',
         id             => "php${_php_major}_module",
-        path           => "${suse_lib_path}/mod_php5.so",
+        path           => "${::apache::lib_path}/mod_php5.so",
       }
     } else {
       ::apache::mod { $mod:

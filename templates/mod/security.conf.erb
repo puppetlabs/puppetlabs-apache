@@ -4,9 +4,9 @@
     SecRequestBodyAccess On
     SecRule REQUEST_HEADERS:Content-Type "text/xml" \
       "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
-    SecRequestBodyLimit 13107200
-    SecRequestBodyNoFilesLimit 131072
-    SecRequestBodyInMemoryLimit 131072
+    SecRequestBodyLimit <%= @secrequestbodylimit %>
+    SecRequestBodyNoFilesLimit <%= @secrequestbodynofileslimit %>
+    SecRequestBodyInMemoryLimit <%= @secrequestbodyinmemorylimit %>
     SecRequestBodyLimitAction Reject
     SecRule REQBODY_ERROR "!@eq 0" \
       "id:'200001', phase:2,t:none,log,deny,status:400,msg:'Failed to parse request body.',logdata:'%{reqbody_error_msg}',severity:2"
@@ -49,8 +49,8 @@
     SecArgumentSeparator &
     SecCookieFormat 0
 <%- if scope.lookupvar('::osfamily') == 'Debian' -%>
-    SecDebugLog /var/log/apache2/modsec_debug.log
-    SecAuditLog /var/log/apache2/modsec_audit.log
+    SecDebugLog <%= @logroot %>/modsec_debug.log
+    SecAuditLog <%= @logroot %>/modsec_audit.log
     SecTmpDir /var/cache/modsecurity
     SecDataDir /var/cache/modsecurity
     SecUploadDir /var/cache/modsecurity
@@ -61,8 +61,8 @@
     SecDataDir /var/lib/mod_security
     SecUploadDir /var/lib/mod_security
 <% else -%>
-    SecDebugLog /var/log/httpd/modsec_debug.log
-    SecAuditLog /var/log/httpd/modsec_audit.log
+    SecDebugLog <%= @logroot %>/modsec_debug.log
+    SecAuditLog <%= @logroot %>/modsec_audit.log
     SecTmpDir /var/lib/mod_security
     SecDataDir /var/lib/mod_security
     SecUploadDir /var/lib/mod_security

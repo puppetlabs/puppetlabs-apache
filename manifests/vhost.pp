@@ -34,6 +34,9 @@ define apache::vhost(
   $ssl_options                 = undef,
   $ssl_openssl_conf_cmd        = undef,
   $ssl_proxyengine             = false,
+  $ssl_stapling                = undef,
+  $ssl_stapling_timeout        = undef,
+  $ssl_stapling_return_errors  = undef,
   $priority                    = undef,
   $default_vhost               = false,
   $servername                  = $name,
@@ -100,6 +103,7 @@ define apache::vhost(
   $rewrite_base                = undef,
   $rewrite_rule                = undef,
   $rewrite_cond                = undef,
+  $rewrite_inherit             = false,
   $setenv                      = [],
   $setenvif                    = [],
   $setenvifnocase              = [],
@@ -189,10 +193,14 @@ define apache::vhost(
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  if $ssl_stapling != undef {
+    validate_bool($ssl_stapling)
+  }
   if $rewrites {
     validate_array($rewrites)
     unless empty($rewrites) {
-      validate_hash($rewrites[0])
+      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
+      validate_hash($rewrites_flattened[0])
     }
   }
 
@@ -206,6 +214,12 @@ define apache::vhost(
   if $wsgi_pass_authorization {
     validate_re(downcase($wsgi_pass_authorization), '^(on|off)$',
     "${wsgi_pass_authorization} is not supported for wsgi_pass_authorization.
+    Allowed values are 'on' and 'off'.")
+  }
+
+  if $wsgi_chunked_request {
+    validate_re(downcase($wsgi_chunked_request), '^(on|off)$',
+    "${wsgi_chunked_request} is not supported for wsgi_chunked_request.
     Allowed values are 'on' and 'off'.")
   }
 
@@ -432,10 +446,11 @@ define apache::vhost(
 
 
   if $ip {
-    $_ip = enclose_ipv6($ip)
+    $_ip = any2array(enclose_ipv6($ip))
     if $port {
-      $listen_addr_port = suffix(any2array($_ip),":${port}")
-      $nvh_addr_port = suffix(any2array($_ip),":${port}")
+      $_port = any2array($port)
+      $listen_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
+      $nvh_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $_ip
@@ -446,11 +461,11 @@ define apache::vhost(
   } else {
     if $port {
       $listen_addr_port = $port
-      $nvh_addr_port = "${vhost_name}:${port}"
+      $nvh_addr_port = prefix(any2array($port),"${vhost_name}:")
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
-      if ! $servername {
+      if ! $servername and $servername != '' {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
       }
     }
@@ -526,11 +541,19 @@ define apache::vhost(
     }
   }
 
+  # Check if mod_env is required and not yet loaded.
+  # create an expression to simplify the conditional check
+  $use_env_mod = $setenv and ! empty($setenv)
+  if ($use_env_mod) {
+    if ! defined(Class['apache::mod::env']) {
+      include ::apache::mod::env
+    }
+  }
   # Check if mod_setenvif is required and not yet loaded.
   # create an expression to simplify the conditional check
-  $use_setenv_mod = ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
+  $use_setenvif_mod = ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
 
-  if ($use_setenv_mod) {
+  if ($use_setenvif_mod) {
     if ! defined(Class['apache::mod::setenvif']) {
       include ::apache::mod::setenvif
     }
@@ -894,7 +917,7 @@ define apache::vhost(
   # Template uses:
   # - $setenv
   # - $setenvif
-  if ($use_setenv_mod) {
+  if ($use_env_mod or $use_setenvif_mod) {
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
       order   => 220,
@@ -919,6 +942,7 @@ define apache::vhost(
   # - $ssl_verify_depth
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
+  # - $ssl_stapling
   # - $apache_version
   if $ssl {
     concat::fragment { "${name}-ssl":
@@ -1086,7 +1110,7 @@ define apache::vhost(
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb')
+      content => template('apache/vhost/_security.erb'),
     }
   }
 

@@ -5,3 +5,4 @@ fixtures:
     portage: "git://github.com/gentoo/puppet-portage.git"
   symlinks:
     apache: "#{source_dir}"
+    site_apache: "#{source_dir}/spec/fixtures/site_apache"

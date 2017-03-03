@@ -1,8 +1,11 @@
 require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
+require 'beaker/module_install_helper'
 
 run_puppet_install_helper
+install_module_on(hosts)
+install_module_dependencies_on(hosts)
 
 RSpec.configure do |c|
   c.filter_run :focus => true
@@ -11,9 +14,6 @@ RSpec.configure do |c|
   if fact('operatingsystem') == 'Ubuntu' and (fact('operatingsystemrelease') == '10.04' or fact('operatingsystemrelease') == '12.04')
     c.filter_run_excluding :ipv6 => true
   end
-
-  # Project root
-  proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
   # Readable test descriptions
   c.formatter = :documentation
@@ -42,11 +42,6 @@ RSpec.configure do |c|
 
     # Install module and dependencies
     hosts.each do |host|
-      copy_module_to(host, :source => proj_root, :module_name => 'apache')
-
-      on host, puppet('module','install','puppetlabs-stdlib')
-      on host, puppet('module','install','puppetlabs-concat')
-
       # Required for mod_passenger tests.
       if fact('osfamily') == 'RedHat'
         on host, puppet('module','install','stahnma/epel')

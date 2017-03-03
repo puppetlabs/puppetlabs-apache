@@ -6,7 +6,20 @@ class apache::mod::info (
 ){
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
-  apache::mod { 'info': }
+
+  if $::osfamily == 'Suse' {
+    if defined(Class['::apache::mod::worker']){
+      $suse_path = '/usr/lib64/apache2-worker'
+    } else {
+      $suse_path = '/usr/lib64/apache2-prefork'
+    }
+    ::apache::mod { 'info':
+      lib_path => $suse_path,
+    }
+  } else {
+    ::apache::mod { 'info': }
+  }
+
   # Template uses $allow_from, $_apache_version
   file { 'info.conf':
     ensure  => file,

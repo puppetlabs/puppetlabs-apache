@@ -166,6 +166,7 @@
 [`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
+[`mod_env`]: http://httpd.apache.org/docs/current/mod/mod_env.html
 [`mod_expires`]: https://httpd.apache.org/docs/current/mod/mod_expires.html
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
@@ -323,6 +324,8 @@ class { 'apache':
 }
 ```
 
+> **Note**: When `default_vhost` is set to `false` you have to add at least one `apache::vhost` resource or Apache will not start.
+
 ## Usage
 
 ### Configuring virtual hosts
@@ -433,6 +436,16 @@ It is also possible to configure more than one IP address per virtual host by us
 apache::vhost { 'ip.example.com':
   ip      => ['127.0.0.1','169.254.1.1'],
   port    => '80',
+  docroot => '/var/www/ip',
+}
+```
+
+You can configure multiple ports per virtual host by using an array of ports for the [`port`][] parameter:
+
+``` puppet
+apache::vhost { 'ip.example.com':
+  ip      => ['127.0.0.1'],
+  port    => ['80','8080']
   docroot => '/var/www/ip',
 }
 ```
@@ -931,6 +944,8 @@ Configures a default virtual host when the class is declared. Valid options: Boo
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to false.
 
+> **Note**: Apache will not start without at least one virtual host. If you set this to false be sure to configure one elsewhere.
+
 ##### `dev_packages`
 
 Configures a specific dev package to use. Valid options: A string or array of strings. Default: Depends on the operating system.
@@ -1179,6 +1194,18 @@ Determines whether Puppet manages the HTTPD service's state. Valid options: Bool
 
 Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. Default: undef, which uses the [default Puppet behavior][Service attribute restart].
 
+##### `ssl_stapling`
+
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean. Default: false. It is possible to override this on a vhost level.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `ssl_stapling_return_errors`
+
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default. It is possible to override this on a vhost level.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
 ##### `timeout`
 
 Sets Apache's [`TimeOut`][] directive, which defines the number of seconds Apache waits for certain events before failing a request. Default: 120.
@@ -1357,6 +1384,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `dir`\*
 * `disk_cache` (see [`apache::mod::disk_cache`][])
 * `dumpio` (see [`apache::mod::dumpio`][])
+* `env`
 * `event` (see [`apache::mod::event`][])
 * `expires`
 * `ext_filter` (see [`apache::mod::ext_filter`][])
@@ -1692,6 +1720,7 @@ Installs and manages [`mod_passenger`][]. For RedHat based systems, please ensur
 - `passenger_max_pool_size` Sets the [`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpoolsize). Default: undef.
 - `passenger_max_request_queue_size` Sets the [`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize). Default: undef.
 - `passenger_max_requests` Sets the [`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests). Default: undef.
+- `passenger_data_buffer_dir` Sets the [`PassengerDataBufferDir`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdatabufferdir). Default: undef.
 
 ##### Class: `apache::mod::ldap`
 
@@ -1807,8 +1836,12 @@ Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
 
 **Parameters within `apache::mod::proxy_balancer`**:
 
+- `manager`: Determines whether to enable balancer manager support. Default: `false`.
+- `manager_path`: The server location of the balancer manager. Default: '/balancer-manager'.
+- `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer-manager`. Default: ['127.0.0.1','::1'].
 - `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'. Default: the value of [`$::apache::apache_version`][`apache_version`].
    - On Apache >= 2.4, `mod_slotmem_shm` is loaded.
+
 
 ##### Class: `apache::mod::php`
 
@@ -1838,6 +1871,10 @@ Installs and configures [`mod_reqtimeout`][].
 
 - `timeouts`: A string or [array][] that sets the [`RequestReadTimeout`][] option. Default: ['header=20-40,MinRate=500', 'body=20,MinRate=500'].
 
+##### Class: `apache::mod::rewrite`
+
+Installs and enables the Apache module `mod_rewrite`.
+
 ##### Class: `apache::mod::shib`
 
 Installs the [Shibboleth](http://shibboleth.net/) Apache module `mod_shib`, which enables SAML2 single sign-on (SSO) authentication by Shibboleth Identity Providers and Shibboleth Federations. This class only installs and configures the Apache components of a web application that consumes Shibboleth SSO identities, also known as a Shibboleth Service Provider. You can manage the Shibboleth configuration manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
@@ -1848,7 +1885,7 @@ Defining this class enables Shibboleth-specific parameters in `apache::vhost` in
 
 ##### Class: `apache::mod::ssl`
 
-Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.
+Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template to generate its configuration.  On most operating systems, this ssl.conf is placed in the module configuration directory, however on Red Hat-based operating systems it is placed in the confd directory (/etc/httpd/conf.d), the same location the RPM stores the configuration.
 
 **Parameters within `apache::mod::ssl`**:
 
@@ -1904,6 +1941,7 @@ ${modsec\_dir}/activated\_rules.
 - `secdefaultaction`: Configures the Mode of Operation, Self-Contained ('deny') vs. Collaborative Detection ('pass'), for the OWASP ModSecurity Core Rule Set. Default: 'deny'. Fuller values can be set too like "log,auditlog,deny,status:406,tag:'SLA 24/7'"
 - `secpcrematchlimit`: Sets the number for the match limit in the PCRE library. Default: '1500'
 - `secpcrematchlimitrecursion`: Sets the number for the match limit recursion in the PCRE library. Default: '1500'
+- `logroot`: Configures the location of audit and debug logs.  Defaults to apache log directory (Redhat: /var/log/httpd Debian: /var/log/apache2)
 - `audit_log_releavant_status`: Configures which response status code is to be considered relevant for the purpose of audit logging. Defaults: '^(?:5|4(?!04))'.
 - `audit_log_parts`: Sets the sections to be put in the [audit log][]. Default: 'ABIJDEFHZ'
 - `anomaly_score_blocking`: De-/Activates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set. Default: off.
@@ -1913,6 +1951,10 @@ ${modsec\_dir}/activated\_rules.
 - `error_anomaly_score`: Sets the scoring points of the error severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '4'.
 - `warning_anomaly_score`: Sets the scoring points of the warning severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '3'.
 - `notice_anomaly_score`: Sets the scoring points of the notice severity level for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set. Default: '2'.
+- `secrequestmaxnumargs`: Sets the Maximum number of arguments in the request. Default: '255'.
+- `secrequestbodylimit`:  Sets the maximum request body size ModSecurity will accept for buffering.. Default: '13107200'.
+- `secrequestbodynofileslimit`: Sets the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported in the request. Default: '131072'.
+- `secrequestbodyinmemorylimit`: Sets the maximum request body size that ModSecurity will store in memory. Default: '131072'
 
 ##### Class: `apache::mod::wsgi`
 
@@ -2711,6 +2753,8 @@ apache::vhost { 'site.name.fdqn':
       'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
     { 'path' => '/g', 'url' => 'http://backend-g/',
       'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
+    { 'path' => '/h', 'url' => 'http://backend-h/h',
+      'no_proxy_uris' => ['/h/admin', '/h/server-status'] },
   ],
 }
 ```
@@ -2866,6 +2910,35 @@ apache::vhost { 'site.name.fdqn':
 ```
 
 Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on what is possible with rewrite rules and conditions.
+
+##### `rewrite_inherit`
+
+Determines whether the virtual host inherits global rewrite rules. Default: false.
+
+Rewrite rules may be specified globally (in `$conf_file` or `$confd_dir`) or inside the virtual host `.conf` file. By default, virtual hosts do not inherit global settings. To activate inheritance, specify the `rewrites` parameter and set `rewrite_inherit` parameter to `true`:
+
+``` puppet
+apache::vhost { 'site.name.fdqn':
+  …
+  rewrites => [
+    <rules>,
+  ],
+  rewrite_inherit => true,
+}
+```
+
+> **Note**: The `rewrites` parameter is **required** for this to have effect
+
+###### Some background
+
+Apache activates global `Rewrite` rules inheritance if the virtual host files contains the following directives:
+
+``` ApacheConf
+RewriteEngine On
+RewriteOptions Inherit
+```
+
+Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html), section "Rewriting in Virtual Hosts".
 
 ##### `scriptalias`
 
@@ -3783,6 +3856,24 @@ Sets the [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.h
 ##### `ssl_proxyengine`
 
 Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Valid options: Boolean. Default: true.
+
+##### `ssl_stapling`
+
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean or undef. Default: undef, meaning use what is set globally.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `ssl_stapling_timeout`
+
+Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive. No default.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+##### `ssl_stapling_return_errors`
+
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default.
+
+This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
 #### Defined type: FastCGI Server
 

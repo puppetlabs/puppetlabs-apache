@@ -60,7 +60,7 @@ define apache::custom_config (
       refreshonly => true,
       notify      => Class['Apache::Service'],
       before      => Exec["remove ${name} if invalid"],
-      require     => Anchor['::apache::modules_set_up']
+      require     => Anchor['::apache::modules_set_up'],
     }
 
     exec { "remove ${name} if invalid":
