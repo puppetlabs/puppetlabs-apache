@@ -9,6 +9,7 @@ class apache::mod::cluster (
   $manager_allowed_network = '127.0.0.1',
   $max_keep_alive_requests = 0,
   $server_advertise = true,
+  $advertise_frequency = undef,
 ) {
 
   include ::apache
