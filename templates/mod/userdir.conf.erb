@@ -5,7 +5,7 @@
   UserDir <%= @home %>/*/<%= @dir %>
 
   <Directory "<%= @home %>/*/<%= @dir %>">
-    AllowOverride FileInfo AuthConfig Limit Indexes
+    AllowOverride <%= @overrides.join(' ') %>
     Options <%= @options.join(' ') %>
     <Limit GET POST OPTIONS>
       <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>

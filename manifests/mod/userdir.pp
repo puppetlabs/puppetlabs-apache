@@ -3,6 +3,7 @@ class apache::mod::userdir (
   $dir = 'public_html',
   $disable_root = true,
   $apache_version = undef,
+  $overrides = [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ],
   $options = [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ],
 ) {
   include ::apache
