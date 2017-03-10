@@ -1,4 +1,5 @@
 class apache::mod::cgid {
+  include ::apache
   case $::osfamily {
     'FreeBSD': {}
     default: {
@@ -17,12 +18,21 @@ class apache::mod::cgid {
     'freebsd' => 'cgisock',
     default   => undef,
   }
-  ::apache::mod { 'cgid': }
+
+  if $::osfamily == 'Suse' {
+    ::apache::mod { 'cgid':
+      lib_path => '/usr/lib64/apache2-worker',
+    }
+  } else {
+    ::apache::mod { 'cgid': }
+  }
+
   if $cgisock_path {
     # Template uses $cgisock_path
     file { 'cgid.conf':
       ensure  => file,
       path    => "${::apache::mod_dir}/cgid.conf",
+      mode    => $::apache::file_mode,
       content => template('apache/mod/cgid.conf.erb'),
       require => Exec["mkdir ${::apache::mod_dir}"],
       before  => File[$::apache::mod_dir],

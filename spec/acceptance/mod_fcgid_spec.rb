@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::fcgid class', :unless => (UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) or (fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7')) do
-  context "default fcgid config", :if => (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5') do
+describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5') and !(fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7')) do
+  context "default fcgid config" do
     it 'succeeds in puppeting fcgid' do
       pp = <<-EOS
         class { 'epel': } # mod_fcgid lives in epel

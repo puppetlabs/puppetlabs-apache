@@ -10,7 +10,7 @@
 
   <% if @proxy_requests != 'Off' or ( @allow_from and ! @allow_from.empty? ) -%>
   <Proxy *>
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip <%= Array(@allow_from).join(" ") %>
     <%- else -%>
     Order deny,allow
@@ -23,5 +23,5 @@
   # Enable/disable the handling of HTTP/1.1 "Via:" headers.
   # ("Full" adds the server version; "Block" removes all outgoing Via: headers)
   # Set to one of: Off | On | Full | Block
-  ProxyVia On
+  ProxyVia <%= @proxy_via %>
 </IfModule>

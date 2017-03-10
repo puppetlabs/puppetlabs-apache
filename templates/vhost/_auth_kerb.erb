@@ -17,7 +17,16 @@
   Krb5Keytab <%= @krb_5keytab %>
   <%- end -%>
   <%- if @krb_local_user_mapping -%>
-  KrbLocalUserMapping <%= @krb_local_user_mapping -%>
+  KrbLocalUserMapping <%= @krb_local_user_mapping %>
+  <%- end -%>
+  <%- if @krb_verify_kdc -%>
+  KrbVerifyKDC <%= @krb_verify_kdc %>
+  <%- end -%>
+  <%- if @krb_servicename -%>
+  KrbServiceName <%= @krb_servicename %>
+  <%- end -%>
+  <%- if @krb_save_credentials -%>
+  KrbSaveCredentials <%= @krb_save_credentials -%>
   <%- end -%>
 
 <% end -%>

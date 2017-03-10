@@ -63,10 +63,12 @@ class apache (
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
   $max_keepalive_requests = $::apache::params::max_keepalive_requests,
+  $limitreqfieldsize      = '8190',
   $logroot                = $::apache::params::logroot,
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,
   $log_formats            = {},
+  $ssl_file               = $::apache::params::ssl_file,
   $ports_file             = $::apache::params::ports_file,
   $docroot                = $::apache::params::docroot,
   $apache_version         = $::apache::version::default,
@@ -74,9 +76,17 @@ class apache (
   $server_signature       = 'On',
   $trace_enable           = 'On',
   $allow_encoded_slashes  = undef,
+  $file_e_tag             = undef,
   $package_ensure         = 'installed',
   $use_optional_includes  = $::apache::params::use_optional_includes,
   $use_systemd            = $::apache::params::use_systemd,
+  $mime_types_additional  = $::apache::params::mime_types_additional,
+  $file_mode              = $::apache::params::file_mode,
+  $root_directory_options = $::apache::params::root_directory_options,
+  $root_directory_secured = false,
+  $error_log              = $::apache::params::error_log,
+  $scriptalias            = $::apache::params::scriptalias,
+  $access_log_file        = $::apache::params::access_log_file,
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -85,13 +95,14 @@ class apache (
   validate_bool($service_enable)
   validate_bool($service_manage)
   validate_bool($use_optional_includes)
+  validate_bool($root_directory_secured)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
     default => '(event|itk|prefork|worker)'
   }
 
-  if $mpm_module {
+  if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
     validate_re($mpm_module, $valid_mpms_re)
   }
 
@@ -127,7 +138,7 @@ class apache (
   if $manage_group {
     group { $group:
       ensure  => present,
-      require => Package['httpd']
+      require => Package['httpd'],
     }
   }
 
@@ -168,6 +179,7 @@ class apache (
     ensure  => directory,
     recurse => true,
     purge   => $purge_confd,
+    force   => $purge_confd,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
@@ -185,6 +197,7 @@ class apache (
       purge   => $purge_mod_dir,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
+      before  => Anchor['::apache::modules_set_up'],
     }
   }
 
@@ -237,58 +250,45 @@ class apache (
   }
 
   concat { $ports_file:
+    ensure  => present,
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
   concat::fragment { 'Apache ports header':
-    ensure  => present,
     target  => $ports_file,
-    content => template('apache/ports_header.erb')
+    content => template('apache/ports_header.erb'),
   }
 
   if $::apache::conf_dir and $::apache::params::conf_file {
-    case $::osfamily {
-      'debian': {
-        $error_log            = 'error.log'
-        $scriptalias          = '/usr/lib/cgi-bin'
-        $access_log_file      = 'access.log'
+    if $::osfamily == 'gentoo' {
+      $error_documents_path = '/usr/share/apache2/error'
+      if is_array($default_mods) {
+        if versioncmp($apache_version, '2.4') >= 0 {
+          if defined('apache::mod::ssl') {
+            ::portage::makeconf { 'apache2_modules':
+              content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
+            }
+          } else {
+            ::portage::makeconf { 'apache2_modules':
+              content => concat($default_mods, 'authz_core'),
+            }
+          }
+        } else {
+          ::portage::makeconf { 'apache2_modules':
+            content => $default_mods,
+          }
+        }
       }
-      'redhat': {
-        $error_log            = 'error_log'
-        $scriptalias          = '/var/www/cgi-bin'
-        $access_log_file      = 'access_log'
-      }
-      'freebsd': {
-        $error_log            = 'httpd-error.log'
-        $scriptalias          = '/usr/local/www/apache24/cgi-bin'
-        $access_log_file      = 'httpd-access.log'
-      } 'gentoo': {
-        $error_log            = 'error.log'
-        $error_documents_path = '/usr/share/apache2/error'
-        $scriptalias          = '/var/www/localhost/cgi-bin'
-        $access_log_file      = 'access.log'
 
-        ::portage::makeconf { 'apache2_modules':
-          content => $default_mods,
-        }
-        file { [
-          '/etc/apache2/modules.d/.keep_www-servers_apache-2',
-          '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
-        ]:
-          ensure  => absent,
-          require => Package['httpd'],
-        }
-      }
-      'Suse': {
-        $error_log            = 'error.log'
-        $scriptalias          = '/usr/lib/cgi-bin'
-        $access_log_file      = 'access.log'
-      }
-      default: {
-        fail("Unsupported osfamily ${::osfamily}")
+      file { [
+        '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+        '/etc/apache2/vhosts.d/.keep_www-servers_apache-2',
+      ]:
+        ensure  => absent,
+        require => Package['httpd'],
       }
     }
 
@@ -323,11 +323,12 @@ class apache (
     # - $server_signature
     # - $trace_enable
     # - $rewrite_lock
+    # - $root_directory_secured
     file { "${::apache::conf_dir}/${::apache::params::conf_file}":
       ensure  => file,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
-      require => [Package['httpd'], File[$ports_file]],
+      require => [Package['httpd'], Concat[$ports_file]],
     }
 
     # preserve back-wards compatibility to the times when default_mods was
@@ -343,10 +344,10 @@ class apache (
       }
     }
     class { '::apache::default_confd_files':
-      all => $default_confd_files
+      all => $default_confd_files,
     }
-    if $mpm_module {
-      class { "::apache::mod::${mpm_module}": }
+    if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
+      include "::apache::mod::${mpm_module}"
     }
 
     $default_vhost_ensure = $default_vhost ? {
@@ -360,7 +361,7 @@ class apache (
 
     ::apache::vhost { 'default':
       ensure          => $default_vhost_ensure,
-      port            => 80,
+      port            => '80',
       docroot         => $docroot,
       scriptalias     => $scriptalias,
       serveradmin     => $serveradmin,
@@ -376,7 +377,7 @@ class apache (
     }
     ::apache::vhost { 'default-ssl':
       ensure          => $default_ssl_vhost_ensure,
-      port            => 443,
+      port            => '443',
       ssl             => true,
       docroot         => $docroot,
       scriptalias     => $scriptalias,

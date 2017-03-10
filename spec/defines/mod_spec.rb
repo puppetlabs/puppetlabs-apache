@@ -34,6 +34,20 @@ describe 'apache::mod', :type => :define do
       end
     end
 
+    describe "with file_mode set" do
+      let :pre_condition do
+        "class {'::apache': file_mode => '0640'}"
+      end
+      let :title do
+        'spec_m'
+      end
+      it "should manage the module load file" do
+        is_expected.to contain_file('spec_m.load').with({
+          :mode    => '0640',
+        } )
+      end
+    end
+
     describe "with shibboleth module and package param passed" do
       # name/title for the apache::mod define
       let :title do

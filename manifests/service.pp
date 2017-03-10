@@ -38,12 +38,16 @@ class apache::service (
       $_service_ensure = undef
     }
   }
+
+  $service_hasrestart = $service_restart == undef
+
   if $service_manage {
     service { 'httpd':
-      ensure  => $_service_ensure,
-      name    => $service_name,
-      enable  => $service_enable,
-      restart => $service_restart
+      ensure     => $_service_ensure,
+      name       => $service_name,
+      enable     => $service_enable,
+      restart    => $service_restart,
+      hasrestart => $service_hasrestart,
     }
   }
 }

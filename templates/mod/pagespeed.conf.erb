@@ -7,7 +7,7 @@ AddOutputFilterByType MOD_PAGESPEED_OUTPUT_FILTER application/xhtml+xml
 <% end -%>
 ModPagespeedFileCachePath "<%= @cache_path %>"
 ModPagespeedLogDir "<%= @log_dir %>"
-    
+
 <% @memcache_servers.each do |server| -%>
 ModPagespeedMemcachedServers <%= server %>
 <% end -%>
@@ -17,7 +17,7 @@ ModPagespeedRewriteLevel <%= @rewrite_level -%>
 <% @disable_filters.each do |filter| -%>
 ModPagespeedDisableFilters <%= filter %>
 <% end -%>
-    
+
 <% @enable_filters.each do |filter| -%>
 ModPagespeedEnableFilters <%= filter %>
 <% end -%>
@@ -61,7 +61,7 @@ ModPagespeedStatistics <%= @collect_statistics %>
     # statistics.  This might be appropriate in an experimental setup or
     # if the Apache server is protected by a reverse proxy that will
     # filter URLs in some fashion.
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_view_stats).join(" ") %>
     <%- else -%>
     Order allow,deny
@@ -72,7 +72,7 @@ ModPagespeedStatistics <%= @collect_statistics %>
 
 ModPagespeedStatisticsLogging <%= @statistics_logging %>
 <Location /pagespeed_console>
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_pagespeed_console).join(" ") %>
     <%- else -%>
     Order allow,deny
@@ -84,7 +84,7 @@ ModPagespeedStatisticsLogging <%= @statistics_logging %>
 ModPagespeedMessageBufferSize <%= @message_buffer_size %>
 
 <Location /mod_pagespeed_message>
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_pagespeed_message).join(" ") %>
     <%- else -%>
     Order allow,deny
@@ -93,6 +93,10 @@ ModPagespeedMessageBufferSize <%= @message_buffer_size %>
     SetHandler mod_pagespeed_message
 </Location>
 
+<% if @additional_configuration.is_a? Array -%>
+<%= @additional_configuration.join("\n") %>
+<% else -%>
 <% @additional_configuration.each_pair do |key, value| -%>
 <%= key %> <%= value %>
+<% end -%>
 <% end -%>

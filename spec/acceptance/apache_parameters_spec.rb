@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache parameters' do
 
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do
@@ -55,7 +55,11 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      it { is_expected.to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { is_expected.to be_enabled }
+      end
     end
   end
 
@@ -72,7 +76,11 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      it { is_expected.not_to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { is_expected.not_to be_enabled }
+      end
     end
   end
 
@@ -90,7 +98,11 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      it { is_expected.not_to be_enabled }
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { is_expected.not_to be_enabled }
+      end
     end
   end
 
@@ -354,6 +366,20 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     end
   end
 
+  describe 'limitrequestfieldsize' do
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': limitreqfieldsize => '16830' }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'LimitRequestFieldSize 16830' }
+    end
+  end
+
   describe 'logging' do
     describe 'setup' do
       it 'applies cleanly' do
@@ -454,6 +480,22 @@ describe 'apache parameters', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
     describe file($conf_file) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'TraceEnable Off' }
+    end
+  end
+
+  describe 'file_e_tag' do
+    it 'applys cleanly' do
+      pp = <<-EOS
+        class { 'apache':
+          file_e_tag  => 'None',
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'FileETag None' }
     end
   end
 

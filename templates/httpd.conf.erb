@@ -10,6 +10,7 @@ Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
+LimitRequestFieldSize <%= @limitreqfieldsize %>
 
 <%- if @rewrite_lock and scope.function_versioncmp([@apache_version, '2.2']) <= 0 -%>
 RewriteLock <%= @rewrite_lock %>
@@ -30,8 +31,16 @@ AccessFileName .htaccess
 </FilesMatch>
 
 <Directory />
-  Options FollowSymLinks
+  Options <%= Array(@root_directory_options).join(' ') %>
   AllowOverride None
+<%- if @root_directory_secured -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  Require all denied
+<%- else -%>
+  Order deny,allow
+  Deny from all
+<%- end -%>
+<%- end -%>
 </Directory>
 
 <% if @default_charset -%>
@@ -42,11 +51,18 @@ AddDefaultCharset <%= @default_charset %>
 DefaultType <%= @default_type %>
 <%- end -%>
 HostnameLookups Off
+<%- if /^[|\/]/.match(@error_log) || /^syslog:/.match(@error_log) -%>
+ErrorLog "<%= @error_log %>"
+<%- else -%>
 ErrorLog "<%= @logroot %>/<%= @error_log %>"
+<%- end -%>
 LogLevel <%= @log_level %>
 EnableSendfile <%= @sendfile %>
 <%- if @allow_encoded_slashes -%>
 AllowEncodedSlashes <%= @allow_encoded_slashes %>
+<%- end -%>
+<%- if @file_e_tag -%>
+FileETag <%= @file_e_tag %>
 <%- end -%>
 
 #Listen 80
@@ -75,6 +91,9 @@ LogFormat "%{Referer}i -> %U" referer
 <% end -%>
 <% unless @log_formats.has_key?('agent') -%>
 LogFormat "%{User-agent}i" agent
+<% end -%>
+<% unless @log_formats.has_key?('forwarded') -%>
+LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"" forwarded
 <% end -%>
 <% if @log_formats and !@log_formats.empty? -%>
   <%- @log_formats.sort.each do |nickname,format| -%>

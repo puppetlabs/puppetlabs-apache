@@ -32,21 +32,26 @@ class apache::mod::pagespeed (
   $allow_pagespeed_message       = [],
   $message_buffer_size           = 100000,
   $additional_configuration      = {},
-  $apache_version                = $::apache::apache_version,
+  $apache_version                = undef,
+  $package_ensure                = undef,
 ){
-
-  $_lib = $::apache::apache_version ? {
+  include ::apache
+  $_apache_version = pick($apache_version, $apache::apache_version)
+  $_lib = $_apache_version ? {
     '2.4'   => 'mod_pagespeed_ap24.so',
     default => undef
   }
 
   apache::mod { 'pagespeed':
-    lib => $_lib,
+    lib            => $_lib,
+    package_ensure => $package_ensure,
   }
 
+  # Template uses $_apache_version
   file { 'pagespeed.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/pagespeed.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/pagespeed.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

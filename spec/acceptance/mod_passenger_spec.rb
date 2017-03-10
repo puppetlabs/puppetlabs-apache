@@ -1,12 +1,14 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
-describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
+describe 'apache::mod::passenger class' do
+  pending 'This cannot run in the same test run as apache::vhost with passenger
+  as the passenger.conf file is not yet managed by puppet and will be wiped out
+  between tests and not replaced'
   case fact('osfamily')
   when 'Debian'
-    service_name = 'apache2'
-    mod_dir = '/etc/apache2/mods-available/'
-    conf_file = "#{mod_dir}passenger.conf"
-    load_file = "#{mod_dir}zpassenger.load"
+    conf_file = "#{$mod_dir}/passenger.conf"
+    load_file = "#{$mod_dir}/zpassenger.load"
 
     case fact('operatingsystem')
     when 'Ubuntu'
@@ -18,6 +20,10 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
         passenger_root = '/usr'
         passenger_ruby = '/usr/bin/ruby'
       when '14.04'
+        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+        passenger_ruby         = '/usr/bin/ruby'
+        passenger_default_ruby = '/usr/bin/ruby'
+      when '16.04'
         passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
         passenger_ruby         = '/usr/bin/ruby'
         passenger_default_ruby = '/usr/bin/ruby'
@@ -46,43 +52,37 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
     rackapp_user = 'www-data'
     rackapp_group = 'www-data'
   when 'RedHat'
-    service_name = 'httpd'
-    mod_dir = '/etc/httpd/conf.d/'
-    conf_file = "#{mod_dir}passenger.conf"
-    load_file = "#{mod_dir}zpassenger.load"
+    conf_file = "#{$mod_dir}/passenger.conf"
+    load_file = "#{$mod_dir}/zpassenger.load"
     # sometimes installs as 3.0.12, sometimes as 3.0.19 - so just check for the stable part
-    passenger_root = '/usr/lib/ruby/gems/1.8/gems/passenger-3.0.1'
+    passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
     passenger_ruby = '/usr/bin/ruby'
-    passenger_tempdir = '/var/run/rubygem-passenger'
     passenger_module_path = 'modules/mod_passenger.so'
     rackapp_user = 'apache'
     rackapp_group = 'apache'
   end
 
   pp_rackapp = <<-EOS
-          /* a simple ruby rack 'hellow world' app */
-          file { '/var/www/passenger':
-            ensure  => directory,
-            owner   => '#{rackapp_user}',
-            group   => '#{rackapp_group}',
-            require => Class['apache::mod::passenger'],
-          }
-          file { '/var/www/passenger/config.ru':
-            ensure  => file,
-            owner   => '#{rackapp_user}',
-            group   => '#{rackapp_group}',
-            content => "app = proc { |env| [200, { \\"Content-Type\\" => \\"text/html\\" }, [\\"hello <b>world</b>\\"]] }\\nrun app",
-            require => File['/var/www/passenger'] ,
-          }
-          apache::vhost { 'passenger.example.com':
-            port    => '80',
-            docroot => '/var/www/passenger/public',
-            docroot_group => '#{rackapp_group}' ,
-            docroot_owner => '#{rackapp_user}' ,
-            custom_fragment => "PassengerRuby  #{passenger_ruby}\\nRailsEnv  development" ,
-            require => File['/var/www/passenger/config.ru'] ,
-          }
-          host { 'passenger.example.com': ip => '127.0.0.1', }
+    /* a simple ruby rack 'hello world' app */
+    file { '/var/www/passenger':
+      ensure => directory,
+      owner  => '#{rackapp_user}',
+      group  => '#{rackapp_group}',
+    }
+    file { '/var/www/passenger/config.ru':
+      ensure  => file,
+      owner   => '#{rackapp_user}',
+      group   => '#{rackapp_group}',
+      content => "app = proc { |env| [200, { \\"Content-Type\\" => \\"text/html\\" }, [\\"hello <b>world</b>\\"]] }\\nrun app",
+    }
+    apache::vhost { 'passenger.example.com':
+      port          => '80',
+      docroot       => '/var/www/passenger/public',
+      docroot_group => '#{rackapp_group}',
+      docroot_owner => '#{rackapp_user}',
+      require       => File['/var/www/passenger/config.ru'],
+    }
+    host { 'passenger.example.com': ip => '127.0.0.1', }
   EOS
 
   case fact('osfamily')
@@ -98,8 +98,12 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe service(service_name) do
-        it { is_expected.to be_enabled }
+      describe service($service_name) do
+        if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { should be_enabled }
+        end
         it { is_expected.to be_running }
       end
 
@@ -116,6 +120,9 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
             it { is_expected.to contain "PassengerRuby \"#{passenger_ruby}\"" }
             it { is_expected.not_to contain "/PassengerDefaultRuby/" }
           when '14.04'
+            it { is_expected.to contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
+            it { is_expected.not_to contain "/PassengerRuby/" }
+          when '16.04'
             it { is_expected.to contain "PassengerDefaultRuby \"#{passenger_ruby}\"" }
             it { is_expected.not_to contain "/PassengerRuby/" }
           else
@@ -152,7 +159,8 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           # passenger-memory-stats output on newer Debian/Ubuntu verions do not contain
           # these two lines
           unless ((fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') or
-                 (fact('operatingsystem') == 'Debian' && fact('operatingsystemrelease') == '8.0'))
+                 (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') or
+                 (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'))
             expect(r.stdout).to match(/### Processes: [0-9]+/)
             expect(r.stdout).to match(/### Total private dirty RSS: [0-9\.]+ MB/)
           end
@@ -169,7 +177,9 @@ describe 'apache::mod::passenger class', :unless => UNSUPPORTED_PLATFORMS.includ
           shell("PATH=/usr/bin:$PATH /usr/sbin/passenger-status") do |r|
             # spacing may vary
             expect(r.stdout).to match(/[\-]+ General information [\-]+/)
-            if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04'
+            if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04' or
+               (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') or
+               fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
               expect(r.stdout).to match(/Max pool size[ ]+: [0-9]+/)
               expect(r.stdout).to match(/Processes[ ]+: [0-9]+/)
               expect(r.stdout).to match(/Requests in top-level queue[ ]+: [0-9]+/)

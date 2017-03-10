@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'apache::mod::expires', :type => :class do
-  let :pre_condition do
-    'include apache'
-  end
+  it_behaves_like "a mod class, without including apache"
+
   context "with expires active", :compile do
     let :facts do
       {

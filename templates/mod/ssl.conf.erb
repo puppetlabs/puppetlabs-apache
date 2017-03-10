@@ -10,16 +10,23 @@
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @session_cache %>"
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
-<% if @ssl_compression -%>
-  SSLCompression On
-<% end -%>
-  <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-  Mutex <%= @ssl_mutex %>
+  <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+  Mutex <%= @_ssl_mutex %>
+    <%- if @ssl_compression -%>
+  SSLCompression <%= scope.function_bool2httpd([@ssl_compression]) %>
+    <%- end -%>
   <%- else -%>
-  SSLMutex <%= @ssl_mutex %>
+  SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
-  SSLHonorCipherOrder <%= @ssl_honorcipherorder %>
+  SSLHonorCipherOrder <%= scope.function_bool2httpd([@_ssl_honorcipherorder]) %>
+<% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+  SSLUseStapling <%= scope.function_bool2httpd([@ssl_stapling]) %>
+  <%- if not @ssl_stapling_return_errors.nil? -%>
+  SSLStaplingReturnResponderErrors <%= scope.function_bool2httpd([@ssl_stapling_return_errors]) %>
+  <%- end -%>
+  SSLStaplingCache "shmcb:<%= @stapling_cache %>"
+<% end -%>
   SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
 <% if @ssl_options -%>

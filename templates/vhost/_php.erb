@@ -1,6 +1,10 @@
 <% if @php_values and not @php_values.empty? -%>
   <%- @php_values.sort.each do |key,value| -%>
+    <%- if value.is_a? String -%>
+  php_value <%= key %> "<%= value %>"
+    <%- else -%>
   php_value <%= key %> <%= value %>
+    <%- end -%>
   <%- end -%>
 <% end -%>
 <% if @php_flags and not @php_flags.empty? -%>

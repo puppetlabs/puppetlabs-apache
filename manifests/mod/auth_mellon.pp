@@ -6,8 +6,9 @@ class apache::mod::auth_mellon (
   $mellon_post_ttl = undef,
   $mellon_post_size = undef,
   $mellon_post_count = undef
-) {
+) inherits ::apache::params {
 
+  include ::apache
   ::apache::mod { 'auth_mellon': }
 
   # Template uses
@@ -15,6 +16,7 @@ class apache::mod::auth_mellon (
   file { 'auth_mellon.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/auth_mellon.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/auth_mellon.conf.erb'),
     require => [ Exec["mkdir ${::apache::mod_dir}"], ],
     before  => File[$::apache::mod_dir],

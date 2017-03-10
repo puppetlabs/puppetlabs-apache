@@ -19,8 +19,14 @@
   <%- if @passenger_min_instances -%>
   PassengerMinInstances <%= @passenger_min_instances %>
   <%- end -%>
+  <%- if @passenger_max_instances_per_app -%>
+  PassengerMaxInstancesPerApp <%= @passenger_max_instances_per_app %>
+  <%- end -%>
   <%- if @passenger_pool_idle_time -%>
   PassengerPoolIdleTime <%= @passenger_pool_idle_time %>
+  <%- end -%>
+  <%- if @passenger_max_request_queue_size -%>
+  PassengerMaxRequestQueueSize <%= @passenger_max_request_queue_size %>
   <%- end -%>
   <%- if @passenger_max_requests -%>
   PassengerMaxRequests <%= @passenger_max_requests %>
@@ -42,5 +48,14 @@
   <%- end -%>
   <%- if @passenger_app_env -%>
   PassengerAppEnv <%= @passenger_app_env %>
+  <%- end -%>
+  <%- if @passenger_log_file -%>
+  PassengerLogFile <%= @passenger_log_file %>
+  <%- end -%>
+  <%- if @passenger_log_level -%>
+  PassengerLogLevel <%= @passenger_log_level %>
+  <%- end -%>
+  <%- if @passenger_data_buffer_dir -%>
+  PassengerDataBufferDir <%= @passenger_data_buffer_dir %>
   <%- end -%>
 </IfModule>

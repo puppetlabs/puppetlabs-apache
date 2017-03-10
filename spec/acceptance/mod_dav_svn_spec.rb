@@ -1,22 +1,15 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
-describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7') do
+describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7') || (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajorrelease') < '11') do
   case fact('osfamily')
   when 'Debian'
-    mod_dir             = '/etc/apache2/mods-available'
-    service_name        = 'apache2'
-    if fact('operatingsystemmajrelease') == '6' or fact('operatingsystemmajrelease') == '10.04' or fact('operatingsystemrelease') == '10.04'
+    if fact('operatingsystemmajrelease') == '6' or fact('operatingsystemmajrelease') == '10.04' or fact('operatingsystemrelease') == '10.04' or fact('operatingsystemmajrelease') == '16.04'
       authz_svn_load_file = 'dav_svn_authz_svn.load'
     else
       authz_svn_load_file = 'authz_svn.load'
     end
-  when 'RedHat'
-    mod_dir             = '/etc/httpd/conf.d'
-    service_name        = 'httpd'
-    authz_svn_load_file = 'dav_svn_authz_svn.load'
-  when 'FreeBSD'
-    mod_dir             = '/usr/local/etc/apache24/Modules'
-    service_name        = 'apache24'
+  else
     authz_svn_load_file = 'dav_svn_authz_svn.load'
   end
 
@@ -29,12 +22,16 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
-      it { is_expected.to be_enabled }
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/dav_svn.load") do
+    describe file("#{$mod_dir}/dav_svn.load") do
       it { is_expected.to contain "LoadModule dav_svn_module" }
     end
   end
@@ -50,12 +47,16 @@ describe 'apache::mod::dav_svn class', :unless => (fact('operatingsystem') == 'O
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
-      it { is_expected.to be_enabled }
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
 
-    describe file("#{mod_dir}/#{authz_svn_load_file}") do
+    describe file("#{$mod_dir}/#{authz_svn_load_file}") do
       it { is_expected.to contain "LoadModule authz_svn_module" }
     end
   end

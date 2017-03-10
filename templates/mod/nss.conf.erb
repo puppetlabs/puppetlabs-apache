@@ -17,7 +17,7 @@
 # Note: Configurations that use IPv6 but not IPv4-mapped addresses need two
 #       Listen directives: "Listen [::]:8443" and "Listen 0.0.0.0:443"
 #
-Listen 8443
+Listen <%= @port %>
 
 ##
 ##  SSL Global Context
@@ -84,7 +84,7 @@ NSSRequireSafeNegotiation off
 ## SSL Virtual Host Context
 ##
 
-<VirtualHost _default_:8443>
+<VirtualHost _default_:<%= @port %>>
 
 #   General setup for the virtual host
 #DocumentRoot "/etc/httpd/htdocs"
@@ -121,9 +121,9 @@ NSSCipherSuite +rsa_rc4_128_md5,+rsa_rc4_128_sha,+rsa_3des_sha,-rsa_des_sha,-rsa
 #   with the maximum specified protocol and downgrading as necessary to the
 #   minimum specified protocol that can be used between two processes.
 #   Since all protocol ranges are completely inclusive, and no protocol in the
-#   middle of a range may be excluded, the entry "NSSProtocol SSLv3,TLSv1.1"
-#   is identical to the entry "NSSProtocol SSLv3,TLSv1.0,TLSv1.1".
-NSSProtocol SSLv3,TLSv1.0,TLSv1.1
+#   middle of a range may be excluded, the entry "NSSProtocol TLSv1.0,TLSv1.2"
+#   is identical to the entry "NSSProtocol TLSv1.0,TLSv1.1,TLSv1.2".
+NSSProtocol TLSv1.0,TLSv1.1
 
 #   SSL Certificate Nickname:
 #   The nickname of the RSA server certificate you are going to use.

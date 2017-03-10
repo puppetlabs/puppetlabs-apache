@@ -37,6 +37,10 @@ describe 'apache::mod::itk', :type => :class do
     end
 
     context "with Apache version >= 2.4" do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+
       let :params do
         {
           :apache_version => '2.4',
@@ -51,7 +55,60 @@ describe 'apache::mod::itk', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/mods-enabled/itk.load").with_ensure('link') }
     end
   end
+  context "on a RedHat OS" do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '6',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
+      }
+    end
+    it { is_expected.to contain_class("apache::params") }
+    it { is_expected.not_to contain_apache__mod('itk') }
+    it { is_expected.to contain_file("/etc/httpd/conf.d/itk.conf").with_ensure('file') }
+    it { is_expected.to contain_package("httpd-itk") }
+
+    context "with Apache version < 2.4" do
+      let :params do
+        {
+          :apache_version => '2.2',
+        }
+      end
+
+      it { is_expected.to contain_file_line("/etc/sysconfig/httpd itk enable").with({
+        'require' => 'Package[httpd]',
+        })
+      }
+    end
+
+    context "with Apache version >= 2.4" do
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
+
+      let :params do
+        {
+          :apache_version => '2.4',
+        }
+      end
+
+      it { is_expected.to contain_file("/etc/httpd/conf.d/itk.load").with({
+        'ensure'  => 'file',
+        'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n"
+        })
+      }
+    end
+  end
   context "on a FreeBSD OS" do
+    let :pre_condition do
+      'class { "apache": mpm_module => false, }'
+    end
+
     let :facts do
       {
         :osfamily               => 'FreeBSD',

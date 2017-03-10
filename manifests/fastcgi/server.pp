@@ -4,18 +4,23 @@ define apache::fastcgi::server (
   $flush         = false,
   $faux_path     = "/var/www/${name}.fcgi",
   $fcgi_alias    = "/${name}.fcgi",
-  $file_type     = 'application/x-httpd-php'
+  $file_type     = 'application/x-httpd-php',
+  $pass_header   = undef,
 ) {
-  include apache::mod::fastcgi
+  include ::apache::mod::fastcgi
 
   Apache::Mod['fastcgi'] -> Apache::Fastcgi::Server[$title]
+
+  if is_absolute_path($host) {
+    $socket = $host
+  }
 
   file { "fastcgi-pool-${name}.conf":
     ensure  => present,
     path    => "${::apache::confd_dir}/fastcgi-pool-${name}.conf",
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     content => template('apache/fastcgi/server.erb'),
     require => Exec["mkdir ${::apache::confd_dir}"],
     before  => File[$::apache::confd_dir],

@@ -110,6 +110,14 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^AllowEncodedSlashes nodecode$} }
     end
 
+    context "when specifying fileETag behaviour" do
+      let :params do
+        { :file_e_tag => 'None' }
+      end
+
+      it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^FileETag None$} }
+    end
+
     context "when specifying default character set" do
       let :params do
         { :default_charset => 'none' }
@@ -504,7 +512,7 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/opt/rh/root/etc/httpd/conf/httpd.conf").with(
         'ensure'  => 'file',
         'notify'  => 'Class[Apache::Service]',
-        'require' => ['Package[httpd]', 'File[/etc/httpd/conf/ports.conf]'],
+        'require' => ['Package[httpd]', 'Concat[/etc/httpd/conf/ports.conf]'],
       ) }
     end
 
@@ -835,9 +843,43 @@ describe 'apache', :type => :class do
         )
       }
     end
+    context 'with a custom file_mode parameter' do
+      let :params do {
+        :file_mode => '0640'
+      }
+      end
+      it { is_expected.to contain_concat("/etc/httpd/conf/ports.conf").with(
+        'mode' => '0640',
+      )
+      }
+    end
+    context 'with a custom root_directory_options parameter' do
+      let :params do {
+        :root_directory_options => ['-Indexes', '-FollowSymLinks']
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options -Indexes -FollowSymLinks} }
+    end
+    context 'with a custom root_directory_secured parameter and Apache < 2.4' do
+      let :params do {
+        :apache_version => '2.2',
+        :root_directory_secured => true
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Order deny,allow\n\s+Deny from all} }
+    end
+    context 'with a custom root_directory_secured parameter and Apache >= 2.4' do
+      let :params do {
+        :apache_version => '2.4',
+        :root_directory_secured => true
+      }
+      end
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Require all denied} }
+    end
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }
+      it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").with_content %r{Options FollowSymLinks} }
     end
     context 'without default non-ssl vhost' do
       let :params do {

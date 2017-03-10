@@ -25,10 +25,18 @@ define apache::vhost(
   $ssl_honorcipherorder        = undef,
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
+  $ssl_proxy_verify            = undef,
+  $ssl_proxy_check_peer_cn     = undef,
+  $ssl_proxy_check_peer_name   = undef,
+  $ssl_proxy_check_peer_expire = undef,
   $ssl_proxy_machine_cert      = undef,
+  $ssl_proxy_protocol          = undef,
   $ssl_options                 = undef,
   $ssl_openssl_conf_cmd        = undef,
   $ssl_proxyengine             = false,
+  $ssl_stapling                = undef,
+  $ssl_stapling_timeout        = undef,
+  $ssl_stapling_return_errors  = undef,
   $priority                    = undef,
   $default_vhost               = false,
   $servername                  = $name,
@@ -40,6 +48,8 @@ define apache::vhost(
   $logroot                     = $::apache::logroot,
   $logroot_ensure              = 'directory',
   $logroot_mode                = undef,
+  $logroot_owner               = undef,
+  $logroot_group               = undef,
   $log_level                   = undef,
   $access_log                  = true,
   $access_log_file             = false,
@@ -54,6 +64,9 @@ define apache::vhost(
   $error_log_file              = undef,
   $error_log_pipe              = undef,
   $error_log_syslog            = undef,
+  $modsec_audit_log            = undef,
+  $modsec_audit_log_file       = undef,
+  $modsec_audit_log_pipe       = undef,
   $error_documents             = [],
   $fallbackresource            = undef,
   $scriptalias                 = undef,
@@ -73,6 +86,7 @@ define apache::vhost(
   $no_proxy_uris               = [],
   $no_proxy_uris_match         = [],
   $proxy_preserve_host         = false,
+  $proxy_add_headers           = undef,
   $proxy_error_override        = false,
   $redirect_source             = '/',
   $redirect_dest               = undef,
@@ -89,8 +103,10 @@ define apache::vhost(
   $rewrite_base                = undef,
   $rewrite_rule                = undef,
   $rewrite_cond                = undef,
+  $rewrite_inherit             = false,
   $setenv                      = [],
   $setenvif                    = [],
+  $setenvifnocase              = [],
   $block                       = [],
   $ensure                      = 'present',
   $wsgi_application_group      = undef,
@@ -99,6 +115,7 @@ define apache::vhost(
   $wsgi_import_script          = undef,
   $wsgi_import_script_options  = undef,
   $wsgi_process_group          = undef,
+  $wsgi_script_aliases_match   = undef,
   $wsgi_script_aliases         = undef,
   $wsgi_pass_authorization     = undef,
   $wsgi_chunked_request        = undef,
@@ -108,6 +125,7 @@ define apache::vhost(
   $fastcgi_server              = undef,
   $fastcgi_socket              = undef,
   $fastcgi_dir                 = undef,
+  $fastcgi_idle_timeout        = undef,
   $additional_includes         = [],
   $use_optional_includes       = $::apache::use_optional_includes,
   $apache_version              = $::apache::apache_version,
@@ -119,11 +137,19 @@ define apache::vhost(
   $passenger_min_instances     = undef,
   $passenger_start_timeout     = undef,
   $passenger_pre_start         = undef,
+  $passenger_user              = undef,
+  $passenger_high_performance  = undef,
+  $passenger_nodejs            = undef,
+  $passenger_sticky_sessions   = undef,
+  $passenger_startup_file      = undef,
   $add_default_charset         = undef,
   $modsec_disable_vhost        = undef,
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
+  $modsec_disable_msgs         = undef,
+  $modsec_disable_tags         = undef,
   $modsec_body_limit           = undef,
+  $jk_mounts                   = undef,
   $auth_kerb                   = false,
   $krb_method_negotiate        = 'on',
   $krb_method_k5passwd         = 'on',
@@ -131,7 +157,19 @@ define apache::vhost(
   $krb_auth_realms             = [],
   $krb_5keytab                 = undef,
   $krb_local_user_mapping      = undef,
-  $limit_request_field_size    = undef,
+  $krb_verify_kdc              = 'on',
+  $krb_servicename             = 'HTTP',
+  $krb_save_credentials        = 'off',
+  $keepalive                   = undef,
+  $keepalive_timeout           = undef,
+  $max_keepalive_requests      = undef,
+  $cas_attribute_prefix        = undef,
+  $cas_attribute_delimiter     = undef,
+  $cas_scrub_request_headers   = undef,
+  $cas_sso_enabled             = undef,
+  $cas_login_url               = undef,
+  $cas_validate_url            = undef,
+  $cas_validate_saml           = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -149,12 +187,21 @@ define apache::vhost(
   validate_bool($ip_based)
   validate_bool($access_log)
   validate_bool($error_log)
+  if $modsec_audit_log != undef {
+    validate_bool($modsec_audit_log)
+  }
   validate_bool($ssl)
   validate_bool($default_vhost)
   validate_bool($ssl_proxyengine)
+  if $ssl_stapling != undef {
+    validate_bool($ssl_stapling)
+  }
   if $rewrites {
     validate_array($rewrites)
-    validate_hash($rewrites[0])
+    unless empty($rewrites) {
+      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
+      validate_hash($rewrites_flattened[0])
+    }
   }
 
   # Input validation begins
@@ -167,6 +214,12 @@ define apache::vhost(
   if $wsgi_pass_authorization {
     validate_re(downcase($wsgi_pass_authorization), '^(on|off)$',
     "${wsgi_pass_authorization} is not supported for wsgi_pass_authorization.
+    Allowed values are 'on' and 'off'.")
+  }
+
+  if $wsgi_chunked_request {
+    validate_re(downcase($wsgi_chunked_request), '^(on|off)$',
+    "${wsgi_chunked_request} is not supported for wsgi_chunked_request.
     Allowed values are 'on' and 'off'.")
   }
 
@@ -183,6 +236,9 @@ define apache::vhost(
 
   if $wsgi_script_aliases {
     validate_hash($wsgi_script_aliases)
+  }
+  if $wsgi_script_aliases_match {
+    validate_hash($wsgi_script_aliases_match)
   }
   if $wsgi_daemon_process_options {
     validate_hash($wsgi_daemon_process_options)
@@ -210,6 +266,10 @@ define apache::vhost(
     fail("Apache::Vhost[${name}]: 'error_log_file' and 'error_log_pipe' cannot be defined at the same time")
   }
 
+  if $modsec_audit_log_file and $modsec_audit_log_pipe {
+    fail("Apache::Vhost[${name}]: 'modsec_audit_log_file' and 'modsec_audit_log_pipe' cannot be defined at the same time")
+  }
+
   if $fallbackresource {
     validate_re($fallbackresource, '^/|disabled', 'Please make sure fallbackresource starts with a / (or is "disabled")')
   }
@@ -224,15 +284,35 @@ define apache::vhost(
 
   validate_bool($auth_kerb)
 
-  if $limit_request_field_size {
-    validate_integer($limit_request_field_size)
-  }
-
   # Validate the docroot as a string if:
   # - $manage_docroot is true
   if $manage_docroot {
     validate_string($docroot)
   }
+
+  if $ssl_proxy_verify {
+    validate_re($ssl_proxy_verify,'^(none|optional|require|optional_no_ca)$',"${ssl_proxy_verify} is not permitted for ssl_proxy_verify. Allowed values are 'none', 'optional', 'require' or 'optional_no_ca'.")
+  }
+
+  if $ssl_proxy_check_peer_cn {
+    validate_re($ssl_proxy_check_peer_cn,'(^on$|^off$)',"${ssl_proxy_check_peer_cn} is not permitted for ssl_proxy_check_peer_cn. Allowed values are 'on' or 'off'.")
+  }
+  if $ssl_proxy_check_peer_name {
+    validate_re($ssl_proxy_check_peer_name,'(^on$|^off$)',"${ssl_proxy_check_peer_name} is not permitted for ssl_proxy_check_peer_name. Allowed values are 'on' or 'off'.")
+  }
+
+  if $ssl_proxy_check_peer_expire {
+    validate_re($ssl_proxy_check_peer_expire,'(^on$|^off$)',"${ssl_proxy_check_peer_expire} is not permitted for ssl_proxy_check_peer_expire. Allowed values are 'on' or 'off'.")
+  }
+
+  if $keepalive {
+    validate_re($keepalive,'(^on$|^off$)',"${keepalive} is not permitted for keepalive. Allowed values are 'on' or 'off'.")
+  }
+
+  if $passenger_sticky_sessions {
+    validate_bool($passenger_sticky_sessions)
+  }
+
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
@@ -257,7 +337,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
     include ::apache::mod::passenger
   }
 
@@ -292,6 +372,8 @@ define apache::vhost(
   if ! defined(File[$logroot]) {
     file { $logroot:
       ensure  => $logroot_ensure,
+      owner   => $logroot_owner,
+      group   => $logroot_group,
       mode    => $logroot_mode,
       require => Package['httpd'],
       before  => Concat["${priority_real}${filename}.conf"],
@@ -304,6 +386,9 @@ define apache::vhost(
 
   # Is apache::mod::shib enabled (or apache::mod['shib2'])
   $shibboleth_enabled = defined(Apache::Mod['shib2'])
+
+  # Is apache::mod::cas enabled (or apache::mod['cas'])
+  $cas_enabled = defined(Apache::Mod['auth_cas'])
 
   if $access_log and !$access_logs {
     if $access_log_file {
@@ -343,13 +428,32 @@ define apache::vhost(
     }
   }
 
+  if $modsec_audit_log == false {
+    $modsec_audit_log_destination = undef
+  } elsif $modsec_audit_log_file {
+    $modsec_audit_log_destination = "${logroot}/${modsec_audit_log_file}"
+  } elsif $modsec_audit_log_pipe {
+    $modsec_audit_log_destination = $modsec_audit_log_pipe
+  } elsif $modsec_audit_log {
+    if $ssl {
+      $modsec_audit_log_destination = "${logroot}/${name}_security_ssl.log"
+    } else {
+      $modsec_audit_log_destination = "${logroot}/${name}_security.log"
+    }
+  } else {
+    $modsec_audit_log_destination = undef
+  }
+
+
   if $ip {
+    $_ip = any2array(enclose_ipv6($ip))
     if $port {
-      $listen_addr_port = suffix(any2array($ip),":${port}")
-      $nvh_addr_port = suffix(any2array($ip),":${port}")
+      $_port = any2array($port)
+      $listen_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
+      $nvh_addr_port = split(inline_template("<%= @_ip.product(@_port).map {|x| x.join(':')  }.join(',')%>"), ',')
     } else {
       $listen_addr_port = undef
-      $nvh_addr_port = $ip
+      $nvh_addr_port = $_ip
       if ! $servername and ! $ip_based {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters for name-based vhosts")
       }
@@ -357,11 +461,11 @@ define apache::vhost(
   } else {
     if $port {
       $listen_addr_port = $port
-      $nvh_addr_port = "${vhost_name}:${port}"
+      $nvh_addr_port = prefix(any2array($port),"${vhost_name}:")
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
-      if ! $servername {
+      if ! $servername and $servername != '' {
         fail("Apache::Vhost[${name}]: must pass 'ip' and/or 'port' parameters, and/or 'servername' parameter")
       }
     }
@@ -437,7 +541,19 @@ define apache::vhost(
     }
   }
 
-  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+  # Check if mod_env is required and not yet loaded.
+  # create an expression to simplify the conditional check
+  $use_env_mod = $setenv and ! empty($setenv)
+  if ($use_env_mod) {
+    if ! defined(Class['apache::mod::env']) {
+      include ::apache::mod::env
+    }
+  }
+  # Check if mod_setenvif is required and not yet loaded.
+  # create an expression to simplify the conditional check
+  $use_setenvif_mod = ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
+
+  if ($use_setenvif_mod) {
     if ! defined(Class['apache::mod::setenvif']) {
       include ::apache::mod::setenvif
     }
@@ -470,6 +586,8 @@ define apache::vhost(
     }
 
     $_directories = [ merge($_directory, $_directory_version) ]
+  } else {
+    $_directories = undef
   }
 
   ## Create a global LocationMatch if locations aren't defined
@@ -483,16 +601,38 @@ define apache::vhost(
     }
   }
 
+  if $modsec_disable_msgs {
+    if is_hash($modsec_disable_msgs) {
+      $_modsec_disable_msgs = $modsec_disable_msgs
+    } elsif is_array($modsec_disable_msgs) {
+      $_modsec_disable_msgs = { '.*' => $modsec_disable_msgs }
+    } else {
+      fail("Apache::Vhost[${name}]: 'modsec_disable_msgs' must be either a Hash of location/Msgs or an Array of Msgs")
+    }
+  }
+
+  if $modsec_disable_tags {
+    if is_hash($modsec_disable_tags) {
+      $_modsec_disable_tags = $modsec_disable_tags
+    } elsif is_array($modsec_disable_tags) {
+      $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
+    } else {
+      fail("Apache::Vhost[${name}]: 'modsec_disable_tags' must be either a Hash of location/Tags or an Array of Tags")
+    }
+  }
+
   concat { "${priority_real}${filename}.conf":
     ensure  => $ensure,
     path    => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
     owner   => 'root',
     group   => $::apache::params::root_group,
-    mode    => '0644',
+    mode    => $::apache::file_mode,
     order   => 'numeric',
     require => Package['httpd'],
     notify  => Class['apache::service'],
   }
+  # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
+  # needs to be converted into something generic.
   if $::apache::vhost_enable_dir {
     $vhost_enable_dir = $::apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
@@ -505,7 +645,7 @@ define apache::vhost(
       target  => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
       owner   => 'root',
       group   => $::apache::params::root_group,
-      mode    => '0644',
+      mode    => $::apache::file_mode,
       require => Concat["${priority_real}${filename}.conf"],
       notify  => Class['apache::service'],
     }
@@ -664,15 +804,36 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $headers
+  if $headers and ! empty($headers) {
+    concat::fragment { "${name}-header":
+      target  => "${priority_real}${filename}.conf",
+      order   => 140,
+      content => template('apache/vhost/_header.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $request_headers
+  if $request_headers and ! empty($request_headers) {
+    concat::fragment { "${name}-requestheader":
+      target  => "${priority_real}${filename}.conf",
+      order   => 150,
+      content => template('apache/vhost/_requestheader.erb'),
+    }
+  }
+
+  # Template uses:
   # - $proxy_dest
   # - $proxy_pass
   # - $proxy_pass_match
   # - $proxy_preserve_host
+  # - $proxy_add_headers
   # - $no_proxy_uris
   if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
-      order   => 140,
+      order   => 160,
       content => template('apache/vhost/_proxy.erb'),
     }
   }
@@ -682,7 +843,7 @@ define apache::vhost(
   if $rack_base_uris {
     concat::fragment { "${name}-rack":
       target  => "${priority_real}${filename}.conf",
-      order   => 150,
+      order   => 170,
       content => template('apache/vhost/_rack.erb'),
     }
   }
@@ -692,7 +853,7 @@ define apache::vhost(
   if $passenger_base_uris {
     concat::fragment { "${name}-passenger_uris":
       target  => "${priority_real}${filename}.conf",
-      order   => 155,
+      order   => 175,
       content => template('apache/vhost/_passenger_base_uris.erb'),
     }
   }
@@ -710,10 +871,10 @@ define apache::vhost(
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
   # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest) {
+  if ($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest) {
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}${filename}.conf",
-      order   => 160,
+      order   => 180,
       content => template('apache/vhost/_redirect.erb'),
     }
   }
@@ -727,7 +888,7 @@ define apache::vhost(
   if $rewrites or $rewrite_rule {
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}${filename}.conf",
-      order   => 170,
+      order   => 190,
       content => template('apache/vhost/_rewrite.erb'),
     }
   }
@@ -738,7 +899,7 @@ define apache::vhost(
   if ( $scriptalias or $scriptaliases != [] ) {
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
-      order   => 180,
+      order   => 200,
       content => template('apache/vhost/_scriptalias.erb'),
     }
   }
@@ -748,7 +909,7 @@ define apache::vhost(
   if $serveraliases and ! empty($serveraliases) {
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}${filename}.conf",
-      order   => 190,
+      order   => 210,
       content => template('apache/vhost/_serveralias.erb'),
     }
   }
@@ -756,10 +917,10 @@ define apache::vhost(
   # Template uses:
   # - $setenv
   # - $setenvif
-  if ($setenv and ! empty($setenv)) or ($setenvif and ! empty($setenvif)) {
+  if ($use_env_mod or $use_setenvif_mod) {
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
-      order   => 200,
+      order   => 220,
       content => template('apache/vhost/_setenv.erb'),
     }
   }
@@ -774,21 +935,36 @@ define apache::vhost(
   # - $ssl_crl_path
   # - $ssl_crl
   # - $ssl_crl_check
-  # - $ssl_proxyengine
   # - $ssl_protocol
   # - $ssl_cipher
   # - $ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
-  # - $ssl_proxy_machine_cert
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
+  # - $ssl_stapling
   # - $apache_version
   if $ssl {
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
-      order   => 210,
+      order   => 230,
       content => template('apache/vhost/_ssl.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $ssl_proxyengine
+  # - $ssl_proxy_verify
+  # - $ssl_proxy_check_peer_cn
+  # - $ssl_proxy_check_peer_name
+  # - $ssl_proxy_check_peer_expire
+  # - $ssl_proxy_machine_cert
+  # - $ssl_proxy_protocol
+  if $ssl_proxyengine {
+    concat::fragment { "${name}-sslproxy":
+      target  => "${priority_real}${filename}.conf",
+      order   => 230,
+      content => template('apache/vhost/_sslproxy.erb'),
     }
   }
 
@@ -798,12 +974,12 @@ define apache::vhost(
   # - $krb_method_k5passwd
   # - $krb_authoritative
   # - $krb_auth_realms
-  # - $krb_5keytab 
+  # - $krb_5keytab
   # - $krb_local_user_mapping
   if $auth_kerb {
     concat::fragment { "${name}-auth_kerb":
       target  => "${priority_real}${filename}.conf",
-      order   => 210,
+      order   => 230,
       content => template('apache/vhost/_auth_kerb.erb'),
     }
   }
@@ -815,7 +991,7 @@ define apache::vhost(
   if $suphp_engine == 'on' {
     concat::fragment { "${name}-suphp":
       target  => "${priority_real}${filename}.conf",
-      order   => 220,
+      order   => 240,
       content => template('apache/vhost/_suphp.erb'),
     }
   }
@@ -826,7 +1002,7 @@ define apache::vhost(
   if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
     concat::fragment { "${name}-php":
       target  => "${priority_real}${filename}.conf",
-      order   => 220,
+      order   => 240,
       content => template('apache/vhost/_php.erb'),
     }
   }
@@ -837,28 +1013,8 @@ define apache::vhost(
   if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
     concat::fragment { "${name}-php_admin":
       target  => "${priority_real}${filename}.conf",
-      order   => 230,
-      content => template('apache/vhost/_php_admin.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $headers
-  if $headers and ! empty($headers) {
-    concat::fragment { "${name}-header":
-      target  => "${priority_real}${filename}.conf",
-      order   => 240,
-      content => template('apache/vhost/_header.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $request_headers
-  if $request_headers and ! empty($request_headers) {
-    concat::fragment { "${name}-requestheader":
-      target  => "${priority_real}${filename}.conf",
       order   => 250,
-      content => template('apache/vhost/_requestheader.erb'),
+      content => template('apache/vhost/_php_admin.erb'),
     }
   }
 
@@ -893,6 +1049,7 @@ define apache::vhost(
   # - $fastcgi_server
   # - $fastcgi_socket
   # - $fastcgi_dir
+  # - $fastcgi_idle_timeout
   # - $apache_version
   if $fastcgi_server or $fastcgi_dir {
     concat::fragment { "${name}-fastcgi":
@@ -919,7 +1076,11 @@ define apache::vhost(
   # - $passenger_min_instances
   # - $passenger_start_timeout
   # - $passenger_pre_start
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start {
+  # - $passenger_user
+  # - $passenger_nodejs
+  # - $passenger_sticky_sessions
+  # - $passenger_startup_file
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
@@ -941,12 +1102,15 @@ define apache::vhost(
   # - $modsec_disable_vhost
   # - $modsec_disable_ids
   # - $modsec_disable_ips
+  # - $modsec_disable_msgs
+  # - $modsec_disable_tags
   # - $modsec_body_limit
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips {
+  # - $modsec_audit_log_destination
+  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb')
+      content => template('apache/vhost/_security.erb'),
     }
   }
 
@@ -959,13 +1123,36 @@ define apache::vhost(
       content => template('apache/vhost/_filters.erb'),
     }
   }
+
   # Template uses:
-  # - $limit_request_field_size
-  if $limit_request_field_size {
-    concat::fragment { "${name}-limits":
+  # - $jk_mounts
+  if $jk_mounts and ! empty($jk_mounts) {
+    concat::fragment { "${name}-jk_mounts":
       target  => "${priority_real}${filename}.conf",
-      order   => 330,
-      content => template('apache/vhost/_limits.erb'),
+      order   => 340,
+      content => template('apache/vhost/_jk_mounts.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $keepalive
+  # - $keepalive_timeout
+  # - $max_keepalive_requests
+  if $keepalive or $keepalive_timeout or $max_keepalive_requests {
+    concat::fragment { "${name}-keepalive_options":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_keepalive_options.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $cas_*
+  if $cas_enabled {
+    concat::fragment { "${name}-auth_cas":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_auth_cas.erb'),
     }
   }
 

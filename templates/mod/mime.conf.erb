@@ -31,6 +31,8 @@ AddLanguage sv .sv
 AddLanguage zh-CN .zh-cn
 AddLanguage zh-TW .zh-tw
 
-AddHandler type-map var
-AddType text/html .shtml
-AddOutputFilter INCLUDES .shtml
+<%- @_mime_types_additional.sort.each do |add_mime, config| -%>
+        <%- config.each do |type, extension| %>
+<%= add_mime %> <%= type %> <%= extension%>
+        <%- end -%>
+<% end %>

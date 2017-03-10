@@ -1,8 +1,10 @@
 class apache::mod::nss (
   $transfer_log = "${::apache::params::logroot}/access.log",
   $error_log    = "${::apache::params::logroot}/error.log",
-  $passwd_file  = undef
+  $passwd_file  = undef,
+  $port     = 8443,
 ) {
+  include ::apache
   include ::apache::mod::mime
 
   apache::mod { 'nss': }
@@ -17,6 +19,7 @@ class apache::mod::nss (
   file { 'nss.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/nss.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/nss.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

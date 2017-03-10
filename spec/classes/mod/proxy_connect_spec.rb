@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'apache::mod::proxy_connect', :type => :class do
   let :pre_condition do
     [
-      'include apache',
       'include apache::mod::proxy',
     ]
   end
+  it_behaves_like "a mod class, without including apache"
   context 'on a Debian OS' do
     let :facts do
       {

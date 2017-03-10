@@ -12,6 +12,13 @@
 <% if @wsgi_process_group -%>
   WSGIProcessGroup <%= @wsgi_process_group %>
 <% end -%>
+<% if @wsgi_script_aliases_match and ! @wsgi_script_aliases_match.empty? -%>
+  <%- @wsgi_script_aliases_match.keys.sort.each do |key| -%>
+    <%- if key != '' and @wsgi_script_aliases_match[key] != ''-%>
+  WSGIScriptAliasMatch <%= key %> "<%= @wsgi_script_aliases_match[key] %>"
+    <%- end -%>
+  <%- end -%>
+<% end -%>
 <% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
   <%- @wsgi_script_aliases.keys.sort.each do |key| -%>
     <%- if key != '' and @wsgi_script_aliases[key] != ''-%>

@@ -11,6 +11,9 @@ CASCertificatePath <%= @cas_certificate_path %>
 <% if @cas_proxy_validate_url -%>
 CASProxyValidateURL <%= @cas_proxy_validate_url %>
 <% end -%>
+<% if @cas_validate_server -%>
+CASValidateServer <%= @cas_validate_server %>
+<% end -%>
 <% if @cas_validate_depth -%>
 CASValidateDepth <%= @cas_validate_depth %>
 <% end -%>
@@ -38,3 +41,18 @@ CASCookieHttpOnly <%= @cas_cookie_http_only %>
 <% if @cas_authoritative -%>
 CASAuthoritative <%= @cas_authoritative %>
 <% end -%>
+<%- if @cas_sso_enabled -%>
+CASSSOEnabled On
+<%- end -%>
+<%- if @cas_validate_saml -%>
+CASValidateSAML On
+<%- end -%>
+<%- if @cas_attribute_prefix -%>
+CASAttributePrefix <%= @cas_attribute_prefix %>
+<%- end -%>
+<%- if @cas_attribute_delimiter -%>
+CASAttributeDelimiter <%= @cas_attribute_delimiter %>
+<%- end -%>
+<%- if @cas_scrub_request_headers -%>
+CASAttributeDelimiter On
+<%- end -%>

@@ -1,17 +1,8 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
-describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
-  case fact('osfamily')
-  when 'Debian'
-    service_name = 'apache2'
-  when 'RedHat'
-    service_name = 'httpd'
-  when 'FreeBSD'
-    service_name = 'apache24'
-  when 'Gentoo'
-    service_name = 'apache2'
-  end
-
+# Don't run proxy_html tests on RHEL7 because the yum repos are missing packages required by it.
+describe 'apache::mod::proxy_html class', :unless => (fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7') do
   context "default proxy_html config" do
     if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') =~ /(5|6)/
       it 'adds epel' do
@@ -33,8 +24,12 @@ describe 'apache::mod::proxy_html class', :unless => UNSUPPORTED_PLATFORMS.inclu
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe service(service_name) do
-      it { is_expected.to be_enabled }
+    describe service($service_name) do
+      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { should be_enabled }
+      end
       it { is_expected.to be_running }
     end
   end
