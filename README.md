@@ -1606,6 +1606,7 @@ class { '::apache::mod::cluster':
 
 - `port`: mod_cluster listen port. Default: '6666'.
 - `server_advertise`: Whether the server should advertise. Default: true.
+- `advertise_frequency`: Interval between advertise messages in seconds[.miliseconds]. Default: 10.
 - `manager_allowed_network`: Network allowed to access the mod_cluster_manager. Default: '127.0.0.1'.
 - `keep_alive_timeout`: Keep-alive timeout. Default: 60.
 - `max_keep_alive_requests`: Max number of requests kept alive. Default: 0
