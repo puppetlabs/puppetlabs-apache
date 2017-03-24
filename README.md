@@ -318,9 +318,9 @@ class { 'apache': }
 When you declare this class with the default options, the module:
 
 - Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
-- Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
+- Places the required configuration files in a directory, with the [default location](#conf_dir) Depends on operating system.
 - Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
-- Creates a document root directory determined by your operating system, typically `/var/www`.
+- Creates a document root directory Depends on operating system, typically `/var/www`.
 - Starts the Apache service.
 
 Apache defaults depend on your operating system. These defaults work in testing environments but are not suggested for production. We recommend customizing the class's parameters to suit your site.
@@ -818,15 +818,21 @@ Guides the basic setup and installation of Apache on your system.
 
 ##### `allow_encoded_slashes`
 
-Sets the server default for the [`AllowEncodedSlashes`][] declaration, which modifies the responses to URLs containing '\' and '/' characters. Valid options: 'on', 'off', 'nodecode'. Default: undef, which omits the declaration from the server's configuration and uses Apache's default setting of 'off'.
+Sets the server default for the [`AllowEncodedSlashes`][] declaration, which modifies the responses to URLs containing '\' and '/' characters. Valid options: 'on', 'off', 'nodecode'. If not specified, omits the declaration from the server's configuration and uses Apache's default setting of 'off'.
+
+Default: `undef`.
 
 ##### `apache_version`
 
-Configures module template behavior, package names, and default Apache modules by defining the version of Apache to use. Default: Determined by your operating system family and release via the [`apache::version`][] class. Puppet recommends against manually configuring this parameter without reason.
+Configures module template behavior, package names, and default Apache modules by defining the version of Apache to use. We do not recommend manually configuring this parameter without reason.
+
+Default: Depends on operating system and release via the [`apache::version`][] class. 
 
 ##### `conf_dir`
 
-Sets the directory where the Apache server's main configuration file is located. Default: Depends on your operating system.
+Sets the directory where the Apache server's main configuration file is located.
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2`
 - **FreeBSD**: `/usr/local/etc/apache22`
@@ -835,11 +841,15 @@ Sets the directory where the Apache server's main configuration file is located.
 
 ##### `conf_template`
 
-Defines the [template][] used for the main Apache configuration file. Default: `apache/httpd.conf.erb`. Modifying this parameter is potentially risky, as the apache Puppet module is designed to use a minimal configuration file customized by `conf.d` entries.
+Defines the [template][] used for the main Apache configuration file. Modifying this parameter is potentially risky, as the apache module is designed to use a minimal configuration file customized by `conf.d` entries.
+
+Default: `apache/httpd.conf.erb`.
 
 ##### `confd_dir`
 
-Sets the location of the Apache server's custom configuration directory. Default: Depends on your operating system.
+Sets the location of the Apache server's custom configuration directory. 
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2/conf.d`
 - **FreeBSD**: `/usr/local/etc/apache22`
@@ -848,83 +858,102 @@ Sets the location of the Apache server's custom configuration directory. Default
 
 ##### `default_charset`
 
-Used as the [`AddDefaultCharset`][] directive in the main configuration file. Default: undef.
+Used as the [`AddDefaultCharset`][] directive in the main configuration file.
+
+Default: `undef`.
 
 ##### `default_confd_files`
 
-Determines whether Puppet generates a default set of includable Apache configuration files in the directory defined by the [`confd_dir`][] parameter. These configuration files correspond to what is typically installed with the Apache package on the server's operating system. Valid options: Boolean. Default: `true`.
+Determines whether Puppet generates a default set of includable Apache configuration files in the directory defined by the [`confd_dir`][] parameter. These configuration files correspond to what is typically installed with the Apache package on the server's operating system.
+
+Boolean. Default: `true`.
 
 ##### `default_mods`
 
-Determines whether to configure and enable a set of default [Apache modules][] depending on your operating system. Valid options: `true`, `false`, or an array of Apache module names. Default: `true`.
+Determines whether to configure and enable a set of default [Apache modules][] depending on your operating system. Valid options: Boolean or an array of Apache module names. 
 
-If this parameter's value is `false`, Puppet includes only the Apache modules required to make the HTTP daemon work on your operating system, and you can declare any other modules separately using the [`apache::mod::<MODULE NAME>`][] class or [`apache::mod`][] defined type.
+If `false`, Puppet includes only the Apache modules required to make the HTTP daemon work on your operating system, and you can declare any other modules separately using the [`apache::mod::<MODULE NAME>`][] class or [`apache::mod`][] defined type.
 
 If `true`, Puppet installs additional modules, the list of which depends on the operating system as well as the [`apache_version`][] and [`mpm_module`][] parameters' values. As these lists of modules can change frequently, consult the [Puppet module's code][] for up-to-date lists.
 
 If this parameter contains an array, Puppet instead enables all passed Apache modules.
 
+Default: `true`.
+
 ##### `default_ssl_ca`
 
-Sets the default certificate authority for the Apache server. Default: undef.
+Sets the default certificate authority for the Apache server.
 
-While this default value results in a functioning Apache server, you **must** update this parameter with your certificate authority information before deploying this server in a production environment.
+Although this default value results in a functioning Apache server, you **must** update this parameter with your certificate authority information before deploying this server in a production environment.
+
+Boolean. Default: `undef`.
 
 ##### `default_ssl_cert`
 
-Sets the [SSL encryption][] certificate location. Default: Determined by your operating system.
+Sets the [SSL encryption][] certificate location.
+
+While the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/ssl/certs/ssl-cert-snakeoil.pem`
 - **FreeBSD**: `/usr/local/etc/apache22/server.crt`
 - **Gentoo**: `/etc/ssl/apache2/server.crt`
 - **Red Hat**: `/etc/pki/tls/certs/localhost.crt`
 
-While the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
-
 ##### `default_ssl_chain`
 
-Sets the default [SSL chain][] location. Default: undef.
+Sets the default [SSL chain][] location.
 
-While this default value results in a functioning Apache server, you **must** update this parameter with your SSL chain before deploying this server in a production environment.
+Although this default value results in a functioning Apache server, you **must** update this parameter with your SSL chain before deploying this server in a production environment.
+
+Default: `undef`.
 
 ##### `default_ssl_crl`
 
-Sets the path of the default [certificate revocation list][] (CRL) file to use. Default: undef.
+Sets the path of the default [certificate revocation list][] (CRL) file to use.
 
-While this default value results in a functioning Apache server, you **must** update this parameter with your CRL file's path before deploying this server in a production environment. You can use this parameter with or in place of the [`default_ssl_crl_path`][].
+Although this default value results in a functioning Apache server, you **must** update this parameter with your CRL file's path before deploying this server in a production environment. You can use this parameter with or in place of the [`default_ssl_crl_path`][].
+
+Default: `undef`.
 
 ##### `default_ssl_crl_path`
 
-Sets the server's [certificate revocation list path][], which contains your CRLs. Default: undef.
+Sets the server's [certificate revocation list path][], which contains your CRLs.
 
-While this default value results in a functioning Apache server, you **must** update this parameter with the CRL path before deploying this server in a production environment.
+Although this default value results in a functioning Apache server, you **must** update this parameter with the CRL path before deploying this server in a production environment.
+
+Default: `undef`.
 
 ##### `default_ssl_crl_check`
 
-Sets the default certificate revocation check level via the [`SSLCARevocationCheck`][] directive. Default: undef.
+Sets the default certificate revocation check level via the [`SSLCARevocationCheck`][] directive. This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
-While this default value results in a functioning Apache server, you **must** specify this parameter when using certificate revocation lists in a production environment.
+Although this default value results in a functioning Apache server, you **must** specify this parameter when using certificate revocation lists in a production environment.
 
-This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+Default: `undef`.
 
 ##### `default_ssl_key`
 
-Sets the [SSL certificate key file][] location. Default: Determined by your operating system.
+Sets the [SSL certificate key file][] location.
+
+Although the default values result in a functioning Apache server, you **must** update this parameter with your SSL key's location before deploying this server in a production environment.
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/ssl/private/ssl-cert-snakeoil.key`
 - **FreeBSD**: `/usr/local/etc/apache22/server.key`
 - **Gentoo**: `/etc/ssl/apache2/server.key`
 - **Red Hat**: `/etc/pki/tls/private/localhost.key`
 
-While these default values result in a functioning Apache server, you **must** update this parameter with your SSL key's location before deploying this server in a production environment.
 
 ##### `default_ssl_vhost`
 
-Configures a default [SSL][SSL encryption] virtual host. Valid options: Boolean. Default: `false`.
+Configures a default [SSL][SSL encryption] virtual host. 
 
 If `true`, Puppet automatically configures the following virtual host using the [`apache::vhost`][] defined type:
 
-``` puppet
+```puppet
 apache::vhost { 'default-ssl':
   port            => 443,
   ssl             => true,
@@ -937,27 +966,29 @@ apache::vhost { 'default-ssl':
 
 > **Note**: SSL virtual hosts only respond to HTTPS queries.
 
+
+Boolean. Default: `false`.
+
 ##### `default_type`
 
-_Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer and only exists for backwards compatibility in configuration files. Default: `undef`.
+_Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer and only exists for backwards compatibility in configuration files.
+
+Default: `undef`.
 
 ##### `default_vhost`
 
-Configures a default virtual host when the class is declared. Valid options: Boolean. Default: `true`.
+Configures a default virtual host when the class is declared. 
+
 
 To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's value to `false`.
 
 > **Note**: Apache will not start without at least one virtual host. If you set this to `false` be sure to configure one elsewhere.
 
+Boolean. Default: `true`.
+
 ##### `dev_packages`
 
-Configures a specific dev package to use. Valid options: A string or array of strings. Default: Depends on the operating system.
-
-- **Red Hat:** 'httpd-devel'
-- **Debian 8/Ubuntu 13.10 or newer:** ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']
-- **Older Debian/Ubuntu versions:** ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
-- **FreeBSD, Gentoo:** `undef`
-- **Suse:** ['libapr-util1-devel', 'libapr1-devel']
+Configures a specific dev package to use. Valid options: A string or array of strings.
 
 Example for using httpd 2.4 from the IUS yum repo:
 
@@ -969,9 +1000,19 @@ class { 'apache':
 }
 ```
 
+Default: Depends on operating system.
+
+- **Red Hat:** 'httpd-devel'
+- **Debian 8/Ubuntu 13.10 or newer:** ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']
+- **Older Debian/Ubuntu versions:** ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
+- **FreeBSD, Gentoo:** `undef`
+- **Suse:** ['libapr-util1-devel', 'libapr1-devel']
+
 ##### `docroot`
 
-Sets the default [`DocumentRoot`][] location. Default: Determined by your operating system.
+Sets the default [`DocumentRoot`][] location.
+
+Default: Depends on operating system.
 
 - **Debian**: `/var/www/html`
 - **FreeBSD**: `/usr/local/www/apache22/data`
@@ -980,7 +1021,9 @@ Sets the default [`DocumentRoot`][] location. Default: Determined by your operat
 
 ##### `error_documents`
 
-Determines whether to enable [custom error documents][] on the Apache server. Valid options: Boolean. Default: `false`.
+Determines whether to enable [custom error documents][] on the Apache server.
+
+Boolean. Default: `false`.
 
 ##### `group`
 
@@ -992,7 +1035,9 @@ By default, Puppet attempts to manage this group as a resource under the `apache
 
 ##### `httpd_dir`
 
-Sets the Apache server's base configuration directory. This is useful for specially repackaged Apache server builds but might have unintended consequences when combined with the default distribution packages. Default: Determined by your operating system.
+Sets the Apache server's base configuration directory. This is useful for specially repackaged Apache server builds but might have unintended consequences when combined with the default distribution packages.
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2`
 - **FreeBSD**: `/usr/local/etc/apache22`
@@ -1001,23 +1046,27 @@ Sets the Apache server's base configuration directory. This is useful for specia
 
 ##### `keepalive`
 
-Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive. Valid options: 'Off', 'On'. Default: 'Off'.
+Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive. Valid options: 'Off', 'On'.
 
 If 'On', use the [`keepalive_timeout`][] and [`max_keepalive_requests`][] parameters to set relevant options.
 
+Default: 'Off'.
+
 ##### `keepalive_timeout`
 
-Sets the [`KeepAliveTimeout`] directive, which determines the amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. Default: '15'.
+Sets the [`KeepAliveTimeout`] directive, which determines the amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. This parameter is only relevant if the [`keepalive` parameter][] is enabled.
 
-This parameter is only relevant if the [`keepalive` parameter][] is enabled.
+Default: '15'.
 
 ##### `max_keepalive_requests`
 
-Limits the number of requests allowed per connection when the [`keepalive` parameter][] is enabled. Default: '100'.
+Limits the number of requests allowed per connection when the [`keepalive` parameter][] is enabled.
+
+Default: '100'.
 
 ##### `lib_path`
 
-Specifies the location where [Apache module][Apache modules] files are stored. Default: Depends on the operating system.
+Specifies the location where [Apache module][Apache modules] files are stored. Default: Depends on operating system.
 
 - **Debian** and **Gentoo**: `/usr/lib/apache2/modules`
 - **FreeBSD**: `/usr/local/libexec/apache24`
@@ -1033,7 +1082,9 @@ This can be used to set the module load order.
 
 ##### `log_level`
 
-Changes the error log's verbosity. Valid options: 'alert', 'crit', 'debug', 'emerg', 'error', 'info', 'notice', 'warn'. Default: 'warn'.
+Changes the error log's verbosity. Valid options: 'alert', 'crit', 'debug', 'emerg', 'error', 'info', 'notice', 'warn'.
+
+Default: 'warn'.
 
 ##### `log_formats`
 
@@ -1057,7 +1108,9 @@ If your `log_formats` parameter contains one of those, it will be overwritten wi
 
 ##### `logroot`
 
-Changes the directory of Apache log files for the virtual host. Default: Determined by your operating system.
+Changes the directory of Apache log files for the virtual host.
+
+Default: Depends on operating system.
 
 - **Debian**: `/var/log/apache2`
 - **FreeBSD**: `/var/log/apache22`
@@ -1066,25 +1119,33 @@ Changes the directory of Apache log files for the virtual host. Default: Determi
 
 ##### `logroot_mode`
 
-Overrides the default [`logroot`][] directory's mode. Default: `undef`.
+Overrides the default [`logroot`][] directory's mode.
 
 > **Note**: Do _not_ grant write access to the directory where the logs are stored without being aware of the consequences. See the [Apache documentation][Log security] for details.
 
+Default: `undef`.
+
 ##### `manage_group`
 
-When `false`, stops Puppet from creating the group resource. Valid options: Boolean. Default: `true`.
+When `false`, stops Puppet from creating the group resource.
 
 If you have a group created from another Puppet module that you want to use to run Apache, set this to `false`. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
 
+Boolean. Default: `true`.
+
 ##### `manage_user`
 
-When `false`, stops Puppet from creating the user resource. Valid options: Boolean. Default: `true`.
+When `false`, stops Puppet from creating the user resource.
 
 This is for instances when you have a user, created from another Puppet module, you want to use to run Apache. Without this parameter, attempting to use a previously established user would result in a duplicate resource error.
 
+Boolean. Default: `true`.
+
 ##### `mod_dir`
 
-Sets where Puppet places configuration files for your [Apache modules][]. Default: Determined by your operating system.
+Sets where Puppet places configuration files for your [Apache modules][].
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2/mods-available`
 - **FreeBSD**: `/usr/local/etc/apache22/Modules`
@@ -1093,10 +1154,7 @@ Sets where Puppet places configuration files for your [Apache modules][]. Defaul
 
 ##### `mpm_module`
 
-Determines which [multi-processing module][] (MPM) is loaded and configured for the HTTPD process. Valid options: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`. Default: Determined by your operating system.
-
-- **Debian**: 'worker'
-- **FreeBSD, Gentoo, and Red Hat**: 'prefork'
+Determines which [multi-processing module][] (MPM) is loaded and configured for the HTTPD process. Valid options: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.
 
 You must set this to `false` to explicitly declare the following classes with custom parameters:
 
@@ -1106,13 +1164,22 @@ You must set this to `false` to explicitly declare the following classes with cu
 - [`apache::mod::prefork`][]
 - [`apache::mod::worker`][]
 
+Default: Depends on operating system.
+
+- **Debian**: 'worker'
+- **FreeBSD, Gentoo, and Red Hat**: 'prefork'
+
 ##### `package_ensure`
 
-Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or the equivalent 'present'), or a version string. Default: 'installed'.
+Controls the `package` resource's [`ensure`][] attribute. Valid options: 'absent', 'installed' (or equivalent 'present'), or a version string.
 
+Default: 'installed'.
+ 
 ##### `pidfile`
 
-Allows settting a custom location for the pid file - useful if using a custom built Apache rpm. Default: Depends on operating system.
+Allows settting a custom location for the pid file. Useful if using a custom-built Apache rpm.
+
+Default: Depends on operating system.
 
 - **Debian:** '\${APACHE_PID_FILE}'
 - **FreeBSD:** '/var/run/httpd.pid'
@@ -1120,43 +1187,57 @@ Allows settting a custom location for the pid file - useful if using a custom bu
 
 ##### `ports_file`
 
-Sets the path to the file containing Apache ports configuration. Default: '{$conf_dir}/ports.conf'.
+Sets the path to the file containing Apache ports configuration.
+
+Default: '{$conf_dir}/ports.conf'.
 
 ##### `purge_configs`
 
-Removes all other Apache configs and virtual hosts. Valid options: Boolean. Default: `true`.
+Removes all other Apache configs and virtual hosts.
 
-Setting this to `false` is a stopgap measure to allow the apache Puppet module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_dir`][].
+Setting this to `false` is a stopgap measure to allow the apache module to coexist with existing or unmanaged configurations. We recommend moving your configuration to resources within this module. For virtual host configurations, see [`purge_vhost_dir`][].
+
+Boolean. Default: `true`.
 
 ##### `purge_vhost_dir`
 
-If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parameter's, the Boolean parameter `purge_vhost_dir` determines whether Puppet removes any configurations inside `vhost_dir` _not_ managed by Puppet. Valid options: Boolean. Default: same as [`purge_configs`][].
+If the [`vhost_dir`][] parameter's value differs from the [`confd_dir`][] parameter's, this parameter determines whether Puppet removes any configurations inside `vhost_dir` that are _not_ managed by Puppet.
 
-Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache Puppet module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
+Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
+
+Boolean. Default: same as [`purge_configs`][].
 
 ##### `rewrite_lock`
 
-Allows setting a custom location for a rewrite lock - considered best practice if using a RewriteMap of type prg in the [`rewrites`][] parameter of your virtual host. Default: `undef`.
+Allows setting a custom location for a rewrite lock - considered best practice if using a RewriteMap of type prg in the [`rewrites`][] parameter of your virtual host. This parameter only applies to Apache version 2.2 or lower and is ignored on newer versions.
 
-This parameter only applies to Apache version 2.2 or lower and is ignored on newer versions.
+Default: `undef`.
 
 ##### `sendfile`
 
-Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the [`EnableSendfile`][] directive. Valid options: 'On', 'Off'. Default: 'On'.
+Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the [`EnableSendfile`][] directive. Valid options: 'On', 'Off'.
+
+Default: 'On'.
 
 ##### `serveradmin`
 
-Sets the Apache server administrator's contact information via Apache's [`ServerAdmin`][] directive. Default: 'root@localhost'.
+Sets the Apache server administrator's contact information via Apache's [`ServerAdmin`][] directive.
+
+Default: 'root@localhost'.
 
 ##### `servername`
 
-Sets the Apache server name via Apache's [`ServerName`][] directive. Default: the 'fqdn' fact reported by [Facter][].
+Sets the Apache server name via Apache's [`ServerName`][] directive. 
 
 Setting to `false` will not set ServerName at all.
 
+Default: the 'fqdn' fact reported by [Facter][].
+
 ##### `server_root`
 
-Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive. Default: determined by your operating system.
+Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive.
+
+Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2`
 - **FreeBSD**: `/usr/local`
@@ -1165,25 +1246,35 @@ Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive.
 
 ##### `server_signature`
 
-Configures a trailing footer line to display at the bottom of server-generated documents, such as error documents and output of certain [Apache modules][], via Apache's [`ServerSignature`][] directive. Valid options: 'Off', 'On'. Default: 'On'.
+Configures a trailing footer line to display at the bottom of server-generated documents, such as error documents and output of certain [Apache modules][], via Apache's [`ServerSignature`][] directive. Valid options: 'Off', 'On'.
+
+Default: 'On'.
 
 ##### `server_tokens`
 
-Controls how much information Apache sends to the browser about itself and the operating system, via Apache's [`ServerTokens`][] directive. Default: 'OS'.
+Controls how much information Apache sends to the browser about itself and the operating system, via Apache's [`ServerTokens`][] directive.
+
+Default: 'OS'.
 
 ##### `service_enable`
 
-Determines whether Puppet enables the Apache HTTPD service when the system is booted. Valid options: Boolean. Default: `true`.
+Determines whether Puppet enables the Apache HTTPD service when the system is booted.
+
+Boolean. Default: `true`.
 
 ##### `service_ensure`
 
-Determines whether Puppet should make sure the service is running. Valid options: '`true`' (equivalent to 'running'), '`false`' (equivalent to 'stopped'). Default: 'running'.
+Determines whether Puppet should make sure the service is running. Valid options: '`true`' (or 'running'), '`false`' (or 'stopped'). 
 
 The '`false`' or 'stopped' values set the 'httpd' service resource's `ensure` parameter to '`false`', which is useful when you want to let the service be managed by another application, such as Pacemaker.
 
+Default: 'running'.
+
 ##### `service_name`
 
-Sets the name of the Apache service. Default: determined by your operating system.
+Sets the name of the Apache service.
+
+Default: Depends on operating system.
 
 - **Debian and Gentoo**: 'apache2'
 - **FreeBSD**: 'apache22'
@@ -1191,17 +1282,21 @@ Sets the name of the Apache service. Default: determined by your operating syste
 
 ##### `service_manage`
 
-Determines whether Puppet manages the HTTPD service's state. Valid options: Boolean. Default: `true`.
+Determines whether Puppet manages the HTTPD service's state.
+
+Boolean. Default: `true`.
 
 ##### `service_restart`
 
-Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. Default: `undef`, which uses the [default Puppet behavior][Service attribute restart].
+Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. The default setting uses the [default Puppet behavior][Service attribute restart].
+
+Default: `undef`.
 
 ##### `ssl_stapling`
 
-Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean. Default: `false`. It is possible to override this on a vhost level.
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). This parameter only applies to Apache 2.4 or higher and is ignored on older versions. It is possible to override the default setting on a vhost level.
 
-This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+Boolean. Default: `false`.
 
 ##### `ssl_stapling_return_errors`
 
@@ -1235,7 +1330,7 @@ Sets the default access policy for the / directory in httpd.conf. A value of '`f
 
 ##### `vhost_dir`
 
-Changes your virtual host configuration files' location. Default: determined by your operating system.
+Changes your virtual host configuration files' location. Default: Depends on operating system.
 
 - **Debian**: `/etc/apache2/sites-available`
 - **FreeBSD**: `/usr/local/etc/apache22/Vhosts`
@@ -1266,7 +1361,7 @@ To prevent Puppet from managing the user, set the [`manage_user`][] parameter to
 
 The name of the Apache package to install. Default: Puppet sets the default value via the [`apache::params`][] class, which manages the user based on your operating system:
 
-The default value is determined by your operating system:
+The default value is Depends on operating system:
 
 - **Debian**: 'apache2'
 - **FreeBSD**: 'apache24'
@@ -1279,7 +1374,7 @@ You might need to override this if you are using a non-standard Apache package, 
 
 The name of the error log file for the main server instance
 
-The default value is determined by your operating system:
+The default value is Depends on operating system:
 
 - **Debian**: 'error.log'
 - **FreeBSD**: 'httpd-error.log'
@@ -1293,7 +1388,7 @@ If the string starts with / or | or syslog: the full path will be set. Otherwise
 
 Directory to use for global script alias 
 
-The default value is determined by your operating system:
+The default value is Depends on operating system:
 
 - **Debian**: '/usr/lib/cgi-bin'
 - **FreeBSD**: '/usr/local/www/apache24/cgi-bin'
@@ -1305,7 +1400,7 @@ The default value is determined by your operating system:
 
 The name of the access log file for the main server instance
 
-The default value is determined by your operating system:
+The default value is Depends on operating system:
 
 - **Debian**: 'error.log'
 - **FreeBSD**: 'httpd-access.log'
@@ -1317,7 +1412,7 @@ The default value is determined by your operating system:
 
 Installs Apache development libraries. By default, the package name is defined by the [`dev_packages`][] parameter of the [`apache::params`][] class based on your operating system:
 
-The default value is determined by your operating system:
+The default value is Depends on operating system:
 
 - **Debian** : 'libaprutil1-dev', 'libapr1-dev'; 'apache2-dev' on Ubuntu 13.10 and Debian 8; 'apache2-prefork-dev' on other versions
 - **FreeBSD**: '`undef`'; see note below
@@ -1444,7 +1539,7 @@ Installs and manages [`mod_alias`][].
 **Parameters within `apache::mod::alias`**:
 
 * `icons_options`: Disables directory listings for the icons directory, via Apache [`Options`] directive. Default: 'Indexes MultiViews'.
-* `icons_path`: Sets the local path for an `/icons/` Alias. Default: depends on your operating system.
+* `icons_path`: Sets the local path for an `/icons/` Alias. Default: Depends on operating system.
 
 - **Debian**: `/usr/share/apache2/icons`
 - **FreeBSD**: `/usr/local/www/apache24/icons`
@@ -3757,7 +3852,7 @@ Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.htm
 
 ##### `ssl_certs_dir`
 
-Specifies the location of the SSL certification directory. Default: Depends on the operating system.
+Specifies the location of the SSL certification directory. Default: Depends on operating system.
 
 - **Debian:** '/etc/ssl/certs'
 - **Red Hat:** '/etc/pki/tls/certs'
