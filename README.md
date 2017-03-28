@@ -3434,6 +3434,26 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+###### `limit_except`
+
+Creates a [LimitExcept](https://httpd.apache.org/docs/current/mod/core.html#limitexcept) block inside the Directory block, which can also contain `require` directives.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/docroot',
+  directories => [
+    { path         => '/',
+      provider     => 'location',
+      limit_except => [
+        { methods => 'GET HEAD',
+          require => ['valid-user']
+        },
+      ],
+    },
+  ],
+}
+```
+
 ###### `mellon_enable`
 
 Sets the [MellonEnable][`mod_auth_mellon`] directory to enable [`mod_auth_mellon`][]. You can use [`apache::mod::auth_mellon`][] to install `mod_auth_mellon`.
