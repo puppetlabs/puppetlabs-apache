@@ -535,7 +535,7 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+<LimitExcept GET HEAD>$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-        :content => /\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
+        :content => /\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/LimitExcept>/m ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Dav\sfilesystem$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
