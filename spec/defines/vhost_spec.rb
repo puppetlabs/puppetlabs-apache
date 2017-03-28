@@ -245,6 +245,14 @@ describe 'apache::vhost', :type => :define do
                 },
               ],
             },
+            { 'path'         => '/var/www/files',
+              'provider'     => 'location',
+              'limit_except' => [
+                { 'methods' => 'GET HEAD',
+                  'require' => ['valid-user']
+                },
+              ],
+            },
             { 'path'               => '/var/www/dav',
               'dav'                => 'filesystem',
               'dav_depth_infinity' => true,
@@ -524,6 +532,10 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+<Limit GET HEAD>$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<LimitExcept GET HEAD>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Dav\sfilesystem$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
