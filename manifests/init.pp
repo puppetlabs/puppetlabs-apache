@@ -60,6 +60,7 @@ class apache (
   $manage_group           = true,
   $user                   = $::apache::params::user,
   $group                  = $::apache::params::group,
+  $supplementary_groups   = [],
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
   $max_keepalive_requests = $::apache::params::max_keepalive_requests,
@@ -131,6 +132,7 @@ class apache (
     user { $user:
       ensure  => present,
       gid     => $group,
+      groups  => $supplementary_groups,
       require => Package['httpd'],
     }
   }
