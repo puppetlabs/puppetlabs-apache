@@ -152,6 +152,7 @@
 [`manage_docroot`]: #manage_docroot
 [`manage_user`]: #manage_user
 [`manage_group`]: #manage_group
+[`supplementary_groups`]: #supplementary_groups
 [`MaxConnectionsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxconnectionsperchild
 [`max_keepalive_requests`]: #max_keepalive_requests
 [`MaxRequestWorkers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxrequestworkers
@@ -1073,6 +1074,12 @@ Overrides the default [`logroot`][] directory's mode. Default: undef.
 When false, stops Puppet from creating the group resource. Valid options: Boolean. Default: true.
 
 If you have a group created from another Puppet module that you want to use to run Apache, set this to false. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
+
+##### `supplementary_groups`
+
+A list of groups to which the user belongs. These groups are in addition to the primary group. Default: No additional groups.
+
+Notice: This option only has an effect when `manage_user` is set to true.
 
 ##### `manage_user`
 
