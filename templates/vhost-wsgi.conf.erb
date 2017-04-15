@@ -1,0 +1,73 @@
+# ************************************
+# Default wsgi template in module puppetlabs-apache
+# Managed by Puppet
+# ************************************
+
+NameVirtualHost <%= vhost_name %>:<%= port %>
+<VirtualHost <%= vhost_name %>:<%= port %>>
+  ServerName <%= srvname %>
+<% if serveradmin %>
+  ServerAdmin <%= serveradmin %>
+<% end %>
+<% if serveraliases.is_a? Array -%>
+<% serveraliases.each do |name| -%><%= "  ServerAlias #{name}\n" %><% end -%>
+<% elsif serveraliases != '' -%>
+<%= "  ServerAlias #{serveraliases}" %>
+<% end -%>
+  <% if ssl == true %>
+  SSLEngine on
+  SSLCertificateFile
+  SSLCertificateKeyFile
+  <% end %>
+
+  WSGIDaemonProcess <%= wsgidaemonprocess %> 
+  WSGIProcessGroup <%= wsgiprocessgroup %>
+  WSGIApplicationGroup <%= wsgiapplicationgroup %>
+  WSGIImportScript <%= wsgiimportscript %>
+
+<% if wsgiscriptalias.is_a? Hash -%>
+<% wsgiscriptalias.sort.each do |scriptalias,v1| -%>
+  WSGIScriptAlias <%= v1['path'] %> <%= v1['script'] %>
+<% end -%><% end -%>
+
+<% if aliases.is_a? Hash -%>
+<% aliases.sort.each do |aliases,v1| -%>
+  Alias <%= v1['path'] %> <%= v1['alias'] %>
+<% end -%><% end -%>
+
+  DocumentRoot <%= docroot %>
+  <Directory <%= docroot %>>
+    Options <%= options %>
+    AllowOverride <%= Array(override).join(' ') %>
+    Order allow,deny
+    allow from all
+  </Directory>
+  ErrorLog <%= logroot %>/<%= name %>_error.log
+  LogLevel warn
+<% if access_log -%>
+  CustomLog <%= logroot %>/<%= name %>_access.log combined
+<% end -%>
+  ServerSignature Off
+
+<% if directory.is_a? Hash -%>
+<% directory.sort.each do |loc,directives| -%>
+  <Directory "<%= loc %>">
+<% directives.each do |directive| -%>
+<% directive.sort.each do |dirname,param| -%>
+    <%= dirname %> <%= param %>
+<% end -%><% end -%>
+  </Directory>
+<% end -%><% end -%>
+
+<% if location.is_a? Hash -%>
+<% location.sort.each do |loc,directives| -%>
+  <Location "<%= loc %>">
+<% directives.each do |directive| -%>
+<% directive.sort.each do |dirname,param| -%>
+    <%= dirname %> <%= param %>
+<% end -%><% end -%>
+  </Location>
+<% end -%><% end -%>
+  
+</VirtualHost>
+
