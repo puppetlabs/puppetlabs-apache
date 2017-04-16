@@ -1,0 +1,83 @@
+<% if @_files and ! @_files.empty? -%>
+
+  ## Files
+  <%- [@_files].flatten.compact.each do |file| -%>
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+      <%- if file['allow'] and ! [ false, 'false', '' ].include?(file['allow']) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using allow is deprecated in your Apache version"]) -%>
+      <%- end -%>
+      <%- if file['deny'] and ! [ false, 'false', '' ].include?(file['deny']) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using deny is deprecated in your Apache version"]) -%>
+      <%- end -%>
+      <%- if file['order'] and ! [ false, 'false', '' ].include?(file['order']) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using order is deprecated in your Apache version"]) -%>
+      <%- end -%>
+      <%- if file['satisfy'] and ! [ false, 'false', '' ].include?(file['satisfy']) -%>
+        <%- scope.function_warning(["Apache::Vhost: Using satisfy is deprecated in your Apache version"]) -%>
+      <%- end -%>
+    <%- end -%>
+    <%- if file['path'] and file['path'] != '' -%>
+      <%- if file['provider'] and file['provider'].match('(file|location|files)') -%>
+        <%- if /^(.*)match$/ =~ file['provider'] -%>
+          <%- provider = $1.capitalize + 'Match' -%>
+        <%- else -%>
+          <%- provider = file['provider'].capitalize -%>
+        <%- end -%>
+      <%- else -%>
+        <%- provider = 'Files' -%>
+      <%- end -%>
+      <%- path = file['path'] -%>
+
+  <<%= provider %> "<%= path %>">
+    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+      <%- if file['require'] and file['require'] != '' -%>
+        <%- Array(file['require']).each do |req| -%>
+    Require <%= req %>
+        <%- end -%>
+      <%- end -%>
+      <%- if file['auth_require'] -%>
+    Require <%= file['auth_require'] %>
+      <%- end -%>
+      <%- if !(file['require'] and file['require'] != '') && !(file['auth_require']) -%>
+    Require all granted
+      <%- end -%>
+    <%- else -%>
+      <%- if file['auth_require'] -%>
+    Require <%= file['auth_require'] %>
+      <%- end -%>
+      <%- if file['order'] and file['order'] != '' -%>
+    Order <%= Array(file['order']).join(',') %>
+      <%- else -%>
+    Order allow,deny
+      <%- end -%>
+      <%- if file['deny'] and ! [ false, 'false', '' ].include?(file['deny']) -%>
+        <%- if file['deny'].kind_of?(Array) -%>
+          <%- Array(file['deny']).each do |restrict| -%>
+    Deny <%=  restrict %>
+          <%- end -%>
+        <%- else -%>
+    Deny <%= file['deny'] %>
+        <%- end -%>
+      <%- end -%>
+      <%- if file['allow'] and ! [ false, 'false', '' ].include?(file['allow']) -%>
+        <%- if file['allow'].kind_of?(Array) -%>
+          <%- Array(file['allow']).each do |access| -%>
+    Allow <%=  access %>
+        <%- end -%>
+      <%- else -%>
+    Allow <%= file['allow'] %>
+      <%- end -%>
+      <%- elsif [ 'from all', 'from All' ].include?(file['deny']) -%>
+      <%- elsif ! file['deny'] and [ false, 'false', '' ].include?(file['allow']) -%>
+    Deny from all
+      <%- else -%>
+    Allow from all
+      <%- end -%>
+      <%- if file['satisfy'] and file['satisfy'] != '' -%>
+    Satisfy <%= file['satisfy'] %>
+      <%- end -%>
+    <%- end -%>
+  </<%= provider %>>
+    <%- end -%>
+  <%- end -%>
+<% end -%>
