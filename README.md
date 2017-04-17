@@ -3537,6 +3537,19 @@ apache::vhost { 'sample.example.net':
 
 `php_admin_value` sets the value of the directory, and `php_admin_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
+###### `request_headers`
+
+Adds lines for [RequestHeader](http://httpd.apache.org/docs/current/mod/mod_headers.html#requestheader) directives.
+
+~~~ puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/directory',
+  directories => {
+    path    => '/path/to/directory',
+    headers => ['set X-Forwarded-Port 443'],
+  },
+}
+~~~
 
 ###### `require`
 
