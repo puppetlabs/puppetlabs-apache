@@ -144,6 +144,7 @@ define apache::vhost(
   $passenger_startup_file      = undef,
   $add_default_charset         = undef,
   $modsec_disable_vhost        = undef,
+  $modsec_before_crs           = [],
   $modsec_disable_ids          = undef,
   $modsec_disable_ips          = undef,
   $modsec_disable_msgs         = undef,
@@ -390,6 +391,9 @@ define apache::vhost(
   # Is apache::mod::cas enabled (or apache::mod['cas'])
   $cas_enabled = defined(Apache::Mod['auth_cas'])
 
+  # Is apache::mod::security enabled (or apache::mod['security'])
+  $security_enabled = defined(Apache::Mod['security'])
+
   if $access_log and !$access_logs {
     if $access_log_file {
       $_logs_dest = "${logroot}/${access_log_file}"
@@ -590,6 +594,7 @@ define apache::vhost(
     $_directories = undef
   }
 
+  validate_array($modsec_before_crs)
   ## Create a global LocationMatch if locations aren't defined
   if $modsec_disable_ids {
     if is_hash($modsec_disable_ids) {
@@ -1100,13 +1105,16 @@ define apache::vhost(
 
   # Template uses:
   # - $modsec_disable_vhost
+  # - $modsec_before_crs
+  # - $modsec_dir
   # - $modsec_disable_ids
   # - $modsec_disable_ips
   # - $modsec_disable_msgs
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+  if $security_enabled or $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+    $modsec_dir = $::apache::params::modsec_dir
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,

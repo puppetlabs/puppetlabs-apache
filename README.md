@@ -2553,6 +2553,18 @@ Configures the maximum request body size (in bytes) ModSecurity will accept for 
 
 Disables [`mod_security`][] on a virtual host. Only valid if [`apache::mod::security`][] is included. Valid options: Boolean. Default: undef.
 
+###### `modsec_before_crs`
+
+Array of Apache directives applied before the OWASP ModSecurity Core Rule Set. Only valid if [`apache::mod::security`][] is included.
+
+``` puppet
+apache::vhost { 'sec.example.org':
+  modsec_before_crs => [
+    'SecRule REQUEST_FILENAME "@rx $/upload$" "phase:1,t:none,nolog,pass,ctl:ruleRemoveById=960010"',
+  ],
+}
+```
+
 ###### `modsec_disable_ids`
 
 Array of mod_security IDs to remove from the virtual host. Also takes a hash allowing removal of an ID from a specific location.
