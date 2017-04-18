@@ -135,6 +135,7 @@ This release fixes backwards compatibility bugs introduced in 1.9.0. Also includ
   - `fastcgi_idle_timeout`
   - `modsec_disable_msgs`
   - `modsec_disable_tags`
+  - `wsgi_script_aliases_match`
 - Added ability for 2.4-style `RequireAll|RequireNone|RequireAny` directory permissions
 - Added ability for includes in vhost directory
 - Added directory values:
