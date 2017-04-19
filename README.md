@@ -4039,7 +4039,6 @@ The [`apache::vhost::wsgi_import_script`][] parameter creates a statement inside
 
 ### RHEL/CentOS
 The [`apache::mod::auth_cas`][], [`apache::mod::passenger`][], [`apache::mod::proxy_html`][] and [`apache::mod::shib`][] classes are not functional on RH/CentOS without providing dependency packages from extra repositories.
-
 See their respective documentation above for related repositories and packages.
 
 ### SELinux and custom paths
