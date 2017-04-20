@@ -42,6 +42,7 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('httpd24-mod_ssl') }
       it { is_expected.not_to contain_package('mod_ssl') }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/cache/mod_ssl/scache\(512000\)"$})}
     end
   end
 
@@ -96,6 +97,7 @@ describe 'apache::mod::ssl', :type => :class do
     end
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/run/ssl_scache\(512000\)"$})}
   end
 
   context 'on a Suse OS' do
@@ -113,6 +115,7 @@ describe 'apache::mod::ssl', :type => :class do
     end
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/lib/apache2/ssl_scache\(512000\)"$})}
   end
   # Template config doesn't vary by distro
   context "on all distros" do
@@ -233,6 +236,22 @@ describe 'apache::mod::ssl', :type => :class do
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$})}
+    end
+    context 'setting ssl_sessioncache' do
+      let :params do
+        {
+          :ssl_sessioncache => '/tmp/customsessioncache(51200)',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/tmp/customsessioncache\(51200\)"$})}
+    end
+    context 'setting ssl_proxy_protocol' do
+      let :params do
+        {
+          :ssl_proxy_protocol => [ '-ALL', '+TLSv1'],
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLProxyProtocol -ALL \+TLSv1$})}
     end
   end
 end

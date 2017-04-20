@@ -1906,7 +1906,9 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 - `ssl_options`: Default: [ 'StdEnvVars' ]
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
 - `ssl_protocol`: Default: [ 'all', '-SSLv2', '-SSLv3' ].
+- `ssl_proxy_protocol`: Default: [].
 - `ssl_random_seed_bytes`: Valid options: A string. Default: '512'.
+- `ssl_sessioncache`: Valid options: A string. Default: '300'.
 - `ssl_sessioncachetimeout`: Valid options: A string. Default: '300'.
 - `ssl_mutex`: Default: Determined based on the OS. Valid options: See [mod_ssl][mod_ssl] documentation.
   - RedHat/FreeBSD/Suse/Gentoo: 'default'
