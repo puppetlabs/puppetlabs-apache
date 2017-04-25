@@ -6,15 +6,17 @@ class apache::mod::ssl (
   $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
   $ssl_honorcipherorder       = true,
   $ssl_protocol               = [ 'all', '-SSLv2', '-SSLv3' ],
+  $ssl_proxy_protocol         = [],
   $ssl_pass_phrase_dialog     = 'builtin',
   $ssl_random_seed_bytes      = '512',
+  $ssl_sessioncache           = $::apache::params::ssl_sessioncache,
   $ssl_sessioncachetimeout    = '300',
   $ssl_stapling               = false,
   $ssl_stapling_return_errors = undef,
   $ssl_mutex                  = undef,
   $apache_version             = undef,
   $package_name               = undef,
-) {
+) inherits ::apache::params {
   include ::apache
   include ::apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -51,6 +53,9 @@ class apache::mod::ssl (
 
   validate_bool($ssl_compression)
 
+  validate_array($ssl_proxy_protocol)
+  validate_string($ssl_sessioncache)
+
   if is_bool($ssl_honorcipherorder) {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
   } else {
@@ -59,14 +64,6 @@ class apache::mod::ssl (
       'off'   => false,
       default => true,
     }
-  }
-
-  $session_cache = $::osfamily ? {
-    'debian'  => "\${APACHE_RUN_DIR}/ssl_scache(512000)",
-    'redhat'  => '/var/cache/mod_ssl/scache(512000)',
-    'freebsd' => '/var/run/ssl_scache(512000)',
-    'gentoo'  => '/var/run/ssl_scache(512000)',
-    'Suse'    => '/var/lib/apache2/ssl_scache(512000)'
   }
 
   validate_bool($ssl_stapling)
@@ -111,7 +108,7 @@ class apache::mod::ssl (
   # $ssl_honorcipherorder
   # $ssl_options
   # $ssl_openssl_conf_cmd
-  # $session_cache
+  # $ssl_sessioncache
   # $stapling_cache
   # $ssl_mutex
   # $ssl_random_seed_bytes
