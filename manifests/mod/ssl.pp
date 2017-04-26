@@ -3,6 +3,7 @@ class apache::mod::ssl (
   $ssl_cryptodevice           = 'builtin',
   $ssl_options                = [ 'StdEnvVars' ],
   $ssl_openssl_conf_cmd       = undef,
+  $ssl_ca                     = undef,
   $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
   $ssl_honorcipherorder       = true,
   $ssl_protocol               = [ 'all', '-SSLv2', '-SSLv3' ],
@@ -104,6 +105,7 @@ class apache::mod::ssl (
   #
   # $ssl_compression
   # $ssl_cryptodevice
+  # $ssl_ca
   # $ssl_cipher
   # $ssl_honorcipherorder
   # $ssl_options
