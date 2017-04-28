@@ -136,6 +136,14 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog builtin$/)}
     end
 
+    context 'setting ssl_ca to a path' do
+      let :params do
+        {
+            :ssl_ca => '/etc/pki/some/path/ca.crt',
+        }
+      end
+      it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLCACertificateFile/)}
+    end
     context "with Apache version < 2.4" do
       let :params do
         {

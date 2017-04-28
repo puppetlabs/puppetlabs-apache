@@ -1202,6 +1202,10 @@ Determines whether Puppet manages the HTTPD service's state. Valid options: Bool
 
 Determines whether Puppet should use a specific command to restart the HTTPD service. Valid options: a command to restart the Apache service. Default: undef, which uses the [default Puppet behavior][Service attribute restart].
 
+##### `ssl_ca`
+
+Specifies the SSL certificate authority. [SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile). Default: undef. It is possible to override this on a vhost level.
+
 ##### `ssl_stapling`
 
 Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean. Default: false. It is possible to override this on a vhost level.

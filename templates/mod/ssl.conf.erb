@@ -20,6 +20,9 @@
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
   SSLHonorCipherOrder <%= scope.function_bool2httpd([@_ssl_honorcipherorder]) %>
+  <%- if @ssl_ca -%>
+  SSLCACertificateFile    "<%= @ssl_ca %>"
+  <%- end -%>
 <% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   SSLUseStapling <%= scope.function_bool2httpd([@ssl_stapling]) %>
   <%- if not @ssl_stapling_return_errors.nil? -%>
