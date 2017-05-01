@@ -43,6 +43,12 @@ describe 'apache::mod::wsgi', :type => :class do
     }
     it { is_expected.to contain_package("mod_wsgi") }
 
+    describe "with WSGIRestrictEmbedded enabled" do
+      let :params do
+        { :wsgi_restrict_embedded => 'On' }
+      end
+      it {is_expected.to contain_file('wsgi.conf').with_content(/^  WSGIRestrictEmbedded On$/)}
+    end
     describe "with custom WSGISocketPrefix" do
       let :params do
         { :wsgi_socket_prefix => 'run/wsgi' }
