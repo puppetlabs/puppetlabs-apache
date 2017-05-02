@@ -477,7 +477,7 @@ class apache::params inherits ::apache::version {
     $access_log_file      = 'access.log'
   } elsif $::osfamily == 'Suse' {
     $user                = 'wwwrun'
-    $group               = 'wwwrun'
+    $group               = 'www'
     $root_group          = 'root'
     $apache_name         = 'apache2'
     $service_name        = 'apache2'
