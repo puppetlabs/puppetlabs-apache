@@ -1589,21 +1589,18 @@ describe 'apache::vhost define' do
             location    => $_location,
             release     => $_release,
             repos       => $_repos,
-            include_src => false,
           }
 
           apt::source { "${_os}_${_release}-updates":
             location    => $_location,
             release     => "${_release}-updates",
             repos       => $_repos,
-            include_src => false,
           }
 
           apt::source { "${_os}_${_release}-security":
             location    => $_security_location,
             release     => $_release_security,
             repos       => $_repos,
-            include_src => false,
           }
         EOS
 
