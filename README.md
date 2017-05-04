@@ -1000,7 +1000,7 @@ Sets the Apache server's base configuration directory. This is useful for specia
 
 ##### `keepalive`
 
-Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive. Valid options: 'Off', 'On'. Default: 'Off'.
+Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive. Valid options: 'Off', 'On'. Default: 'On'.
 
 If 'On', use the [`keepalive_timeout`][] and [`max_keepalive_requests`][] parameters to set relevant options.
 
