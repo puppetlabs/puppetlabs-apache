@@ -2197,7 +2197,7 @@ Installs and configures `mod_passenger`.
 
 >**Note**: The passenger module isn't available on RH/CentOS without providing the dependency packages provided by EPEL and the `mod_passengers` custom repository. See the `manage_repo` parameter above and [https://www.phusionpassenger.com/library/install/apache/install/oss/el7/]()
 
-**Parameters**: [TODO: parameters were not listed (except `manage_repo`), so I pulled them out of the manifest. I need to know what these parameters do and what their values can be OR a link that points external documentation for the parameter mapping (as with mod_pagespeed above)]
+**Parameters**: [TODO: parameters were not listed (except `manage_repo`), so I pulled them out of the manifest. I need to know what these parameters do and what their values can be OR a link that points external documentation for the parameter mapping (as with mod_pagespeed above) <!--see also MODULES-4745-->]
 
 * `passenger_conf_file`: `$::apache::params::passenger_conf_file`
 * `passenger_conf_package_file: `$::apache::params::passenger_conf_package_file`
@@ -3504,7 +3504,7 @@ Default: `undef`.
 
 Sets [PassengerMaxInstancesPerApp](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxinstancesperapp), the maximum number of application processes that may simultaneously exist for a single application.
 
-Default: `undef`. TODO: bookmark
+Default: `undef`.
 
 ##### `passenger_start_timeout`
 
