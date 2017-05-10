@@ -4,7 +4,7 @@ class apache::mod::ssl (
   $ssl_options                = [ 'StdEnvVars' ],
   $ssl_openssl_conf_cmd       = undef,
   $ssl_ca                     = undef,
-  $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4',
+  $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
   $ssl_honorcipherorder       = true,
   $ssl_protocol               = [ 'all', '-SSLv2', '-SSLv3' ],
   $ssl_proxy_protocol         = [],
