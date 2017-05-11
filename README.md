@@ -382,6 +382,8 @@ apache::vhost { 'cert.example.com':
 }
 ```
 
+If you have included your certificate and key in the same PEM file specified in the [`ssl_cert`][] parameter you will need to set the [`ssl_key`][] parameter to 'false'.  Please note that doing this is highly discouraged.
+
 To configure a mix of SSL and unencrypted virtual hosts at the same domain, declare them with separate [`apache::vhost`][] defined types:
 
 ``` puppet
@@ -880,6 +882,8 @@ Sets the [SSL encryption][] certificate location. Default: Determined by your op
 
 While the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
 
+If you have included your certificate and key in the same PEM file specified in the [`default_ssl_cert`][] parameter you will need to set the [`default_ssl_key`][] parameter to 'false'.  Please note that doing this is highly discouraged.
+
 ##### `default_ssl_chain`
 
 Sets the default [SSL chain][] location. Default: undef.
@@ -916,6 +920,8 @@ Sets the [SSL certificate key file][] location. Default: Determined by your oper
 - **Red Hat**: `/etc/pki/tls/private/localhost.key`
 
 While these default values result in a functioning Apache server, you **must** update this parameter with your SSL key's location before deploying this server in a production environment.
+
+If you have included your certificate and key in the same PEM file specified in the [`default_ssl_cert`][] parameter you will need to set the [`default_ssl_key`][] parameter to 'false'.  Please note that doing this is highly discouraged.
 
 ##### `default_ssl_vhost`
 
@@ -3754,6 +3760,8 @@ Specifies the SSL certificate authority. Default: undef.
 
 Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' on Gentoo.
 
+If you have included your certificate and key in the same PEM file specified in the [`ssl_cert`][] parameter you will need to set the [`ssl_key`][] parameter to 'false'.  Please note that doing this is highly discouraged.
+
 ##### `ssl_protocol`
 
 Specifies [SSLProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array or space separated string of accepted protocols. Defaults: 'all', '-SSLv2', '-SSLv3'.
@@ -3794,6 +3802,8 @@ Sets the certificate revocation check level via the [SSLCARevocationCheck direct
 ##### `ssl_key`
 
 Specifies the SSL key. Defaults are based on your operating system: '/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' on Gentoo. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+
+If you have included your certificate and key in the same PEM file specified in the [`ssl_cert`][] parameter you will need to set the [`ssl_key`][] parameter to 'false'.  Please note that doing this is highly discouraged.
 
 ##### `ssl_verify_client`
 
