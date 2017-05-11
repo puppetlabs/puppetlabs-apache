@@ -13,91 +13,83 @@
 # Sample Usage:
 #
 class apache (
-  $apache_name            = $::apache::params::apache_name,
-  $service_name           = $::apache::params::service_name,
-  $default_mods           = true,
-  $default_vhost          = true,
-  $default_charset        = undef,
-  $default_confd_files    = true,
-  $default_ssl_vhost      = false,
-  $default_ssl_cert       = $::apache::params::default_ssl_cert,
-  $default_ssl_key        = $::apache::params::default_ssl_key,
-  $default_ssl_chain      = undef,
-  $default_ssl_ca         = undef,
-  $default_ssl_crl_path   = undef,
-  $default_ssl_crl        = undef,
-  $default_ssl_crl_check  = undef,
-  $default_type           = 'none',
-  $dev_packages           = $::apache::params::dev_packages,
-  $ip                     = undef,
-  $service_enable         = true,
-  $service_manage         = true,
-  $service_ensure         = 'running',
-  $service_restart        = undef,
-  $purge_configs          = true,
-  $purge_vhost_dir        = undef,
-  $purge_vdir             = false,
-  $serveradmin            = 'root@localhost',
-  $sendfile               = 'On',
-  $error_documents        = false,
-  $timeout                = '120',
-  $httpd_dir              = $::apache::params::httpd_dir,
-  $server_root            = $::apache::params::server_root,
-  $conf_dir               = $::apache::params::conf_dir,
-  $confd_dir              = $::apache::params::confd_dir,
-  $vhost_dir              = $::apache::params::vhost_dir,
-  $vhost_enable_dir       = $::apache::params::vhost_enable_dir,
-  $vhost_include_pattern  = $::apache::params::vhost_include_pattern,
-  $mod_dir                = $::apache::params::mod_dir,
-  $mod_enable_dir         = $::apache::params::mod_enable_dir,
-  $mpm_module             = $::apache::params::mpm_module,
-  $lib_path               = $::apache::params::lib_path,
-  $conf_template          = $::apache::params::conf_template,
-  $servername             = $::apache::params::servername,
-  $pidfile                = $::apache::params::pidfile,
-  $rewrite_lock           = undef,
-  $manage_user            = true,
-  $manage_group           = true,
-  $user                   = $::apache::params::user,
-  $group                  = $::apache::params::group,
-  $http_protocol_options  = $::apache::params::http_protocol_options,
-  $supplementary_groups   = [],
-  $keepalive              = $::apache::params::keepalive,
-  $keepalive_timeout      = $::apache::params::keepalive_timeout,
-  $max_keepalive_requests = $::apache::params::max_keepalive_requests,
-  $limitreqfieldsize      = '8190',
-  $logroot                = $::apache::params::logroot,
-  $logroot_mode           = $::apache::params::logroot_mode,
-  $log_level              = $::apache::params::log_level,
-  $log_formats            = {},
-  $ssl_file               = undef,
-  $ports_file             = $::apache::params::ports_file,
-  $docroot                = $::apache::params::docroot,
-  $apache_version         = $::apache::version::default,
-  $server_tokens          = 'OS',
-  $server_signature       = 'On',
-  $trace_enable           = 'On',
-  $allow_encoded_slashes  = undef,
-  $file_e_tag             = undef,
-  $package_ensure         = 'installed',
-  $use_optional_includes  = $::apache::params::use_optional_includes,
-  $use_systemd            = $::apache::params::use_systemd,
-  $mime_types_additional  = $::apache::params::mime_types_additional,
-  $file_mode              = $::apache::params::file_mode,
-  $root_directory_options = $::apache::params::root_directory_options,
-  $root_directory_secured = false,
-  $error_log              = $::apache::params::error_log,
-  $scriptalias            = $::apache::params::scriptalias,
-  $access_log_file        = $::apache::params::access_log_file,
+  $apache_name                                                   = $::apache::params::apache_name,
+  $service_name                                                  = $::apache::params::service_name,
+  $default_mods                                                  = true,
+  Boolean $default_vhost                                         = true,
+  $default_charset                                               = undef,
+  Boolean $default_confd_files                                   = true,
+  Boolean $default_ssl_vhost                                     = false,
+  $default_ssl_cert                                              = $::apache::params::default_ssl_cert,
+  $default_ssl_key                                               = $::apache::params::default_ssl_key,
+  $default_ssl_chain                                             = undef,
+  $default_ssl_ca                                                = undef,
+  $default_ssl_crl_path                                          = undef,
+  $default_ssl_crl                                               = undef,
+  $default_ssl_crl_check                                         = undef,
+  $default_type                                                  = 'none',
+  $dev_packages                                                  = $::apache::params::dev_packages,
+  $ip                                                            = undef,
+  Boolean $service_enable                                        = true,
+  Boolean $service_manage                                        = true,
+  $service_ensure                                                = 'running',
+  $service_restart                                               = undef,
+  $purge_configs                                                 = true,
+  $purge_vhost_dir                                               = undef,
+  $purge_vdir                                                    = false,
+  $serveradmin                                                   = 'root@localhost',
+  $sendfile                                                      = 'On',
+  $error_documents                                               = false,
+  $timeout                                                       = '120',
+  $httpd_dir                                                     = $::apache::params::httpd_dir,
+  $server_root                                                   = $::apache::params::server_root,
+  $conf_dir                                                      = $::apache::params::conf_dir,
+  $confd_dir                                                     = $::apache::params::confd_dir,
+  $vhost_dir                                                     = $::apache::params::vhost_dir,
+  $vhost_enable_dir                                              = $::apache::params::vhost_enable_dir,
+  $vhost_include_pattern                                         = $::apache::params::vhost_include_pattern,
+  $mod_dir                                                       = $::apache::params::mod_dir,
+  $mod_enable_dir                                                = $::apache::params::mod_enable_dir,
+  $mpm_module                                                    = $::apache::params::mpm_module,
+  $lib_path                                                      = $::apache::params::lib_path,
+  $conf_template                                                 = $::apache::params::conf_template,
+  $servername                                                    = $::apache::params::servername,
+  $pidfile                                                       = $::apache::params::pidfile,
+  Optional[Stdlib::Absolutepath] $rewrite_lock                   = undef,
+  Boolean $manage_user                                           = true,
+  Boolean $manage_group                                          = true,
+  $user                                                          = $::apache::params::user,
+  $group                                                         = $::apache::params::group,
+  $http_protocol_options                                         = $::apache::params::http_protocol_options,
+  $supplementary_groups                                          = [],
+  $keepalive                                                     = $::apache::params::keepalive,
+  $keepalive_timeout                                             = $::apache::params::keepalive_timeout,
+  $max_keepalive_requests                                        = $::apache::params::max_keepalive_requests,
+  $limitreqfieldsize                                             = '8190',
+  $logroot                                                       = $::apache::params::logroot,
+  $logroot_mode                                                  = $::apache::params::logroot_mode,
+  $log_level                                                     = $::apache::params::log_level,
+  $log_formats                                                   = {},
+  $ssl_file                                                      = undef,
+  $ports_file                                                    = $::apache::params::ports_file,
+  $docroot                                                       = $::apache::params::docroot,
+  $apache_version                                                = $::apache::version::default,
+  $server_tokens                                                 = 'OS',
+  $server_signature                                              = 'On',
+  $trace_enable                                                  = 'On',
+  Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes = undef,
+  $file_e_tag                                                    = undef,
+  $package_ensure                                                = 'installed',
+  Boolean $use_optional_includes                                 = $::apache::params::use_optional_includes,
+  $use_systemd                                                   = $::apache::params::use_systemd,
+  $mime_types_additional                                         = $::apache::params::mime_types_additional,
+  $file_mode                                                     = $::apache::params::file_mode,
+  $root_directory_options                                        = $::apache::params::root_directory_options,
+  Boolean $root_directory_secured                                = false,
+  $error_log                                                     = $::apache::params::error_log,
+  $scriptalias                                                   = $::apache::params::scriptalias,
+  $access_log_file                                               = $::apache::params::access_log_file,
 ) inherits ::apache::params {
-  validate_bool($default_vhost)
-  validate_bool($default_ssl_vhost)
-  validate_bool($default_confd_files)
-  # true/false is sufficient for both ensure and enable
-  validate_bool($service_enable)
-  validate_bool($service_manage)
-  validate_bool($use_optional_includes)
-  validate_bool($root_directory_secured)
 
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
@@ -124,10 +116,6 @@ class apache (
     validate_re($mpm_module, $valid_mpms_re)
   }
 
-  if $allow_encoded_slashes {
-    validate_re($allow_encoded_slashes, '(^on$|^off$|^nodecode$)', "${allow_encoded_slashes} is not permitted for allow_encoded_slashes. Allowed values are 'on', 'off' or 'nodecode'.")
-  }
-
   # NOTE: on FreeBSD it's mpm module's responsibility to install httpd package.
   # NOTE: the same strategy may be introduced for other OSes. For this, you
   # should delete the 'if' block below and modify all MPM modules' manifests
@@ -144,7 +132,6 @@ class apache (
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet
-  validate_bool($manage_user)
   if $manage_user {
     user { $user:
       ensure  => present,
@@ -153,7 +140,6 @@ class apache (
       require => Package['httpd'],
     }
   }
-  validate_bool($manage_group)
   if $manage_group {
     group { $group:
       ensure  => present,
@@ -314,10 +300,6 @@ class apache (
     $apxs_workaround = $::osfamily ? {
       'freebsd' => true,
       default   => false
-    }
-
-    if $rewrite_lock {
-      validate_absolute_path($rewrite_lock)
     }
 
     # Template uses:
