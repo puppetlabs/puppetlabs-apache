@@ -121,18 +121,5 @@ describe 'apache::custom_config', :type => :define do
         }.to raise_error(Puppet::Error, /One of \$content and \$source must be specified\./)
       end
     end
-    context 'bad ensure' do
-      let :params do
-        {
-          'content' => 'foo',
-          'ensure'  => 'foo',
-        }
-      end
-      it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /is not supported for ensure/)
-      end
-    end
   end
 end
