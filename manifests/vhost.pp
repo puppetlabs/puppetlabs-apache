@@ -201,17 +201,6 @@ define apache::vhost(
     "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
   }
 
-  # Deprecated backwards-compatibility
-  if $rewrite_base {
-    warning('Apache::Vhost: parameter rewrite_base is deprecated in favor of rewrites')
-  }
-  if $rewrite_rule {
-    warning('Apache::Vhost: parameter rewrite_rule is deprecated in favor of rewrites')
-  }
-  if $rewrite_cond {
-    warning('Apache::Vhost parameter rewrite_cond is deprecated in favor of rewrites')
-  }
-
   if $log_level {
     validate_apache_log_level($log_level)
   }
