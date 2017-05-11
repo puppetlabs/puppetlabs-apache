@@ -18,8 +18,6 @@ class apache::mod::authnz_ldap (
     $_verify_server_cert = $verify_server_cert
   }
 
-  validate_bool($_verify_server_cert)
-
   # Template uses:
   # - $_verify_server_cert
   file { 'authnz_ldap.conf':
