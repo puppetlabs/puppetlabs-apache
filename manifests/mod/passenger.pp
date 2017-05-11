@@ -17,7 +17,7 @@ class apache::mod::passenger (
   $passenger_max_instances_per_app                                                       = undef,
   $passenger_use_global_queue                                                            = undef,
   $passenger_app_env                                                                     = undef,
-  Optional[Stdlib::Absoluteppath] $passenger_log_file                                    = undef,
+  Optional[Stdlib::Absolutepath] $passenger_log_file                                     = undef,
   $passenger_log_level                                                                   = undef,
   $passenger_data_buffer_dir                                                             = undef,
   $manage_repo                                                                           = true,
@@ -30,9 +30,6 @@ class apache::mod::passenger (
 ) inherits ::apache::params {
 
   include ::apache
-  if $passenger_spawn_method {
-    validate_re($passenger_spawn_method, '(^smart$|^direct$|^smart-lv2$|^conservative$)', "${passenger_spawn_method} is not permitted for passenger_spawn_method. Allowed values are 'smart', 'direct', 'smart-lv2', or 'conservative'.")
-  }
 
   # Managed by the package, but declare it to avoid purging
   if $passenger_conf_package_file {
