@@ -3,7 +3,9 @@
   ## SSL directives
   SSLEngine on
   SSLCertificateFile      "<%= @ssl_cert %>"
+  <%- if @ssl_key -%>
   SSLCertificateKeyFile   "<%= @ssl_key %>"
+  <%- end -%>
   <%- if @ssl_chain -%>
   SSLCertificateChainFile "<%= @ssl_chain %>"
   <%- end -%>
