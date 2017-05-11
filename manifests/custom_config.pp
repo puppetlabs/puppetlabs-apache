@@ -1,13 +1,13 @@
 # See README.md for usage information
 define apache::custom_config (
-  $ensure         = 'present',
-  $confdir        = $::apache::confd_dir,
-  $content        = undef,
-  $priority       = '25',
-  $source         = undef,
-  $verify_command = $::apache::params::verify_command,
-  $verify_config  = true,
-  $filename       = undef,
+  Enum['absent', 'present'] $ensure = 'present',
+  $confdir                          = $::apache::confd_dir,
+  $content                          = undef,
+  $priority                         = '25',
+  $source                           = undef,
+  $verify_command                   = $::apache::params::verify_command,
+  Boolean $verify_config            = true,
+  $filename                         = undef,
 ) {
 
   if $content and $source {
@@ -17,12 +17,6 @@ define apache::custom_config (
   if $ensure == 'present' and ! $content and ! $source {
     fail('One of $content and $source must be specified.')
   }
-
-  validate_re($ensure, '^(present|absent)$',
-  "${ensure} is not supported for ensure.
-  Allowed values are 'present' and 'absent'.")
-
-  validate_bool($verify_config)
 
   if $filename {
     $_filename = $filename
