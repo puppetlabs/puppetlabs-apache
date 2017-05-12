@@ -113,7 +113,7 @@ class apache (
   }
 
   if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
-    validate_re($mpm_module, $valid_mpms_re)
+    assert_type(Pattern[$valid_mpms_re], $mpm_module)
   }
 
   # NOTE: on FreeBSD it's mpm module's responsibility to install httpd package.
