@@ -1380,6 +1380,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
 * `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
+* `authnz_pam`
 * `authz_default`
 * `authz_user`
 * `autoindex`
@@ -1407,8 +1408,10 @@ The following Apache modules have supported classes, many of which allow for par
 * `headers`
 * `include`
 * `info`\*
+* `intercept_form_submit`
 * `itk`
 * `ldap` (see [`apache::mod::ldap`][])
+* `lookup_identity`
 * `mime`
 * `mime_magic`\*
 * `negotiation`
