@@ -5,3 +5,6 @@ LoadFile <%= loadfile %>
 
 <% end -%>
 LoadModule <%= @_id %> <%= @_path %>
+<% if @_id == 'authnz_ldap_module' && scope.lookupvar('::apache::version::distrelease') == '7' -%>
+LoadModule ldap_module modules/mod_ldap.so
+<% end -%>
