@@ -145,6 +145,7 @@ class apache::params inherits ::apache::version {
       'nss' => 'libmodnss.so',
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $http_protocol_options  = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
@@ -273,6 +274,7 @@ class apache::params inherits ::apache::version {
       'shib2' => $shib2_lib,
     }
     $conf_template          = 'apache/httpd.conf.erb'
+    $http_protocol_options  = undef
     $keepalive              = 'Off'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
@@ -399,6 +401,7 @@ class apache::params inherits ::apache::version {
     $mod_libs         = {
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $http_protocol_options = undef
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
@@ -467,6 +470,7 @@ class apache::params inherits ::apache::version {
     $mod_libs         = {
     }
     $conf_template        = 'apache/httpd.conf.erb'
+    $http_protocol_options = undef
     $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
@@ -534,6 +538,7 @@ class apache::params inherits ::apache::version {
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
     }
     $conf_template          = 'apache/httpd.conf.erb'
+    $http_protocol_options  = undef
     $keepalive              = 'Off'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100

@@ -64,6 +64,7 @@ define apache::vhost(
   $error_log_file              = undef,
   $error_log_pipe              = undef,
   $error_log_syslog            = undef,
+  $http_protocol_options       = undef,
   $modsec_audit_log            = undef,
   $modsec_audit_log_file       = undef,
   $modsec_audit_log_pipe       = undef,
@@ -187,6 +188,13 @@ define apache::vhost(
   validate_bool($ip_based)
   validate_bool($access_log)
   validate_bool($error_log)
+  if $http_protocol_options != undef {
+    validate_re($http_protocol_options, '^((Strict|Unsafe)?\s*(\b(RegisteredMethods|LenientMethods))?\s*(\b(Allow0\.9|Require1\.0))?)$',
+    "${http_protocol_options} is not supported for http_protocol_options.
+    Allowed value is any sequence of the following alternative values:
+    'Strict' or Unsafe, 'RegisteredMethods' or 'LenientMethods', and
+    'Allow0.9' or 'Require1.0'.")
+  }
   if $modsec_audit_log != undef {
     validate_bool($modsec_audit_log)
   }
@@ -1153,6 +1161,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_auth_cas.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $http_protocol_options
+  if $http_protocol_options {
+    concat::fragment { "${name}-http_protocol_options":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_http_protocol_options.erb'),
     }
   }
 
