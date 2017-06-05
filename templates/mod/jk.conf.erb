@@ -2,3 +2,13 @@
 # Any manual changes will be overwritten
 
 JkWorkersFile <%= @workers_file %>
+
+<% if @log_file -%>
+JkLogFile <%= @log_file %>
+<% end -%>
+<% if @log_level -%>
+JkLogLevel <%= @log_level %>
+<% end -%>
+<% if @log_stamp_format -%>
+JkLogStampFormat <%= @log_stamp_format %>
+<% end -%>
