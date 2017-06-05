@@ -2,6 +2,11 @@
 # Any manual changes will be overwritten
 
 JkWorkersFile <%= @workers_file %>
+<%# Define jk_mount_file if workers map should be global -%>
+<%# Otherwise, include JkMount directives in your vhosts -%>
+<% if @jk_mount_file -%>
+JkMountFile <%= @jk_mount_file %>
+<% end -%>
 
 <% if @log_file -%>
 JkLogFile <%= @log_file %>
