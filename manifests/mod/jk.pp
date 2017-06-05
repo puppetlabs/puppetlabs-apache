@@ -1,4 +1,11 @@
-class apache::mod::jk {
+class apache::mod::jk (
+  $workers_file,
+  $jk_mount = undef,
+  $jk_mount_file = undef,
+  $log_file = undef,
+  $log_level = undef,
+  $log_stamp_format = undef,
+){
 
   include ::apache
 
