@@ -10,13 +10,13 @@
 #
 class apache::mod::jk (
   $workers_file          = undef,
-  $worker_property       = undef,
+  $worker_property       = {},
   $shm_file              = undef,
   $shm_size              = undef,
   $mount_file            = undef,
   $mount_file_reload     = undef,
-  $mount                 = undef,
-  $un_mount              = undef,
+  $mount                 = {},
+  $un_mount              = {},
   $auto_alias            = undef,
   $mount_copy            = undef,
   $worker_indicator      = undef,
@@ -42,8 +42,8 @@ class apache::mod::jk (
   $remote_port_indicator = undef,
   $remote_user_indicator = undef,
   $auth_type_indicator   = undef,
-  $options               = undef,
-  $env_var               = undef,
+  $options               = [],
+  $env_var               = {},
   $strip_session         = undef,
 ){
 
