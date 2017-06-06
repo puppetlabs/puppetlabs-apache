@@ -5,7 +5,9 @@
 JkWorkersFile <%= @workers_file %>
 <% end -%>
 <% if @worker_property -%>
-JkWorkerProperty <%= @worker_property %>
+<% @worker_property.sort.each do |property,value| -%>
+JkWorkerProperty <%= @property %>=<%= @value %>
+<% end -%>
 <% end -%>
 <% if @shm_file -%>
 JkShmFile <%= @shm_file %>
