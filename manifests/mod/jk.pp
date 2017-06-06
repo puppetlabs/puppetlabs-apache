@@ -49,8 +49,12 @@ class apache::mod::jk (
 
   include ::apache
 
+  # Provides important variables
+  include ::apache
+  # Manages basic module config
   ::apache::mod { 'jk': }
 
+  # Main config file
   file {'jk.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/jk.conf",
