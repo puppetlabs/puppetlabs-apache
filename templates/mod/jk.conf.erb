@@ -22,10 +22,14 @@ JkMountFile <%= @mount_file %>
 JkMountFileReload <%= @mount_file_reload %>
 <% end -%>
 <% if @mount -%>
-JkMount <%= @mount %>
+<% @mount.sort.each do |url_prefix,worker_name| -%>
+JkMount <%= @url_prefix %> <%= @worker_name %>
+<% end -%>
 <% end -%>
 <% if @un_mount -%>
-JkUnMount <%= @un_mount %>
+<% @un_mount.sort.each do |url_prefix,worker_name| -%>
+JkUnMount <%= @url_prefix %> <%= @worker_name %>
+<% end -%>
 <% end -%>
 <% if @auto_alias -%>
 JkAutoAlias <%= @auto_alias %>
@@ -103,10 +107,14 @@ JkRemoteUserIndicator <%= @remote_user_indicator %>
 JkAuthTypeIndicator <%= @auth_type_indicator %>
 <% end -%>
 <% if @options -%>
-JkOptions <%= @options %>
+<% @options.sort.each do |fwd_option| -%>
+JkOptions <%= @fwd_option %>
+<% end -%>
 <% end -%>
 <% if @env_var -%>
-JkEnvVar <%= @env_var %>
+<% @env_var.sort.each do |variable,value| -%>
+JkEnvVar <%= @variable %><% if not @value.empty? -%> @value<% end -%>
+<% end -%>
 <% end -%>
 <% if @strip_session -%>
 JkStripSession <%= @strip_session %>
