@@ -1,13 +1,42 @@
 # This file is generated automatically by Puppet - DO NOT EDIT
 # Any manual changes will be overwritten
 
+<% if @workers_file -%>
 JkWorkersFile <%= @workers_file %>
-<%# Define jk_mount_file if workers map should be global -%>
-<%# Otherwise, include JkMount directives in your vhosts -%>
-<% if @jk_mount_file -%>
-JkMountFile <%= @jk_mount_file %>
 <% end -%>
-
+<% if @worker_property -%>
+JkWorkerProperty <%= @worker_property %>
+<% end -%>
+<% if @shm_file -%>
+JkShmFile <%= @shm_file %>
+<% end -%>
+<% if @shm_size -%>
+JkShmSize <%= @shm_size %>
+<% end -%>
+<% if @mount_file -%>
+JkMountFile <%= @mount_file %>
+<% end -%>
+<% if @mount_file_reload -%>
+JkMountFileReload <%= @mount_file_reload %>
+<% end -%>
+<% if @mount -%>
+JkMount <%= @mount %>
+<% end -%>
+<% if @un_mount -%>
+JkUnMount <%= @un_mount %>
+<% end -%>
+<% if @auto_alias -%>
+JkAutoAlias <%= @auto_alias %>
+<% end -%>
+<% if @mount_copy -%>
+JkMountCopy <%= @mount_copy %>
+<% end -%>
+<% if @worker_indicator -%>
+JkWorkerIndicator <%= @worker_indicator %>
+<% end -%>
+<% if @watchdog_interval -%>
+JkWatchdogInterval <%= @watchdog_interval %>
+<% end -%>
 <% if @log_file -%>
 JkLogFile <%= @log_file %>
 <% end -%>
@@ -16,4 +45,67 @@ JkLogLevel <%= @log_level %>
 <% end -%>
 <% if @log_stamp_format -%>
 JkLogStampFormat <%= @log_stamp_format %>
+<% end -%>
+<% if @request_log_format -%>
+JkRequestLogFormat <%= @request_log_format %>
+<% end -%>
+<% if @extract_ssl -%>
+JkExtractSSL <%= @extract_ssl %>
+<% end -%>
+<% if @https_indicator -%>
+JkHTTPSIndicator <%= @https_indicator %>
+<% end -%>
+<% if @sslprotocol_indicator -%>
+JkSSLPROTOCOLIndicator <%= @sslprotocol_indicator %>
+<% end -%>
+<% if @certs_indicator -%>
+JkCERTSIndicator <%= @certs_indicator %>
+<% end -%>
+<% if @cipher_indicator -%>
+JkCIPHERIndicator <%= @cipher_indicator %>
+<% end -%>
+<% if @certchain_prefix -%>
+JkCERTCHAINPrefix <%= @certchain_prefix %>
+<% end -%>
+<% if @session_indicator -%>
+JkSESSIONIndicator <%= @session_indicator %>
+<% end -%>
+<% if @keysize_indicator -%>
+JkKEYSIZEIndicator <%= @keysize_indicator %>
+<% end -%>
+<% if @local_name_indicator -%>
+JkLocalNameIndicator <%= @local_name_indicator %>
+<% end -%>
+<% if @ignore_cl_indicator -%>
+JkIgnoreCLIndicator <%= @ignore_cl_indicator %>
+<% end -%>
+<% if @local_addr_indicator -%>
+JkLocalAddrIndicator <%= @local_addr_indicator %>
+<% end -%>
+<% if @local_port_indicator -%>
+JkLocalPortIndicator <%= @local_port_indicator %>
+<% end -%>
+<% if @remote_host_indicator -%>
+JkRemoteHostIndicator <%= @remote_host_indicator %>
+<% end -%>
+<% if @remote_addr_indicator -%>
+JkRemoteAddrIndicator <%= @remote_addr_indicator %>
+<% end -%>
+<% if @remote_port_indicator -%>
+JkRemotePortIndicator <%= @remote_port_indicator %>
+<% end -%>
+<% if @remote_user_indicator -%>
+JkRemoteUserIndicator <%= @remote_user_indicator %>
+<% end -%>
+<% if @auth_type_indicator -%>
+JkAuthTypeIndicator <%= @auth_type_indicator %>
+<% end -%>
+<% if @options -%>
+JkOptions <%= @options %>
+<% end -%>
+<% if @env_var -%>
+JkEnvVar <%= @env_var %>
+<% end -%>
+<% if @strip_session -%>
+JkStripSession <%= @strip_session %>
 <% end -%>
