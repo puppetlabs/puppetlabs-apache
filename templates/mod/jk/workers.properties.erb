@@ -26,6 +26,16 @@
 <%#   }, -%>
 <%# }, -%>
 <%# -%>
+<% if @workers_file_content.has_key?('worker_lists') -%>
+
+<% @workers_file_content['worker_lists'].sort.each do |list| -%>
+worker.list = <%= list %>
+<% end -%>
+<% end -%>
+<% if @workers_file_content.has_key?('worker_mantain') -%>
+
+worker.maintain = <%= @workers_file_content['worker_mantain'] %>
+<% end -%>
 <% @workers_file_content.sort.each do |worker,directives| -%>
 
 <%# Places comment before worker directives -%>
