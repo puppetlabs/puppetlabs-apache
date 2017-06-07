@@ -48,6 +48,9 @@ class apache::mod::jk (
   # Workers file content
   # See comments in template mod/jk/workers.properties.erb
   $workers_file_content  = [],
+  # Mount file content
+  # See comments in template mod/jk/uriworkermap.properties.erb
+  $mount_file_content  = [],
 ){
 
   include ::apache
@@ -82,6 +85,18 @@ class apache::mod::jk (
     }
     file { $workers_path:
       content => template('apache/mod/jk/workers.properties.erb'),
+      require => Package['httpd'],
+    }
+  }
+
+  # Mount file
+  if $mount_file != undef {
+    $mount_path = $mount_file ? {
+      /^\//   => $mount_file,
+      default => "${apache::httpd_dir}/${mount_file}",
+    }
+    file { $mount_path:
+      content => template('apache/mod/jk/uriworkermap.properties.erb'),
       require => Package['httpd'],
     }
   }
