@@ -1791,7 +1791,7 @@ $workers_file_content = {
 
 **mount\_file\_content**
 
-Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an Array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.  
+Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.  
 For example, the mount file below:
 
 ```
