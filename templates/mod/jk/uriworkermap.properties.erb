@@ -1,0 +1,12 @@
+# This file is generated automatically by Puppet - DO NOT EDIT
+# Any manual changes will be overwritten
+<% @mount_file_content.sort.each do |worker,directives| -%>
+
+<%# Places comment before worker mappings -%>
+<% if directives.has_key?('comment') -%>
+# <%= directives['comment'] %>
+<% end -%>
+<% directives['uri_list'].sort.each do |uri| -%>
+<%= uri %> = <%= worker %>
+<% end -%>
+<% end -%>
