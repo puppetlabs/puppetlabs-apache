@@ -36,7 +36,9 @@ worker.list = <%= list %>
 
 worker.maintain = <%= @workers_file_content['worker_mantain'] %>
 <% end -%>
-<% @workers_file_content.sort.each do |worker,directives| -%>
+<% @workers_file_content.sort.each do |name,directives| -%>
+<%# Skip hash items with the reserved keys -%>
+<% if not ['worker_lists', 'worker_mantain'].include?(name) -%>
 
 <%# Places comment before worker directives -%>
 <% if directives.has_key?('comment') -%>
@@ -44,7 +46,8 @@ worker.maintain = <%= @workers_file_content['worker_mantain'] %>
 <% end -%>
 <% directives.sort.each do |property,value| -%>
 <% if property != 'comment' -%>
-worker.<%= worker %>.<%= property %>=<%= value %>
+worker.<%= name %>.<%= property %>=<%= value %>
+<% end -%>
 <% end -%>
 <% end -%>
 <% end -%>
