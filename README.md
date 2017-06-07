@@ -1749,14 +1749,22 @@ class { '::apache::mod::jk':
 
 The best source for understanding the `mod_jk` parameters is the [official documentation](https://tomcat.apache.org/connectors-doc/reference/apache.html), except for \*file_content:
 
-**`workers_file_content`**
+**workers\_file\_content**
 
-Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values. For example, the workers file below:
+Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.  
+Plus, there are two global directives, 'worker.list' and 'worker.mantain'  
+For example, the workers file below:
 
 ```
+worker.list = status
+worker.list = some_name,other_name
+
+worker.mantain = 60
+
 # Optional comment
 worker.some_name.type=ajp13
 worker.some_name.socket_keepalive=true
+
 # I just like comments
 worker.other_name.type=ajp12 (why would you?)
 worker.other_name.socket_keepalive=false
@@ -1766,12 +1774,14 @@ Should be parameterized as:
 
 ```
 $workers_file_content = {
-  some_name  => {
+  worker_lists   => ['status', 'some_name,other_name'],
+  worker_mantain => '60',
+  some_name      => {
     comment          => 'Optional comment',
     type             => 'ajp13',
     socket_keepalive => 'true',
   },
-  other_name => {
+  other_name     => {
     comment          => 'I just like comments',
     type             => 'ajp12',
     socket_keepalive => 'false',
