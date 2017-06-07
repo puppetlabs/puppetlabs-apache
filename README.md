@@ -1300,7 +1300,7 @@ If the string starts with / or | or syslog: the full path will be set. Otherwise
 
 ##### `scriptalias`
 
-Directory to use for global script alias 
+Directory to use for global script alias
 
 The default value is determined by your operating system:
 
@@ -1410,6 +1410,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `info`\*
 * `intercept_form_submit`
 * `itk`
+* `jk` (see [`apache::mod::jk`][])
 * `ldap` (see [`apache::mod::ldap`][])
 * `lookup_identity`
 * `mime`
@@ -1724,6 +1725,58 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 - `allow_from`: Whitelist of IPv4 or IPv6 addresses or ranges that can access `/server-info`. Valid options: One or more octets of an IPv4 address, an IPv6 address or range, or an array of either. Default: ['127.0.0.1','::1'].
 - `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'. Default: the value of [`$::apache::apache_version`][`apache_version`].
 - `restrict_access`: Determines whether to enable access restrictions. If false, the `allow_from` whitelist is ignored and any IP address can access `/server-info`. Valid options: Boolean. Default: true.
+
+##### Class: `apache::mod::jk`
+
+Installs and manages `mod_jk`, a connector for Apache httpd redirection to old versions of TomCat and JBoss
+
+**Note**: There is no official package available for mod\_jk and thus it must be made available by means outside of the control of the apache module. Binaries can be found at [Apache Tomcat Connectors download page](https://tomcat.apache.org/download-connectors.cgi)
+
+``` puppet
+class { '::apache::mod::jk':
+  workers_file = 'conf/workers.properties',
+  mount_file   = 'conf/uriworkermap.properties',
+  shm_file     = 'run/jk.shm',
+  shm_size     = '50M',
+  $workers_file_content = {
+    <Content>
+  },
+}
+```
+
+**Parameters within `apache::mod::jk`**:
+
+The best source for understanding the `mod_jk` parameters is the [official documentation](https://tomcat.apache.org/connectors-doc/reference/apache.html), except for \*file_content:
+
+**`workers_file_content`**
+
+Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values. For example, the workers file below:
+
+```
+# Optional comment
+worker.some_name.type=ajp13
+worker.some_name.socket_keepalive=true
+# I just like comments
+worker.other_name.type=ajp12 (why would you?)
+worker.other_name.socket_keepalive=false
+```
+
+Should be parameterized as:
+
+```
+$workers_file_content = {
+  some_name  => {
+    comment          => 'Optional comment',
+    type             => 'ajp13',
+    socket_keepalive => 'true',
+  },
+  other_name => {
+    comment          => 'I just like comments',
+    type             => 'ajp12',
+    socket_keepalive => 'false',
+  },
+}
+```
 
 ##### Class: `apache::mod::passenger`
 
