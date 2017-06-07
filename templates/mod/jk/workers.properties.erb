@@ -2,7 +2,13 @@
 # Any manual changes will be overwritten
 <% @workers_file_content.sort.each do |worker,directives| -%>
 
+<%# Places comment before worker directives -%>
+<% if directives.has_key?('comment') -%>
+# <%= directives['comment'] %>
+<% end -%>
 <% directives.sort.each do |property,value| -%>
+<% if property != 'comment' -%>
 worker.<%= worker %>.<%= property %>=<%= value %>
+<% end -%>
 <% end -%>
 <% end -%>
