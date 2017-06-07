@@ -45,6 +45,8 @@ class apache::mod::jk (
   $options               = [],
   $env_var               = {},
   $strip_session         = undef,
+  # Workers file content
+  $workers_file_content  = [],
 ){
 
   include ::apache
@@ -69,6 +71,18 @@ class apache::mod::jk (
       Exec["mkdir ${::apache::mod_dir}"],
       File[$::apache::mod_dir],
     ],
+  }
+
+  # Workers file
+  if $workers_file != undef {
+    $workers_path = $workers_file ? {
+      /^\//   => $workers_file,
+      default => "${apache::httpd_dir}/${workers_file}",
+    }
+    file { $workers_path:
+      content => template('apache/mod/jk/workers.properties.erb'),
+      require => Package['httpd'],
+    }
   }
 
 }
