@@ -54,17 +54,21 @@ class apache::mod::jk (
   # Manages basic module config
   ::apache::mod { 'jk': }
 
+  # File resource common parameters
+  File {
+    ensure  => file,
+    mode    => $::apache::file_mode,
+    notify  => Class['apache::service'],
+  }
+
   # Main config file
   file {'jk.conf':
-    ensure  => file,
     path    => "${::apache::mod_dir}/jk.conf",
-    mode    => $::apache::file_mode,
     content => template('apache/mod/jk.conf.erb'),
     require => [
       Exec["mkdir ${::apache::mod_dir}"],
       File[$::apache::mod_dir],
     ],
-    notify  => Class['apache::service'],
   }
 
 }
