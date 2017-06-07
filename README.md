@@ -1789,6 +1789,37 @@ $workers_file_content = {
 }
 ```
 
+**mount\_file\_content**
+
+Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an Array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.  
+For example, the mount file below:
+
+```
+# Worker 1
+/context_1/ = worker_1
+/context_1/* = worker_1
+
+# Worker 2
+/ = worker_2
+/context_2/ = worker_2
+/context_2/* = worker_2
+```
+
+Should be parameterized as:
+
+```
+$mount_file_content = {
+  worker_1 => {
+    uri_list => ['/context_1/', '/context_1/*'],
+    comment  => 'Worker 1',
+  },
+  worker_2 => {
+    uri_list => ['/context_2/', '/context_2/*'],
+    comment  => 'Worker 2',
+  },
+},
+```
+
 ##### Class: `apache::mod::passenger`
 
 Installs and manages [`mod_passenger`][]. For RedHat based systems, please ensure that you meet the minimum requirements as described in the [passenger docs](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux)
