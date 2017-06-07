@@ -11,7 +11,7 @@
 <%# Example: -%>
 <%# worker.list = status -%>
 <%# worker.list = some_name,other_name -%>
-<%# worker_mantain = 60 -%>
+<%# worker.mantain = 60 -%>
 <%# # Optional comment -%>
 <%# worker.some_name.type=ajp13 -%>
 <%# worker.some_name.socket_keepalive=true -%>
@@ -21,8 +21,8 @@
 <%# -%>
 <%# should be parameterized as: -%>
 <%# $workers_file_content = { -%>
-<%#   worker_lists => ['status', 'some_name,other_name'],
-<%#   worker_mantain => '60',
+<%#   worker_lists => ['status', 'some_name,other_name'], -%>
+<%#   worker_mantain => '60', -%>
 <%#   some_name => { -%>
 <%#     type             => 'ajp13', -%>
 <%#     socket_keepalive => 'true', -%>
