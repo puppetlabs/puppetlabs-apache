@@ -55,6 +55,7 @@
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
+[`apache::mod::jk`]: #class-apachemodjk
 [`apache::mod::ldap`]: #class-apachemodldap
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
@@ -1410,7 +1411,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `info`\*
 * `intercept_form_submit`
 * `itk`
-* `jk` (see [`apache::mod::jk`][])
+* `jk` (see [`apache::mod::jk`])
 * `ldap` (see [`apache::mod::ldap`][])
 * `lookup_identity`
 * `mime`
