@@ -3,17 +3,26 @@
 <%# -%>
 <%# workers_file_content should be a hash which keys are workers names -%>
 <%# and values are new hashes with properties and values -%>
+<%# Two keys are special (and reserved!): -%>
+<%# worker_lists - Array of comma-separated worker names lists -%>
+<%# Each list is an item of the array and will be placed in one line -%>
+<%# worker_mantain - Numeric string -%>
 <%# -%>
 <%# Example: -%>
+<%# worker.list = status -%>
+<%# worker.list = some_name,other_name -%>
+<%# worker_mantain = 60 -%>
 <%# # Optional comment -%>
 <%# worker.some_name.type=ajp13 -%>
 <%# worker.some_name.socket_keepalive=true -%>
 <%# # I just like comments -%>
 <%# worker.other_name.type=ajp12 (why would you?) -%>
 <%# worker.other_name.socket_keepalive=false -%>
-<%# should be parameterized as: -%>
 <%# -%>
+<%# should be parameterized as: -%>
 <%# $workers_file_content = { -%>
+<%#   worker_lists => ['status', 'some_name,other_name'],
+<%#   worker_mantain => '60',
 <%#   some_name => { -%>
 <%#     type             => 'ajp13', -%>
 <%#     socket_keepalive => 'true', -%>
