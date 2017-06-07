@@ -1,5 +1,31 @@
 # This file is generated automatically by Puppet - DO NOT EDIT
 # Any manual changes will be overwritten
+<%# -%>
+<%# workers_file_content should be a hash which keys are workers names -%>
+<%# and values are new hashes with properties and values -%>
+<%# -%>
+<%# Example: -%>
+<%# # Optional comment -%>
+<%# worker.some_name.type=ajp13 -%>
+<%# worker.some_name.socket_keepalive=true -%>
+<%# # I just like comments -%>
+<%# worker.other_name.type=ajp12 (why would you?) -%>
+<%# worker.other_name.socket_keepalive=false -%>
+<%# should be parameterized as: -%>
+<%# -%>
+<%# $workers_file_content = { -%>
+<%#   some_name => { -%>
+<%#     type             => 'ajp13', -%>
+<%#     socket_keepalive => 'true', -%>
+<%#     comment          => 'Optional comment', -%>
+<%#   }, -%>
+<%#   other_name => { -%>
+<%#     type             => 'ajp12', -%>
+<%#     socket_keepalive => 'false', -%>
+<%#     comment          => 'I just like comments', -%>
+<%#   }, -%>
+<%# }, -%>
+<%# -%>
 <% @workers_file_content.sort.each do |worker,directives| -%>
 
 <%# Places comment before worker directives -%>
