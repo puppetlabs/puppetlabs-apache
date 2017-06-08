@@ -151,14 +151,15 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
-    $docroot              = '/var/www/html'
+    $sites_root           = '/var/www'
+    $docroot              = "${sites_root}/html"
     $alias_icons_path     = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/icons',
-      default => '/var/www/icons',
+      default => "${sites_root}/icons",
     }
     $error_documents_path = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/error',
-      default => '/var/www/error'
+      default => "${sites_root}/error"
     }
     if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
@@ -279,10 +280,11 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
+    $sites_root             = '/var/www'
     if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') >= 0) {
-      $docroot              = '/var/www/html'
+      $docroot              = "${sites_root}/html"
     } else {
-      $docroot              = '/var/www'
+      $docroot              = $sites_root
     }
     $cas_cookie_path      = '/var/cache/apache2/mod_auth_cas/'
     $mellon_lock_file     = undef
@@ -474,7 +476,8 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'app-misc/mime-types'
     $mime_types_config    = '/etc/mime.types'
     $wsgi_socket_prefix   = undef
-    $docroot              = '/var/www/localhost/htdocs'
+    $sites_root           = '/var/www'
+    $docroot              = "${sites_root}/localhost/htdocs"
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
     $pidfile              = '/var/run/apache2.pid'
