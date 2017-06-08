@@ -38,7 +38,7 @@ class apache::mod::php (
   }
 
   # Determine if we have a package
-  $mod_packages = $::apache::params::mod_packages
+  $mod_packages = $::apache::mod_packages
   if $package_name {
     $_package_name = $package_name
   } elsif has_key($mod_packages, $mod) { # 2.6 compatibility hack
