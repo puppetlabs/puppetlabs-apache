@@ -75,7 +75,7 @@ class apache (
   $apache_version         = $::apache::version::default,
   $server_tokens          = 'OS',
   $server_signature       = 'On',
-  $trace_enable           = 'On',
+  $trace_enable           = 'Off',
   $allow_encoded_slashes  = undef,
   $file_e_tag             = undef,
   $package_ensure         = 'installed',
