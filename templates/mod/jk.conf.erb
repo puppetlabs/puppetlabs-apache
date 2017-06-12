@@ -120,6 +120,35 @@
   <%- if @strip_session -%>
   JkStripSession <%= @strip_session %>
   <%- end -%>
+  <%# -%>
+  <%# Global locations for mod_jk are defined in array location_list -%>
+  <%# Each array item is a hash with quoted* property name as key -%>
+  <%# and value as value itself -%>
+  <%# You can define a comment in a special 'comment' key -%>
+  <%# -%>
+  <%# Example: -%>
+  <%# <Location /jkstatus/> -%>
+  <%#   # Configures jkstatus -%>
+  <%#   JkMount status -%>
+  <%#   Order deny,allow -%>
+  <%#   Deny from all -%>
+  <%#   Allow from 127.0.0.1 -%>
+  <%# </Location> -%>
+  <%# -%>
+  <%# Is defined as: -%>
+  <%# location_list = [ -%>
+  <%#   { -%>
+  <%#     'Location'   => '/jkstatus/', -%>
+  <%#     'Comment'    => 'Configures jkstatus', -%>
+  <%#     'JkMount'    => 'status', -%>
+  <%#     'Order'      => 'deny,allow', -%>
+  <%#     'Deny from'  => 'all', -%>
+  <%#     'Allow from' => '127.0.0.1', -%>
+  <%#   }, -%>
+  <%# ] -%>
+  <%# * Keys must be quoted to alow arbitrary case and/or multi-word keys -%>
+  <%# (BTW, note the case of 'Location' and 'Comment' keys) -%>
+  <%# -%>
   <%- if @location_list -%>
   <%- @location_list.each do |location_tag| -%>
 
