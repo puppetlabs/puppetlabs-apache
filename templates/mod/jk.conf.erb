@@ -120,4 +120,19 @@
   <%- if @strip_session -%>
   JkStripSession <%= @strip_session %>
   <%- end -%>
+  <%- if @location_list -%>
+  <%- @location_list.each do |location_tag| -%>
+
+  <Location <%= location_tag['Location'] %>>
+    <%- if location_tag.has_key?('Comment') -%>
+    # <%= location_tag['Comment'] %>
+    <%- end -%>
+    <%- location_tag.each do |property,value| -%>
+    <%- if property != 'Comment' and property != 'Location' -%>
+    <%= property %> <%= value %>
+    <%- end -%>
+    <%- end -%>
+  </Location>
+  <%- end -%>
+  <%- end -%>
 </IfModule>
