@@ -6,7 +6,7 @@ JkWorkersFile <%= @workers_file %>
 <% end -%>
 <% if @worker_property -%>
 <% @worker_property.sort.each do |property,value| -%>
-JkWorkerProperty <%= @property %>=<%= @value %>
+JkWorkerProperty <%= property %>=<%= value %>
 <% end -%>
 <% end -%>
 <% if @shm_file -%>
@@ -23,12 +23,12 @@ JkMountFileReload <%= @mount_file_reload %>
 <% end -%>
 <% if @mount -%>
 <% @mount.sort.each do |url_prefix,worker_name| -%>
-JkMount <%= @url_prefix %> <%= @worker_name %>
+JkMount <%= url_prefix %> <%= worker_name %>
 <% end -%>
 <% end -%>
 <% if @un_mount -%>
 <% @un_mount.sort.each do |url_prefix,worker_name| -%>
-JkUnMount <%= @url_prefix %> <%= @worker_name %>
+JkUnMount <%= url_prefix %> <%= worker_name %>
 <% end -%>
 <% end -%>
 <% if @auto_alias -%>
@@ -108,12 +108,12 @@ JkAuthTypeIndicator <%= @auth_type_indicator %>
 <% end -%>
 <% if @options -%>
 <% @options.sort.each do |fwd_option| -%>
-JkOptions <%= @fwd_option %>
+JkOptions <%= fwd_option %>
 <% end -%>
 <% end -%>
 <% if @env_var -%>
 <% @env_var.sort.each do |variable,value| -%>
-JkEnvVar <%= @variable %><% if not @value.empty? -%> @value<% end -%>
+JkEnvVar <%= variable %><% if not value.empty? -%> value<% end -%>
 <% end -%>
 <% end -%>
 <% if @strip_session -%>
