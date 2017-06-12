@@ -45,6 +45,9 @@ class apache::mod::jk (
   $options               = [],
   $env_var               = {},
   $strip_session         = undef,
+  # Location list
+  # See comments in template mod/jk.conf.erb
+  $location_list         = [],
   # Workers file content
   # See comments in template mod/jk/workers.properties.erb
   $workers_file_content  = [],
