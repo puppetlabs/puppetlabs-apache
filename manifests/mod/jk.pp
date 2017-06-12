@@ -53,7 +53,7 @@ class apache::mod::jk (
   $workers_file_content  = [],
   # Mount file content
   # See comments in template mod/jk/uriworkermap.properties.erb
-  $mount_file_content  = [],
+  $mount_file_content    = [],
 ){
 
   include ::apache
