@@ -50,10 +50,10 @@ class apache::mod::jk (
   $location_list         = [],
   # Workers file content
   # See comments in template mod/jk/workers.properties.erb
-  $workers_file_content  = [],
+  $workers_file_content  = {},
   # Mount file content
   # See comments in template mod/jk/uriworkermap.properties.erb
-  $mount_file_content    = [],
+  $mount_file_content    = {},
 ){
 
   include ::apache
