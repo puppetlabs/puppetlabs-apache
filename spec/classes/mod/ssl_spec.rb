@@ -18,7 +18,7 @@ describe 'apache::mod::ssl', :type => :class do
     it { expect { catalogue }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
   end
 
-  context 'on a RedHat OS' do
+  context 'on a RedHat 6 OS' do
     let :facts do
       {
         :osfamily               => 'RedHat',
@@ -43,7 +43,24 @@ describe 'apache::mod::ssl', :type => :class do
       it { is_expected.to contain_package('httpd24-mod_ssl') }
       it { is_expected.not_to contain_package('mod_ssl') }
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/cache/mod_ssl/scache\(512000\)"$})}
+      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf')}
     end
+  end
+
+  context 'on a RedHat 7 OS' do
+    let :facts do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => '7',
+        :concat_basedir         => '/dne',
+        :operatingsystem        => 'RedHat',
+        :id                     => 'root',
+        :kernel                 => 'Linux',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                  => false,
+      }
+    end
+    it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.modules.d/ssl.conf')}
   end
 
   context 'on a Debian OS' do
@@ -260,6 +277,18 @@ describe 'apache::mod::ssl', :type => :class do
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLProxyProtocol -ALL \+TLSv1$})}
+    end
+    context 'setting apache mod_dir' do
+      let :pre_condition do
+        [
+         '
+           class{"apache":
+             mod_dir  => "/tmp/junk/conf.modules.puppet.d",
+           }
+         ',
+        ]
+      end
+      it { is_expected.to contain_file('ssl.conf').with_path('/tmp/junk/conf.modules.puppet.d/ssl.conf')}
     end
   end
 end
