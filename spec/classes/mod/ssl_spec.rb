@@ -61,6 +61,8 @@ describe 'apache::mod::ssl', :type => :class do
       }
     end
     it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.modules.d/ssl.conf')}
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/cache/mod_ssl/scache\(512000\)"$})}
+    it { is_expected.to contain_file('/etc/httpd/conf.d/ssl.conf').with_content(%r{^.*unwanted mod_ssl configuration.*$})}
   end
 
   context 'on a Debian OS' do
