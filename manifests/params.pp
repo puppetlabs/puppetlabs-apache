@@ -74,7 +74,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef
     $conf_file            = 'httpd.conf'
-    $ssl_file             = "${confd_dir}/ssl.conf"
+    $ssl_conf_clobber     = '/etc/httpd/conf.d/ssl.conf'
     $ports_file           = "${conf_dir}/ports.conf"
     $pidfile              = 'run/httpd.pid'
     $logroot              = '/var/log/httpd'
@@ -215,7 +215,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir           = "${httpd_dir}/sites-available"
     $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
     $conf_file           = 'apache2.conf'
-    $ssl_file             = "${mod_dir}/ssl.conf"
+    $ssl_conf_clobber    = undef
     $ports_file          = "${conf_dir}/ports.conf"
     $pidfile             = "\${APACHE_PID_FILE}"
     $logroot             = '/var/log/apache2'
@@ -356,7 +356,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir        = "${httpd_dir}/Vhosts"
     $vhost_enable_dir = undef
     $conf_file        = 'httpd.conf'
-    $ssl_file         = "${mod_dir}/ssl.conf"
+    $ssl_conf_clobber = undef
     $ports_file       = "${conf_dir}/ports.conf"
     $pidfile          = '/var/run/httpd.pid'
     $logroot          = '/var/log/apache24'
@@ -427,7 +427,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir        = "${httpd_dir}/vhosts.d"
     $vhost_enable_dir = undef
     $conf_file        = 'httpd.conf'
-    $ssl_file         = "${mod_dir}/ssl.conf"
+    $ssl_conf_clobber = undef
     $ports_file       = "${conf_dir}/ports.conf"
     $logroot          = '/var/log/apache2'
     $logroot_mode     = undef
@@ -496,7 +496,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir           = "${httpd_dir}/sites-available"
     $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
     $conf_file           = 'httpd.conf'
-    $ssl_file            = "${mod_dir}/ssl.conf"
+    $ssl_conf_clobber    = undef
     $ports_file          = "${conf_dir}/ports.conf"
     $pidfile             = '/var/run/httpd2.pid'
     $logroot             = '/var/log/apache2'

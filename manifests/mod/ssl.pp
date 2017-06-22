@@ -118,11 +118,18 @@ class apache::mod::ssl (
   # $_apache_version
   file { 'ssl.conf':
     ensure  => file,
-    path    => $::apache::ssl_file,
+    path    => "${::apache::mod_dir}/ssl.conf",
     mode    => $::apache::file_mode,
     content => template('apache/mod/ssl.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
+  }
+
+  if $::apache::ssl_conf_clobber and $apache::ssl_conf_clobber != "${::apache::mod_dir}/ssl.conf" {
+    file{$::apache::ssl_conf_clobber:
+      ensure  => file,
+      content => '# puppet overwriting unwanted mod_ssl configuration file from package',
+    }
   }
 }
