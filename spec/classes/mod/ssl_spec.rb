@@ -18,31 +18,59 @@ describe 'apache::mod::ssl', :type => :class do
     it { expect { catalogue }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
   end
 
-  context 'on a RedHat OS' do
-    let :facts do
-      {
-        :osfamily               => 'RedHat',
-        :operatingsystemrelease => '6',
-        :concat_basedir         => '/dne',
-        :operatingsystem        => 'RedHat',
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
-      }
-    end
-    it { is_expected.to contain_class('apache::params') }
-    it { is_expected.to contain_apache__mod('ssl') }
-    it { is_expected.to contain_package('mod_ssl') }
-    context 'with a custom package_name parameter' do
-      let :params do
-        { :package_name => 'httpd24-mod_ssl' }
+  context 'on a RedHat' do
+    context '6 OS' do
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '6',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
+        }
       end
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
-      it { is_expected.to contain_package('httpd24-mod_ssl') }
-      it { is_expected.not_to contain_package('mod_ssl') }
-      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/cache/mod_ssl/scache\(512000\)"$})}
+      it { is_expected.to contain_package('mod_ssl') }
+      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf') }
+      context 'with a custom package_name parameter' do
+        let :params do
+          { :package_name => 'httpd24-mod_ssl' }
+        end
+        it { is_expected.to contain_class('apache::params') }
+        it { is_expected.to contain_apache__mod('ssl') }
+        it { is_expected.to contain_package('httpd24-mod_ssl') }
+        it { is_expected.not_to contain_package('mod_ssl') }
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/cache/mod_ssl/scache\(512000\)"$})}
+      end
+    end
+    context '7 OS with custom directories for PR#1635' do
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '7',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
+        }
+      end
+      let :pre_condition do
+        "class { 'apache':
+          confd_dir           => '/etc/httpd/conf.puppet.d',
+          default_mods        => false,
+          default_vhost       => false,
+          mod_dir             => '/etc/httpd/conf.modules.puppet.d',
+          vhost_dir           => '/etc/httpd/conf.puppet.d',
+        }"
+      end
+      it { is_expected.to contain_package('mod_ssl') }
+      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.puppet.d/ssl.conf') }
     end
   end
 

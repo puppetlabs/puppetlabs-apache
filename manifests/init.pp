@@ -69,7 +69,7 @@ class apache (
   $logroot_mode           = $::apache::params::logroot_mode,
   $log_level              = $::apache::params::log_level,
   $log_formats            = {},
-  $ssl_file               = $::apache::params::ssl_file,
+  $ssl_file               = undef,
   $ports_file             = $::apache::params::ports_file,
   $docroot                = $::apache::params::docroot,
   $apache_version         = $::apache::version::default,
@@ -101,6 +101,22 @@ class apache (
   $valid_mpms_re = $apache_version ? {
     '2.4'   => '(event|itk|peruser|prefork|worker)',
     default => '(event|itk|prefork|worker)'
+  }
+
+  if $::osfamily == 'RedHat' and $::apache::version::distrelease == '7' {
+    # On redhat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
+    # when all other module configs live in /etc/httpd/conf.modules.d (the
+    # mod_dir). On all other platforms and versions, ssl.conf lives in the
+    # mod_dir. This should maintain the expected location of ssl.conf
+    $_ssl_file = $ssl_file ? {
+      undef   => "${apache::confd_dir}/ssl.conf",
+      default =>  $ssl_file
+    }
+  } else {
+    $_ssl_file = $ssl_file ? {
+      undef   => "${apache::mod_dir}/ssl.conf",
+      default =>  $ssl_file
+    }
   }
 
   if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
