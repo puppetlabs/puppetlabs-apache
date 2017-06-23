@@ -42,7 +42,7 @@ class apache::mod::event (
   # - $threadsperchild
   # - $maxrequestsperchild
   # - $serverlimit
-  file { "${::apache::mod_dir}/event.conf":
+  file { "${::apache::mod_dir}/override_event.conf":
     ensure  => file,
     mode    => $::apache::file_mode,
     content => template('apache/mod/event.conf.erb'),

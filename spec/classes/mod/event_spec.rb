@@ -19,7 +19,7 @@ describe 'apache::mod::event', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.not_to contain_apache__mod('event') }
-    it { is_expected.to contain_file("/usr/local/etc/apache24/Modules/event.conf").with_ensure('file') }
+    it { is_expected.to contain_file("/usr/local/etc/apache24/Modules/override_event.conf").with_ensure('file') }
   end
   context "on a Gentoo OS" do
     let :facts do
@@ -36,7 +36,7 @@ describe 'apache::mod::event', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.not_to contain_apache__mod('event') }
-    it { is_expected.to contain_file("/etc/apache2/modules.d/event.conf").with_ensure('file') }
+    it { is_expected.to contain_file("/etc/apache2/modules.d/override_event.conf").with_ensure('file') }
   end
   context "on a Debian OS" do
     let :facts do
@@ -56,8 +56,8 @@ describe 'apache::mod::event', :type => :class do
 
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.not_to contain_apache__mod('event') }
-    it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file') }
-    it { is_expected.to contain_file("/etc/apache2/mods-enabled/event.conf").with_ensure('link') }
+    it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file') }
+    it { is_expected.to contain_file("/etc/apache2/mods-enabled/override_event.conf").with_ensure('link') }
 
     context "Test mpm_event new params" do
       let :params do
@@ -76,17 +76,17 @@ describe 'apache::mod::event', :type => :class do
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ServerLimit\s*0/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*StartServers\s*1/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MinSpareThreads\s*3/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxSpareThreads\s*4/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadsPerChild\s*5/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxRequestWorkers\s*9/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxConnectionsPerChild\s*10/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ServerLimit\s*0/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*StartServers\s*1/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MinSpareThreads\s*3/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxSpareThreads\s*4/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ThreadsPerChild\s*5/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxRequestWorkers\s*9/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxConnectionsPerChild\s*10/) }
     end
 
     context "Test mpm_event old style params" do
@@ -106,17 +106,17 @@ describe 'apache::mod::event', :type => :class do
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ServerLimit\s*0/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*StartServers\s*1/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxClients\s*2/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MinSpareThreads\s*3/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxSpareThreads\s*4/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadsPerChild\s*5/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*MaxRequestsPerChild\s*6/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ServerLimit\s*0/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*StartServers\s*1/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxClients\s*2/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MinSpareThreads\s*3/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxSpareThreads\s*4/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ThreadsPerChild\s*5/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*MaxRequestsPerChild\s*6/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ThreadLimit\s*7/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').with_content(/^\s*ListenBacklog\s*8/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
     end
 
     context "Test mpm_event false params" do
@@ -136,17 +136,17 @@ describe 'apache::mod::event', :type => :class do
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ServerLimit/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*StartServers/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MinSpareThreads/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxSpareThreads/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ThreadsPerChild/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ThreadLimit/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*ListenBacklog/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*ServerLimit/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*StartServers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxClients/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MinSpareThreads/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxSpareThreads/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*ThreadsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxRequestsPerChild/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*ThreadLimit/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*ListenBacklog/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxRequestWorkers/) }
+      it { is_expected.to contain_file("/etc/apache2/mods-available/override_event.conf").with_ensure('file').without_content(/^\s*MaxConnectionsPerChild/) }
     end
 
     context "with Apache version < 2.4" do
@@ -202,7 +202,7 @@ describe 'apache::mod::event', :type => :class do
       it { is_expected.not_to contain_apache__mod('worker') }
       it { is_expected.not_to contain_apache__mod('prefork') }
 
-      it { is_expected.to contain_file("/etc/httpd/conf.d/event.conf").with_ensure('file') }
+      it { is_expected.to contain_file("/etc/httpd/conf.d/override_event.conf").with_ensure('file') }
 
       it { is_expected.to contain_file("/etc/httpd/conf.d/event.load").with({
         'ensure'  => 'file',
