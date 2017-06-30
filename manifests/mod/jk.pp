@@ -56,8 +56,6 @@ class apache::mod::jk (
   $mount_file_content    = {},
 ){
 
-  include ::apache
-
   # Provides important variables
   include ::apache
   # Manages basic module config
