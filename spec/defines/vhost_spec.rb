@@ -407,6 +407,7 @@ describe 'apache::vhost', :type => :define do
           'krb_auth_realms'             => ['EXAMPLE.ORG','EXAMPLE.NET'],
           'krb_5keytab'                 => '/tmp/keytab5',
           'krb_local_user_mapping'      => 'off',
+	  'http_protocol_options'       => 'Strict LenientMethods Allow0.9',
           'keepalive'                   => 'on',
           'keepalive_timeout'           => '100',
           'max_keepalive_requests'      => '1000',
@@ -617,6 +618,8 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+KrbSaveCredentials\soff$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbVerifyKDC\son$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-http_protocol_options').with(
+        :content => /^\s*HttpProtocolOptions\s+Strict\s+LenientMethods\s+Allow0\.9$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
         :content => /^\s+KeepAlive\son$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(

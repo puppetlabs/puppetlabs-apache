@@ -126,6 +126,7 @@
 [`gentoo/puppet-portage`]: https://github.com/gentoo/puppet-portage
 
 [Hash]: https://docs.puppetlabs.com/puppet/latest/reference/lang_data_hash.html
+[`HttpProtocolOptions`]: http://httpd.apache.org/docs/current/mod/core.html#httpprotocoloptions
 
 [`IncludeOptional`]: https://httpd.apache.org/docs/current/mod/core.html#includeoptional
 [`Include`]: https://httpd.apache.org/docs/current/mod/core.html#include
@@ -997,6 +998,10 @@ Sets the Apache server's base configuration directory. This is useful for specia
 - **FreeBSD**: `/usr/local/etc/apache22`
 - **Gentoo**: `/etc/apache2`
 - **Red Hat**: `/etc/httpd`
+
+##### http_protocol_options`
+
+Specifies the strictness of HTTP protocol checks. Valid options: any sequence of the following alternative values: `Strict` or `Unsafe`, `RegisteredMethods` or `LenientMethods`, and `Allow0.9` or `Require1.0`. Default '`Strict LenientMethods Allow0.9`'.
 
 ##### `keepalive`
 

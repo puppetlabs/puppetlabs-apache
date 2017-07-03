@@ -60,6 +60,7 @@ class apache (
   $manage_group           = true,
   $user                   = $::apache::params::user,
   $group                  = $::apache::params::group,
+  $http_protocol_options  = $::apache::params::http_protocol_options,
   $supplementary_groups   = [],
   $keepalive              = $::apache::params::keepalive,
   $keepalive_timeout      = $::apache::params::keepalive_timeout,
@@ -333,6 +334,7 @@ class apache (
     # - $error_documents
     # - $error_documents_path
     # - $apxs_workaround
+    # - $http_protocol_options
     # - $keepalive
     # - $keepalive_timeout
     # - $max_keepalive_requests

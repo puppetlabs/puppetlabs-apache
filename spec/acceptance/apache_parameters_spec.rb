@@ -237,6 +237,23 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'http_protocol_options' do
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    # Actually >= 2.4.24, but the minor version is not provided
+    if $apache_version >= '2.4'
+      describe file($conf_file) do
+	it { is_expected.to be_file }
+	it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
+      end
+    end
+  end
+
   describe 'server_root' do
     describe 'setup' do
       it 'applies cleanly' do
