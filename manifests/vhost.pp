@@ -750,7 +750,7 @@ define apache::vhost(
   # - $proxy_preserve_host
   # - $proxy_add_headers
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
+  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 160,
