@@ -23,7 +23,9 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     it_behaves_like 'minimal resources'
-    verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
+    it {
+      verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
+    }
 
   end
 
