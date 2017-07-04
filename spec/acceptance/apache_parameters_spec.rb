@@ -238,18 +238,20 @@ describe 'apache parameters' do
   end
 
   describe 'http_protocol_options' do
-    describe 'setup' do
-      it 'applies cleanly' do
-        pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
-        apply_manifest(pp, :catch_failures => true)
-      end
-    end
-
     # Actually >= 2.4.24, but the minor version is not provided
-    if $apache_version >= '2.4'
+    # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
+    # basically older versions of the ubuntu package cause issues
+    if $apache_version >= '2.4' and fact('operatingsystem') != 'Ubuntu'
+      describe 'setup' do
+        it 'applies cleanly' do
+          pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
+          apply_manifest(pp, :catch_failures => true)
+        end
+      end
+
       describe file($conf_file) do
-	it { is_expected.to be_file }
-	it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
       end
     end
   end
