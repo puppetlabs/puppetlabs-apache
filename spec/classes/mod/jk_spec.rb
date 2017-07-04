@@ -9,11 +9,8 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to create_class('apache::mod::jk') }
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('jk') }
-    it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]').with(
-      :ensure  => 'file',
-      :content => /<IfModule jk_module>/,
-      :content => /<\/IfModule>/,
-    )}
+    it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
+    verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
   end
 
   context "with only required facts and no parameters" do
