@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-unless (fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') == '12.0')
+unless (fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '12')
   describe 'apache::mod::php class' do
     context "default php config" do
       it 'succeeds in puppeting php' do

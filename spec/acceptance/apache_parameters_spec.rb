@@ -240,8 +240,8 @@ describe 'apache parameters' do
   describe 'http_protocol_options' do
     # Actually >= 2.4.24, but the minor version is not provided
     # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
-    # basically older versions of the ubuntu package cause issues
-    if $apache_version >= '2.4' and fact('operatingsystem') != 'Ubuntu'
+    # basically versions of the ubuntu or sles  apache package cause issue
+    if $apache_version >= '2.4' && (fact('operatingsystem') != 'Ubuntu' || fact('operatingsystem') != 'SLES')
       describe 'setup' do
         it 'applies cleanly' do
           pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
