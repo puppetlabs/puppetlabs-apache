@@ -237,6 +237,25 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'http_protocol_options' do
+    # Actually >= 2.4.24, but the minor version is not provided
+    # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
+    # basically versions of the ubuntu or sles  apache package cause issue
+    if $apache_version >= '2.4' && (fact('operatingsystem') != 'Ubuntu' || fact('operatingsystem') != 'SLES')
+      describe 'setup' do
+        it 'applies cleanly' do
+          pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
+          apply_manifest(pp, :catch_failures => true)
+        end
+      end
+
+      describe file($conf_file) do
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
+      end
+    end
+  end
+
   describe 'server_root' do
     describe 'setup' do
       it 'applies cleanly' do
