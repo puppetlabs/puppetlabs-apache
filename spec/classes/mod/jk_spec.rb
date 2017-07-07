@@ -22,6 +22,13 @@ describe 'apache::mod::jk', :type => :class do
       }
     end
 
+    let :params do
+      {
+        :log_file => '/var/log/httpd/mod_jk.log',
+        :shm_file => '/var/log/httpd/jk-runtime-status',
+      }
+    end
+
     it_behaves_like 'minimal resources'
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
