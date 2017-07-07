@@ -22,11 +22,8 @@ describe 'apache::mod::jk', :type => :class do
       }
     end
 
-    let :params do
-      {
-        :log_file => '/var/log/httpd/mod_jk.log',
-        :shm_file => '/var/log/httpd/jk-runtime-status',
-      }
+    let(:pre_condition) do
+      'include apache'
     end
 
     it_behaves_like 'minimal resources'
