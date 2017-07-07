@@ -11,7 +11,7 @@
 class apache::mod::jk (
   $workers_file          = undef,
   $worker_property       = {},
-  $shm_file              = undef,
+  $shm_file              = "${::apache::logroot}/jk-runtime-status",
   $shm_size              = undef,
   $mount_file            = undef,
   $mount_file_reload     = undef,
@@ -21,7 +21,7 @@ class apache::mod::jk (
   $mount_copy            = undef,
   $worker_indicator      = undef,
   $watchdog_interval     = undef,
-  $log_file              = undef,
+  $log_file              = "${::apache::logroot}/mod_jk.log",
   $log_level             = undef,
   $log_stamp_format      = undef,
   $request_log_format    = undef,
