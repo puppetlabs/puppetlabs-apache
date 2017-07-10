@@ -400,7 +400,12 @@ define apache::vhost(
 
   if $access_log and !$access_logs {
     if $access_log_file {
-      $_logs_dest = "${logroot}/${access_log_file}"
+      if $access_log_file =~ /^\// {
+        # Absolute path provided - don't prepend $logroot
+        $_logs_dest = $access_log_file
+      } else {
+        $_logs_dest = "${logroot}/${access_log_file}"
+      }
     } elsif $access_log_pipe {
       $_logs_dest = $access_log_pipe
     } elsif $access_log_syslog {
@@ -423,7 +428,12 @@ define apache::vhost(
   }
 
   if $error_log_file {
-    $error_log_destination = "${logroot}/${error_log_file}"
+    if $error_log_file =~ /^\// {
+      # Absolute path provided - don't prepend $logroot
+      $error_log_destination = $error_log_file
+    } else {
+      $error_log_destination = "${logroot}/${error_log_file}"
+    }
   } elsif $error_log_pipe {
     $error_log_destination = $error_log_pipe
   } elsif $error_log_syslog {
