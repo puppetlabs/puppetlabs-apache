@@ -421,7 +421,7 @@ define apache::vhost(
 
   if $error_log_file {
     if $error_log_file =~ /^\// {
-        # Absolute path provided - don't prepend $logroot
+      # Absolute path provided - don't prepend $logroot
       $error_log_destination = $error_log_file
     } else {
       $error_log_destination = "${logroot}/${error_log_file}"
