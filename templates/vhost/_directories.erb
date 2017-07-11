@@ -206,6 +206,9 @@
     <%- if directory['force_type'] -%>
     ForceType <%= directory['force_type'] %>
     <%- end -%>
+    <%- if directory['add_charset'] -%>
+    AddCharset <%= directory['add_charset'] %>
+    <%- end -%>
     <%- if directory['ssl_options'] -%>
     SSLOptions <%= Array(directory['ssl_options']).join(' ') %>
     <%- end -%>
