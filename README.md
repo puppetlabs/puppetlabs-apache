@@ -3837,6 +3837,14 @@ Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.ht
 
 Sets the [SSLProxyVerify](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverify) directive, which configures certificate verification of the remote server when a proxy is configured to forward requests to a remote SSL server. Default: undef.
 
+##### `ssl_proxy_verify_depth`
+
+Sets the [SSLProxyVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverifydepth) directive, which configures how deeply mod_ssl should verify before deciding that the remote server does not have a valid certificate. (A depth of 0 means that self-signed remote server certificates are accepted only, the default depth of 1 means the remote server certificate can be self-signed or has to be signed by a CA which is directly known to the server) Default: undef.
+
+##### `ssl_proxy_ca_cert`
+
+Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference. Default: undef.
+
 ##### `ssl_proxy_machine_cert`
 
 Sets the [SSLProxyMachineCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatefile) directive, which specifies an all-in-one file where you keep the certs and keys used for this server to authenticate itself to remote servers. This file should be a concatenation of the PEM-encoded certificate files in order of preference. Default: undef.

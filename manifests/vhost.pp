@@ -26,6 +26,8 @@ define apache::vhost(
   $ssl_verify_client           = undef,
   $ssl_verify_depth            = undef,
   $ssl_proxy_verify            = undef,
+  $ssl_proxy_verify_depth      = undef,
+  $ssl_proxy_ca_cert           = undef,
   $ssl_proxy_check_peer_cn     = undef,
   $ssl_proxy_check_peer_name   = undef,
   $ssl_proxy_check_peer_expire = undef,
@@ -300,6 +302,10 @@ define apache::vhost(
 
   if $ssl_proxy_verify {
     validate_re($ssl_proxy_verify,'^(none|optional|require|optional_no_ca)$',"${ssl_proxy_verify} is not permitted for ssl_proxy_verify. Allowed values are 'none', 'optional', 'require' or 'optional_no_ca'.")
+  }
+
+  if $ssl_proxy_verify_depth {
+    validate_integer($ssl_proxy_verify_depth)
   }
 
   if $ssl_proxy_check_peer_cn {
@@ -973,6 +979,8 @@ define apache::vhost(
   # Template uses:
   # - $ssl_proxyengine
   # - $ssl_proxy_verify
+  # - $ssl_proxy_verify_depth
+  # - $ssl_proxy_ca_cert
   # - $ssl_proxy_check_peer_cn
   # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_check_peer_expire
