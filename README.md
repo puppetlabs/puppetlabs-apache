@@ -1956,6 +1956,7 @@ Installs and configures Trustwave's [`mod_security`][]. It is enabled and runs b
 - `allowed_methods`: A space-separated list of allowed HTTP methods. Default: 'GET HEAD POST OPTIONS'.
 - `content_types`: A list of one or more allowed [MIME types][MIME `content-type`]. Default: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'
 - `crs_package`: Names the package that installs CRS rules. Default: `modsec_crs_package` in [`apache::params`][].
+- `manage_security_crs` : Manage security_crs.conf rules file. Default: `true`.
 - `modsec_dir`: Defines the path where Puppet installs the modsec configuration and activated rules links. Default: 'On', set by `modsec_dir` in [`apache::params`][].
 ${modsec\_dir}/activated\_rules.
 - `modsec_secruleengine`: Configures the modsec rules engine. Valid options: 'On', 'Off', and 'DetectionOnly'. Default: `modsec_secruleengine` in [`apache::params`][].
