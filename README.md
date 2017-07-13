@@ -1420,7 +1420,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `mime`
 * `mime_magic`\*
 * `negotiation`
-* `nss`\*
+* `nss`\* (see [`apache::mod::nss`][])
 * `pagespeed` (see [`apache::mod::pagespeed`][])
 * `passenger`\* (see [`apache::mod::passenger`][])
 * `perl`
