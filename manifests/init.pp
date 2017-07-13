@@ -89,6 +89,8 @@ class apache (
   $error_log              = $::apache::params::error_log,
   $scriptalias            = $::apache::params::scriptalias,
   $access_log_file        = $::apache::params::access_log_file,
+  $default_port           = '80',
+  $default_ssl_port       = '443',
 ) inherits ::apache::params {
   validate_bool($default_vhost)
   validate_bool($default_ssl_vhost)
@@ -381,7 +383,7 @@ class apache (
 
     ::apache::vhost { 'default':
       ensure          => $default_vhost_ensure,
-      port            => '80',
+      port            => $default_port,
       docroot         => $docroot,
       scriptalias     => $scriptalias,
       serveradmin     => $serveradmin,
@@ -397,7 +399,7 @@ class apache (
     }
     ::apache::vhost { 'default-ssl':
       ensure          => $default_ssl_vhost_ensure,
-      port            => '443',
+      port            => $default_ssl_port,
       ssl             => true,
       docroot         => $docroot,
       scriptalias     => $scriptalias,
