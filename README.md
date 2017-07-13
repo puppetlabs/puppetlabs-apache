@@ -1029,12 +1029,6 @@ Specifies the location where [Apache module][Apache modules] files are stored. D
 
 > **Note**: Do not configure this parameter manually without special reason.
 
-##### `loadfile_name`
-
-Sets the [`LoadFile`] directive's filename. Valid options: Filenames in the format `\*.load`.
-
-This can be used to set the module load order.
-
 ##### `log_level`
 
 Changes the error log's verbosity. Valid options: 'alert', 'crit', 'debug', 'emerg', 'error', 'info', 'notice', 'warn'. Default: 'warn'.
@@ -1210,18 +1204,6 @@ Determines whether Puppet should use a specific command to restart the HTTPD ser
 ##### `ssl_ca`
 
 Specifies the SSL certificate authority. [SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile). Default: undef. It is possible to override this on a vhost level.
-
-##### `ssl_stapling`
-
-Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Valid options: Boolean. Default: false. It is possible to override this on a vhost level.
-
-This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
-
-##### `ssl_stapling_return_errors`
-
-Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default. It is possible to override this on a vhost level.
-
-This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
 ##### `timeout`
 
