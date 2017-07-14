@@ -1,9 +1,10 @@
 # lint:ignore:variable_is_lowercase required for compatibility
 class apache::mod::authnz_ldap (
-  $verify_server_cert = true,
-  $verifyServerCert   = undef,
-  $package_name       = undef,
+  Boolean $verify_server_cert = true,
+  $verifyServerCert           = undef,
+  $package_name               = undef,
 ) {
+
   include ::apache
   include '::apache::mod::ldap'
   ::apache::mod { 'authnz_ldap':
@@ -16,8 +17,6 @@ class apache::mod::authnz_ldap (
   } else {
     $_verify_server_cert = $verify_server_cert
   }
-
-  validate_bool($_verify_server_cert)
 
   # Template uses:
   # - $_verify_server_cert

@@ -1,10 +1,8 @@
 class apache::mod::dumpio(
-  $dump_io_input  = 'Off',
-  $dump_io_output = 'Off',
+  Enum['Off', 'On', 'off', 'on'] $dump_io_input  = 'Off',
+  Enum['Off', 'On', 'off', 'on'] $dump_io_output = 'Off',
 ) {
   include ::apache
-  validate_re(downcase($dump_io_input), '^(on|off)$', "${dump_io_input} is not supported for dump_io_input.  Allowed values are 'On' and 'Off'.")
-  validate_re(downcase($dump_io_output), '^(on|off)$', "${dump_io_output} is not supported for dump_io_output.  Allowed values are 'On' and 'Off'.")
 
   ::apache::mod { 'dumpio': }
   file{'dumpio.conf':

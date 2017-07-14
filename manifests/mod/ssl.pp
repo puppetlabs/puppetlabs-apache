@@ -1,23 +1,24 @@
 class apache::mod::ssl (
-  $ssl_compression            = false,
-  $ssl_cryptodevice           = 'builtin',
-  $ssl_options                = [ 'StdEnvVars' ],
-  $ssl_openssl_conf_cmd       = undef,
-  $ssl_ca                     = undef,
-  $ssl_cipher                 = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
-  $ssl_honorcipherorder       = true,
-  $ssl_protocol               = [ 'all', '-SSLv2', '-SSLv3' ],
-  $ssl_proxy_protocol         = [],
-  $ssl_pass_phrase_dialog     = 'builtin',
-  $ssl_random_seed_bytes      = '512',
-  $ssl_sessioncache           = $::apache::params::ssl_sessioncache,
-  $ssl_sessioncachetimeout    = '300',
-  $ssl_stapling               = false,
-  $ssl_stapling_return_errors = undef,
-  $ssl_mutex                  = undef,
-  $apache_version             = undef,
-  $package_name               = undef,
+  Boolean $ssl_compression                                  = false,
+  $ssl_cryptodevice                                         = 'builtin',
+  $ssl_options                                              = [ 'StdEnvVars' ],
+  $ssl_openssl_conf_cmd                                     = undef,
+  $ssl_ca                                                   = undef,
+  $ssl_cipher                                               = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
+  Variant[Boolean, Enum['on', 'off']] $ssl_honorcipherorder = true,
+  $ssl_protocol                                             = [ 'all', '-SSLv2', '-SSLv3' ],
+  Array $ssl_proxy_protocol                                 = [],
+  $ssl_pass_phrase_dialog                                   = 'builtin',
+  $ssl_random_seed_bytes                                    = '512',
+  String $ssl_sessioncache                                  = $::apache::params::ssl_sessioncache,
+  $ssl_sessioncachetimeout                                  = '300',
+  Boolean $ssl_stapling                                     = false,
+  Optional[Boolean] $ssl_stapling_return_errors             = undef,
+  $ssl_mutex                                                = undef,
+  $apache_version                                           = undef,
+  $package_name                                             = undef,
 ) inherits ::apache::params {
+
   include ::apache
   include ::apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -52,11 +53,6 @@ class apache::mod::ssl (
     }
   }
 
-  validate_bool($ssl_compression)
-
-  validate_array($ssl_proxy_protocol)
-  validate_string($ssl_sessioncache)
-
   if is_bool($ssl_honorcipherorder) {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
   } else {
@@ -65,12 +61,6 @@ class apache::mod::ssl (
       'off'   => false,
       default => true,
     }
-  }
-
-  validate_bool($ssl_stapling)
-
-  if $ssl_stapling_return_errors != undef {
-    validate_bool($ssl_stapling_return_errors)
   }
 
   $stapling_cache = $::osfamily ? {

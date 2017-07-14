@@ -53,22 +53,6 @@ describe 'apache::service', :type => :class do
       }
     end
 
-    context "$service_enable must be a bool" do
-      let (:params) {{ :service_enable => 'not-a-boolean' }}
-
-      it 'should fail' do
-        expect { catalogue }.to raise_error(Puppet::Error, /is not a boolean/)
-      end
-    end
-
-    context "$service_manage must be a bool" do
-      let (:params) {{ :service_manage => 'not-a-boolean' }}
-
-      it 'should fail' do
-        expect { catalogue }.to raise_error(Puppet::Error, /is not a boolean/)
-      end
-    end
-
     context "with $service_ensure => 'running'" do
       let (:params) {{ :service_ensure => 'running', }}
       it { is_expected.to contain_service("httpd").with(
