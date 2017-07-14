@@ -1402,7 +1402,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `mime`
 * `mime_magic`\*
 * `negotiation`
-* `nss`\*
+* `nss`\* (see [`apache::mod::nss`][])
 * `pagespeed` (see [`apache::mod::pagespeed`][])
 * `passenger`\* (see [`apache::mod::passenger`][])
 * `perl`
@@ -1762,6 +1762,17 @@ Installs and configures [`mod_negotiation`][].
 
 - `force_language_priority`: Sets the `ForceLanguagePriority` option. Valid option: String. Default: `Prefer Fallback`.
 - `language_priority`: An [array][] of languages to set the `LanguagePriority` option of the module. Default: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN', 'zh-TW' ]
+
+##### Class: `apache::mod::nss`
+
+An SSL provider for Apache using the NSS crypto libraries
+
+**Parameters within `apache::mod::nss`:**
+
+- `transfer_log`: path to access.log
+- `error_log`: path to error.log
+- `passwd_file`: path to file used for NSSPassPhraseDialog directive 
+- `port`: SSL port. Defaults to 8443
 
 ##### Class: `apache::mod::pagespeed`
 
