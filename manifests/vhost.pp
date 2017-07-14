@@ -28,6 +28,8 @@ define apache::vhost(
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
   $ssl_proxy_verify_depth                                                           = undef,
   $ssl_proxy_ca_cert                                                                = undef,
+  Optional[Enum['on', 'off']] $ssl_proxy_check_peer_cn                              = undef,
+  Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                            = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                          = undef,
   $ssl_proxy_machine_cert                                                           = undef,
   $ssl_proxy_protocol                                                               = undef,
