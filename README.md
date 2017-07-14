@@ -2791,6 +2791,20 @@ apache::vhost { 'site.name.fdqn':
 * `params`. *Optional.* Allows for ProxyPass key-value parameters, such as connection settings.
 * `setenv`. *Optional.* Sets [environment variables](https://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings) for the proxy directive. Valid options: array.
 
+##### `proxy_pass_reverse`
+
+Specifies an array of `path => URI` values for a [ProxyPassReverse](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse) configuration without matching [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass). Defaults to 'undef'.
+
+``` puppet
+apache::vhost { 'site.name.fdqn':
+  …
+  proxy_pass_reverse => [
+    { 'path' => '/a', 'url' => 'http://backend-a/' },
+    { 'path' => '/b', 'url' => 'http://backend-b/' },
+  ],
+}
+```
+
 ##### `proxy_dest_match`
 
 This directive is equivalent to [`proxy_dest`][], but takes regular expressions, see [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch) for details.

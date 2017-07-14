@@ -18,6 +18,9 @@
 <% if @proxy_error_override -%>
   ProxyErrorOverride On
 <%- end -%>
+<%- [@proxy_pass_reverse].flatten.compact.each do |reverse_proxy| -%>
+  ProxyPassReverse <%= reverse_proxy['path'] %> <%= reverse_proxy['url'] %>
+<%- end -%>
 <%- [@proxy_pass].flatten.compact.each do |proxy| -%>
   <%- Array(proxy['no_proxy_uris']).each do |uri| -%>
   ProxyPass <%= uri %> !
