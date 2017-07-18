@@ -1,7 +1,6 @@
 # lint:ignore:variable_is_lowercase required for compatibility
 class apache::mod::authnz_ldap (
   Boolean $verify_server_cert = true,
-  $verifyServerCert           = undef,
   $package_name               = undef,
 ) {
 
@@ -11,15 +10,8 @@ class apache::mod::authnz_ldap (
     package => $package_name,
   }
 
-  if $verifyServerCert {
-    warning('Class[\'apache::mod::authnz_ldap\'] parameter verifyServerCert is deprecated in favor of verify_server_cert')
-    $_verify_server_cert = $verifyServerCert
-  } else {
-    $_verify_server_cert = $verify_server_cert
-  }
-
   # Template uses:
-  # - $_verify_server_cert
+  # - $verify_server_cert
   file { 'authnz_ldap.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/authnz_ldap.conf",
