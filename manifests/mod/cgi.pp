@@ -2,7 +2,9 @@ class apache::mod::cgi {
   case $::osfamily {
     'FreeBSD': {}
     default: {
-      Class['::apache::mod::prefork'] -> Class['::apache::mod::cgi']
+      if $::apache::mpm_module =~ /^(itk|peruser|prefork)$/ {
+        Class["::apache::mod::${::apache::mpm_module}"] -> Class['::apache::mod::cgi']
+      }
     }
   }
 
