@@ -2,7 +2,7 @@
 <% if @disable_root -%>
   UserDir disabled root
 <% end -%>
-  UserDir <%= @home %>/*/<%= @dir %>
+  UserDir <%= @_path %>
 
   <Directory "<%= @home %>/*/<%= @dir %>">
     AllowOverride <%= @overrides.join(' ') %>
