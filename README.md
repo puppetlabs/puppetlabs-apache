@@ -264,6 +264,7 @@
 [`virtual_docroot`]: #virtual_docroot
 
 [Web Server Gateway Interface]: https://www.python.org/dev/peps/pep-3333/#abstract
+[`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
 [`WSGIPythonPath`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonPath.html
 [`WSGIPythonHome`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonHome.html
 
@@ -1983,6 +1984,7 @@ Enables Python support via [`mod_wsgi`][].
   - If the `mod_path` parameter doesn't contain `/`, Puppet prefixes it with your operating system's default module path.
 Otherwise, Puppet follows it literally.
 - `package_name`: Names the package that installs `mod_wsgi`. Default: undef.
+- `wsgi_restrict_embedded`: Defines the [`WSGIRestrictEmbedded`][] directive, such as 'On'. Valid options: On|Off|undef. Default: undef.
 - `wsgi_python_home`: Defines the [`WSGIPythonHome`][] directive, such as '/path/to/venv'. Valid options: path. Default: undef.
 - `wsgi_python_path`: Defines the [`WSGIPythonPath`][] directive, such as '/path/to/venv/site-packages'. Valid options: path. Default: undef.
 - `wsgi_socket_prefix`: Defines the [`WSGISocketPrefix`][] directive, such as "\${APACHE\_RUN\_DIR}WSGI". Default: `wsgi_socket_prefix` in [`apache::params`][].
