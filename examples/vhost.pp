@@ -165,7 +165,7 @@ apache::vhost { 'sixteenth.example.com non-ssl':
     { comment      => 'Rewrite to lower case',
       rewrite_cond => ['%{REQUEST_URI} [A-Z]'],
       rewrite_map  => ['lc int:tolower'],
-      rewrite_rule => ['(.*) ${lc:$1} [R=301,L]'],
+      rewrite_rule => ["(.*) \${lc:\$1} [R=301,L]"],
     }
   ],
 }

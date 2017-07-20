@@ -245,6 +245,14 @@ describe 'apache::vhost', :type => :define do
                 },
               ],
             },
+            { 'path'         => '/var/www/files',
+              'provider'     => 'location',
+              'limit_except' => [
+                { 'methods' => 'GET HEAD',
+                  'require' => ['valid-user']
+                },
+              ],
+            },
             { 'path'               => '/var/www/dav',
               'dav'                => 'filesystem',
               'dav_depth_infinity' => true,
@@ -388,6 +396,7 @@ describe 'apache::vhost', :type => :define do
           'passenger_app_env'           => 'test',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
           'passenger_min_instances'     => '1',
+          'passenger_max_requests'      => '1000',
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
           'passenger_high_performance'  => true,
@@ -407,6 +416,7 @@ describe 'apache::vhost', :type => :define do
           'krb_auth_realms'             => ['EXAMPLE.ORG','EXAMPLE.NET'],
           'krb_5keytab'                 => '/tmp/keytab5',
           'krb_local_user_mapping'      => 'off',
+	  'http_protocol_options'       => 'Strict LenientMethods Allow0.9',
           'keepalive'                   => 'on',
           'keepalive_timeout'           => '100',
           'max_keepalive_requests'      => '1000',
@@ -525,6 +535,10 @@ describe 'apache::vhost', :type => :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>/m ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /^\s+<LimitExcept GET HEAD>$/ ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+        :content => /\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/LimitExcept>/m ) }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+Dav\sfilesystem$/ ) }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
         :content => /^\s+DavDepthInfinity\sOn$/ ) }
@@ -617,6 +631,8 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+KrbSaveCredentials\soff$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
         :content => /^\s+KrbVerifyKDC\son$/)}
+      it { is_expected.to contain_concat__fragment('rspec.example.com-http_protocol_options').with(
+        :content => /^\s*HttpProtocolOptions\s+Strict\s+LenientMethods\s+Allow0\.9$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
         :content => /^\s+KeepAlive\son$/)}
       it { is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(

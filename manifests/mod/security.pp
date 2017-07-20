@@ -24,6 +24,7 @@ class apache::mod::security (
   $secrequestbodylimit         = '13107200',
   $secrequestbodynofileslimit  = '131072',
   $secrequestbodyinmemorylimit = '131072',
+  $manage_security_crs         = true,
 ) inherits ::apache::params {
   include ::apache
 
@@ -53,7 +54,7 @@ class apache::mod::security (
 
   if $crs_package  {
     package { $crs_package:
-      ensure => 'latest',
+      ensure => 'installed',
       before => [
         File[$::apache::confd_dir],
         File[$modsec_dir],
@@ -104,25 +105,27 @@ class apache::mod::security (
     notify  => Class['apache::service'],
   }
 
-  # Template uses:
-  # - $_secdefaultaction
-  # - $critical_anomaly_score
-  # - $error_anomaly_score
-  # - $warning_anomaly_score
-  # - $notice_anomaly_score
-  # - $inbound_anomaly_threshold
-  # - $outbound_anomaly_threshold
-  # - $anomaly_score_blocking
-  # - $allowed_methods
-  # - $content_types
-  # - $restricted_extensions
-  # - $restricted_headers
-  # - $secrequestmaxnumargs
-  file { "${modsec_dir}/security_crs.conf":
-    ensure  => file,
-    content => template('apache/mod/security_crs.conf.erb'),
-    require => File[$modsec_dir],
-    notify  => Class['apache::service'],
+  if $manage_security_crs {
+    # Template uses:
+    # - $_secdefaultaction
+    # - $critical_anomaly_score
+    # - $error_anomaly_score
+    # - $warning_anomaly_score
+    # - $notice_anomaly_score
+    # - $inbound_anomaly_threshold
+    # - $outbound_anomaly_threshold
+    # - $anomaly_score_blocking
+    # - $allowed_methods
+    # - $content_types
+    # - $restricted_extensions
+    # - $restricted_headers
+    # - $secrequestmaxnumargs
+    file { "${modsec_dir}/security_crs.conf":
+      ensure  => file,
+      content => template('apache/mod/security_crs.conf.erb'),
+      require => File[$modsec_dir],
+      notify  => Class['apache::service'],
+    }
   }
 
   unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }

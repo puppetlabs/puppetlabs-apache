@@ -2,10 +2,10 @@
 # Parameters:
 # - $indexes provides a string for the DirectoryIndex directive http://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
 class apache::mod::dir (
-  $dir     = 'public_html',
-  $indexes = ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml'],
+  $dir                   = 'public_html',
+  Array[String] $indexes = ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml'],
 ) {
-  validate_array($indexes)
+
   include ::apache
   ::apache::mod { 'dir': }
 

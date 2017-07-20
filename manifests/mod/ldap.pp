@@ -1,19 +1,17 @@
 class apache::mod::ldap (
-  $apache_version                = undef,
-  $package_name                  = undef,
-  $ldap_trusted_global_cert_file = undef,
-  $ldap_trusted_global_cert_type = 'CA_BASE64',
-  $ldap_shared_cache_size        = undef,
-  $ldap_cache_entries            = undef,
-  $ldap_cache_ttl                = undef,
-  $ldap_opcache_entries          = undef,
-  $ldap_opcache_ttl              = undef,
+  $apache_version                                  = undef,
+  $package_name                                    = undef,
+  $ldap_trusted_global_cert_file                   = undef,
+  Optional[String] $ldap_trusted_global_cert_type  = 'CA_BASE64',
+  $ldap_shared_cache_size                          = undef,
+  $ldap_cache_entries                              = undef,
+  $ldap_cache_ttl                                  = undef,
+  $ldap_opcache_entries                            = undef,
+  $ldap_opcache_ttl                                = undef,
 ){
+
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
-  if ($ldap_trusted_global_cert_file) {
-    validate_string($ldap_trusted_global_cert_type)
-  }
   ::apache::mod { 'ldap':
     package => $package_name,
   }

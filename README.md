@@ -127,6 +127,7 @@
 [`gentoo/puppet-portage`]: https://github.com/gentoo/puppet-portage
 
 [Hash]: https://docs.puppet.com/puppet/latest/reference/lang_data_hash.html
+[`HttpProtocolOptions`]: http://httpd.apache.org/docs/current/mod/core.html#httpprotocoloptions
 
 [`IncludeOptional`]: https://httpd.apache.org/docs/current/mod/core.html#includeoptional
 [`Include`]: https://httpd.apache.org/docs/current/mod/core.html#include
@@ -153,6 +154,7 @@
 [`manage_docroot`]: #manage_docroot
 [`manage_user`]: #manage_user
 [`manage_group`]: #manage_group
+[`supplementary_groups`]: #supplementary_groups
 [`MaxConnectionsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxconnectionsperchild
 [`max_keepalive_requests`]: #max_keepalive_requests
 [`MaxRequestWorkers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxrequestworkers
@@ -263,6 +265,7 @@
 [`virtual_docroot`]: #virtual_docroot
 
 [Web Server Gateway Interface]: https://www.python.org/dev/peps/pep-3333/#abstract
+[`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
 [`WSGIPythonPath`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonPath.html
 [`WSGIPythonHome`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonHome.html
 
@@ -302,6 +305,8 @@
 - Virtual hosts
 - Listened-to ports
 - `/etc/make.conf` on FreeBSD and Gentoo
+
+On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module. Note that while several options apply or enable certain features and settings for Gentoo, it is not a [supported operating system][] for this module.
 
 > **Warning**: This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Apache configuration should be managed by Puppet, as unmanaged configuration files can cause unexpected failures.
 >
@@ -814,7 +819,19 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
 
 Guides the basic setup and installation of Apache on your system.
 
-**Parameters:**
+When this class is declared with the default options, Puppet:
+
+- Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
+- Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
+- Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
+- Creates a document root directory determined by your operating system, typically `/var/www`.
+- Starts the Apache service.
+
+You can simply declare the default `apache` class:
+
+``` puppet
+class { 'apache': }
+```
 
 ##### `allow_encoded_slashes`
 
@@ -888,7 +905,7 @@ Default: `true`.
 
 Sets the default certificate authority for the Apache server.
 
-Although this default value results in a functioning Apache server, you **must** update this parameter with your certificate authority information before deploying this server in a production environment.
+Although the default value results in a functioning Apache server, you **must** update this parameter with your certificate authority information before deploying this server in a production environment.
 
 Boolean. Default: `undef`.
 
@@ -896,7 +913,7 @@ Boolean. Default: `undef`.
 
 Sets the [SSL encryption][] certificate location.
 
-While the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
+Although the default value results in a functioning Apache server, you **must** update this parameter with your certificate location before deploying this server in a production environment.
 
 Default: Depends on operating system.
 
@@ -1049,6 +1066,10 @@ Default: Depends on operating system.
 - **Gentoo**: `/etc/apache2`
 - **Red Hat**: `/etc/httpd`
 
+##### http_protocol_options`
+
+Specifies the strictness of HTTP protocol checks. Valid options: any sequence of the following alternative values: `Strict` or `Unsafe`, `RegisteredMethods` or `LenientMethods`, and `Allow0.9` or `Require1.0`. Default '`Strict LenientMethods Allow0.9`'.
+
 ##### `keepalive`
 
 Determines whether to enable persistent HTTP connections with the [`KeepAlive`][] directive. If you set this to 'On', use the [`keepalive_timeout`][] and [`max_keepalive_requests`][] parameters to set relevant options.
@@ -1078,12 +1099,6 @@ Specifies the location where [Apache module][Apache modules] files are stored. D
 - **Red Hat**: `modules`
 
 > **Note**: Do not configure this parameter manually without special reason.
-
-##### `loadfile_name`
-
-Sets the [`LoadFile`] directive's filename. Values: Filenames in the format `\*.load`.
-
-This can be used to set the module load order.
 
 ##### `log_level`
 
@@ -1137,6 +1152,12 @@ When `false`, stops Puppet from creating the group resource.
 If you have a group created from another Puppet module that you want to use to run Apache, set this to `false`. Without this parameter, attempting to use a previously established group results in a duplicate resource error.
 
 Boolean. Default: `true`.
+
+##### `supplementary_groups`
+
+A list of groups to which the user belongs. These groups are in addition to the primary group. Default: No additional groups.
+
+Notice: This option only has an effect when `manage_user` is set to true.
 
 ##### `manage_user`
 
@@ -1299,19 +1320,21 @@ Values: a command to restart the Apache service. The default setting uses the [d
 
 Default: `undef`.
 
-##### `ssl_stapling`
+##### `ssl_ca`
 
-Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). This parameter only applies to Apache 2.4 or higher and is ignored on older versions. It is possible to override the default setting on a vhost level.
+Specifies the SSL certificate authority. [SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile). Default: undef. It is possible to override this on a vhost level.
 
-Boolean. Default: `false`.
 
-##### `ssl_stapling_return_errors`
 
-Sets the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. It is possible to override this on a vhost level. This parameter applies only to Apache 2.4 or higher and is ignored on older versions.
 
-Values: 'On', 'Off'. 
 
-Default: 'Off'.
+
+
+
+
+
+
+
 
 
 ##### `timeout`
@@ -1382,6 +1405,8 @@ Default: Depends on the user set by [`apache::params`][] class, based on your op
 - **Debian**: 'www-data'
 - **FreeBSD**: 'www'
 - **Gentoo** and **Red Hat**: 'apache'
+
+To prevent Puppet from managing the user, set the [`manage_user`][] parameter to false.
 
 ##### `apache_name`
 
@@ -1490,6 +1515,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
 * `authnz_ldap`\* (see [`apache::mod::authnz_ldap`][])
+* `authnz_pam`
 * `authz_default`
 * `authz_user`
 * `autoindex`
@@ -1517,12 +1543,14 @@ The following Apache modules have supported classes, many of which allow for par
 * `headers`
 * `include`
 * `info`\*
+* `intercept_form_submit`
 * `itk`
 * `ldap` (see [`apache::mod::ldap`][])
+* `lookup_identity`
 * `mime`
 * `mime_magic`\*
 * `negotiation`
-* `nss`\*
+* `nss`\* (see [`apache::mod::nss`][])
 * `pagespeed` (see [`apache::mod::pagespeed`][])
 * `passenger`\* (see [`apache::mod::passenger`][])
 * `perl`
@@ -1565,6 +1593,7 @@ Installs and manages [`mod_alias`][].
 * `icons_options`: Disables directory listings for the icons directory, via Apache [`Options`] directive.
 
   Default: 'Indexes MultiViews'.
+
 * `icons_path`: Sets the local path for an `/icons/` Alias.
 
   Default: Depends on operating system.
@@ -2145,6 +2174,17 @@ Installs and configures [`mod_negotiation`][].
 
   Default: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt*BR', 'ru', 'sv', 'zh*CN', 'zh*TW' ]
 
+##### Class: `apache::mod::nss`
+
+An SSL provider for Apache using the NSS crypto libraries.
+
+**Parameters:**
+
+- `transfer_log`: path to access.log
+- `error_log`: path to error.log
+- `passwd_file`: path to file used for NSSPassPhraseDialog directive 
+- `port`: SSL port. Defaults to 8443
+
 ##### Class: `apache::mod::pagespeed`
 
 Installs and manages [`mod_pagespeed`][], a Google module that rewrites web pages to reduce latency and bandwidth.
@@ -2312,6 +2352,22 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 
 To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] parameter in `::apache` to `true` **or** the [`ssl`][] parameter in [`apache::vhost`][] to `true`.
 
+- `ssl_cipher`: Default: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'.
+- `ssl_compression`: Default: false.
+- `ssl_cryptodevice`: Default: 'builtin'.
+- `ssl_honorcipherorder`: Default: true.
+- `ssl_openssl_conf_cmd`: Default: undef.
+- `ssl_options`: Default: [ 'StdEnvVars' ]
+- `ssl_pass_phrase_dialog`: Default: 'builtin'.
+- `ssl_protocol`: Default: [ 'all', '-SSLv2', '-SSLv3' ].
+- `ssl_proxy_protocol`: Default: [].
+- `ssl_random_seed_bytes`: Valid options: A string. Default: '512'.
+- `ssl_sessioncache`: Valid options: A string. Default: '300'.
+- `ssl_sessioncachetimeout`: Valid options: A string. Default: '300'.
+- `ssl_mutex`: Default: Determined based on the OS. Valid options: See [mod_ssl][mod_ssl] documentation.
+  - RedHat/FreeBSD/Suse/Gentoo: 'default'
+  - Debian/Ubuntu + Apache >= 2.4: 'default'
+  - Debian/Ubuntu + Apache < 2.4: 'file:\${APACHE_RUN_DIR}/ssl_mutex'
 **Parameters:
 
 * `ssl_cipher`
@@ -2402,9 +2458,6 @@ Installs and configures Trustwave's [`mod_security`][]. It is enabled and runs b
 **Parameters**:
 
 * `activated_rules`: An [array][] of rules from the `modsec_crs_path` or absolute to activate via symlinks.
-
-  Default: `modsec_default_rules` in [`apache::params`][].
-
 * `allowed_methods`: A space*separated list of allowed HTTP methods.
 
   Default: 'GET HEAD POST OPTIONS'.
@@ -2416,6 +2469,10 @@ Installs and configures Trustwave's [`mod_security`][]. It is enabled and runs b
 * `crs_package`: Names the package that installs CRS rules.
 
   Default: `modsec_crs_package` in [`apache::params`][].
+
+* `manage_security_crs`: Manage security_crs.conf rules file.
+
+  Default: `true`.
   
 * `modsec_dir`: Defines the path where Puppet installs the modsec configuration and activated rules links.
 
@@ -2529,7 +2586,13 @@ Enables Python support via [`mod_wsgi`][].
   Values: A string specifying a path.
   
   Default: `undef`.
-  
+
+* `wsgi_restrict_embedded`: Defines the [`WSGIRestrictEmbedded`][] directive, such as 'On'. 
+
+Values: On|Off|undef.
+
+Default: undef.
+
 * `wsgi_socket_prefix`: Defines the [`WSGISocketPrefix`][] directive, such as "\${APACHE\_RUN\_DIR}WSGI".
 
   Default: `wsgi_socket_prefix` in [`apache::params`][].
@@ -3102,7 +3165,9 @@ apache::vhost { "$::fqdn":
 
 Sets the [`ForceType`][] directive, which forces Apache to serve all matching files with a [MIME `content-type`][] matching this parameter's value.
 
-TODO: is there a default for this? Valid values?
+#### `add_charset`
+
+Lets Apache set custom content character sets per directory and/or file extension
 
 ##### `headers`
 
@@ -3493,7 +3558,10 @@ Default: `undef`.
 
 Sets [PassengerMinInstances](https://www.phusionpassenger.com/library/config/apache/reference/#passengermininstances), the minimum number of application processes to run.
 
-Default: `undef`.
+##### `passenger_max_requests`
+
+Sets [PassengerMaxRequests](https://www.phusionpassenger.com/library/config/apache/reference/#pas
+sengermaxrequests), the maximum number of requests an application process will process.
 
 ##### `passenger_max_instances_per_app`
 
@@ -4253,6 +4321,26 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+###### `limit_except`
+
+Creates a [LimitExcept](https://httpd.apache.org/docs/current/mod/core.html#limitexcept) block inside the Directory block, which can also contain `require` directives.
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  docroot     => '/path/to/docroot',
+  directories => [
+    { path         => '/',
+      provider     => 'location',
+      limit_except => [
+        { methods => 'GET HEAD',
+          require => ['valid-user']
+        },
+      ],
+    },
+  ],
+}
+```
+
 ###### `mellon_enable`
 
 Sets the [MellonEnable][`mod_auth_mellon`] directory to enable [`mod_auth_mellon`][]. You can use [`apache::mod::auth_mellon`][] to install `mod_auth_mellon`.
@@ -4631,6 +4719,14 @@ Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.ht
 ##### `ssl_proxy_verify`
 
 Sets the [SSLProxyVerify](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverify) directive, which configures certificate verification of the remote server when a proxy is configured to forward requests to a remote SSL server. Default: `undef`.
+
+##### `ssl_proxy_verify_depth`
+
+Sets the [SSLProxyVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverifydepth) directive, which configures how deeply mod_ssl should verify before deciding that the remote server does not have a valid certificate. (A depth of 0 means that self-signed remote server certificates are accepted only, the default depth of 1 means the remote server certificate can be self-signed or has to be signed by a CA which is directly known to the server) Default: undef.
+
+##### `ssl_proxy_ca_cert`
+
+Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference. Default: undef.
 
 ##### `ssl_proxy_machine_cert`
 

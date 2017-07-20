@@ -67,6 +67,14 @@
     </Limit>
       <%- end -%>
     <%- end -%>
+    <%- if directory['limit_except'] && directory['limit_except'] != '' -%>
+      <%- Array(directory['limit_except']).each do |lim| -%>
+    <LimitExcept <%= lim['methods'] %>>
+    <%- scope.lookupvar('_template_scope')[:item] = lim -%>
+    <%= scope.function_template(["apache/vhost/_require.erb"]) -%>
+    </LimitExcept>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- [directory['addhandlers']].flatten.compact.each do |addhandler| -%>
     <FilesMatch ".+(<%= Array(addhandler['extensions']).collect { |s| Regexp.escape(s) }.join('|') %>)$">
@@ -206,6 +214,9 @@
     <%- if directory['force_type'] -%>
     ForceType <%= directory['force_type'] %>
     <%- end -%>
+    <%- if directory['add_charset'] -%>
+    AddCharset <%= directory['add_charset'] %>
+    <%- end -%>
     <%- if directory['ssl_options'] -%>
     SSLOptions <%= Array(directory['ssl_options']).join(' ') %>
     <%- end -%>
@@ -317,18 +328,18 @@
          <%- end -%>
       <%- end -%>
     <%- end -%>
-    <% if directory['request_headers'] and ! directory['request_headers'].empty? -%>
+    <%- if directory['request_headers'] and ! directory['request_headers'].empty? -%>
       ## Request Header rules
       <%- Array(directory['request_headers']).each do |request_statement| -%>
         <%- if request_statement != '' -%>
             RequestHeader <%= request_statement %>
         <%- end -%>
       <%- end -%>
-    <% end -%>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>
   </<%= provider %>>
     <%- end -%>
   <%- end -%>
-<% end -%>
+<%- end -%>

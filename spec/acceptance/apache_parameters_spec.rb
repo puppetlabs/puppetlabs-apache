@@ -237,6 +237,25 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'http_protocol_options' do
+    # Actually >= 2.4.24, but the minor version is not provided
+    # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
+    # basically versions of the ubuntu or sles  apache package cause issue
+    if $apache_version >= '2.4' && fact('operatingsystem') !~ /Ubuntu|SLES/
+      describe 'setup' do
+        it 'applies cleanly' do
+          pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
+          apply_manifest(pp, :catch_failures => true)
+        end
+      end
+
+      describe file($conf_file) do
+        it { is_expected.to be_file }
+        it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
+      end
+    end
+  end
+
   describe 'server_root' do
     describe 'setup' do
       it 'applies cleanly' do
@@ -353,14 +372,14 @@ describe 'apache parameters' do
   describe 'keepalive' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': keepalive => 'On', keepalive_timeout => '30', max_keepalive_requests => '200' }"
+        pp = "class { 'apache': keepalive => 'Off', keepalive_timeout => '30', max_keepalive_requests => '200' }"
         apply_manifest(pp, :catch_failures => true)
       end
     end
 
     describe file($conf_file) do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'KeepAlive On' }
+      it { is_expected.to contain 'KeepAlive Off' }
       it { is_expected.to contain 'KeepAliveTimeout 30' }
       it { is_expected.to contain 'MaxKeepAliveRequests 200' }
     end

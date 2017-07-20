@@ -8,7 +8,7 @@
   AddType application/x-pkcs7-crl    .crl
 
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
-  SSLSessionCache "shmcb:<%= @session_cache %>"
+  SSLSessionCache "shmcb:<%= @ssl_sessioncache %>"
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
   <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
@@ -20,6 +20,9 @@
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
   SSLHonorCipherOrder <%= scope.function_bool2httpd([@_ssl_honorcipherorder]) %>
+  <%- if @ssl_ca -%>
+  SSLCACertificateFile    "<%= @ssl_ca %>"
+  <%- end -%>
 <% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   SSLUseStapling <%= scope.function_bool2httpd([@ssl_stapling]) %>
   <%- if not @ssl_stapling_return_errors.nil? -%>
@@ -29,6 +32,9 @@
 <% end -%>
   SSLCipherSuite <%= @ssl_cipher %>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
+<% if not @ssl_proxy_protocol.empty? -%>
+  SSLProxyProtocol <%= @ssl_proxy_protocol.compact.join(' ') %>
+<% end -%>
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>

@@ -2,8 +2,8 @@
 <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   <%- if _item['require'] && _item['require'] != '' && _item['require'] !~ /unmanaged/i -%>
     <%- if _item['require'].is_a?(Hash) -%>
-      <%- case _item['require']['enforce'].downcase -%>
-      <%- when 'all','none','any' then -%>
+      <%- case _item['require']['enforce'].downcase
+          when 'all','none','any' then -%>
     <Require<%= _item['require']['enforce'].capitalize %>>
         <%- Array(_item['require']['requires']).each do |req| -%>
       Require <%= req.strip %>

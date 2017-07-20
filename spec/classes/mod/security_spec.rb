@@ -75,8 +75,15 @@ describe 'apache::mod::security', :type => :class do
         :target => '/tmp/foo/bar.conf',
       ) }
     end
+    describe 'with other modsec parameters' do
+      let :params do
+        {
+          :manage_security_crs => false
+        }
+      end
+      it { should_not contain_file('/etc/httpd/modsecurity.d/security_crs.conf') }
+    end
   end
-
   context "on Debian based systems" do
     let :facts do
       {

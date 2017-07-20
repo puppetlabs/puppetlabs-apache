@@ -563,12 +563,6 @@ describe 'apache', :type => :class do
         it { is_expected.not_to contain_class('apache::mod::peruser') }
         it { is_expected.not_to contain_class('apache::mod::prefork') }
       end
-      context "when declaring mpm_module => breakme" do
-        let :params do
-          { :mpm_module => 'breakme' }
-        end
-        it { expect { catalogue }.to raise_error Puppet::Error, /does not match/ }
-      end
     end
 
     describe "different templates for httpd.conf" do
