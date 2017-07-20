@@ -2505,7 +2505,7 @@ ${modsec\_dir}/activated\_rules.
 
 * `logroot`: Configures the location of audit and debug logs.
 
- Defaults to the Apache log directory (Redhat: `/var/log/httpd`,  Debian: `/var/log/apache2`).
+  Defaults to the Apache log directory (Redhat: `/var/log/httpd`,  Debian: `/var/log/apache2`).
 
 * `audit_log_releavant_status`: Configures which response status code is to be considered relevant for the purpose of audit logging.
 
@@ -3599,15 +3599,17 @@ Boolean. Default: `undef`.
 
 Sets the [`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile) path. This path is relative to the application root.
 
-TODO: BOOKMARK
-
 ##### `php_flags & values`
 
-Allows per-virtual host setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application. Default: '{}'.
+Allows per-virtual host setting [`php_value`s or `php_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values can be overwritten by a user or an application.
+
+Default: '{}'.
 
 ##### `php_admin_flags & values`
 
-Allows per-virtual host setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application. Default: '{}'.
+Allows per-virtual host setting [`php_admin_value`s or `php_admin_flag`s](http://php.net/manual/en/configuration.changes.php). These flags or values cannot be overwritten by a user or an application.
+
+Default: '{}'.
 
 ##### `port`
 
@@ -3615,7 +3617,7 @@ Sets the port the host is configured on. The module's defaults ensure the host l
 
 ##### `priority`
 
-Sets the relative load-order for Apache HTTPD VirtualHost configuration files. Default: '25'.
+Sets the relative load-order for Apache HTTPD VirtualHost configuration files.
 
 If nothing matches the priority, the first name-based virtual host is used. Likewise, passing a higher priority causes the alphabetically first name-based virtual host to be used if no other names match.
 
@@ -3623,13 +3625,19 @@ If nothing matches the priority, the first name-based virtual host is used. Like
 
 To omit the priority prefix in file names, pass a priority of `false`.
 
+Default: '25'.
+
 ##### `proxy_dest`
 
-Specifies the destination address of a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Default: `undef`.
+Specifies the destination address of a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration.
+
+Default: `undef`.
 
 ##### `proxy_pass`
 
-Specifies an array of `path => URI` values for a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Defaults to `undef`. Optionally parameters can be added as an array.
+Specifies an array of `path => URI` values for a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration. Optionally, parameters can be added as an array.
+
+Default: `undef`.
 
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -3673,15 +3681,21 @@ This directive is equivalent to [`proxy_pass`][], but takes regular expressions,
 
 ##### `rack_base_uris`
 
-Specifies the resource identifiers for a rack configuration. The file paths specified are listed as rack application roots for [Phusion Passenger](http://www.modrails.com/documentation/Users%20guide%20Apache.html#_railsbaseuri_and_rackbaseuri) in the _rack.erb template. Default: `undef`.
+Specifies the resource identifiers for a rack configuration. The file paths specified are listed as rack application roots for [Phusion Passenger](http://www.modrails.com/documentation/Users%20guide%20Apache.html#_railsbaseuri_and_rackbaseuri) in the _rack.erb template.
+
+Default: `undef`.
 
 #####`passenger_base_uris`
 
-Used to specify that the given URI is a Phusion Passenger-served application. The file paths specified are listed as passenger application roots for [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerBaseURI) in the _passenger_base_uris.erb template. Default: `undef`.
+Used to specify that the given URI is a Phusion Passenger-served application. The file paths specified are listed as passenger application roots for [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerBaseURI) in the _passenger_base_uris.erb template.
+
+Default: `undef`.
 
 ##### `redirect_dest`
 
-Specifies the address to redirect to. Default: `undef`.
+Specifies the address to redirect to.
+
+Default: `undef`.
 
 ##### `redirect_source`
 
@@ -3697,7 +3711,9 @@ apache::vhost { 'site.name.fdqn':
 
 ##### `redirect_status`
 
-Specifies the status to append to the redirect. Default: `undef`.
+Specifies the status to append to the redirect.
+
+Default: `undef`.
 
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -3706,9 +3722,15 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-##### `redirectmatch_regexp` & `redirectmatch_status` & `redirectmatch_dest`
+##### `redirectmatch_*`
 
-Determines which server status should be raised for a given regular expression and where to forward the user to. Entered as arrays. Default: `undef`.
+* `redirectmatch_regexp`
+* `redirectmatch_status`
+* `redirectmatch_dest`
+
+Determines which server status should be raised for a given regular expression and where to forward the user to. Entered as arrays.
+
+Default: `undef`.
 
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -3721,7 +3743,9 @@ apache::vhost { 'site.name.fdqn':
 
 ##### `request_headers`
 
-Modifies collected [request headers](https://httpd.apache.org/docs/current/mod/mod_headers.html#requestheader) in various ways, including adding additional request headers, removing request headers, etc. Default: `undef`.
+Modifies collected [request headers](https://httpd.apache.org/docs/current/mod/mod_headers.html#requestheader) in various ways, including adding additional request headers, removing request headers, and so on. 
+
+Default: `undef`.
 
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -3732,9 +3756,14 @@ apache::vhost { 'site.name.fdqn':
   ],
 }
 ```
+
 ##### `rewrites`
 
-Creates URL rewrite rules. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule' or 'rewrite_map'. Default: `undef`.
+Creates URL rewrite rules. Expects an array of hashes. 
+
+Values: Hash keys that are any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule' or 'rewrite_map'.
+
+Default: `undef`.
 
 For example, you can specify that anyone trying to access index.html is served welcome.html
 
@@ -3808,7 +3837,9 @@ Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on wh
 
 ##### `rewrite_inherit`
 
-Determines whether the virtual host inherits global rewrite rules. Default: `false`.
+Determines whether the virtual host inherits global rewrite rules.
+
+Default: `false`.
 
 Rewrite rules may be specified globally (in `$conf_file` or `$confd_dir`) or inside the virtual host `.conf` file. By default, virtual hosts do not inherit global settings. To activate inheritance, specify the `rewrites` parameter and set `rewrite_inherit` parameter to `true`:
 
@@ -3824,8 +3855,6 @@ apache::vhost { 'site.name.fdqn':
 
 > **Note**: The `rewrites` parameter is **required** for this to have effect
 
-###### Some background
-
 Apache activates global `Rewrite` rules inheritance if the virtual host files contains the following directives:
 
 ``` ApacheConf
@@ -3837,7 +3866,9 @@ Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/doc
 
 ##### `scriptalias`
 
-Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as '/usr/scripts'. Default: `undef`.
+Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as '/usr/scripts'.
+
+Default: `undef`.
 
 ##### `scriptaliases`
 
@@ -3870,19 +3901,27 @@ The ScriptAlias and ScriptAliasMatch directives are created in the order specifi
 
 ##### `serveradmin`
 
-Specifies the email address Apache displays when it renders one of its error pages. Default: `undef`.
+Specifies the email address Apache displays when it renders one of its error pages. 
+
+Default: `undef`.
 
 ##### `serveraliases`
 
-Sets the [ServerAliases](https://httpd.apache.org/docs/current/mod/core.html#serveralias) of the site. Default: '[]'.
+Sets the [ServerAliases](https://httpd.apache.org/docs/current/mod/core.html#serveralias) of the site.
+
+Default: '[]'.
 
 ##### `servername`
 
-Sets the servername corresponding to the hostname you connect to the virtual host at. Default: the title of the resource.
+Sets the servername corresponding to the hostname you connect to the virtual host at. 
+
+Default: the title of the resource.
 
 ##### `setenv`
 
-Used by HTTPD to set environment variables for virtual hosts. Default: '[]'.
+Used by HTTPD to set environment variables for virtual hosts.
+
+Default: '[]'.
 
 Example:
 
@@ -3894,13 +3933,21 @@ apache::vhost { 'setenv.example.com':
 
 ##### `setenvif`
 
-Used by HTTPD to conditionally set environment variables for virtual hosts. Default: '[]'.
+Used by HTTPD to conditionally set environment variables for virtual hosts.
+
+Default: '[]'.
 
 ##### `setenvifnocase`
 
-Used by HTTPD to conditionally set environment variables for virtual hosts (caseless matching). Default: '[]'.
+Used by HTTPD to conditionally set environment variables for virtual hosts (caseless matching).
 
-##### `suphp_addhandler`, `suphp_configpath`, & `suphp_engine`
+Default: '[]'.
+
+##### `suphp_*`
+
+* `suphp_addhandler`
+* `suphp_configpath`
+* `suphp_engine`
 
 Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG).
 
@@ -3925,11 +3972,15 @@ apache::vhost { 'suphp.example.com':
 
 ##### `vhost_name`
 
-Enables name-based virtual hosting. If no IP is passed to the virtual host, but the virtual host is assigned a port, then the virtual host name is 'vhost_name:port'. If the virtual host has no assigned IP or port, the virtual host name is set to the title of the resource. Default: '*'.
+Enables name-based virtual hosting. If no IP is passed to the virtual host, but the virtual host is assigned a port, then the virtual host name is 'vhost_name:port'. If the virtual host has no assigned IP or port, the virtual host name is set to the title of the resource.
+
+Default: '*'.
 
 ##### `virtual_docroot`
 
-Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the same name. For example, 'http://example.com' would map to '/var/www/example.com'. Default: `false`.
+Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the same name. For example, 'http://example.com' would map to '/var/www/example.com'.
+
+Default: `false`.
 
 ``` puppet
 apache::vhost { 'subdomain.loc':
@@ -3941,7 +3992,13 @@ apache::vhost { 'subdomain.loc':
 }
 ```
 
-##### `wsgi_daemon_process`, `wsgi_daemon_process_options`, `wsgi_process_group`, `wsgi_script_aliases`, & `wsgi_pass_authorization`
+##### `wsgi*`
+
+* `wsgi_daemon_process`
+* `wsgi_daemon_process_options`
+* `wsgi_process_group`
+* `wsgi_script_aliases`
+* `wsgi_pass_authorization`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi).
 
@@ -4006,7 +4063,7 @@ apache::vhost { 'sample.example.net':
 
 Any handlers you do not set in these hashes are considered 'undefined' within Puppet and are not added to the virtual host, resulting in the module using their default values. Supported handlers are:
 
-###### `addhandlers`
+##### `addhandlers`
 
 Sets [AddHandler](https://httpd.apache.org/docs/current/mod/mod_mime.html#addhandler) directives, which map filename extensions to the specified handler. Accepts a list of hashes, with `extensions` serving to list the extensions being managed by the handler, and takes the form: `{ handler => 'handler-name', extensions => ['extension'] }`.
 
@@ -4023,7 +4080,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `allow`
+##### `allow`
 
 Sets an [Allow](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow) directive, which groups authorizations based on hostnames or IPs. **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.
 
@@ -4038,7 +4095,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `allow_override`
+##### `allow_override`
 
 Sets the types of directives allowed in [.htaccess](https://httpd.apache.org/docs/current/mod/core.html#allowoverride) files. Accepts an array.
 
@@ -4053,19 +4110,19 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `auth_basic_authoritative`
+##### `auth_basic_authoritative`
 
 Sets the value for [AuthBasicAuthoritative](https://httpd.apache.org/docs/current/mod/mod_auth_basic.html#authbasicauthoritative), which determines whether authorization and authentication are passed to lower level Apache modules.
 
-###### `auth_basic_fake`
+##### `auth_basic_fake`
 
 Sets the value for [AuthBasicFake](https://httpd.apache.org/docs/current/mod/mod_auth_basic.html#authbasicfake), which statically configures authorization credentials for a given directive block.
 
-###### `auth_basic_provider`
+##### `auth_basic_provider`
 
 Sets the value for [AuthBasicProvider](https://httpd.apache.org/docs/current/mod/mod_auth_basic.html#authbasicprovider), which sets the authentication provider for a given location.
 
-###### `auth_digest_algorithm`
+##### `auth_digest_algorithm`
 
 Sets the value for [AuthDigestAlgorithm](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestalgorithm), which selects the algorithm used to calculate the challenge and response hashes.
 
@@ -4073,67 +4130,67 @@ Sets the value for [AuthDigestAlgorithm](https://httpd.apache.org/docs/current/m
 
 Sets the value for [AuthDigestDomain](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestdomain), which allows you to specify one or more URIs in the same protection space for digest authentication.
 
-###### `auth_digest_nonce_lifetime`
+##### `auth_digest_nonce_lifetime`
 
 Sets the value for [AuthDigestNonceLifetime](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestnoncelifetime), which controls how long the server nonce is valid.
 
-###### `auth_digest_provider`
+##### `auth_digest_provider`
 
 Sets the value for [AuthDigestProvider](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestprovider), which sets the authentication provider for a given location.
 
-###### `auth_digest_qop`
+##### `auth_digest_qop`
 
 Sets the value for [AuthDigestQop](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestqop), which determines the quality-of-protection to use in digest authentication.
 
-###### `auth_digest_shmem_size`
+##### `auth_digest_shmem_size`
 
 Sets the value for [AuthAuthDigestShmemSize](https://httpd.apache.org/docs/current/mod/mod_auth_digest.html#authdigestshmemsize), which defines the amount of shared memory allocated to the server for keeping track of clients.
 
-###### `auth_group_file`
+##### `auth_group_file`
 
 Sets the value for [AuthGroupFile](https://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html#authgroupfile), which sets the name of the text file containing the list of user groups for authorization.
 
-###### `auth_name`
+##### `auth_name`
 
 Sets the value for [AuthName](https://httpd.apache.org/docs/current/mod/mod_authn_core.html#authname), which sets the name of the authorization realm.
 
-###### `auth_require`
+##### `auth_require`
 
 Sets the entity name you're requiring to allow access. Read more about [Require](https://httpd.apache.org/docs/current/mod/mod_authz_host.html#requiredirectives).
 
-###### `auth_type`
+##### `auth_type`
 
 Sets the value for [AuthType](https://httpd.apache.org/docs/current/mod/mod_authn_core.html#authtype), which guides the type of user authentication.
 
-###### `auth_user_file`
+##### `auth_user_file`
 
 Sets the value for [AuthUserFile](https://httpd.apache.org/docs/current/mod/mod_authn_file.html#authuserfile), which sets the name of the text file containing the users/passwords for authentication.
 
-###### `auth_merging`
+##### `auth_merging`
 
 Sets the value for [AuthMerging](https://httpd.apache.org/docs/current/mod/mod_authz_core.html#authmerging), which determines if authorization logic should be combined
 
-###### `auth_ldap_url`
+##### `auth_ldap_url`
 
 Sets the value for [AuthLDAPURL](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapurl), which determines URL of LDAP-server(s) if AuthBasicProvider 'ldap' is used
 
-###### `auth_ldap_bind_dn`
+##### `auth_ldap_bind_dn`
 
 Sets the value for [AuthLDAPBindDN](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbinddn), which allows use of an optional DN used to bind to the LDAP-server when searching for entries if AuthBasicProvider 'ldap' is used.
 
-###### `auth_ldap_bind_password`
+##### `auth_ldap_bind_password`
 
 Sets the value for [AuthLDAPBindPassword](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapbindpassword), which allows use of an optional bind password to use in conjunction with the bind DN if AuthBasicProvider 'ldap' is used.
 
-###### `auth_ldap_group_attribute`
+##### `auth_ldap_group_attribute`
 
 Array of values for [AuthLDAPGroupAttribute](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapgroupattribute), specifies which LDAP attributes are used to check for user members within ldap-groups. Defaults are: "member" and "uniquemember".
 
-###### `auth_ldap_group_attribute_is_dn`
+##### `auth_ldap_group_attribute_is_dn`
 
 Sets value for [AuthLDAPGroupAttributeIsDN](https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html#authldapgroupattributeisdn), specifies if member of a ldapgroup is a dn or simple username. When set on, this directive says to use the distinguished name of the client username when checking for group membership. Otherwise, the username will be used. valid values are: "on" or "off"
 
-###### `custom_fragment`
+##### `custom_fragment`
 
 Pass a string of custom configuration directives to be placed at the end of the directory configuration.
 
@@ -4160,19 +4217,19 @@ ProxyStatus On',
 }
 ```
 
-###### `dav`
+##### `dav`
 
 Sets the value for [Dav](http://httpd.apache.org/docs/current/mod/mod_dav.html#dav), which determines if the WebDAV HTTP methods should be enabled. The value can be either 'On', 'Off' or the name of the provider. A value of 'On' enables the default filesystem provider implemented by the `mod_dav_fs` module.
 
-###### `dav_depth_infinity`
+##### `dav_depth_infinity`
 
 Sets the value for [DavDepthInfinity](http://httpd.apache.org/docs/current/mod/mod_dav.html#davdepthinfinity), which is used to enable the processing of `PROPFIND` requests having a `Depth: Infinity` header.
 
-###### `dav_min_timeout`
+##### `dav_min_timeout`
 
 Sets the value for [DavMinTimeout](http://httpd.apache.org/docs/current/mod/mod_dav.html#davmintimeout), which sets the time the server holds a lock on a DAV resource. The value should be the number of seconds to set.
 
-###### `deny`
+##### `deny`
 
 Sets a [Deny](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny) directive, specifying which hosts are denied access to the server. **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.
 
@@ -4187,7 +4244,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `error_documents`
+##### `error_documents`
 
 An array of hashes used to override the [ErrorDocument](https://httpd.apache.org/docs/current/mod/core.html#errordocument) settings for the directory.
 
@@ -4205,7 +4262,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `ext_filter_options`
+##### `ext_filter_options`
 
 Sets the [ExtFilterOptions](https://httpd.apache.org/docs/current/mod/mod_ext_filter.html) directive.
 Note that you must declare `class { 'apache::mod::ext_filter': }` before using this directive.
@@ -4221,7 +4278,7 @@ apache::vhost { 'filter.example.org':
 }
 ```
 
-###### `geoip_enable`
+##### `geoip_enable`
 
 Sets the [GeoIPEnable](http://dev.maxmind.com/geoip/legacy/mod_geoip2/#Configuration) directive.
 Note that you must declare `class {'apache::mod::geoip': }` before using this directive.
@@ -4237,7 +4294,7 @@ apache::vhost { 'first.example.com':
 }
 ```
 
-###### `headers`
+##### `headers`
 
 Adds lines for [Header](https://httpd.apache.org/docs/current/mod/mod_headers.html#header) directives.
 
@@ -4251,7 +4308,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `index_options`
+##### `index_options`
 
 Allows configuration settings for [directory indexing](https://httpd.apache.org/docs/current/mod/mod_autoindex.html#indexoptions).
 
@@ -4268,7 +4325,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `index_order_default`
+##### `index_order_default`
 
 Sets the [default ordering](https://httpd.apache.org/docs/current/mod/mod_autoindex.html#indexorderdefault) of the directory index.
 
@@ -4301,7 +4358,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `limit`
+##### `limit`
 
 Creates a [Limit](https://httpd.apache.org/docs/current/mod/core.html#limit) block inside the Directory block, which can also contain `require` directives.
 
@@ -4321,7 +4378,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `limit_except`
+##### `limit_except`
 
 Creates a [LimitExcept](https://httpd.apache.org/docs/current/mod/core.html#limitexcept) block inside the Directory block, which can also contain `require` directives.
 
@@ -4341,7 +4398,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `mellon_enable`
+##### `mellon_enable`
 
 Sets the [MellonEnable][`mod_auth_mellon`] directory to enable [`mod_auth_mellon`][]. You can use [`apache::mod::auth_mellon`][] to install `mod_auth_mellon`.
 
@@ -4382,7 +4439,7 @@ to environment variables.
 - `mellon_sp_cert_file`: Sets the [MellonSPCertFile][`mod_auth_mellon`] directive for the public key location of the service provider.
 - `mellon_user`: Sets the [MellonUser][`mod_auth_mellon`] attribute to use for the username.
 
-###### `options`
+##### `options`
 
 Lists the [Options](https://httpd.apache.org/docs/current/mod/core.html#options) for the given Directory block.
 
@@ -4397,7 +4454,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `order`
+##### `order`
 
 Sets the order of processing Allow and Deny statements as per [Apache core documentation](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower.
 
@@ -4412,7 +4469,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `passenger_enabled`
+##### `passenger_enabled`
 
 Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled) directive to 'on' or 'off'. Requires `apache::mod::passenger` to be included.
 
@@ -4429,16 +4486,16 @@ apache::vhost { 'sample.example.net':
 
 > **Note:** There is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) using the PassengerEnabled directive with the PassengerHighPerformance directive.
 
-###### `php_value` and `php_flag`
+##### `php_value` and `php_flag`
 
 `php_value` sets the value of the directory, and `php_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
-###### `php_admin_value` and `php_admin_flag`
+##### `php_admin_value` and `php_admin_flag`
 
 `php_admin_value` sets the value of the directory, and `php_admin_flag` uses a boolean to configure the directory. Further information can be found [here](http://php.net/manual/en/configuration.changes.php).
 
 
-###### `require`
+##### `require`
 
 
 Sets a `Require` directive as per the [Apache Authz documentation](https://httpd.apache.org/docs/current/mod/mod_authz_core.html#require). If no `require` is set, it will default to `Require all granted`.
@@ -4490,7 +4547,7 @@ apache::vhost { 'sample.example.net':
 
 
 
-###### `satisfy`
+##### `satisfy`
 
 Sets a `Satisfy` directive per the [Apache Core documentation](https://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is deprecated due to a change in Apache and only works with Apache 2.2 and lower.
 
@@ -4505,7 +4562,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `sethandler`
+##### `sethandler`
 
 Sets a `SetHandler` directive per the [Apache Core documentation](https://httpd.apache.org/docs/2.2/mod/core.html#sethandler).
 
@@ -4520,7 +4577,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-###### `set_output_filter`
+##### `set_output_filter`
 
 Sets a `SetOutputFilter` directive per the [Apache Core documentation](https://httpd.apache.org/docs/current/mod/core.html#setoutputfilter).
 
@@ -4535,7 +4592,7 @@ apache::vhost{ 'filter.example.net':
 }
 ```
 
-###### `rewrites`
+##### `rewrites`
 
 Creates URL [`rewrites`](#rewrites) rules in virtual host directories. Expects an array of hashes, and the hash keys can be any of 'comment', 'rewrite_base', 'rewrite_cond', or 'rewrite_rule'.
 
@@ -4562,7 +4619,7 @@ apache::vhost { 'secure.example.net':
 
 > **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite` and consider setting the rewrites using the `rewrites` parameter in `apache::vhost` rather than setting the rewrites in the virtual host's directories.
 
-###### `shib_request_settings`
+##### `shib_request_settings`
 
 Allows a valid content setting to be set or altered for the application request. This command takes two parameters: the name of the content setting, and the value to set it to. Check the Shibboleth [content setting documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPContentSettings) for valid settings. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
 
@@ -4578,11 +4635,11 @@ apache::vhost { 'secure.example.net':
 }
 ```
 
-###### `shib_use_headers`
+##### `shib_use_headers`
 
 When set to 'On', this turns on the use of request headers to publish attributes to applications. Values for this key is 'On' or 'Off', and the default value is 'Off'. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
 
-###### `ssl_options`
+##### `ssl_options`
 
 String or list of [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions), which configure SSL engine run-time options. This handler takes precedence over SSLOptions set in the parent block of the virtual host.
 
@@ -4600,7 +4657,7 @@ apache::vhost { 'secure.example.net':
 }
 ```
 
-###### `suphp`
+##### `suphp`
 
 A hash containing the 'user' and 'group' keys for the [suPHP_UserGroup](http://www.suphp.org/DocumentationView.html?file=apache/CONFIG) setting. It must be used with `suphp_engine => on` in the virtual host declaration, and can only be passed within `directories`.
 
@@ -4617,7 +4674,7 @@ apache::vhost { 'secure.example.net':
   ],
 }
 ```
-###### `additional_includes`
+##### `additional_includes`
 
 Specifies paths to additional static, specific Apache configuration files in virtual host directories. Values: a array of string path.
 
@@ -4638,60 +4695,90 @@ All of the SSL parameters for `::vhost` default to whatever is set in the base `
 
 ##### `ssl`
 
-Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS queries. Values: Boolean. Default: `false`.
+Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS queries. Values: Boolean.
+
+Default: `false`.
 
 ##### `ssl_ca`
 
-Specifies the SSL certificate authority. Default: `undef`.
+Specifies the SSL certificate authority.
+
+Default: `undef`.
 
 ##### `ssl_cert`
 
-Specifies the SSL certification. Defaults are based on your OS: '/etc/pki/tls/certs/localhost.crt' for RedHat, '/etc/ssl/certs/ssl-cert-snakeoil.pem' for Debian, '/usr/local/etc/apache22/server.crt' for FreeBSD, and '/etc/ssl/apache2/server.crt' on Gentoo.
+Specifies the SSL certification. Defaults are based on your OS.
+
+* RedHat: '/etc/pki/tls/certs/localhost.crt'
+* Debian: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+* FreeBSD: '/usr/local/etc/apache22/server.crt'
+* Gentoo: '/etc/ssl/apache2/server.crt'
 
 ##### `ssl_protocol`
 
-Specifies [SSLProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array or space separated string of accepted protocols. Defaults: 'all', '-SSLv2', '-SSLv3'.
+Specifies [SSLProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol). Expects an array or space separated string of accepted protocols.
+
+Defaults: 'all', '-SSLv2', '-SSLv3'.
 
 ##### `ssl_cipher`
 
-Specifies [SSLCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite). Default: 'HIGH:MEDIUM:!aNULL:!MD5'.
+Specifies [SSLCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite). 
+
+Default: 'HIGH:MEDIUM:!aNULL:!MD5'.
 
 ##### `ssl_honorcipherorder`
 
-Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslhonorcipherorder), to cause Apache to use the server's preferred order of ciphers rather than the client's preferred order. Default: `true`. In addition to `true`/`false` Boolean values, will also accept case-insensitive Strings 'on' or 'off'.
+Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslhonorcipherorder), to cause Apache to use the server's preferred order of ciphers rather than the client's preferred order. Values:
+
+Values: Boolean, 'on', 'off'.
+
+Default: `true`.
 
 ##### `ssl_certs_dir`
 
 Specifies the location of the SSL certification directory. Default: Depends on operating system.
 
-- **Debian:** '/etc/ssl/certs'
-- **Red Hat:** '/etc/pki/tls/certs'
-- **FreeBSD:** `undef`
-- **Gentoo:** '/etc/ssl/apache2'
+- Debian: '/etc/ssl/certs'
+- Red Hat: '/etc/pki/tls/certs'
+- FreeBSD: `undef`
+- Gentoo: '/etc/ssl/apache2'
 
 ##### `ssl_chain`
 
-Specifies the SSL chain. Default: `undef`. This default works out of the box, but it must be updated in the base `apache` class with your specific certificate information before being used in production.
+Specifies the SSL chain. This default works out of the box, but it must be updated in the base `apache` class with your specific certificate information before being used in production.
+
+Default: `undef`. 
 
 ##### `ssl_crl`
 
-Specifies the certificate revocation list to use. Default: `undef`. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+Specifies the certificate revocation list to use. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+
+Default: `undef`.
 
 ##### `ssl_crl_path`
 
-Specifies the location of the certificate revocation list. Default: `undef`. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+Specifies the location of the certificate revocation list. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+
+Default: `undef`. 
 
 ##### `ssl_crl_check`
 
-Sets the certificate revocation check level via the [SSLCARevocationCheck directive](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). Default: `undef`. This default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
+Sets the certificate revocation check level via the [SSLCARevocationCheck directive](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). The default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
+
+Default: `undef`.
 
 ##### `ssl_key`
 
-Specifies the SSL key. Defaults are based on your operating system: '/etc/pki/tls/private/localhost.key' for RedHat, '/etc/ssl/private/ssl-cert-snakeoil.key' for Debian, '/usr/local/etc/apache22/server.key' for FreeBSD, and '/etc/ssl/apache2/server.key' on Gentoo. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+Specifies the SSL key. Defaults are based on your operating system. Default work out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.
+
+* RedHat: '/etc/pki/tls/private/localhost.key'
+* Debian: '/etc/ssl/private/ssl-cert-snakeoil.key'
+* FreeBSD: '/usr/local/etc/apache22/server.key'
+* Gentoo: '/etc/ssl/apache2/server.key'
 
 ##### `ssl_verify_client`
 
-Sets the [SSLVerifyClient](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifyclient) directive, which sets the certificate verification level for client authentication. Values are: 'none', 'optional', 'require', and 'optional_no_ca'. Default: `undef`.
+Sets the [SSLVerifyClient](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifyclient) directive, which sets the certificate verification level for client authentication.
 
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -4700,9 +4787,14 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+Values: 'none', 'optional', 'require', and 'optional_no_ca'.
+
+Default: `undef`.
+
+
 ##### `ssl_verify_depth`
 
-Sets the [SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth) directive, which specifies the maximum depth of CA certificates in client certificate verification. Default: `undef`.
+Sets the [SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth) directive, which specifies the maximum depth of CA certificates in client certificate verification.
 
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -4711,26 +4803,37 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+Default: `undef`.
+
 ##### `ssl_proxy_protocol`
 
-Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyprotocol) directive, which controls the SSL protocol flavors mod_ssl should use when establishing its server environment for proxy. It will only connect to servers using one of the provided protocols. Default: `undef`.
+Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyprotocol) directive, which controls which SSL protocol flavors `mod_ssl` should use when establishing its server environment for proxy. It connects to servers using only one of the provided protocols.
 
+Default: `undef`.
 
 ##### `ssl_proxy_verify`
 
-Sets the [SSLProxyVerify](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverify) directive, which configures certificate verification of the remote server when a proxy is configured to forward requests to a remote SSL server. Default: `undef`.
+Sets the [SSLProxyVerify](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverify) directive, which configures certificate verification of the remote server when a proxy is configured to forward requests to a remote SSL server.
+
+Default: `undef`.
 
 ##### `ssl_proxy_verify_depth`
 
-Sets the [SSLProxyVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverifydepth) directive, which configures how deeply mod_ssl should verify before deciding that the remote server does not have a valid certificate. (A depth of 0 means that self-signed remote server certificates are accepted only, the default depth of 1 means the remote server certificate can be self-signed or has to be signed by a CA which is directly known to the server) Default: undef.
+Sets the [SSLProxyVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyverifydepth) directive, which configures how deeply mod_ssl should verify before deciding that the remote server does not have a valid certificate.
+
+A depth of 0 means that only self-signed remote server certificates are accepted, the default depth of 1 means the remote server certificate can be self-signed or signed by a CA that is directly known to the server.
+
+Default: `undef`
 
 ##### `ssl_proxy_ca_cert`
 
-Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference. Default: undef.
+Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference.
+
+Default: `undef`
 
 ##### `ssl_proxy_machine_cert`
 
-Sets the [SSLProxyMachineCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatefile) directive, which specifies an all-in-one file where you keep the certs and keys used for this server to authenticate itself to remote servers. This file should be a concatenation of the PEM-encoded certificate files in order of preference. Default: `undef`.
+Sets the [SSLProxyMachineCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatefile) directive, which specifies an all-in-one file where you keep the certs and keys used for this server to authenticate itself to remote servers. This file should be a concatenation of the PEM-encoded certificate files in order of preference.
 
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -4739,21 +4842,35 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+Default: `undef`
+
 ##### `ssl_proxy_check_peer_cn`
 
-Sets the [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Values: 'on', 'off'. Default: `undef`.
+Sets the [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL.
+
+Values: 'on', 'off'.
+
+Default: `undef`
 
 ##### `ssl_proxy_check_peer_name`
 
-Sets the [SSLProxyCheckPeerName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL. Values: 'on', 'off'. Default: `undef`.
+Sets the [SSLProxyCheckPeerName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeername) directive, which specifies whether the remote server certificate's CN field is compared against the hostname of the request URL.
+
+Values: 'on', 'off'.
+
+Default: `undef`
 
 ##### `ssl_proxy_check_peer_expire`
 
-Sets the [SSLProxyCheckPeerExpire](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeerexpire) directive, which specifies whether the remote server certificate is checked for expiration or not. Values: 'on', 'off'. Default: `undef`.
+Sets the [SSLProxyCheckPeerExpire](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeerexpire) directive, which specifies whether the remote server certificate is checked for expiration or not.
+
+Values: 'on', 'off'.
+
+Default: `undef`
 
 ##### `ssl_options`
 
-Sets the [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions) directive, which configures various SSL engine run-time options. This is the global setting for the given virtual host and can be a string or an array. Default: `undef`.
+Sets the [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions) directive, which configures various SSL engine run-time options. This is the global setting for the given virtual host and can be a string or an array.
 
 A string:
 
@@ -4773,31 +4890,47 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
+Default: `undef`.
+
 ##### `ssl_openssl_conf_cmd`
 
-Sets the [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslopensslconfcmd) directive, which provides direct configuration of OpenSSL parameters. Default: `undef`.
+Sets the [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslopensslconfcmd) directive, which provides direct configuration of OpenSSL parameters. 
+
+Default: `undef`
 
 ##### `ssl_proxyengine`
 
-Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). Values: Boolean. Default: `true`.
+Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine). 
+
+Boolean.
+
+Default: `true`.
 
 ##### `ssl_stapling`
 
-Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). Values: Boolean or `undef`. Default: `undef`, meaning use what is set globally.
+Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling). By default, uses what is set globally.
 
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+Boolean or `undef`.
+
+Default: `undef`
 
 ##### `ssl_stapling_timeout`
 
-Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive. No default.
+Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive.
 
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+Default: none.
 
 ##### `ssl_stapling_return_errors`
 
-Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive. No default.
+Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive.
 
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
+
+Default: none.
 
 #### Defined type: FastCGI Server
 
@@ -4851,7 +4984,7 @@ Force a write to the client as data is received from the application. By default
 
 ##### `faux_path`
 
-`faux_path` does not have to exist in the local filesystem. URIs that Apache resolves to this filename are handled by this external FastCGI application.
+Does not have to exist in the local filesystem. URIs that Apache resolves to this filename are handled by this external FastCGI application.
 
 ##### `alias`
 
@@ -4893,7 +5026,9 @@ Default: '25'.
 
 Specifies whether to validate the configuration file before notifying the Apache service. 
 
-Boolean. Default: `true`.
+Boolean.
+
+Default: `true`.
 
 ### Private defined types
 
