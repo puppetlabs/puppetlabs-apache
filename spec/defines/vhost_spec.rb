@@ -396,6 +396,7 @@ describe 'apache::vhost', :type => :define do
           'passenger_app_env'           => 'test',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
           'passenger_min_instances'     => '1',
+          'passenger_max_requests'      => '1000',
           'passenger_start_timeout'     => '600',
           'passenger_pre_start'         => 'http://localhost/myapp',
           'passenger_high_performance'  => true,

@@ -138,6 +138,7 @@ define apache::vhost(
   $passenger_app_env                                                                = undef,
   $passenger_ruby                                                                   = undef,
   $passenger_min_instances                                                          = undef,
+  $passenger_max_requests                                                           = undef,
   $passenger_start_timeout                                                          = undef,
   $passenger_pre_start                                                              = undef,
   $passenger_user                                                                   = undef,
@@ -247,7 +248,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
+  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
     include ::apache::mod::passenger
   }
 
@@ -996,6 +997,7 @@ define apache::vhost(
   # - $passenger_app_env
   # - $passenger_ruby
   # - $passenger_min_instances
+  # - $passenger_max_requests
   # - $passenger_start_timeout
   # - $passenger_pre_start
   # - $passenger_user
