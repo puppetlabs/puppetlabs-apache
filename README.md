@@ -1059,7 +1059,7 @@ Default: 'Off'.
 
 ##### `keepalive_timeout`
 
-Sets the [`KeepAliveTimeout`] directive, which determines the [TODO: number of seconds?] amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. This parameter is only relevant if the [`keepalive` parameter][] is enabled.
+Sets the [`KeepAliveTimeout`] directive, which determines the amount of time the Apache server waits for subsequent requests on a persistent HTTP connection. This parameter is only relevant if the [`keepalive` parameter][] is enabled.
 
 Default: '15'.
 
@@ -1712,7 +1712,7 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
   
   Default: 'Off'.
 
-- `cas_idle_timeout`: Sets the idle timeout limit, in seconds. TODO: is this correct?
+- `cas_idle_timeout`: Sets the idle timeout limit, in seconds.
 
   Default: `undef`.
 
@@ -1754,7 +1754,7 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 
   Default: '2'.
 
-- `suppress_warning`: Suppress warning about being on RedHat (Hint: mod_auth_cas package is now available in epel-testing repo). TODO: how does this hint relate to this warning? 
+- `suppress_warning`: Suppress warning about being on RedHat (`mod_auth_cas` package is now available in epel-testing repo).
 
   Default: `false`.
 
@@ -1849,7 +1849,7 @@ Installs `mod_authnz_ldap` and uses the `authnz_ldap.conf.erb` template to gener
 
   Default: `undef`.
   
-* `verify_server_cert`: Whether to verify the server certificate. TODO: this didn't say anything, so I'm guessing? is this true, false, undef?
+* `verify_server_cert`: Whether to verify the server certificate.
   
   Default: `undef`.
 
@@ -1872,7 +1872,7 @@ class { '::apache::mod::cluster':
 
   Default: '6666'.
   
-* `server_advertise`: Whether the server should advertise. TODO: what does advertise mean?
+* `server_advertise`: Whether the server should advertise.
 
   Default: `true`.
   
@@ -1896,9 +1896,9 @@ class { '::apache::mod::cluster':
 
   Default: `true`.
 
-* `ip`: Specifies the IP address to listen to. TODO: is this required or does it have a default?
+* `ip`: Specifies the IP address to listen to.
 
-* `allowed_network`: Balanced members network. TODO: What does this do? Is there a default?
+* `allowed_network`: Balanced members network.
 
 * `version`: Specifies the `mod_cluster` version. Version 1.3.0 or greater is required for httpd 2.4.
 
@@ -2137,7 +2137,7 @@ Installs and configures [`mod_negotiation`][].
 
 * `force_language_priority`: Sets the `ForceLanguagePriority` option.
 
-  Values: A string. TODO: What are options for the string?
+  Values: A string.
   
   Default: `Prefer Fallback`.
   
@@ -2578,7 +2578,7 @@ Declare one `apache::balancer` defined type for each Apache load balancing group
 
 ##### `name`
 
-Sets the title of the balancer cluster and name of the `conf.d` file containing its configuration. TODO: isn't the default for this generated from something?
+Sets the title of the balancer cluster and name of the `conf.d` file containing its configuration.
 
 ##### `proxy_set`
 
@@ -3278,23 +3278,17 @@ Default: 'directory'.
 
 Overrides the mode the logroot directory is set to. Do *not* grant write access to the directory the logs are stored in without being aware of the consequences; for more information, see [Apache's log security documentation](https://httpd.apache.org/docs/2.4/logs.html#security).
 
-Values: TODO what values
-
 Default: `undef`.
 
 ##### `logroot_owner`
 
 Sets individual user access to the logroot directory.
 
-Values: TODO what values
-
 Defaults to `undef`.
 
 ##### `logroot_group`
 
 Sets group access to the [`logroot`][] directory.
-
-Values: TODO what values
 
 Defaults to `undef`.
 
@@ -3304,7 +3298,7 @@ Specifies the verbosity of the error log.
 
 Values: 'emerg', 'alert', 'crit', 'error', 'warn', 'notice', 'info' or 'debug'.
 
-Default: 'warn' for the global server configuration, which can be overridden on a per-virtual host basis.
+Default: 'warn' for the global server configuration. Can be overridden on a per-virtual host basis.
 
 ###### `modsec_body_limit`
 
@@ -3379,6 +3373,7 @@ apache::vhost { 'sample.example.net':
   modsec_disable_tags => { '/location1' => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ] },
 }
 ```
+
 Default: `undef`.
 
 ##### `modsec_audit*`
@@ -3535,6 +3530,8 @@ Boolean. Default: `undef`.
 ##### `passenger_startup_file`
 
 Sets the [`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile) path. This path is relative to the application root.
+
+TODO: BOOKMARK
 
 ##### `php_flags & values`
 
@@ -4625,6 +4622,7 @@ apache::vhost { 'sample.example.net':
   ssl_verify_depth => 1,
 }
 ```
+
 ##### `ssl_proxy_protocol`
 
 Sets the [SSLProxyProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyprotocol) directive, which controls the SSL protocol flavors mod_ssl should use when establishing its server environment for proxy. It will only connect to servers using one of the provided protocols. Default: `undef`.
