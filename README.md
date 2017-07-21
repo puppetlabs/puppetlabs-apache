@@ -1178,6 +1178,21 @@ Default: Depends on operating system.
 - **Gentoo**: `/etc/apache2/modules.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
+##### `mod_packages`
+
+Allows the user to override default module package names.
+
+```puppet
+include apache::params
+class { 'apache':
+  mod_packages => merge($::apache::params::mod_packages, {
+    'auth_kerb' => 'httpd24-mod_auth_kerb',
+  })
+}
+```
+
+Hash. Default: `$apache::params::mod_packages`
+
 ##### `mpm_module`
 
 Determines which [multi-processing module][] (MPM) is loaded and configured for the HTTPD process. Values: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.
