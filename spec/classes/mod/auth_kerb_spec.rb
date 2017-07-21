@@ -74,4 +74,33 @@ describe 'apache::mod::auth_kerb', :type => :class do
       it { is_expected.to contain_package("www-apache/mod_auth_kerb") }
     end
   end
+  context "overriding mod_packages" do
+    context "on a RedHat OS", :compile do
+      let :facts do
+        {
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemrelease => '6',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :concat_basedir         => '/dne',
+          :is_pe                  => false,
+        }
+      end
+      let :pre_condition do
+        <<-EOS
+        include apache::params
+        class { 'apache':
+          mod_packages => merge($::apache::params::mod_packages, {
+            'auth_kerb' => 'httpd24-mod_auth_kerb',
+          })
+        }
+        EOS
+      end
+      it { is_expected.to contain_apache__mod("auth_kerb") }
+      it { is_expected.to contain_package("httpd24-mod_auth_kerb") }
+      it { is_expected.to_not contain_package("mod_auth_kerb") }
+    end
+  end
 end

@@ -1183,10 +1183,11 @@ Default: Depends on operating system.
 Allows the user to override default module package names.
 
 ```puppet
-class { '::apache':
-  mod_packages => merge($::apache::mod_params {
+include apache::params
+class { 'apache':
+  mod_packages => merge($::apache::params::mod_packages, {
     'auth_kerb' => 'httpd24-mod_auth_kerb',
-  }
+  })
 }
 ```
 
