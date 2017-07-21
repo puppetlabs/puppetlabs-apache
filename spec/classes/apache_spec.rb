@@ -10,6 +10,7 @@ describe 'apache', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '6',
+        :operatingsystemmajrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
         :is_pe                  => false,
@@ -124,6 +125,20 @@ describe 'apache', :type => :class do
       end
 
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^AddDefaultCharset none$} }
+    end
+
+    context "when overriding with mod_packages" do
+      let :params do
+        { :mod_packages => { 'dav_svn' => 'foobarbaz' } }
+      end
+      let :pre_condition do
+        "apache::mod { 'dav_svn': }"
+      end
+
+      it { is_expected.to contain_file("dav_svn.load") }
+      it { is_expected.to contain_package('foobarbaz') }
+      it { is_expected.to_not contain_file("fcgid.load") }
+      it { is_expected.to_not contain_package('libapache2-svn') }
     end
 
     # Assert that both load files and conf files are placed and symlinked for these mods
@@ -449,6 +464,20 @@ describe 'apache', :type => :class do
           }
         end
         it { is_expected.to contain_file("/etc/httpd/conf/httpd.conf").without_content %r{^RewriteLock [.]*$} }
+      end
+
+      context "when overriding with mod_packages" do
+        let :params do
+          { :mod_packages => { 'dav_svn' => 'foobarbaz' } }
+        end
+        let :pre_condition do
+          "apache::mod { 'dav_svn': }"
+        end
+
+        it { is_expected.to contain_file("dav_svn.load") }
+        it { is_expected.to contain_package('foobarbaz') }
+        it { is_expected.to_not contain_file("fcgid.load") }
+        it { is_expected.to_not contain_package('mod_dav_svn') }
       end
 
       context "when specifying slash encoding behaviour" do
