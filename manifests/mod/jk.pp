@@ -71,12 +71,12 @@ class apache::mod::jk (
 
   # Shared memory and log paths
   if $logroot == undef {
-    $shm_path = ${::apache::logroot}/${shm_file}
-    $log_path = ${::apache::logroot}/${log_file}
+    $shm_path = "${::apache::logroot}/${shm_file}"
+    $log_path = "${::apache::logroot}/${log_file}"
   }
   else {
-    $shm_path = ${logroot}/${shm_file}
-    $log_path = ${logroot}/${log_file}
+    $shm_path = "${logroot}/${shm_file}"
+    $log_path = "${logroot}/${log_file}"
   }
 
   # Main config file
@@ -89,7 +89,6 @@ class apache::mod::jk (
     ],
   }
 
-  }
   # Workers file
   if $workers_file != undef {
     $workers_path = $workers_file ? {
