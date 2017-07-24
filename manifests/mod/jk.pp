@@ -11,7 +11,8 @@
 class apache::mod::jk (
   $workers_file          = undef,
   $worker_property       = {},
-  $shm_file              = "${::apache::logroot}/jk-runtime-status",
+  $logroot               = undef,
+  $shm_file              = 'jk-runtime-status',
   $shm_size              = undef,
   $mount_file            = undef,
   $mount_file_reload     = undef,
@@ -21,7 +22,7 @@ class apache::mod::jk (
   $mount_copy            = undef,
   $worker_indicator      = undef,
   $watchdog_interval     = undef,
-  $log_file              = "${::apache::logroot}/mod_jk.log",
+  $log_file              = 'mod_jk.log',
   $log_level             = undef,
   $log_stamp_format      = undef,
   $request_log_format    = undef,
@@ -68,6 +69,16 @@ class apache::mod::jk (
     notify  => Class['apache::service'],
   }
 
+  # Shared memory and log paths
+  if $logroot == undef {
+    $shm_path = ${::apache::logroot}/${shm_file}
+    $log_path = ${::apache::logroot}/${log_file}
+  }
+  else {
+    $shm_path = ${logroot}/${shm_file}
+    $log_path = ${logroot}/${log_file}
+  }
+
   # Main config file
   file {'jk.conf':
     path    => "${::apache::mod_dir}/jk.conf",
@@ -78,6 +89,7 @@ class apache::mod::jk (
     ],
   }
 
+  }
   # Workers file
   if $workers_file != undef {
     $workers_path = $workers_file ? {

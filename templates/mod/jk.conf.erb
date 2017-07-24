@@ -10,8 +10,8 @@
   JkWorkerProperty <%= property %>=<%= value %>
   <%- end -%>
   <%- end -%>
-  <%- if @shm_file -%>
-  JkShmFile <%= @shm_file %>
+  <%- if @shm_path -%>
+  JkShmFile <%= @shm_path %>
   <%- end -%>
   <%- if @shm_size -%>
   JkShmSize <%= @shm_size %>
@@ -44,8 +44,8 @@
   <%- if @watchdog_interval -%>
   JkWatchdogInterval <%= @watchdog_interval %>
   <%- end -%>
-  <%- if @log_file -%>
-  JkLogFile <%= @log_file %>
+  <%- if @log_path -%>
+  JkLogFile <%= @log_path %>
   <%- end -%>
   <%- if @log_level -%>
   JkLogLevel <%= @log_level %>

@@ -22,8 +22,12 @@ describe 'apache::mod::jk', :type => :class do
       }
     end
 
-    let(:pre_condition) do
+    let (:pre_condition) do
       'include apache'
+    end
+
+    let (:params) do
+      :logroot => '/var/log/httpd'
     end
 
     it_behaves_like 'minimal resources'
