@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apache",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "puppet",
   "summary": "Installs, configures, and manages Apache virtual hosts, web services, and modules.",
   "license": "Apache-2.0",
@@ -47,7 +47,6 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
