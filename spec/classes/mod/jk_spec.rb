@@ -14,7 +14,7 @@ describe 'apache::mod::jk', :type => :class do
 
   context "with only required facts and no parameters" do
 
-    let :facts do
+    let (:facts) do
       {
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
