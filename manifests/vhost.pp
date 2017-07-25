@@ -174,6 +174,7 @@ define apache::vhost(
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  Optional[String] $shib_compat_valid_user                                          = undef,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
@@ -1084,6 +1085,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_http_protocol_options.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $shibboleth_enabled
+  if $shibboleth_enabled {
+    concat::fragment { "${name}-shibboleth":
+      target  => "${priority_real}${filename}.conf",
+      order   => 350,
+      content => template('apache/vhost/_shib.erb'),
     }
   }
 
