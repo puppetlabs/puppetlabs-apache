@@ -1,4 +1,3 @@
-# lint:ignore:variable_is_lowercase required for compatibility
 class apache::mod::authnz_ldap (
   Boolean $verify_server_cert = true,
   $package_name               = undef,
@@ -22,4 +21,3 @@ class apache::mod::authnz_ldap (
     notify  => Class['apache::service'],
   }
 }
-# lint:endignore

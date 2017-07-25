@@ -59,7 +59,7 @@ define apache::vhost(
   $access_log_syslog                                                                = false,
   $access_log_format                                                                = false,
   $access_log_env_var                                                               = false,
-  $access_logs                                                                      = undef,
+  Optional[Array] $access_logs                                                      = undef,
   $aliases                                                                          = undef,
   $directories                                                                      = undef,
   Boolean $error_log                                                                = true,
@@ -324,9 +324,6 @@ define apache::vhost(
       'env'         => $access_log_env_var
     }]
   } elsif $access_logs {
-    if !is_array($access_logs) {
-      fail("Apache::Vhost[${name}]: access_logs must be an array of hashes")
-    }
     $_access_logs = $access_logs
   }
 

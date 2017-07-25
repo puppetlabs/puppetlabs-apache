@@ -53,7 +53,7 @@ class apache::mod::ssl (
     }
   }
 
-  if is_bool($ssl_honorcipherorder) {
+  if $ssl_honorcipherorder =~ Boolean {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
   } else {
     $_ssl_honorcipherorder = $ssl_honorcipherorder ? {
