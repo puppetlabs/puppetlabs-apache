@@ -586,11 +586,9 @@ define apache::vhost(
 
   # Template uses:
   # - $allow_encoded_slashes
-  if $allow_encoded_slashes {
-    concat::fragment { "${name}-allow_encoded_slashes":
-      target  => "apache::vhost::${name}",
-      order   => 50,
-      content => template('apache/vhost/_allow_encoded_slashes.erb'),
+  if $allow_encoded_slashes and $ensure == 'present' {
+    apache::vhost::allow_encoded_slashes { $name:
+      allow_encoded_slashes => $allow_encoded_slashes,
     }
   }
 
