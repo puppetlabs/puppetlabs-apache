@@ -561,11 +561,9 @@ define apache::vhost(
 
   # Template uses:
   # - $aliases
-  if $aliases and ! empty($aliases) {
-    concat::fragment { "${name}-aliases":
-      target  => "apache::vhost::${name}",
-      order   => 20,
-      content => template('apache/vhost/_aliases.erb'),
+  if $aliases and ! empty($aliases) and $ensure == 'present' {
+    apache::vhost::aliases { $name:
+      aliases => $aliases,
     }
   }
 
