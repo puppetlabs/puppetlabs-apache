@@ -1,7 +1,9 @@
 <% if @_directories and ! @_directories.empty? -%>
 
   <%- scope.setvar('_template_scope', {}) -%>
+  <%- if @docroot %>
   ## Directories, there should at least be a declaration for <%= @docroot %>
+  <%- end -%>
   <%- [@_directories].flatten.compact.each do |directory| -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>

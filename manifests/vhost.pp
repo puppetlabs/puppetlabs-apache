@@ -599,10 +599,11 @@ define apache::vhost(
   # - $suphp_engine
   # - $shibboleth_enabled
   if $_directories and ! empty($_directories) {
-    concat::fragment { "${name}-directories":
-      target  => "apache::vhost::${name}",
-      order   => 60,
-      content => template('apache/vhost/_directories.erb'),
+    apache::vhost::directories { $name:
+      directories    => $_directories,
+      docroot        => $docroot,
+      apache_version => $apache_version,
+      suphp_engine   => $suphp_engine,
     }
   }
 
