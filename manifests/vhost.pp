@@ -570,11 +570,9 @@ define apache::vhost(
   # Template uses:
   # - $itk
   # - $::kernelversion
-  if $itk and ! empty($itk) {
-    concat::fragment { "${name}-itk":
-      target  => "apache::vhost::${name}",
-      order   => 30,
-      content => template('apache/vhost/_itk.erb'),
+  if $itk and ! empty($itk) and $ensure == 'present' {
+    apache::vhost::itk { $name:
+      itk => $itk,
     }
   }
 
