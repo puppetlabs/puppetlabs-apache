@@ -578,11 +578,9 @@ define apache::vhost(
 
   # Template uses:
   # - $fallbackresource
-  if $fallbackresource {
-    concat::fragment { "${name}-fallbackresource":
-      target  => "apache::vhost::${name}",
-      order   => 40,
-      content => template('apache/vhost/_fallbackresource.erb'),
+  if $fallbackresource and $ensure == 'present' {
+    apache::vhost::fallbackresource { $name:
+      fallbackresource => $fallbackresource,
     }
   }
 
