@@ -54,7 +54,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_class('apache::params') }
       it {
-        is_expected.to contain_concat('25-rspec.example.com.conf').with(
+        is_expected.to contain_concat('apache::vhost::rspec.example.com').with(
           ensure: 'present',
           path: '/etc/apache2/sites-available/25-rspec.example.com.conf',
         )
@@ -86,7 +86,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_class('apache::params') }
       it {
-        is_expected.to contain_concat('25-rspec.example.com.conf').with(
+        is_expected.to contain_concat('apache::vhost::rspec.example.com').with(
           ensure: 'present',
           path: '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf',
         )
@@ -111,7 +111,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_class('apache::params') }
       it {
-        is_expected.to contain_concat('25-rspec.example.com.conf').with(
+        is_expected.to contain_concat('apache::vhost::rspec.example.com').with(
           ensure: 'present',
           path: '/etc/apache2/vhosts.d/25-rspec.example.com.conf',
         )
@@ -485,10 +485,10 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_class('apache::mod::env') }
       it { is_expected.to contain_class('apache::mod::setenvif') }
       it {
-        is_expected.to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
-                                                                        'mode'    => '0644',
-                                                                        'require' => 'Package[httpd]',
-                                                                        'notify'  => 'Class[Apache::Service]')
+        is_expected.to contain_concat('apache::vhost::rspec.example.com').with('owner'   => 'root',
+                                                                               'mode'    => '0644',
+                                                                               'require' => 'Package[httpd]',
+                                                                               'notify'  => 'Class[Apache::Service]')
       }
       it {
         is_expected.to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
@@ -1248,7 +1248,7 @@ describe 'apache::vhost', type: :define do
         is_expected.to contain_file('/tmp/logroot').with('ensure' => 'absent')
       }
       it {
-        is_expected.to contain_concat('25-rspec.example.com.conf').with('ensure' => 'absent')
+        is_expected.to contain_concat('apache::vhost::rspec.example.com').with('ensure' => 'absent')
       }
       it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
@@ -1831,7 +1831,7 @@ describe 'apache::vhost', type: :define do
       end
 
       it { is_expected.to compile }
-      it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+      it { is_expected.to contain_concat('apache::vhost::rspec.example.com') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
@@ -1867,7 +1867,7 @@ describe 'apache::vhost', type: :define do
       end
 
       it { is_expected.to compile }
-      it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+      it { is_expected.to contain_concat('apache::vhost::rspec.example.com') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
       it {
         is_expected.not_to contain_concat__fragment('rspec.example.com-directories').with(
