@@ -205,10 +205,6 @@ define apache::vhost(
     fail("Apache::Vhost[${name}]: 'access_log_file' and 'access_log_pipe' cannot be defined at the same time")
   }
 
-  if $error_log_file and $error_log_pipe {
-    fail("Apache::Vhost[${name}]: 'error_log_file' and 'error_log_pipe' cannot be defined at the same time")
-  }
-
   if $modsec_audit_log_file and $modsec_audit_log_pipe {
     fail("Apache::Vhost[${name}]: 'modsec_audit_log_file' and 'modsec_audit_log_pipe' cannot be defined at the same time")
   }
@@ -300,25 +296,6 @@ define apache::vhost(
     }]
   } elsif $access_logs {
     $_access_logs = $access_logs
-  }
-
-  if $error_log_file {
-    if $error_log_file =~ /^\// {
-      # Absolute path provided - don't prepend $logroot
-      $error_log_destination = $error_log_file
-    } else {
-      $error_log_destination = "${logroot}/${error_log_file}"
-    }
-  } elsif $error_log_pipe {
-    $error_log_destination = $error_log_pipe
-  } elsif $error_log_syslog {
-    $error_log_destination = $error_log_syslog
-  } else {
-    if $ssl {
-      $error_log_destination = "${logroot}/${name}_error_ssl.log"
-    } else {
-      $error_log_destination = "${logroot}/${name}_error.log"
-    }
   }
 
   if $modsec_audit_log == false {
@@ -619,14 +596,17 @@ define apache::vhost(
 
   # Template uses:
   # - $error_log
-  # - $log_level
   # - $error_log_destination
   # - $log_level
-  if $error_log or $log_level {
-    concat::fragment { "${name}-logging":
-      target  => "apache::vhost::${name}",
-      order   => 80,
-      content => template('apache/vhost/_logging.erb'),
+  if ( $error_log or $log_level ) {
+    apache::vhost::error_log { $name:
+      error_log        => $error_log,
+      error_log_file   => $error_log_file,
+      error_log_pipe   => $error_log_pipe,
+      error_log_syslog => $error_log_syslog,
+      log_level        => $log_level,
+      ssl              => $ssl,
+      logroot          => $logroot,
     }
   }
 

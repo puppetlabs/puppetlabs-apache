@@ -270,7 +270,7 @@ describe 'apache::vhost', type: :define do
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
-          'error_log_syslog'            => true,
+          'error_log_syslog'            => false,
           'error_documents'             => 'true',
           'fallbackresource'            => '/index.php',
           'scriptalias'                 => '/usr/lib/cgi-bin',
