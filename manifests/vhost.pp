@@ -609,11 +609,11 @@ define apache::vhost(
 
   # Template uses:
   # - $additional_includes
-  if $additional_includes and ! empty($additional_includes) {
-    concat::fragment { "${name}-additional_includes":
-      target  => "apache::vhost::${name}",
-      order   => 70,
-      content => template('apache/vhost/_additional_includes.erb'),
+  # - $use_optional_includes
+  # - $apache_version
+  if $additional_includes and ! empty($additional_includes) and $ensure == 'present' {
+    apache::vhost::additional_includes { $name:
+      additional_includes => $additional_includes,
     }
   }
 
