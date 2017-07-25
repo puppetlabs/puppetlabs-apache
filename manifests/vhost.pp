@@ -201,10 +201,6 @@ define apache::vhost(
     apache::validate_apache_log_level($log_level)
   }
 
-  if $access_log_file and $access_log_pipe {
-    fail("Apache::Vhost[${name}]: 'access_log_file' and 'access_log_pipe' cannot be defined at the same time")
-  }
-
   if $modsec_audit_log_file and $modsec_audit_log_pipe {
     fail("Apache::Vhost[${name}]: 'modsec_audit_log_file' and 'modsec_audit_log_pipe' cannot be defined at the same time")
   }
@@ -618,17 +614,26 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $access_log
-  # - $_access_log_env_var
-  # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
-  # - $access_logs
-  if $access_log or $access_logs {
-    concat::fragment { "${name}-access_log":
-      target  => "apache::vhost::${name}",
-      order   => 100,
-      content => template('apache/vhost/_access_log.erb'),
+  # - $_access_logs - generated from:
+  #   - $access_logs, if defined, else:
+  #   - $access_log_file
+  #   - $access_log_pipe
+  #   - $access_log_syslog
+  #   - $access_log_format
+  #   - $access_log_env_var
+  # - $logroot
+  # - $ssl
+  if ( $access_log or $access_logs ) {
+    apache::vhost::access_logs { $name:
+      access_log         => $access_log,
+      access_log_file    => $access_log_file,
+      access_log_pipe    => $access_log_pipe,
+      access_log_syslog  => $access_log_syslog,
+      access_log_format  => $access_log_format,
+      access_log_env_var => $access_log_env_var,
+      access_logs        => $access_logs,
+      logroot            => $logroot,
+      ssl                => $ssl,
     }
   }
 
