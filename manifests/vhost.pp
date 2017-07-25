@@ -553,10 +553,9 @@ define apache::vhost(
   # - $virtual_docroot
   # - $docroot
   if $docroot {
-    concat::fragment { "${name}-docroot":
-      target  => "apache::vhost::${name}",
-      order   => 10,
-      content => template('apache/vhost/_docroot.erb'),
+    apache::vhost::docroot { $name:
+      docroot         => $docroot,
+      virtual_docroot => $virtual_docroot,
     }
   }
 
