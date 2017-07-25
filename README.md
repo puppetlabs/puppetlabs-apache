@@ -4656,8 +4656,7 @@ When set to 'On', this turns on the use of request headers to publish attributes
 
 ##### `shib_compat_valid_user`
 
-Default is Off, matching the behavior prior to this command's existence. Addresses a conflict when using Shibboleth in conjunction with other auth/auth modules by restoring "standard" Apache behavior when proces
-sing the "valid-user" and "user" Require rules. See the [`mod_shib`documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions), and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess) topic for more details.
+Default is Off, matching the behavior prior to this command's existence. Addresses a conflict when using Shibboleth in conjunction with other auth/auth modules by restoring "standard" Apache behavior when processing the "valid-user" and "user" Require rules. See the [`mod_shib`documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions), and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess) topic for more details. This key is disabled if `apache::mod::shib` is not defined.
 
 ##### `ssl_options`
 
