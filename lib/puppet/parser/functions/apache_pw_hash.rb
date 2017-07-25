@@ -1,3 +1,5 @@
+require 'base64'
+
 Puppet::Parser::Functions::newfunction(:apache_pw_hash, :type => :rvalue, :doc => <<-EOS
 Hashes a password in a format suitable for htpasswd files read by apache.
 
