@@ -68,6 +68,7 @@
 [`apache::mod::shib`]: #class-apachemodshib
 [`apache::mod::ssl`]: #class-apachemodssl
 [`apache::mod::status`]: #class-apachemodstatus
+[`apache::mod::userdir`]: #class-apachemoduserdir
 [`apache::mod::worker`]: #class-apachemodworker
 [`apache::mod::wsgi`]: #class-apachemodwsgi
 [`apache::params`]: #class-apacheparams
@@ -1076,7 +1077,7 @@ Default: Depends on operating system.
 - **Gentoo**: `/etc/apache2`
 - **Red Hat**: `/etc/httpd`
 
-##### http_protocol_options`
+##### `http_protocol_options`
 
 Specifies the strictness of HTTP protocol checks.
 
@@ -1620,7 +1621,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `ssl`\* (see [`apache::mod::ssl`][])
 * `status`\* (see [`apache::mod::status`][])
 * `suphp`
-* `userdir`\*
+* `userdir`\* (see [`apache::mod::userdir`][])
 * `version`
 * `vhost_alias`
 * `worker`\*
@@ -2503,6 +2504,16 @@ Installs [`mod_status`][] and uses the `status.conf.erb` template to generate it
 * `status_path`: The server location of the status page.
 
   Default: '/server-status'.
+
+##### Class: `apache::mod::userdir`
+
+Allows user-specific directories to be accessed using the `http://example.com/~user/` syntax. All parameters can be found in in the [official Apache documentation](https://httpd.apache.org/docs/2.4/mod/mod_userdir.html).
+
+**Parameters**:
+
+* `overrides`: An [array][] of directive-types.
+
+  Default: '[ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]'.
 
 ##### Class: `apache::mod::version`
 
