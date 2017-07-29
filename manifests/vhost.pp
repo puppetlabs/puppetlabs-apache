@@ -639,11 +639,9 @@ define apache::vhost(
 
   # Template uses:
   # - $action
-  if $action {
-    concat::fragment { "${name}-action":
-      target  => "apache::vhost::${name}",
-      order   => 110,
-      content => template('apache/vhost/_action.erb'),
+  if $action and $ensure == 'present' {
+    apache::vhost::action { $name:
+      action => $action,
     }
   }
 
