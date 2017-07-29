@@ -648,11 +648,10 @@ define apache::vhost(
   # Template uses:
   # - $block
   # - $apache_version
-  if $block and ! empty($block) {
-    concat::fragment { "${name}-block":
-      target  => "apache::vhost::${name}",
-      order   => 120,
-      content => template('apache/vhost/_block.erb'),
+  if $block and ! empty($block) and $ensure == 'present' {
+    apache::vhost::block { $name:
+      block          => $block,
+      apache_version => $apache_version,
     }
   }
 

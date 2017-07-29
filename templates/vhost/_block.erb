@@ -1,7 +1,9 @@
 <% if @block and ! @block.empty? -%>
 
   ## Block access statements
-<% if @block.include? 'scm' -%>
+  <%- [@block].flatten.each { |blk| -%>
+    <%- case blk -%>
+      <%- when 'scm' -%>
   # Block access to SCM directories.
   <DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>
   <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
@@ -10,5 +12,8 @@
     Deny From All
   <%- end -%>
   </DirectoryMatch>
-<% end -%>
+      <%- else -%>
+  # Ignoring unknown `block` directive <%= blk.inspect %>
+    <%- end -%>
+  <%- } -%>
 <% end -%>
