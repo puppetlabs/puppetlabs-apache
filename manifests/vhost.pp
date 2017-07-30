@@ -368,16 +368,6 @@ define apache::vhost(
     }
   }
 
-  # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
-    if ! defined(Class['apache::mod::proxy']) {
-      include ::apache::mod::proxy
-    }
-    if ! defined(Class['apache::mod::proxy_http']) {
-      include ::apache::mod::proxy_http
-    }
-  }
-
   # Load mod_passenger if needed and not yet loaded
   if $rack_base_uris {
     if ! defined(Class['apache::mod::passenger']) {
@@ -673,17 +663,28 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $no_proxy_uris
+  # - $no_proxy_uris_match
+  # - $proxy_add_headers
   # - $proxy_dest
+  # - $proxy_dest_match
+  # - $proxy_dest_reverse_match
+  # - $proxy_error_override
   # - $proxy_pass
   # - $proxy_pass_match
   # - $proxy_preserve_host
-  # - $proxy_add_headers
-  # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host {
-    concat::fragment { "${name}-proxy":
-      target  => "apache::vhost::${name}",
-      order   => 160,
-      content => template('apache/vhost/_proxy.erb'),
+  if ( $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host ) and $ensure == 'present' {
+    apache::vhost::proxy { $name:
+      proxy_dest               => $proxy_dest,
+      proxy_dest_match         => $proxy_dest_match,
+      proxy_dest_reverse_match => $proxy_dest_reverse_match,
+      proxy_pass               => $proxy_pass,
+      proxy_pass_match         => $proxy_pass_match,
+      no_proxy_uris            => $no_proxy_uris,
+      no_proxy_uris_match      => $no_proxy_uris_match,
+      proxy_preserve_host      => $proxy_preserve_host,
+      proxy_add_headers        => $proxy_add_headers,
+      proxy_error_override     => $proxy_error_override,
     }
   }
 
