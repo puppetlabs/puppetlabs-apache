@@ -368,11 +368,6 @@ define apache::vhost(
     }
   }
 
-  # Load mod_passenger if needed and not yet loaded
-  if $passenger_base_uris {
-      include ::apache::mod::passenger
-  }
-
   # Load mod_fastci if needed and not yet loaded
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
@@ -691,11 +686,9 @@ define apache::vhost(
 
   # Template uses:
   # - $passenger_base_uris
-  if $passenger_base_uris {
-    concat::fragment { "${name}-passenger_uris":
-      target  => "apache::vhost::${name}",
-      order   => 175,
-      content => template('apache/vhost/_passenger_base_uris.erb'),
+  if $passenger_base_uris and $ensure == 'present' {
+    apache::vhost::passenger_base_uris { $name:
+      passenger_base_uris => $passenger_base_uris,
     }
   }
 
