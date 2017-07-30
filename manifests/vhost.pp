@@ -397,13 +397,6 @@ define apache::vhost(
     }
   }
 
-  # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
-    if ! defined(Class['apache::mod::headers']) {
-      include ::apache::mod::headers
-    }
-  }
-
   # Check if mod_filter is required to process $filters
   if $filters {
     if ! defined(Class['apache::mod::filter']) {
@@ -673,11 +666,9 @@ define apache::vhost(
 
   # Template uses:
   # - $request_headers
-  if $request_headers and ! empty($request_headers) {
-    concat::fragment { "${name}-requestheader":
-      target  => "apache::vhost::${name}",
-      order   => 150,
-      content => template('apache/vhost/_requestheader.erb'),
+  if $request_headers and ! empty($request_headers) and $ensure == 'present' {
+    apache::vhost::request_header { $name:
+      request_headers => $request_headers,
     }
   }
 
