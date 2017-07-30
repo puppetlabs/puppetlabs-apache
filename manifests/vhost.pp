@@ -666,10 +666,8 @@ define apache::vhost(
   # Template uses:
   # - $headers
   if $headers and ! empty($headers) {
-    concat::fragment { "${name}-header":
-      target  => "apache::vhost::${name}",
-      order   => 140,
-      content => template('apache/vhost/_header.erb'),
+    apache::vhost::header { $name:
+      headers => $headers,
     }
   }
 
