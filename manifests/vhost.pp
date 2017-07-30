@@ -657,11 +657,9 @@ define apache::vhost(
 
   # Template uses:
   # - $error_documents
-  if $error_documents and ! empty($error_documents) {
-    concat::fragment { "${name}-error_document":
-      target  => "apache::vhost::${name}",
-      order   => 130,
-      content => template('apache/vhost/_error_document.erb'),
+  if $error_documents and ! empty($error_documents) and $ensure == 'present' {
+    apache::vhost::error_documents { $name:
+      error_documents => $error_documents,
     }
   }
 
