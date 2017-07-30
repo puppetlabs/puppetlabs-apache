@@ -369,13 +369,6 @@ define apache::vhost(
   }
 
   # Load mod_passenger if needed and not yet loaded
-  if $rack_base_uris {
-    if ! defined(Class['apache::mod::passenger']) {
-      include ::apache::mod::passenger
-    }
-  }
-
-  # Load mod_passenger if needed and not yet loaded
   if $passenger_base_uris {
       include ::apache::mod::passenger
   }
@@ -690,11 +683,9 @@ define apache::vhost(
 
   # Template uses:
   # - $rack_base_uris
-  if $rack_base_uris {
-    concat::fragment { "${name}-rack":
-      target  => "apache::vhost::${name}",
-      order   => 170,
-      content => template('apache/vhost/_rack.erb'),
+  if $rack_base_uris and $ensure == 'present' {
+    apache::vhost::rack_base_uris { $name:
+      rack_base_uris => $rack_base_uris,
     }
   }
 
