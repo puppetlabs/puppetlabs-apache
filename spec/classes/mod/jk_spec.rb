@@ -27,7 +27,7 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     let (:params) do
-      :logroot => '/var/log/httpd'
+      { :logroot => '/var/log/httpd' }
     end
 
     it_behaves_like 'minimal resources'
