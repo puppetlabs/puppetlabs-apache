@@ -12,7 +12,7 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
   end
 
-  context "with only required facts and no parameters" do
+  context "RHEL 6 with only required facts and no parameters" do
 
     let (:facts) do
       {
@@ -28,6 +28,31 @@ describe 'apache::mod::jk', :type => :class do
 
     let (:params) do
       { :logroot => '/var/log/httpd' }
+    end
+
+    it_behaves_like 'minimal resources'
+    it {
+      verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
+    }
+
+  end
+
+  context "Debian 8 with only required facts and no parameters" do
+
+    let (:facts) do
+      {
+        :osfamily               => 'Debian',
+        :operatingsystem        => 'Debian',
+        :operatingsystemrelease => '8',
+      }
+    end
+
+    let (:pre_condition) do
+      'include apache'
+    end
+
+    let (:params) do
+      { :logroot => '/var/log/apache2' }
     end
 
     it_behaves_like 'minimal resources'
