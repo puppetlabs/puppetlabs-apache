@@ -11,7 +11,7 @@
 class apache::mod::jk (
   $workers_file          = undef,
   $worker_property       = {},
-  $logroot               = undef,
+  $logroot               = $::apache::logroot,
   $shm_file              = 'jk-runtime-status',
   $shm_size              = undef,
   $mount_file            = undef,
@@ -70,14 +70,8 @@ class apache::mod::jk (
   }
 
   # Shared memory and log paths
-  if $logroot == undef {
-    $shm_path = "${::apache::logroot}/${shm_file}"
-    $log_path = "${::apache::logroot}/${log_file}"
-  }
-  else {
-    $shm_path = "${logroot}/${shm_file}"
-    $log_path = "${logroot}/${log_file}"
-  }
+  $shm_path = "${logroot}/${shm_file}"
+  $log_path = "${logroot}/${log_file}"
 
   # Main config file
   file {'jk.conf':
