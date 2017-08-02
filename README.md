@@ -56,6 +56,7 @@
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
 [`apache::mod::itk`]: #class-apachemoditk
+[`apache::mod::jk`]: #class-apachemodjk
 [`apache::mod::ldap`]: #class-apachemodldap
 [`apache::mod::passenger`]: #class-apachemodpassenger
 [`apache::mod::peruser`]: #class-apachemodperuser
@@ -1591,6 +1592,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `info`\*
 * `intercept_form_submit`
 * `itk`
+* `jk` (see [`apache::mod::jk`])
 * `ldap` (see [`apache::mod::ldap`][])
 * `lookup_identity`
 * `mime`
@@ -2142,6 +2144,99 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
   Boolean.
 
   Default: `true`.
+
+##### Class: `apache::mod::jk`
+
+Installs and manages `mod_jk`, a connector for Apache httpd redirection to old versions of TomCat and JBoss
+
+**Note**: There is no official package available for mod\_jk and thus it must be made available by means outside of the control of the apache module. Binaries can be found at [Apache Tomcat Connectors download page](https://tomcat.apache.org/download-connectors.cgi)
+
+``` puppet
+class { '::apache::mod::jk':
+  workers_file = 'conf/workers.properties',
+  mount_file   = 'conf/uriworkermap.properties',
+  shm_file     = 'run/jk.shm',
+  shm_size     = '50M',
+  $workers_file_content = {
+    <Content>
+  },
+}
+```
+
+**Parameters within `apache::mod::jk`**:
+
+The best source for understanding the `mod_jk` parameters is the [official documentation](https://tomcat.apache.org/connectors-doc/reference/apache.html), except for \*file_content:
+
+**workers\_file\_content**
+
+Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.  
+Plus, there are two global directives, 'worker.list' and 'worker.mantain'  
+For example, the workers file below:
+
+```
+worker.list = status
+worker.list = some_name,other_name
+
+worker.mantain = 60
+
+# Optional comment
+worker.some_name.type=ajp13
+worker.some_name.socket_keepalive=true
+
+# I just like comments
+worker.other_name.type=ajp12 (why would you?)
+worker.other_name.socket_keepalive=false
+```
+
+Should be parameterized as:
+
+```
+$workers_file_content = {
+  worker_lists   => ['status', 'some_name,other_name'],
+  worker_mantain => '60',
+  some_name      => {
+    comment          => 'Optional comment',
+    type             => 'ajp13',
+    socket_keepalive => 'true',
+  },
+  other_name     => {
+    comment          => 'I just like comments',
+    type             => 'ajp12',
+    socket_keepalive => 'false',
+  },
+}
+```
+
+**mount\_file\_content**
+
+Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.  
+For example, the mount file below:
+
+```
+# Worker 1
+/context_1/ = worker_1
+/context_1/* = worker_1
+
+# Worker 2
+/ = worker_2
+/context_2/ = worker_2
+/context_2/* = worker_2
+```
+
+Should be parameterized as:
+
+```
+$mount_file_content = {
+  worker_1 => {
+    uri_list => ['/context_1/', '/context_1/*'],
+    comment  => 'Worker 1',
+  },
+  worker_2 => {
+    uri_list => ['/context_2/', '/context_2/*'],
+    comment  => 'Worker 2',
+  },
+},
+```
 
 ##### Class: `apache::mod::passenger`
 
