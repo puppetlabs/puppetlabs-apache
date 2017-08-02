@@ -68,6 +68,9 @@ AllowEncodedSlashes <%= @allow_encoded_slashes %>
 <%- if @file_e_tag -%>
 FileETag <%= @file_e_tag %>
 <%- end -%>
+<%- if @use_canonical_name -%>
+UseCanonicalName <%= @use_canonical_name %>
+<%- end -%>
 
 #Listen 80
 

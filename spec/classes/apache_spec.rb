@@ -118,6 +118,14 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^FileETag None$} }
     end
 
+    context "when specifying canonical name behaviour" do
+      let :params do
+        { :use_canonical_name => 'dns' }
+      end
+
+      it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^UseCanonicalName dns$} }
+    end
+
     context "when specifying default character set" do
       let :params do
         { :default_charset => 'none' }

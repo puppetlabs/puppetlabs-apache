@@ -261,6 +261,8 @@
 [template]: http://docs.puppet.com/puppet/latest/reference/lang_template.html
 [`TraceEnable`]: https://httpd.apache.org/docs/current/mod/core.html#traceenable
 
+[`UseCanonicalName`]: https://httpd.apache.org/docs/current/mod/core.html#usecanonicalname
+
 [`verify_config`]: #verify_config
 [`vhost`]: #defined-type-apachevhost
 [`vhost_dir`]: #vhost_dir
@@ -1389,6 +1391,14 @@ Controls how Apache handles `TRACE` requests (per [RFC 2616][]) via the [`TraceE
 Values: 'Off', 'On'.
 
 Default: 'On'.
+
+##### `use_canonical_name`
+
+Controls Apache's [`UseCanonicalName`][] directive which controls how Apache handles self-referential URLs. If not specified, this parameter omits the declaration from the server's configuration and uses Apache's default setting of 'off'.
+
+Values: 'On', 'on', 'Off', 'off', 'DNS', 'dns'.
+
+Default: `undef`.
 
 ##### `use_systemd`
 

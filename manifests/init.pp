@@ -80,6 +80,8 @@ class apache (
   $trace_enable                                                  = 'On',
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes = undef,
   $file_e_tag                                                    = undef,
+  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]
+    $use_canonical_name                                          = undef,
   $package_ensure                                                = 'installed',
   Boolean $use_optional_includes                                 = $::apache::params::use_optional_includes,
   $use_systemd                                                   = $::apache::params::use_systemd,

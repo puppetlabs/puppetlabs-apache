@@ -175,6 +175,7 @@ define apache::vhost(
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
@@ -1064,6 +1065,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_http_protocol_options.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $use_canonical_name
+  if $use_canonical_name {
+    concat::fragment { "${name}-use_canonical_name":
+      target  => "${priority_real}${filename}.conf",
+      order   => 360,
+      content => template('apache/vhost/_use_canonical_name.erb'),
     }
   }
 
