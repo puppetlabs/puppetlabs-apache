@@ -97,7 +97,6 @@ class apache::mod::passenger (
   $wsgi_auto_detect                                                                          = undef,
 ) inherits ::apache::params {
   include ::apache
-  # Checking version support
   if $passenger_installed_version {
     if $passenger_allow_encoded_slashes {
       if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
@@ -152,9 +151,6 @@ class apache::mod::passenger (
     if $passenger_debug_log_file {
       if (versioncmp($passenger_installed_version, '5.0.5') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: passenger_debug_log_file :: This option has been renamed in version 5.0.5 to PassengerLogFile.')
-      }
-      if (versioncmp($passenger_installed_version, '5.0.5') < 0) {
-        fail("Passenger config option :: passenger_debug_log_file is not introduced until version 5.0.5 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $passenger_debugger {
@@ -404,10 +400,10 @@ class apache::mod::passenger (
     }
     if $passenger_use_global_queue {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
-        fail('REMOVED PASSENGER OPTION :: passenger_use_global_queue :: no longer used after version 4.0.0 and is on by default')
+        fail('REMOVED PASSENGER OPTION :: passenger_use_global_queue :: -- no message on the current passenger reference webpage -- ')
       }
       if (versioncmp($passenger_installed_version, '2.0.4') < 0) {
-        fail("Passenger config option :: passenger_use_global_queue is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
+        fail('Passenger config option :: passenger_use_global_queue is not introduced until version 2.0.4 :: ${passenger_installed_version} is the version reported')
       }
     }
     if $passenger_user {
@@ -420,20 +416,14 @@ class apache::mod::passenger (
         fail("Passenger config option :: passenger_user_switching is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
-    if ($rack_auto_detect or $rack_autodetect) {
+    if $rack_auto_detect {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rack_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
-      }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: rack_auto_detect is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $rack_base_uri {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rack_base_uri :: Deprecated in 3.0.0 in favor of PassengerBaseURI.')
-      }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rack_base_uri is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $rack_env {
@@ -445,40 +435,25 @@ class apache::mod::passenger (
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         warning("DEPRECATED PASSENGER OPTION :: rails_allow_mod_rewrite :: This option doesn't do anything anymore in since version 4.0.0.")
       }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: rails_allow_mod_rewrite is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
     if $rails_app_spawner_idle_time {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rails_app_spawner_idle_time ::  This option has been removed in version 4.0.0, and replaced with PassengerMaxPreloaderIdleTime.')
       }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: rails_app_spawner_idle_time is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
-    if ($rails_auto_detect or $rails_autodetect) {
+    if $rails_auto_detect {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rails_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
-      }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: rails_auto_detect is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $rails_base_uri {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rails_base_uri :: Deprecated in 3.0.0 in favor of PassengerBaseURI.')
       }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rails_base_uri is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
     if $rails_default_user {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rails_default_user :: Deprecated in 3.0.0 in favor of PassengerDefaultUser.')
-      }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rails_default_user is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $rails_env {
@@ -490,32 +465,20 @@ class apache::mod::passenger (
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rails_framework_spawner_idle_time ::  This option is no longer available in version 4.0.0. There is no alternative because framework spawning has been removed altogether. You should use smart spawning instead.')
       }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: rails_framework_spawner_idle_time is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
     if $rails_ruby {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rails_ruby :: Deprecated in 3.0.0 in favor of PassengerRuby.')
-      }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rails_ruby is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $rails_spawn_method {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rails_spawn_method :: Deprecated in 3.0.0 in favor of PassengerSpawnMethod.')
       }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rails_spawn_method is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
     if $rails_user_switching {
       if (versioncmp($passenger_installed_version, '3.0.0') > 0) {
         warning('DEPRECATED PASSENGER OPTION :: rails_user_switching :: Deprecated in 3.0.0 in favor of PassengerUserSwitching.')
-      }
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: rails_user_switching is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $union_station_filter {
@@ -557,12 +520,8 @@ class apache::mod::passenger (
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: wsgi_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
       }
-      if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
-        fail("Passenger config option :: wsgi_auto_detect is not introduced until version 4.0.0 :: ${passenger_installed_version} is the version reported")
-      }
     }
   }
-
   # Managed by the package, but declare it to avoid purging
   if $passenger_conf_package_file {
     file { 'passenger_package.conf':
