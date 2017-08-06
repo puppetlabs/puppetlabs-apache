@@ -2,9 +2,6 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache::mod::passenger class' do
-  pending 'This cannot run in the same test run as apache::vhost with passenger
-  as the passenger.conf file is not yet managed by puppet and will be wiped out
-  between tests and not replaced'
   case fact('osfamily')
   when 'Debian'
     conf_file = "#{$mod_dir}/passenger.conf"
