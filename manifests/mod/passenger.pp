@@ -416,7 +416,7 @@ class apache::mod::passenger (
         fail("Passenger config option :: passenger_user_switching is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
       }
     }
-    if $rack_auto_detect {
+    if ($rack_auto_detect or $rack_autodetect) {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rack_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
       }
@@ -441,7 +441,7 @@ class apache::mod::passenger (
         fail('REMOVED PASSENGER OPTION :: rails_app_spawner_idle_time ::  This option has been removed in version 4.0.0, and replaced with PassengerMaxPreloaderIdleTime.')
       }
     }
-    if $rails_auto_detect {
+    if ($rails_auto_detect or $rails_autodetect) {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: rails_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
       }
