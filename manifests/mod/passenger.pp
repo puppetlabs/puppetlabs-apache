@@ -587,7 +587,7 @@ class apache::mod::passenger (
   # - $passenger_buffer_upload : since 4.0.26
   # - $passenger_concurrency_model : since 4.0.0
   # - $passenger_data_buffer_dir : since 5.0.0
-  # - $passenger_debug_log_file : since 5.0.5
+  # - $passenger_debug_log_file : since unkown, probably deprecated
   # - $passenger_debugger : since 3.0.0
   # - $passenger_default_group : since 3.0.0
   # - $passenger_default_ruby : since 4.0.0
@@ -637,22 +637,22 @@ class apache::mod::passenger (
   # - $passenger_sticky_sessions : since 4.0.45
   # - $passenger_sticky_sessions_cookie_name : since 4.0.45
   # - $passenger_thread_count : since 4.0.0
-  # - $passenger_use_global_queue : since 4.0.0
+  # - $passenger_use_global_queue : since 2.0.4
   # - $passenger_user : since 4.0.0
   # - $passenger_user_switching : since 3.0.0
-  # - $rack_auto_detect : since 4.0.0
-  # - $rack_base_uri : since 3.0.0
+  # - $rack_auto_detect : since unkown, probably deprecated
+  # - $rack_base_uri : since unkown, probably deprecated
   # - $rack_env : since 2.0.0
-  # - $rails_allow_mod_rewrite : since 4.0.0
-  # - $rails_app_spawner_idle_time : since 4.0.0
-  # - $rails_auto_detect : since 4.0.0
-  # - $rails_base_uri : since 3.0.0
-  # - $rails_default_user : since 3.0.0
+  # - $rails_allow_mod_rewrite : since unkown, probably deprecated
+  # - $rails_app_spawner_idle_time : since unkown, probably deprecated
+  # - $rails_auto_detect : since unkown, probably deprecated
+  # - $rails_base_uri : since unkown, probably deprecated
+  # - $rails_default_user : since unkown, probably deprecated
   # - $rails_env : since 2.0.0
-  # - $rails_framework_spawner_idle_time : since 4.0.0
-  # - $rails_ruby : since 3.0.0
-  # - $rails_spawn_method : since 3.0.0
-  # - $rails_user_switching : since 3.0.0
+  # - $rails_framework_spawner_idle_time : since unkown, probably deprecated
+  # - $rails_ruby : since unkown, probably deprecated
+  # - $rails_spawn_method : since unkown, probably deprecated
+  # - $rails_user_switching : since unkown, probably deprecated
   # - $union_station_filter : since 3.0.5
   # - $union_station_gateway_address : since 3.0.0
   # - $union_station_gateway_cert : since 3.0.0
@@ -660,9 +660,9 @@ class apache::mod::passenger (
   # - $union_station_key : since 3.0.0
   # - $union_station_proxy_address : since 3.0.11
   # - $union_station_support : since 3.0.0
-  # - $wsgi_auto_detect : since 4.0.0
+  # - $wsgi_auto_detect : since unkown, probably deprecated
   # - $rails_autodetect : this options is only for backward compatiblity with older versions of this class
-  # - $rack_autodectect : this options is only for backward compatiblity with older versions of this class
+  # - $rack_autodetect : this options is only for backward compatiblity with older versions of this class
   file { 'passenger.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/${passenger_conf_file}",
