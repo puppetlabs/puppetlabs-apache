@@ -70,14 +70,13 @@ class apache::mod::jk (
   }
 
   # Shared memory and log paths
-  if $logroot == undef {
-    $shm_path = "${::apache::logroot}/${shm_file}"
-    $log_path = "${::apache::logroot}/${log_file}"
+  # If logroot unspecified, use default
+  $log_dir = $logroot ? {
+    undef   => $::apache::logroot,
+    default => $logroot,
   }
-  else {
-    $shm_path = "${logroot}/${shm_file}"
-    $log_path = "${logroot}/${log_file}"
-  }
+  $shm_path = "${log_dir}/${shm_file}"
+  $log_path = "${log_dir}/${log_file}"
 
   # Main config file
   file {'jk.conf':
