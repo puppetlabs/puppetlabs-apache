@@ -25,7 +25,7 @@ describe 'apache::fastcgi::server', :type => :define do
       it { should contain_class("apache") }
       it { should contain_class("apache::mod::fastcgi") }
       it { should contain_file("fastcgi-pool-#{title}.conf").with(
-        :ensure => 'present',
+        :ensure => 'file',
         :path => "/etc/httpd/conf.d/fastcgi-pool-#{title}.conf"
       ) }
     end
@@ -47,7 +47,7 @@ describe 'apache::fastcgi::server', :type => :define do
       it { should contain_class("apache") }
       it { should contain_class("apache::mod::fastcgi") }
       it { should contain_file("fastcgi-pool-#{title}.conf").with(
-        :ensure => 'present',
+        :ensure => 'file',
         :path   => "/etc/apache2/conf.d/fastcgi-pool-#{title}.conf"
       ) }
     end
@@ -68,7 +68,7 @@ describe 'apache::fastcgi::server', :type => :define do
       it { should contain_class("apache") }
       it { should contain_class("apache::mod::fastcgi") }
       it { should contain_file("fastcgi-pool-#{title}.conf").with(
-        :ensure => 'present',
+        :ensure => 'file',
         :path   => "/usr/local/etc/apache24/Includes/fastcgi-pool-#{title}.conf"
       ) }
     end
@@ -89,7 +89,7 @@ describe 'apache::fastcgi::server', :type => :define do
       it { should contain_class("apache") }
       it { should contain_class("apache::mod::fastcgi") }
       it { should contain_file("fastcgi-pool-#{title}.conf").with(
-        :ensure => 'present',
+        :ensure => 'file',
         :path   => "/etc/apache2/conf.d/fastcgi-pool-#{title}.conf"
       ) }
     end
