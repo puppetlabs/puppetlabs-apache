@@ -12,7 +12,7 @@ class apache::mod::jk (
   $workers_file          = undef,
   $worker_property       = {},
   $logroot               = undef,
-  $shm_file              = 'jk-runtime-status',
+  $shm_file              = undef,
   $shm_size              = undef,
   $mount_file            = undef,
   $mount_file_reload     = undef,
@@ -22,7 +22,7 @@ class apache::mod::jk (
   $mount_copy            = undef,
   $worker_indicator      = undef,
   $watchdog_interval     = undef,
-  $log_file              = 'mod_jk.log',
+  $log_file              = undef,
   $log_level             = undef,
   $log_stamp_format      = undef,
   $request_log_format    = undef,
@@ -77,11 +77,14 @@ class apache::mod::jk (
   }
   # If absolute path or pipe, use as-is
   # If relative path, prepend with log directory
+  # If unspecified, use default
   $shm_path = $shm_file ? {
+    undef       => "${log_dir}/jk-runtime-status",
     /^\"?[|\/]/ => $shm_file,
     default     => "${log_dir}/${shm_file}",
   }
   $log_path = $log_file ? {
+    undef       => "${log_dir}/mod_jk.log",
     /^\"?[|\/]/ => $log_file,
     default     => "${log_dir}/${log_file}",
   }
