@@ -75,8 +75,16 @@ class apache::mod::jk (
     undef   => $::apache::logroot,
     default => $logroot,
   }
-  $shm_path = "${log_dir}/${shm_file}"
-  $log_path = "${log_dir}/${log_file}"
+  # If absolute path or pipe, use as-is
+  # If relative path, prepend with log directory
+  $shm_path = $shm_file ? {
+    /^\"?[|\/]/ => $shm_file,
+    default     => "${log_dir}/${shm_file}",
+  }
+  $log_path = $log_file ? {
+    /^\"?[|\/]/ => $log_file,
+    default     => "${log_dir}/${log_file}",
+  }
 
   # Main config file
   file {'jk.conf':
