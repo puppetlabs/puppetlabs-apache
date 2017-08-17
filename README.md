@@ -2238,6 +2238,12 @@ $mount_file_content = {
 },
 ```
 
+**logroot**
+
+The base directory for `shm_file` and `log_file` is determined by the `logroot` parameter. If unspecified, defaults to `apache::params::logroot`.
+
+> The default logroot is sane enough. Therefore, it is not recommended to override it.
+
 ##### Class: `apache::mod::passenger`
 
 Installs and manages [`mod_passenger`][]. For Red Hat-based systems, ensure that you meet the minimum requirements described in the [passenger docs](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux).
