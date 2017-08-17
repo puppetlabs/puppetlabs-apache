@@ -696,20 +696,23 @@ define apache::vhost(
   # - $redirect_source
   # - $redirect_dest
   # - $redirect_status
-  # - $redirect_dest_a
-  # - $redirect_source_a
-  # - $redirect_status_a
+  if ($redirect_source and $redirect_dest) and $ensure == 'present' {
+    apache::vhost::redirect {  $name:
+      redirect_source => $redirect_source,
+      redirect_dest   => $redirect_dest,
+      redirect_status => $redirect_status,
+    }
+  }
+
+  # Template uses:
   # - $redirectmatch_status
   # - $redirectmatch_regexp
   # - $redirectmatch_dest
-  # - $redirectmatch_status_a
-  # - $redirectmatch_regexp_a
-  # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest) {
-    concat::fragment { "${name}-redirect":
-      target  => "apache::vhost::${name}",
-      order   => 180,
-      content => template('apache/vhost/_redirect.erb'),
+  if ($redirectmatch_regexp and $redirectmatch_dest) and $ensure == 'present' {
+    apache::vhost::redirectmatch { $name:
+      redirectmatch_status => $redirectmatch_status,
+      redirectmatch_regexp => $redirectmatch_regexp,
+      redirectmatch_dest   => $redirectmatch_dest,
     }
   }
 
