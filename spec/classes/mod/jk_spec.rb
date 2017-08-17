@@ -62,4 +62,40 @@ describe 'apache::mod::jk', :type => :class do
 
   end
 
+  path_formats = {
+    :undef => {
+      :shm_file => :undef,
+      :log_file => :undef,
+      :shm_path => '/var/log/httpd/jk-runtime-status',
+      :log_path => '/var/log/httpd/mod_jk.log',
+    },
+  }
+  context 'RHEL 6 with required facts' do
+    path_formats.each do |format, paths|
+      context "when shm_file and log_file parameters are #{format}" do
+        let (:facts) do
+          {
+            :osfamily               => 'RedHat',
+            :operatingsystem        => 'RedHat',
+            :operatingsystemrelease => '6',
+          }
+        end
+
+        let (:pre_condition) do
+          'include apache'
+        end
+
+        let (:params) do
+          {
+            :logroot  => '/var/log/httpd',
+            :shm_file => paths[:shm_file],
+            :log_file => paths[:shm_file],
+          }
+        end
+
+        it_behaves_like 'minimal resources'
+      end
+    end
+  end
+
 end
