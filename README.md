@@ -2238,6 +2238,14 @@ $mount_file_content = {
 },
 ```
 
+**shm\_file and log\_file**
+
+Depending on how these files are specified, the class creates their final path differently:
+- Relative path: prepends supplied path with `logroot` (see below)
+- Absolute path or pipe: uses supplied path as-is
+
+> The default logroot is sane enough. Therefore, it is not recommended to specify absolute paths.
+
 **logroot**
 
 The base directory for `shm_file` and `log_file` is determined by the `logroot` parameter. If unspecified, defaults to `apache::params::logroot`.
