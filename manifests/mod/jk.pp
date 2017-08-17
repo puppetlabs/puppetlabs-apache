@@ -90,12 +90,13 @@ class apache::mod::jk (
   }
 
   # Main config file
+  $mod_dir = $::apache::mod_dir
   file {'jk.conf':
-    path    => "${::apache::mod_dir}/jk.conf",
+    path    => "${mod_dir}/jk.conf",
     content => template('apache/mod/jk.conf.erb'),
     require => [
-      Exec["mkdir ${::apache::mod_dir}"],
-      File[$::apache::mod_dir],
+      Exec["mkdir ${mod_dir}"],
+      File[$mod_dir],
     ],
   }
 
