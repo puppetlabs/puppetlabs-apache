@@ -2244,6 +2244,24 @@ Depending on how these files are specified, the class creates their final path d
 - Relative path: prepends supplied path with `logroot` (see below)
 - Absolute path or pipe: uses supplied path as-is
 
+Examples (RHEL 6):
+
+```
+shm_file => 'shm_file'
+# Ends up in
+$shm_path = '/var/log/httpd/shm_file'
+```
+```
+shm_file => '/run/shm_file'
+# Ends up in
+$shm_path = '/run/shm_file'
+```
+```
+shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+# Ends up in
+$shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+```
+
 > The default logroot is sane enough. Therefore, it is not recommended to specify absolute paths.
 
 **logroot**
