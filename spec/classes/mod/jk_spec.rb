@@ -111,6 +111,8 @@ describe 'apache::mod::jk', :type => :class do
           }
         end
 
+        let (:mod_dir) { '/etc/httpd/conf.d' }
+
         it_behaves_like 'minimal resources'
         it do
           is_expected.to contain_file("/etc/httpd/conf.d/jk.conf")
