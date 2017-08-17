@@ -94,6 +94,12 @@ describe 'apache::mod::jk', :type => :class do
         end
 
         it_behaves_like 'minimal resources'
+        it do
+          is_expected.to contain_file("/etc/httpd/conf.d/jk.conf").with_content(
+            "  JkShmFile #{paths[:shm_path]}\n",
+            "  JkLogFile #{paths[:log_path]}\n",
+          )
+        end
       end
     end
   end
