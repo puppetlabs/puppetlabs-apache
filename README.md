@@ -29,7 +29,6 @@
 
 [Development]: #development
 [Contributing]: #contributing
-[Testing]: #testing
 
 [`AddDefaultCharset`]: https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
 [`add_listen`]: #add_listen
@@ -90,6 +89,7 @@
 [common gateway interface]: https://httpd.apache.org/docs/current/howto/cgi.html
 [`confd_dir`]: #confd_dir
 [`content`]: #content
+[CONTRIBUTING.md]: CONTRIBUTING.md
 [custom error documents]: https://httpd.apache.org/docs/current/custom-error.html
 [`custom_fragment`]: #custom_fragment
 
@@ -5368,26 +5368,4 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 
 We want to make it as easy as possible to contribute changes so our modules work in your environment, but we also need contributors to follow a few guidelines to help us maintain and improve the modules' quality.
 
-For more information, please read the complete [module contribution guide][].
-
-### Testing
-
-This project contains tests for both [rspec-puppet][] and [beaker-rspec][] to verify functionality. For detailed information on using these tools, please see their respective documentation.
-
-#### Testing quickstart: Ruby > 1.8.7
-
-```
-gem install bundler
-bundle install
-bundle exec rake spec
-bundle exec rspec spec/acceptance
-RS_DEBUG=yes bundle exec rspec spec/acceptance
-```
-
-#### Testing quickstart: Ruby = 1.8.7
-
-```
-gem install bundler
-bundle install --without system_tests
-bundle exec rake spec
-```
+For more information, please read the complete [module contribution guide][] and check out [CONTRIBUTING.md][].
