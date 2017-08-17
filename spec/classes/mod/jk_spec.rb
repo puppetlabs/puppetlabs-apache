@@ -69,6 +69,12 @@ describe 'apache::mod::jk', :type => :class do
       :shm_path => '/var/log/httpd/jk-runtime-status',
       :log_path => '/var/log/httpd/mod_jk.log',
     },
+    :relative => {
+      :shm_file => 'shm_file',
+      :log_file => 'log_file',
+      :shm_path => '/var/log/httpd/shm_file',
+      :log_path => '/var/log/httpd/log_file',
+    },
   }
   context 'RHEL 6 with required facts' do
     path_formats.each do |format, paths|
