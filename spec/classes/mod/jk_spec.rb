@@ -81,6 +81,12 @@ describe 'apache::mod::jk', :type => :class do
       :shm_path => '/run/shm_file',
       :log_path => '/tmp/log_file',
     },
+    :pipe => {
+      :shm_file => '"!rotatelogs /var/log/httpd/shm_file.%Y%m%d 86400 -180"',
+      :log_file => '"!rotatelogs /var/log/httpd/log_file.%Y%m%d 86400 -180"',
+      :shm_path => '"!rotatelogs /var/log/httpd/shm_file.%Y%m%d 86400 -180"',
+      :log_path => '"!rotatelogs /var/log/httpd/log_file.%Y%m%d 86400 -180"',
+    },
   }
   context 'RHEL 6 with required facts' do
     path_formats.each do |format, paths|
