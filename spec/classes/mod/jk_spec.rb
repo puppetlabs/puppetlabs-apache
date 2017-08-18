@@ -9,12 +9,10 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to create_class('apache::mod::jk') }
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('jk') }
-    it { is_expected.to contain_file('jk.conf').
-      that_notifies('Class[apache::service]').and
-      with({
-        :path => "#{mod_dir}/jk.conf",
-      })
-    }
+    it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
+    it { is_expected.to contain_file('jk.conf').with({
+      :path => "#{mod_dir}/jk.conf",
+    }) }
   end
 
   context "RHEL 6 with only required facts and no parameters" do
