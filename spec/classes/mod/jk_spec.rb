@@ -59,7 +59,7 @@ describe 'apache::mod::jk', :type => :class do
       { :logroot => '/var/log/apache2' }
     end
 
-    mod_dir = '/etc/apache2/mods-enabled'
+    mod_dir = '/etc/apache2/mods-available'
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
