@@ -90,7 +90,7 @@ describe 'apache::mod::jk', :type => :class do
     },
     :pipe => {
       :shm_file => :undef,
-      :log_file => "|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180",
+      :log_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
       :shm_path => '/var/log/httpd/jk-runtime-status',
       :log_path => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
     },
