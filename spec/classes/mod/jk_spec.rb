@@ -91,6 +91,8 @@ describe 'apache::mod::jk', :type => :class do
     :default => {
       :shm_file => :undef,
       :log_file => :undef,
+      :shm_path => '/var/log/httpd/jk-runtime-status',
+      :log_path => '/var/log/httpd/mod_jk.log',
     },
   }
   shm_log_paths.each do |option, paths|
@@ -113,6 +115,16 @@ describe 'apache::mod::jk', :type => :class do
         :shm_file => paths[:shm_file],
         :log_file => paths[:log_file],
       } end
+
+      it { is_expected.to contain_file('jk.conf').with_content(
+        "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+        "# Any manual changes will be overwritten\n"\
+        "\n"\
+        "<IfModule jk_module>\n"\
+        "  JkShmFile #{paths[:shm_path]}\n"\
+        "  JkLogFile #{paths[:log_path]}\n"\
+        "</IfModule>\n"
+      ) }
 
     end
   end
