@@ -35,15 +35,6 @@ describe 'apache::mod::jk', :type => :class do
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
-    it { is_expected.to contain_file('jk.conf').with_content(
-      "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-      "# Any manual changes will be overwritten\n"\
-      "\n"\
-      "<IfModule jk_module>\n"\
-      "  JkShmFile /var/log/httpd/jk-runtime-status\n"\
-      "  JkLogFile /var/log/httpd/mod_jk.log\n"\
-      "</IfModule>\n"
-    ) }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
