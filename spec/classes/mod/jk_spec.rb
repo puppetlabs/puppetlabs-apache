@@ -93,5 +93,28 @@ describe 'apache::mod::jk', :type => :class do
       :log_file => :undef,
     },
   }
+  shm_log_paths.each do |option, paths|
+    context "RHEL 6 with #{option} shm_file and log_file paths" do
+
+      let (:facts) do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemrelease => '6',
+        }
+      end
+
+      let (:pre_condition) do
+        'include apache'
+      end
+
+      let (:params) do {
+        :logroot => '/var/log/httpd',
+        :shm_file => paths[:shm_file],
+        :log_file => paths[:log_file],
+      } end
+
+    end
+  end
 
 end
