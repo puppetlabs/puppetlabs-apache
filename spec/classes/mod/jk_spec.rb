@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apache::mod::jk', :type => :class do
   it_behaves_like 'a mod class, without including apache'
 
-  shared_examples 'minimal resources' do
+  shared_examples 'minimal resources' do |mod_dir|
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
     it { is_expected.to create_class('apache::mod::jk') }
@@ -33,7 +33,7 @@ describe 'apache::mod::jk', :type => :class do
     mod_dir = '/etc/httpd/conf.d'
     let (:mod_dir) { mod_dir }
 
-    it_behaves_like 'minimal resources'
+    it_behaves_like 'minimal resources', mod_dir
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
@@ -61,7 +61,7 @@ describe 'apache::mod::jk', :type => :class do
     mod_dir = '/etc/apache2/mods-enabled'
     let (:mod_dir) { mod_dir }
 
-    it_behaves_like 'minimal resources'
+    it_behaves_like 'minimal resources', mod_dir
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
