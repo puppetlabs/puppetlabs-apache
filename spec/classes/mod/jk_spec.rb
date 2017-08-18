@@ -35,6 +35,10 @@ describe 'apache::mod::jk', :type => :class do
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
+    it { is_expected.to contain_file('jk.conf').with_content(
+      "<IfModule jk_module>\n"\
+      "</IfModule>\n"\
+    ) }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
@@ -63,6 +67,10 @@ describe 'apache::mod::jk', :type => :class do
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
+    it { is_expected.to contain_file('jk.conf').with_content(
+      "<IfModule jk_module>\n"\
+      "</IfModule>\n"\
+    ) }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
