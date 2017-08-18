@@ -30,6 +30,9 @@ describe 'apache::mod::jk', :type => :class do
       { :logroot => '/var/log/httpd' }
     end
 
+    mod_dir = '/etc/httpd/conf.d'
+    let (:mod_dir) { mod_dir }
+
     it_behaves_like 'minimal resources'
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
@@ -54,6 +57,9 @@ describe 'apache::mod::jk', :type => :class do
     let (:params) do
       { :logroot => '/var/log/apache2' }
     end
+
+    mod_dir = '/etc/apache2/mods-enabled'
+    let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources'
     it {
