@@ -3029,6 +3029,15 @@ The `apache::vhost` defined type uses `concat::fragment` to build the configurat
 
 For the custom fragment's `order` parameter, the `apache::vhost` defined type uses multiples of 10, so any `order` that isn't a multiple of 10 should work.
 
+**NOTE:** When creating an `apache::vhost` it cannot be named `default` or `default-ssl` as vhosts with these titles will always be created by the module. This means that you cannot override the `default` or `default-ssl` vhosts. An optional workaround is to create a vhost named something else such as "my default" and ensure that the `default` and `default_ssl` vhosts are set to false:
+
+```
+class { 'apache':
+  default_vhost     => false
+  default_ssl_vhost => false,
+}
+```
+
 **Parameters**:
 
 ##### `access_log`
