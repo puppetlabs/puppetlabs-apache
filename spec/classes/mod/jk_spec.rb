@@ -9,9 +9,9 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to create_class('apache::mod::jk') }
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('jk') }
-    it { is_expected.to contain_file('jk.conf')
-      .that_notifies('Class[apache::service]')
-      .and_with({
+    it { is_expected.to contain_file('jk.conf').
+      that_notifies('Class[apache::service]').and
+      with({
         :path => "#{mod_dir}/jk.conf",
       })
     }
