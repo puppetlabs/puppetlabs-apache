@@ -10,6 +10,7 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('jk') }
     it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
+    it { is_expected.to contain_file('jk.conf').with_path("#{mod_dir}/jk.conf") }
   end
 
   context "RHEL 6 with only required facts and no parameters" do
