@@ -90,7 +90,7 @@ class apache::mod::jk (
   }
 
   # Main config file
-  mod_dir = $::apache::mod_dir
+  $mod_dir = $::apache::mod_dir
   file {'jk.conf':
     path    => "${mod_dir}/jk.conf",
     content => template('apache/mod/jk.conf.erb'),
