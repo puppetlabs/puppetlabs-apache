@@ -1,3 +1,17 @@
+# Manages the settings for the mod_passenger
+# The result is the /etc/mods-available/mod_passenger.conf file
+#
+# Where do we get these settings?
+#   Settings are dervied from https://www.phusionpassenger.com/library/config/apache/reference
+#   Also in passenger source code you can strip out what are all the available options by looking in
+#     * src/apache2_module/Configuration.cpp
+#     * src/apache2_module/ConfigurationCommands.cpp
+#   Note: in the src there are several undocumented settings.
+#
+# Change Log:
+#   * As of 08/13/2017 there are 84 available/deprecated/removed settings.
+#   * Around 08/20/2017 UnionStation was discontinued options were removed.
+#   * As of 08/20/2017 there are 77 available/deprecated/removed settings.
 class apache::mod::passenger (
   $manage_repo                                                                               = true,
   $mod_id                                                                                    = undef,
@@ -87,13 +101,6 @@ class apache::mod::passenger (
   $rails_ruby                                                                                = undef,
   $rails_spawn_method                                                                        = undef,
   $rails_user_switching                                                                      = undef,
-  $union_station_filter                                                                      = undef,
-  $union_station_gateway_address                                                             = undef,
-  $union_station_gateway_cert                                                                = undef,
-  $union_station_gateway_port                                                                = undef,
-  $union_station_key                                                                         = undef,
-  $union_station_proxy_address                                                               = undef,
-  $union_station_support                                                                     = undef,
   $wsgi_auto_detect                                                                          = undef,
 ) inherits ::apache::params {
   include ::apache
@@ -481,41 +488,6 @@ class apache::mod::passenger (
         warning('DEPRECATED PASSENGER OPTION :: rails_user_switching :: Deprecated in 3.0.0 in favor of PassengerUserSwitching.')
       }
     }
-    if $union_station_filter {
-      if (versioncmp($passenger_installed_version, '3.0.5') < 0) {
-        fail("Passenger config option :: union_station_filter is not introduced until version 3.0.5 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_gateway_address {
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: union_station_gateway_address is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_gateway_cert {
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: union_station_gateway_cert is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_gateway_port {
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: union_station_gateway_port is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_key {
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: union_station_key is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_proxy_address {
-      if (versioncmp($passenger_installed_version, '3.0.11') < 0) {
-        fail("Passenger config option :: union_station_proxy_address is not introduced until version 3.0.11 :: ${passenger_installed_version} is the version reported")
-      }
-    }
-    if $union_station_support {
-      if (versioncmp($passenger_installed_version, '3.0.0') < 0) {
-        fail("Passenger config option :: union_station_support is not introduced until version 3.0.0 :: ${passenger_installed_version} is the version reported")
-      }
-    }
     if $wsgi_auto_detect {
       if (versioncmp($passenger_installed_version, '4.0.0') > 0) {
         fail('REMOVED PASSENGER OPTION :: wsgi_auto_detect ::  These options have been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.')
@@ -576,91 +548,85 @@ class apache::mod::passenger (
       loadfile_name  => 'zpassenger.load',
     }
   }
+
   # Template uses:
-  # - $passenger_allow_encoded_slashes : since 4.0.0
-  # - $passenger_app_env : since 4.0.0
-  # - $passenger_app_group_name : since 4.0.0
-  # - $passenger_app_root : since 4.0.0
-  # - $passenger_app_type : since 4.0.25
-  # - $passenger_base_uri : since 4.0.0
-  # - $passenger_buffer_response : since 4.0.0
-  # - $passenger_buffer_upload : since 4.0.26
-  # - $passenger_concurrency_model : since 4.0.0
-  # - $passenger_data_buffer_dir : since 5.0.0
-  # - $passenger_debug_log_file : since unkown, probably deprecated
-  # - $passenger_debugger : since 3.0.0
-  # - $passenger_default_group : since 3.0.0
-  # - $passenger_default_ruby : since 4.0.0
-  # - $passenger_default_user : since 3.0.0
-  # - $passenger_disable_security_update_check : since 5.1.0
-  # - $passenger_enabled : since 4.0.0
-  # - $passenger_error_override : since 4.0.24
-  # - $passenger_file_descriptor_log_file : since 5.0.5
-  # - $passenger_fly_with : since 4.0.45
-  # - $passenger_force_max_concurrent_requests_per_process : since 5.0.22
-  # - $passenger_friendly_error_pages : since 4.0.42
-  # - $passenger_group : since 4.0.0
-  # - $passenger_high_performance : since 2.0.0
-  # - $passenger_instance_registry_dir : since 5.0.0
-  # - $passenger_load_shell_envvars : since 4.0.20
-  # - $passenger_log_file : since 5.0.5
-  # - $passenger_log_level : since 3.0.0
-  # - $passenger_lve_min_uid : since 5.0.28
-  # - $passenger_max_instances : since 3.0.0
-  # - $passenger_max_instances_per_app : since 3.0.0
-  # - $passenger_max_pool_size : since 1.0.0
-  # - $passenger_max_preloader_idle_time : since 4.0.0
-  # - $passenger_max_request_queue_size : since 4.0.15
-  # - $passenger_max_request_time : since 3.0.0
-  # - $passenger_max_requests : since 3.0.0
-  # - $passenger_memory_limit : since 3.0.0
-  # - $passenger_meteor_app_settings : since 5.0.7
-  # - $passenger_min_instances : since 3.0.0
-  # - $passenger_nodejs : since 4.0.24
-  # - $passenger_pool_idle_time : since 1.0.0
-  # - $passenger_pre_start : since 3.0.0
-  # - $passenger_python : since 4.0.0
-  # - $passenger_resist_deployment_errors : since 3.0.0
-  # - $passenger_resolve_symlinks_in_document_root : since 3.0.0
-  # - $passenger_response_buffer_high_watermark : since 5.0.0
-  # - $passenger_restart_dir : since 3.0.0
-  # - $passenger_rolling_restarts : since 3.0.0
-  # - $passenger_root : since 1.0.0
-  # - $passenger_ruby : since 4.0.0
-  # - $passenger_security_update_check_proxy : since 5.1.0
-  # - $passenger_show_version_in_header : since 5.1.0
-  # - $passenger_socket_backlog : since 5.0.24
-  # - $passenger_spawn_method : since 2.0.0
-  # - $passenger_start_timeout : since 4.0.15
-  # - $passenger_startup_file : since 4.0.25
-  # - $passenger_stat_throttle_rate : since 2.2.0
-  # - $passenger_sticky_sessions : since 4.0.45
-  # - $passenger_sticky_sessions_cookie_name : since 4.0.45
-  # - $passenger_thread_count : since 4.0.0
-  # - $passenger_use_global_queue : since 2.0.4
-  # - $passenger_user : since 4.0.0
-  # - $passenger_user_switching : since 3.0.0
-  # - $rack_auto_detect : since unkown, probably deprecated
-  # - $rack_base_uri : since unkown, probably deprecated
-  # - $rack_env : since 2.0.0
-  # - $rails_allow_mod_rewrite : since unkown, probably deprecated
-  # - $rails_app_spawner_idle_time : since unkown, probably deprecated
-  # - $rails_auto_detect : since unkown, probably deprecated
-  # - $rails_base_uri : since unkown, probably deprecated
-  # - $rails_default_user : since unkown, probably deprecated
-  # - $rails_env : since 2.0.0
-  # - $rails_framework_spawner_idle_time : since unkown, probably deprecated
-  # - $rails_ruby : since unkown, probably deprecated
-  # - $rails_spawn_method : since unkown, probably deprecated
-  # - $rails_user_switching : since unkown, probably deprecated
-  # - $union_station_filter : since 3.0.5
-  # - $union_station_gateway_address : since 3.0.0
-  # - $union_station_gateway_cert : since 3.0.0
-  # - $union_station_gateway_port : since 3.0.0
-  # - $union_station_key : since 3.0.0
-  # - $union_station_proxy_address : since 3.0.11
-  # - $union_station_support : since 3.0.0
-  # - $wsgi_auto_detect : since unkown, probably deprecated
+  # - $passenger_allow_encoded_slashes : since 4.0.0.
+  # - $passenger_app_env : since 4.0.0.
+  # - $passenger_app_group_name : since 4.0.0.
+  # - $passenger_app_root : since 4.0.0.
+  # - $passenger_app_type : since 4.0.25.
+  # - $passenger_base_uri : since 4.0.0.
+  # - $passenger_buffer_response : since 4.0.0.
+  # - $passenger_buffer_upload : since 4.0.26.
+  # - $passenger_concurrency_model : since 4.0.0.
+  # - $passenger_data_buffer_dir : since 5.0.0.
+  # - $passenger_debug_log_file : since unkown. Deprecated in 5.0.5.
+  # - $passenger_debugger : since 3.0.0.
+  # - $passenger_default_group : since 3.0.0.
+  # - $passenger_default_ruby : since 4.0.0.
+  # - $passenger_default_user : since 3.0.0.
+  # - $passenger_disable_security_update_check : since 5.1.0.
+  # - $passenger_enabled : since 4.0.0.
+  # - $passenger_error_override : since 4.0.24.
+  # - $passenger_file_descriptor_log_file : since 5.0.5.
+  # - $passenger_fly_with : since 4.0.45.
+  # - $passenger_force_max_concurrent_requests_per_process : since 5.0.22.
+  # - $passenger_friendly_error_pages : since 4.0.42.
+  # - $passenger_group : since 4.0.0.
+  # - $passenger_high_performance : since 2.0.0.
+  # - $passenger_instance_registry_dir : since 5.0.0.
+  # - $passenger_load_shell_envvars : since 4.0.20.
+  # - $passenger_log_file : since 5.0.5.
+  # - $passenger_log_level : since 3.0.0.
+  # - $passenger_lve_min_uid : since 5.0.28.
+  # - $passenger_max_instances : since 3.0.0.
+  # - $passenger_max_instances_per_app : since 3.0.0.
+  # - $passenger_max_pool_size : since 1.0.0.
+  # - $passenger_max_preloader_idle_time : since 4.0.0.
+  # - $passenger_max_request_queue_size : since 4.0.15.
+  # - $passenger_max_request_time : since 3.0.0.
+  # - $passenger_max_requests : since 3.0.0.
+  # - $passenger_memory_limit : since 3.0.0.
+  # - $passenger_meteor_app_settings : since 5.0.7.
+  # - $passenger_min_instances : since 3.0.0.
+  # - $passenger_nodejs : since 4.0.24.
+  # - $passenger_pool_idle_time : since 1.0.0.
+  # - $passenger_pre_start : since 3.0.0.
+  # - $passenger_python : since 4.0.0.
+  # - $passenger_resist_deployment_errors : since 3.0.0.
+  # - $passenger_resolve_symlinks_in_document_root : since 3.0.0.
+  # - $passenger_response_buffer_high_watermark : since 5.0.0.
+  # - $passenger_restart_dir : since 3.0.0.
+  # - $passenger_rolling_restarts : since 3.0.0.
+  # - $passenger_root : since 1.0.0.
+  # - $passenger_ruby : since 4.0.0.
+  # - $passenger_security_update_check_proxy : since 5.1.0.
+  # - $passenger_show_version_in_header : since 5.1.0.
+  # - $passenger_socket_backlog : since 5.0.24.
+  # - $passenger_spawn_method : since 2.0.0.
+  # - $passenger_start_timeout : since 4.0.15.
+  # - $passenger_startup_file : since 4.0.25.
+  # - $passenger_stat_throttle_rate : since 2.2.0.
+  # - $passenger_sticky_sessions : since 4.0.45.
+  # - $passenger_sticky_sessions_cookie_name : since 4.0.45.
+  # - $passenger_thread_count : since 4.0.0.
+  # - $passenger_use_global_queue : since 2.0.4.Deprecated in 4.0.0.
+  # - $passenger_user : since 4.0.0.
+  # - $passenger_user_switching : since 3.0.0.
+  # - $rack_auto_detect : since unkown. Deprecated in 4.0.0.
+  # - $rack_base_uri : since unkown. Deprecated in 3.0.0.
+  # - $rack_env : since 2.0.0.
+  # - $rails_allow_mod_rewrite : since unkown. Deprecated in 4.0.0.
+  # - $rails_app_spawner_idle_time : since unkown. Deprecated in 4.0.0.
+  # - $rails_auto_detect : since unkown. Deprecated in 4.0.0.
+  # - $rails_base_uri : since unkown. Deprecated in 3.0.0.
+  # - $rails_default_user : since unkown. Deprecated in 3.0.0.
+  # - $rails_env : since 2.0.0.
+  # - $rails_framework_spawner_idle_time : since unkown. Deprecated in 4.0.0.
+  # - $rails_ruby : since unkown. Deprecated in 3.0.0.
+  # - $rails_spawn_method : since unkown. Deprecated in 3.0.0.
+  # - $rails_user_switching : since unkown. Deprecated in 3.0.0.
+  # - $wsgi_auto_detect : since unkown. Deprecated in 4.0.0.
   # - $rails_autodetect : this options is only for backward compatiblity with older versions of this class
   # - $rack_autodetect : this options is only for backward compatiblity with older versions of this class
   file { 'passenger.conf':

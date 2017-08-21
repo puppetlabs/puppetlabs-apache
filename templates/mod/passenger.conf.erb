@@ -229,27 +229,6 @@
   <%- if @rails_user_switching -%>
   RailsUserSwitching <%= @rails_user_switching %>
   <%- end -%>
-  <%- if @union_station_filter -%>
-  UnionStationFilter "<%= @union_station_filter %>"
-  <%- end -%>
-  <%- if @union_station_gateway_address -%>
-  UnionStationGatewayAddress <%= @union_station_gateway_address %>
-  <%- end -%>
-  <%- if @union_station_gateway_cert -%>
-  UnionStationGatewayCert "<%= @union_station_gateway_cert %>"
-  <%- end -%>
-  <%- if @union_station_gateway_port -%>
-  UnionStationGatewayPort <%= @union_station_gateway_port %>
-  <%- end -%>
-  <%- if @union_station_key -%>
-  UnionStationKey <%= @union_station_key %>
-  <%- end -%>
-  <%- if @union_station_proxy_address -%>
-  UnionStationProxyAddress <%= @union_station_proxy_address %>
-  <%- end -%>
-  <%- if @union_station_support -%>
-  UnionStationSupport <%= @union_station_support %>
-  <%- end -%>
   <%- if @wsgi_auto_detect -%>
   WsgiAutoDetect <%= @wsgi_auto_detect %>
   <%- end -%>
@@ -259,4 +238,5 @@
   <%- if @rack_autodetect -%>
   RackAutoDetect <%= @rack_autodetect %>
   <%- end -%>
+
 </IfModule>
