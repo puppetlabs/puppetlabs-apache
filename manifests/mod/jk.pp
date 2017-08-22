@@ -12,6 +12,7 @@ class apache::mod::jk (
   # Binding to mod_jk
   $ip                    = $::ipaddress,
   $port                  = '80',
+  $add_listen            = true,
   # Conf file content
   $workers_file          = undef,
   $worker_property       = {},
@@ -67,7 +68,9 @@ class apache::mod::jk (
   ::apache::mod { 'jk': }
 
   # Binding to mod_jk
-  ensure_resource('apache::listen', "${ip}:${port}", {})
+  if $add_listen {
+    ensure_resource('apache::listen', "${ip}:${port}", {})
+  }
 
   # File resource common parameters
   File {
