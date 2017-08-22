@@ -1397,5 +1397,41 @@ describe 'apache::vhost', :type => :define do
         :content => /^\s+Require all granted$/ )
       }
     end
+    describe "redirectmatch_*" do
+      let :facts do
+        {
+          :osfamily               => 'RedHat',
+          :operatingsystemrelease => '6',
+          :concat_basedir         => '/dne',
+          :operatingsystem        => 'RedHat',
+          :id                     => 'root',
+          :kernel                 => 'Linux',
+          :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          :is_pe                  => false,
+        }
+      end
+      let :dparams do
+        {
+          :docroot => '/rspec/docroot',
+          :port    => '84',
+        }
+      end
+      context "status" do
+        let (:params) { dparams.merge({:redirectmatch_status => "404"}) }
+        it { is_expected.to contain_class("apache::mod::alias")}
+      end
+      context "dest" do
+        let (:params) { dparams.merge({:redirectmatch_dest => "http://other.example.com$1.jpg"}) }
+        it { is_expected.to contain_class("apache::mod::alias")}
+      end
+      context "regexp" do
+        let (:params) { dparams.merge({:redirectmatch_regexp => "(.*)\.gif$"}) }
+        it { is_expected.to contain_class("apache::mod::alias")}
+      end
+      context "none" do
+        let (:params) { dparams }
+        it { is_expected.to_not contain_class("apache::mod::alias") }
+      end
+    end
   end
 end
