@@ -94,4 +94,27 @@ describe 'apache::mod::jk', :type => :class do
 
   end
 
+  context "RHEL 6 with required facts and no binding" do
+
+    let (:facts) do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
+        :operatingsystemrelease => '6',
+        :add_listen             => false,
+      }
+    end
+
+    let (:pre_condition) do
+      'include apache'
+    end
+
+    let (:params) do
+      { :logroot => '/var/log/httpd' }
+    end
+
+    it { is_expected.to have_apache__listen_resource_count(0) }
+
+  end
+
 end
