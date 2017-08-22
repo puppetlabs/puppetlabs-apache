@@ -12,6 +12,9 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
   end
 
+  default_ip = '192.168.1.1'
+  default_port = '80'
+
   context "RHEL 6 with only required facts and no parameters" do
 
     let (:facts) do
@@ -19,6 +22,7 @@ describe 'apache::mod::jk', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
+        :ipaddress              => default_ip,
       }
     end
 
@@ -31,6 +35,7 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     it_behaves_like 'minimal resources'
+    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
@@ -44,6 +49,7 @@ describe 'apache::mod::jk', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '8',
+        :ipaddress              => ip,
       }
     end
 
@@ -56,6 +62,7 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     it_behaves_like 'minimal resources'
+    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
