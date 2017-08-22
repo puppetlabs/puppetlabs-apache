@@ -10,9 +10,9 @@
 #
 class apache::mod::jk (
   # Binding to mod_jk
-  $ip                    = $::ipaddress,
-  $port                  = '80',
-  $add_listen            = true,
+  String           $ip         = $::ipaddress,
+  Pattern[/^\d+$/] $port       = '80',
+  Boolean          $add_listen = true,
   # Conf file content
   $workers_file          = undef,
   $worker_property       = {},
