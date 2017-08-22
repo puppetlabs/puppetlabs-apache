@@ -9,6 +9,10 @@
 # https://tomcat.apache.org/connectors-doc/reference/apache.html
 #
 class apache::mod::jk (
+  # Binding to mod_jk
+  $ip                    = $::ipaddress,
+  $port                  = '80',
+  # Conf file content
   $workers_file          = undef,
   $worker_property       = {},
   $logroot               = undef,
@@ -61,6 +65,9 @@ class apache::mod::jk (
   include ::apache
   # Manages basic module config
   ::apache::mod { 'jk': }
+
+  # Binding to mod_jk
+  ensure_resource('apache::listen', "${ip}:${port}", {})
 
   # File resource common parameters
   File {
