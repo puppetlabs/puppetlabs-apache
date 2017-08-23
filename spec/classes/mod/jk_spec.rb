@@ -38,6 +38,7 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     it_behaves_like 'minimal resources'
+    it { is_expected.to have_apache__listen_resource_count(1) }
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
@@ -67,6 +68,7 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     it_behaves_like 'minimal resources'
+    it { is_expected.to have_apache__listen_resource_count(1) }
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
@@ -96,6 +98,7 @@ describe 'apache::mod::jk', :type => :class do
       }
     end
 
+    it { is_expected.to have_apache__listen_resource_count(1) }
     it { is_expected.to contain_apache__listen("#{default_ip}:#{altern8_port}") }
 
   end
