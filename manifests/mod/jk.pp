@@ -10,7 +10,7 @@
 #
 class apache::mod::jk (
   # Binding to mod_jk
-  String           $ip         = $facter['ipaddress'],
+  String           $ip         = $facts['ipaddress'],
   Pattern[/^\d+$/] $port       = '80',
   Boolean          $add_listen = true,
   # Conf file content
