@@ -13,6 +13,7 @@ describe 'apache::mod::jk', :type => :class do
   end
 
   default_ip = '192.168.1.1'
+  altern8_ip = '10.1.2.3'
   default_port = '80'
   altern8_port = '8008'
 
@@ -71,6 +72,32 @@ describe 'apache::mod::jk', :type => :class do
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
+
+  end
+
+  context "RHEL 6 with required facts and alternative IP" do
+
+    let (:facts) do
+      {
+        :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
+        :operatingsystemrelease => '6',
+        :ipaddress              => default_ip,
+      }
+    end
+
+    let (:pre_condition) do
+      'include apache'
+    end
+
+    let (:params) do
+      {
+        :ip      => altern8_ip,
+        :logroot => '/var/log/httpd',
+      }
+    end
+
+    it { is_expected.to contain_apache__listen("#{altern8_ip}:#{default_port}") }
 
   end
 
