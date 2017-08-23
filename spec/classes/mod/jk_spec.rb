@@ -23,6 +23,7 @@ describe 'apache::mod::jk', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
+        :ipaddress              => default_ip,
       }
     end
 
@@ -32,7 +33,6 @@ describe 'apache::mod::jk', :type => :class do
 
     let (:params) do
       {
-        :ip      => default_ip,
         :logroot => '/var/log/httpd',
       }
     end
@@ -52,6 +52,7 @@ describe 'apache::mod::jk', :type => :class do
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '8',
+        :ipaddress              => default_ip,
       }
     end
 
@@ -61,7 +62,6 @@ describe 'apache::mod::jk', :type => :class do
 
     let (:params) do
       {
-        :ip      => default_ip,
         :logroot => '/var/log/apache2',
       }
     end
@@ -82,7 +82,6 @@ describe 'apache::mod::jk', :type => :class do
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
         :ipaddress              => default_ip,
-        :port                   => altern8_port,
       }
     end
 
@@ -92,7 +91,6 @@ describe 'apache::mod::jk', :type => :class do
 
     let (:params) do
       {
-        :ip      => default_ip,
         :port    => altern8_port,
         :logroot => '/var/log/httpd',
       }
@@ -109,7 +107,7 @@ describe 'apache::mod::jk', :type => :class do
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
-        :add_listen             => false,
+        :ipaddress              => default_ip,
       }
     end
 
@@ -119,7 +117,6 @@ describe 'apache::mod::jk', :type => :class do
 
     let (:params) do
       {
-        :ip         => default_ip,
         :add_listen => false,
         :logroot    => '/var/log/httpd',
       }
