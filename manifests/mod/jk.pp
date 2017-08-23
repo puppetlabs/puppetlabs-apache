@@ -10,7 +10,7 @@
 #
 class apache::mod::jk (
   # Binding to mod_jk
-  String           $ip         = $::ipaddress,
+  Optional[String] $ip         = undef,
   Pattern[/^\d+$/] $port       = '80',
   Boolean          $add_listen = true,
   # Conf file content
@@ -69,7 +69,11 @@ class apache::mod::jk (
 
   # Binding to mod_jk
   if $add_listen {
-    ensure_resource('apache::listen', "${ip}:${port}", {})
+    $_ip = $ip ? {
+      undef   => $::ipaddress,
+      default => $ip,
+    }
+    ensure_resource('apache::listen', "${_ip}:${port}", {})
   }
 
   # File resource common parameters
