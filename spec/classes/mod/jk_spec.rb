@@ -16,14 +16,13 @@ describe 'apache::mod::jk', :type => :class do
   default_port = '80'
   altern8_port = '8008'
 
-  context "RHEL 6 with only required facts and no parameters" do
+  context "RHEL 6 with only required facts and default parameters" do
 
     let (:facts) do
       {
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
         :operatingsystemrelease => '6',
-        :ipaddress              => default_ip,
       }
     end
 
@@ -32,7 +31,10 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     let (:params) do
-      { :logroot => '/var/log/httpd' }
+      {
+        :ip      => default_ip,
+        :logroot => '/var/log/httpd',
+      }
     end
 
     it_behaves_like 'minimal resources'
@@ -43,14 +45,13 @@ describe 'apache::mod::jk', :type => :class do
 
   end
 
-  context "Debian 8 with only required facts and no parameters" do
+  context "Debian 8 with only required facts and default parameters" do
 
     let (:facts) do
       {
         :osfamily               => 'Debian',
         :operatingsystem        => 'Debian',
         :operatingsystemrelease => '8',
-        :ipaddress              => ip,
       }
     end
 
@@ -59,7 +60,10 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     let (:params) do
-      { :logroot => '/var/log/apache2' }
+      {
+        :ip      => default_ip,
+        :logroot => '/var/log/apache2',
+      }
     end
 
     it_behaves_like 'minimal resources'
@@ -87,7 +91,11 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     let (:params) do
-      { :logroot => '/var/log/httpd' }
+      {
+        :ip      => default_ip,
+        :port    => altern8_port,
+        :logroot => '/var/log/httpd',
+      }
     end
 
     it { is_expected.to contain_apache__listen("#{default_ip}:#{altern8_port}") }
@@ -110,7 +118,11 @@ describe 'apache::mod::jk', :type => :class do
     end
 
     let (:params) do
-      { :logroot => '/var/log/httpd' }
+      {
+        :ip         => default_ip,
+        :add_listen => false,
+        :logroot    => '/var/log/httpd',
+      }
     end
 
     it { is_expected.to have_apache__listen_resource_count(0) }
