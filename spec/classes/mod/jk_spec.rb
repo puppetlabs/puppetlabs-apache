@@ -14,8 +14,8 @@ describe 'apache::mod::jk', :type => :class do
 
   default_ip = '192.168.1.1'
   altern8_ip = '10.1.2.3'
-  default_port = '80'
-  altern8_port = '8008'
+  default_port = 80
+  altern8_port = 8008
 
   context "RHEL 6 with only required facts and default parameters" do
 
