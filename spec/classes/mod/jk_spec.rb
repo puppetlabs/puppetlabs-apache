@@ -69,7 +69,7 @@ describe 'apache::mod::jk', :type => :class do
 
   end
 
-  let (shm_log_paths) do {
+  let ('shm_log_paths') do {
     :default => {
       :shm_file => :undef,
       :log_file => :undef,
