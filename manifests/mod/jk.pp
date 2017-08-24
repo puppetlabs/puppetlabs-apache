@@ -11,7 +11,7 @@
 class apache::mod::jk (
   # Binding to mod_jk
   Optional[String] $ip         = undef,
-  Pattern[/^\d+$/] $port       = '80',
+  Integer          $port       = 80,
   Boolean          $add_listen = true,
   # Conf file content
   $workers_file                = undef,
