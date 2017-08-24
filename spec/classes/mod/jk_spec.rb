@@ -69,7 +69,7 @@ describe 'apache::mod::jk', :type => :class do
 
   end
 
-  let (:shm_log_paths) do {
+  {
     :default => {
       :shm_file => :undef,
       :log_file => :undef,
@@ -94,8 +94,7 @@ describe 'apache::mod::jk', :type => :class do
       :shm_path => '/var/log/httpd/jk-runtime-status',
       :log_path => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
     },
-  } end
-  :shm_log_paths.each do |option, paths|
+  }.each do |option, paths|
     context "RHEL 6 with #{option} shm_file and log_file paths" do
 
       let (:facts) do
