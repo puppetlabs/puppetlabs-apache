@@ -61,7 +61,7 @@ define apache::vhost(
   $access_log_env_var                                                               = false,
   Optional[Array] $access_logs                                                      = undef,
   $aliases                                                                          = undef,
-  Optional[Variant[Hash, Array[Hash]]] $directories                                 = undef,
+  Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                  = undef,
   Boolean $error_log                                                                = true,
   $error_log_file                                                                   = undef,
   $error_log_pipe                                                                   = undef,
