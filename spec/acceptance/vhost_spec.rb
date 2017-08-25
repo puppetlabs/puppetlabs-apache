@@ -503,8 +503,7 @@ describe 'apache::vhost define' do
           $_directories = [
             { 'path' => '/var/www/files', },
             { 'path' => '/foo/', 'provider' => 'location', 'directoryindex' => 'notindex.html', },
-            $_files_match_directory,
-          ]
+          ] + $_files_match_directory
 
           apache::vhost { 'files.example.net':
             docroot     => '/var/www/files',
