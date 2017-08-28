@@ -32,6 +32,7 @@ describe 'apache::mod::userdir', :type => :class do
         }
       end
       it { should contain_file("userdir.conf").with_content(%r{^\s*UserDir\s+/home/\*/hi$})}
+      it { should contain_file("userdir.conf").with_content(%r{^\s*\<Directory\s+\"/home/\*/hi\"\>$})}
     end
     context "with home set to something" do
       let :params do
@@ -40,6 +41,7 @@ describe 'apache::mod::userdir', :type => :class do
         }
       end
       it { should contain_file("userdir.conf").with_content(%r{^\s*UserDir\s+/u/\*/public_html$})}
+      it { should contain_file("userdir.conf").with_content(%r{^\s*\<Directory\s+\"/u/\*/public_html"\>$})}
     end
     context "with path set to something" do
       let :params do
@@ -48,6 +50,7 @@ describe 'apache::mod::userdir', :type => :class do
         }
       end
       it { should contain_file("userdir.conf").with_content(%r{^\s*UserDir\s+public_html /usr/web http://www\.example\.com/$})}
+      it { should contain_file("userdir.conf").with_content(%r{^\s*\<Directory\s+\"public_html /usr/web http://www\.example\.com/\"\>$})}
     end
   end
 end

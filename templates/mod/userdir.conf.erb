@@ -4,7 +4,7 @@
 <% end -%>
   UserDir <%= @_path %>
 
-  <Directory "<%= @home %>/*/<%= @dir %>">
+  <Directory "<%= @_path %>">
     AllowOverride <%= @overrides.join(' ') %>
     Options <%= @options.join(' ') %>
     <Limit GET POST OPTIONS>
