@@ -84,22 +84,33 @@ class apache::mod::jk (
   }
 
   # Shared memory and log paths
-  if $logroot == undef {
-    $shm_path = "${::apache::logroot}/${shm_file}"
-    $log_path = "${::apache::logroot}/${log_file}"
+  # If logroot unspecified, use default
+  $log_dir = $logroot ? {
+    undef   => $::apache::logroot,
+    default => $logroot,
   }
-  else {
-    $shm_path = "${logroot}/${shm_file}"
-    $log_path = "${logroot}/${log_file}"
+  # If absolute path or pipe, use as-is
+  # If relative path, prepend with log directory
+  # If unspecified, use default
+  $shm_path = $shm_file ? {
+    undef       => "${log_dir}/jk-runtime-status",
+    /^\"?[|\/]/ => $shm_file,
+    default     => "${log_dir}/${shm_file}",
+  }
+  $log_path = $log_file ? {
+    undef       => "${log_dir}/mod_jk.log",
+    /^\"?[|\/]/ => $log_file,
+    default     => "${log_dir}/${log_file}",
   }
 
   # Main config file
+  $mod_dir = $::apache::mod_dir
   file {'jk.conf':
-    path    => "${::apache::mod_dir}/jk.conf",
+    path    => "${mod_dir}/jk.conf",
     content => template('apache/mod/jk.conf.erb'),
     require => [
-      Exec["mkdir ${::apache::mod_dir}"],
-      File[$::apache::mod_dir],
+      Exec["mkdir ${mod_dir}"],
+      File[$mod_dir],
     ],
   }
 

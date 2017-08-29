@@ -1595,6 +1595,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `jk` (see [`apache::mod::jk`])
 * `ldap` (see [`apache::mod::ldap`][])
 * `lookup_identity`
+* `macro` (see [`apache:mod:macro`][])
 * `mime`
 * `mime_magic`\*
 * `negotiation`
@@ -2262,6 +2263,38 @@ $mount_file_content = {
   },
 },
 ```
+
+**shm\_file and log\_file**
+
+Depending on how these files are specified, the class creates their final path differently:
+- Relative path: prepends supplied path with `logroot` (see below)
+- Absolute path or pipe: uses supplied path as-is
+
+Examples (RHEL 6):
+
+```
+shm_file => 'shm_file'
+# Ends up in
+$shm_path = '/var/log/httpd/shm_file'
+```
+```
+shm_file => '/run/shm_file'
+# Ends up in
+$shm_path = '/run/shm_file'
+```
+```
+shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+# Ends up in
+$shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+```
+
+> The default logroot is sane enough. Therefore, it is not recommended to specify absolute paths.
+
+**logroot**
+
+The base directory for `shm_file` and `log_file` is determined by the `logroot` parameter. If unspecified, defaults to `apache::params::logroot`.
+
+> The default logroot is sane enough. Therefore, it is not recommended to override it.
 
 ##### Class: `apache::mod::passenger`
 
