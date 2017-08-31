@@ -636,7 +636,7 @@ describe 'apache', :type => :class do
         it "should fail" do
           expect do
             catalogue
-          end.to raise_error(Puppet::PreformattedError, /Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\], got 'foo'/)
+          end.to raise_error(Puppet::PreformattedError, /Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\]/)
         end
       end
       context "On" do
