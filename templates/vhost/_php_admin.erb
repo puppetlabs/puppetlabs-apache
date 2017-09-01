@@ -6,7 +6,7 @@
 <% if @php_admin_flags and not @php_admin_flags.empty? -%>
   <%- @php_admin_flags.sort.each do |key,flag| -%>
     <%-# normalize flag -%>
-    <%- if flag =~ /true|yes|on|1/i then flag = 'on' else flag = 'off' end -%>
+    <%- if "#{flag}" =~ /true|yes|on|1/i then flag = 'on' else flag = 'off' end -%>
   php_admin_flag <%= key %> <%= flag %>
   <%- end -%>
 <% end -%>

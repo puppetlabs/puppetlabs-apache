@@ -886,10 +886,9 @@ define apache::vhost(
   # - $php_admin_values
   # - $php_admin_flags
   if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
-    concat::fragment { "${name}-php_admin":
-      target  => "apache::vhost::${name}",
-      order   => 250,
-      content => template('apache/vhost/_php_admin.erb'),
+    apache::vhost::php_admin { $name:
+      php_admin_flags  => $php_admin_flags,
+      php_admin_values => $php_admin_values,
     }
   }
 
