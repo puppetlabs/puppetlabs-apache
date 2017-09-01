@@ -9,58 +9,72 @@
 # https://tomcat.apache.org/connectors-doc/reference/apache.html
 #
 class apache::mod::jk (
-  $workers_file          = undef,
-  $worker_property       = {},
-  $logroot               = undef,
-  $shm_file              = undef,
-  $shm_size              = undef,
-  $mount_file            = undef,
-  $mount_file_reload     = undef,
-  $mount                 = {},
-  $un_mount              = {},
-  $auto_alias            = undef,
-  $mount_copy            = undef,
-  $worker_indicator      = undef,
-  $watchdog_interval     = undef,
-  $log_file              = undef,
-  $log_level             = undef,
-  $log_stamp_format      = undef,
-  $request_log_format    = undef,
-  $extract_ssl           = undef,
-  $https_indicator       = undef,
-  $sslprotocol_indicator = undef,
-  $certs_indicator       = undef,
-  $cipher_indicator      = undef,
-  $certchain_prefix      = undef,
-  $session_indicator     = undef,
-  $keysize_indicator     = undef,
-  $local_name_indicator  = undef,
-  $ignore_cl_indicator   = undef,
-  $local_addr_indicator  = undef,
-  $local_port_indicator  = undef,
-  $remote_host_indicator = undef,
-  $remote_addr_indicator = undef,
-  $remote_port_indicator = undef,
-  $remote_user_indicator = undef,
-  $auth_type_indicator   = undef,
-  $options               = [],
-  $env_var               = {},
-  $strip_session         = undef,
+  # Binding to mod_jk
+  Optional[String] $ip         = undef,
+  Integer          $port       = 80,
+  Boolean          $add_listen = true,
+  # Conf file content
+  $workers_file                = undef,
+  $worker_property             = {},
+  $logroot                     = undef,
+  $shm_file                    = 'jk-runtime-status',
+  $shm_size                    = undef,
+  $mount_file                  = undef,
+  $mount_file_reload           = undef,
+  $mount                       = {},
+  $un_mount                    = {},
+  $auto_alias                  = undef,
+  $mount_copy                  = undef,
+  $worker_indicator            = undef,
+  $watchdog_interval           = undef,
+  $log_file                    = 'mod_jk.log',
+  $log_level                   = undef,
+  $log_stamp_format            = undef,
+  $request_log_format          = undef,
+  $extract_ssl                 = undef,
+  $https_indicator             = undef,
+  $sslprotocol_indicator       = undef,
+  $certs_indicator             = undef,
+  $cipher_indicator            = undef,
+  $certchain_prefix            = undef,
+  $session_indicator           = undef,
+  $keysize_indicator           = undef,
+  $local_name_indicator        = undef,
+  $ignore_cl_indicator         = undef,
+  $local_addr_indicator        = undef,
+  $local_port_indicator        = undef,
+  $remote_host_indicator       = undef,
+  $remote_addr_indicator       = undef,
+  $remote_port_indicator       = undef,
+  $remote_user_indicator       = undef,
+  $auth_type_indicator         = undef,
+  $options                     = [],
+  $env_var                     = {},
+  $strip_session               = undef,
   # Location list
   # See comments in template mod/jk.conf.erb
-  $location_list         = [],
+  $location_list               = [],
   # Workers file content
   # See comments in template mod/jk/workers.properties.erb
-  $workers_file_content  = {},
+  $workers_file_content        = {},
   # Mount file content
   # See comments in template mod/jk/uriworkermap.properties.erb
-  $mount_file_content    = {},
+  $mount_file_content          = {},
 ){
 
   # Provides important variables
   include ::apache
   # Manages basic module config
   ::apache::mod { 'jk': }
+
+  # Binding to mod_jk
+  if $add_listen {
+    $_ip = $ip ? {
+      undef   => $facts['ipaddress'],
+      default => $ip,
+    }
+    ensure_resource('apache::listen', "${_ip}:${port}", {})
+  }
 
   # File resource common parameters
   File {

@@ -2154,6 +2154,7 @@ Installs and manages `mod_jk`, a connector for Apache httpd redirection to old v
 
 ``` puppet
 class { '::apache::mod::jk':
+  ip           = '192.168.2.15',
   workers_file = 'conf/workers.properties',
   mount_file   = 'conf/uriworkermap.properties',
   shm_file     = 'run/jk.shm',
@@ -2166,7 +2167,31 @@ class { '::apache::mod::jk':
 
 **Parameters within `apache::mod::jk`**:
 
-The best source for understanding the `mod_jk` parameters is the [official documentation](https://tomcat.apache.org/connectors-doc/reference/apache.html), except for \*file_content:
+The best source for understanding the `mod_jk` parameters is the [official documentation](https://tomcat.apache.org/connectors-doc/reference/apache.html), except for:
+
+**add_listen**
+
+Defines if a `Listen` directive according to parameters `ip` and `port` (see below), so that Apache listens to the IP/port combination and redirect to `mod_jk`.
+Useful when another `Listen` directive, like `Listen *:<Port>` or `Listen <Port>`, can conflict with the one necessary for `mod_jk` binding.
+
+Type: Boolean
+Default: true
+
+**ip**
+
+IP for binding to `mod_jk`.
+Useful when the binding address is not the primary network interface IP.
+
+Type: String
+Default: `$facts['ipaddress']`
+
+**port**
+
+Port for binding to `mod_jk`.
+Useful when something else, like a reverse proxy or cache, is receiving requests at port 80, then needs to forward them to Apache at a different port.
+
+Type: String (numerical)
+Default: '80'
 
 **workers\_file\_content**
 
