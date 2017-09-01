@@ -865,10 +865,10 @@ define apache::vhost(
   # - $suphp_addhandler
   # - $suphp_configpath
   if $suphp_engine == 'on' {
-    concat::fragment { "${name}-suphp":
-      target  => "apache::vhost::${name}",
-      order   => 240,
-      content => template('apache/vhost/_suphp.erb'),
+    apache::vhost::suphp { $name:
+      suphp_engine     => $suphp_engine,
+      suphp_addhandler => $suphp_addhandler,
+      suphp_configpath => $suphp_configpath,
     }
   }
 
