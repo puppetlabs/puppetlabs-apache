@@ -753,11 +753,12 @@ define apache::vhost(
   # Template uses:
   # - $setenv
   # - $setenvif
+  # - $setenvifnocase
   if ($use_env_mod or $use_setenvif_mod) {
-    concat::fragment { "${name}-setenv":
-      target  => "apache::vhost::${name}",
-      order   => 220,
-      content => template('apache/vhost/_setenv.erb'),
+    apache::vhost::setenv { $name:
+      setenv         => $setenv,
+      setenvif       => $setenvif,
+      setenvifnocase => $setenvifnocase,
     }
   }
 

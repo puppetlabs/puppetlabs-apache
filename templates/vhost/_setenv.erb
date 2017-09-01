@@ -1,17 +1,19 @@
-<% if @setenv and ! @setenv.empty? -%>
+<% if (@setenv and ! @setenv.empty?) or (@setenvif and ! @setenvif.empty?) or (@setenvifnocase and ! @setenvifnocase.empty?) -%>
 
   ## SetEnv/SetEnvIf for environment variables
-  <%- Array(@setenv).each do |envvar| -%>
+  <%- if @setenv and ! @setenv.empty? -%>
+    <%- Array(@setenv).each do |envvar| -%>
   SetEnv <%= envvar %>
+    <%- end -%>
   <%- end -%>
-<% end -%>
-<% if @setenvif and ! @setenvif.empty? -%>
-  <%- Array(@setenvif).each do |envifvar| -%>
+  <%- if @setenvif and ! @setenvif.empty? -%>
+    <%- Array(@setenvif).each do |envifvar| -%>
   SetEnvIf <%= envifvar %>
+    <%- end -%>
   <%- end -%>
-<% end -%>
-<% if @setenvifnocase and ! @setenvifnocase.empty? -%>
-  <%- Array(@setenvifnocase).each do |envifncvar| -%>
+  <%- if @setenvifnocase and ! @setenvifnocase.empty? -%>
+    <%- Array(@setenvifnocase).each do |envifncvar| -%>
   SetEnvIfNoCase <%= envifncvar %>
+    <%- end -%>
   <%- end -%>
 <% end -%>
