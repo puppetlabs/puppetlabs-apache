@@ -79,12 +79,16 @@ describe 'apache::mod::prefork', :type => :class do
         'require' => 'Package[httpd]',
         })
       }
+      it { is_expected.to contain_file("/etc/httpd/conf.d/prefork.conf").without({ 'content' => /MaxRequestWorkers/ }) }
+      it { is_expected.to contain_file("/etc/httpd/conf.d/prefork.conf").without({ 'content' => /MaxConnectionsPerChild/ }) }
     end
 
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version         => '2.4',
+          :maxrequestworkers      => '512',
+          :maxconnectionsperchild => '4000'
         }
       end
 
@@ -95,6 +99,8 @@ describe 'apache::mod::prefork', :type => :class do
         'content' => "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n",
         })
       }
+      it { is_expected.to contain_file("/etc/httpd/conf.d/prefork.conf").without({ 'content' => /MaxClients/ }) }
+      it { is_expected.to contain_file("/etc/httpd/conf.d/prefork.conf").without({ 'content' => /MaxRequestsPerChild/ }) }
     end
   end
   context "on a FreeBSD OS" do
