@@ -817,12 +817,20 @@ define apache::vhost(
   # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_check_peer_expire
   # - $ssl_proxy_machine_cert
+  # - $ssl_proxy_cipher_suite
   # - $ssl_proxy_protocol
   if $ssl_proxyengine {
-    concat::fragment { "${name}-sslproxy":
-      target  => "apache::vhost::${name}",
-      order   => 230,
-      content => template('apache/vhost/_sslproxy.erb'),
+    apache::vhost::sslproxy { $name:
+      ssl_proxy_verify            => $ssl_proxy_verify,
+      ssl_proxy_verify_depth      => $ssl_proxy_verify_depth,
+      ssl_proxy_ca_cert           => $ssl_proxy_ca_cert,
+      ssl_proxy_check_peer_cn     => $ssl_proxy_check_peer_cn,
+      ssl_proxy_check_peer_name   => $ssl_proxy_check_peer_name,
+      ssl_proxy_check_peer_expire => $ssl_proxy_check_peer_expire,
+      ssl_proxy_machine_cert      => $ssl_proxy_machine_cert,
+      ssl_proxy_cipher_suite      => $ssl_proxy_cipher_suite,
+      ssl_proxy_protocol          => $ssl_proxy_protocol,
+      ssl_proxyengine             => $ssl_proxyengine,
     }
   }
 
