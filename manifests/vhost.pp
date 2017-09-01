@@ -745,10 +745,8 @@ define apache::vhost(
   # Template uses:
   # - $serveraliases
   if $serveraliases and ! empty($serveraliases) {
-    concat::fragment { "${name}-serveralias":
-      target  => "apache::vhost::${name}",
-      order   => 210,
-      content => template('apache/vhost/_serveralias.erb'),
+    apache::vhost::serveralias { $name:
+      serveraliases => $serveraliases,
     }
   }
 
