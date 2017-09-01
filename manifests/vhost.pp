@@ -842,11 +842,21 @@ define apache::vhost(
   # - $krb_auth_realms
   # - $krb_5keytab
   # - $krb_local_user_mapping
+  # - $krb_verify_kdc
+  # - $krb_servicename
+  # - $krb_save_credentials
   if $auth_kerb {
-    concat::fragment { "${name}-auth_kerb":
-      target  => "apache::vhost::${name}",
-      order   => 230,
-      content => template('apache/vhost/_auth_kerb.erb'),
+    apache::vhost::auth_kerb { $name:
+      auth_kerb              => $auth_kerb,
+      krb_method_negotiate   => $krb_method_negotiate,
+      krb_method_k5passwd    => $krb_method_k5passwd,
+      krb_authoritative      => $krb_authoritative,
+      krb_auth_realms        => $krb_auth_realms,
+      krb_5keytab            => $krb_5keytab,
+      krb_local_user_mapping => $krb_local_user_mapping,
+      krb_verify_kdc         => $krb_verify_kdc,
+      krb_servicename        => $krb_servicename,
+      krb_save_credentials   => $krb_save_credentials,
     }
   }
 
