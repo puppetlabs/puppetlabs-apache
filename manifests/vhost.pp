@@ -735,11 +735,10 @@ define apache::vhost(
   # Template uses:
   # - $scriptaliases
   # - $scriptalias
-  if ( $scriptalias or $scriptaliases != [] ) {
-    concat::fragment { "${name}-scriptalias":
-      target  => "apache::vhost::${name}",
-      order   => 200,
-      content => template('apache/vhost/_scriptalias.erb'),
+  if ( $scriptalias or $scriptaliases != [] ) and $ensure == 'present' {
+    apache::vhost::scriptalias { $name:
+      scriptaliases => $scriptaliases,
+      scriptalias   => $scriptalias,
     }
   }
 
