@@ -780,12 +780,31 @@ define apache::vhost(
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
+  # - $ssl_stapling_timeout
+  # - $ssl_stapling_return_errors
   # - $apache_version
-  if $ssl {
-    concat::fragment { "${name}-ssl":
-      target  => "apache::vhost::${name}",
-      order   => 230,
-      content => template('apache/vhost/_ssl.erb'),
+  if $ssl and $ensure == 'present' {
+    apache::vhost::ssl { $name:
+      ssl                        => $ssl,
+      ssl_cert                   => $ssl_cert,
+      ssl_key                    => $ssl_key,
+      ssl_chain                  => $ssl_chain,
+      ssl_certs_dir              => $ssl_certs_dir,
+      ssl_ca                     => $ssl_ca,
+      ssl_crl_path               => $ssl_crl_path,
+      ssl_crl                    => $ssl_crl,
+      ssl_crl_check              => $ssl_crl_check,
+      ssl_protocol               => $ssl_protocol,
+      ssl_cipher                 => $ssl_cipher,
+      ssl_honorcipherorder       => $ssl_honorcipherorder,
+      ssl_verify_client          => $ssl_verify_client,
+      ssl_verify_depth           => $ssl_verify_depth,
+      ssl_options                => $ssl_options,
+      ssl_openssl_conf_cmd       => $ssl_openssl_conf_cmd,
+      ssl_stapling               => $ssl_stapling,
+      ssl_stapling_timeout       => $ssl_stapling_timeout,
+      ssl_stapling_return_errors => $ssl_stapling_return_errors,
+      apache_version             => $apache_version,
     }
   }
 
