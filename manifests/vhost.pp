@@ -721,12 +721,14 @@ define apache::vhost(
   # - $rewrite_base
   # - $rewrite_rule
   # - $rewrite_cond
-  # - $rewrite_map
-  if $rewrites or $rewrite_rule {
-    concat::fragment { "${name}-rewrite":
-      target  => "apache::vhost::${name}",
-      order   => 190,
-      content => template('apache/vhost/_rewrite.erb'),
+  # - $rewrite_inherit
+  if ( $rewrites or $rewrite_rule ) and $ensure == 'present' {
+    apache::vhost::rewrites { $name:
+      rewrites        => $rewrites,
+      rewrite_base    => $rewrite_base,
+      rewrite_rule    => $rewrite_rule,
+      rewrite_cond    => $rewrite_cond,
+      rewrite_inherit => $rewrite_inherit,
     }
   }
 
