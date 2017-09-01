@@ -876,10 +876,9 @@ define apache::vhost(
   # - $php_values
   # - $php_flags
   if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
-    concat::fragment { "${name}-php":
-      target  => "apache::vhost::${name}",
-      order   => 240,
-      content => template('apache/vhost/_php.erb'),
+    apache::vhost::php { $name:
+      php_values => $php_values,
+      php_flags  => $php_flags,
     }
   }
 
