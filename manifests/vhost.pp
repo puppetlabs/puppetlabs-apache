@@ -957,10 +957,8 @@ define apache::vhost(
   # Template uses:
   # - $suexec_user_group
   if $suexec_user_group {
-    concat::fragment { "${name}-suexec":
-      target  => "apache::vhost::${name}",
-      order   => 290,
-      content => template('apache/vhost/_suexec.erb'),
+    apache::vhost::suexec { $name:
+      suexec_user_group => $suexec_user_group,
     }
   }
 
