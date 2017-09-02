@@ -310,7 +310,6 @@ define apache::vhost(
     $modsec_audit_log_destination = undef
   }
 
-
   if $ip {
     $_ip = any2array(enclose_ipv6($ip))
     if $port {
@@ -1010,11 +1009,21 @@ define apache::vhost(
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
+  #   (built from $ssl, $modsec_audit_log, $modsec_audit_log_file,
+  #    $modsec_audit_log_pipe, and $logroot)
   if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
-    concat::fragment { "${name}-security":
-      target  => "apache::vhost::${name}",
-      order   => 320,
-      content => template('apache/vhost/_security.erb'),
+    apache::vhost::security { $name:
+      ssl                   => $ssl,
+      modsec_audit_log      => $modsec_audit_log,
+      modsec_audit_log_file => $modsec_audit_log_file,
+      modsec_audit_log_pipe => $modsec_audit_log_pipe,
+      logroot               => $logroot,
+      modsec_disable_vhost  => $modsec_disable_vhost,
+      modsec_disable_ids    => $modsec_disable_ids,
+      modsec_disable_ips    => $modsec_disable_ips,
+      modsec_disable_msgs   => $modsec_disable_msgs,
+      modsec_disable_tags   => $modsec_disable_tags,
+      modsec_body_limit     => $modsec_body_limit,
     }
   }
 
