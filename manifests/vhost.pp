@@ -1038,10 +1038,8 @@ define apache::vhost(
   # Template uses:
   # - $jk_mounts
   if $jk_mounts and ! empty($jk_mounts) {
-    concat::fragment { "${name}-jk_mounts":
-      target  => "apache::vhost::${name}",
-      order   => 340,
-      content => template('apache/vhost/_jk_mounts.erb'),
+    apache::vhost::jk_mounts { $name:
+      jk_mounts => $jk_mounts,
     }
   }
 
