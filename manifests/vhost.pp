@@ -927,10 +927,8 @@ define apache::vhost(
   # Template uses:
   # - $custom_fragment
   if $custom_fragment {
-    concat::fragment { "${name}-custom_fragment":
-      target  => "apache::vhost::${name}",
-      order   => 270,
-      content => template('apache/vhost/_custom_fragment.erb'),
+    apache::vhost::custom_fragment { $name:
+      custom_fragment => $custom_fragment,
     }
   }
 
