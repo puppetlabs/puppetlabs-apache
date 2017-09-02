@@ -899,13 +899,28 @@ define apache::vhost(
   # - $wsgi_import_script
   # - $wsgi_import_script_options
   # - $wsgi_process_group
-  # - $wsgi_script_aliases
   # - $wsgi_pass_authorization
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
-    concat::fragment { "${name}-wsgi":
-      target  => "apache::vhost::${name}",
-      order   => 260,
-      content => template('apache/vhost/_wsgi.erb'),
+  # - $wsgi_chunked_request
+  if ( $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or $wsgi_pass_authorization or $wsgi_chunked_request ) and $ensure == 'present' {
+    apache::vhost::wsgi { $name:
+      wsgi_application_group      => $wsgi_application_group,
+      wsgi_daemon_process         => $wsgi_daemon_process,
+      wsgi_daemon_process_options => $wsgi_daemon_process_options,
+      wsgi_import_script          => $wsgi_import_script,
+      wsgi_import_script_options  => $wsgi_import_script_options,
+      wsgi_process_group          => $wsgi_process_group,
+      wsgi_pass_authorization     => $wsgi_pass_authorization,
+      wsgi_chunked_request        => $wsgi_chunked_request,
+    }
+  }
+
+  # Template uses:
+  # - $wsgi_script_aliases
+  # - $wsgi_script_aliases_match
+  if ( ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or ($wsgi_script_aliases_match and ! empty($wsgi_script_aliases_match)) ) and $ensure == 'present' {
+    apache::vhost::wsgi_script_aliases { $name:
+      wsgi_script_aliases       => $wsgi_script_aliases,
+      wsgi_script_aliases_match => $wsgi_script_aliases_match,
     }
   }
 

@@ -774,6 +774,7 @@ describe 'apache::vhost', type: :define do
       }
       it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi_script_aliases') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
@@ -1317,6 +1318,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-header') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-requestheader') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-wsgi') }
+      it { is_expected.not_to contain_concat__fragment('rspec.example.com-wsgi_script_aliases') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-fastcgi') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-suexec') }
