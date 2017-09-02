@@ -1,0 +1,18 @@
+<% if @fastcgi_dir -%>
+
+  <Directory "<%= @fastcgi_dir %>">
+    Options +ExecCGI
+    AllowOverride All
+    SetHandler fastcgi-script
+  <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+    Require all granted
+  <%- else -%>
+    Order allow,deny
+    Allow From All
+  <%- end -%>
+    AuthBasicAuthoritative Off
+  </Directory>
+
+  AllowEncodedSlashes On
+  ServerSignature Off
+<% end -%>

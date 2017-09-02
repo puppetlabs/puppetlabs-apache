@@ -935,14 +935,22 @@ define apache::vhost(
   # Template uses:
   # - $fastcgi_server
   # - $fastcgi_socket
-  # - $fastcgi_dir
   # - $fastcgi_idle_timeout
+  if $fastcgi_server {
+    apache::vhost::fastcgi_server { $name:
+      fastcgi_server       => $fastcgi_server,
+      fastcgi_socket       => $fastcgi_socket,
+      fastcgi_idle_timeout => $fastcgi_idle_timeout,
+    }
+  }
+
+  # Template uses:
+  # - $fastcgi_dir
   # - $apache_version
-  if $fastcgi_server or $fastcgi_dir {
-    concat::fragment { "${name}-fastcgi":
-      target  => "apache::vhost::${name}",
-      order   => 280,
-      content => template('apache/vhost/_fastcgi.erb'),
+  if $fastcgi_dir {
+    apache::vhost::fastcgi_dir { $name:
+      fastcgi_dir    => $fastcgi_dir,
+      apache_version => $apache_version,
     }
   }
 

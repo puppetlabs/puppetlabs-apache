@@ -777,6 +777,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi_script_aliases') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
+      it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi_dir') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-allow_encoded_slashes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
@@ -1321,6 +1322,7 @@ describe 'apache::vhost', type: :define do
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-wsgi_script_aliases') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-custom_fragment') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-fastcgi') }
+      it { is_expected.not_to contain_concat__fragment('rspec.example.com-fastcgi_dir') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-suexec') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-charsets') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-limits') }
