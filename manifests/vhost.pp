@@ -1030,10 +1030,8 @@ define apache::vhost(
   # Template uses:
   # - $filters
   if $filters and ! empty($filters) {
-    concat::fragment { "${name}-filters":
-      target  => "apache::vhost::${name}",
-      order   => 330,
-      content => template('apache/vhost/_filters.erb'),
+    apache::vhost::filters { $name:
+      filters => $filters,
     }
   }
 
