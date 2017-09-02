@@ -997,10 +997,8 @@ define apache::vhost(
   # Template uses:
   # - $add_default_charset
   if $add_default_charset {
-    concat::fragment { "${name}-charsets":
-      target  => "apache::vhost::${name}",
-      order   => 310,
-      content => template('apache/vhost/_charsets.erb'),
+    apache::vhost::default_charset { $name:
+      add_default_charset => $add_default_charset,
     }
   }
 
