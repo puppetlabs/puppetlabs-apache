@@ -1056,12 +1056,23 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $cas_*
+  # - $cas_attribute_delimiter
+  # - $cas_attribute_prefix
+  # - $cas_login_url
+  # - $cas_scrub_request_headers
+  # - $cas_sso_enabled
+  # - $cas_validate_saml
+  # - $cas_validate_url
+  # + a bunch more variables that are never defined here?
   if $cas_enabled {
-    concat::fragment { "${name}-auth_cas":
-      target  => "apache::vhost::${name}",
-      order   => 350,
-      content => template('apache/vhost/_auth_cas.erb'),
+    apache::vhost::auth_cas { $name:
+      cas_attribute_delimiter   => $cas_attribute_prefix,
+      cas_attribute_prefix      => $cas_attribute_prefix,
+      cas_login_url             => $cas_login_url,
+      cas_scrub_request_headers => $cas_scrub_request_headers,
+      cas_sso_enabled           => $cas_sso_enabled,
+      cas_validate_saml         => $cas_validate_saml,
+      cas_validate_url          => $cas_validate_url,
     }
   }
 
