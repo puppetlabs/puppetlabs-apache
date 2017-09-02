@@ -1079,10 +1079,8 @@ define apache::vhost(
   # Template uses:
   # - $http_protocol_options
   if $http_protocol_options {
-    concat::fragment { "${name}-http_protocol_options":
-      target  => "${priority_real}${filename}.conf",
-      order   => 350,
-      content => template('apache/vhost/_http_protocol_options.erb'),
+    apache::vhost::http_protocol_options { $name:
+      http_protocol_options => $http_protocol_options,
     }
   }
 
