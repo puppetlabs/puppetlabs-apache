@@ -1048,10 +1048,10 @@ define apache::vhost(
   # - $keepalive_timeout
   # - $max_keepalive_requests
   if $keepalive or $keepalive_timeout or $max_keepalive_requests {
-    concat::fragment { "${name}-keepalive_options":
-      target  => "apache::vhost::${name}",
-      order   => 350,
-      content => template('apache/vhost/_keepalive_options.erb'),
+    apache::vhost::keepalive_options { $name:
+      keepalive              => $keepalive,
+      keepalive_timeout      => $keepalive_timeout,
+      max_keepalive_requests => $max_keepalive_requests,
     }
   }
 
