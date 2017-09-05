@@ -392,6 +392,7 @@ describe 'apache::vhost', :type => :define do
           'use_optional_includes'       => true,
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
+          'passenger_spawn_method'      => 'direct',
           'passenger_app_root'          => '/usr/share/myapp',
           'passenger_app_env'           => 'test',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
