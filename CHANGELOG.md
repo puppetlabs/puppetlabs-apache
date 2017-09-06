@@ -1,3 +1,14 @@
+## Supported Release 1.11.1
+#### Summary
+This is a security patch release (CVE-2017-2299)
+
+#### Changed
+- $ssl_certs_dir default to `undef` for all platorms
+- $ssl_verify_client must now be set to use any of the following: `$ssl_certs_dir`, `$ssl_ca`, `$ssl_crl_path`, `$ssl_crl`, `$ssl_verify_depth`, `$ssl_crl_check`
+
+#### Fixed
+- **Issue where the $ssl_certs_dir default set Apache to implicitly trust all client certificates that were issued by any CA in that directory** ([MODULES-5471](https://tickets.puppet.com/browse/MODULES-5471))
+
 ## Supported Release 1.11.0
 #### Summary
 This release adds SLES12 Support and many more features and bugfixes.
