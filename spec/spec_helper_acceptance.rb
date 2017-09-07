@@ -61,7 +61,7 @@ RSpec.configure do |c|
 
       # Required for manifest to make mod_pagespeed repository available
       if fact('osfamily') == 'Debian'
-        on host, puppet('module','install','puppetlabs-apt')
+        on host, puppet('module','install','puppetlabs-apt','-v','2.4.0')
       end
 
       # Make sure selinux is disabled so the tests work.
