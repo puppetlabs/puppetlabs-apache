@@ -1437,7 +1437,7 @@ Defines the pattern for files included from the `vhost_dir`.
 
 If set to a value like `[^.#]\*.conf[^~]` to make sure that files accidentally created in this directory (such as files created by version control systems or editor backups) are *not* included in your server configuration.
 
-Default: '*', also for BC with previous versions of this module. TODO: what does "also for BC" mean?
+Default: '*'.
 
 Some operating systems use a value of `*.conf`. By default, this module creates configuration files ending in `.conf`.
 
@@ -2450,7 +2450,7 @@ Installs and configures `mod_passenger`.
 
 >**Note**: The passenger module isn't available on RH/CentOS without providing the dependency packages provided by EPEL and the `mod_passengers` custom repository. See the `manage_repo` parameter above and [https://www.phusionpassenger.com/library/install/apache/install/oss/el7/]()
 
-**Parameters**: [TODO: parameters were not listed (except `manage_repo`), so I pulled them out of the manifest. I need to know what these parameters do and what their values can be OR a link that points external documentation for the parameter mapping (as with mod_pagespeed above) <!--see also MODULES-4745-->]
+**Parameters**:
 
 * `passenger_conf_file`: `$::apache::params::passenger_conf_file`
 * `passenger_conf_package_file: `$::apache::params::passenger_conf_package_file`
@@ -2486,8 +2486,6 @@ Installs and configures `mod_passenger`.
 Installs `mod_proxy` and uses the `proxy.conf.erb` template to generate its configuration.
 
 **Parameters within `apache::mod::proxy`**:
-
-TODO: What do these parameters do?
 
 - `allow_from`: Default: `undef`.
 - `apache_version`: Default: `undef`.
@@ -2952,7 +2950,7 @@ Default: '25'.
 
 ##### `source`
 
-Points to the configuration file's source. The [`content`][] and `source` parameters are exclusive of each other. TODO: is this required or does it have a default value?
+Points to the configuration file's source. The [`content`][] and `source` parameters are exclusive of each other.
 
 Default: `undef`
 
