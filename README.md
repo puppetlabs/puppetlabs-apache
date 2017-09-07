@@ -3778,6 +3778,10 @@ Sets the overrides for the specified virtual host. Accepts an array of [AllowOve
 
 Default: '[none]'.
 
+##### `passenger_spawn_method`
+
+Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/library/config/apache/reference/#passengerspawnmethod), whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
+
 ##### `passenger_app_root`
 
 Sets [PassengerRoot](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapproot), the location of the Passenger application root if different from the DocumentRoot.
