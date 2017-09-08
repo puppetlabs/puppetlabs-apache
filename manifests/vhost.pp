@@ -225,7 +225,7 @@ define apache::vhost(
     include ::apache::mod::vhost_alias
   }
 
-  if $wsgi_daemon_process {
+  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
     include ::apache::mod::wsgi
   }
 
