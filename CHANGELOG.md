@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [2.1.0]
+### Summary
+This is a feature release including a security patch (CVE-2017-2299)
+
+#### Added
+- `apache::mod::jk` class for managing the mod_jk connector
+- `apache_pw_hash` function
+- the ProxyPass directive in location contexts
+- more Puppet 4 type validation
+- `apache::mod::macro` class for managing mod_macro
+
+#### Changed
+- $ssl_certs_dir default to `undef` for all platorms
+- $ssl_verify_client must now be set to use any of the following: `$ssl_certs_dir`, `$ssl_ca`, `$ssl_crl_path`, `$ssl_crl`, `$ssl_verify_depth`, `$ssl_crl_check`
+
+#### Fixed
+- issue where mod_alias was not being loaded when RedirectMatch* directives were being used ([MODULES-3942](https://tickets.puppet.com/browse/MODULES-3942))
+- issue with `$directories` parameter in `apache::vhost`
+- issue in UserDir template where the UserDir path did not match the Directory path
+- **Issue where the $ssl_certs_dir default set Apache to implicitly trust all client certificates that were issued by any CA in that directory**
+
+#### Removed
+- support for EOL platforms: Ubuntu 10.04, 12.04 and Debian 6 (Squeeze)
+
 ## Supported Release [2.0.0]
 ### Summary
 Major release **removing Puppet 3 support** and other backwards-incompatible changes.
@@ -46,6 +70,17 @@ Major release **removing Puppet 3 support** and other backwards-incompatible cha
 - mod::cgi ordering for FreeBSD
 - issue where ProxyPreserveHost could not be set without other Proxy* directives
 - the module attempting to install proxy_html on Ubuntu Xenial and Debian Stretch
+
+## Supported Release [1.11.1]
+#### Summary
+This is a security patch release (CVE-2017-2299). These changes are also in version 2.1.0 and higher.
+
+#### Changed
+- $ssl_certs_dir default to `undef` for all platorms
+- $ssl_verify_client must now be set to use any of the following: `$ssl_certs_dir`, `$ssl_ca`, `$ssl_crl_path`, `$ssl_crl`, `$ssl_verify_depth`, `$ssl_crl_check`
+
+#### Fixed
+- **Issue where the $ssl_certs_dir default set Apache to implicitly trust all client certificates that were issued by any CA in that directory** ([MODULES-5471](https://tickets.puppet.com/browse/MODULES-5471))
 
 ## Supported Release [1.11.0]
 ### Summary
@@ -864,7 +899,9 @@ worker/prefork
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
 
+[2.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.0.0...2.1.0
 [2.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...2.0.0
+[1.11.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...1.11.1
 [1.11.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.10.0...1.11.0
 [1.10.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.9.0...1.10.0
 [1.9.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.8.1...1.9.0
