@@ -3713,7 +3713,9 @@ Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS querie
 
 ##### `ssl_ca`
 
-Specifies the SSL certificate authority. Default: undef.
+Specifies the SSL certificate authority to be used to verify client certificates used for authentication. You must also set `ssl_verify_client` to use this.
+
+Default: `undef`.
 
 ##### `ssl_cert`
 
@@ -3733,12 +3735,9 @@ Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.htm
 
 ##### `ssl_certs_dir`
 
-Specifies the location of the SSL certification directory. Default: Depends on the operating system.
+Specifies the location of the SSL certification directory to verify client certs. Will not be used unless `ssl_verify_client` is also set (see below).
 
-- **Debian:** '/etc/ssl/certs'
-- **Red Hat:** '/etc/pki/tls/certs'
-- **FreeBSD:** undef
-- **Gentoo:** '/etc/ssl/apache2'
+Default: undef
 
 ##### `ssl_chain`
 
@@ -3750,11 +3749,15 @@ Specifies the certificate revocation list to use. Default: undef. (This default 
 
 ##### `ssl_crl_path`
 
-Specifies the location of the certificate revocation list. Default: undef. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+Specifies the location of the certificate revocation list to verify certificates for client authentication with. (This default works out of the box but must be updated in the base `apache` class with your specific certificate information before being used in production.)
+
+Default: `undef`.
 
 ##### `ssl_crl_check`
 
-Sets the certificate revocation check level via the [SSLCARevocationCheck directive](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). Default: undef. This default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
+Sets the certificate revocation check level via the [SSLCARevocationCheck directive] for ssl client authentication (https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). The default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
+
+Default: `undef`.
 
 ##### `ssl_key`
 
@@ -3773,11 +3776,14 @@ apache::vhost { 'sample.example.net':
 
 ##### `ssl_verify_depth`
 
-Sets the [SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth) directive, which specifies the maximum depth of CA certificates in client certificate verification. Default: undef.
+Sets the [SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth) directive, which specifies the maximum depth of CA certificates in client certificate verification. You must set `ssl_verify_client` for it to take effect.
+
+Default: `undef`
 
 ``` puppet
 apache::vhost { 'sample.example.net':
   …
+  ssl_verify_client => 'require',
   ssl_verify_depth => 1,
 }
 ```

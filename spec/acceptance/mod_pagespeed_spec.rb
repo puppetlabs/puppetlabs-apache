@@ -6,6 +6,7 @@ require_relative './version.rb'
 describe 'apache::mod::pagespeed class', :unless =>
   ((fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') < '8') or
    (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') < '12') or
+   (fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') < '6') or
    (fact('operatingsystem') == 'SLES' )) do
   context "default pagespeed config" do
     it 'succeeds in puppeting pagespeed' do
@@ -26,7 +27,7 @@ describe 'apache::mod::pagespeed class', :unless =>
          yumrepo { 'mod-pagespeed':
           baseurl  => "http://dl.google.com/linux/mod-pagespeed/rpm/stable/$::architecture",
             enabled  => 1,
-            gpgcheck => 1,
+            gpgcheck => 0,
             gpgkey   => 'https://dl-ssl.google.com/linux/linux_signing_key.pub',
             before   => Class['apache'],
           }
