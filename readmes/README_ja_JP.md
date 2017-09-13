@@ -2391,7 +2391,7 @@ NSS暗号化ライブラリを使用するApacheのSSLプロバイダ。
 
 >**注意**: passengerモジュールは、EPELにより提供される依存関係パッケージと`mod_passengers`カスタムリポジトリがなければ、RH/CentOSでは使用できません。前述の`manage_repo`パラメータと[https://www.phusionpassenger.com/library/install/apache/install/oss/el7/]()を参照してください。
 
-**パラメータ**: [TODO: パラメータがリスト化されていなかったため(`manage_repo`は除く)、マニフェストから引き出しました。これらのパラメータの機能と可能な値、または(前述のmod_pagespeedによる)パラメータマッピングに関する外部ドキュメントを示すリンクを知る必要があります。<!--MODULES-4745も参照-->]
+**パラメータ**:__``<>
 
 * `passenger_conf_file`: `$::apache::params::passenger_conf_file`
 * `passenger_conf_package_file: `$::apache::params::passenger_conf_package_file`
