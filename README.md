@@ -5030,7 +5030,7 @@ Default: `undef`.
 
 ##### `ssl_crl_check`
 
-Sets the certificate revocation check level via the [SSLCARevocationCheck directive] for ssl client authentication (https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck). The default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
+Sets the certificate revocation check level via the [SSLCARevocationCheck directive](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck) for ssl client authentication. The default works out of the box but must be specified when using CRLs in production. Only applicable to Apache 2.4 or higher; the value is ignored on older versions.
 
 Default: `undef`.
 
