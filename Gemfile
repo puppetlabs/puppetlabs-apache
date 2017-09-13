@@ -53,6 +53,7 @@ group :development do
 end
 
 group :system_tests do
+  gem 'specinfra', '2.66.0',                                                     :require => false
   gem 'beaker', *location_for(ENV['BEAKER_VERSION'] || '~> 2.20')                if supports_windows
   gem 'beaker', *location_for(ENV['BEAKER_VERSION'])                             if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0') and ! supports_windows
   gem 'beaker', *location_for(ENV['BEAKER_VERSION'] || '< 3')                    if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.3.0') and ! supports_windows
