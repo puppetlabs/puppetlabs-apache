@@ -3782,6 +3782,10 @@ Default: '[none]'.
 
 Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/library/config/apache/reference/#passengerspawnmethod), whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 
+Valid options: `smart` or `direct`.
+
+Default: `undef`.
+
 ##### `passenger_app_root`
 
 Sets [PassengerRoot](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapproot), the location of the Passenger application root if different from the DocumentRoot.
