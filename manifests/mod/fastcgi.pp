@@ -1,6 +1,8 @@
 class apache::mod::fastcgi {
   include ::apache
-
+  if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemrelease, '7.0') >= 0) {
+    fail('mod_fastcgi is no longer supported on el7 and above.')
+  }
   # Debian specifies it's fastcgi lib path, but RedHat uses the default value
   # with no config file
   $fastcgi_lib_path = $::apache::params::fastcgi_lib_path

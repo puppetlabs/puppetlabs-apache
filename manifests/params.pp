@@ -106,7 +106,11 @@ class apache::params inherits ::apache::version {
         default => 'mod_authz_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
-      'fastcgi'               => 'mod_fastcgi',
+      'fastcgi'               => $::apache::version::distrelease ? {
+        '5'     => 'mod_fastcgi',
+        '6'     => 'mod_fastcgi',
+        default => undef,
+      },
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
