@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [2.2.0]
+### Summary
+This is a maintainence and feature release. It will include updates to translations in Japanese, some maintainence and adding `PassengerSpawnMethod` to vhost.
+
+#### Added
+- `PassengerSpawnMethod` added to `vhost`.
+
+#### Changed
+- Improve version match fact for `apache_version`
+- Update to prefork.conf params for Apache 2.4
+- Updates to `CONTRIBUTING.md`
+- Do not install mod_fastcgi on el7
+- Include mod_wsgi when using wsgi options
+
 ## Supported Release [2.1.0]
 ### Summary
 This is a feature release including a security patch (CVE-2017-2299)
@@ -899,6 +913,7 @@ worker/prefork
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
 
+[2.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.1.0...2.2.0
 [2.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.0.0...2.1.0
 [2.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...2.0.0
 [1.11.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...1.11.1
