@@ -2242,8 +2242,7 @@ $mount_file_content = {
 
 Installs and manages [`mod_passenger`][]. For Red Hat-based systems, ensure that you meet the minimum requirements described in the [passenger docs](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux).
 
-The current set of server configurations settings were taking directly from the [Passenger Reference](https://www.phusionpassenger.com/library/config/apache/reference/). Deprecation warning and removal failure messages can be enabled by setting the `passenger_installed_version` to
-the version number installed on the server.
+The current set of server configurations settings were taken directly from the [Passenger Reference](https://www.phusionpassenger.com/library/config/apache/reference/). To enable deprecation warnings and removal failure messages, set the `passenger_installed_version` to the version number installed on the server.
 
 **Parameters**:
 
