@@ -8,6 +8,7 @@ class apache::mod::prefork (
   $maxrequestsperchild    = '4000',
   $maxconnectionsperchild = undef,
   $apache_version         = undef,
+  $listenbacklog          = '511'
 ) {
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
