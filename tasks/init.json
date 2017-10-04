@@ -1,0 +1,12 @@
+{
+  "summary": "Allows you to perform apache functions",
+  "description": "Allows you to perform apache functions",
+  "supports_noop": false,
+  "input_method": "stdin",
+  "parameters": {
+    "action": {
+      "description": "Action to perform ",
+      "type": "Enum[reload]"
+    }
+  }
+}

@@ -24,6 +24,7 @@
 [Public defined types]: #public-defined-types
 [Private defined types]: #private-defined-types
 [Templates]: #templates
+[Tasks]: #tasks
 
 [Limitations]: #limitations
 
@@ -287,6 +288,7 @@
     - [Public defined types][]
     - [Private defined types][]
     - [Templates][]
+    - [Tasks][]
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
     - [Contributing to the apache module][Contributing]
@@ -814,6 +816,7 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
     - [Defined type: apache::peruser::processor](#defined-type-apacheperuserprocessor)
     - [Defined type: apache::security::file_link](#defined-type-apachesecurityfile_link)
 - [**Templates**](#templates)
+- [**Tasks**](#tasks)
 
 ### Public Classes
 
@@ -5329,6 +5332,10 @@ Links the `activated_rules` from [`apache::mod::security`][] to the respective C
 ### Templates
 
 The Apache module relies heavily on templates to enable the [`apache::vhost`][] and [`apache::mod`][] defined types. These templates are built based on [Facter][] facts specific to your operating system. Unless explicitly called out, most templates are not meant for configuration.
+
+### Tasks
+
+The Apache module has an example task that allows a user to reload the Apache config without restarting the service. Please refer to to the PE documentation or Bolt documentation on how to execute a task.
 
 ### Functions
 #### apache_pw_hash
