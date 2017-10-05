@@ -29,7 +29,6 @@
 
 [開発]: #development
 [貢献]: #contributing
-[テスト]: #testing
 
 [`AddDefaultCharset`]: https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
 [`add_listen`]: #add_listen
@@ -90,6 +89,7 @@
 [コモンゲートウェイインターフェース]: https://httpd.apache.org/docs/current/howto/cgi.html
 [`confd_dir`]: #confd_dir
 [`content`]: #content
+[CONTRIBUTING.md]: CONTRIBUTING.md
 [カスタムエラードキュメント]: https://httpd.apache.org/docs/current/custom-error.html
 [`custom_fragment`]: #custom_fragment
 
@@ -1369,7 +1369,7 @@ HTTPDサービスの再起動にあたり、Puppetが特定のコマンドを使
 
 ##### `ssl_ca`
 
-SSL証明書認証局を指定します。 [SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile)。
+SSL証明書認証局を指定します。[SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile)を使用してSSLクライアント認証で使用する証明書を確認します。
 
 これはバーチャルホストレベルでオーバーライドすることが可能です。
 
@@ -1437,7 +1437,7 @@ httpd.confの/ディレクトリについて、デフォルトのアクセスポ
 
 `[^.#]\*.conf[^~]`などの値に設定すると、このディレクトリで偶発的に作成されたファイル(バージョン管理システムやエディタのバックアップにより作成されたファイルなど)がサーバ設定に*含まれなく*なります。
 
-デフォルト: '*'、また、このモジュールの過去のバージョンのBC。
+デフォルト値: '*'。
 
 一部のオペレーティングシステムでは、`*.conf`の値が使用されます。デフォルトでは、このモジュールは`.conf`で終わる設定ファイルを作成します。
 
@@ -1595,6 +1595,7 @@ class { 'apache::mod::alias':
 * `jk` ([`apache::mod::jk`]参照)
 * `ldap` ([`apache::mod::ldap`][]参照)
 * `lookup_identity`
+* `macro` ([`apache:mod:macro`][]参照)
 * `mime`
 * `mime_magic`\*
 * `negotiation`
@@ -1636,7 +1637,7 @@ class { 'apache::mod::alias':
 
 [`mod_alias`][]をインストールして管理します。
 
-**パラメータ**:
+**パラメータ**:　
 
 * `icons_options`: Apache [`Options`]ディレクティブにより、アイコンディレクトリのディレクトリリスティングを無効にします。
 
@@ -1685,17 +1686,17 @@ class{'apache::mod::diskio':
 }
 ```
 
-**パラメータ**:
+**パラメータ**:　
 
 * `dump_io_input`: すべての入力データをエラーログにダンプします。
 
-  値: 'On'、'Off'。
+  値: 'On'、'Off'。　
 
   デフォルト値: 'Off'。
 
 * `dump_io_output`: すべての出力データをエラーログにダンプします。
 
-  値: 'On'、'Off'。
+  値: 'On'、'Off'。　
 
   デフォルト値: 'Off'。
 
@@ -1703,7 +1704,7 @@ class{'apache::mod::diskio':
 
 [`mod_mpm_event`][]をインストールして管理します。同じサーバ上に、`apache::mod::event`と一緒に[`apache::mod::itk`][]、[`apache::mod::peruser`][]、[`apache::mod::prefork`][]、[`apache::mod::worker`][]を含めることはできません。
 
-**パラメータ**:
+**パラメータ**:　
 
 * `listenbacklog`: モジュールの[`ListenBackLog`][]ディレクティブでペンディング接続キューの最大長を設定します。`false`に設定すると、このパラメータが削除されます。
 
@@ -1745,7 +1746,7 @@ class{'apache::mod::diskio':
 
 > **注意**: auth_casモジュールは、EPELにより提供される依存関係パッケージがなければ、RH/CentOSで使用できません。 [https://github.com/Jasig/mod_auth_cas]()を参照してください。
 
-**パラメータ**:
+**パラメータ**:　
 
 - `cas_attribute_prefix`: ヘッダを追加します。SAMLバリデーションが有効になっている場合には、このヘッダの値が属性値になります。
 
@@ -1912,7 +1913,7 @@ class { 'apache::mod::authn_dbd':
 
 * `authn_dbd_min`: DBDMinに相当します。
 
-  デフォルト値: 4。
+  デフォルト値: 4。　
 
 * `authn_dbd_params`: **必須**。接続文字列に関して、DBDParamsに相当します。
 
@@ -2086,7 +2087,7 @@ apache::vhost { 'example.org':
 
   ブーリアン。
 
-  デフォルト値: `false`。　
+  デフォルト値: `false`。
 
 * `flag`: GeoIPフラグを設定します。
 
@@ -2132,9 +2133,9 @@ apache::vhost { 'example.org':
 
   値: IPv4アドレス、IPv6アドレス、または範囲の1つまたは複数のオクテット、またはいずれかの配列。
 
-  デフォルト値: ['127.0.0.1','::1']。
+  デフォルト値: ['127.0.0.1','::1']。　
 
-* `apache_version`: 文字列で表されるApacheのバージョン番号、'2.2'や'2.4'など。
+* `apache_version`: 文字列で表されるApacheのバージョン番号、'2.2'や'2.4'など。　
 
   デフォルト値: [`$::apache::apache_version`][`apache_version`]の値。
 
@@ -2153,6 +2154,7 @@ apache::vhost { 'example.org':
 
 ``` puppet
 class { '::apache::mod::jk':
+  ip           = '192.168.2.15',
   workers_file = 'conf/workers.properties',
   mount_file   = 'conf/uriworkermap.properties',
   shm_file     = 'run/jk.shm',
@@ -2165,7 +2167,31 @@ class { '::apache::mod::jk':
 
 **`apache::mod::jk`**内のパラメータ:
 
-`mod_jk`パラメータを理解するための情報源としては、[公式ドキュメント](https://tomcat.apache.org/connectors-doc/reference/apache.html)が最適です。ただし、\*file_contentはこれに含まれません。
+`mod_jk`パラメータを理解するための情報源としては、[公式ドキュメント](https://tomcat.apache.org/connectors-doc/reference/apache.html)が最適です。ただし、次はこれに含まれません:
+
+**add_listen**
+
+パラメータ`ip`および `port`に従って`Listen`ディレクティブを定義して(下記参照)、ApacheがIP/portの組合せをリッスンし`mod_jk`にリダイレクトするようにします。
+`Listen *:<Port>`または`Listen <Port>`のように、別の`Listen`ディレクティブが`mod_jk`バインディングで必要なものと競合するときに役立ちます。
+
+タイプ: ブール値
+デフォルト: true
+
+**ip**
+
+`mod_jk`にバインディングするIP。
+バインディングアドレスがプライマリのネットワークインターフェースIPではないときに役立ちます。
+
+タイプ: 文字列
+デフォルト: `$facts['ipaddress']`
+
+**port**
+
+`mod_jk`にバインディングするポート。
+リバースプロキシまたはキャッシュのような、別のものがポート80でリクエストを受信して、異なるポートのApacheに転送する必要があるときに役立ちます。
+
+タイプ: 文字列(数値)
+デフォルト: '80'
 
 **workers\_file\_content**
 
@@ -2188,7 +2214,7 @@ worker.other_name.type=ajp12 (why would you?)
 worker.other_name.socket_keepalive=false
 ```
 
-以下のようにパラメータ化する必要があります。
+以下のようにパラメータ化する必要があります。　
 
 ```
 $workers_file_content = {
@@ -2238,7 +2264,39 @@ $mount_file_content = {
 },
 ```
 
-##### クラス: `apache::mod::passenger`
+**shm\_file and log\_file**
+
+これらのファイルがどのように定義されているかによって、クラスはそれらの最終パスを別々に作成します。
+- 相対パス: `logroot`で提供されたパスを追加します (下記参照)
+- 絶対パスまたはパイプ: 提供されたパスをそのまま使用します
+
+例 (RHEL 6):
+
+```
+shm_file => 'shm_file'
+# Ends up in
+$shm_path = '/var/log/httpd/shm_file'
+```
+```
+shm_file => '/run/shm_file'
+# Ends up in
+$shm_path = '/run/shm_file'
+```
+```
+shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+# Ends up in
+$shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+```
+
+> デフォルトのlogrootは十分健全です。このため、絶対パスを指定することは推奨しません。
+
+**logroot**
+
+`shm_file`および`log_file`のベースディレクトリは`logroot`パラメータで決定されます。指定されない場合、デフォルトは`apache::params::logroot`です。
+
+> デフォルトのlogrootは十分健全です。このため、上書きすることは推奨しません。
+
+##### クラス: `apache::mod::passenger`　
 
 [`mod_passenger`][]をインストールして管理します。Red Hatベースのシステムの場合は、[passengerドキュメント](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux)に記載された最小要件を満たしていることを確認してください。
 
@@ -2320,7 +2378,7 @@ class { 'apache::mod::ldap':
 
 * `force_language_priority`: `ForceLanguagePriority`オプションを設定します。
 
-  値: 文字列。
+  値: 文字列。　
 
   デフォルト値: `Prefer Fallback`。
 
@@ -2391,7 +2449,7 @@ NSS暗号化ライブラリを使用するApacheのSSLプロバイダ。
 
 >**注意**: passengerモジュールは、EPELにより提供される依存関係パッケージと`mod_passengers`カスタムリポジトリがなければ、RH/CentOSでは使用できません。前述の`manage_repo`パラメータと[https://www.phusionpassenger.com/library/install/apache/install/oss/el7/]()を参照してください。
 
-**パラメータ**:__``<>
+**パラメータ**:　
 
 * `passenger_conf_file`: `$::apache::params::passenger_conf_file`
 * `passenger_conf_package_file: `$::apache::params::passenger_conf_package_file`
@@ -2427,8 +2485,6 @@ NSS暗号化ライブラリを使用するApacheのSSLプロバイダ。
 I`mod_proxy`をインストールし、`proxy.conf.erb`テンプレートを使用して設定を生成します。
 
 **`apache::mod::proxy`内のパラメータ**:
-
-.
 
 - `allow_from`: デフォルト値: `undef`
 - `apache_version`: デフォルト値: `undef`
@@ -2530,19 +2586,19 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `ssl_compression`
 
-  デフォルト値: `false`
+  デフォルト値: `false`。
 
 * `ssl_cryptodevice`
 
-  デフォルト値: 'builtin'
+  デフォルト値: 'builtin'　
 
 * `ssl_honorcipherorder`
 
-  デフォルト値: `true`
+  デフォルト値: `true`。
 
 * `ssl_openssl_conf_cmd`
 
-  デフォルト値: `undef`
+  デフォルト値: `undef`。
 
 * `ssl_options`
 
@@ -2558,13 +2614,13 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `ssl_random_seed_bytes`
 
-  値: 文字列。
+  値: 文字列。　
 
   デフォルト値: '512'
 
 * `ssl_sessioncachetimeout`
 
-  値: 文字列。
+  値: 文字列。　
 
   デフォルト値: '300'
 
@@ -2588,7 +2644,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `allow_from`: `/server-status`にアクセスできるIPv4またはIPv6アドレスの[配列][]。
 
-  デフォルト値: ['127.0.0.1','::1']。
+  デフォルト値: ['127.0.0.1','::1']。　
 * `extended_status`: [`ExtendedStatus`][]ディレクティブをつうじて、各リクエストに関する拡張ステータス情報を追跡するかどうかを決定します。
 
   値: 'Off'、'On'。
@@ -2661,7 +2717,7 @@ ${modsec\_dir}/activated\_rules。
 
 * `secpcrematchlimit`: PCREライブラリのマッチ限度数を設定します。
 
-  デフォルト値: 1500。
+  デフォルト値: 1500。　
 
 * `secpcrematchlimitrecursion`: PCREライブラリのマッチ再帰制限数を設定します。
 
@@ -2685,7 +2741,7 @@ ${modsec\_dir}/activated\_rules。
 
 * `inbound_anomaly_threshold`: OWASP ModSecurityコアルールセットのコラボレーティブ検出モードに関して、インバウンドブロッキングルールのスコアリング閾値レベルを設定します。
 
-  デフォルト値: 5。
+  デフォルト値: 5。　
 
 * `outbound_anomaly_threshold`: OWASP ModSecurityコアルールセットのコラボレーティブ検出モードに関して、アウトバウンドブロッキングルールのスコアリング閾値レベルを設定します。
 
@@ -2731,17 +2787,17 @@ ${modsec\_dir}/activated\_rules。
 
 * `mod_path`: `mod_wsgi`共有オブジェクト(`.so`)ファイルのパスを定義します。
 
-  デフォルト値: `undef`。　
+  デフォルト値: `undef`。
 
   * `mod_path`パラメータに`/`が含まれていない場合、Puppetではオペレーティングシステムのデフォルトのモジュールパスの先頭にこれを付加します。含まれている場合は、そのとおりに扱われます。
 
 * `package_name`: `mod_wsgi`をインストールするパッケージの名前。
 
-  デフォルト値: `undef`。　
+  デフォルト値: `undef`。
 
 * `wsgi_python_home`: '/path/to/venv'などの[`WSGIPythonHome`][]ディレクティブを定義します。
 
-  値: パスを指定する文字列。
+  値: パスを指定する文字列。　
 
   デフォルト値: `undef`。
 
@@ -2825,7 +2881,7 @@ Apacheデーモンを管理します。
 
 ブーリアン。
 
-デフォルト値: `true`。　
+デフォルト値: `true`。
 
 #### 定義タイプ: `apache::balancermember`
 
@@ -2835,7 +2891,7 @@ Apacheデーモンを管理します。
 
 ##### `balancer_cluster`
 
-**必須**。
+**必須**。　
 
 Apacheサービスのインスタンス名を設定します。宣言された[`apache::balancer`][]リソースの名前と一致する必要があります。
 
@@ -2849,7 +2905,7 @@ Apacheサービスのインスタンス名を設定します。宣言された[`
 
 URL後に[オプション](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember)の[配列][]を指定します。[`ProxyPass`][]で使用可能な任意のキー-値ペアを使用できます。
 
-デフォルト値: 空配列。
+デフォルト値: 空配列。　
 
 #### 定義タイプ: `apache::custom_config`
 
@@ -2861,7 +2917,7 @@ Apacheサーバの`conf.d`ディレクトリにカスタム設定ファイルを
 
 設定ファイルが存在するべきかどうかを指定します。
 
-値: 'absent'、'present'。
+値: 'absent'、'present'。　
 
 デフォルト値: 'present'。　
 
@@ -2875,7 +2931,7 @@ Puppetが設定ファイルを置くディレクトリを設定します。
 
 設定ファイルのコンテンツを設定します。`content`および[`source`][]パラメータは、相互排他的な関係にあります。
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `filename`
 
@@ -2889,11 +2945,11 @@ Apacheでは設定ファイルがアルファベット順に処理されるた�
 
 設定ファイル名の優先順位の接頭値を無視するには、このパラメータを`false`に設定します。
 
-デフォルト値: '25'。　
+デフォルト値: '25'。
 
 ##### `source`
 
-設定ファイルのソースを指し示します。[`content`][]および`source`パラメータは、相互排他的な関係にあります。
+設定ファイルのソースを指します。[`content`][]および`source`パラメータは互いに排他的です。
 
 デフォルト値: `undef`。　
 
@@ -2911,7 +2967,7 @@ Apacheサービスに通知する前に設定ファイルのバリデーショ�
 
 ブーリアン。
 
-デフォルト値: `true`。　
+デフォルト値: `true`。
 
 #### 定義タイプ: `apache::fastcgi::server`
 
@@ -2935,7 +2991,7 @@ FastCGIのホスト名またはIPアドレスおよびTCPポート番号(1-65535
 
 アプリケーションから受信したデータを、強制的に[`mod_fastcgi`][FastCGI]がクライアントに書き込みます。デフォルトでは、アプリケーションをできるだけ早くフリーな状態にするために、`mod_fastcgi`はデータをバッファリングします。 
 
-デフォルト値: `false`。　
+デフォルト値: `false`。
 
 ##### `faux_path`
 
@@ -2971,7 +3027,7 @@ Apacheサーバまたはバーチャルホストのリッスンするアドレ�
 
 PuppetがApacheモジュールのインストールに使用するパッケージの名前。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `package_ensure`
 
@@ -3006,7 +3062,7 @@ Apacheモジュールをインストールの必要性をPuppetが確認する�
 
 [`LoadFile`][]ディレクティブの配列を指定します。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `path`
 
@@ -3028,6 +3084,15 @@ apacheモジュールでは、バーチャルホストのセットアップと�
 
 `apache::vhost`定義タイプでは、カスタムフラグメントの`order`パラメータについては10の倍数が使用されるため、10の倍数ではない`order`が機能します。
 
+> **Note:** `apache::vhost`を作成するとき、`default`または`default-ssl`を指定することはできません。これはこの属性を持つvhostsが常にモジュールによって管理されるためです。これは`Apache::Vhost['default']`または`Apache::Vhost['default-ssl]`リソースを上書きできないことを意味します。 オプションの回避策として、`my default`などの別の名前のvhostを作成して、`default`および`default_ssl`が`false`に設定されていることを確認します。
+
+```
+class { 'apache':
+  default_vhost     => false
+  default_ssl_vhost => false,
+}
+```
+
 **パラメータ**:　
 
 ##### `access_log`
@@ -3042,13 +3107,13 @@ apacheモジュールでは、バーチャルホストのセットアップと�
 
 特定の環境変数を持つリクエストのみをロギングするように指定します。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `access_log_file`
 
 [`logroot`][]に置く`*_access.log`のファイル名を設定します。バーチャルホスト---例えばexample.comなど---を与えると、[SSL暗号化][SSL暗号化]バーチャルホストの場合はデフォルト値が'example.com_ssl.log'、暗号化されていないバーチャルホストの場合は'example.com_access.log'になります。
 
-デフォルト値: `false`。　
+デフォルト値: `false`。
 
 ##### `access_log_format`
 
@@ -3060,19 +3125,19 @@ apacheモジュールでは、バーチャルホストのセットアップと�
 
 Apacheがアクセスログメッセージを送信するパイプを指定します。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `access_log_syslog`
 
 すべてのアクセスログメッセージをsyslogに送ります。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `add_default_charset`
 
 [`AddDefaultCharset`][]ディレクティブのデフォルトのメディア文字セット値を設定します。これは`text/plain`および`text/html`応答に追加されます。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `add_listen`
 
@@ -3082,7 +3147,7 @@ Apacheがアクセスログメッセージを送信するパイプを指定し�
 
 ブーリアン。
 
-デフォルト値: `true`。　
+デフォルト値: `true`。
 
 ##### `use_optional_includes`
 
@@ -3090,7 +3155,7 @@ Apache 2.4以降の`additional_includes`について、Apacheが[`Include`][]の
 
 ブーリアン。
 
-デフォルト値: `false`。　
+デフォルト値: `false`。
 
 ##### `additional_includes`
 
@@ -3104,7 +3169,7 @@ Apache 2.4以降の`additional_includes`について、Apacheが[`Include`][]の
 
 [ハッシュ][ハッシュ]のリストをバーチャルホストに渡し、[`mod_alias`][]ドキュメントに従って[`Alias`][]、[`AliasMatch`][]、[`ScriptAlias`][]、または[`ScriptAliasMatch`][]ディレクティブを作成します。
 
-例:
+例:　
 
 ``` puppet
 aliases => [
@@ -3154,7 +3219,7 @@ SAMLバリデーションが有効になっている場合に、このヘッダ�
 
 `cas_attribute_prefix`により作成されたヘッダの属性値の区切り文字を設定します。
 
-デフォルト値: [`apache::mod::auth_cas`][]により設定された値。
+デフォルト値: [`apache::mod::auth_cas`][]により設定された値。　
 
 ##### `cas_login_url`
 
@@ -3190,13 +3255,13 @@ HTTPクエリ文字列でクライアントの提示するチケットをバリ�
 
 カスタム設定ディレクティブの文字列を渡し、バーチャルホスト設定の最後に配置します。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `default_vhost`
 
 任意の`apache::vhost`定義タイプを、他の`apache::vhost`定義タイプと一致しないリクエストをサーブするためのデフォルトとして設定します。 
 
-デフォルト値: `false`。　
+デフォルト値: `false`。
 
 ##### `directories`
 
@@ -3206,7 +3271,7 @@ HTTPクエリ文字列でクライアントの提示するチケットをバリ�
 
 ディレクトリ名の最後で'/'を指定することで、クライアントがディレクトリのインデックスをリクエストした際に探すべきリソースのリストを設定します。詳細については、[`DirectoryIndex`][]ディレクティブドキュメントを参照してください。
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `docroot`
 
@@ -3224,7 +3289,7 @@ HTTPクエリ文字列でクライアントの提示するチケットをバリ�
 
 値: システムグループを指定する文字列。
 
-デフォルト値: 'root'。
+デフォルト値: 'root'。　
 
 ##### `docroot_owner`
 
@@ -3240,7 +3305,7 @@ HTTPクエリ文字列でクライアントの提示するチケットをバリ�
 
 値: 文字列。　
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `manage_docroot`
 
@@ -3248,7 +3313,7 @@ Puppetが[`docroot`][]ディレクトリを管理するかどうかを決定し�
 
 ブーリアン。
 
-デフォルト値: `true`。　
+デフォルト値: `true`。
 
 ##### `error_log`
 
@@ -3288,7 +3353,7 @@ Puppetが[`docroot`][]ディレクトリを管理するかどうかを決定し�
 
 このバーチャルホストの[エラードキュメント](https://httpd.apache.org/docs/current/mod/core.html#errordocument)設定のオーバーライドに使用できるハッシュのリスト。
 
-例:
+例:　
 
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -3307,7 +3372,7 @@ apache::vhost { 'sample.example.net':
 
 値: 'absent'、'present'。　
 
-デフォルト値: 'present'。
+デフォルト値: 'present'。　
 
 ##### `fallbackresource`
 
@@ -3356,7 +3421,7 @@ apache::vhost { "$::fqdn":
 
 レスポンスヘッダを置換、結合、または削除するための行を追加します。詳細については、[Apacheのmod_headersドキュメント](https://httpd.apache.org/docs/current/mod/mod_headers.html#header)を参照してください。
 
-値: 文字列または文字列の配列。
+値: 文字列または文字列の配列。　
 
 デフォルト値: `undef`。
 
@@ -3388,7 +3453,7 @@ apache::vhost { 'sample.example.net':
     group => 'somegroup',
   },
 }
-```
+```　
 
 値: ハッシュ。キーを含めることもできます。
 
@@ -3400,7 +3465,7 @@ apache::vhost { 'sample.example.net':
 * `limituidrange` (Linux 3.5.0以降)
 * `limitgidrange` (Linux 3.5.0以降)
 
-通常は、以下のように使用します。
+通常は、以下のように使用します。　
 
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -3438,7 +3503,7 @@ apache::vhost { 'sample.example.net':
 
 バーチャルホストの関連オプションを設定するには、`keepalive_timeout`および`max_keepalive_requests`パラメータを使用します。
 
-値: 'Off', 'On'。
+値: 'Off'、'On'。
 
 デフォルト値: `undef`。　
 
@@ -3446,7 +3511,7 @@ apache::vhost { 'sample.example.net':
 
 バーチャルホストの[`KeepAliveTimeout`]ディレクティブを設定します。これにより、HTTPの持続的接続で後続のリクエストを実行するまでの待機時間が決まります。デフォルトでは、グローバルなサーバ全体の[`KeepAlive`][]設定が有効になります。
 
-このパラメータが意味を持つのは、グローバルなサーバ全体の[`keepalive`パラメータ][]またはバーチャルホストごとの`keepalive`パラメータのいずれかが有効になっている場合のみです。
+このパラメータが意味を持つのは、グローバルなサーバ全体の[`keepalive`パラメータ][]またはバーチャルホストごとの`keepalive`パラメータのいずれかが有効になっている場合のみです。　
 
 デフォルト値: `undef`。　
 
@@ -3456,7 +3521,7 @@ apache::vhost { 'sample.example.net':
 
 このパラメータが意味を持つのは、グローバルなサーバ全体の[`keepalive`パラメータ][]またはバーチャルホストごとの`keepalive`パラメータのいずれかが有効になっている場合のみです。　
 
-デフォルト値: `undef`。　
+デフォルト値: `undef`。
 
 ##### `auth_kerb`
 
@@ -3654,7 +3719,7 @@ apache::vhost { 'sample.example.net':
 
 プロキシを使用しないURLを指定します。このパラメータは、[`proxy_dest`](#proxy_dest)と組み合わせて使用することはできません。
 
-デフォルト値: []。
+デフォルト値: []。　
 
 ##### `no_proxy_uris_match`
 
@@ -3711,11 +3776,19 @@ apache::vhost { 'site.name.fdqn':
 
 デフォルト値: '[none]'。
 
+##### `passenger_spawn_method`
+
+[PassengerSpawnMethod](https://www.phusionpassenger.com/library/config/apache/reference/#passengerspawnmethod)を設定します。Passengerが引き起こしたアプリケーションに直接か、preforkのcopy-on-writeメカニズムを使用します。
+
+有効なオプション: `smart`または`direct`。
+
+デフォルト値: `undef`。
+
 ##### `passenger_app_root`
 
 [PassengerRoot](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapproot)を設定します。これは、DocumentRootと異なる場合のPassengerアプリケーションルートのロケーションです。
 
-値: パスを指定する文字列。
+値: パスを指定する文字列。　
 
 デフォルト値: `undef`。
 
@@ -3731,7 +3804,7 @@ apache::vhost { 'site.name.fdqn':
 
 デフォルトでは、PassengerログメッセージはApacheグローバルエラーログに書き込まれます。[PassengerLogFile](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlogfile)を使えば、そのメッセージを別のファイルに書き込むように設定することができます。このオプションは、Passenger 5.0.5以降でのみ使用できます。
 
-値: パスを指定する文字列。
+値: パスを指定する文字列。　
 
 デフォルト値: `undef`。
 
@@ -4901,7 +4974,7 @@ apache::vhost { 'sample.example.net':
 
 ##### `ssl_ca`
 
-SSL証明書認証局を指定します。
+使用するSSL認証局を指定して、認証に使用するクライアントの証明書を検証します。これを使用するには、`ssl_verify_client`も設定する必要があります。
 
 デフォルト値: `undef`。
 
@@ -4938,14 +5011,9 @@ SSL証明書を指定します。
 
 ##### `ssl_certs_dir`
 
-SSL証明書ディレクトリのロケーションを指定します。 
+SSL認証ディレクトリの場所を指定してクライアントの証明書を検証します。`ssl_verify_client`も設定されていない限り使用されません(下記参照)。
 
-デフォルト値: オペレーティングシステムによって異なります。
-
-- Debian: '/etc/ssl/certs'
-- Red Hat: '/etc/pki/tls/certs'
-- FreeBSD: `undef`
-- Gentoo: '/etc/ssl/apache2'
+デフォルト: undef
 
 ##### `ssl_chain`
 
@@ -4961,13 +5029,13 @@ SSLチェーンを指定します。このデフォルト値は設定しなく�
 
 ##### `ssl_crl_path`
 
-証明書失効リストの保存場所を指定します。(このデフォルト値は設定しなくても機能しますが、本稼働環境で使用する前に、固有の証明書情報により基本の`apache`クラス内で更新する必要があります。)
+証明書失効リストの保存場所を指定して、クライアント認証の証明書を検証します(このデフォルト値は設定しなくても機能しますが、本稼働環境で使用する前に、固有の証明書情報により基本の`apache`クラス内で更新する必要があります)。
 
 デフォルト値: `undef`。
 
 ##### `ssl_crl_check`
 
-[SSLCARevocationCheckディレクティブ](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck)により、証明書失効チェックレベルを設定します。このデフォルト値は設定しなくても機能しますが、本稼働環境でCRLを使用する際に指定する必要があります。Apache 2.4以上にのみ適用されます。それ以前のバージョンでは、この値は無視されます。
+[SSLCARevocationCheckディレクティブ](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck)により、SSLクライアント認証の証明書失効チェックレベルを設定します。このデフォルト値は設定しなくても機能しますが、本稼働環境でCRLを使用する際に指定する必要があります。Apache 2.4以上にのみ適用され、それ以前のバージョンではこの値は無視されます。
 
 デフォルト値: `undef`。
 
@@ -5000,11 +5068,12 @@ apache::vhost { 'sample.example.net':
 
 ##### `ssl_verify_depth`
 
-[SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth)ディレクティブを設定します。これにより、クライアント認証確認におけるCA証明書の最大深さが指定されます。
+[SSLVerifyDepth](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifydepth)ディレクティブを設定します。これにより、クライアント認証確認におけるCA証明書の最大深さが指定されます。これを有効にするには、`ssl_verify_client`を設定する必要があります。
 
 ``` puppet
 apache::vhost { 'sample.example.net':
   …
+  ssl_verify_client => 'require',
   ssl_verify_depth => 1,
 }
 ```
@@ -5029,13 +5098,13 @@ apache::vhost { 'sample.example.net':
 
 深さ0では、自己署名リモートサーバ証明書のみが許可されます。デフォルトの深さ 1では、リモートサーバ証明書を自己署名にすることも、サーバが直接知っているCAにより署名することもできます。
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxy_ca_cert`
 
 [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile)ディレクティブを設定します。これにより、やりとりするリモートサーバに関する認証局(CA)の証明書を集められるオールインワンファイルを指定します。これはリモートサーバ認証に用いられます。このファイルは、PEMエンコード証明書ファイルを優先順に連結したものにする必要があります。
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxy_machine_cert`
 
@@ -5048,15 +5117,15 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxy_check_peer_cn`
 
 [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn)ディレクティブを設定します。これにより、リモートサーバの証明書のCNフィールドをリクエストURLのホスト名と比較するかどうかを指定します。 
 
-値: 'on'、'off'。
+値: 'on'、'off'。　
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxy_check_peer_name`
 
@@ -5064,7 +5133,7 @@ apache::vhost { 'sample.example.net':
 
 値: 'on'、'off'。　
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxy_check_peer_expire`
 
@@ -5072,7 +5141,7 @@ apache::vhost { 'sample.example.net':
 
 値: 'on'、'off'。　
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_options`
 
@@ -5102,7 +5171,7 @@ apache::vhost { 'sample.example.net':
 
 [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslopensslconfcmd)ディレクティブを設定します。これにより、OpenSSLパラメータを直接設定できます。
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_proxyengine`
 
@@ -5116,11 +5185,11 @@ apache::vhost { 'sample.example.net':
 
 [SSLUseStapling](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusestapling)を使用するかどうかを指定します。デフォルトでは、全体で設定されているものを使用します。
 
-このパラメータはApache 2.4以上にのみ適用され、それ以前のバージョンでは無視されます。
+このパラメータはApache 2.4以上にのみ適用され、それ以前のバージョンでは無視されます。　
 
 ブーリアンまたは`undef`。
 
-デフォルト値: `undef`。
+デフォルト値: `undef`。　
 
 ##### `ssl_stapling_timeout`
 
@@ -5128,7 +5197,7 @@ apache::vhost { 'sample.example.net':
 
 このパラメータはApache 2.4以上にのみ適用され、それ以前のバージョンでは無視されます。　
 
-デフォルト値: なし。
+デフォルト値: なし。　
 
 ##### `ssl_stapling_return_errors`
 
@@ -5218,9 +5287,9 @@ FastCGIサーバにより処理するファイルのMIMEタイプ。
 
 バーチャルホストファイルが存在するかどうかを指定します。
 
-値: 'absent'、'present'。
+値: 'absent'、'present'。　
 
-デフォルト値: 'present'。
+デフォルト値: 'present'。　
 
 ##### `priority`
 
@@ -5238,13 +5307,13 @@ Apacheサービスに通知する前に設定ファイルのバリデーショ�
 
 ### プライベート定義タイプ
 
-#### 定義タイプ: `apache::peruser::multiplexer`
+#### 定義タイプ: `apache::peruser::multiplexer`　
 
 この定義タイプは、Apacheモジュールにクラスがあるかどうかを確認します。クラスがある場合は、そのクラスを含めます。ない場合は、モジュール名を[`apache::mod`][]定義タイプに渡します。
 
 #### 定義タイプ: `apache::peruser::multiplexer`　
 
-FreeBSDに関してのみ、[`Peruser`][]モジュールを有効にします。
+FreeBSDに関してのみ、[`Peruser`][]モジュールを有効にします。　
 
 #### 定義タイプ: `apache::peruser::processor`
 
@@ -5364,26 +5433,4 @@ apache::vhost { 'test.server':
 
 できるだけ変更に簡単に貢献していただき、お使いの環境でモジュールが動作するようにしたいと考えています。モジュールの品質の維持と改善のため、Puppetは貢献者に守っていただくガイドラインを設けています。
 
-詳細については、[モジュールコントリビューションガイド][]を参照してください。
-
-### テスト
-
-このプロジェクトには、機能検証のための[rspec-puppet][]および[beaker-rspec][]に関するテストが含まれています。このツールの詳しい使い方については、それぞれのドキュメントを参照してください。
-
-#### テストのクイックスタート: Ruby > 1.8.7
-
-```
-gem install bundler
-bundle install
-bundle exec rake spec
-bundle exec rspec spec/acceptance
-RS_DEBUG=yes bundle exec rspec spec/acceptance
-```
-
-#### テストのクイックスタート: Ruby = 1.8.7
-
-```
-gem install bundler
-bundle install --without system_tests
-bundle exec rake spec
-```
+詳細については、[モジュールコントリビューションガイド][]および[CONTRIBUTING.md][]を参照してください。
