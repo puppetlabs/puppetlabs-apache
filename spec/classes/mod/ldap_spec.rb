@@ -34,6 +34,7 @@ describe 'apache::mod::ldap', :type => :class do
       let(:params) {{
         :ldap_trusted_global_cert_file => 'ca.pem',
         :ldap_trusted_global_cert_type => 'CA_DER',
+        :ldap_trusted_mode             => 'TLS',
         :ldap_shared_cache_size        => '500000',
         :ldap_cache_entries            => '1024',
         :ldap_cache_ttl                => '600',
@@ -41,6 +42,7 @@ describe 'apache::mod::ldap', :type => :class do
         :ldap_opcache_ttl              => '600'
       }}
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPTrustedGlobalCert CA_DER ca\.pem$/) }
+      it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPTrustedMode TLS$/) }
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPSharedCacheSize 500000$/) }
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPCacheEntries 1024$/) }
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPCacheTTL 600$/) }

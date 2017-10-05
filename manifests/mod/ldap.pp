@@ -8,6 +8,7 @@ class apache::mod::ldap (
   $ldap_cache_ttl                                  = undef,
   $ldap_opcache_entries                            = undef,
   $ldap_opcache_ttl                                = undef,
+  $ldap_trusted_mode                               = undef,
 ){
 
   include ::apache
