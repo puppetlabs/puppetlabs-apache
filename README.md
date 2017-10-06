@@ -5335,7 +5335,7 @@ The Apache module relies heavily on templates to enable the [`apache::vhost`][] 
 
 ### Tasks
 
-The Apache module has an example task that allows a user to reload the Apache config without restarting the service. Please refer to to the PE documentation or Bolt documentation on how to execute a task.
+The Apache module has a task that allows a user to reload the Apache config without restarting the service. Please refer to to the [PE documentation](https://puppet.com/docs/pe/2017.3/orchestrator/running_tasks.html) or [Bolt documentation](https://puppet.com/docs/bolt/latest/bolt.html) on how to execute a task.
 
 ### Functions
 #### apache_pw_hash
