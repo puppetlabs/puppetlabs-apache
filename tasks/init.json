@@ -1,7 +1,5 @@
 {
-  "summary": "Allows you to perform apache functions",
-  "description": "Allows you to perform apache functions",
-  "supports_noop": false,
+  "description": "Allows you to perform apache service functions",
   "input_method": "stdin",
   "parameters": {
     "action": {
