@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [2.3.0]
+### Summary
+This is a feature release. It includes a task that will reload the apache service.
+
+#### Added
+- Add a task that allows the reloading of the Apache service.
+
 ## Supported Release [2.2.0]
 ### Summary
 This is a maintainence and feature release. It will include updates to translations in Japanese, some maintainence and adding `PassengerSpawnMethod` to vhost.
