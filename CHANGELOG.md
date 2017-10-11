@@ -920,6 +920,7 @@ worker/prefork
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
 
+[2.3.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.2.0...2.3.0
 [2.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.1.0...2.2.0
 [2.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.0.0...2.1.0
 [2.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...2.0.0
