@@ -3454,7 +3454,7 @@ Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.ht
 
 Default: `undef`.
 
-#####`fastcgi_idle_timeout`
+##### `fastcgi_idle_timeout`
 
 If using fastcgi, this option sets the timeout for the server to respond.
 
@@ -4031,7 +4031,7 @@ Specifies the resource identifiers for a rack configuration. The file paths spec
 
 Default: `undef`.
 
-#####`passenger_base_uris`
+##### `passenger_base_uris`
 
 Used to specify that the given URI is a Phusion Passenger-served application. The file paths specified are listed as passenger application roots for [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerBaseURI) in the _passenger_base_uris.erb template.
 
