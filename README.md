@@ -1993,7 +1993,7 @@ Installs and configures [`mod_deflate`][].
 
 * `types`: An [array][] of [MIME types][MIME `content*type`] to be deflated.
 
-  Default: [ 'text/html text/plain text/xml', 'text/css', 'application/x*javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json' ].
+  Default: ['text/html text/plain text/xml', 'text/css', 'application/x*javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json'].
 
 * `notes`: A [Hash][] where the key represents the type and the value represents the note name.
 
@@ -2457,7 +2457,7 @@ Installs and configures [`mod_negotiation`][].
 
 * `language_priority`: An [array][] of languages to set the `LanguagePriority` option of the module.
 
-  Default: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt*BR', 'ru', 'sv', 'zh*CN', 'zh*TW' ]
+  Default: ['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt*BR', 'ru', 'sv', 'zh*CN', 'zh*TW']
 
 ##### Class: `apache::mod::nss`
 
@@ -2640,9 +2640,9 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 - `ssl_cryptodevice`: Default: 'builtin'.
 - `ssl_honorcipherorder`: Default: true.
 - `ssl_openssl_conf_cmd`: Default: undef.
-- `ssl_options`: Default: [ 'StdEnvVars' ]
+- `ssl_options`: Default: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
-- `ssl_protocol`: Default: [ 'all', '-SSLv2', '-SSLv3' ].
+- `ssl_protocol`: Default: ['all', '-SSLv2', '-SSLv3'].
 - `ssl_proxy_protocol`: Default: [].
 - `ssl_random_seed_bytes`: Valid options: A string. Default: '512'.
 - `ssl_sessioncache`: Valid options: A string. Default: '300'.
@@ -2675,7 +2675,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 
 * `ssl_options`
 
-  Default: [ 'StdEnvVars' ]
+  Default: ['StdEnvVars']
 
 * `ssl_pass_phrase_dialog`
 
@@ -2683,7 +2683,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 
 * `ssl_protocol`
 
-  Default: [ 'all', '*SSLv2', '*SSLv3' ].
+  Default: ['all', '*SSLv2', '*SSLv3'].
 
 * `ssl_random_seed_bytes`
 
@@ -2736,7 +2736,7 @@ Allows user-specific directories to be accessed using the `http://example.com/~u
 
 * `overrides`: An [array][] of directive-types.
 
-  Default: [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ].
+  Default: ['FileInfo', 'AuthConfig', 'Limit', 'Indexes'].
 
 ##### Class: `apache::mod::version`
 
@@ -3737,13 +3737,13 @@ Array of mod_security Msgs to remove from the virtual host. Also takes a hash al
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_msgs => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ],
+  modsec_disable_msgs => ['Blind SQL Injection Attack', 'Session Fixation Attack'],
 }
 ```
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_msgs => { '/location1' => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ] },
+  modsec_disable_msgs => { '/location1' => ['Blind SQL Injection Attack', 'Session Fixation Attack'] },
 }
 ```
 
@@ -3755,13 +3755,13 @@ Array of mod_security Tags to remove from the virtual host. Also takes a hash al
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_tags => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ],
+  modsec_disable_tags => ['WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS'],
 }
 ```
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_tags => { '/location1' => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ] },
+  modsec_disable_tags => { '/location1' => ['WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS'] },
 }
 ```
 
@@ -4952,12 +4952,12 @@ apache::vhost { 'secure.example.net':
       rewrites => [ { comment      => 'Permalink Rewrites',
                       rewrite_base => '/'
                     },
-                    { rewrite_rule => [ '^index\.php$ - [L]' ]
+                    { rewrite_rule => ['^index\.php$ - [L]']
                     },
-                    { rewrite_cond => [ '%{REQUEST_FILENAME} !-f',
-                                        '%{REQUEST_FILENAME} !-d',
+                    { rewrite_cond => ['%{REQUEST_FILENAME} !-f',
+                                       '%{REQUEST_FILENAME} !-d',
                                       ],
-                      rewrite_rule => [ '. /index.php [L]' ],
+                      rewrite_rule => ['. /index.php [L]'],
                     }
                   ],
     },
@@ -4999,7 +4999,7 @@ apache::vhost { 'secure.example.net':
       ssl_options => '+ExportCertData',
     },
     { path        => '/path/to/different/dir',
-      ssl_options => [ '-StdEnvVars', '+ExportCertData'],
+      ssl_options => ['-StdEnvVars', '+ExportCertData'],
     },
   ],
 }
@@ -5031,7 +5031,7 @@ apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
   directories => [
     { path  => '/path/to/different/dir',
-      additional_includes => [ '/custom/path/includes', '/custom/path/another_includes', ],
+      additional_includes => ['/custom/path/includes', '/custom/path/another_includes',],
     },
   ],
 }
@@ -5236,7 +5236,7 @@ An array:
 ``` puppet
 apache::vhost { 'sample.example.net':
   …
-  ssl_options => [ '+StrictRequire', '+ExportCertData' ],
+  ssl_options => ['+StrictRequire', '+ExportCertData'],
 }
 ```
 
