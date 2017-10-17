@@ -2736,7 +2736,7 @@ Allows user-specific directories to be accessed using the `http://example.com/~u
 
 * `overrides`: An [array][] of directive-types.
 
-  Default: '[ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]'.
+  Default: [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ].
 
 ##### Class: `apache::mod::version`
 
@@ -3438,7 +3438,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default: '[]'.
+Default: [].
 
 ##### `ensure`
 
@@ -3623,7 +3623,7 @@ Related parameters follow the names of `mod_auth_kerb` directives:
 - `krb_method_negotiate`: Determines whether to use the Negotiate method. Default: 'on'.
 - `krb_method_k5passwd`: Determines whether to use password-based authentication for Kerberos v5. Default: 'on'.
 - `krb_authoritative`: If set to 'off', authentication controls can be passed on to another module. Default: 'on'.
-- `krb_auth_realms`: Specifies an array of Kerberos realms to use for authentication. Default: '[]'.
+- `krb_auth_realms`: Specifies an array of Kerberos realms to use for authentication. Default: [].
 - `krb_5keytab`: Specifies the Kerberos v5 keytab file's location. Default: `undef`.
 - `krb_local_user_mapping`: Strips @REALM from usernames for further use. Default: `undef`.
 
@@ -3848,7 +3848,7 @@ Default: ['Indexes','FollowSymLinks','MultiViews'],
 
 Sets the overrides for the specified virtual host. Accepts an array of [AllowOverride](https://httpd.apache.org/docs/current/mod/core.html#allowoverride) arguments.
 
-Default: '[none]'.
+Default: ['None'].
 
 ##### `passenger_spawn_method`
 
@@ -4255,7 +4255,7 @@ Default: `undef`.
 
 Sets the [ServerAliases](https://httpd.apache.org/docs/current/mod/core.html#serveralias) of the site.
 
-Default: '[]'.
+Default: [].
 
 ##### `servername`
 
@@ -4267,7 +4267,7 @@ Default: the title of the resource.
 
 Used by HTTPD to set environment variables for virtual hosts.
 
-Default: '[]'.
+Default: [].
 
 Example:
 
@@ -4281,13 +4281,13 @@ apache::vhost { 'setenv.example.com':
 
 Used by HTTPD to conditionally set environment variables for virtual hosts.
 
-Default: '[]'.
+Default: [].
 
 ##### `setenvifnocase`
 
 Used by HTTPD to conditionally set environment variables for virtual hosts (caseless matching).
 
-Default: '[]'.
+Default: [].
 
 ##### `suphp_*`
 
