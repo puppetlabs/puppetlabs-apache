@@ -10,6 +10,8 @@ define apache::custom_config (
   $filename                         = undef,
   $owner                            = 'root',
   $group                            = $::apache::params::root_group,
+  $owner                            = 'root',
+  $group                            = $::apache::params::root_group,
 ) {
 
   if $content and $source {
