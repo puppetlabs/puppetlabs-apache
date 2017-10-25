@@ -8,6 +8,8 @@ define apache::custom_config (
   $verify_command                   = $::apache::params::verify_command,
   Boolean $verify_config            = true,
   $filename                         = undef,
+  $owner                            = 'root',
+  $group                            = $::apache::params::root_group,
 ) {
 
   if $content and $source {
@@ -45,6 +47,8 @@ define apache::custom_config (
     source  => $source,
     require => Package['httpd'],
     notify  => $notifies,
+    owner   => $owner,
+    group   => $group,
   }
 
   if $ensure == 'present' and $verify_config {
