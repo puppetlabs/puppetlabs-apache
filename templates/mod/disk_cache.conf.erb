@@ -3,5 +3,5 @@ CacheRoot "<%= @_cache_root %>"
 CacheDirLevels 2
 CacheDirLength 1
 <% if scope['cache_ignore_headers'] != :undef -%>
-CacheIgnoreHeaders <%= @cache_ignore_headers %>
+CacheIgnoreHeaders <%= @cache_ignore_headers -%>
 <% end -%>
