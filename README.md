@@ -2198,8 +2198,8 @@ Default: '80'
 
 **workers\_file\_content**
 
-Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.  
-Plus, there are two global directives, 'worker.list' and 'worker.mantain'  
+Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.
+Plus, there are two global directives, 'worker.list' and 'worker.mantain'
 For example, the workers file below:
 
 ```
@@ -2238,7 +2238,7 @@ $workers_file_content = {
 
 **mount\_file\_content**
 
-Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.  
+Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.
 For example, the mount file below:
 
 ```
@@ -4786,6 +4786,7 @@ to environment variables.
 - `mellon_sp_private_key_file`: Sets the [MellonSPPrivateKeyFile][`mod_auth_mellon`] directive for the private key location of the service provider.
 - `mellon_sp_cert_file`: Sets the [MellonSPCertFile][`mod_auth_mellon`] directive for the public key location of the service provider.
 - `mellon_user`: Sets the [MellonUser][`mod_auth_mellon`] attribute to use for the username.
+- `mellon_session_length`: Sets the [MellonSessionLength][`mod_auth_mellon`] attribute.
 
 ##### `options`
 
