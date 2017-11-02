@@ -67,6 +67,14 @@
     </Limit>
       <%- end -%>
     <%- end -%>
+    <%- if directory['limit_except'] && directory['limit_except'] != '' -%>
+      <%- Array(directory['limit_except']).each do |lim| -%>
+    <LimitExcept <%= lim['methods'] %>>
+    <%- scope.lookupvar('_template_scope')[:item] = lim -%>
+    <%= scope.function_template(["apache/vhost/_require.erb"]) -%>
+    </LimitExcept>
+      <%- end -%>
+    <%- end -%>
     <%- if directory['addhandlers'] and ! directory['addhandlers'].empty? -%>
       <%- [directory['addhandlers']].flatten.compact.each do |addhandler| -%>
     <FilesMatch ".+(<%= Array(addhandler['extensions']).collect { |s| Regexp.escape(s) }.join('|') %>)$">
