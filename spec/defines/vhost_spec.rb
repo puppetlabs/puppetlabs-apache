@@ -1197,7 +1197,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad suphp_engine' do
       let :params do
@@ -1207,7 +1207,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad ip_based' do
       let :params do
@@ -1217,7 +1217,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad access_log' do
       let :params do
@@ -1227,7 +1227,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad error_log' do
       let :params do
@@ -1237,7 +1237,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad_ssl' do
       let :params do
@@ -1247,7 +1247,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad default_vhost' do
       let :params do
@@ -1257,7 +1257,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad ssl_proxyengine' do
       let :params do
@@ -1267,7 +1267,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad rewrites' do
       let :params do
@@ -1277,7 +1277,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad rewrites 2' do
       let :params do
@@ -1287,7 +1287,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'empty rewrites' do
       let :params do
@@ -1307,7 +1307,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad wsgi_script_alias' do
       let :params do
@@ -1317,7 +1317,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad wsgi_daemon_process_options' do
       let :params do
@@ -1327,7 +1327,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad wsgi_import_script_alias' do
       let :params do
@@ -1337,7 +1337,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad itk' do
       let :params do
@@ -1347,7 +1347,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad logroot_ensure' do
       let :params do
@@ -1357,7 +1357,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad log_level' do
       let :params do
@@ -1367,7 +1367,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'access_log_file and access_log_pipe' do
       let :params do
@@ -1378,7 +1378,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'error_log_file and error_log_pipe' do
       let :params do
@@ -1389,7 +1389,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad fallbackresource' do
       let :params do
@@ -1399,7 +1399,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad custom_fragment' do
       let :params do
@@ -1409,7 +1409,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'bad access_logs' do
       let :params do
@@ -1419,7 +1419,7 @@ describe 'apache::vhost', :type => :define do
         }
       end
       let :facts do default_facts end
-      it { expect { is_expected.to compile }.to raise_error }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
     context 'default of require all granted' do
       let :params do
