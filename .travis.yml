@@ -7,10 +7,6 @@ script: "bundle exec rake release_checks"
 #Inserting below due to the following issue: https://github.com/travis-ci/travis-ci/issues/3531#issuecomment-88311203
 before_install:
   - gem update bundler
-# Reduce load on Travis servers to prevent tests from being killed
-env:
-  global:
-  - PARALLEL_TEST_PROCESSORS=16
 matrix:
   fast_finish: true
   include:
@@ -26,7 +22,7 @@ matrix:
     script: bundle exec rake beaker
     services: docker
     sudo: required
-  - rvm: 2.4.0
+  - rvm: 2.4.1
     bundler_args: --without system_tests
     env: PUPPET_GEM_VERSION="~> 5.0"
   - rvm: 2.1.9
