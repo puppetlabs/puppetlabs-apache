@@ -4,15 +4,16 @@ describe 'apache::mod::php', :type => :class do
   describe "on a Debian OS" do
     let :facts do
       {
-        :osfamily               => 'Debian',
-        :operatingsystemrelease => '6',
-        :concat_basedir         => '/dne',
-        :lsbdistcodename        => 'squeeze',
-        :operatingsystem        => 'Debian',
-        :id                     => 'root',
-        :kernel                 => 'Linux',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :osfamily                  => 'Debian',
+        :operatingsystemrelease    => '6',
+        :operatingsystemmajrelease => '6',
+        :concat_basedir            => '/dne',
+        :lsbdistcodename           => 'squeeze',
+        :operatingsystem           => 'Debian',
+        :id                        => 'root',
+        :kernel                    => 'Linux',
+        :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :is_pe                     => false,
       }
     end
     context "with mpm_module => prefork" do
