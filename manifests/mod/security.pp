@@ -130,4 +130,35 @@ class apache::mod::security (
 
   unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }
 
+  file { "${docroot}/csp":
+    ensure  => directory,
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
+    mode    => '0755',
+    force   => true,
+    recurse => true,
+    require => Package['httpd'],
+  }
+
+  file { "${docroot}/csp/log":
+    ensure  => directory,
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
+    mode    => '0750',
+    force   => true,
+    recurse => true,
+    require => Package['httpd'],
+  }
+
+  file { 'report.php':
+    ensure  => file,
+    content => template('apache/mod/csp-hotline.php.erb'),
+    mode    => $::apache::file_mode,
+    path    => "${docroot}/csp/report.php",
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
+    before  => File[$::apache::mod_dir],
+    notify  => Class['apache::service'],
+  }
+
 }
