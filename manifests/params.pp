@@ -151,7 +151,7 @@ class apache::params inherits ::apache::version {
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $http_protocol_options  = undef
-    $keepalive            = 'On'
+    $keepalive            = 'Off'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef
