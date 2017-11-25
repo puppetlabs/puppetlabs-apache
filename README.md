@@ -1680,7 +1680,7 @@ Installs and configures [`mod_diskio`][].
 
 ```puppet
 class{'apache':
-  default_mods => `false`,
+  default_mods => false,
   log_level    => 'dumpio:trace7',
 }
 class{'apache::mod::diskio':
