@@ -1653,7 +1653,7 @@ Installs and manages [`mod_alias`][].
     * **Debian**: `/usr/share/apache2/icons`
     * **FreeBSD**: `/usr/local/www/apache24/icons`
     * **Gentoo**: `/var/www/icons`
-    * *Red Hat**: `/var/www/icons`, except on Apache 2.4, where it's `/usr/share/httpd/icons`
+    * **Red Hat**: `/var/www/icons`, except on Apache 2.4, where it's `/usr/share/httpd/icons`
 
 #### Class: `apache::mod::disk_cache`
 
@@ -1680,7 +1680,7 @@ Installs and configures [`mod_diskio`][].
 
 ```puppet
 class{'apache':
-  default_mods => `false`,
+  default_mods => false,
   log_level    => 'dumpio:trace7',
 }
 class{'apache::mod::diskio':
