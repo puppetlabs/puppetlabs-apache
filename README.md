@@ -50,6 +50,7 @@
 [`apache::mod::authn_dbd`]: #class-apachemodauthn_dbd
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::cluster`]: #class-apachemodcluster
+[`apache::mod::data]: #class-apachemoddata
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::dumpio`]: #class-apachemoddumpio
 [`apache::mod::event`]: #class-apachemodevent
@@ -1573,6 +1574,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `cgi`
 * `cgid`
 * `cluster` (see [`apache::mod::cluster`][])
+* `data`
 * `dav`
 * `dav_fs`
 * `dav_svn`\*
