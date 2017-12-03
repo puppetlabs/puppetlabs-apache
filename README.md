@@ -2577,9 +2577,9 @@ Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
 
 * `manager_path`: The server location of the balancer manager.
 
-  Default: '/balancer*manager'.
+  Default: '/balancer-manager'.
 
-* `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer*manager`.
+* `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer-manager`.
 
   Default: ['127.0.0.1','::1'].
 
