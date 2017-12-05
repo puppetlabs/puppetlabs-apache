@@ -13,6 +13,52 @@ describe 'apache::mod::jk', :type => :class do
     it { is_expected.to contain_file('jk.conf').with({ :path => "#{mod_dir}/jk.conf" }) }
   end
 
+  shared_examples 'specific workers_file' do |mod_dir|
+    #let (:pre_condition) do
+    #  'include apache'
+    #end
+    let (:params) do
+      {
+        :workers_file => "#{mod_dir}/workers.properties",
+        :workers_file_content => {
+          'worker_a' => {
+            'type' => 'ajp13',
+            'socket_keepalive' => 'true',
+            'comment'          => 'This is worker A',
+          },
+          'worker_b' => {
+            'type' => 'ajp13',
+            'socket_keepalive' => 'true',
+            'comment'          => 'This is worker B',
+          },
+          'worker_mantain' => 40,
+          'worker_lists' => ['worker_a,worker_b'],
+        },
+      }
+    end
+    it { is_expected.to compile }
+    it { is_expected.to compile.with_all_deps }
+    it do
+      is_expected.to contain_file("#{mod_dir}/workers.properties")
+        .with_content(
+          "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+          "# Any manual changes will be overwritten\n"\
+          "\n"\
+          "worker.list = worker_a,worker_b\n"\
+          "\n"\
+          "worker.maintain = 40\n"\
+          "\n"\
+          "# This is worker A\n"\
+          "worker.worker_a.socket_keepalive=true\n"\
+          "worker.worker_a.type=ajp13\n"\
+          "\n"\
+          "# This is worker B\n"\
+          "worker.worker_b.socket_keepalive=true\n"\
+          "worker.worker_b.type=ajp13\n"
+        )
+    end
+  end
+
   default_ip = '192.168.1.1'
   altern8_ip = '10.1.2.3'
   default_port = 80
@@ -43,6 +89,7 @@ describe 'apache::mod::jk', :type => :class do
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
+    it_behaves_like 'specific workers_file', mod_dir
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
@@ -75,6 +122,7 @@ describe 'apache::mod::jk', :type => :class do
     let (:mod_dir) { mod_dir }
 
     it_behaves_like 'minimal resources', mod_dir
+    it_behaves_like 'specific workers_file', mod_dir
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
