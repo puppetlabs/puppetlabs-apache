@@ -146,7 +146,7 @@ describe 'apache::vhost', type: :define do
         {
           'docroot'                     => '/var/www/foo',
           'manage_docroot'              => false,
-          'virtual_docroot'             => true,
+          'virtual_docroot'             => '/var/www/%0',
           'port'                        => '8080',
           'ip'                          => '127.0.0.1',
           'ip_based'                    => true,
