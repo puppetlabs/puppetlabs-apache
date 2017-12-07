@@ -287,20 +287,6 @@ define apache::vhost(
   $cas_enabled = defined(Apache::Mod['auth_cas'])
 
   if $access_log and !$access_logs {
-    if $access_log_file {
-      if $access_log_file =~ /^\// {
-        # Absolute path provided - don't prepend $logroot
-        $_logs_dest = $access_log_file
-      } else {
-        $_logs_dest = "${logroot}/${access_log_file}"
-      }
-    } elsif $access_log_pipe {
-      $_logs_dest = $access_log_pipe
-    } elsif $access_log_syslog {
-      $_logs_dest = $access_log_syslog
-    } else {
-      $_logs_dest = undef
-    }
     $_access_logs = [{
       'file'        => $access_log_file,
       'pipe'        => $access_log_pipe,
