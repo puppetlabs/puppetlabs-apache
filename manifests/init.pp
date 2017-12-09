@@ -76,7 +76,7 @@ class apache (
   $ports_file                                                    = $::apache::params::ports_file,
   $docroot                                                       = $::apache::params::docroot,
   $apache_version                                                = $::apache::version::default,
-  $server_tokens                                                 = 'OS',
+  $server_tokens                                                 = 'Prod',
   $server_signature                                              = 'On',
   $trace_enable                                                  = 'On',
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes = undef,
