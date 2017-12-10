@@ -23,6 +23,9 @@
   <%- if @ssl_proxy_machine_cert -%>
   SSLProxyMachineCertificateFile "<%= @ssl_proxy_machine_cert %>"
   <%- end -%>
+  <%- if @ssl_proxy_cipher_suite -%>
+  SSLProxyCipherSuite <%= @ssl_proxy_cipher_suite %>
+  <%- end -%>
   <%- if @ssl_proxy_protocol -%>
   SSLProxyProtocol  <%= [@ssl_proxy_protocol].flatten.compact.join(' ') %>
   <%- end -%>
