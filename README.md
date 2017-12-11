@@ -1991,9 +1991,9 @@ Installs and configures [`mod_deflate`][].
 
 **Parameters**:
 
-* `types`: An [array][] of [MIME types][MIME `content*type`] to be deflated.
+* `types`: An [array][] of [MIME types][MIME `content-type`] to be deflated.
 
-  Default: ['text/html text/plain text/xml', 'text/css', 'application/x*javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json'].
+  Default: ['text/html text/plain text/xml', 'text/css', 'application/x-javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json'].
 
 * `notes`: A [Hash][] where the key represents the type and the value represents the note name.
 
@@ -2015,9 +2015,9 @@ Installs [`mod_expires`][] and uses the `expires.conf.erb` template to generate 
 
   Default: `undef`.
 
-* `expires_by_type`: Describes a set of [MIME `content*type`][] and their expiration times.
+* `expires_by_type`: Describes a set of [MIME `content-type`][] and their expiration times.
 
-  Values: An [array][] of [Hashes][Hash], with each Hash's key a valid MIME `content*type` (i.e. 'text/json') and its value following valid [interval syntax][].
+  Values: An [array][] of [Hashes][Hash], with each Hash's key a valid MIME `content-type` (i.e. 'text/json') and its value following valid [interval syntax][].
 
   Default: `undef`.
 
@@ -2457,7 +2457,7 @@ Installs and configures [`mod_negotiation`][].
 
 * `language_priority`: An [array][] of languages to set the `LanguagePriority` option of the module.
 
-  Default: ['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt*BR', 'ru', 'sv', 'zh*CN', 'zh*TW']
+  Default: ['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et', 'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn', 'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN', 'zh-TW']
 
 ##### Class: `apache::mod::nss`
 
@@ -2577,9 +2577,9 @@ Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
 
 * `manager_path`: The server location of the balancer manager.
 
-  Default: '/balancer*manager'.
+  Default: '/balancer-manager'.
 
-* `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer*manager`.
+* `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/balancer-manager`.
 
   Default: ['127.0.0.1','::1'].
 
@@ -2751,13 +2751,13 @@ Installs and configures Trustwave's [`mod_security`][]. It is enabled and runs b
 **Parameters**:
 
 * `activated_rules`: An [array][] of rules from the `modsec_crs_path` or absolute to activate via symlinks.
-* `allowed_methods`: A space*separated list of allowed HTTP methods.
+* `allowed_methods`: A space-separated list of allowed HTTP methods.
 
   Default: 'GET HEAD POST OPTIONS'.
 
-* `content_types`: A list of one or more allowed [MIME types][MIME `content*type`].
+* `content_types`: A list of one or more allowed [MIME types][MIME `content-type`].
 
-  Default: 'application/x*www*form*urlencoded|multipart/form*data|text/xml|application/xml|application/x*amf'.
+  Default: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'.
 
 * `crs_package`: Names the package that installs CRS rules.
 
@@ -2776,13 +2776,13 @@ ${modsec\_dir}/activated\_rules.
 
   Default: `modsec_secruleengine` in [`apache::params`][].
 
-* `restricted_extensions`: A space*separated list of prohibited file extensions.
+* `restricted_extensions`: A space-sparated list of prohibited file extensions.
 
   Default: '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/'.
 
 * `restricted_headers`: A list of restricted headers separated by slashes and spaces.
 
-  Default: 'Proxy*Connection/ /Lock*Token/ /Content*Range/ /Translate/ /via/ /if/'.
+  Default: 'Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'.
 
 * `secdefaultaction`: Configures the Mode of Operation, Self-Contained ('deny') or Collaborative Detection ('pass'), for the OWASP ModSecurity Core Rule Set.
 
@@ -2874,7 +2874,7 @@ Enables Python support via [`mod_wsgi`][].
 
   Default: `undef`.
 
-* `wsgi_python_path`: Defines the [`WSGIPythonPath`][] directive, such as '/path/to/venv/site*packages'.
+* `wsgi_python_path`: Defines the [`WSGIPythonPath`][] directive, such as '/path/to/venv/site-packages'.
 
   Values: A string specifying a path.
 
