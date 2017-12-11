@@ -4786,6 +4786,7 @@ to environment variables.
 - `mellon_sp_private_key_file`: Sets the [MellonSPPrivateKeyFile][`mod_auth_mellon`] directive for the private key location of the service provider.
 - `mellon_sp_cert_file`: Sets the [MellonSPCertFile][`mod_auth_mellon`] directive for the public key location of the service provider.
 - `mellon_user`: Sets the [MellonUser][`mod_auth_mellon`] attribute to use for the username.
+- `mellon_session_length`: Sets the [MellonSessionLength][`mod_auth_mellon`] attribute.
 
 ##### `options`
 

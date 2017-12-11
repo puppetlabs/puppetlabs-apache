@@ -327,6 +327,9 @@
     MellonCond <%= cond %>
          <%- end -%>
       <%- end -%>
+      <%- if directory['mellon_session_length'] -%>
+    MellonSessionLength "<%= directory['mellon_session_length'] %>"
+      <%- end -%>
     <%- end -%>
     <%- if directory['request_headers'] and ! directory['request_headers'].empty? -%>
       ## Request Header rules
