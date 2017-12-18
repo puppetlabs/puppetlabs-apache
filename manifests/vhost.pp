@@ -1096,10 +1096,8 @@ define apache::vhost(
 
   # - $use_canonical_name
   if $use_canonical_name {
-    concat::fragment { "${name}-use_canonical_name":
-      target  => "${priority_real}${filename}.conf",
-      order   => 360,
-      content => template('apache/vhost/_use_canonical_name.erb'),
+    apache::vhost::use_canonical_name { $name:
+      use_canonical_name => $use_canonical_name,
     }
   }
 
