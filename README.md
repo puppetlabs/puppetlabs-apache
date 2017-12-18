@@ -1096,7 +1096,7 @@ Determines whether to enable persistent HTTP connections with the [`KeepAlive`][
 
 Values: 'Off', 'On'.
 
-Default: 'Off'.
+Default: 'On'.
 
 ##### `keepalive_timeout`
 
