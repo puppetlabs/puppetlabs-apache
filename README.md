@@ -2421,6 +2421,7 @@ Installs and configures [`mod_ldap`][], and allows you to modify the
 class { 'apache::mod::ldap':
   ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
   ldap_trusted_global_cert_type => 'CA_DER',
+  ldap_trusted_mode             => 'TLS',
   ldap_shared_cache_size        => '500000',
   ldap_cache_entries            => '1024',
   ldap_cache_ttl                => '600',
@@ -2440,6 +2441,8 @@ class { 'apache::mod::ldap':
 * `ldap_trusted_global_cert_type`: Specifies the global trust certificate format.
 
   Default: 'CA_BASE64'.
+
+* `ldap_trusted_mode`: Specifies the SSL/TLS mode to be used when connecting to an LDAP server.
 
 * `ldap_shared_cache_size`: Specifies the size, in bytes, of the shared memory cache.
 
