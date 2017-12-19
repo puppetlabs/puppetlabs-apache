@@ -11,6 +11,7 @@ KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
 LimitRequestFieldSize <%= @limitreqfieldsize %>
+LimitRequestFields <%= @limitreqfields %>
 <%# Actually >= 2.4.24, but the minor version is not provided -%>
 <%- if @http_protocol_options and scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 HttpProtocolOptions <%= @http_protocol_options %>
