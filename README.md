@@ -2161,6 +2161,54 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 
   Default: `true`.
 
+##### Class: `apache::mod::itk`
+
+Installs and manages [`mod_itk`][], which is an (MPM) that is loaded and configured for the HTTPD process. [official documentation](http://mpm-itk.sesse.net/)
+
+**Parameters**:
+
+* `startservers`: The number of child server processes created on startup.
+
+  Values: Integer.
+
+  Default: `8`.
+
+* `minspareservers`: The desired minimum number of idle child server processes.
+
+  Values: Integer.
+
+  Default: `5`.
+
+* `maxspareservers`: The desired maximum number of idle child server processes.
+
+  Values: Integer.
+
+  Default: `20`.
+
+* `serverlimit`: The maximum configured value for MaxRequestWorkers for the lifetime of the Apache httpd process.
+
+  Values: Integer.
+
+  Default: `256`.
+
+* `maxclients`: The limit on the number of simultaneous requests that will be served.
+
+  Values: Integer.
+
+  Default: `256`.
+
+* `maxrequestsperchild`: The limit on the number of connections that an individual child server process will handle.
+
+  Values: Integer.
+
+  Default: `4000`.
+
+* `enablecapabilities`: Drop most root capabilities in the parent process, and instead run as the user given by the User/Group directives with some extra capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor capabilities, such as NFS.
+
+  Values: Boolean.
+
+  Default: `undef`.
+
 ##### Class: `apache::mod::jk`
 
 Installs and manages `mod_jk`, a connector for Apache httpd redirection to old versions of TomCat and JBoss
