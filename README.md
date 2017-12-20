@@ -66,6 +66,7 @@
 [`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
+[`apache::mod::python`]: #class-apachemodpython
 [`apache::mod::security`]: #class-apachemodsecurity
 [`apache::mod::shib`]: #class-apachemodshib
 [`apache::mod::ssl`]: #class-apachemodssl
@@ -189,6 +190,7 @@
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [`mod_proxy_balancer`]: https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
 [`mod_reqtimeout`]: https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html
+[`mod_python`]: http://modpython.org/
 [`mod_rewrite`]: https://httpd.apache.org/docs/current/mod/mod_rewrite.html
 [`mod_security`]: https://www.modsecurity.org/
 [`mod_ssl`]: https://httpd.apache.org/docs/current/mod/mod_ssl.html
@@ -1627,7 +1629,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
 * `proxy_http`
-* `python`
+* `python` (see [`apache::mod::python`][])
 * `reqtimeout`
 * `remoteip`\*
 * `rewrite`
@@ -2667,6 +2669,14 @@ Default values for these parameters depend on your operating system. Most of thi
 ##### Class: `apache::mod::proxy_html`
 
 **Note**: There is no official package available for `mod_proxy_html`, so you must make it available outside of the apache module.
+
+##### Class: `apache::mod::python`
+
+Installs and configures [`mod_python`][].
+
+**Parameters**
+
+* `loadfile_name`: Sets the name of the configuration file that is used to load the python module.
 
 ##### Class: `apache::mod::reqtimeout`
 
