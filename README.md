@@ -1517,7 +1517,7 @@ Default: Depends on operating system:
 
 ##### `limitreqfields`
 
-The [limitreqfields][] parameter sets the maximum number of request header fields in an HTTP request. This directive gives the server administrator greater control over abnormal client request behavior, which may be useful for avoiding some forms of denial-of-service attacks. The value should be increased if normal clients see an error response from the server that indicates too many fields were sent in the request.
+The [`limitreqfields`][] parameter sets the maximum number of request header fields in an HTTP request. This directive gives the server administrator greater control over abnormal client request behavior, which may be useful for avoiding some forms of denial-of-service attacks. The value should be increased if normal clients see an error response from the server that indicates too many fields were sent in the request.
 
 Default: '100'
 
