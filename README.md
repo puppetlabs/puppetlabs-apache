@@ -3005,6 +3005,12 @@ Configures key-value pairs as [`ProxySet`][] lines. Values: a [hash][].
 
 Default: '{}'.
 
+##### `options`
+
+Specifies an [array][] of [options](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember) after the balancer URL, and accepts any key-value pairs available to [`ProxyPass`][].
+
+Default: [].
+
 ##### `collect_exported`
 
 Determines whether to use [exported resources][].
