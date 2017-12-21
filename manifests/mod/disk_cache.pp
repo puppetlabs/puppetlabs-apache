@@ -1,5 +1,6 @@
 class apache::mod::disk_cache (
-  $cache_root = undef,
+  $cache_root           = undef,
+  $cache_ignore_headers = undef,
 ) {
   include ::apache
   if $cache_root {
