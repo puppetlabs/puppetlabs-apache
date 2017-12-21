@@ -15,6 +15,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
@@ -57,6 +64,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
@@ -93,6 +107,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
