@@ -1678,7 +1678,7 @@ To specify cache ignore headers, pass a string to the `cache_ignore_headers` par
 
 ``` puppet
 class {'::apache::mod::disk_cache':
-  cache_ignore_headers => 'Set-Cookie',
+  cache_ignore_headers => "Set-Cookie",
 }
 ```
 
