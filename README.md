@@ -5175,6 +5175,12 @@ A depth of 0 means that only self-signed remote server certificates are accepted
 
 Default: `undef`
 
+##### `ssl_proxy_cipher_suite`
+
+Sets the [SSLProxyCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyciphersuite) directive, which controls cipher suites supported for ssl proxy traffic.
+
+Default: `undef`
+
 ##### `ssl_proxy_ca_cert`
 
 Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference.
