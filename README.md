@@ -1674,6 +1674,14 @@ class {'::apache::mod::disk_cache':
 }
 ```
 
+To specify cache ignore headers, pass a string to the `cache_ignore_headers` parameter.
+
+``` puppet
+class {'::apache::mod::disk_cache':
+  cache_ignore_headers => 'Set-Cookie',
+}
+```
+
 ##### Class: `apache::mod::diskio`
 
 Installs and configures [`mod_diskio`][].
