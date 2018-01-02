@@ -49,6 +49,9 @@ class apache::params inherits ::apache::version {
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
 
+  # no client certs should be trusted for auth by default.
+  $ssl_certs_dir          = undef
+
   if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::operatingsystem == 'SLES') {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
@@ -83,7 +86,6 @@ class apache::params inherits ::apache::version {
     $dev_packages         = 'httpd-devel'
     $default_ssl_cert     = '/etc/pki/tls/certs/localhost.crt'
     $default_ssl_key      = '/etc/pki/tls/private/localhost.key'
-    $ssl_certs_dir        = '/etc/pki/tls/certs'
     $ssl_sessioncache     = '/var/cache/mod_ssl/scache(512000)'
     $passenger_conf_file  = 'passenger_extra.conf'
     $passenger_conf_package_file = 'passenger.conf'
@@ -104,7 +106,11 @@ class apache::params inherits ::apache::version {
         default => 'mod_authz_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
-      'fastcgi'               => 'mod_fastcgi',
+      'fastcgi'               => $::apache::version::distrelease ? {
+        '5'     => 'mod_fastcgi',
+        '6'     => 'mod_fastcgi',
+        default => undef,
+      },
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
@@ -223,7 +229,6 @@ class apache::params inherits ::apache::version {
     $mpm_module          = 'worker'
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
-    $ssl_certs_dir       = '/etc/ssl/certs'
     $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
@@ -297,7 +302,7 @@ class apache::params inherits ::apache::version {
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $http_protocol_options  = undef
-    $keepalive              = 'Off'
+    $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
@@ -389,7 +394,6 @@ class apache::params inherits ::apache::version {
     $dev_packages     = undef
     $default_ssl_cert = '/usr/local/etc/apache24/server.crt'
     $default_ssl_key  = '/usr/local/etc/apache24/server.key'
-    $ssl_certs_dir    = undef
     $ssl_sessioncache  = '/var/run/ssl_scache(512000)'
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
@@ -423,7 +427,7 @@ class apache::params inherits ::apache::version {
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $http_protocol_options = undef
-    $keepalive            = 'Off'
+    $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef # TODO: revisit
@@ -459,7 +463,6 @@ class apache::params inherits ::apache::version {
     $dev_packages     = undef
     $default_ssl_cert = '/etc/ssl/apache2/server.crt'
     $default_ssl_key  = '/etc/ssl/apache2/server.key'
-    $ssl_certs_dir    = '/etc/ssl/apache2'
     $ssl_sessioncache  = '/var/run/ssl_scache(512000)'
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
@@ -491,7 +494,7 @@ class apache::params inherits ::apache::version {
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $http_protocol_options = undef
-    $keepalive            = 'Off'
+    $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path     = undef # TODO: revisit
@@ -528,7 +531,6 @@ class apache::params inherits ::apache::version {
     $mpm_module          = 'prefork'
     $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
     $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
-    $ssl_certs_dir       = '/etc/ssl/certs'
     $ssl_sessioncache    = '/var/lib/apache2/ssl_scache(512000)'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
@@ -558,7 +560,7 @@ class apache::params inherits ::apache::version {
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $http_protocol_options  = undef
-    $keepalive              = 'Off'
+    $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'

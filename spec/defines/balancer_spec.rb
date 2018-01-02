@@ -21,6 +21,12 @@ describe 'apache::balancer', :type => :define do
     let :pre_condition do
       'include apache'
     end
+    describe "works when only declaring resource title" do
+      it { should contain_concat('apache_balancer_myapp') }
+      it { should_not contain_apache__mod('slotmem_shm') }
+      it { should_not contain_apache__mod('lbmethod_byrequests') }
+      it { should contain_concat__fragment('00-myapp-header').with_content(%r{^<Proxy balancer://myapp>$}) }
+    end
     describe "accept a target parameter and use it" do
       let :params do
         {
@@ -32,6 +38,16 @@ describe 'apache::balancer', :type => :define do
       })}
       it { should_not contain_apache__mod('slotmem_shm') }
       it { should_not contain_apache__mod('lbmethod_byrequests') }
+    end
+    describe "accept an options parameter and use it" do
+      let :params do
+        {
+          :options => ['timeout=0', 'nonce=none'],
+        }
+      end
+      it { should contain_concat__fragment('00-myapp-header').with_content(
+        %r{^<Proxy balancer://myapp timeout=0 nonce=none>$}
+      )}
     end
     context "on jessie" do
       let(:facts) { super().merge({

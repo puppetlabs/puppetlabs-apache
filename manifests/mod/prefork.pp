@@ -1,11 +1,14 @@
 class apache::mod::prefork (
-  $startservers        = '8',
-  $minspareservers     = '5',
-  $maxspareservers     = '20',
-  $serverlimit         = '256',
-  $maxclients          = '256',
-  $maxrequestsperchild = '4000',
-  $apache_version      = undef,
+  $startservers           = '8',
+  $minspareservers        = '5',
+  $maxspareservers        = '20',
+  $serverlimit            = '256',
+  $maxclients             = '256',
+  $maxrequestworkers      = undef,
+  $maxrequestsperchild    = '4000',
+  $maxconnectionsperchild = undef,
+  $apache_version         = undef,
+  $listenbacklog          = '511'
 ) {
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -23,6 +26,15 @@ class apache::mod::prefork (
   if defined(Class['apache::mod::worker']) {
     fail('May not include both apache::mod::prefork and apache::mod::worker on the same node')
   }
+
+  if versioncmp($_apache_version, '2.3.13') < 0 {
+    if $maxrequestworkers == undef {
+      warning("For newer versions of Apache, \$maxclients is deprecated, please use \$maxrequestworkers.")
+    } elsif $maxconnectionsperchild == undef {
+      warning("For newer versions of Apache, \$maxrequestsperchild is deprecated, please use \$maxconnectionsperchild.")
+    }
+  }
+
   File {
     owner => 'root',
     group => $::apache::params::root_group,
@@ -35,7 +47,9 @@ class apache::mod::prefork (
   # - $maxspareservers
   # - $serverlimit
   # - $maxclients
+  # - $maxrequestworkers
   # - $maxrequestsperchild
+  # - $maxconnectionsperchild
   file { "${::apache::mod_dir}/prefork.conf":
     ensure  => file,
     content => template('apache/mod/prefork.conf.erb'),

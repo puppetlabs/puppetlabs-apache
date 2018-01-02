@@ -11,12 +11,12 @@ define apache::fastcgi::server (
 
   Apache::Mod['fastcgi'] -> Apache::Fastcgi::Server[$title]
 
-  if is_absolute_path($host) {
+  if $host =~ Stdlib::Absolutepath {
     $socket = $host
   }
 
   file { "fastcgi-pool-${name}.conf":
-    ensure  => present,
+    ensure  => file,
     path    => "${::apache::confd_dir}/fastcgi-pool-${name}.conf",
     owner   => 'root',
     group   => $::apache::params::root_group,

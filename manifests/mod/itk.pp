@@ -5,6 +5,7 @@ class apache::mod::itk (
   $serverlimit         = '256',
   $maxclients          = '256',
   $maxrequestsperchild = '4000',
+  $enablecapabilities  = undef,
   $apache_version      = undef,
 ) {
   include ::apache

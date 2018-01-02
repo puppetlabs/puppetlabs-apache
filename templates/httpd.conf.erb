@@ -11,7 +11,7 @@ KeepAlive <%= @keepalive %>
 MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
 LimitRequestFieldSize <%= @limitreqfieldsize %>
-# Actually >= 2.4.24, but the minor version is not provided
+<%# Actually >= 2.4.24, but the minor version is not provided -%>
 <%- if @http_protocol_options and scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 HttpProtocolOptions <%= @http_protocol_options %>
 <%- end -%>
@@ -68,6 +68,9 @@ AllowEncodedSlashes <%= @allow_encoded_slashes %>
 <%- if @file_e_tag -%>
 FileETag <%= @file_e_tag %>
 <%- end -%>
+<%- if @use_canonical_name -%>
+UseCanonicalName <%= @use_canonical_name %>
+<%- end -%>
 
 #Listen 80
 
@@ -85,10 +88,10 @@ Include "<%= @mod_load_dir %>/*.conf"
 Include "<%= @ports_file %>"
 
 <% unless @log_formats.has_key?('combined') -%>
-LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+LogFormat "%a %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 <% end -%>
 <% unless @log_formats.has_key?('common') -%>
-LogFormat "%h %l %u %t \"%r\" %>s %b" common
+LogFormat "%a %l %u %t \"%r\" %>s %b" common
 <% end -%>
 <% unless @log_formats.has_key?('referer') -%>
 LogFormat "%{Referer}i -> %U" referer

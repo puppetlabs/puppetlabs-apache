@@ -118,6 +118,14 @@ describe 'apache', :type => :class do
       it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^FileETag None$} }
     end
 
+    context "when specifying canonical name behaviour" do
+      let :params do
+        { :use_canonical_name => 'dns' }
+      end
+
+      it { is_expected.to contain_file("/etc/apache2/apache2.conf").with_content %r{^UseCanonicalName dns$} }
+    end
+
     context "when specifying default character set" do
       let :params do
         { :default_charset => 'none' }
@@ -636,7 +644,7 @@ describe 'apache', :type => :class do
         it "should fail" do
           expect do
             catalogue
-          end.to raise_error(Puppet::Error, /"foo" does not match/)
+          end.to raise_error(Puppet::PreformattedError, /Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\]/)
         end
       end
       context "On" do

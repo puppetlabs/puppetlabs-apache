@@ -26,12 +26,13 @@ define apache::vhost(
   $ssl_verify_client                                                                = undef,
   $ssl_verify_depth                                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
-  $ssl_proxy_verify_depth                                                           = undef,
+  Optional[Integer[0]] $ssl_proxy_verify_depth                                      = undef,
   $ssl_proxy_ca_cert                                                                = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_cn                              = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                            = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                          = undef,
   $ssl_proxy_machine_cert                                                           = undef,
+  $ssl_proxy_cipher_suite                                                           = undef,
   $ssl_proxy_protocol                                                               = undef,
   $ssl_options                                                                      = undef,
   $ssl_openssl_conf_cmd                                                             = undef,
@@ -61,12 +62,12 @@ define apache::vhost(
   $access_log_env_var                                                               = false,
   Optional[Array] $access_logs                                                      = undef,
   $aliases                                                                          = undef,
-  $directories                                                                      = undef,
+  Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                  = undef,
   Boolean $error_log                                                                = true,
   $error_log_file                                                                   = undef,
   $error_log_pipe                                                                   = undef,
   $error_log_syslog                                                                 = undef,
-  $http_protocol_options                                                            = undef,
+  Optional[Pattern[/^((Strict|Unsafe)?\s*(\b(Registered|Lenient)Methods)?\s*(\b(Allow0\.9|Require1\.0))?)$/]] $http_protocol_options = undef,
   $modsec_audit_log                                                                 = undef,
   $modsec_audit_log_file                                                            = undef,
   $modsec_audit_log_pipe                                                            = undef,
@@ -133,7 +134,8 @@ define apache::vhost(
   $use_optional_includes                                                            = $::apache::use_optional_includes,
   $apache_version                                                                   = $::apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                    = undef,
-  $suexec_user_group                                                                = undef,
+  Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                           = undef,
+  $passenger_spawn_method                                                           = undef,
   $passenger_app_root                                                               = undef,
   $passenger_app_env                                                                = undef,
   $passenger_ruby                                                                   = undef,
@@ -148,10 +150,10 @@ define apache::vhost(
   $passenger_startup_file                                                           = undef,
   $add_default_charset                                                              = undef,
   $modsec_disable_vhost                                                             = undef,
-  $modsec_disable_ids                                                               = undef,
+  Optional[Variant[Hash, Array]] $modsec_disable_ids                                = undef,
   $modsec_disable_ips                                                               = undef,
-  $modsec_disable_msgs                                                              = undef,
-  $modsec_disable_tags                                                              = undef,
+  Optional[Variant[Hash, Array]] $modsec_disable_msgs                               = undef,
+  Optional[Variant[Hash, Array]] $modsec_disable_tags                               = undef,
   $modsec_body_limit                                                                = undef,
   $jk_mounts                                                                        = undef,
   Boolean $auth_kerb                                                                = false,
@@ -175,6 +177,7 @@ define apache::vhost(
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
   Optional[String] $shib_compat_valid_user                                          = undef,
+  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
@@ -184,26 +187,14 @@ define apache::vhost(
 
   $apache_name = $::apache::apache_name
 
-  if $http_protocol_options != undef {
-    validate_re($http_protocol_options, '^((Strict|Unsafe)?\s*(\b(RegisteredMethods|LenientMethods))?\s*(\b(Allow0\.9|Require1\.0))?)$',
-    "${http_protocol_options} is not supported for http_protocol_options.
-    Allowed value is any sequence of the following alternative values:
-    'Strict' or Unsafe, 'RegisteredMethods' or 'LenientMethods', and
-    'Allow0.9' or 'Require1.0'.")
-  }
   if $rewrites {
     unless empty($rewrites) {
       $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
-      validate_hash($rewrites_flattened[0])
+      assert_type(Array[Hash], $rewrites_flattened)
     }
   }
 
   # Input validation begins
-
-  if $suexec_user_group {
-    validate_re($suexec_user_group, '^[\w-]+ [\w-]+$',
-    "${suexec_user_group} is not supported for suexec_user_group.  Must be 'user group'.")
-  }
 
   if $log_level {
     validate_apache_log_level($log_level)
@@ -219,10 +210,6 @@ define apache::vhost(
 
   if $modsec_audit_log_file and $modsec_audit_log_pipe {
     fail("Apache::Vhost[${name}]: 'modsec_audit_log_file' and 'modsec_audit_log_pipe' cannot be defined at the same time")
-  }
-
-  if $ssl_proxy_verify_depth {
-    validate_integer($ssl_proxy_verify_depth)
   }
 
   # Input validation ends
@@ -241,7 +228,7 @@ define apache::vhost(
     include ::apache::mod::vhost_alias
   }
 
-  if $wsgi_daemon_process {
+  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
     include ::apache::mod::wsgi
   }
 
@@ -249,7 +236,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
+  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
     include ::apache::mod::passenger
   }
 
@@ -303,20 +290,6 @@ define apache::vhost(
   $cas_enabled = defined(Apache::Mod['auth_cas'])
 
   if $access_log and !$access_logs {
-    if $access_log_file {
-      if $access_log_file =~ /^\// {
-        # Absolute path provided - don't prepend $logroot
-        $_logs_dest = $access_log_file
-      } else {
-        $_logs_dest = "${logroot}/${access_log_file}"
-      }
-    } elsif $access_log_pipe {
-      $_logs_dest = $access_log_pipe
-    } elsif $access_log_syslog {
-      $_logs_dest = $access_log_syslog
-    } else {
-      $_logs_dest = undef
-    }
     $_access_logs = [{
       'file'        => $access_log_file,
       'pipe'        => $access_log_pipe,
@@ -411,7 +384,10 @@ define apache::vhost(
   }
 
   # Load mod_alias if needed and not yet loaded
-  if ($scriptalias or $scriptaliases != []) or ($aliases and $aliases != []) or ($redirect_source and $redirect_dest) {
+  if ($scriptalias or $scriptaliases != [])
+    or ($aliases and $aliases != [])
+    or ($redirect_source and $redirect_dest)
+    or ($redirectmatch_regexp or $redirectmatch_status or $redirectmatch_dest){
     if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
       include ::apache::mod::alias
     }
@@ -480,9 +456,6 @@ define apache::vhost(
 
   ## Create a default directory list if none defined
   if $directories {
-    if !is_hash($directories) and !(is_array($directories) and is_hash($directories[0])) {
-      fail("Apache::Vhost[${name}]: 'directories' must be either a Hash or an Array of Hashes")
-    }
     $_directories = $directories
   } elsif $docroot {
     $_directory = {
@@ -511,32 +484,26 @@ define apache::vhost(
 
   ## Create a global LocationMatch if locations aren't defined
   if $modsec_disable_ids {
-    if is_hash($modsec_disable_ids) {
-      $_modsec_disable_ids = $modsec_disable_ids
-    } elsif is_array($modsec_disable_ids) {
+    if $modsec_disable_ids =~ Array {
       $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
     } else {
-      fail("Apache::Vhost[${name}]: 'modsec_disable_ids' must be either a Hash of location/IDs or an Array of IDs")
+      $_modsec_disable_ids = $modsec_disable_ids
     }
   }
 
   if $modsec_disable_msgs {
-    if is_hash($modsec_disable_msgs) {
-      $_modsec_disable_msgs = $modsec_disable_msgs
-    } elsif is_array($modsec_disable_msgs) {
+    if $modsec_disable_msgs =~ Array {
       $_modsec_disable_msgs = { '.*' => $modsec_disable_msgs }
     } else {
-      fail("Apache::Vhost[${name}]: 'modsec_disable_msgs' must be either a Hash of location/Msgs or an Array of Msgs")
+      $_modsec_disable_msgs = $modsec_disable_msgs
     }
   }
 
   if $modsec_disable_tags {
-    if is_hash($modsec_disable_tags) {
-      $_modsec_disable_tags = $modsec_disable_tags
-    } elsif is_array($modsec_disable_tags) {
+    if $modsec_disable_tags =~ Array {
       $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
     } else {
-      fail("Apache::Vhost[${name}]: 'modsec_disable_tags' must be either a Hash of location/Tags or an Array of Tags")
+      $_modsec_disable_tags = $modsec_disable_tags
     }
   }
 
@@ -991,6 +958,7 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $passenger_spawn_method
   # - $passenger_app_root
   # - $passenger_app_env
   # - $passenger_ruby
@@ -1002,7 +970,7 @@ define apache::vhost(
   # - $passenger_nodejs
   # - $passenger_sticky_sessions
   # - $passenger_startup_file
-  if $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
+  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
@@ -1095,6 +1063,13 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_shib.erb'),
+
+  # - $use_canonical_name
+  if $use_canonical_name {
+    concat::fragment { "${name}-use_canonical_name":
+      target  => "${priority_real}${filename}.conf",
+      order   => 360,
+      content => template('apache/vhost/_use_canonical_name.erb'),
     }
   }
 

@@ -34,6 +34,15 @@ describe 'apache::mod::itk', :type => :class do
       it { is_expected.not_to contain_file("/etc/apache2/mods-enabled/itk.load") }
 
       it { is_expected.to contain_package("apache2-mpm-itk") }
+
+      context "with enablecapabilities set" do
+        let :params do
+          super().merge({:enablecapabilities => true})
+        end
+
+        it { is_expected.not_to contain_file('/etc/apache2/mods-available/itk.conf').with_content(
+                /EnableCapabilities/) }
+      end
     end
 
     context "with Apache version >= 2.4" do
@@ -53,6 +62,11 @@ describe 'apache::mod::itk', :type => :class do
         })
       }
       it { is_expected.to contain_file("/etc/apache2/mods-enabled/itk.load").with_ensure('link') }
+
+      context "with enablecapabilities not set" do
+        it { is_expected.not_to contain_file('/etc/apache2/mods-available/itk.conf').with_content(
+                /EnableCapabilities/) }
+      end
     end
   end
   context "on a RedHat OS" do
@@ -84,6 +98,15 @@ describe 'apache::mod::itk', :type => :class do
         'require' => 'Package[httpd]',
         })
       }
+
+      context "with enablecapabilities set" do
+        let :params do
+          super().merge({:enablecapabilities => 'On'})
+        end
+
+        it { is_expected.not_to contain_file('/etc/httpd/conf.d/itk.conf').with_content(
+                /EnableCapabilities/) }
+      end
     end
 
     context "with Apache version >= 2.4" do
@@ -102,6 +125,15 @@ describe 'apache::mod::itk', :type => :class do
         'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n"
         })
       }
+
+      context "with enablecapabilities set" do
+        let :params do
+          super().merge({:enablecapabilities => false})
+        end
+
+        it { is_expected.to contain_file('/etc/httpd/conf.d/itk.conf').with_content(
+                /EnableCapabilities  Off/) }
+      end
     end
   end
   context "on a FreeBSD OS" do
@@ -126,5 +158,35 @@ describe 'apache::mod::itk', :type => :class do
     it { is_expected.not_to contain_apache__mod('itk') }
     it { is_expected.to contain_file("/usr/local/etc/apache24/Modules/itk.conf").with_ensure('file') }
     it { is_expected.to contain_package("www/mod_mpm_itk") }
+
+    context "with Apache version < 2.4" do
+      let :params do
+        {
+          :apache_version => '2.2',
+        }
+      end
+
+      context "with enablecapabilities not set" do
+        it { is_expected.not_to contain_file('/usr/local/etc/apache24/Modules/itk.conf').with_content(
+                /EnableCapabilities/) }
+      end
+    end
+
+    context "with Apache version >= 2.4" do
+      let :params do
+        {
+          :apache_version => '2.4',
+        }
+      end
+
+      context "with enablecapabilities set" do
+        let :params do
+          super().merge({:enablecapabilities => true})
+        end
+
+        it { is_expected.to contain_file('/usr/local/etc/apache24/Modules/itk.conf').with_content(
+                /EnableCapabilities  On/) }
+      end
+    end
   end
 end

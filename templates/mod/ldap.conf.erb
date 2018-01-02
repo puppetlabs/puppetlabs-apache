@@ -12,6 +12,9 @@
 <% if @ldap_trusted_global_cert_file -%>
 LDAPTrustedGlobalCert <%= @ldap_trusted_global_cert_type %> <%= @ldap_trusted_global_cert_file %>
 <% end -%>
+<% if @ldap_trusted_mode -%>
+LDAPTrustedMode <%= @ldap_trusted_mode %>
+<% end -%>
 <%- if @ldap_shared_cache_size -%>
 LDAPSharedCacheSize <%= @ldap_shared_cache_size %>
 <%- end -%>

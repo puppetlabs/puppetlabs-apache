@@ -38,7 +38,7 @@ class apache (
   $purge_vhost_dir                                               = undef,
   $purge_vdir                                                    = false,
   $serveradmin                                                   = 'root@localhost',
-  $sendfile                                                      = 'On',
+  Enum['On', 'Off', 'on', 'off'] $sendfile                       = 'On',
   $error_documents                                               = false,
   $timeout                                                       = '120',
   $httpd_dir                                                     = $::apache::params::httpd_dir,
@@ -80,6 +80,8 @@ class apache (
   $trace_enable                                                  = 'On',
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes = undef,
   $file_e_tag                                                    = undef,
+  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]
+    $use_canonical_name                                          = undef,
   $package_ensure                                                = 'installed',
   Boolean $use_optional_includes                                 = $::apache::params::use_optional_includes,
   $use_systemd                                                   = $::apache::params::use_systemd,
@@ -129,7 +131,6 @@ class apache (
       notify => Class['Apache::Service'],
     }
   }
-  validate_re($sendfile, [ '^[oO]n$' , '^[oO]ff$' ])
 
   # declare the web server user and group
   # Note: requiring the package means the package ought to create them and not puppet

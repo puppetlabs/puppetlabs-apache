@@ -1,5 +1,110 @@
-## Supported Release 1.11.0
+# Change log
+
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org).
+
+## Supported Release [2.3.0]
+### Summary
+This is a feature release. It includes a task that will reload the apache service.
+
+#### Added
+- Add a task that allows the reloading of the Apache service.
+
+## Supported Release [2.2.0]
+### Summary
+This is a maintainence and feature release. It will include updates to translations in Japanese, some maintainence and adding `PassengerSpawnMethod` to vhost.
+
+#### Added
+- `PassengerSpawnMethod` added to `vhost`.
+
+#### Changed
+- Improve version match fact for `apache_version`
+- Update to prefork.conf params for Apache 2.4
+- Updates to `CONTRIBUTING.md`
+- Do not install mod_fastcgi on el7
+- Include mod_wsgi when using wsgi options
+
+## Supported Release [2.1.0]
+### Summary
+This is a feature release including a security patch (CVE-2017-2299)
+
+#### Added
+- `apache::mod::jk` class for managing the mod_jk connector
+- `apache_pw_hash` function
+- the ProxyPass directive in location contexts
+- more Puppet 4 type validation
+- `apache::mod::macro` class for managing mod_macro
+
+#### Changed
+- $ssl_certs_dir default to `undef` for all platorms
+- $ssl_verify_client must now be set to use any of the following: `$ssl_certs_dir`, `$ssl_ca`, `$ssl_crl_path`, `$ssl_crl`, `$ssl_verify_depth`, `$ssl_crl_check`
+
+#### Fixed
+- issue where mod_alias was not being loaded when RedirectMatch* directives were being used ([MODULES-3942](https://tickets.puppet.com/browse/MODULES-3942))
+- issue with `$directories` parameter in `apache::vhost`
+- issue in UserDir template where the UserDir path did not match the Directory path
+- **Issue where the $ssl_certs_dir default set Apache to implicitly trust all client certificates that were issued by any CA in that directory**
+
+#### Removed
+- support for EOL platforms: Ubuntu 10.04, 12.04 and Debian 6 (Squeeze)
+
+## Supported Release [2.0.0]
+### Summary
+Major release **removing Puppet 3 support** and other backwards-incompatible changes.
+
+#### Added
+- support for FileETag directive configurable with the `file_e_tag` parameter
+- ability to configure multiple ports per vhost
+- RequestHeader directive to vhost template ([MODULES-4156](https://tickets.puppet.com/browse/MODULES-4156))
+- customizability for AllowOverride directive in userdir.conf ([MODULES-4516](https://tickets.puppet.com/browse/MODULES-4516))
+- AdvertiseFrequency directive for cluster.conf ([MODULES-4500](https://tickets.puppet.com/browse/MODULES-4500))
+- `ssl_proxy_protocol` and `ssl_sessioncache` parameters for mod::ssl ([MODULES-4737](https://tickets.puppet.com/browse/MODULES-4737))
+- SSLCACertificateFile directive in ssl.conf configurable with `ssl_ca` parameter
+- mod::authnz_pam 
+- mod::intercept_form_submit 
+- mod::lookup_identity
+- Suse compatibility for mod::proxy_html
+- support for AddCharset directive configurable with `add_charset` parameter
+- support for SSLProxyVerifyDepth and SSLProxyCACertificateFile directives configurable with `ssl_proxy_verify_depth` and `ssl_proxy_ca_cert` respectively
+- `manage_security_crs` parameter for mod::security
+- support for LimitExcept directive configurable with `limit_except` parameter
+- support for WSGIRestrictEmbedded directive configurable with `wsgi_restrict_embedded` parameter
+- support for custom UserDir path ([MODULES-4933](https://tickets.puppet.com/browse/MODULES-4933))
+- support for PassengerMaxRequests directive configurable with `passenger_max_requests`
+- option to override module package names with `mod_packages` parameter ([MODULES-3838](https://tickets.puppet.com/browse/MODULES-3838))
+
+#### Removed
+- enclose_ipv6 as it was added to puppetlabs-stdlib
+- deprecated `$verifyServerCert` parameter from the `apache::mod::authnz_ldap` class ([MODULES-4445](https://tickets.puppet.com/browse/MODULES-4445))
+
+#### Changed
+- `keepalive` default to 'On' from 'Off'
+- Puppet version compatibility to ">= 4.7.0 < 6.0.0"
+- puppetlabs-stdlib dependency to ">= 4.12.0 < 5.0.0"
+- `ssl_cipher` to explicitly disable 3DES because of Sweet32
+
+#### Fixed
+- various issues in the vhost template
+- use of deprecated `include_src` parameter in vhost_spec
+- management of ssl.conf on RedHat systems
+- various SLES/Suse params
+- mod::cgi ordering for FreeBSD
+- issue where ProxyPreserveHost could not be set without other Proxy* directives
+- the module attempting to install proxy_html on Ubuntu Xenial and Debian Stretch
+
+## Supported Release [1.11.1]
 #### Summary
+This is a security patch release (CVE-2017-2299). These changes are also in version 2.1.0 and higher.
+
+#### Changed
+- $ssl_certs_dir default to `undef` for all platorms
+- $ssl_verify_client must now be set to use any of the following: `$ssl_certs_dir`, `$ssl_ca`, `$ssl_crl_path`, `$ssl_crl`, `$ssl_verify_depth`, `$ssl_crl_check`
+
+#### Fixed
+- **Issue where the $ssl_certs_dir default set Apache to implicitly trust all client certificates that were issued by any CA in that directory** ([MODULES-5471](https://tickets.puppet.com/browse/MODULES-5471))
+
+## Supported Release [1.11.0]
+### Summary
 This release adds SLES12 Support and many more features and bugfixes.
 
 #### Features
@@ -68,7 +173,7 @@ This release adds SLES12 Support and many more features and bugfixes.
 - (MODULES-3744) Process $crs_package before $modsec_dir
 - (MODULES-1491) Adds `::apache` include to mods that need it
 
-## Supported Release 1.10.0
+## Supported Release [1.10.0]
 #### Summary
 This release fixes backwards compatibility bugs introduced in 1.9.0. Also includes a new mod class and a new vhost feature.
 
@@ -89,7 +194,7 @@ This release fixes backwards compatibility bugs introduced in 1.9.0. Also includ
 - Revert "changed rpaf Configuration Directives: RPAF -> RPAF_". Bug introduced in release 1.9.0.
 - Set actual path to apachectl on FreeBSD. Fixes snippets verification.
 
-## Supported Release 1.9.0 [DELETED]
+## Supported Release [1.9.0] [DELETED]
 #### Features
 - Added `apache_version` fact
 - Added `apache::balancer::target` attribute
@@ -169,7 +274,7 @@ This release fixes backwards compatibility bugs introduced in 1.9.0. Also includ
 - Fixed xml2enc for proxy\_html on debian
 - Fixed a problem where the apache service restarts too fast
 
-## Supported Release 1.8.1
+## Supported Release [1.8.1]
 ### Summary
 This release includes bug fixes and a documentation update.
 
@@ -178,7 +283,7 @@ This release includes bug fixes and a documentation update.
 - Fixes a bug where passenger.conf was vulnerable to purging.
 - Removes the pin of the concat module dependency.
 
-## 2016-01-26 - Supported Release 1.8.0
+## Supported Release [1.8.0]
 ### Summary
 This release includes a lot of bug fixes and feature updates, including support for Debian 8, as well as many test improvements.
 
@@ -219,12 +324,12 @@ This release includes a lot of bug fixes and feature updates, including support 
 - Added X-Forwarded-For into log_formats defaults.
 - (MODULES-2703) Allow mod pagespeed to take an array of lines as additional_configuration.
 
-## Supported Release 1.7.1
+## Supported Release [1.7.1]
 ###Summary
 
 Small release for support of newer PE versions. This increments the version of PE in the metadata.json file.
 
-## 2015-11-17 - Supported Release 1.7.0
+## Supported Release [1.7.0]
 ### Summary
 This release includes many new features and bugfixes. There are test, documentation and misc improvements.
 
@@ -272,7 +377,7 @@ This release includes many new features and bugfixes. There are test, documentat
 - allow multiple IP addresses per vhost
 - default document root update for Ubuntu 14.04 and Debian 8 
 
-## 2015-07-28 - Supported Release 1.6.0
+## Supported Release [1.6.0]
 ### Summary
 This release includes a couple of new features, along with test and documentation updates, and support for the latest AIO puppet builds.
 
@@ -286,7 +391,7 @@ This release includes a couple of new features, along with test and documentatio
 - Do not use systemd on Amazon Linux
 - Add missing docs for `timeout` parameter (MODULES-2148)
 
-## 2015-06-11 - Supported Release 1.5.0
+## Supported Release [1.5.0]
 ### Summary
 This release primarily adds Suse compatibility. It also adds a handful of other
 parameters for greater configuration control.
@@ -318,11 +423,11 @@ parameters for greater configuration control.
 - Fix userdir access permissions
 - Fix issue where the module was trying to use systemd on Amazon Linux.
 
-## 2015-04-28 - Supported Release 1.4.1
+## Supported Release [1.4.1]
 
 This release corrects a metadata issue that has been present since release 1.2.0. The refactoring of `apache::vhost` to use `puppetlabs-concat` requires a version of concat newer than the version required in PE. If you are using PE 3.3.0 or earlier you will need to use version 1.1.1 or earlier of the `puppetlabs-apache` module.
 
-## 2015-03-17 - Supported Release 1.4.0
+## Supported Release [1.4.0]
 ###Summary
 
 This release fixes the issue where the docroot was still managed even if the default vhosts were disabled and has many other features and bugfixes including improved support for 'deny' and 'require' as arrays in the 'directories' parameter under `apache::vhost`
@@ -365,7 +470,7 @@ This release fixes the issue where the docroot was still managed even if the def
 - Change the loadfile name for `mod_passenger` so `mod_proxy` will load by default before `mod_passenger`
 - Remove old Debian work-around that removed `passenger_extra.conf`
 
-## 2015-02-17 - Supported Release 1.3.0
+## Supported Release [1.3.0]
 ### Summary
 
 This release has many new features and bugfixes, including the ability to optionally not trigger service restarts on config changes.
@@ -424,7 +529,7 @@ This release has many new features and bugfixes, including the ability to option
 - Fix indentation in `vhost/_directories.erb` template (MODULES-1688)
 - Create symlinks on all distros if `vhost_enable_dir` is specified
 
-## 2014-09-30 - Supported Release 1.2.0
+## Supported Release [1.2.0]
 ### Summary
 
 This release features many improvements and bugfixes, including several new defines, a reworking of apache::vhost for more extensibility, and many new parameters for more customization. This release also includes improved support for strict variables and the future parser.
@@ -527,13 +632,13 @@ This release features many improvements and bugfixes, including several new defi
 * By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
 * SLES is unsupported.
 
-## 2014-07-15 - Supported Release 1.1.1
+## Supported Release [1.1.1]
 ### Summary
 
 This release merely updates metadata.json so the module can be uninstalled and
 upgraded via the puppet module command.
 
-## 2014-04-14 Supported Release 1.1.0
+## Supported Release [1.1.0]
 
 ### Summary
 
@@ -568,7 +673,7 @@ through adding RHEL7 and Ubuntu 14.04 support.  It also includes Passenger
 * By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
 * SLES is unsupported.
 
-## 2014-03-04 Supported Release 1.0.1
+## Supported Release [1.0.1]
 ### Summary
 
 This is a supported release.  This release removes a testing symlink that can
@@ -581,7 +686,7 @@ modulepath.
 * By default, the version of Apache that ships with Ubuntu 10.04 does not work with `wsgi_import_script`.
 * SLES is unsupported.
  
-## 2014-03-04 Supported Release 1.0.0
+## Supported Release [1.0.0]
 ### Summary
 
 This is a supported release. This release introduces Apache 2.4 support for
@@ -605,7 +710,7 @@ Debian and RHEL based osfamilies.
 
 ---
 
-## 2014-01-31 Release 0.11.0
+## Supported Release [0.11.0]
 ### Summary:
 
 This release adds preliminary support for Windows compatibility and multiple rewrite support.
@@ -642,7 +747,7 @@ This release adds preliminary support for Windows compatibility and multiple rew
 - Fix $ports_file reference in Namevirtualhost.
 
 
-## 2013-12-05 Release 0.10.0
+## Supported Release [0.10.0]
 ### Summary:
 
 This release adds FreeBSD osfamily support and various other improvements to some mods.
@@ -681,7 +786,7 @@ This release adds FreeBSD osfamily support and various other improvements to som
 - only apply Directory defaults when provider is a directory
 - Working mod_authnz_ldap support on Debian/Ubuntu
 
-## 2013-09-06 Release 0.9.0
+## Supported Release [0.9.0]
 ### Summary:
 This release adds more parameters to the base apache class and apache defined
 resource to make the module more flexible. It also adds or enhances SuPHP,
@@ -739,13 +844,13 @@ Class['apache::service']`
 - Made `aliases` able to take a single alias hash instead of requiring an
 array.
 
-## 2013-07-26 Release 0.8.1
+## Supported Release [0.8.1]
 #### Bugfixes:
 - Update `apache::mpm_module` detection for worker/prefork
 - Update `apache::mod::cgi` and `apache::mod::cgid` detection for
 worker/prefork
 
-## 2013-07-16 Release 0.8.0
+## Supported Release [0.8.0]
 #### Features:
 - Add `servername` parameter to `apache` class
 - Add `proxy_set` parameter to `apache::balancer` define
@@ -757,7 +862,7 @@ worker/prefork
 - Fix `apache::mod::*` to notify the service on config change
 - Documentation updates
 
-## 2013-07-09 Release 0.7.0
+## Supported Release [0.7.0]
 #### Changes:
 - Essentially rewrite the module -- too many to list
 - `apache::vhost` has many abilities -- see README.md for details
@@ -767,12 +872,12 @@ worker/prefork
 #### Bugfixes:
 - Many. And many more to come
 
-## 2013-03-2 Release 0.6.0
+## Supported Release [0.6.0]
 - update travis tests (add more supported versions)
 - add access log_parameter
 - make purging of vhost dir configurable
 
-## 2012-08-24 Release 0.4.0
+## Supported Release [0.4.0]
 #### Changes:
 - `include apache` is now required when using `apache::mod::*`
 
@@ -781,7 +886,7 @@ worker/prefork
 - Fix formatting in vhost template
 - Fix spec tests such that they pass
 
-## 2012-05-08 Puppet Labs <info@puppetlabs.com> - 0.0.4
+## Supported Release [0.0.4]
 * e62e362 Fix broken tests for ssl, vhost, vhost::*
 * 42c6363 Changes to match style guide and pass puppet-lint without error
 * 42bc8ba changed name => path for file resources in order to name namevar by it's name
@@ -814,3 +919,36 @@ worker/prefork
 * 6a5b11a Ensure installed
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
+
+[2.3.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.2.0...2.3.0
+[2.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.1.0...2.2.0
+[2.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.0.0...2.1.0
+[2.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...2.0.0
+[1.11.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.11.0...1.11.1
+[1.11.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.10.0...1.11.0
+[1.10.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.9.0...1.10.0
+[1.9.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.8.1...1.9.0
+[1.8.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.8.0...1.8.1
+[1.8.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.7.1...1.8.0
+[1.7.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.7.0...1.7.1
+[1.7.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.6.0...1.7.0
+[1.6.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.5.0...1.6.0
+[1.5.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.4.1...1.5.0
+[1.4.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.4.0...1.4.1
+[1.4.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.3.0...1.4.0
+[1.3.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.2.0...1.3.0
+[1.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.1.1...1.2.0
+[1.1.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.1.0...1.1.1
+[1.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.0.1...1.1.0
+[1.0.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.0.0...1.0.1
+[1.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.11.0...1.0.0
+[0.11.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.10.0...0.11.0
+[0.10.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.9.0...0.10.0
+[0.9.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/1.8.1...0.9.0
+[0.8.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.8.0...0.8.1
+[0.8.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.7.0...0.8.0
+[0.7.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.6.0...0.7.0
+[0.6.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.5.0-rc1...0.6.0
+[0.5.0-rc1]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.4.0...0.5.0-rc1
+[0.4.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/0.3.0...0.4.0
+[0.0.4]:https://github.com/puppetlabs/puppetlabs-apache/commits/0.0.4
