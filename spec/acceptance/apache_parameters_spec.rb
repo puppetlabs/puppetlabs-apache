@@ -399,6 +399,20 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'limitrequestfields' do
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': limitreqfields => '120' }"
+        apply_manifest(pp, :catch_failures => true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'LimitRequestFields 120' }
+    end
+  end
+
   describe 'logging' do
     describe 'setup' do
       it 'applies cleanly' do

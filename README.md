@@ -146,6 +146,7 @@
 [`keepalive` parameter]: #keepalive
 [`keepalive_timeout`]: #keepalive_timeout
 [`limitreqfieldsize`]: https://httpd.apache.org/docs/current/mod/core.html#limitrequestfieldsize
+[`limitreqfields`]: http://httpd.apache.org/docs/current/mod/core.html#limitrequestfields
 
 [`lib`]: #lib
 [`lib_path`]: #lib_path
@@ -1515,6 +1516,12 @@ Default: Depends on operating system:
 - **Gentoo**: 'access.log'
 - **Red Hat**: 'access_log'
 - **Suse**: 'access.log'
+
+##### `limitreqfields`
+
+The [`limitreqfields`][] parameter sets the maximum number of request header fields in an HTTP request. This directive gives the server administrator greater control over abnormal client request behavior, which may be useful for avoiding some forms of denial-of-service attacks. The value should be increased if normal clients see an error response from the server that indicates too many fields were sent in the request.
+
+Default: '100'
 
 #### Class: `apache::dev`
 
