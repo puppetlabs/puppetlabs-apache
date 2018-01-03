@@ -67,6 +67,7 @@ class apache (
   $keepalive_timeout                                             = $::apache::params::keepalive_timeout,
   $max_keepalive_requests                                        = $::apache::params::max_keepalive_requests,
   $limitreqfieldsize                                             = '8190',
+  $limitreqfields                                                = '100',
   $logroot                                                       = $::apache::params::logroot,
   $logroot_mode                                                  = $::apache::params::logroot_mode,
   $log_level                                                     = $::apache::params::log_level,
@@ -80,6 +81,8 @@ class apache (
   $trace_enable                                                  = 'On',
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes = undef,
   $file_e_tag                                                    = undef,
+  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]
+    $use_canonical_name                                          = undef,
   $package_ensure                                                = 'installed',
   Boolean $use_optional_includes                                 = $::apache::params::use_optional_includes,
   $use_systemd                                                   = $::apache::params::use_systemd,

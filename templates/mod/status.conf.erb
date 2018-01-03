@@ -1,11 +1,13 @@
 <Location <%= @status_path %>>
     SetHandler server-status
+    <%-# From Puppet 4.2 up, replace: -%>
+    <%-# "scope.function_template(["apache/mod/<Template>"])" -%>
+    <%-# with: -%>
+    <%-# "scope.call_function('template', ["apache/mod/<Template>"])" -%>
     <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
-    Require ip <%= Array(@allow_from).join(" ") %>
+<%= scope.function_template(["apache/mod/_require.erb"]) -%>
     <%- else -%>
-    Order deny,allow
-    Deny from all
-    Allow from <%= Array(@allow_from).join(" ") %>
+<%= scope.function_template(["apache/mod/_allow.erb"]) -%>
     <%- end -%>
 </Location>
 ExtendedStatus <%= @extended_status %>

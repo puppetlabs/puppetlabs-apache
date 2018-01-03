@@ -83,7 +83,7 @@ define apache::mpm (
         }
       }
 
-      if $mpm == 'itk' and $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '16.04' {
+      if $mpm == 'itk' and ( ( $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '16.04' ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) ) {
         $packagename = 'libapache2-mpm-itk'
       } else {
         $packagename = "apache2-mpm-${mpm}"

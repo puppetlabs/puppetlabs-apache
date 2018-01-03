@@ -8,6 +8,7 @@ class apache::mod::ldap (
   $ldap_cache_ttl                                  = undef,
   $ldap_opcache_entries                            = undef,
   $ldap_opcache_ttl                                = undef,
+  $ldap_trusted_mode                               = undef,
 ){
 
   include ::apache
@@ -16,7 +17,7 @@ class apache::mod::ldap (
     package => $package_name,
   }
   # Template uses $_apache_version
-  file { 'ldap.conf':
+  file { 'apache-mod-ldap.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/ldap.conf",
     mode    => $::apache::file_mode,

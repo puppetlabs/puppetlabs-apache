@@ -15,7 +15,7 @@ describe 'apache::custom_config define' do
     end
 
     describe file("#{$confd_dir}/25-acceptance_test.conf") do
-      it { is_expected.not_to be_file }
+      it { expect(file).not_to exist }
     end
   end
 

@@ -15,6 +15,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
@@ -26,7 +33,7 @@ describe 'apache::mod::disk_cache', :type => :class do
       it { should compile }
       it { should contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_apache__mod("disk_cache") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_disk_cache\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_disk_cache\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
     context "with Apache version >= 2.4" do
       let :pre_condition do
@@ -40,7 +47,7 @@ describe 'apache::mod::disk_cache', :type => :class do
       it { should contain_class('apache::mod::disk_cache') }
       it { should contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]')  }
       it { is_expected.to contain_apache__mod("cache_disk") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
   end
 
@@ -57,6 +64,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
@@ -66,7 +80,7 @@ describe 'apache::mod::disk_cache', :type => :class do
          }'
       end
       it { is_expected.to contain_apache__mod("disk_cache") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_proxy\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_proxy\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
     context "with Apache version >= 2.4" do
       let :pre_condition do
@@ -77,7 +91,7 @@ describe 'apache::mod::disk_cache', :type => :class do
          }'
       end
       it { is_expected.to contain_apache__mod("cache_disk") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
   end
   context "on a FreeBSD OS" do
@@ -93,6 +107,13 @@ describe 'apache::mod::disk_cache', :type => :class do
         :is_pe                  => false,
       }
     end
+
+    let(:params) {
+      {
+        :cache_ignore_headers   => "Set-Cookie",
+      }
+    }
+
     context "with Apache version < 2.4" do
       let :pre_condition do
         'class{ "apache":
@@ -105,7 +126,7 @@ describe 'apache::mod::disk_cache', :type => :class do
       it { should contain_class('apache::mod::disk_cache') }
       it { should contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]')  }
       it { is_expected.to contain_apache__mod("disk_cache") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_disk_cache\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_disk_cache\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
     context "with Apache version >= 2.4" do
       let :pre_condition do
@@ -119,7 +140,7 @@ describe 'apache::mod::disk_cache', :type => :class do
       it { should contain_class('apache::mod::disk_cache') }
       it { should contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]')  }
       it { is_expected.to contain_apache__mod("cache_disk") }
-      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1/) }
+      it { is_expected.to contain_file("disk_cache.conf").with(:content => /CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie/) }
     end
   end
 end
