@@ -42,7 +42,7 @@ class apache::mod::event (
   # - $threadsperchild
   # - $maxrequestsperchild
   # - $serverlimit
-  file { "${::apache::mod_dir}/event.conf":
+  file { "${::apache::mod_dir}/override_event.conf":
     ensure  => file,
     mode    => $::apache::file_mode,
     content => template('apache/mod/event.conf.erb'),
@@ -54,7 +54,7 @@ class apache::mod::event (
   case $::osfamily {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
-        apache::mpm{ 'event':
+        apache::mpm{ 'override_event':
           apache_version => $_apache_version,
         }
       }
