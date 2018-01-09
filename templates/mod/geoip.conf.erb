@@ -1,4 +1,4 @@
-GeoIPEnable <%= scope.function_bool2httpd([@enable]) %>
+GeoIPEnable <%= scope.call_function('apache::bool2httpd', [@enable]) %>
 
 <%- if @db_file and ! [ false, 'false', '' ].include?(@db_file) -%>
     <%- if @db_file.kind_of?(Array) -%>
@@ -11,7 +11,7 @@ GeoIPDBFile <%= @db_file %> <%= @flag %>
 <%- end -%>
 GeoIPOutput <%= @output %>
 <% if ! @enable_utf8.nil? -%>
-GeoIPEnableUTF8 <%= scope.function_bool2httpd([@enable_utf8]) %>
+GeoIPEnableUTF8 <%= scope.call_function('apache::bool2httpd', [@enable_utf8]) %>
 <% end -%>
 <% if ! @scan_proxy_headers.nil? -%>
 GeoIPScanProxyHeaders <%= scope.function_bool2httpd([@scan_proxy_headers]) %>

@@ -194,7 +194,7 @@ define apache::vhost(
   # Input validation begins
 
   if $log_level {
-    validate_apache_log_level($log_level)
+    apache::validate_apache_log_level($log_level)
   }
 
   if $access_log_file and $access_log_pipe {

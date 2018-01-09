@@ -1,4 +1,4 @@
-ExpiresActive <%= scope.function_bool2httpd([@expires_active]) %>
+ExpiresActive <%= scope.call_function('apache::bool2httpd', [@expires_active]) %>
 <%- if ! @expires_default.nil? and ! @expires_default.empty? -%>
 ExpiresDefault "<%= @expires_default %>"
 <%- end -%>

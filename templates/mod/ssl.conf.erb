@@ -13,20 +13,20 @@
   <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
     <%- if @ssl_compression -%>
-  SSLCompression <%= scope.function_bool2httpd([@ssl_compression]) %>
+  SSLCompression <%= scope.call_function('apache::bool2httpd', [@ssl_compression]) %>
     <%- end -%>
   <%- else -%>
   SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
-  SSLHonorCipherOrder <%= scope.function_bool2httpd([@_ssl_honorcipherorder]) %>
+  SSLHonorCipherOrder <%= scope.call_function('apache::bool2httpd', [@_ssl_honorcipherorder]) %>
   <%- if @ssl_ca -%>
   SSLCACertificateFile    "<%= @ssl_ca %>"
   <%- end -%>
 <% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
-  SSLUseStapling <%= scope.function_bool2httpd([@ssl_stapling]) %>
+  SSLUseStapling <%= scope.call_function('apache::bool2httpd', [@ssl_stapling]) %>
   <%- if not @ssl_stapling_return_errors.nil? -%>
-  SSLStaplingReturnResponderErrors <%= scope.function_bool2httpd([@ssl_stapling_return_errors]) %>
+  SSLStaplingReturnResponderErrors <%= scope.call_function('apache::bool2httpd', [@ssl_stapling_return_errors]) %>
   <%- end -%>
   SSLStaplingCache "shmcb:<%= @stapling_cache %>"
 <% end -%>

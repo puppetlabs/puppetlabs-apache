@@ -26,13 +26,13 @@
   PassengerUser <%= @passenger_user %>
 <% end -%>
 <% if @passenger_high_performance -%>
-  PassengerHighPerformance <%= scope.function_bool2httpd([@passenger_high_performance]) %>
+  PassengerHighPerformance <%= scope.call_function('apache::bool2httpd', [@passenger_high_performance]) %>
 <% end -%>
 <% if @passenger_nodejs -%>
   PassengerNodejs <%= @passenger_nodejs -%>
 <% end -%>
 <% if @passenger_sticky_sessions -%>
-  PassengerStickySessions <%= scope.function_bool2httpd([@passenger_sticky_sessions]) %>
+  PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [@passenger_sticky_sessions]) %>
 <% end -%>
 <% if @passenger_startup_file -%>
   PassengerStartupFile <%= @passenger_startup_file -%>

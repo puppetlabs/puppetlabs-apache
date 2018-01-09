@@ -147,7 +147,7 @@ class apache (
     }
   }
 
-  validate_apache_log_level($log_level)
+  apache::validate_apache_log_level($log_level)
 
   class { '::apache::service':
     service_name    => $service_name,
