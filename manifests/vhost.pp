@@ -1061,8 +1061,10 @@ define apache::vhost(
   if $shibboleth_enabled {
     concat::fragment { "${name}-shibboleth":
       target  => "${priority_real}${filename}.conf",
-      order   => 350,
+      order   => 370,
       content => template('apache/vhost/_shib.erb'),
+    }
+  }
 
   # - $use_canonical_name
   if $use_canonical_name {
