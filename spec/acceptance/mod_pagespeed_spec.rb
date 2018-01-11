@@ -3,12 +3,10 @@ require_relative './version.rb'
 
 # Only run the test on centos 7, this is to cut down on the different types of setup
 # required. Installing the dependancies are highly prone to failure.
-describe 'apache::mod::pagespeed class', :if =>
-  ((fact('operatingsystem') == 'CentOS' ) and
-   (fact('operatingsystemmajrelease') == '7' )) do
-  context "default pagespeed config" do
-    it 'succeeds in puppeting pagespeed' do
-      pp= <<-EOS
+describe 'apache::mod::pagespeed class', if:   ((fact('operatingsystem') == 'CentOS') &&
+   (fact('operatingsystemmajrelease') == '7')) do
+  context 'default pagespeed config' do
+    pp = <<-MANIFEST
        yumrepo { 'mod-pagespeed':
         baseurl  => "http://dl.google.com/linux/mod-pagespeed/rpm/stable/$::architecture",
           enabled  => 1,
@@ -34,26 +32,27 @@ describe 'apache::mod::pagespeed class', :if =>
           ensure  => file,
           content => "<html>\n<!-- comment -->\n<body>\n<p>Hello World!</p>\n</body>\n</html>",
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'succeeds in puppeting pagespeed' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe service($service_name) do
-      it { should be_enabled }
+      it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
     describe file("#{$mod_dir}/pagespeed.conf") do
-      it { is_expected.to contain "AddOutputFilterByType MOD_PAGESPEED_OUTPUT_FILTER text/html" }
-      it { is_expected.to contain "ModPagespeedEnableFilters remove_comments" }
-      it { is_expected.to contain "ModPagespeedDisableFilters extend_cache" }
-      it { is_expected.to contain "ModPagespeedForbidFilters rewrite_javascript" }
+      it { is_expected.to contain 'AddOutputFilterByType MOD_PAGESPEED_OUTPUT_FILTER text/html' }
+      it { is_expected.to contain 'ModPagespeedEnableFilters remove_comments' }
+      it { is_expected.to contain 'ModPagespeedDisableFilters extend_cache' }
+      it { is_expected.to contain 'ModPagespeedForbidFilters rewrite_javascript' }
     end
 
-    it 'should answer to pagespeed.example.com and include <head/> and be stripped of comments by mod_pagespeed' do
-      shell("/usr/bin/curl pagespeed.example.com:80") do |r|
-        expect(r.stdout).to match(/<head\/>/)
-        expect(r.stdout).not_to match(/<!-- comment -->/)
+    it 'answers to pagespeed.example.com and include <head/> and be stripped of comments by mod_pagespeed' do # rubocop:disable RSpec/MultipleExpectations
+      shell('/usr/bin/curl pagespeed.example.com:80') do |r|
+        expect(r.stdout).to match(%r{head\/})
+        expect(r.stdout).not_to match(%r{<!-- comment -->})
         expect(r.exit_code).to eq(0)
       end
     end

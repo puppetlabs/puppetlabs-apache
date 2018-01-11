@@ -2,12 +2,11 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache parameters' do
-
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do
     it 'doesnt do anything' do
       pp = "class { 'apache': default_confd_files => false }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     if fact('osfamily') == 'FreeBSD'
@@ -19,7 +18,7 @@ describe 'apache parameters' do
   describe 'default_confd_files => true' do
     it 'copies conf.d files' do
       pp = "class { 'apache': default_confd_files => true }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     if fact('osfamily') == 'FreeBSD'
@@ -32,7 +31,7 @@ describe 'apache parameters' do
   describe 'when set adds a listen statement' do
     it 'applys cleanly' do
       pp = "class { 'apache': ip => '10.1.1.1', service_ensure => stopped }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($ports_file) do
@@ -42,20 +41,20 @@ describe 'apache parameters' do
   end
 
   describe 'service tests => true' do
-    it 'starts the service' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_enable => true,
           service_manage => true,
           service_ensure => running,
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'starts the service' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
         it { is_expected.to be_enabled }
@@ -64,19 +63,19 @@ describe 'apache parameters' do
   end
 
   describe 'service tests => false' do
-    it 'stops the service' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_enable => false,
           service_ensure => stopped,
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'stops the service' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
         it { is_expected.not_to be_enabled }
@@ -85,20 +84,20 @@ describe 'apache parameters' do
   end
 
   describe 'service manage => false' do
-    it 'we dont manage the service, so it shouldnt start the service' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_enable => true,
           service_manage => false,
           service_ensure => true,
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'we dont manage the service, so it shouldnt start the service' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
         it { is_expected.not_to be_enabled }
@@ -107,17 +106,17 @@ describe 'apache parameters' do
   end
 
   describe 'purge parameters => false' do
-    it 'applies cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           purge_configs   => false,
           purge_vhost_dir => false,
           vhost_dir       => "#{$confd_dir}.vhosts"
         }
-      EOS
+    MANIFEST
+    it 'applies cleanly' do
       shell("touch #{$confd_dir}/test.conf")
       shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     # Ensure the files didn't disappear.
@@ -131,17 +130,17 @@ describe 'apache parameters' do
 
   if fact('osfamily') != 'Debian'
     describe 'purge parameters => true' do
-      it 'applies cleanly' do
-        pp = <<-EOS
+      pp = <<-MANIFEST
           class { 'apache':
             purge_configs   => true,
             purge_vhost_dir => true,
             vhost_dir       => "#{$confd_dir}.vhosts"
           }
-        EOS
+      MANIFEST
+      it 'applies cleanly' do
         shell("touch #{$confd_dir}/test.conf")
         shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       # File should be gone
@@ -157,7 +156,7 @@ describe 'apache parameters' do
   describe 'serveradmin' do
     it 'applies cleanly' do
       pp = "class { 'apache': serveradmin => 'test@example.com' }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($vhost) do
@@ -170,7 +169,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': sendfile => 'On' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -182,7 +181,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': sendfile => 'Off' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -196,7 +195,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': error_documents => true }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -210,7 +209,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': timeout => '1234' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -222,12 +221,12 @@ describe 'apache parameters' do
 
   describe 'httpd_dir' do
     describe 'setup' do
-      it 'applies cleanly' do
-        pp = <<-EOS
+      pp = <<-MANIFEST
           class { 'apache': httpd_dir => '/tmp', service_ensure => stopped }
           include 'apache::mod::mime'
-        EOS
-        apply_manifest(pp, :catch_failures => true)
+      MANIFEST
+      it 'applies cleanly' do
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -241,11 +240,11 @@ describe 'apache parameters' do
     # Actually >= 2.4.24, but the minor version is not provided
     # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
     # basically versions of the ubuntu or sles  apache package cause issue
-    if $apache_version >= '2.4' && fact('operatingsystem') !~ /Ubuntu|SLES/
+    if $apache_version >= '2.4' && fact('operatingsystem') !~ %r{Ubuntu|SLES}
       describe 'setup' do
         it 'applies cleanly' do
           pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
-          apply_manifest(pp, :catch_failures => true)
+          apply_manifest(pp, catch_failures: true)
         end
       end
 
@@ -260,7 +259,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': server_root => '/tmp/root', service_ensure => stopped }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -274,7 +273,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': confd_dir => '/tmp/root', service_ensure => stopped, use_optional_includes => true }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -297,7 +296,7 @@ describe 'apache parameters' do
         pp = "class { 'apache': conf_template => 'another/test.conf.erb', service_ensure => stopped }"
         shell("mkdir -p #{default['distmoduledir']}/another/templates")
         shell("echo 'testcontent' >> #{default['distmoduledir']}/another/templates/test.conf.erb")
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -311,7 +310,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': servername => 'test.server', service_ensure => stopped }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -323,16 +322,16 @@ describe 'apache parameters' do
 
   describe 'user' do
     describe 'setup' do
-      it 'applies cleanly' do
-        pp = <<-EOS
+      pp = <<-MANIFEST
           class { 'apache':
             manage_user  => true,
             manage_group => true,
             user         => 'testweb',
             group        => 'testweb',
           }
-        EOS
-        apply_manifest(pp, :catch_failures => true)
+      MANIFEST
+      it 'applies cleanly' do
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -348,16 +347,16 @@ describe 'apache parameters' do
 
   describe 'logformats' do
     describe 'setup' do
-      it 'applies cleanly' do
-        pp = <<-EOS
+      pp = <<-MANIFEST
           class { 'apache':
             log_formats => {
               'vhost_common'   => '%v %h %l %u %t \\\"%r\\\" %>s %b',
               'vhost_combined' => '%v %h %l %u %t \\\"%r\\\" %>s %b \\\"%{Referer}i\\\" \\\"%{User-agent}i\\\"',
             }
           }
-        EOS
-        apply_manifest(pp, :catch_failures => true)
+      MANIFEST
+      it 'applies cleanly' do
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -368,12 +367,11 @@ describe 'apache parameters' do
     end
   end
 
-
   describe 'keepalive' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': keepalive => 'Off', keepalive_timeout => '30', max_keepalive_requests => '200' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -389,7 +387,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': limitreqfieldsize => '16830' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -403,7 +401,7 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': limitreqfields => '120' }"
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -415,8 +413,7 @@ describe 'apache parameters' do
 
   describe 'logging' do
     describe 'setup' do
-      it 'applies cleanly' do
-        pp = <<-EOS
+      pp = <<-MANIFEST
           if $::osfamily == 'RedHat' and "$::selinux" == "true" {
             $semanage_package = $::operatingsystemmajrelease ? {
               '5'     => 'policycoreutils',
@@ -438,8 +435,9 @@ describe 'apache parameters' do
           }
           file { '/apache_spec': ensure => directory, }
           class { 'apache': logroot => '/apache_spec' }
-        EOS
-        apply_manifest(pp, :catch_failures => true)
+      MANIFEST
+      it 'applies cleanly' do
+        apply_manifest(pp, catch_failures: true)
       end
     end
 
@@ -449,16 +447,16 @@ describe 'apache parameters' do
   end
 
   describe 'ports_file' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         file { '/apache_spec': ensure => directory, }
         class { 'apache':
           ports_file     => '/apache_spec/ports_file',
           ip             => '10.1.1.1',
           service_ensure => stopped
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file('/apache_spec/ports_file') do
@@ -468,13 +466,13 @@ describe 'apache parameters' do
   end
 
   describe 'server_tokens' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           server_tokens  => 'Minor',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($conf_file) do
@@ -484,14 +482,14 @@ describe 'apache parameters' do
   end
 
   describe 'server_signature' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           server_signature  => 'testsig',
           service_ensure    => stopped,
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($conf_file) do
@@ -501,13 +499,13 @@ describe 'apache parameters' do
   end
 
   describe 'trace_enable' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           trace_enable  => 'Off',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($conf_file) do
@@ -517,13 +515,13 @@ describe 'apache parameters' do
   end
 
   describe 'file_e_tag' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           file_e_tag  => 'None',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file($conf_file) do
@@ -533,18 +531,17 @@ describe 'apache parameters' do
   end
 
   describe 'package_ensure' do
-    it 'applys cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           package_ensure  => present,
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe package($package_name) do
       it { is_expected.to be_installed }
     end
   end
-
 end

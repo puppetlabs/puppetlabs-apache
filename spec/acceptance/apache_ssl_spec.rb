@@ -2,10 +2,8 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache ssl' do
-
   describe 'ssl parameters' do
-    it 'runs without error' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_ensure        => stopped,
           default_ssl_vhost     => true,
@@ -17,9 +15,10 @@ describe 'apache ssl' do
           default_ssl_crl       => '/tmp/ssl_crl',
           default_ssl_crl_check => 'chain',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+    MANIFEST
+    it 'runs without error' do
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file("#{$vhost_dir}/15-default-ssl.conf") do
@@ -39,8 +38,7 @@ describe 'apache ssl' do
   end
 
   describe 'vhost ssl parameters' do
-    it 'runs without error' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -65,9 +63,10 @@ describe 'apache ssl' do
           ssl_proxyengine      => true,
           ssl_proxy_protocol   => 'TLSv1.2',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+    MANIFEST
+    it 'runs without error' do
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file("#{$vhost_dir}/25-test_ssl.conf") do
@@ -95,8 +94,7 @@ describe 'apache ssl' do
   end
 
   describe 'vhost ssl ssl_ca only' do
-    it 'runs without error' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -109,9 +107,10 @@ describe 'apache ssl' do
           ssl_ca               => '/tmp/ssl_ca',
           ssl_verify_client    => 'test',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+    MANIFEST
+    it 'runs without error' do
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file("#{$vhost_dir}/25-test_ssl_ca_only.conf") do
@@ -124,8 +123,7 @@ describe 'apache ssl' do
   end
 
   describe 'vhost ssl ssl_certs_dir' do
-    it 'runs without error' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -138,9 +136,10 @@ describe 'apache ssl' do
           ssl_certs_dir        => '/tmp',
           ssl_verify_client    => 'test',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+    MANIFEST
+    it 'runs without error' do
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
     end
 
     describe file("#{$vhost_dir}/25-test_ssl_certs_dir_only.conf") do
@@ -152,5 +151,4 @@ describe 'apache ssl' do
       it { is_expected.not_to contain 'SSLCACertificateFile' }
     end
   end
-
 end

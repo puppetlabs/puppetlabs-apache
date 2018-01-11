@@ -8,15 +8,14 @@
 #        validate_apache_loglevel('warn ssl_module:info')
 #
 #    Expected to be used from the main or vhost.
-#    
 #    Might be used from directory too later as apache supports that
 Puppet::Functions.create_function(:'apache::validate_apache_log_level') do
   dispatch :validate_apache_log_level do
     required_param 'String', :log_level
   end
 
-  def validate_apache_log_level (log_level)
+  def validate_apache_log_level(log_level)
     msg = "Log level '${log_level}' is not one of the supported Apache HTTP Server log levels."
-    raise Puppet::ParseError, (msg) unless log_level =~ Regexp.compile('(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])')
+    raise Puppet::ParseError, msg unless log_level =~ Regexp.compile('(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])')
   end
 end
