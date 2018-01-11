@@ -1713,4 +1713,23 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
     end
   end
+
+  describe 'shibboleth parameters' do
+    it 'applies cleanly' do
+      pp = <<-EOS
+        class { 'apache': }
+        class { 'apache::mod::shib': }
+        apache::vhost { 'test.server':
+          port    => '80',
+          docroot => '/var/www/html',
+          shib_compat_valid_user => 'On'
+        }
+      EOS
+      apply_manifest(pp, :catch_failures => true)
+    end
+    describe file("#{$vhost_dir}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ShibCompatValidUser On' }
+    end
+  end
 end

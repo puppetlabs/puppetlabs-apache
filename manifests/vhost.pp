@@ -176,6 +176,7 @@ define apache::vhost(
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
 ) {
 
@@ -1056,6 +1057,15 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $shibboleth_enabled
+  if $shibboleth_enabled {
+    concat::fragment { "${name}-shibboleth":
+      target  => "${priority_real}${filename}.conf",
+      order   => 370,
+      content => template('apache/vhost/_shib.erb'),
+    }
+  }
+
   # - $use_canonical_name
   if $use_canonical_name {
     concat::fragment { "${name}-use_canonical_name":
