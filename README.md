@@ -1458,6 +1458,14 @@ Default: '*'.
 
 Some operating systems use a value of `*.conf`. By default, this module creates configuration files ending in `.conf`.
 
+##### `x_frame_options`
+
+Sets Header to always appened X-Frame-Options to meet CIS Apache server 2.4 Benchmark v1.3.0 in httpd.conf. There are three possible directives for X-Frame-Options: X-Frame-Options: DENY, X-Frame-Options: SAMEORIGIN, X-Frame-Options: ALLOW-FROM https://example.com/.  If you specify DENY, not only will attempts to load the page in a frame fail when loaded from other sites, attempts to do so will fail when loaded from the same site. On the other hand, if you specify SAMEORIGIN, you can still use the page in a frame as long as the site including it in a frame is the same as the one serving the page. DENY: The page cannot be displayed in a frame, regardless of the site attempting to do so. SAMEORIGIN: The page can only be displayed in a frame on the same origin as the page itself. The spec leaves it up to browser vendors to decide whether this option applies to the top level, the parent, or the whole chain. See Browser compatibility for details. ALLOW-FROM uri: The page can only be displayed in a frame on the specified origin.
+
+Values: 'DENY', 'SAMEORIGIN', 'ALLOW-FROM https://example.com/'
+
+Default: `undef`.
+
 ##### `user`
 
 Changes the user that Apache uses to answer requests. Apache's parent process continues to run as root, but child processes access resources as the user defined by this parameter. To prevent Puppet from managing the user, set the [`manage_user`][] parameter to `false`.

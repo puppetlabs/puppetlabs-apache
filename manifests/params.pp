@@ -301,6 +301,7 @@ class apache::params inherits ::apache::version {
       'shib2' => $shib2_lib,
     }
     $conf_template          = 'apache/httpd.conf.erb'
+    $x_frame_options        = undef
     $http_protocol_options  = undef
     $keepalive              = 'On'
     $keepalive_timeout      = 15
