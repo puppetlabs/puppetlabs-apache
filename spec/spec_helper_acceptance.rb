@@ -16,6 +16,10 @@ RSpec.configure do |c|
   if fact('operatingsystem') == 'Ubuntu' and (fact('operatingsystemrelease') == '10.04' or fact('operatingsystemrelease') == '12.04')
     c.filter_run_excluding :ipv6 => true
   end
+  # IPv6 is not enabled by default in the new travis-ci Trusty environment (see https://github.com/travis-ci/travis-ci/issues/8891 )
+  if fact('network6_lo') != '::1'
+    c.filter_run_excluding :ipv6 => true
+  end
 
   # Readable test descriptions
   c.formatter = :documentation
