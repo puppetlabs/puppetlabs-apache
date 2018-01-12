@@ -1714,7 +1714,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'shibboleth parameters' do
+  describe 'shibboleth parameters', :unless => fact('osfamily') == 'RedHat' do
     it 'applies cleanly' do
       pp = <<-EOS
         class { 'apache': }
