@@ -1,0 +1,9 @@
+<% if @security_headers and ! @security_headers.empty? -%>
+
+  ## Security header rules
+  <%- Array(@security_headers).each do |security_statement| -%>
+    <%- if security_statement != '' -%>
+  Header <%= security_statement %>
+    <%- end -%>
+  <%- end -%>
+<% end -%>

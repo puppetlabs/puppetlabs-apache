@@ -100,12 +100,11 @@ define apache::vhost(
   $redirectmatch_dest                                                               = undef,
   $rack_base_uris                                                                   = undef,
   $passenger_base_uris                                                              = undef,
-## FIXME! how to ensure those headers are not overwrited too easily?
-  $headers                                                                          = [
+  $headers                                                                          = undef,
+  $security_headers                                                                 = [
     'set X-Content-Type-Options "nosniff"',
     'set X-Frame-Options "sameorigin"',
     "set Strict-Transport-Security \"max-age=16070400; includeSubDomains\"",
-    ## https://www.w3.org/TR/upgrade-insecure-requests/
     "set Upgrade-Insecure-Requests \"1\"",
     "set X-XSS-Protection \"1; mode=block\"",
     "set Content-Security-Policy \"default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; upgrade-insecure-requests; report-uri /csp/report.php\"",
@@ -439,8 +438,8 @@ define apache::vhost(
     }
   }
 
-  # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
+  # Check if mod_headers is required to process $headers/$request_headers/$security_headers
+  if $headers or $request_headers or $security_headers {
     if ! defined(Class['apache::mod::headers']) {
       include ::apache::mod::headers
     }
@@ -723,6 +722,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 150,
       content => template('apache/vhost/_requestheader.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $security_headers
+  if $security_headers and ! empty($security_headers) {
+    concat::fragment { "${name}-securityheader":
+      target  => "${priority_real}${filename}.conf",
+      order   => 160,
+      content => template('apache/vhost/_securityheader.erb'),
     }
   }
 
