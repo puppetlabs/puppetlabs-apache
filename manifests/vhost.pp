@@ -176,6 +176,8 @@ define apache::vhost(
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  $security_txt                                                                     = $::apache::params::security_txt,
+  $security_txt_value                                                               = $::apache::params::security_txt_template,
   Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
 ) {
@@ -1081,4 +1083,19 @@ define apache::vhost(
     order   => 999,
     content => template('apache/vhost/_file_footer.erb'),
   }
+
+  # Template uses no variables
+  if $security_txt {
+    file { "${docroot}/${name}-security.txt":
+# FIXME! puppet complain if file exists because of another vhost...
+#   Error: Evaluation Error: Error while evaluating a Resource Statement, Evaluation Error: Error while evaluating a Resource Statement, Duplicate declaration: File[/var/www/html/security.txt] is already declared in file /tmp/kitchen/modules/apache/manifests/vhost.pp:1099; cannot redeclare at /tmp/kitchen/modules/apache/manifests/vhost.pp:1099 at /tmp/kitchen/modules/apache/manifests/vhost.pp:1099:3  at /tmp/kitchen/modules/apache/manifests/init.pp:380 on node 51a0780bb787
+#    file { "${docroot}/security.txt":
+      ensure  => 'present',
+      owner   => $docroot_owner,
+      group   => $docroot_group,
+      mode    => '0444',
+      content => template("${security_txt_value}"),
+    }
+  }
+
 }
