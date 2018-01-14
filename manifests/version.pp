@@ -2,7 +2,10 @@
 #
 # Try to automatically detect the version by OS
 #
-class apache::version {
+class apache::version(
+  Optional[String] $scl_httpd       = undef,
+  Optional[String] $scl_php_version = undef,
+) {
   # This will be 5 or 6 on RedHat, 6 or wheezy on Debian, 12 or quantal on Ubuntu, etc.
   $osr_array = split($::operatingsystemrelease,'[\/\.]')
   $distrelease = $osr_array[0]

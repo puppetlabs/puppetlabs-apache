@@ -795,6 +795,7 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
 
 - [**Public classes**](#public-classes)
     - [Class: apache](#class-apache)
+    - [Class: apache::globals](#class-apacheglobals)
     - [Class: apache::dev](#class-apachedev)
     - [Class: apache::vhosts](#class-apachevhosts)
     - [Classes: apache::mod::\*](#classes-apachemodname)
@@ -825,6 +826,36 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
 - [**Tasks**](#tasks)
 
 ### Public Classes
+
+#### Class: `apache::globals`
+
+Global configurations for Apache. These values has to be set before apache is included.
+
+##### `scl`
+
+**Experimental!**
+Enables Software Collections on RHEL / CentOS. If this is enabled Apache Httpd is installed from [Software Collections](https://www.softwarecollections.org/en/).
+These packages allow for newer Apache and PHP amongst other packages.
+
+The repository is not managed by this module yet. For CentOS you can enable the repo by installing the package: centos-release-scl-rh
+
+Values: false, true
+
+Default: false
+
+##### `scl_httpd`
+
+The name of the httpd to install.
+
+Example: 'httpd24' for httpd24, it is.
+
+
+##### `scl_php_version`
+
+Version of PHP to use.
+
+Example: '7.1'
+
 
 #### Class: `apache`
 
@@ -1472,7 +1503,8 @@ To prevent Puppet from managing the user, set the [`manage_user`][] parameter to
 
 ##### `apache_name`
 
-The name of the Apache package to install. If you are using a non-standard Apache package, such as those from Red Hat's software collections, you might need to override the default setting.
+The name of the Apache package to install. If you are using a non-standard Apache package. 
+For Red Hat's software collections, you can also use apache::globals::scl_httpd.
 
 Default: Depends on the user set by [`apache::params`][] class, based on your operating system:
 
@@ -3026,7 +3058,35 @@ Manages the Apache daemon.
 
 #### Class: `apache::version`
 
-Attempts to automatically detect the Apache version based on the operating system.
+Automatically detect the Apache version based on the operating system.
+
+For RedHat Enterprise Linux and distros based of this, it is possible to use Software Collections instead. This is configured here.
+
+##### `scl`
+
+**Experimental!**
+Enables Software Collections on RHEL / CentOS. If this is enabled Apache Httpd is installed from [Software Collections](https://www.softwarecollections.org/en/).
+These packages allow for newer Apache and PHP amongst other packages.
+
+The repository is not managed by this module yet. For CentOS you can enable the repo by installing the package: centos-release-scl-rh
+
+Values: false, true
+
+Default: false
+
+##### `scl_httpd`
+
+The name of the httpd to install.
+
+Example: 'httpd24' for httpd24, it is.
+
+
+##### `scl_php_version`
+
+Version of PHP to use.
+
+Example: '7.1'
+
 
 ### Public defined types
 
