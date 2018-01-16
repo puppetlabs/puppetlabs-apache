@@ -1057,7 +1057,7 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $shibboleth_enabled
+  # - $shib_compat_valid_user
   if $shibboleth_enabled {
     concat::fragment { "${name}-shibboleth":
       target  => "${priority_real}${filename}.conf",
