@@ -125,7 +125,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajorrelease') <= '10')
+  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajrelease') <= '10')
     context 'new proxy vhost on port 80' do
       it 'should configure an apache proxy vhost' do
         pp = <<-EOS
@@ -800,7 +800,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajorrelease') <= '10')
+  unless (fact('operatingsystem') == 'SLES' and fact('operatingsystemmajrelease') <= '10')
     context 'proxy_pass_match for alternative vhost' do
       it 'should configure a local vhost and a proxy vhost' do
         apply_manifest(%{
@@ -1714,7 +1714,8 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'shibboleth parameters', :unless => fact('osfamily') == 'RedHat' do
+  describe 'shibboleth parameters', :if => (fact('osfamily') == 'Debian' and fact('operatingsystemmajrelease') != '7') do
+    # Debian 7 is too old for ShibCompatValidUser
     it 'applies cleanly' do
       pp = <<-EOS
         class { 'apache': }
