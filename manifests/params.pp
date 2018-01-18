@@ -96,6 +96,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
     $php_version          = '5'
+    $php_ini              = '/etc/php.ini'
     $mod_packages         = {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
       'auth_cas'              => 'mod_auth_cas',
@@ -236,6 +237,7 @@ class apache::params inherits ::apache::version {
     if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '16.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') < 0) {
       # Only the major version is used here
       $php_version = '5'
+      $php_ini     = '/etc/php5/apache2/php.ini'
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
@@ -264,6 +266,7 @@ class apache::params inherits ::apache::version {
     } else {
       # major.minor version used since Debian stretch and Ubuntu Xenial
       $php_version = '7.0'
+      $php_ini     = '/etc/php/7.0/apache2/php.ini'
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
@@ -404,6 +407,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine     = 'off'
     $suphp_configpath = undef
     $php_version      = '5'
+    $php_ini          = '/usr/local/etc/php.ini'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www/apache24
       # NOTE: 'passenger' needs to enable APACHE_SUPPORT in make config
@@ -473,6 +477,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine     = 'off'
     $suphp_configpath = '/etc/php5/apache2'
     $php_version      = '5'
+    $php_ini          = '/etc/php5/apache2/php.ini'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'       => 'www-apache/mod_auth_kerb',
@@ -536,6 +541,7 @@ class apache::params inherits ::apache::version {
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $php_version         = '5'
+    $php_ini             = '/etc/php5/apache2/php.ini'
     if $::operatingsystemrelease < '11' or $::operatingsystemrelease >= '12' {
       $mod_packages      = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
