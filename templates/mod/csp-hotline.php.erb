@@ -1,0 +1,37 @@
+<?php
+// {{ ansible_managed }}
+// inspired from https://mathiasbynens.be/notes/csp-reports
+// Note: this script requires PHP ≥ 5.4.
+
+// Specify the email address that receives the reports.
+define('EMAIL', 'csp-violations@example.local');
+// Specify the desired email subject for violation reports.
+define('SUBJECT', 'CSP violation');
+// Specify target log file
+define('LOG_FILE', '<%= @docroot %>/csp/log/csp-violations.log');
+
+// Send `204 No Content` status code.
+http_response_code(204);
+
+// Get the raw POST data.
+$data = file_get_contents('php://input');
+
+// Only continue if it’s valid JSON that is not just `null`, `0`, `false` or an
+// empty string, i.e. if it could be a CSP violation report.
+if ($data = json_decode($data)) {
+    // Prettify the JSON-formatted data.
+    $data2 = json_encode(
+        $data,
+        JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+    );
+
+    // Mail the CSP violation report.
+    //mail(EMAIL, SUBJECT, $data2, 'Content-Type: text/plain;charset=utf-8');
+
+    // save to file (in DocumentRoot)
+    $today = date("Y-m-d H:i:s O");
+    file_put_contents(LOG_FILE, "$today clientip=".$_SERVER['REMOTE_ADDR']." jsonreport=$data", FILE_APPEND | LOCK_EX);
+}
+
+?>
+
