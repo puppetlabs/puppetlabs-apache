@@ -101,6 +101,22 @@ define apache::vhost(
   $rack_base_uris                                                                   = undef,
   $passenger_base_uris                                                              = undef,
   $headers                                                                          = undef,
+  $security_headers                                                                 = [
+    'set X-Content-Type-Options "nosniff"',
+    'set X-Frame-Options "sameorigin"',
+    "set Strict-Transport-Security \"max-age=16070400; includeSubDomains\"",
+    "set Upgrade-Insecure-Requests \"1\"",
+    "set X-XSS-Protection \"1; mode=block\"",
+    "set Content-Security-Policy \"default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; upgrade-insecure-requests; report-uri /csp/report.php\"",
+    "set Referrer-Policy \"origin\"",
+    "set Expect-CT \"max-age=0, report-uri,report-uri=/csp/report.php\"",
+    # Note: might break some app... need Apache 2.2.4+
+    # https://scotthelme.co.uk/csrf-is-dead/
+    'edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure;SameSite',
+    # want to be indexed by search engine?
+    'set X-Robots-Tag none',
+#    'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+    ],
   $request_headers                                                                  = undef,
   $filters                                                                          = undef,
   Optional[Array] $rewrites                                                         = undef,
@@ -422,8 +438,8 @@ define apache::vhost(
     }
   }
 
-  # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
+  # Check if mod_headers is required to process $headers/$request_headers/$security_headers
+  if $headers or $request_headers or $security_headers {
     if ! defined(Class['apache::mod::headers']) {
       include ::apache::mod::headers
     }
@@ -706,6 +722,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 150,
       content => template('apache/vhost/_requestheader.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $security_headers
+  if $security_headers and ! empty($security_headers) {
+    concat::fragment { "${name}-securityheader":
+      target  => "${priority_real}${filename}.conf",
+      order   => 160,
+      content => template('apache/vhost/_securityheader.erb'),
     }
   }
 
