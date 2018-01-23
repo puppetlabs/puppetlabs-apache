@@ -539,6 +539,7 @@ class apache::params inherits ::apache::version {
     if $::operatingsystemrelease < '11' or $::operatingsystemrelease >= '12' {
       $mod_packages      = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
         'python'      => 'apache2-mod_python',
@@ -548,6 +549,7 @@ class apache::params inherits ::apache::version {
     } else {
       $mod_packages        = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php53',
         'python'      => 'apache2-mod_python',
