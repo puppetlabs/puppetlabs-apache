@@ -1,0 +1,127 @@
+<%- _item = scope.lookupvar('_template_scope')[:item] -%>
+<%- if _item['passenger_allow_encoded_slashes'] and _item['passenger_allow_encoded_slashes'] != '' -%>
+    PassengerAllowEncodedSlashes <%= _item['passenger_allow_encoded_slashes'] %>
+<%- end -%>
+<%- if _item['passenger_app_env'] and _item['passenger_app_env'] != '' -%>
+    PassengerAppEnv <%= _item['passenger_app_env'] %>
+<%- end -%>
+<%- if _item['passenger_app_group_name'] and _item['passenger_app_group_name'] != '' -%>
+    PassengerAppGroupName <%= _item['passenger_app_group_name'] %>
+<%- end -%>
+<%- if _item['passenger_app_root'] and _item['passenger_app_root'] != '' -%>
+    PassengerAppRoot "<%= _item['passenger_app_root'] %>"
+<%- end -%>
+<%- if _item['passenger_app_type'] and _item['passenger_app_type'] != '' -%>
+    PassengerAppType <%= _item['passenger_app_type'] %>
+<%- end -%>
+<%- if _item['passenger_base_uri'] and _item['passenger_base_uri'] != '' -%>
+    PassengerBaseURI <%= _item['passenger_base_uri'] %>
+<%- end -%>
+<%- if _item['passenger_buffer_response'] and _item['passenger_buffer_response'] != '' -%>
+    PassengerBufferResponse <%= _item['passenger_buffer_response'] %>
+<%- end -%>
+<%- if _item['passenger_buffer_upload'] and _item['passenger_buffer_upload'] != '' -%>
+    PassengerBufferUpload <%= _item['passenger_buffer_upload'] %>
+<%- end -%>
+<%- if _item['passenger_concurrency_model'] and _item['passenger_concurrency_model'] != '' -%>
+    PassengerConcurrencyModel <%= _item['passenger_concurrency_model'] %>
+<%- end -%>
+<%- if _item['passenger_debugger'] and _item['passenger_debugger'] != '' -%>
+    PassengerDebugger <%= _item['passenger_debugger'] %>
+<%- end -%>
+<%- if _item['passenger_enabled'] and _item['passenger_enabled'] != '' -%>
+    PassengerEnabled <%= _item['passenger_enabled'] %>
+<%- end -%>
+<%- if _item['passenger_error_override'] and _item['passenger_error_override'] != '' -%>
+    PassengerErrorOverride <%= _item['passenger_error_override'] %>
+<%- end -%>
+<%- if _item['passenger_force_max_concurrent_requests_per_process'] and _item['passenger_force_max_concurrent_requests_per_process'] != '' -%>
+    PassengerForceMaxConcurrentRequestsPerProcess <%= _item['passenger_force_max_concurrent_requests_per_process'] %>
+<%- end -%>
+<%- if _item['passenger_friendly_error_pages'] and _item['passenger_friendly_error_pages'] != '' -%>
+    PassengerFriendlyErrorPages <%= _item['passenger_friendly_error_pages'] %>
+<%- end -%>
+<%- if _item['passenger_group'] and _item['passenger_group'] != '' -%>
+    PassengerGroup <%= _item['passenger_group'] %>
+<%- end -%>
+<%- if _item['passenger_high_performance'] and _item['passenger_high_performance'] != '' -%>
+    PassengerHighPerformance <%= _item['passenger_high_performance'] %>
+<%- end -%>
+<%- if _item['passenger_load_shell_envvars'] and _item['passenger_load_shell_envvars'] != '' -%>
+    PassengerLoadShellEnvvars <%= _item['passenger_load_shell_envvars'] %>
+<%- end -%>
+<%- if _item['passenger_max_instances'] and _item['passenger_max_instances'] != '' -%>
+    PassengerMaxInstances <%= _item['passenger_max_instances'] %>
+<%- end -%>
+<%- if _item['passenger_max_request_queue_size'] and _item['passenger_max_request_queue_size'] != '' -%>
+    PassengerMaxRequestQueueSize <%= _item['passenger_max_request_queue_size'] %>
+<%- end -%>
+<%- if _item['passenger_max_request_time'] and _item['passenger_max_request_time'] != '' -%>
+    PassengerMaxRequestTime <%= _item['passenger_max_request_time'] %>
+<%- end -%>
+<%- if _item['passenger_max_requests'] and _item['passenger_max_requests'] != '' -%>
+    PassengerMaxRequests <%= _item['passenger_max_requests'] %>
+<%- end -%>
+<%- if _item['passenger_memory_limit'] and _item['passenger_memory_limit'] != '' -%>
+    PassengerMemoryLimit <%= _item['passenger_memory_limit'] %>
+<%- end -%>
+<%- if _item['passenger_meteor_app_settings'] and _item['passenger_meteor_app_settings'] != '' -%>
+    PassengerMeteorAppSettings "<%= _item['passenger_meteor_app_settings'] %>"
+<%- end -%>
+<%- if _item['passenger_min_instances'] and _item['passenger_min_instances'] != '' -%>
+    PassengerMinInstances <%= _item['passenger_min_instances'] %>
+<%- end -%>
+<%- if _item['passenger_nodejs'] and _item['passenger_nodejs'] != '' -%>
+    PassengerNodejs "<%= _item['passenger_nodejs'] %>"
+<%- end -%>
+<%- if _item['passenger_python'] and _item['passenger_python'] != '' -%>
+    PassengerPython "<%= _item['passenger_python'] %>"
+<%- end -%>
+<%- if _item['passenger_resist_deployment_errors'] and _item['passenger_resist_deployment_errors'] != '' -%>
+    PassengerResistDeploymentErrors <%= _item['passenger_resist_deployment_errors'] %>
+<%- end -%>
+<%- if _item['passenger_resolve_symlinks_in_document_root'] and _item['passenger_resolve_symlinks_in_document_root'] != '' -%>
+    PassengerResolveSymlinksInDocumentRoot <%= _item['passenger_resolve_symlinks_in_document_root'] %>
+<%- end -%>
+<%- if _item['passenger_restart_dir'] and _item['passenger_restart_dir'] != '' -%>
+    PassengerRestartDir "<%= _item['passenger_restart_dir'] %>"
+<%- end -%>
+<%- if _item['passenger_rolling_restarts'] and _item['passenger_rolling_restarts'] != '' -%>
+    PassengerRollingRestarts <%= _item['passenger_rolling_restarts'] %>
+<%- end -%>
+<%- if _item['passenger_ruby'] and _item['passenger_ruby'] != '' -%>
+    PassengerRuby "<%= _item['passenger_ruby'] %>"
+<%- end -%>
+<%- if _item['passenger_start_timeout'] and _item['passenger_start_timeout'] != '' -%>
+    PassengerStartTimeout <%= _item['passenger_start_timeout'] %>
+<%- end -%>
+<%- if _item['passenger_startup_file'] and _item['passenger_startup_file'] != '' -%>
+    PassengerStartupFile "<%= _item['passenger_startup_file'] %>"
+<%- end -%>
+<%- if _item['passenger_sticky_sessions'] and _item['passenger_sticky_sessions'] != '' -%>
+    PassengerStickySessions <%= _item['passenger_sticky_sessions'] %>
+<%- end -%>
+<%- if _item['passenger_sticky_sessions_cookie_name'] and _item['passenger_sticky_sessions_cookie_name'] != '' -%>
+    PassengerStickySessionsCookieName <%= _item['passenger_sticky_sessions_cookie_name'] %>
+<%- end -%>
+<%- if _item['passenger_thread_count'] and _item['passenger_thread_count'] != '' -%>
+    PassengerThreadCount <%= _item['passenger_thread_count'] %>
+<%- end -%>
+<%- if _item['passenger_user'] and _item['passenger_user'] != '' -%>
+    PassengerUser <%= _item['passenger_user'] %>
+<%- end -%>
+<%- if _item['rack_env'] and _item['rack_env'] != '' -%>
+    RackEnv <%= _item['rack_env'] %>
+<%- end -%>
+<%- if _item['rails_env'] and _item['rails_env'] != '' -%>
+    RailsEnv <%= _item['rails_env'] %>
+<%- end -%>
+<%- if _item['union_station_filter'] and _item['union_station_filter'] != '' -%>
+    UnionStationFilter "<%= _item['union_station_filter'] %>"
+<%- end -%>
+<%- if _item['union_station_key'] and _item['union_station_key'] != '' -%>
+    UnionStationKey <%= _item['union_station_key'] %>
+<%- end -%>
+<%- if _item['union_station_support'] and _item['union_station_support'] != '' -%>
+    UnionStationSupport <%= _item['union_station_support'] %>
+<%- end -%>

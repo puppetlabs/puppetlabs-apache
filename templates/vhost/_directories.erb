@@ -85,9 +85,7 @@
     <%- if directory['sethandler'] and directory['sethandler'] != '' -%>
     SetHandler <%= directory['sethandler'] %>
     <%- end -%>
-    <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
-    PassengerEnabled <%= directory['passenger_enabled'] %>
-    <%- end -%>
+    <%= scope.function_template(["apache/vhost/_passenger_directory.erb"]) -%>
     <%- if directory['php_flags'] and ! directory['php_flags'].empty? -%>
       <%- directory['php_flags'].sort.each do |flag,value| -%>
         <%- value = if value =~ /true|yes|on|1/i then 'on' else 'off' end -%>
