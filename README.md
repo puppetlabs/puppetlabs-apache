@@ -1332,7 +1332,7 @@ Default: 'On'.
 
 Controls how much information Apache sends to the browser about itself and the operating system, via Apache's [`ServerTokens`][] directive.
 
-Default: 'OS'.
+Default: 'Prod'.
 
 ##### `service_enable`
 
