@@ -18,6 +18,7 @@
   <%- end -%>
   <%- if @ssl_verify_client -%>
   SSLVerifyClient         <%= @ssl_verify_client %>
+  <%- end -%>
   <%- if @ssl_certs_dir && @ssl_certs_dir != '' -%>
   SSLCACertificatePath    "<%= @ssl_certs_dir %>"
   <%- end -%>
