@@ -31,7 +31,7 @@ describe 'apache::mod::jk', :type => :class do
             'socket_keepalive' => 'true',
             'comment'          => 'This is worker B',
           },
-          'worker_mantain' => 40,
+          'worker_maintain' => 40,
           'worker_lists' => ['worker_a,worker_b'],
         },
       }
