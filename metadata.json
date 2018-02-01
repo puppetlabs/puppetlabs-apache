@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apache",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "author": "puppet",
   "summary": "Installs, configures, and manages Apache virtual hosts, web services, and modules.",
   "license": "Apache-2.0",
