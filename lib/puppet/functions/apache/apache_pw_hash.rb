@@ -10,6 +10,6 @@ Puppet::Functions.create_function(:'apache::apache_pw_hash') do
 
   def apache_pw_hash(password)
     require 'base64'
-    return '{SHA}' + Base64.strict_encode64(Digest::SHA1.digest(password))
+    '{SHA}' + Base64.strict_encode64(Digest::SHA1.digest(password))
   end
 end

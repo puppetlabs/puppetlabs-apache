@@ -1,9 +1,9 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') != '5') and !(fact('operatingsystem') == 'OracleLinux' and fact('operatingsystemmajrelease') == '7')) do
-  context "default fcgid config" do
-    it 'succeeds in puppeting fcgid' do
-      pp = <<-EOS
+describe 'apache::mod::fcgid class', if: ((fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') != '5') &&
+                                         !(fact('operatingsystem') == 'OracleLinux' && fact('operatingsystemmajrelease') == '7')) do
+  context 'default fcgid config' do
+    pp = <<-MANIFEST
         class { 'epel': } # mod_fcgid lives in epel
         class { 'apache': }
         class { 'apache::mod::php': } # For /usr/bin/php-cgi
@@ -34,8 +34,9 @@ describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and f
           group   => 'root',
           content => "<?php echo 'Hello world'; ?>\\n",
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'succeeds in puppeting fcgid' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe service('httpd') do
@@ -43,15 +44,15 @@ describe 'apache::mod::fcgid class', :if => ((fact('osfamily') == 'RedHat' and f
       it { is_expected.to be_running }
     end
 
-    it 'should answer to fcgid.example.com' do
+    it 'answers to fcgid.example.com' do # rubocop:disable RSpec/MultipleExpectations
       shell("/usr/bin/curl -H 'Host: fcgid.example.com' 127.0.0.1:80") do |r|
-        expect(r.stdout).to match(/^Hello world$/)
+        expect(r.stdout).to match(%r{^Hello world$})
         expect(r.exit_code).to eq(0)
       end
     end
 
-    it 'should run a php-cgi process' do
-      shell("pgrep -u apache php-cgi", :acceptable_exit_codes => [0])
+    it 'runs a php-cgi process' do
+      shell('pgrep -u apache php-cgi', acceptable_exit_codes: [0])
     end
   end
 end

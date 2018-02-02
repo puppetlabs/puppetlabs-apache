@@ -13,170 +13,178 @@ describe provider_class do
     end
   end
 
-  describe "when fetching modules" do
-    before do
-      @filetype = double()
+  # rubocop:disable RSpec/MessageSpies
+  describe 'when fetching modules' do
+    let(:filetype) do
+      double
     end
 
-    it "should return a sorted array of the defined parameters" do
-      expect(@filetype).to receive(:read) { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
-      expect(provider_class).to receive(:filetype) { @filetype }
+    it 'returns a sorted array of the defined parameters' do # rubocop:disable RSpec/MultipleExpectations
+      expect(filetype).to receive(:read).and_return(%(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n))
+      expect(provider_class).to receive(:filetype) { filetype }
 
-      expect(provider_class.modules).to eq(%w{bar baz foo})
+      expect(provider_class.modules).to eq(%w[bar baz foo])
     end
 
-    it "should cache the module list" do
-      expect(@filetype).to receive(:read).once { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
-      expect(provider_class).to receive(:filetype).once { @filetype }
+    it 'caches the module list' do # rubocop:disable RSpec/MultipleExpectations
+      expect(filetype).to receive(:read).once { %(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n) } # rubocop:disable Lint/AmbiguousBlockAssociation
+      expect(provider_class).to receive(:filetype).once { filetype } # rubocop:disable Lint/AmbiguousBlockAssociation
 
-      2.times { expect(provider_class.modules).to eq(%w{bar baz foo}) }
+      2.times { expect(provider_class.modules).to eq(%w[bar baz foo]) }
     end
 
-    it "should normalize parameters" do
-      @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n})
-      provider_class.expects(:filetype).returns(@filetype)
+    it 'normalizes parameters' do
+      filetype.expects(:read).returns(%(APACHE2_OPTS="-D FOO -D BAR -D BAR"\n))
+      provider_class.expects(:filetype).returns(filetype)
 
-      expect(provider_class.modules).to eq(%w{bar foo})
+      expect(provider_class.modules).to eq(%w[bar foo])
     end
   end
 
-  describe "when prefetching" do
-    it "should match providers to resources" do
-      provider = double("ssl_provider", :name => "ssl")
-      resource = double("ssl_resource")
+  describe 'when prefetching' do
+    it 'matches providers to resources' do
+      provider = instance_double('ssl_provider', name: 'ssl')
+      resource = instance_double('ssl_resource')
       resource.expects(:provider=).with(provider)
 
       expect(provider_class).to receive(:instances) { [provider] }
-      provider_class.prefetch("ssl" => resource)
+      provider_class.prefetch('ssl' => resource)
     end
   end
 
-  describe "when flushing" do
+  # rubocop:disable RSpec/InstanceVariable
+  describe 'when flushing' do
     before :each do
-      @filetype = double()
+      @filetype = double
       allow(@filetype).to receive(:backup)
       allow(provider_class).to receive(:filetype).at_least(:once) { @filetype }
 
-      @info = double()
-      allow(@info).to receive(:[]).with(:name) { "info" }
+      @info = double
+      allow(@info).to receive(:[]).with(:name) { 'info' }
       allow(@info).to receive(:provider=)
 
-      @mpm = double()
-      allow(@mpm).to receive(:[]).with(:name) { "mpm" }
+      @mpm = double
+      allow(@mpm).to receive(:[]).with(:name) { 'mpm' }
       allow(@mpm).to receive(:provider=)
 
-      @ssl = double()
-      allow(@ssl).to receive(:[]).with(:name) { "ssl" }
+      @ssl = double
+      allow(@ssl).to receive(:[]).with(:name) { 'ssl' }
       allow(@ssl).to receive(:provider=)
     end
 
-    it "should add modules whose ensure is present" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D INFO"})
+    # rubocop:disable RSpec/MultipleExpectations
+    it 'adds modules whose ensure is present' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="") }
+      expect(@filetype).to receive(:write).with(%(APACHE2_OPTS="-D INFO"))
 
       allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
 
       provider_class.flush
     end
 
-    it "should remove modules whose ensure is present" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO"} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS=""})
+    # rubocop:disable RSpec/ExampleLength
+    it 'removes modules whose ensure is present' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="-D INFO") }
+      expect(@filetype).to receive(:write).with(%(APACHE2_OPTS=""))
 
       allow(@info).to receive(:should).with(:ensure) { :absent }
       allow(@info).to receive(:provider=)
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
 
       provider_class.flush
     end
 
-    it "should not modify providers without resources" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO -D MPM"} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D MPM -D SSL"})
+    it 'does not modify providers without resources' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="-D INFO -D MPM") }
+      expect(@filetype).to receive(:write).with(%(APACHE2_OPTS="-D MPM -D SSL"))
 
       allow(@info).to receive(:should).with(:ensure) { :absent }
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
 
       allow(@ssl).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("ssl" => @ssl)
+      provider_class.prefetch('ssl' => @ssl)
 
       provider_class.flush
     end
 
-    it "should write the modules in sorted order" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D INFO -D MPM -D SSL"})
+    it 'writes the modules in sorted order' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="") }
+      expect(@filetype).to receive(:write).with(%(APACHE2_OPTS="-D INFO -D MPM -D SSL"))
 
       allow(@mpm).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("mpm" => @mpm)
+      provider_class.prefetch('mpm' => @mpm)
       allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
       allow(@ssl).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("ssl" => @ssl)
+      provider_class.prefetch('ssl' => @ssl)
 
       provider_class.flush
     end
 
-    it "should write the records back once" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
+    it 'writes the records back once' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="") }
+      expect(@filetype).to receive(:write).once.with(%(APACHE2_OPTS="-D INFO -D SSL"))
 
       allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
-
-      allow(@ssl).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("ssl" => @ssl)
-
-      provider_class.flush
-    end
-
-    it "should only modify the line containing APACHE2_OPTS" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{# Comment\nAPACHE2_OPTS=""\n# Another comment} }
-      expect(@filetype).to receive(:write).once.with(%Q{# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment})
-
-      allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
-      provider_class.flush
-    end
-
-    it "should restore any arbitrary arguments" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-Y -D MPM -X"} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-Y -X -D INFO -D MPM"})
-
-      allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
-      provider_class.flush
-    end
-
-    it "should backup the file once if changes were made" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
-
-      allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
 
       allow(@ssl).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("ssl" => @ssl)
+      provider_class.prefetch('ssl' => @ssl)
+
+      provider_class.flush
+    end
+
+    it 'onlies modify the line containing APACHE2_OPTS' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(# Comment\nAPACHE2_OPTS=""\n# Another comment) }
+      expect(@filetype).to receive(:write).once.with(%(# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment))
+
+      allow(@info).to receive(:should).with(:ensure) { :present }
+      provider_class.prefetch('info' => @info)
+      provider_class.flush
+    end
+
+    it 'restores any arbitrary arguments' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="-Y -D MPM -X") }
+      expect(@filetype).to receive(:write).once.with(%(APACHE2_OPTS="-Y -X -D INFO -D MPM"))
+
+      allow(@info).to receive(:should).with(:ensure) { :present }
+      provider_class.prefetch('info' => @info)
+      provider_class.flush
+    end
+
+    it 'backups the file once if changes were made' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="") }
+      expect(@filetype).to receive(:write).once.with(%(APACHE2_OPTS="-D INFO -D SSL"))
+
+      allow(@info).to receive(:should).with(:ensure) { :present }
+      provider_class.prefetch('info' => @info)
+
+      allow(@ssl).to receive(:should).with(:ensure) { :present }
+      provider_class.prefetch('ssl' => @ssl)
 
       @filetype.unstub(:backup)
       @filetype.expects(:backup)
       provider_class.flush
     end
 
-    it "should not write the file or run backups if no changes were made" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-X -D INFO -D SSL -Y"} }
+    it 'does not write the file or run backups if no changes were made' do
+      expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="-X -D INFO -D SSL -Y") }
       expect(@filetype).to receive(:write).never
 
       allow(@info).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("info" => @info)
+      provider_class.prefetch('info' => @info)
 
       allow(@ssl).to receive(:should).with(:ensure) { :present }
-      provider_class.prefetch("ssl" => @ssl)
+      provider_class.prefetch('ssl' => @ssl)
 
       @filetype.unstub(:backup)
       @filetype.expects(:backup).never
       provider_class.flush
     end
+    # rubocop:enable RSpec/ExampleLength
+    # rubocop:enable RSpec/MultipleExpectations
   end
+  # rubocop:enable RSpec/InstanceVariable
+  # rubocop:enable RSpec/MessageSpies
 end

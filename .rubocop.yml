@@ -96,3 +96,6 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/SymbolProc:
   Enabled: false
+#TODO: Additional value added to resolve error's
+Style/GlobalVars:
+  Enabled: false

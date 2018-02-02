@@ -1,7 +1,9 @@
+# a2mod.rb
 class Puppet::Provider::A2mod < Puppet::Provider
   def self.prefetch(mods)
     instances.each do |prov|
-      if mod = mods[prov.name]
+      mod = mods[prov.name]
+      if mod
         mod.provider = prov
       end
     end
@@ -13,7 +15,7 @@ class Puppet::Provider::A2mod < Puppet::Provider
 
   def properties
     if @property_hash.empty?
-      @property_hash = query || {:ensure => :absent}
+      @property_hash = query || { ensure: :absent }
       @property_hash[:ensure] = :absent if @property_hash.empty?
     end
     @property_hash.dup
@@ -21,7 +23,7 @@ class Puppet::Provider::A2mod < Puppet::Provider
 
   def query
     self.class.instances.each do |mod|
-      if mod.name == self.name or mod.name.downcase == self.name
+      if mod.name == name || mod.name.downcase == name
         return mod.properties
       end
     end

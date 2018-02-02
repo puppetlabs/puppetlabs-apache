@@ -1,80 +1,82 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-case fact('osfamily')
-when 'FreeBSD'
-  describe 'apache::mod::event class' do
+describe 'prefork_worker_spec.rb' do
+  case fact('osfamily')
+  when 'FreeBSD'
+    describe 'apache::mod::event class' do
+      describe 'running puppet code' do
+        # Using puppet_apply as a helper
+        pp = <<-MANIFEEST
+            class { 'apache':
+              mpm_module => 'event',
+            }
+        MANIFEEST
+        it 'works with no errors' do
+          # Run it twice and test for idempotency
+          apply_manifest(pp, catch_failures: true)
+          expect(apply_manifest(pp, catch_failures: true).exit_code).to be_zero
+        end
+      end
+
+      describe service($service_name) do
+        it { is_expected.to be_running }
+        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+          pending 'Should be enabled - Bug 760616 on Debian 8'
+        else
+          it { is_expected.to be_enabled }
+        end
+      end
+    end
+  end
+
+  describe 'apache::mod::worker class' do
     describe 'running puppet code' do
       # Using puppet_apply as a helper
-      it 'should work with no errors' do
-        pp = <<-EOS
+      let(:pp) do
+        <<-MANIFEEST
           class { 'apache':
-            mpm_module => 'event',
+            mpm_module => 'worker',
           }
-        EOS
-
-        # Run it twice and test for idempotency
-        apply_manifest(pp, :catch_failures => true)
-        expect(apply_manifest(pp, :catch_failures => true).exit_code).to be_zero
+        MANIFEEST
       end
+
+      # Run it twice and test for idempotency
+      it_behaves_like 'a idempotent resource'
     end
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
-        it { should be_enabled }
+        it { is_expected.to be_enabled }
       end
     end
   end
-end
 
-describe 'apache::mod::worker class' do
-  describe 'running puppet code' do
-    # Using puppet_apply as a helper
-    let(:pp) do
-      <<-EOS
-        class { 'apache':
-          mpm_module => 'worker',
-        }
-      EOS
+  describe 'apache::mod::prefork class' do
+    describe 'running puppet code' do
+      # Using puppet_apply as a helper
+      let(:pp) do
+        <<-MANIFEEST
+          class { 'apache':
+            mpm_module => 'prefork',
+          }
+        MANIFEEST
+      end
+
+      # Run it twice and test for idempotency
+      it_behaves_like 'a idempotent resource'
     end
 
-    # Run it twice and test for idempotency
-    it_behaves_like "a idempotent resource"
-  end
-
-  describe service($service_name) do
-    it { is_expected.to be_running }
-    if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
-      pending 'Should be enabled - Bug 760616 on Debian 8'
-    else
-      it { should be_enabled }
-    end
-  end
-end
-
-describe 'apache::mod::prefork class' do
-  describe 'running puppet code' do
-    # Using puppet_apply as a helper
-    let(:pp) do
-      <<-EOS
-        class { 'apache':
-          mpm_module => 'prefork',
-        }
-      EOS
-    end
-    # Run it twice and test for idempotency
-    it_behaves_like "a idempotent resource"
-  end
-
-  describe service($service_name) do
-    it { is_expected.to be_running }
-    if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
-      pending 'Should be enabled - Bug 760616 on Debian 8'
-    else
-      it { should be_enabled }
+    describe service($service_name) do
+      it { is_expected.to be_running }
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { is_expected.to be_enabled }
+      end
     end
   end
 end
