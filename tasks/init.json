@@ -5,6 +5,10 @@
     "action": {
       "description": "Action to perform ",
       "type": "Enum[reload]"
+    },
+    "service_name": {
+      "description": "The name of the apache service ",
+      "type": "Optional[String[1]]"
     }
   }
 }
