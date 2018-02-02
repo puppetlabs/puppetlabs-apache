@@ -175,7 +175,8 @@ describe 'apache::mod::passenger class' do
       # these two lines
       unless (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') ||
              (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') ||
-             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8') ||
+             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '7')
         expected_one < [%r{### Processes: [0-9]+}, %r{### Total private dirty RSS: [0-9\.]+ MB}]
       end
       it 'outputs status via passenger-memory-stats #stdout' do
