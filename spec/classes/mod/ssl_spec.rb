@@ -188,21 +188,21 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_cert' do
       let :params do
         {
-            ssl_cert: '/etc/pki/some/path/localhost.crt',
+          ssl_cert: '/etc/pki/some/path/localhost.crt',
         }
       end
 
-      it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLCertificateFile/) }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCertificateFile}) }
     end
 
     context 'setting ssl_key' do
       let :params do
         {
-            ssl_key: '/etc/pki/some/path/localhost.key',
+          ssl_key: '/etc/pki/some/path/localhost.key',
         }
       end
 
-      it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLCertificateKeyFile/) }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCertificateKeyFile}) }
     end
 
     context 'setting ssl_ca to a path' do
