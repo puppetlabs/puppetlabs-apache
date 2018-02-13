@@ -2196,14 +2196,14 @@ class { '::apache::mod::jk':
 **workers\_file\_content**
 
 各ディレクティブにはフォーマット`worker.<Worker name>.<Property>=<Value>`があります。このマップは複数ハッシュのハッシュとして表され、外側のハッシュはワーカーを指定し、内側の各ハッシュは各ワーカーのプロパティと値を指定します。
-また、2つのグローバルディレクティブ 'worker.list'および'worker.mantain'もあります。  
+また、2つのグローバルディレクティブ 'worker.list'および'worker.maintain'もあります。  
 例えば、ワーカーファイルは以下のようになります。
 
 ```
 worker.list = status
 worker.list = some_name,other_name
 
-worker.mantain = 60
+worker.maintain = 60
 
 # Optional comment
 worker.some_name.type=ajp13
@@ -2218,14 +2218,14 @@ worker.other_name.socket_keepalive=false
 
 ```
 $workers_file_content = {
-  worker_lists   => ['status', 'some_name,other_name'],
-  worker_mantain => '60',
-  some_name      => {
+  worker_lists    => ['status', 'some_name,other_name'],
+  worker_maintain => '60',
+  some_name       => {
     comment          => 'Optional comment',
     type             => 'ajp13',
     socket_keepalive => 'true',
   },
-  other_name     => {
+  other_name      => {
     comment          => 'I just like comments',
     type             => 'ajp12',
     socket_keepalive => 'false',
