@@ -19,7 +19,7 @@ describe 'apache::mod::jk', type: :class do
   altern8_port = 8008
 
   context 'RHEL 6 with only required facts and default parameters' do
-    let(:facts) do
+    let :facts do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -27,19 +27,21 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-    let(:pre_condition) do
+    let :pre_condition do
       'include apache'
     end
-    let(:params) do
+    let :params do
       {
         logroot: '/var/log/httpd',
       }
     end
-    let(:mod_dir) { mod_dir }
+    let :mod_dir do
+      {
+        mod_dir = '/etc/httpd/conf.d'
+      }
+    end
 
-    mod_dir = '/etc/httpd/conf.d'
-
-    it_behaves_like 'minimal resources', mod_dir
+    it_behaves_like 'minimal resources, mod_dir'
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
@@ -47,7 +49,7 @@ describe 'apache::mod::jk', type: :class do
   end
 
   context 'Debian 8 with only required facts and default parameters' do
-    let(:facts) do
+    let :facts do
       {
         osfamily: 'Debian',
         operatingsystem: 'Debian',
@@ -55,15 +57,15 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-    let(:pre_condition) do
+    let :pre_condition do
       'include apache'
     end
-    let(:params) do
+    let :params do
       {
         logroot: '/var/log/apache2',
       }
     end
-    let(:mod_dir) { mod_dir }
+    let :mod_dir { mod_dir }
 
     mod_dir = '/etc/apache2/mods-available'
 
@@ -75,7 +77,7 @@ describe 'apache::mod::jk', type: :class do
   end
 
   context 'RHEL 6 with required facts and alternative IP' do
-    let(:facts) do
+    let :facts do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -83,10 +85,10 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-    let(:pre_condition) do
+    let :pre_condition do
       'include apache'
     end
-    let(:params) do
+    let :params do
       {
         ip: altern8_ip,
         logroot: '/var/log/httpd',
@@ -97,7 +99,7 @@ describe 'apache::mod::jk', type: :class do
   end
 
   context 'RHEL 6 with required facts and alternative port' do
-    let(:facts) do
+    let :facts do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -105,10 +107,10 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-    let(:pre_condition) do
+    let :pre_condition do
       'include apache'
     end
-    let(:params) do
+    let :params do
       {
         port: altern8_port,
         logroot: '/var/log/httpd',
@@ -119,7 +121,7 @@ describe 'apache::mod::jk', type: :class do
   end
 
   context 'RHEL 6 with required facts and no binding' do
-    let(:facts) do
+    let :facts do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
@@ -127,10 +129,10 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-    let(:pre_condition) do
+    let :pre_condition do
       'include apache'
     end
-    let(:params) do
+    let :params do
       {
         add_listen: false,
         logroot: '/var/log/httpd',
@@ -167,17 +169,17 @@ describe 'apache::mod::jk', type: :class do
     },
   }.each do |option, paths|
     context "RHEL 6 with #{option} shm_file and log_file paths" do
-      let(:facts) do
+      let :facts do
         {
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
           operatingsystemrelease: '6',
         }
       end
-      let(:pre_condition) do
+      let :pre_condition do
         'include apache'
       end
-      let(:params) do
+      let :params do
         {
           logroot: '/var/log/httpd',
           shm_file: paths[:shm_file],
