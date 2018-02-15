@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [3.0.0]
+### Summary
+This release updates the code to match the set Rubocop standards in additiont to adding several minor features. AS this release includes Puppet 4 updates it is thus backwards incompatible.
+
+### Fixed
+- Fixes made to mod_passenger test's.
+- REMOVED options bug fix.
+- Fix case of setting apache::mpm_module to false and declaring the mpm class yourself b/c you need to set params.
+- Various small fixes.
+
+#### Added
+- ShibCompatValidUser option added to vhost config.
+- loadfile_name option exposed to mod::python class.
+- $options added to 'balancer' type.
+- log formats updated to include client ip.
+- EnableCapabilities added for itk.
+- Support added for UseCanonicalName.
+- Option added to include CacheIgnorHEaders for disk_cache module.
+- Added ability to specify MellonSessionLength.
+- CASSscrubRequestHeaders now created in _auth_cas.erb.
+- $apache_version param now defined.
+- Auxiliary template included for 'Require' directives for mod::*.
+- Acceptance test added for param LimitRequestFields.
+- Acceptance test added for param shib_compat_valid_user.
+- Updated to use puppet 4 functions-api.
+
+#### Changed
+- remoteip: apacher::service notified instead of service['httpd'].
+- Travis test parellelism reduced.
+- Modulesync updates.
+- Default keepalive set to on in all distros.
+- php_values section adjusted.
+- Various doc changes made.
+- Code updated to match the set Rubocop standards.
+
+#### Removed
+- Unused variable $_logs_dest removed.
+
 ## Supported Release [2.3.1]
 ### Summary
 This release fixes CVE-2018-6508 which is a potential arbitrary code execution via tasks.
@@ -927,6 +965,8 @@ worker/prefork
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
 
+[3.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.3.1...3.0.0
+[2.3.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.3.0...2.3.1
 [2.3.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.2.0...2.3.0
 [2.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.1.0...2.2.0
 [2.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.0.0...2.1.0
