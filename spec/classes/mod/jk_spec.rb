@@ -228,6 +228,11 @@ describe 'apache::mod::jk', type: :class do
           log_file: paths[:log_file],
         }
       end
+      let :mod_dir do
+        {
+          mod_dir: '/etc/httpd/conf.d',
+        }
+      end
 
       expected_content2 =
         "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
