@@ -33,9 +33,10 @@ describe 'apache::mod::jk', type: :class do
         },
       }
     end
+
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
-    it do
+    it {
       is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(
         %r{^"# This file is generated automatically by Puppet - DO NOT EDIT\n"\
         "# Any manual changes will be overwritten\n"\
@@ -50,9 +51,11 @@ describe 'apache::mod::jk', type: :class do
         "\n"\
         "# This is worker B\n"\
         "worker.worker_b.socket_keepalive=true\n"\
-        "worker.worker_b.type=ajp13\n"
-      })
+        "worker.worker_b.type=ajp13\n"}
+      )
+    }
     end
+
   end
 
   default_ip = '192.168.1.1'
@@ -69,14 +72,17 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
+
     let :pre_condition do
       'include apache'
     end
+
     let :params do
       {
         logroot: '/var/log/httpd',
       }
     end
+
     let :mod_dir do
       {
         mod_dir: '/etc/httpd/conf.d',
@@ -85,12 +91,8 @@ describe 'apache::mod::jk', type: :class do
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it do
-      is_expected.to contain_apache_listen("#{default_ip}:#{default_port}")
-    end
-    it do
-      verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
-    end
+    it { is_expected.to contain_apache_listen("#{default_ip}:#{default_port}") }
+    it { verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>']) }
   end
 
   context 'Debian 8 with only required facts and default parameters' do
@@ -102,14 +104,17 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
+
     let :pre_condition do
       'include apache'
     end
+
     let :params do
       {
         logroot: '/var/log/apache2',
       }
     end
+
     let :mod_dir do
       {
         mod_dir: '/etc/apache2/mods-available',
@@ -118,12 +123,8 @@ describe 'apache::mod::jk', type: :class do
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it do
-      is_expected.to contain_apache_listen("#{default_ip}:#{default_port}")
-    end
-    it do
-      verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
-    end
+    it { is_expected.to contain_apache_listen("#{default_ip}:#{default_port}") }
+    it { verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>']) }
   end
 
   context 'RHEL 6 with required facts and alternative IP' do
@@ -135,9 +136,11 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
+
     let :pre_condition do
       'include apache'
     end
+
     let :params do
       {
         ip: altern8_ip,
@@ -157,9 +160,11 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
+
     let :pre_condition do
       'include apache'
     end
+
     let :params do
       {
         port: altern8_port,
@@ -179,9 +184,11 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
+
     let :pre_condition do
       'include apache'
     end
+
     let :params do
       {
         add_listen: false,
@@ -226,9 +233,11 @@ describe 'apache::mod::jk', type: :class do
           operatingsystemrelease: '6',
         }
       end
+
       let :pre_condition do
         'include apache'
       end
+
       let :params do
         {
           logroot: '/var/log/httpd',
@@ -236,7 +245,8 @@ describe 'apache::mod::jk', type: :class do
           log_file: paths[:log_file],
         }
       end
-      it do
+
+      it {
         is_expected.to contain_file('jk.conf').with_content(
           %r{^
           "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
@@ -245,8 +255,9 @@ describe 'apache::mod::jk', type: :class do
           "<IfModule jk_module>\n"\
           "  JkShmFile #{paths[:shm_path]}\n"\
           "  JkLogFile #{paths[:log_path]}\n"\
-          "</IfModule>\n"
-        })
+          "</IfModule>\n"}
+        )
+      }
       end
     end
   end
