@@ -235,7 +235,7 @@ describe 'apache::mod::jk', type: :class do
       end
 
       let :pre_condition do
-        'include apache',
+        'include apache'
       end
 
       let :params do
@@ -255,6 +255,4 @@ describe 'apache::mod::jk', type: :class do
                  "</IfModule>\n"
       it { is_expected.to contain_file('jk.conf').with_content(expected) }
     end
-
-  end
 end
