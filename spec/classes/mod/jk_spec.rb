@@ -83,7 +83,7 @@ describe 'apache::mod::jk', type: :class do
     end
     let :mod_dir do
       {
-        mod_dir: = '/etc/httpd/conf.d'
+        mod_dir: '/etc/httpd/conf.d'
       }
     end
 
@@ -116,7 +116,7 @@ describe 'apache::mod::jk', type: :class do
     end
     let :mod_dir do
       {
-        mod_dir: = '/etc/apache2/mods-available'
+        mod_dir: '/etc/apache2/mods-available'
       }
     end
 
