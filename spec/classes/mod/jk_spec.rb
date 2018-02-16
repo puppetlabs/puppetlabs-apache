@@ -199,7 +199,7 @@ describe 'apache::mod::jk', type: :class do
     it { is_expected.not_to contain_apache__listen("#{default_ip}:#{default_port}") }
   end
 
-  {
+  [
     default: {
       shm_file: :undef,
       log_file: :undef,
@@ -224,7 +224,7 @@ describe 'apache::mod::jk', type: :class do
       shm_path: '/var/log/httpd/jk-runtime-status',
       log_path: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
     },
-  }.each do |option, paths|
+  ].each do |option, paths|
     context "RHEL 6 with #{option} shm_file and log_file paths" do
       let :facts do
         {
@@ -255,4 +255,5 @@ describe 'apache::mod::jk', type: :class do
                  "</IfModule>\n"
       it { is_expected.to contain_file('jk.conf').with_content(expected) }
     end
+  end
 end
