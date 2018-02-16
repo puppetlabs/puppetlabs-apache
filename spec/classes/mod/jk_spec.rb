@@ -50,7 +50,7 @@ describe 'apache::mod::jk', type: :class do
         "\n"\
         "# This is worker B\n"\
         "worker.worker_b.socket_keepalive=true\n"\
-        "worker.worker_b.type=ajp13\n"\
+        "worker.worker_b.type=ajp13\n"
         )
       }
     end
@@ -238,7 +238,7 @@ describe 'apache::mod::jk', type: :class do
         "<IfModule jk_module>\n"\
         "  JkShmFile #{paths[:shm_path]}\n"\
         "  JkLogFile #{paths[:log_path]}\n"\
-        "</IfModule>\n"\
+        "</IfModule>\n"
         )
       }
     end
