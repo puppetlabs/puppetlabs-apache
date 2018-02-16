@@ -82,8 +82,6 @@ describe 'apache::mod::jk', type: :class do
       }
     end
 
-    mod_dir = '/etc/httpd/conf.d'
-
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
