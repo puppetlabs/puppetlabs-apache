@@ -76,7 +76,11 @@ describe 'apache::mod::jk', type: :class do
         logroot: '/var/log/httpd',
       }
     end
-    let :mod_dir { mod_dir }
+    let :mod_dir do
+      {
+        mod_dir: '/etc/httpd/conf.d',
+      }
+    end
 
     mod_dir = '/etc/httpd/conf.d'
 
