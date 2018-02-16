@@ -36,23 +36,22 @@ describe 'apache::mod::jk', type: :class do
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
     it do
-      is_expected.to contain_file("#{mod_dir}/workers.properties")
-        .with_content(
-          "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-          "# Any manual changes will be overwritten\n"\
-          "\n"\
-          "worker.list = worker_a,worker_b\n"\
-          "\n"\
-          "worker.maintain = 40\n"\
-          "\n"\
-          "# This is worker A\n"\
-          "worker.worker_a.socket_keepalive=true\n"\
-          "worker.worker_a.type=ajp13\n"\
-          "\n"\
-          "# This is worker B\n"\
-          "worker.worker_b.socket_keepalive=true\n"\
-          "worker.worker_b.type=ajp13\n"
-        )
+      is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(
+        %r{^"# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+        "# Any manual changes will be overwritten\n"\
+        "\n"\
+        "worker.list = worker_a,worker_b\n"\
+        "\n"\
+        "worker.maintain = 40\n"\
+        "\n"\
+        "# This is worker A\n"\
+        "worker.worker_a.socket_keepalive=true\n"\
+        "worker.worker_a.type=ajp13\n"\
+        "\n"\
+        "# This is worker B\n"\
+        "worker.worker_b.socket_keepalive=true\n"\
+        "worker.worker_b.type=ajp13\n"
+      })
     end
   end
 
@@ -238,16 +237,16 @@ describe 'apache::mod::jk', type: :class do
         }
       end
       it do
-        is_expected.to contain_file('jk.conf')
-          .with_content(
-            "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-            "# Any manual changes will be overwritten\n"\
-            "\n"\
-            "<IfModule jk_module>\n"\
-            "  JkShmFile #{paths[:shm_path]}\n"\
-            "  JkLogFile #{paths[:log_path]}\n"\
-            "</IfModule>\n"
-          )
+        is_expected.to contain_file('jk.conf').with_content(
+          %r{^
+          "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+          "# Any manual changes will be overwritten\n"\
+          "\n"\
+          "<IfModule jk_module>\n"\
+          "  JkShmFile #{paths[:shm_path]}\n"\
+          "  JkLogFile #{paths[:log_path]}\n"\
+          "</IfModule>\n"
+        })
       end
     end
   end
