@@ -70,17 +70,14 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-
     let :pre_condition do
       'include apache'
     end
-
     let :params do
       {
         logroot: '/var/log/httpd',
       }
     end
-
     let :mod_dir do
       {
         mod_dir: '/etc/httpd/conf.d',
@@ -102,17 +99,14 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-
     let :pre_condition do
       'include apache'
     end
-
     let :params do
       {
         logroot: '/var/log/apache2',
       }
     end
-
     let :mod_dir do
       {
         mod_dir: '/etc/apache2/mods-available',
@@ -134,11 +128,9 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-
     let :pre_condition do
       'include apache'
     end
-
     let :params do
       {
         ip: altern8_ip,
@@ -158,11 +150,9 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-
     let :pre_condition do
       'include apache'
     end
-
     let :params do
       {
         port: altern8_port,
@@ -182,11 +172,9 @@ describe 'apache::mod::jk', type: :class do
         ipaddress: default_ip,
       }
     end
-
     let :pre_condition do
       'include apache'
     end
-
     let :params do
       {
         add_listen: false,
@@ -232,11 +220,9 @@ describe 'apache::mod::jk', type: :class do
           operatingsystemrelease: '6',
         }
       end
-
       let :pre_condition do
         'include apache'
       end
-
       let :params do
         {
           logroot: '/var/log/httpd',
