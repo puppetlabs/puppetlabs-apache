@@ -8,7 +8,7 @@ describe 'apache::mod::jk', type: :class do
     it { is_expected.to compile.with_all_deps }
     it { is_expected.to create_class('apache::mod::jk') }
     it { is_expected.to contain_class('apache') }
-    it { is_expected.to contain_apache_mod('jk') }
+    it { is_expected.to contain_apache__mod('jk') }
     it { is_expected.to contain_file('jk.conf').that_notifies('Class[apache::service]') }
     it { is_expected.to contain_file('jk.conf').with(path: "#{mod_dir}/jk.conf") }
   end
@@ -36,22 +36,22 @@ describe 'apache::mod::jk', type: :class do
 
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
-    it { is_expected.to contain_file("#{mod_dir}/workers.properties")
-      .with_content("# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-                    "# Any manual changes will be overwritten\n"\
-                    "\n"\
-                    "worker.list = worker_a,worker_b\n"\
-                    "\n"\
-                    "worker.maintain = 40\n"\
-                    "\n"\
-                    "# This is worker A\n"\
-                    "worker.worker_a.socket_keepalive=true\n"\
-                    "worker.worker_a.type=ajp13\n"\
-                    "\n"\
-                    "# This is worker B\n"\
-                    "worker.worker_b.socket_keepalive=true\n"\
-                    "worker.worker_b.type=ajp13\n")
-    }
+    expected_content =
+      "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+      "# Any manual changes will be overwritten\n"\
+      "\n"\
+      "worker.list = worker_a,worker_b\n"\
+      "\n"\
+      "worker.maintain = 40\n"\
+      "\n"\
+      "# This is worker A\n"\
+      "worker.worker_a.socket_keepalive=true\n"\
+      "worker.worker_a.type=ajp13\n"\
+      "\n"\
+      "# This is worker B\n"\
+      "worker.worker_b.socket_keepalive=true\n"\
+      "worker.worker_b.type=ajp13\n"
+    it { is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(expected_content)}
   end
 
   default_ip = '192.168.1.1'
@@ -84,7 +84,7 @@ describe 'apache::mod::jk', type: :class do
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it { is_expected.to contain_apache_listen("#{default_ip}:#{default_port}") }
+    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it { verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>']) }
   end
 
@@ -113,7 +113,7 @@ describe 'apache::mod::jk', type: :class do
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it { is_expected.to contain_apache_listen("#{default_ip}:#{default_port}") }
+    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
     it { verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>']) }
   end
 
@@ -229,7 +229,7 @@ describe 'apache::mod::jk', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('jk.conf').with_content(
+      expected_content2 =
         "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
         "# Any manual changes will be overwritten\n"\
         "\n"\
@@ -237,8 +237,7 @@ describe 'apache::mod::jk', type: :class do
         "  JkShmFile #{paths[:shm_path]}\n"\
         "  JkLogFile #{paths[:log_path]}\n"\
         "</IfModule>\n"
-        )
-      }
+      it { is_expected.to contain_file('jk.conf').with_content(expected_content2) }
     end
   end
 end
