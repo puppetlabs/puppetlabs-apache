@@ -81,9 +81,11 @@ describe 'apache::mod::jk', type: :class do
         logroot: '/var/log/httpd',
       }
     end
-    let :mod_dir { mod_dir }
-
-    mod_dir = '/etc/httpd/conf.d'
+    let :mod_dir do
+      {
+        mod_dir = '/etc/httpd/conf.d'
+      }
+    end
 
     it_behaves_like 'minimal resources', mod_dir
     it_behaves_like 'specific workers_file', mod_dir
@@ -110,9 +112,10 @@ describe 'apache::mod::jk', type: :class do
         logroot: '/var/log/apache2',
       }
     end
-    let :mod_dir { mod_dir }
-
-    mod_dir = '/etc/apache2/mods-available'
+    let :mod_dir do
+      {
+        mod_dir = '/etc/apache2/mods-available'
+      }
 
     it_behaves_like 'minimal resources', mod_dir
     it_behaves_like 'specific workers_file', mod_dir
