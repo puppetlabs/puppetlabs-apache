@@ -244,14 +244,16 @@ describe 'apache::mod::jk', type: :class do
         }
       end
 
-      expected = "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-                 "# Any manual changes will be overwritten\n"\
-                 "\n"\
-                 "<IfModule jk_module>\n"\
-                 "  JkShmFile #{paths[:shm_path]}\n"\
-                 "  JkLogFile #{paths[:log_path]}\n"\
-                 "</IfModule>\n"\
-      it { is_expected.to contain_file('jk.conf').with_content(expected) }
+      it { is_expected.to contain_file('jk.conf').with_content(
+        "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
+        "# Any manual changes will be overwritten\n"\
+        "\n"\
+        "<IfModule jk_module>\n"\
+        "  JkShmFile #{paths[:shm_path]}\n"\
+        "  JkLogFile #{paths[:log_path]}\n"\
+        "</IfModule>\n"\
+      )
+    }
     end
   end
 end
