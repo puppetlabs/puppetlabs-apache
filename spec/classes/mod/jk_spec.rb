@@ -256,7 +256,6 @@ describe 'apache::mod::jk', type: :class do
           "</IfModule>\n"}
         )
       }
-      end
     end
   end
 end
