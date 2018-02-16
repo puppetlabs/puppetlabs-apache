@@ -83,16 +83,18 @@ describe 'apache::mod::jk', type: :class do
     end
     let :mod_dir do
       {
-        mod_dir = '/etc/httpd/conf.d'
+        mod_dir: = '/etc/httpd/conf.d'
       }
     end
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
-    it {
+    it do
+      is_expected.to contain_apache_listen("#{default_ip}:#{default_port}")
+    end
+    it do
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
-    }
+    end
   end
 
   context 'Debian 8 with only required facts and default parameters' do
@@ -114,16 +116,18 @@ describe 'apache::mod::jk', type: :class do
     end
     let :mod_dir do
       {
-        mod_dir = '/etc/apache2/mods-available'
+        mod_dir: = '/etc/apache2/mods-available'
       }
     end
 
     it_behaves_like 'minimal resources'
     it_behaves_like 'specific workers_file'
-    it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
-    it {
+    it do
+      is_expected.to contain_apache_listen("#{default_ip}:#{default_port}")
+    end
+    it do
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
-    }
+    end
   end
 
   context 'RHEL 6 with required facts and alternative IP' do
