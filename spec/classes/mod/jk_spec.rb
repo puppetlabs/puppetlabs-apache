@@ -51,8 +51,8 @@ describe 'apache::mod::jk', type: :class do
                     "# This is worker B\n"\
                     "worker.worker_b.socket_keepalive=true\n"\
                     "worker.worker_b.type=ajp13\n")
-      }
-    end
+    }
+  end
 
   default_ip = '192.168.1.1'
   altern8_ip = '10.1.2.3'
