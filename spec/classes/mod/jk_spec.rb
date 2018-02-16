@@ -116,6 +116,7 @@ describe 'apache::mod::jk', type: :class do
       {
         mod_dir = '/etc/apache2/mods-available'
       }
+    end
 
     it_behaves_like 'minimal resources', mod_dir
     it_behaves_like 'specific workers_file', mod_dir
