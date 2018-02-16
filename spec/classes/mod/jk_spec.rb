@@ -36,8 +36,7 @@ describe 'apache::mod::jk', type: :class do
 
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
-    it {
-      is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(
+    it { is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(
         %r{^"# This file is generated automatically by Puppet - DO NOT EDIT\n"\
         "# Any manual changes will be overwritten\n"\
         "\n"\
@@ -246,8 +245,7 @@ describe 'apache::mod::jk', type: :class do
         }
       end
 
-      it {
-        is_expected.to contain_file('jk.conf').with_content(
+      it { is_expected.to contain_file('jk.conf').with_content(
           %r{^
           "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
           "# Any manual changes will be overwritten\n"\
