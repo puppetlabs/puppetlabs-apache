@@ -237,7 +237,7 @@ describe 'apache::mod::jk', type: :class do
         "  JkShmFile #{paths[:shm_path]}\n"\
         "  JkLogFile #{paths[:log_path]}\n"\
         "</IfModule>\n"
-      it { is_expected.to contain_file("#{mod_dir}jk.conf").with_content(expected_content2) }
+      it { is_expected.to contain_file("#{mod_dir}/jk.conf").with_content(expected_content2) }
     end
   end
 end
