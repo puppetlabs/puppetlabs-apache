@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe 'apache::mod::jk', type: :class do
   it_behaves_like 'a mod class, without including apache'
-
+  let :pre_condition do
+    'include apache::mod_dir'
+  end
   shared_examples 'minimal resources' do |mod_dir|
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
