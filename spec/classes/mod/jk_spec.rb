@@ -51,7 +51,7 @@ describe 'apache::mod::jk', type: :class do
       "# This is worker B\n"\
       "worker.worker_b.socket_keepalive=true\n"\
       "worker.worker_b.type=ajp13\n"
-    it { is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(expected_content)}
+    it { is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(expected_content) }
   end
 
   default_ip = '192.168.1.1'
