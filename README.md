@@ -1376,6 +1376,22 @@ Values: a command to restart the Apache service. The default setting uses the [d
 
 Default: `undef`.
 
+##### `ssl_cert`
+
+This enables the user to specify a specific SSLCertificateFile.
+
+For more information see: [SSLCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateFile)
+
+Default: `undef.`
+
+##### `ssl_key`
+This enables the user to specify a specific SSLCertificateKey.
+
+For more information see: [SSLCertificateKey](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateKeyFile)
+
+Default: `undef`.
+
+
 ##### `ssl_ca`
 
 Specifies the SSL certificate authority. [SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile) to use to verify certificate used in ssl client authentication.
@@ -2728,6 +2744,8 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 - `ssl_cryptodevice`: Default: 'builtin'.
 - `ssl_honorcipherorder`: Default: true.
 - `ssl_openssl_conf_cmd`: Default: undef.
+- `ssl_cert`: Default: undef.
+- `ssl_key`: Default: undef.
 - `ssl_options`: Default: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
 - `ssl_protocol`: Default: ['all', '-SSLv2', '-SSLv3'].
@@ -2758,6 +2776,14 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
   Default: `true`.
 
 * `ssl_openssl_conf_cmd`
+
+  Default: `undef`.
+
+* `ssl_cert`
+
+  Default: `undef`.
+
+* `ssl_key`
 
   Default: `undef`.
 
