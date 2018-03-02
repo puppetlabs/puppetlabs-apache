@@ -79,10 +79,20 @@ define apache::mpm (
         $packagename = "apache2-mpm-${mpm}"
       }
 
+      $mod_enabled_dir = $::apache::mod_enable_dir
+
+      if $mpm == 'prefork' and ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) {
+        exec { '/usr/sbin/a2dismod mpm_event':
+          onlyif  => "/usr/bin/test -e ${mod_enabled_dir}/mpm_event.load",
+          require => Package['httpd'],
+          before  => Package[$packagename],
+        }
+      }
+
       if $mpm == 'itk' and ( ( $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' ) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) ) {
         # workaround https://bugs.launchpad.net/ubuntu/+source/mpm-itk/+bug/1286882
         exec { '/usr/sbin/a2dismod mpm_event':
-          onlyif  => '/usr/bin/test -e /etc/apache2/mods-enabled/mpm_event.load',
+          onlyif  => "/usr/bin/test -e ${mod_enabled_dir}/mpm_event.load",
           require => Package['httpd'],
           before  => Package[$packagename],
         }
