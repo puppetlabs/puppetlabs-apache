@@ -412,6 +412,7 @@ describe 'apache::vhost', type: :define do
           'passenger_pre_start'         => 'http://localhost/myapp',
           'passenger_high_performance'  => true,
           'passenger_user'              => 'sandbox',
+          'passenger_group'             => 'sandbox',
           'passenger_nodejs'            => '/usr/bin/node',
           'passenger_sticky_sessions'   => true,
           'passenger_startup_file'      => 'bin/www',
@@ -849,6 +850,11 @@ describe 'apache::vhost', type: :define do
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
           content: %r{^\s+MaxKeepAliveRequests\s1000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerGroup\ssandbox$},
         )
       }
     end
