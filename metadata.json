@@ -8,10 +8,15 @@
   "project_page": "https://github.com/puppetlabs/puppetlabs-apache",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 4.13.1 < 5.0.0"},
-    {"name":"puppetlabs/concat","version_requirement":">= 2.2.1 < 5.0.0"}
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.1 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 2.2.1 < 5.0.0"
+    }
   ],
-  "data_provider": null,
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -72,5 +77,8 @@
       "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
-  "description": "Module for Apache configuration"
+  "description": "Module for Apache configuration",
+  "pdk-version": "1.4.1",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.4.1-0-g52adbbb"
 }
