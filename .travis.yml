@@ -17,7 +17,8 @@ rvm:
   - 2.4.1
 env:
   - PUPPET_GEM_VERSION="~> 5.0" CHECK=spec
-  - PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers
+  global:
+    - PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers
 matrix:
   fast_finish: true
   include:
