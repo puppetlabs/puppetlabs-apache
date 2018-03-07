@@ -854,7 +854,72 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerSpawnMethod\sdirect$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppEnv\stest$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMinInstances\s1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequests\s1000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStartTimeout\s600$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerPreStart\shttp://localhost/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerHighPerformance\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerUser\ssandbox$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerGroup\ssandbox$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStickySessions\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStartupFile\sbin/www$},
         )
       }
     end
