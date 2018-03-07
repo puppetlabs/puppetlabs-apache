@@ -5,41 +5,103 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 
 ## Supported Release [3.0.0]
 ### Summary
-This release updates the code to match the set Rubocop standards in additiont to adding several minor features. AS this release includes Puppet 4 updates it is thus backwards incompatible.
-
-### Fixed
-- Fixes made to mod_passenger test's.
-- REMOVED options bug fix.
-- Fix case of setting apache::mpm_module to false and declaring the mpm class yourself b/c you need to set params.
-- Various small fixes.
-
-#### Added
-- ShibCompatValidUser option added to vhost config.
-- loadfile_name option exposed to mod::python class.
-- $options added to 'balancer' type.
-- log formats updated to include client ip.
-- EnableCapabilities added for itk.
-- Support added for UseCanonicalName.
-- Option added to include CacheIgnorHEaders for disk_cache module.
-- Added ability to specify MellonSessionLength.
-- CASSscrubRequestHeaders now created in _auth_cas.erb.
-- $apache_version param now defined.
-- Auxiliary template included for 'Require' directives for mod::*.
-- Acceptance test added for param LimitRequestFields.
-- Acceptance test added for param shib_compat_valid_user.
-- Updated to use puppet 4 functions-api.
+This major release changes the default value of `keepalive` to `On`. It also includes many other features and bugfixes.
 
 #### Changed
-- remoteip: apacher::service notified instead of service['httpd'].
-- Travis test parellelism reduced.
-- Modulesync updates.
-- Default keepalive set to on in all distros.
-- php_values section adjusted.
-- Various doc changes made.
-- Code updated to match the set Rubocop standards.
+- Default `apache::keepalive` from `Off` to `On`.
 
-#### Removed
-- Unused variable $_logs_dest removed.
+#### Added
+- Class `apache::mod::data`
+- Function `apache::apache_pw_hash` function (puppet 4 port of `apache_pw_hash()`)
+- Function `apache::bool2httpd` function (puppet 4 port of `bool2httpd()`)
+- Function `apache::validate_apache_log_level` function (puppet 4 port of `validate_apache_log_level()`)
+- Parameter `apache::balancer::options` for additional directives.
+- Parameter `apache::limitreqfields` setting the LimitRequestFields directive to 100.
+- Parameter `apache::use_canonical_name` to control how httpd uses self-referential URLs.
+- Parameter `apache::mod::disk_cache::cache_ignore_headers` to ignore cache headers.
+- Parameter `apache::mod::itk::enablecapabilities` to manage ITK capabilities.
+- Parameter `apache::mod::ldap::ldap_trusted_mode` to manage trusted mode.
+- Parameters for `apache::mod::passenger`:
+  - `passenger_allow_encoded_slashes`
+  - `passenger_app_group_name`
+  - `passenger_app_root`
+  - `passenger_app_type`
+  - `passenger_base_uri`
+  - `passenger_buffer_response`
+  - `passenger_buffer_upload`
+  - `passenger_concurrency_model`
+  - `passenger_debug_log_file`
+  - `passenger_debugger`
+  - `passenger_default_group`
+  - `passenger_default_user`
+  - `passenger_disable_security_update_check`
+  - `passenger_enabled`
+  - `passenger_error_override`
+  - `passenger_file_descriptor_log_file`
+  - `passenger_fly_with`
+  - `passenger_force_max_concurrent_requests_per_process`
+  - `passenger_friendly_error_pages`
+  - `passenger_group`
+  - `passenger_installed_version`
+  - `passenger_instance_registry_dir`
+  - `passenger_load_shell_envvars`
+  - `passenger_lve_min_uid`
+  - `passenger_max_instances`
+  - `passenger_max_preloader_idle_time`
+  - `passenger_max_request_time`
+  - `passenger_memory_limit`
+  - `passenger_meteor_app_settings`
+  - `passenger_nodejs`
+  - `passenger_pre_start`
+  - `passenger_python`
+  - `passenger_resist_deployment_errors`
+  - `passenger_resolve_symlinks_in_document_root`
+  - `passenger_response_buffer_high_watermark`
+  - `passenger_restart_dir`
+  - `passenger_rolling_restarts`
+  - `passenger_security_update_check_proxy`
+  - `passenger_show_version_in_header`
+  - `passenger_socket_backlog`
+  - `passenger_start_timeout`
+  - `passenger_startup_file`
+  - `passenger_sticky_sessions`
+  - `passenger_sticky_sessions_cookie_name`
+  - `passenger_thread_count`
+  - `passenger_user`
+  - `passenger_user_switching`
+  - `rack_auto_detect`
+  - `rack_base_uri`
+  - `rack_env`
+  - `rails_allow_mod_rewrite`
+  - `rails_app_spawner_idle_time`
+  - `rails_auto_detect`
+  - `rails_base_uri`
+  - `rails_default_user`
+  - `rails_env`
+  - `rails_framework_spawner_idle_time`
+  - `rails_ruby`
+  - `rails_spawn_method`
+  - `rails_user_switching`
+  - `wsgi_auto_detect`
+- Parameter `apache::mod::prefork::listenbacklog` to set the listen backlog to 511.
+- Parameter `apache::mod::python::loadfile_name` to workaround python.load filename conflicts.
+- Parameter `apache::mod::ssl::ssl_cert` to manage the client auth cert.
+- Parameter `apache::mod::ssl::ssl_key` to manage the client auth key.
+- Parameter `apache::mod::status::requires` as an alternative to `apache::mod::status::allow_from`
+- Parameter `apache::vhost::ssl_proxy_cipher_suite` to manage that directive.
+- Parameter `apache::vhost::shib_compat_valid_user` to manage that directive.
+- Parameter `apache::vhost::use_canonical_name` to manage that directive.
+- Parameter value `mellon_session_length` for `apache::vhost::directories`
+
+### Fixed
+- `apache_version` is confined to just Linux to avoid erroring on AIX.
+- Parameter `apache::mod::jk::workers_file_content` docs typo of "mantain" instead of maintain.
+- Deduplicate `apache::mod::ldap` managing `File['ldap.conf']` to avoid resource conflicts.
+- ITK package name on Debian 9
+- Dav_svn package for SLES
+- Log client IP instead of loadbalancer IP when behind a loadbalancer.
+- `apache::mod::remoteip` now notifies the `Class['apache::service']` class instead of `Service['httpd']` to avoid restarting the service when `apache::service_manage` is false.
+- `apache::vhost::cas_scrub_request_headers` actually manages the directive.
 
 ## Supported Release [2.3.1]
 ### Summary
