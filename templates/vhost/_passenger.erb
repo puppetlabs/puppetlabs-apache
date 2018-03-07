@@ -32,7 +32,7 @@
   PassengerHighPerformance <%= scope.call_function('apache::bool2httpd', [@passenger_high_performance]) %>
 <% end -%>
 <% if @passenger_nodejs -%>
-  PassengerNodejs <%= @passenger_nodejs -%>
+  PassengerNodejs <%= @passenger_nodejs %>
 <% end -%>
 <% if @passenger_sticky_sessions -%>
   PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [@passenger_sticky_sessions]) %>
