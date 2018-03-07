@@ -410,7 +410,7 @@ class apache::mod::passenger (
         fail('REMOVED PASSENGER OPTION :: passenger_use_global_queue :: -- no message on the current passenger reference webpage -- ')
       }
       if (versioncmp($passenger_installed_version, '2.0.4') < 0) {
-        fail('Passenger config option :: passenger_use_global_queue is not introduced until version 2.0.4 :: ${passenger_installed_version} is the version reported')
+        fail("Passenger config option :: passenger_use_global_queue is not introduced until version 2.0.4 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $passenger_user {
