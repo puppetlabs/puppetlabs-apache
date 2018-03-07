@@ -69,13 +69,13 @@ describe 'apache', type: :class do
       dav
       env
     ].each do |modname|
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/etc/apache2/mods-available/#{modname}.load",
           'ensure' => 'file',
         )
       }
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load symlink").with(
           'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
           'ensure' => 'link',
@@ -148,13 +148,13 @@ describe 'apache', type: :class do
       negotiation
       setenvif
     ].each do |modname|
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/etc/apache2/mods-available/#{modname}.load",
           'ensure' => 'file',
         )
       }
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load symlink").with(
           'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
           'ensure' => 'link',
@@ -389,7 +389,7 @@ describe 'apache', type: :class do
         dav
         env
       ].each do |modname|
-        it { # rubocop:disable RSpec/RepeatedExample
+        it {
           is_expected.to contain_file("#{modname}.load").with_path(
             "/etc/httpd/mod.d/#{modname}.load",
           )
@@ -412,7 +412,7 @@ describe 'apache', type: :class do
         negotiation
         setenvif
       ].each do |modname|
-        it { # rubocop:disable RSpec/RepeatedExample
+        it {
           is_expected.to contain_file("#{modname}.load").with_path(
             "/etc/httpd/mod.d/#{modname}.load",
           )
@@ -784,7 +784,7 @@ describe 'apache', type: :class do
       dav
       env
     ].each do |modname|
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
           'ensure' => 'file',
@@ -804,7 +804,7 @@ describe 'apache', type: :class do
       negotiation
       setenvif
     ].each do |modname|
-      it { # rubocop:disable RSpec/RepeatedExample
+      it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
           'ensure' => 'file',

@@ -1824,7 +1824,6 @@ describe 'apache::vhost', type: :define do
         }
       end
 
-      # rubocop:disable RSpec/NestedGroups
       context 'status' do
         let(:params) { dparams.merge(redirectmatch_status: '404') }
 

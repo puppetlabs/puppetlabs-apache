@@ -35,8 +35,8 @@ describe 'apache::mod::authnz_ldap', type: :class do
     context 'verify_server_cert = wrong' do
       let(:params) { { verify_server_cert: 'wrong' } }
 
-      it 'raises an error' do # rubocop:disable RSpec/MultipleExpectations
-        expect { is_expected.to raise_error Puppet::Error } # rubocop:disable RSpec/VoidExpect
+      it 'raises an error' do
+        expect { is_expected.to raise_error Puppet::Error }
       end
     end
   end # Debian
@@ -72,8 +72,8 @@ describe 'apache::mod::authnz_ldap', type: :class do
     context 'verify_server_cert = wrong' do
       let(:params) { { verify_server_cert: 'wrong' } }
 
-      it 'raises an error' do # rubocop:disable RSpec/MultipleExpectations
-        expect { is_expected.to raise_error Puppet::Error } # rubocop:disable RSpec/VoidExpect
+      it 'raises an error' do
+        expect { is_expected.to raise_error Puppet::Error }
       end
     end
   end # Redhat

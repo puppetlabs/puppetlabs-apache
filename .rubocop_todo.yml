@@ -1,2 +1,20 @@
 Style/GlobalVars:
   Enabled: false
+RSpec/InstanceVariable:
+  Enabled: false
+RSpec/RepeatedExample:
+  Enabled: false
+RSpec/ExpectInHook:
+  Enabled: false
+Style/CommentedKeyword:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/VoidExpect:
+  Enabled: false
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/FilePath:
+  Enabled: false
+RSpec/EmptyExampleGroup:
+   Enabled: false
