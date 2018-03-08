@@ -469,7 +469,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe service($service_name) do # rubocop:disable RSpec/NestedGroups
+      describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
         else
@@ -533,7 +533,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_one, catch_failures: true)
       end
 
-      describe service($service_name) do # rubocop:disable RSpec/NestedGroups
+      describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
         else
@@ -577,7 +577,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_two, catch_failures: true)
       end
 
-      describe service($service_name) do # rubocop:disable RSpec/NestedGroups
+      describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
         else
@@ -657,7 +657,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_two, catch_failures: true)
       end
 
-      describe service($service_name) do # rubocop:disable RSpec/NestedGroups
+      describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
         else
@@ -665,7 +665,7 @@ describe 'apache::vhost define' do
         end
         it { is_expected.to be_running }
 
-        it 'answers to files.example.net' do # rubocop:disable RSpec/ExampleLength
+        it 'answers to files.example.net' do
           shell('/usr/bin/curl -sSf files.example.net:80/foo/index.html', acceptable_exit_codes: 22).stderr.should match(%r{curl: \(22\) The requested URL returned error: 401})
           shell('/usr/bin/curl -sSf -u login:password files.example.net:80/foo/index.html').stdout.should eq("Hello World\n")
           shell('/usr/bin/curl -sSf files.example.net:80/bar/index.html').stdout.should eq("Hello World\n")
@@ -757,7 +757,7 @@ describe 'apache::vhost define' do
   end
 
   context 'proxy_pass for alternative vhost' do
-    it 'configures a local vhost and a proxy vhost' do # rubocop:disable RSpec/ExampleLength
+    it 'configures a local vhost and a proxy vhost' do
       apply_manifest(%(
         class { 'apache': default_vhost => false, }
         apache::vhost { 'localhost':
@@ -807,7 +807,7 @@ describe 'apache::vhost define' do
 
   unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajorrelease') <= '10'
     context 'proxy_pass_match for alternative vhost' do
-      it 'configures a local vhost and a proxy vhost' do # rubocop:disable RSpec/ExampleLength
+      it 'configures a local vhost and a proxy vhost' do
         apply_manifest(%(
           class { 'apache': default_vhost => false, }
           apache::vhost { 'localhost':
@@ -1517,7 +1517,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file("#{$vhost_dir}/25-test.server.conf") do # rubocop:disable RSpec/NestedGroups
+      describe file("#{$vhost_dir}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
         it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }

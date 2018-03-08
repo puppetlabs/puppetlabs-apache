@@ -12,21 +12,19 @@ describe provider_class do
       expect(provider_class).to respond_to(method)
     end
   end
-
-  # rubocop:disable RSpec/MessageSpies
   describe 'when fetching modules' do
     let(:filetype) do
       double
     end
 
-    it 'returns a sorted array of the defined parameters' do # rubocop:disable RSpec/MultipleExpectations
+    it 'returns a sorted array of the defined parameters' do
       expect(filetype).to receive(:read).and_return(%(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n))
       expect(provider_class).to receive(:filetype) { filetype }
 
       expect(provider_class.modules).to eq(%w[bar baz foo])
     end
 
-    it 'caches the module list' do # rubocop:disable RSpec/MultipleExpectations
+    it 'caches the module list' do
       expect(filetype).to receive(:read).once { %(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n) } # rubocop:disable Lint/AmbiguousBlockAssociation
       expect(provider_class).to receive(:filetype).once { filetype } # rubocop:disable Lint/AmbiguousBlockAssociation
 
@@ -51,8 +49,6 @@ describe provider_class do
       provider_class.prefetch('ssl' => resource)
     end
   end
-
-  # rubocop:disable RSpec/InstanceVariable
   describe 'when flushing' do
     before :each do
       @filetype = double
@@ -71,8 +67,6 @@ describe provider_class do
       allow(@ssl).to receive(:[]).with(:name) { 'ssl' }
       allow(@ssl).to receive(:provider=)
     end
-
-    # rubocop:disable RSpec/MultipleExpectations
     it 'adds modules whose ensure is present' do
       expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="") }
       expect(@filetype).to receive(:write).with(%(APACHE2_OPTS="-D INFO"))
@@ -82,8 +76,6 @@ describe provider_class do
 
       provider_class.flush
     end
-
-    # rubocop:disable RSpec/ExampleLength
     it 'removes modules whose ensure is present' do
       expect(@filetype).to receive(:read).at_least(:once) { %(APACHE2_OPTS="-D INFO") }
       expect(@filetype).to receive(:write).with(%(APACHE2_OPTS=""))

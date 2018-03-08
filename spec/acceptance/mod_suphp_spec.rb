@@ -37,7 +37,7 @@ class { 'apache::mod::suphp': }
       it { is_expected.to be_running }
     end
 
-    it 'answers to suphp.example.com #timeout' do # rubocop:disable RSpec/ExampleLength
+    it 'answers to suphp.example.com #timeout' do
       timeout = 0
       loop do
         r = shell('curl suphp.example.com:80')

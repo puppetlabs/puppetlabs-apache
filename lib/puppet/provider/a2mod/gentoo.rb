@@ -51,9 +51,7 @@ Puppet::Type.type(:a2mod).provide(:gentoo, parent: Puppet::Provider) do
       apache2_opts = records.grep(%r{^\s*APACHE2_OPTS=}).first
 
       # Extract all defines
-      while apache2_opts.sub!(%r{-D\s+(\w+)}, '')
-        @modules << Regexp.last_match(1).downcase
-      end
+      @modules << Regexp.last_match(1).downcase while apache2_opts.sub!(%r{-D\s+(\w+)}, '')
 
       # Hang on to any remaining options.
       if apache2_opts =~ %r{APACHE2_OPTS="(.+)"}

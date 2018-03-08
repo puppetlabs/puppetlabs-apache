@@ -44,7 +44,7 @@ describe 'apache::mod::fcgid class', if: ((fact('osfamily') == 'RedHat' && fact(
       it { is_expected.to be_running }
     end
 
-    it 'answers to fcgid.example.com' do # rubocop:disable RSpec/MultipleExpectations
+    it 'answers to fcgid.example.com' do
       shell("/usr/bin/curl -H 'Host: fcgid.example.com' 127.0.0.1:80") do |r|
         expect(r.stdout).to match(%r{^Hello world$})
         expect(r.exit_code).to eq(0)

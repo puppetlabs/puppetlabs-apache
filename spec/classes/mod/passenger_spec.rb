@@ -460,14 +460,14 @@ describe 'apache::mod::passenger', type: :class do
       }
       it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRoot}) }
       it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRuby}) }
-      describe "with passenger_root => '/usr/lib/example'" do # rubocop:disable RSpec/NestedGroups
+      describe "with passenger_root => '/usr/lib/example'" do
         let :params do
           { passenger_root: '/usr/lib/example' }
         end
 
         it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRoot "\/usr\/lib\/example"$}) }
       end
-      describe 'with passenger_ruby => /usr/lib/example/ruby' do # rubocop:disable RSpec/NestedGroups
+      describe 'with passenger_ruby => /usr/lib/example/ruby' do
         let :params do
           { passenger_ruby: '/usr/lib/example/ruby' }
         end

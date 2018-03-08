@@ -62,8 +62,6 @@ describe 'apache::mod::proxy_balancer', type: :class do
       it { is_expected.not_to contain_file('proxy_balancer.conf symlink') }
     end
   end
-
-  # rubocop:disable RSpec/EmptyExampleGroup
   context "default configuration with custom parameters $manager => true, $allow_from => ['10.10.10.10','11.11.11.11'], $status_path => '/custom-manager' on a Debian OS" do
     let :facts do
       {

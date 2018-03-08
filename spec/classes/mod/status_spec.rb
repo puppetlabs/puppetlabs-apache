@@ -206,7 +206,7 @@ describe 'apache::mod::status', type: :class do
       end
     end
 
-    context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do # rubocop:disable RSpec/EmptyExampleGroup
+    context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
       let :facts do
         {
           osfamily: 'Debian',
@@ -249,7 +249,7 @@ describe 'apache::mod::status', type: :class do
         { allow_from: ['10.10.10.10'] }
       end
 
-      it 'expects to succeed array validation' do # rubocop:disable RSpec/MultipleExpectations
+      it 'expects to succeed array validation' do
         expect {
           is_expected.to contain_file('status.conf')
         }.not_to raise_error
@@ -273,7 +273,7 @@ describe 'apache::mod::status', type: :class do
         { allow_from: '10.10.10.10' }
       end
 
-      it 'expects to fail array validation' do # rubocop:disable RSpec/MultipleExpectations
+      it 'expects to fail array validation' do
         expect {
           is_expected.to contain_file('status.conf')
         }.to raise_error(Puppet::Error)
@@ -300,7 +300,7 @@ describe 'apache::mod::status', type: :class do
           { extended_status: valid_param }
         end
 
-        it 'expects to succeed regular expression validation' do # rubocop:disable RSpec/MultipleExpectations
+        it 'expects to succeed regular expression validation' do
           expect {
             is_expected.to contain_file('status.conf')
           }.not_to raise_error
@@ -326,7 +326,7 @@ describe 'apache::mod::status', type: :class do
           { extended_status: invalid_param }
         end
 
-        it 'expects to fail regular expression validation' do # rubocop:disable RSpec/MultipleExpectations
+        it 'expects to fail regular expression validation' do
           expect {
             is_expected.to contain_file('status.conf')
           }.to raise_error(Puppet::Error)

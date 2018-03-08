@@ -11,7 +11,7 @@ describe 'apache::vhost::custom', type: :define do
   end
 
   describe 'os-dependent items' do
-    context 'on RedHat based systems' do # rubocop:disable RSpec/EmptyExampleGroup
+    context 'on RedHat based systems' do
       let :default_facts do
         {
           osfamily: 'RedHat',

@@ -134,8 +134,6 @@ describe 'apache::mod::passenger class' do
 
       describe file(conf_file) do
         it { is_expected.to contain %(PassengerRoot "#{passenger_root}") }
-
-        # rubocop:disable RSpec/RepeatedExample
         case fact('operatingsystem')
         when 'Ubuntu'
           case fact('lsbdistrelease')
