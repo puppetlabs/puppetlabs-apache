@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [3.1.0]
+### Summary
+This release includes the module being converted using version 1.4.1 of the PDK. It also includes a couple of additional parameters added.
+
+#### Added
+- Module has been pdk converted with version 1.4.1 ([MODULES-6331](https://tickets.puppet.com/browse/MODULES-6331))
+- Parameter `ssl_cert` to provide a SSLCertificateFile option for use with SSL, optional of type String.
+- Parameter `ssl_key` to provide a SSLCertificateKey option for use with SSL, optional of type String.
+
+#### Fixed
+- Documentation updates.
+- Updates to the Japanese translation based on documentation update.
+
 ## Supported Release [3.0.0]
 ### Summary
 This major release changes the default value of `keepalive` to `On`. It also includes many other features and bugfixes.
