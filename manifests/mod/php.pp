@@ -56,9 +56,9 @@ class apache::mod::php (
       ::apache::mod { $mod:
         package        => $_package_name,
         package_ensure => $package_ensure,
-        lib            => 'mod_php5.so',
+        lib            => 'mod_php${_php_major}.so',
         id             => "php${_php_major}_module",
-        path           => "${::apache::lib_path}/mod_php5.so",
+        path           => "${::apache::lib_path}/mod_php${_php_major}.so",
       }
     } else {
       ::apache::mod { $mod:
