@@ -1376,6 +1376,22 @@ HTTPDサービスの再起動にあたり、Puppetが特定のコマンドを使
 
 デフォルト値: `undef`。
 
+##### `ssl_cert`
+
+特定の SSLCertificateFile を指定できるようになります。
+
+詳細については、[SSLCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateFile)を参照してください。
+
+デフォルト値: `undef`。
+
+##### `ssl_key`
+特定の  SSLCertificateKey を指定できるようになります。
+
+詳細については、[SSLCertificateKey](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateKeyFile)を参照してください。
+
+デフォルト値: `undef`。
+
+
 ##### `ssl_ca`
 
 SSL証明書認証局を指定します。[SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile)を使用してSSLクライアント認証で使用する証明書を確認します。
@@ -2727,6 +2743,8 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 - `ssl_cryptodevice`: デフォルト値: 'builtin'
 - `ssl_honorcipherorder`: デフォルト値: true
 - `ssl_openssl_conf_cmd`: デフォルト値: undef
+- `ssl_cert`: デフォルト値: undef。
+- `ssl_key`: デフォルト値: undef。
 - `ssl_options`: デフォルト値: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: デフォルト値: 'builtin'
 - `ssl_protocol`: デフォルト値: ['all', '-SSLv2', '-SSLv3']。
@@ -2757,6 +2775,14 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
   デフォルト値: `true`。
 
 * `ssl_openssl_conf_cmd`
+
+  デフォルト値: `undef`。
+
+* `ssl_cert`
+
+  デフォルト値: `undef`。
+
+* `ssl_key`
 
   デフォルト値: `undef`。
 
