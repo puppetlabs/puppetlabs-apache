@@ -967,13 +967,12 @@ define apache::vhost(
   # - $passenger_min_instances
   # - $passenger_max_requests
   # - $passenger_start_timeout
-  # - $passenger_pre_start
   # - $passenger_user
   # - $passenger_group
   # - $passenger_nodejs
   # - $passenger_sticky_sessions
   # - $passenger_startup_file
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_group or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
+  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_user or $passenger_group or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
