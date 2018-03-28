@@ -142,7 +142,7 @@ define apache::vhost(
   $passenger_min_instances                                                          = undef,
   $passenger_max_requests                                                           = undef,
   $passenger_start_timeout                                                          = undef,
-  $passenger_pre_start                                                              = undef,
+  Optional[Variant[String,Array[String]]] $passenger_pre_start                      = undef,
   $passenger_user                                                                   = undef,
   $passenger_group                                                                  = undef,
   $passenger_high_performance                                                       = undef,
