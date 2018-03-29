@@ -64,7 +64,7 @@ class apache::mod::passenger (
   $passenger_min_instances                                                                   = undef,
   $passenger_nodejs                                                                          = undef,
   $passenger_pool_idle_time                                                                  = undef,
-  $passenger_pre_start                                                                       = undef,
+  Optional[Variant[String,Array[String]]] $passenger_pre_start                               = undef,
   $passenger_python                                                                          = undef,
   $passenger_resist_deployment_errors                                                        = undef,
   $passenger_resolve_symlinks_in_document_root                                               = undef,

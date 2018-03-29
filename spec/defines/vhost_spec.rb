@@ -888,8 +888,8 @@ describe 'apache::vhost', type: :define do
         )
       }
       it {
-        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerPreStart\shttp://localhost/myapp$},
+        is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
+          content: %r{^PassengerPreStart\shttp://localhost/myapp$},
         )
       }
       it {
