@@ -39,11 +39,11 @@
 <% if @passenger_max_requests -%>
   PassengerMaxRequests <%= @passenger_max_requests %>
 <% end -%>
-<% if @passenger_high_performance -%>
+<% unless @passenger_high_performance.nil? -%>
   PassengerHighPerformance <%= scope.call_function('apache::bool2httpd', [@passenger_high_performance]) %>
 <% end -%>
 <%# 6 - Connection handling options -%>
-<% if @passenger_sticky_sessions -%>
+<% unless @passenger_sticky_sessions.nil? -%>
   PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [@passenger_sticky_sessions]) %>
 <% end -%>
 <%# 7 - Compatibility options -%>
