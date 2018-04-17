@@ -149,6 +149,7 @@ define apache::vhost(
   $passenger_nodejs                                                                 = undef,
   Optional[Boolean] $passenger_sticky_sessions                                      = undef,
   $passenger_startup_file                                                           = undef,
+  Optional[String] $passenger_restart_dir                                           = undef,
   $add_default_charset                                                              = undef,
   $modsec_disable_vhost                                                             = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_ids                                = undef,

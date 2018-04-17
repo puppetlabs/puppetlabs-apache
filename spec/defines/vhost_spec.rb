@@ -416,6 +416,7 @@ describe 'apache::vhost', type: :define do
           'passenger_nodejs'            => '/usr/bin/node',
           'passenger_sticky_sessions'   => true,
           'passenger_startup_file'      => 'bin/www',
+          'passenger_restart_dir'       => 'tmp',
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
             { 'mount'   => '/*',     'worker' => 'tcnode1' },
@@ -920,6 +921,11 @@ describe 'apache::vhost', type: :define do
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerStartupFile\sbin/www$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerRestartDir\stmp$},
         )
       }
     end

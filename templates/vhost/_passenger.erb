@@ -35,5 +35,8 @@
   PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [@passenger_sticky_sessions]) %>
 <% end -%>
 <% if @passenger_startup_file -%>
-  PassengerStartupFile <%= @passenger_startup_file -%>
+  PassengerStartupFile <%= @passenger_startup_file %>
+<% end -%>
+<% if @passenger_restart_dir -%>
+  PassengerRestartDir <%= @passenger_restart_dir %>
 <% end -%>
