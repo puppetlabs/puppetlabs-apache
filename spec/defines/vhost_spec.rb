@@ -402,21 +402,21 @@ describe 'apache::vhost', type: :define do
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'use_canonical_name'          => 'dns',
-          'passenger_spawn_method'      => 'direct',
-          'passenger_app_root'          => '/usr/share/myapp',
-          'passenger_app_env'           => 'test',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
-          'passenger_min_instances'     => '1',
-          'passenger_max_requests'      => '1000',
-          'passenger_start_timeout'     => '600',
-          'passenger_pre_start'         => 'http://localhost/myapp',
-          'passenger_high_performance'  => true,
-          'passenger_user'              => 'sandbox',
-          'passenger_group'             => 'sandbox',
           'passenger_nodejs'            => '/usr/bin/node',
-          'passenger_sticky_sessions'   => true,
+          'passenger_app_env'           => 'test',
+          'passenger_app_root'          => '/usr/share/myapp',
           'passenger_startup_file'      => 'bin/www',
           'passenger_restart_dir'       => 'tmp',
+          'passenger_spawn_method'      => 'direct',
+          'passenger_user'              => 'sandbox',
+          'passenger_group'             => 'sandbox',
+          'passenger_min_instances'     => '1',
+          'passenger_start_timeout'     => '600',
+          'passenger_max_requests'      => '1000',
+          'passenger_pre_start'         => 'http://localhost/myapp',
+          'passenger_high_performance'  => true,
+          'passenger_sticky_sessions'   => true,
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
             { 'mount'   => '/*',     'worker' => 'tcnode1' },
@@ -855,12 +855,12 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerSpawnMethod\sdirect$},
+          content: %r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
+          content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
         )
       }
       it {
@@ -870,32 +870,22 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$},
+          content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerMinInstances\s1$},
+          content: %r{^\s+PassengerStartupFile\sbin/www$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerMaxRequests\s1000$},
+          content: %r{^\s+PassengerRestartDir\stmp$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerStartTimeout\s600$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
-          content: %r{^PassengerPreStart\shttp://localhost/myapp$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerHighPerformance\sOn$},
+          content: %r{^\s+PassengerSpawnMethod\sdirect$},
         )
       }
       it {
@@ -910,22 +900,32 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
+          content: %r{^\s+PassengerMinInstances\s1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStartTimeout\s600$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequests\s1000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
+          content: %r{^PassengerPreStart\shttp://localhost/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerHighPerformance\sOn$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerStickySessions\sOn$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerStartupFile\sbin/www$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerRestartDir\stmp$},
         )
       }
     end
