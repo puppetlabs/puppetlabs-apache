@@ -152,14 +152,14 @@ define apache::vhost(
   Optional[String] $passenger_user                                                  = undef,
   Optional[String] $passenger_group                                                 = undef,
   Optional[Boolean] $passenger_friendly_error_pages                                 = undef,
-  Optional[String] $passenger_min_instances                                         = undef, # FIXME: Should be Integer, not String
+  Optional[Integer] $passenger_min_instances                                        = undef,
   Optional[Integer] $passenger_max_instances                                        = undef,
   Optional[Integer] $passenger_max_preloader_idle_time                              = undef,
   Optional[Integer] $passenger_force_max_concurrent_requests_per_process            = undef,
-  Optional[String] $passenger_start_timeout                                         = undef, # FIXME: Should be Integer, not String
+  Optional[Integer] $passenger_start_timeout                                        = undef,
   Optional[Enum['process', 'thread']] $passenger_concurrency_model                  = undef,
   Optional[Integer] $passenger_thread_count                                         = undef,
-  Optional[String] $passenger_max_requests                                          = undef, # FIXME: Should be Integer, not String
+  Optional[Integer] $passenger_max_requests                                         = undef,
   Optional[Integer] $passenger_max_request_time                                     = undef,
   Optional[Integer] $passenger_memory_limit                                         = undef,
   Optional[Integer] $passenger_stat_throttle_rate                                   = undef,
