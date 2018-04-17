@@ -339,8 +339,6 @@ describe 'apache::vhost', type: :define do
           'redirectmatch_status'        => ['404'],
           'redirectmatch_regexp'        => ['\.git$'],
           'redirectmatch_dest'          => ['http://www.example.com'],
-          'rack_base_uris'              => ['/rackapp1'],
-          'passenger_base_uris'         => ['/passengerapp1'],
           'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
           'request_headers'             => ['append MirrorID "mirror 12"'],
           'rewrites'                    => [
@@ -703,7 +701,6 @@ describe 'apache::vhost', type: :define do
           %r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo},
         )
       }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
       it {
@@ -1310,7 +1307,6 @@ describe 'apache::vhost', type: :define do
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-block') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-error_document') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy') }
-      it { is_expected.not_to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-scriptalias') }

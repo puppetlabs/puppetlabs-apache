@@ -98,8 +98,6 @@ define apache::vhost(
   $redirectmatch_status                                                             = undef,
   $redirectmatch_regexp                                                             = undef,
   $redirectmatch_dest                                                               = undef,
-  $rack_base_uris                                                                   = undef,
-  $passenger_base_uris                                                              = undef,
   $headers                                                                          = undef,
   $request_headers                                                                  = undef,
   $filters                                                                          = undef,
@@ -400,18 +398,6 @@ define apache::vhost(
     if ! defined(Class['apache::mod::proxy_http']) {
       include ::apache::mod::proxy_http
     }
-  }
-
-  # Load mod_passenger if needed and not yet loaded
-  if $rack_base_uris {
-    if ! defined(Class['apache::mod::passenger']) {
-      include ::apache::mod::passenger
-    }
-  }
-
-  # Load mod_passenger if needed and not yet loaded
-  if $passenger_base_uris {
-      include ::apache::mod::passenger
   }
 
   # Load mod_fastci if needed and not yet loaded
@@ -720,26 +706,6 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 160,
       content => template('apache/vhost/_proxy.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $rack_base_uris
-  if $rack_base_uris {
-    concat::fragment { "${name}-rack":
-      target  => "${priority_real}${filename}.conf",
-      order   => 170,
-      content => template('apache/vhost/_rack.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $passenger_base_uris
-  if $passenger_base_uris {
-    concat::fragment { "${name}-passenger_uris":
-      target  => "${priority_real}${filename}.conf",
-      order   => 175,
-      content => template('apache/vhost/_passenger_base_uris.erb'),
     }
   }
 
