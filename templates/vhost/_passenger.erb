@@ -1,17 +1,35 @@
 <%# 1 - Essentials -%>
 <%# 2 - Deployment options -%>
+<% unless @passenger_enabled.nil? -%>
+  PassengerEnabled <%= scope.call_function('apache::bool2httpd', [@passenger_enabled]) %>
+<% end -%>
+<% if @passenger_base_uri -%>
+  PassengerBaseURI <%= @passenger_base_uri %>
+<% end -%>
 <%# 3 - Application loading options -%>
 <% if @passenger_ruby -%>
   PassengerRuby <%= @passenger_ruby %>
 <% end -%>
+<% if @passenger_python -%>
+  PassengerPython <%= @passenger_python %>
+<% end -%>
 <% if @passenger_nodejs -%>
   PassengerNodejs <%= @passenger_nodejs %>
+<% end -%>
+<% if @passenger_meteor_app_settings -%>
+  PassengerMeteorAppSettings <%= @passenger_meteor_app_settings %>
 <% end -%>
 <% if @passenger_app_env -%>
   PassengerAppEnv <%= @passenger_app_env %>
 <% end -%>
 <% if @passenger_app_root -%>
   PassengerAppRoot <%= @passenger_app_root %>
+<% end -%>
+<% if @passenger_app_group_name -%>
+  PassengerAppGroupName <%= @passenger_app_group_name %>
+<% end -%>
+<% if @passenger_app_type -%>
+  PassengerAppType <%= @passenger_app_type %>
 <% end -%>
 <% if @passenger_startup_file -%>
   PassengerStartupFile <%= @passenger_startup_file %>
@@ -22,6 +40,15 @@
 <% if @passenger_spawn_method -%>
   PassengerSpawnMethod <%= @passenger_spawn_method %>
 <% end -%>
+<% unless @passenger_load_shell_envvars.nil? -%>
+  PassengerLoadShellEnvvars <%= scope.call_function('apache::bool2httpd', [@passenger_load_shell_envvars]) %>
+<% end -%>
+<% unless @passenger_rolling_restarts.nil? -%>
+  PassengerRollingRestarts <%= scope.call_function('apache::bool2httpd', [@passenger_rolling_restarts]) %>
+<% end -%>
+<% unless @passenger_resist_deployment_errors.nil? -%>
+  PassengerResistDeploymentErrors <%= scope.call_function('apache::bool2httpd', [@passenger_resist_deployment_errors]) %>
+<% end -%>
 <%# 4 - Security options -%>
 <% if @passenger_user -%>
   PassengerUser <%= @passenger_user %>
@@ -29,23 +56,77 @@
 <% if @passenger_group -%>
   PassengerGroup <%= @passenger_group %>
 <% end -%>
+<% unless @passenger_friendly_error_pages.nil? -%>
+  PassengerFriendlyErrorPages <%= scope.call_function('apache::bool2httpd', [@passenger_friendly_error_pages]) %>
+<% end -%>
 <%# 5 - Resource control and optimization options -%>
 <% if @passenger_min_instances -%>
   PassengerMinInstances <%= @passenger_min_instances %>
 <% end -%>
+<% if @passenger_max_instances -%>
+  PassengerMaxInstances <%= @passenger_max_instances %>
+<% end -%>
+<% if @passenger_max_preloader_idle_time -%>
+  PassengerMaxPreloaderIdleTime <%= @passenger_max_preloader_idle_time %>
+<% end -%>
+<% if @passenger_force_max_concurrent_requests_per_process -%>
+  PassengerForceMaxConcurrentRequestsPerProcess <%= @passenger_force_max_concurrent_requests_per_process %>
+<% end -%>
 <% if @passenger_start_timeout -%>
   PassengerStartTimeout <%= @passenger_start_timeout %>
 <% end -%>
+<% if @passenger_concurrency_model -%>
+  PassengerConcurrencyModel <%= @passenger_concurrency_model %>
+<% end -%>
+<% if @passenger_thread_count -%>
+  PassengerThreadCount <%= @passenger_thread_count %>
+<% end -%>
 <% if @passenger_max_requests -%>
   PassengerMaxRequests <%= @passenger_max_requests %>
+<% end -%>
+<% if @passenger_max_request_time -%>
+  PassengerMaxRequestTime <%= @passenger_max_request_time %>
+<% end -%>
+<% if @passenger_memory_limit -%>
+  PassengerMemoryLimit <%= @passenger_memory_limit %>
+<% end -%>
+<% if @passenger_stat_throttle_rate -%>
+  PassengerStatThrottleRate <%= @passenger_stat_throttle_rate %>
 <% end -%>
 <% unless @passenger_high_performance.nil? -%>
   PassengerHighPerformance <%= scope.call_function('apache::bool2httpd', [@passenger_high_performance]) %>
 <% end -%>
 <%# 6 - Connection handling options -%>
+<% unless @passenger_buffer_upload.nil? -%>
+  PassengerBufferUpload <%= scope.call_function('apache::bool2httpd', [@passenger_buffer_upload]) %>
+<% end -%>
+<% unless @passenger_buffer_response.nil? -%>
+  PassengerBufferResponse <%= scope.call_function('apache::bool2httpd', [@passenger_buffer_response]) %>
+<% end -%>
+<% unless @passenger_error_override.nil? -%>
+  PassengerErrorOverride <%= scope.call_function('apache::bool2httpd', [@passenger_error_override]) %>
+<% end -%>
+<% if @passenger_max_request_queue_size -%>
+  PassengerMaxRequestQueueSize <%= @passenger_max_request_queue_size %>
+<% end -%>
+<% if @passenger_max_request_queue_time -%>
+  PassengerMaxRequestQueueTime <%= @passenger_max_request_queue_time %>
+<% end -%>
 <% unless @passenger_sticky_sessions.nil? -%>
   PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [@passenger_sticky_sessions]) %>
 <% end -%>
+<% if @passenger_sticky_sessions_cookie_name -%>
+  PassengerStickySessionsCookieName <%= @passenger_sticky_sessions_cookie_name %>
+<% end -%>
 <%# 7 - Compatibility options -%>
+<% unless @passenger_allow_encoded_slashes.nil? -%>
+  PassengerAllowEncodedSlashes <%= scope.call_function('apache::bool2httpd', [@passenger_allow_encoded_slashes]) %>
+<% end -%>
 <%# 8 - Logging and debugging options -%>
+<% unless @passenger_debugger.nil? -%>
+  PassengerDebugger <%= scope.call_function('apache::bool2httpd', [@passenger_debugger]) %>
+<% end -%>
 <%# 9 - Advanced options -%>
+<% if @passenger_lve_min_uid -%>
+  PassengerLveMinUid <%= @passenger_lve_min_uid %>
+<% end -%>

@@ -400,21 +400,48 @@ describe 'apache::vhost', type: :define do
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'use_canonical_name'          => 'dns',
+          'passenger_enabled'           => false,
+          'passenger_base_uri'          => '/app',
           'passenger_ruby'              => '/usr/bin/ruby1.9.1',
+          'passenger_python'            => '/usr/local/bin/python',
           'passenger_nodejs'            => '/usr/bin/node',
+          'passenger_meteor_app_settings' => '/path/to/some/file.json',
           'passenger_app_env'           => 'test',
           'passenger_app_root'          => '/usr/share/myapp',
+          'passenger_app_group_name'    => 'app_customer',
+          'passenger_app_type'          => 'rack',
           'passenger_startup_file'      => 'bin/www',
           'passenger_restart_dir'       => 'tmp',
           'passenger_spawn_method'      => 'direct',
+          'passenger_load_shell_envvars' => false,
+          'passenger_rolling_restarts'  => false,
+          'passenger_resist_deployment_errors' => true,
           'passenger_user'              => 'sandbox',
           'passenger_group'             => 'sandbox',
+          'passenger_friendly_error_pages' => false,
           'passenger_min_instances'     => '1',
+          'passenger_max_instances'     => 30,
+          'passenger_max_preloader_idle_time' => 600,
+          'passenger_force_max_concurrent_requests_per_process' => 10,
           'passenger_start_timeout'     => '600',
+          'passenger_concurrency_model' => 'thread',
+          'passenger_thread_count'      => 5,
           'passenger_max_requests'      => '1000',
+          'passenger_max_request_time'  => 2,
+          'passenger_memory_limit'      => 64,
+          'passenger_stat_throttle_rate' => 5,
           'passenger_pre_start'         => 'http://localhost/myapp',
           'passenger_high_performance'  => true,
+          'passenger_buffer_upload'     => false,
+          'passenger_buffer_response'   => false,
+          'passenger_error_override'    => true,
+          'passenger_max_request_queue_size' => 10,
+          'passenger_max_request_queue_time' => 2,
           'passenger_sticky_sessions'   => true,
+          'passenger_sticky_sessions_cookie_name' => '_nom_nom_nom',
+          'passenger_allow_encoded_slashes' => true,
+          'passenger_debugger'          => true,
+          'passenger_lve_min_uid'       => 500,
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
             { 'mount'   => '/*',     'worker' => 'tcnode1' },
@@ -852,12 +879,32 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerEnabled\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerBaseURI\s/app$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerPython\s/usr/local/bin/python$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMeteorAppSettings\s/path/to/some/file.json$},
         )
       }
       it {
@@ -868,6 +915,16 @@ describe 'apache::vhost', type: :define do
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppGroupName\sapp_customer$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppType\srack$},
         )
       }
       it {
@@ -887,6 +944,21 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerRollingRestarts\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerResistDeploymentErrors\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerUser\ssandbox$},
         )
       }
@@ -897,7 +969,27 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerFriendlyErrorPages\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerMinInstances\s1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxInstances\s30$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxPreloaderIdleTime\s600$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s10$},
         )
       }
       it {
@@ -907,7 +999,32 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerConcurrencyModel\sthread$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerThreadCount\s5$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerMaxRequests\s1000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestTime\s2$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMemoryLimit\s64$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStatThrottleRate\s5$},
         )
       }
       it {
@@ -922,7 +1039,52 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerBufferUpload\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerBufferResponse\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerErrorOverride\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestQueueSize\s10$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestQueueTime\s2$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
           content: %r{^\s+PassengerStickySessions\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStickySessionsCookieName\s_nom_nom_nom$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAllowEncodedSlashes\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerDebugger\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerLveMinUid\s500$},
         )
       }
     end
