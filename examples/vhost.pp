@@ -229,7 +229,7 @@ apache::vhost { 'subdomain.loc':
   serveraliases   => ['*.loc',],
 }
 
-# Vhost with SSLProtocol,SSLCipherSuite, SSLHonorCipherOrder
+# Vhost with SSL (SSLProtocol, SSLCipherSuite & SSLHonorCipherOrder from default)
 apache::vhost { 'securedomain.com':
         priority             => '10',
         vhost_name           => 'www.securedomain.com',
@@ -239,9 +239,6 @@ apache::vhost { 'securedomain.com':
         ssl_cert             => '/etc/ssl/securedomain.cert',
         ssl_key              => '/etc/ssl/securedomain.key',
         ssl_chain            => '/etc/ssl/securedomain.crt',
-        ssl_protocol         => '-ALL +TLSv1',
-        ssl_cipher           => 'ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
-        ssl_honorcipherorder => 'On',
         add_listen           => false,
 }
 
