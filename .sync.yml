@@ -13,7 +13,7 @@
     - release
   extras:
     - env: CHECK=release_checks
-      rvm: 2.1.9
+      rvm: 2.3.4
 
 Gemfile:
   required:
