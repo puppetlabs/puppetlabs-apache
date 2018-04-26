@@ -1,14 +1,11 @@
 ---
-env:
-  global:
-    - PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers
 sudo: false
 dist: trusty
 language: ruby
 cache: bundler
 before_install:
   - bundle -v
-  - rm Gemfile.lock || true
+  - rm -f Gemfile.lock
   - gem update --system
   - gem update bundler
   - gem --version
@@ -46,12 +43,11 @@ matrix:
     -
       env: CHECK=metadata_lint
     -
+      env: CHECK=release_checks
+    -
       env: CHECK=spec
     -
       env: PUPPET_GEM_VERSION="~> 4.0" CHECK=spec
-      rvm: 2.1.9
-    -
-      env: CHECK=release_checks
       rvm: 2.1.9
 branches:
   only:
