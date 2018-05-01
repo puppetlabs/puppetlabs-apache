@@ -1,19 +1,13 @@
 ---
 .travis.yml:
-  bundle_args: --without system_tests
   docker_sets:
     - set: docker/centos-7
-      options:
     - set: docker/ubuntu-14.04
-      options:
   docker_defaults:
     bundler_args: ""
   secure: ""
   branches:
     - release
-  extras:
-    - env: CHECK=release_checks
-      rvm: 2.1.9
 
 Gemfile:
   required:
@@ -36,15 +30,14 @@ Gemfile:
         from_env: BEAKER_HOSTGENERATOR_VERSION
       - gem: beaker-rspec
         from_env: BEAKER_RSPEC_VERSION
-    ':development':
-      - gem: puppet-blacksmith
-        version: '~> 3.4'
 
 Rakefile:
   requires:
-    - puppet_blacksmith/rake_tasks
     - puppet-lint/tasks/puppet-lint
 
+appveyor.yml:
+  delete: true
+
 .rubocop.yml:
-   default_configs:
+  default_configs:
     inherit_from: .rubocop_todo.yml
