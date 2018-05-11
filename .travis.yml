@@ -1,7 +1,4 @@
 ---
-env:
-  global:
-    - PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers
 sudo: false
 dist: trusty
 language: ruby
@@ -19,7 +16,9 @@ bundler_args: --without system_tests
 rvm:
   - 2.4.1
 env:
-  - PUPPET_GEM_VERSION="~> 5.0" CHECK=spec
+  global:
+    - BEAKER_PUPPET_COLLECTION=puppet5 PUPPET_GEM_VERSION="~> 5.0"
+    - PARALLEL_TEST_PROCESSORS=16
 matrix:
   fast_finish: true
   include:
