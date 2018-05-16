@@ -1,5 +1,7 @@
 ---
 .travis.yml:
+  global_env:
+    - PARALLEL_TEST_PROCESSORS=16  
   docker_sets:
     - set: docker/centos-7
     - set: docker/ubuntu-14.04
