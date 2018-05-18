@@ -246,7 +246,7 @@ describe 'apache::vhost', type: :define do
             },
             { 'path'              => '/var/www/files/indexed_directory',
               'directoryindex'    => 'disabled',
-              'options'           => %w[Indexes FollowSymLinks MultiViews],
+              'options'           => ['Indexes', 'FollowSymLinks', 'MultiViews'],
               'index_options'     => ['FancyIndexing'],
               'index_style_sheet' => '/styles/style.css' },
             { 'path'              => '/var/www/files/output_filtered',
@@ -289,7 +289,7 @@ describe 'apache::vhost', type: :define do
             {
               'path'            => '/a',
               'url'             => 'http://backend-a/',
-              'keywords'        => %w[noquery interpolate],
+              'keywords'        => ['noquery', 'interpolate'],
               'no_proxy_uris'       => ['/a/foo', '/a/bar'],
               'no_proxy_uris_match' => ['/a/foomatch'],
               'reverse_cookies' => [
@@ -313,7 +313,7 @@ describe 'apache::vhost', type: :define do
             {
               'path'     => '/a',
               'url'      => 'http://backend-a/',
-              'keywords' => %w[noquery interpolate],
+              'keywords' => ['noquery', 'interpolate'],
               'no_proxy_uris'       => ['/a/foo', '/a/bar'],
               'no_proxy_uris_match' => ['/a/foomatch'],
               'params' => {
@@ -326,8 +326,8 @@ describe 'apache::vhost', type: :define do
           'suphp_addhandler'            => 'foo',
           'suphp_engine'                => 'on',
           'suphp_configpath'            => '/var/www/html',
-          'php_admin_flags'             => %w[foo bar],
-          'php_admin_values'            => %w[true false],
+          'php_admin_flags'             => ['foo', 'bar'],
+          'php_admin_values'            => ['true', 'false'],
           'no_proxy_uris'               => '/foo',
           'no_proxy_uris_match'         => '/foomatch',
           'proxy_preserve_host'         => true,
@@ -964,7 +964,7 @@ describe 'apache::vhost', type: :define do
     context 'vhost with multiple ports' do
       let :params do
         {
-          'port'                        => %w[80 8080],
+          'port'                        => ['80', '8080'],
           'ip'                          => '127.0.0.1',
           'ip_based'                    => true,
           'servername'                  => 'example.com',
@@ -1002,7 +1002,7 @@ describe 'apache::vhost', type: :define do
     context 'vhost with multiple ip addresses, multiple ports' do
       let :params do
         {
-          'port'                        => %w[80 8080],
+          'port'                        => ['80', '8080'],
           'ip'                          => ['127.0.0.1', '::1'],
           'ip_based'                    => true,
           'servername'                  => 'example.com',

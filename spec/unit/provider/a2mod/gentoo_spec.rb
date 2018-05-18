@@ -21,21 +21,21 @@ describe provider_class do
       expect(filetype).to receive(:read).and_return(%(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n))
       expect(provider_class).to receive(:filetype) { filetype }
 
-      expect(provider_class.modules).to eq(%w[bar baz foo])
+      expect(provider_class.modules).to eq(['bar', 'baz', 'foo'])
     end
 
     it 'caches the module list' do
       expect(filetype).to receive(:read).once { %(APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n) } # rubocop:disable Lint/AmbiguousBlockAssociation
       expect(provider_class).to receive(:filetype).once { filetype } # rubocop:disable Lint/AmbiguousBlockAssociation
 
-      2.times { expect(provider_class.modules).to eq(%w[bar baz foo]) }
+      2.times { expect(provider_class.modules).to eq(['bar', 'baz', 'foo']) }
     end
 
     it 'normalizes parameters' do
       filetype.expects(:read).returns(%(APACHE2_OPTS="-D FOO -D BAR -D BAR"\n))
       provider_class.expects(:filetype).returns(filetype)
 
-      expect(provider_class.modules).to eq(%w[bar foo])
+      expect(provider_class.modules).to eq(['bar', 'foo'])
     end
   end
 

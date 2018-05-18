@@ -281,7 +281,7 @@ describe 'apache::mod::status', type: :class do
     end
 
     # Only On or Off are valid options
-    %w[On Off].each do |valid_param|
+    ['On', 'Off'].each do |valid_param|
       context "with valid value $extended_status => '#{valid_param}'" do
         let :facts do
           {
@@ -308,7 +308,7 @@ describe 'apache::mod::status', type: :class do
       end
     end
 
-    %w[Yes No].each do |invalid_param|
+    ['Yes', 'No'].each do |invalid_param|
       context "with invalid value $extended_status => '#{invalid_param}'" do
         let :facts do
           {
