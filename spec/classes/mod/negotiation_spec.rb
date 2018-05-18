@@ -40,7 +40,7 @@ ForceLanguagePriority Prefer Fallback
 
     context 'with language_priority parameter' do
       let :params do
-        { language_priority: %w[en es] }
+        { language_priority: ['en', 'es'] }
       end
 
       it do

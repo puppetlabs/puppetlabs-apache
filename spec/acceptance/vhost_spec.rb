@@ -1039,7 +1039,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  %w[access error].each do |logtype|
+  ['access', 'error'].each do |logtype|
     case logtype
     when 'access'
       logname = 'CustomLog'

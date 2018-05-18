@@ -36,7 +36,7 @@ describe 'apache::mod::passenger', type: :class do
       'passenger_base_uri' => { type: 'URI', pass_opt: :PassengerBaseURI },
       'passenger_buffer_response' => { type: 'OnOff', pass_opt: :PassengerBufferResponse },
       'passenger_buffer_upload' => { type: 'OnOff', pass_opt: :PassengerBufferUpload },
-      'passenger_concurrency_model' => { type: %w[process thread], pass_opt: :PassengerConcurrencyModel },
+      'passenger_concurrency_model' => { type: ['process', 'thread'], pass_opt: :PassengerConcurrencyModel },
       'passenger_data_buffer_dir' => { type: 'FullPath', pass_opt: :PassengerDataBufferDir },
       'passenger_debug_log_file' => { type: 'String', pass_opt: :PassengerDebugLogFile },
       'passenger_debugger' => { type: 'OnOff', pass_opt: :PassengerDebugger },
@@ -81,7 +81,7 @@ describe 'apache::mod::passenger', type: :class do
       'passenger_security_update_check_proxy' => { type: 'URI', pass_opt: :PassengerSecurityUpdateCheckProxy },
       'passenger_show_version_in_header' => { type: 'OnOff', pass_opt: :PassengerShowVersionInHeader },
       'passenger_socket_backlog' => { type: 'Integer', pass_opt: :PassengerSocketBacklog },
-      'passenger_spawn_method' => { type: %w[smart direct], pass_opt: :PassengerSpawnMethod },
+      'passenger_spawn_method' => { type: ['smart', 'direct'], pass_opt: :PassengerSpawnMethod },
       'passenger_start_timeout' => { type: 'Integer', pass_opt: :PassengerStartTimeout },
       'passenger_startup_file' => { type: 'RelPath', pass_opt: :PassengerStartupFile },
       'passenger_stat_throttle_rate' => { type: 'Integer', pass_opt: :PassengerStatThrottleRate },
@@ -146,7 +146,7 @@ describe 'apache::mod::passenger', type: :class do
           end
         end
       when 'OnOff'
-        valid_config_values = %w[on off]
+        valid_config_values = ['on', 'off']
         valid_config_values.each do |valid_value|
           describe "with #{puppetized_config_option} => '#{valid_value}'" do
             let :params do
