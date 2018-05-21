@@ -8,14 +8,11 @@ AllCops:
   Exclude:
   - bin/*
   - ".vendor/**/*"
-  - "**/Gemfile"
-  - "**/Rakefile"
+  - Gemfile
+  - Rakefile
   - pkg/**/*
   - spec/fixtures/**/*
   - vendor/**/*
-  - "**/Puppetfile"
-  - "**/Vagrantfile"
-  - "**/Guardfile"
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200
@@ -69,11 +66,6 @@ Style/SymbolArray:
 inherit_from: ".rubocop_todo.yml"
 RSpec/MessageSpies:
   EnforcedStyle: receive
-Style/Documentation:
-  Exclude:
-  - lib/puppet/parser/functions/**/*
-Style/WordArray:
-  EnforcedStyle: brackets
 Style/CollectionMethods:
   Enabled: true
 Style/MethodCalledOnDoEndBlock:
