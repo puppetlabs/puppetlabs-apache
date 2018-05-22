@@ -217,6 +217,7 @@ define apache::vhost(
   $max_keepalive_requests                                                           = undef,
   $cas_attribute_prefix                                                             = undef,
   $cas_attribute_delimiter                                                          = undef,
+  $cas_root_proxied_as                                                              = undef,
   $cas_scrub_request_headers                                                        = undef,
   $cas_sso_enabled                                                                  = undef,
   $cas_login_url                                                                    = undef,
