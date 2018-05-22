@@ -1894,7 +1894,7 @@ The `cas_login_url` and `cas_validate_url` parameters are required; several othe
 
   Default: `undef`.
 
-- `cas_root_proxied_as`: Sets the URL end users see when access to this Apache server is proxied.
+- `cas_root_proxied_as`: Sets the URL end users see when access to this Apache server is proxied. This URL should not include a trailing slash.
 
   Default: `undef`.
 
