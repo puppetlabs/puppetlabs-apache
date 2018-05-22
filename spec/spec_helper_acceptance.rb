@@ -3,7 +3,7 @@ require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
-require 'beaker/task_helper'
+require 'beaker-task_helper'
 
 run_puppet_install_helper
 install_bolt_on(hosts) unless pe_install?
