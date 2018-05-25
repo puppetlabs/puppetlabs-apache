@@ -270,33 +270,6 @@ describe 'apache', type: :class do
         )
       }
     end
-    context 'on Ubuntu 13.10' do
-      let :facts do
-        super().merge(operatingsystem: 'Ubuntu',
-                      lsbdistrelease: '13.10',
-                      operatingsystemrelease: '13.10')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.4') }
-    end
-    context 'on Ubuntu 12.04' do
-      let :facts do
-        super().merge(operatingsystem: 'Ubuntu',
-                      lsbdistrelease: '12.04',
-                      operatingsystemrelease: '12.04')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.2') }
-    end
-    context 'on Ubuntu 13.04' do
-      let :facts do
-        super().merge(operatingsystem: 'Ubuntu',
-                      lsbdistrelease: '13.04',
-                      operatingsystemrelease: '13.04')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.2') }
-    end
   end
 
   context 'on a RedHat 5 OS' do

@@ -6,9 +6,9 @@ describe 'apache::mod::authnz_ldap', type: :class do
   context 'default configuration with parameters on a Debian OS' do
     let :facts do
       {
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/dne',
         id: 'root',
         kernel: 'Linux',

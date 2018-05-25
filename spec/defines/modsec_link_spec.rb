@@ -38,9 +38,9 @@ describe 'apache::security::rule_link', type: :define do
       {
         osfamily: 'Debian',
         operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         kernel: 'Linux',

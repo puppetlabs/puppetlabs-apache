@@ -9,9 +9,9 @@ describe 'apache::service', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/dne',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',

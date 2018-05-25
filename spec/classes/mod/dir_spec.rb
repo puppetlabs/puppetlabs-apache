@@ -7,13 +7,13 @@ describe 'apache::mod::dir', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/dne',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         is_pe: false,
       }
     end

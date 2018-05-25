@@ -25,10 +25,10 @@ describe 'apache::mod::authn_dbd', type: :class do
         {
           id: 'root',
           kernel: 'Linux',
-          lsbdistcodename: 'squeeze',
+          lsbdistcodename: 'jessie',
           osfamily: 'Debian',
           operatingsystem: 'Debian',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '8',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           concat_basedir: '/dne',
           is_pe: false,

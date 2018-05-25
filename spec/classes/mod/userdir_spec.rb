@@ -10,10 +10,10 @@ describe 'apache::mod::userdir', type: :class do
     end
     let :facts do
       {
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        operatingsystemmajrelease: '6',
+        operatingsystemrelease: '8',
+        operatingsystemmajrelease: '8',
         concat_basedir: '/dne',
         operatingsystem: 'Debian',
         id: 'root',
