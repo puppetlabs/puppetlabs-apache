@@ -5412,7 +5412,7 @@ Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/c
 
 Boolean.
 
-Default: `true`.
+Default: `false`.
 
 ##### `ssl_stapling`
 
