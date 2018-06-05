@@ -38,8 +38,8 @@ describe 'apache::fastcgi::server', type: :define do
         {
           osfamily: 'Debian',
           operatingsystem: 'Debian',
-          operatingsystemrelease: '6',
-          lsbdistcodename: 'squeeze',
+          operatingsystemrelease: '8',
+          lsbdistcodename: 'jessie',
           kernel: 'Linux',
           id: 'root',
           concat_basedir: '/dne',
@@ -112,8 +112,8 @@ describe 'apache::fastcgi::server', type: :define do
       {
         osfamily: 'Debian',
         operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'squeeze',
+        operatingsystemrelease: '8',
+        lsbdistcodename: 'jessie',
         kernel: 'Linux',
         id: 'root',
         concat_basedir: '/dne',

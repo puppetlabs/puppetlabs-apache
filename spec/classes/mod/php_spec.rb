@@ -5,9 +5,9 @@ describe 'apache::mod::php', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/dne',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -265,7 +265,7 @@ describe 'apache::mod::php', type: :class do
         operatingsystem: 'Debian',
         operatingsystemrelease: '6',
         kernel: 'Linux',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         concat_basedir: '/dne',
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',

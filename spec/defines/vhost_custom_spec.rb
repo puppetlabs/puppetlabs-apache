@@ -31,8 +31,8 @@ describe 'apache::vhost::custom', type: :define do
       let :default_facts do
         {
           osfamily: 'Debian',
-          operatingsystemrelease: '6',
-          lsbdistcodename: 'squeeze',
+          operatingsystemrelease: '8',
+          lsbdistcodename: 'jessie',
           operatingsystem: 'Debian',
           concat_basedir: '/dne',
           id: 'root',

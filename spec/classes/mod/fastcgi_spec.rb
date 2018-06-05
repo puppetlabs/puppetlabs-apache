@@ -6,7 +6,7 @@ describe 'apache::mod::fastcgi', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         concat_basedir: '/dne',
         lsbdistcodename: 'squeze',
         operatingsystem: 'Debian',

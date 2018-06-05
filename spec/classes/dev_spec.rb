@@ -10,7 +10,7 @@ describe 'apache::dev', type: :class do
   context 'on a Debian OS' do
     let :facts do
       {
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         operatingsystem: 'Debian',
         operatingsystemrelease: '6',
@@ -27,14 +27,14 @@ describe 'apache::dev', type: :class do
     it { is_expected.to contain_package('libapr1-dev') }
     it { is_expected.to contain_package('apache2-prefork-dev') }
   end
-  context 'on an Ubuntu 14 OS' do
+  context 'on an Ubuntu 16 OS' do
     let :facts do
       {
-        lsbdistrelease: '14.04',
-        lsbdistcodename: 'trusty',
+        lsbdistrelease: '16.04',
+        lsbdistcodename: 'xenial',
         osfamily: 'Debian',
         operatingsystem: 'Ubuntu',
-        operatingsystemrelease: '14.04',
+        operatingsystemrelease: '16.04',
         is_pe: false,
         concat_basedir: '/foo',
         id: 'root',

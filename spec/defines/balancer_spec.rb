@@ -8,8 +8,8 @@ describe 'apache::balancer', type: :define do
     {
       osfamily: 'Debian',
       operatingsystem: 'Debian',
-      operatingsystemrelease: '6',
-      lsbdistcodename: 'squeeze',
+      operatingsystemrelease: '8',
+      lsbdistcodename: 'jessie',
       id: 'root',
       concat_basedir: '/dne',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
@@ -25,8 +25,6 @@ describe 'apache::balancer', type: :define do
 
     describe 'works when only declaring resource title' do
       it { is_expected.to contain_concat('apache_balancer_myapp') }
-      it { is_expected.not_to contain_apache__mod('slotmem_shm') }
-      it { is_expected.not_to contain_apache__mod('lbmethod_byrequests') }
       it { is_expected.to contain_concat__fragment('00-myapp-header').with_content(%r{^<Proxy balancer://myapp>$}) }
     end
     describe 'accept a target parameter and use it' do
@@ -39,8 +37,6 @@ describe 'apache::balancer', type: :define do
       it {
         is_expected.to contain_concat('apache_balancer_myapp').with(path: '/tmp/myapp.conf')
       }
-      it { is_expected.not_to contain_apache__mod('slotmem_shm') }
-      it { is_expected.not_to contain_apache__mod('lbmethod_byrequests') }
     end
     describe 'accept an options parameter and use it' do
       let :params do
@@ -54,15 +50,6 @@ describe 'apache::balancer', type: :define do
           %r{^<Proxy balancer://myapp timeout=0 nonce=none>$},
         )
       }
-    end
-    context 'on jessie' do
-      let(:facts) do
-        super().merge(operatingsystemrelease: '8',
-                      lsbdistcodename: 'jessie')
-      end
-
-      it { is_expected.to contain_apache__mod('slotmem_shm') }
-      it { is_expected.to contain_apache__mod('lbmethod_byrequests') }
     end
   end
   describe 'apache pre_condition with conf_dir set' do

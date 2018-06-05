@@ -123,33 +123,31 @@ describe 'apache::vhost define' do
     end
   end
 
-  unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajorrelease') <= '10'
-    context 'new proxy vhost on port 80' do
-      pp = <<-MANIFEST
-        class { 'apache': }
-        apache::vhost { 'proxy.example.com':
-          port    => '80',
-          docroot => '#{$docroot}/proxy',
-          proxy_pass_match => [
-            { 'path' => '/foo', 'url' => 'http://backend-foo/'},
-          ],
-        proxy_preserve_host   => true,
-        proxy_error_override  => true,
-        }
-      MANIFEST
-      it 'configures an apache proxy vhost' do
-        apply_manifest(pp, catch_failures: true)
-      end
+  context 'new proxy vhost on port 80' do
+    pp = <<-MANIFEST
+      class { 'apache': }
+      apache::vhost { 'proxy.example.com':
+        port    => '80',
+        docroot => '#{$docroot}/proxy',
+        proxy_pass_match => [
+          { 'path' => '/foo', 'url' => 'http://backend-foo/'},
+        ],
+      proxy_preserve_host   => true,
+      proxy_error_override  => true,
+      }
+    MANIFEST
+    it 'configures an apache proxy vhost' do
+      apply_manifest(pp, catch_failures: true)
+    end
 
-      describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
-        it { is_expected.to contain '<VirtualHost \*:80>' }
-        it { is_expected.to contain 'ServerName proxy.example.com' }
-        it { is_expected.to contain 'ProxyPassMatch /foo http://backend-foo/' }
-        it { is_expected.to contain 'ProxyPreserveHost On' }
-        it { is_expected.to contain 'ProxyErrorOverride On' }
-        it { is_expected.not_to contain 'ProxyAddHeaders' }
-        it { is_expected.not_to contain "<Proxy \*>" }
-      end
+    describe file("#{$vhost_dir}/25-proxy.example.com.conf") do
+      it { is_expected.to contain '<VirtualHost \*:80>' }
+      it { is_expected.to contain 'ServerName proxy.example.com' }
+      it { is_expected.to contain 'ProxyPassMatch /foo http://backend-foo/' }
+      it { is_expected.to contain 'ProxyPreserveHost On' }
+      it { is_expected.to contain 'ProxyErrorOverride On' }
+      it { is_expected.not_to contain 'ProxyAddHeaders' }
+      it { is_expected.not_to contain "<Proxy \*>" }
     end
   end
 
@@ -805,53 +803,51 @@ describe 'apache::vhost define' do
     end
   end
 
-  unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajorrelease') <= '10'
-    context 'proxy_pass_match for alternative vhost' do
-      it 'configures a local vhost and a proxy vhost' do
-        apply_manifest(%(
-          class { 'apache': default_vhost => false, }
-          apache::vhost { 'localhost':
-            docroot => '/var/www/local',
-            ip      => '127.0.0.1',
-            port    => '8888',
-          }
-          apache::listen { '*:80': }
-          apache::vhost { 'proxy.example.com':
-            docroot    => '/var/www',
-            port       => '80',
-            add_listen => false,
-            proxy_pass_match => {
-              'path' => '/',
-              'url'  => 'http://localhost:8888/subdir/',
-            },
-          }
-          host { 'proxy.example.com': ip => '127.0.0.1', }
-          file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
-          file { '/var/www/local/subdir/index.html':
-            ensure  => file,
-            content => "Hello from localhost\\n",
-          }
-                      ), catch_failures: true)
-      end
+  context 'proxy_pass_match for alternative vhost' do
+    it 'configures a local vhost and a proxy vhost' do
+      apply_manifest(%(
+        class { 'apache': default_vhost => false, }
+        apache::vhost { 'localhost':
+          docroot => '/var/www/local',
+          ip      => '127.0.0.1',
+          port    => '8888',
+        }
+        apache::listen { '*:80': }
+        apache::vhost { 'proxy.example.com':
+          docroot    => '/var/www',
+          port       => '80',
+          add_listen => false,
+          proxy_pass_match => {
+            'path' => '/',
+            'url'  => 'http://localhost:8888/subdir/',
+          },
+        }
+        host { 'proxy.example.com': ip => '127.0.0.1', }
+        file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
+        file { '/var/www/local/subdir/index.html':
+          ensure  => file,
+          content => "Hello from localhost\\n",
+        }
+                    ), catch_failures: true)
+    end
 
-      describe service($service_name) do
-        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-          pending 'Should be enabled - Bug 760616 on Debian 8'
-        else
-          it { is_expected.to be_enabled }
-        end
-        it { is_expected.to be_running }
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      else
+        it { is_expected.to be_enabled }
       end
+      it { is_expected.to be_running }
+    end
 
-      it 'gets a response from the back end #stdout' do
-        shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
-          expect(r.stdout).to eq("Hello from localhost\n")
-        end
+    it 'gets a response from the back end #stdout' do
+      shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
+        expect(r.stdout).to eq("Hello from localhost\n")
       end
-      it 'gets a response from the back end #exit_code' do
-        shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
-          expect(r.exit_code).to eq(0)
-        end
+    end
+    it 'gets a response from the back end #exit_code' do
+      shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
+        expect(r.exit_code).to eq(0)
       end
     end
   end
@@ -968,7 +964,7 @@ describe 'apache::vhost define' do
     describe file($ports_file) do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
-         fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') =~ %r{(14\.04|13\.10|16\.04)} ||
+         fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') =~ %r{(14\.04|16\.04)} ||
          fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8' ||
          fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
