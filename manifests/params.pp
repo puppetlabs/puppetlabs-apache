@@ -100,6 +100,7 @@ class apache::params inherits ::apache::version {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
       'auth_cas'              => 'mod_auth_cas',
       'auth_kerb'             => 'mod_auth_kerb',
+      'auth_gssapi'           => 'mod_auth_gssapi',
       'auth_mellon'           => 'mod_auth_mellon',
       'authnz_ldap'           => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
@@ -239,6 +240,7 @@ class apache::params inherits ::apache::version {
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
+        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-svn',
@@ -267,6 +269,7 @@ class apache::params inherits ::apache::version {
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
+        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-svn',
@@ -410,18 +413,19 @@ class apache::params inherits ::apache::version {
       # NOTE: 'php' needs to enable APACHE option in make config
       # NOTE: 'dav_svn' needs to enable MOD_DAV_SVN make config
       # NOTE: not sure where the shibboleth should come from
-      'auth_kerb'  => 'www/mod_auth_kerb2',
-      'fcgid'      => 'www/mod_fcgid',
-      'passenger'  => 'www/rubygem-passenger',
-      'perl'       => 'www/mod_perl2',
-      'phpXXX'     => 'www/mod_phpXXX',
-      'proxy_html' => 'www/mod_proxy_html',
-      'python'     => 'www/mod_python3',
-      'wsgi'       => 'www/mod_wsgi',
-      'dav_svn'    => 'devel/subversion',
-      'xsendfile'  => 'www/mod_xsendfile',
-      'rpaf'       => 'www/mod_rpaf2',
-      'shib2'      => 'security/shibboleth2-sp',
+      'auth_kerb'   => 'www/mod_auth_kerb2',
+      'auth_gssapi' => 'www/mod_auth_gssapi',
+      'fcgid'       => 'www/mod_fcgid',
+      'passenger'   => 'www/rubygem-passenger',
+      'perl'        => 'www/mod_perl2',
+      'phpXXX'      => 'www/mod_phpXXX',
+      'proxy_html'  => 'www/mod_proxy_html',
+      'python'      => 'www/mod_python3',
+      'wsgi'        => 'www/mod_wsgi',
+      'dav_svn'     => 'devel/subversion',
+      'xsendfile'   => 'www/mod_xsendfile',
+      'rpaf'        => 'www/mod_rpaf2',
+      'shib2'       => 'security/shibboleth2-sp',
     }
     $mod_libs         = {
     }
@@ -476,6 +480,7 @@ class apache::params inherits ::apache::version {
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www-servers/apache
       'auth_kerb'       => 'www-apache/mod_auth_kerb',
+      'auth_gssapi'     => 'www-apache/mod_auth_gssapi',
       'authnz_external' => 'www-apache/mod_authnz_external',
       'fcgid'           => 'www-apache/mod_fcgid',
       'passenger'       => 'www-apache/passenger',
@@ -539,6 +544,7 @@ class apache::params inherits ::apache::version {
     if $::operatingsystemrelease < '11' or $::operatingsystemrelease >= '12' {
       $mod_packages      = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'auth_gssapi' => 'apache2-mod_auth_gssapi',
         'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
@@ -549,6 +555,7 @@ class apache::params inherits ::apache::version {
     } else {
       $mod_packages        = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
+        'auth_gssapi' => 'apache2-mod_auth_gssapi',
         'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php53',

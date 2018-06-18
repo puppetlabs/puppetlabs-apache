@@ -170,6 +170,7 @@
 [`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
+[`mod_auth_gssapi`]: https://github.com/modauthgssapi/mod_auth_gssapi
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
@@ -1597,6 +1598,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `auth_cas`\* (see [`apache::mod::auth_cas`][])
 * `auth_mellon`\* (see [`apache::mod::auth_mellon`][])
 * `auth_kerb`
+* `auth_gssapi`
 * `authn_core`
 * `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
