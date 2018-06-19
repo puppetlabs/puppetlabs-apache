@@ -3182,6 +3182,20 @@ Boolean.
 
 Default: `true`.
 
+##### `owner`
+
+Specifies the owner of the configuration file. Default: 'root'.
+
+##### `group`
+
+Specifies the group of the configuration file. Default: Depends on your operating system.
+
+- **Debian**: `root`
+- **FreeBSD**: `wheel`
+- **Gentoo**: `wheel`
+- **Red Hat**: `root`
+- **Suse**: `root`
+
 #### Defined type: `apache::fastcgi::server`
 
 Defines one or more external FastCGI servers to handle specific file types. Use this defined type with [`mod_fastcgi`][FastCGI].
