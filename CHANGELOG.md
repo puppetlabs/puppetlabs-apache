@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
+## Supported Release [3.2.0]
+### Summary
+This is a clean release to prepare for several planned backwards incompatible changes.
+
+#### Changed
+- Parameter `passenger_pre_start` has been moved outside of `<VirtualHost>`.
+- Apache version fact has been enabled on FreeBSD.
+- Parameter `ssl_proxyengine` has had it's default changed to false.
+
+#### Added
+- Parameter `passenger_group` can now be set in `apache::vhost`.
+- Multiple `passenger_pre_start` URIs can now be set at once.
+- Manifest `mod::auth_gssapi` has been added to allow the deployment of authorisation with kerberos, through GSSAPI.
+
+#### Removed
+- Scientific 5 and Debian 7 are no longer supported on Apache.
+
 ## Supported Release [3.1.0]
 ### Summary
 This release includes the module being converted using version 1.4.1 of the PDK. It also includes a couple of additional parameters added.
@@ -1040,6 +1057,8 @@ worker/prefork
 * f672e46 a2mod fix
 * 8a56ee9 add pthon support to apache
 
+[3.2.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/3.1.0...3.2.0
+[3.1.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/3.0.0...3.1.0
 [3.0.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.3.1...3.0.0
 [2.3.1]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.3.0...2.3.1
 [2.3.0]:https://github.com/puppetlabs/puppetlabs-apache/compare/2.2.0...2.3.0
