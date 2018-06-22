@@ -17,7 +17,7 @@ define apache::mod (
   $mod_dir = $::apache::mod_dir
 
   # Determine if we have special lib
-  $mod_libs = $::apache::params::mod_libs
+  $mod_libs = $::apache::mod_libs
   if $lib {
     $_lib = $lib
   } elsif has_key($mod_libs, $mod) { # 2.6 compatibility hack

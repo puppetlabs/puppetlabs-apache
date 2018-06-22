@@ -1212,6 +1212,21 @@ Default: Depends on operating system.
 - **Gentoo**: `/etc/apache2/modules.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
+##### `mod_libs`
+
+Allows the user to override default module library names.
+
+```puppet
+include apache::params
+class { 'apache':
+  mod_libs => merge($::apache::params::mod_libs, {
+    'wsgi' => 'mod_wsgi_python3.so',
+  })
+}
+```
+
+Hash. Default: `$apache::params::mod_libs`
+
 ##### `mod_packages`
 
 Allows the user to override default module package names.

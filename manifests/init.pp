@@ -47,6 +47,7 @@ class apache (
   $confd_dir                                                     = $::apache::params::confd_dir,
   $vhost_dir                                                     = $::apache::params::vhost_dir,
   $vhost_enable_dir                                              = $::apache::params::vhost_enable_dir,
+  $mod_libs                                                      = $::apache::params::mod_libs,
   $mod_packages                                                  = $::apache::params::mod_packages,
   $vhost_include_pattern                                         = $::apache::params::vhost_include_pattern,
   $mod_dir                                                       = $::apache::params::mod_dir,
