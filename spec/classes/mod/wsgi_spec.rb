@@ -160,4 +160,37 @@ describe 'apache::mod::wsgi', type: :class do
     }
     it { is_expected.to contain_package('www-apache/mod_wsgi') }
   end
+  context 'overriding mod_libs' do
+    context 'on a RedHat OS', :compile do
+      let :facts do
+        {
+          id: 'root',
+          kernel: 'Linux',
+          osfamily: 'RedHat',
+          operatingsystem: 'Fedora',
+          operatingsystemrelease: '28',
+          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          concat_basedir: '/dne',
+          is_pe: false,
+        }
+      end
+      let :pre_condition do
+        <<-MANIFEST
+        include apache::params
+        class { 'apache':
+          mod_packages => merge($::apache::params::mod_packages, {
+            'wsgi' => 'python3-mod_wsgi',
+          }),
+          mod_libs => merge($::apache::params::mod_libs, {
+            'wsgi' => 'mod_wsgi_python3.so',
+          })
+        }
+        MANIFEST
+      end
+
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module modules/mod_wsgi_python3.so}) }
+      it { is_expected.to contain_package('python3-mod_wsgi') }
+    end
+  end
 end
