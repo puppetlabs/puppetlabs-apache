@@ -8,7 +8,7 @@
   AddType application/x-pkcs7-crl    .crl
 
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
-  SSLSessionCache "shmcb:<%= @ssl_sessioncache %>"
+  SSLSessionCache "<%= @ssl_sessioncache %>"
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
   <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
