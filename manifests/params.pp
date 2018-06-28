@@ -230,7 +230,7 @@ class apache::params inherits ::apache::version {
     $mpm_module          = 'worker'
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
-    $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
+    $ssl_sessioncache    = "shmcb:\${APACHE_RUN_DIR}/ssl_scache(512000)"
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
