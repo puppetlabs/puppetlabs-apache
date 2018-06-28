@@ -2,7 +2,7 @@
 # managed by Puppet an changes will be overwritten.
 <IfModule mod_wsgi.c>
   <%- if @wsgi_restrict_embedded -%>
-  WSGIRestrictEmbedded <%= scope.function_bool2httpd([@wsgi_restrict_embedded]) %>
+  WSGIRestrictEmbedded <%= scope.call_function('apache::bool2httpd', [@wsgi_restrict_embedded]) %>
   <%- end -%>
   <%- if @wsgi_socket_prefix -%>
   WSGISocketPrefix <%= @wsgi_socket_prefix %>

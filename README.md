@@ -66,6 +66,7 @@
 [`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
+[`apache::mod::python`]: #class-apachemodpython
 [`apache::mod::security`]: #class-apachemodsecurity
 [`apache::mod::shib`]: #class-apachemodshib
 [`apache::mod::ssl`]: #class-apachemodssl
@@ -169,6 +170,7 @@
 [`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
+[`mod_auth_gssapi`]: https://github.com/modauthgssapi/mod_auth_gssapi
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
@@ -190,6 +192,7 @@
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [`mod_proxy_balancer`]: https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
 [`mod_reqtimeout`]: https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html
+[`mod_python`]: http://modpython.org/
 [`mod_rewrite`]: https://httpd.apache.org/docs/current/mod/mod_rewrite.html
 [`mod_security`]: https://www.modsecurity.org/
 [`mod_ssl`]: https://httpd.apache.org/docs/current/mod/mod_ssl.html
@@ -1209,6 +1212,21 @@ Default: Depends on operating system.
 - **Gentoo**: `/etc/apache2/modules.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
+##### `mod_libs`
+
+Allows the user to override default module library names.
+
+```puppet
+include apache::params
+class { 'apache':
+  mod_libs => merge($::apache::params::mod_libs, {
+    'wsgi' => 'mod_wsgi_python3.so',
+  })
+}
+```
+
+Hash. Default: `$apache::params::mod_libs`
+
 ##### `mod_packages`
 
 Allows the user to override default module package names.
@@ -1373,6 +1391,22 @@ Determines whether Puppet should use a specific command to restart the HTTPD ser
 Values: a command to restart the Apache service. The default setting uses the [default Puppet behavior][Service attribute restart].
 
 Default: `undef`.
+
+##### `ssl_cert`
+
+This enables the user to specify a specific SSLCertificateFile.
+
+For more information see: [SSLCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateFile)
+
+Default: `undef.`
+
+##### `ssl_key`
+This enables the user to specify a specific SSLCertificateKey.
+
+For more information see: [SSLCertificateKey](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateKeyFile)
+
+Default: `undef`.
+
 
 ##### `ssl_ca`
 
@@ -1579,6 +1613,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `auth_cas`\* (see [`apache::mod::auth_cas`][])
 * `auth_mellon`\* (see [`apache::mod::auth_mellon`][])
 * `auth_kerb`
+* `auth_gssapi`
 * `authn_core`
 * `authn_dbd`\* (see [`apache::mod::authn_dbd`][])
 * `authn_file`
@@ -1634,7 +1669,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `proxy_balancer`
 * `proxy_html` (see [`apache::mod::proxy_html`][])
 * `proxy_http`
-* `python`
+* `python` (see [`apache::mod::python`][])
 * `reqtimeout`
 * `remoteip`\*
 * `rewrite`
@@ -1690,6 +1725,14 @@ To specify the cache root, pass a path as a string to the `cache_root` parameter
 ``` puppet
 class {'::apache::mod::disk_cache':
   cache_root => '/path/to/cache',
+}
+```
+
+To specify cache ignore headers, pass a string to the `cache_ignore_headers` parameter.
+
+``` puppet
+class {'::apache::mod::disk_cache':
+  cache_ignore_headers => "Set-Cookie",
 }
 ```
 
@@ -2168,6 +2211,54 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 
   Default: `true`.
 
+##### Class: `apache::mod::itk`
+
+Installs and manages [`mod_itk`][], which is an (MPM) that is loaded and configured for the HTTPD process. [official documentation](http://mpm-itk.sesse.net/)
+
+**Parameters**:
+
+* `startservers`: The number of child server processes created on startup.
+
+  Values: Integer.
+
+  Default: `8`.
+
+* `minspareservers`: The desired minimum number of idle child server processes.
+
+  Values: Integer.
+
+  Default: `5`.
+
+* `maxspareservers`: The desired maximum number of idle child server processes.
+
+  Values: Integer.
+
+  Default: `20`.
+
+* `serverlimit`: The maximum configured value for MaxRequestWorkers for the lifetime of the Apache httpd process.
+
+  Values: Integer.
+
+  Default: `256`.
+
+* `maxclients`: The limit on the number of simultaneous requests that will be served.
+
+  Values: Integer.
+
+  Default: `256`.
+
+* `maxrequestsperchild`: The limit on the number of connections that an individual child server process will handle.
+
+  Values: Integer.
+
+  Default: `4000`.
+
+* `enablecapabilities`: Drop most root capabilities in the parent process, and instead run as the user given by the User/Group directives with some extra capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor capabilities, such as NFS.
+
+  Values: Boolean.
+
+  Default: `undef`.
+
 ##### Class: `apache::mod::jk`
 
 Installs and manages `mod_jk`, a connector for Apache httpd redirection to old versions of TomCat and JBoss
@@ -2218,14 +2309,14 @@ Default: '80'
 **workers\_file\_content**
 
 Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.
-Plus, there are two global directives, 'worker.list' and 'worker.mantain'
+Plus, there are two global directives, 'worker.list' and 'worker.maintain'
 For example, the workers file below:
 
 ```
 worker.list = status
 worker.list = some_name,other_name
 
-worker.mantain = 60
+worker.maintain = 60
 
 # Optional comment
 worker.some_name.type=ajp13
@@ -2240,14 +2331,14 @@ Should be parameterized as:
 
 ```
 $workers_file_content = {
-  worker_lists   => ['status', 'some_name,other_name'],
-  worker_mantain => '60',
-  some_name      => {
+  worker_lists    => ['status', 'some_name,other_name'],
+  worker_maintain => '60',
+  some_name       => {
     comment          => 'Optional comment',
     type             => 'ajp13',
     socket_keepalive => 'true',
   },
-  other_name     => {
+  other_name      => {
     comment          => 'I just like comments',
     type             => 'ajp12',
     socket_keepalive => 'false',
@@ -2627,6 +2718,14 @@ Default values for these parameters depend on your operating system. Most of thi
 
 **Note**: There is no official package available for `mod_proxy_html`, so you must make it available outside of the apache module.
 
+##### Class: `apache::mod::python`
+
+Installs and configures [`mod_python`][].
+
+**Parameters**
+
+* `loadfile_name`: Sets the name of the configuration file that is used to load the python module.
+
 ##### Class: `apache::mod::reqtimeout`
 
 Installs and configures [`mod_reqtimeout`][].
@@ -2662,6 +2761,8 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 - `ssl_cryptodevice`: Default: 'builtin'.
 - `ssl_honorcipherorder`: Default: true.
 - `ssl_openssl_conf_cmd`: Default: undef.
+- `ssl_cert`: Default: undef.
+- `ssl_key`: Default: undef.
 - `ssl_options`: Default: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
 - `ssl_protocol`: Default: ['all', '-SSLv2', '-SSLv3'].
@@ -2692,6 +2793,14 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
   Default: `true`.
 
 * `ssl_openssl_conf_cmd`
+
+  Default: `undef`.
+
+* `ssl_cert`
+
+  Default: `undef`.
+
+* `ssl_key`
 
   Default: `undef`.
 
@@ -2740,6 +2849,24 @@ Installs [`mod_status`][] and uses the `status.conf.erb` template to generate it
 * `allow_from`: An [array][] of IPv4 or IPv6 addresses that can access `/server-status`.
 
   Default: ['127.0.0.1','::1'].
+
+* `requires`: A string, an [array][] or a [hash][], of IPs and/or names that can/can't access `/server-status`, using Apache v. >= 2.4 `mod_authz_host` directives (`require ip`, `require host`, etc.). This parameter should follow one of the structures below:
+
+  > Only used if Apache version >= 2.4
+
+  - `undef` - Uses `allow_from` and old directive syntax (`Allow from <List of IPs and/or names>`). Issues deprecation warning.
+  - String
+    - `''` or `'unmanaged'` - No auth directives (access controlled elsewhere)
+    - `'ip <List of IPs>'` - IPs/ranges allowed to access `/server-status`
+    - `'host <List of names>'` - Names/domains allowed to access `/server-status`
+    - `'all [granted|denied]'` - Allow / block everyone
+  - Array - Each item should be a string from those described above. Results in one directive per array item.
+  - Hash with structure below (shown as key => value, where keys are strings):
+    - `'requires'` => Array as above - Same effect as the array
+    - `'enforce'`  => String `'Any'`, `'All'` or `'None'` (optional) - Encloses all directives from `'requires'` key in a `<Require(Any|All|None)>` block
+
+  Default: 'ip 127.0.0.1 ::1'
+
 * `extended_status`: Determines whether to track extended status information for each request, via the [`ExtendedStatus`][] directive.
 
   Values: 'Off', 'On'.
@@ -2963,6 +3090,12 @@ Sets the title of the balancer cluster and name of the `conf.d` file containing 
 Configures key-value pairs as [`ProxySet`][] lines. Values: a [hash][].
 
 Default: '{}'.
+
+##### `options`
+
+Specifies an [array][] of [options](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember) after the balancer URL, and accepts any key-value pairs available to [`ProxyPass`][].
+
+Default: [].
 
 ##### `collect_exported`
 
@@ -3943,6 +4076,10 @@ Sets [PassengerPreStart](https://www.phusionpassenger.com/library/config/apache/
 
 Sets [PassengerUser](https://www.phusionpassenger.com/library/config/apache/reference/#passengeruser), the running user for sandboxing applications.
 
+##### `passenger_group`
+
+Sets [PassengerGroup](https://www.phusionpassenger.com/library/config/apache/reference/#passengergroup), the running group for sandboxing applications.
+
 ##### `passenger_high_performance`
 
 Sets the [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance) parameter.
@@ -4110,7 +4247,7 @@ apache::vhost { 'site.name.fdqn':
   …
   redirectmatch_status => ['404','404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-  redirectmatch_dest => ['http://www.example.com/1','http://www.example.com/2'],
+  redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
 ```
 
@@ -5015,6 +5152,10 @@ apache::vhost { 'secure.example.net':
 
 When set to 'On', this turns on the use of request headers to publish attributes to applications. Values for this key is 'On' or 'Off', and the default value is 'Off'. This key is disabled if `apache::mod::shib` is not defined. Check the [`mod_shib` documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions) for more details.
 
+##### `shib_compat_valid_user`
+
+Default is Off, matching the behavior prior to this command's existence. Addresses a conflict when using Shibboleth in conjunction with other auth/auth modules by restoring "standard" Apache behavior when processing the "valid-user" and "user" Require rules. See the [`mod_shib`documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions), and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess) topic for more details. This key is disabled if `apache::mod::shib` is not defined.
+
 ##### `ssl_options`
 
 String or list of [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions), which configure SSL engine run-time options. This handler takes precedence over SSLOptions set in the parent block of the virtual host.
@@ -5203,6 +5344,12 @@ A depth of 0 means that only self-signed remote server certificates are accepted
 
 Default: `undef`
 
+##### `ssl_proxy_cipher_suite`
+
+Sets the [SSLProxyCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyciphersuite) directive, which controls cipher suites supported for ssl proxy traffic.
+
+Default: `undef`
+
 ##### `ssl_proxy_ca_cert`
 
 Sets the [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile) directive, which specifies an all-in-one file where you can assemble the Certificates of Certification Authorities (CA) whose remote servers you deal with. These are used for Remote Server Authentication. This file should be a concatenation of the PEM-encoded certificate files in order of preference.
@@ -5282,7 +5429,7 @@ Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/c
 
 Boolean.
 
-Default: `true`.
+Default: `false`.
 
 ##### `ssl_stapling`
 

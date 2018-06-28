@@ -1,12 +1,48 @@
 ---
+.travis.yml:
+  global_env:
+    - PARALLEL_TEST_PROCESSORS=16  
+  docker_sets:
+    - set: docker/centos-7
+    - set: docker/ubuntu-14.04
+  docker_defaults:
+    bundler_args: ""
+  secure: ""
+  branches:
+    - release
+
+Gemfile:
+  required:
+    ':system_tests':
+      - gem: 'puppet-module-posix-system-r#{minor_version}'
+        platforms: ruby
+      - gem: 'puppet-module-win-system-r#{minor_version}'
+        platforms:
+          - mswin
+          - mingw
+          - x64_mingw
+      - gem: beaker
+        version: '~> 3.13'
+        from_env: BEAKER_VERSION
+      - gem: beaker-abs
+        from_env: BEAKER_ABS_VERSION
+        version: '~> 0.1'
+      - gem: beaker-pe
+      - gem: beaker-hostgenerator
+        from_env: BEAKER_HOSTGENERATOR_VERSION
+      - gem: beaker-rspec
+        from_env: BEAKER_RSPEC_VERSION
+
+Rakefile:
+  requires:
+    - puppet-lint/tasks/puppet-lint
+
 appveyor.yml:
   delete: true
-Rakefile:
-  extra_disabled_lint_checks:
-  - 'disable_only_variable_string'
-spec/spec_helper.rb:
-  allow_deprecations: true
-.travis.yml:
-  env:
-    global:
-      - "PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers"
+
+.rubocop.yml:
+  default_configs:
+    inherit_from: .rubocop_todo.yml
+
+.gitlab-ci.yml:
+  unmanaged: true

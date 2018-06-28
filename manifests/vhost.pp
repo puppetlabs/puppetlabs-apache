@@ -32,6 +32,7 @@ define apache::vhost(
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                            = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                          = undef,
   $ssl_proxy_machine_cert                                                           = undef,
+  $ssl_proxy_cipher_suite                                                           = undef,
   $ssl_proxy_protocol                                                               = undef,
   $ssl_options                                                                      = undef,
   $ssl_openssl_conf_cmd                                                             = undef,
@@ -141,8 +142,9 @@ define apache::vhost(
   $passenger_min_instances                                                          = undef,
   $passenger_max_requests                                                           = undef,
   $passenger_start_timeout                                                          = undef,
-  $passenger_pre_start                                                              = undef,
+  Optional[Variant[String,Array[String]]] $passenger_pre_start                      = undef,
   $passenger_user                                                                   = undef,
+  $passenger_group                                                                  = undef,
   $passenger_high_performance                                                       = undef,
   $passenger_nodejs                                                                 = undef,
   Optional[Boolean] $passenger_sticky_sessions                                      = undef,
@@ -175,6 +177,7 @@ define apache::vhost(
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
 ) {
 
@@ -195,7 +198,7 @@ define apache::vhost(
   # Input validation begins
 
   if $log_level {
-    validate_apache_log_level($log_level)
+    apache::validate_apache_log_level($log_level)
   }
 
   if $access_log_file and $access_log_pipe {
@@ -234,7 +237,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
+  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_group or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
     include ::apache::mod::passenger
   }
 
@@ -360,8 +363,9 @@ define apache::vhost(
       }
     }
   }
+
   if $add_listen {
-    if $ip and defined(Apache::Listen["${port}"]) {
+    if $ip and defined(Apache::Listen[String($port)]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
     if $listen_addr_port and $ensure == 'present' {
@@ -963,12 +967,12 @@ define apache::vhost(
   # - $passenger_min_instances
   # - $passenger_max_requests
   # - $passenger_start_timeout
-  # - $passenger_pre_start
   # - $passenger_user
+  # - $passenger_group
   # - $passenger_nodejs
   # - $passenger_sticky_sessions
   # - $passenger_startup_file
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
+  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_user or $passenger_group or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
@@ -1055,6 +1059,15 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $shib_compat_valid_user
+  if $shibboleth_enabled {
+    concat::fragment { "${name}-shibboleth":
+      target  => "${priority_real}${filename}.conf",
+      order   => 370,
+      content => template('apache/vhost/_shib.erb'),
+    }
+  }
+
   # - $use_canonical_name
   if $use_canonical_name {
     concat::fragment { "${name}-use_canonical_name":

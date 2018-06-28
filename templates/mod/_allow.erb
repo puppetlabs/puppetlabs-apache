@@ -1,0 +1,7 @@
+    Order deny,allow
+    Deny from all
+<% if @allow_from != nil and ! @allow_from.empty? -%>
+    Allow from <%= Array(@allow_from).join(" ") %>
+<% else -%>
+    Allow from <%= Array(@allow_defaults).join(" ") %>
+<% end -%>

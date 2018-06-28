@@ -5,19 +5,17 @@ require 'puppet'
 
 def service(action, service_name)
   if service_name.nil?
-    cmd_string = "facter -p osfamily"
-    stdout, stderr, status = Open3.capture3(cmd_string)
+    stdout, _stderr, _status = Open3.capture3('facter', '-p', 'osfamily')
     osfamily = stdout.strip
-    if osfamily == 'RedHat'
-      service_name = 'httpd'
-    elsif osfamily == 'FreeBSD'
-      service_name = 'apache24'
-    else
-      service_name = 'apache2'
-    end
+    service_name = if osfamily == 'RedHat'
+                     'httpd'
+                   elsif osfamily == 'FreeBSD'
+                     'apache24'
+                   else
+                     'apache2'
+                   end
   end
-  cmd_string = "service #{service_name} #{action}"
-  stdout, stderr, status = Open3.capture3(cmd_string)
+  _stdout, stderr, status = Open3.capture3('service', service_name, action)
   raise Puppet::Error, stderr if status != 0
   { status: "#{action} successful" }
 end

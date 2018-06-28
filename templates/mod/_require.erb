@@ -1,0 +1,44 @@
+<% if @requires != nil -%>
+  <%- _requires = @requires -%>
+<% elsif @allow_from != nil and ! @allow_from.empty? -%>
+  <%- scope.function_warning(["Class #{@title}: Using Allow"]) -%>
+  <%- scope.function_warning(["is deprecated in Apache #{@_apache_version}"]) -%>
+  <%- _requires = 'ip ' + Array(@allow_from).join(" ") -%>
+<% else -%>
+  <%- _requires = @requires_defaults -%>
+<% end -%>
+<%-# -%>
+<% if _requires.is_a?(String) -%>
+  <%- if ! ['', 'unmanaged'].include?_requires.downcase -%>
+    Require <%= _requires %>
+  <%- end -%>
+<% elsif _requires.is_a?(Array) -%>
+  <%- _requires.each do |req| -%>
+    Require <%= req %>
+  <%- end -%>
+<% elsif _requires.is_a?(Hash) -%>
+  <%- if _requires.has_key?('enforce') and ['all', 'none', 'any'].include?_requires['enforce'].downcase -%>
+    <%- enforce_str = "Require#{_requires['enforce'].capitalize}>\n" -%>
+    <%- enforce_open = "    <#{enforce_str}" -%>
+    <%- enforce_close = "    </#{enforce_str}" -%>
+    <%- indentation = '    ' -%>
+  <%- else -%>
+    <%- if _requires.has_key?('enforce') -%>
+      <%- scope.function_warning(["Class #{@title}: Require can only"]) -%>
+      <%- scope.function_warning(["be overwritten with all, none or any."]) -%>
+    <%- end -%>
+    <%- enforce_open = '' -%>
+    <%- enforce_close = '' -%>
+    <%- indentation = '' -%>
+  <%- end -%>
+  <%- if _requires.has_key?('requires') and _requires['requires'].is_a?(Array) -%>
+<%# %><%= enforce_open -%>
+      <%- _requires['requires'].each do |req| -%>
+<%# %>    <%= indentation -%>Require <%= req %>
+      <%- end -%>
+<%# %><%= enforce_close -%>
+  <%- else -%>
+    <%- scope.function_warning(["Class #{@title}: Require hash must have"]) -%>
+    <%- scope.function_warning(["a key named \"requires\" with array value"]) -%>
+  <%- end -%>
+<% end -%>

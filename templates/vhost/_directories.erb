@@ -36,7 +36,7 @@
       <%- end -%>
     <%- end -%>
     <%- if ! directory['geoip_enable'].nil? -%>
-    GeoIPEnable <%= scope.function_bool2httpd([directory['geoip_enable']]) %>
+    GeoIPEnable <%= scope.call_function('apache::bool2httpd', [directory['geoip_enable']]) %>
     <%- end -%>
     <%- if directory['options'] -%>
     Options <%= Array(directory['options']).join(' ') %>
@@ -126,7 +126,7 @@
     <%- if directory['dav'] -%>
     Dav <%= directory['dav'] %>
     <%- if directory['dav_depth_infinity'] -%>
-    DavDepthInfinity <%= scope.function_bool2httpd([directory['dav_depth_infinity']]) %>
+    DavDepthInfinity <%= scope.call_function('apache::bool2httpd', [directory['dav_depth_infinity']]) %>
     <%- end -%>
     <%- if directory['dav_min_timeout'] -%>
     DavMinTimeout <%= directory['dav_min_timeout'] %>

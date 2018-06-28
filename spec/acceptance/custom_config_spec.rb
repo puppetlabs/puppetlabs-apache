@@ -3,15 +3,14 @@ require_relative './version.rb'
 
 describe 'apache::custom_config define' do
   context 'invalid config' do
-    it 'should not add the config' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache': }
         apache::custom_config { 'acceptance_test':
           content => 'INVALID',
         }
-      EOS
-
-      apply_manifest(pp, :expect_failures => true)
+    MANIFEST
+    it 'does not add the config' do
+      apply_manifest(pp, expect_failures: true)
     end
 
     describe file("#{$confd_dir}/25-acceptance_test.conf") do
@@ -20,15 +19,14 @@ describe 'apache::custom_config define' do
   end
 
   context 'valid config' do
-    it 'should add the config' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache': }
         apache::custom_config { 'acceptance_test':
           content => '# just a comment',
         }
-      EOS
-
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'adds the config' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file("#{$confd_dir}/25-acceptance_test.conf") do
@@ -37,16 +35,15 @@ describe 'apache::custom_config define' do
   end
 
   context 'with a custom filename' do
-    it 'should store content in the described file' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache': }
         apache::custom_config { 'filename_test':
           filename => 'custom_filename',
           content  => '# just another comment',
         }
-      EOS
-
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'stores content in the described file' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file("#{$confd_dir}/custom_filename") do
@@ -55,15 +52,15 @@ describe 'apache::custom_config define' do
   end
 
   describe 'custom_config without priority prefix' do
-    it 'applies cleanly' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache': }
         apache::custom_config { 'prefix_test':
           priority => false,
           content => '# just a comment',
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'applies cleanly' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file("#{$confd_dir}/prefix_test.conf") do
@@ -72,8 +69,7 @@ describe 'apache::custom_config define' do
   end
 
   describe 'custom_config only applied after configs are written' do
-    it 'applies in the right order' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache': }
 
         apache::custom_config { 'ordering_test':
@@ -83,8 +79,9 @@ describe 'apache::custom_config define' do
         # Try to wedge the apache::custom_config call between when httpd.conf is written and
         # ports.conf is written. This should trigger a dependency cycle
         File["#{$conf_file}"] -> Apache::Custom_config['ordering_test'] -> Concat["#{$ports_file}"]
-      EOS
-      expect(apply_manifest(pp, :expect_failures => true).stderr).to match(/Found 1 dependency cycle/i)
+    MANIFEST
+    it 'applies in the right order' do
+      expect(apply_manifest(pp, expect_failures: true).stderr).to match(%r{Found 1 dependency cycle}i)
     end
 
     describe file("#{$confd_dir}/25-ordering_test.conf") do
