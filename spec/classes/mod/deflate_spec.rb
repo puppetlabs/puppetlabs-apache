@@ -64,7 +64,7 @@ describe 'apache::mod::deflate', type: :class do
           kernel: 'Linux',
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           is_pe: false,
         }
@@ -73,7 +73,7 @@ describe 'apache::mod::deflate', type: :class do
       # Load the more generic tests for this context
       general_deflate_specs
 
-      it { is_expected.to contain_file('deflate.conf').with_path('/etc/httpd/conf.d/deflate.conf') }
+      it { is_expected.to contain_file('deflate.conf').with_path('/etc/httpd/conf.modules.d/deflate.conf') }
     end
 
     context 'On a FreeBSD OS with default params' do

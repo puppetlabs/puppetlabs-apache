@@ -173,7 +173,7 @@ describe 'apache::mod::passenger', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         kernel: 'Linux',
         lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
@@ -399,8 +399,8 @@ describe 'apache::mod::passenger', type: :class do
       }
     end
 
-    context 'on EL6' do
-      let(:facts) { rh_facts.merge(operatingsystemrelease: '6') }
+    context 'on EL7' do
+      let(:facts) { rh_facts.merge(operatingsystemrelease: '7') }
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('passenger') }
@@ -411,7 +411,7 @@ describe 'apache::mod::passenger', type: :class do
       it { is_expected.to contain_file('passenger_package.conf').without_content }
       it { is_expected.to contain_file('passenger_package.conf').without_source }
       it {
-        is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.d/zpassenger.load')
+        is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
       }
       it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRoot}) }
       it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRuby}) }
@@ -429,17 +429,6 @@ describe 'apache::mod::passenger', type: :class do
 
         it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRuby "\/usr\/lib\/example\/ruby"$}) }
       end
-    end
-
-    context 'on EL7' do
-      let(:facts) { rh_facts.merge(operatingsystemrelease: '7') }
-
-      it {
-        is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
-      }
-      it {
-        is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
-      }
     end
   end
   context 'on a FreeBSD OS' do

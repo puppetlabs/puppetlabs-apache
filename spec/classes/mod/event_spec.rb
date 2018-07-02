@@ -148,18 +148,18 @@ describe 'apache::mod::event', type: :class do
       it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxConnectionsPerChild}) }
     end
 
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
+    # context 'with Apache version < 2.4' do
+    #   let :params do
+    #     {
+    #       apache_version: '2.2',
+    #     }
+    #   end
 
-      it { is_expected.not_to contain_file('/etc/apache2/mods-available/event.load') }
-      it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/event.load') }
+    #   it { is_expected.not_to contain_file('/etc/apache2/mods-available/event.load') }
+    #   it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/event.load') }
 
-      it { is_expected.to contain_package('apache2-mpm-event') }
-    end
+    #   it { is_expected.to contain_package('apache2-mpm-event') }
+    # end
 
     context 'with Apache version >= 2.4' do
       let :params do
@@ -179,7 +179,8 @@ describe 'apache::mod::event', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
+        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -199,11 +200,11 @@ describe 'apache::mod::event', type: :class do
       it { is_expected.not_to contain_apache__mod('worker') }
       it { is_expected.not_to contain_apache__mod('prefork') }
 
-      it { is_expected.to contain_file('/etc/httpd/conf.d/event.conf').with_ensure('file') }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/event.conf').with_ensure('file') }
 
       it {
-        is_expected.to contain_file('/etc/httpd/conf.d/event.load').with('ensure' => 'file',
-                                                                         'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
+        is_expected.to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
+                                                                                 'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
       }
     end
   end

@@ -31,7 +31,7 @@ describe 'apache::mod::mime', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -42,6 +42,6 @@ describe 'apache::mod::mime', type: :class do
 
     general_mime_specs
 
-    it { is_expected.to contain_file('mime.conf').with_path('/etc/httpd/conf.d/mime.conf') }
+    it { is_expected.to contain_file('mime.conf').with_path('/etc/httpd/conf.modules.d/mime.conf') }
   end
 end

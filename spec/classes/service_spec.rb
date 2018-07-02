@@ -104,29 +104,6 @@ describe 'apache::service', type: :class do
     end
   end
 
-  context 'on a RedHat 5 OS, do not manage service' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '5',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
-    let(:params) do
-      {
-        'service_ensure' => 'running',
-        'service_name'   => 'httpd',
-        'service_manage' => false,
-      }
-    end
-
-    it { is_expected.not_to contain_service('httpd') }
-  end
-
   context 'on a FreeBSD 5 OS' do
     let :facts do
       {

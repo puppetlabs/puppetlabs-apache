@@ -19,11 +19,11 @@ describe 'apache::mod::ssl', type: :class do
   end
 
   context 'on a RedHat' do
-    context '6 OS' do
+    context '7 OS' do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
@@ -37,11 +37,11 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_package('mod_ssl') }
       it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf') }
     end
-    context '6 OS with a custom package_name parameter' do
+    context '7 OS with a custom package_name parameter' do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
@@ -164,7 +164,7 @@ describe 'apache::mod::ssl', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystem: 'CentOS',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         kernel: 'Linux',
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
@@ -204,36 +204,6 @@ describe 'apache::mod::ssl', type: :class do
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCACertificateFile}) }
-    end
-
-    context 'with Apache version < 2.4 - ssl_compression with default value' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression Off$}) }
-    end
-    context 'with Apache version < 2.4 - setting ssl_compression to true' do
-      let :params do
-        {
-          apache_version: '2.2',
-          ssl_compression: true,
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression On$}) }
-    end
-    context 'with Apache version < 2.4 - setting ssl_stapling to true' do
-      let :params do
-        {
-          apache_version: '2.2',
-          ssl_stapling: true,
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLUseStapling}) }
     end
 
     context 'with Apache version >= 2.4 - ssl_compression with default value' do
@@ -305,16 +275,16 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^\s+SSLOpenSSLConfCmd DHParameters "foo.pem"$}) }
     end
+    # SSL_mutex is removed from apache 2.4 - replaced with high level 'mutex' directive. https://httpd.apache.org/docs/2.4/upgrading.html
+    # context 'setting ssl_mutex' do
+    #   let :params do
+    #     {
+    #       ssl_mutex: 'posixsem',
+    #     }
+    #   end
 
-    context 'setting ssl_mutex' do
-      let :params do
-        {
-          ssl_mutex: 'posixsem',
-        }
-      end
-
-      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$}) }
-    end
+    #   it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$}) }
+    # end
     context 'setting ssl_sessioncache' do
       let :params do
         {

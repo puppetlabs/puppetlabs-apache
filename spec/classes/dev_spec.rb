@@ -13,7 +13,7 @@ describe 'apache::dev', type: :class do
         lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         is_pe: false,
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
@@ -24,7 +24,7 @@ describe 'apache::dev', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_package('libaprutil1-dev') }
     it { is_expected.to contain_package('libapr1-dev') }
-    it { is_expected.to contain_package('apache2-prefork-dev') }
+    it { is_expected.to contain_package('apache2-dev') }
   end
   context 'on an Ubuntu 16 OS' do
     let :facts do
@@ -48,7 +48,7 @@ describe 'apache::dev', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         is_pe: false,
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',

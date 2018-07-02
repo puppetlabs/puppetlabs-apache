@@ -10,7 +10,7 @@ describe 'apache::mod::dev', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   [
-    ['RedHat', '6', 'Santiago', 'Linux'],
+    ['RedHat', '7', 'Maipo', 'Linux'],
     ['Debian', '8', 'jessie', 'Linux'],
     ['FreeBSD', '9', 'FreeBSD', 'FreeBSD'],
   ].each do |osfamily, operatingsystemrelease, lsbdistcodename, kernel|

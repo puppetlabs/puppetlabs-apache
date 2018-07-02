@@ -41,7 +41,8 @@ describe 'apache::mod::dir', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
+        concat_basedir: '/dne',
         operatingsystem: 'Redhat',
         id: 'root',
         kernel: 'Linux',

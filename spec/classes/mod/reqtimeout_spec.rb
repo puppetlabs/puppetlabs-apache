@@ -44,7 +44,7 @@ describe 'apache::mod::reqtimeout', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'Redhat',
         id: 'root',
         kernel: 'Linux',

@@ -48,7 +48,8 @@ describe 'apache::mod::auth_mellon', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
+        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -61,7 +62,7 @@ describe 'apache::mod::auth_mellon', type: :class do
     describe 'with no parameters' do
       it { is_expected.to contain_apache__mod('auth_mellon') }
       it { is_expected.to contain_package('mod_auth_mellon') }
-      it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/httpd/conf.d/auth_mellon.conf') }
+      it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/httpd/conf.modules.d/auth_mellon.conf') }
       it { is_expected.to contain_file('auth_mellon.conf').with_content("MellonCacheSize 100\nMellonLockFile \"/run/mod_auth_mellon/lock\"\n") }
     end
     describe 'with parameters' do

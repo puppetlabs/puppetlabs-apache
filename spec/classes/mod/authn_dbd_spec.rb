@@ -47,7 +47,7 @@ describe 'apache::mod::authn_dbd', type: :class do
           kernel: 'Linux',
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           is_pe: false,
         }
@@ -56,7 +56,7 @@ describe 'apache::mod::authn_dbd', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('authn_dbd') }
       it { is_expected.to contain_apache__mod('dbd') }
-      it { is_expected.to contain_file('authn_dbd.conf').with_path('/etc/httpd/conf.d/authn_dbd.conf') }
+      it { is_expected.to contain_file('authn_dbd.conf').with_path('/etc/httpd/conf.modules.d/authn_dbd.conf') }
     end
   end
 end

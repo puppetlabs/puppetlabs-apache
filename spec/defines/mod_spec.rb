@@ -9,7 +9,7 @@ describe 'apache::mod', type: :define do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -25,7 +25,7 @@ describe 'apache::mod', type: :define do
 
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
-        is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.d/spec_m.load',
+        is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.modules.d/spec_m.load',
                                                         content: "LoadModule spec_m_module modules/mod_spec_m.so\n",
                                                         owner: 'root',
                                                         group: 'root',

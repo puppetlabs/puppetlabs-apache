@@ -27,7 +27,7 @@ describe 'apache::mod::intercept_form_submit', type: :class do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           id: 'root',
           kernel: 'Linux',
           operatingsystem: 'RedHat',

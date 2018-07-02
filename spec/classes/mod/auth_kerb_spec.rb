@@ -29,7 +29,7 @@ describe 'apache::mod::auth_kerb', type: :class do
           kernel: 'Linux',
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           is_pe: false,
         }
@@ -82,7 +82,7 @@ describe 'apache::mod::auth_kerb', type: :class do
           kernel: 'Linux',
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           is_pe: false,
         }
