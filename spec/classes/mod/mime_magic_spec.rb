@@ -44,7 +44,21 @@ describe 'apache::mod::mime_magic', type: :class do
   end
 
   context 'on a RedHat OS with default params' do
+<<<<<<< refs/remotes/upstream/main
     include_examples 'RedHat 8'
+=======
+    let :facts do
+      {
+        osfamily: 'RedHat',
+        operatingsystemrelease: '7',
+        operatingsystem: 'RedHat',
+        id: 'root',
+        kernel: 'Linux',
+        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        is_pe: false,
+      }
+    end
+>>>>>>> Modification of version code and apache_spec fixes
 
     general_mime_magic_specs
 
@@ -55,5 +69,33 @@ describe 'apache::mod::mime_magic', type: :class do
     end
 
     it { is_expected.to contain_file('mime_magic.conf').with_path('/etc/httpd/conf.modules.d/mime_magic.conf') }
+<<<<<<< refs/remotes/upstream/main
+=======
+  end
+
+  context 'with magic_file => /tmp/magic' do
+    let :facts do
+      {
+        osfamily: 'Debian',
+        operatingsystemrelease: '8',
+        lsbdistcodename: 'jessie',
+        operatingsystem: 'Debian',
+        id: 'root',
+        kernel: 'Linux',
+        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        is_pe: false,
+      }
+    end
+
+    let :params do
+      { magic_file: '/tmp/magic' }
+    end
+
+    it do
+      is_expected.to contain_file('mime_magic.conf').with_content(
+        "MIMEMagicFile \"/tmp/magic\"\n",
+      )
+    end
+>>>>>>> Modification of version code and apache_spec fixes
   end
 end

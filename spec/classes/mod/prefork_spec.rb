@@ -15,18 +15,18 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.to contain_file('/etc/apache2/mods-available/prefork.conf').with_ensure('file') }
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.conf').with_ensure('link') }
 
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
+    # context 'with Apache version < 2.4' do
+    #   let :params do
+    #     {
+    #       apache_version: '2.2',
+    #     }
+    #   end
 
-      it { is_expected.not_to contain_file('/etc/apache2/mods-available/prefork.load') }
-      it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/prefork.load') }
+    #   it { is_expected.not_to contain_file('/etc/apache2/mods-available/prefork.load') }
+    #   it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/prefork.load') }
 
-      it { is_expected.to contain_package('apache2-mpm-prefork') }
-    end
+    #   it { is_expected.to contain_package('apache2-mpm-prefork') }
+    # end
 
     context 'with Apache version >= 2.4' do
       let :params do
@@ -48,20 +48,6 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('prefork') }
     it { is_expected.to contain_file('/etc/httpd/conf.modules.d/prefork.conf').with_ensure('file') }
-
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it {
-        is_expected.to contain_file_line('/etc/sysconfig/httpd prefork enable').with('require' => 'Package[httpd]')
-      }
-      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/prefork.conf').without('content' => %r{MaxRequestWorkers}) }
-      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/prefork.conf').without('content' => %r{MaxConnectionsPerChild}) }
-    end
 
     context 'with Apache version >= 2.4' do
       let :params do

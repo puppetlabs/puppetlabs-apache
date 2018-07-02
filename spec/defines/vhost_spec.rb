@@ -7,15 +7,63 @@ describe 'apache::vhost', type: :define do
     on_supported_os.each do |os, os_facts|
       let(:apache_name) { facts[:os]['family'] == 'RedHat' ? 'httpd' : 'apache2' }
 
-      let :pre_condition do
         "class {'apache': default_vhost => false, default_mods => false, vhost_enable_dir => '/etc/#{apache_name}/sites-enabled'}"
       end
-
-      let :title do
-        'rspec.example.com'
+        is_expected.to contain_concat('25-rspec.example.com.conf').with(
+          ensure: 'present',
+          path: '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf',
+        )
+      }
+    end
+    context 'on Gentoo systems' do
+      let :default_facts do
+        {
+          osfamily: 'Gentoo',
+          operatingsystem: 'Gentoo',
+          operatingsystemrelease: '3.16.1-gentoo',
+          id: 'root',
+          kernel: 'Linux',
+          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+          is_pe: false,
+        }
       end
+      let(:params) { default_params }
+      let(:facts) { default_facts }
 
-      let :default_params do
+      it { is_expected.to contain_class('apache') }
+      it { is_expected.to contain_class('apache::params') }
+      it {
+        is_expected.to contain_concat('25-rspec.example.com.conf').with(
+          ensure: 'present',
+          path: '/etc/apache2/vhosts.d/25-rspec.example.com.conf',
+        )
+      }
+    end
+  end
+  describe 'os-independent items' do
+    let :facts do
+      {
+        osfamily: 'Debian',
+        operatingsystemrelease: '8',
+        lsbdistcodename: 'jessie',
+        operatingsystem: 'Debian',
+        id: 'root',
+        kernel: 'Linux',
+        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        is_pe: false,
+      }
+    end
+
+    describe 'basic assumptions' do
+      let(:params) { default_params }
+
+      it { is_expected.to contain_class('apache') }
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_apache__listen(params[:port]) }
+    end
+    context 'set everything!' do
+      let :params do
+>>>>>>> Modification of version code and apache_spec fixes
         {
           docroot: '/rspec/docroot',
           port: 84,

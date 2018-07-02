@@ -15,19 +15,6 @@ describe 'apache::mod::worker', type: :class do
     it { is_expected.to contain_file('/etc/apache2/mods-available/worker.conf').with_ensure('file') }
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/worker.conf').with_ensure('link') }
 
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it { is_expected.not_to contain_file('/etc/apache2/mods-available/worker.load') }
-      it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/worker.load') }
-
-      it { is_expected.to contain_package('apache2-mpm-worker') }
-    end
-
     context 'with Apache version >= 2.4' do
       let :params do
         {
@@ -48,18 +35,6 @@ describe 'apache::mod::worker', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('worker') }
     it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with_ensure('file') }
-
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it {
-        is_expected.to contain_file_line('/etc/sysconfig/httpd worker enable').with('require' => 'Package[httpd]')
-      }
-    end
 
     context 'with Apache version >= 2.4' do
       let :params do

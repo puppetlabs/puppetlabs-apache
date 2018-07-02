@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# Apache >= 2.4
 def require_directives(requires)
   if requires == :undef
     "    Require ip 127.0.0.1 ::1\n"
