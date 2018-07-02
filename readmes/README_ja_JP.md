@@ -170,6 +170,7 @@
 [`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
+[`mod_auth_gssapi`]: https://github.com/modauthgssapi/mod_auth_gssapi
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
@@ -1597,6 +1598,7 @@ class { 'apache::mod::alias':
 * `auth_cas`\* ([`apache::mod::auth_cas`][]参照)
 * `auth_mellon`\* ([`apache::mod::auth_mellon`][]参照)
 * `auth_kerb`
+* auth_gssapi
 * `authn_core`
 * `authn_dbd`\* ([`apache::mod::authn_dbd`][]参照)
 * `authn_file`
@@ -4057,6 +4059,10 @@ sengermaxrequests)を設定します。これは、アプリケーションプ�
 
 [PassengerUser](https://www.phusionpassenger.com/library/config/apache/reference/#passengeruser)を設定します。これは、サンドボックスアプリケーションの実行ユーザです。
 
+##### passenger_group
+
+ [PassengerGroup](https://www.phusionpassenger.com/library/config/apache/reference/#passengergroup)を設定します。これは、サンドボックスアプリケーションの実行グループです。
+
 ##### `passenger_high_performance`
 
 [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance)パラメータを設定します。
@@ -4224,7 +4230,7 @@ apache::vhost { 'site.name.fdqn':
   …
   redirectmatch_status => ['404','404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-  redirectmatch_dest => ['http://www.example.com/1','http://www.example.com/2'],
+  redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
 ```
 
@@ -5405,7 +5411,7 @@ apache::vhost { 'sample.example.net':
 
 ブーリアン。
 
-デフォルト値: `true`。
+デフォルト値: `false`。
 
 ##### `ssl_stapling`
 
