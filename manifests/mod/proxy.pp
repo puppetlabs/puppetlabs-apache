@@ -4,7 +4,7 @@ class apache::mod::proxy (
   $apache_version = undef,
   $package_name   = undef,
   $proxy_via      = 'On',
-  $proxy_timeout  = $::apache::timeout,
+  $proxy_timeout  = '60',
 ) {
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)
