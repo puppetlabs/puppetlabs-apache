@@ -5,7 +5,7 @@
   ServerLimit         <%= @serverlimit %>
   MaxClients          <%= @maxclients %>
   MaxRequestsPerChild <%= @maxrequestsperchild %>
-  <%- if (not @enablecapabilities.nil?) && (scope.function_versioncmp([@_apache_version, '2.4']) >= 0) -%>
+  <%- if (not @enablecapabilities.nil?) -%>
   EnableCapabilities  <%= scope.call_function('apache::bool2httpd', [@enablecapabilities]) %>
   <%- end -%>
 </IfModule>
