@@ -145,8 +145,6 @@ class apache::default_mods (
 
       # lots of stuff seems to break without access_compat
       ::apache::mod { 'access_compat': }
-    } else {
-      include ::apache::mod::authz_default
     }
 
     include ::apache::mod::authz_user
