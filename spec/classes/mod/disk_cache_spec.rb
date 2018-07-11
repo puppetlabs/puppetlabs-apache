@@ -12,23 +12,6 @@ describe 'apache::mod::disk_cache', type: :class do
       }
     end
 
-    context 'with Apache version < 2.4' do
-      let :pre_condition do
-        'class{ "apache":
-          apache_version => "2.2",
-          default_mods   => ["cache"],
-          mod_dir        => "/tmp/junk",
-         }'
-      end
-
-      it { is_expected.to compile }
-      it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_apache__mod('disk_cache') }
-      it {
-        is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_disk_cache\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
-      }
-    end
     context 'with Apache version >= 2.4' do
       let :pre_condition do
         'class{ "apache":

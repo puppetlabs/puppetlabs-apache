@@ -140,21 +140,14 @@ class apache::default_mods (
     include apache::mod::negotiation
     include apache::mod::setenvif
     include apache::mod::auth_basic
-
-    if versioncmp($apache_version, '2.4') >= 0 {
-      # filter is needed by mod_deflate
-      include apache::mod::filter
-
-      # authz_core is needed for 'Require' directive
-      ::apache::mod { 'authz_core':
-        id => 'authz_core_module',
-      }
-
-      # lots of stuff seems to break without access_compat
-      ::apache::mod { 'access_compat': }
-    } else {
-      include apache::mod::authz_default
+    # filter is needed by mod_deflate
+    include apache::mod::filter
+    # authz_core is needed for 'Require' directive
+    ::apache::mod { 'authz_core':
+      id => 'authz_core_module',
     }
+    # lots of stuff seems to break without access_compat
+    ::apache::mod { 'access_compat': }
 
     include apache::mod::authz_user
     include apache::mod::authz_groupfile

@@ -195,10 +195,7 @@ class apache::mod::pagespeed (
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
-  $_lib = $_apache_version ? {
-    '2.4'   => 'mod_pagespeed_ap24.so',
-    default => undef
-  }
+  $_lib = 'mod_pagespeed_ap24.so'
 
   apache::mod { 'pagespeed':
     lib            => $_lib,
