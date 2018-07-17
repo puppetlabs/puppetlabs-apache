@@ -27,14 +27,6 @@ class apache::mod::prefork (
     fail('May not include both apache::mod::prefork and apache::mod::worker on the same node')
   }
 
-  if versioncmp($_apache_version, '2.3.13') < 0 {
-    if $maxrequestworkers == undef {
-      warning("For newer versions of Apache, \$maxclients is deprecated, please use \$maxrequestworkers.")
-    } elsif $maxconnectionsperchild == undef {
-      warning("For newer versions of Apache, \$maxrequestsperchild is deprecated, please use \$maxconnectionsperchild.")
-    }
-  }
-
   File {
     owner => 'root',
     group => $::apache::params::root_group,
@@ -60,20 +52,8 @@ class apache::mod::prefork (
 
   case $::osfamily {
     'redhat': {
-      if versioncmp($_apache_version, '2.4') >= 0 {
-        ::apache::mpm{ 'prefork':
-          apache_version => $_apache_version,
-        }
-      }
-      else {
-        file_line { '/etc/sysconfig/httpd prefork enable':
-          ensure  => present,
-          path    => '/etc/sysconfig/httpd',
-          line    => '#HTTPD=/usr/sbin/httpd.worker',
-          match   => '#?HTTPD=/usr/sbin/httpd.worker',
-          require => Package['httpd'],
-          notify  => Class['apache::service'],
-        }
+      ::apache::mpm{ 'prefork':
+        apache_version => $_apache_version,
       }
     }
     'debian', 'freebsd': {
