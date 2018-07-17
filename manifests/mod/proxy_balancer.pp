@@ -21,11 +21,10 @@ class apache::mod::proxy_balancer (
   Array[Stdlib::IP::Address] $allow_from = ['127.0.0.1', '::1'],
   Optional[String] $apache_version       = $apache::apache_version,
 ) {
-  require apache::mod::proxy
-  require apache::mod::proxy_http
-  if versioncmp($apache_version, '2.4') >= 0 {
-    ::apache::mod { 'slotmem_shm': }
-  }
+
+  include ::apache::mod::proxy
+  include ::apache::mod::proxy_http
+  ::apache::mod { 'slotmem_shm': }
 
   ::apache::mod { 'proxy_balancer': }
   if $manager {

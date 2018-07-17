@@ -118,27 +118,12 @@ class apache::mod::ssl (
   include apache
   include apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
+
   if $ssl_mutex {
     $_ssl_mutex = $ssl_mutex
   } else {
-    case $facts['os']['family'] {
-      'debian': {
-        if versioncmp($_apache_version, '2.4') >= 0 {
-          $_ssl_mutex = 'default'
-        } else {
-          $_ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
-        }
-      }
-      'redhat': {
-        $_ssl_mutex = 'default'
-      }
-      'freebsd': {
-        $_ssl_mutex = 'default'
-      }
-      'gentoo': {
-        $_ssl_mutex = 'default'
-      }
-      'Suse': {
+    case $::osfamily {
+      'debian','redhat','freebsd','gentoo','Suse': {
         $_ssl_mutex = 'default'
       }
       default: {
@@ -146,6 +131,7 @@ class apache::mod::ssl (
       }
     }
   }
+
 
   if $ssl_honorcipherorder =~ Boolean {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
@@ -185,9 +171,7 @@ class apache::mod::ssl (
     }
   }
 
-  if versioncmp($_apache_version, '2.4') >= 0 {
-    include apache::mod::socache_shmcb
-  }
+  include apache::mod::socache_shmcb
 
   if $ssl_reload_on_change {
     [$ssl_cert, $ssl_key, $ssl_ca].each |$ssl_file| {

@@ -69,9 +69,6 @@ class apache::mod::remoteip (
   include apache
 
   $_apache_version = pick($apache_version, $apache::apache_version)
-  if versioncmp($_apache_version, '2.4') < 0 {
-    fail('mod_remoteip is only available in Apache 2.4')
-  }
 
   if $proxy_ips {
     deprecation('apache::mod::remoteip::proxy_ips', 'This parameter is deprecated, please use `internal_proxy`.')
