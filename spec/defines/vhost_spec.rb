@@ -267,6 +267,46 @@ describe 'apache::vhost', type: :define do
               'dav'                => 'filesystem',
               'dav_depth_infinity' => true,
               'dav_min_timeout'    => '600' },
+            {
+              'path'                                                => '/var/www/node-app/public',
+              'passenger_enabled'                                   => true,
+              'passenger_base_uri'                                  => '/app',
+              'passenger_ruby'                                      => '/path/to/ruby',
+              'passenger_python'                                    => '/path/to/python',
+              'passenger_nodejs'                                    => '/path/to/nodejs',
+              'passenger_meteor_app_settings'                       => '/path/to/file.json',
+              'passenger_app_env'                                   => 'demo',
+              'passenger_app_root'                                  => '/var/www/node-app',
+              'passenger_app_group_name'                            => 'foo_bar',
+              'passenger_app_type'                                  => 'node',
+              'passenger_startup_file'                              => 'start.js',
+              'passenger_restart_dir'                               => 'temp',
+              'passenger_load_shell_envvars'                        => false,
+              'passenger_rolling_restarts'                          => false,
+              'passenger_resist_deployment_errors'                  => false,
+              'passenger_user'                                      => 'nodeuser',
+              'passenger_group'                                     => 'nodegroup',
+              'passenger_friendly_error_pages'                      => true,
+              'passenger_min_instances'                             => 7,
+              'passenger_max_instances'                             => 9,
+              'passenger_force_max_concurrent_requests_per_process' => 12,
+              'passenger_start_timeout'                             => 10,
+              'passenger_concurrency_model'                         => 'thread',
+              'passenger_thread_count'                              => 20,
+              'passenger_max_requests'                              => 2000,
+              'passenger_max_request_time'                          => 1,
+              'passenger_memory_limit'                              => 32,
+              'passenger_high_performance'                          => false,
+              'passenger_buffer_upload'                             => false,
+              'passenger_buffer_response'                           => false,
+              'passenger_error_override'                            => false,
+              'passenger_max_request_queue_size'                    => 120,
+              'passenger_max_request_queue_time'                    => 5,
+              'passenger_sticky_sessions'                           => true,
+              'passenger_sticky_sessions_cookie_name'               => '_delicious_cookie',
+              'passenger_allow_encoded_slashes'                     => false,
+              'passenger_debugger'                                  => false,
+            },
           ],
           'error_log'                   => false,
           'error_log_file'              => 'httpd_error_log',
@@ -339,8 +379,6 @@ describe 'apache::vhost', type: :define do
           'redirectmatch_status'        => ['404'],
           'redirectmatch_regexp'        => ['\.git$'],
           'redirectmatch_dest'          => ['http://www.example.com'],
-          'rack_base_uris'              => ['/rackapp1'],
-          'passenger_base_uris'         => ['/passengerapp1'],
           'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
           'request_headers'             => ['append MirrorID "mirror 12"'],
           'rewrites'                    => [
@@ -402,20 +440,48 @@ describe 'apache::vhost', type: :define do
           'suexec_user_group'           => 'root root',
           'allow_encoded_slashes'       => 'nodecode',
           'use_canonical_name'          => 'dns',
-          'passenger_spawn_method'      => 'direct',
-          'passenger_app_root'          => '/usr/share/myapp',
-          'passenger_app_env'           => 'test',
-          'passenger_ruby'              => '/usr/bin/ruby1.9.1',
-          'passenger_min_instances'     => '1',
-          'passenger_max_requests'      => '1000',
-          'passenger_start_timeout'     => '600',
-          'passenger_pre_start'         => 'http://localhost/myapp',
-          'passenger_high_performance'  => true,
-          'passenger_user'              => 'sandbox',
-          'passenger_group'             => 'sandbox',
-          'passenger_nodejs'            => '/usr/bin/node',
-          'passenger_sticky_sessions'   => true,
-          'passenger_startup_file'      => 'bin/www',
+          'passenger_enabled'                     => false,
+          'passenger_base_uri'                    => '/app',
+          'passenger_ruby'                        => '/usr/bin/ruby1.9.1',
+          'passenger_python'                      => '/usr/local/bin/python',
+          'passenger_nodejs'                      => '/usr/bin/node',
+          'passenger_meteor_app_settings'         => '/path/to/some/file.json',
+          'passenger_app_env'                     => 'test',
+          'passenger_app_root'                    => '/usr/share/myapp',
+          'passenger_app_group_name'              => 'app_customer',
+          'passenger_app_type'                    => 'rack',
+          'passenger_startup_file'                => 'bin/www',
+          'passenger_restart_dir'                 => 'tmp',
+          'passenger_spawn_method'                => 'direct',
+          'passenger_load_shell_envvars'          => false,
+          'passenger_rolling_restarts'            => false,
+          'passenger_resist_deployment_errors'    => true,
+          'passenger_user'                        => 'sandbox',
+          'passenger_group'                       => 'sandbox',
+          'passenger_friendly_error_pages'        => false,
+          'passenger_min_instances'               => 1,
+          'passenger_max_instances'               => 30,
+          'passenger_max_preloader_idle_time'     => 600,
+          'passenger_force_max_concurrent_requests_per_process' => 10,
+          'passenger_start_timeout'               => 600,
+          'passenger_concurrency_model'           => 'thread',
+          'passenger_thread_count'                => 5,
+          'passenger_max_requests'                => 1000,
+          'passenger_max_request_time'            => 2,
+          'passenger_memory_limit'                => 64,
+          'passenger_stat_throttle_rate'          => 5,
+          'passenger_pre_start'                   => 'http://localhost/myapp',
+          'passenger_high_performance'            => true,
+          'passenger_buffer_upload'               => false,
+          'passenger_buffer_response'             => false,
+          'passenger_error_override'              => true,
+          'passenger_max_request_queue_size'      => 10,
+          'passenger_max_request_queue_time'      => 2,
+          'passenger_sticky_sessions'             => true,
+          'passenger_sticky_sessions_cookie_name' => '_nom_nom_nom',
+          'passenger_allow_encoded_slashes'       => true,
+          'passenger_debugger'                    => true,
+          'passenger_lve_min_uid'                 => 500,
           'add_default_charset'         => 'UTF-8',
           'jk_mounts'                   => [
             { 'mount'   => '/*',     'worker' => 'tcnode1' },
@@ -650,6 +716,191 @@ describe 'apache::vhost', type: :define do
           content: %r{^\s+DavMinTimeout\s600$},
         )
       }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerEnabled\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerBaseURI\s/app$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerRuby\s/path/to/ruby$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerPython\s/path/to/python$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerNodejs\s/path/to/nodejs$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMeteorAppSettings\s/path/to/file\.json$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerAppEnv\sdemo$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerAppRoot\s/var/www/node-app$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerAppGroupName\sfoo_bar$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerAppType\snode$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerStartupFile\sstart\.js$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerRestartDir\stemp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerRollingRestarts\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerResistDeploymentErrors\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerUser\snodeuser$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerGroup\snodegroup$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerFriendlyErrorPages\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMinInstances\s7$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMaxInstances\s9$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s12$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerStartTimeout\s10$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerConcurrencyModel\sthread$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerThreadCount\s20$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMaxRequests\s2000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMaxRequestTime\s1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMemoryLimit\s32$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerHighPerformance\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerBufferUpload\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerBufferResponse\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerErrorOverride\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMaxRequestQueueSize\s120$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerMaxRequestQueueTime\s5$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerStickySessions\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerStickySessionsCookieName\s_delicious_cookie$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerAllowEncodedSlashes\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+          content: %r{^\s+PassengerDebugger\sOff$},
+        )
+      }
       it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -702,7 +953,6 @@ describe 'apache::vhost', type: :define do
           %r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo},
         )
       }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
       it {
@@ -854,17 +1104,12 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerSpawnMethod\sdirect$},
+          content: %r{^\s+PassengerEnabled\sOff$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerAppEnv\stest$},
+          content: %r{^\s+PassengerBaseURI\s/app$},
         )
       }
       it {
@@ -874,27 +1119,67 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerMinInstances\s1$},
+          content: %r{^\s+PassengerPython\s/usr/local/bin/python$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerMaxRequests\s1000$},
+          content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerStartTimeout\s600$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
-          content: %r{^PassengerPreStart\shttp://localhost/myapp$},
+          content: %r{^\s+PassengerMeteorAppSettings\s/path/to/some/file.json$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerHighPerformance\sOn$},
+          content: %r{^\s+PassengerAppEnv\stest$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppGroupName\sapp_customer$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAppType\srack$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStartupFile\sbin/www$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerRestartDir\stmp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerSpawnMethod\sdirect$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerRollingRestarts\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerResistDeploymentErrors\sOn$},
         )
       }
       it {
@@ -909,7 +1194,97 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
+          content: %r{^\s+PassengerFriendlyErrorPages\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMinInstances\s1$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxInstances\s30$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxPreloaderIdleTime\s600$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s10$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStartTimeout\s600$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerConcurrencyModel\sthread$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerThreadCount\s5$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequests\s1000$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestTime\s2$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMemoryLimit\s64$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerStatThrottleRate\s5$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
+          content: %r{^PassengerPreStart\shttp://localhost/myapp$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerHighPerformance\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerBufferUpload\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerBufferResponse\sOff$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerErrorOverride\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestQueueSize\s10$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerMaxRequestQueueTime\s2$},
         )
       }
       it {
@@ -919,7 +1294,22 @@ describe 'apache::vhost', type: :define do
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-          content: %r{^\s+PassengerStartupFile\sbin/www$},
+          content: %r{^\s+PassengerStickySessionsCookieName\s_nom_nom_nom$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerAllowEncodedSlashes\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerDebugger\sOn$},
+        )
+      }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+          content: %r{^\s+PassengerLveMinUid\s500$},
         )
       }
     end
@@ -1304,7 +1694,6 @@ describe 'apache::vhost', type: :define do
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-block') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-error_document') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy') }
-      it { is_expected.not_to contain_concat__fragment('rspec.example.com-rack') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-redirect') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite') }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-scriptalias') }

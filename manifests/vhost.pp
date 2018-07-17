@@ -98,8 +98,6 @@ define apache::vhost(
   $redirectmatch_status                                                             = undef,
   $redirectmatch_regexp                                                             = undef,
   $redirectmatch_dest                                                               = undef,
-  $rack_base_uris                                                                   = undef,
-  $passenger_base_uris                                                              = undef,
   $headers                                                                          = undef,
   $request_headers                                                                  = undef,
   $filters                                                                          = undef,
@@ -135,20 +133,48 @@ define apache::vhost(
   $apache_version                                                                   = $::apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                    = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                           = undef,
-  $passenger_spawn_method                                                           = undef,
-  $passenger_app_root                                                               = undef,
-  $passenger_app_env                                                                = undef,
-  $passenger_ruby                                                                   = undef,
-  $passenger_min_instances                                                          = undef,
-  $passenger_max_requests                                                           = undef,
-  $passenger_start_timeout                                                          = undef,
+  Optional[Boolean] $passenger_enabled                                              = undef,
+  Optional[String] $passenger_base_uri                                              = undef,
+  Optional[Stdlib::Absolutepath] $passenger_ruby                                    = undef,
+  Optional[Stdlib::Absolutepath] $passenger_python                                  = undef,
+  Optional[Stdlib::Absolutepath] $passenger_nodejs                                  = undef,
+  Optional[String] $passenger_meteor_app_settings                                   = undef,
+  Optional[String] $passenger_app_env                                               = undef,
+  Optional[Stdlib::Absolutepath] $passenger_app_root                                = undef,
+  Optional[String] $passenger_app_group_name                                        = undef,
+  Optional[Enum['meteor', 'node', 'rack', 'wsgi']] $passenger_app_type              = undef,
+  Optional[String] $passenger_startup_file                                          = undef,
+  Optional[String] $passenger_restart_dir                                           = undef,
+  Optional[Enum['direct', 'smart']] $passenger_spawn_method                         = undef,
+  Optional[Boolean] $passenger_load_shell_envvars                                   = undef,
+  Optional[Boolean] $passenger_rolling_restarts                                     = undef,
+  Optional[Boolean] $passenger_resist_deployment_errors                             = undef,
+  Optional[String] $passenger_user                                                  = undef,
+  Optional[String] $passenger_group                                                 = undef,
+  Optional[Boolean] $passenger_friendly_error_pages                                 = undef,
+  Optional[Integer] $passenger_min_instances                                        = undef,
+  Optional[Integer] $passenger_max_instances                                        = undef,
+  Optional[Integer] $passenger_max_preloader_idle_time                              = undef,
+  Optional[Integer] $passenger_force_max_concurrent_requests_per_process            = undef,
+  Optional[Integer] $passenger_start_timeout                                        = undef,
+  Optional[Enum['process', 'thread']] $passenger_concurrency_model                  = undef,
+  Optional[Integer] $passenger_thread_count                                         = undef,
+  Optional[Integer] $passenger_max_requests                                         = undef,
+  Optional[Integer] $passenger_max_request_time                                     = undef,
+  Optional[Integer] $passenger_memory_limit                                         = undef,
+  Optional[Integer] $passenger_stat_throttle_rate                                   = undef,
   Optional[Variant[String,Array[String]]] $passenger_pre_start                      = undef,
-  $passenger_user                                                                   = undef,
-  $passenger_group                                                                  = undef,
-  $passenger_high_performance                                                       = undef,
-  $passenger_nodejs                                                                 = undef,
+  Optional[Boolean] $passenger_high_performance                                     = undef,
+  Optional[Boolean] $passenger_buffer_upload                                        = undef,
+  Optional[Boolean] $passenger_buffer_response                                      = undef,
+  Optional[Boolean] $passenger_error_override                                       = undef,
+  Optional[Integer] $passenger_max_request_queue_size                               = undef,
+  Optional[Integer] $passenger_max_request_queue_time                               = undef,
   Optional[Boolean] $passenger_sticky_sessions                                      = undef,
-  $passenger_startup_file                                                           = undef,
+  Optional[String] $passenger_sticky_sessions_cookie_name                           = undef,
+  Optional[Boolean] $passenger_allow_encoded_slashes                                = undef,
+  Optional[Boolean] $passenger_debugger                                             = undef,
+  Optional[Integer] $passenger_lve_min_uid                                          = undef,
   $add_default_charset                                                              = undef,
   $modsec_disable_vhost                                                             = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_ids                                = undef,
@@ -280,10 +306,6 @@ define apache::vhost(
     }
   }
 
-
-  # Is apache::mod::passenger enabled (or apache::mod['passenger'])
-  $passenger_enabled = defined(Apache::Mod['passenger'])
-
   # Is apache::mod::shib enabled (or apache::mod['shib2'])
   $shibboleth_enabled = defined(Apache::Mod['shib2'])
 
@@ -403,18 +425,6 @@ define apache::vhost(
     if ! defined(Class['apache::mod::proxy_http']) {
       include ::apache::mod::proxy_http
     }
-  }
-
-  # Load mod_passenger if needed and not yet loaded
-  if $rack_base_uris {
-    if ! defined(Class['apache::mod::passenger']) {
-      include ::apache::mod::passenger
-    }
-  }
-
-  # Load mod_passenger if needed and not yet loaded
-  if $passenger_base_uris {
-      include ::apache::mod::passenger
   }
 
   # Load mod_fastci if needed and not yet loaded
@@ -723,26 +733,6 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 160,
       content => template('apache/vhost/_proxy.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $rack_base_uris
-  if $rack_base_uris {
-    concat::fragment { "${name}-rack":
-      target  => "${priority_real}${filename}.conf",
-      order   => 170,
-      content => template('apache/vhost/_rack.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $passenger_base_uris
-  if $passenger_base_uris {
-    concat::fragment { "${name}-passenger_uris":
-      target  => "${priority_real}${filename}.conf",
-      order   => 175,
-      content => template('apache/vhost/_passenger_base_uris.erb'),
     }
   }
 
