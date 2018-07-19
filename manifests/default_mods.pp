@@ -14,19 +14,17 @@ class apache::default_mods (
   case $facts['os']['family'] {
     'redhat': {
       ::apache::mod { 'log_config': }
-      if versioncmp($apache_version, '2.4') >= 0 {
-        # Lets fork it
-        # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
-        if ( !($facts['os']['family'] == 'redhat' and versioncmp($facts['os']['release']['major'], '7') == -1) and !($facts['os']['name'] == 'Amazon') ) {
-          if ($use_systemd) {
-            ::apache::mod { 'systemd': }
-          }
-        }
-        if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['full'] == '2') {
+      # Lets fork it
+      # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
+      if ( !($facts['os']['family'] == 'redhat' and versioncmp($facts['os']['release']['major'], '7') == -1) and !($facts['os']['name'] == 'Amazon') ) {
+        if ($use_systemd) {
           ::apache::mod { 'systemd': }
         }
-        ::apache::mod { 'unixd': }
       }
+      if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['full'] == '2') {
+        ::apache::mod { 'systemd': }
+      }
+      ::apache::mod { 'unixd': }
     }
     'freebsd': {
       ::apache::mod { 'log_config': }
@@ -47,11 +45,8 @@ class apache::default_mods (
   if $all {
     case $facts['os']['family'] {
       'debian': {
-        include apache::mod::authn_core
-        include apache::mod::reqtimeout
-        if versioncmp($apache_version, '2.4') < 0 {
-          ::apache::mod { 'authn_alias': }
-        }
+        include ::apache::mod::authn_core
+        include ::apache::mod::reqtimeout
       }
       'redhat': {
         include apache::mod::actions
@@ -75,11 +70,6 @@ class apache::default_mods (
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
-
-        if versioncmp($apache_version, '2.4') < 0 {
-          ::apache::mod { 'authn_alias': }
-          ::apache::mod { 'authn_default': }
-        }
       }
       'freebsd': {
         include apache::mod::actions
@@ -155,24 +145,14 @@ class apache::default_mods (
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
 
-    if versioncmp($apache_version, '2.4') >= 0 {
-      # authz_core is needed for 'Require' directive
-      ::apache::mod { 'authz_core':
-        id => 'authz_core_module',
-      }
-
-      # filter is needed by mod_deflate
-      include apache::mod::filter
+    # authz_core is needed for 'Require' directive
+    ::apache::mod { 'authz_core':
+      id => 'authz_core_module',
     }
-  } else {
-    if versioncmp($apache_version, '2.4') >= 0 {
-      # authz_core is needed for 'Require' directive
-      ::apache::mod { 'authz_core':
-        id => 'authz_core_module',
-      }
+    # filter is needed by mod_deflate
+    include apache::mod::filter
 
-      # filter is needed by mod_deflate
-      include apache::mod::filter
-    }
+    # filter is needed by mod_deflate
+    include ::apache::mod::filter
   }
 }

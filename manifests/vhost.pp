@@ -2143,11 +2143,11 @@ define apache::vhost (
       ensure_resource('apache::listen', $listen_addr_port)
     }
   }
-  if ! $ip_based {
-    if $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
-      ensure_resource('apache::namevirtualhost', $nvh_addr_port)
-    }
-  }
+  # if ! $ip_based {
+  #   if $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
+  #     ensure_resource('apache::namevirtualhost', $nvh_addr_port)
+  #   }
+  # }
 
   ## Create a default directory list if none defined
   if $directories {
@@ -2166,10 +2166,10 @@ define apache::vhost (
         require => 'all granted',
       }
     } else {
-      $_directory_version = {
-        order => 'allow,deny',
-        allow => 'from all',
-      }
+      # $_directory_version = {
+      #   order => 'allow,deny',
+      #   allow => 'from all',
+      # }
     }
 
     $_directories = [merge($_directory, $_directory_version)]
