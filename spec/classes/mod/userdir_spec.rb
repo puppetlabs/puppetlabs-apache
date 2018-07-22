@@ -14,7 +14,6 @@ describe 'apache::mod::userdir', type: :class do
         osfamily: 'Debian',
         operatingsystemrelease: '8',
         operatingsystemmajrelease: '8',
-        concat_basedir: '/dne',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',

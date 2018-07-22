@@ -19,7 +19,6 @@ describe 'apache::security::rule_link', type: :define do
         operatingsystemrelease: '7',
         kernel: 'Linux',
         id: 'root',
-        concat_basedir: '/',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -39,7 +38,6 @@ describe 'apache::security::rule_link', type: :define do
         osfamily: 'Debian',
         operatingsystem: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/',
         lsbdistcodename: 'jessie',
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',

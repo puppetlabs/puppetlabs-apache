@@ -71,7 +71,6 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '6',
-          concat_basedir: '/dne',
           lsbdistcodename: 'squeeze',
           operatingsystem: 'Debian',
           id: 'root',
@@ -101,7 +100,6 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'RedHat',
           operatingsystemrelease: '6',
-          concat_basedir: '/dne',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
@@ -147,7 +145,6 @@ describe 'apache::mod::status', type: :class do
           {
             osfamily: 'Debian',
             operatingsystemrelease: '8',
-            concat_basedir: '/dne',
             lsbdistcodename: 'squeeze',
             operatingsystem: 'Debian',
             id: 'root',
@@ -183,7 +180,6 @@ describe 'apache::mod::status', type: :class do
           {
             osfamily: 'RedHat',
             operatingsystemrelease: '7',
-            concat_basedir: '/dne',
             operatingsystem: 'RedHat',
             id: 'root',
             kernel: 'Linux',
@@ -211,7 +207,6 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '6',
-          concat_basedir: '/dne',
           lsbdistcodename: 'squeeze',
           operatingsystem: 'Debian',
           id: 'root',
@@ -236,7 +231,6 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '6',
-          concat_basedir: '/dne',
           lsbdistcodename: 'squeeze',
           operatingsystem: 'Debian',
           id: 'root',
@@ -261,7 +255,6 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '6',
-          concat_basedir: '/dne',
           operatingsystem: 'Debian',
           id: 'root',
           kernel: 'Linux',
@@ -287,7 +280,6 @@ describe 'apache::mod::status', type: :class do
           {
             osfamily: 'Debian',
             operatingsystemrelease: '6',
-            concat_basedir: '/dne',
             lsbdistcodename: 'squeeze',
             operatingsystem: 'Debian',
             id: 'root',
@@ -314,7 +306,6 @@ describe 'apache::mod::status', type: :class do
           {
             osfamily: 'Debian',
             operatingsystemrelease: '6',
-            concat_basedir: '/dne',
             operatingsystem: 'Debian',
             id: 'root',
             kernel: 'Linux',

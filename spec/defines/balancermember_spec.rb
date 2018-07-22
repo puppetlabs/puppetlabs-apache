@@ -11,7 +11,6 @@ describe 'apache::balancermember', type: :define do
       operatingsystemrelease: '8',
       lsbdistcodename: 'jessie',
       id: 'root',
-      concat_basedir: '/dne',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       kernel: 'Linux',
       is_pe: false,

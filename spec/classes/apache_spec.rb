@@ -11,7 +11,6 @@ describe 'apache', type: :class do
         operatingsystem: 'Debian',
         operatingsystemrelease: '6',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        concat_basedir: '/dne',
         is_pe: false,
       }
     end
@@ -280,7 +279,6 @@ describe 'apache', type: :class do
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
         operatingsystemrelease: '5',
-        concat_basedir: '/dne',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -667,7 +665,6 @@ describe 'apache', type: :class do
         osfamily: 'FreeBSD',
         operatingsystem: 'FreeBSD',
         operatingsystemrelease: '10',
-        concat_basedir: '/dne',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -738,7 +735,6 @@ describe 'apache', type: :class do
         osfamily: 'Gentoo',
         operatingsystem: 'Gentoo',
         operatingsystemrelease: '3.16.1-gentoo',
-        concat_basedir: '/dne',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
         is_pe: false,
       }
@@ -782,7 +778,6 @@ describe 'apache', type: :class do
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -875,7 +870,6 @@ describe 'apache', type: :class do
     let :facts do
       { osfamily: 'Darwin',
         operatingsystemrelease: '13.1.0',
-        concat_basedir: '/dne',
         is_pe: false }
     end
 

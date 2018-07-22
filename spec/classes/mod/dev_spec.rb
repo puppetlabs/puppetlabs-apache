@@ -22,7 +22,6 @@ describe 'apache::mod::dev', type: :class do
           operatingsystem: osfamily,
           operatingsystemrelease: operatingsystemrelease,
           is_pe: false,
-          concat_basedir: '/foo',
           id: 'root',
           path: '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
           kernel: kernel,

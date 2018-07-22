@@ -12,7 +12,6 @@ describe 'apache::mod::proxy_connect', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        concat_basedir: '/dne',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
