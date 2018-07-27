@@ -40,7 +40,7 @@ class apache (
   $serveradmin                                                   = 'root@localhost',
   Enum['On', 'Off', 'on', 'off'] $sendfile                       = 'On',
   $error_documents                                               = false,
-  $timeout                                                       = '120',
+  $timeout                                                       = '60',
   $httpd_dir                                                     = $::apache::params::httpd_dir,
   $server_root                                                   = $::apache::params::server_root,
   $conf_dir                                                      = $::apache::params::conf_dir,
