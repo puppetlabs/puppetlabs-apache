@@ -7,7 +7,6 @@ describe 'apache::mod::fastcgi', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
         lsbdistcodename: 'squeze',
         operatingsystem: 'Debian',
         id: 'root',
@@ -28,7 +27,6 @@ describe 'apache::mod::fastcgi', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',

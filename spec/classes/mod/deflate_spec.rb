@@ -40,7 +40,6 @@ describe 'apache::mod::deflate', type: :class do
           operatingsystem: 'Debian',
           operatingsystemrelease: '8',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          concat_basedir: '/dne',
           is_pe: false,
         }
       end
@@ -67,7 +66,6 @@ describe 'apache::mod::deflate', type: :class do
           operatingsystem: 'RedHat',
           operatingsystemrelease: '6',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          concat_basedir: '/dne',
           is_pe: false,
         }
       end
@@ -87,7 +85,6 @@ describe 'apache::mod::deflate', type: :class do
           operatingsystem: 'FreeBSD',
           operatingsystemrelease: '9',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          concat_basedir: '/dne',
           is_pe: false,
         }
       end
@@ -110,7 +107,6 @@ describe 'apache::mod::deflate', type: :class do
           operatingsystem: 'Gentoo',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
           operatingsystemrelease: '3.16.1-gentoo',
-          concat_basedir: '/dne',
           is_pe: false,
         }
       end

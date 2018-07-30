@@ -6,7 +6,6 @@ describe 'apache::params', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
         lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',

@@ -6,7 +6,6 @@ describe 'apache::mod::cluster', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '7',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -40,7 +39,6 @@ describe 'apache::mod::cluster', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '7',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -74,7 +72,6 @@ describe 'apache::mod::cluster', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',

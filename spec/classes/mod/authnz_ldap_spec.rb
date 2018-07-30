@@ -9,7 +9,6 @@ describe 'apache::mod::authnz_ldap', type: :class do
         lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
         id: 'root',
         kernel: 'Linux',
         operatingsystem: 'Debian',
@@ -46,7 +45,6 @@ describe 'apache::mod::authnz_ldap', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
         id: 'root',
         kernel: 'Linux',
         operatingsystem: 'RedHat',

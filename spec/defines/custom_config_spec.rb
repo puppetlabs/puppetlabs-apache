@@ -11,7 +11,6 @@ describe 'apache::custom_config', type: :define do
     {
       osfamily: 'Debian',
       operatingsystemrelease: '8',
-      concat_basedir: '/',
       lsbdistcodename: 'jessie',
       operatingsystem: 'Debian',
       id: 'root',

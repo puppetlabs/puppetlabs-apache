@@ -6,7 +6,6 @@ describe 'apache::mod::php', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
         lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
@@ -84,7 +83,6 @@ describe 'apache::mod::php', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '6',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -191,7 +189,6 @@ describe 'apache::mod::php', type: :class do
       {
         osfamily: 'FreeBSD',
         operatingsystemrelease: '10',
-        concat_basedir: '/dne',
         operatingsystem: 'FreeBSD',
         id: 'root',
         kernel: 'FreeBSD',
@@ -228,7 +225,6 @@ describe 'apache::mod::php', type: :class do
         osfamily: 'Gentoo',
         operatingsystem: 'Gentoo',
         operatingsystemrelease: '3.16.1-gentoo',
-        concat_basedir: '/dne',
         id: 'root',
         kernel: 'Linux',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
@@ -266,7 +262,6 @@ describe 'apache::mod::php', type: :class do
         operatingsystemrelease: '6',
         kernel: 'Linux',
         lsbdistcodename: 'jessie',
-        concat_basedir: '/dne',
         id: 'root',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,

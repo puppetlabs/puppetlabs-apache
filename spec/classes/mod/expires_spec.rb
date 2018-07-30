@@ -13,7 +13,6 @@ describe 'apache::mod::expires', type: :class do
         operatingsystem: 'Debian',
         operatingsystemrelease: '8',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        concat_basedir: '/dne',
         is_pe: false,
       }
     end
@@ -33,7 +32,6 @@ describe 'apache::mod::expires', type: :class do
         operatingsystem: 'RedHat',
         operatingsystemrelease: '7',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        concat_basedir: '/dne',
         is_pe: false,
       }
     end
@@ -63,7 +61,6 @@ describe 'apache::mod::expires', type: :class do
         operatingsystem: 'RedHat',
         operatingsystemrelease: '7',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        concat_basedir: '/dne',
         is_pe: false,
       }
     end
