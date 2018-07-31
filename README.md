@@ -303,7 +303,7 @@
 
 ## Module description
 
-[Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][].
+[Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][]. Please note that this module has went through an update and is now supporting only Apache 2.4 and above. For Apache < 2.4 please use an older version of the module.
 
 ## Setup
 
@@ -1008,12 +1008,6 @@ Boolean.
 
 Default: `false`.
 
-##### `default_type`
-
-_Apache 2.2 only_. Sets the [MIME `content-type`][] sent if the server cannot otherwise determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and newer, and is only for backwards compatibility in configuration files.
-
-Default: `undef`.
-
 ##### `default_vhost`
 
 Configures a default virtual host when the class is declared.
@@ -1300,12 +1294,6 @@ Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache mo
 Boolean.
 
 Default: same as [`purge_configs`][].
-
-##### `rewrite_lock`
-
-Allows setting a custom location for a rewrite lock - considered best practice if using a RewriteMap of type prg in the [`rewrites`][] parameter of your virtual host. This parameter only applies to Apache version 2.2 or lower and is ignored on newer versions.
-
-Default: `undef`.
 
 ##### `sendfile`
 
@@ -1710,14 +1698,13 @@ Installs and manages [`mod_alias`][].
 
 #### Class: `apache::mod::disk_cache`
 
-Installs and configures [`mod_disk_cache`][] on Apache 2.2, or [`mod_cache_disk`][] on Apache 2.4.
+Installs and configures [`mod_cache_disk`][] on Apache 2.4.
 
 Default: Depends on the Apache version and operating system:
 
 - **Debian**: `/var/cache/apache2/mod_cache_disk`
 - **FreeBSD**: `/var/cache/mod_cache_disk`
 - **Red Hat, Apache 2.4**: `/var/cache/httpd/proxy`
-- **Red Hat, Apache 2.2**: `/var/cache/mod_proxy`
 
 To specify the cache root, pass a path as a string to the `cache_root` parameter.
 
@@ -2199,7 +2186,7 @@ Installs and manages [`mod_info`][], which provides a comprehensive overview of 
 
   Default: ['127.0.0.1','::1'].
 
-* `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'.
+* `apache_version`: Apache's version number as a string, such as '2.4'.
 
   Default: The value of [`$::apache::apache_version`][`apache_version`].
 
@@ -2695,7 +2682,7 @@ Installs and manages [`mod_proxy_balancer`][], which provides load balancing.
 
   Default: ['127.0.0.1','::1'].
 
-* `apache_version`: Apache's version number as a string, such as '2.2' or '2.4'.
+* `apache_version`: Apache's version number as a string, such as '2.4'.
 
   Default: the value of [`$::apache::apache_version`][`apache_version`]. On Apache 2.4 or greater, `mod_slotmem_shm` is loaded.
 
@@ -4371,7 +4358,7 @@ RewriteEngine On
 RewriteOptions Inherit
 ```
 
-Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html), section "Rewriting in Virtual Hosts".
+Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/current/mod/mod_rewrite.html), section "Rewriting in Virtual Hosts".
 
 ##### `scriptalias`
 
@@ -4589,21 +4576,6 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-##### `allow`
-
-Sets an [Allow](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#allow) directive, which groups authorizations based on hostnames or IPs. **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.
-
-``` puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path  => '/path/to/directory',
-      allow => 'from example.org',
-    },
-  ],
-}
-```
-
 ##### `allow_override`
 
 Sets the types of directives allowed in [.htaccess](https://httpd.apache.org/docs/current/mod/core.html#allowoverride) files. Accepts an array.
@@ -4739,21 +4711,6 @@ Sets the value for [DavDepthInfinity](http://httpd.apache.org/docs/current/mod/m
 ##### `dav_min_timeout`
 
 Sets the value for [DavMinTimeout](http://httpd.apache.org/docs/current/mod/mod_dav.html#davmintimeout), which sets the time the server holds a lock on a DAV resource. The value should be the number of seconds to set.
-
-##### `deny`
-
-Sets a [Deny](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#deny) directive, specifying which hosts are denied access to the server. **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower. You can use it as a single string for one rule or as an array for more than one.
-
-``` puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path => '/path/to/directory',
-      deny => 'from example.org',
-    },
-  ],
-}
-```
 
 ##### `error_documents`
 
@@ -4966,21 +4923,6 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-##### `order`
-
-Sets the order of processing Allow and Deny statements as per [Apache core documentation](https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order). **Deprecated:** This parameter is being deprecated due to a change in Apache. It only works with Apache 2.2 and lower.
-
-``` puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path  => '/path/to/directory',
-      order => 'Allow,Deny',
-    },
-  ],
-}
-```
-
 ##### `passenger_enabled`
 
 Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled) directive to 'on' or 'off'. Requires `apache::mod::passenger` to be included.
@@ -5052,23 +4994,6 @@ apache::vhost { 'sample.example.net':
   directories => [
     { path    => '/path/to/directory',
       require => 'unmanaged',
-    }
-  ],
-}
-```
-
-
-
-##### `satisfy`
-
-Sets a `Satisfy` directive per the [Apache Core documentation](https://httpd.apache.org/docs/2.2/mod/core.html#satisfy). **Deprecated:** This parameter is deprecated due to a change in Apache and only works with Apache 2.2 and lower.
-
-``` puppet
-apache::vhost { 'sample.example.net':
-  docroot     => '/path/to/directory',
-  directories => [
-    { path    => '/path/to/directory',
-      satisfy => 'Any',
     }
   ],
 }
@@ -5589,7 +5514,23 @@ most secure format supported by the most platforms.
 
 ## Limitations
 
+<<<<<<< HEAD
 For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
+=======
+### General
+
+This module is CI tested against both [open source Puppet][] and [Puppet Enterprise][] on:
+
+- CentOS 7
+- Ubuntu 14.04 and 16.04
+- Debian 8
+- RHEL 7
+- Oracle 7
+- Scientific 7
+- SLES 12
+
+This module also provides functions for other distributions and operating systems, such as FreeBSD, Gentoo, and Amazon Linux, but is not formally tested on them and are subject to regressions.
+>>>>>>> [MODULES-7532] Re-write of README for changes
 
 ### FreeBSD
 
@@ -5603,14 +5544,6 @@ On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module.
 The [`apache::mod::auth_cas`][], [`apache::mod::passenger`][], [`apache::mod::proxy_html`][] and [`apache::mod::shib`][] classes are not functional on RH/CentOS without providing dependency packages from extra repositories.
 
 See their respective documentation below for related repositories and packages.
-
-#### RHEL/CentOS 5
-
-The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested because repositories are missing compatible packages.
-
-#### RHEL/CentOS 6
-
-The [`apache::mod::passenger`][] class is not installing, because the the EL6 repository is missing compatible packages.
 
 #### RHEL/CentOS 7
 
@@ -5662,10 +5595,6 @@ apache::vhost { 'test.server':
 ```
 
 You must set the contexts using `semanage fcontext` instead of `chcon` because Puppet's `file` resources reset the values' context in the database if the resource doesn't specify it.
-
-### Ubuntu 10.04
-
-The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside the virtual host that is unsupported on older versions of Apache, causing it to fail. This will be remedied in a future refactoring.
 
 ### Ubuntu 16.04
 The [`apache::mod::suphp`][] class is untested since repositories are missing compatible packages.
