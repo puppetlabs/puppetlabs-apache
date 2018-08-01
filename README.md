@@ -2756,7 +2756,7 @@ Installs [Apache SSL features][`mod_ssl`] and uses the `ssl.conf.erb` template t
 
 To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] parameter in `::apache` to `true` **or** the [`ssl`][] parameter in [`apache::vhost`][] to `true`.
 
-- `ssl_cipher`: Default: 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH'.
+- `ssl_cipher`: Default: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'.
 - `ssl_compression`: Default: false.
 - `ssl_cryptodevice`: Default: 'builtin'.
 - `ssl_honorcipherorder`: Default: true.
@@ -2765,7 +2765,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 - `ssl_key`: Default: undef.
 - `ssl_options`: Default: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: Default: 'builtin'.
-- `ssl_protocol`: Default: ['all', '-SSLv2', '-SSLv3', '-TLSv1', '-TLSv1.1'].
+- `ssl_protocol`: Default: ['all', '-SSLv2', '-SSLv3'].
 - `ssl_proxy_protocol`: Default: [].
 - `ssl_random_seed_bytes`: Valid options: A string. Default: '512'.
 - `ssl_sessioncache`: Valid options: A string. Default: '300'.
@@ -2778,7 +2778,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 
 * `ssl_cipher`
 
-  Default: 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH'.
+  Default: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'.
 
 * `ssl_compression`
 
@@ -2814,7 +2814,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 
 * `ssl_protocol`
 
-  Default: ['all', '-SSLv2', '-SSLv3', '-TLSv1', '-TLSv1.1'].
+  Default: ['all', '*SSLv2', '*SSLv3'].
 
 * `ssl_random_seed_bytes`
 
