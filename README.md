@@ -2814,7 +2814,7 @@ To use SSL with a virtual host, you must either set the [`default_ssl_vhost`][] 
 
 * `ssl_protocol`
 
-  Default: ['all', '*SSLv2', '*SSLv3'].
+  Default: ['all', '-SSLv2', '-SSLv3'].
 
 * `ssl_random_seed_bytes`
 
