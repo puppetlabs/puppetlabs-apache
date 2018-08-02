@@ -12,13 +12,8 @@ MaxKeepAliveRequests <%= @max_keepalive_requests %>
 KeepAliveTimeout <%= @keepalive_timeout %>
 LimitRequestFieldSize <%= @limitreqfieldsize %>
 LimitRequestFields <%= @limitreqfields %>
-<%# Actually >= 2.4.24, but the minor version is not provided -%>
-<%- if @http_protocol_options and scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+<%- if @http_protocol_options -%>
 HttpProtocolOptions <%= @http_protocol_options %>
-<%- end -%>
-
-<%- if @rewrite_lock and scope.function_versioncmp([@apache_version, '2.2']) <= 0 -%>
-RewriteLock <%= @rewrite_lock %>
 <%- end -%>
 
 User <%= @user %>
@@ -26,25 +21,14 @@ Group <%= @group %>
 
 AccessFileName .htaccess
 <FilesMatch "^\.ht">
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-    Require all denied
-<%- else -%>
-     Order allow,deny
-     Deny from all
-     Satisfy all
-<%- end -%>
+Require all denied
 </FilesMatch>
 
 <Directory />
   Options <%= Array(@root_directory_options).join(' ') %>
   AllowOverride None
 <%- if @root_directory_secured -%>
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Require all denied
-<%- else -%>
-  Order deny,allow
-  Deny from all
-<%- end -%>
 <%- end -%>
 </Directory>
 
@@ -52,9 +36,6 @@ AccessFileName .htaccess
 AddDefaultCharset <%= @default_charset %>
 <% end -%>
 
-<%- if scope.function_versioncmp([@apache_version, '2.4']) < 0 -%>
-DefaultType <%= @default_type %>
-<%- end -%>
 HostnameLookups Off
 <%- if /^[|\/]/.match(@error_log) || /^syslog:/.match(@error_log) -%>
 ErrorLog "<%= @error_log %>"
@@ -109,17 +90,9 @@ LogFormat "<%= format -%>" <%= nickname %>
   <%- end -%>
 <% end -%>
 
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 IncludeOptional "<%= @confd_dir %>/*.conf"
-<%- else -%>
-Include "<%= @confd_dir %>/*.conf"
-<%- end -%>
 <% if @vhost_load_dir != @confd_dir -%>
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 IncludeOptional "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
-<%- else -%>
-Include "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
-<%- end -%>
 <% end -%>
 
 <% if @error_documents -%>
@@ -131,12 +104,7 @@ Alias /error/ "<%= @error_documents_path %>/"
   Options IncludesNoExec
   AddOutputFilter Includes html
   AddHandler type-map var
-<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   Require all granted
-<%- else -%>
-  Order allow,deny
-  Allow from all
-<%- end -%>
   LanguagePriority en cs de es fr it nl sv pt-br ro
   ForceLanguagePriority Prefer Fallback
 </Directory>
