@@ -10,7 +10,6 @@
   SSLPassPhraseDialog <%= @ssl_pass_phrase_dialog %>
   SSLSessionCache "shmcb:<%= @ssl_sessioncache %>"
   SSLSessionCacheTimeout <%= @ssl_sessioncachetimeout %>
-  <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   Mutex <%= @_ssl_mutex %>
     <%- if @ssl_compression -%>
   SSLCompression <%= scope.call_function('apache::bool2httpd', [@ssl_compression]) %>
@@ -32,7 +31,6 @@
   <%- if @ssl_ca -%>
   SSLCACertificateFile    "<%= @ssl_ca %>"
   <%- end -%>
-<% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
   SSLUseStapling <%= scope.call_function('apache::bool2httpd', [@ssl_stapling]) %>
   <%- if not @ssl_stapling_return_errors.nil? -%>
   SSLStaplingReturnResponderErrors <%= scope.call_function('apache::bool2httpd', [@ssl_stapling_return_errors]) %>

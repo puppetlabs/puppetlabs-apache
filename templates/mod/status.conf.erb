@@ -1,14 +1,6 @@
 <Location <%= @status_path %>>
     SetHandler server-status
-    <%-# From Puppet 4.2 up, replace: -%>
-    <%-# "scope.function_template(["apache/mod/<Template>"])" -%>
-    <%-# with: -%>
-    <%-# "scope.call_function('template', ["apache/mod/<Template>"])" -%>
-    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
-<%= scope.function_template(["apache/mod/_require.erb"]) -%>
-    <%- else -%>
-<%= scope.function_template(["apache/mod/_allow.erb"]) -%>
-    <%- end -%>
+<%= scope.call_function('template', ["apache/mod/_require.erb"]) -%>
 </Location>
 ExtendedStatus <%= @extended_status %>
 
