@@ -10,8 +10,6 @@ class apache::default_mods (
   case $::osfamily {
     'redhat': {
       ::apache::mod { 'log_config': }
-      # Lets fork it
-      # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
       if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) and !($::operatingsystem == 'Amazon') ) {
         if ($use_systemd) {
           ::apache::mod { 'systemd': }

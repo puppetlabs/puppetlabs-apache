@@ -9,7 +9,7 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '8',
-          lsbdistcodename: 'squeeze',
+          lsbdistcodename: 'jessie',
           operatingsystem: 'Debian',
           id: 'root',
           kernel: 'Linux',
@@ -81,8 +81,7 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '8',
-          concat_basedir: '/dne',
-          lsbdistcodename: 'squeeze',
+          lsbdistcodename: 'jessie',
           operatingsystem: 'Debian',
           id: 'root',
           kernel: 'Linux',
@@ -173,8 +172,7 @@ describe 'apache::mod::status', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -210,8 +208,7 @@ describe 'apache::mod::status', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -235,7 +232,6 @@ describe 'apache::mod::status', type: :class do
       {
         osfamily: 'Debian',
         operatingsystemrelease: '8',
-        concat_basedir: '/dne',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -261,7 +257,7 @@ describe 'apache::mod::status', type: :class do
         {
           osfamily: 'Debian',
           operatingsystemrelease: '8',
-          lsbdistcodename: 'squeeze',
+          lsbdistcodename: 'jessie',
           operatingsystem: 'Debian',
           id: 'root',
           kernel: 'Linux',

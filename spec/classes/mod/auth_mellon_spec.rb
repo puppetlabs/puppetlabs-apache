@@ -49,7 +49,6 @@ describe 'apache::mod::auth_mellon', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '7',
-        concat_basedir: '/dne',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',

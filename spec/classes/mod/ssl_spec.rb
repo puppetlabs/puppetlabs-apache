@@ -275,16 +275,7 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^\s+SSLOpenSSLConfCmd DHParameters "foo.pem"$}) }
     end
-    # SSL_mutex is removed from apache 2.4 - replaced with high level 'mutex' directive. https://httpd.apache.org/docs/2.4/upgrading.html
-    # context 'setting ssl_mutex' do
-    #   let :params do
-    #     {
-    #       ssl_mutex: 'posixsem',
-    #     }
-    #   end
 
-    #   it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$}) }
-    # end
     context 'setting ssl_sessioncache' do
       let :params do
         {

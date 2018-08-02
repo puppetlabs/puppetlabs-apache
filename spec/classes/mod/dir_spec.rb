@@ -42,7 +42,6 @@ describe 'apache::mod::dir', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '7',
-        concat_basedir: '/dne',
         operatingsystem: 'Redhat',
         id: 'root',
         kernel: 'Linux',

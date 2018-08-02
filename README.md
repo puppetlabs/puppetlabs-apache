@@ -303,7 +303,9 @@
 
 ## Module description
 
-[Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][]. Please note that this module has went through an update and is now supporting only Apache 2.4 and above. For Apache < 2.4 please use an older version of the module.
+[Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][]. 
+
+**Please note that this module has went through an update and is now supporting only Apache 2.4 and above. For Apache < 2.4 please use an older version of the module.**
 
 ## Setup
 
@@ -5514,24 +5516,7 @@ most secure format supported by the most platforms.
 
 ## Limitations
 
-<<<<<<< HEAD
 For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
-=======
-### General
-
-This module is CI tested against both [open source Puppet][] and [Puppet Enterprise][] on:
-
-- CentOS 7
-- Ubuntu 14.04 and 16.04
-- Debian 8
-- RHEL 7
-- Oracle 7
-- Scientific 7
-- SLES 12
-
-This module also provides functions for other distributions and operating systems, such as FreeBSD, Gentoo, and Amazon Linux, but is not formally tested on them and are subject to regressions.
->>>>>>> [MODULES-7532] Re-write of README for changes
-
 ### FreeBSD
 
 In order to use this module on FreeBSD, you _must_ use apache24-2.4.12 (www/apache24) or newer.

@@ -25,56 +25,6 @@ describe 'apache::mod::fcgid', type: :class do
     it { is_expected.to contain_package('libapache2-mod-fcgid') }
   end
 
-  # context 'on a RHEL6' do
-  #   let :facts do
-  #     {
-  #       osfamily: 'RedHat',
-  #       operatingsystemrelease: '6',
-  #       operatingsystemmajrelease: '6',
-  #       concat_basedir: '/dne',
-  #       operatingsystem: 'RedHat',
-  #       id: 'root',
-  #       kernel: 'Linux',
-  #       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-  #       is_pe: false,
-  #     }
-  #   end
-
-  #   describe 'without parameters' do
-  #     it { is_expected.to contain_class('apache::params') }
-  #     it {
-  #       is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => nil)
-  #     }
-  #     it { is_expected.to contain_package('mod_fcgid') }
-  #   end
-
-  #   describe 'with parameters' do
-  #     let :params do
-  #       {
-  #         options: {
-  #           'FcgidIPCDir'               => '/var/run/fcgidsock',
-  #           'SharememPath'              => '/var/run/fcgid_shm',
-  #           'FcgidMinProcessesPerClass' => '0',
-  #           'AddHandler'                => 'fcgid-script .fcgi',
-  #         },
-  #       }
-  #     end
-
-  #     expected = [
-  #       '<IfModule mod_fcgid.c>',
-  #       '  AddHandler fcgid-script .fcgi',
-  #       '  FcgidIPCDir /var/run/fcgidsock',
-  #       '  FcgidMinProcessesPerClass 0',
-  #       '  SharememPath /var/run/fcgid_shm',
-  #       '</IfModule>',
-  #     ]
-  #     it 'contains the correct config' do
-  #       content = catalogue.resource('file', 'fcgid.conf').send(:parameters)[:content]
-  #       expect(content.split("\n").reject { |c| c =~ %r{(^#|^$)} }).to eq(expected)
-  #     end
-  #   end
-  # end
-
   context 'on RHEL7' do
     let :facts do
       {

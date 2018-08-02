@@ -29,7 +29,6 @@ describe 'apache::mod::dav_svn', type: :class do
           osfamily: 'RedHat',
           operatingsystemrelease: '7',
           operatingsystemmajrelease: '7',
-          concat_basedir: '/dne',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',

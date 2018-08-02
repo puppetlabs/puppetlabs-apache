@@ -45,7 +45,6 @@ describe 'apache::mod::authnz_ldap', type: :class do
       {
         osfamily: 'RedHat',
         operatingsystemrelease: '7',
-        concat_basedir: '/dne',
         id: 'root',
         kernel: 'Linux',
         operatingsystem: 'RedHat',
