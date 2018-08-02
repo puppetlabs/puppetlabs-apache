@@ -65,14 +65,6 @@ describe 'apache', type: :class do
       it { is_expected.not_to contain_file("#{modname}.conf symlink") }
     end
 
-    # context 'with Apache version < 2.4' do
-    #   let :params do
-    #     { apache_version: '2.2' }
-    #   end
-
-    #   it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^Include "/etc/apache2/conf\.d/\*\.conf"$} }
-    # end
-
     context 'with Apache version >= 2.4' do
       let :params do
         {
@@ -155,27 +147,6 @@ describe 'apache', type: :class do
         )
       }
     end
-
-    # describe "Check default type with Apache version < 2.2 when default_type => 'none'" do
-    #   let :params do
-    #     {
-    #       apache_version: '2.2',
-    #       default_type: 'none',
-    #     }
-    #   end
-
-    #   it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^DefaultType none$} }
-    # end
-    # describe "Check default type with Apache version < 2.2 when default_type => 'text/plain'" do
-    #   let :params do
-    #     {
-    #       apache_version: '2.2',
-    #       default_type: 'text/plain',
-    #     }
-    #   end
-
-    #   it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^DefaultType text/plain$} }
-    # end
 
     describe 'Check default type with Apache version >= 2.4' do
       let :params do
@@ -343,18 +314,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
-    # describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-    #   let :params do
-    #     {
-    #       vhost_dir: '/etc/httpd/site.d',
-    #       confd_dir: '/etc/httpd/conf.d',
-    #       mod_dir: '/etc/httpd/mod.d',
-    #       apache_version: '2.2',
-    #     }
-    #   end
 
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/conf\.d/\*\.conf"$} }
-    # end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -368,31 +328,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
     end
-    # describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-    #   let :params do
-    #     {
-    #       vhost_dir: '/etc/httpd/site.d',
-    #       confd_dir: '/etc/httpd/conf.d',
-    #       mod_dir: '/etc/httpd/mod.d',
-    #       apache_version: '2.2',
-    #       rewrite_lock: '/var/lock/subsys/rewrite-lock',
-    #     }
-    #   end
 
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^RewriteLock /var/lock/subsys/rewrite-lock$} }
-    # end
-    # describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-    #   let :params do
-    #     {
-    #       vhost_dir: '/etc/httpd/site.d',
-    #       confd_dir: '/etc/httpd/conf.d',
-    #       mod_dir: '/etc/httpd/mod.d',
-    #       apache_version: '2.2',
-    #     }
-    #   end
-
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').without_content %r{^RewriteLock [.]*$} }
-    # end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -431,32 +367,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^AddDefaultCharset none$} }
     end
-    # describe "Alternate confd/mod/vhosts directory with Apache version < 2.4 when default_type => 'none'" do
-    #   let :params do
-    #     {
-    #       vhost_dir: '/etc/httpd/site.d',
-    #       confd_dir: '/etc/httpd/conf.d',
-    #       mod_dir: '/etc/httpd/mod.d',
-    #       apache_version: '2.4',
-    #       default_type: 'none',
-    #     }
-    #   end
 
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^DefaultType none$} }
-    # end
-    # describe "Alternate confd/mod/vhosts directory with Apache version < 2.4 when default_type => 'text/plain'" do
-    #   let :params do
-    #     {
-    #       vhost_dir: '/etc/httpd/site.d',
-    #       confd_dir: '/etc/httpd/conf.d',
-    #       mod_dir: '/etc/httpd/mod.d',
-    #       apache_version: '2.4',
-    #       default_type: 'text/plain',
-    #     }
-    #   end
-
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^DefaultType text/plain$} }
-    # end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -774,16 +685,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options -Indexes -FollowSymLinks} }
     end
-    # context 'with a custom root_directory_secured parameter and Apache < 2.4' do
-    #   let :params do
-    #     {
-    #       apache_version: '2.2',
-    #       root_directory_secured: true,
-    #     }
-    #   end
 
-    #   it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Order deny,allow\n\s+Deny from all} }
-    # end
     context 'with a custom root_directory_secured parameter and Apache >= 2.4' do
       let :params do
         {

@@ -62,29 +62,10 @@ describe 'apache::mod::info', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS' do
-<<<<<<< refs/remotes/upstream/main
     include_examples 'Debian 11'
 
     # Load the more generic tests for this context
     general_info_specs_apache24
-=======
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        concat_basedir: '/dne',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
-
-    # Load the more generic tests for this context
-    general_info_specs_24
->>>>>>> Modification of version code and apache_spec fixes
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -97,28 +78,10 @@ describe 'apache::mod::info', type: :class do
   end
 
   context 'on a RedHat OS' do
-<<<<<<< refs/remotes/upstream/main
     include_examples 'RedHat 8'
 
     # Load the more generic tests for this context
     general_info_specs_apache24
-=======
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '7',
-        concat_basedir: '/dne',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
-
-    # Load the more generic tests for this context
-    general_info_specs_24
->>>>>>> Modification of version code and apache_spec fixes
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',

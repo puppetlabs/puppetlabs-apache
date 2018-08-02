@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Facter.add(:apache_version) do
+  confine kernel: ['Darwin', 'Linux', 'FreeBSD']
   setcode do
     apache_version = nil
 

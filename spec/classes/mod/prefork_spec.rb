@@ -15,19 +15,6 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.to contain_file('/etc/apache2/mods-available/prefork.conf').with_ensure('file') }
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.conf').with_ensure('link') }
 
-    # context 'with Apache version < 2.4' do
-    #   let :params do
-    #     {
-    #       apache_version: '2.2',
-    #     }
-    #   end
-
-    #   it { is_expected.not_to contain_file('/etc/apache2/mods-available/prefork.load') }
-    #   it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/prefork.load') }
-
-    #   it { is_expected.to contain_package('apache2-mpm-prefork') }
-    # end
-
     context 'with Apache version >= 2.4' do
       let :params do
         {
