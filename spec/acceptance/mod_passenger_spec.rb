@@ -9,19 +9,8 @@ describe 'apache::mod::passenger class' do
 
     case fact('operatingsystem')
     when 'Ubuntu'
-      case fact('lsbdistrelease')
-      when '14.04'
-        passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-        passenger_default_ruby = '/usr/bin/ruby'
-      when '16.04'
-        passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-        passenger_default_ruby = '/usr/bin/ruby'
-      else
-        # Includes 10.04 and 12.04
-        # This may or may not work on Ubuntu releases other than the above
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      end
+      passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+      passenger_default_ruby = '/usr/bin/ruby'
     when 'Debian'
       case fact('lsbdistcodename')
       when 'jessie'
@@ -113,12 +102,28 @@ describe 'apache::mod::passenger class' do
       end
     end
     context 'default passenger config' do
-      pp = <<-MANIFEST
-          /* stock apache and mod_passenger */
-          class { 'apache': }
-          class { 'apache::mod::passenger': }
-          #{pp_rackapp}
-      MANIFEST
+      # We need to set passenger_instance_registry_dir on every sane distro
+      # with systemd. Systemd can force processes into a seperate/private
+      # tmpdir. This is the default for apache on Ubuntu 18.04. As a result,
+      # passenger CLI tools can't find the config/socket, which defaults to /tmp
+      # we enable it for ubuntu 16.04/18.04, centos7 and debian 9
+      pp = if ['7', '9', '16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
+             <<-MANIFEST
+            /* stock apache and mod_passenger */
+            class { 'apache': }
+            class { 'apache::mod::passenger':
+              passenger_instance_registry_dir => '/var/run',
+            }
+            #{pp_rackapp}
+        MANIFEST
+           else
+             <<-MANIFEST
+            /* stock apache and mod_passenger */
+            class { 'apache': }
+            class { 'apache::mod::passenger': }
+            #{pp_rackapp}
+        MANIFEST
+           end
       it 'succeeds in puppeting passenger' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -136,19 +141,8 @@ describe 'apache::mod::passenger class' do
         it { is_expected.to contain %(PassengerRoot "#{passenger_root}") }
         case fact('operatingsystem')
         when 'Ubuntu'
-          case fact('lsbdistrelease')
-          when '14.04'
-            it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
-            it { is_expected.not_to contain '/PassengerRuby/' }
-          when '16.04'
-            it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
-            it { is_expected.not_to contain '/PassengerRuby/' }
-          else
-            # Includes 10.04 and 12.04
-            # This may or may not work on Ubuntu releases other than the above
-            it { is_expected.to contain %(PassengerRuby "#{passenger_ruby}) }
-            it { is_expected.not_to contain '/PassengerDefaultRuby/' }
-          end
+          it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
+          it { is_expected.not_to contain '/PassengerRuby/' }
         when 'Debian'
           case fact('lsbdistcodename')
           when 'jessie'
@@ -171,10 +165,8 @@ describe 'apache::mod::passenger class' do
       expected_one = [%r{Apache processes}, %r{Nginx processes}, %r{Passenger processes}]
       # passenger-memory-stats output on newer Debian/Ubuntu verions do not contain
       # these two lines
-      unless (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') ||
-             (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') ||
-             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
-        expected_one << [%r{### Processes: [0-9]+}, %r{### Total private dirty RSS: [0-9\.]+ MB}]
+      unless fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        expected_one + [%r{### Processes: [0-9]+}, %r{### Total private dirty RSS: [0-9\.]+ MB}]
       end
       it 'outputs status via passenger-memory-stats #stdout' do
         expected_one.each do |expect|
@@ -189,33 +181,28 @@ describe 'apache::mod::passenger class' do
         end
       end
 
-      # passenger-status fails under stock ubuntu-server-12042-x64 + mod_passenger,
-      # even when the passenger process is successfully installed and running
-      unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '12.04'
-        it 'outputs status via passenger-status #General information' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
-            # spacing may vary
-            expect(r.stdout).to match(%r{[\-]+ General information [\-]+})
+      it 'outputs status via passenger-status #General information' do
+        shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
+          # spacing may vary
+          expect(r.stdout).to match(%r{[\-]+ General information [\-]+})
+        end
+      end
+      expected_two = if fact('operatingsystem') == 'Ubuntu' ||
+                        fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+                       [%r{Max pool size[ ]+: [0-9]+}, %r{Processes[ ]+: [0-9]+}, %r{Requests in top-level queue[ ]+: [0-9]+}]
+                     else
+                       [%r{max[ ]+= [0-9]+}, %r{count[ ]+= [0-9]+}, %r{active[ ]+= [0-9]+}, %r{inactive[ ]+= [0-9]+}, %r{Waiting on global queue: [0-9]+}]
+                     end
+      it 'outputs status via passenger-status #stdout' do
+        shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
+          expected_two.each do |expect|
+            expect(r.stdout).to match(expect)
           end
         end
-        expected_two = if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04' ||
-                          (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') ||
-                          fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-                         [%r{Max pool size[ ]+: [0-9]+}, %r{Processes[ ]+: [0-9]+}, %r{Requests in top-level queue[ ]+: [0-9]+}]
-                       else
-                         [%r{max[ ]+= [0-9]+}, %r{count[ ]+= [0-9]+}, %r{active[ ]+= [0-9]+}, %r{inactive[ ]+= [0-9]+}, %r{Waiting on global queue: [0-9]+}]
-                       end
-        it 'outputs status via passenger-status #stdout' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
-            expected_two.each do |expect|
-              expect(r.stdout).to match(expect)
-            end
-          end
-        end
-        it 'outputs status via passenger-status #exit_code' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
-            expect(r.exit_code).to eq(0)
-          end
+      end
+      it 'outputs status via passenger-status #exit_code' do
+        shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
+          expect(r.exit_code).to eq(0)
         end
       end
 
