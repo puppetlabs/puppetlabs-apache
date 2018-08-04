@@ -964,7 +964,7 @@ describe 'apache::vhost define' do
     describe file($ports_file) do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
-         fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') =~ %r{(14\.04|16\.04)} ||
+         fact('operatingsystem') == 'Ubuntu' ||
          fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8' ||
          fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
@@ -1567,6 +1567,7 @@ describe 'apache::vhost define' do
   # Limit testing to Debian, since Centos does not have fastcgi package.
   case fact('osfamily')
   when 'Debian'
+    next if fact('operatingsystemmajrelease') == '18.04' # Ubuntu 18.04 does not support this fastcgi
     describe 'fastcgi' do
       pp_one = <<-MANIFEST
         $_os = $::operatingsystem
