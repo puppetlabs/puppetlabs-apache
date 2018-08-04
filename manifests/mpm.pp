@@ -73,20 +73,20 @@ define apache::mpm (
         }
       }
 
-      if $mpm == 'itk' and $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' {
+      if $mpm == 'itk' and ( ( $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease  in ['16.04', '18.04'] ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) ) {
+        $packagename = 'libapache2-mpm-itk'
+      } else {
+        $packagename = "apache2-mpm-${mpm}"
+      }
+
+      if $mpm == 'itk' and $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease in ['14.04', '18.04'] {
         # workaround https://bugs.launchpad.net/ubuntu/+source/mpm-itk/+bug/1286882
         exec {
           '/usr/sbin/a2dismod mpm_event':
             onlyif  => '/usr/bin/test -e /etc/apache2/mods-enabled/mpm_event.load',
             require => Package['httpd'],
-            before  => Package['apache2-mpm-itk'],
+            before  => Package[$packagename],
         }
-      }
-
-      if $mpm == 'itk' and ( ( $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '16.04' ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) ) {
-        $packagename = 'libapache2-mpm-itk'
-      } else {
-        $packagename = "apache2-mpm-${mpm}"
       }
 
       if versioncmp($apache_version, '2.4') < 0 or $mpm == 'itk' {
