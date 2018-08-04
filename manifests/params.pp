@@ -273,7 +273,6 @@ class apache::params inherits ::apache::version {
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn', # different to Ubuntu16.04
-        'fastcgi'               => 'libapache2-mod-fastcgi',
         'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
