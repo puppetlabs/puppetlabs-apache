@@ -128,6 +128,10 @@ class apache::mod::security (
     }
   }
 
-  unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }
+  # the rule setup on ubuntu 18.04 is completely different,
+  # the default rules used within this module aren't available
+  unless $::operatingsystem == 'SLES' or $facts['os']['release']['major'] == '18.04' {
+    apache::security::rule_link {$activated_rules: }
+  }
 
 }

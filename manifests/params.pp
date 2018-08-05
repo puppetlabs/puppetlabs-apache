@@ -266,6 +266,7 @@ class apache::params inherits ::apache::version {
     } elsif $facts['os']['release']['major'] == '18.04' {
       # major.minor version used since Debian stretch and Ubuntu Xenial
       $php_version = '7.2' # different to Ubuntu 16.04
+      # fastcgi got removed from #mod_packages, it isn't supported anymore
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
@@ -284,7 +285,7 @@ class apache::params inherits ::apache::version {
         'phpXXX'                => 'libapache2-mod-phpXXX',
         'python'                => 'libapache2-mod-python',
         'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-modsecurity',
+        'security'              => 'libapache2-mod-security2',
         'shib2'                 => 'libapache2-mod-shib2',
         'suphp'                 => 'libapache2-mod-suphp',
         'wsgi'                  => 'libapache2-mod-wsgi',
