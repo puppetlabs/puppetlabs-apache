@@ -1,5 +1,8 @@
 class apache::mod::suphp (
 ){
+  if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '18.04') >= 0) {
+    fail('mod_fastcgi is no longer supported on Ubuntu 18.04 and above. Please use mod_proxy_fcgi')
+  }
   include ::apache
   ::apache::mod { 'suphp': }
 
