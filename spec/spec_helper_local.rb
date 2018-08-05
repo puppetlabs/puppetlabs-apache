@@ -19,7 +19,7 @@ shared_examples :compile, compile: true do
   it { is_expected.to compile.with_all_deps }
 end
 
-shared_examples 'a mod class, without including apache' do
+shared_context 'a mod class, without including apache' do
   let :facts do
     {
       id: 'root',
@@ -35,5 +35,5 @@ shared_examples 'a mod class, without including apache' do
     }
   end
 
-  it { is_expected.to compile.with_all_deps }
+  # it { is_expected.to compile.with_all_deps }
 end
