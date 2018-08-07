@@ -1073,7 +1073,7 @@ Default: `false`.
 
 Sets the group ID that owns any Apache processes spawned to answer requests.
 
-By default, Puppet attempts to manage this group as a resource under the `apache` class, determining the group based on the operating system as detected by the [`apache::params`][] class. To to prevent the group resource from being created and use a group created by another Puppet module, set the [`manage_group`][] parameter's value to `false`.
+By default, Puppet attempts to manage this group as a resource under the `apache` class, determining the group based on the operating system as detected by the [`apache::params`][] class. To prevent the group resource from being created and use a group created by another Puppet module, set the [`manage_group`][] parameter's value to `false`.
 
 > **Note**: Modifying this parameter only changes the group ID that Apache uses to spawn child processes to access resources. It does not change the user that owns the parent server process.
 
