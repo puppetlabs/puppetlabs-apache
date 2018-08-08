@@ -5590,16 +5590,7 @@ most secure format supported by the most platforms.
 
 ## Limitations
 
-### General
-
-This module is CI tested against both [open source Puppet][] and [Puppet Enterprise][] on:
-
-- CentOS 5 and 6
-- Ubuntu 12.04 and 14.04
-- Debian 7
-- RHEL 5, 6, and 7
-
-This module also provides functions for other distributions and operating systems, such as FreeBSD, Gentoo, and Amazon Linux, but is not formally tested on them and are subject to regressions.
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
 
 ### FreeBSD
 
