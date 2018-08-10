@@ -73,6 +73,14 @@ define apache::mpm (
         }
       }
 
+      if $mpm == 'prefork' and $::operatingsystem == 'Debian' and $::operatingsystemrelease == '9.5' {
+        exec {
+          '/usr/sbin/a2dismod mpm_event':
+            onlyif  => '/usr/bin/test -e /etc/apache2/mods-enabled/mpm_event.load',
+            require => Package['httpd'],
+        }
+      }
+
       if $mpm == 'itk' and $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' {
         # workaround https://bugs.launchpad.net/ubuntu/+source/mpm-itk/+bug/1286882
         exec {
