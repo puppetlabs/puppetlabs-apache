@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
 # why is that not executed on 16.04
-describe 'apache::mod::suphp class', if: (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') != '16.04') do
-  if ['16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
+describe 'apache::mod::suphp class' do
+  before :all do
     # this policy defaults to 101. it prevents newly installed services from starting
     # it is useful for containers, it prevents new processes during 'docker build'
     # but we actually want to test the services and this should not behave like docker
@@ -10,9 +10,9 @@ describe 'apache::mod::suphp class', if: (fact('operatingsystem') == 'Ubuntu' &&
 
     # without this apache fails to start -> installation of mod-php-something fails because it reloads apache to enable the module. WTF Ubuntu
     # exit codes are documented at https://askubuntu.com/a/365912. Default for docker images is 101
-    shell("sed -i 's/^exit.*/exit 0/' /usr/sbin/policy-rc.d")
+    on(host, "if [ -a '/usr/sbin/policy-rc.d' ]; then sed -i 's/^exit.*/exit 0/' /usr/sbin/policy-rc.d; fi") if ['16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
   end
-  # mod php isn't supported for ubuntu 1.04
+  # mod php isn't supported for ubuntu 18.04
   next if fact('operatingsystemmajrelease') == '18.04'
   context 'default suphp config' do
     # rubocop:disable Layout/IndentHeredoc : Manifest must have zero base indents
