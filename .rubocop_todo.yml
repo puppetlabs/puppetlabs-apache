@@ -6,8 +6,6 @@ RSpec/RepeatedExample:
   Enabled: false
 RSpec/ExpectInHook:
   Enabled: false
-Style/CommentedKeyword:
-  Enabled: false
 RSpec/NamedSubject:
   Enabled: false
 RSpec/VoidExpect:
