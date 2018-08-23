@@ -418,7 +418,7 @@ define apache::vhost(
   }
 
   # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host) {
     if ! defined(Class['apache::mod::proxy']) {
       include ::apache::mod::proxy
     }
