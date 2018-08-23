@@ -2,7 +2,6 @@ require 'spec_helper_acceptance'
 
 describe 'apache::mod::suphp class', if: (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') != '16.04') do
   context 'default suphp config' do
-    # rubocop:disable Layout/IndentHeredoc : Manifest must have zero base indents
     pp = <<-MANIFEST
 class { 'apache':
   mpm_module => 'prefork',
