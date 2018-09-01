@@ -2748,7 +2748,7 @@ Installs the [Shibboleth](http://shibboleth.net/) Apache module `mod_shib`, whic
 
 This class installs and configures only the Apache components of a web application that consumes Shibboleth SSO identities. You can manage the Shibboleth configuration manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
 
-**Note**: The shibboleth module isn't available on RH/CentOS without providing dependency packages provided by Shibboleth's repositories. See [http://wiki.aaf.edu.au/tech-info/sp-install-guide]()
+**Note**: The Shibboleth module isn't available on RH/CentOS without providing dependency packages provided by Shibboleth's repositories. See the [Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/tech-info/sp-install-guide).
 
 ##### Class: `apache::mod::ssl`
 
