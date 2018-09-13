@@ -2000,7 +2000,7 @@ Installs `mod_authnz_ldap` and uses the `authnz_ldap.conf.erb` template to gener
 
 ##### Class: `apache::mod::cluster`
 
-**Note**: There is no official package available for `mod_cluster`, so you must make it available outside of the apache module. Binaries can be found at http://mod-cluster.jboss.org/
+**Note**: There is no official package available for `mod_cluster`, so you must make it available outside of the apache module. Binaries can be found at [here](http://mod-cluster.jboss.org/).
 
 ``` puppet
 class { '::apache::mod::cluster':
@@ -2310,9 +2310,9 @@ Default: '80'
 
 Each directive has the format `worker.<Worker name>.<Property>=<Value>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash specifies each worker properties and values.
 Plus, there are two global directives, 'worker.list' and 'worker.maintain'
-For example, the workers file below:
+For example, the workers file below should be parameterized as Figure 1:
 
-```
+``` puppet
 worker.list = status
 worker.list = some_name,other_name
 
@@ -2327,9 +2327,9 @@ worker.other_name.type=ajp12 (why would you?)
 worker.other_name.socket_keepalive=false
 ```
 
-Should be parameterized as:
+**Figure 1:**
 
-```
+``` puppet
 $workers_file_content = {
   worker_lists    => ['status', 'some_name,other_name'],
   worker_maintain => '60',
@@ -2348,10 +2348,12 @@ $workers_file_content = {
 
 **mount\_file\_content**
 
-Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: uri_list - an array with URIs to be mapped to the worker - and comment - an optional string with a comment for the worker.
-For example, the mount file below:
+Each directive has the format `<URI> = <Worker name>`. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items: 
+* uri_list&mdash;an array with URIs to be mapped to the worker 
+* comment&mdash;an optional string with a comment for the worker.
+For example, the mount file below should be parameterized as Figure 2:
 
-```
+``` puppet
 # Worker 1
 /context_1/ = worker_1
 /context_1/* = worker_1
@@ -2362,9 +2364,9 @@ For example, the mount file below:
 /context_2/* = worker_2
 ```
 
-Should be parameterized as:
+**Figure 2:**
 
-```
+``` puppet
 $mount_file_content = {
   worker_1 => {
     uri_list => ['/context_1/', '/context_1/*'],
@@ -2385,17 +2387,17 @@ Depending on how these files are specified, the class creates their final path d
 
 Examples (RHEL 6):
 
-```
+``` puppet
 shm_file => 'shm_file'
 # Ends up in
 $shm_path = '/var/log/httpd/shm_file'
 ```
-```
+``` puppet
 shm_file => '/run/shm_file'
 # Ends up in
 $shm_path = '/run/shm_file'
 ```
-```
+``` puppet
 shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 # Ends up in
 $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
@@ -3808,7 +3810,7 @@ Default is 'off'
 
 Specifies the location of the virtual host's logfiles.
 
-Default: '/var/log/<apache log location>/'.
+Default: `/var/log/<apache log location>/`.
 
 ##### `$logroot_ensure`
 
