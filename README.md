@@ -2951,7 +2951,7 @@ ${modsec\_dir}/activated\_rules.
 
   Defaults to the Apache log directory (Redhat: `/var/log/httpd`,  Debian: `/var/log/apache2`).
 
-* `audit_log_releavant_status`: Configures which response status code is to be considered relevant for the purpose of audit logging.
+* `audit_log_relevant_status`: Configures which response status code is to be considered relevant for the purpose of audit logging.
 
   Default: '^(?:5|4(?!04))'.
 
