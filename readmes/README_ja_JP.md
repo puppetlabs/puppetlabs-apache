@@ -1212,6 +1212,21 @@ Puppetが[Apacheモジュール][]の設定ファイルを置く場所を設定�
 - **Gentoo**: `/etc/apache2/modules.d`
 - **Red Hat**: `/etc/httpd/conf.d`
 
+##### `mod_libs`
+
+デフォルトのモジュールライブラリ名をユーザがオーバーライドすることを許可します。
+
+```puppet
+include apache::params
+class { 'apache':
+  mod_libs => merge($::apache::params::mod_libs, {
+    'wsgi' => 'mod_wsgi_python3.so',
+  })
+}
+```
+
+ハッシュ。デフォルト値: `$apache::params::mod_libs`
+
 ##### `mod_packages`
 
 デフォルトのモジュールパッケージ名をユーザがオーバーライドすることを許可します。
@@ -2442,11 +2457,11 @@ $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 |passenger_load_shell_envvars|未定義|[`PassengerLoadShellEnvvars`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLoadShellEnvvars)|server-config virutal-host htaccess directory ||
 |passenger_log_file|未定義|[`PassengerLogFile`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLogFile)|server-config ||
 |passenger_log_level|未定義|[`PassengerLogLevel`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLogLevel)|server-config ||
-|passenger_lve_min_uid|未定義|[`PassengerLveMinUid`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLveMinUid)|server-config virutal-host ||
+|passenger_lve_min_uid|未定義|[`PassengerLveMinUid`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLveMinUid)|server-config virtual-host ||
 |passenger_max_instances|未定義|[`PassengerMaxInstances`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxInstances)|server-config virutal-host htaccess directory ||
 |passenger_max_instances_per_app|未定義|[`PassengerMaxInstancesPerApp`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxInstancesPerApp)|server-config ||
 |passenger_max_pool_size|未定義|[`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxPoolSize)|server-config ||
-|passenger_max_preloader_idle_time|未定義|[`PassengerMaxPreloaderIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxPreloaderIdleTime)|server-config virutal-host ||
+|passenger_max_preloader_idle_time|未定義|[`PassengerMaxPreloaderIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxPreloaderIdleTime)|server-config virtual-host ||
 |passenger_max_request_queue_size|未定義|[`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequestQueueSize)|server-config virutal-host htaccess directory ||
 |passenger_max_request_time|未定義|[`PassengerMaxRequestTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequestTime)|server-config virutal-host htaccess directory ||
 |passenger_max_requests|未定義|[`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequests)|server-config virutal-host htaccess directory ||
@@ -2455,7 +2470,7 @@ $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 |passenger_min_instances|未定義|[`PassengerMinInstances`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMinInstances)|server-config virutal-host htaccess directory ||
 |passenger_nodejs|未定義|[`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerNodejs)|server-config virutal-host htaccess directory ||
 |passenger_pool_idle_time|未定義|[`PassengerPoolIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPoolIdleTime)|server-config ||
-|passenger_pre_start|未定義|[`PassengerPreStart`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPreStart)|server-config virutal-host ||
+|passenger_pre_start|未定義|[`PassengerPreStart`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPreStart)|server-config virtual-host ||
 |passenger_python|未定義|[`PassengerPython`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPython)|server-config virutal-host htaccess directory ||
 |passenger_resist_deployment_errors|未定義|[`PassengerResistDeploymentErrors`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerResistDeploymentErrors)|server-config virutal-host htaccess directory ||
 |passenger_resolve_symlinks_in_document_root|未定義|[`PassengerResolveSymlinksInDocumentRoot`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerResolveSymlinksInDocumentRoot)|server-config virutal-host htaccess directory ||
@@ -2467,7 +2482,7 @@ $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 |passenger_security_update_check_proxy|未定義|[`PassengerSecurityUpdateCheckProxy`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSecurityUpdateCheckProxy)|server-config ||
 |passenger_show_version_in_header|未定義|[`PassengerShowVersionInHeader`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerShowVersionInHeader)|server-config ||
 |passenger_socket_backlog|未定義|[`PassengerSocketBacklog`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSocketBacklog)|server-config ||
-|passenger_spawn_method|未定義|[`PassengerSpawnMethod`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSpawnMethod)|server-config virutal-host ||
+|passenger_spawn_method|未定義|[`PassengerSpawnMethod`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSpawnMethod)|server-config virtual-host ||
 |passenger_start_timeout|未定義|[`PassengerStartTimeout`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStartTimeout)|server-config virutal-host htaccess directory ||
 |passenger_startup_file|未定義|[`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStartupFile)|server-config virutal-host htaccess directory ||
 |passenger_stat_throttle_rate|未定義|[`PassengerStatThrottleRate`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStatThrottleRate)|server-config ||
@@ -2732,7 +2747,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 このクラスでインストールおよび設定されるのは、Shibboleth SSO認証をコンシュームするWebアプリケーションのApacheコンポーネントのみです。PuppetでShibboleth設定を手動で管理することも、[Shibboleth Puppetモジュール](https://github.com/aethylred/puppet-shibboleth)を使用することもできます。
 
-**注意**: shibbolethモジュールは、Shibbolethのリポジトリにより提供される依存関係パッケージがなければ、RH/CentOSでは使用できません。[http://wiki.aaf.edu.au/tech-info/sp-install-guide]()を参照してください。
+**注意**: shibbolethモジュールは、Shibbolethのリポジトリにより提供される依存関係パッケージがなければ、RH/CentOSでは使用できません。[Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/tech-info/sp-install-guide)を参照してください。
 
 ##### クラス: `apache::mod::ssl`
 
@@ -2798,7 +2813,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `ssl_protocol`
 
-  デフォルト値: ['all', '*SSLv2', '*SSLv3']。
+  デフォルト値: ['all', '-SSLv2', '-SSLv3']
 
 * `ssl_random_seed_bytes`
 
@@ -5569,18 +5584,9 @@ Apacheが読みこむhtpasswdファイルに適したフォーマットでパス
 
 現在はSHAハッシュを使用しています。これは、このフォーマットは安全ではないとされているものの、ほとんどのプラットフォームでサポートされているもっとも安全なフォーマットであるためです。
 
-## 制約事項
+## 制約
 
-### 全般
-
-このモジュールは、以下に関して、[オープンソースPuppet][]および[Puppet Enterprise][]の両方でCIテストが実施されています。
-
-- CentOS 5および6
-- Ubuntu 12.04および14.04
-- Debian 7
-- RHEL 5、6、7
-
-このモジュールでは、FreeBSD、Gentoo、Amazon Linuxなどの、他のディストリビューションおよびオペレーティングシステムで使用できる機能も提供されていますが、そうしたシステムについては公式なテストは実施されておらず、新たに不具合が生じる可能性があります。
+ サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)を参照してください。
 
 ### FreeBSD
 
