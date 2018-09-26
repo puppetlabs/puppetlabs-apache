@@ -6,7 +6,7 @@ require 'puppet-lint/tasks/puppet-lint'
 
 def changelog_user
   return unless Rake.application.top_level_tasks.include? "changelog"
-  returnVal = 'puppetlabs' || JSON.load(File.read('metadata.json'))['author']
+  returnVal = nil || JSON.load(File.read('metadata.json'))['author']
   raise "unable to find the changelog_user in .sync.yml, or the author in metadata.json" if returnVal.nil?
   puts "GitHubChangelogGenerator user:#{returnVal}"
   returnVal

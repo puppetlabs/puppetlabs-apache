@@ -3,6 +3,9 @@ fixtures:
     stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
     concat: "git://github.com/puppetlabs/puppetlabs-concat.git"
     portage: "git://github.com/gentoo/puppet-portage.git"
+    yumrepo_core: 
+      repo: "git://github.com/puppetlabs/puppetlabs-yumrepo_core.git"
+      puppet_version: '>= 6.0.0'
   symlinks:
     apache: "#{source_dir}"
     site_apache: "#{source_dir}/spec/fixtures/site_apache"
