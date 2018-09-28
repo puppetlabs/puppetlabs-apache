@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [3.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.3.0) (2018-09-10)
+## [3.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.4.0) (2018-09-27)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.3.0...3.4.0)
+
+### Added
+
+- pdksync - \(FM-7392\) - Puppet 6 Testing Changes [\#1838](https://github.com/puppetlabs/puppetlabs-apache/pull/1838) ([pmcmaw](https://github.com/pmcmaw))
+- pdksync - \(MODULES-6805\) metadata.json shows support for puppet 6 [\#1836](https://github.com/puppetlabs/puppetlabs-apache/pull/1836) ([tphoney](https://github.com/tphoney))
+
+### Fixed
+
+- Fix "audit\_log\_relevant\_status" typo in README.md [\#1830](https://github.com/puppetlabs/puppetlabs-apache/pull/1830) ([smokris](https://github.com/smokris))
+
+## [3.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.3.0) (2018-09-11)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.2.0...3.3.0)
 
