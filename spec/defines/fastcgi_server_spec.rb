@@ -14,7 +14,7 @@ describe 'apache::fastcgi::server', type: :define do
         {
           osfamily: 'RedHat',
           operatingsystem: 'CentOS',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           kernel: 'Linux',
           id: 'root',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',

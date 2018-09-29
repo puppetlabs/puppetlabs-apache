@@ -82,7 +82,7 @@ describe 'apache::mod::php', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -259,7 +259,7 @@ describe 'apache::mod::php', type: :class do
       {
         osfamily: 'Debian',
         operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         kernel: 'Linux',
         lsbdistcodename: 'jessie',
         id: 'root',

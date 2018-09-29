@@ -1,67 +1,6 @@
 require 'spec_helper'
 
-# This function is called inside the OS specific contexts
-def general_info_specs_22
-  it { is_expected.to contain_apache__mod('info') }
-
-  context 'passing no parameters' do
-    expected = "<Location /server-info>\n"\
-               "    SetHandler server-info\n"\
-               "    Order deny,allow\n"\
-               "    Deny from all\n"\
-               "    Allow from 127.0.0.1\n"\
-               "    Allow from ::1\n"\
-               "</Location>\n"
-    it { is_expected.to contain_file('info.conf').with_content(expected) }
-  end
-  context 'passing restrict_access => false' do
-    let :params do
-      {
-        restrict_access: false,
-      }
-    end
-
-    it {
-      is_expected.to contain_file('info.conf').with_content(
-        "<Location /server-info>\n"\
-        "    SetHandler server-info\n"\
-        "</Location>\n",
-      )
-    }
-  end
-  context "passing allow_from => ['10.10.1.2', '192.168.1.2', '127.0.0.1']" do
-    let :params do
-      { allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1'] }
-    end
-
-    expected = "<Location /server-info>\n"\
-               "    SetHandler server-info\n"\
-               "    Order deny,allow\n"\
-               "    Deny from all\n"\
-               "    Allow from 10.10.1.2\n"\
-               "    Allow from 192.168.1.2\n"\
-               "    Allow from 127.0.0.1\n"\
-               "</Location>\n"
-    it { is_expected.to contain_file('info.conf').with_content(expected) }
-  end
-  context 'passing both restrict_access and allow_from' do
-    let :params do
-      {
-        restrict_access: false,
-        allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1'],
-      }
-    end
-
-    it {
-      is_expected.to contain_file('info.conf').with_content(
-        "<Location /server-info>\n"\
-        "    SetHandler server-info\n"\
-        "</Location>\n",
-      )
-    }
-  end
-end
-
+# test helper method
 def general_info_specs_24
   it { is_expected.to contain_apache__mod('info') }
 
@@ -125,8 +64,8 @@ describe 'apache::mod::info', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'squeeze',
+        operatingsystemrelease: '8',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -136,7 +75,7 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_22
+    general_info_specs_24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -152,7 +91,7 @@ describe 'apache::mod::info', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -162,11 +101,11 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_22
+    general_info_specs_24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
-                                                    path: '/etc/httpd/conf.d/info.conf')
+                                                    path: '/etc/httpd/conf.modules.d/info.conf')
     }
   end
 

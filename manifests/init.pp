@@ -96,10 +96,7 @@ class apache (
   $access_log_file                                               = $::apache::params::access_log_file,
 ) inherits ::apache::params {
 
-  $valid_mpms_re = $apache_version ? {
-    '2.4'   => '(event|itk|peruser|prefork|worker)',
-    default => '(event|itk|prefork|worker)'
-  }
+  $valid_mpms_re = '(event|itk|peruser|prefork|worker)'
 
   if $::osfamily == 'RedHat' and $::apache::version::distrelease == '7' {
     # On redhat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
@@ -275,19 +272,9 @@ class apache (
     if $::osfamily == 'gentoo' {
       $error_documents_path = '/usr/share/apache2/error'
       if $default_mods =~ Array {
-        if versioncmp($apache_version, '2.4') >= 0 {
-          if defined('apache::mod::ssl') {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
-            }
-          } else {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, 'authz_core'),
-            }
-          }
-        } else {
+        if defined('apache::mod::ssl') {
           ::portage::makeconf { 'apache2_modules':
-            content => $default_mods,
+            content => concat($default_mods, [ 'authz_core', 'socache_shmcb' ]),
           }
         }
       }

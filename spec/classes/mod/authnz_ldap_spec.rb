@@ -44,7 +44,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         id: 'root',
         kernel: 'Linux',
         operatingsystem: 'RedHat',

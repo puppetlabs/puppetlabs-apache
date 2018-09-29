@@ -61,12 +61,12 @@ describe 'apache::mod::jk', type: :class do
   default_port = 80
   altern8_port = 8008
 
-  context 'RHEL 6 with only required facts and default parameters' do
+  context 'RHEL 7 with only required facts and default parameters' do
     let(:facts) do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         ipaddress: default_ip,
       }
     end
@@ -80,7 +80,7 @@ describe 'apache::mod::jk', type: :class do
     end
     let(:mod_dir) { mod_dir }
 
-    mod_dir = '/etc/httpd/conf.d'
+    mod_dir = '/etc/httpd/conf.modules.d'
 
     it_behaves_like 'minimal resources', mod_dir
     it_behaves_like 'specific workers_file', mod_dir
@@ -119,12 +119,12 @@ describe 'apache::mod::jk', type: :class do
     }
   end
 
-  context 'RHEL 6 with required facts and alternative IP' do
+  context 'RHEL 7 with required facts and alternative IP' do
     let(:facts) do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         ipaddress: default_ip,
       }
     end
@@ -141,12 +141,12 @@ describe 'apache::mod::jk', type: :class do
     it { is_expected.to contain_apache__listen("#{altern8_ip}:#{default_port}") }
   end
 
-  context 'RHEL 6 with required facts and alternative port' do
+  context 'RHEL 7 with required facts and alternative port' do
     let(:facts) do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         ipaddress: default_ip,
       }
     end
@@ -163,12 +163,12 @@ describe 'apache::mod::jk', type: :class do
     it { is_expected.to contain_apache__listen("#{default_ip}:#{altern8_port}") }
   end
 
-  context 'RHEL 6 with required facts and no binding' do
+  context 'RHEL 7 with required facts and no binding' do
     let(:facts) do
       {
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         ipaddress: default_ip,
       }
     end
@@ -216,7 +216,7 @@ describe 'apache::mod::jk', type: :class do
         {
           osfamily: 'RedHat',
           operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
         }
       end
       let(:pre_condition) do

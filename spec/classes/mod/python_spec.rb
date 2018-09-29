@@ -25,7 +25,7 @@ describe 'apache::mod::python', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -37,14 +37,14 @@ describe 'apache::mod::python', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('python') }
     it { is_expected.to contain_package('mod_python') }
-    it { is_expected.to contain_file('python.load').with_path('/etc/httpd/conf.d/python.load') }
+    it { is_expected.to contain_file('python.load').with_path('/etc/httpd/conf.modules.d/python.load') }
 
     describe 'with loadfile_name specified' do
       let :params do
         { loadfile_name: 'FooBar' }
       end
 
-      it { is_expected.to contain_file('FooBar').with_path('/etc/httpd/conf.d/FooBar') }
+      it { is_expected.to contain_file('FooBar').with_path('/etc/httpd/conf.modules.d/FooBar') }
     end
   end
   context 'on a FreeBSD OS' do

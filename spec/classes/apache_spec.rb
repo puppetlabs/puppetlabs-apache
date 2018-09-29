@@ -6,10 +6,10 @@ describe 'apache', type: :class do
       {
         id: 'root',
         kernel: 'Linux',
-        lsbdistcodename: 'squeeze',
+        lsbdistcodename: 'jessie',
         osfamily: 'Debian',
         operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -26,7 +26,7 @@ describe 'apache', type: :class do
     it { is_expected.to contain_group('www-data') }
     it { is_expected.to contain_class('apache::service') }
     it {
-      is_expected.to contain_file('/var/www').with(
+      is_expected.to contain_file('/var/www/html').with(
         'ensure' => 'directory',
       )
     }
@@ -58,7 +58,7 @@ describe 'apache', type: :class do
       )
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
-    ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+    ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/etc/apache2/mods-available/#{modname}.load",
@@ -74,14 +74,6 @@ describe 'apache', type: :class do
       }
       it { is_expected.not_to contain_file("#{modname}.conf") }
       it { is_expected.not_to contain_file("#{modname}.conf symlink") }
-    end
-
-    context 'with Apache version < 2.4' do
-      let :params do
-        { apache_version: '2.2' }
-      end
-
-      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^Include "/etc/apache2/conf\.d/\*\.conf"$} }
     end
 
     context 'with Apache version >= 2.4' do
@@ -155,27 +147,6 @@ describe 'apache', type: :class do
           'target' => "/etc/apache2/mods-available/#{modname}.conf",
         )
       }
-    end
-
-    describe "Check default type with Apache version < 2.2 when default_type => 'none'" do
-      let :params do
-        {
-          apache_version: '2.2',
-          default_type: 'none',
-        }
-      end
-
-      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^DefaultType none$} }
-    end
-    describe "Check default type with Apache version < 2.2 when default_type => 'text/plain'" do
-      let :params do
-        {
-          apache_version: '2.2',
-          default_type: 'text/plain',
-        }
-      end
-
-      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^DefaultType text/plain$} }
     end
 
     describe 'Check default type with Apache version >= 2.4' do
@@ -256,11 +227,11 @@ describe 'apache', type: :class do
         )
       }
     end
-    context 'on Ubuntu 14.04' do
+    context 'on Ubuntu 16.04' do
       let :facts do
         super().merge(operatingsystem: 'Ubuntu',
-                      lsbdistrelease: '14.04',
-                      operatingsystemrelease: '14.04')
+                      lsbdistrelease: '16.04',
+                      operatingsystemrelease: '16.04')
       end
 
       it {
@@ -271,14 +242,14 @@ describe 'apache', type: :class do
     end
   end
 
-  context 'on a RedHat 5 OS' do
+  context 'on a RedHat 7 OS' do
     let :facts do
       {
         id: 'root',
         kernel: 'Linux',
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '5',
+        operatingsystemrelease: '7',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -332,7 +303,7 @@ describe 'apache', type: :class do
       end
 
       # Assert that load files are placed for these mods, but no conf file.
-      ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+      ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
         it {
           is_expected.to contain_file("#{modname}.load").with_path(
             "/etc/httpd/mod.d/#{modname}.load",
@@ -359,22 +330,11 @@ describe 'apache', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/site\.d/\*"$} }
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/site\.d/\*"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
-    describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-      let :params do
-        {
-          vhost_dir: '/etc/httpd/site.d',
-          confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
-          apache_version: '2.2',
-        }
-      end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/conf\.d/\*\.conf"$} }
-    end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -388,31 +348,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
     end
-    describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-      let :params do
-        {
-          vhost_dir: '/etc/httpd/site.d',
-          confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
-          apache_version: '2.2',
-          rewrite_lock: '/var/lock/subsys/rewrite-lock',
-        }
-      end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^RewriteLock /var/lock/subsys/rewrite-lock$} }
-    end
-    describe 'Alternate confd/mod/vhosts directory with Apache version < 2.4' do
-      let :params do
-        {
-          vhost_dir: '/etc/httpd/site.d',
-          confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
-          apache_version: '2.2',
-        }
-      end
-
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').without_content %r{^RewriteLock [.]*$} }
-    end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -450,32 +386,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^AddDefaultCharset none$} }
     end
-    describe "Alternate confd/mod/vhosts directory with Apache version < 2.4 when default_type => 'none'" do
-      let :params do
-        {
-          vhost_dir: '/etc/httpd/site.d',
-          confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
-          apache_version: '2.2',
-          default_type: 'none',
-        }
-      end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^DefaultType none$} }
-    end
-    describe "Alternate confd/mod/vhosts directory with Apache version < 2.4 when default_type => 'text/plain'" do
-      let :params do
-        {
-          vhost_dir: '/etc/httpd/site.d',
-          confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
-          apache_version: '2.2',
-          default_type: 'text/plain',
-        }
-      end
-
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^DefaultType text/plain$} }
-    end
     describe 'Alternate confd/mod/vhosts directory with Apache version >= 2.4' do
       let :params do
         {
@@ -627,35 +538,6 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^EnableSendfile Off\n} }
     end
-
-    context 'on Fedora 21' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: '21',
-                      operatingsystemrelease: '21')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.4') }
-    end
-    context 'on Fedora Rawhide' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: 'Rawhide',
-                      operatingsystemrelease: 'Rawhide')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.4') }
-    end
-    # kinda obsolete
-    context 'on Fedora 17' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: '17',
-                      operatingsystemrelease: '17')
-      end
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.2') }
-    end
   end
   context 'on a FreeBSD OS' do
     let :facts do
@@ -777,7 +659,7 @@ describe 'apache', type: :class do
         kernel: 'Linux',
         osfamily: 'RedHat',
         operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         is_pe: false,
       }
@@ -820,16 +702,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options -Indexes -FollowSymLinks} }
     end
-    context 'with a custom root_directory_secured parameter and Apache < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-          root_directory_secured: true,
-        }
-      end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Order deny,allow\n\s+Deny from all} }
-    end
     context 'with a custom root_directory_secured parameter and Apache >= 2.4' do
       let :params do
         {
@@ -868,8 +741,9 @@ describe 'apache', type: :class do
   end
   context 'with unsupported osfamily' do
     let :facts do
-      { osfamily: 'Darwin',
-        operatingsystemrelease: '13.1.0',
+      { osfamily: 'NOtafamily',
+        operatingsystem: 'NotAnOS',
+        operatingsystemrelease: '1.1.0',
         is_pe: false }
     end
 

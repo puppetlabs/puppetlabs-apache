@@ -27,8 +27,8 @@ describe 'apache::mod::dav_svn', type: :class do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystemmajrelease: '6',
+          operatingsystemrelease: '7',
+          operatingsystemmajrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',

@@ -52,14 +52,7 @@ class apache::mod::event (
   }
 
   case $::osfamily {
-    'redhat': {
-      if versioncmp($_apache_version, '2.4') >= 0 {
-        apache::mpm{ 'event':
-          apache_version => $_apache_version,
-        }
-      }
-    }
-    'debian','freebsd' : {
+    'debian','freebsd','redhat' : {
       apache::mpm{ 'event':
         apache_version => $_apache_version,
       }

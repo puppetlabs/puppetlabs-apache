@@ -16,14 +16,9 @@ when 'RedHat'
   $error_log        = 'error_log'
   $suphp_handler    = 'php5-script'
   $suphp_configpath = 'undef'
+  $apache_version = '2.4'
+  $mod_dir        = '/etc/httpd/conf.modules.d'
 
-  if (@operatingsystem == 'Fedora' && @operatingsystemrelease >= 18) || (@operatingsystem != 'Fedora' && @operatingsystemrelease >= 7)
-    $apache_version = '2.4'
-    $mod_dir        = '/etc/httpd/conf.modules.d'
-  else
-    $apache_version = '2.2'
-    $mod_dir        = '/etc/httpd/conf.d'
-  end
 when 'Debian'
   $confd_dir        = '/etc/apache2/conf.d'
   $mod_dir          = '/etc/apache2/mods-available'
@@ -38,13 +33,7 @@ when 'Debian'
   $error_log        = 'error.log'
   $suphp_handler    = 'x-httpd-php'
   $suphp_configpath = '/etc/php5/apache2'
-  $apache_version = if @operatingsystem == 'Ubuntu' && @operatingsystemrelease >= 13.10
-                      '2.4'
-                    elsif @operatingsystem == 'Debian' && @operatingsystemrelease >= 8.0
-                      '2.4'
-                    else
-                      '2.2'
-                    end
+  $apache_version = '2.4'
 when 'FreeBSD'
   $confd_dir        = '/usr/local/etc/apache24/Includes'
   $mod_dir          = '/usr/local/etc/apache24/Modules'
@@ -83,11 +72,7 @@ when 'Suse'
   $service_name     = 'apache2'
   $package_name     = 'apache2'
   $error_log        = 'error.log'
-  $apache_version   = if @operatingsystemrelease < 12
-                        '2.2'
-                      else
-                        '2.4'
-                      end
+  $apache_version   = '2.4'
 else
   $apache_version   = '0'
 end

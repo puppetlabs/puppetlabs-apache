@@ -11,36 +11,8 @@ class apache::version {
   }
 
   case $::osfamily {
-    'RedHat': {
-      if ($::operatingsystem == 'Amazon') {
-        $default = '2.2'
-      } elsif ($::operatingsystem == 'Fedora' and versioncmp($distrelease, '18') >= 0) or ($::operatingsystem != 'Fedora' and versioncmp($distrelease, '7') >= 0) {
-        $default = '2.4'
-      } else {
-        $default = '2.2'
-      }
-    }
-    'Debian': {
-      if $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0 {
-        $default = '2.4'
-      } elsif $::operatingsystem == 'Debian' and versioncmp($distrelease, '8') >= 0 {
-        $default = '2.4'
-      } else {
-        $default = '2.2'
-      }
-    }
-    'FreeBSD': {
+    'RedHat','Debian','FreeBSD','Gentoo','Suse': {
       $default = '2.4'
-    }
-    'Gentoo': {
-      $default = '2.4'
-    }
-    'Suse': {
-      if ($::operatingsystem == 'SLES' and $::operatingsystemrelease >= '12') or ($::operatingsystem == 'OpenSuSE' and $::operatingsystemrelease >= '42') {
-        $default = '2.4'
-      } else {
-        $default = '2.2'
-      }
     }
     default: {
       fail("Class['apache::version']: Unsupported osfamily: ${::osfamily}")

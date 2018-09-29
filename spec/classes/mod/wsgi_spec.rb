@@ -28,7 +28,7 @@ describe 'apache::mod::wsgi', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -163,8 +163,8 @@ describe 'apache::mod::wsgi', type: :class do
           id: 'root',
           kernel: 'Linux',
           osfamily: 'RedHat',
-          operatingsystem: 'Fedora',
-          operatingsystemrelease: '28',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '7',
           path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           is_pe: false,
         }

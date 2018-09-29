@@ -15,7 +15,7 @@ describe 'apache::vhost::custom', type: :define do
       let :default_facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',

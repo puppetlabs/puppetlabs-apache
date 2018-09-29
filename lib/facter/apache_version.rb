@@ -1,5 +1,5 @@
 Facter.add(:apache_version) do
-  confine kernel: ['FreeBSD', 'Linux']
+  confine kernel: ['Darwin', 'Linux', 'FreeBSD']
   setcode do
     if Facter::Util::Resolution.which('apachectl')
       apache_version = Facter::Util::Resolution.exec('apachectl -v 2>&1')

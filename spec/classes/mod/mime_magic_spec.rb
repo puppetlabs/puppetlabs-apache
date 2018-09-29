@@ -12,7 +12,7 @@ describe 'apache::mod::mime_magic', type: :class do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
@@ -56,7 +56,7 @@ describe 'apache::mod::mime_magic', type: :class do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -73,14 +73,14 @@ describe 'apache::mod::mime_magic', type: :class do
       )
     end
 
-    it { is_expected.to contain_file('mime_magic.conf').with_path('/etc/httpd/conf.d/mime_magic.conf') }
+    it { is_expected.to contain_file('mime_magic.conf').with_path('/etc/httpd/conf.modules.d/mime_magic.conf') }
   end
 
   context 'with magic_file => /tmp/magic' do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '8',
         lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',

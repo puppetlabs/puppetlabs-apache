@@ -1665,7 +1665,7 @@ describe 'apache::vhost define' do
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'Include "/apache_spec/include"' }
+      it { is_expected.to contain 'IncludeOptional "/apache_spec/include"' }
     end
   end
 

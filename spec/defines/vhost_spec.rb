@@ -19,7 +19,7 @@ describe 'apache::vhost', type: :define do
       let :default_facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
@@ -118,8 +118,8 @@ describe 'apache::vhost', type: :define do
     let :facts do
       {
         osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'squeeze',
+        operatingsystemrelease: '8',
+        lsbdistcodename: 'jessie',
         operatingsystem: 'Debian',
         id: 'root',
         kernel: 'Linux',
@@ -134,7 +134,6 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__listen(params[:port]) }
-      it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
     end
     context 'set everything!' do
       let :params do
@@ -1599,7 +1598,7 @@ describe 'apache::vhost', type: :define do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
@@ -1636,42 +1635,22 @@ describe 'apache::vhost', type: :define do
       it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Allow from 127\.0\.0\.1$},
+          content: %r{^\s+<Files "\/var\/www\/files">$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Allow from 127\.0\.0\.2$},
+          content: %r{^\s+Require all granted$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Allow from 127\.0\.0\.5$},
+          content: %r{^\s+<Files "\/var\/www\/foo">$},
         )
       }
       it {
         is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Deny from 127\.0\.0\.3$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Deny from 127\.0\.0\.4$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Deny from all$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Satisfy any$},
-        )
-      }
-      it {
-        is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-          content: %r{^\s+Order deny,allow$},
+          content: %r{^\s+Require all granted$},
         )
       }
       it { is_expected.not_to contain_concat__fragment('rspec.example.com-additional_includes') }
@@ -1843,7 +1822,7 @@ describe 'apache::vhost', type: :define do
     let :facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -1914,7 +1893,7 @@ describe 'apache::vhost', type: :define do
     let :default_facts do
       {
         osfamily: 'RedHat',
-        operatingsystemrelease: '6',
+        operatingsystemrelease: '7',
         operatingsystem: 'RedHat',
         id: 'root',
         kernel: 'Linux',
@@ -2252,7 +2231,7 @@ describe 'apache::vhost', type: :define do
       let :facts do
         {
           osfamily: 'RedHat',
-          operatingsystemrelease: '6',
+          operatingsystemrelease: '7',
           operatingsystem: 'RedHat',
           id: 'root',
           kernel: 'Linux',
