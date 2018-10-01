@@ -493,6 +493,10 @@ describe 'apache::vhost', type: :define do
           'keepalive'                   => 'on',
           'keepalive_timeout'           => '100',
           'max_keepalive_requests'      => '1000',
+          'comment'                     => [
+            'Comment 1',
+            'Comment 2',
+          ],
         }
       end
       let :facts do
@@ -554,7 +558,11 @@ describe 'apache::vhost', type: :define do
         is_expected.to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
                                                                               'path' => '/etc/apache2/sites-enabled/30-rspec.example.com.conf')
       }
-      it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
+      it {
+        is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+          content: %r{^# Comment 1$},
+        )
+      }
       it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-aliases') }
       it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }

@@ -2,6 +2,7 @@
 # Vhost template in module puppetlabs-apache
 # Managed by Puppet
 # ************************************
+<%= [@comment].flatten.collect{|c| "# #{c}"}.join("\n") -%>
 
 <VirtualHost <%= [@nvh_addr_port].flatten.compact.join(' ') %>>
 <% if @servername and not @servername.empty? -%>
