@@ -1736,18 +1736,18 @@ class {'::apache::mod::disk_cache':
 }
 ```
 
-##### Class: `apache::mod::diskio`
+##### Class: `apache::mod::dumpio`
 
-Installs and configures [`mod_diskio`][].
+Installs and configures [`mod_dumpio`][].
 
 ```puppet
 class{'apache':
   default_mods => false,
   log_level    => 'dumpio:trace7',
 }
-class{'apache::mod::diskio':
-  disk_io_input  => 'On',
-  disk_io_output => 'Off',
+class{'apache::mod::dumpio':
+  dump_io_input  => 'On',
+  dump_io_output => 'Off',
 }
 ```
 
