@@ -18,6 +18,9 @@ class apache::default_mods (
             ::apache::mod { 'systemd': }
           }
         }
+        if ($::operatingsystem == 'Amazon' and $::operatingsystemrelease == '2') {
+          ::apache::mod { 'systemd': }
+        }
         ::apache::mod { 'unixd': }
       }
     }

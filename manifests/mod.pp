@@ -50,7 +50,7 @@ define apache::mod (
   if $package {
     $_package = $package
   } elsif has_key($mod_packages, $mod) { # 2.6 compatibility hack
-    if ($::apache::apache_version == '2.4' and $::operatingsystem =~ /^[Aa]mazon$/) {
+    if ($::apache::apache_version == '2.4' and $::operatingsystem =~ /^[Aa]mazon$/ and $::operatingsystemmajrelease != '2') {
       # On amazon linux we need to prefix our package name with mod24 instead of mod to support apache 2.4
       $_package = regsubst($mod_packages[$mod],'^(mod_)?(.*)','mod24_\2')
     } else {
