@@ -3482,6 +3482,28 @@ Sets the URL to use when validating a client-presented ticket in an HTTP query s
 
 Defaults to the value set by [`apache::mod::auth_cas`][].
 
+
+##### `comment`
+
+Adds comments to the header of the configuration file. Pass as string or an array of strings.
+
+Default: `undef`.
+
+For example:
+
+``` puppet
+comment => "Account number: 123B",
+```
+
+Or:
+
+``` puppet
+comment => [
+  "Customer: X",
+  "Frontend domain: x.example.org",
+]
+```
+
 ##### `custom_fragment`
 
 Passes a string of custom configuration directives to place at the end of the virtual host configuration.
