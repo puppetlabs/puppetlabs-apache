@@ -2267,16 +2267,18 @@ Installs and manages `mod_jk`, a connector for Apache httpd redirection to old v
 
 ``` puppet
 class { '::apache::mod::jk':
-  ip           = '192.168.2.15',
-  workers_file = 'conf/workers.properties',
-  mount_file   = 'conf/uriworkermap.properties',
-  shm_file     = 'run/jk.shm',
-  shm_size     = '50M',
-  $workers_file_content = {
+  ip                   => '192.168.2.15',
+  workers_file         => 'conf/workers.properties',
+  mount_file           => 'conf/uriworkermap.properties',
+  shm_file             => 'run/jk.shm',
+  shm_size             => '50M',
+  workers_file_content => {
     <Content>
   },
 }
 ```
+
+See [templates/mod/jk/workers.properties.erb](templates/mod/jk/workers.properties.erb) for more information.
 
 **Parameters within `apache::mod::jk`**:
 
