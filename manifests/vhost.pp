@@ -205,6 +205,7 @@ define apache::vhost(
   $cas_validate_saml                                                                = undef,
   Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
+  Optional[Variant[String,Array[String]]] $comment                                  = undef,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
