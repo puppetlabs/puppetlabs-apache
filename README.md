@@ -5157,6 +5157,27 @@ apache::vhost { 'secure.example.net':
 }
 ```
 
+##### `ssl_verify_client`
+
+Exactly as with the top-level (VHost) `ssl_verify_client` directive, permits user to set [client certificate verification](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslverifyclient) level for this directory. 
+
+``` puppet
+apache::vhost { 'sample.example.net':
+  …
+  directories => [
+	{ 	path				=> '/path/to/directory',
+		ssl_verify_client 	=> 'optional',
+	},
+  ],
+}
+```
+
+SSL renegotiation will occur if a session already exists at a lower verification level.
+
+Values: 'none', 'optional', 'require', and 'optional_no_ca'.
+
+Default: `undef`.
+
 ##### `suphp`
 
 A hash containing the 'user' and 'group' keys for the [suPHP_UserGroup](http://www.suphp.org/DocumentationView.html?file=apache/CONFIG) setting. It must be used with `suphp_engine => on` in the virtual host declaration, and can only be passed within `directories`.
