@@ -66,6 +66,13 @@ describe 'apache::mod::wsgi', type: :class do
 
       it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIPythonHome "\/path\/to\/virtenv"$}) }
     end
+    describe 'with custom WSGIApplicationGroup' do
+      let :params do
+        { wsgi_python_home: '%{GLOBAL}' }
+      end
+
+      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIApplicationGroup "%{GLOBAL}"$}) }
+    end
     describe 'with custom package_name and mod_path' do
       let :params do
         {
