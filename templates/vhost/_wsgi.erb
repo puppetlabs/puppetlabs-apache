@@ -1,3 +1,7 @@
+<% if @wsgi_application_group or @wsgi_daemon_process or @wsgi_import_script or @wsgi_process_group -%>
+
+  ## WSGI configuration
+<% end -%>
 <% if @wsgi_application_group -%>
   WSGIApplicationGroup <%= @wsgi_application_group %>
 <% end -%>
