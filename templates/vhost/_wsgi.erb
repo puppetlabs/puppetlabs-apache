@@ -29,7 +29,7 @@
       <%- if @wsgi_script_aliases[key].is_a? Array -%>
   WSGIScriptAlias <%= key %> <%= @wsgi_script_aliases[key].join(' ') %>
       <%- else -%>
-  WSGIScriptAlias <%= key %> <%= @wsgi_script_aliases[key] %>
+  WSGIScriptAlias <%= key %> "<%= @wsgi_script_aliases[key] %>"
       <%- end -%>
     <%- end -%>
   <%- end -%>
