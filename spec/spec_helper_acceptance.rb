@@ -34,7 +34,8 @@ RSpec.configure do |c|
   c.before :suite do
     run_puppet_access_login(user: 'admin') if pe_install? && (Gem::Version.new(puppet_version) >= Gem::Version.new('5.0.0'))
     # net-tools required for netstat utility being used by be_listening
-    if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7'
+    if (fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7') ||
+       (fact('osfamily') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       pp = <<-EOS
         package { 'net-tools': ensure => installed }
       EOS

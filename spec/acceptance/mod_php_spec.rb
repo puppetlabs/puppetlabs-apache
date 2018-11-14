@@ -32,7 +32,8 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') ==
         it { is_expected.to be_running }
       end
 
-      if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04'
+      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
+         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
@@ -120,7 +121,8 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') ==
       it 'succeeds in puppeting php' do
         apply_manifest(pp, catch_failures: true)
       end
-      if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04'
+      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
+         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain '# somecontent' }
         end
@@ -145,7 +147,8 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') ==
         apply_manifest(pp, catch_failures: true)
       end
 
-      if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04'
+      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
+         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain '# somecontent' }
         end
