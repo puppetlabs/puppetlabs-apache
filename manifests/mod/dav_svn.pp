@@ -13,7 +13,7 @@ class apache::mod::dav_svn (
 
   ::apache::mod { 'dav_svn': }
 
-  if $::osfamily == 'Debian' and ($::operatingsystemmajrelease != '6' and $::operatingsystemmajrelease != '10.04' and $::operatingsystemrelease != '10.04' and $::operatingsystemmajrelease != '16.04') {
+  if $::osfamily == 'Debian' and ! ($::operatingsystemmajrelease in ['6', '16.04', '9']) {
     $loadfile_name = undef
   } else {
     $loadfile_name = 'dav_svn_authz_svn.load'

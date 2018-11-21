@@ -4,7 +4,7 @@ require_relative './version.rb'
 describe 'apache::mod::dav_svn class', unless: (fact('operatingsystem') == 'OracleLinux' && fact('operatingsystemmajrelease') == '7') do
   authz_svn_load_file = case fact('osfamily')
                         when 'Debian'
-                          if fact('operatingsystemmajrelease') == '16.04'
+                          if fact('operatingsystemmajrelease') == '16.04' || fact('operatingsystemmajrelease') == '9'
                             'dav_svn_authz_svn.load'
                           else
                             'authz_svn.load'

@@ -75,7 +75,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
         end
       end
 
-      unless fact('operatingsystem') == 'SLES'
+      unless fact('operatingsystem') == 'SLES' ||
+             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         it 'blocks query with SQL' do
           shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
         end
@@ -114,7 +115,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless fact('operatingsystem') == 'SLES'
+    unless fact('operatingsystem') == 'SLES' ||
+           (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -176,7 +178,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless fact('operatingsystem') == 'SLES'
+    unless  fact('operatingsystem') == 'SLES' ||
+            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -242,7 +245,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless fact('operatingsystem') == 'SLES'
+    unless  fact('operatingsystem') == 'SLES' ||
+            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -308,7 +312,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless fact('operatingsystem') == 'SLES'
+    unless  fact('operatingsystem') == 'SLES' ||
+            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -374,7 +379,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless fact('operatingsystem') == 'SLES'
+    unless  fact('operatingsystem') == 'SLES' ||
+            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end

@@ -23,8 +23,11 @@ describe 'apache::mod::passenger class' do
         passenger_ruby = '/usr/bin/ruby'
       end
     when 'Debian'
-      case fact('lsbdistcodename')
-      when 'jessie'
+      case fact('operatingsystemmajrelease')
+      when '8'
+        passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+        passenger_default_ruby = '/usr/bin/ruby'
+      when '9'
         passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
         passenger_default_ruby = '/usr/bin/ruby'
       else
@@ -76,11 +79,11 @@ describe 'apache::mod::passenger class' do
   when 'Debian'
     context 'passenger config with passenger_installed_version set' do
       pp_one = <<-MANIFEST
-          class { 'apache': }
-          class { 'apache::mod::passenger':
-            passenger_installed_version     => '4.0.0',
-            passenger_instance_registry_dir => '/some/path/to/nowhere'
-          }
+        class { 'apache': }
+        class { 'apache::mod::passenger':
+          passenger_installed_version     => '4.0.0',
+          passenger_instance_registry_dir => '/some/path/to/nowhere'
+        }
       MANIFEST
       it 'fails when an option is not valid for $passenger_installed_version' do
         apply_manifest(pp_one, expect_failures: true) do |r|
@@ -88,11 +91,11 @@ describe 'apache::mod::passenger class' do
         end
       end
       pp_two = <<-MANIFEST
-          class { 'apache': }
-          class { 'apache::mod::passenger':
-            passenger_installed_version => '5.0.0',
-            rails_autodetect            => 'on'
-          }
+        class { 'apache': }
+        class { 'apache::mod::passenger':
+          passenger_installed_version => '5.0.0',
+          rails_autodetect            => 'on'
+        }
       MANIFEST
       it 'fails when an option is removed' do
         apply_manifest(pp_two, expect_failures: true) do |r|
@@ -100,11 +103,11 @@ describe 'apache::mod::passenger class' do
         end
       end
       pp_three = <<-MANIFEST
-          class { 'apache': }
-          class { 'apache::mod::passenger':
-            passenger_installed_version => '5.0.0',
-            rails_ruby                  => '/some/path/to/ruby'
-          }
+        class { 'apache': }
+        class { 'apache::mod::passenger':
+          passenger_installed_version => '5.0.0',
+          rails_ruby                  => '/some/path/to/ruby'
+        }
       MANIFEST
       it 'warns when an option is deprecated' do
         apply_manifest(pp_three, catch_failures: true) do |r|
@@ -113,12 +116,23 @@ describe 'apache::mod::passenger class' do
       end
     end
     context 'default passenger config' do
-      pp = <<-MANIFEST
-          /* stock apache and mod_passenger */
-          class { 'apache': }
-          class { 'apache::mod::passenger': }
-          #{pp_rackapp}
-      MANIFEST
+      pp =  if ['7', '9', '16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
+              <<-MANIFEST
+                /* stock apache and mod_passenger */
+                class { 'apache': }
+                class { 'apache::mod::passenger':
+                  passenger_instance_registry_dir => '/var/run',
+                }
+                #{pp_rackapp}
+              MANIFEST
+            else
+              <<-MANIFEST
+                /* stock apache and mod_passenger */
+                class { 'apache': }
+                class { 'apache::mod::passenger': }
+                #{pp_rackapp}
+              MANIFEST
+            end
       it 'succeeds in puppeting passenger' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -150,8 +164,11 @@ describe 'apache::mod::passenger class' do
             it { is_expected.not_to contain '/PassengerDefaultRuby/' }
           end
         when 'Debian'
-          case fact('lsbdistcodename')
-          when 'jessie'
+          case fact('operatingsystemmajrelease')
+          when '8'
+            it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
+            it { is_expected.not_to contain '/PassengerRuby/' }
+          when '9'
             it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
             it { is_expected.not_to contain '/PassengerRuby/' }
           else
@@ -173,7 +190,8 @@ describe 'apache::mod::passenger class' do
       # these two lines
       unless (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') ||
              (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') ||
-             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8') ||
+             (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         expected_one << [%r{### Processes: [0-9]+}, %r{### Total private dirty RSS: [0-9\.]+ MB}]
       end
       it 'outputs status via passenger-memory-stats #stdout' do
@@ -193,27 +211,28 @@ describe 'apache::mod::passenger class' do
       # even when the passenger process is successfully installed and running
       unless fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '12.04'
         it 'outputs status via passenger-status #General information' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
+          shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
             # spacing may vary
             expect(r.stdout).to match(%r{[\-]+ General information [\-]+})
           end
         end
-        expected_two = if fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04' ||
+        expected_two = if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '14.04') ||
                           (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') == '16.04') ||
-                          fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+                          (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8') ||
+                          (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
                          [%r{Max pool size[ ]+: [0-9]+}, %r{Processes[ ]+: [0-9]+}, %r{Requests in top-level queue[ ]+: [0-9]+}]
                        else
                          [%r{max[ ]+= [0-9]+}, %r{count[ ]+= [0-9]+}, %r{active[ ]+= [0-9]+}, %r{inactive[ ]+= [0-9]+}, %r{Waiting on global queue: [0-9]+}]
                        end
         it 'outputs status via passenger-status #stdout' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
+          shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
             expected_two.each do |expect|
               expect(r.stdout).to match(expect)
             end
           end
         end
         it 'outputs status via passenger-status #exit_code' do
-          shell('PATH=/usr/bin:$PATH /usr/sbin/passenger-status') do |r|
+          shell('PATH=/usr/bin:$PATH PASSENGER_INSTANCE_REGISTRY_DIR=/var/run /usr/sbin/passenger-status') do |r|
             expect(r.exit_code).to eq(0)
           end
         end
