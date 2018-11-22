@@ -114,6 +114,9 @@ IncludeOptional "<%= @confd_dir %>/*.conf"
 <%- else -%>
 Include "<%= @confd_dir %>/*.conf"
 <%- end -%>
+<%- if @conf_enabled and scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+IncludeOptional "<%= @conf_enabled %>/*.conf"
+<%- end -%>
 <% if @vhost_load_dir != @confd_dir -%>
 <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
 IncludeOptional "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
