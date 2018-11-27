@@ -8,6 +8,7 @@ class apache::mod::php (
   $source           = undef,
   $root_group       = $::apache::params::root_group,
   $php_version      = $::apache::params::php_version,
+  $libphp_prefix    = 'libphp'
 ) inherits apache::params {
 
   include ::apache
@@ -48,9 +49,9 @@ class apache::mod::php (
   } else {
     $_package_name = undef
   }
-  
-  # Controls the php version and libphp prefix
-  $_lib = "libphp${php_version}.so"
+
+  # Controls php version and libphp prefix
+  $_lib = "${libphp_prefix}${php_version}.so"
   $_php_major = regsubst($php_version, '^(\d+)\..*$', '\1')
 
   if $::operatingsystem == 'SLES' {
