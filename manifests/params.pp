@@ -263,8 +263,8 @@ class apache::params inherits ::apache::version {
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
-    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) {
-      # Debian stretch uses a different dav_svn from Ubuntu Xenial
+    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+      # Debian stretch and Ubuntu 18.04 uses a different dav_svn and security from Ubuntu Xenial
       $php_version = '7.0'
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
