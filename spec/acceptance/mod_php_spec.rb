@@ -4,6 +4,28 @@ require_relative './version.rb'
 unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '12'
   describe 'apache::mod::php class' do
     context 'default php config' do
+      if ['16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
+        # this policy defaults to 101. it prevents newly installed services from starting
+        # it is useful for containers, it prevents new processes during 'docker build'
+        # but we actually want to test the services and this should not behave like docker
+        # but like a normal operating system
+
+        # without this apache fails to start -> installation of mod-php-something fails because it reloads apache to enable the module
+        # exit codes are documented at https://askubuntu.com/a/365912. Default for docker images is 101
+        shell("if [ -a '/usr/sbin/policy-rc.d' ]; then sed -i 's/^exit.*/exit 0/' /usr/sbin/policy-rc.d; fi")
+      end
+      if fact('operatingsystemmajrelease') == '18.04'
+        # apache helper script has a bug which prevents the installation of certain apache modules
+        # https://bugs.launchpad.net/ubuntu/+source/php7.2/+bug/1771934
+        # https://bugs.launchpad.net/ubuntu/+source/apache2/+bug/1782806
+        pp1 = "class { 'apache': mpm_module => 'prefork',}"
+        it 'succeeds in installing apache' do
+          apply_manifest(pp1, catch_failures: true)
+        end
+        it 'fixes the broken apache2 helper from Ubuntu 18.04' do
+          shell("sed -i 's|a2query -m \"$mpm_$MPM\"|a2query -m \"mpm_$MPM\"|' /usr/share/apache2/apache2-maintscript-helper")
+        end
+      end
       pp = <<-MANIFEST
           class { 'apache':
             mpm_module => 'prefork',
@@ -35,6 +57,10 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') ==
       if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
          (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
         describe file("#{$mod_dir}/php7.0.conf") do
+          it { is_expected.to contain 'DirectoryIndex index.php' }
+        end
+      elsif fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04'
+        describe file("#{$mod_dir}/php7.2.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
       else
@@ -126,30 +152,8 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') ==
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain '# somecontent' }
         end
-      else
-        describe file("#{$mod_dir}/php5.conf") do
-          it { is_expected.to contain '# somecontent' }
-        end
-      end
-    end
-
-    context 'provide content and template config file' do
-      pp = <<-MANIFEST
-          class {'apache':
-            mpm_module => 'prefork',
-          }
-          class {'apache::mod::php':
-            content  => '# somecontent',
-            template => 'apache/mod/php5.conf.erb',
-          }
-      MANIFEST
-      it 'succeeds in puppeting php' do
-        apply_manifest(pp, catch_failures: true)
-      end
-
-      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
-         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
-        describe file("#{$mod_dir}/php7.0.conf") do
+      elsif fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04'
+        describe file("#{$mod_dir}/php7.2.conf") do
           it { is_expected.to contain '# somecontent' }
         end
       else
