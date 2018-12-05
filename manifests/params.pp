@@ -218,7 +218,12 @@ class apache::params inherits ::apache::version {
     $server_root         = '/etc/apache2'
     $conf_dir            = $httpd_dir
     $confd_dir           = "${httpd_dir}/conf.d"
-    $conf_enabled        = "${httpd_dir}/conf-enabled"
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') == 0) {
+      # Overwrite conf_enabled to be false as it causes errors with Shibboleth when enabled on Ubuntu 18.04
+      $conf_enabled      = undef
+    } else {
+      $conf_enabled      = "${httpd_dir}/conf-enabled"
+    }
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
     $vhost_dir           = "${httpd_dir}/sites-available"
