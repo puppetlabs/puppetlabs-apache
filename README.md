@@ -1504,7 +1504,9 @@ To prevent Puppet from managing the user, set the [`manage_user`][] parameter to
 
 ##### `apache_name`
 
-The name of the Apache package to install. If you are using a non-standard Apache package, such as those from Red Hat's software collections, you might need to override the default setting.
+The name of the Apache package to install. If you are using a non-standard Apache package you might need to override the default setting.
+
+For CentOS/RHEL Software Collections (SCL), you can also use `apache::version::scl_httpd_version`.
 
 Default: Depends on the user set by [`apache::params`][] class, based on your operating system:
 
@@ -3074,6 +3076,28 @@ Manages the Apache daemon.
 #### Class: `apache::version`
 
 Attempts to automatically detect the Apache version based on the operating system.
+
+##### Red Hat Software Collections (SCL)
+
+Software Collections on CentOS/RHEL allow for newer Apache and PHP, amongst other packages.
+
+If `scl_httpd_version` is set, Apache Httpd will get installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+If `scl_httpd_version` is set, `scl_php_version` also needs to be set, even if PHP is not going to be installed.
+
+The repository is not managed by this module yet. For CentOS you can enable the repo by installing the package `centos-release-scl-rh`.
+
+##### `scl_httpd_version`
+
+#### Version of httpd to install.
+
+Example: `2.4` for Apache 2.4.
+
+##### `scl_php_version`
+
+Version of PHP to use.
+
+Example: `7.1`
 
 ### Public defined types
 
