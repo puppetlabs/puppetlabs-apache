@@ -67,6 +67,13 @@ class apache::mod::jk (
   # Manages basic module config
   ::apache::mod { 'jk': }
 
+  # Ensure that we are not using variables with the typo fixed by MODULES-6225
+  # anymore:
+  if !empty($workers_file_content) and has_key($workers_file_content, 'worker_mantain') {
+    fail('Please replace $workers_file_content[\'worker_mantain\'] by $workers_file_content[\'worker_maintain\']. See MODULES-6225 for details.')
+  }
+
+
   # Binding to mod_jk
   if $add_listen {
     $_ip = $ip ? {

@@ -3,8 +3,7 @@ require_relative './version.rb'
 
 describe 'apache::vhosts class' do
   context 'custom vhosts defined via class apache::vhosts' do
-    it 'should create custom vhost config files' do
-      pp = <<-EOS
+    pp = <<-MANIFEST
         class { 'apache::vhosts':
           vhosts => {
             'custom_vhost_1' => {
@@ -17,8 +16,9 @@ describe 'apache::vhosts class' do
             },
           },
         }
-      EOS
-      apply_manifest(pp, :catch_failures => true)
+    MANIFEST
+    it 'creates custom vhost config files' do
+      apply_manifest(pp, catch_failures: true)
     end
 
     describe file("#{$vhost_dir}/25-custom_vhost_1.conf") do

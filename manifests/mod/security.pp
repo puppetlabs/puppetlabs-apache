@@ -128,6 +128,8 @@ class apache::mod::security (
     }
   }
 
-  unless $::operatingsystem == 'SLES' { apache::security::rule_link { $activated_rules: } }
-
+  # Debian 9 has a different rule setup
+  unless $::operatingsystem == 'SLES' or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+    apache::security::rule_link { $activated_rules: }
+  }
 }

@@ -20,6 +20,12 @@
   <%- end -%>
   SSLCryptoDevice <%= @ssl_cryptodevice %>
   SSLHonorCipherOrder <%= scope.call_function('apache::bool2httpd', [@_ssl_honorcipherorder]) %>
+  <%- if @ssl_cert -%>
+  SSLCertificateFile      "<%= @ssl_cert %>"
+  <%- end -%>
+  <%- if @ssl_key -%>
+  SSLCertificateKeyFile   "<%= @ssl_key %>"
+  <%- end -%>
   <%- if @ssl_ca -%>
   SSLCACertificateFile    "<%= @ssl_ca %>"
   <%- end -%>

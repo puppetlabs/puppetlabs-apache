@@ -14,12 +14,8 @@
 #    # => 'Off'
 Puppet::Functions.create_function(:'apache::bool2httpd') do
   def bool2httpd(arg)
-    if arg.nil? or arg == false or arg =~ /false/i or arg == :undef
-      return 'Off'
-    elsif arg == true or arg =~ /true/i
-      return 'On'
-    end
-
-    return arg.to_s
+    return 'Off' if arg.nil? || arg == false || arg =~ %r{false}i || arg == :undef
+    return 'On' if arg == true || arg =~ %r{true}i
+    arg.to_s
   end
 end

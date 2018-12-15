@@ -5,19 +5,19 @@ describe 'apache class' do
   context 'default parameters' do
     let(:pp) { "class { 'apache': }" }
 
-    it_behaves_like "a idempotent resource"
+    it_behaves_like 'a idempotent resource'
 
     describe 'apache_version fact' do
-      before :all do
-        apply_manifest("include apache", :catch_failures => true)
-        version_check_pp = <<-EOS
+      let(:result) do
+        apply_manifest('include apache', catch_failures: true)
+        version_check_pp = <<-MANIFEST
         notice("apache_version = >${apache_version}<")
-        EOS
-        @result = apply_manifest(version_check_pp, :catch_failures => true)
+        MANIFEST
+        apply_manifest(version_check_pp, catch_failures: true)
       end
 
       it {
-        expect(@result.output).to match(/apache_version = >#{$apache_version}.*</)
+        expect(result.output).to match(%r{apache_version = >#{$apache_version}.*<})
       }
     end
 
@@ -26,23 +26,23 @@ describe 'apache class' do
     end
 
     describe service($service_name) do
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
-        it { should be_enabled }
+        it { is_expected.to be_enabled }
       end
       it { is_expected.to be_running }
     end
 
     describe port(80) do
-      it { should be_listening }
+      it { is_expected.to be_listening }
     end
   end
 
   context 'custom site/mod dir parameters' do
     # Using puppet_apply as a helper
     let(:pp) do
-      <<-EOS
+      <<-MANIFEST
         if $::osfamily == 'RedHat' and "$::selinux" == "true" {
           $semanage_package = $::operatingsystemmajrelease ? {
             '5'     => 'policycoreutils',
@@ -71,17 +71,17 @@ describe 'apache class' do
           mod_dir   => '/apache_spec/apache_custom/mods',
           vhost_dir => '/apache_spec/apache_custom/vhosts',
         }
-      EOS
+      MANIFEST
     end
 
     # Run it twice and test for idempotency
-    it_behaves_like "a idempotent resource"
+    it_behaves_like 'a idempotent resource'
 
     describe service($service_name) do
-      if (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8')
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
       else
-        it { should be_enabled }
+        it { is_expected.to be_enabled }
       end
       it { is_expected.to be_running }
     end

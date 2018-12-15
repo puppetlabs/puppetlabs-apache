@@ -64,7 +64,7 @@ class apache::mod::passenger (
   $passenger_min_instances                                                                   = undef,
   $passenger_nodejs                                                                          = undef,
   $passenger_pool_idle_time                                                                  = undef,
-  $passenger_pre_start                                                                       = undef,
+  Optional[Variant[String,Array[String]]] $passenger_pre_start                               = undef,
   $passenger_python                                                                          = undef,
   $passenger_resist_deployment_errors                                                        = undef,
   $passenger_resolve_symlinks_in_document_root                                               = undef,
@@ -410,7 +410,7 @@ class apache::mod::passenger (
         fail('REMOVED PASSENGER OPTION :: passenger_use_global_queue :: -- no message on the current passenger reference webpage -- ')
       }
       if (versioncmp($passenger_installed_version, '2.0.4') < 0) {
-        fail('Passenger config option :: passenger_use_global_queue is not introduced until version 2.0.4 :: ${passenger_installed_version} is the version reported')
+        fail("Passenger config option :: passenger_use_global_queue is not introduced until version 2.0.4 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $passenger_user {
@@ -527,7 +527,7 @@ class apache::mod::passenger (
       descr         => 'passenger',
       enabled       => '1',
       gpgcheck      => '0',
-      gpgkey        => 'https://packagecloud.io/gpg.key',
+      gpgkey        => 'https://packagecloud.io/phusion/passenger/gpgkey',
       repo_gpgcheck => '1',
       sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
       sslverify     => '1',

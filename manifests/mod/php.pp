@@ -13,6 +13,9 @@ class apache::mod::php (
   include ::apache
   $mod = "php${php_version}"
 
+  if $::apache::version::scl_httpd_version == undef and $::apache::version::scl_php_version != undef {
+    fail('If you define apache::version::scl_php_version, you also need to specify apache::version::scl_httpd_version')
+  }
   if defined(Class['::apache::mod::prefork']) {
     Class['::apache::mod::prefork']->File["${mod}.conf"]
   }
@@ -49,28 +52,31 @@ class apache::mod::php (
     $_package_name = undef
   }
 
-  $_lib = "libphp${php_version}.so"
   $_php_major = regsubst($php_version, '^(\d+)\..*$', '\1')
+  $_php_version_no_dot = regsubst($php_version, '\.', '')
+  if $apache::version::scl_httpd_version {
+    $_lib = "librh-php${_php_version_no_dot}-php${_php_major}.so"
+  } else {
+    $_lib = "libphp${php_version}.so"
+  }
 
   if $::operatingsystem == 'SLES' {
-      ::apache::mod { $mod:
-        package        => $_package_name,
-        package_ensure => $package_ensure,
-        lib            => 'mod_php5.so',
-        id             => "php${_php_major}_module",
-        path           => "${::apache::lib_path}/mod_php5.so",
-      }
-    } else {
-      ::apache::mod { $mod:
-        package        => $_package_name,
-        package_ensure => $package_ensure,
-        lib            => $_lib,
-        id             => "php${_php_major}_module",
-        path           => $path,
-      }
-
+    ::apache::mod { $mod:
+      package        => $_package_name,
+      package_ensure => $package_ensure,
+      lib            => "mod_${mod}.so",
+      id             => "php${_php_major}_module",
+      path           => "${::apache::lib_path}/mod_${mod}.so",
     }
-
+  } else {
+    ::apache::mod { $mod:
+      package        => $_package_name,
+      package_ensure => $package_ensure,
+      lib            => $_lib,
+      id             => "php${_php_major}_module",
+      path           => $path,
+    }
+  }
 
   include ::apache::mod::mime
   include ::apache::mod::dir

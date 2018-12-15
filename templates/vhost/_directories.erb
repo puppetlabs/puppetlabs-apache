@@ -85,8 +85,116 @@
     <%- if directory['sethandler'] and directory['sethandler'] != '' -%>
     SetHandler <%= directory['sethandler'] %>
     <%- end -%>
-    <%- if directory['passenger_enabled'] and directory['passenger_enabled'] != '' -%>
-    PassengerEnabled <%= directory['passenger_enabled'] %>
+    <%- unless directory['passenger_enabled'].nil? -%>
+    PassengerEnabled <%= scope.call_function('apache::bool2httpd', [directory['passenger_enabled']]) %>
+    <%- end -%>
+    <%- if directory['passenger_base_uri'] and ! directory['passenger_base_uri'].empty? -%>
+    PassengerBaseURI <%= directory['passenger_base_uri'] %>
+    <%- end -%>
+    <%- if directory['passenger_ruby'] and ! directory['passenger_ruby'].empty? -%>
+    PassengerRuby <%= directory['passenger_ruby'] %>
+    <%- end -%>
+    <%- if directory['passenger_python'] and ! directory['passenger_python'].empty? -%>
+    PassengerPython <%= directory['passenger_python'] %>
+    <%- end -%>
+    <%- if directory['passenger_nodejs'] and ! directory['passenger_nodejs'].empty? -%>
+    PassengerNodejs <%= directory['passenger_nodejs'] %>
+    <%- end -%>
+    <%- if directory['passenger_meteor_app_settings'] and ! directory['passenger_meteor_app_settings'].empty? -%>
+    PassengerMeteorAppSettings <%= directory['passenger_meteor_app_settings'] %>
+    <%- end -%>
+    <%- if directory['passenger_app_env'] and ! directory['passenger_app_env'].empty? -%>
+    PassengerAppEnv <%= directory['passenger_app_env'] %>
+    <%- end -%>
+    <%- if directory['passenger_app_root'] and ! directory['passenger_app_root'].empty? -%>
+    PassengerAppRoot <%= directory['passenger_app_root'] %>
+    <%- end -%>
+    <%- if directory['passenger_app_group_name'] and ! directory['passenger_app_group_name'].empty? -%>
+    PassengerAppGroupName <%= directory['passenger_app_group_name'] %>
+    <%- end -%>
+    <%- if directory['passenger_app_type'] and ! directory['passenger_app_type'].empty? -%>
+    PassengerAppType <%= directory['passenger_app_type'] %>
+    <%- end -%>
+    <%- if directory['passenger_startup_file'] and ! directory['passenger_startup_file'].empty? -%>
+    PassengerStartupFile <%= directory['passenger_startup_file'] %>
+    <%- end -%>
+    <%- if directory['passenger_restart_dir'] and ! directory['passenger_restart_dir'].empty? -%>
+    PassengerRestartDir <%= directory['passenger_restart_dir'] %>
+    <%- end -%>
+    <%- unless directory['passenger_load_shell_envvars'].nil? -%>
+    PassengerLoadShellEnvvars <%= scope.call_function('apache::bool2httpd', [directory['passenger_load_shell_envvars']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_rolling_restarts'].nil? -%>
+    PassengerRollingRestarts <%= scope.call_function('apache::bool2httpd', [directory['passenger_rolling_restarts']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_resist_deployment_errors'].nil? -%>
+    PassengerResistDeploymentErrors <%= scope.call_function('apache::bool2httpd', [directory['passenger_resist_deployment_errors']]) %>
+    <%- end -%>
+    <%- if directory['passenger_user'] and ! directory['passenger_user'].empty? -%>
+    PassengerUser <%= directory['passenger_user'] %>
+    <%- end -%>
+    <%- if directory['passenger_group'] and ! directory['passenger_group'].empty? -%>
+    PassengerGroup <%= directory['passenger_group'] %>
+    <%- end -%>
+    <%- unless directory['passenger_friendly_error_pages'].nil? -%>
+    PassengerFriendlyErrorPages <%= scope.call_function('apache::bool2httpd', [directory['passenger_friendly_error_pages']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_min_instances'].nil? -%>
+    PassengerMinInstances <%= directory['passenger_min_instances'] %>
+    <%- end -%>
+    <%- unless directory['passenger_max_instances'].nil? -%>
+    PassengerMaxInstances <%= directory['passenger_max_instances'] %>
+    <%- end -%>
+    <%- unless directory['passenger_force_max_concurrent_requests_per_process'].nil? -%>
+    PassengerForceMaxConcurrentRequestsPerProcess <%= directory['passenger_force_max_concurrent_requests_per_process'] %>
+    <%- end -%>
+    <%- unless directory['passenger_start_timeout'].nil? -%>
+    PassengerStartTimeout <%= directory['passenger_start_timeout'] %>
+    <%- end -%>
+    <%- if directory['passenger_concurrency_model'] and ! directory['passenger_concurrency_model'].empty? -%>
+    PassengerConcurrencyModel <%= directory['passenger_concurrency_model'] %>
+    <%- end -%>
+    <%- unless directory['passenger_thread_count'].nil? -%>
+    PassengerThreadCount <%= directory['passenger_thread_count'] %>
+    <%- end -%>
+    <%- unless directory['passenger_max_requests'].nil? -%>
+    PassengerMaxRequests <%= directory['passenger_max_requests'] %>
+    <%- end -%>
+    <%- unless directory['passenger_max_request_time'].nil? -%>
+    PassengerMaxRequestTime <%= directory['passenger_max_request_time'] %>
+    <%- end -%>
+    <%- unless directory['passenger_memory_limit'].nil? -%>
+    PassengerMemoryLimit <%= directory['passenger_memory_limit'] %>
+    <%- end -%>
+    <%- unless directory['passenger_high_performance'].nil? -%>
+    PassengerHighPerformance <%= scope.call_function('apache::bool2httpd', [directory['passenger_high_performance']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_buffer_upload'].nil? -%>
+    PassengerBufferUpload <%= scope.call_function('apache::bool2httpd', [directory['passenger_buffer_upload']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_buffer_response'].nil? -%>
+    PassengerBufferResponse <%= scope.call_function('apache::bool2httpd', [directory['passenger_buffer_response']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_error_override'].nil? -%>
+    PassengerErrorOverride <%= scope.call_function('apache::bool2httpd', [directory['passenger_error_override']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_max_request_queue_size'].nil? -%>
+    PassengerMaxRequestQueueSize <%= directory['passenger_max_request_queue_size'] %>
+    <%- end -%>
+    <%- unless directory['passenger_max_request_queue_time'].nil? -%>
+    PassengerMaxRequestQueueTime <%= directory['passenger_max_request_queue_time'] %>
+    <%- end -%>
+    <%- unless directory['passenger_sticky_sessions'].nil? -%>
+    PassengerStickySessions <%= scope.call_function('apache::bool2httpd', [directory['passenger_sticky_sessions']]) %>
+    <%- end -%>
+    <%- if directory['passenger_sticky_sessions_cookie_name'] and ! directory['passenger_sticky_sessions_cookie_name'].empty? -%>
+    PassengerStickySessionsCookieName <%= directory['passenger_sticky_sessions_cookie_name'] %>
+    <%- end -%>
+    <%- unless directory['passenger_allow_encoded_slashes'].nil? -%>
+    PassengerAllowEncodedSlashes <%= scope.call_function('apache::bool2httpd', [directory['passenger_allow_encoded_slashes']]) %>
+    <%- end -%>
+    <%- unless directory['passenger_debugger'].nil? -%>
+    PassengerDebugger <%= scope.call_function('apache::bool2httpd', [directory['passenger_debugger']]) %>
     <%- end -%>
     <%- if directory['php_flags'] and ! directory['php_flags'].empty? -%>
       <%- directory['php_flags'].sort.each do |flag,value| -%>

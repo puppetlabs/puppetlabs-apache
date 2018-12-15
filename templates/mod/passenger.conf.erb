@@ -125,7 +125,9 @@
   PassengerPoolIdleTime <%= @passenger_pool_idle_time %>
   <%- end -%>
   <%- if @passenger_pre_start -%>
-  PassengerPreStart <%= @passenger_pre_start %>
+    <%- [@passenger_pre_start].flatten.compact.each do |passenger_pre_start| -%>
+  PassengerPreStart <%= passenger_pre_start %>
+    <%- end -%>
   <%- end -%>
   <%- if @passenger_python -%>
   PassengerPython "<%= @passenger_python %>"

@@ -1,22 +1,28 @@
 ---
-require:
- - rubocop-rspec
+require: rubocop-rspec
 AllCops:
+  DisplayCopNames: true
   TargetRubyVersion: '2.1'
   Include:
   - "./**/*.rb"
   Exclude:
   - bin/*
   - ".vendor/**/*"
-  - Gemfile
-  - Rakefile
+  - "**/Gemfile"
+  - "**/Rakefile"
   - pkg/**/*
   - spec/fixtures/**/*
   - vendor/**/*
-inherit_from: .rubocop_todo.yml
+  - "**/Puppetfile"
+  - "**/Vagrantfile"
+  - "**/Guardfile"
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200
+GetText/DecorateString:
+  Description: We don't want to decorate test output.
+  Exclude:
+  - spec/*
 RSpec/BeforeAfterAll:
   Description: Beware of using after(:all) as it may cause state to leak between tests.
     A necessary evil in acceptance testing.
@@ -64,12 +70,25 @@ Style/TrailingCommaInLiteral:
 Style/SymbolArray:
   Description: Using percent style obscures symbolic intent of array's contents.
   EnforcedStyle: brackets
+inherit_from: ".rubocop_todo.yml"
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+Style/Documentation:
+  Exclude:
+  - lib/puppet/parser/functions/**/*
+  - spec/**/*
+Style/WordArray:
+  EnforcedStyle: brackets
 Style/CollectionMethods:
   Enabled: true
 Style/MethodCalledOnDoEndBlock:
   Enabled: true
 Style/StringMethods:
   Enabled: true
+Layout/EndOfLine:
+  Enabled: false
+Layout/IndentHeredoc:
+  Enabled: false
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
@@ -88,7 +107,13 @@ Metrics/PerceivedComplexity:
   Enabled: false
 RSpec/DescribeClass:
   Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
 RSpec/MessageExpectation:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NestedGroups:
   Enabled: false
 Style/AsciiComments:
   Enabled: false

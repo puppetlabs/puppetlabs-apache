@@ -24,6 +24,7 @@
 [パブリック定義タイプ]: #public-defined-types
 [プライベート定義タイプ]: #private-defined-types
 [テンプレート]: #templates
+[タスク]: #tasks
 
 [制約事項]: #limitations
 
@@ -49,6 +50,7 @@
 [`apache::mod::authn_dbd`]: #class-apachemodauthn_dbd
 [`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
 [`apache::mod::cluster`]: #class-apachemodcluster
+[`apache::mod::data]: #class-apachemoddata
 [`apache::mod::disk_cache`]: #class-apachemoddisk_cache
 [`apache::mod::dumpio`]: #class-apachemoddumpio
 [`apache::mod::event`]: #class-apachemodevent
@@ -64,6 +66,7 @@
 [`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
 [`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
 [`apache::mod::proxy_html`]: #class-apachemodproxy_html
+[`apache::mod::python`]: #class-apachemodpython
 [`apache::mod::security`]: #class-apachemodsecurity
 [`apache::mod::shib`]: #class-apachemodshib
 [`apache::mod::ssl`]: #class-apachemodssl
@@ -143,6 +146,7 @@
 [`keepalive`パラメータ]: #keepalive
 [`keepalive_timeout`]: #keepalive_timeout
 [`limitreqfieldsize`]: https://httpd.apache.org/docs/current/mod/core.html#limitrequestfieldsize
+[`limitreqfields`]: http://httpd.apache.org/docs/current/mod/core.html#limitrequestfields
 
 [`lib`]: #lib
 [`lib_path`]: #lib_path
@@ -166,6 +170,7 @@
 [`mod_alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html
 [`mod_auth_cas`]: https://github.com/Jasig/mod_auth_cas
 [`mod_auth_kerb`]: http://modauthkerb.sourceforge.net/configure.html
+[`mod_auth_gssapi`]: https://github.com/modauthgssapi/mod_auth_gssapi
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
@@ -187,6 +192,7 @@
 [`mod_proxy`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html
 [`mod_proxy_balancer`]: https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
 [`mod_reqtimeout`]: https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html
+[`mod_python`]: http://modpython.org/
 [`mod_rewrite`]: https://httpd.apache.org/docs/current/mod/mod_rewrite.html
 [`mod_security`]: https://www.modsecurity.org/
 [`mod_ssl`]: https://httpd.apache.org/docs/current/mod/mod_ssl.html
@@ -261,6 +267,8 @@
 [テンプレート]: http://docs.puppet.com/puppet/latest/reference/lang_template.html
 [`TraceEnable`]: https://httpd.apache.org/docs/current/mod/core.html#traceenable
 
+[`UseCanonicalName`]: https://httpd.apache.org/docs/current/mod/core.html#usecanonicalname
+
 [`verify_config`]: #verify_config
 [`vhost`]: #defined-type-apachevhost
 [`vhost_dir`]: #vhost_dir
@@ -287,6 +295,7 @@
     - [パブリック定義タイプ][]
     - [プライベート定義タイプ][]
     - [テンプレート][]
+    - [タスク][]
 5. [制約事項 - OSの互換性など][制約事項]
 6. [開発 - モジュールへの貢献方法][開発]
     - [apacheモジュールへの貢献][貢献]
@@ -814,6 +823,7 @@ apache::balancer { 'puppet01':
     - [定義タイプ: apache::peruser::processor](#defined-type-apacheperuserprocessor)
     - [定義タイプ: apache::security::file_link](#defined-type-apachesecurityfile_link)
 - [**テンプレート**](#templates)
+- [**タスク**](#tasks)
 
 ### パブリッククラス
 
@@ -1090,9 +1100,9 @@ HTTPプロトコルチェックの厳密さを指定します。
 
 [`KeepAlive`][]ディレクティブによってHTTPの持続的接続を有効にするかどうかを決定します。 'On'に設定する場合は、[`keepalive_timeout`][]および[`max_keepalive_requests`][]パラメータを使って関連オプションを設定してください。 
 
-値: 'Off', 'On'。
+値: 'Off'、'On'。
 
-デフォルト値: 'Off'。
+デフォルト値: 'On'。
 
 ##### `keepalive_timeout`
 
@@ -1201,6 +1211,21 @@ Puppetが[Apacheモジュール][]の設定ファイルを置く場所を設定�
 - **FreeBSD**: `/usr/local/etc/apache22/Modules`
 - **Gentoo**: `/etc/apache2/modules.d`
 - **Red Hat**: `/etc/httpd/conf.d`
+
+##### `mod_libs`
+
+デフォルトのモジュールライブラリ名をユーザがオーバーライドすることを許可します。
+
+```puppet
+include apache::params
+class { 'apache':
+  mod_libs => merge($::apache::params::mod_libs, {
+    'wsgi' => 'mod_wsgi_python3.so',
+  })
+}
+```
+
+ハッシュ。デフォルト値: `$apache::params::mod_libs`
 
 ##### `mod_packages`
 
@@ -1367,6 +1392,22 @@ HTTPDサービスの再起動にあたり、Puppetが特定のコマンドを使
 
 デフォルト値: `undef`。
 
+##### `ssl_cert`
+
+特定の SSLCertificateFile を指定できるようになります。
+
+詳細については、[SSLCertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateFile)を参照してください。
+
+デフォルト値: `undef`。
+
+##### `ssl_key`
+特定の  SSLCertificateKey を指定できるようになります。
+
+詳細については、[SSLCertificateKey](https://httpd.apache.org/docs/current/mod/mod_ssl.html#SSLCertificateKeyFile)を参照してください。
+
+デフォルト値: `undef`。
+
+
 ##### `ssl_ca`
 
 SSL証明書認証局を指定します。[SSLCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcacertificatefile)を使用してSSLクライアント認証で使用する証明書を確認します。
@@ -1386,9 +1427,17 @@ Apacheの[`TimeOut`][]ディレクティブを設定します。このディレ�
 
 [`TraceEnable`][]ディレクティブで、Apacheが`TRACE`リクエスト([RFC 2616][]ごと)をどのように処理するかを制御します。
 
-値: 'Off', 'On'。
+値: 'Off'、'On'。
 
 デフォルト値: 'On'。
+
+##### `use_canonical_name`
+
+Apacheの [`UseCanonicalName`][]ディレクティブを制御します。このディレクティブは、Apacheが自己参照URLをどのように処理するかを制御します。指定しない場合、このパラメータの宣言がサーバの設定から除外され、Apacheのデフォルト設定'off'が使用されます。
+
+値: 'On', 'on', 'Off', 'off', 'DNS', 'dns'。
+
+デフォルト値: `undef`。
 
 ##### `use_systemd`
 
@@ -1500,6 +1549,12 @@ Puppetがこのユーザを管理しないようにするには、[`manage_user`
 - **Red Hat**: 'access_log'
 - **Suse**: 'access.log'
 
+##### `limitreqfields`
+
+[`limitreqfields`][]パラメータは、HTTPリクエスト内のリクエストヘッダフィールドの最大数を設定します。このディレクティブを使用すると、サーバ管理者は異常なクライアントリクエスト動作の制御を強化できるので、ある種のDoS攻撃の防止に役立てることができます。送信リクエスト内のフィールドが多過ぎることを示すエラー応答が、通常のクライアントに対して表示される場合、この値を増やす必要があります。
+
+デフォルト値: '100'。
+
 #### クラス: `apache::dev`
 
 Apache開発ライブラリをインストールします。
@@ -1515,7 +1570,7 @@ Apache開発ライブラリをインストールします。
 
 [`apache::vhost`][]定義タイプを作成します。
 
-**パラメータ**:
+**パラメータ**:　
 
 * `vhosts`: [`apache::vhost`][]定義タイプのパラメータを指定します。
 
@@ -1558,6 +1613,7 @@ class { 'apache::mod::alias':
 * `auth_cas`\* ([`apache::mod::auth_cas`][]参照)
 * `auth_mellon`\* ([`apache::mod::auth_mellon`][]参照)
 * `auth_kerb`
+* auth_gssapi
 * `authn_core`
 * `authn_dbd`\* ([`apache::mod::authn_dbd`][]参照)
 * `authn_file`
@@ -1570,6 +1626,7 @@ class { 'apache::mod::alias':
 * `cgi`
 * `cgid`
 * `cluster` ([`apache::mod::cluster`][]参照)
+* `data`
 * `dav`
 * `dav_fs`
 * `dav_svn`\*
@@ -1612,7 +1669,7 @@ class { 'apache::mod::alias':
 * `proxy_balancer`
 * `proxy_html` ([`apache::mod::proxy_html`][]参照)
 * `proxy_http`
-* `python`
+* `python` ([`apache::mod::python`][]参照)
 * `reqtimeout`
 * `remoteip`\*
 * `rewrite`
@@ -1650,7 +1707,7 @@ class { 'apache::mod::alias':
     * **Debian**: `/usr/share/apache2/icons`
     * **FreeBSD**: `/usr/local/www/apache24/icons`
     * **Gentoo**: `/var/www/icons`
-    * *Red Hat**: `/var/www/icons`、ただし、Apache 2.4は`/usr/share/httpd/icons`
+    * **Red Hat**: `/var/www/icons`、Apache 2.4の場合のみ、`/usr/share/httpd/icons`
 
 #### クラス: `apache::mod::disk_cache`
 
@@ -1671,13 +1728,21 @@ class {'::apache::mod::disk_cache':
 }
 ```
 
+キャッシュ無視ヘッダを指定するには、文字列を`cache_ignore_headers`パラメータに渡します。
+
+``` puppet
+class {'::apache::mod::disk_cache':
+  cache_ignore_headers => "Set-Cookie",
+}
+```
+
 ##### クラス: `apache::mod::diskio`
 
 [`mod_diskio`][]をインストールして設定します。
 
 ```puppet
 class{'apache':
-  default_mods => `false`,
+  default_mods => false,
   log_level    => 'dumpio:trace7',
 }
 class{'apache::mod::diskio':
@@ -1988,9 +2053,9 @@ class { '::apache::mod::cluster':
 
 **パラメータ**:　
 
-* `types`: デフレートする[MIMEタイプ][MIME `content*type`]の[配列][]。 
+* `types`: デフレートする[配列][]または[MIMEタイプ][MIME `content-type`]。
 
-  デフォルト値: [ 'text/html text/plain text/xml'、'text/css'、'application/x*javascript application/javascript application/ecmascript'、'application/rss+xml'、'application/json' ]。
+  デフォルト値: ['text/html text/plain text/xml', 'text/css', 'application/x-javascript application/javascript application/ecmascript', 'application/rss+xml', 'application/json']。
 
 * `notes`: [ハッシュ][]、キーはタイプを表し、値はノート名を表します。
 
@@ -2012,9 +2077,9 @@ class { '::apache::mod::cluster':
 
   デフォルト値: `undef`。
 
-* `expires_by_type`: [MIME `content*type`][]とその有効時間のセットを記述します。
+* `expires_by_type`: 一連の[MIME `content-type`][]とその有効期限を表します。
 
-  値: [ハッシュ][ハッシュ]の[配列][]、各ハッシュのキーは有効なMIME `content*type` ('text/json'など)、値は以下の有効な [インターバル構文][]。
+  値: [ハッシュ][ハッシュ]の[配列][]、各ハッシュのキーは有効なMIME `content-type` ('text/json'など)、値は以下の有効な [インターバル構文][]。
 
   デフォルト値: `undef`。
 
@@ -2146,6 +2211,54 @@ apache::vhost { 'example.org':
 
   デフォルト値: `true`。
 
+##### クラス: `apache::mod::itk`
+
+[`mod_itk`][]をインストールして管理します。これはHTTPDプロセス向けにロードおよび設定されるMPMです。[公式ドキュメント](http://mpm-itk.sesse.net/)。
+
+**パラメータ**:　
+
+* `startservers`: 起動時に作成される子サーバプロセスの数。
+
+  値: 整数。
+
+  デフォルト値: `8`。
+
+* `minspareservers`: 待機する子サーバプロセスに望ましい最小数。
+
+  値: 整数。
+
+  デフォルト値: `5`。
+
+* `maxspareservers`: 待機する子サーバプロセスに望ましい最大数。
+
+  値: 整数。
+
+  デフォルト値: `20`。
+
+* `serverlimit`: Apache httpdプロセスの継続期間に対して設定されるMaxRequestWorkersの最大数。
+
+  値: 整数。
+
+  デフォルト値: `256`。
+
+* `maxclients`: 処理される同時リクエストの最大数。
+
+  値: 整数。
+
+  デフォルト値: `256`。
+
+* `maxrequestsperchild`: 個々の子サーバプロセスが処理する接続の最大数。
+
+  値: 整数。
+
+  デフォルト値: `4000`。
+
+* `enablecapabilities`: 親プロセスのルート機能をほぼすべて削除し、User/Groupディレクティブで指定されたユーザとして、いくつかの追加機能(特にsetuid)付きで実行します。 セキュリティはある程度強化されますが、NFSなどの機能に対応しないファイルシステムによる処理では問題が生じるおそれがあります。
+
+  値: ブール値。
+
+  デフォルト値: `undef`。
+
 ##### クラス: `apache::mod::jk`
 
 `mod_jk`をインストールして管理します。これは、Apache httpdリダイレクションと古いバージョンのTomCatおよびJBossを結ぶコネクタです。
@@ -2196,14 +2309,14 @@ class { '::apache::mod::jk':
 **workers\_file\_content**
 
 各ディレクティブにはフォーマット`worker.<Worker name>.<Property>=<Value>`があります。このマップは複数ハッシュのハッシュとして表され、外側のハッシュはワーカーを指定し、内側の各ハッシュは各ワーカーのプロパティと値を指定します。
-また、2つのグローバルディレクティブ 'worker.list'および'worker.mantain'もあります。  
+また、2つのグローバルディレクティブ 'worker.list'および'worker.maintain'もあります。  
 例えば、ワーカーファイルは以下のようになります。
 
 ```
 worker.list = status
 worker.list = some_name,other_name
 
-worker.mantain = 60
+worker.maintain = 60
 
 # Optional comment
 worker.some_name.type=ajp13
@@ -2218,14 +2331,14 @@ worker.other_name.socket_keepalive=false
 
 ```
 $workers_file_content = {
-  worker_lists   => ['status', 'some_name,other_name'],
-  worker_mantain => '60',
-  some_name      => {
+  worker_lists    => ['status', 'some_name,other_name'],
+  worker_maintain => '60',
+  some_name       => {
     comment          => 'Optional comment',
     type             => 'ajp13',
     socket_keepalive => 'true',
   },
-  other_name     => {
+  other_name      => {
     comment          => 'I just like comments',
     type             => 'ajp12',
     socket_keepalive => 'false',
@@ -2300,33 +2413,102 @@ $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 
 [`mod_passenger`][]をインストールして管理します。Red Hatベースのシステムの場合は、[passengerドキュメント](https://www.phusionpassenger.com/library/install/apache/install/oss/el6/#step-1:-upgrade-your-kernel,-or-disable-selinux)に記載された最小要件を満たしていることを確認してください。
 
+現在のサーバ設定は、[Passengerリファレンス](https://www.phusionpassenger.com/library/config/apache/reference/)から直接取得されています。廃止予定の警告と削除失敗メッセージを有効にするには、 サーバにインストールされているバージョン番号を`passenger_installed_version`に設定します。
+
 **パラメータ**:　
 
-* `passenger_high_performance`: [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance)を設定します。
+|パラメータ|デフォルト値|passengerの設定|コンテキスト|注記|
+|---------|-------------|------------------------|-------|-----|
+|manage_repo|true|n/a|||
+|mod_id|未定義|n/a|||
+|mod_lib|未定義|n/a|||
+|mod_lib_path|未定義|n/a|||
+|mod_package|未定義|n/a|||
+|mod_package_ensure|未定義|n/a|||
+|mod_path|未定義|n/a|||
+|passenger_allow_encoded_slashes|未定義|[`PassengerAllowEncodedSlashes`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerAllowEncodedSlashes)|server-config virutal-host htaccess directory ||
+|passenger_app_env|未定義|[`PassengerAppEnv`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerAppEnv)|server-config virutal-host htaccess directory ||
+|passenger_app_group_name|未定義|[`PassengerAppGroupName`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerAppGroupName)|server-config virutal-host htaccess directory ||
+|passenger_app_root|未定義|[`PassengerAppRoot`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerAppRoot)|server-config virutal-host htaccess directory ||
+|passenger_app_type|未定義|[`PassengerAppType`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerAppType)|server-config virutal-host htaccess directory ||
+|passenger_base_uri|未定義|[`PassengerBaseURI`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerBaseURI)|server-config virutal-host htaccess directory ||
+|passenger_buffer_response|未定義|[`PassengerBufferResponse`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerBufferResponse)|server-config virutal-host htaccess directory ||
+|passenger_buffer_upload|未定義|[`PassengerBufferUpload`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerBufferUpload)|server-config virutal-host htaccess directory ||
+|passenger_concurrency_model|未定義|[`PassengerConcurrencyModel`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerConcurrencyModel)|server-config virutal-host htaccess directory ||
+|passenger_conf_file|$::apache::params::passenger_conf_file|n/a|||
+|passenger_conf_package_file|$::apache::params::passenger_conf_package_file|n/a|||
+|passenger_data_buffer_dir|未定義|[`PassengerDataBufferDir`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDataBufferDir)|server-config ||
+|passenger_debug_log_file|未定義|PassengerDebugLogFile|server-config |このオプションの名前は、バージョン5.0.5でPassengerLogFileに変更されています。|
+|passenger_debugger|未定義|[`PassengerDebugger`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDebugger)|server-config virutal-host htaccess directory ||
+|passenger_default_group|未定義|[`PassengerDefaultGroup`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDefaultGroup)|server-config ||
+|passenger_default_ruby|$::apache::params::passenger_default_ruby|[`PassengerDefaultRuby`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDefaultRuby)|server-config ||
+|passenger_default_user|未定義|[`PassengerDefaultUser`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDefaultUser)|server-config ||
+|passenger_disable_security_update_check|未定義|[`PassengerDisableSecurityUpdateCheck`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerDisableSecurityUpdateCheck)|server-config ||
+|passenger_enabled|未定義|[`PassengerEnabled`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerEnabled)|server-config virutal-host htaccess directory ||
+|passenger_error_override|未定義|[`PassengerErrorOverride`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerErrorOverride)|server-config virutal-host htaccess directory ||
+|passenger_file_descriptor_log_file|未定義|[`PassengerFileDescriptorLogFile`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerFileDescriptorLogFile)|server-config ||
+|passenger_fly_with|未定義|[`PassengerFlyWith`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerFlyWith)|server-config ||
+|passenger_force_max_concurrent_requests_per_process|未定義|[`PassengerForceMaxConcurrentRequestsPerProcess`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerForceMaxConcurrentRequestsPerProcess)|server-config virutal-host htaccess directory ||
+|passenger_friendly_error_pages|未定義|[`PassengerFriendlyErrorPages`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerFriendlyErrorPages)|server-config virutal-host htaccess directory ||
+|passenger_group|未定義|[`PassengerGroup`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerGroup)|server-config virutal-host directory ||
+|passenger_high_performance|未定義|[`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerHighPerformance)|server-config virutal-host htaccess directory ||
+|passenger_installed_version|未定義|n/a| |このオプションを設定すると、指定した値に対するpassengerオプションのバージョンチェックが有効になります。|
+|passenger_instance_registry_dir|未定義|[`PassengerInstanceRegistryDir`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerInstanceRegistryDir)|server-config ||
+|passenger_load_shell_envvars|未定義|[`PassengerLoadShellEnvvars`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLoadShellEnvvars)|server-config virutal-host htaccess directory ||
+|passenger_log_file|未定義|[`PassengerLogFile`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLogFile)|server-config ||
+|passenger_log_level|未定義|[`PassengerLogLevel`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLogLevel)|server-config ||
+|passenger_lve_min_uid|未定義|[`PassengerLveMinUid`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerLveMinUid)|server-config virtual-host ||
+|passenger_max_instances|未定義|[`PassengerMaxInstances`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxInstances)|server-config virutal-host htaccess directory ||
+|passenger_max_instances_per_app|未定義|[`PassengerMaxInstancesPerApp`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxInstancesPerApp)|server-config ||
+|passenger_max_pool_size|未定義|[`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxPoolSize)|server-config ||
+|passenger_max_preloader_idle_time|未定義|[`PassengerMaxPreloaderIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxPreloaderIdleTime)|server-config virtual-host ||
+|passenger_max_request_queue_size|未定義|[`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequestQueueSize)|server-config virutal-host htaccess directory ||
+|passenger_max_request_time|未定義|[`PassengerMaxRequestTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequestTime)|server-config virutal-host htaccess directory ||
+|passenger_max_requests|未定義|[`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMaxRequests)|server-config virutal-host htaccess directory ||
+|passenger_memory_limit|未定義|[`PassengerMemoryLimit`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMemoryLimit)|server-config virutal-host htaccess directory ||
+|passenger_meteor_app_settings|未定義|[`PassengerMeteorAppSettings`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMeteorAppSettings)|server-config virutal-host htaccess directory ||
+|passenger_min_instances|未定義|[`PassengerMinInstances`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerMinInstances)|server-config virutal-host htaccess directory ||
+|passenger_nodejs|未定義|[`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerNodejs)|server-config virutal-host htaccess directory ||
+|passenger_pool_idle_time|未定義|[`PassengerPoolIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPoolIdleTime)|server-config ||
+|passenger_pre_start|未定義|[`PassengerPreStart`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPreStart)|server-config virtual-host ||
+|passenger_python|未定義|[`PassengerPython`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerPython)|server-config virutal-host htaccess directory ||
+|passenger_resist_deployment_errors|未定義|[`PassengerResistDeploymentErrors`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerResistDeploymentErrors)|server-config virutal-host htaccess directory ||
+|passenger_resolve_symlinks_in_document_root|未定義|[`PassengerResolveSymlinksInDocumentRoot`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerResolveSymlinksInDocumentRoot)|server-config virutal-host htaccess directory ||
+|passenger_response_buffer_high_watermark|未定義|[`PassengerResponseBufferHighWatermark`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerResponseBufferHighWatermark)|server-config ||
+|passenger_restart_dir|未定義|[`PassengerRestartDir`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerRestartDir)|server-config virutal-host htaccess directory ||
+|passenger_rolling_restarts|未定義|[`PassengerRollingRestarts`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerRollingRestarts)|server-config virutal-host htaccess directory ||
+|passenger_root|$::apache::params::passenger_root|[`PassengerRoot`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerRoot)|server-config ||
+|passenger_ruby|$::apache::params::passenger_ruby|[`PassengerRuby`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerRuby)|server-config virutal-host htaccess directory ||
+|passenger_security_update_check_proxy|未定義|[`PassengerSecurityUpdateCheckProxy`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSecurityUpdateCheckProxy)|server-config ||
+|passenger_show_version_in_header|未定義|[`PassengerShowVersionInHeader`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerShowVersionInHeader)|server-config ||
+|passenger_socket_backlog|未定義|[`PassengerSocketBacklog`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSocketBacklog)|server-config ||
+|passenger_spawn_method|未定義|[`PassengerSpawnMethod`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerSpawnMethod)|server-config virtual-host ||
+|passenger_start_timeout|未定義|[`PassengerStartTimeout`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStartTimeout)|server-config virutal-host htaccess directory ||
+|passenger_startup_file|未定義|[`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStartupFile)|server-config virutal-host htaccess directory ||
+|passenger_stat_throttle_rate|未定義|[`PassengerStatThrottleRate`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStatThrottleRate)|server-config ||
+|passenger_sticky_sessions|未定義|[`PassengerStickySessions`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStickySessions)|server-config virutal-host htaccess directory ||
+|passenger_sticky_sessions_cookie_name|未定義|[`PassengerStickySessionsCookieName`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerStickySessionsCookieName)|server-config virutal-host htaccess directory ||
+|passenger_thread_count|未定義|[`PassengerThreadCount`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerThreadCount)|server-config virutal-host htaccess directory ||
+|passenger_use_global_queue|未定義|PassengerUseGlobalQueue|server-config ||
+|passenger_user|未定義|[`PassengerUser`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerUser)|server-config virutal-host directory ||
+|passenger_user_switching|未定義|[`PassengerUserSwitching`](https://www.phusionpassenger.com/library/config/apache/reference/#PassengerUserSwitching)|server-config ||
+|rack_auto_detect|未定義|RackAutoDetect|server-config |これらのオプションは、バージョン4.0.0で最適化の一環として削除されました。代わりにPassengerEnabledを使用してください。|
+|rack_autodetect|未定義|n/a|||
+|rack_base_uri|未定義|RackBaseURI|server-config |3.0.0で廃止され、PassengerBaseURIが採用されました。|
+|rack_env|未定義|[`RackEnv`](https://www.phusionpassenger.com/library/config/apache/reference/#RackEnv)|server-config virutal-host htaccess directory ||
+|rails_allow_mod_rewrite|未定義|RailsAllowModRewrite|server-config |このオプションは、バージョン4.0.0以降では何の影響も与えません。|
+|rails_app_spawner_idle_time|未定義|RailsAppSpawnerIdleTime|server-config |このオプションはバージョン4.0.0で削除され、PassengerMaxPreloaderIdleTimeに置き換えられました。|
+|rails_auto_detect|未定義|RailsAutoDetect|server-config |これらのオプションは、バージョン4.0.0で最適化の一環として削除されました。代わりにPassengerEnabledを使用してください。|
+|rails_autodetect|未定義|n/a|||
+|rails_base_uri|未定義|RailsBaseURI|server-config |3.0.0で廃止され、PassengerBaseURIが採用されました。|
+|rails_default_user|未定義|RailsDefaultUser|server-config |3.0.0で廃止され、PassengerDefaultUserが採用されました。|
+|rails_env|未定義|[`RailsEnv`](https://www.phusionpassenger.com/library/config/apache/reference/#RailsEnv)|server-config virutal-host htaccess directory ||
+|rails_framework_spawner_idle_time|未定義|RailsFrameworkSpawnerIdleTime|server-config |このオプションはバージョン4.0.0では使用できません。フレームワークスポーンも同時に削除されたので、代わりのオプションはありません。スマートスポーンを使用してください。|
+|rails_ruby|未定義|RailsRuby|server-config |3.0.0で廃止され、PassengerRubyが採用されました。|
+|rails_spawn_method|未定義|RailsSpawnMethod|server-config |3.0.0で廃止され、PassengerSpawnMethodが採用されました。|
+|rails_user_switching|未定義|RailsUserSwitching|server-config |3.0.0で廃止され、PassengerUserSwitchingが採用されました。|
+|wsgi_auto_detect|未定義|WsgiAutoDetect|server-config |これらのオプションは、バージョン4.0.0で最適化の一環として削除されました。代わりにPassengerEnabledを使用してください。|
 
-  値: 'On'、'Off'。　
-
-  デフォルト値: `undef`。
-
-* `passenger_pool_idle_time`: [`PassengerPoolIdleTime`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerpoolidletime)を設定します。
-
-  デフォルト値: `undef`。
-
-* `passenger_max_pool_size`: [`PassengerMaxPoolSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpoolsize)を設定します。
-
-  デフォルト値: `undef`。
-
-* `passenger_max_request_queue_size`: [`PassengerMaxRequestQueueSize`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize)を設定します。
-
-  デフォルト値: `undef`。
-
-* `passenger_max_requests`: [`PassengerMaxRequests`](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests)を設定します。
-
-  デフォルト値: `undef`。
-
-* `passenger_data_buffer_dir`: [`PassengerDataBufferDir`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdatabufferdir)を設定します。
-
-  デフォルト値: `undef`。
 
 ##### クラス: `apache::mod::ldap`
 
@@ -2336,6 +2518,7 @@ $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 class { 'apache::mod::ldap':
   ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
   ldap_trusted_global_cert_type => 'CA_DER',
+  ldap_trusted_mode             => 'TLS',
   ldap_shared_cache_size        => '500000',
   ldap_cache_entries            => '1024',
   ldap_cache_ttl                => '600',
@@ -2355,6 +2538,8 @@ class { 'apache::mod::ldap':
 * `ldap_trusted_global_cert_type`:グローバルな信頼できる証明書フォーマットを指定します。
 
   デフォルト値: 'CA_BASE64'。
+
+* `ldap_trusted_mode`: LDAPサーバ接続時に使用されるSSL/TLSモードを指定します。
 
 * `ldap_shared_cache_size`: 共有されたメモリのキャッシュのサイズをバイトで指定します。
 
@@ -2384,7 +2569,7 @@ class { 'apache::mod::ldap':
 
 * `language_priority`: モジュールの`LanguagePriority`オプションを設定するための言語の[配列][]。
 
-  デフォルト値: [ 'en'、'ca'、'cs'、'da'、'de'、'el'、'eo'、'es'、'et'、'fr'、'he'、'hr'、'it'、'ja'、'ko'、'ltz'、'nl'、'nn'、'no'、'pl'、'pt'、'pt*BR'、'ru'、'sv'、'zh*CN'、'zh*TW' ]。
+  デフォルト値: ['en'、'ca'、cs'、'da'、'de'、'el'、'eo'、'es'、'et'、'fr'、'he'、'hr'、'it'、'ja'、'ko'、'ltz'、'nl'、'nn'、'no'、'pl'、'pt'、'pt-BR'、'ru'、'sv'、'zh-CN'、'zh-TW']。
 
 ##### クラス: `apache::mod::nss`
 
@@ -2504,9 +2689,9 @@ I`mod_proxy`をインストールし、`proxy.conf.erb`テンプレートを使�
 
 * `manager_path`: バランサマネージャのサーバロケーション。
 
-  デフォルト値: '/balancer*manager'。
+  デフォルト値: '/balancer-manager'。
 
-* `allow_from`: `/balancer*manager`にアクセスできるIPv4またはIPv6アドレスの[配列][]。
+* `allow_from`: `/balancer-manager`にアクセスできるIPv4またはIPv6アドレスの[配列][]。
 
   デフォルト値: ['127.0.0.1','::1']。　
 
@@ -2532,6 +2717,14 @@ I`mod_proxy`をインストールし、`proxy.conf.erb`テンプレートを使�
 
 **注意**: `mod_proxy_html`に関して提供されている公式なパッケージはありません。そのため、apacheモジュールの外部から使用できるようにする必要があります。
 
+##### クラス: `apache::mod::python`
+
+[`mod_python`][]をインストールして設定します。
+
+**パラメータ**　
+
+* `loadfile_name`: pythonモジュールのロードに使用される設定ファイルの名前を指定します。
+
 ##### クラス: `apache::mod::reqtimeout`
 
 [`mod_reqtimeout`][]をインストールして設定します。
@@ -2554,7 +2747,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 このクラスでインストールおよび設定されるのは、Shibboleth SSO認証をコンシュームするWebアプリケーションのApacheコンポーネントのみです。PuppetでShibboleth設定を手動で管理することも、[Shibboleth Puppetモジュール](https://github.com/aethylred/puppet-shibboleth)を使用することもできます。
 
-**注意**: shibbolethモジュールは、Shibbolethのリポジトリにより提供される依存関係パッケージがなければ、RH/CentOSでは使用できません。[http://wiki.aaf.edu.au/tech-info/sp-install-guide]()を参照してください。
+**注意**: shibbolethモジュールは、Shibbolethのリポジトリにより提供される依存関係パッケージがなければ、RH/CentOSでは使用できません。[Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/tech-info/sp-install-guide)を参照してください。
 
 ##### クラス: `apache::mod::ssl`
 
@@ -2567,9 +2760,11 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 - `ssl_cryptodevice`: デフォルト値: 'builtin'
 - `ssl_honorcipherorder`: デフォルト値: true
 - `ssl_openssl_conf_cmd`: デフォルト値: undef
-- `ssl_options`: デフォルト値: [ 'StdEnvVars' ]
+- `ssl_cert`: デフォルト値: undef。
+- `ssl_key`: デフォルト値: undef。
+- `ssl_options`: デフォルト値: ['StdEnvVars']
 - `ssl_pass_phrase_dialog`: デフォルト値: 'builtin'
-- `ssl_protocol`: デフォルト値: [ 'all', '-SSLv2', '-SSLv3' ]
+- `ssl_protocol`: デフォルト値: ['all', '-SSLv2', '-SSLv3']。
 - `ssl_proxy_protocol`: デフォルト値: []
 - `ssl_random_seed_bytes`: 有効なオプション: 文字列、デフォルト値: '512'
 - `ssl_sessioncache`: 有効なオプション: 文字列。デフォルト値: '300'
@@ -2600,9 +2795,17 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
   デフォルト値: `undef`。
 
+* `ssl_cert`
+
+  デフォルト値: `undef`。
+
+* `ssl_key`
+
+  デフォルト値: `undef`。
+
 * `ssl_options`
 
-  デフォルト値: [ 'StdEnvVars' ]
+  デフォルト値: ['StdEnvVars']
 
 * `ssl_pass_phrase_dialog`
 
@@ -2610,7 +2813,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `ssl_protocol`
 
-  デフォルト値: [ 'all', '*SSLv2', '*SSLv3' ]
+  デフォルト値: ['all', '-SSLv2', '-SSLv3']
 
 * `ssl_random_seed_bytes`
 
@@ -2645,6 +2848,24 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 * `allow_from`: `/server-status`にアクセスできるIPv4またはIPv6アドレスの[配列][]。
 
   デフォルト値: ['127.0.0.1','::1']。　
+
+* Apacheバージョン2.4以降の`mod_authz_host` ディレクティブ(`require ip`、`require host`など)を使用して、アクセスできる/できないIPまたは名前の文字列、[配列][]、または[ハッシュ][]。このパラメータは、以下のいずれかの構成で指定します。
+
+  > Apacheバージョンが2.4以降の場合のみ使用
+
+  - `undef` - `allow_from` および古いディレクティブ構文(`Allow from <List of IPs and/or names>`)を使用し、廃止予定の警告を通知します。
+  - 文字列
+    - `''`または`'unmanaged'` - authディレクティブなし(アクセス制御は別の方法で実施)
+    - `'ip <List of IPs>'` - `/server-status`にアクセスできるIP/範囲
+    - `'host <List of names>'` - `/server-status`にアクセスできる名前/ドメイン
+    - `'all [granted|denied]'` - すべてのユーザを許可/ブロック
+  - 配列 - 各要素には上記のいずれかの文字列が入ります。配列要素ごとに1つのディレクティブになります。
+  - 以下の構造を持つハッシュ(キー => 値の形式で表示、キーは文字列)
+    - `'requires'` => 上記に従った配列 - 配列と同じ作用
+    - `'enforce'`  => `'Any'`、`'All'`、`'None'`のいずれかの文字列(任意指定) - `'requires'`キーで指定されたすべてのディレクティブを`<Require(Any|All|None)>`ブロックで囲みます。
+
+  デフォルト値: 'ip 127.0.0.1 ::1'
+
 * `extended_status`: [`ExtendedStatus`][]ディレクティブをつうじて、各リクエストに関する拡張ステータス情報を追跡するかどうかを決定します。
 
   値: 'Off'、'On'。
@@ -2663,7 +2884,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 * `overrides`: ディレクティブタイプの[配列][]。
 
-  デフォルト値: '[ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]'。
+  デフォルト値: ['FileInfo', 'AuthConfig', 'Limit', 'Indexes']。
 
 ##### クラス: `apache::mod::version`
 
@@ -2678,13 +2899,13 @@ Trustwaveの[`mod_security`][]をインストールして設定します。こ�
 **パラメータ**:　
 
 * `activated_rules`: `modsec_crs_path`のルールの[配列][]またはsymlinkを使用してアクティベートする絶対値。 
-* `allowed_methods`: 許可されるHTTPメソッドのスペース*区切りリスト。
+* `allowed_methods`: 許可されるHTTPメソッドのスペース区切りリスト。
 
   デフォルト値: 'GET HEAD POST OPTIONS'。
 
-* `content_types`: 1つまたは複数の許可される[MIMEタイプ][MIME `content*type`]のリスト。
+* `content_types`: 1つまたは複数の許可される[MIMEタイプ][MIME `content-type`]のリスト。
 
-  デフォルト値: 'application/x*www*form*urlencoded|multipart/form*data|text/xml|application/xml|application/x*amf'。
+  デフォルト値: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'。
 
 * `crs_package`: CRSルールをインストールするパッケージの名前。
 
@@ -2703,13 +2924,13 @@ ${modsec\_dir}/activated\_rules。
 
   デフォルト値: [`apache::params`][]の`modsec_secruleengine`。
 
-* `restricted_extensions`: 禁止されるファイル拡張子のスペース*区切りリスト。
+* `restricted_extensions`: 禁止されるファイル拡張子のスペース区切りリスト。
 
   デフォルト値: '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/'。
 
 * `restricted_headers`: 禁止されるヘッダのスラッシュおよびスペースで区切ったリスト。
 
-  デフォルト値: 'Proxy*Connection/ /Lock*Token/ /Content*Range/ /Translate/ /via/ /if/'。
+  デフォルト値: 'Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'。
 
 * `secdefaultaction`: OWASP ModSecurityコアルールセットに関して、動作モード、自己完結('deny')、コラボレーティブ検出('pass')を設定します。
 
@@ -2801,7 +3022,7 @@ ${modsec\_dir}/activated\_rules。
 
   デフォルト値: `undef`。
 
-* `wsgi_python_path`: '/path/to/venv/site*packages'などの[`WSGIPythonPath`][]ディレクティブを定義します。
+* `wsgi_python_path`: '/path/to/venv/site-packages'などの[`WSGIPythonPath`][]ディレクティブを定義します。
 
   値: パスを指定する文字列。　
 
@@ -2868,6 +3089,12 @@ Apacheデーモンを管理します。
 キー‐値ペアを[`ProxySet`][]行として設定します。値: [ハッシュ][]。
 
 デフォルト値: '{}'。
+
+##### `options`
+
+バランサURLの後に[オプション](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember)の[配列][]を指定します。[`ProxyPass`][]で使用可能な任意のキー-値ペアを使用できます。
+
+デフォルト値: []。　
 
 ##### `collect_exported`
 
@@ -3101,7 +3328,7 @@ class { 'apache':
 
 ブーリアン。
 
-デフォルト値: `true`。　
+デフォルト値: `true`。
 
 ##### `access_log_env_var`
 
@@ -3364,7 +3591,7 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-デフォルト値: '[]'。
+デフォルト値: []。　
 
 ##### `ensure`
 
@@ -3380,7 +3607,7 @@ apache::vhost { 'sample.example.net':
 
 デフォルト値: `undef`。
 
-#####`fastcgi_idle_timeout`
+##### `fastcgi_idle_timeout`
 
 fastcgiを使用する場合に、このオプションにより、サーバ応答のタイムアウトを設定します。
 
@@ -3549,7 +3776,7 @@ apache::vhost { 'sample.example.net':
 - `krb_method_negotiate`: Negotiateメソッドを使用するかどうかを決定します。デフォルト値: 'on'。
 - `krb_method_k5passwd`: Kerberos v5に関してパスワードベースの認証を使用するかどうかを決定します。デフォルト値: 'on'。
 - `krb_authoritative`: 'off'に設定すると、認証コントロールを別のモジュールに渡すことができます。デフォルト値: 'on'。
-- `krb_auth_realms`: 認証に使用するKerberos領域の配列を指定します。デフォルト値: '[]'。
+- `krb_auth_realms`: 認証に使用するKerberos領域の配列を指定します。デフォルト値: []。
 - `krb_5keytab`: Kerberos v5キータブファイルのロケーションを指定します。デフォルト値: `undef`。
 - `krb_local_user_mapping`: 今後の使用のために、ユーザ名から@REALMを取り除きます。デフォルト値: `undef`。
 
@@ -3663,13 +3890,13 @@ apache::vhost { 'sample.example.net':
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_msgs => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ],
+  modsec_disable_msgs => ['Blind SQL Injection Attack', 'Session Fixation Attack'],
 }
 ```
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_msgs => { '/location1' => [ 'Blind SQL Injection Attack', 'Session Fixation Attack' ] },
+  modsec_disable_msgs => { '/location1' => ['Blind SQL Injection Attack', 'Session Fixation Attack'] },
 }
 ```
 
@@ -3681,13 +3908,13 @@ apache::vhost { 'sample.example.net':
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_tags => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ],
+  modsec_disable_tags => ['WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS'],
 }
 ```
 
 ``` puppet
 apache::vhost { 'sample.example.net':
-  modsec_disable_tags => { '/location1' => [ 'WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS' ] },
+  modsec_disable_tags => { '/location1' => ['WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS'] },
 }
 ```
 
@@ -3774,7 +4001,7 @@ apache::vhost { 'site.name.fdqn':
 
 指定されたバーチャルホストのオーバーライドを設定します。[AllowOverride](https://httpd.apache.org/docs/current/mod/core.html#allowoverride)引数の配列を使用できます。
 
-デフォルト値: '[none]'。
+デフォルト値: ['None']。
 
 ##### `passenger_spawn_method`
 
@@ -3847,6 +4074,10 @@ sengermaxrequests)を設定します。これは、アプリケーションプ�
 
 [PassengerUser](https://www.phusionpassenger.com/library/config/apache/reference/#passengeruser)を設定します。これは、サンドボックスアプリケーションの実行ユーザです。
 
+##### passenger_group
+
+ [PassengerGroup](https://www.phusionpassenger.com/library/config/apache/reference/#passengergroup)を設定します。これは、サンドボックスアプリケーションの実行グループです。
+
 ##### `passenger_high_performance`
 
 [`PassengerHighPerformance`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance)パラメータを設定します。
@@ -3871,11 +4102,16 @@ sengermaxrequests)を設定します。これは、アプリケーションプ�
 
 [`PassengerStartupFile`](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile)パスを設定します。このパスは、アプリケーションルートに関連しています。
 
-##### `php_flags & values`
+##### `php_values & php_flags`
 
 バーチャルホストごとの設定[`php_value`または`php_flag`](http://php.net/manual/en/configuration.changes.php)を許可します。これらのフラグや値は、ユーザまたはアプリケーションにより上書きすることができます。
 
 デフォルト値: '{}'。
+
+vhostの宣言内
+``` puppet
+  php_values    => [ 'include_path ".:/usr/local/example-app/include"' ],
+```
 
 ##### `php_admin_flags & values`
 
@@ -3957,7 +4193,7 @@ rack設定のリソース識別子を設定します。指定されたファイ�
 
 デフォルト値: `undef`。
 
-#####`passenger_base_uris`
+##### `passenger_base_uris`
 
 任意のURIをPhusion Passengerのサーブするアプリケーションとして指定するのに使用します。指定されたファイルパスは、_passenger_base_uris.erbテンプレート内の[Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Apache.html#PassengerBaseURI)のpassengerアプリケーションルートとしてリストされます。
 
@@ -4009,7 +4245,7 @@ apache::vhost { 'site.name.fdqn':
   …
   redirectmatch_status => ['404','404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-  redirectmatch_dest => ['http://www.example.com/1','http://www.example.com/2'],
+  redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
 ```
 
@@ -4181,7 +4417,7 @@ ScriptAliasおよびScriptAliasMatchディレクティブは、指定した順�
 
 サイトの[ServerAliases](https://httpd.apache.org/docs/current/mod/core.html#serveralias)を設定します。
 
-デフォルト値: '[]'。
+デフォルト値: []。　
 
 ##### `servername`
 
@@ -4193,7 +4429,7 @@ ScriptAliasおよびScriptAliasMatchディレクティブは、指定した順�
 
 HTTPDにより使用し、バーチャルホストの環境変数を設定します。
 
-デフォルト値: '[]'。
+デフォルト値: []。　
 
 例:
 
@@ -4207,13 +4443,13 @@ apache::vhost { 'setenv.example.com':
 
 HTTPDにより使用し、条件を用いてバーチャルホストの環境変数を設定します。
 
-デフォルト値: '[]'。
+デフォルト値: []。　
 
 ##### `setenvifnocase`
 
 HTTPDにより使用し、条件を用いてバーチャルホストの環境変数を設定します(大文字小文字を区別しないマッチング)。
 
-デフォルト値: '[]'。
+デフォルト値: []。　
 
 ##### `suphp_*`
 
@@ -4712,6 +4948,7 @@ apache::vhost { 'sample.example.net':
 - `mellon_sp_private_key_file`: サービスプロバイダのプライベートキー保存場所に関する[MellonSPPrivateKeyFile][`mod_auth_mellon`]ディレクティブを設定します。
 - `mellon_sp_cert_file`: サービスプロバイダの公開キー保存場所に関する[MellonSPCertFile][`mod_auth_mellon`]ディレクティブを設定します。
 - `mellon_user`: ユーザ名に関して使用する[MellonUser][`mod_auth_mellon`]属性を設定します。
+- `mellon_session_length`: [MellonSessionLength][`mod_auth_mellon`]属性を設定します。
 
 ##### `options`
 
@@ -4877,12 +5114,12 @@ apache::vhost { 'secure.example.net':
       rewrites => [ { comment      => 'Permalink Rewrites',
                       rewrite_base => '/'
                     },
-                    { rewrite_rule => [ '^index\.php$ - [L]' ]
+                    { rewrite_rule => ['^index\.php$ - [L]']
                     },
-                    { rewrite_cond => [ '%{REQUEST_FILENAME} !-f',
-                                        '%{REQUEST_FILENAME} !-d',
+                    { rewrite_cond => ['%{REQUEST_FILENAME} !-f',
+                                       '%{REQUEST_FILENAME} !-d',
                                       ],
-                      rewrite_rule => [ '. /index.php [L]' ],
+                      rewrite_rule => ['. /index.php [L]'],
                     }
                   ],
     },
@@ -4912,6 +5149,10 @@ apache::vhost { 'secure.example.net':
 
 'On'に設定すると、アプリケーションに属性を公開するリクエストヘッダの使用がオンになります。このキーの値は'On'または'Off'です。デフォルト値は'Off'です。このキーは、`apache::mod::shib`が定義されていない場合は無効になります。詳細については、[`mod_shib`ドキュメント](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions)を参照してください。
 
+##### `shib_compat_valid_user`
+
+このコマンドが存在しなかったときの動作と合わせるため、デフォルト値はOffです。 "valid-user"および"user"のRequireルールの処理で、「標準」Apacheの動作を復元して、Shibbolethをその他のauth/authモジュールと組み合わせて使用する場合の競合を解消します。詳細については、[`mod_shib`ドキュメント](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions)、および[NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess)を参照してください。`apache::mod::shib`が定義されていない場合、このキーは無効です。
+
 ##### `ssl_options`
 
 [SSLOptions](https://httpd.apache.org/docs/current/mod/mod_ssl.html#ssloptions)の文字列またはリスト。これにより、SSLエンジンのランタイムオプションが設定されます。このハンドラは、バーチャルホストの親ブロック内のSSLOptionsセットよりも優先されます。
@@ -4924,7 +5165,7 @@ apache::vhost { 'secure.example.net':
       ssl_options => '+ExportCertData',
     },
     { path        => '/path/to/different/dir',
-      ssl_options => [ '-StdEnvVars', '+ExportCertData'],
+      ssl_options => ['-StdEnvVars', '+ExportCertData'],
     },
   ],
 }
@@ -4956,7 +5197,7 @@ apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
   directories => [
     { path  => '/path/to/different/dir',
-      additional_includes => [ '/custom/path/includes', '/custom/path/another_includes', ],
+      additional_includes => ['/custom/path/includes', '/custom/path/another_includes',],
     },
   ],
 }
@@ -5100,6 +5341,12 @@ apache::vhost { 'sample.example.net':
 
 デフォルト値: `undef`。　
 
+##### `ssl_proxy_cipher_suite`
+
+[SSLProxyCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyciphersuite)ディレクティブを設定します。このディレクティブは、sslプロキシトラフィックに対してサポートされる暗号化スイートを制御します。
+
+デフォルト値: `undef`。　
+
 ##### `ssl_proxy_ca_cert`
 
 [SSLProxyCACertificateFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycacertificatefile)ディレクティブを設定します。これにより、やりとりするリモートサーバに関する認証局(CA)の証明書を集められるオールインワンファイルを指定します。これはリモートサーバ認証に用いられます。このファイルは、PEMエンコード証明書ファイルを優先順に連結したものにする必要があります。
@@ -5161,7 +5408,7 @@ apache::vhost { 'sample.example.net':
 ``` puppet
 apache::vhost { 'sample.example.net':
   …
-  ssl_options => [ '+StrictRequire', '+ExportCertData' ],
+  ssl_options => ['+StrictRequire', '+ExportCertData'],
 }
 ```
 
@@ -5179,7 +5426,7 @@ apache::vhost { 'sample.example.net':
 
 ブーリアン。
 
-デフォルト値: `true`。
+デフォルト値: `false`。
 
 ##### `ssl_stapling`
 
@@ -5327,24 +5574,19 @@ FreeBSDに関してのみ、[`Peruser`][]モジュールを有効にします。
 
 Apacheモジュールは、[`apache::vhost`][]および[`apache::mod`][]定義タイプを有効にするにあたり、テンプレートに大きく依存しています。このテンプレートは、オペレーティングシステムに固有の[Facter][] factsをベースに構築されています。明示的にコールアウトされない限り、ほとんどのテンプレートは設定には使われません。
 
+### タスク
+
+Apacheモジュールには、サービスの再起動なしでApache設定を再ロードできるタスクがあります。タスクの実行方法については、[Puppet Enterpriseマニュアル](https://puppet.com/docs/pe/2017.3/orchestrator/running_tasks.html)または[Boltマニュアル](https://puppet.com/docs/bolt/latest/bolt.html)を参照してください。
+
 ### 関数
 #### apache_pw_hash
 Apacheが読みこむhtpasswdファイルに適したフォーマットでパスワードをハッシュします。
 
 現在はSHAハッシュを使用しています。これは、このフォーマットは安全ではないとされているものの、ほとんどのプラットフォームでサポートされているもっとも安全なフォーマットであるためです。
 
-## 制約事項
+## 制約
 
-### 全般
-
-このモジュールは、以下に関して、[オープンソースPuppet][]および[Puppet Enterprise][]の両方でCIテストが実施されています。
-
-- CentOS 5および6
-- Ubuntu 12.04および14.04
-- Debian 7
-- RHEL 5、6、7
-
-このモジュールでは、FreeBSD、Gentoo、Amazon Linuxなどの、他のディストリビューションおよびオペレーティングシステムで使用できる機能も提供されていますが、そうしたシステムについては公式なテストは実施されておらず、新たに不具合が生じる可能性があります。
+ サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)を参照してください。
 
 ### FreeBSD
 

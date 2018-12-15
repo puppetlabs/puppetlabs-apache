@@ -1,12 +1,43 @@
 ---
+.travis.yml:
+  global_env:
+    - PARALLEL_TEST_PROCESSORS=16  
+  docker_sets:
+    - set: docker/centos-7
+    - set: docker/ubuntu-14.04
+  docker_defaults:
+    bundler_args: ""
+  secure: ""
+  branches:
+    - release
+
+Gemfile:
+  required:
+    ':system_tests':
+      - gem: 'puppet-module-posix-system-r#{minor_version}'
+        platforms: ruby
+      - gem: 'puppet-module-win-system-r#{minor_version}'
+        platforms:
+          - mswin
+          - mingw
+          - x64_mingw
+  optional:
+    ':development':
+      - gem: 'github_changelog_generator'
+        git: 'https://github.com/skywinder/github-changelog-generator'
+        ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')"
+
+Rakefile:
+  requires:
+    - puppet-lint/tasks/puppet-lint
+
 appveyor.yml:
   delete: true
-Rakefile:
-  extra_disabled_lint_checks:
-  - 'disable_only_variable_string'
-spec/spec_helper.rb:
-  allow_deprecations: true
-.travis.yml:
-  env:
-    global:
-      - "PARALLEL_TEST_PROCESSORS=16 # reduce test parallelism to prevent overloading containers"
+
+.rubocop.yml:
+  default_configs:
+    inherit_from: .rubocop_todo.yml
+
+.gitlab-ci.yml:
+  unmanaged: true
