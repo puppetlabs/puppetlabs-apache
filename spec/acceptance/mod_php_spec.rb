@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '12'
+unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >= '12'
   describe 'apache::mod::php class' do
     context 'default php config' do
       if ['16.04', '18.04'].include?(fact('operatingsystemmajrelease'))

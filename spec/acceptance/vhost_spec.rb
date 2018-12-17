@@ -9,8 +9,13 @@ describe 'apache::vhost define' do
         default_ssl_vhost => false,
         service_ensure => stopped,
       }
-      if ($::osfamily == 'Suse') {
+      if ($::osfamily == 'Suse' and $::operatingsystemrelease < '15') {
         exec { '/usr/bin/gensslcert':
+          require => Class['apache'],
+        }
+      } elsif ($::osfamily == 'Suse' and $::operatingsystemrelease >= '15') {
+        # In SLES 15, if not given a name, gensslcert defaults the name to be the hostname
+        exec { '/usr/bin/gensslcert -n default':
           require => Class['apache'],
         }
       }

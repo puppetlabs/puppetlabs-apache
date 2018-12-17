@@ -19,7 +19,7 @@ describe 'apache::default_mods class' do
     end
   end
 
-  unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '12'
+  unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >= '12'
     describe 'no default mods and failing' do
       before :all do
         pp = <<-PP
