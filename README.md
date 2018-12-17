@@ -369,7 +369,7 @@ apache::vhost { 'vhost.example.com':
 
 See the [`apache::vhost`][] defined type's reference for a list of all virtual host parameters.
 
-> **Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] defined type applies a default [`priority`][] of 25, which Puppet interprets by prefixing the virtual host's file name with `25-`. This all means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to false, Apache still processes virtual hosts in alphabetical order.
+> **Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] defined type applies a default [`priority`][] of 25, which Puppet interprets by prefixing the virtual host's file name with `25-`. This means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to false, Apache still processes virtual hosts in alphabetical order.
 
 To configure user and group ownership for `docroot`, use the [`docroot_owner`][] and [`docroot_group`][] parameters:
 
