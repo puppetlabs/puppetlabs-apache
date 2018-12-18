@@ -3831,6 +3831,93 @@ Sets the [`ForceType`][] directive, which forces Apache to serve all matching fi
 
 Lets Apache set custom content character sets per directory and/or file extension
 
+##### `h2_copy_files`
+
+Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles)
+directive which influences how the requestion process pass files to the main
+connection.
+
+##### `h2_direct`
+
+Sets the [H2Direct](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2direct)
+directive which toggles the usage of the HTTP/2 Direct Mode.
+
+##### `h2_early_hints`
+
+Sets the [H2EarlyHints](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2earlyhints)
+directive which controls if HTTP status 103 interim responses are forwarded to
+the client or not.
+
+##### `h2_max_session_streams`
+
+Sets the [H2MaxSessionStreams](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2maxsessionstreams)
+directive which sets the maximum number of active streams per HTTP/2 session
+that the server allows.
+
+##### `h2_modern_tls_only`
+
+Sets the [H2ModernTLSOnly](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2moderntlsonly)
+directive which toggles the security checks on HTTP/2 connections in TLS mode.
+
+##### `h2_push`
+
+Sets the [H2Push](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2push)
+directive which toggles the usage of the HTTP/2 server push protocol feature.
+
+##### `h2_push_diary_size`
+
+Sets the [H2PushDiarySize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushdiarysize)
+directive which toggles the maximum number of HTTP/2 server pushes that are
+remembered per HTTP/2 connection.
+
+##### `h2_push_priority`
+
+Sets the [H2PushPriority](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushpriority)
+directive which defines the priority handling of pushed responses based on the
+content-type of the response.
+
+##### `h2_push_resource`
+
+Sets the [H2PushResource](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushresource)
+directive which declares resources for early pushing to the client.
+
+##### `h2_serialize_headers`
+
+Sets the [H2SerializeHeaders](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2serializeheaders)
+directive which toggles if HTTP/2 requests shall be serialized in HTTP/1.1
+format for processing by httpd core.
+
+##### `h2_stream_max_mem_size`
+
+Sets the [H2StreamMaxMemSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2streammaxmemsize)
+directive which sets the maximum number of outgoing data bytes buffered in
+memory for an active streams.
+
+##### `h2_tls_cool_down_secs`
+
+Sets the [H2TLSCoolDownSecs](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlscooldownsecs)
+directive which sets the number of seconds of idle time on a TLS connection
+before the TLS write size falls back to small (~1300 bytes) length.
+
+##### `h2_tls_warm_up_size`
+
+Sets the [H2TLSWarmUpSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlswarmupsize)
+directive which sets the number of bytes to be sent in small TLS records (~1300
+bytes) until doing maximum sized writes (16k) on https: HTTP/2 connections.
+
+##### `h2_upgrade`
+
+Sets the [H2Upgrade](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2upgrade)
+directive which toggles the usage of the HTTP/1.1 Upgrade method for switching
+to HTTP/2.
+
+##### `h2_window_size`
+
+Sets the [H2WindowSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2windowsize)
+directive which sets the size of the window that is used for flow control from
+client to server and limits the amount of data the server has to buffer.
+
+
 ##### `headers`
 
 Adds lines to replace, merge, or remove response headers. See [Apache's mod_headers documentation](https://httpd.apache.org/docs/current/mod/mod_headers.html#header) for more information.
