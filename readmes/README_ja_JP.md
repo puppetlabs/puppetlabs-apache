@@ -369,7 +369,7 @@ apache::vhost { 'vhost.example.com':
 
 すべてのバーチャルホストパラメータのリストについては、[`apache::vhost`][]定義タイプのリファレンスを参照してください。
 
-> **注意**: Apacheはバーチャルホストをアルファベット順に処理します。サーバ管理者は、バーチャルホスト設定ファイル名の先頭に数字を付けることで、 Apacheバーチャルホスト処理の優先順位を設定できます。[`apache::vhost`][]定義タイプは、デフォルトの [`priority`][]である15を適用します。これはPuppetではバーチャルホストのファイル名の先頭に`15-`が付いていると解釈されます。そのため、優先順位が同じサイトが複数ある場合や、`priority`パラメータの値をfalseに設定して優先順位番号を無効にした場合でも、Apacheはバーチャルホストをアルファベット順に処理します。
+> **注意**: Apacheはバーチャルホストをアルファベット順に処理します。サーバ管理者は、バーチャルホスト設定ファイル名の先頭に数字を付けることで、 Apacheバーチャルホスト処理の優先順位を設定できます。[`apache::vhost`][]定義タイプは、デフォルトの [`priority`][]である25を適用します。これはPuppetではバーチャルホストのファイル名の先頭に`25-`が付いていると解釈されます。そのため、優先順位が同じサイトが複数ある場合や、`priority`パラメータの値をfalseに設定して優先順位番号を無効にした場合でも、Apacheはバーチャルホストをアルファベット順に処理します。
 
 `docroot`のユーザおよびグループのオーナーシップを設定するには、[`docroot_owner`][]および[`docroot_group`][]パラメータを使用します。
 
@@ -1736,18 +1736,18 @@ class {'::apache::mod::disk_cache':
 }
 ```
 
-##### クラス: `apache::mod::diskio`
+##### クラス: `apache::mod::dumpio`
 
-[`mod_diskio`][]をインストールして設定します。
+[`mod_dumpio`][]をインストールして設定します。
 
 ```puppet
 class{'apache':
   default_mods => false,
   log_level    => 'dumpio:trace7',
 }
-class{'apache::mod::diskio':
-  disk_io_input  => 'On',
-  disk_io_output => 'Off',
+class{'apache::mod::dumpio':
+  dump_io_input  => 'On',
+  dump_io_output => 'Off',
 }
 ```
 
@@ -2000,7 +2000,7 @@ class { 'apache::mod::authn_dbd':
 
 ##### クラス: `apache::mod::cluster`
 
-**注意**: `mod_cluster`に関して提供されている公式なパッケージはありません。そのため、Apacheモジュールの外部から使用できるようにする必要があります。バイナリはhttp://mod-cluster.jboss.org/にあります。
+**注意**: `mod_cluster`に関して提供されている公式なパッケージはありません。そのため、Apacheモジュールの外部から使用できるようにする必要があります。バイナリは[こちら](http://mod-cluster.jboss.org/)にあります。
 
 ``` puppet
 class { '::apache::mod::cluster':
@@ -2267,16 +2267,18 @@ apache::vhost { 'example.org':
 
 ``` puppet
 class { '::apache::mod::jk':
-  ip           = '192.168.2.15',
-  workers_file = 'conf/workers.properties',
-  mount_file   = 'conf/uriworkermap.properties',
-  shm_file     = 'run/jk.shm',
-  shm_size     = '50M',
-  $workers_file_content = {
+  ip                   => '192.168.2.15',
+  workers_file         => 'conf/workers.properties',
+  mount_file           => 'conf/uriworkermap.properties',
+  shm_file             => 'run/jk.shm',
+  shm_size             => '50M',
+  workers_file_content => {
     <Content>
   },
 }
 ```
+
+詳細については、[templates/mod/jk/workers.properties.erb](templates/mod/jk/workers.properties.erb)を参照してください。
 
 **`apache::mod::jk`**内のパラメータ:
 
@@ -2310,9 +2312,9 @@ class { '::apache::mod::jk':
 
 各ディレクティブにはフォーマット`worker.<Worker name>.<Property>=<Value>`があります。このマップは複数ハッシュのハッシュとして表され、外側のハッシュはワーカーを指定し、内側の各ハッシュは各ワーカーのプロパティと値を指定します。
 また、2つのグローバルディレクティブ 'worker.list'および'worker.maintain'もあります。  
-例えば、ワーカーファイルは以下のようになります。
+例えば、以下のワーカーファイルは図1のようにパラメータ化します。
 
-```
+``` puppet
 worker.list = status
 worker.list = some_name,other_name
 
@@ -2327,9 +2329,9 @@ worker.other_name.type=ajp12 (why would you?)
 worker.other_name.socket_keepalive=false
 ```
 
-以下のようにパラメータ化する必要があります。　
+**図1:**
 
-```
+``` puppet
 $workers_file_content = {
   worker_lists    => ['status', 'some_name,other_name'],
   worker_maintain => '60',
@@ -2348,10 +2350,12 @@ $workers_file_content = {
 
 **mount\_file\_content**
 
-各ディレクティブにはフォーマット`<URI> = <Worker name>`があります。このマップは複数ハッシュのハッシュとして表され、外側のハッシュはワーカーを指定し、内側の各ハッシュは次の2つのアイテムを含みます: uri_list - ワーカーにマップするURIを用いた配列 - およびコメント - ワーカーに関するコメントを記したオプションの文字列。 
-例えば、マウントファイルは以下のようになります。
+各ディレクティブにはフォーマット`<URI> = <Worker name>`があります。このマップは複数ハッシュのハッシュとして表され、外側のハッシュはワーカーを指定し、内側の各ハッシュは次の2つのアイテムを含みます: 
+* uri_list&mdash - ワーカーにマップするURIを用いた配列
+* comment&mdash - ワーカーに関するコメントを記したオプションの文字列
+例えば、以下のマウントファイルは図2のようにパラメータ化します。
 
-```
+``` puppet
 # Worker 1
 /context_1/ = worker_1
 /context_1/* = worker_1
@@ -2362,9 +2366,9 @@ $workers_file_content = {
 /context_2/* = worker_2
 ```
 
-以下のようにパラメータ化する必要があります。　
+**図2:**
 
-```
+``` puppet
 $mount_file_content = {
   worker_1 => {
     uri_list => ['/context_1/', '/context_1/*'],
@@ -2385,17 +2389,17 @@ $mount_file_content = {
 
 例 (RHEL 6):
 
-```
+``` puppet
 shm_file => 'shm_file'
 # Ends up in
 $shm_path = '/var/log/httpd/shm_file'
 ```
-```
+``` puppet
 shm_file => '/run/shm_file'
 # Ends up in
 $shm_path = '/run/shm_file'
 ```
-```
+``` puppet
 shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
 # Ends up in
 $shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
@@ -2854,7 +2858,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
   > Apacheバージョンが2.4以降の場合のみ使用
 
   - `undef` - `allow_from` および古いディレクティブ構文(`Allow from <List of IPs and/or names>`)を使用し、廃止予定の警告を通知します。
-  - 文字列
+  - String
     - `''`または`'unmanaged'` - authディレクティブなし(アクセス制御は別の方法で実施)
     - `'ip <List of IPs>'` - `/server-status`にアクセスできるIP/範囲
     - `'host <List of names>'` - `/server-status`にアクセスできる名前/ドメイン
@@ -2948,7 +2952,7 @@ ${modsec\_dir}/activated\_rules。
 
   デフォルト値はApacheのログディレクトリ(Redhat: `/var/log/httpd`、Debian: `/var/log/apache2`)。
 
-* `audit_log_releavant_status`: オーディットロギングの目的に関して、考慮すべき応答ステータスコードを設定します。
+* `audit_log_relevant_status`: オーディットロギングの目的に関して、考慮すべき応答ステータスコードを設定します。
 
   デフォルト値: '^(?:5|4(?!04))'。
 
@@ -3478,6 +3482,28 @@ HTTPクエリ文字列でクライアントの提示するチケットをバリ�
 
 デフォルト値: [`apache::mod::auth_cas`][]により設定された値。
 
+
+##### `comment`
+
+設定ファイルのヘッダにコメントを追加します。文字列または文字列の配列として渡します。
+
+デフォルト値: `undef`。
+
+例:　
+
+``` puppet
+comment => "Account number: 123B",
+```
+
+Or:
+
+``` puppet
+comment => [
+  "Customer: X",
+  "Frontend domain: x.example.org",
+]
+```
+
 ##### `custom_fragment`
 
 カスタム設定ディレクティブの文字列を渡し、バーチャルホスト設定の最後に配置します。
@@ -3806,7 +3832,7 @@ Apacheが認証に使用するサービス名を指定します。この名前�
 
 バーチャルホストのログファイルの保存場所を指定します。
 
-デフォルト値: '/var/log/<apache log location>/'。
+デフォルト値: `/var/log/<apache log location>/`。
 
 ##### `$logroot_ensure`
 
