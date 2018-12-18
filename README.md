@@ -56,6 +56,7 @@
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
+[`apache::mod::http2`]: #class-apachemodhttp2
 [`apache::mod::itk`]: #class-apachemoditk
 [`apache::mod::jk`]: #class-apachemodjk
 [`apache::mod::ldap`]: #class-apachemodldap
@@ -182,6 +183,7 @@
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
 [`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
+[`mod_http2`]: https://httpd.apache.org/docs/current/mod/mod_http2.html
 [`mod_info`]: https://httpd.apache.org/docs/current/mod/mod_info.html
 [`mod_ldap`]: https://httpd.apache.org/docs/2.2/mod/mod_ldap.html
 [`mod_mpm_event`]: https://httpd.apache.org/docs/current/mod/event.html
@@ -1647,6 +1649,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `filter`
 * `geoip` (see [`apache::mod::geoip`][])
 * `headers`
+* `http2` (see [`apache::mod::http2`][])
 * `include`
 * `info`\*
 * `intercept_form_submit`
@@ -2189,6 +2192,138 @@ Installs and manages [`mod_geoip`][].
   Boolean.
 
   Default: `undef`.
+
+##### Class: `apache::mod::http2`
+
+Installs and manages [`mod_http2`][].
+
+**Parameters**:
+
+* `h2_copy_files`: Determines if file handles or copies of file content are
+passed from the requestion processing down to the main connection.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_direct`: Toggles the usage of the HTTP/2 Direct Mode.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_early_hints`: Controls if HTTP status 103 interim responses are forwarded
+to the client or not.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_max_session_streams`: Sets the maximum number of active streams per
+HTTP/2 session that the server allows.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_max_worker_idle_seconds`: Sets the maximum number of seconds a h2 worker
+  may idle until it shuts itself down.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_max_workers`: Sets the maximum number of worker threads to spawn per
+  child process for HTTP/2 processing.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_min_workers`: Sets the minimum number of worker threads to spawn per
+  child process for HTTP/2 processing.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_modern_tls_only`: Toggles the security checks on HTTP/2 connections in
+  TLS mode.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_push`: Toggles the usage of the HTTP/2 server push protocol feature.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_push_diary_size`: Toggles the maximum number of HTTP/2 server pushes that
+  are remembered per HTTP/2 connection.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_push_priority`: Defines the priority handling of pushed responses based
+  on the content-type of the response.
+
+  Values: An array of priority definitions.
+
+  Default: `[]`
+
+* `h2_push_resource`: Declares resources for early pushing to the client.
+
+  Values: An array of resources.
+
+  Default: `[]`
+
+* `h2_serialize_headers`: Toggles if HTTP/2 requests shall be serialized in
+  HTTP/1.1 format for processing by httpd core.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_stream_max_mem_size`: Maximum number of outgoing data bytes buffered in
+  memory for an active streams.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_tls_cool_down_secs`: Sets the number of seconds of idle time on a TLS
+  connection before the TLS write size falls back to small (~1300 bytes)
+  length.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_tls_warm_up_size`: Sets the number of bytes to be sent in small TLS
+  records (~1300 bytes) until doing maximum sized writes (16k) on https: HTTP/2
+  connections.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_upgrade`: Toggles the usage of the HTTP/1.1 Upgrade method for switching
+  to HTTP/2.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_window_size`: Sets the size of the window that is used for flow control
+  from client to server and limits the amount of data the server has to buffer.
+
+  Integer.
+
+  Default: `undef`
+
 
 ##### Class: `apache::mod::info`
 
