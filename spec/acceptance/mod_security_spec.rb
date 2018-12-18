@@ -49,6 +49,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -106,6 +108,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -170,6 +174,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -238,6 +244,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -306,6 +314,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -374,6 +384,8 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end

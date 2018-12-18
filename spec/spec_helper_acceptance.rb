@@ -42,6 +42,12 @@ RSpec.configure do |c|
       EOS
 
       apply_manifest_on(agents, pp, catch_failures: false)
+    elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      pp = <<-EOS
+        package { 'net-tools-deprecated': ensure => installed }
+      EOS
+
+      apply_manifest_on(agents, pp, catch_failures: false)
     end
 
     if fact('osfamily') == 'Debian'

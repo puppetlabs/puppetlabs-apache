@@ -725,8 +725,14 @@ class apache::params inherits ::apache::version {
     $logroot_mode        = undef
     $lib_path            = '/usr/lib64/apache2' #changes for some modules based on mpm
     $mpm_module          = 'prefork'
-    $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
-    $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
+
+    if $::operatingsystemrelease < '15' {
+      $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
+      $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
+    } else {
+      $default_ssl_cert    = '/etc/apache2/ssl.crt/default-server.crt'
+      $default_ssl_key     = '/etc/apache2/ssl.key/default-server.key'
+    }
     $ssl_sessioncache    = '/var/lib/apache2/ssl_scache(512000)'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
