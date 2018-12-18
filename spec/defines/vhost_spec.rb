@@ -177,6 +177,14 @@ describe 'apache::vhost', type: :define do
                   'dav_depth_infinity' => true,
                   'dav_min_timeout'    => '600' },
                 {
+                  'path'             => '/var/www/http2',
+                  'h2_copy_files'    => true,
+                  'h2_push_resource' => [
+                    '/foo.css',
+                    '/foo.js',
+                  ],
+                },
+                {
                   'path'                                                => '/var/www/node-app/public',
                   'passenger_enabled'                                   => true,
                   'passenger_base_uri'                                  => '/app',
@@ -499,6 +507,21 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+Include\s'\/custom\/path\/another_includes'$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2CopyFiles\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2PushResource\s/foo.css$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2PushResource\s/foo.js$},
             )
           }
           it {

@@ -5078,6 +5078,16 @@ apache::vhost { 'first.example.com':
 }
 ```
 
+##### `h2_copy_files`
+
+Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles) directive.
+Note that you must declare `class {'apache::mod::http2': }` before using this directive.
+
+##### `h2_push_resource`
+
+Sets the [H2PushResource](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushresource) directive.
+Note that you must declare `class {'apache::mod::http2': }` before using this directive.
+
 ##### `headers`
 
 Adds lines for [Header](https://httpd.apache.org/docs/current/mod/mod_headers.html#header) directives.

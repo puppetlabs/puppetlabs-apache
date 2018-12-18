@@ -85,6 +85,14 @@
     <%- if directory['sethandler'] and directory['sethandler'] != '' -%>
     SetHandler <%= directory['sethandler'] %>
     <%- end -%>
+    <%- unless directory['h2_copy_files'].nil? -%>
+    H2CopyFiles <%= scope.call_function('apache::bool2httpd', [directory['h2_copy_files']]) %>
+    <%- end -%>
+    <%- if directory['h2_push_resource'] && ! directory['h2_push_resource'].empty? -%>
+      <%- [directory['h2_push_resource']].flatten.compact.each do |h2_push_resource| -%>
+    H2PushResource <%= h2_push_resource %>
+      <%- end -%>
+    <%- end -%>
     <%- unless directory['passenger_enabled'].nil? -%>
     PassengerEnabled <%= scope.call_function('apache::bool2httpd', [directory['passenger_enabled']]) %>
     <%- end -%>
