@@ -301,12 +301,15 @@
     - [Contributing to the apache module][Contributing]
     - [Running tests - A quick guide][Running tests]
 
+<a id="module-description"></a>
 ## Module description
 
 [Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][].
 
+<a id="setup"></a>
 ## Setup
 
+<a id="apache-affects"></a>
 ### What the apache module affects:
 
 - Configuration files and directories (created and written to)
@@ -323,6 +326,7 @@ On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module.
 >
 >To temporarily disable full Puppet management, set the [`purge_configs`][] parameter in the [`apache`][] class declaration to false. We recommend this only as a temporary means of saving and relocating customized configurations.
 
+<a id="beginning-with-apache"></a>
 ### Beginning with Apache
 
 To have Puppet install Apache with the default parameters, declare the [`apache`][] class:
@@ -351,8 +355,10 @@ class { 'apache':
 
 > **Note**: When `default_vhost` is set to `false`, you have to add at least one `apache::vhost` resource or Apache will not start. To establish a default virtual host, either set the `default_vhost` in the `apache` class or use the [`apache::vhost`][] defined type. You can also configure additional specific virtual hosts with the [`apache::vhost`][] defined type.
 
+<a id="usage"></a>
 ## Usage
 
+<a id="configuring-virtual-hosts"></a>
 ### Configuring virtual hosts
 
 The default [`apache`][] class sets up a virtual host on port 80, listening on all interfaces and serving the [`docroot`][] parameter's default directory of `/var/www`.
@@ -720,6 +726,7 @@ apache::mod { 'mod_authnz_external': }
 
 There are several optional parameters you can specify when defining Apache modules this way. See the [defined type's reference][`apache::mod`] for details.
 
+<a id="configuring-fastCGI-servers"></a>
 ### Configuring FastCGI servers to handle PHP files
 
 Add the [`apache::fastcgi::server`][] defined type to allow [FastCGI][] servers to handle requests for specific files. For example, the following defines a FastCGI server at 127.0.0.1 (localhost) on port 9000 to handle PHP requests:
@@ -745,6 +752,7 @@ apache::vhost { 'www':
 }
 ```
 
+<a id="load-balancing-examples"></a> 
 ### Load balancing examples
 
 Apache supports load balancing across groups of servers through the [`mod_proxy`][] Apache module. Puppet supports configuring Apache load balancing groups (also known as balancer clusters) through the [`apache::balancer`][] and [`apache::balancermember`][] defined types.
@@ -792,6 +800,7 @@ apache::balancer { 'puppet01':
 
 Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balancer documentation](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
+<a id="reference"></a> 
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -5638,6 +5647,7 @@ Hashes a password in a format suitable for htpasswd files read by apache.
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
+<a id="limitations"></a>
 ## Limitations
 
 For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
@@ -5721,6 +5731,7 @@ The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside t
 ### Ubuntu 16.04
 The [`apache::mod::suphp`][] class is untested since repositories are missing compatible packages.
 
+<a id="development"></a> 
 ## Development
 
 ### Contributing
