@@ -1283,6 +1283,18 @@ Sets the path to the file containing Apache ports configuration.
 
 Default: '{$conf_dir}/ports.conf'.
 
+##### `protocols`
+
+Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols) directive, which lists available protocols for the server.
+
+Default: `undef`
+
+##### `protocols_honor_order`
+
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+
+Default: `undef`
+
 ##### `purge_configs`
 
 Removes all other Apache configs and virtual hosts.
@@ -4408,6 +4420,18 @@ If nothing matches the priority, the first name-based virtual host is used. Like
 To omit the priority prefix in file names, pass a priority of `false`.
 
 Default: '25'.
+
+##### `protocols`
+
+Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols) directive, which lists available protocols for the virutal host.
+
+Default: `undef`
+
+##### `protocols_honor_order`
+
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+
+Default: `undef`
 
 ##### `proxy_dest`
 

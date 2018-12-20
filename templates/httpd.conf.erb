@@ -17,6 +17,16 @@ LimitRequestFields <%= @limitreqfields %>
 HttpProtocolOptions <%= @http_protocol_options %>
 <%- end -%>
 
+<%# Actually >= 2.4.17, but the minor version is not provided -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- unless @protocols.empty? -%>
+Protocols <%= @protocols.join(' ') %>
+  <%- end -%>
+  <%- unless @protocols_honor_order.nil? -%>
+ProtocolsHonorOrder <%= scope.call_function('apache::bool2httpd', [@protocols_honor_order]) %>
+  <%- end -%>
+<%- end -%>
+
 <%- if @rewrite_lock and scope.function_versioncmp([@apache_version, '2.2']) <= 0 -%>
 RewriteLock <%= @rewrite_lock %>
 <%- end -%>

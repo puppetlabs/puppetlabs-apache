@@ -94,6 +94,8 @@ class apache (
   $error_log                                                     = $::apache::params::error_log,
   $scriptalias                                                   = $::apache::params::scriptalias,
   $access_log_file                                               = $::apache::params::access_log_file,
+  Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                = [],
+  Optional[Boolean] $protocols_honor_order                       = undef,
 ) inherits ::apache::params {
 
   $valid_mpms_re = $apache_version ? {

@@ -437,6 +437,8 @@ describe 'apache::vhost', type: :define do
               'keepalive'                   => 'on',
               'keepalive_timeout'           => '100',
               'max_keepalive_requests'      => '1000',
+              'protocols'                   => ['h2', 'http/1.1'],
+              'protocols_honor_order'       => true,
             }
           end
 
@@ -1043,6 +1045,16 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
               content: %r{^\s+MaxKeepAliveRequests\s1000$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+Protocols\sh2 http/1.1$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ProtocolsHonorOrder\sOn$},
             )
           }
 

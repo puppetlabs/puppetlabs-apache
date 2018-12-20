@@ -10,6 +10,8 @@ define apache::vhost(
   $docroot_owner                                                                    = 'root',
   $docroot_group                                                                    = $::apache::params::root_group,
   $docroot_mode                                                                     = undef,
+  Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                                   = [],
+  Optional[Boolean] $protocols_honor_order                                          = undef,
   $serveradmin                                                                      = undef,
   Boolean $ssl                                                                      = false,
   $ssl_cert                                                                         = $::apache::default_ssl_cert,
@@ -571,6 +573,9 @@ define apache::vhost(
   # - $nvh_addr_port
   # - $servername
   # - $serveradmin
+  # - $protocols
+  # - $protocols_honor_order
+  # - $apache_version
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
     order   => 0,
