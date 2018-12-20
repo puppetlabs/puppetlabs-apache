@@ -570,6 +570,7 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $comment
   # - $nvh_addr_port
   # - $servername
   # - $serveradmin
