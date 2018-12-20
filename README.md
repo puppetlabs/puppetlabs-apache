@@ -726,7 +726,7 @@ apache::mod { 'mod_authnz_external': }
 
 There are several optional parameters you can specify when defining Apache modules this way. See the [defined type's reference][`apache::mod`] for details.
 
-<a id="configuring-fastCGI-servers"></a>
+<a id="configuring-fastcgi-servers-to-handle-php-files"></a>
 ### Configuring FastCGI servers to handle PHP files
 
 Add the [`apache::fastcgi::server`][] defined type to allow [FastCGI][] servers to handle requests for specific files. For example, the following defines a FastCGI server at 127.0.0.1 (localhost) on port 9000 to handle PHP requests:
