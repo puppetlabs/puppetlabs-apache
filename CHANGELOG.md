@@ -2,7 +2,25 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [3.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.5.0) (2018-12-14)
+## [4.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.6.0) (2019-01-07)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.5.0...3.6.0)
+
+### Changed
+
+- default server\_tokens to prod - more secure default [\#1746](https://github.com/puppetlabs/puppetlabs-apache/pull/1746) ([juju4](https://github.com/juju4))
+
+### Added
+
+- \(Modules 8141/Modules 8379\) - Addition of support for SLES 15 [\#1862](https://github.com/puppetlabs/puppetlabs-apache/pull/1862) ([david22swan](https://github.com/david22swan))
+- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
+
+### Fixed
+
+- \(MODULES-5990\) - conf-enabled defaulted to undef [\#1869](https://github.com/puppetlabs/puppetlabs-apache/pull/1869) ([david22swan](https://github.com/david22swan))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#1866](https://github.com/puppetlabs/puppetlabs-apache/pull/1866) ([tphoney](https://github.com/tphoney))
+
+## [3.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.5.0) (2018-12-17)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.4.0...3.5.0)
 
