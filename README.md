@@ -3098,15 +3098,29 @@ The repository is not managed by this module yet. For CentOS you can enable the 
 
 ##### `scl_httpd_version`
 
-#### Version of httpd to install.
+Version of httpd to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
 
-Example: `2.4` for Apache 2.4.
+If you set `scl_httpd_version`, Apache httpd is installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+If you set `scl_httpd_version`, you must also set `scl_php_version`, even if you are not installing PHP.
+
+The SCL repository is not managed by this module. For CentOS, enable the repo by installing the package `centos-release-scl-rh`.
+
+Valid value: A string specifying the version of httpd to install. For example, for Apache 2.4, specify '2.4'.
+
+Default: undef.
 
 ##### `scl_php_version`
 
-Version of PHP to use.
+Version of PHP to install using Red Hat Software Collections (SCL). Version of httpd to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
 
-Example: `7.1`
+If you set `scl_php_version`, PHP is installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+The SCL repository is not managed by this module. For CentOS, enable the repo by installing the package `centos-release-scl-rh`.
+
+Valid value: A string specifying the version of PHP to install. For example, for PHP 7.1, specify '7.1'.
+
+Default: undef.
 
 ### Public defined types
 
