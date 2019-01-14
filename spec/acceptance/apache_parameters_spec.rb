@@ -111,6 +111,31 @@ describe 'apache parameters' do
     end
   end
 
+  if fact('osfamily') == 'Debian'
+    describe 'conf_enabled => /etc/apache2/conf-enabled' do
+      pp = <<-MANIFEST
+          class { 'apache':
+            purge_configs   => false,
+            conf_enabled    => "/etc/apache2/conf-enabled"
+          }
+      MANIFEST
+      it 'applies cleanly' do
+        shell('touch /etc/apache2/conf-enabled/test.conf')
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      # Ensure the created file didn't disappear.
+      describe file('/etc/apache2/conf-enabled/test.conf') do
+        it { is_expected.to be_file }
+      end
+
+      # Ensure the default file didn't disappear.
+      describe file('/etc/apache2/conf-enabled/security.conf') do
+        it { is_expected.to be_file }
+      end
+    end
+  end
+
   describe 'purge parameters => false' do
     pp = <<-MANIFEST
         class { 'apache':
