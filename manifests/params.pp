@@ -640,6 +640,7 @@ class apache::params inherits ::apache::version {
     $server_root      = '/var/www'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
+    $conf_enabled     = undef
     $mod_dir          = "${httpd_dir}/modules.d"
     $mod_enable_dir   = undef
     $vhost_dir        = "${httpd_dir}/vhosts.d"

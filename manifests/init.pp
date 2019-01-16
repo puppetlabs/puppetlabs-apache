@@ -45,6 +45,7 @@ class apache (
   $server_root                                                   = $::apache::params::server_root,
   $conf_dir                                                      = $::apache::params::conf_dir,
   $confd_dir                                                     = $::apache::params::confd_dir,
+  $conf_enabled                                                  = $::apache::params::conf_enabled,
   $vhost_dir                                                     = $::apache::params::vhost_dir,
   $vhost_enable_dir                                              = $::apache::params::vhost_enable_dir,
   $mod_libs                                                      = $::apache::params::mod_libs,
@@ -191,6 +192,17 @@ class apache (
     force   => $purge_confd,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
+  }
+
+  if $conf_enabled and ! defined(File[$conf_enabled]) {
+    file { $conf_enabled:
+      ensure  => directory,
+      recurse => true,
+      purge   => $purge_confd,
+      force   => $purge_confd,
+      notify  => Class['Apache::Service'],
+      require => Package['httpd'],
+    }
   }
 
   if ! defined(File[$mod_dir]) {
