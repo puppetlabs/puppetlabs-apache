@@ -3112,7 +3112,7 @@ Default: undef.
 
 ##### `scl_php_version`
 
-Version of PHP to install using Red Hat Software Collections (SCL). Version of httpd to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
+Version of PHP to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
 
 If you set `scl_php_version`, PHP is installed from [Software Collections](https://www.softwarecollections.org/en/).
 
