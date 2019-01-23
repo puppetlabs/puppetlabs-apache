@@ -301,12 +301,15 @@
     - [apacheモジュールへの貢献][貢献]
     - [テストの実施 - クイックガイド][テストの実施]
 
+<a id="module-description"></a>
 ## モジュールの概要
 
 [Apache HTTPサーバ][] (Apache HTTPD、あるいは単にApacheとも呼ばれます)は、広く使用されているWebサーバです。この[Puppetモジュール][]によって、インフラ内でApacheを管理するための設定がシンプルなものになります。幅広いバーチャルホストセットアップを設定および管理し、[Apacheモジュール][]を効率的にインストールして設定することができます。
 
+<a id="setup"></a>
 ## セットアップ
 
+<a id="apache-affects"></a>
 ### apacheモジュールが影響を与えるもの:
 
 - (作成し、書き込みを行う)設定ファイルおよびディレクトリ
@@ -323,6 +326,7 @@ Gentooでは、このモジュールは [`gentoo/puppet-portage`][] Puppetモジ
 >
 >全面的なPuppet管理を一時的に無効にするには、[`apache`][]クラス宣言の[`purge_configs`][]パラメータをfalseに設定します。この手順は、カスタマイズした設定を保存し、リロケーションするための一時的な対策としてのみ推奨されます。
 
+<a id="beginning-with-apache"></a>
 ### Apacheの使用を始める
 
 デフォルトパラメータを用いてPuppetでApacheをインストールするには、[`apache`][]クラスを宣言します。
@@ -351,8 +355,10 @@ class { 'apache':
 
 > **注意**: `default_vhost`を`false`に設定する場合、少なくとも1つの`apache::vhost`リソースを追加する必要があります。追加しなければ、Apacheは起動しません。デフォルトのバーチャルホストを設定するには、`apache`クラスで`default_vhost`を設定するか、[`apache::vhost`][]定義タイプを使用します。[`apache::vhost`][]定義タイプを用いて、追加の固有バーチャルホストを設定することもできます。
 
+<a id="usage"></a>
 ## 使用方法
 
+<a id="configuring-virtual-hosts"></a>
 ### バーチャルホストの設定
 
 デフォルトの[`apache`][]クラスは、ポート80にバーチャルホストを設定します。すべてのインターフェースをリッスンし、[`docroot`][]パラメータのデフォルトディレクトリ`/var/www`をサーブします。
@@ -720,6 +726,7 @@ apache::mod { 'mod_authnz_external': }
 
 この方法でApacheモジュールを定義する際には、いくつかのオプションパラメータを指定できます。詳細については、[定義タイプのリファレンス][`apache::mod`]を参照してください。
 
+<a id="configuring-fastcgi-servers-to-handle-php-files"></a>
 ### PHPファイルを処理するFastCGIサーバの設定
 
 [`apache::fastcgi::server`][]定義タイプを追加すれば、 [FastCGI][]サーバで特定のファイルに関するリクエストを処理することができます。以下の例では、PHPリクエストを処理するFastCGIサーバをポート9000の127.0.0.1 (ローカルホスト)で定義しています。
@@ -745,6 +752,7 @@ apache::vhost { 'www':
 }
 ```
 
+<a id="load-balancing-examples"></a> 
 ### ロードバランシングの例
 
 Apacheは、[`mod_proxy`][] Apacheモジュールを通じて、複数のグループのサーバにわたるロードバランシングをサポートしています。Puppetでは、[`apache::balancer`][]および[`apache::balancermember`][]定義タイプにより、Apacheロードバランシンググループ(バランサクラスタとも呼ばれます)をサポートしています。
@@ -792,6 +800,7 @@ apache::balancer { 'puppet01':
 
 ロードバランシングのスケジューラのアルゴリズム(`lbmethod`)は、[mod_proxy_balancerドキュメント](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html)に記載されています。
 
+<a id="reference"></a> 
 ## リファレンス
 
 - [**パブリッククラス**](#public-classes)
@@ -1348,7 +1357,7 @@ Apacheの[`ServerSignature`][]ディレクティブで、エラードキュメ�
 
 Apacheの[`ServerTokens`][]ディレクティブで、Apacheからブラウザに送信される、Apacheやオペレーティングシステムに関する情報の量を制御します。
 
-デフォルト値: 'OS'。
+デフォルト値: 'Prod'.
 
 ##### `service_enable`
 
@@ -1504,7 +1513,9 @@ Puppetがこのユーザを管理しないようにするには、[`manage_user`
 
 ##### `apache_name`
 
-インストールするApacheパッケージの名前。Red Hatのソフトウェアコレクションのパッケージなど、標準的ではないApacheパッケージを使用している場合は、デフォルト設定をオーバーライドする必要があるかもしれません。
+インストールするApacheパッケージの名前。標準的ではないApacheパッケージを使用している場合は、デフォルト設定をオーバーライドする必要があるかもしれません。
+
+CentOS/RHELソフトウェアコレクション(SCL)では、`apache::version::scl_httpd_version`も使用できます。
 
 デフォルト値: [`apache::params`][]クラスにより設定されたユーザに依存します。これはオペレーティングシステムによって異なります。
 
@@ -3073,6 +3084,42 @@ Apacheデーモンを管理します。
 #### クラス: `apache::version`
 
 オペレーティングシステムに基づき、Apacheバージョンの自動検出を試みます。 
+
+##### Red Hat Software Collections (SCL)
+
+CentOS/RHELのSoftware Collectionsでは、新しいApacheおよびPHPに加え、他のパッケージも使用できます。
+
+`scl_httpd_version`が設定されている場合、Apache Httpdは[Software Collections](https://www.softwarecollections.org/en/)からインストールされます。
+
+`scl_httpd_version`が設定されている場合、PHPをインストールする予定がない場合でも`scl_php_version`を設定する必要があります。
+
+リポジトリはこのモジュールではまだ管理されていません。CentOSでは、`centos-release-scl-rh`パッケージをインストールすることでリポジトリを有効にできます。
+
+##### `scl_httpd_version`
+
+Red Hat Software Collections (SCL)を使用してインストールされるhttpdのバージョン。CentOSおよびRHELのコレクションでは、新しいApacheおよびPHPパッケージを使用できます。
+
+`scl_httpd_version`を設定すると、Apache httpdは[Software Collections](https://www.softwarecollections.org/en/)からインストールされます。
+
+`scl_httpd_version`を設定した場合、PHPをインストールする予定がない場合でも`scl_php_version`を設定する必要があります。
+
+SCLリポジトリはこのモジュールではまだ管理されていません。CentOSでは、`centos-release-scl-rh`パッケージをインストールすることでリポジトリを有効にできます。
+
+有効な値: インストールするhttpdのバージョンを指定する文字列。例えば、Apache 2.4の場合は'2.4'を指定します。
+
+デフォルト値: undef。
+
+##### `scl_php_version`
+
+Red Hat Software Collections (SCL)を使用してインストールするhttpdのバージョン。CentOSおよびRHELのコレクションでは、新しいApacheおよびPHPのパッケージを使用できます。
+
+`scl_php_version`を設定すると、PHPは[Software Collections](https://www.softwarecollections.org/en/)からインストールされます。
+
+SCLリポジトリはこのモジュールではまだ管理されていません。CentOSでは、`centos-release-scl-rh`パッケージをインストールすることでリポジトリを有効にできます。
+
+有効な値: インストールするPHPのバージョンを指定する文字列。例えば、PHP 7.1の場合は'7.1'を指定します。
+
+デフォルト値: undef。
 
 ### パブリック定義タイプ　
 
@@ -5610,7 +5657,8 @@ Apacheが読みこむhtpasswdファイルに適したフォーマットでパス
 
 現在はSHAハッシュを使用しています。これは、このフォーマットは安全ではないとされているものの、ほとんどのプラットフォームでサポートされているもっとも安全なフォーマットであるためです。
 
-## 制約
+<a id="limitations"></a>
+## 制約事項
 
  サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)を参照してください。
 
@@ -5693,6 +5741,7 @@ apache::vhost { 'test.server':
 ### Ubuntu 16.04
 [`apache::mod::suphp`][]クラスは、リポジトリに適合するパッケージがないため、テストされていません。
 
+<a id="development"></a> 
 ## 開発
 
 ### 貢献
