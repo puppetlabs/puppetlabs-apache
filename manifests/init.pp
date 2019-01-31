@@ -35,6 +35,7 @@ class apache (
   $service_ensure                                                = 'running',
   $service_restart                                               = undef,
   $purge_configs                                                 = true,
+  $host_namelookups                                              = $::apache::params::host_namelookups,
   $purge_vhost_dir                                               = undef,
   $purge_vdir                                                    = false,
   $serveradmin                                                   = 'root@localhost',
