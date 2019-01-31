@@ -28,6 +28,9 @@ class apache::params inherits ::apache::version {
   # The default error log level
   $log_level = 'warn'
   $use_optional_includes = false
+  
+  # The default value for host hame lookup
+  $host_namelookups = 'Off'
 
   # Default mime types settings
   $mime_types_additional = {
