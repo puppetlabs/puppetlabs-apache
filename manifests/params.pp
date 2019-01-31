@@ -42,6 +42,9 @@ class apache::params inherits ::apache::version {
   # Default mode for files
   $file_mode = '0644'
 
+  # The default value for host hame lookup
+  $hostname_lookups = 'Off'
+
   # Default options for / directory
   $root_directory_options = ['FollowSymLinks']
 

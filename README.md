@@ -1125,6 +1125,13 @@ Limits the number of requests allowed per connection when the [`keepalive` param
 
 Default: '100'.
 
+##### `hostname_lookups`
+
+This directive enables DNS lookups so that host names can be logged (and passed to CGIs/SSIs in REMOTE_HOST). Values:'On','Off','Double'.
+
+Default: 'Off'.
+> **Note**: If enabled, it impacts performance significantly.
+
 ##### `lib_path`
 
 Specifies the location where [Apache module][Apache modules] files are stored.

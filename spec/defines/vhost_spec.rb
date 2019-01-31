@@ -85,7 +85,6 @@ describe 'apache::vhost', type: :define do
               'ssl_proxyengine'             => true,
               'ssl_proxy_cipher_suite'      => 'HIGH',
               'ssl_proxy_protocol'          => 'TLSv1.2',
-
               'priority'                    => '30',
               'default_vhost'               => true,
               'servername'                  => 'example.com',
