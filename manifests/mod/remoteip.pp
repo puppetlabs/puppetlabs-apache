@@ -65,16 +65,18 @@ class apache::mod::remoteip (
 
   ::apache::mod { 'remoteip': }
 
-  # Template uses:
-  # - $header
-  # - $proxy_ips
-  # - $proxies_header
-  # - $trusted_proxy_ips
+  $template_parameters = {
+    header                    => $header,
+    internal_proxy            => $_internal_proxy,
+    proxies_header            => $proxies_header,
+    trusted_proxy             => $_trusted_proxy,
+  }
+
   file { 'remoteip.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/remoteip.conf",
     mode    => $::apache::file_mode,
-    content => template('apache/mod/remoteip.conf.erb'),
+    content => epp('apache/mod/remoteip.conf.epp', $template_parameters),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],
     notify  => Class['apache::service'],
