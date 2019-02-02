@@ -1,8 +1,12 @@
 <%- |
   String                               $header,
   Optional[Array[Stdlib::IP::Address]] $internal_proxy            = undef,
+  Optional[Stdlib::Absolutepath]       $internal_proxy_list       = undef,
   Optional[String]                     $proxies_header            = undef,
+  Boolean                              $proxy_protocol            = undef,
+  Optional[Array[Stdlib::IP::Address]] $proxy_protocol_exceptions = undef,
   Optional[Array[Stdlib::IP::Address]] $trusted_proxy             = undef,
+  Optional[Stdlib::Absolutepath]       $trusted_proxy_list        = undef,
 | -%>
 # Declare the header field which should be parsed for useragent IP addresses
 RemoteIPHeader <%= $header %>
@@ -15,9 +19,23 @@ RemoteIPInternalProxy <%= $proxy %>
 <%-   } -%>
 <%- } -%>
 
+<%- if $internal_proxy_list { -%>
+RemoteIPInternalProxyList <%= $internal_proxy_list %>
+<%- } -%>
+
 <%- if $proxies_header { -%>
 # Declare the header field which will record all intermediate IP addresses
 RemoteIPProxiesHeader <%= $proxies_header %>
+<%- } -%>
+
+<%- if $proxy_protocol { -%>
+RemoteIPProxyProtocol On
+<%- } -%>
+
+<%- if $proxy_protocol_exceptions { -%>
+<%-   [$proxy_protocol_exceptions].flatten.each |$exception| { -%>
+RemoteIPProxyProtocolExceptions <%= $exception %>
+<%-   } -%>
 <%- } -%>
 
 <%- if $trusted_proxy { -%>
@@ -26,4 +44,8 @@ RemoteIPProxiesHeader <%= $proxies_header %>
   <%- [$trusted_proxy].flatten.each |$proxy| { -%>
 RemoteIPTrustedProxy <%= $proxy %>
   <%- } -%>
+<%- } -%>
+
+<%- if $trusted_proxy_list { -%>
+RemoteIPTrustedProxyList <%= $trusted_proxy_list %>
 <%- } -%>
