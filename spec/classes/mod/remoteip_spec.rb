@@ -30,6 +30,14 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPHeader X-Forwarded-For$}) }
     end
+    describe 'with internal_proxy => [ 10.42.17.8, 10.42.18.99 ]' do
+      let :params do
+        { internal_proxy: ['10.42.17.8', '10.42.18.99'] }
+      end
+
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.17.8$}) }
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.18.99$}) }
+    end
     describe 'with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_ips: ['10.42.17.8', '10.42.18.99'] }
@@ -38,14 +46,28 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.18.99$}) }
     end
+    describe 'with trusted_proxy => [ 10.42.17.8, 10.42.18.99 ]' do
+      let :params do
+        { trusted_proxy: ['10.42.17.8', '10.42.18.99'] }
+      end
+
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.17.8$}) }
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.18.99$}) }
+    end
+    describe 'with trusted_proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
+      let :params do
+        { trusted_proxy: ['10.42.17.8', '10.42.18.99'] }
+      end
+
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.17.8$}) }
+      it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.18.99$}) }
+    end
     describe 'with Apache version < 2.4' do
       let :params do
         { apache_version: '2.2' }
       end
 
-      it 'fails' do
-        expect { catalogue }.to raise_error(Puppet::Error, %r{mod_remoteip is only available in Apache 2.4})
-      end
+      it { expect { catalogue }.to raise_error(Puppet::Error, %r{mod_remoteip is only available in Apache 2.4}) }
     end
   end
 end
