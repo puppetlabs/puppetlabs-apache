@@ -278,6 +278,8 @@
 [`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
 [`WSGIPythonPath`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonPath.html
 [`WSGIPythonHome`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonHome.html
+[`WSGIApplicationGroup`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html
+[`WSGIPythonOptimize`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIPythonOptimize.html
 
 #### Table of Contents
 
@@ -3046,9 +3048,21 @@ Enables Python support via [`mod_wsgi`][].
 
 * `wsgi_restrict_embedded`: Defines the [`WSGIRestrictEmbedded`][] directive, such as 'On'.
 
-Values: On|Off|undef.
+  Values: On|Off|undef.
 
-Default: undef.
+  Default: undef.
+
+* `wsgi_application_group`: Defines the [`WSGIApplicationGroup`][] directive, such as "%{GLOBAL}".
+
+  Values: A string specifying a wsgi application.
+
+  Default: `undef`.
+
+* `wsgi_python_optimize`: Defines the [`WSGIPythonOptimize`][] directive, such as 1.
+
+  Values: A integer specifying the level of Python compiler optimisations.
+
+  Default: `undef`.
 
 * `wsgi_socket_prefix`: Defines the [`WSGISocketPrefix`][] directive, such as "\${APACHE\_RUN\_DIR}WSGI".
 
