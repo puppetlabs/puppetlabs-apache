@@ -3381,7 +3381,7 @@ For the custom fragment's `order` parameter, the `apache::vhost` defined type us
 
 ```
 class { 'apache':
-  default_vhost     => false
+  default_vhost     => false,
   default_ssl_vhost => false,
 }
 ```
