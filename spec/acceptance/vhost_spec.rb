@@ -1510,7 +1510,7 @@ describe 'apache::vhost define' do
           apache::vhost { 'test.server':
             docroot                     => '/tmp',
             wsgi_application_group      => '%{GLOBAL}',
-            wsgi_daemon_process         => 'wsgi',
+            wsgi_daemon_process         => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
             wsgi_daemon_process_options => {processes => '2'},
             wsgi_process_group          => 'nobody',
             wsgi_script_aliases         => { '/test' => '/test1' },
@@ -1531,7 +1531,7 @@ describe 'apache::vhost define' do
         apache::vhost { 'test.server':
           docroot                     => '/tmp',
           wsgi_application_group      => '%{GLOBAL}',
-          wsgi_daemon_process         => 'wsgi',
+          wsgi_daemon_process         => { 'wsgi' => { 'python-home' => '/usr' }, 'foo' => {} },
           wsgi_daemon_process_options => {processes => '2'},
           wsgi_import_script          => '/test1',
           wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
@@ -1549,7 +1549,8 @@ describe 'apache::vhost define' do
         describe file("#{$vhost_dir}/25-test.server.conf") do
           it { is_expected.to be_file }
           it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
-          it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }
+          it { is_expected.to contain 'WSGIDaemonProcess foo' }
+          it { is_expected.to contain 'WSGIDaemonProcess wsgi python-home=/usr' }
           it { is_expected.to contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
           it { is_expected.to contain 'WSGIProcessGroup nobody' }
           it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }

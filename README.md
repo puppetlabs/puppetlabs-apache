@@ -561,11 +561,13 @@ apache::vhost { 'wsgi.example.com':
   port                        => '80',
   docroot                     => '/var/www/pythonapp',
   wsgi_application_group      => '%{GLOBAL}',
-  wsgi_daemon_process         => 'wsgi',
-  wsgi_daemon_process_options => {
-    processes    => '2',
-    threads      => '15',
-    display-name => '%{GROUP}',
+  wsgi_daemon_process         => {
+    'wsgi' => {
+      processes    => '2',
+      threads      => '15',
+      display-name => '%{GROUP}',
+    },
+    'foo' => {},
   },
   wsgi_import_script          => '/var/www/demo.wsgi',
   wsgi_import_script_options  => {
@@ -4853,7 +4855,7 @@ apache::vhost { 'subdomain.loc':
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi).
 
 * `wsgi_daemon_process`: A hash that sets the name of the WSGI daemon, accepting [certain keys](http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIDaemonProcess.html). Default: `undef`.
-* `wsgi_daemon_process_options`. _Optional._ Default: `undef`.
+* `wsgi_daemon_process_options`. _Optional._ Default: `undef`. **Deprecated:** Please add values inside Hash `wsgi_daemon_process`.
 * `wsgi_process_group`: Sets the group ID that the virtual host runs under. Default: `undef`.
 * `wsgi_script_aliases`: Requires a hash of web paths to filesystem .wsgi paths. Default: `undef`.
 * `wsgi_script_aliases_match`: Requires a hash of web path regexes to filesystem .wsgi paths. Default: `undef`
@@ -4866,12 +4868,14 @@ An example virtual host configuration with WSGI:
 apache::vhost { 'wsgi.example.com':
   port                        => '80',
   docroot                     => '/var/www/pythonapp',
-  wsgi_daemon_process         => 'wsgi',
-  wsgi_daemon_process_options =>
-    { processes    => '2',
+  wsgi_daemon_process         => {
+    'wsgi' => {
+      processes    => '2',
       threads      => '15',
       display-name => '%{GROUP}',
-     },
+    },
+    'foo' => {},
+  },
   wsgi_process_group          => 'wsgi',
   wsgi_script_aliases         => { '/' => '/var/www/demo.wsgi' },
   wsgi_chunked_request        => 'On',

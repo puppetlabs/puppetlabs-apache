@@ -320,7 +320,7 @@ describe 'apache::vhost', type: :define do
               'setenvifnocase'              => 'REMOTE_ADDR ^127.0.0.1 localhost=true',
               'block'                       => 'scm',
               'wsgi_application_group'      => '%{GLOBAL}',
-              'wsgi_daemon_process'         => 'wsgi',
+              'wsgi_daemon_process'         => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
               'wsgi_daemon_process_options' => {
                 'processes'    => '2',
                 'threads'      => '15',
@@ -1691,7 +1691,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot'                    => '/rspec/docroot',
-              'wsgi_daemon_process' => 'wsgi',
+              'wsgi_daemon_process' => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
             }
           end
 
