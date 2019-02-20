@@ -301,8 +301,7 @@
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
     - [Contributing to the apache module][Contributing]
-    - [Running tests - A quick guide][Running tests]
-
+    
 <a id="module-description"></a>
 ## Module description
 
