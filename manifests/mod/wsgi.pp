@@ -3,6 +3,8 @@ class apache::mod::wsgi (
   $wsgi_socket_prefix     = $::apache::params::wsgi_socket_prefix,
   $wsgi_python_path       = undef,
   $wsgi_python_home       = undef,
+  $wsgi_python_optimize   = undef,
+  $wsgi_application_group = undef,
   $package_name           = undef,
   $mod_path               = undef,
 ) inherits ::apache::params {

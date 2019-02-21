@@ -9,8 +9,13 @@ describe 'apache::vhost define' do
         default_ssl_vhost => false,
         service_ensure => stopped,
       }
-      if ($::osfamily == 'Suse') {
+      if ($::osfamily == 'Suse' and $::operatingsystemrelease < '15') {
         exec { '/usr/bin/gensslcert':
+          require => Class['apache'],
+        }
+      } elsif ($::osfamily == 'Suse' and $::operatingsystemrelease >= '15') {
+        # In SLES 15, if not given a name, gensslcert defaults the name to be the hostname
+        exec { '/usr/bin/gensslcert -n default':
           require => Class['apache'],
         }
       }
@@ -180,6 +185,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -224,6 +231,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -280,6 +289,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -337,6 +348,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -409,6 +422,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -470,6 +485,8 @@ describe 'apache::vhost define' do
       describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
+        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
         end
@@ -534,6 +551,8 @@ describe 'apache::vhost define' do
       describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
+        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
         end
@@ -578,6 +597,8 @@ describe 'apache::vhost define' do
       describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
+        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
         end
@@ -658,6 +679,8 @@ describe 'apache::vhost define' do
       describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
+        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
         end
@@ -697,6 +720,8 @@ describe 'apache::vhost define' do
       describe service($service_name) do
         if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
+        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
         end
@@ -735,6 +760,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -785,6 +812,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -834,6 +863,8 @@ describe 'apache::vhost define' do
     describe service($service_name) do
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -964,9 +995,7 @@ describe 'apache::vhost define' do
     describe file($ports_file) do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
-         fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemrelease') =~ %r{(14\.04|16\.04)} ||
-         fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8' ||
-         fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9' ||
+         fact('osfamily') == 'Debian' ||
          fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
@@ -1566,9 +1595,8 @@ describe 'apache::vhost define' do
   end
 
   # Limit testing to Debian, since Centos does not have fastcgi package.
-  case fact('osfamily')
-  when 'Debian'
-    next if fact('operatingsystemmajrelease') == '9' # Debian 9 does not support this fastcgi
+  # In addition Debian 9/Ubuntu 18.04 no longer support this fastcgi
+  if fact('osfamily') == 'Debian' && !['9', '18.04'].include?(fact('operatingsystemmajrelease'))
     describe 'fastcgi' do
       pp_one = <<-MANIFEST
         $_os = $::operatingsystem

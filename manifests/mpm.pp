@@ -82,7 +82,6 @@ define apache::mpm (
       }
 
       if $mpm == 'itk' {
-
         if ( ( $::operatingsystem == 'Ubuntu' ) or ( ($::operatingsystem == 'Debian') and ( versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) ) {
           ensure_resource('exec', '/usr/sbin/a2dismod mpm_event', {
             onlyif  => "/usr/bin/test -e ${apache::mod_enable_dir}/mpm_event.load",
@@ -98,7 +97,6 @@ define apache::mpm (
             File[$::apache::mod_enable_dir],
           ],
         }
-
       }
 
       if $mpm == 'prefork' {

@@ -278,6 +278,8 @@
 [`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
 [`WSGIPythonPath`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonPath.html
 [`WSGIPythonHome`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonHome.html
+[`WSGIApplicationGroup`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html
+[`WSGIPythonOptimize`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIPythonOptimize.html
 
 #### Table of Contents
 
@@ -299,14 +301,16 @@
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
     - [Contributing to the apache module][Contributing]
-    - [Running tests - A quick guide][Running tests]
-
+    
+<a id="module-description"></a>
 ## Module description
 
 [Apache HTTP Server][] (also called Apache HTTPD, or simply Apache) is a widely used web server. This [Puppet module][] simplifies the task of creating configurations to manage Apache servers in your infrastructure. It can configure and manage a range of virtual host setups and provides a streamlined way to install and configure [Apache modules][].
 
+<a id="setup"></a>
 ## Setup
 
+<a id="apache-affects"></a>
 ### What the apache module affects:
 
 - Configuration files and directories (created and written to)
@@ -323,6 +327,7 @@ On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module.
 >
 >To temporarily disable full Puppet management, set the [`purge_configs`][] parameter in the [`apache`][] class declaration to false. We recommend this only as a temporary means of saving and relocating customized configurations.
 
+<a id="beginning-with-apache"></a>
 ### Beginning with Apache
 
 To have Puppet install Apache with the default parameters, declare the [`apache`][] class:
@@ -351,8 +356,10 @@ class { 'apache':
 
 > **Note**: When `default_vhost` is set to `false`, you have to add at least one `apache::vhost` resource or Apache will not start. To establish a default virtual host, either set the `default_vhost` in the `apache` class or use the [`apache::vhost`][] defined type. You can also configure additional specific virtual hosts with the [`apache::vhost`][] defined type.
 
+<a id="usage"></a>
 ## Usage
 
+<a id="configuring-virtual-hosts"></a>
 ### Configuring virtual hosts
 
 The default [`apache`][] class sets up a virtual host on port 80, listening on all interfaces and serving the [`docroot`][] parameter's default directory of `/var/www`.
@@ -369,7 +376,7 @@ apache::vhost { 'vhost.example.com':
 
 See the [`apache::vhost`][] defined type's reference for a list of all virtual host parameters.
 
-> **Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] defined type applies a default [`priority`][] of 25, which Puppet interprets by prefixing the virtual host's file name with `25-`. This all means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to false, Apache still processes virtual hosts in alphabetical order.
+> **Note**: Apache processes virtual hosts in alphabetical order, and server administrators can prioritize Apache's virtual host processing by prefixing a virtual host's configuration file name with a number. The [`apache::vhost`][] defined type applies a default [`priority`][] of 25, which Puppet interprets by prefixing the virtual host's file name with `25-`. This means that if multiple sites have the same priority, or if you disable priority numbers by setting the `priority` parameter's value to false, Apache still processes virtual hosts in alphabetical order.
 
 To configure user and group ownership for `docroot`, use the [`docroot_owner`][] and [`docroot_group`][] parameters:
 
@@ -720,6 +727,7 @@ apache::mod { 'mod_authnz_external': }
 
 There are several optional parameters you can specify when defining Apache modules this way. See the [defined type's reference][`apache::mod`] for details.
 
+<a id="configuring-fastcgi-servers-to-handle-php-files"></a>
 ### Configuring FastCGI servers to handle PHP files
 
 Add the [`apache::fastcgi::server`][] defined type to allow [FastCGI][] servers to handle requests for specific files. For example, the following defines a FastCGI server at 127.0.0.1 (localhost) on port 9000 to handle PHP requests:
@@ -745,6 +753,7 @@ apache::vhost { 'www':
 }
 ```
 
+<a id="load-balancing-examples"></a> 
 ### Load balancing examples
 
 Apache supports load balancing across groups of servers through the [`mod_proxy`][] Apache module. Puppet supports configuring Apache load balancing groups (also known as balancer clusters) through the [`apache::balancer`][] and [`apache::balancermember`][] defined types.
@@ -792,6 +801,7 @@ apache::balancer { 'puppet01':
 
 Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balancer documentation](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
+<a id="reference"></a> 
 ## Reference
 
 - [**Public classes**](#public-classes)
@@ -1348,7 +1358,7 @@ Default: 'On'.
 
 Controls how much information Apache sends to the browser about itself and the operating system, via Apache's [`ServerTokens`][] directive.
 
-Default: 'OS'.
+Default: 'Prod'.
 
 ##### `service_enable`
 
@@ -1504,7 +1514,9 @@ To prevent Puppet from managing the user, set the [`manage_user`][] parameter to
 
 ##### `apache_name`
 
-The name of the Apache package to install. If you are using a non-standard Apache package, such as those from Red Hat's software collections, you might need to override the default setting.
+The name of the Apache package to install. If you are using a non-standard Apache package you might need to override the default setting.
+
+For CentOS/RHEL Software Collections (SCL), you can also use `apache::version::scl_httpd_version`.
 
 Default: Depends on the user set by [`apache::params`][] class, based on your operating system:
 
@@ -3035,9 +3047,21 @@ Enables Python support via [`mod_wsgi`][].
 
 * `wsgi_restrict_embedded`: Defines the [`WSGIRestrictEmbedded`][] directive, such as 'On'.
 
-Values: On|Off|undef.
+  Values: On|Off|undef.
 
-Default: undef.
+  Default: undef.
+
+* `wsgi_application_group`: Defines the [`WSGIApplicationGroup`][] directive, such as "%{GLOBAL}".
+
+  Values: A string specifying a wsgi application.
+
+  Default: `undef`.
+
+* `wsgi_python_optimize`: Defines the [`WSGIPythonOptimize`][] directive, such as 1.
+
+  Values: A integer specifying the level of Python compiler optimisations.
+
+  Default: `undef`.
 
 * `wsgi_socket_prefix`: Defines the [`WSGISocketPrefix`][] directive, such as "\${APACHE\_RUN\_DIR}WSGI".
 
@@ -3074,6 +3098,42 @@ Manages the Apache daemon.
 #### Class: `apache::version`
 
 Attempts to automatically detect the Apache version based on the operating system.
+
+##### Red Hat Software Collections (SCL)
+
+Software Collections on CentOS/RHEL allow for newer Apache and PHP, amongst other packages.
+
+If `scl_httpd_version` is set, Apache Httpd will get installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+If `scl_httpd_version` is set, `scl_php_version` also needs to be set, even if PHP is not going to be installed.
+
+The repository is not managed by this module yet. For CentOS you can enable the repo by installing the package `centos-release-scl-rh`.
+
+##### `scl_httpd_version`
+
+Version of httpd to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
+
+If you set `scl_httpd_version`, Apache httpd is installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+If you set `scl_httpd_version`, you must also set `scl_php_version`, even if you are not installing PHP.
+
+The SCL repository is not managed by this module. For CentOS, enable the repo by installing the package `centos-release-scl-rh`.
+
+Valid value: A string specifying the version of httpd to install. For example, for Apache 2.4, specify '2.4'.
+
+Default: undef.
+
+##### `scl_php_version`
+
+Version of PHP to install using Red Hat Software Collections (SCL). These collections for CentOS and RHEL allow for newer Apache and PHP packages.
+
+If you set `scl_php_version`, PHP is installed from [Software Collections](https://www.softwarecollections.org/en/).
+
+The SCL repository is not managed by this module. For CentOS, enable the repo by installing the package `centos-release-scl-rh`.
+
+Valid value: A string specifying the version of PHP to install. For example, for PHP 7.1, specify '7.1'.
+
+Default: undef.
 
 ### Public defined types
 
@@ -3320,7 +3380,7 @@ For the custom fragment's `order` parameter, the `apache::vhost` defined type us
 
 ```
 class { 'apache':
-  default_vhost     => false
+  default_vhost     => false,
   default_ssl_vhost => false,
 }
 ```
@@ -5614,6 +5674,7 @@ Hashes a password in a format suitable for htpasswd files read by apache.
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
+<a id="limitations"></a>
 ## Limitations
 
 For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
@@ -5697,6 +5758,7 @@ The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside t
 ### Ubuntu 16.04
 The [`apache::mod::suphp`][] class is untested since repositories are missing compatible packages.
 
+<a id="development"></a> 
 ## Development
 
 ### Contributing

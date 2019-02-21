@@ -11,46 +11,29 @@ describe 'apache::security::rule_link', type: :define do
     'base_rules/modsecurity_35_bad_robots.data'
   end
 
-  context 'on RedHat based systems' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystem: 'CentOS',
-        operatingsystemrelease: '7',
-        kernel: 'Linux',
-        id: 'root',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      case facts[:os]['family']
+      when 'RedHat'
+        it {
+          is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+            path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
+            target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
+          )
+        }
+      when 'Debian'
+        it {
+          is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+            path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
+            target: '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
+          )
+        }
+      end
     end
-
-    it {
-      is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
-        path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
-        target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
-      )
-    }
-  end
-
-  context 'on Debian based systems' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        id: 'root',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        kernel: 'Linux',
-        is_pe: false,
-      }
-    end
-
-    it {
-      is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
-        path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
-        target: '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
-      )
-    }
   end
 end

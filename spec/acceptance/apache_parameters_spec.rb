@@ -56,6 +56,8 @@ describe 'apache parameters' do
       it { is_expected.to be_running }
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
       end
@@ -77,6 +79,8 @@ describe 'apache parameters' do
       it { is_expected.not_to be_running }
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.not_to be_enabled }
       end
@@ -99,8 +103,35 @@ describe 'apache parameters' do
       it { is_expected.not_to be_running }
       if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.not_to be_enabled }
+      end
+    end
+  end
+
+  if fact('osfamily') == 'Debian'
+    describe 'conf_enabled => /etc/apache2/conf-enabled' do
+      pp = <<-MANIFEST
+          class { 'apache':
+            purge_configs   => false,
+            conf_enabled    => "/etc/apache2/conf-enabled"
+          }
+      MANIFEST
+      it 'applies cleanly' do
+        shell('touch /etc/apache2/conf-enabled/test.conf')
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      # Ensure the created file didn't disappear.
+      describe file('/etc/apache2/conf-enabled/test.conf') do
+        it { is_expected.to be_file }
+      end
+
+      # Ensure the default file didn't disappear.
+      describe file('/etc/apache2/conf-enabled/security.conf') do
+        it { is_expected.to be_file }
       end
     end
   end

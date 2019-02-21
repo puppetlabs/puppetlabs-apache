@@ -19,21 +19,6 @@ shared_examples :compile, compile: true do
   it { is_expected.to compile.with_all_deps }
 end
 
-shared_examples 'a mod class, without including apache' do
-  let :facts do
-    {
-      id: 'root',
-      lsbdistcodename: 'jessie',
-      kernel: 'Linux',
-      osfamily: 'Debian',
-      operatingsystem: 'Debian',
-      operatingsystemrelease: '8',
-      operatingsystemmajrelease: nil,
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      is_pe: false,
-      hardwaremodel: 'x86_64',
-    }
-  end
-
-  it { is_expected.to compile.with_all_deps }
+shared_context 'a mod class, without including apache' do
+  let(:facts) { on_supported_os['debian-8-x86_64'] }
 end

@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [4.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.6.0) (2019-01-07)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.5.0...3.6.0)
+
+### Changed
+
+- default server\_tokens to prod - more secure default [\#1746](https://github.com/puppetlabs/puppetlabs-apache/pull/1746) ([juju4](https://github.com/juju4))
+
+### Added
+
+- \(Modules 8141/Modules 8379\) - Addition of support for SLES 15 [\#1862](https://github.com/puppetlabs/puppetlabs-apache/pull/1862) ([david22swan](https://github.com/david22swan))
+- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
+
+### Fixed
+
+- \(MODULES-5990\) - conf-enabled defaulted to undef [\#1869](https://github.com/puppetlabs/puppetlabs-apache/pull/1869) ([david22swan](https://github.com/david22swan))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#1866](https://github.com/puppetlabs/puppetlabs-apache/pull/1866) ([tphoney](https://github.com/tphoney))
+
+## [3.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.5.0) (2018-12-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.4.0...3.5.0)
+
+### Added
+
+- \(MODULES-5990\) Addition of 'IncludeOptional conf-enabled/\*.conf' to apache2.conf' on Debian Family OS [\#1851](https://github.com/puppetlabs/puppetlabs-apache/pull/1851) ([david22swan](https://github.com/david22swan))
+- \(MODULES-8107\) - Support added for Ubuntu 18.04. [\#1850](https://github.com/puppetlabs/puppetlabs-apache/pull/1850) ([david22swan](https://github.com/david22swan))
+- \(MODULES-8108\) - Support added for Debian 9 [\#1849](https://github.com/puppetlabs/puppetlabs-apache/pull/1849) ([david22swan](https://github.com/david22swan))
+- Add option to add comments to the header of a vhost file [\#1841](https://github.com/puppetlabs/puppetlabs-apache/pull/1841) ([jovandeginste](https://github.com/jovandeginste))
+
+### Fixed
+
+- \(FM-7605\) - Disabling conf\_enabled on Ubuntu 18.04  by default as it conflicts with Shibboleth causing errors with apache2. [\#1856](https://github.com/puppetlabs/puppetlabs-apache/pull/1856) ([david22swan](https://github.com/david22swan))
+- \(MODULES-8429\) Update GPG key for phusion passenger [\#1848](https://github.com/puppetlabs/puppetlabs-apache/pull/1848) ([abottchen](https://github.com/abottchen))
+- Fix default vhost priority in readme [\#1843](https://github.com/puppetlabs/puppetlabs-apache/pull/1843) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
+- fix apache::mod::jk example typo and add link for more info [\#1812](https://github.com/puppetlabs/puppetlabs-apache/pull/1812) ([xorpaul](https://github.com/xorpaul))
+- MODULES-7379: Fixing syntax by adding newline [\#1803](https://github.com/puppetlabs/puppetlabs-apache/pull/1803) ([wimvr](https://github.com/wimvr))
+- ensure mpm\_event is disabled under debian 9 if mpm itk is used [\#1766](https://github.com/puppetlabs/puppetlabs-apache/pull/1766) ([zivis](https://github.com/zivis))
+
 ## [3.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.4.0) (2018-09-27)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.3.0...3.4.0)
@@ -23,7 +61,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - pdksync - \(MODULES-7705\) - Bumping stdlib dependency from \< 5.0.0 to \< 6.0.0 [\#1821](https://github.com/puppetlabs/puppetlabs-apache/pull/1821) ([pmcmaw](https://github.com/pmcmaw))
 - Add support for ProxyTimeout [\#1805](https://github.com/puppetlabs/puppetlabs-apache/pull/1805) ([agoodno](https://github.com/agoodno))
-- MODULES-7343: Allow overrides by adding mod\_libs in apache class [\#1800](https://github.com/puppetlabs/puppetlabs-apache/pull/1800) ([karelyatin](https://github.com/karelyatin))
+- \(MODULES-7343\) - Allow overrides by adding mod\_libs in apache class [\#1800](https://github.com/puppetlabs/puppetlabs-apache/pull/1800) ([karelyatin](https://github.com/karelyatin))
 - Rework passenger VHost and Directories [\#1778](https://github.com/puppetlabs/puppetlabs-apache/pull/1778) ([smortex](https://github.com/smortex))
 
 ### Fixed
