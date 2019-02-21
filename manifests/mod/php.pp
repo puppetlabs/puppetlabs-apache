@@ -58,8 +58,8 @@ class apache::mod::php (
   if $apache::version::scl_httpd_version {
     $_lib = "librh-php${_php_version_no_dot}-php${_php_major}.so"
   } else {
-  # Controls php version and libphp prefix
-  $_lib = "${libphp_prefix}${php_version}.so"
+    # Controls php version and libphp prefix
+    $_lib = "${libphp_prefix}${php_version}.so"
   }
 
   if $::operatingsystem == 'SLES' {
