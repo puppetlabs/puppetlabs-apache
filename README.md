@@ -2729,6 +2729,7 @@ Default values for these parameters depend on your operating system. Most of thi
 * `source`: Defines the path to the default configuration. Values include a `puppet:///` path.
 * `template`: Defines the path to the `php.conf` template Puppet uses to generate the configuration file.
 * `content`: Adds arbitrary content to `php.conf`.
+* `libphp_prefix`: Allows the definition of a libphp prefix. Defaults to `libphp`.
 
 ##### Class: `apache::mod::proxy_html`
 
