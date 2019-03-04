@@ -956,9 +956,12 @@ describe 'apache::vhost define' do
 
     describe file($ports_file) do
       it { is_expected.to be_file }
-      if os[:family] == 'redhat' && os[:release].to_i == 7 ||
-         os[:family] == 'debian' ||
-         os[:family] == 'sles' && os[:family].to_i >= 12
+      require 'pry'
+      binding.pry
+
+      if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
+         fact('osfamily') == 'Debian' ||
+         fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
@@ -1237,7 +1240,9 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] == 'debian' || os[:family] == 'suse'
+      require 'pry'
+      binding.pry
+      pp += "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian' || fact('osfamily') == 'Suse'
       apply_manifest(pp, catch_failures: true)
     end
 
