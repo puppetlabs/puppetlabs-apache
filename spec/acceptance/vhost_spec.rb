@@ -958,7 +958,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       if os[:family] == 'redhat' && os[:release].to_i == 7 ||
          os[:family] == 'debian' ||
-         os[:family] == 'sles' && os[:release].to_i >= 12
+         os[:family] == 'sles' && os[:family].to_i >= 12
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
@@ -1461,7 +1461,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'wsgi' do
-    context 'on everything but sles', unless: os[:family] == 'sles') do
+    context 'on everything but lucid', unless: (os[:family] == 'sles') do
       pp = <<-MANIFEST
         class { 'apache': }
         class { 'apache::mod::wsgi': }
@@ -1537,8 +1537,7 @@ describe 'apache::vhost define' do
 
   # Limit testing to Debian, since Centos does not have fastcgi package.
   # In addition Debian 9/Ubuntu 18.04 no longer support this fastcgi
-  # if os[:family] == 'Debian' && !['9', '18.04'].include?(fact('operatingsystemmajrelease'))
-  if (os[:family] == 'debian' && os[:release].to_i == 9) || (os[:family] == 'debian' && os[:release].to_i == 18)
+  if os[:family] == 'debian' && !['9', '18.04'].include?(fact('operatingsystemmajrelease'))
     describe 'fastcgi' do
       pp_one = <<-MANIFEST
         $_os = $::operatingsystem
@@ -1687,7 +1686,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'shibboleth parameters', if: os[:family] == 'debian' && os[:release].to_i != 7) do
+  describe 'shibboleth parameters', if: (os[:family] == 'debian' && os[:release].to_i != 7) do
     # Debian 7 is too old for ShibCompatValidUser
     pp = <<-MANIFEST
       class { 'apache': }
