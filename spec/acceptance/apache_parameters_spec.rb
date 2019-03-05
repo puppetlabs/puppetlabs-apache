@@ -9,7 +9,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if fact('osfamily') == 'FreeBSD'
+    if os[:family] == 'freebsd'
       describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { is_expected.not_to be_file }
       end
@@ -21,7 +21,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if fact('osfamily') == 'FreeBSD'
+    if os[:family] == 'freebsd'
       describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { is_expected.to be_file }
       end
@@ -54,9 +54,9 @@ describe 'apache parameters' do
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
         pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
@@ -77,9 +77,9 @@ describe 'apache parameters' do
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
         pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.not_to be_enabled }
@@ -101,9 +101,9 @@ describe 'apache parameters' do
 
     describe service($service_name) do
       it { is_expected.not_to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
         pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.not_to be_enabled }
@@ -111,7 +111,7 @@ describe 'apache parameters' do
     end
   end
 
-  if fact('osfamily') == 'Debian'
+  if os[:family] == 'debian'
     describe 'conf_enabled => /etc/apache2/conf-enabled' do
       pp = <<-MANIFEST
           class { 'apache':
@@ -159,7 +159,7 @@ describe 'apache parameters' do
     end
   end
 
-  if fact('osfamily') != 'Debian'
+  if os[:family] != 'debian'
     describe 'purge parameters => true' do
       pp = <<-MANIFEST
           class { 'apache':
@@ -266,23 +266,20 @@ describe 'apache parameters' do
       it { is_expected.to contain 'AddLanguage eo .eo' }
     end
   end
-
-  describe 'http_protocol_options' do
+  describe 'http_protocol_options', unless: ($apache_version < '2.4' || host_inventory['facter']['os']['name'].downcase.start_with?('ubuntu', 'sles')) do
     # Actually >= 2.4.24, but the minor version is not provided
     # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
-    # basically versions of the ubuntu or sles  apache package cause issue
-    if $apache_version >= '2.4' && fact('operatingsystem') !~ %r{Ubuntu|SLES}
-      describe 'setup' do
-        it 'applies cleanly' do
-          pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
-          apply_manifest(pp, catch_failures: true)
-        end
+    # basically versions of the ubuntu or sles apache package cause issue
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
+        apply_manifest(pp, catch_failures: true)
       end
+    end
 
-      describe file($conf_file) do
-        it { is_expected.to be_file }
-        it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
-      end
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
     end
   end
 
