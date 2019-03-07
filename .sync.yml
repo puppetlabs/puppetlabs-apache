@@ -1,4 +1,8 @@
 ---
+.gitignore:
+  required:
+    - ---.project
+
 .travis.yml:
   global_env:
     - PARALLEL_TEST_PROCESSORS=16  
