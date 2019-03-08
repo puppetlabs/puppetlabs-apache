@@ -1,12 +1,12 @@
 <%- |
-  String                               $header,
-  Optional[Array[Stdlib::IP::Address]] $internal_proxy            = undef,
-  Optional[Stdlib::Absolutepath]       $internal_proxy_list       = undef,
-  Optional[String]                     $proxies_header            = undef,
-  Boolean                              $proxy_protocol            = undef,
-  Optional[Array[Stdlib::IP::Address]] $proxy_protocol_exceptions = undef,
-  Optional[Array[Stdlib::IP::Address]] $trusted_proxy             = undef,
-  Optional[Stdlib::Absolutepath]       $trusted_proxy_list        = undef,
+  String                                                     $header,
+  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $internal_proxy            = undef,
+  Optional[Stdlib::Absolutepath]                             $internal_proxy_list       = undef,
+  Optional[String]                                           $proxies_header            = undef,
+  Boolean                                                    $proxy_protocol            = undef,
+  Optional[Array[Stdlib::IP::Address]]                       $proxy_protocol_exceptions = undef,
+  Optional[Array[Stdlib::IP::Address]]                       $trusted_proxy             = undef,
+  Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
 | -%>
 # Declare the header field which should be parsed for useragent IP addresses
 RemoteIPHeader <%= $header %>
