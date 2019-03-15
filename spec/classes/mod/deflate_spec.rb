@@ -18,7 +18,7 @@ def general_deflate_specs
   end
 end
 
-describe 'apache::mod::deflate', type: :class, test: true do
+describe 'apache::mod::deflate', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters' do
