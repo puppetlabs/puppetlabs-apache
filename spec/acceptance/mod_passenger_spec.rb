@@ -1,14 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-describe 'apache::mod::passenger class', if: fact('osfamily') == 'Debian' do
-  conf_file = "#{$mod_dir}/passenger.conf"
-  load_file = "#{$mod_dir}/zpassenger.load"
-
-  passenger_root = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-  passenger_default_ruby = '/usr/bin/ruby'
-
-  passenger_module_path = '/usr/lib/apache2/modules/mod_passenger.so'
+describe 'apache::mod::passenger class', if: os[:family] == 'debian' do
   rackapp_user = 'www-data'
   rackapp_group = 'www-data'
 
@@ -35,51 +28,13 @@ describe 'apache::mod::passenger class', if: fact('osfamily') == 'Debian' do
     host { 'passenger.example.com': ip => '127.0.0.1', }
   MANIFEST
 
-  context 'passenger config with passenger_installed_version set' do
-    pp_one = <<-MANIFEST
-      class { 'apache': }
-      class { 'apache::mod::passenger':
-        passenger_installed_version     => '4.0.0',
-        passenger_instance_registry_dir => '/some/path/to/nowhere'
-      }
-    MANIFEST
-    it 'fails when an option is not valid for $passenger_installed_version' do
-      apply_manifest(pp_one, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{passenger_instance_registry_dir is not introduced until version 5.0.0})
-      end
-    end
-    pp_two = <<-MANIFEST
-      class { 'apache': }
-      class { 'apache::mod::passenger':
-        passenger_installed_version => '5.0.0',
-        rails_autodetect            => 'on'
-      }
-    MANIFEST
-    it 'fails when an option is removed' do
-      apply_manifest(pp_two, expect_failures: true) do |r|
-        expect(r.stderr).to match(%r{REMOVED PASSENGER OPTION})
-      end
-    end
-    pp_three = <<-MANIFEST
-      class { 'apache': }
-      class { 'apache::mod::passenger':
-        passenger_installed_version => '5.0.0',
-        rails_ruby                  => '/some/path/to/ruby'
-      }
-    MANIFEST
-    it 'warns when an option is deprecated' do
-      apply_manifest(pp_three, catch_failures: true) do |r|
-        expect(r.stderr).to match(%r{DEPRECATED PASSENGER OPTION})
-      end
-    end
-  end
   context 'default passenger config' do
     # We need to set passenger_instance_registry_dir on every sane distro
     # with systemd. Systemd can force processes into a seperate/private
     # tmpdir. This is the default for apache on Ubuntu 18.04. As a result,
     # passenger CLI tools can't find the config/socket, which defaults to /tmp
     # we enable it for ubuntu 16.04/18.04, centos7 and debian 9
-    pp =  if ['7', '9', '16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
+    pp =  if ['7', '9', '16.04', '18.04'].include?('%g' % ('%.2f' % os[:release]))
             <<-MANIFEST
               /* stock apache and mod_passenger */
               class { 'apache': }
@@ -98,28 +53,6 @@ describe 'apache::mod::passenger class', if: fact('osfamily') == 'Debian' do
           end
     it 'succeeds in puppeting passenger' do
       apply_manifest(pp, catch_failures: true)
-    end
-
-    describe service($service_name) do
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
-      it { is_expected.to be_running }
-    end
-
-    describe file(conf_file) do
-      it { is_expected.to contain %(PassengerRoot "#{passenger_root}") }
-      it { is_expected.to contain %(PassengerDefaultRuby "#{passenger_default_ruby}") }
-      it { is_expected.not_to contain '/PassengerRuby/' }
-    end
-    # rubocop:enable RSpec/RepeatedExample
-
-    describe file(load_file) do
-      it { is_expected.to contain "LoadModule passenger_module #{passenger_module_path}" }
     end
 
     expected_one = [%r{Apache processes}, %r{Nginx processes}, %r{Passenger processes}]
