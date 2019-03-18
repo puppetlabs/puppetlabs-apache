@@ -88,9 +88,10 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >=
           class { 'apache':
             mpm_module => 'prefork',
           }
-          class { 'apache::mod::php':
-            extensions => ['.php','.php5'],
-          }
+           class { 'apache::mod::php':
+           extensions => ['.php','.php5'],
+         }
+
           apache::vhost { 'php.example.com':
             port             => '80',
             docroot          => '#{$doc_root}/php',
@@ -109,17 +110,6 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >=
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe service($service_name) do
-        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-          pending 'Should be enabled - Bug 760616 on Debian 8'
-        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-        else
-          it { is_expected.to be_enabled }
-        end
-        it { is_expected.to be_running }
-      end
-
       describe file("#{$vhost_dir}/25-php.example.com.conf") do
         it { is_expected.to contain '  php_flag display_errors on' }
         it { is_expected.to contain '  php_value include_path ".:/usr/share/pear:/usr/bin/php"' }
@@ -135,34 +125,6 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >=
       it 'answers to php.example.com #exit_code' do
         shell('/usr/bin/curl php.example.com:80') do |r|
           expect(r.exit_code).to eq(0)
-        end
-      end
-    end
-
-    context 'provide custom config file' do
-      pp = <<-MANIFEST
-          class {'apache':
-            mpm_module => 'prefork',
-          }
-          class {'apache::mod::php':
-            content => '# somecontent',
-          }
-      MANIFEST
-      it 'succeeds in puppeting php' do
-        apply_manifest(pp, catch_failures: true)
-      end
-      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
-         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
-        describe file("#{$mod_dir}/php7.0.conf") do
-          it { is_expected.to contain '# somecontent' }
-        end
-      elsif fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04'
-        describe file("#{$mod_dir}/php7.2.conf") do
-          it { is_expected.to contain '# somecontent' }
-        end
-      else
-        describe file("#{$mod_dir}/php5.conf") do
-          it { is_expected.to contain '# somecontent' }
         end
       end
     end

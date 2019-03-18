@@ -6,25 +6,20 @@ describe 'apache::mod::php', type: :class do
       let :facts do
         facts
       end
+      let :pre_condition do
+        'class { "apache": mpm_module => prefork, }'
+      end
 
       case facts[:os]['family']
       when 'Debian'
         describe 'on a Debian OS' do
           context 'with mpm_module => prefork' do
-            let :pre_condition do
-              'class { "apache": mpm_module => prefork, }'
-            end
-
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_class('apache::mod::prefork') }
           end
           case facts[:os]['release']['major']
           when '8'
             context 'on jessie' do
-              let :pre_condition do
-                'class { "apache": mpm_module => prefork, }'
-              end
-
               it {
                 is_expected.to contain_file('php5.load').with(
                   content: "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n",
@@ -48,15 +43,36 @@ describe 'apache::mod::php', type: :class do
             end
           when '9'
             context 'on stretch' do
-              let :pre_condition do
-                'class { "apache": mpm_module => prefork, }'
-              end
-
               it { is_expected.to contain_apache__mod('php7.0') }
               it { is_expected.to contain_package('libapache2-mod-php7.0') }
               it {
                 is_expected.to contain_file('php7.0.load').with(
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n",
+                )
+              }
+            end
+          when '16.04'
+            context 'on stretch' do
+              let :params do
+                { content: 'somecontent' }
+              end
+
+              it {
+                is_expected.to contain_file('php7.0.conf').with(
+                  content: 'somecontent',
+                )
+              }
+            end
+
+          when '18.04'
+            context 'on stretch' do
+              let :params do
+                { content: 'somecontent' }
+              end
+
+              it {
+                is_expected.to contain_file('php7.2.conf').with(
+                  content: 'somecontent',
                 )
               }
             end
@@ -107,7 +123,9 @@ describe 'apache::mod::php', type: :class do
               'class { "apache": }'
             end
             let :params do
-              { extensions: ['.php', '.php5'] }
+              {
+                extensions: ['.php', '.php5'],
+              }
             end
 
             it { is_expected.to contain_file('php5.conf').with_content(Regexp.new(Regexp.escape('<FilesMatch ".+(\.php|\.php5)$">'))) }
@@ -129,10 +147,6 @@ describe 'apache::mod::php', type: :class do
             end
           end
           context 'with mpm_module => prefork' do
-            let :pre_condition do
-              'class { "apache": mpm_module => prefork, }'
-            end
-
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_class('apache::mod::prefork') }
             it { is_expected.to contain_apache__mod('php5') }
@@ -162,10 +176,6 @@ describe 'apache::mod::php', type: :class do
       when 'FreeBSD'
         describe 'on a FreeBSD OS' do
           context 'with mpm_module => prefork' do
-            let :pre_condition do
-              'class { "apache": mpm_module => prefork, }'
-            end
-
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_apache__mod('php5') }
             it { is_expected.to contain_package('www/mod_php5') }
@@ -186,10 +196,6 @@ describe 'apache::mod::php', type: :class do
       when 'Gentoo'
         describe 'on a Gentoo OS' do
           context 'with mpm_module => prefork' do
-            let :pre_condition do
-              'class { "apache": mpm_module => prefork, }'
-            end
-
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_apache__mod('php5') }
             it { is_expected.to contain_package('dev-lang/php') }
@@ -215,9 +221,6 @@ describe 'apache::mod::php', type: :class do
 
       describe 'OS independent tests' do
         context 'with content param' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             { content: 'somecontent' }
           end
@@ -229,9 +232,6 @@ describe 'apache::mod::php', type: :class do
           }
         end
         context 'with template param' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             { template: 'apache/mod/php.conf.erb' }
           end
@@ -243,9 +243,6 @@ describe 'apache::mod::php', type: :class do
           }
         end
         context 'with source param' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             { source: 'some-path' }
           end
@@ -257,9 +254,6 @@ describe 'apache::mod::php', type: :class do
           }
         end
         context 'content has priority over template' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             {
               template: 'apache/mod/php5.conf.erb',
@@ -274,9 +268,6 @@ describe 'apache::mod::php', type: :class do
           }
         end
         context 'source has priority over template' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             {
               template: 'apache/mod/php5.conf.erb',
@@ -291,9 +282,6 @@ describe 'apache::mod::php', type: :class do
           }
         end
         context 'source has priority over content' do
-          let :pre_condition do
-            'class { "apache": mpm_module => prefork, }'
-          end
           let :params do
             {
               content: 'somecontent',
