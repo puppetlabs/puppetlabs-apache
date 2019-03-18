@@ -81,6 +81,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef
     $conf_file            = 'httpd.conf'
+    $conf_enabled         = undef
     $ports_file           = "${conf_dir}/ports.conf"
     $pidfile              = 'run/httpd.pid'
     $logroot              = "/var/log/${_scl_httpd_name}"
@@ -101,6 +102,8 @@ class apache::params inherits ::apache::version {
     $suphp_configpath     = undef
     $php_version          = $::apache::version::scl_php_version
     $mod_packages         = {
+      'authnz_ldap' => "${_scl_httpd_name}-mod_ldap",
+      'ldap' => "${_scl_httpd_name}-mod_ldap",
       "php${::apache::version::scl_php_version}" => "rh-php${_scl_php_version_no_dot}-php",
       'ssl'                   => "${_scl_httpd_name}-mod_ssl",
     }
