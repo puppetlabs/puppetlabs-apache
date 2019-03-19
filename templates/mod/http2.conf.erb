@@ -1,0 +1,65 @@
+# The http2 Apache module configuration file is being
+# managed by Puppet and changes will be overwritten.
+
+<%# Actually >= 2.4.24, but the minor version is not provided -%>
+<% if !@h2_copy_files.nil? && scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+H2CopyFiles <%= scope.call_function('apache::bool2httpd', [@h2_copy_files]) %>
+<% end -%>
+<% unless @h2_direct.nil? -%>
+H2Direct <%= scope.call_function('apache::bool2httpd', [@h2_direct]) %>
+<% end -%>
+<%# Actually >= 2.4.24, but the minor version is not provided -%>
+<% if !@h2_early_hints.nil? && scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+H2EarlyHints <%= scope.call_function('apache::bool2httpd', [@h2_early_hints]) %>
+<% end -%>
+<% unless @h2_max_session_streams.nil? -%>
+H2MaxSessionStreams <%= @h2_max_session_streams %>
+<% end -%>
+<% unless @h2_max_worker_idle_seconds.nil? -%>
+H2MaxWorkerIdleSeconds <%= @h2_max_worker_idle_seconds %>
+<% end -%>
+<% unless @h2_max_workers.nil? -%>
+H2MaxWorkers <%= @h2_max_workers %>
+<% end -%>
+<% unless @h2_min_workers.nil? -%>
+H2MinWorkers <%= @h2_min_workers %>
+<% end -%>
+<%# Actually >= 2.4.24, but the minor version is not provided -%>
+<% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+    <%- unless @h2_modern_tls_only.nil? -%>
+H2ModernTLSOnly <%= scope.call_function('apache::bool2httpd', [@h2_modern_tls_only]) %>
+    <%- end -%>
+    <%- unless @h2_push.nil? -%>
+H2Push <%= scope.call_function('apache::bool2httpd', [@h2_push]) %>
+    <%- end -%>
+    <%- unless @h2_push_diary_size.nil? -%>
+H2PushDiarySize <%= @h2_push_diary_size %>
+    <%- end -%>
+    <%- @h2_push_priority.each do |expr| -%>
+H2PushPriority <%= expr %>
+    <%- end -%>
+    <%- @h2_push_resource.each do |expr| -%>
+H2PushResource <%= expr %>
+    <%- end -%>
+<% end -%>
+<% unless @h2_serialize_headers.nil? -%>
+H2SerializeHeaders <%= scope.call_function('apache::bool2httpd', [@h2_serialize_headers]) %>
+<% end -%>
+<% unless @h2_stream_max_mem_size.nil? -%>
+H2StreamMaxMemSize <%= @h2_stream_max_mem_size %>
+<% end -%>
+<%# Actually >= 2.4.24, but the minor version is not provided -%>
+<% if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
+    <%- unless @h2_tls_cool_down_secs.nil? -%>
+H2TLSCoolDownSecs <%= @h2_tls_cool_down_secs %>
+    <%- end -%>
+    <%- unless @h2_tls_warm_up_size.nil? -%>
+H2TLSWarmUpSize <%= @h2_tls_warm_up_size %>
+    <%- end -%>
+<% end -%>
+<% unless @h2_upgrade.nil? -%>
+H2Upgrade <%= scope.call_function('apache::bool2httpd', [@h2_upgrade]) %>
+<% end -%>
+<% unless @h2_window_size.nil? -%>
+H2WindowSize <%= @h2_window_size %>
+<% end -%>
