@@ -856,8 +856,8 @@ describe 'apache::vhost define' do
     describe file($ports_file) do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
-          fact('osfamily') == 'Debian' ||
-          fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
+         fact('osfamily') == 'Debian' ||
+         fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }

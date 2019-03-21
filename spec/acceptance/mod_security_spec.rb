@@ -58,13 +58,10 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
     end
 
     describe package($package_name) do
-
       it { is_expected.to be_installed }
     end
 
     describe file("#{$mod_dir}/security.conf") do
-      require 'pry'
-      binding.pry
       it { is_expected.to contain 'mod_security2.c' }
     end
 
