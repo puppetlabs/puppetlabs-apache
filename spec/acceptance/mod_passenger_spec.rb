@@ -55,6 +55,17 @@ describe 'apache::mod::passenger class', if: os[:family] == 'debian' do
       apply_manifest(pp, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     expected_one = [%r{Apache processes}, %r{Nginx processes}, %r{Passenger processes}]
     it 'outputs status via passenger-memory-stats #stdout' do
       expected_one.each do |expect|

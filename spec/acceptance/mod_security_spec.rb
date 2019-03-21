@@ -2,8 +2,8 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' && (fact('lsbdistcodename') == 'squeeze' ||
-                                                fact('lsbdistcodename') == 'lucid' || fact('lsbdistcodename') == 'precise' ||
-                                                fact('lsbdistcodename') == 'wheezy')) || (fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') < '11') do
+    fact('lsbdistcodename') == 'lucid' || fact('lsbdistcodename') == 'precise' ||
+    fact('lsbdistcodename') == 'wheezy')) || (fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') < '11') do
   context 'default mod_security config' do
     if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') =~ %r{(5|6)}
       pp_one = "class { 'epel': }"
@@ -105,6 +105,17 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       apply_manifest(pp_one, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain 'mod_security2.c' }
     end
@@ -160,13 +171,24 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       apply_manifest(pp_one, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless  fact('operatingsystem') == 'SLES' ||
-            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
-            (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
+    unless fact('operatingsystem') == 'SLES' ||
+           (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
+           (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -219,13 +241,24 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       apply_manifest(pp_one, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless  fact('operatingsystem') == 'SLES' ||
-            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
-            (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
+    unless fact('operatingsystem') == 'SLES' ||
+           (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
+           (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -278,13 +311,24 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       apply_manifest(pp_one, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless  fact('operatingsystem') == 'SLES' ||
-            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
-            (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
+    unless fact('operatingsystem') == 'SLES' ||
+           (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
+           (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end
@@ -337,13 +381,24 @@ describe 'apache::mod::security class', unless: (fact('osfamily') == 'Debian' &&
       apply_manifest(pp_one, catch_failures: true)
     end
 
+    describe service($service_name) do
+      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        pending 'Should be enabled - Bug 760616 on Debian 8'
+      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      else
+        it { is_expected.to be_enabled }
+      end
+      it { is_expected.to be_running }
+    end
+
     describe file("#{$mod_dir}/security.conf") do
       it { is_expected.to contain 'mod_security2.c' }
     end
 
-    unless  fact('operatingsystem') == 'SLES' ||
-            (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
-            (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
+    unless fact('operatingsystem') == 'SLES' ||
+           (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9') ||
+           (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04')
       it 'blocks query with SQL' do
         shell '/usr/bin/curl -A beaker -f modsec.example.com:80?SELECT%20*FROM%20mysql.users', acceptable_exit_codes: [22]
       end

@@ -37,6 +37,11 @@ describe 'apache::mod::pagespeed class', if:   ((host_inventory['facter']['os'][
       apply_manifest(pp, catch_failures: true)
     end
 
+    describe service($service_name) do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
     it 'answers to pagespeed.example.com and include <head/> and be stripped of comments by mod_pagespeed' do
       shell('/usr/bin/curl pagespeed.example.com:80') do |r|
         expect(r.stdout).to match(%r{head\/})

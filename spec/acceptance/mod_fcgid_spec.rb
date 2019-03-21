@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
-describe 'apache::mod::fcgid class', if: ((os[:family] == 'redhat' && os[:release].to_i != 5) &&
-                                         !(host_inventory['facter']['os']['name'] == 'oraclelinux' && os[:release].to_i == 7)) do
+describe 'apache::mod::fcgid class', if: ((fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') != '5') &&
+    !(fact('operatingsystem') == 'OracleLinux' && fact('operatingsystemmajrelease') == '7')) do
   context 'default fcgid config' do
     pp = <<-MANIFEST
         class { 'epel': } # mod_fcgid lives in epel
@@ -37,6 +37,11 @@ describe 'apache::mod::fcgid class', if: ((os[:family] == 'redhat' && os[:releas
     MANIFEST
     it 'succeeds in puppeting fcgid' do
       apply_manifest(pp, catch_failures: true)
+    end
+
+    describe service('httpd') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
     end
 
     it 'answers to fcgid.example.com' do
