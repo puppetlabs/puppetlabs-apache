@@ -7,6 +7,7 @@ describe Facter::Util::Fact do
   describe 'apache_version' do
     context 'with value' do
       before :each do
+        allow(Facter.fact(:kernel)).to receive(:value).and_return('Linux')
         expect(Facter::Util::Resolution).to receive(:which).with('apachectl') { true }
         expect(Facter::Util::Resolution).to receive(:exec).with('apachectl -v 2>&1') {
           'Server version: Apache/2.4.16 (Unix)
@@ -22,6 +23,7 @@ describe Facter::Util::Fact do
   describe 'apache_version with empty OS' do
     context 'with value' do
       before :each do
+        allow(Facter.fact(:kernel)).to receive(:value).and_return('Linux')
         expect(Facter::Util::Resolution).to receive(:which).with('apachectl') { true }
         expect(Facter::Util::Resolution).to receive(:exec).with('apachectl -v 2>&1') {
           'Server version: Apache/2.4.6 ()
