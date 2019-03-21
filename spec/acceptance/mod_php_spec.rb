@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >= '12'
+unless host_inventory['facter']['os']['name'] == 'sles' && os[:release].to_i >= 12
   describe 'apache::mod::php class' do
     context 'default php config' do
       if ['16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
@@ -45,23 +45,23 @@ unless fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') >=
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe service($service_name) do
-        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-          pending 'Should be enabled - Bug 760616 on Debian 8'
-        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-        else
-          it { is_expected.to be_enabled }
-        end
-        it { is_expected.to be_running }
-      end
+      # describe service($service_name) do
+      #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      #     pending 'Should be enabled - Bug 760616 on Debian 8'
+      #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      #   else
+      #     it { is_expected.to be_enabled }
+      #   end
+      #   it { is_expected.to be_running }
+      # end
 
-      if (fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
-         (fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '9')
+      if (host_inventory['facter']['os']['name'] == 'ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
+         (host_inventory['facter']['os']['name'] == 'debian' && os[:release].to_i == 9)
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
-      elsif fact('operatingsystem') == 'Ubuntu' && fact('operatingsystemmajrelease') == '18.04'
+      elsif host_inventory['facter']['os']['name'] == 'ubuntu' && fact('operatingsystemmajrelease') == '18.04'
         describe file("#{$mod_dir}/php7.2.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
