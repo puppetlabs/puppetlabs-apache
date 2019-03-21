@@ -39,11 +39,6 @@ describe 'apache::mod::fcgid class', if: ((os[:family] == 'redhat' && os[:releas
       apply_manifest(pp, catch_failures: true)
     end
 
-    # describe service('httpd') do
-    #   it { is_expected.to be_enabled }
-    #   it { is_expected.to be_running }
-    # end
-
     it 'answers to fcgid.example.com' do
       shell("/usr/bin/curl -H 'Host: fcgid.example.com' 127.0.0.1:80") do |r|
         expect(r.stdout).to match(%r{^Hello world$})

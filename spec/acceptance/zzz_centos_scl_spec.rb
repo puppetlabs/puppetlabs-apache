@@ -35,11 +35,6 @@ describe 'CentOS with SCL enabled', if: (host_inventory['facter']['os']['name'] 
       apply_manifest(pp, catch_failures: true)
     end
 
-    # describe service('httpd24-httpd') do
-    #   it { is_expected.to be_enabled }
-    #   it { is_expected.to be_running }
-    # end
-
     it 'answers to sclphp.example.com' do
       shell("/usr/bin/curl -H 'Host: sclphp.example.com' 127.0.0.1:80") do |r|
         expect(r.stdout).to eq('Hello world')

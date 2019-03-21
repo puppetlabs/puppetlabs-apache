@@ -45,17 +45,6 @@ unless host_inventory['facter']['os']['name'] == 'sles' && os[:release].to_i >= 
         apply_manifest(pp, catch_failures: true)
       end
 
-      # describe service($service_name) do
-      #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-      #     pending 'Should be enabled - Bug 760616 on Debian 8'
-      #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      #   else
-      #     it { is_expected.to be_enabled }
-      #   end
-      #   it { is_expected.to be_running }
-      # end
-
       if (host_inventory['facter']['os']['name'] == 'ubuntu' && fact('operatingsystemmajrelease') == '16.04') ||
          (host_inventory['facter']['os']['name'] == 'debian' && os[:release].to_i == 9)
         describe file("#{$mod_dir}/php7.0.conf") do
