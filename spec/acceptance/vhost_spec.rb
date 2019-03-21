@@ -182,17 +182,6 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    # describe service($service_name) do
-    #   if os[:family] == 'debian' && os[:release].to_i == 8
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
-
     it 'answers to first.example.com' do
       shell('/usr/bin/curl first.example.com:80', acceptable_exit_codes: 0) do |r|
         expect(r.stdout).to eq("Hello from first\n")
@@ -227,17 +216,6 @@ describe 'apache::vhost define' do
     it 'configures one apache vhost with 2 ip addresses' do
       apply_manifest(pp, catch_failures: true)
     end
-
-    # describe service($service_name) do
-    #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
 
     describe file("#{$vhost_dir}/25-example.com.conf") do
       it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.2:80>' }
@@ -286,17 +264,6 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    # describe service($service_name) do
-    #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
-
     describe file("#{$vhost_dir}/25-example.com.conf") do
       it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.1:8080>' }
       it { is_expected.to contain 'ServerName example.com' }
@@ -344,17 +311,6 @@ describe 'apache::vhost define' do
     it 'configures one apache vhost with 2 ip addresses and 2 ports' do
       apply_manifest(pp, catch_failures: true)
     end
-
-    # describe service($service_name) do
-    #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
 
     describe file("#{$vhost_dir}/25-example.com.conf") do
       it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.1:8080 127.0.0.2:80 127.0.0.2:8080>' }
@@ -419,17 +375,6 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    # describe service($service_name) do
-    #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
-
     describe file("#{$vhost_dir}/25-example.com.conf") do
       it { is_expected.to contain '<VirtualHost [::1]:80>' }
       it { is_expected.to contain 'ServerName example.com' }
@@ -481,17 +426,6 @@ describe 'apache::vhost define' do
       it 'configures a vhost with Files' do
         apply_manifest(pp, catch_failures: true)
       end
-
-      # describe service($service_name) do
-      #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-      #     pending 'Should be enabled - Bug 760616 on Debian 8'
-      #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      #   else
-      #     it { is_expected.to be_enabled }
-      #   end
-      #   it { is_expected.to be_running }
-      # end
 
       it 'answers to files.example.net #stdout' do
         expect(shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
@@ -548,17 +482,6 @@ describe 'apache::vhost define' do
         apply_manifest(pp_one, catch_failures: true)
       end
 
-      # describe service($service_name) do
-      #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-      #     pending 'Should be enabled - Bug 760616 on Debian 8'
-      #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      #   else
-      #     it { is_expected.to be_enabled }
-      #   end
-      #   it { is_expected.to be_running }
-      # end
-
       it 'answers to files.example.net #stdout' do
         expect(shell('/usr/bin/curl -sSf files.example.net:80/').stdout).to eq("Hello World\n")
       end
@@ -593,17 +516,6 @@ describe 'apache::vhost define' do
       it 'configures a vhost with a SetHandler directive' do
         apply_manifest(pp_two, catch_failures: true)
       end
-
-      # describe service($service_name) do
-      #   if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-      #     pending 'Should be enabled - Bug 760616 on Debian 8'
-      #   elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      #   else
-      #     it { is_expected.to be_enabled }
-      #   end
-      #   it { is_expected.to be_running }
-      # end
 
       it 'answers to files.example.net #stdout' do
         expect(shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
@@ -677,13 +589,6 @@ describe 'apache::vhost define' do
       end
 
       describe service($service_name) do
-        # if os[:family] == 'debian' && fact('operatingsystemmajrelease') == '8'
-        #   pending 'Should be enabled - Bug 760616 on Debian 8'
-        # elsif os[:family] == 'sles' && fact('operatingsystemmajrelease') == '15'
-        #   pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-        # else
-        #   it { is_expected.to be_enabled }
-        # end
         it { is_expected.to be_running }
 
         it 'answers to files.example.net' do
@@ -717,17 +622,6 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      # describe service($service_name) do
-      #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-      #     pending 'Should be enabled - Bug 760616 on Debian 8'
-      #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      #   else
-      #     it { is_expected.to be_enabled }
-      #   end
-      #   it { is_expected.to be_running }
-      # end
-
       it 'answers to fallback.example.net' do
         shell('/usr/bin/curl fallback.example.net:80/Does/Not/Exist') do |r|
           expect(r.stdout).to eq("Hello World\n")
@@ -756,17 +650,6 @@ describe 'apache::vhost define' do
     it 'configures a vhost with VirtualDocumentRoot' do
       apply_manifest(pp, catch_failures: true)
     end
-    #
-    # describe service($service_name) do
-    #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
 
     it 'answers to a.virt.example.com' do
       shell('/usr/bin/curl a.virt.example.com:80', acceptable_exit_codes: 0) do |r|
@@ -809,17 +692,6 @@ describe 'apache::vhost define' do
                      ), catch_failures: true)
     end
 
-    # describe service($service_name) do
-    #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
-
     it 'gets a response from the back end #stdout' do
       shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
         expect(r.stdout).to eq("Hello from localhost\n")
@@ -859,17 +731,6 @@ describe 'apache::vhost define' do
         }
                     ), catch_failures: true)
     end
-
-    # describe service($service_name) do
-    #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-    #     pending 'Should be enabled - Bug 760616 on Debian 8'
-    #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-    #   else
-    #     it { is_expected.to be_enabled }
-    #   end
-    #   it { is_expected.to be_running }
-    # end
 
     it 'gets a response from the back end #stdout' do
       shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
@@ -994,9 +855,9 @@ describe 'apache::vhost define' do
 
     describe file($ports_file) do
       it { is_expected.to be_file }
-      if os[:family] == 'redhat' && os[:release].to_i == 7 ||
-          os[:family] == 'debian' ||
-          host_inventory['facter']['os']['name'] == 'sles' && os[:release].to_i >= 12
+      if fact('osfamily') == 'RedHat' && fact('operatingsystemmajrelease') == '7' ||
+          fact('osfamily') == 'Debian' ||
+          fact('operatingsystem') == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       else
         it { is_expected.to contain 'NameVirtualHost test.server' }
@@ -1235,7 +1096,7 @@ describe 'apache::vhost define' do
         docroot    => '/tmp',
         scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
       }
-  MANIFEST
+    MANIFEST
     it 'applies cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
@@ -1275,7 +1136,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] == 'debian' || os[:family] == 'suse'
+      pp += "\nclass { 'apache::mod::actions': }" if fact('osfamily') == 'Debian' || fact('osfamily') == 'Suse'
       apply_manifest(pp, catch_failures: true)
     end
 
@@ -1309,7 +1170,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'rack_base_uris' do
-    unless os[:family] == 'redhat' || host_inventory['facter']['os']['name'] == 'sles'
+    unless fact('osfamily') == 'RedHat' || fact('operatingsystem') == 'SLES'
       test = -> do
         pp = <<-MANIFEST
           class { 'apache': }
@@ -1596,7 +1457,7 @@ describe 'apache::vhost define' do
 
   # Limit testing to Debian, since Centos does not have fastcgi package.
   # In addition Debian 9/Ubuntu 18.04 no longer support this fastcgi
-  if os[:family] == 'debian' && !['9', '18.04'].include?(os[:release])
+  if fact('osfamily') == 'Debian' && !['9', '18.04'].include?(fact('operatingsystemmajrelease'))
     describe 'fastcgi' do
       pp_one = <<-MANIFEST
         $_os = $::operatingsystem
@@ -1745,7 +1606,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'shibboleth parameters', if: (os[:family] == 'debian' && os[:release].to_i != 7) do
+  describe 'shibboleth parameters', if: (fact('osfamily') == 'Debian' && fact('operatingsystemmajrelease') != '7') do
     # Debian 7 is too old for ShibCompatValidUser
     pp = <<-MANIFEST
       class { 'apache': }
