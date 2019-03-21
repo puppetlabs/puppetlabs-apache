@@ -2,8 +2,8 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'prefork_worker_spec.rb' do
-  case fact('osfamily')
-  when 'FreeBSD'
+  case os[:family]
+  when 'freebsd'
     describe 'apache::mod::event class' do
       describe 'running puppet code' do
         # Using puppet_apply as a helper
@@ -19,16 +19,16 @@ describe 'prefork_worker_spec.rb' do
         end
       end
 
-      describe service($service_name) do
-        it { is_expected.to be_running }
-        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-          pending 'Should be enabled - Bug 760616 on Debian 8'
-        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-          pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-        else
-          it { is_expected.to be_enabled }
-        end
-      end
+      # describe service($service_name) do
+      #   it { is_expected.to be_running }
+      #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      #     pending 'Should be enabled - Bug 760616 on Debian 8'
+      #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+      #   else
+      #     it { is_expected.to be_enabled }
+      #   end
+      # end
     end
   end
 
@@ -47,16 +47,16 @@ describe 'prefork_worker_spec.rb' do
       it_behaves_like 'a idempotent resource'
     end
 
-    describe service($service_name) do
-      it { is_expected.to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
-    end
+    # describe service($service_name) do
+    #   it { is_expected.to be_running }
+    #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+    #     pending 'Should be enabled - Bug 760616 on Debian 8'
+    #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+    #   else
+    #     it { is_expected.to be_enabled }
+    #   end
+    # end
   end
 
   describe 'apache::mod::prefork class' do
@@ -74,15 +74,15 @@ describe 'prefork_worker_spec.rb' do
       it_behaves_like 'a idempotent resource'
     end
 
-    describe service($service_name) do
-      it { is_expected.to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
-    end
+    # describe service($service_name) do
+    #   it { is_expected.to be_running }
+    #   if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+    #     pending 'Should be enabled - Bug 760616 on Debian 8'
+    #   elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+    #     pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
+    #   else
+    #     it { is_expected.to be_enabled }
+    #   end
+    # end
   end
 end
