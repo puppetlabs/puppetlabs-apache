@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'prefork_worker_spec.rb' do
-  case fact('osfamily')
+  case host_inventory['facter']['os']['family']
   when 'FreeBSD'
     describe 'apache::mod::event class' do
       describe 'running puppet code' do

@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 require_relative './version.rb'
 
-unless host_inventory['facter']['os']['name'] == 'sles' && os[:release].to_i >= 12
+unless host_inventory['facter']['os']['name'] == 'SLES' && os[:release].to_i >= 12
   describe 'apache::mod::php class' do
     context 'default php config' do
       pp = <<-MANIFEST
@@ -23,12 +23,12 @@ unless host_inventory['facter']['os']['name'] == 'sles' && os[:release].to_i >= 
         apply_manifest(pp, catch_failures: true)
       end
 
-      if (host_inventory['facter']['os']['name'] == 'ubuntu' && host_inventory['facter']['os']['release']['full'] == '16.04') ||
-         (host_inventory['facter']['os']['name'] == 'debian' && os[:release].to_i == 9)
+      if (host_inventory['facter']['os']['name'] == 'Ubuntu' && host_inventory['facter']['os']['release']['full'] == '16.04') ||
+         (host_inventory['facter']['os']['name'] == 'Debian' && os[:release].to_i == 9)
         describe file("#{$mod_dir}/php7.0.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
-      elsif host_inventory['facter']['os']['name'] == 'ubuntu' && host_inventory['facter']['os']['release']['full'] == '18.04'
+      elsif host_inventory['facter']['os']['name'] == 'Ubuntu' && host_inventory['facter']['os']['release']['full'] == '18.04'
         describe file("#{$mod_dir}/php7.2.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end

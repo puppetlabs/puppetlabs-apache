@@ -1,19 +1,15 @@
 require 'spec_helper_acceptance'
 
-case os[:family]
-when 'debian'
+case host_inventory['facter']['os']['family']
+when 'Debian'
   service_name = 'apache2'
   variant = :prefork
-when 'redhat'
-  unless os[:release].to_i == 5
+when 'RedHat'
+  unless host_inventory['facter']['os']['release']['major'] == '5'
+    variant = (os[:release].to_i >= 7) ? :prefork : :itk_only
     service_name = 'httpd'
-    variant = if [6].include?(os[:release].to_i)
-                :itk_only
-              else
-                :prefork
-              end
   end
-when 'freebsd'
+when 'FreeBSD'
   service_name = 'apache24'
   variant = :prefork
 end
@@ -45,8 +41,6 @@ describe 'apache::mod::itk class', if: service_name do
 
   describe service(service_name) do
     it { is_expected.to be_running }
-    require 'pry'
-    binding.pry
     if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
       pending 'Should be enabled - Bug 760616 on Debian 8'
     elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
