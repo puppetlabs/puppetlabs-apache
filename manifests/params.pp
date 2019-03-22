@@ -173,9 +173,14 @@ class apache::params inherits ::apache::version {
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
     $conf_enabled         = undef
-    $mod_dir              = $::apache::version::distrelease ? {
-      '7'     => "${httpd_dir}/conf.modules.d",
-      default => "${httpd_dir}/conf.d",
+    if $::operatingsystem =~ /^[Aa]mazon$/ and $::operatingsystemmajrelease == '2' {
+      # Amazon Linux 2 uses the /conf.modules.d/ dir
+      $mod_dir            = "${httpd_dir}/conf.modules.d"
+    } else {
+      $mod_dir              = $::apache::version::distrelease ? {
+        '7'     => "${httpd_dir}/conf.modules.d",
+        default => "${httpd_dir}/conf.d",
+      }
     }
     $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
