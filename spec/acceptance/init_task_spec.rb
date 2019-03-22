@@ -1,7 +1,7 @@
 # run a test task
 require 'spec_helper_acceptance'
 
-describe 'apache tasks', if: puppet_version =~ %r{(5\.\d\.\d)} && host_inventory['facter']['os']['name'] != 'sles' do
+describe 'apache tasks', if: puppet_version =~ %r{(5\.\d+\.\d+)} && host_inventory['facter']['os']['name'] != 'sles' do
   describe 'reload' do
     pp = <<-MANIFEST
       class { 'apache':

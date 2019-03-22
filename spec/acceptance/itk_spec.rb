@@ -3,17 +3,11 @@ require 'spec_helper_acceptance'
 case os[:family]
 when 'debian'
   service_name = 'apache2'
-  majrelease = fact('operatingsystemmajrelease')
-  variant = if ['6', '7', '10.04', '12.04'].include?(majrelease)
-              :itk_only
-            else
-              :prefork
-            end
+  variant = :prefork
 when 'redhat'
   unless os[:release].to_i == 5
     service_name = 'httpd'
-    majrelease = os[:release].to_i
-    variant = if [6].include?(majrelease)
+    variant = if [6].include?(os[:release].to_i)
                 :itk_only
               else
                 :prefork
@@ -21,7 +15,6 @@ when 'redhat'
   end
 when 'freebsd'
   service_name = 'apache24'
-  # majrelease = fact('operatingsystemmajrelease')
   variant = :prefork
 end
 
