@@ -21,9 +21,9 @@ describe 'prefork_worker_spec.rb' do
 
       describe service($service_name) do
         it { is_expected.to be_running }
-        if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+        if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
           pending 'Should be enabled - Bug 760616 on Debian 8'
-        elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+        elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
           pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
         else
           it { is_expected.to be_enabled }
@@ -49,9 +49,9 @@ describe 'prefork_worker_spec.rb' do
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
         pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
@@ -76,9 +76,9 @@ describe 'prefork_worker_spec.rb' do
 
     describe service($service_name) do
       it { is_expected.to be_running }
-      if fact('operatingsystem') == 'Debian' && fact('operatingsystemmajrelease') == '8'
+      if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
         pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif fact('operatingsystem') == 'SLES' && fact('operatingsystemmajrelease') == '15'
+      elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
         pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
       else
         it { is_expected.to be_enabled }
