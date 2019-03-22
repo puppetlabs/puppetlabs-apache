@@ -34,7 +34,7 @@ describe 'apache::mod::passenger class', if: os[:family] == 'debian' do
     # tmpdir. This is the default for apache on Ubuntu 18.04. As a result,
     # passenger CLI tools can't find the config/socket, which defaults to /tmp
     # we enable it for ubuntu 16.04/18.04, centos7 and debian 9
-    pp =  if ['7', '9', '16.04', '18.04'].include?('%g' % ('%.2f' % os[:release]))
+    pp =  if ['7', '9', '16.04', '18.04'].include?(fact('operatingsystemmajrelease'))
             <<-MANIFEST
               /* stock apache and mod_passenger */
               class { 'apache': }
