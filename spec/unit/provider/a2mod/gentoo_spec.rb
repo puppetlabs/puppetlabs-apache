@@ -32,9 +32,11 @@ describe provider_class do
     end
 
     it 'normalizes parameters' do
-      filetype.expects(:read).returns(%(APACHE2_OPTS="-D FOO -D BAR -D BAR"\n))
-      provider_class.expects(:filetype).returns(filetype)
-
+      # filetype.expects(:read).returns(%(APACHE2_OPTS="-D FOO -D BAR -D BAR"\n))
+      allow(filetype).to receive(:read).and_return(%(APACHE2_OPTS="-D FOO -D BAR -D BAR"\n))
+      # provider_class.expects(:filetype).returns(filetype)
+      allow(provider_class).to receive(:filetype)
+      expect(provider_class).to receive(:filetype) { filetype }
       expect(provider_class.modules).to eq(['bar', 'foo'])
     end
   end
@@ -43,7 +45,8 @@ describe provider_class do
     it 'matches providers to resources' do
       provider = instance_double('ssl_provider', name: 'ssl')
       resource = instance_double('ssl_resource')
-      resource.expects(:provider=).with(provider)
+      expect(resource).to receive(:provider=).with(provider)
+      # resource.expects(:provider=).with(provider)
 
       expect(provider_class).to receive(:instances) { [provider] }
       provider_class.prefetch('ssl' => resource)
@@ -155,8 +158,11 @@ describe provider_class do
       allow(@ssl).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch('ssl' => @ssl)
 
-      @filetype.unstub(:backup)
-      @filetype.expects(:backup)
+      # @filetype.unstub(:backup)
+      # allow(@filetype).to receive(:backup).and_call_original
+      # @filetype.expects(:backup)
+      expect(@filetype).to receive(:backup)
+
       provider_class.flush
     end
 
@@ -170,8 +176,10 @@ describe provider_class do
       allow(@ssl).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch('ssl' => @ssl)
 
-      @filetype.unstub(:backup)
-      @filetype.expects(:backup).never
+      # @filetype.unstub(:backup)
+      # allow(@filetype).to receive(:backup).and_call_original
+      # @filetype.expects(:backup).never
+      expect(@filetype).to receive(:backup).never
       provider_class.flush
     end
     # rubocop:enable RSpec/ExampleLength
