@@ -9,7 +9,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if os[:family] == 'freebsd'
+    if host_inventory['facter']['os']['family'] == 'FreeBSD'
       describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { is_expected.not_to be_file }
       end
@@ -21,7 +21,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if os[:family] == 'freebsd'
+    if host_inventory['facter']['os']['family'] == 'FreeBSD'
       describe file("#{$confd_dir}/no-accf.conf.erb") do
         it { is_expected.to be_file }
       end
@@ -111,7 +111,7 @@ describe 'apache parameters' do
     end
   end
 
-  if os[:family] == 'debian'
+  if host_inventory['facter']['os']['family'] == 'Debian'
     describe 'conf_enabled => /etc/apache2/conf-enabled' do
       pp = <<-MANIFEST
           class { 'apache':
@@ -159,7 +159,7 @@ describe 'apache parameters' do
     end
   end
 
-  if os[:family] != 'debian'
+  if host_inventory['facter']['os']['family'] != 'Debian'
     describe 'purge parameters => true' do
       pp = <<-MANIFEST
           class { 'apache':
@@ -271,7 +271,7 @@ describe 'apache parameters' do
     # Actually >= 2.4.24, but the minor version is not provided
     # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
     # basically versions of the ubuntu or sles  apache package cause issue
-    if $apache_version >= '2.4' && host_inventory['facter']['os']['name'] !~ %r{ubuntu|sles}
+    if $apache_version >= '2.4' && host_inventory['facter']['os']['name'] !~ %r{Ubuntu|SLES}
       describe 'setup' do
         it 'applies cleanly' do
           pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
