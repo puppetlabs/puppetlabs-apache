@@ -6020,7 +6020,7 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 
 ### Testing
 
-Due to the difficult and slow process of acceptance testing, modules will now tested with unit tests.
+Due to the difficult and specialised nature of acceptance testing mods in apache IE (high OS specificity), we have moved those acceptance tests into unit tests as much as possible.
 
 To run the unit tests you have to install all the necessary gems:
 
