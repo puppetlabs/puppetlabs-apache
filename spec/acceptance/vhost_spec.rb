@@ -1501,8 +1501,6 @@ describe 'apache::vhost define' do
   end
 
   describe 'wsgi' do
-    require 'pry'
-    binding.pry
     unless host_inventory['facter']['os']['distro'].nil?
       context 'on lucid', if: host_inventory['facter']['os']['distro']['codename'] == 'lucid' do
         pp = <<-MANIFEST
@@ -1525,8 +1523,8 @@ describe 'apache::vhost define' do
         end
       end
 
-    context 'on everything but lucid', unless: (host_inventory['facter']['os']['distro']['codename'] == 'lucid' || host_inventory['facter']['os']['name'] == 'SLES') do
-      pp = <<-MANIFEST
+      context 'on everything but lucid', unless: (host_inventory['facter']['os']['distro']['codename'] == 'lucid' || host_inventory['facter']['os']['name'] == 'SLES') do
+        pp = <<-MANIFEST
         class { 'apache': }
         class { 'apache::mod::wsgi': }
         host { 'test.server': ip => '127.0.0.1' }
@@ -1544,21 +1542,21 @@ describe 'apache::vhost define' do
           wsgi_chunked_request        => 'On',
         }
       MANIFEST
-      it 'import_script applies cleanly' do
-        apply_manifest(pp, catch_failures: true)
-      end
+        it 'import_script applies cleanly' do
+          apply_manifest(pp, catch_failures: true)
+        end
 
-      describe file("#{$vhost_dir}/25-test.server.conf") do
-        it { is_expected.to be_file }
-        it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
-        it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }
-        it { is_expected.to contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
-        it { is_expected.to contain 'WSGIProcessGroup nobody' }
-        it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }
-        it { is_expected.to contain 'WSGIPassAuthorization On' }
-        it { is_expected.to contain 'WSGIChunkedRequest On' }
+        describe file("#{$vhost_dir}/25-test.server.conf") do
+          it { is_expected.to be_file }
+          it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
+          it { is_expected.to contain 'WSGIDaemonProcess wsgi processes=2' }
+          it { is_expected.to contain 'WSGIImportScript /test1 application-group=%{GLOBAL} process-group=wsgi' }
+          it { is_expected.to contain 'WSGIProcessGroup nobody' }
+          it { is_expected.to contain 'WSGIScriptAlias /test "/test1"' }
+          it { is_expected.to contain 'WSGIPassAuthorization On' }
+          it { is_expected.to contain 'WSGIChunkedRequest On' }
+        end
       end
-    end
     end
   end
 

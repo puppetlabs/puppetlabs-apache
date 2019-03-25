@@ -6018,6 +6018,28 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 <a id="development"></a> 
 ## Development
 
+### Testing
+
+Due to the difficult and slow process of acceptance testing, modules will now tested with unit tests.
+
+To run the unit tests you have to install all the necessary gems:
+
+```
+bundle install
+```
+
+And then execute the command:
+
+```
+bundle exec rake parallel_spec
+```
+
+To check the code coverage you can run the command:
+
+```
+COVERAGE=yes bundle exec rake parallel_spec
+```
+
 ### Contributing
 
 [Puppet][] modules on the [Puppet Forge][] are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve.
