@@ -4,10 +4,13 @@ require 'spec_helper'
 def general_deflate_specs
   it { is_expected.to contain_apache__mod('deflate') }
 
-  expected = "AddOutputFilterByType DEFLATE text/css\n"\
+  expected = "AddOutputFilterByType DEFLATE application/rss+xml\n"\
+  "AddOutputFilterByType DEFLATE application/x-javascript\n"\
+      "AddOutputFilterByType DEFLATE text/css\n"\
              "AddOutputFilterByType DEFLATE text/html\n"\
              "\n"\
              "DeflateFilterNote Input instream\n"\
+             "DeflateFilterNote Output outstream\n"\
              "DeflateFilterNote Ratio ratio\n"
 
   it do
@@ -21,10 +24,11 @@ describe 'apache::mod::deflate', type: :class do
   context 'default configuration with parameters' do
     let :pre_condition do
       'class { "apache::mod::deflate":
-        types => [ "text/html", "text/css" ],
+        types => [ "text/html", "text/css" , "application/x-javascript", "application/rss+xml"],
         notes => {
           "Input" => "instream",
           "Ratio" => "ratio",
+          "Output" => "outstream",
         }
       }
       '

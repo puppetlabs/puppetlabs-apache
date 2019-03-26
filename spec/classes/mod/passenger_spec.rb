@@ -173,6 +173,45 @@ describe 'apache::mod::passenger', type: :class do
         it {
           is_expected.to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
         }
+
+        context 'passenger config with passenger_installed_version set', test: true do
+          describe 'fails when an option is not valid for $passenger_installed_version' do
+            let :params do
+              {
+                passenger_installed_version: '4.0.0',
+                passenger_instance_registry_dir: '/some/path/to/nowhere',
+              }
+            end
+
+            it { is_expected.to raise_error(%r{passenger_instance_registry_dir is not introduced until version 5.0.0}) }
+          end
+
+          describe 'fails when an option is removed' do
+            let :params do
+              {
+                passenger_installed_version: '5.0.0',
+                rails_autodetect: 'on',
+              }
+            end
+
+            it { is_expected.to raise_error(%r{REMOVED PASSENGER OPTION}) }
+          end
+
+          describe 'warns when an option is deprecated' do
+            puts facts[:os]['family']
+            puts facts[:os]['release']
+
+            let :params do
+              {
+                passenger_installed_version: '5.0.0',
+                rails_ruby: '/some/path/to/ruby',
+              }
+            end
+
+            specify { expect { warn(%r{DEPRECATED PASSENGER OPTION}) }.to output(%r{DEPRECATED PASSENGER OPTION}).to_stderr }
+          end
+        end
+
         describe "with passenger_root => '/usr/lib/example'" do
           let :params do
             { passenger_root: '/usr/lib/example' }
