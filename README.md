@@ -56,6 +56,7 @@
 [`apache::mod::event`]: #class-apachemodevent
 [`apache::mod::ext_filter`]: #class-apachemodext_filter
 [`apache::mod::geoip`]: #class-apachemodgeoip
+[`apache::mod::http2`]: #class-apachemodhttp2
 [`apache::mod::itk`]: #class-apachemoditk
 [`apache::mod::jk`]: #class-apachemodjk
 [`apache::mod::ldap`]: #class-apachemodldap
@@ -182,6 +183,7 @@
 [`mod_ext_filter`]: https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
 [`mod_fcgid`]: https://httpd.apache.org/mod_fcgid/mod/mod_fcgid.html
 [`mod_geoip`]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/
+[`mod_http2`]: https://httpd.apache.org/docs/current/mod/mod_http2.html
 [`mod_info`]: https://httpd.apache.org/docs/current/mod/mod_info.html
 [`mod_ldap`]: https://httpd.apache.org/docs/2.2/mod/mod_ldap.html
 [`mod_mpm_event`]: https://httpd.apache.org/docs/current/mod/event.html
@@ -278,6 +280,8 @@
 [`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
 [`WSGIPythonPath`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonPath.html
 [`WSGIPythonHome`]: http://modwsgi.readthedocs.org/en/develop/configuration-directives/WSGIPythonHome.html
+[`WSGIApplicationGroup`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html
+[`WSGIPythonOptimize`]: https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIPythonOptimize.html
 
 #### Table of Contents
 
@@ -299,8 +303,7 @@
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
     - [Contributing to the apache module][Contributing]
-    - [Running tests - A quick guide][Running tests]
-
+    
 <a id="module-description"></a>
 ## Module description
 
@@ -1297,6 +1300,18 @@ Sets the path to the file containing Apache ports configuration.
 
 Default: '{$conf_dir}/ports.conf'.
 
+##### `protocols`
+
+Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols) directive, which lists available protocols for the server.
+
+Default: `undef`
+
+##### `protocols_honor_order`
+
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+
+Default: `undef`
+
 ##### `purge_configs`
 
 Removes all other Apache configs and virtual hosts.
@@ -1663,6 +1678,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `filter`
 * `geoip` (see [`apache::mod::geoip`][])
 * `headers`
+* `http2` (see [`apache::mod::http2`][])
 * `include`
 * `info`\*
 * `intercept_form_submit`
@@ -2206,6 +2222,138 @@ Installs and manages [`mod_geoip`][].
 
   Default: `undef`.
 
+##### Class: `apache::mod::http2`
+
+Installs and manages [`mod_http2`][].
+
+**Parameters**:
+
+* `h2_copy_files`: Determines if file handles or copies of file content are
+passed from the requestion processing down to the main connection.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_direct`: Toggles the usage of the HTTP/2 Direct Mode.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_early_hints`: Controls if HTTP status 103 interim responses are forwarded
+to the client or not.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_max_session_streams`: Sets the maximum number of active streams per
+HTTP/2 session that the server allows.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_max_worker_idle_seconds`: Sets the maximum number of seconds a h2 worker
+  may idle until it shuts itself down.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_max_workers`: Sets the maximum number of worker threads to spawn per
+  child process for HTTP/2 processing.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_min_workers`: Sets the minimum number of worker threads to spawn per
+  child process for HTTP/2 processing.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_modern_tls_only`: Toggles the security checks on HTTP/2 connections in
+  TLS mode.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_push`: Toggles the usage of the HTTP/2 server push protocol feature.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_push_diary_size`: Toggles the maximum number of HTTP/2 server pushes that
+  are remembered per HTTP/2 connection.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_push_priority`: Defines the priority handling of pushed responses based
+  on the content-type of the response.
+
+  Values: An array of priority definitions.
+
+  Default: `[]`
+
+* `h2_push_resource`: Declares resources for early pushing to the client.
+
+  Values: An array of resources.
+
+  Default: `[]`
+
+* `h2_serialize_headers`: Toggles if HTTP/2 requests shall be serialized in
+  HTTP/1.1 format for processing by httpd core.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_stream_max_mem_size`: Maximum number of outgoing data bytes buffered in
+  memory for an active streams.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_tls_cool_down_secs`: Sets the number of seconds of idle time on a TLS
+  connection before the TLS write size falls back to small (~1300 bytes)
+  length.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_tls_warm_up_size`: Sets the number of bytes to be sent in small TLS
+  records (~1300 bytes) until doing maximum sized writes (16k) on https: HTTP/2
+  connections.
+
+  Integer.
+
+  Default: `undef`
+
+* `h2_upgrade`: Toggles the usage of the HTTP/1.1 Upgrade method for switching
+  to HTTP/2.
+
+  Boolean.
+
+  Default: `undef`
+
+* `h2_window_size`: Sets the size of the window that is used for flow control
+  from client to server and limits the amount of data the server has to buffer.
+
+  Integer.
+
+  Default: `undef`
+
+
 ##### Class: `apache::mod::info`
 
 Installs and manages [`mod_info`][], which provides a comprehensive overview of the server configuration.
@@ -2735,6 +2883,7 @@ Default values for these parameters depend on your operating system. Most of thi
 * `source`: Defines the path to the default configuration. Values include a `puppet:///` path.
 * `template`: Defines the path to the `php.conf` template Puppet uses to generate the configuration file.
 * `content`: Adds arbitrary content to `php.conf`.
+* `libphp_prefix`: Allows the definition of a libphp prefix. Defaults to `libphp`.
 
 ##### Class: `apache::mod::proxy_html`
 
@@ -3053,9 +3202,21 @@ Enables Python support via [`mod_wsgi`][].
 
 * `wsgi_restrict_embedded`: Defines the [`WSGIRestrictEmbedded`][] directive, such as 'On'.
 
-Values: On|Off|undef.
+  Values: On|Off|undef.
 
-Default: undef.
+  Default: undef.
+
+* `wsgi_application_group`: Defines the [`WSGIApplicationGroup`][] directive, such as "%{GLOBAL}".
+
+  Values: A string specifying a wsgi application.
+
+  Default: `undef`.
+
+* `wsgi_python_optimize`: Defines the [`WSGIPythonOptimize`][] directive, such as 1.
+
+  Values: A integer specifying the level of Python compiler optimisations.
+
+  Default: `undef`.
 
 * `wsgi_socket_prefix`: Defines the [`WSGISocketPrefix`][] directive, such as "\${APACHE\_RUN\_DIR}WSGI".
 
@@ -3374,7 +3535,7 @@ For the custom fragment's `order` parameter, the `apache::vhost` defined type us
 
 ```
 class { 'apache':
-  default_vhost     => false
+  default_vhost     => false,
   default_ssl_vhost => false,
 }
 ```
@@ -3725,6 +3886,93 @@ Sets the [`ForceType`][] directive, which forces Apache to serve all matching fi
 #### `add_charset`
 
 Lets Apache set custom content character sets per directory and/or file extension
+
+##### `h2_copy_files`
+
+Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles)
+directive which influences how the requestion process pass files to the main
+connection.
+
+##### `h2_direct`
+
+Sets the [H2Direct](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2direct)
+directive which toggles the usage of the HTTP/2 Direct Mode.
+
+##### `h2_early_hints`
+
+Sets the [H2EarlyHints](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2earlyhints)
+directive which controls if HTTP status 103 interim responses are forwarded to
+the client or not.
+
+##### `h2_max_session_streams`
+
+Sets the [H2MaxSessionStreams](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2maxsessionstreams)
+directive which sets the maximum number of active streams per HTTP/2 session
+that the server allows.
+
+##### `h2_modern_tls_only`
+
+Sets the [H2ModernTLSOnly](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2moderntlsonly)
+directive which toggles the security checks on HTTP/2 connections in TLS mode.
+
+##### `h2_push`
+
+Sets the [H2Push](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2push)
+directive which toggles the usage of the HTTP/2 server push protocol feature.
+
+##### `h2_push_diary_size`
+
+Sets the [H2PushDiarySize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushdiarysize)
+directive which toggles the maximum number of HTTP/2 server pushes that are
+remembered per HTTP/2 connection.
+
+##### `h2_push_priority`
+
+Sets the [H2PushPriority](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushpriority)
+directive which defines the priority handling of pushed responses based on the
+content-type of the response.
+
+##### `h2_push_resource`
+
+Sets the [H2PushResource](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushresource)
+directive which declares resources for early pushing to the client.
+
+##### `h2_serialize_headers`
+
+Sets the [H2SerializeHeaders](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2serializeheaders)
+directive which toggles if HTTP/2 requests shall be serialized in HTTP/1.1
+format for processing by httpd core.
+
+##### `h2_stream_max_mem_size`
+
+Sets the [H2StreamMaxMemSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2streammaxmemsize)
+directive which sets the maximum number of outgoing data bytes buffered in
+memory for an active streams.
+
+##### `h2_tls_cool_down_secs`
+
+Sets the [H2TLSCoolDownSecs](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlscooldownsecs)
+directive which sets the number of seconds of idle time on a TLS connection
+before the TLS write size falls back to small (~1300 bytes) length.
+
+##### `h2_tls_warm_up_size`
+
+Sets the [H2TLSWarmUpSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlswarmupsize)
+directive which sets the number of bytes to be sent in small TLS records (~1300
+bytes) until doing maximum sized writes (16k) on https: HTTP/2 connections.
+
+##### `h2_upgrade`
+
+Sets the [H2Upgrade](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2upgrade)
+directive which toggles the usage of the HTTP/1.1 Upgrade method for switching
+to HTTP/2.
+
+##### `h2_window_size`
+
+Sets the [H2WindowSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2windowsize)
+directive which sets the size of the window that is used for flow control from
+client to server and limits the amount of data the server has to buffer.
+
 
 ##### `headers`
 
@@ -4216,6 +4464,18 @@ If nothing matches the priority, the first name-based virtual host is used. Like
 To omit the priority prefix in file names, pass a priority of `false`.
 
 Default: '25'.
+
+##### `protocols`
+
+Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols) directive, which lists available protocols for the virutal host.
+
+Default: `undef`
+
+##### `protocols_honor_order`
+
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+
+Default: `undef`
 
 ##### `proxy_dest`
 
@@ -4885,6 +5145,16 @@ apache::vhost { 'first.example.com':
   ],
 }
 ```
+
+##### `h2_copy_files`
+
+Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles) directive.
+Note that you must declare `class {'apache::mod::http2': }` before using this directive.
+
+##### `h2_push_resource`
+
+Sets the [H2PushResource](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushresource) directive.
+Note that you must declare `class {'apache::mod::http2': }` before using this directive.
 
 ##### `headers`
 
@@ -5754,6 +6024,28 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 
 <a id="development"></a> 
 ## Development
+
+### Testing
+
+Due to the difficult and specialised nature of acceptance testing mods in apache IE (high OS specificity), we have moved those acceptance tests into unit tests as much as possible.
+
+To run the unit tests you have to install all the necessary gems:
+
+```
+bundle install
+```
+
+And then execute the command:
+
+```
+bundle exec rake parallel_spec
+```
+
+To check the code coverage you can run the command:
+
+```
+COVERAGE=yes bundle exec rake parallel_spec
+```
 
 ### Contributing
 

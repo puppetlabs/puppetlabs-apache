@@ -176,6 +176,14 @@ describe 'apache::vhost', type: :define do
                   'dav_depth_infinity' => true,
                   'dav_min_timeout'    => '600' },
                 {
+                  'path'             => '/var/www/http2',
+                  'h2_copy_files'    => true,
+                  'h2_push_resource' => [
+                    '/foo.css',
+                    '/foo.js',
+                  ],
+                },
+                {
                   'path'                                                => '/var/www/node-app/public',
                   'passenger_enabled'                                   => true,
                   'passenger_base_uri'                                  => '/app',
@@ -348,6 +356,28 @@ describe 'apache::vhost', type: :define do
               'suexec_user_group'           => 'root root',
               'allow_encoded_slashes'       => 'nodecode',
               'use_canonical_name'          => 'dns',
+
+              'h2_copy_files'               => false,
+              'h2_direct'                   => true,
+              'h2_early_hints'              => false,
+              'h2_max_session_streams'      => 100,
+              'h2_modern_tls_only'          => true,
+              'h2_push'                     => true,
+              'h2_push_diary_size'          => 256,
+              'h2_push_priority'            => [
+                'application/json 32',
+              ],
+              'h2_push_resource' => [
+                '/css/main.css',
+                '/js/main.js',
+              ],
+              'h2_serialize_headers'        => false,
+              'h2_stream_max_mem_size'      => 65_536,
+              'h2_tls_cool_down_secs'       => 1,
+              'h2_tls_warm_up_size'         => 1_048_576,
+              'h2_upgrade'                  => true,
+              'h2_window_size'              => 65_535,
+
               'passenger_enabled'                     => false,
               'passenger_base_uri'                    => '/app',
               'passenger_ruby'                        => '/usr/bin/ruby1.9.1',
@@ -406,6 +436,8 @@ describe 'apache::vhost', type: :define do
               'keepalive'                   => 'on',
               'keepalive_timeout'           => '100',
               'max_keepalive_requests'      => '1000',
+              'protocols'                   => ['h2', 'http/1.1'],
+              'protocols_honor_order'       => true,
             }
           end
 
@@ -476,6 +508,21 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+Include\s'\/custom\/path\/another_includes'$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2CopyFiles\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2PushResource\s/foo.css$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+H2PushResource\s/foo.js$},
             )
           }
           it {
@@ -999,6 +1046,98 @@ describe 'apache::vhost', type: :define do
               content: %r{^\s+MaxKeepAliveRequests\s1000$},
             )
           }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+Protocols\sh2 http/1.1$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ProtocolsHonorOrder\sOn$},
+            )
+          }
+
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2CopyFiles\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2Direct\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2EarlyHints\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2MaxSessionStreams\s100$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2ModernTLSOnly\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2Push\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2PushDiarySize\s256$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2PushPriority\sapplication/json 32$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2PushResource\s/css/main.css$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2PushResource\s/js/main.js$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2SerializeHeaders\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2StreamMaxMemSize\s65536$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2TLSCoolDownSecs\s1$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2TLSWarmUpSize\s1048576$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2Upgrade\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
+              content: %r{^\s+H2WindowSize\s65535$},
+            )
+          }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
               content: %r{^\s+PassengerEnabled\sOff$},
