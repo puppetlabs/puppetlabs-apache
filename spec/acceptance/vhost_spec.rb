@@ -1768,26 +1768,4 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ShibCompatValidUser On' }
     end
   end
-
-  describe 'cas parameters' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      class {'::apache::mod::auth_cas':
-        cas_login_url    => 'https://login.example.com/cas/login',
-        cas_validate_url => 'https://login.example.com/cas/serviceValidate',
-      }
-      apache::vhost { 'test.server':
-        port    => '80',
-        docroot => '/var/www/html',
-        cas_root_proxied_as => 'http://test.server'
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-    describe file("#{$vhost_dir}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'CASRootProxiedAs http://test.server' }
-    end
-  end
 end
