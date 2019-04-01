@@ -529,6 +529,44 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'hostname_lookups' do
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': hostname_lookups => 'On' }"
+        apply_manifest(pp, catch_failures: true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'HostnameLookups On' }
+    end
+
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': hostname_lookups => 'Off' }"
+        apply_manifest(pp, catch_failures: true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'HostnameLookups Off' }
+    end
+
+    describe 'setup' do
+      it 'applies cleanly' do
+        pp = "class { 'apache': hostname_lookups => 'Double' }"
+        apply_manifest(pp, catch_failures: true)
+      end
+    end
+
+    describe file($conf_file) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'HostnameLookups Double' }
+    end
+  end
+
   describe 'trace_enable' do
     pp = <<-MANIFEST
         class { 'apache':

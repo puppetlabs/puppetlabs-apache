@@ -65,7 +65,7 @@ AddDefaultCharset <%= @default_charset %>
 <%- if scope.function_versioncmp([@apache_version, '2.4']) < 0 -%>
 DefaultType <%= @default_type %>
 <%- end -%>
-HostnameLookups Off
+HostnameLookups <%= @hostname_lookups %>
 <%- if /^[|\/]/.match(@error_log) || /^syslog:/.match(@error_log) -%>
 ErrorLog "<%= @error_log %>"
 <%- else -%>
