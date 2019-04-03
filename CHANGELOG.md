@@ -2,9 +2,29 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [4.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.6.0) (2019-01-07)
+## [v4.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v4.1.0) (2019-04-03)
 
-[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.5.0...3.6.0)
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.0.0...v4.1.0)
+
+### Added
+
+- \(MODULES-7196\) Allow setting CASRootProxiedAs per virtualhost \(replaces \#1857\) [\#1900](https://github.com/puppetlabs/puppetlabs-apache/pull/1900) ([Lavinia-Dan](https://github.com/Lavinia-Dan))
+- \(feat\) - Amazon Linux 2 compatibility added [\#1898](https://github.com/puppetlabs/puppetlabs-apache/pull/1898) ([david22swan](https://github.com/david22swan))
+- \(MODULES-8731\) Allow CIDRs for proxy\_ips/internal\_proxy in remoteip [\#1891](https://github.com/puppetlabs/puppetlabs-apache/pull/1891) ([JAORMX](https://github.com/JAORMX))
+- Manage all mod\_remoteip parameters supported by Apache [\#1882](https://github.com/puppetlabs/puppetlabs-apache/pull/1882) ([johanfleury](https://github.com/johanfleury))
+- MODULES-8541 : Allow HostnameLookups to be modified [\#1881](https://github.com/puppetlabs/puppetlabs-apache/pull/1881) ([k2patel](https://github.com/k2patel))
+- Add support for mod\_http2 [\#1867](https://github.com/puppetlabs/puppetlabs-apache/pull/1867) ([smortex](https://github.com/smortex))
+- Added code to paramertize the libphp prefix [\#1852](https://github.com/puppetlabs/puppetlabs-apache/pull/1852) ([grahamuk2018](https://github.com/grahamuk2018))
+- Added WSGI Options WSGIApplicationGroup and WSGIPythonOptimize [\#1847](https://github.com/puppetlabs/puppetlabs-apache/pull/1847) ([emetriqLikedeeler](https://github.com/emetriqLikedeeler))
+
+### Fixed
+
+- \(bugfix\) set kernel for facter version test [\#1895](https://github.com/puppetlabs/puppetlabs-apache/pull/1895) ([tphoney](https://github.com/tphoney))
+- \(MODULES-5990\) - Managing conf\_enabled [\#1875](https://github.com/puppetlabs/puppetlabs-apache/pull/1875) ([david22swan](https://github.com/david22swan))
+
+## [4.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/4.0.0) (2019-01-10)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/3.5.0...4.0.0)
 
 ### Changed
 
