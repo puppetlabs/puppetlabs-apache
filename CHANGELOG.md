@@ -2,9 +2,9 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v4.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v4.1.0) (2019-04-03)
+## [4.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/4.1.0) (2019-04-03)
 
-[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.0.0...v4.1.0)
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.0.0...4.1.0)
 
 ### Added
 
