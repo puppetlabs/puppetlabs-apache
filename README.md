@@ -1130,7 +1130,7 @@ Default: '100'.
 
 ##### `hostname_lookups`
 
-This directive enables DNS lookups so that host names can be logged (and passed to CGIs/SSIs in REMOTE_HOST). Values:'On','Off','Double'.
+This directive enables DNS lookups so that host names can be logged and passed to CGIs/SSIs in REMOTE_HOST. Values:'On','Off','Double'.
 
 Default: 'Off'.
 > **Note**: If enabled, it impacts performance significantly.
@@ -1308,7 +1308,7 @@ Default: `undef`
 
 ##### `protocols_honor_order`
 
-Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines whether the order of Protocols sets precedence during negotiation.
 
 Default: `undef`
 
@@ -2324,7 +2324,7 @@ HTTP/2 session that the server allows.
   Default: `undef`
 
 * `h2_tls_cool_down_secs`: Sets the number of seconds of idle time on a TLS
-  connection before the TLS write size falls back to small (~1300 bytes)
+  connection before the TLS write size falls back to a small (~1300 bytes)
   length.
 
   Integer.
@@ -3940,20 +3940,20 @@ directive which declares resources for early pushing to the client.
 ##### `h2_serialize_headers`
 
 Sets the [H2SerializeHeaders](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2serializeheaders)
-directive which toggles if HTTP/2 requests shall be serialized in HTTP/1.1
+directive which toggles if HTTP/2 requests are serialized in HTTP/1.1
 format for processing by httpd core.
 
 ##### `h2_stream_max_mem_size`
 
 Sets the [H2StreamMaxMemSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2streammaxmemsize)
 directive which sets the maximum number of outgoing data bytes buffered in
-memory for an active streams.
+memory for an active stream.
 
 ##### `h2_tls_cool_down_secs`
 
 Sets the [H2TLSCoolDownSecs](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlscooldownsecs)
 directive which sets the number of seconds of idle time on a TLS connection
-before the TLS write size falls back to small (~1300 bytes) length.
+before the TLS write size falls back to a small (~1300 bytes) length.
 
 ##### `h2_tls_warm_up_size`
 
@@ -4473,7 +4473,7 @@ Default: `undef`
 
 ##### `protocols_honor_order`
 
-Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines if order of Protocols determines precedence during negotiation.
+Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder) directive which determines wether the order of Protocols sets precedence during negotiation.
 
 Default: `undef`
 
@@ -6027,9 +6027,9 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 
 ### Testing
 
-Due to the difficult and specialised nature of acceptance testing mods in apache IE (high OS specificity), we have moved those acceptance tests into unit tests as much as possible.
+Due to the difficult and specialised nature of acceptance testing mods in apache IE (high OS specificity), we have replaced  acceptance tests with unit tests.
 
-To run the unit tests you have to install all the necessary gems:
+To run the unit tests, install the necessary gems:
 
 ```
 bundle install
@@ -6041,7 +6041,7 @@ And then execute the command:
 bundle exec rake parallel_spec
 ```
 
-To check the code coverage you can run the command:
+To check the code coverage, run:
 
 ```
 COVERAGE=yes bundle exec rake parallel_spec
