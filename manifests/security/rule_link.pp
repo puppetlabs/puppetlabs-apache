@@ -1,3 +1,4 @@
+# @api private
 define apache::security::rule_link () {
 
   $parts = split($title, '/')

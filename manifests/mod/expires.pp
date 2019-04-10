@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::expires (
   $expires_active  = true,
   $expires_default = undef,

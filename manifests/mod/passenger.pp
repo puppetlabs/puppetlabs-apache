@@ -1,17 +1,4 @@
-# Manages the settings for the mod_passenger
-# The result is the /etc/mods-available/mod_passenger.conf file
-#
-# Where do we get these settings?
-#   Settings are dervied from https://www.phusionpassenger.com/library/config/apache/reference
-#   Also in passenger source code you can strip out what are all the available options by looking in
-#     * src/apache2_module/Configuration.cpp
-#     * src/apache2_module/ConfigurationCommands.cpp
-#   Note: in the src there are several undocumented settings.
-#
-# Change Log:
-#   * As of 08/13/2017 there are 84 available/deprecated/removed settings.
-#   * Around 08/20/2017 UnionStation was discontinued options were removed.
-#   * As of 08/20/2017 there are 77 available/deprecated/removed settings.
+# @api private
 class apache::mod::passenger (
   $manage_repo                                                                               = true,
   $mod_id                                                                                    = undef,

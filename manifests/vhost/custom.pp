@@ -1,4 +1,20 @@
-# See README.md for usage information
+# @summary
+#   A wrapper around the `apache::custom_config` defined type.
+#  
+# The `apache::vhost::custom` defined type is a thin wrapper around the `apache::custom_config` defined type, and simply overrides some of its default settings specific to the virtual host directory in Apache.
+#
+# @param content
+#   Sets the configuration file's content.
+#
+# @param ensure
+#   Specifies if the virtual host file is present or absent.
+#
+# @param priority
+#   Sets the relative load order for Apache HTTPD VirtualHost configuration files.
+#
+# @param verify_config
+#   Specifies whether to validate the configuration file before notifying the Apache service.
+#
 define apache::vhost::custom(
   $content,
   $ensure = 'present',

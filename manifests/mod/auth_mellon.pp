@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::auth_mellon (
   $mellon_cache_size = $::apache::params::mellon_cache_size,
   $mellon_lock_file  = $::apache::params::mellon_lock_file,

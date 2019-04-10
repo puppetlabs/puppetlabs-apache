@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::shib (
   $suppress_warning = false,
   $mod_full_path    = undef,

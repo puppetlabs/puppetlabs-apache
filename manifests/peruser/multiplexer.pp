@@ -1,3 +1,4 @@
+# @api private
 define apache::peruser::multiplexer (
   $user = $::apache::user,
   $group = $::apache::group,

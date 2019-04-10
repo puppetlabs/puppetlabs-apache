@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::suphp (
 ){
   if  ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '15.10') >= 0) or

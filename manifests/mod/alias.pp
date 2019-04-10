@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::alias(
   $apache_version = undef,
   $icons_options  = 'Indexes MultiViews',

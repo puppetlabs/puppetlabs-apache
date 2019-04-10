@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::authn_dbd (
   $authn_dbd_params,
   $authn_dbd_dbdriver    = 'mysql',

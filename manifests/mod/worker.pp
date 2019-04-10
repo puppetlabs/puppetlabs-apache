@@ -1,37 +1,35 @@
-# == Class: apache::mod::worker
+# @summary
+#   Manages the Apache worker MPM
 #
-#
-# === Parameters
-#
-#  [*startservers*]
+# @param startservers
 #   (optional) The number of child server processes created on startup
 #   Defaults is '2'
 #
-#  [*maxclients*]
+# @param maxclients
 #   (optional) The max number of simultaneous requests that will be served.
 #   This is the old name and is still supported. The new name is
 #   MaxRequestWorkers as of 2.3.13.
 #   Default is '150'
 #
-#  [*minsparethreads*]
+# @param minsparethreads
 #   (optional) Minimum number of idle threads to handle request spikes.
 #   Default is '25'
 #
-#  [*maxsparethreads*]
+# @param maxsparethreads
 #   (optional) Maximum number of idle threads.
 #   Default is '75'
 #
-#  [*threadsperchild*]
+# @param threadsperchild
 #   (optional) The number of threads created by each child process.
 #   Default is '25'
 #
-#  [*maxrequestsperchild*]
+# @param maxrequestsperchild
 #   (optional) Limit on the number of connectiojns an individual child server
 #   process will handle. This is the old name and is still supported. The new
 #   name is MaxConnectionsPerChild as of 2.3.9+.
 #   Default is '0'
 #
-#  [*serverlimit*]
+# @param serverlimit
 #   (optional) With worker, use this directive only if your MaxRequestWorkers
 #   and ThreadsPerChild settings require more than 16 server processes
 #   (default). Do not set the value of this directive any higher than the
@@ -39,19 +37,20 @@
 #   MaxRequestWorkers and ThreadsPerChild.
 #   Default is '25'
 #
-#  [*threadlimit*]
+# @param threadlimit
 #   (optional) This directive sets the maximum configured value for
 #   ThreadsPerChild for the lifetime of the Apache httpd process.
 #   Default is '64'
 #
-#  [*listenbacklog*]
+# @param listenbacklog
 #    (optional) Maximum length of the queue of pending connections.
 #    Defaults is '511'
 #
-#  [*apache_version*]
+# @param apache_version
 #   (optional)
 #   Default is $::apache::apache_version
 #
+# @api private
 class apache::mod::worker (
   $startservers        = '2',
   $maxclients          = '150',

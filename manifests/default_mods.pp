@@ -1,3 +1,4 @@
+# @api private
 class apache::default_mods (
   $all            = true,
   $mods           = undef,

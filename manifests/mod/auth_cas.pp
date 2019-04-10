@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::auth_cas (
   String $cas_login_url,
   String $cas_validate_url,

@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::ssl (
   Boolean $ssl_compression                                  = false,
   $ssl_cryptodevice                                         = 'builtin',

@@ -1,6 +1,5 @@
-# Class: apache::php
-#
-# This class installs PHP for Apache
+# @summary
+#   This class installs PHP for Apache
 #
 # Parameters:
 # - $php_package
@@ -12,6 +11,7 @@
 #
 # Sample Usage:
 #
+# @api private
 class apache::php {
   warning('apache::php is deprecated; please use apache::mod::php')
   include ::apache::mod::php

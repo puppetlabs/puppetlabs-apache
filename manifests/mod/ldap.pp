@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::ldap (
   $apache_version                                  = undef,
   $package_name                                    = undef,

@@ -1,3 +1,4 @@
+# @api private
 class apache::default_confd_files (
   $all = true,
 ) {

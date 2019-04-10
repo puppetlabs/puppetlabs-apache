@@ -1,14 +1,16 @@
-# Class: apache::mod::status
+# @api private
 #
-# This class enables and configures Apache mod_status
+# @summary
+#   This class enables and configures Apache mod_status
+#
 # See: http://httpd.apache.org/docs/current/mod/mod_status.html
 #
 # Parameters:
-# - $allow_from is an array of hosts, ip addresses, partial network numbers
+# @param allow_from is an array of hosts, ip addresses, partial network numbers
 #   or networks in CIDR notation specifying what hosts can view the special
 #   /server-status URL.  Defaults to ['127.0.0.1', '::1'].
 #   > Creates Apache < 2.4 directive "Allow from"
-# - $requires is either a:
+# @param requires is either a:
 #   - String with:
 #     - '' or 'unmanaged' - Host auth control done elsewhere
 #     - 'ip <List of IPs>' - Allowed IPs/ranges
@@ -21,10 +23,11 @@
 #       This encloses "Require" directives in "<Require(Any|All|None)>" block
 #       Optional - If unspecified, "Require" directives follow current flow
 #   > Creates Apache >= 2.4 directives "Require"
-# - $extended_status track and display extended status information. Valid
+# @param extended_status track and display extended status information. Valid
 #   values are 'On' or 'Off'.  Defaults to 'On'.
-# - $status_path is the path assigned to the Location directive which
+# @param status_path is the path assigned to the Location directive which
 #   defines the URL to access the server status. Defaults to '/server-status'.
+# @param apache_version
 #
 # Actions:
 # - Enable and configure Apache mod_status
