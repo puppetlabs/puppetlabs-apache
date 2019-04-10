@@ -1,3 +1,4 @@
+# @api private
 class apache::package (
   $ensure     = 'present',
   $mpm_module = $::apache::params::mpm_module,

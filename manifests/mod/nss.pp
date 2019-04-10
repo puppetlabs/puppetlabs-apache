@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::nss (
   $transfer_log = "${::apache::params::logroot}/access.log",
   $error_log    = "${::apache::params::logroot}/error.log",

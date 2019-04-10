@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::itk (
   $startservers        = '8',
   $minspareservers     = '5',

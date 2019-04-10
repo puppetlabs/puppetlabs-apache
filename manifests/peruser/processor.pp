@@ -1,3 +1,4 @@
+# @api private
 define apache::peruser::processor (
   $user,
   $group,

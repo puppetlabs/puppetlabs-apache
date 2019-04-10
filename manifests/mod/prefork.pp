@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::prefork (
   $startservers           = '8',
   $minspareservers        = '5',

@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::proxy_balancer(
   Boolean $manager                   = false,
   Stdlib::Absolutepath $manager_path = '/balancer-manager',

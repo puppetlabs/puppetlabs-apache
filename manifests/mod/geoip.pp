@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::geoip (
   $enable                     = false,
   $db_file                    = '/usr/share/GeoIP/GeoIP.dat',

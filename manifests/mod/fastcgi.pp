@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::fastcgi {
   include ::apache
   if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemrelease, '7.0') >= 0) {

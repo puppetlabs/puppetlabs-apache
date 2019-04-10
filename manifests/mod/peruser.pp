@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::peruser (
   $minspareprocessors = '2',
   $minprocessors = '2',

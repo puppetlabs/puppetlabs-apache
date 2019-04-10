@@ -1,6 +1,5 @@
-# Class: apache::params
-#
-# This class manages Apache parameters
+# @summary
+#   This class manages Apache parameters
 #
 # Parameters:
 # - The $user that Apache runs as
@@ -18,6 +17,7 @@
 #
 # Sample Usage:
 #
+# @api private
 class apache::params inherits ::apache::version {
   if($::fqdn) {
     $servername = $::fqdn

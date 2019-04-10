@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::auth_kerb {
   include ::apache
   include ::apache::mod::authn_core

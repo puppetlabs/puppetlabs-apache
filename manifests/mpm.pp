@@ -1,3 +1,4 @@
+# @api private
 define apache::mpm (
   $lib_path       = $::apache::lib_path,
   $apache_version = $::apache::apache_version,

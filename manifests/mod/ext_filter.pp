@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::ext_filter(
   Optional[Hash] $ext_filter_define = undef
 ) {

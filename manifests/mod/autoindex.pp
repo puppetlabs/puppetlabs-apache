@@ -1,3 +1,4 @@
+# @api private
 class apache::mod::autoindex {
   include ::apache
   ::apache::mod { 'autoindex': }
