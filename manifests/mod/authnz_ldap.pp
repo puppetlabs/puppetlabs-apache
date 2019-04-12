@@ -4,7 +4,6 @@ class apache::mod::authnz_ldap (
 ) {
 
   include ::apache
-  include '::apache::mod::ldap'
   ::apache::mod { 'authnz_ldap':
     package => $package_name,
   }
