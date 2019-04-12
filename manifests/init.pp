@@ -14,7 +14,7 @@
 # ```
 #
 # @param allow_encoded_slashes
-#   Sets the server default for the [`AllowEncodedSlashes`][] declaration, which modifies the 
+#   Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the 
 #   responses to URLs containing '\' and '/' characters. If not specified, this parameter omits 
 #   the declaration from the server's configuration and uses Apache's default setting of 'off'.
 #   Values: 'on', 'off', 'nodecode'.
@@ -72,13 +72,13 @@
 #   this parameter with your SSL chain before deploying this server in a production environment.
 #
 # @param default_ssl_crl
-#   Sets the path of the default [certificate revocation list][] (CRL) file to use.<br />
+#   Sets the path of the default certificate revocation list (CRL) file to use.<br />
 #   Although this default value results in a functioning Apache server, you **must** update 
 #   this parameter with the CRL file path before deploying this server in a production 
 #   environment. You can use this parameter with or in place of the `default_ssl_crl_path`.
 #
 # @param default_ssl_crl_path
-#   Sets the server's [certificate revocation list path][], which contains your CRLs.<br />
+#   Sets the server's certificate revocation list path, which contains your CRLs.<br />
 #   Although this default value results in a functioning Apache server, you **must** update 
 #   this parameter with the CRL file path before deploying this server in a production environment.
 #
@@ -89,13 +89,13 @@
 #   this parameter when using certificate revocation lists in a production environment.
 #
 # @param default_ssl_key
-#   Sets the [SSL certificate key file][] location.
+#   Sets the SSL certificate key file location.
 #   Although the default values result in a functioning Apache server, you **must** update 
 #   this parameter with your SSL key's location before deploying this server in a production 
 #   environment.
 #
 # @param default_ssl_vhost
-#   Configures a default [SSL][SSL encryption] virtual host.
+#   Configures a default SSL virtual host.
 #   If `true`, Puppet automatically configures the following virtual host using the 
 #   `apache::vhost` defined type:
 #   ```puppet
@@ -117,7 +117,7 @@
 #
 # @param default_vhost
 #   Configures a default virtual host when the class is declared.<br />
-#   To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's 
+#   To configure customized virtual hosts, set this parameter's 
 #   value to `false`.<br />
 #   > **Note**: Apache will not start without at least one virtual host. If you set this 
 #   to `false` you must configure a virtual host elsewhere.
@@ -179,7 +179,7 @@
 #   > **Note**: If enabled, it impacts performance significantly.
 #
 # @param lib_path
-#   Specifies the location where [Apache module][Apache modules] files are stored.<br />
+#   Specifies the location whereApache module files are stored.<br />
 #   > **Note**: Do not configure this parameter manually without special reason.
 #
 # @param log_level
@@ -187,7 +187,7 @@
 #   'info', 'notice', 'warn'.
 #
 # @param log_formats
-#   Define additional [`LogFormat`][] directives. Values: A [hash][], such as:
+#   Define additional `LogFormat` directives. Values: A hash, such as:
 #   ``` puppet
 #   $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
 #   ```
@@ -227,7 +227,7 @@
 #   user would result in a duplicate resource error.
 #
 # @param mod_dir
-#   Sets where Puppet places configuration files for your Apache modules].
+#   Sets where Puppet places configuration files for your Apache modules.
 #
 # @param mod_libs
 #   Allows the user to override default module library names.
@@ -252,7 +252,7 @@
 #   ```
 #
 # @param mpm_module
-#   Determines which [multi-processing module][] (MPM) is loaded and configured for the 
+#   Determines which multi-processing module (MPM) is loaded and configured for the 
 #   HTTPD process. Values: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.<br />
 #   You must set this to `false` to explicitly declare the following classes with custom parameters:
 #   - `apache::mod::event`
@@ -299,17 +299,17 @@
 #
 # @param sendfile
 #   Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the 
-#   [`EnableSendfile`][] directive. Values: 'On', 'Off'.
+#   `EnableSendfile` directive. Values: 'On', 'Off'.
 #
 # @param serveradmin
 #   Sets the Apache server administrator's contact information via Apache's `ServerAdmin` directive.
 #
 # @param servername
-#   Sets the Apache server name via Apache's [`ServerName`][] directive.
+#   Sets the Apache server name via Apache's `ServerName` directive.
 #   Setting to `false` will not set ServerName at all.
 #
 # @param server_root
-#   Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive.
+#   Sets the Apache server's root directory via Apache's `ServerRoot` directive.
 #
 # @param server_signature
 #   Configures a trailing footer line to display at the bottom of server-generated documents, 
@@ -338,8 +338,7 @@
 #
 # @param service_restart
 #   Determines whether Puppet should use a specific command to restart the HTTPD service.
-#   Values: a command to restart the Apache service. The default setting uses the 
-#   [default Puppet behavior][Service attribute restart].
+#   Values: a command to restart the Apache service.
 #
 # @param timeout
 #   Sets Apache's `TimeOut` directive, which defines the number of seconds Apache waits for 

@@ -178,7 +178,7 @@ The following parameters are available in the `apache` class.
 
 Data type: `Optional[Enum['on', 'off', 'nodecode']]`
 
-Sets the server default for the [`AllowEncodedSlashes`][] declaration, which modifies the
+Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the
 responses to URLs containing '\' and '/' characters. If not specified, this parameter omits
 the declaration from the server's configuration and uses Apache's default setting of 'off'.
 Values: 'on', 'off', 'nodecode'.
@@ -291,7 +291,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Sets the path of the default [certificate revocation list][] (CRL) file to use.<br />
+Sets the path of the default certificate revocation list (CRL) file to use.<br />
 Although this default value results in a functioning Apache server, you **must** update
 this parameter with the CRL file path before deploying this server in a production
 environment. You can use this parameter with or in place of the `default_ssl_crl_path`.
@@ -302,7 +302,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Sets the server's [certificate revocation list path][], which contains your CRLs.<br />
+Sets the server's certificate revocation list path, which contains your CRLs.<br />
 Although this default value results in a functioning Apache server, you **must** update
 this parameter with the CRL file path before deploying this server in a production environment.
 
@@ -323,7 +323,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Sets the [SSL certificate key file][] location.
+Sets the SSL certificate key file location.
 Although the default values result in a functioning Apache server, you **must** update
 this parameter with your SSL key's location before deploying this server in a production
 environment.
@@ -334,7 +334,7 @@ Default value: $::apache::params::default_ssl_key
 
 Data type: `Boolean`
 
-Configures a default [SSL][SSL encryption] virtual host.
+Configures a default SSL virtual host.
 If `true`, Puppet automatically configures the following virtual host using the
 `apache::vhost` defined type:
 ```puppet
@@ -366,7 +366,7 @@ Default value: 'none'
 Data type: `Boolean`
 
 Configures a default virtual host when the class is declared.<br />
-To configure [customized virtual hosts][Configuring virtual hosts], set this parameter's
+To configure customized virtual hosts, set this parameter's
 value to `false`.<br />
 > **Note**: Apache will not start without at least one virtual host. If you set this
 to `false` you must configure a virtual host elsewhere.
@@ -483,7 +483,7 @@ Default value: $::apache::params::hostname_lookups
 
 Data type: `Any`
 
-Specifies the location where [Apache module][Apache modules] files are stored.<br />
+Specifies the location whereApache module files are stored.<br />
 > **Note**: Do not configure this parameter manually without special reason.
 
 Default value: $::apache::params::lib_path
@@ -501,7 +501,7 @@ Default value: $::apache::params::log_level
 
 Data type: `Any`
 
-Define additional [`LogFormat`][] directives. Values: A [hash][], such as:
+Define additional `LogFormat` directives. Values: A hash, such as:
 ``` puppet
 $log_formats = { vhost_common => '%v %h %l %u %t \"%r\" %>s %b' }
 ```
@@ -571,7 +571,7 @@ Default value: `true`
 
 Data type: `Any`
 
-Sets where Puppet places configuration files for your Apache modules].
+Sets where Puppet places configuration files for your Apache modules.
 
 Default value: $::apache::params::mod_dir
 
@@ -611,7 +611,7 @@ Default value: $::apache::params::mod_packages
 
 Data type: `Any`
 
-Determines which [multi-processing module][] (MPM) is loaded and configured for the
+Determines which multi-processing module (MPM) is loaded and configured for the
 HTTPD process. Values: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.<br />
 You must set this to `false` to explicitly declare the following classes with custom parameters:
 - `apache::mod::event`
@@ -703,7 +703,7 @@ Default value: `undef`
 Data type: `Enum['On', 'Off', 'on', 'off']`
 
 Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the
-[`EnableSendfile`][] directive. Values: 'On', 'Off'.
+`EnableSendfile` directive. Values: 'On', 'Off'.
 
 Default value: 'On'
 
@@ -719,7 +719,7 @@ Default value: 'root@localhost'
 
 Data type: `Any`
 
-Sets the Apache server name via Apache's [`ServerName`][] directive.
+Sets the Apache server name via Apache's `ServerName` directive.
 Setting to `false` will not set ServerName at all.
 
 Default value: $::apache::params::servername
@@ -728,7 +728,7 @@ Default value: $::apache::params::servername
 
 Data type: `Any`
 
-Sets the Apache server's root directory via Apache's [`ServerRoot`][] directive.
+Sets the Apache server's root directory via Apache's `ServerRoot` directive.
 
 Default value: $::apache::params::server_root
 
@@ -792,8 +792,7 @@ Default value: `true`
 Data type: `Any`
 
 Determines whether Puppet should use a specific command to restart the HTTPD service.
-Values: a command to restart the Apache service. The default setting uses the
-[default Puppet behavior][Service attribute restart].
+Values: a command to restart the Apache service.
 
 Default value: `undef`
 
