@@ -1,6 +1,6 @@
 # @summary
 #   Defines one or more external FastCGI servers to handle specific file types. Use this 
-#   defined type with [`mod_fastcgi`][FastCGI].
+#   defined type with `mod_fastcgi`.
 #
 # @param host
 #   Determines the FastCGI's hostname or IP address and TCP port number (1-65535).

@@ -1,14 +1,16 @@
-#    Perform simple validation of a string against the list of known log
-#    levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
-#        validate_apache_loglevel('info')
-#
-#    Modules maybe specified with their own levels like these:
-#        validate_apache_loglevel('warn ssl:info')
-#        validate_apache_loglevel('warn mod_ssl.c:info')
-#        validate_apache_loglevel('warn ssl_module:info')
-#
-#    Expected to be used from the main or vhost.
-#    Might be used from directory too later as apache supports that
+# @summary
+#   Perform simple validation of a string against the list of known log levels.
+# 
+# As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+#     * validate_apache_loglevel('info')
+# 
+# Modules maybe specified with their own levels like these:
+#     * validate_apache_loglevel('warn ssl:info')
+#     * validate_apache_loglevel('warn mod_ssl.c:info')
+#     * validate_apache_loglevel('warn ssl_module:info')
+# 
+# Expected to be used from the main or vhost.
+# Might be used from directory too later as apache supports that
 Puppet::Functions.create_function(:'apache::validate_apache_log_level') do
   dispatch :validate_apache_log_level do
     required_param 'String', :log_level

@@ -1,6 +1,5 @@
-# Class: apache::ssl
-#
-# This class installs Apache SSL capabilities
+# @summary
+#   This class installs Apache SSL capabilities
 #
 # Parameters:
 # - The $ssl_package name from the apache::params class

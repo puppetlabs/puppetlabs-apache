@@ -1,4 +1,5 @@
-# Hashes a password in a format suitable for htpasswd files read by apache.
+# @summary
+#   Hashes a password in a format suitable for htpasswd files read by apache.
 #
 # Currently uses SHA-hashes, because although this format is considered insecure, its the
 # most secure format supported by the most platforms.

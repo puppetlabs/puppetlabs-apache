@@ -1,9 +1,11 @@
-# Creates `apache::vhost` defined types.
+# @summary
+#   Creates `apache::vhost` defined types.
 #
-#   > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
+# > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
 #
-#   For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1, 
-#   declare this class with the `vhosts` parameter set to '{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
+# For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1, 
+# declare this class with the `vhosts` parameter set to 
+# '{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
 #
 # ``` puppet
 # class { 'apache::vhosts':
