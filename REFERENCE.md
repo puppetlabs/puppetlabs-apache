@@ -170,19 +170,6 @@ You can simply declare the default `apache` class:
 class { 'apache': }
 ```
 
-Specifies the location where [Apache module][Apache modules] files are stored.<br />
-> **Note**: Do not configure this parameter manually without special reason.
-
-Allows the user to override default module package names.
-  ```puppet
-  include apache::params
-  class { 'apache':
-    mod_packages => merge($::apache::params::mod_packages, {
-      'auth_kerb' => 'httpd24-mod_auth_kerb',
-    })
-  }
-  ```
-
 #### Parameters
 
 The following parameters are available in the `apache` class.
@@ -496,7 +483,8 @@ Default value: $::apache::params::hostname_lookups
 
 Data type: `Any`
 
-
+Specifies the location where [Apache module][Apache modules] files are stored.<br />
+> **Note**: Do not configure this parameter manually without special reason.
 
 Default value: $::apache::params::lib_path
 
@@ -607,7 +595,15 @@ Default value: $::apache::params::mod_libs
 
 Data type: `Any`
 
-
+Allows the user to override default module package names.
+```puppet
+include apache::params
+class { 'apache':
+  mod_packages => merge($::apache::params::mod_packages, {
+    'auth_kerb' => 'httpd24-mod_auth_kerb',
+  })
+}
+```
 
 Default value: $::apache::params::mod_packages
 

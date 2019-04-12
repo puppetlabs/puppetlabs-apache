@@ -179,8 +179,8 @@
 #   > **Note**: If enabled, it impacts performance significantly.
 #
 # @param lib_path
-# Specifies the location where [Apache module][Apache modules] files are stored.<br />
-# > **Note**: Do not configure this parameter manually without special reason.
+#   Specifies the location where [Apache module][Apache modules] files are stored.<br />
+#   > **Note**: Do not configure this parameter manually without special reason.
 #
 # @param log_level
 #   Changes the error log's verbosity. Values: 'alert', 'crit', 'debug', 'emerg', 'error', 
@@ -241,7 +241,7 @@
 #   ```
 #
 # @param mod_packages
-# Allows the user to override default module package names.
+#   Allows the user to override default module package names.
 #   ```puppet
 #   include apache::params
 #   class { 'apache':
