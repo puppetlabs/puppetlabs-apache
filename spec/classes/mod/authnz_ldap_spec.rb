@@ -18,7 +18,6 @@ describe 'apache::mod::authnz_ldap', type: :class do
     end
 
     it { is_expected.to contain_class('apache::params') }
-    it { is_expected.to contain_class('apache::mod::ldap') }
     it { is_expected.to contain_apache__mod('authnz_ldap') }
 
     context 'default verify_server_cert' do
@@ -54,7 +53,6 @@ describe 'apache::mod::authnz_ldap', type: :class do
     end
 
     it { is_expected.to contain_class('apache::params') }
-    it { is_expected.to contain_class('apache::mod::ldap') }
     it { is_expected.to contain_apache__mod('authnz_ldap') }
 
     context 'default verify_server_cert' do
