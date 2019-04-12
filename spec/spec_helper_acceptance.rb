@@ -59,14 +59,9 @@ RSpec.configure do |c|
     hosts.each do |host|
       # Required for mod_passenger tests.
       if host_inventory['facter']['os']['family'] == 'RedHat'
-        on host, puppet('module', 'install', 'stahnma/epel')
-        on host, puppet('module', 'install', 'puppetlabs/inifile')
-        # we need epel installed, so we can get plugins, wsgi, mime ...
-        pp = <<-EOS
-          class { 'epel': }
-        EOS
-
-        apply_manifest_on(host, pp, catch_failures: true)
+        # we need repoforge installed, so we can get plugins, git, wsgi, mime ... using repoforge instead of epel which is causing problems
+        on(host, 'rpm -ivh http://repository.it4i.cz/mirrors/repoforge/redhat/el5/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el5.rf.x86_64.rpm', acceptable_exit_codes: [0])
+        on(host, 'yum install -y git', acceptable_exit_codes: [0])
       end
 
       # Required for manifest to make mod_pagespeed repository available
