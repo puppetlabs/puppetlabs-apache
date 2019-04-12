@@ -1,4 +1,5 @@
-# Installs Apache development libraries.
+# @summary
+#   Installs Apache development libraries.
 #
 # Default: Depends on the operating system:`dev_packages` parameter of the `apache::params` 
 # class, based on your operating system:

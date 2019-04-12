@@ -8,9 +8,9 @@
 _Public Classes_
 
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
-* [`apache::dev`](#apachedev): Installs Apache development libraries.  Default: Depends on the operating system:`dev_packages` parameter of the `apache::params` class, base
-* [`apache::ssl`](#apachessl): Class: apache::ssl  This class installs Apache SSL capabilities  Parameters: - The $ssl_package name from the apache::params class  Actions: 
-* [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.    > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host paramet
+* [`apache::dev`](#apachedev): Installs Apache development libraries.
+* [`apache::ssl`](#apachessl): This class installs Apache SSL capabilities
+* [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
 
@@ -119,7 +119,7 @@ directory.
 * [`apache::balancermember`](#apachebalancermember): Defines members of `mod_proxy_balancer`
 * [`apache::custom_config`](#apachecustom_config): Adds a custom configuration file to the Apache server's `conf.d` directory.
 * [`apache::fastcgi::server`](#apachefastcgiserver): Defines one or more external FastCGI servers to handle specific file types. Use this
-defined type with [`mod_fastcgi`][FastCGI].
+defined type with `mod_fastcgi`.
 * [`apache::listen`](#apachelisten): Adds `Listen` directives to `ports.conf` that define the
 Apache server's or a virtual host's listening address and port.
 * [`apache::mod`](#apachemod): Installs packages for an Apache module that doesn't have a corresponding
@@ -143,12 +143,12 @@ _Private Defined types_
 
 **Functions**
 
-* [`apache::apache_pw_hash`](#apacheapache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.  Currently uses SHA-hashes, because although this format is conside
-* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Pass all other values through. Given a nil value (undef), bool2httpd will return 'Off'  Example:  
-* [`apache::validate_apache_log_level`](#apachevalidate_apache_log_level): Perform simple validation of a string against the list of known log    levels as per http://httpd.apache.org/docs/current/mod/core.html#logle
-* [`apache_pw_hash`](#apache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache. Currently uses SHA-hashes, because although this format is consider
-* [`bool2httpd`](#bool2httpd): Transform a supposed boolean to On or Off. Pass all other values through. Given a nil value (undef), bool2httpd will return 'Off' Example:   
-* [`validate_apache_log_level`](#validate_apache_log_level): Perform simple validation of a string against the list of known log levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+* [`apache::apache_pw_hash`](#apacheapache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
+* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Pass all other values through.
+* [`apache::validate_apache_log_level`](#apachevalidate_apache_log_level): Perform simple validation of a string against the list of known log levels.
+* [`apache_pw_hash`](#apache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
+* [`bool2httpd`](#bool2httpd): Transform a supposed boolean to On or Off. Pass all other values through.
+* [`validate_apache_log_level`](#validate_apache_log_level): Perform simple validation of a string against the list of known log levels.
 
 **Tasks**
 
@@ -1035,8 +1035,6 @@ Default value: $::apache::params::mime_types_additional
 
 ### apache::dev
 
-Installs Apache development libraries.
-
 Default: Depends on the operating system:`dev_packages` parameter of the `apache::params`
 class, based on your operating system:
 
@@ -1046,10 +1044,6 @@ class, based on your operating system:
 - **Red Hat**: 'httpd-devel'.
 
 ### apache::ssl
-
-Class: apache::ssl
-
-This class installs Apache SSL capabilities
 
 Parameters:
 - The $ssl_package name from the apache::params class
@@ -1063,12 +1057,11 @@ Sample Usage:
 
 ### apache::vhosts
 
-Creates `apache::vhost` defined types.
+> **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
 
-  > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
-
-  For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1,
-  declare this class with the `vhosts` parameter set to '{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
+For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1,
+declare this class with the `vhosts` parameter set to
+'{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
 
 ``` puppet
 class { 'apache::vhosts':
@@ -1316,7 +1309,7 @@ Default value: `true`
 ### apache::fastcgi::server
 
 Defines one or more external FastCGI servers to handle specific file types. Use this
-defined type with [`mod_fastcgi`][FastCGI].
+defined type with `mod_fastcgi`.
 
 #### Parameters
 
@@ -4345,14 +4338,10 @@ Module identifier string used by LoadModule. Default: module-name_module
 
 Type: Ruby 4.x API
 
-Hashes a password in a format suitable for htpasswd files read by apache.
-
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
 #### `apache::apache_pw_hash(String[1] $password)`
-
-Hashes a password in a format suitable for htpasswd files read by apache.
 
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
@@ -4369,7 +4358,6 @@ Data type: `String[1]`
 
 Type: Ruby 4.x API
 
-Transform a supposed boolean to On or Off. Pass all other values through.
 Given a nil value (undef), bool2httpd will return 'Off'
 
 Example:
@@ -4386,7 +4374,6 @@ Example:
 
 #### `apache::bool2httpd(Any $arg)`
 
-Transform a supposed boolean to On or Off. Pass all other values through.
 Given a nil value (undef), bool2httpd will return 'Off'
 
 Example:
@@ -4413,31 +4400,29 @@ Data type: `Any`
 
 Type: Ruby 4.x API
 
-Perform simple validation of a string against the list of known log
-   levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
-       validate_apache_loglevel('info')
+As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+    * validate_apache_loglevel('info')
 
-   Modules maybe specified with their own levels like these:
-       validate_apache_loglevel('warn ssl:info')
-       validate_apache_loglevel('warn mod_ssl.c:info')
-       validate_apache_loglevel('warn ssl_module:info')
+Modules maybe specified with their own levels like these:
+    * validate_apache_loglevel('warn ssl:info')
+    * validate_apache_loglevel('warn mod_ssl.c:info')
+    * validate_apache_loglevel('warn ssl_module:info')
 
-   Expected to be used from the main or vhost.
-   Might be used from directory too later as apache supports that
+Expected to be used from the main or vhost.
+Might be used from directory too later as apache supports that
 
 #### `apache::validate_apache_log_level(String $log_level)`
 
-Perform simple validation of a string against the list of known log
-   levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
-       validate_apache_loglevel('info')
+As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+    * validate_apache_loglevel('info')
 
-   Modules maybe specified with their own levels like these:
-       validate_apache_loglevel('warn ssl:info')
-       validate_apache_loglevel('warn mod_ssl.c:info')
-       validate_apache_loglevel('warn ssl_module:info')
+Modules maybe specified with their own levels like these:
+    * validate_apache_loglevel('warn ssl:info')
+    * validate_apache_loglevel('warn mod_ssl.c:info')
+    * validate_apache_loglevel('warn ssl_module:info')
 
-   Expected to be used from the main or vhost.
-   Might be used from directory too later as apache supports that
+Expected to be used from the main or vhost.
+Might be used from directory too later as apache supports that
 
 Returns: `Any`
 
@@ -4451,13 +4436,11 @@ Data type: `String`
 
 Type: Ruby 3.x API
 
-Hashes a password in a format suitable for htpasswd files read by apache.
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
 #### `apache_pw_hash()`
 
-Hashes a password in a format suitable for htpasswd files read by apache.
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
@@ -4467,7 +4450,6 @@ Returns: `Any`
 
 Type: Ruby 3.x API
 
-Transform a supposed boolean to On or Off. Pass all other values through.
 Given a nil value (undef), bool2httpd will return 'Off'
 Example:
     $trace_enable     = false
@@ -4481,7 +4463,6 @@ Example:
 
 #### `bool2httpd()`
 
-Transform a supposed boolean to On or Off. Pass all other values through.
 Given a nil value (undef), bool2httpd will return 'Off'
 Example:
     $trace_enable     = false
@@ -4499,25 +4480,23 @@ Returns: `Any`
 
 Type: Ruby 3.x API
 
-Perform simple validation of a string against the list of known log
-levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
-    validate_apache_loglevel('info')
+As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+    * validate_apache_loglevel('info')
 Modules maybe specified with their own levels like these:
-    validate_apache_loglevel('warn ssl:info')
-    validate_apache_loglevel('warn mod_ssl.c:info')
-    validate_apache_loglevel('warn ssl_module:info')
+    * validate_apache_loglevel('warn ssl:info')
+    * validate_apache_loglevel('warn mod_ssl.c:info')
+    * validate_apache_loglevel('warn ssl_module:info')
 Expected to be used from the main or vhost.
 Might be used from directory too later as apaceh supports that
 
 #### `validate_apache_log_level()`
 
-Perform simple validation of a string against the list of known log
-levels as per http://httpd.apache.org/docs/current/mod/core.html#loglevel
-    validate_apache_loglevel('info')
+As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
+    * validate_apache_loglevel('info')
 Modules maybe specified with their own levels like these:
-    validate_apache_loglevel('warn ssl:info')
-    validate_apache_loglevel('warn mod_ssl.c:info')
-    validate_apache_loglevel('warn ssl_module:info')
+    * validate_apache_loglevel('warn ssl:info')
+    * validate_apache_loglevel('warn mod_ssl.c:info')
+    * validate_apache_loglevel('warn ssl_module:info')
 Expected to be used from the main or vhost.
 Might be used from directory too later as apaceh supports that
 
