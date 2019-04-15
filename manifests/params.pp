@@ -229,7 +229,7 @@ class apache::params inherits ::apache::version {
       'intercept_form_submit' => 'mod_intercept_form_submit',
       'ldap'                  => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
-        default => undef,
+        default => 'mod_ldap',
       },
       'lookup_identity'       => 'mod_lookup_identity',
       'pagespeed'             => 'mod-pagespeed-stable',
