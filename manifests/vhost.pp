@@ -37,10 +37,10 @@
 #   Specifies that only requests with particular environment variables be logged.
 # 
 # @param access_log_file
-#   Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host---for 
-#   instance, example.com---it defaults to 'example.com_ssl.log' for 
-#   [SSL-encrypted][SSL encryption] virtual hosts and 'example.com_access.log' for 
-#   unencrypted virtual hosts.
+#   Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host ---for 
+#   instance, example.com--- it defaults to 'example.com_ssl.log' for 
+#   [SSL-encrypted](https://httpd.apache.org/docs/current/ssl/index.html) virtual hosts and 
+#   `example.com_access.log` for unencrypted virtual hosts.
 # 
 # @param access_log_format
 #   Specifies the use of either a `LogFormat` nickname or a custom-formatted string for the 
@@ -53,8 +53,8 @@
 #   Sends all access log messages to syslog.
 #
 # @param access_logs
-#   Allows you to give a hash that specifies the state of each of the access_log_* 
-#   directives shown above, i.e. access_log_pipe and access_log_syslog.
+#   Allows you to give a hash that specifies the state of each of the `access_log_*` 
+#   directives shown above, i.e. `access_log_pipe` and `access_log_syslog`.
 # 
 # @param add_default_charset
 #   Sets a default media charset value for the `AddDefaultCharset` directive, which is 
@@ -115,13 +115,13 @@
 # 
 # @param allow_encoded_slashes
 #   Sets the `AllowEncodedSlashes` declaration for the virtual host, overriding the server 
-#   default. This modifies the virtual host responses to URLs with `\` and `/` characters. 
-#   Values: 'nodecode', 'off', 'on'. The default setting omits the declaration from the server 
-#   configuration and selects the Apache default setting of 'Off'.
+#   default. This modifies the virtual host responses to URLs with `\` and `/` characters. The 
+#   default setting omits the declaration from the server configuration and selects the 
+#   Apache default setting of `Off`.
 # 
 # @param block
-#   Specifies the list of things to which Apache blocks access. Valid option: 'scm', which 
-#   blocks web access to `.svn`, `.git`, and `.bzr` directories.
+#   Specifies the list of things to which Apache blocks access. Valid options are: `scm` (which 
+#   blocks web access to `.svn`), `.git`, and `.bzr` directories.
 # 
 # @param cas_attribute_prefix
 #   Adds a header with the value of this header being the attribute values when SAML 
@@ -172,9 +172,6 @@
 #   Sets a given `apache::vhost` defined type as the default to serve requests that do not 
 #   match any other `apache::vhost` defined types.
 # 
-# @param directories
-#   See the [`directories`](#parameter-directories-for-apachevhost) section.
-# 
 # @param directoryindex
 #   Sets the list of resources to look for when a client requests an index of the directory 
 #   by specifying a '/' at the end of the directory name. See the `DirectoryIndex` directive 
@@ -205,8 +202,8 @@
 #   Points the virtual host's error logs to a `*_error.log` file. If this parameter is 
 #   undefined, Puppet checks for values in `error_log_pipe`, then `error_log_syslog`.<br />
 #   If none of these parameters is set, given a virtual host `example.com`, Puppet defaults 
-#   to '$logroot/example.com_error_ssl.log' for SSL virtual hosts and 
-#   '$logroot/example.com_error.log' for non-SSL virtual hosts.
+#   to `$logroot/example.com_error_ssl.log` for SSL virtual hosts and 
+#   `$logroot/example.com_error.log` for non-SSL virtual hosts.
 # 
 # @param error_log_pipe
 #   Specifies a pipe to send error log messages to.<br />
@@ -217,8 +214,8 @@
 #   Determines whether to send all error log messages to syslog.
 #   This parameter has no effect if either of the `error_log_file` or `error_log_pipe` 
 #   parameters has a value. If none of these parameters has a value, given a virtual host 
-#   `example.com`, Puppet defaults to '$logroot/example.com_error_ssl.log' for SSL virtual 
-#   hosts and '$logroot/example.com_error.log' for non-SSL virtual hosts.
+#   `example.com`, Puppet defaults to `$logroot/example.com_error_ssl.log` for SSL virtual 
+#   hosts and `$logroot/example.com_error.log` for non-SSL virtual hosts.
 # 
 # @param error_documents
 #   A list of hashes which can be used to override the 
@@ -241,7 +238,7 @@
 #   Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) 
 #   directive, which specifies an action to take for any URL that doesn't map to anything in 
 #   your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin 
-#   with a '/' or be 'disabled'.
+#   with a `/` or be `disabled`.
 # 
 # @param fastcgi_server
 #   Specify an external FastCGI server to manage a connection to.
@@ -364,34 +361,24 @@
 #     },
 #   }
 #   ```
-#   Values: a hash, which can include the keys:
-#   * user + group
+#   Valid values are: a hash, which can include the keys:
+#   * `user` + `group`
 #   * `assignuseridexpr`
 #   * `assigngroupidexpr`
 #   * `maxclientvhost`
 #   * `nice`
 #   * `limituidrange` (Linux 3.5.0 or newer)
 #   * `limitgidrange` (Linux 3.5.0 or newer)
-#   Usage typically looks like:
-#   ``` puppet
-#   apache::vhost { 'sample.example.net':
-#     docroot => '/path/to/directory',
-#     itk     => {
-#       user  => 'someuser',
-#       group => 'somegroup',
-#     },
-#   }
-#   ```
 # 
 # @param action
 #   Specifies whether you wish to configure mod_actions action directive which will
 #   activate cgi-script when triggered by a request.
 # 
 # @param jk_mounts
-#   Sets up a virtual host with 'JkMount' and 'JkUnMount' directives to handle the paths 
+#   Sets up a virtual host with `JkMount` and `JkUnMount` directives to handle the paths 
 #   for URL mapping between Tomcat and Apache.<br />
-#   The parameter must be an array of hashes where each hash must contain the 'worker' 
-#   and either the 'mount' or 'unmount' keys.<br />
+#   The parameter must be an array of hashes where each hash must contain the `worker` 
+#   and either the `mount` or `unmount` keys.<br />
 #   Usage typically looks like:
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
@@ -403,9 +390,7 @@
 #   ```
 # 
 # @param http_protocol_options
-#   Specifies the strictness of HTTP protocol checks. Valid options: any sequence of the 
-#   following alternative values: `Strict` or `Unsafe`, `RegisteredMethods` or 
-#   `LenientMethods`, and `Allow0.9` or `Require1.0`.
+#   Specifies the strictness of HTTP protocol checks.
 # 
 # @param keepalive
 #   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive 
@@ -414,7 +399,7 @@
 #   for the virtual host.
 # 
 # @param keepalive_timeout
-#   Sets the [`KeepAliveTimeout`] directive for the virtual host, which determines the amount 
+#   Sets the `KeepAliveTimeout` directive for the virtual host, which determines the amount 
 #   of time to wait for subsequent requests on a persistent HTTP connection. By default, the 
 #   global, server-wide `KeepAlive` setting is in effect.<br />
 #   This parameter is only relevant if either the global, server-wide `keepalive` parameter or 
@@ -451,7 +436,7 @@
 #   Determines whether to use password-based authentication for Kerberos v5.
 # 
 # @param krb_authoritative
-#   If set to 'off', authentication controls can be passed on to another module.
+#   If set to `off`, authentication controls can be passed on to another module.
 # 
 # @param krb_auth_realms
 #   Specifies an array of Kerberos realms to use for authentication.
@@ -501,8 +486,7 @@
 # 
 # @param modsec_disable_ids
 #   Removes `mod_security` IDs from the virtual host.<br />
-#   Values: An array of `mod_security` IDs to remove from the virtual host. Also takes a 
-#   hash allowing removal of an ID from a specific location.
+#   Also takes a hash allowing removal of an ID from a specific location.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
 #     modsec_disable_ids => [ 90015, 90016 ],
@@ -551,24 +535,24 @@
 #   One of the parameters that determines how to send `mod_security` audit 
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 #   If none of those parameters are set, the global audit log is used 
-#   (''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+#   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 # 
 # @param modsec_audit_log_pipe
 #   If `modsec_audit_log_pipe` is set, it should start with a pipe. Example 
-#   '|/path/to/mlogc /path/to/mlogc.conf'.<br />
+#   `|/path/to/mlogc /path/to/mlogc.conf`.<br />
 #   One of the parameters that determines how to send `mod_security` audit 
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 #   If none of those parameters are set, the global audit log is used 
-#   (''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+#   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 # 
 # @param modsec_audit_log
-#   If `modsec_audit_log` is `true`, given a virtual host---for instance, example.com---it 
-#   defaults to 'example.com\_security\_ssl.log' for [SSL-encrypted][SSL encryption] virtual hosts 
-#   and 'example.com\_security.log' for unencrypted virtual hosts.<br />
+#   If `modsec_audit_log` is `true`, given a virtual host ---for instance, example.com--- it 
+#   defaults to `example.com\_security\_ssl.log` for SSL-encrypted virtual hosts 
+#   and `example.com\_security.log` for unencrypted virtual hosts.<br />
 #   One of the parameters that determines how to send `mod_security` audit 
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).<br />
 #   If none of those parameters are set, the global audit log is used 
-#   (''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+#   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 # 
 # @param no_proxy_uris
 #   Specifies URLs you do not want to proxy. This parameter is meant to be used in combination 
@@ -608,7 +592,7 @@
 #
 # @param passenger_enabled
 #   Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled) 
-#   directive to 'on' or 'off'. Requires `apache::mod::passenger` to be included.
+#   directive to `on` or `off`. Requires `apache::mod::passenger` to be included.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
 #     docroot     => '/path/to/directory',
@@ -814,7 +798,7 @@
 #   ```
 #
 # @param php_flags
-#   Allows per-virtual host setting [`php_flag`s](http://php.net/manual/en/configuration.changes.php). 
+#   Allows per-virtual host setting [`php_flags\``](http://php.net/manual/en/configuration.changes.php). 
 #   These flags or values can be overwritten by a user or an application.
 #
 # @param php_admin_values
@@ -881,17 +865,17 @@
 #   * `setenv`. *Optional.* Sets [environment variables](https://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings) for the proxy directive. Values: array.
 #
 # @param proxy_dest_match
-#   This directive is equivalent to [`proxy_dest`][], but takes regular expressions, see 
+#   This directive is equivalent to `proxy_dest`, but takes regular expressions, see 
 #   [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch) 
 #   for details.
 #
 # @param proxy_dest_reverse_match
-#   Allows you to pass a ProxyPassReverse if [`proxy_dest_match`][] is specified. See 
+#   Allows you to pass a ProxyPassReverse if `proxy_dest_match` is specified. See 
 #   [ProxyPassReverse](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse) 
 #   for details.
 #
 # @param proxy_pass_match
-#   This directive is equivalent to [`proxy_pass`][], but takes regular expressions, see 
+#   This directive is equivalent to `proxy_pass`, but takes regular expressions, see 
 #   [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch) 
 #   for details.
 #
@@ -974,8 +958,8 @@
 #
 # @param rewrites
 #   Creates URL rewrite rules. Expects an array of hashes.<br />
-#   Values: Hash keys that are any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule' 
-#   or 'rewrite_map'.<br />
+#   Valid Hash keys include `comment`, `rewrite_base`, `rewrite_cond`, `rewrite_rule`
+#   or `rewrite_map`.<br />
 #   For example, you can specify that anyone trying to access index.html is served welcome.html
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
@@ -1038,9 +1022,9 @@
 #     ],
 #   }
 #   ```
-#   Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on what is 
-#   possible with rewrite rules and conditions.<br />
-#   #   > **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite` 
+#   Refer to the [`mod_rewrite` documentation](https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html)
+#   for more details on what is possible with rewrite rules and conditions.<br />
+#   > **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite` 
 #   and consider setting the rewrites using the `rewrites` parameter in `apache::vhost` rather 
 #   than setting the rewrites in the virtual host's directories.
 #
@@ -1080,8 +1064,8 @@
 #   RewriteEngine On
 #   RewriteOptions Inherit
 #   ```
-#   Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html), 
-#   section "Rewriting in Virtual Hosts".
+#   Refer to the official [`mod_rewrite`](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html)
+#   documentation, section "Rewriting in Virtual Hosts".
 #
 # @param scriptalias
 #   Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as 
@@ -1090,7 +1074,7 @@
 # @param scriptaliases
 #   > **Note**: This parameter is deprecated in favor of the `aliases` parameter.<br />
 #   Passes an array of hashes to the virtual host to create either ScriptAlias or 
-#   ScriptAliasMatch statements per the [`mod_alias` documentation][`mod_alias`].
+#   ScriptAliasMatch statements per the `mod_alias` documentation.
 #   ``` puppet
 #   scriptaliases => [
 #     {
@@ -1197,13 +1181,13 @@
 #
 # @param vhost_name
 #   Enables name-based virtual hosting. If no IP is passed to the virtual host, but the 
-#   virtual host is assigned a port, then the virtual host name is 'vhost_name:port'. 
+#   virtual host is assigned a port, then the virtual host name is `vhost_name:port`. 
 #   If the virtual host has no assigned IP or port, the virtual host name is set to the 
 #   title of the resource.
 #
 # @param virtual_docroot
 #   Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the 
-#   same name. For example, 'http://example.com' would map to '/var/www/example.com'.
+#   same name. For example, `http://example.com` would map to `/var/www/example.com`.
 #   ``` puppet
 #   apache::vhost { 'subdomain.loc':
 #     vhost_name      => '*',
@@ -1280,23 +1264,23 @@
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process, wsgi_daemon_process_options,  
 #   wsgi_script_aliases and wsgi_pass_authorization.<br />
-#   Requires a hash of web paths to filesystem .wsgi paths/
+#   Requires a hash of web paths to filesystem `.wsgi paths/`.
 #
 # @param wsgi_script_aliases
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group, 
 #   and wsgi_pass_authorization.<br />
-#   Uses the WSGI application to handle authorization instead of Apache when set to 'On'.<br />
-#   For more information, see [mod_wsgi's WSGIPassAuthorization documentation] (https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
+#   Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
+#   For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 #
 # @param wsgi_script_aliases_match
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group, 
 #   and wsgi_pass_authorization.<br />
-#   Uses the WSGI application to handle authorization instead of Apache when set to 'On'.<br />
+#   Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
 #   This directive is similar to `wsgi_script_aliases`, but makes use of regular expressions
 #   in place of simple prefix matching.<br />
-#   For more information, see [mod_wsgi's WSGIPassAuthorization documentation] (https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
+#   For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 # 
 # @param wsgi_pass_authorization
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
@@ -1309,15 +1293,15 @@
 #   to the virtual host to create [Directory](https://httpd.apache.org/docs/current/mod/core.html#directory), 
 #   [File](https://httpd.apache.org/docs/current/mod/core.html#files), and 
 #   [Location](https://httpd.apache.org/docs/current/mod/core.html#location) directive blocks. 
-#   These blocks take the form, '< Directory /path/to/directory>...< /Directory>'.<br />
+#   These blocks take the form, `< Directory /path/to/directory>...< /Directory>`.<br />
 #   The `path` key sets the path for the directory, files, and location blocks. Its value 
-#   must be a path for the 'directory', 'files', and 'location' providers, or a regex for 
-#   the 'directorymatch', 'filesmatch', or 'locationmatch' providers. Each hash passed to 
+#   must be a path for the `directory`, `files`, and `location` providers, or a regex for 
+#   the `directorymatch`, `filesmatch`, or `locationmatch` providers. Each hash passed to 
 #   `directories` **must** contain `path` as one of the keys.<br />
-#   The `provider` key is optional. If missing, this key defaults to 'directory'.
-#    Values: 'directory', 'files', 'proxy', 'location', 'directorymatch', 'filesmatch', 
-#   'proxymatch' or 'locationmatch'. If you set `provider` to 'directorymatch', it 
-#   uses the keyword 'DirectoryMatch' in the Apache config file.<br />
+#   The `provider` key is optional. If missing, this key defaults to `directory`.
+#    Values: `directory`, `files`, `proxy`, `location`, `directorymatch`, `filesmatch`, 
+#   `proxymatch` or `locationmatch`. If you set `provider` to `directorymatch`, it 
+#   uses the keyword `DirectoryMatch` in the Apache config file.<br />
 #   An example use of `directories`:
 #   ``` puppet
 #   apache::vhost { 'files.example.net':
@@ -1342,7 +1326,7 @@
 #     directories => [ { path => '/path/to/directory', handler => value } ],
 #   }
 #   ```
-#   Any handlers you do not set in these hashes are considered 'undefined' within Puppet and 
+#   Any handlers you do not set in these hashes are considered `undefined` within Puppet and 
 #   are not added to the virtual host, resulting in the module using their default values.
 #
 # @param custom_fragment
@@ -1424,8 +1408,8 @@
 # 
 # @param shib_compat_valid_user
 #   Default is Off, matching the behavior prior to this command's existence. Addresses a conflict 
-#   when using Shibboleth in conjunction with other auth/auth modules by restoring "standard" 
-#   Apache behavior when processing the "valid-user" and "user" Require rules. See the 
+#   when using Shibboleth in conjunction with other auth/auth modules by restoring `standard` 
+#   Apache behavior when processing the `valid-user` and `user` Require rules. See the 
 #   [`mod_shib`documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions), 
 #   and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess) 
 #   topic for more details. This key is disabled if `apache::mod::shib` is not defined.
@@ -1450,7 +1434,7 @@
 #
 # @param additional_includes
 #   Specifies paths to additional static, specific Apache configuration files in virtual 
-#   host directories. Values: a array of string path.
+#   host directories.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
 #     docroot     => '/path/to/directory',

@@ -6,7 +6,7 @@
 #   Determines the FastCGI's hostname or IP address and TCP port number (1-65535).
 #
 # @param timeout
-#   Sets the number of seconds a [FastCGI][] application can be inactive before aborting the 
+#   Sets the number of seconds a [FastCGI](http://www.fastcgi.com/) application can be inactive before aborting the 
 #   request and logging the event at the error LogLevel. The inactivity timer applies only as 
 #   long as a connection is pending with the FastCGI application. If a request is queued to an 
 #   application, but the application doesn't respond by writing and flushing within this period, 
@@ -14,7 +14,7 @@
 #   the client (the response is buffered), the timeout does not apply.
 #
 # @param flush
-#   Forces [`mod_fastcgi`][FastCGI] to write to the client as data is received from the 
+#   Forces `mod_fastcgi` to write to the client as data is received from the 
 #   application. By default, `mod_fastcgi` buffers data in order to free the application 
 #   as quickly as possible.
 #

@@ -2,8 +2,8 @@
 #   Enables name-based virtual hosts 
 #
 # Adds all related directives to the `ports.conf` file in the Apache HTTPD configuration 
-# directory. Titles can take the forms '\*', '\*:\<PORT\>', '\_default\_:\<PORT\>, 
-# '\<IP\>', or '\<IP\>:\<PORT\>'.
+# directory. Titles can take the forms `\*`, `\*:\<PORT\>`, `\_default\_:\<PORT\>`, 
+# `\<IP\>`, or `\<IP\>:\<PORT\>`.
 define apache::namevirtualhost {
   $addr_port = $name
 
