@@ -22,7 +22,7 @@
 #   Configures key-value pairs to be used as a ProxySet lines in the configuration.
 #
 # @param target
-#   If given, path to the file the balancer definition will be written.
+#   The path to the file the balancer definition will be written in.
 #
 # @param collect_exported
 #   Determines whether to use exported resources.<br />

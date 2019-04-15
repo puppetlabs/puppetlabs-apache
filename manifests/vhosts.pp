@@ -3,8 +3,8 @@
 #
 # Creates `apache::vhost` defined types.
 # 
-# > **Note**: See the [`apache::vhost`](#defined-type-apachevhost) defined type's reference for 
-# a list of all virtual host parameters or [Configuring virtual hosts](#configuring-virtual-hosts).
+# > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual 
+# host parameters or Configuring virtual hosts in the README section.
 #
 # For example, to create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html) 
 # `custom_vhost_1`, declare the following manifest:

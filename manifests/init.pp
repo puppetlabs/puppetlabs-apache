@@ -4,7 +4,7 @@
 # When this class is declared with the default options, Puppet:
 # - Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
 # - Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
-# - Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
+# - Configures the server with a default virtual host and standard port (`80`) and address (`\*`) bindings.
 # - Creates a document root directory determined by your operating system, typically `/var/www`.
 # - Starts the Apache service.
 #
@@ -17,7 +17,6 @@
 #   Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the 
 #   responses to URLs containing '\' and '/' characters. If not specified, this parameter omits 
 #   the declaration from the server's configuration and uses Apache's default setting of 'off'.
-#   Values: 'on', 'off', 'nodecode'.
 #
 # @param apache_version
 #   Configures module template behavior, package names, and default Apache modules by defining 
@@ -161,7 +160,7 @@
 #
 # @param keepalive
 #   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive. 
-#   If you set this to 'On', use the `keepalive_timeout` and `max_keepalive_requests` parameters 
+#   If you set this to `On`, use the `keepalive_timeout` and `max_keepalive_requests` parameters 
 #   to set relevant options.<br />
 #
 # @param keepalive_timeout
@@ -182,8 +181,8 @@
 #   > **Note**: Do not configure this parameter manually without special reason.
 #
 # @param log_level
-#   Changes the error log's verbosity. Valid options are: 'alert', 'crit', 'debug', 'emerg', 'error', 
-#   'info', 'notice' and 'warn'.
+#   Changes the error log's verbosity. Valid options are: `alert`, `crit`, `debug`, `emerg`, `error`, 
+#   `info`, `notice` and `warn`.
 #
 # @param log_formats
 #   Define additional `LogFormat` directives. Values: A hash, such as:
@@ -367,7 +366,7 @@
 #   allows access to all resources that are missing a more specific access policy. A value of 
 #   `true` denies access to all resources by default. If `true`, more specific rules must be 
 #   used to allow access to these resources (for example, in a directory block using the 
-#   [`directories`](#parameter-directories-for-apachevhost) parameter).
+#   `directories` parameter).
 #
 # @param vhost_dir
 #   Changes your virtual host configuration files' location.
