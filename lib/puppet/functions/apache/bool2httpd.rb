@@ -1,6 +1,6 @@
 # @summary
 #   Transform a supposed boolean to On or Off. Pass all other values through.
-# 
+#
 # Given a nil value (undef), bool2httpd will return 'Off'
 #
 # Example:

@@ -3,7 +3,7 @@ require 'base64'
 Puppet::Parser::Functions.newfunction(:apache_pw_hash, type: :rvalue, doc: <<-DOC
   @summary
     Hashes a password in a format suitable for htpasswd files read by apache.
-  
+
   Currently uses SHA-hashes, because although this format is considered insecure, its the
   most secure format supported by the most platforms.
 DOC
