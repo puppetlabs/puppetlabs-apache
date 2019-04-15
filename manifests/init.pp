@@ -124,7 +124,7 @@
 #
 # @param dev_packages
 #   Configures a specific dev package to use.<br />
-#   Example for using httpd 2.4 from the IUS yum repo:<br />
+#   For example, using httpd 2.4 from the IUS yum repo:<br />
 #   ``` puppet
 #   include ::apache::dev
 #   class { 'apache':
@@ -163,7 +163,6 @@
 #   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive. 
 #   If you set this to 'On', use the `keepalive_timeout` and `max_keepalive_requests` parameters 
 #   to set relevant options.<br />
-#   Values: 'Off', 'On'.
 #
 # @param keepalive_timeout
 #   Sets the `KeepAliveTimeout` directive, which determines the amount of time the Apache 
@@ -175,7 +174,7 @@
 #
 # @param hostname_lookups
 #   This directive enables DNS lookups so that host names can be logged and passed to 
-#   CGIs/SSIs in REMOTE_HOST. Values:'On','Off','Double'.<br />
+#   CGIs/SSIs in REMOTE_HOST.<br />
 #   > **Note**: If enabled, it impacts performance significantly.
 #
 # @param lib_path
@@ -183,8 +182,8 @@
 #   > **Note**: Do not configure this parameter manually without special reason.
 #
 # @param log_level
-#   Changes the error log's verbosity. Values: 'alert', 'crit', 'debug', 'emerg', 'error', 
-#   'info', 'notice', 'warn'.
+#   Changes the error log's verbosity. Valid options are: 'alert', 'crit', 'debug', 'emerg', 'error', 
+#   'info', 'notice' and 'warn'.
 #
 # @param log_formats
 #   Define additional `LogFormat` directives. Values: A hash, such as:
@@ -207,7 +206,7 @@
 # @param logroot_mode
 #   Overrides the default `logroot` directory's mode.<br />
 #   > **Note**: Do _not_ grant write access to the directory where the logs are stored 
-#   without being aware of the consequences. See the [Apache documentation][Log security] 
+#   without being aware of the consequences. See the [Apache documentation](https://httpd.apache.org/docs/current/logs.html#security)
 #   for details.
 #
 # @param manage_group
@@ -253,7 +252,7 @@
 #
 # @param mpm_module
 #   Determines which multi-processing module (MPM) is loaded and configured for the 
-#   HTTPD process. Values: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.<br />
+#   HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
 #   You must set this to `false` to explicitly declare the following classes with custom parameters:
 #   - `apache::mod::event`
 #   - `apache::mod::itk`
@@ -262,8 +261,8 @@
 #   - `apache::mod::worker`
 #
 # @param package_ensure
-#   Controls the `package` resource's `ensure` attribute. Values: 'absent', 'installed' 
-#   (or equivalent 'present'), or a version string.
+#   Controls the `package` resource's `ensure` attribute. Valid values are: `absent`, `installed`
+#   (or equivalent `present`), or a version string.
 #
 # @param pidfile
 #   Allows settting a custom location for the pid file. Useful if using a custom-built Apache rpm.
@@ -299,7 +298,7 @@
 #
 # @param sendfile
 #   Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the 
-#   `EnableSendfile` directive. Values: 'On', 'Off'.
+#   `EnableSendfile` directive.
 #
 # @param serveradmin
 #   Sets the Apache server administrator's contact information via Apache's `ServerAdmin` directive.
@@ -314,7 +313,7 @@
 # @param server_signature
 #   Configures a trailing footer line to display at the bottom of server-generated documents, 
 #   such as error documents and output of certain Apache modules, via Apache's `ServerSignature`
-#   directive. Values: 'Off', 'On'.
+#   directive. Valid values are: `On` or `Off`.
 # 
 # @param server_tokens
 #   Controls how much information Apache sends to the browser about itself and the operating 
@@ -325,8 +324,8 @@
 # 
 # @param service_ensure
 #   Determines whether Puppet should make sure the service is running. 
-#   Values: `true` (or 'running'), `false` (or 'stopped').<br />
-#   The `false` or 'stopped' values set the 'httpd' service resource's `ensure` parameter 
+#   Valid values are: `true` (or `running`) or `false` (or `stopped`).<br />
+#   The `false` or `stopped` values set the 'httpd' service resource's `ensure` parameter 
 #   to `false`, which is useful when you want to let the service be managed by another 
 #   application, such as Pacemaker.<br />
 # 
@@ -345,14 +344,12 @@
 #   certain events before failing a request.
 #
 # @param trace_enable
-#   Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable` directive.<br />
-#   Values: 'Off', 'On'.
+#   Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable` directive.
 #
 # @param use_canonical_name
 #   Controls Apache's `UseCanonicalName` directive which controls how Apache handles 
 #   self-referential URLs. If not specified, this parameter omits the declaration from the 
-#   server's configuration and uses Apache's default setting of 'off'.<br />
-#   Values: 'On', 'on', 'Off', 'off', 'DNS', 'dns'.
+#   server's configuration and uses Apache's default setting of 'off'.
 #
 # @param use_systemd
 #   Controls whether the systemd module should be installed on Centos 7 servers, this is 
@@ -360,13 +357,13 @@
 #
 # @param file_mode
 #   Sets the desired permissions mode for config files.
-#   Values: A string, with permissions mode in symbolic or numeric notation.
+#   Valid values are: a string, with permissions mode in symbolic or numeric notation.
 #
 # @param root_directory_options
-#   Array of the desired options for the / directory in httpd.conf.
+#   Array of the desired options for the `/` directory in httpd.conf.
 #
 # @param root_directory_secured
-#   Sets the default access policy for the / directory in httpd.conf. A value of `false` 
+#   Sets the default access policy for the `/` directory in httpd.conf. A value of `false` 
 #   allows access to all resources that are missing a more specific access policy. A value of 
 #   `true` denies access to all resources by default. If `true`, more specific rules must be 
 #   used to allow access to these resources (for example, in a directory block using the 
@@ -409,7 +406,7 @@
 #   an HTTP request. This directive gives the server administrator greater control over 
 #   abnormal client request behavior, which may be useful for avoiding some forms of 
 #   denial-of-service attacks. The value should be increased if normal clients see an error 
-#   response from the server that indicates too many fields were sent in the request.#
+#   response from the server that indicates too many fields were sent in the request.
 #
 # @param limitreqfieldsize
 #   The `limitreqfieldsize` parameter sets the maximum ammount of _bytes_ that will

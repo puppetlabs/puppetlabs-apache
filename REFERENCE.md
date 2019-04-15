@@ -378,7 +378,7 @@ Default value: `true`
 Data type: `Any`
 
 Configures a specific dev package to use.<br />
-Example for using httpd 2.4 from the IUS yum repo:<br />
+For example, using httpd 2.4 from the IUS yum repo:<br />
 ``` puppet
 include ::apache::dev
 class { 'apache':
@@ -447,7 +447,6 @@ Data type: `Any`
 Determines whether to enable persistent HTTP connections with the `KeepAlive` directive.
 If you set this to 'On', use the `keepalive_timeout` and `max_keepalive_requests` parameters
 to set relevant options.<br />
-Values: 'Off', 'On'.
 
 Default value: $::apache::params::keepalive
 
@@ -474,7 +473,7 @@ Default value: $::apache::params::max_keepalive_requests
 Data type: `Enum['Off', 'On', 'Double', 'off', 'on', 'double']`
 
 This directive enables DNS lookups so that host names can be logged and passed to
-CGIs/SSIs in REMOTE_HOST. Values:'On','Off','Double'.<br />
+CGIs/SSIs in REMOTE_HOST.<br />
 > **Note**: If enabled, it impacts performance significantly.
 
 Default value: $::apache::params::hostname_lookups
@@ -492,8 +491,8 @@ Default value: $::apache::params::lib_path
 
 Data type: `Any`
 
-Changes the error log's verbosity. Values: 'alert', 'crit', 'debug', 'emerg', 'error',
-'info', 'notice', 'warn'.
+Changes the error log's verbosity. Valid options are: 'alert', 'crit', 'debug', 'emerg', 'error',
+'info', 'notice' and 'warn'.
 
 Default value: $::apache::params::log_level
 
@@ -531,7 +530,7 @@ Data type: `Any`
 
 Overrides the default `logroot` directory's mode.<br />
 > **Note**: Do _not_ grant write access to the directory where the logs are stored
-without being aware of the consequences. See the [Apache documentation][Log security]
+without being aware of the consequences. See the [Apache documentation](https://httpd.apache.org/docs/current/logs.html#security)
 for details.
 
 Default value: $::apache::params::logroot_mode
@@ -612,7 +611,7 @@ Default value: $::apache::params::mod_packages
 Data type: `Any`
 
 Determines which multi-processing module (MPM) is loaded and configured for the
-HTTPD process. Values: 'event', 'itk', 'peruser', 'prefork', 'worker', or `false`.<br />
+HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
 You must set this to `false` to explicitly declare the following classes with custom parameters:
 - `apache::mod::event`
 - `apache::mod::itk`
@@ -626,8 +625,8 @@ Default value: $::apache::params::mpm_module
 
 Data type: `Any`
 
-Controls the `package` resource's `ensure` attribute. Values: 'absent', 'installed'
-(or equivalent 'present'), or a version string.
+Controls the `package` resource's `ensure` attribute. Valid values are: `absent`, `installed`
+(or equivalent `present`), or a version string.
 
 Default value: 'installed'
 
@@ -703,7 +702,7 @@ Default value: `undef`
 Data type: `Enum['On', 'Off', 'on', 'off']`
 
 Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the
-`EnableSendfile` directive. Values: 'On', 'Off'.
+`EnableSendfile` directive.
 
 Default value: 'On'
 
@@ -738,7 +737,7 @@ Data type: `Any`
 
 Configures a trailing footer line to display at the bottom of server-generated documents,
 such as error documents and output of certain Apache modules, via Apache's `ServerSignature`
-directive. Values: 'Off', 'On'.
+directive. Valid values are: `On` or `Off`.
 
 Default value: 'On'
 
@@ -764,8 +763,8 @@ Default value: `true`
 Data type: `Any`
 
 Determines whether Puppet should make sure the service is running.
-Values: `true` (or 'running'), `false` (or 'stopped').<br />
-The `false` or 'stopped' values set the 'httpd' service resource's `ensure` parameter
+Valid values are: `true` (or `running`) or `false` (or `stopped`).<br />
+The `false` or `stopped` values set the 'httpd' service resource's `ensure` parameter
 to `false`, which is useful when you want to let the service be managed by another
 application, such as Pacemaker.<br />
 
@@ -809,8 +808,7 @@ Default value: '60'
 
 Data type: `Any`
 
-Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable` directive.<br />
-Values: 'Off', 'On'.
+Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable` directive.
 
 Default value: 'On'
 
@@ -820,8 +818,7 @@ Data type: `Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]`
 
 Controls Apache's `UseCanonicalName` directive which controls how Apache handles
 self-referential URLs. If not specified, this parameter omits the declaration from the
-server's configuration and uses Apache's default setting of 'off'.<br />
-Values: 'On', 'on', 'Off', 'off', 'DNS', 'dns'.
+server's configuration and uses Apache's default setting of 'off'.
 
 Default value: `undef`
 
@@ -839,7 +836,7 @@ Default value: $::apache::params::use_systemd
 Data type: `Any`
 
 Sets the desired permissions mode for config files.
-Values: A string, with permissions mode in symbolic or numeric notation.
+Valid values are: a string, with permissions mode in symbolic or numeric notation.
 
 Default value: $::apache::params::file_mode
 
@@ -847,7 +844,7 @@ Default value: $::apache::params::file_mode
 
 Data type: `Any`
 
-Array of the desired options for the / directory in httpd.conf.
+Array of the desired options for the `/` directory in httpd.conf.
 
 Default value: $::apache::params::root_directory_options
 
@@ -855,7 +852,7 @@ Default value: $::apache::params::root_directory_options
 
 Data type: `Boolean`
 
-Sets the default access policy for the / directory in httpd.conf. A value of `false`
+Sets the default access policy for the `/` directory in httpd.conf. A value of `false`
 allows access to all resources that are missing a more specific access policy. A value of
 `true` denies access to all resources by default. If `true`, more specific rules must be
 used to allow access to these resources (for example, in a directory block using the
@@ -938,7 +935,7 @@ The `limitreqfields` parameter sets the maximum number of request header fields 
 an HTTP request. This directive gives the server administrator greater control over
 abnormal client request behavior, which may be useful for avoiding some forms of
 denial-of-service attacks. The value should be increased if normal clients see an error
-response from the server that indicates too many fields were sent in the request.#
+response from the server that indicates too many fields were sent in the request.
 
 Default value: '100'
 
