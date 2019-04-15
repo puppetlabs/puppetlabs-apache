@@ -144,7 +144,7 @@ _Private Defined types_
 **Functions**
 
 * [`apache::apache_pw_hash`](#apacheapache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
-* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Pass all other values through.
+* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
 * [`apache::validate_apache_log_level`](#apachevalidate_apache_log_level): Perform simple validation of a string against the list of known log levels.
 * [`apache_pw_hash`](#apache_pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
 * [`bool2httpd`](#bool2httpd): Transform a supposed boolean to On or Off. Pass all other values through.
@@ -4308,13 +4308,13 @@ most secure format supported by the most platforms.
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
-Returns: `String`
+Returns: `String` Return's the hash of the input that was given.
 
 ##### `password`
 
 Data type: `String[1]`
 
-
+The input that is to be hashed.
 
 ### apache::bool2httpd
 
@@ -4352,13 +4352,14 @@ bool2httpd(undef)
 => 'Off'
 ```
 
-Returns: `Any`
+Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any 
+other given value.
 
 ##### `arg`
 
 Data type: `Any`
 
-
+The value to be converted into a string.
 
 ### apache::validate_apache_log_level
 
@@ -4388,13 +4389,13 @@ Modules maybe specified with their own levels like these:
 Expected to be used from the main or vhost.
 Might be used from directory too later as apache supports that
 
-Returns: `Any`
+Returns: `Any` Return's an error if the validation fails.
 
 ##### `log_level`
 
 Data type: `String`
 
-
+The string that is to be validated.
 
 ### apache_pw_hash
 
@@ -4403,12 +4404,18 @@ Type: Ruby 3.x API
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
-#### `apache_pw_hash()`
+#### `apache_pw_hash(Any $password)`
 
 Currently uses SHA-hashes, because although this format is considered insecure, its the
 most secure format supported by the most platforms.
 
-Returns: `Any`
+Returns: `Any` Return's the hash of the input that was given.
+
+##### `password`
+
+Data type: `Any`
+
+The input that is to be hashed.
 
 ### bool2httpd
 
@@ -4427,7 +4434,7 @@ bool2httpd(undef)
 => 'Off'
 ```
 
-#### `bool2httpd()`
+#### `bool2httpd(Any $arg)`
 
 Given a nil value (undef), bool2httpd will return 'Off'
 Example:
@@ -4442,7 +4449,14 @@ bool2httpd(undef)
 => 'Off'
 ```
 
-Returns: `Any`
+Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any
+other given value.
+
+##### `arg`
+
+Data type: `Any`
+
+The value to be converted into a string.
 
 ### validate_apache_log_level
 
@@ -4457,7 +4471,7 @@ Modules maybe specified with their own levels like these:
 Expected to be used from the main or vhost.
 Might be used from directory too later as apaceh supports that
 
-#### `validate_apache_log_level()`
+#### `validate_apache_log_level(Any $log_level)`
 
 As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
     * validate_apache_loglevel('info')
@@ -4468,7 +4482,13 @@ Modules maybe specified with their own levels like these:
 Expected to be used from the main or vhost.
 Might be used from directory too later as apaceh supports that
 
-Returns: `Any`
+Returns: `Any` Return's an error if the validation fails.
+
+##### `log_level`
+
+Data type: `Any`
+
+The string that is to be validated.
 
 ## Tasks
 

@@ -12,6 +12,11 @@
 # Expected to be used from the main or vhost.
 # Might be used from directory too later as apache supports that
 Puppet::Functions.create_function(:'apache::validate_apache_log_level') do
+  # @param log_level
+  #   The string that is to be validated.
+  # 
+  # @return
+  #   Return's an error if the validation fails.
   dispatch :validate_apache_log_level do
     required_param 'String', :log_level
   end

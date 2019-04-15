@@ -12,6 +12,12 @@ module Puppet::Parser::Functions
         * validate_apache_loglevel('warn ssl_module:info')
     Expected to be used from the main or vhost.
     Might be used from directory too later as apaceh supports that
+
+    @param log_level
+      The string that is to be validated.
+    
+    @return
+      Return's an error if the validation fails.
 DOC
              ) do |args|
     if args.size != 1
