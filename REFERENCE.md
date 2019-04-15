@@ -161,7 +161,7 @@ _Private Defined types_
 When this class is declared with the default options, Puppet:
 - Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
 - Places the required configuration files in a directory, with the [default location](#conf_dir) determined by your operating system.
-- Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
+- Configures the server with a default virtual host and standard port (`80`) and address (`\*`) bindings.
 - Creates a document root directory determined by your operating system, typically `/var/www`.
 - Starts the Apache service.
 
@@ -181,7 +181,6 @@ Data type: `Optional[Enum['on', 'off', 'nodecode']]`
 Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the
 responses to URLs containing '\' and '/' characters. If not specified, this parameter omits
 the declaration from the server's configuration and uses Apache's default setting of 'off'.
-Values: 'on', 'off', 'nodecode'.
 
 Default value: `undef`
 
@@ -445,7 +444,7 @@ Default value: $::apache::params::http_protocol_options
 Data type: `Any`
 
 Determines whether to enable persistent HTTP connections with the `KeepAlive` directive.
-If you set this to 'On', use the `keepalive_timeout` and `max_keepalive_requests` parameters
+If you set this to `On`, use the `keepalive_timeout` and `max_keepalive_requests` parameters
 to set relevant options.<br />
 
 Default value: $::apache::params::keepalive
@@ -491,8 +490,8 @@ Default value: $::apache::params::lib_path
 
 Data type: `Any`
 
-Changes the error log's verbosity. Valid options are: 'alert', 'crit', 'debug', 'emerg', 'error',
-'info', 'notice' and 'warn'.
+Changes the error log's verbosity. Valid options are: `alert`, `crit`, `debug`, `emerg`, `error`,
+`info`, `notice` and `warn`.
 
 Default value: $::apache::params::log_level
 
@@ -856,7 +855,7 @@ Sets the default access policy for the `/` directory in httpd.conf. A value of `
 allows access to all resources that are missing a more specific access policy. A value of
 `true` denies access to all resources by default. If `true`, more specific rules must be
 used to allow access to these resources (for example, in a directory block using the
-[`directories`](#parameter-directories-for-apachevhost) parameter).
+`directories` parameter).
 
 Default value: `false`
 
@@ -1039,8 +1038,8 @@ class, based on your operating system:
 
 Creates `apache::vhost` defined types.
 
-> **Note**: See the [`apache::vhost`](#defined-type-apachevhost) defined type's reference for
-a list of all virtual host parameters or [Configuring virtual hosts](#configuring-virtual-hosts).
+> **Note**: See the `apache::vhost` defined type's reference for a list of all virtual
+host parameters or Configuring virtual hosts in the README section.
 
 For example, to create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html)
 `custom_vhost_1`, declare the following manifest:
@@ -1114,7 +1113,7 @@ Default value: {}
 
 Data type: `Any`
 
-If given, path to the file the balancer definition will be written.
+The path to the file the balancer definition will be written in.
 
 Default value: `undef`
 
@@ -1309,7 +1308,7 @@ Default value: '127.0.0.1:9000'
 
 Data type: `Any`
 
-Sets the number of seconds a [FastCGI][] application can be inactive before aborting the
+Sets the number of seconds a [FastCGI](http://www.fastcgi.com/) application can be inactive before aborting the
 request and logging the event at the error LogLevel. The inactivity timer applies only as
 long as a connection is pending with the FastCGI application. If a request is queued to an
 application, but the application doesn't respond by writing and flushing within this period,
@@ -1322,7 +1321,7 @@ Default value: 15
 
 Data type: `Any`
 
-Forces [`mod_fastcgi`][FastCGI] to write to the client as data is received from the
+Forces `mod_fastcgi` to write to the client as data is received from the
 application. By default, `mod_fastcgi` buffers data in order to free the application
 as quickly as possible.
 
@@ -1445,8 +1444,8 @@ Default value: `undef`
 ### apache::namevirtualhost
 
 Adds all related directives to the `ports.conf` file in the Apache HTTPD configuration
-directory. Titles can take the forms '\*', '\*:\<PORT\>', '\_default\_:\<PORT\>,
-'\<IP\>', or '\<IP\>:\<PORT\>'.
+directory. Titles can take the forms `\*`, `\*:\<PORT\>`, `\_default\_:\<PORT\>`,
+`\<IP\>`, or `\<IP\>:\<PORT\>`.
 
 ### apache::vhost
 
@@ -1512,10 +1511,10 @@ Default value: `false`
 
 Data type: `Any`
 
-Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host---for
-instance, example.com---it defaults to 'example.com_ssl.log' for
-[SSL-encrypted][SSL encryption] virtual hosts and 'example.com_access.log' for
-unencrypted virtual hosts.
+Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host ---for
+instance, example.com--- it defaults to 'example.com_ssl.log' for
+[SSL-encrypted](https://httpd.apache.org/docs/current/ssl/index.html) virtual hosts and
+`example.com_access.log` for unencrypted virtual hosts.
 
 Default value: `false`
 
@@ -1548,8 +1547,8 @@ Default value: `false`
 
 Data type: `Optional[Array]`
 
-Allows you to give a hash that specifies the state of each of the access_log_*
-directives shown above, i.e. access_log_pipe and access_log_syslog.
+Allows you to give a hash that specifies the state of each of the `access_log_*`
+directives shown above, i.e. `access_log_pipe` and `access_log_syslog`.
 
 Default value: `undef`
 
@@ -1640,9 +1639,9 @@ Default value: `undef`
 Data type: `Optional[Enum['on', 'off', 'nodecode']]`
 
 Sets the `AllowEncodedSlashes` declaration for the virtual host, overriding the server
-default. This modifies the virtual host responses to URLs with `\` and `/` characters.
-Values: 'nodecode', 'off', 'on'. The default setting omits the declaration from the server
-configuration and selects the Apache default setting of 'Off'.
+default. This modifies the virtual host responses to URLs with `\` and `/` characters. The
+default setting omits the declaration from the server configuration and selects the
+Apache default setting of `Off`.
 
 Default value: `undef`
 
@@ -1650,8 +1649,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-Specifies the list of things to which Apache blocks access. Valid option: 'scm', which
-blocks web access to `.svn`, `.git`, and `.bzr` directories.
+Specifies the list of things to which Apache blocks access. Valid options are: `scm` (which
+blocks web access to `.svn`), `.git`, and `.bzr` directories.
 
 Default value: []
 
@@ -1759,14 +1758,6 @@ match any other `apache::vhost` defined types.
 
 Default value: `false`
 
-##### `directories`
-
-Data type: `Optional[Variant[Hash, Array[Variant[Array,Hash]]]]`
-
-See the [`directories`](#parameter-directories-for-apachevhost) section.
-
-Default value: `undef`
-
 ##### `directoryindex`
 
 Data type: `Any`
@@ -1833,8 +1824,8 @@ Data type: `Any`
 Points the virtual host's error logs to a `*_error.log` file. If this parameter is
 undefined, Puppet checks for values in `error_log_pipe`, then `error_log_syslog`.<br />
 If none of these parameters is set, given a virtual host `example.com`, Puppet defaults
-to '$logroot/example.com_error_ssl.log' for SSL virtual hosts and
-'$logroot/example.com_error.log' for non-SSL virtual hosts.
+to `$logroot/example.com_error_ssl.log` for SSL virtual hosts and
+`$logroot/example.com_error.log` for non-SSL virtual hosts.
 
 Default value: `undef`
 
@@ -1855,8 +1846,8 @@ Data type: `Any`
 Determines whether to send all error log messages to syslog.
 This parameter has no effect if either of the `error_log_file` or `error_log_pipe`
 parameters has a value. If none of these parameters has a value, given a virtual host
-`example.com`, Puppet defaults to '$logroot/example.com_error_ssl.log' for SSL virtual
-hosts and '$logroot/example.com_error.log' for non-SSL virtual hosts.
+`example.com`, Puppet defaults to `$logroot/example.com_error_ssl.log` for SSL virtual
+hosts and `$logroot/example.com_error.log` for non-SSL virtual hosts.
 
 Default value: `undef`
 
@@ -1894,7 +1885,7 @@ Data type: `Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]]`
 Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource)
 directive, which specifies an action to take for any URL that doesn't map to anything in
 your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin
-with a '/' or be 'disabled'.
+with a `/` or be `disabled`.
 
 Default value: `undef`
 
@@ -2137,24 +2128,14 @@ apache::vhost { 'sample.example.net':
   },
 }
 ```
-Values: a hash, which can include the keys:
-* user + group
+Valid values are: a hash, which can include the keys:
+* `user` + `group`
 * `assignuseridexpr`
 * `assigngroupidexpr`
 * `maxclientvhost`
 * `nice`
 * `limituidrange` (Linux 3.5.0 or newer)
 * `limitgidrange` (Linux 3.5.0 or newer)
-Usage typically looks like:
-``` puppet
-apache::vhost { 'sample.example.net':
-  docroot => '/path/to/directory',
-  itk     => {
-    user  => 'someuser',
-    group => 'somegroup',
-  },
-}
-```
 
 Default value: `undef`
 
@@ -2171,10 +2152,10 @@ Default value: `undef`
 
 Data type: `Any`
 
-Sets up a virtual host with 'JkMount' and 'JkUnMount' directives to handle the paths
+Sets up a virtual host with `JkMount` and `JkUnMount` directives to handle the paths
 for URL mapping between Tomcat and Apache.<br />
-The parameter must be an array of hashes where each hash must contain the 'worker'
-and either the 'mount' or 'unmount' keys.<br />
+The parameter must be an array of hashes where each hash must contain the `worker`
+and either the `mount` or `unmount` keys.<br />
 Usage typically looks like:
 ``` puppet
 apache::vhost { 'sample.example.net':
@@ -2191,9 +2172,7 @@ Default value: `undef`
 
 Data type: `Optional[Pattern[/^((Strict|Unsafe)?\s*(\b(Registered|Lenient)Methods)?\s*(\b(Allow0\.9|Require1\.0))?)$/]]`
 
-Specifies the strictness of HTTP protocol checks. Valid options: any sequence of the
-following alternative values: `Strict` or `Unsafe`, `RegisteredMethods` or
-`LenientMethods`, and `Allow0.9` or `Require1.0`.
+Specifies the strictness of HTTP protocol checks.
 
 Default value: `undef`
 
@@ -2212,7 +2191,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Sets the [`KeepAliveTimeout`] directive for the virtual host, which determines the amount
+Sets the `KeepAliveTimeout` directive for the virtual host, which determines the amount
 of time to wait for subsequent requests on a persistent HTTP connection. By default, the
 global, server-wide `KeepAlive` setting is in effect.<br />
 This parameter is only relevant if either the global, server-wide `keepalive` parameter or
@@ -2274,7 +2253,7 @@ Default value: 'on'
 
 Data type: `Any`
 
-If set to 'off', authentication controls can be passed on to another module.
+If set to `off`, authentication controls can be passed on to another module.
 
 Default value: 'on'
 
@@ -2399,8 +2378,7 @@ Default value: `undef`
 Data type: `Optional[Variant[Hash, Array]]`
 
 Removes `mod_security` IDs from the virtual host.<br />
-Values: An array of `mod_security` IDs to remove from the virtual host. Also takes a
-hash allowing removal of an ID from a specific location.
+Also takes a hash allowing removal of an ID from a specific location.
 ``` puppet
 apache::vhost { 'sample.example.net':
   modsec_disable_ids => [ 90015, 90016 ],
@@ -2469,7 +2447,7 @@ If set, it is relative to `logroot`.<br />
 One of the parameters that determines how to send `mod_security` audit
 log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 If none of those parameters are set, the global audit log is used
-(''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+(`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
 Default value: `undef`
 
@@ -2478,11 +2456,11 @@ Default value: `undef`
 Data type: `Any`
 
 If `modsec_audit_log_pipe` is set, it should start with a pipe. Example
-'|/path/to/mlogc /path/to/mlogc.conf'.<br />
+`|/path/to/mlogc /path/to/mlogc.conf`.<br />
 One of the parameters that determines how to send `mod_security` audit
 log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 If none of those parameters are set, the global audit log is used
-(''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+(`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
 Default value: `undef`
 
@@ -2490,13 +2468,13 @@ Default value: `undef`
 
 Data type: `Any`
 
-If `modsec_audit_log` is `true`, given a virtual host---for instance, example.com---it
-defaults to 'example.com\_security\_ssl.log' for [SSL-encrypted][SSL encryption] virtual hosts
-and 'example.com\_security.log' for unencrypted virtual hosts.<br />
+If `modsec_audit_log` is `true`, given a virtual host ---for instance, example.com--- it
+defaults to `example.com\_security\_ssl.log` for SSL-encrypted virtual hosts
+and `example.com\_security.log` for unencrypted virtual hosts.<br />
 One of the parameters that determines how to send `mod_security` audit
 log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).<br />
 If none of those parameters are set, the global audit log is used
-(''/var/log/httpd/modsec\_audit.log''; Debian and derivatives: ''/var/log/apache2/modsec\_audit.log''; others: ).
+(`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
 Default value: `undef`
 
@@ -2576,7 +2554,7 @@ Default value: ['None']
 Data type: `Optional[Boolean]`
 
 Sets the value for the [PassengerEnabled](http://www.modrails.com/documentation/Users%20guide%20Apache.html#PassengerEnabled)
-directive to 'on' or 'off'. Requires `apache::mod::passenger` to be included.
+directive to `on` or `off`. Requires `apache::mod::passenger` to be included.
 ``` puppet
 apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
@@ -2997,7 +2975,7 @@ Default value: {}
 
 Data type: `Any`
 
-Allows per-virtual host setting [`php_flag`s](http://php.net/manual/en/configuration.changes.php).
+Allows per-virtual host setting [`php_flags\``](http://php.net/manual/en/configuration.changes.php).
 These flags or values can be overwritten by a user or an application.
 
 Default value: {}
@@ -3109,7 +3087,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-This directive is equivalent to [`proxy_dest`][], but takes regular expressions, see
+This directive is equivalent to `proxy_dest`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
@@ -3119,7 +3097,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Allows you to pass a ProxyPassReverse if [`proxy_dest_match`][] is specified. See
+Allows you to pass a ProxyPassReverse if `proxy_dest_match` is specified. See
 [ProxyPassReverse](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse)
 for details.
 
@@ -3129,7 +3107,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-This directive is equivalent to [`proxy_pass`][], but takes regular expressions, see
+This directive is equivalent to `proxy_pass`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
@@ -3252,8 +3230,8 @@ Default value: `undef`
 Data type: `Optional[Array]`
 
 Creates URL rewrite rules. Expects an array of hashes.<br />
-Values: Hash keys that are any of 'comment', 'rewrite_base', 'rewrite_cond', 'rewrite_rule'
-or 'rewrite_map'.<br />
+Valid Hash keys include `comment`, `rewrite_base`, `rewrite_cond`, `rewrite_rule`
+or `rewrite_map`.<br />
 For example, you can specify that anyone trying to access index.html is served welcome.html
 ``` puppet
 apache::vhost { 'site.name.fdqn':
@@ -3316,9 +3294,9 @@ apache::vhost { 'site.name.fdqn':
   ],
 }
 ```
-Refer to the [`mod_rewrite` documentation][`mod_rewrite`] for more details on what is
-possible with rewrite rules and conditions.<br />
-#   > **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite`
+Refer to the [`mod_rewrite` documentation](https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html)
+for more details on what is possible with rewrite rules and conditions.<br />
+> **Note**: If you include rewrites in your directories, also include `apache::mod::rewrite`
 and consider setting the rewrites using the `rewrites` parameter in `apache::vhost` rather
 than setting the rewrites in the virtual host's directories.
 
@@ -3378,8 +3356,8 @@ the following directives:
 RewriteEngine On
 RewriteOptions Inherit
 ```
-Refer to the [official `mod_rewrite` documentation](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html),
-section "Rewriting in Virtual Hosts".
+Refer to the official [`mod_rewrite`](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html)
+documentation, section "Rewriting in Virtual Hosts".
 
 Default value: `false`
 
@@ -3398,7 +3376,7 @@ Data type: `Any`
 
 > **Note**: This parameter is deprecated in favor of the `aliases` parameter.<br />
 Passes an array of hashes to the virtual host to create either ScriptAlias or
-ScriptAliasMatch statements per the [`mod_alias` documentation][`mod_alias`].
+ScriptAliasMatch statements per the `mod_alias` documentation.
 ``` puppet
 scriptaliases => [
   {
@@ -3560,7 +3538,7 @@ Default value: $::apache::params::suphp_engine
 Data type: `Any`
 
 Enables name-based virtual hosting. If no IP is passed to the virtual host, but the
-virtual host is assigned a port, then the virtual host name is 'vhost_name:port'.
+virtual host is assigned a port, then the virtual host name is `vhost_name:port`.
 If the virtual host has no assigned IP or port, the virtual host name is set to the
 title of the resource.
 
@@ -3571,7 +3549,7 @@ Default value: '*'
 Data type: `Any`
 
 Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the
-same name. For example, 'http://example.com' would map to '/var/www/example.com'.
+same name. For example, `http://example.com` would map to `/var/www/example.com`.
 ``` puppet
 apache::vhost { 'subdomain.loc':
   vhost_name      => '*',
@@ -3683,7 +3661,7 @@ Data type: `Any`
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 wsgi_daemon_process, wsgi_daemon_process_options,
 wsgi_script_aliases and wsgi_pass_authorization.<br />
-Requires a hash of web paths to filesystem .wsgi paths/
+Requires a hash of web paths to filesystem `.wsgi paths/`.
 
 Default value: `undef`
 
@@ -3694,8 +3672,8 @@ Data type: `Optional[Hash]`
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
 and wsgi_pass_authorization.<br />
-Uses the WSGI application to handle authorization instead of Apache when set to 'On'.<br />
-For more information, see [mod_wsgi's WSGIPassAuthorization documentation] (https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
+Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
+For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 
 Default value: `undef`
 
@@ -3706,10 +3684,10 @@ Data type: `Optional[Hash]`
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
 and wsgi_pass_authorization.<br />
-Uses the WSGI application to handle authorization instead of Apache when set to 'On'.<br />
+Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
 This directive is similar to `wsgi_script_aliases`, but makes use of regular expressions
 in place of simple prefix matching.<br />
-For more information, see [mod_wsgi's WSGIPassAuthorization documentation] (https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
+For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 
 Default value: `undef`
 
@@ -3726,19 +3704,21 @@ Default value: `undef`
 
 ##### `directories`
 
+Data type: `Optional[Variant[Hash, Array[Variant[Array,Hash]]]]`
+
 The `directories` parameter within the `apache::vhost` class passes an array of hashes
 to the virtual host to create [Directory](https://httpd.apache.org/docs/current/mod/core.html#directory),
 [File](https://httpd.apache.org/docs/current/mod/core.html#files), and
 [Location](https://httpd.apache.org/docs/current/mod/core.html#location) directive blocks.
-These blocks take the form, '< Directory /path/to/directory>...< /Directory>'.<br />
+These blocks take the form, `< Directory /path/to/directory>...< /Directory>`.<br />
 The `path` key sets the path for the directory, files, and location blocks. Its value
-must be a path for the 'directory', 'files', and 'location' providers, or a regex for
-the 'directorymatch', 'filesmatch', or 'locationmatch' providers. Each hash passed to
+must be a path for the `directory`, `files`, and `location` providers, or a regex for
+the `directorymatch`, `filesmatch`, or `locationmatch` providers. Each hash passed to
 `directories` **must** contain `path` as one of the keys.<br />
-The `provider` key is optional. If missing, this key defaults to 'directory'.
- Values: 'directory', 'files', 'proxy', 'location', 'directorymatch', 'filesmatch',
-'proxymatch' or 'locationmatch'. If you set `provider` to 'directorymatch', it
-uses the keyword 'DirectoryMatch' in the Apache config file.<br />
+The `provider` key is optional. If missing, this key defaults to `directory`.
+ Values: `directory`, `files`, `proxy`, `location`, `directorymatch`, `filesmatch`,
+`proxymatch` or `locationmatch`. If you set `provider` to `directorymatch`, it
+uses the keyword `DirectoryMatch` in the Apache config file.<br />
 An example use of `directories`:
 ``` puppet
 apache::vhost { 'files.example.net':
@@ -3763,7 +3743,7 @@ apache::vhost { 'sample.example.net':
   directories => [ { path => '/path/to/directory', handler => value } ],
 }
 ```
-Any handlers you do not set in these hashes are considered 'undefined' within Puppet and
+Any handlers you do not set in these hashes are considered `undefined` within Puppet and
 are not added to the virtual host, resulting in the module using their default values.
 
 Default value: `undef`
@@ -3868,8 +3848,8 @@ Default value: ['Indexes','FollowSymLinks','MultiViews']
 Data type: `Optional[String]`
 
 Default is Off, matching the behavior prior to this command's existence. Addresses a conflict
-when using Shibboleth in conjunction with other auth/auth modules by restoring "standard"
-Apache behavior when processing the "valid-user" and "user" Require rules. See the
+when using Shibboleth in conjunction with other auth/auth modules by restoring `standard`
+Apache behavior when processing the `valid-user` and `user` Require rules. See the
 [`mod_shib`documentation](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig#NativeSPApacheConfig-Server/VirtualHostOptions),
 and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess)
 topic for more details. This key is disabled if `apache::mod::shib` is not defined.
@@ -3902,7 +3882,7 @@ Default value: `undef`
 ##### `additional_includes`
 
 Specifies paths to additional static, specific Apache configuration files in virtual
-host directories. Values: a array of string path.
+host directories.
 ``` puppet
 apache::vhost { 'sample.example.net':
   docroot     => '/path/to/directory',
