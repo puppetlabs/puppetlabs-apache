@@ -6,7 +6,7 @@
 Puppet::Functions.create_function(:'apache::apache_pw_hash') do
   # @param password
   #   The input that is to be hashed.
-  # 
+  #
   # @return
   #   Return's the hash of the input that was given.
   dispatch :apache_pw_hash do

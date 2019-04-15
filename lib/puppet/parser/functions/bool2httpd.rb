@@ -14,12 +14,12 @@ Puppet::Parser::Functions.newfunction(:bool2httpd, type: :rvalue, doc: <<-DOC
   bool2httpd(undef)
   => 'Off'
   ```
-  
+
   @param arg
     The value to be converted into a string.
-  
+
   @return
-    Will return either `On` or `Off` if given a boolean value. Return's a string of any 
+    Will return either `On` or `Off` if given a boolean value. Return's a string of any
     other given value.
 DOC
                                      ) do |args|

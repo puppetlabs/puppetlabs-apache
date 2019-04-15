@@ -15,7 +15,7 @@ module Puppet::Parser::Functions
 
     @param log_level
       The string that is to be validated.
-    
+
     @return
       Return's an error if the validation fails.
 DOC
