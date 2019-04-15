@@ -8,11 +8,11 @@ Puppet::Parser::Functions.newfunction(:bool2httpd, type: :rvalue, doc: <<-DOC
   $trace_enable     = false
   $server_signature = 'mail'
   bool2httpd($trace_enable)
-  * => 'Off'
+  => 'Off'
   bool2httpd($server_signature)
-  * => 'mail'
+  => 'mail'
   bool2httpd(undef)
-  * => 'Off'
+  => 'Off'
   ```
 DOC
                                      ) do |args|

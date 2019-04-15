@@ -4328,11 +4328,11 @@ $trace_enable     = false
 $server_signature = 'mail'
 
 bool2httpd($trace_enable)
-* => 'Off'
+=> 'Off'
 bool2httpd($server_signature)
-* => 'mail'
+=> 'mail'
 bool2httpd(undef)
-* => 'Off'
+=> 'Off'
 ```
 
 #### `apache::bool2httpd(Any $arg)`
@@ -4345,11 +4345,11 @@ $trace_enable     = false
 $server_signature = 'mail'
 
 bool2httpd($trace_enable)
-* => 'Off'
+=> 'Off'
 bool2httpd($server_signature)
-* => 'mail'
+=> 'mail'
 bool2httpd(undef)
-* => 'Off'
+=> 'Off'
 ```
 
 Returns: `Any`
@@ -4420,11 +4420,11 @@ Example:
 $trace_enable     = false
 $server_signature = 'mail'
 bool2httpd($trace_enable)
-* => 'Off'
+=> 'Off'
 bool2httpd($server_signature)
-* => 'mail'
+=> 'mail'
 bool2httpd(undef)
-* => 'Off'
+=> 'Off'
 ```
 
 #### `bool2httpd()`
@@ -4435,11 +4435,11 @@ Example:
 $trace_enable     = false
 $server_signature = 'mail'
 bool2httpd($trace_enable)
-* => 'Off'
+=> 'Off'
 bool2httpd($server_signature)
-* => 'mail'
+=> 'mail'
 bool2httpd(undef)
-* => 'Off'
+=> 'Off'
 ```
 
 Returns: `Any`

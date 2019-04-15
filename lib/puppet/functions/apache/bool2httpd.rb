@@ -9,11 +9,11 @@
 # $server_signature = 'mail'
 # 
 # bool2httpd($trace_enable)
-# * => 'Off'
+# => 'Off'
 # bool2httpd($server_signature)
-# * => 'mail'
+# => 'mail'
 # bool2httpd(undef)
-# * => 'Off'
+# => 'Off'
 # ```
 Puppet::Functions.create_function(:'apache::bool2httpd') do
   def bool2httpd(arg)
