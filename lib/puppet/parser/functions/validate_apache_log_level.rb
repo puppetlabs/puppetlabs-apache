@@ -1,7 +1,7 @@
 # validate_apache_log_level.rb
 module Puppet::Parser::Functions
   newfunction(:validate_apache_log_level, doc: <<-DOC
-    @summary 
+    @summary
       Perform simple validation of a string against the list of known log levels.
 
     As per http://httpd.apache.org/docs/current/mod/core.html#loglevel
