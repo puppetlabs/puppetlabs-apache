@@ -1,11 +1,13 @@
 # @summary
 #   Creates `apache::vhost` defined types.
 #
-# > **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
+# Creates `apache::vhost` defined types.
+# 
+# > **Note**: See the [`apache::vhost`](#defined-type-apachevhost) defined type's reference for 
+# a list of all virtual host parameters or [Configuring virtual hosts](#configuring-virtual-hosts).
 #
-# For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1, 
-# declare this class with the `vhosts` parameter set to 
-# '{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
+# For example, to create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html) 
+# `custom_vhost_1`, declare the following manifest:
 #
 # ``` puppet
 # class { 'apache::vhosts':
@@ -19,7 +21,7 @@
 # ```
 #
 # @param vhosts
-#   A hash, where the key represents the name and the value represents a hash] of 
+#   A hash, where the key represents the name and the value represents a hash of 
 #   `apache::vhost` defined type's parameters.
 class apache::vhosts (
   $vhosts = {},
