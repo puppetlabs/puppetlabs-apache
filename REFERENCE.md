@@ -4352,7 +4352,7 @@ bool2httpd(undef)
 => 'Off'
 ```
 
-Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any 
+Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any
 other given value.
 
 ##### `arg`
