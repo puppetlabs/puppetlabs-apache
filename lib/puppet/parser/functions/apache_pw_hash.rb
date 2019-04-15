@@ -9,7 +9,7 @@ Puppet::Parser::Functions.newfunction(:apache_pw_hash, type: :rvalue, doc: <<-DO
 
   @param password
     The input that is to be hashed.
-  
+
   @return
     Return's the hash of the input that was given.
 DOC
