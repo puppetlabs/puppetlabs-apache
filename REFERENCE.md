@@ -9,7 +9,6 @@ _Public Classes_
 
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
 * [`apache::dev`](#apachedev): Installs Apache development libraries.
-* [`apache::ssl`](#apachessl): This class installs Apache SSL capabilities
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -108,6 +107,7 @@ _Private Classes_
 * `apache::proxy`: This class enabled the proxy module for Apache
 * `apache::python`: This class installs Python for Apache
 * `apache::service`: 
+* `apache::ssl`: This class installs Apache SSL capabilities
 * `apache::version`: Try to automatically detect the version by OS
 
 **Defined types**
@@ -1030,30 +1030,20 @@ Default value: $::apache::params::mime_types_additional
 Default: Depends on the operating system:`dev_packages` parameter of the `apache::params`
 class, based on your operating system:
 
-- **Debian** : 'libaprutil1-dev', 'libapr1-dev'; 'apache2-dev' on Ubuntu 13.10 and Debian 8; 'apache2-prefork-dev' on other versions.
+- **Debian** : `libaprutil1-dev`, `libapr1-dev`; `apache2-dev` on Ubuntu 13.10 and Debian 8; `apache2-prefork-dev` on other versions.
 - **FreeBSD**: `undef`; on FreeBSD, you must declare the `apache::package` or `apache` classes before declaring `apache::dev`.
 - **Gentoo**: `undef`.
-- **Red Hat**: 'httpd-devel'.
-
-### apache::ssl
-
-Parameters:
-- The $ssl_package name from the apache::params class
-
-Actions:
-  - Install Apache SSL capabilities
-
-Requires:
-
-Sample Usage:
+- **Red Hat**: `httpd-devel`.
 
 ### apache::vhosts
 
-> **Note**: See the `apache::vhost` defined type's reference for a list of all virtual host parameters or [Configuring virtual hosts].
+Creates `apache::vhost` defined types.
 
-For example, to create a [name-based virtual host][name-based virtual hosts] 'custom_vhost_1,
-declare this class with the `vhosts` parameter set to
-'{ "custom_vhost_1" => { "docroot" => "/var/www/custom_vhost_1", "port" => "81" }':
+> **Note**: See the [`apache::vhost`](#defined-type-apachevhost) defined type's reference for
+a list of all virtual host parameters or [Configuring virtual hosts](#configuring-virtual-hosts).
+
+For example, to create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html)
+`custom_vhost_1`, declare the following manifest:
 
 ``` puppet
 class { 'apache::vhosts':
@@ -1074,7 +1064,7 @@ The following parameters are available in the `apache::vhosts` class.
 
 Data type: `Any`
 
-A hash, where the key represents the name and the value represents a hash] of
+A hash, where the key represents the name and the value represents a hash of
 `apache::vhost` defined type's parameters.
 
 Default value: {}
