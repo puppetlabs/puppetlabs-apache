@@ -4323,32 +4323,34 @@ Type: Ruby 4.x API
 Given a nil value (undef), bool2httpd will return 'Off'
 
 Example:
+```
+$trace_enable     = false
+$server_signature = 'mail'
 
-   $trace_enable     = false
-   $server_signature = 'mail'
-
-   bool2httpd($trace_enable)
-   # => 'Off'
-   bool2httpd($server_signature)
-   # => 'mail'
-   bool2httpd(undef)
-   # => 'Off'
+bool2httpd($trace_enable)
+* => 'Off'
+bool2httpd($server_signature)
+* => 'mail'
+bool2httpd(undef)
+* => 'Off'
+```
 
 #### `apache::bool2httpd(Any $arg)`
 
 Given a nil value (undef), bool2httpd will return 'Off'
 
 Example:
+```
+$trace_enable     = false
+$server_signature = 'mail'
 
-   $trace_enable     = false
-   $server_signature = 'mail'
-
-   bool2httpd($trace_enable)
-   # => 'Off'
-   bool2httpd($server_signature)
-   # => 'mail'
-   bool2httpd(undef)
-   # => 'Off'
+bool2httpd($trace_enable)
+* => 'Off'
+bool2httpd($server_signature)
+* => 'mail'
+bool2httpd(undef)
+* => 'Off'
+```
 
 Returns: `Any`
 
@@ -4414,27 +4416,31 @@ Type: Ruby 3.x API
 
 Given a nil value (undef), bool2httpd will return 'Off'
 Example:
-    $trace_enable     = false
-    $server_signature = 'mail'
-    bool2httpd($trace_enable)
-    # => 'Off'
-    bool2httpd($server_signature)
-    # => 'mail'
-    bool2httpd(undef)
-    # => 'Off'
+```
+$trace_enable     = false
+$server_signature = 'mail'
+bool2httpd($trace_enable)
+* => 'Off'
+bool2httpd($server_signature)
+* => 'mail'
+bool2httpd(undef)
+* => 'Off'
+```
 
 #### `bool2httpd()`
 
 Given a nil value (undef), bool2httpd will return 'Off'
 Example:
-    $trace_enable     = false
-    $server_signature = 'mail'
-    bool2httpd($trace_enable)
-    # => 'Off'
-    bool2httpd($server_signature)
-    # => 'mail'
-    bool2httpd(undef)
-    # => 'Off'
+```
+$trace_enable     = false
+$server_signature = 'mail'
+bool2httpd($trace_enable)
+* => 'Off'
+bool2httpd($server_signature)
+* => 'mail'
+bool2httpd(undef)
+* => 'Off'
+```
 
 Returns: `Any`
 
