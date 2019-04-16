@@ -1,5 +1,4 @@
-# @summary 
-#   Setup and load Apache `mod_remoteip`
+# @summary Setup and load Apache `mod_remoteip`
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_remoteip.html
 #

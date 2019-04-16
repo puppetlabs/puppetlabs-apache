@@ -1,4 +1,13 @@
-# @api private
+# Class apache::mod::jk
+#
+# Manages mod_jk connector
+#
+# All parameters are optional. When undefined, some receive default values,
+# while others cause an optional directive to be absent
+#
+# For help on parameters, pls see official reference at:
+# https://tomcat.apache.org/connectors-doc/reference/apache.html
+#
 class apache::mod::jk (
   # Binding to mod_jk
   Optional[String] $ip         = undef,
