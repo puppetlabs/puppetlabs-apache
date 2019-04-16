@@ -608,24 +608,24 @@
 # 
 # @param passenger_base_uri
 #   Sets [PassengerBaseURI](https://www.phusionpassenger.com/library/config/apache/reference/#passengerbase_rui), 
-#    to specify that the given URI is an distinct application that should be served by Passenger.
+#    to specify that the given URI is a distinct application served by Passenger.
 # 
 # @param passenger_ruby
 #   Sets [PassengerRuby](https://www.phusionpassenger.com/library/config/apache/reference/#passengerruby), 
-#   the Ruby interpreter to use for the application, on this virtual host.
+#   specifying the Ruby interpreter to use when serving the relevant web applications.
 # 
 # @param passenger_python
 #   Sets [PassengerPython](https://www.phusionpassenger.com/library/config/apache/reference/#passengerpython), 
-#   the Python interpreter to use for the application, on this virtual host.
+#   specifying the Python interpreter to use when serving the relevant web applications.
 # 
 # @param passenger_nodejs
 #   Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#passengernodejs), 
-#   the NodeJS interpreter to use for the application, on this virtual host.
+#   specifying Node.js command to use when serving the relevant web applications.
 # 
 # @param passenger_meteor_app_settings
 #   Sets [PassengerMeteorAppSettings](https://www.phusionpassenger.com/library/config/apache/reference/#passengermeteorappsettings), 
-#   to specify a JSON file with settings for the application when using a Meteor 
-#   application in non-bundled mode
+#   specifying a JSON file with settings for the application when using a Meteor 
+#   application in non-bundled mode.
 # 
 # @param passenger_app_env
 #   Sets [PassengerAppEnv](https://www.phusionpassenger.com/library/config/apache/reference/#passengerappenv), 
