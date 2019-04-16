@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::userdir (
   $home = undef,
   $dir = undef,

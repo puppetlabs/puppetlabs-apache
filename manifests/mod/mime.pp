@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::mime (
   $mime_support_package = $::apache::params::mime_support_package,
   $mime_types_config    = $::apache::params::mime_types_config,

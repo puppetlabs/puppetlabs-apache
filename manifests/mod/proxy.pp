@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::proxy (
   $proxy_requests = 'Off',
   $allow_from     = undef,

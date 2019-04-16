@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::python (
   Optional[String] $loadfile_name = undef,
 ) {

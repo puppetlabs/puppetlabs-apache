@@ -1,5 +1,5 @@
 # @summary
-#   This class enables Apache mod_auth_cas
+#   This class enables and configures Apache mod_auth_cas
 # 
 # @param cas_login_url
 #   Sets the URL to which the module redirects users when they attempt to access a 

@@ -50,7 +50,7 @@
 #   A version string used to validate that your apache version supports
 #   `mod_remoteip`. If not specified, `$::apache::apache_version` is used.
 #
-# @api private
+
 class apache::mod::remoteip (
   String                                                     $header                    = 'X-Forwarded-For',
   Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $internal_proxy            = undef,

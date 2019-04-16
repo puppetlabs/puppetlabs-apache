@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::deflate (
   $types = [
     'text/html text/plain text/xml',

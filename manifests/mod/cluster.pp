@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::cluster (
   $allowed_network,
   $balancer_name,

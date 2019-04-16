@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::dav_fs {
   include ::apache
   $dav_lock = $::osfamily ? {

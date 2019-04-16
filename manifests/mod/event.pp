@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::event (
   $startservers           = '2',
   $maxclients             = '150',

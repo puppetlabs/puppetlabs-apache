@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::reqtimeout (
   $timeouts = ['header=20-40,minrate=500', 'body=10,minrate=500']
 ){

@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::wsgi (
   $wsgi_restrict_embedded = undef,
   $wsgi_socket_prefix     = $::apache::params::wsgi_socket_prefix,

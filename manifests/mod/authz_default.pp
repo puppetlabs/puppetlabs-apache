@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::authz_default(
     $apache_version = $::apache::apache_version
 ) {

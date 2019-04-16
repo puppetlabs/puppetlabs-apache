@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::pagespeed (
   $inherit_vhost_config          = 'on',
   $filter_xhtml                  = false,

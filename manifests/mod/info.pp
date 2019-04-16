@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::info (
   $allow_from      = ['127.0.0.1','::1'],
   $apache_version  = undef,

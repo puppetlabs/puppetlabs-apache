@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::php (
   $package_name     = undef,
   $package_ensure   = 'present',

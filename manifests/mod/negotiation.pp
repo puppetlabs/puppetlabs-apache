@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::negotiation (
   Variant[Array[String], String] $force_language_priority = 'Prefer Fallback',
   Variant[Array[String], String] $language_priority = [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',

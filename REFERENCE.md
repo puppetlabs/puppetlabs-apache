@@ -12,10 +12,88 @@ _Public Classes_
 * [`apache::mod::actions`](#apachemodactions): This class enables Apache mod_actions
 * [`apache::mod::alias`](#apachemodalias): This class enables and configues Apache mod_alias
 * [`apache::mod::auth_basic`](#apachemodauth_basic): This class enables Apache mod_auth_basic
-* [`apache::mod::auth_cas`](#apachemodauth_cas): This class enables Apache mod_auth_cas
+* [`apache::mod::auth_cas`](#apachemodauth_cas): This class enables and configures Apache mod_auth_cas
+* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): This class enables Apache mod_auth_gsappi
+* [`apache::mod::auth_kerb`](#apachemodauth_kerb): This class enables Apache mod_auth_kerb
+* [`apache::mod::auth_mellon`](#apachemodauth_mellon): This class enables and configures Apache mod_auth_mellon
+* [`apache::mod::authn_core`](#apachemodauthn_core): This class enables Apache mod_authn_core
+* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): This class enables Apache mod_authn_dbd
+* [`apache::mod::authn_file`](#apachemodauthn_file): 
+* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): 
+* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): 
+* [`apache::mod::authz_default`](#apachemodauthz_default): 
+* [`apache::mod::authz_user`](#apachemodauthz_user): 
+* [`apache::mod::autoindex`](#apachemodautoindex): 
+* [`apache::mod::cache`](#apachemodcache): 
+* [`apache::mod::cgi`](#apachemodcgi): 
+* [`apache::mod::cgid`](#apachemodcgid): 
+* [`apache::mod::cluster`](#apachemodcluster): 
+* [`apache::mod::data`](#apachemoddata): 
+* [`apache::mod::dav`](#apachemoddav): 
+* [`apache::mod::dav_fs`](#apachemoddav_fs): 
+* [`apache::mod::dav_svn`](#apachemoddav_svn): 
+* [`apache::mod::dbd`](#apachemoddbd): 
+* [`apache::mod::deflate`](#apachemoddeflate): 
+* [`apache::mod::dev`](#apachemoddev): 
 * [`apache::mod::dir`](#apachemoddir): Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare Direct
+* [`apache::mod::disk_cache`](#apachemoddisk_cache): 
+* [`apache::mod::dumpio`](#apachemoddumpio): 
+* [`apache::mod::env`](#apachemodenv): 
+* [`apache::mod::event`](#apachemodevent): 
+* [`apache::mod::expires`](#apachemodexpires): 
+* [`apache::mod::ext_filter`](#apachemodext_filter): 
+* [`apache::mod::fastcgi`](#apachemodfastcgi): 
+* [`apache::mod::fcgid`](#apachemodfcgid): 
+* [`apache::mod::filter`](#apachemodfilter): 
+* [`apache::mod::geoip`](#apachemodgeoip): 
+* [`apache::mod::headers`](#apachemodheaders): 
+* [`apache::mod::http2`](#apachemodhttp2): 
+* [`apache::mod::include`](#apachemodinclude): 
+* [`apache::mod::info`](#apachemodinfo): 
+* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): 
+* [`apache::mod::itk`](#apachemoditk): 
 * [`apache::mod::jk`](#apachemodjk): Class apache::mod::jk  Manages mod_jk connector  All parameters are optional. When undefined, some receive default values, while others cause
+* [`apache::mod::ldap`](#apachemodldap): 
+* [`apache::mod::lookup_identity`](#apachemodlookup_identity): 
+* [`apache::mod::macro`](#apachemodmacro): 
+* [`apache::mod::mime`](#apachemodmime): 
+* [`apache::mod::mime_magic`](#apachemodmime_magic): 
+* [`apache::mod::negotiation`](#apachemodnegotiation): 
+* [`apache::mod::nss`](#apachemodnss): 
+* [`apache::mod::pagespeed`](#apachemodpagespeed): 
 * [`apache::mod::passenger`](#apachemodpassenger): Manages the settings for the mod_passenger The result is the /etc/mods-available/mod_passenger.conf file  Where do we get these settings?   S
+* [`apache::mod::perl`](#apachemodperl): 
+* [`apache::mod::peruser`](#apachemodperuser): 
+* [`apache::mod::php`](#apachemodphp): 
+* [`apache::mod::prefork`](#apachemodprefork): 
+* [`apache::mod::proxy`](#apachemodproxy): 
+* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): 
+* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): 
+* [`apache::mod::proxy_connect`](#apachemodproxy_connect): 
+* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): 
+* [`apache::mod::proxy_html`](#apachemodproxy_html): 
+* [`apache::mod::proxy_http`](#apachemodproxy_http): 
+* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): 
+* [`apache::mod::python`](#apachemodpython): 
+* [`apache::mod::remoteip`](#apachemodremoteip): 
+* [`apache::mod::reqtimeout`](#apachemodreqtimeout): 
+* [`apache::mod::rewrite`](#apachemodrewrite): 
+* [`apache::mod::rpaf`](#apachemodrpaf): 
+* [`apache::mod::security`](#apachemodsecurity): 
+* [`apache::mod::setenvif`](#apachemodsetenvif): 
+* [`apache::mod::shib`](#apachemodshib): 
+* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): 
+* [`apache::mod::speling`](#apachemodspeling): 
+* [`apache::mod::ssl`](#apachemodssl): 
+* [`apache::mod::status`](#apachemodstatus): This class enables and configures Apache mod_status
+* [`apache::mod::suexec`](#apachemodsuexec): 
+* [`apache::mod::suphp`](#apachemodsuphp): 
+* [`apache::mod::userdir`](#apachemoduserdir): 
+* [`apache::mod::version`](#apachemodversion): 
+* [`apache::mod::vhost_alias`](#apachemodvhost_alias): 
+* [`apache::mod::worker`](#apachemodworker): 
+* [`apache::mod::wsgi`](#apachemodwsgi): 
+* [`apache::mod::xsendfile`](#apachemodxsendfile): 
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -23,84 +101,6 @@ _Private Classes_
 * `apache::confd::no_accf`: 
 * `apache::default_confd_files`: 
 * `apache::default_mods`: 
-* `apache::mod::auth_gssapi`: 
-* `apache::mod::auth_kerb`: 
-* `apache::mod::auth_mellon`: 
-* `apache::mod::authn_core`: 
-* `apache::mod::authn_dbd`: 
-* `apache::mod::authn_file`: 
-* `apache::mod::authnz_ldap`: 
-* `apache::mod::authnz_pam`: 
-* `apache::mod::authz_default`: 
-* `apache::mod::authz_user`: 
-* `apache::mod::autoindex`: 
-* `apache::mod::cache`: 
-* `apache::mod::cgi`: 
-* `apache::mod::cgid`: 
-* `apache::mod::cluster`: 
-* `apache::mod::data`: 
-* `apache::mod::dav`: 
-* `apache::mod::dav_fs`: 
-* `apache::mod::dav_svn`: 
-* `apache::mod::dbd`: 
-* `apache::mod::deflate`: 
-* `apache::mod::dev`: 
-* `apache::mod::disk_cache`: 
-* `apache::mod::dumpio`: 
-* `apache::mod::env`: 
-* `apache::mod::event`: 
-* `apache::mod::expires`: 
-* `apache::mod::ext_filter`: 
-* `apache::mod::fastcgi`: 
-* `apache::mod::fcgid`: 
-* `apache::mod::filter`: 
-* `apache::mod::geoip`: 
-* `apache::mod::headers`: 
-* `apache::mod::http2`: 
-* `apache::mod::include`: 
-* `apache::mod::info`: 
-* `apache::mod::intercept_form_submit`: 
-* `apache::mod::itk`: 
-* `apache::mod::ldap`: 
-* `apache::mod::lookup_identity`: 
-* `apache::mod::macro`: 
-* `apache::mod::mime`: 
-* `apache::mod::mime_magic`: 
-* `apache::mod::negotiation`: 
-* `apache::mod::nss`: 
-* `apache::mod::pagespeed`: 
-* `apache::mod::perl`: 
-* `apache::mod::peruser`: 
-* `apache::mod::php`: 
-* `apache::mod::prefork`: 
-* `apache::mod::proxy`: 
-* `apache::mod::proxy_ajp`: 
-* `apache::mod::proxy_balancer`: 
-* `apache::mod::proxy_connect`: 
-* `apache::mod::proxy_fcgi`: 
-* `apache::mod::proxy_html`: 
-* `apache::mod::proxy_http`: 
-* `apache::mod::proxy_wstunnel`: 
-* `apache::mod::python`: 
-* `apache::mod::remoteip`: Setup and load Apache `mod_remoteip`
-* `apache::mod::reqtimeout`: 
-* `apache::mod::rewrite`: 
-* `apache::mod::rpaf`: 
-* `apache::mod::security`: 
-* `apache::mod::setenvif`: 
-* `apache::mod::shib`: 
-* `apache::mod::socache_shmcb`: 
-* `apache::mod::speling`: 
-* `apache::mod::ssl`: 
-* `apache::mod::status`: This class enables and configures Apache mod_status
-* `apache::mod::suexec`: 
-* `apache::mod::suphp`: 
-* `apache::mod::userdir`: 
-* `apache::mod::version`: 
-* `apache::mod::vhost_alias`: 
-* `apache::mod::worker`: Manages the Apache worker MPM
-* `apache::mod::wsgi`: 
-* `apache::mod::xsendfile`: 
 * `apache::package`: 
 * `apache::params`: This class manages Apache parameters
 * `apache::php`: This class installs PHP for Apache
@@ -1079,7 +1079,8 @@ for more information.
 
 ### apache::mod::auth_cas
 
-This class enables Apache mod_auth_cas
+See [`Apache mod_auth_cas`](https://github.com/apereo/mod_auth_cas)
+for more information.
 
 #### Parameters
 
@@ -1284,6 +1285,406 @@ Data type: `Any`
 
 Default value: `undef`
 
+### apache::mod::auth_gssapi
+
+See [`Apache mod_auth_gsappi`](https://github.com/modauthgssapi/mod_auth_gssapi)
+for more information.
+
+### apache::mod::auth_kerb
+
+This class enables Apache mod_auth_kerb
+
+### apache::mod::auth_mellon
+
+See [`Apache mod_auth_mellon`](https://github.com/Uninett/mod_auth_mellon)
+for more information.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::auth_mellon` class.
+
+##### `mellon_cache_size`
+
+Data type: `Any`
+
+The maximum number of sessions which can be active at once.
+
+Default value: $::apache::params::mellon_cache_size
+
+##### `mellon_lock_file`
+
+Data type: `Any`
+
+The full path to a file used for synchronizing access to the session data.
+
+Default value: $::apache::params::mellon_lock_file
+
+##### `mellon_post_directory`
+
+Data type: `Any`
+
+The full path of a directory where POST requests are saved during authentication.
+
+Default value: $::apache::params::mellon_post_directory
+
+##### `mellon_cache_entry_size`
+
+Data type: `Any`
+
+The maximum size for a single session entry in bytes.
+
+Default value: `undef`
+
+##### `mellon_post_ttl`
+
+Data type: `Any`
+
+The delay in seconds before a saved POST request can be flushed.
+
+Default value: `undef`
+
+##### `mellon_post_size`
+
+Data type: `Any`
+
+The maximum size for saved POST requests.
+
+Default value: `undef`
+
+##### `mellon_post_count`
+
+Data type: `Any`
+
+The maximum amount of saved POST requests.
+
+Default value: `undef`
+
+### apache::mod::authn_core
+
+See [`Apache mod_authn_core`](https://httpd.apache.org/docs/2.4/mod/mod_authn_core.html)
+for more information.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::authn_core` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+The version of apache being run
+
+Default value: $::apache::apache_version
+
+### apache::mod::authn_dbd
+
+See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/2.4/mod/mod_authn_dbd.html)
+for more information.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::authn_dbd` class.
+
+##### `authn_dbd_params`
+
+Data type: `Any`
+
+
+
+##### `authn_dbd_dbdriver`
+
+Data type: `Any`
+
+
+
+Default value: 'mysql'
+
+##### `authn_dbd_query`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `authn_dbd_min`
+
+Data type: `Any`
+
+
+
+Default value: '4'
+
+##### `authn_dbd_max`
+
+Data type: `Any`
+
+
+
+Default value: '20'
+
+##### `authn_dbd_keep`
+
+Data type: `Any`
+
+
+
+Default value: '8'
+
+##### `authn_dbd_exptime`
+
+Data type: `Any`
+
+
+
+Default value: '300'
+
+##### `authn_dbd_alias`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::authn_file
+
+The apache::mod::authn_file class.
+
+### apache::mod::authnz_ldap
+
+The apache::mod::authnz_ldap class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::authnz_ldap` class.
+
+##### `verify_server_cert`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::authnz_pam
+
+The apache::mod::authnz_pam class.
+
+### apache::mod::authz_default
+
+The apache::mod::authz_default class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::authz_default` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::apache_version
+
+### apache::mod::authz_user
+
+The apache::mod::authz_user class.
+
+### apache::mod::autoindex
+
+The apache::mod::autoindex class.
+
+### apache::mod::cache
+
+The apache::mod::cache class.
+
+### apache::mod::cgi
+
+The apache::mod::cgi class.
+
+### apache::mod::cgid
+
+The apache::mod::cgid class.
+
+### apache::mod::cluster
+
+The apache::mod::cluster class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::cluster` class.
+
+##### `allowed_network`
+
+Data type: `Any`
+
+
+
+##### `balancer_name`
+
+Data type: `Any`
+
+
+
+##### `ip`
+
+Data type: `Any`
+
+
+
+##### `version`
+
+Data type: `Any`
+
+
+
+##### `enable_mcpm_receive`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `port`
+
+Data type: `Any`
+
+
+
+Default value: '6666'
+
+##### `keep_alive_timeout`
+
+Data type: `Any`
+
+
+
+Default value: 60
+
+##### `manager_allowed_network`
+
+Data type: `Any`
+
+
+
+Default value: '127.0.0.1'
+
+##### `max_keep_alive_requests`
+
+Data type: `Any`
+
+
+
+Default value: 0
+
+##### `server_advertise`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `advertise_frequency`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::data
+
+The apache::mod::data class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::data` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::dav
+
+The apache::mod::dav class.
+
+### apache::mod::dav_fs
+
+The apache::mod::dav_fs class.
+
+### apache::mod::dav_svn
+
+The apache::mod::dav_svn class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::dav_svn` class.
+
+##### `authz_svn_enabled`
+
+Data type: `Any`
+
+
+
+Default value: `false`
+
+### apache::mod::dbd
+
+The apache::mod::dbd class.
+
+### apache::mod::deflate
+
+The apache::mod::deflate class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::deflate` class.
+
+##### `types`
+
+Data type: `Any`
+
+
+
+Default value: [
+    'text/html text/plain text/xml',
+    'text/css',
+    'application/x-javascript application/javascript application/ecmascript',
+    'application/rss+xml',
+    'application/json',
+  ]
+
+##### `notes`
+
+Data type: `Any`
+
+
+
+Default value: {
+    'Input'  => 'instream',
+    'Output' => 'outstream',
+    'Ratio'  => 'ratio',
+  }
+
+### apache::mod::dev
+
+The apache::mod::dev class.
+
 ### apache::mod::dir
 
 Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare DirectoryIndex statements in a vhost configuration
@@ -1309,6 +1710,590 @@ Data type: `Array[String]`
 
 
 Default value: ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml']
+
+### apache::mod::disk_cache
+
+The apache::mod::disk_cache class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::disk_cache` class.
+
+##### `cache_root`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `cache_ignore_headers`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::dumpio
+
+The apache::mod::dumpio class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::dumpio` class.
+
+##### `dump_io_input`
+
+Data type: `Enum['Off', 'On', 'off', 'on']`
+
+
+
+Default value: 'Off'
+
+##### `dump_io_output`
+
+Data type: `Enum['Off', 'On', 'off', 'on']`
+
+
+
+Default value: 'Off'
+
+### apache::mod::env
+
+The apache::mod::env class.
+
+### apache::mod::event
+
+The apache::mod::event class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::event` class.
+
+##### `startservers`
+
+Data type: `Any`
+
+
+
+Default value: '2'
+
+##### `maxclients`
+
+Data type: `Any`
+
+
+
+Default value: '150'
+
+##### `maxrequestworkers`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `minsparethreads`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `maxsparethreads`
+
+Data type: `Any`
+
+
+
+Default value: '75'
+
+##### `threadsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `maxrequestsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '0'
+
+##### `maxconnectionsperchild`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `serverlimit`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `threadlimit`
+
+Data type: `Any`
+
+
+
+Default value: '64'
+
+##### `listenbacklog`
+
+Data type: `Any`
+
+
+
+Default value: '511'
+
+### apache::mod::expires
+
+The apache::mod::expires class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::expires` class.
+
+##### `expires_active`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `expires_default`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `expires_by_type`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::ext_filter
+
+The apache::mod::ext_filter class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::ext_filter` class.
+
+##### `ext_filter_define`
+
+Data type: `Optional[Hash]`
+
+
+
+Default value: `undef`
+
+### apache::mod::fastcgi
+
+The apache::mod::fastcgi class.
+
+### apache::mod::fcgid
+
+The apache::mod::fcgid class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::fcgid` class.
+
+##### `options`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+### apache::mod::filter
+
+The apache::mod::filter class.
+
+### apache::mod::geoip
+
+The apache::mod::geoip class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::geoip` class.
+
+##### `enable`
+
+Data type: `Any`
+
+
+
+Default value: `false`
+
+##### `db_file`
+
+Data type: `Any`
+
+
+
+Default value: '/usr/share/GeoIP/GeoIP.dat'
+
+##### `flag`
+
+Data type: `Any`
+
+
+
+Default value: 'Standard'
+
+##### `output`
+
+Data type: `Any`
+
+
+
+Default value: 'All'
+
+##### `enable_utf8`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `scan_proxy_headers`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `scan_proxy_header_field`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `use_last_xforwarededfor_ip`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::headers
+
+The apache::mod::headers class.
+
+### apache::mod::http2
+
+The apache::mod::http2 class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::http2` class.
+
+##### `h2_copy_files`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_direct`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_early_hints`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_max_session_streams`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_max_worker_idle_seconds`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_max_workers`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_min_workers`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_modern_tls_only`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_push`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_push_diary_size`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_push_priority`
+
+Data type: `Array[String]`
+
+
+
+Default value: []
+
+##### `h2_push_resource`
+
+Data type: `Array[String]`
+
+
+
+Default value: []
+
+##### `h2_serialize_headers`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_stream_max_mem_size`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_tls_cool_down_secs`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_tls_warm_up_size`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `h2_upgrade`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `h2_window_size`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+### apache::mod::include
+
+The apache::mod::include class.
+
+### apache::mod::info
+
+The apache::mod::info class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::info` class.
+
+##### `allow_from`
+
+Data type: `Any`
+
+
+
+Default value: ['127.0.0.1','::1']
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `restrict_access`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `info_path`
+
+Data type: `Any`
+
+
+
+Default value: '/server-info'
+
+### apache::mod::intercept_form_submit
+
+The apache::mod::intercept_form_submit class.
+
+### apache::mod::itk
+
+The apache::mod::itk class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::itk` class.
+
+##### `startservers`
+
+Data type: `Any`
+
+
+
+Default value: '8'
+
+##### `minspareservers`
+
+Data type: `Any`
+
+
+
+Default value: '5'
+
+##### `maxspareservers`
+
+Data type: `Any`
+
+
+
+Default value: '20'
+
+##### `serverlimit`
+
+Data type: `Any`
+
+
+
+Default value: '256'
+
+##### `maxclients`
+
+Data type: `Any`
+
+
+
+Default value: '256'
+
+##### `maxrequestsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '4000'
+
+##### `enablecapabilities`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
 
 ### apache::mod::jk
 
@@ -1669,6 +2654,505 @@ Data type: `Any`
 
 
 Default value: {}
+
+### apache::mod::ldap
+
+The apache::mod::ldap class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::ldap` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_trusted_global_cert_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_trusted_global_cert_type`
+
+Data type: `Optional[String]`
+
+
+
+Default value: 'CA_BASE64'
+
+##### `ldap_shared_cache_size`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_cache_entries`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_cache_ttl`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_opcache_entries`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_opcache_ttl`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ldap_trusted_mode`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::lookup_identity
+
+The apache::mod::lookup_identity class.
+
+### apache::mod::macro
+
+The apache::mod::macro class.
+
+### apache::mod::mime
+
+The apache::mod::mime class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::mime` class.
+
+##### `mime_support_package`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::mime_support_package
+
+##### `mime_types_config`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::mime_types_config
+
+##### `mime_types_additional`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::mime_magic
+
+The apache::mod::mime_magic class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::mime_magic` class.
+
+##### `magic_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::negotiation
+
+The apache::mod::negotiation class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::negotiation` class.
+
+##### `force_language_priority`
+
+Data type: `Variant[Array[String], String]`
+
+
+
+Default value: 'Prefer Fallback'
+
+##### `language_priority`
+
+Data type: `Variant[Array[String], String]`
+
+
+
+Default value: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
+                        'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn',
+                        'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN',
+                        'zh-TW' ]
+
+### apache::mod::nss
+
+The apache::mod::nss class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::nss` class.
+
+##### `transfer_log`
+
+Data type: `Any`
+
+
+
+Default value: "${::apache::params::logroot}/access.log"
+
+##### `error_log`
+
+Data type: `Any`
+
+
+
+Default value: "${::apache::params::logroot}/error.log"
+
+##### `passwd_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `port`
+
+Data type: `Any`
+
+
+
+Default value: 8443
+
+### apache::mod::pagespeed
+
+The apache::mod::pagespeed class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::pagespeed` class.
+
+##### `inherit_vhost_config`
+
+Data type: `Any`
+
+
+
+Default value: 'on'
+
+##### `filter_xhtml`
+
+Data type: `Any`
+
+
+
+Default value: `false`
+
+##### `cache_path`
+
+Data type: `Any`
+
+
+
+Default value: '/var/cache/mod_pagespeed/'
+
+##### `log_dir`
+
+Data type: `Any`
+
+
+
+Default value: '/var/log/pagespeed'
+
+##### `memcache_servers`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `rewrite_level`
+
+Data type: `Any`
+
+
+
+Default value: 'CoreFilters'
+
+##### `disable_filters`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `enable_filters`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `forbid_filters`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `rewrite_deadline_per_flush_ms`
+
+Data type: `Any`
+
+
+
+Default value: 10
+
+##### `additional_domains`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `file_cache_size_kb`
+
+Data type: `Any`
+
+
+
+Default value: 102400
+
+##### `file_cache_clean_interval_ms`
+
+Data type: `Any`
+
+
+
+Default value: 3600000
+
+##### `lru_cache_per_process`
+
+Data type: `Any`
+
+
+
+Default value: 1024
+
+##### `lru_cache_byte_limit`
+
+Data type: `Any`
+
+
+
+Default value: 16384
+
+##### `css_flatten_max_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 2048
+
+##### `css_inline_max_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 2048
+
+##### `css_image_inline_max_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 2048
+
+##### `image_inline_max_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 2048
+
+##### `js_inline_max_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 2048
+
+##### `css_outline_min_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 3000
+
+##### `js_outline_min_bytes`
+
+Data type: `Any`
+
+
+
+Default value: 3000
+
+##### `inode_limit`
+
+Data type: `Any`
+
+
+
+Default value: 500000
+
+##### `image_max_rewrites_at_once`
+
+Data type: `Any`
+
+
+
+Default value: 8
+
+##### `num_rewrite_threads`
+
+Data type: `Any`
+
+
+
+Default value: 4
+
+##### `num_expensive_rewrite_threads`
+
+Data type: `Any`
+
+
+
+Default value: 4
+
+##### `collect_statistics`
+
+Data type: `Any`
+
+
+
+Default value: 'on'
+
+##### `statistics_logging`
+
+Data type: `Any`
+
+
+
+Default value: 'on'
+
+##### `allow_view_stats`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `allow_pagespeed_console`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `allow_pagespeed_message`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `message_buffer_size`
+
+Data type: `Any`
+
+
+
+Default value: 100000
+
+##### `additional_configuration`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
 
 ### apache::mod::passenger
 
@@ -2402,6 +3886,1333 @@ Data type: `Any`
 
 
 Default value: `undef`
+
+### apache::mod::perl
+
+The apache::mod::perl class.
+
+### apache::mod::peruser
+
+The apache::mod::peruser class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::peruser` class.
+
+##### `minspareprocessors`
+
+Data type: `Any`
+
+
+
+Default value: '2'
+
+##### `minprocessors`
+
+Data type: `Any`
+
+
+
+Default value: '2'
+
+##### `maxprocessors`
+
+Data type: `Any`
+
+
+
+Default value: '10'
+
+##### `maxclients`
+
+Data type: `Any`
+
+
+
+Default value: '150'
+
+##### `maxrequestsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '1000'
+
+##### `idletimeout`
+
+Data type: `Any`
+
+
+
+Default value: '120'
+
+##### `expiretimeout`
+
+Data type: `Any`
+
+
+
+Default value: '120'
+
+##### `keepalive`
+
+Data type: `Any`
+
+
+
+Default value: 'Off'
+
+### apache::mod::php
+
+The apache::mod::php class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::php` class.
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_ensure`
+
+Data type: `Any`
+
+
+
+Default value: 'present'
+
+##### `path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `extensions`
+
+Data type: `Array`
+
+
+
+Default value: ['.php']
+
+##### `content`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `template`
+
+Data type: `Any`
+
+
+
+Default value: 'apache/mod/php.conf.erb'
+
+##### `source`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `root_group`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::root_group
+
+##### `php_version`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::php_version
+
+##### `libphp_prefix`
+
+Data type: `Any`
+
+
+
+Default value: 'libphp'
+
+### apache::mod::prefork
+
+The apache::mod::prefork class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::prefork` class.
+
+##### `startservers`
+
+Data type: `Any`
+
+
+
+Default value: '8'
+
+##### `minspareservers`
+
+Data type: `Any`
+
+
+
+Default value: '5'
+
+##### `maxspareservers`
+
+Data type: `Any`
+
+
+
+Default value: '20'
+
+##### `serverlimit`
+
+Data type: `Any`
+
+
+
+Default value: '256'
+
+##### `maxclients`
+
+Data type: `Any`
+
+
+
+Default value: '256'
+
+##### `maxrequestworkers`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `maxrequestsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '4000'
+
+##### `maxconnectionsperchild`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `listenbacklog`
+
+Data type: `Any`
+
+
+
+Default value: '511'
+
+### apache::mod::proxy
+
+The apache::mod::proxy class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::proxy` class.
+
+##### `proxy_requests`
+
+Data type: `Any`
+
+
+
+Default value: 'Off'
+
+##### `allow_from`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `proxy_via`
+
+Data type: `Any`
+
+
+
+Default value: 'On'
+
+##### `proxy_timeout`
+
+Data type: `Any`
+
+
+
+Default value: '60'
+
+### apache::mod::proxy_ajp
+
+The apache::mod::proxy_ajp class.
+
+### apache::mod::proxy_balancer
+
+The apache::mod::proxy_balancer class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::proxy_balancer` class.
+
+##### `manager`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### `manager_path`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+Default value: '/balancer-manager'
+
+##### `allow_from`
+
+Data type: `Array`
+
+
+
+Default value: ['127.0.0.1','::1']
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::apache_version
+
+### apache::mod::proxy_connect
+
+The apache::mod::proxy_connect class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::proxy_connect` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::proxy_fcgi
+
+The apache::mod::proxy_fcgi class.
+
+### apache::mod::proxy_html
+
+The apache::mod::proxy_html class.
+
+### apache::mod::proxy_http
+
+The apache::mod::proxy_http class.
+
+### apache::mod::proxy_wstunnel
+
+The apache::mod::proxy_wstunnel class.
+
+### apache::mod::python
+
+The apache::mod::python class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::python` class.
+
+##### `loadfile_name`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+### apache::mod::remoteip
+
+The apache::mod::remoteip class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::remoteip` class.
+
+##### `header`
+
+Data type: `String`
+
+
+
+Default value: 'X-Forwarded-For'
+
+##### `internal_proxy`
+
+Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
+
+
+
+Default value: `undef`
+
+##### `proxy_ips`
+
+Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
+
+
+
+Default value: `undef`
+
+##### `internal_proxy_list`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### `proxies_header`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### `proxy_protocol`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### `proxy_protocol_exceptions`
+
+Data type: `Optional[Array[Stdlib::Host]]`
+
+
+
+Default value: `undef`
+
+##### `trusted_proxy`
+
+Data type: `Optional[Array[Stdlib::Host]]`
+
+
+
+Default value: `undef`
+
+##### `trusted_proxy_ips`
+
+Data type: `Optional[Array[Stdlib::Host]]`
+
+
+
+Default value: `undef`
+
+##### `trusted_proxy_list`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+### apache::mod::reqtimeout
+
+The apache::mod::reqtimeout class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::reqtimeout` class.
+
+##### `timeouts`
+
+Data type: `Any`
+
+
+
+Default value: ['header=20-40,minrate=500', 'body=10,minrate=500']
+
+### apache::mod::rewrite
+
+The apache::mod::rewrite class.
+
+### apache::mod::rpaf
+
+The apache::mod::rpaf class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::rpaf` class.
+
+##### `sethostname`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `proxy_ips`
+
+Data type: `Any`
+
+
+
+Default value: [ '127.0.0.1' ]
+
+##### `header`
+
+Data type: `Any`
+
+
+
+Default value: 'X-Forwarded-For'
+
+##### `template`
+
+Data type: `Any`
+
+
+
+Default value: 'apache/mod/rpaf.conf.erb'
+
+### apache::mod::security
+
+The apache::mod::security class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::security` class.
+
+##### `logroot`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::logroot
+
+##### `crs_package`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::modsec_crs_package
+
+##### `activated_rules`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::modsec_default_rules
+
+##### `modsec_dir`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::modsec_dir
+
+##### `modsec_secruleengine`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::modsec_secruleengine
+
+##### `audit_log_relevant_status`
+
+Data type: `Any`
+
+
+
+Default value: '^(?:5|4(?!04))'
+
+##### `audit_log_parts`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::modsec_audit_log_parts
+
+##### `secpcrematchlimit`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::secpcrematchlimit
+
+##### `secpcrematchlimitrecursion`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::secpcrematchlimitrecursion
+
+##### `allowed_methods`
+
+Data type: `Any`
+
+
+
+Default value: 'GET HEAD POST OPTIONS'
+
+##### `content_types`
+
+Data type: `Any`
+
+
+
+Default value: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'
+
+##### `restricted_extensions`
+
+Data type: `Any`
+
+
+
+Default value: '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/'
+
+##### `restricted_headers`
+
+Data type: `Any`
+
+
+
+Default value: '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'
+
+##### `secdefaultaction`
+
+Data type: `Any`
+
+
+
+Default value: 'deny'
+
+##### `anomaly_score_blocking`
+
+Data type: `Any`
+
+
+
+Default value: 'off'
+
+##### `inbound_anomaly_threshold`
+
+Data type: `Any`
+
+
+
+Default value: '5'
+
+##### `outbound_anomaly_threshold`
+
+Data type: `Any`
+
+
+
+Default value: '4'
+
+##### `critical_anomaly_score`
+
+Data type: `Any`
+
+
+
+Default value: '5'
+
+##### `error_anomaly_score`
+
+Data type: `Any`
+
+
+
+Default value: '4'
+
+##### `warning_anomaly_score`
+
+Data type: `Any`
+
+
+
+Default value: '3'
+
+##### `notice_anomaly_score`
+
+Data type: `Any`
+
+
+
+Default value: '2'
+
+##### `secrequestmaxnumargs`
+
+Data type: `Any`
+
+
+
+Default value: '255'
+
+##### `secrequestbodylimit`
+
+Data type: `Any`
+
+
+
+Default value: '13107200'
+
+##### `secrequestbodynofileslimit`
+
+Data type: `Any`
+
+
+
+Default value: '131072'
+
+##### `secrequestbodyinmemorylimit`
+
+Data type: `Any`
+
+
+
+Default value: '131072'
+
+##### `manage_security_crs`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+### apache::mod::setenvif
+
+The apache::mod::setenvif class.
+
+### apache::mod::shib
+
+The apache::mod::shib class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::shib` class.
+
+##### `suppress_warning`
+
+Data type: `Any`
+
+
+
+Default value: `false`
+
+##### `mod_full_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_lib`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::socache_shmcb
+
+The apache::mod::socache_shmcb class.
+
+### apache::mod::speling
+
+The apache::mod::speling class.
+
+### apache::mod::ssl
+
+The apache::mod::ssl class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::ssl` class.
+
+##### `ssl_compression`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### `ssl_cryptodevice`
+
+Data type: `Any`
+
+
+
+Default value: 'builtin'
+
+##### `ssl_options`
+
+Data type: `Any`
+
+
+
+Default value: [ 'StdEnvVars' ]
+
+##### `ssl_openssl_conf_cmd`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ssl_cert`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### `ssl_key`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### `ssl_ca`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ssl_cipher`
+
+Data type: `Any`
+
+
+
+Default value: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'
+
+##### `ssl_honorcipherorder`
+
+Data type: `Variant[Boolean, Enum['on', 'off']]`
+
+
+
+Default value: `true`
+
+##### `ssl_protocol`
+
+Data type: `Any`
+
+
+
+Default value: [ 'all', '-SSLv2', '-SSLv3' ]
+
+##### `ssl_proxy_protocol`
+
+Data type: `Array`
+
+
+
+Default value: []
+
+##### `ssl_pass_phrase_dialog`
+
+Data type: `Any`
+
+
+
+Default value: 'builtin'
+
+##### `ssl_random_seed_bytes`
+
+Data type: `Any`
+
+
+
+Default value: '512'
+
+##### `ssl_sessioncache`
+
+Data type: `String`
+
+
+
+Default value: $::apache::params::ssl_sessioncache
+
+##### `ssl_sessioncachetimeout`
+
+Data type: `Any`
+
+
+
+Default value: '300'
+
+##### `ssl_stapling`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### `ssl_stapling_return_errors`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `ssl_mutex`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::status
+
+See: http://httpd.apache.org/docs/current/mod/mod_status.html
+
+Parameters:
+Actions:
+- Enable and configure Apache mod_status
+
+Requires:
+- The apache class
+
+Sample Usage:
+
+ # Simple usage allowing access from localhost and a private subnet
+ class { 'apache::mod::status':
+   $allow_from => ['127.0.0.1', '10.10.10.10/24'],
+ }
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::status` class.
+
+##### `allow_from`
+
+Data type: `Optional[Array]`
+
+is an array of hosts, ip addresses, partial network numbers
+or networks in CIDR notation specifying what hosts can view the special
+/server-status URL.  Defaults to ['127.0.0.1', '::1'].
+> Creates Apache < 2.4 directive "Allow from"
+
+Default value: `undef`
+
+##### `requires`
+
+Data type: `Optional[Variant[String, Array, Hash]]`
+
+is either a:
+- String with:
+  - '' or 'unmanaged' - Host auth control done elsewhere
+  - 'ip <List of IPs>' - Allowed IPs/ranges
+  - 'host <List of names>' - Allowed names/domains
+  - 'all [granted|denied]'
+- Array of strings with ip or host as above
+- Hash with following keys:
+  - 'requires' - Value => Array as above
+  - 'enforce' - Value => String 'Any', 'All' or 'None'
+    This encloses "Require" directives in "<Require(Any|All|None)>" block
+    Optional - If unspecified, "Require" directives follow current flow
+> Creates Apache >= 2.4 directives "Require"
+
+Default value: `undef`
+
+##### `extended_status`
+
+Data type: `Enum['On', 'Off', 'on', 'off']`
+
+track and display extended status information. Valid
+values are 'On' or 'Off'.  Defaults to 'On'.
+
+Default value: 'On'
+
+##### `status_path`
+
+Data type: `Any`
+
+is the path assigned to the Location directive which
+defines the URL to access the server status. Defaults to '/server-status'.
+
+Default value: '/server-status'
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::suexec
+
+The apache::mod::suexec class.
+
+### apache::mod::suphp
+
+The apache::mod::suphp class.
+
+### apache::mod::userdir
+
+The apache::mod::userdir class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::userdir` class.
+
+##### `home`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `dir`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `disable_root`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `path`
+
+Data type: `Any`
+
+
+
+Default value: '/home/*/public_html'
+
+##### `overrides`
+
+Data type: `Any`
+
+
+
+Default value: [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]
+
+##### `options`
+
+Data type: `Any`
+
+
+
+Default value: [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ]
+
+### apache::mod::version
+
+The apache::mod::version class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::version` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::apache_version
+
+### apache::mod::vhost_alias
+
+The apache::mod::vhost_alias class.
+
+### apache::mod::worker
+
+The apache::mod::worker class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::worker` class.
+
+##### `startservers`
+
+Data type: `Any`
+
+
+
+Default value: '2'
+
+##### `maxclients`
+
+Data type: `Any`
+
+
+
+Default value: '150'
+
+##### `minsparethreads`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `maxsparethreads`
+
+Data type: `Any`
+
+
+
+Default value: '75'
+
+##### `threadsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `maxrequestsperchild`
+
+Data type: `Any`
+
+
+
+Default value: '0'
+
+##### `serverlimit`
+
+Data type: `Any`
+
+
+
+Default value: '25'
+
+##### `threadlimit`
+
+Data type: `Any`
+
+
+
+Default value: '64'
+
+##### `listenbacklog`
+
+Data type: `Any`
+
+
+
+Default value: '511'
+
+##### `apache_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::wsgi
+
+The apache::mod::wsgi class.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::wsgi` class.
+
+##### `wsgi_restrict_embedded`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `wsgi_socket_prefix`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::wsgi_socket_prefix
+
+##### `wsgi_python_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `wsgi_python_home`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `wsgi_python_optimize`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `wsgi_application_group`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `package_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::xsendfile
+
+The apache::mod::xsendfile class.
 
 ### apache::vhosts
 

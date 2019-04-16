@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::dav_svn (
   $authz_svn_enabled = false,
 ) {
