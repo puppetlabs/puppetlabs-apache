@@ -18,8 +18,8 @@ _Public Classes_
 * [`apache::mod::auth_mellon`](#apachemodauth_mellon): This class enables and configures Apache mod_auth_mellon
 * [`apache::mod::authn_core`](#apachemodauthn_core): This class enables Apache mod_authn_core
 * [`apache::mod::authn_dbd`](#apachemodauthn_dbd): This class enables Apache mod_authn_dbd
-* [`apache::mod::authn_file`](#apachemodauthn_file): 
-* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): 
+* [`apache::mod::authn_file`](#apachemodauthn_file): This class enables Apache mod_authn_file
+* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): This class enables Apache mod_authnz_ldap
 * [`apache::mod::authnz_pam`](#apachemodauthnz_pam): 
 * [`apache::mod::authz_default`](#apachemodauthz_default): 
 * [`apache::mod::authz_user`](#apachemodauthz_user): 
@@ -1389,13 +1389,13 @@ The following parameters are available in the `apache::mod::authn_dbd` class.
 
 Data type: `Any`
 
-
+The params needed for the mod to function.
 
 ##### `authn_dbd_dbdriver`
 
 Data type: `Any`
 
-
+Selects an apr_dbd driver by name.
 
 Default value: 'mysql'
 
@@ -1411,7 +1411,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Set the minimum number of connections per process.
 
 Default value: '4'
 
@@ -1419,7 +1419,7 @@ Default value: '4'
 
 Data type: `Any`
 
-
+Set the maximum number of connections per process.
 
 Default value: '20'
 
@@ -1427,7 +1427,7 @@ Default value: '20'
 
 Data type: `Any`
 
-
+Set the maximum number of connections per process to be sustained.
 
 Default value: '8'
 
@@ -1435,7 +1435,8 @@ Default value: '8'
 
 Data type: `Any`
 
-
+Set the time to keep idle connections alive when the number of
+connections specified in DBDKeep has been exceeded.
 
 Default value: '300'
 
@@ -1449,11 +1450,13 @@ Default value: `undef`
 
 ### apache::mod::authn_file
 
-The apache::mod::authn_file class.
+See [`Apache mod_authn_file`](https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html)
+for more information.
 
 ### apache::mod::authnz_ldap
 
-The apache::mod::authnz_ldap class.
+See [`Apache mod_authnz_ldap`](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html)
+for more information.
 
 #### Parameters
 
@@ -1463,7 +1466,7 @@ The following parameters are available in the `apache::mod::authnz_ldap` class.
 
 Data type: `Boolean`
 
-
+Whether to force te verification of a server cert or not.
 
 Default value: `true`
 
@@ -1471,7 +1474,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+The name of the ldap package
 
 Default value: `undef`
 

@@ -1,3 +1,14 @@
+# @summary
+#   This class enables Apache mod_authnz_ldap
+# 
+# @param verify_server_cert
+#   Whether to force te verification of a server cert or not.
+# 
+# @param package_name
+#   The name of the ldap package
+# 
+# See [`Apache mod_authnz_ldap`](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html) 
+# for more information.
 class apache::mod::authnz_ldap (
   Boolean $verify_server_cert = true,
   $package_name               = undef,
