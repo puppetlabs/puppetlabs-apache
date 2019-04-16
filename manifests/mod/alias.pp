@@ -1,4 +1,17 @@
-# @api private
+# @summary
+#   This class enables and configues Apache mod_alias
+# 
+# @param apache_version
+#   The version of Apache, if not set will be retrieved from the init class.
+# 
+# @param icons_options
+#   Passes through alias options
+# 
+# @param icons_path
+#   The directory files will be stored in
+# 
+# See [`Apache mod_alias`](https://httpd.apache.org/docs/2.4/mod/mod_alias.html) 
+# for more information.
 class apache::mod::alias(
   $apache_version = undef,
   $icons_options  = 'Indexes MultiViews',

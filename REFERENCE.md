@@ -9,6 +9,13 @@ _Public Classes_
 
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
 * [`apache::dev`](#apachedev): Installs Apache development libraries.
+* [`apache::mod::actions`](#apachemodactions): This class enables Apache mod_actions
+* [`apache::mod::alias`](#apachemodalias): This class enables and configues Apache mod_alias
+* [`apache::mod::auth_basic`](#apachemodauth_basic): This class enables Apache mod_auth_basic
+* [`apache::mod::auth_cas`](#apachemodauth_cas): This class enables Apache mod_auth_cas
+* [`apache::mod::dir`](#apachemoddir): Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare Direct
+* [`apache::mod::jk`](#apachemodjk): Class apache::mod::jk  Manages mod_jk connector  All parameters are optional. When undefined, some receive default values, while others cause
+* [`apache::mod::passenger`](#apachemodpassenger): Manages the settings for the mod_passenger The result is the /etc/mods-available/mod_passenger.conf file  Where do we get these settings?   S
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -16,10 +23,6 @@ _Private Classes_
 * `apache::confd::no_accf`: 
 * `apache::default_confd_files`: 
 * `apache::default_mods`: 
-* `apache::mod::actions`: 
-* `apache::mod::alias`: 
-* `apache::mod::auth_basic`: 
-* `apache::mod::auth_cas`: 
 * `apache::mod::auth_gssapi`: 
 * `apache::mod::auth_kerb`: 
 * `apache::mod::auth_mellon`: 
@@ -42,7 +45,6 @@ _Private Classes_
 * `apache::mod::dbd`: 
 * `apache::mod::deflate`: 
 * `apache::mod::dev`: 
-* `apache::mod::dir`: 
 * `apache::mod::disk_cache`: 
 * `apache::mod::dumpio`: 
 * `apache::mod::env`: 
@@ -59,7 +61,6 @@ _Private Classes_
 * `apache::mod::info`: 
 * `apache::mod::intercept_form_submit`: 
 * `apache::mod::itk`: 
-* `apache::mod::jk`: 
 * `apache::mod::ldap`: 
 * `apache::mod::lookup_identity`: 
 * `apache::mod::macro`: 
@@ -68,7 +69,6 @@ _Private Classes_
 * `apache::mod::negotiation`: 
 * `apache::mod::nss`: 
 * `apache::mod::pagespeed`: 
-* `apache::mod::passenger`: 
 * `apache::mod::perl`: 
 * `apache::mod::peruser`: 
 * `apache::mod::php`: 
@@ -1033,6 +1033,1375 @@ class, based on your operating system:
 - **FreeBSD**: `undef`; on FreeBSD, you must declare the `apache::package` or `apache` classes before declaring `apache::dev`.
 - **Gentoo**: `undef`.
 - **Red Hat**: `httpd-devel`.
+
+### apache::mod::actions
+
+See [`Apache mod_Actions`](https://httpd.apache.org/docs/2.4/mod/mod_actions.html)
+for more information.
+
+### apache::mod::alias
+
+See [`Apache mod_alias`](https://httpd.apache.org/docs/2.4/mod/mod_alias.html)
+for more information.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::alias` class.
+
+##### `apache_version`
+
+Data type: `Any`
+
+The version of Apache, if not set will be retrieved from the init class.
+
+Default value: `undef`
+
+##### `icons_options`
+
+Data type: `Any`
+
+Passes through alias options
+
+Default value: 'Indexes MultiViews'
+
+##### `icons_path`
+
+Data type: `Any`
+
+The directory files will be stored in
+
+Default value: $::apache::params::alias_icons_path
+
+### apache::mod::auth_basic
+
+See [`Apache mod_auth_basic`](https://httpd.apache.org/docs/2.4/mod/mod_auth_basic.html)
+for more information.
+
+### apache::mod::auth_cas
+
+This class enables Apache mod_auth_cas
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::auth_cas` class.
+
+##### `cas_login_url`
+
+Data type: `String`
+
+Sets the URL to which the module redirects users when they attempt to access a
+CAS-protected resource and don't have an active session.
+
+##### `cas_validate_url`
+
+Data type: `String`
+
+Sets the URL to use when validating a client-presented ticket in an HTTP query string.
+
+##### `cas_cookie_path`
+
+Data type: `String`
+
+Sets the location where information on the current session should be stored. This should
+be writable by the web server only.
+
+Default value: $::apache::params::cas_cookie_path
+
+##### `cas_cookie_path_mode`
+
+Data type: `Any`
+
+
+
+Default value: '0750'
+
+##### `cas_version`
+
+Data type: `Any`
+
+The version of the CAS protocol to adhere to.
+
+Default value: 2
+
+##### `cas_debug`
+
+Data type: `Any`
+
+Whether to enable or disable debug mode.
+
+Default value: 'Off'
+
+##### `cas_validate_server`
+
+Data type: `Any`
+
+Whether to validate the presented certificate. This has been deprecated and
+removed from Version 1.1-RC1 onward.
+
+Default value: `undef`
+
+##### `cas_validatedepth`
+
+The maximum depth for chained certificate validation.
+
+##### `cas_proxy_validate_url`
+
+Data type: `Any`
+
+The URL to use when performing a proxy validation.
+
+Default value: `undef`
+
+##### `cas_root_proxied_as`
+
+Data type: `Any`
+
+Sets the URL end users see when access to this Apache server is proxied per vhost.
+This URL should not include a trailing slash.
+
+Default value: `undef`
+
+##### `cas_cookie_entropy`
+
+Data type: `Any`
+
+When creating a local session, this many random bytes are used to create a unique
+session identifier.
+
+Default value: `undef`
+
+##### `cas_timeout`
+
+Data type: `Any`
+
+The hard limit, in seconds, for a mod_auth_cas session.
+
+Default value: `undef`
+
+##### `cas_idle_timeout`
+
+Data type: `Any`
+
+The limit, in seconds, of how long a mod_auth_cas session can be idle.
+
+Default value: `undef`
+
+##### `cas_cache_clean_interval`
+
+Data type: `Any`
+
+The minimum amount of time that must pass inbetween cache cleanings.
+
+Default value: `undef`
+
+##### `cas_cookie_domain`
+
+Data type: `Any`
+
+The value for the 'Domain=' parameter in the Set-Cookie header.
+
+Default value: `undef`
+
+##### `cas_cookie_http_only`
+
+Data type: `Any`
+
+Setting this flag prevents the mod_auth_cas cookies from being accessed by
+client side Javascript.
+
+Default value: `undef`
+
+##### `cas_authoritative`
+
+Data type: `Any`
+
+Determines whether an optional authorization directive is authoritative and thus binding.
+
+Default value: `undef`
+
+##### `cas_validate_saml`
+
+Data type: `Any`
+
+Parse response from CAS server for SAML.
+
+Default value: `undef`
+
+##### `cas_sso_enabled`
+
+Data type: `Any`
+
+Enables experimental support for single sign out (may mangle POST data).
+
+Default value: `undef`
+
+##### `cas_attribute_prefix`
+
+Data type: `Any`
+
+Adds a header with the value of this header being the attribute values when SAML
+validation is enabled.
+
+Default value: `undef`
+
+##### `cas_attribute_delimiter`
+
+Data type: `Any`
+
+Sets the delimiter between attribute values in the header created by `cas_attribute_prefix`.
+
+Default value: `undef`
+
+##### `cas_scrub_request_headers`
+
+Data type: `Any`
+
+Remove inbound request headers that may have special meaning within mod_auth_cas.
+
+Default value: `undef`
+
+##### `suppress_warning`
+
+Data type: `Any`
+
+
+
+Default value: `false`
+
+##### `cas_validate_depth`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `cas_certificate_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+### apache::mod::dir
+
+Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare DirectoryIndex statements in a vhost configuration
+Parameters:
+- $indexes provides a string for the DirectoryIndex directive http://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::dir` class.
+
+##### `dir`
+
+Data type: `Any`
+
+
+
+Default value: 'public_html'
+
+##### `indexes`
+
+Data type: `Array[String]`
+
+
+
+Default value: ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml']
+
+### apache::mod::jk
+
+Class apache::mod::jk
+
+Manages mod_jk connector
+
+All parameters are optional. When undefined, some receive default values,
+while others cause an optional directive to be absent
+
+For help on parameters, pls see official reference at:
+https://tomcat.apache.org/connectors-doc/reference/apache.html
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::jk` class.
+
+##### `ip`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### `port`
+
+Data type: `Integer`
+
+
+
+Default value: 80
+
+##### `add_listen`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### `workers_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `worker_property`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `logroot`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `shm_file`
+
+Data type: `Any`
+
+
+
+Default value: 'jk-runtime-status'
+
+##### `shm_size`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mount_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mount_file_reload`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mount`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `un_mount`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `auto_alias`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mount_copy`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `worker_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `watchdog_interval`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `log_file`
+
+Data type: `Any`
+
+
+
+Default value: 'mod_jk.log'
+
+##### `log_level`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `log_stamp_format`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `request_log_format`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `extract_ssl`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `https_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `sslprotocol_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `certs_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `cipher_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `certchain_prefix`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `session_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `keysize_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `local_name_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `ignore_cl_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `local_addr_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `local_port_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `remote_host_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `remote_addr_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `remote_port_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `remote_user_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `auth_type_indicator`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `options`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `env_var`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `strip_session`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `location_list`
+
+Data type: `Any`
+
+
+
+Default value: []
+
+##### `workers_file_content`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+##### `mount_file_content`
+
+Data type: `Any`
+
+
+
+Default value: {}
+
+### apache::mod::passenger
+
+Manages the settings for the mod_passenger
+The result is the /etc/mods-available/mod_passenger.conf file
+
+Where do we get these settings?
+  Settings are dervied from https://www.phusionpassenger.com/library/config/apache/reference
+  Also in passenger source code you can strip out what are all the available options by looking in
+    * src/apache2_module/Configuration.cpp
+    * src/apache2_module/ConfigurationCommands.cpp
+  Note: in the src there are several undocumented settings.
+
+Change Log:
+  * As of 08/13/2017 there are 84 available/deprecated/removed settings.
+  * Around 08/20/2017 UnionStation was discontinued options were removed.
+  * As of 08/20/2017 there are 77 available/deprecated/removed settings.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::passenger` class.
+
+##### `manage_repo`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### `mod_id`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_lib`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_lib_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_package`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_package_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `mod_path`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_allow_encoded_slashes`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_app_env`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_app_group_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_app_root`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_app_type`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_base_uri`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_buffer_response`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_buffer_upload`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_concurrency_model`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_conf_file`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::passenger_conf_file
+
+##### `passenger_conf_package_file`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::passenger_conf_package_file
+
+##### `passenger_data_buffer_dir`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_debug_log_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_debugger`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_default_group`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_default_ruby`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::passenger_default_ruby
+
+##### `passenger_default_user`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_disable_security_update_check`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_enabled`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_error_override`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_file_descriptor_log_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_fly_with`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_force_max_concurrent_requests_per_process`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_friendly_error_pages`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_group`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_high_performance`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_installed_version`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_instance_registry_dir`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_load_shell_envvars`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_log_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### `passenger_log_level`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_lve_min_uid`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_instances`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_instances_per_app`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_pool_size`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_preloader_idle_time`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_request_queue_size`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_request_time`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_max_requests`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_memory_limit`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_meteor_app_settings`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_min_instances`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_nodejs`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_pool_idle_time`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_pre_start`
+
+Data type: `Optional[Variant[String,Array[String]]]`
+
+
+
+Default value: `undef`
+
+##### `passenger_python`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_resist_deployment_errors`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_resolve_symlinks_in_document_root`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_response_buffer_high_watermark`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_restart_dir`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_rolling_restarts`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_root`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::passenger_root
+
+##### `passenger_ruby`
+
+Data type: `Any`
+
+
+
+Default value: $::apache::params::passenger_ruby
+
+##### `passenger_security_update_check_proxy`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_show_version_in_header`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_socket_backlog`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_spawn_method`
+
+Data type: `Optional[Enum['smart', 'direct', 'smart-lv2', 'conservative']]`
+
+
+
+Default value: `undef`
+
+##### `passenger_start_timeout`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_startup_file`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_stat_throttle_rate`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_sticky_sessions`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_sticky_sessions_cookie_name`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_thread_count`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_use_global_queue`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_user`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `passenger_user_switching`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rack_auto_detect`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rack_autodetect`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rack_base_uri`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rack_env`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_allow_mod_rewrite`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_app_spawner_idle_time`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_auto_detect`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_autodetect`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_base_uri`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_default_user`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_env`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_framework_spawner_idle_time`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_ruby`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_spawn_method`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `rails_user_switching`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `wsgi_auto_detect`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
 
 ### apache::vhosts
 
