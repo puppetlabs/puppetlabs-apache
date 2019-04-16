@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::rpaf (
   $sethostname = true,
   $proxy_ips   = [ '127.0.0.1' ],

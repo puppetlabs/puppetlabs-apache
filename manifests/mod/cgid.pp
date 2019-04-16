@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::cgid {
   include ::apache
   case $::osfamily {

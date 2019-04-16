@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::dumpio(
   Enum['Off', 'On', 'off', 'on'] $dump_io_input  = 'Off',
   Enum['Off', 'On', 'off', 'on'] $dump_io_output = 'Off',

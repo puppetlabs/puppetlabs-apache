@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::fcgid(
   $options = {},
 ) {

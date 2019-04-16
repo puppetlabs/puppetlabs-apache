@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::authnz_ldap (
   Boolean $verify_server_cert = true,
   $package_name               = undef,

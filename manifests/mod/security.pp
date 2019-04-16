@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::security (
   $logroot                    = $::apache::params::logroot,
   $crs_package                 = $::apache::params::modsec_crs_package,

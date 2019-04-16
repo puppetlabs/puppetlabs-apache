@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::disk_cache (
   $cache_root           = undef,
   $cache_ignore_headers = undef,

@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::setenvif {
   include ::apache
   ::apache::mod { 'setenvif': }

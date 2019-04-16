@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::version(
   $apache_version = $::apache::apache_version
 ) {

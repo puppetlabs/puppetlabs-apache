@@ -1,4 +1,4 @@
-# @api private
+
 #
 # @summary
 #   This class enables and configures Apache mod_status

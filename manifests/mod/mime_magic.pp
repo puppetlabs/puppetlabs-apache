@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::mime_magic (
   $magic_file = undef,
 ) {

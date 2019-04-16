@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::proxy_connect (
   $apache_version  = undef,
 ) {

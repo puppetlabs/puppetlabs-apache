@@ -50,7 +50,7 @@
 #   (optional)
 #   Default is $::apache::apache_version
 #
-# @api private
+
 class apache::mod::worker (
   $startservers        = '2',
   $maxclients          = '150',

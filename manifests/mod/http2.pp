@@ -1,4 +1,4 @@
-# @api private
+
 class apache::mod::http2 (
   Optional[Boolean] $h2_copy_files              = undef,
   Optional[Boolean] $h2_direct                  = undef,

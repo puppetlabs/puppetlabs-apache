@@ -1,4 +1,3 @@
-# @api private
 class apache::mod::data (
   $apache_version = undef,
 ) {
