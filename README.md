@@ -803,11 +803,12 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
 ## Reference
 
 ### Public Classes
-For information on the classes and types, see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-java/blob/master/REFERENCE.md). Shown below is a generic reference for any `apache::mod::*` classes or types that may be present within the module, but not strictly supported, as well as some information regarding the Templates, Tasks and Functions that are part of the module.
+
+For information on classes and types, see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-java/blob/master/REFERENCE.md). For reference information on `apache::mod::*` classes or types that might be present in the module, but are not supported, see below. For information on the templates, tasks and functions in the module, see below.
 
 #### Classes: `apache::mod::<MODULE NAME>`
 
-Enables specific Apache modules. Enable and configure an Apache module by declaring its class.
+Enable and configure specific Apache modules by declaring the class.
 
 For example, to install and enable `mod_alias` with no icons, declare the `apache::mod::alias` class with the `icons_options` parameter set to 'None':
 
@@ -901,7 +902,7 @@ The following Apache modules have supported classes, many of which allow for par
 * `wsgi` (see [`apache::mod::wsgi`][])
 * `xsendfile`
 
-Modules noted with a * indicate that the module has settings and a template that includes parameters to configure the module. Most Apache module class parameters have default values and don't require configuration. For modules with templates, Puppet installs template files with the module; these template files are required for the module to work.
+Modules noted with a * have settings and a template with parameters that allow you to configure the module. Most Apache module class parameters have default values and don't require configuration. For modules with templates, Puppet installs template files with the module. The template files are required for the module to work.
 
 ### Templates
 
