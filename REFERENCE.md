@@ -2759,7 +2759,7 @@ Default value: `undef`
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxPreloaderIdleTime](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpreloaderidletime),
-the maximum amount of time the preloader will wait before shutting down and idle process.
+the maximum amount of time the preloader waits before shutting down an idle process.
 
 Default value: `undef`
 
@@ -2891,9 +2891,9 @@ Default value: `undef`
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxRequestQueueSize](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize),
-to specify the maximum ammount of requests that will be allow to queue whenever the maximum
+to specify the maximum amount of requests that are allowed to queue whenever the maximum
 concurrent request limit is reached. If the queue is already at this specified limit, then
-Passenger will immediately send a "503 Service Unavailable" error to any incoming requests.<br />
+Passenger immediately sends a "503 Service Unavailable" error to any incoming requests.<br />
 A value of 0 means that the queue size is unbounded.
 
 Default value: `undef`
@@ -2903,9 +2903,9 @@ Default value: `undef`
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxRequestQueueTime](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuetime),
-to specify the maximum ammount of time that requests that will be allow to stay in the queue
+to specify the maximum amount of time that requests are allowed to stay in the queue
 whenever the maximum concurrent request limit is reached. If a request reaches this specified
-limit, then Passenger will send a "504 Gateway Timeout" error for that request.<br />
+limit, then Passenger immeaditly sends a "504 Gateway Timeout" error for that request.<br />
 A value of 0 means that the queue time is unbounded.
 
 Default value: `undef`
@@ -2944,7 +2944,7 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 Sets [PassengerDebugger](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdebugger),
-to turns support for Ruby application debugging on or off.
+to turn support for Ruby application debugging on or off.
 
 Default value: `undef`
 
@@ -2953,7 +2953,7 @@ Default value: `undef`
 Data type: `Optional[Integer]`
 
 Sets [PassengerLveMinUid](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlveminuid),
-to only allow the spawning of applicationprocesses with UIDs equal to, or higher than, this
+to only allow the spawning of application processes with UIDs equal to, or higher than, this
 specified value on LVE-enabled kernels.
 
 Default value: `undef`
