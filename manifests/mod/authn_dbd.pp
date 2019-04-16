@@ -1,4 +1,31 @@
-# @api private
+# @summary
+#   This class enables Apache mod_authn_dbd
+# 
+# @param authn_dbd_params
+#   The params needed for the mod to function.
+#   
+# @param authn_dbd_dbdriver
+#   Selects an apr_dbd driver by name.
+#   
+# @param authn_dbd_query
+#   
+# @param authn_dbd_min
+#   Set the minimum number of connections per process.
+#   
+# @param authn_dbd_max
+#   Set the maximum number of connections per process.
+#   
+# @param authn_dbd_keep
+#   Set the maximum number of connections per process to be sustained.
+#   
+# @param authn_dbd_exptime
+#   Set the time to keep idle connections alive when the number of 
+#   connections specified in DBDKeep has been exceeded.
+#   
+# @param authn_dbd_alias
+# 
+# See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/2.4/mod/mod_authn_dbd.html) 
+# for more information.
 class apache::mod::authn_dbd (
   $authn_dbd_params,
   $authn_dbd_dbdriver    = 'mysql',
