@@ -46,8 +46,6 @@ appveyor.yml:
   default_configs:
     inherit_from: .rubocop_todo.yml
 
-
 spec/spec_helper.rb:
-  delete: true
   mock_with: ':rspec'
   coverage_report: true
