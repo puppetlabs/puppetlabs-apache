@@ -438,6 +438,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^AllowEncodedSlashes nodecode$} }
     end
+
     describe 'Alternate confd/mod/vhosts directory when specifying default character set' do
       let :params do
         {
@@ -626,6 +627,40 @@ describe 'apache', type: :class do
       end
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^EnableSendfile Off\n} }
+    end
+
+    describe 'hostname lookup with invalid value' do
+      let :params do
+        { hostname_lookups: 'foo' }
+      end
+
+      it 'fails' do
+        expect {
+          catalogue
+        }.to raise_error(Puppet::Error, %r{Evaluation Error})
+      end
+    end
+    describe 'hostname_lookups On' do
+      let :params do
+        { hostname_lookups: 'On' }
+      end
+
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups On\n} }
+    end
+    describe 'hostname_lookups Off' do
+      let :params do
+        { hostname_lookups: 'Off' }
+      end
+
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups Off\n} }
+    end
+
+    describe 'hostname_lookups Double' do
+      let :params do
+        { hostname_lookups: 'Double' }
+      end
+
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups Double\n} }
     end
 
     context 'on Fedora 21' do

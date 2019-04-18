@@ -66,6 +66,20 @@ describe 'apache::mod::wsgi', type: :class do
 
       it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIPythonHome "\/path\/to\/virtenv"$}) }
     end
+    describe 'with custom WSGIApplicationGroup' do
+      let :params do
+        { wsgi_application_group: '%{GLOBAL}' }
+      end
+
+      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIApplicationGroup "%{GLOBAL}"$}) }
+    end
+    describe 'with custom WSGIPythonOptimize' do
+      let :params do
+        { wsgi_python_optimize: 1 }
+      end
+
+      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIPythonOptimize 1$}) }
+    end
     describe 'with custom package_name and mod_path' do
       let :params do
         {

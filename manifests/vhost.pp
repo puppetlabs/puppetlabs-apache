@@ -10,6 +10,8 @@ define apache::vhost(
   $docroot_owner                                                                    = 'root',
   $docroot_group                                                                    = $::apache::params::root_group,
   $docroot_mode                                                                     = undef,
+  Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                                   = [],
+  Optional[Boolean] $protocols_honor_order                                          = undef,
   $serveradmin                                                                      = undef,
   Boolean $ssl                                                                      = false,
   $ssl_cert                                                                         = $::apache::default_ssl_cert,
@@ -133,6 +135,23 @@ define apache::vhost(
   $apache_version                                                                   = $::apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                    = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                           = undef,
+
+  Optional[Boolean] $h2_copy_files                                                  = undef,
+  Optional[Boolean] $h2_direct                                                      = undef,
+  Optional[Boolean] $h2_early_hints                                                 = undef,
+  Optional[Integer] $h2_max_session_streams                                         = undef,
+  Optional[Boolean] $h2_modern_tls_only                                             = undef,
+  Optional[Boolean] $h2_push                                                        = undef,
+  Optional[Integer] $h2_push_diary_size                                             = undef,
+  Array[String]     $h2_push_priority                                               = [],
+  Array[String]     $h2_push_resource                                               = [],
+  Optional[Boolean] $h2_serialize_headers                                           = undef,
+  Optional[Integer] $h2_stream_max_mem_size                                         = undef,
+  Optional[Integer] $h2_tls_cool_down_secs                                          = undef,
+  Optional[Integer] $h2_tls_warm_up_size                                            = undef,
+  Optional[Boolean] $h2_upgrade                                                     = undef,
+  Optional[Integer] $h2_window_size                                                 = undef,
+
   Optional[Boolean] $passenger_enabled                                              = undef,
   Optional[String] $passenger_base_uri                                              = undef,
   Optional[Stdlib::Absolutepath] $passenger_ruby                                    = undef,
@@ -198,6 +217,7 @@ define apache::vhost(
   $max_keepalive_requests                                                           = undef,
   $cas_attribute_prefix                                                             = undef,
   $cas_attribute_delimiter                                                          = undef,
+  $cas_root_proxied_as                                                              = undef,
   $cas_scrub_request_headers                                                        = undef,
   $cas_sso_enabled                                                                  = undef,
   $cas_login_url                                                                    = undef,
@@ -551,9 +571,13 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $comment
   # - $nvh_addr_port
   # - $servername
   # - $serveradmin
+  # - $protocols
+  # - $protocols_honor_order
+  # - $apache_version
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
     order   => 0,
@@ -947,6 +971,16 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 290,
       content => template('apache/vhost/_suexec.erb'),
+    }
+  }
+
+  if $h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef {
+    include ::apache::mod::http2
+
+    concat::fragment { "${name}-http2":
+      target  => "${priority_real}${filename}.conf",
+      order   => 300,
+      content => template('apache/vhost/_http2.erb'),
     }
   }
 

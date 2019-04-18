@@ -1,4 +1,11 @@
 ---
+.gitlab-ci.yml:
+  unmanaged: true
+
+.gitignore:
+  required:
+    - ---.project
+
 .travis.yml:
   global_env:
     - PARALLEL_TEST_PROCESSORS=16  
@@ -39,5 +46,6 @@ appveyor.yml:
   default_configs:
     inherit_from: .rubocop_todo.yml
 
-.gitlab-ci.yml:
-  unmanaged: true
+spec/spec_helper.rb:
+  mock_with: ':rspec'
+  coverage_report: true

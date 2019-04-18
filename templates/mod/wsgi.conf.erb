@@ -13,4 +13,10 @@
   <%- if @wsgi_python_path -%>
   WSGIPythonPath "<%= @wsgi_python_path %>"
   <%- end -%>
+  <%- if @wsgi_application_group -%>
+  WSGIApplicationGroup "<%= @wsgi_application_group %>"
+  <%- end -%>
+  <%- if @wsgi_python_optimize -%>
+  WSGIPythonOptimize <%= @wsgi_python_optimize %>
+  <%- end -%>
 </IfModule>
