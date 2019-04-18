@@ -324,6 +324,7 @@ define apache::vhost(
       mode    => $logroot_mode,
       require => Package['httpd'],
       before  => Concat["${priority_real}${filename}.conf"],
+      notify  => Class['Apache::Service'],
     }
   }
 
