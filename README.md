@@ -2724,7 +2724,7 @@ class { 'apache::mod::ldap':
 
 * `package_name`: Specifies the custom package name.
 
-  Default: `undef`.
+  Default: `mod_ldap`.
 
 ##### Class: `apache::mod::negotiation`
 
