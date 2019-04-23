@@ -74,5 +74,17 @@ describe 'apache::mod::authnz_ldap', type: :class do
         expect { is_expected.to raise_error Puppet::Error }
       end
     end
+
+    context 'SCL' do
+      let(:pre_condition) do
+        "class { 'apache::version':
+          scl_httpd_version => '2.4',
+          scl_php_version   => '7.0',
+        }
+        include apache"
+      end
+
+      it { is_expected.to contain_package('httpd24-mod_ldap') }
+    end
   end # Redhat
 end
