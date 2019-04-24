@@ -114,7 +114,7 @@ define apache::vhost(
   $block                                                                            = [],
   Enum['absent', 'present'] $ensure                                                 = 'present',
   $wsgi_application_group                                                           = undef,
-  $wsgi_daemon_process                                                              = undef,
+  Optional[Variant[String,Hash]] $wsgi_daemon_process                               = undef,
   Optional[Hash] $wsgi_daemon_process_options                                       = undef,
   $wsgi_import_script                                                               = undef,
   Optional[Hash] $wsgi_import_script_options                                        = undef,
@@ -933,6 +933,9 @@ define apache::vhost(
   # - $wsgi_process_group
   # - $wsgi_script_aliases
   # - $wsgi_pass_authorization
+  if $wsgi_daemon_process_options {
+    deprecation('apache::vhost::wsgi_daemon_process_options', 'This parameter is deprecated. Please add values inside Hash `wsgi_daemon_process`.')
+  }
   if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
     concat::fragment { "${name}-wsgi":
       target  => "${priority_real}${filename}.conf",
