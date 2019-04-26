@@ -56,6 +56,7 @@ class apache::mod::ldap (
   $ldap_opcache_entries                            = undef,
   $ldap_opcache_ttl                                = undef,
   $ldap_trusted_mode                               = undef,
+  String $ldap_path                                = '/ldap-status',
 ){
 
   include ::apache

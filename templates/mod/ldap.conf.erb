@@ -1,4 +1,4 @@
-<Location /ldap-status>
+<Location <%= @ldap_path %>>
     SetHandler ldap-status
     <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1
