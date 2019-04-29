@@ -24,7 +24,7 @@
 #   
 # @param authn_dbd_alias
 # 
-# See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/2.4/mod/mod_authn_dbd.html) 
+# See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html) 
 # for more information.
 class apache::mod::authn_dbd (
   $authn_dbd_params,

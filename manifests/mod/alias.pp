@@ -10,7 +10,7 @@
 # @param icons_path
 #   The directory files will be stored in
 # 
-# See [`Apache mod_alias`](https://httpd.apache.org/docs/2.4/mod/mod_alias.html) 
+# See [`Apache mod_alias`](https://httpd.apache.org/docs/current/mod/mod_alias.html) 
 # for more information.
 class apache::mod::alias(
   $apache_version = undef,
