@@ -125,7 +125,7 @@ Apache server's or a virtual host's listening address and port.
 * [`apache::mod`](#apachemod): Installs packages for an Apache module that doesn't have a corresponding
 `apache::mod::<MODULE NAME>` class.
 * [`apache::namevirtualhost`](#apachenamevirtualhost): Enables name-based virtual hosts
-* [`apache::vhost`](#apachevhost): Allows specialised cnfigurations for virtual hosts that possess requirements
+* [`apache::vhost`](#apachevhost): Allows specialised configurations for virtual hosts that possess requirements
 outside of the defaults.
 * [`apache::vhost::custom`](#apachevhostcustom): A wrapper around the `apache::custom_config` defined type.
 
@@ -2978,7 +2978,7 @@ Data type: `Any`
 If this directive is set to On in some virtual server, the session IDs ;jsessionid=... will be removed for URLs which are not
 forwarded but instead are handled by the local server.
 
-Default value: []
+Default value: `undef`
 
 ##### `workers_file_content`
 
@@ -3059,6 +3059,14 @@ $mount_file_content = {
 ```
 
 Default value: {}
+
+##### `location_list`
+
+Data type: `Any`
+
+
+
+Default value: []
 
 ### apache::mod::ldap
 
@@ -8395,7 +8403,7 @@ Default value: `false`
 
 ##### `wsgi_daemon_process`
 
-Data type: `Any`
+Data type: `Optional[Variant[String,Hash]]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 wsgi_daemon_process_options, wsgi_process_group,
@@ -9151,40 +9159,40 @@ The input that is to be hashed.
 
 Type: Ruby 4.x API
 
-Given a nil value (undef), bool2httpd will return 'Off'
+Transform a supposed boolean to On or Off. Passes all other values through.
 
-Example:
-```
+#### Examples
+
+##### 
+
+```puppet
 $trace_enable     = false
 $server_signature = 'mail'
 
-bool2httpd($trace_enable)
-=> 'Off'
-bool2httpd($server_signature)
-=> 'mail'
-bool2httpd(undef)
-=> 'Off'
+bool2httpd($trace_enable) # returns 'Off'
+bool2httpd($server_signature) # returns 'mail'
+bool2httpd(undef) # returns 'Off'
 ```
 
 #### `apache::bool2httpd(Any $arg)`
 
-Given a nil value (undef), bool2httpd will return 'Off'
-
-Example:
-```
-$trace_enable     = false
-$server_signature = 'mail'
-
-bool2httpd($trace_enable)
-=> 'Off'
-bool2httpd($server_signature)
-=> 'mail'
-bool2httpd(undef)
-=> 'Off'
-```
+The apache::bool2httpd function.
 
 Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any
 other given value.
+
+##### Examples
+
+###### 
+
+```puppet
+$trace_enable     = false
+$server_signature = 'mail'
+
+bool2httpd($trace_enable) # returns 'Off'
+bool2httpd($server_signature) # returns 'mail'
+bool2httpd(undef) # returns 'Off'
+```
 
 ##### `arg`
 
@@ -9252,36 +9260,40 @@ The input that is to be hashed.
 
 Type: Ruby 3.x API
 
-Given a nil value (undef), bool2httpd will return 'Off'
-Example:
-```
+Transform a supposed boolean to On or Off. Pass all other values through.
+
+#### Examples
+
+##### 
+
+```puppet
 $trace_enable     = false
 $server_signature = 'mail'
-bool2httpd($trace_enable)
-=> 'Off'
-bool2httpd($server_signature)
-=> 'mail'
-bool2httpd(undef)
-=> 'Off'
+
+bool2httpd($trace_enable) # returns 'Off'
+bool2httpd($server_signature) # returns 'mail'
+bool2httpd(undef) # returns 'Off'
 ```
 
 #### `bool2httpd(Any $arg)`
 
-Given a nil value (undef), bool2httpd will return 'Off'
-Example:
-```
-$trace_enable     = false
-$server_signature = 'mail'
-bool2httpd($trace_enable)
-=> 'Off'
-bool2httpd($server_signature)
-=> 'mail'
-bool2httpd(undef)
-=> 'Off'
-```
+The bool2httpd function.
 
 Returns: `Any` Will return either `On` or `Off` if given a boolean value. Return's a string of any
 other given value.
+
+##### Examples
+
+###### 
+
+```puppet
+$trace_enable     = false
+$server_signature = 'mail'
+
+bool2httpd($trace_enable) # returns 'Off'
+bool2httpd($server_signature) # returns 'mail'
+bool2httpd(undef) # returns 'Off'
+```
 
 ##### `arg`
 
