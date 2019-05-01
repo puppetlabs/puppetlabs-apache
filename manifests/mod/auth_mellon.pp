@@ -1,29 +1,29 @@
 # @summary
-#   This class enables and configures Apache mod_auth_mellon
+#   Installs and configures Apache mod_auth_mellon
 # 
 # @param mellon_cache_size
-#   The maximum number of sessions which can be active at once.
+#   Maximum number of sessions which can be active at once.
 # 
 # @param mellon_lock_file
-#   The full path to a file used for synchronizing access to the session data.
+#   Full path to a file used for synchronizing access to the session data.
 # 
 # @param mellon_post_directory
-#   The full path of a directory where POST requests are saved during authentication.
+#   Full path of a directory where POST requests are saved during authentication.
 # 
 # @param mellon_cache_entry_size
-#   The maximum size for a single session entry in bytes.
+#   Maximum size for a single session entry in bytes.
 # 
 # @param mellon_post_ttl
-#   The delay in seconds before a saved POST request can be flushed.
+#   Delay in seconds before a saved POST request can be flushed.
 # 
 # @param mellon_post_size
-#   The maximum size for saved POST requests.
+#   Maximum size for saved POST requests.
 # 
 # @param mellon_post_count
-#   The maximum amount of saved POST requests.
+#   Maximum amount of saved POST requests.
 # 
-# See [`Apache mod_auth_mellon`](https://github.com/Uninett/mod_auth_mellon) 
-# for more information.
+# @see https://github.com/Uninett/mod_auth_mellon for additional documentation.
+#
 class apache::mod::auth_mellon (
   $mellon_cache_size = $::apache::params::mellon_cache_size,
   $mellon_lock_file  = $::apache::params::mellon_lock_file,

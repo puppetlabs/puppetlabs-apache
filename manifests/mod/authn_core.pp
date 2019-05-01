@@ -1,11 +1,11 @@
 # @summary
-#   This class enables Apache mod_authn_core
+#   Installs Apache mod_authn_core
 # 
 # @param apache_version
 #   The version of apache being run
 # 
-# See [`Apache mod_authn_core`](https://httpd.apache.org/docs/current/mod/mod_authn_core.html) 
-# for more information.
+# @see https://httpd.apache.org/docs/current/mod/mod_authn_core.html for additional documentation.
+#
 class apache::mod::authn_core(
   $apache_version = $::apache::apache_version
 ) {

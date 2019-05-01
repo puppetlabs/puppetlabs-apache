@@ -1,5 +1,5 @@
 # @summary
-#   This class enables and configures Apache mod_auth_cas
+#   Installs and configures Apache mod_auth_cas
 # 
 # @param cas_login_url
 #   Sets the URL to which the module redirects users when they attempt to access a 
@@ -13,7 +13,8 @@
 #   be writable by the web server only.
 # 
 # @param cas_cookie_path_mode
-# 
+#   The mode of cas_cookie_path.
+#
 # @param cas_version
 #   The version of the CAS protocol to adhere to.
 # 
@@ -74,9 +75,12 @@
 #   Remove inbound request headers that may have special meaning within mod_auth_cas.
 # 
 # @param suppress_warning
-# 
-# See [`Apache mod_auth_cas`](https://github.com/apereo/mod_auth_cas) 
-# for more information.
+#   Suppress warning about being on RedHat (mod_auth_cas package is now available in epel-testing repo).
+#
+# @note The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
+#
+# @see https://github.com/apereo/mod_auth_cas for additional documentation.
+#
 class apache::mod::auth_cas (
   String $cas_login_url,
   String $cas_validate_url,

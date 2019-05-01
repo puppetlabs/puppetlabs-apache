@@ -9,91 +9,91 @@ _Public Classes_
 
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
 * [`apache::dev`](#apachedev): Installs Apache development libraries.
-* [`apache::mod::actions`](#apachemodactions): This class enables Apache mod_actions
-* [`apache::mod::alias`](#apachemodalias): This class enables and configues Apache mod_alias
-* [`apache::mod::auth_basic`](#apachemodauth_basic): This class enables Apache mod_auth_basic
-* [`apache::mod::auth_cas`](#apachemodauth_cas): This class enables and configures Apache mod_auth_cas
-* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): This class enables Apache mod_auth_gsappi
-* [`apache::mod::auth_kerb`](#apachemodauth_kerb): This class enables Apache mod_auth_kerb
-* [`apache::mod::auth_mellon`](#apachemodauth_mellon): This class enables and configures Apache mod_auth_mellon
-* [`apache::mod::authn_core`](#apachemodauthn_core): This class enables Apache mod_authn_core
-* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): This class enables Apache mod_authn_dbd
-* [`apache::mod::authn_file`](#apachemodauthn_file): This class enables Apache mod_authn_file
-* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): This class enables Apache mod_authnz_ldap
-* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): 
-* [`apache::mod::authz_default`](#apachemodauthz_default): 
-* [`apache::mod::authz_user`](#apachemodauthz_user): 
-* [`apache::mod::autoindex`](#apachemodautoindex): 
-* [`apache::mod::cache`](#apachemodcache): 
-* [`apache::mod::cgi`](#apachemodcgi): 
-* [`apache::mod::cgid`](#apachemodcgid): 
-* [`apache::mod::cluster`](#apachemodcluster): 
-* [`apache::mod::data`](#apachemoddata): 
-* [`apache::mod::dav`](#apachemoddav): 
-* [`apache::mod::dav_fs`](#apachemoddav_fs): 
-* [`apache::mod::dav_svn`](#apachemoddav_svn): 
-* [`apache::mod::dbd`](#apachemoddbd): 
-* [`apache::mod::deflate`](#apachemoddeflate): 
-* [`apache::mod::dev`](#apachemoddev): 
-* [`apache::mod::dir`](#apachemoddir): Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare Direct
-* [`apache::mod::disk_cache`](#apachemoddisk_cache): 
-* [`apache::mod::dumpio`](#apachemoddumpio): 
-* [`apache::mod::env`](#apachemodenv): 
-* [`apache::mod::event`](#apachemodevent): 
-* [`apache::mod::expires`](#apachemodexpires): 
-* [`apache::mod::ext_filter`](#apachemodext_filter): 
-* [`apache::mod::fastcgi`](#apachemodfastcgi): 
-* [`apache::mod::fcgid`](#apachemodfcgid): 
-* [`apache::mod::filter`](#apachemodfilter): 
-* [`apache::mod::geoip`](#apachemodgeoip): 
-* [`apache::mod::headers`](#apachemodheaders): 
-* [`apache::mod::http2`](#apachemodhttp2): 
-* [`apache::mod::include`](#apachemodinclude): 
-* [`apache::mod::info`](#apachemodinfo): 
-* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): 
-* [`apache::mod::itk`](#apachemoditk): 
-* [`apache::mod::jk`](#apachemodjk): Class apache::mod::jk  Manages mod_jk connector  All parameters are optional. When undefined, some receive default values, while others cause
-* [`apache::mod::ldap`](#apachemodldap): 
-* [`apache::mod::lookup_identity`](#apachemodlookup_identity): 
-* [`apache::mod::macro`](#apachemodmacro): 
-* [`apache::mod::mime`](#apachemodmime): 
-* [`apache::mod::mime_magic`](#apachemodmime_magic): 
-* [`apache::mod::negotiation`](#apachemodnegotiation): 
-* [`apache::mod::nss`](#apachemodnss): 
-* [`apache::mod::pagespeed`](#apachemodpagespeed): 
-* [`apache::mod::passenger`](#apachemodpassenger): Manages the settings for the mod_passenger The result is the /etc/mods-available/mod_passenger.conf file  Where do we get these settings?   S
-* [`apache::mod::perl`](#apachemodperl): 
-* [`apache::mod::peruser`](#apachemodperuser): 
-* [`apache::mod::php`](#apachemodphp): 
-* [`apache::mod::prefork`](#apachemodprefork): 
-* [`apache::mod::proxy`](#apachemodproxy): 
-* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): 
-* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): 
-* [`apache::mod::proxy_connect`](#apachemodproxy_connect): 
-* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): 
-* [`apache::mod::proxy_html`](#apachemodproxy_html): 
-* [`apache::mod::proxy_http`](#apachemodproxy_http): 
-* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): 
-* [`apache::mod::python`](#apachemodpython): 
-* [`apache::mod::remoteip`](#apachemodremoteip): 
-* [`apache::mod::reqtimeout`](#apachemodreqtimeout): 
-* [`apache::mod::rewrite`](#apachemodrewrite): 
-* [`apache::mod::rpaf`](#apachemodrpaf): 
-* [`apache::mod::security`](#apachemodsecurity): 
-* [`apache::mod::setenvif`](#apachemodsetenvif): 
-* [`apache::mod::shib`](#apachemodshib): 
-* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): 
-* [`apache::mod::speling`](#apachemodspeling): 
-* [`apache::mod::ssl`](#apachemodssl): 
-* [`apache::mod::status`](#apachemodstatus): This class enables and configures Apache mod_status
-* [`apache::mod::suexec`](#apachemodsuexec): 
-* [`apache::mod::suphp`](#apachemodsuphp): 
-* [`apache::mod::userdir`](#apachemoduserdir): 
-* [`apache::mod::version`](#apachemodversion): 
-* [`apache::mod::vhost_alias`](#apachemodvhost_alias): 
-* [`apache::mod::worker`](#apachemodworker): 
-* [`apache::mod::wsgi`](#apachemodwsgi): 
-* [`apache::mod::xsendfile`](#apachemodxsendfile): 
+* [`apache::mod::actions`](#apachemodactions): Installs Apache mod_actions
+* [`apache::mod::alias`](#apachemodalias): Installs and configures Apache mod_alias
+* [`apache::mod::auth_basic`](#apachemodauth_basic): Installs Apache mod_auth_basic
+* [`apache::mod::auth_cas`](#apachemodauth_cas): Installs and configures Apache mod_auth_cas
+* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): Installs Apache mod_auth_gsappi
+* [`apache::mod::auth_kerb`](#apachemodauth_kerb): Installs Apache mod_auth_kerb
+* [`apache::mod::auth_mellon`](#apachemodauth_mellon): Installs and configures Apache mod_auth_mellon
+* [`apache::mod::authn_core`](#apachemodauthn_core): Installs Apache mod_authn_core
+* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): Installs Apache mod_authn_dbd
+* [`apache::mod::authn_file`](#apachemodauthn_file): Installs Apache mod_authn_file
+* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): Installs Apache mod_authnz_ldap
+* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): Installs Adelton mod_authnz_pam
+* [`apache::mod::authz_default`](#apachemodauthz_default): Installs and configures Apache mod_authz_default.
+* [`apache::mod::authz_user`](#apachemodauthz_user): Installs Apache mod_authz_user
+* [`apache::mod::autoindex`](#apachemodautoindex): Installs Apache mod_autoindex
+* [`apache::mod::cache`](#apachemodcache): Installs Apache mod_cache
+* [`apache::mod::cgi`](#apachemodcgi): Installs Apache mod_cgi.
+* [`apache::mod::cgid`](#apachemodcgid): Installs Apache mod_cgid.
+* [`apache::mod::cluster`](#apachemodcluster): Installs mod_cluster.
+* [`apache::mod::data`](#apachemoddata): Installs and configures Apache mod_data.
+* [`apache::mod::dav`](#apachemoddav): Installs Apache mod_dav.
+* [`apache::mod::dav_fs`](#apachemoddav_fs): Installs Apache mod_dav_fs.
+* [`apache::mod::dav_svn`](#apachemoddav_svn): Installs and configures Apache mod_dav_svn.
+* [`apache::mod::dbd`](#apachemoddbd): Installs Apache mod_dbd.
+* [`apache::mod::deflate`](#apachemoddeflate): Installs and configures Apache mod_deflate.
+* [`apache::mod::dev`](#apachemoddev): Installs Apache mod_dev.
+* [`apache::mod::dir`](#apachemoddir): Installs and configures Apache mod_dir.
+* [`apache::mod::disk_cache`](#apachemoddisk_cache): Installs and configures Apache mod_disk_cache.
+* [`apache::mod::dumpio`](#apachemoddumpio): Installs and configures Apache mod_dumpio.
+* [`apache::mod::env`](#apachemodenv): Installs Apache mod_env.
+* [`apache::mod::event`](#apachemodevent): Installs and configures Apache mod_event.
+* [`apache::mod::expires`](#apachemodexpires): Installs and configures Apache mod_expires.
+* [`apache::mod::ext_filter`](#apachemodext_filter): Installs and configures Apache mod_ext_filter.
+* [`apache::mod::fastcgi`](#apachemodfastcgi): Installs mod_fastcgi
+* [`apache::mod::fcgid`](#apachemodfcgid): Installs and configures Apache mod_fcgid.
+* [`apache::mod::filter`](#apachemodfilter): Installs Apache mod_filter
+* [`apache::mod::geoip`](#apachemodgeoip): Installs and configures MaxMind mod_geoip.
+* [`apache::mod::headers`](#apachemodheaders): Installs and configures Apache mod_headers.
+* [`apache::mod::http2`](#apachemodhttp2): Installs and configures Apache mod_http2.
+* [`apache::mod::include`](#apachemodinclude): Installs Apache mod_include
+* [`apache::mod::info`](#apachemodinfo): Installs and configures Apache mod_info.
+* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): Installs Adelton mod_intercept_form_submit
+* [`apache::mod::itk`](#apachemoditk): Installs MPM mod_itk.
+* [`apache::mod::jk`](#apachemodjk): Installs Tomcat mod_jk.
+* [`apache::mod::ldap`](#apachemodldap): Installs and configures Apache mod_ldap.
+* [`apache::mod::lookup_identity`](#apachemodlookup_identity): Installs Adelton mod_lookup_identity
+* [`apache::mod::macro`](#apachemodmacro): Installs Apache mod_macro.
+* [`apache::mod::mime`](#apachemodmime): Installs Apache mod_mime.
+* [`apache::mod::mime_magic`](#apachemodmime_magic): Installs Apache mod_mime_magic.
+* [`apache::mod::negotiation`](#apachemodnegotiation): Installs Apache mod_negotiation.
+* [`apache::mod::nss`](#apachemodnss): Installs mod_nss.
+* [`apache::mod::pagespeed`](#apachemodpagespeed): Installs and configures Google mod_pagespeed.
+* [`apache::mod::passenger`](#apachemodpassenger): Installs Phusion mod_pasenger.
+* [`apache::mod::perl`](#apachemodperl): Installs Apache mod_perl.
+* [`apache::mod::peruser`](#apachemodperuser): Installs mod_peruser.
+* [`apache::mod::php`](#apachemodphp): Installs mod_php.
+* [`apache::mod::prefork`](#apachemodprefork): Installs and configures Apache prefork.
+* [`apache::mod::proxy`](#apachemodproxy): Installs and configures Apache mod_proxy.
+* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): Installs Apache mod_proxy_ajp.
+* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): Installs and configures Apache mod_proxy_balancer.
+* [`apache::mod::proxy_connect`](#apachemodproxy_connect): Installs Apache mod_proxy_connect.
+* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): Installs Apache mod_proxy_fcgi.
+* [`apache::mod::proxy_html`](#apachemodproxy_html): Installs Apache mod_proxy_html
+* [`apache::mod::proxy_http`](#apachemodproxy_http): Installs Apache mod_proxy_http.
+* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): Installs Apache mod_proxy_wstunnel.
+* [`apache::mod::python`](#apachemodpython): Installs Grisha mod_python.
+* [`apache::mod::remoteip`](#apachemodremoteip): Install and configure Apache `mod_remoteip`
+* [`apache::mod::reqtimeout`](#apachemodreqtimeout): Installs and configures Apache mod_reqtimeout.
+* [`apache::mod::rewrite`](#apachemodrewrite): Installs Apache mod_rewrite.
+* [`apache::mod::rpaf`](#apachemodrpaf): Installs and configures Apache mod_rpaf.
+* [`apache::mod::security`](#apachemodsecurity): Installs and configures Trustwaave mod_security.
+* [`apache::mod::setenvif`](#apachemodsetenvif): Installs Apache mod_setenvif.
+* [`apache::mod::shib`](#apachemodshib): Installs and configures Shibboleth mod_shib.
+* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): Installs Apache mod_socache_shmcb.
+* [`apache::mod::speling`](#apachemodspeling): Installs Apache mod_spelling.
+* [`apache::mod::ssl`](#apachemodssl): Installs Apache mod_ssl.
+* [`apache::mod::status`](#apachemodstatus): Installs and configures Apache mod_status
+* [`apache::mod::suexec`](#apachemodsuexec): Installs Apache mod_suexec.
+* [`apache::mod::suphp`](#apachemodsuphp): Installs suPHP mod_suphp.
+* [`apache::mod::userdir`](#apachemoduserdir): Installs and configures Apache mod_userdir.
+* [`apache::mod::version`](#apachemodversion): Installs Apache mod_version.
+* [`apache::mod::vhost_alias`](#apachemodvhost_alias): Installs Apache mod_vhost_alias.
+* [`apache::mod::worker`](#apachemodworker): Manages the Apache worker MPM
+* [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures Graham Dumpleton mod_wsgi.
+* [`apache::mod::xsendfile`](#apachemodxsendfile): Installs tn123 mod_xsendfile.
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -1036,13 +1036,19 @@ class, based on your operating system:
 
 ### apache::mod::actions
 
-See [`Apache mod_Actions`](https://httpd.apache.org/docs/2.4/mod/mod_actions.html)
-for more information.
+Installs Apache mod_actions
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_actions.html
+for additional documentation.
 
 ### apache::mod::alias
 
-See [`Apache mod_alias`](https://httpd.apache.org/docs/2.4/mod/mod_alias.html)
-for more information.
+Installs and configures Apache mod_alias
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_alias.html
+for additional documentation.
 
 #### Parameters
 
@@ -1060,7 +1066,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-Passes through alias options
+Disables directory listings for the icons directory, via Apache [Options](https://httpd.apache.org/docs/current/mod/core.html#options)
+directive.
 
 Default value: 'Indexes MultiViews'
 
@@ -1068,19 +1075,31 @@ Default value: 'Indexes MultiViews'
 
 Data type: `Any`
 
-The directory files will be stored in
+Sets the local path for an /icons/ Alias. Default depends on operating system:
+- Debian: /usr/share/apache2/icons
+- FreeBSD: /usr/local/www/apache24/icons
+- Gentoo: /var/www/icons
+- Red Hat: /var/www/icons, except on Apache 2.4, where it's /usr/share/httpd/icons
 
 Default value: $::apache::params::alias_icons_path
 
 ### apache::mod::auth_basic
 
-See [`Apache mod_auth_basic`](https://httpd.apache.org/docs/2.4/mod/mod_auth_basic.html)
-for more information.
+Installs Apache mod_auth_basic
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_auth_basic.html
+for additional documentation.
 
 ### apache::mod::auth_cas
 
-See [`Apache mod_auth_cas`](https://github.com/apereo/mod_auth_cas)
-for more information.
+Installs and configures Apache mod_auth_cas
+
+* **Note** The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
+
+* **See also**
+https://github.com/apereo/mod_auth_cas
+for additional documentation.
 
 #### Parameters
 
@@ -1112,7 +1131,7 @@ Default value: $::apache::params::cas_cookie_path
 
 Data type: `Any`
 
-
+The mode of cas_cookie_path.
 
 Default value: '0750'
 
@@ -1265,7 +1284,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Suppress warning about being on RedHat (mod_auth_cas package is now available in epel-testing repo).
 
 Default value: `false`
 
@@ -1287,17 +1306,27 @@ Default value: `undef`
 
 ### apache::mod::auth_gssapi
 
-See [`Apache mod_auth_gsappi`](https://github.com/modauthgssapi/mod_auth_gssapi)
-for more information.
+Installs Apache mod_auth_gsappi
+
+* **See also**
+https://github.com/modauthgssapi/mod_auth_gssapi
+for additional documentation.
 
 ### apache::mod::auth_kerb
 
-This class enables Apache mod_auth_kerb
+Installs Apache mod_auth_kerb
+
+* **See also**
+http://modauthkerb.sourceforge.net
+for additional documentation.
 
 ### apache::mod::auth_mellon
 
-See [`Apache mod_auth_mellon`](https://github.com/Uninett/mod_auth_mellon)
-for more information.
+Installs and configures Apache mod_auth_mellon
+
+* **See also**
+https://github.com/Uninett/mod_auth_mellon
+for additional documentation.
 
 #### Parameters
 
@@ -1307,7 +1336,7 @@ The following parameters are available in the `apache::mod::auth_mellon` class.
 
 Data type: `Any`
 
-The maximum number of sessions which can be active at once.
+Maximum number of sessions which can be active at once.
 
 Default value: $::apache::params::mellon_cache_size
 
@@ -1315,7 +1344,7 @@ Default value: $::apache::params::mellon_cache_size
 
 Data type: `Any`
 
-The full path to a file used for synchronizing access to the session data.
+Full path to a file used for synchronizing access to the session data.
 
 Default value: $::apache::params::mellon_lock_file
 
@@ -1323,7 +1352,7 @@ Default value: $::apache::params::mellon_lock_file
 
 Data type: `Any`
 
-The full path of a directory where POST requests are saved during authentication.
+Full path of a directory where POST requests are saved during authentication.
 
 Default value: $::apache::params::mellon_post_directory
 
@@ -1331,7 +1360,7 @@ Default value: $::apache::params::mellon_post_directory
 
 Data type: `Any`
 
-The maximum size for a single session entry in bytes.
+Maximum size for a single session entry in bytes.
 
 Default value: `undef`
 
@@ -1339,7 +1368,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-The delay in seconds before a saved POST request can be flushed.
+Delay in seconds before a saved POST request can be flushed.
 
 Default value: `undef`
 
@@ -1347,7 +1376,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-The maximum size for saved POST requests.
+Maximum size for saved POST requests.
 
 Default value: `undef`
 
@@ -1355,14 +1384,17 @@ Default value: `undef`
 
 Data type: `Any`
 
-The maximum amount of saved POST requests.
+Maximum amount of saved POST requests.
 
 Default value: `undef`
 
 ### apache::mod::authn_core
 
-See [`Apache mod_authn_core`](https://httpd.apache.org/docs/2.4/mod/mod_authn_core.html)
-for more information.
+Installs Apache mod_authn_core
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_authn_core.html
+for additional documentation.
 
 #### Parameters
 
@@ -1378,8 +1410,10 @@ Default value: $::apache::apache_version
 
 ### apache::mod::authn_dbd
 
-See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/2.4/mod/mod_authn_dbd.html)
-for more information.
+Installs Apache mod_authn_dbd
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 
 #### Parameters
 
@@ -1450,13 +1484,19 @@ Default value: `undef`
 
 ### apache::mod::authn_file
 
-See [`Apache mod_authn_file`](https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html)
-for more information.
+Installs Apache mod_authn_file
+
+* **See also**
+https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html
+for additional documentation.
 
 ### apache::mod::authnz_ldap
 
-See [`Apache mod_authnz_ldap`](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html)
-for more information.
+Installs Apache mod_authnz_ldap
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html
+for additional documentation.
 
 #### Parameters
 
@@ -1480,11 +1520,19 @@ Default value: `undef`
 
 ### apache::mod::authnz_pam
 
-The apache::mod::authnz_pam class.
+Installs Adelton mod_authnz_pam
+
+* **See also**
+https://www.adelton.com/apache/mod_authnz_pam
+for additional documentation.
 
 ### apache::mod::authz_default
 
-The apache::mod::authz_default class.
+Installs and configures Apache mod_authz_default.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_authz_default.html
+for additional documentation.
 
 #### Parameters
 
@@ -1494,33 +1542,72 @@ The following parameters are available in the `apache::mod::authz_default` class
 
 Data type: `Any`
 
-
+Version of Apache to install module on.
 
 Default value: $::apache::apache_version
 
 ### apache::mod::authz_user
 
-The apache::mod::authz_user class.
+Installs Apache mod_authz_user
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_authz_user.html
+for additional documentation.
 
 ### apache::mod::autoindex
 
-The apache::mod::autoindex class.
+Installs Apache mod_autoindex
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_autoindex.html
+for additional documentation.
 
 ### apache::mod::cache
 
-The apache::mod::cache class.
+Installs Apache mod_cache
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_cache.html
+for additional documentation.
 
 ### apache::mod::cgi
 
-The apache::mod::cgi class.
+Installs Apache mod_cgi.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_cgi.html
+for additional documentation.
 
 ### apache::mod::cgid
 
-The apache::mod::cgid class.
+Installs Apache mod_cgid.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_cgid.html
 
 ### apache::mod::cluster
 
-The apache::mod::cluster class.
+Installs mod_cluster.
+
+* **Note** There is no official package available for mod_cluster, so you must make it available outside of the apache module.
+Binaries can be found [here](https://modcluster.io/).
+
+* **See also**
+https://modcluster.io/
+for additional documentation.
+
+#### Examples
+
+##### 
+
+```puppet
+class { '::apache::mod::cluster':
+  ip                      => '172.17.0.1',
+  allowed_network         => '172.17.0.',
+  balancer_name           => 'mycluster',
+  version                 => '1.3.1'
+}
+```
 
 #### Parameters
 
@@ -1530,31 +1617,31 @@ The following parameters are available in the `apache::mod::cluster` class.
 
 Data type: `Any`
 
-
+Balanced members network.
 
 ##### `balancer_name`
 
 Data type: `Any`
 
-
+Name of balancer.
 
 ##### `ip`
 
 Data type: `Any`
 
-
+Specifies the IP address to listen to.
 
 ##### `version`
 
 Data type: `Any`
 
-
+Specifies the mod_cluster version. Version 1.3.0 or greater is required for httpd 2.4.
 
 ##### `enable_mcpm_receive`
 
 Data type: `Any`
 
-
+Whether MCPM should be enabled.
 
 Default value: `true`
 
@@ -1562,7 +1649,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+mod_cluster listen port.
 
 Default value: '6666'
 
@@ -1570,7 +1657,7 @@ Default value: '6666'
 
 Data type: `Any`
 
-
+Specifies how long Apache should wait for a request, in seconds.
 
 Default value: 60
 
@@ -1578,7 +1665,7 @@ Default value: 60
 
 Data type: `Any`
 
-
+Whether to allow the network to access the mod_cluster_manager.
 
 Default value: '127.0.0.1'
 
@@ -1586,7 +1673,7 @@ Default value: '127.0.0.1'
 
 Data type: `Any`
 
-
+Maximum number of requests kept alive.
 
 Default value: 0
 
@@ -1594,7 +1681,7 @@ Default value: 0
 
 Data type: `Any`
 
-
+Whether the server should advertise.
 
 Default value: `true`
 
@@ -1602,13 +1689,17 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Sets the interval between advertise messages in seconds.
 
 Default value: `undef`
 
 ### apache::mod::data
 
-The apache::mod::data class.
+Installs and configures Apache mod_data.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_data.html
+for additional documentation.
 
 #### Parameters
 
@@ -1618,21 +1709,33 @@ The following parameters are available in the `apache::mod::data` class.
 
 Data type: `Any`
 
-
+Version of Apache to install module on.
 
 Default value: `undef`
 
 ### apache::mod::dav
 
-The apache::mod::dav class.
+Installs Apache mod_dav.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dav.html
+for additional documentation.
 
 ### apache::mod::dav_fs
 
-The apache::mod::dav_fs class.
+Installs Apache mod_dav_fs.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dav_fs.html
+for additional documentation.
 
 ### apache::mod::dav_svn
 
-The apache::mod::dav_svn class.
+Installs and configures Apache mod_dav_svn.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dav_svn.html
+for additional documentation.
 
 #### Parameters
 
@@ -1642,17 +1745,33 @@ The following parameters are available in the `apache::mod::dav_svn` class.
 
 Data type: `Any`
 
-
+Specifies whether to install Apache mod_authz_svn
 
 Default value: `false`
 
 ### apache::mod::dbd
 
-The apache::mod::dbd class.
+Installs Apache mod_dbd.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dbd.html
+for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::dbd` class.
+
+##### `apache_version`
+
+Used to verify that the Apache version you have requested is compatible with the module.
 
 ### apache::mod::deflate
 
-The apache::mod::deflate class.
+Installs and configures Apache mod_deflate.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_deflate.html
+for additional documentation.
 
 #### Parameters
 
@@ -1662,7 +1781,7 @@ The following parameters are available in the `apache::mod::deflate` class.
 
 Data type: `Any`
 
-
+An array of MIME types to be deflated. See https://www.iana.org/assignments/media-types/media-types.xhtml.
 
 Default value: [
     'text/html text/plain text/xml',
@@ -1676,7 +1795,7 @@ Default value: [
 
 Data type: `Any`
 
-
+A Hash where the key represents the type and the value represents the note name.
 
 Default value: {
     'Input'  => 'instream',
@@ -1686,17 +1805,36 @@ Default value: {
 
 ### apache::mod::dev
 
-The apache::mod::dev class.
+Installs Apache mod_dev.
+
+* **Note** This module is deprecated. Please use `apache::dev`.
 
 ### apache::mod::dir
 
-Note: this sets the global DirectoryIndex directive, it may be necessary to consider being able to modify the apache::vhost to declare DirectoryIndex statements in a vhost configuration
-Parameters:
-- $indexes provides a string for the DirectoryIndex directive http://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
+Installs and configures Apache mod_dir.
+
+* **TODO** This sets the global DirectoryIndex directive, so it may be necessary to consider being able to modify the apache::vhost to declare
+DirectoryIndex statements in a vhost configuration
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dir.html
+for additional documentation.
 
 #### Parameters
 
 The following parameters are available in the `apache::mod::dir` class.
+
+##### `types`
+
+Specifies the text-based content types to compress.
+
+##### `indexes`
+
+Data type: `Array[String]`
+
+Provides a string for the DirectoryIndex directive
+
+Default value: ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml']
 
 ##### `dir`
 
@@ -1706,17 +1844,15 @@ Data type: `Any`
 
 Default value: 'public_html'
 
-##### `indexes`
-
-Data type: `Array[String]`
-
-
-
-Default value: ['index.html','index.html.var','index.cgi','index.pl','index.php','index.xhtml']
-
 ### apache::mod::disk_cache
 
-The apache::mod::disk_cache class.
+Installs and configures Apache mod_disk_cache.
+
+* **Note** Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+
+* **See also**
+https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
+for additional documentation.
 
 #### Parameters
 
@@ -1726,7 +1862,12 @@ The following parameters are available in the `apache::mod::disk_cache` class.
 
 Data type: `Any`
 
-
+Defines the name of the directory on the disk to contain cache files.
+Default depends on the Apache version and operating system:
+- Debian: /var/cache/apache2/mod_cache_disk
+- FreeBSD: /var/cache/mod_cache_disk
+- Red Hat, Apache 2.4: /var/cache/httpd/proxy
+- Red Hat, Apache 2.2: /var/cache/mod_proxy
 
 Default value: `undef`
 
@@ -1734,13 +1875,32 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies HTTP header(s) that should not be stored in the cache.
 
 Default value: `undef`
 
 ### apache::mod::dumpio
 
-The apache::mod::dumpio class.
+Installs and configures Apache mod_dumpio.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_dumpio.html
+for additional documentation.
+
+#### Examples
+
+##### 
+
+```puppet
+class{'apache':
+  default_mods => false,
+  log_level    => 'dumpio:trace7',
+}
+class{'apache::mod::dumpio':
+  dump_io_input  => 'On',
+  dump_io_output => 'Off',
+}
+```
 
 #### Parameters
 
@@ -1750,7 +1910,7 @@ The following parameters are available in the `apache::mod::dumpio` class.
 
 Data type: `Enum['Off', 'On', 'off', 'on']`
 
-
+Dump all input data to the error log
 
 Default value: 'Off'
 
@@ -1758,17 +1918,28 @@ Default value: 'Off'
 
 Data type: `Enum['Off', 'On', 'off', 'on']`
 
-
+Dump all output data to the error log
 
 Default value: 'Off'
 
 ### apache::mod::env
 
-The apache::mod::env class.
+Installs Apache mod_env.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_env.html
+for additional documentation.
 
 ### apache::mod::event
 
-The apache::mod::event class.
+Installs and configures Apache mod_event.
+
+* **Note** You cannot include apache::mod::event with apache::mod::itk, apache::mod::peruser, apache::mod::prefork, or
+apache::mod::worker on the same server.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/event.html
+for additional documentation.
 
 #### Parameters
 
@@ -1778,7 +1949,8 @@ The following parameters are available in the `apache::mod::event` class.
 
 Data type: `Any`
 
-
+Sets the number of child server processes created at startup, via the module's `StartServers` directive. Setting this to `false`
+removes the parameter.
 
 Default value: '2'
 
@@ -1786,7 +1958,7 @@ Default value: '2'
 
 Data type: `Any`
 
-
+Apache 2.3.12 or older alias for the `MaxRequestWorkers` directive.
 
 Default value: '150'
 
@@ -1794,7 +1966,8 @@ Default value: '150'
 
 Data type: `Any`
 
-
+Sets the maximum number of connections Apache can simultaneously process, via the module's `MaxRequestWorkers` directive. Setting
+these to `false` removes the parameters.
 
 Default value: `undef`
 
@@ -1802,7 +1975,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Sets the minimum number of idle threads, via the `MinSpareThreads` directive. Setting this to `false` removes the parameters.
 
 Default value: '25'
 
@@ -1810,7 +1983,7 @@ Default value: '25'
 
 Data type: `Any`
 
-
+Sets the maximum number of idle threads, via the `MaxSpareThreads` directive. Setting this to `false` removes the parameters.
 
 Default value: '75'
 
@@ -1818,7 +1991,7 @@ Default value: '75'
 
 Data type: `Any`
 
-
+Number of threads created by each child process.
 
 Default value: '25'
 
@@ -1826,7 +1999,7 @@ Default value: '25'
 
 Data type: `Any`
 
-
+Apache 2.3.8 or older alias for the `MaxConnectionsPerChild` directive.
 
 Default value: '0'
 
@@ -1834,7 +2007,7 @@ Default value: '0'
 
 Data type: `Any`
 
-
+Limit on the number of connections that an individual child server will handle during its life.
 
 Default value: `undef`
 
@@ -1842,7 +2015,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Limits the configurable number of processes via the `ServerLimit` directive. Setting this to `false` removes the parameter.
 
 Default value: '25'
 
@@ -1850,7 +2023,7 @@ Default value: '25'
 
 Data type: `Any`
 
-
+Version of Apache to install module on.
 
 Default value: `undef`
 
@@ -1858,7 +2031,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Limits the number of event threads via the module's `ThreadLimit` directive. Setting this to `false` removes the parameter.
 
 Default value: '64'
 
@@ -1866,13 +2039,18 @@ Default value: '64'
 
 Data type: `Any`
 
-
+Sets the maximum length of the pending connections queue via the module's `ListenBackLog` directive. Setting this to `false` removes
+the parameter.
 
 Default value: '511'
 
 ### apache::mod::expires
 
-The apache::mod::expires class.
+Installs and configures Apache mod_expires.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_expires.html
+for additional documentation.
 
 #### Parameters
 
@@ -1882,7 +2060,7 @@ The following parameters are available in the `apache::mod::expires` class.
 
 Data type: `Any`
 
-
+Enables generation of Expires headers.
 
 Default value: `true`
 
@@ -1890,7 +2068,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Specifies the default algorithm for calculating expiration time using ExpiresByType syntax or interval syntax.
 
 Default value: `undef`
 
@@ -1898,13 +2076,32 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Describes a set of [MIME content-types](https://www.iana.org/assignments/media-types/media-types.xhtml) and their expiration
+times. This should be used as an array of Hashes, with each Hash's key a valid MIME content-type (i.e. 'text/json') and its
+value following valid interval syntax.
 
 Default value: `undef`
 
 ### apache::mod::ext_filter
 
-The apache::mod::ext_filter class.
+Installs and configures Apache mod_ext_filter.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
+for additional documentation.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'apache::mod::ext_filter':
+  ext_filter_define => {
+    'slowdown'       => 'mode=output cmd=/bin/cat preservescontentlength',
+    'puppetdb-strip' => 'mode=output outtype=application/json cmd="pdb-resource-filter"',
+  },
+}
+```
 
 #### Parameters
 
@@ -1914,21 +2111,72 @@ The following parameters are available in the `apache::mod::ext_filter` class.
 
 Data type: `Optional[Hash]`
 
-
+Hash of filter names and their parameters.
 
 Default value: `undef`
 
 ### apache::mod::fastcgi
 
-The apache::mod::fastcgi class.
+Installs mod_fastcgi
+
+* **See also**
+https://github.com/FastCGI-Archives/mod_fastcgi
+for additional documentation.
 
 ### apache::mod::fcgid
 
-The apache::mod::fcgid class.
+loaded first; Puppet will not automatically enable it if you set the fcgiwrapper parameter in apache::vhost.
+  include apache::mod::fcgid
+
+  apache::vhost { 'example.org':
+    docroot     => '/var/www/html',
+    directories => {
+      path        => '/var/www/html',
+      fcgiwrapper => {
+        command => '/usr/local/bin/fcgiwrapper',
+      }
+    },
+  }
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_fcgid.html
+for additional documentation.
+
+#### Examples
+
+##### The class does not individually parameterize all available options. Instead, configure mod_fcgid using the options hash.
+
+```puppet
+class { 'apache::mod::fcgid':
+  options => {
+    'FcgidIPCDir'  => '/var/run/fcgidsock',
+    'SharememPath' => '/var/run/fcgid_shm',
+    'AddHandler'   => 'fcgid-script .fcgi',
+  },
+}
+```
+
+##### If you include apache::mod::fcgid, you can set the [FcgidWrapper][] per directory, per virtual host. The module must be
+
+```puppet
+
+```
 
 #### Parameters
 
 The following parameters are available in the `apache::mod::fcgid` class.
+
+##### `expires_active`
+
+Enables generation of Expires headers.
+
+##### `expires_default`
+
+Default algorithm for calculating expiration time.
+
+##### `expires_by_type`
+
+Value of the Expires header configured by MIME type.
 
 ##### `options`
 
@@ -1940,11 +2188,19 @@ Default value: {}
 
 ### apache::mod::filter
 
-The apache::mod::filter class.
+Installs Apache mod_filter
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_filter.html
+for additional documentation.
 
 ### apache::mod::geoip
 
-The apache::mod::geoip class.
+Installs and configures MaxMind mod_geoip.
+
+* **See also**
+https://dev.maxmind.com/geoip/legacy/mod_geoip2
+for additional documentation.
 
 #### Parameters
 
@@ -1954,7 +2210,7 @@ The following parameters are available in the `apache::mod::geoip` class.
 
 Data type: `Any`
 
-
+Toggles whether to enable geoip.
 
 Default value: `false`
 
@@ -1962,7 +2218,7 @@ Default value: `false`
 
 Data type: `Any`
 
-
+Path to database for GeoIP to use.
 
 Default value: '/usr/share/GeoIP/GeoIP.dat'
 
@@ -1970,7 +2226,7 @@ Default value: '/usr/share/GeoIP/GeoIP.dat'
 
 Data type: `Any`
 
-
+Caching directive to use. Values: 'CheckCache', 'IndexCache', 'MemoryCache', 'Standard'.
 
 Default value: 'Standard'
 
@@ -1978,7 +2234,7 @@ Default value: 'Standard'
 
 Data type: `Any`
 
-
+Output variable locations. Values: 'All', 'Env', 'Request', 'Notes'.
 
 Default value: 'All'
 
@@ -1986,7 +2242,7 @@ Default value: 'All'
 
 Data type: `Any`
 
-
+Changes the output from ISO88591 (Latin1) to UTF8.
 
 Default value: `undef`
 
@@ -1994,7 +2250,19 @@ Default value: `undef`
 
 Data type: `Any`
 
+Enables the GeoIPScanProxyHeaders option.
 
+Default value: `undef`
+
+##### `scan_proxy_headers_field`
+
+Specifies the header mod_geoip uses to determine the client's IP address.
+
+##### `use_last_xforwarededfor_ip`
+
+Data type: `Any`
+
+Determines whether to use the first or last IP address for the client's IP in a comma-separated list of IP addresses is found.
 
 Default value: `undef`
 
@@ -2006,21 +2274,29 @@ Data type: `Any`
 
 Default value: `undef`
 
-##### `use_last_xforwarededfor_ip`
-
-Data type: `Any`
-
-
-
-Default value: `undef`
-
 ### apache::mod::headers
 
-The apache::mod::headers class.
+Installs and configures Apache mod_headers.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_headers.html
+for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::headers` class.
+
+##### `apache_version`
+
+Version of Apache to install module on.
 
 ### apache::mod::http2
 
-The apache::mod::http2 class.
+Installs and configures Apache mod_http2.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_http2.html
+for additional documentation.
 
 #### Parameters
 
@@ -2030,7 +2306,7 @@ The following parameters are available in the `apache::mod::http2` class.
 
 Data type: `Optional[Boolean]`
 
-
+Determine file handling in responses.
 
 Default value: `undef`
 
@@ -2038,7 +2314,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+H2 Direct Protocol Switch.
 
 Default value: `undef`
 
@@ -2046,7 +2322,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+Determine sending of 103 status codes.
 
 Default value: `undef`
 
@@ -2054,7 +2330,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+Sets maximum number of active streams per HTTP/2 session.
 
 Default value: `undef`
 
@@ -2062,7 +2338,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+Sets maximum number of seconds h2 workers remain idle until shut down.
 
 Default value: `undef`
 
@@ -2070,7 +2346,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+Sets maximum number of worker threads to use per child process.
 
 Default value: `undef`
 
@@ -2078,7 +2354,7 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+Sets minimal number of worker threads to use per child process.
 
 Default value: `undef`
 
@@ -2086,7 +2362,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+Toggles the security checks on HTTP/2 connections in TLS mode
 
 Default value: `undef`
 
@@ -2094,7 +2370,7 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+Toggles the usage of the HTTP/2 server push protocol feature.
 
 Default value: `undef`
 
@@ -2102,7 +2378,80 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
+Sets maximum number of HTTP/2 server pushes that are remembered per HTTP/2 connection.
 
+Default value: `undef`
+
+##### `h2_priority`
+
+Require HTTP/2 connections to be "modern TLS" only
+
+##### `h2_push_resource`
+
+Data type: `Array[String]`
+
+When added to a directory/location, HTTP/2 PUSHes will be attempted for all paths added
+via this directive
+
+Default value: []
+
+##### `h2_serialize_headers`
+
+Data type: `Optional[Boolean]`
+
+Toggles if HTTP/2 requests shall be serialized in HTTP/1.1 format for processing by httpd
+core or if received binary data shall be passed into the request_recs directly.
+
+Default value: `undef`
+
+##### `h2_stream_max_mem_size`
+
+Data type: `Optional[Integer]`
+
+Sets the maximum number of outgoing data bytes buffered in memory for an active streams.
+
+Default value: `undef`
+
+##### `h2_tls_cool_down_secs`
+
+Data type: `Optional[Integer]`
+
+Sets the number of seconds of idle time on a TLS connection before the TLS write size falls
+back to small (~1300 bytes) length.
+
+Default value: `undef`
+
+##### `h2_tls_warm_up_size`
+
+Data type: `Optional[Integer]`
+
+Sets the number of bytes to be sent in small TLS records (~1300 bytes) until doing maximum
+sized writes (16k) on https: HTTP/2 connections.
+
+Default value: `undef`
+
+##### `h2_upgrade`
+
+Data type: `Optional[Boolean]`
+
+Toggles the usage of the HTTP/1.1 Upgrade method for switching to HTTP/2.
+
+Default value: `undef`
+
+##### `h2_window_size`
+
+Data type: `Optional[Integer]`
+
+Sets the size of the window that is used for flow control from client to server and limits
+the amount of data the server has to buffer.
+
+Default value: `undef`
+
+##### `apache_version`
+
+Data type: `Optional[String]`
+
+Version of Apache to install module on.
 
 Default value: `undef`
 
@@ -2114,77 +2463,21 @@ Data type: `Array[String]`
 
 Default value: []
 
-##### `h2_push_resource`
-
-Data type: `Array[String]`
-
-
-
-Default value: []
-
-##### `h2_serialize_headers`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### `h2_stream_max_mem_size`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `h2_tls_cool_down_secs`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `h2_tls_warm_up_size`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `h2_upgrade`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### `h2_window_size`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: `undef`
-
-##### `apache_version`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
 ### apache::mod::include
 
-The apache::mod::include class.
+Installs Apache mod_include
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_include.html
+for additional documentation.
 
 ### apache::mod::info
 
-The apache::mod::info class.
+Installs and configures Apache mod_info.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_info.html
+for additional documentation.
 
 #### Parameters
 
@@ -2194,7 +2487,7 @@ The following parameters are available in the `apache::mod::info` class.
 
 Data type: `Any`
 
-
+Whitelist of IPv4 or IPv6 addresses or ranges that can access the info path.
 
 Default value: ['127.0.0.1','::1']
 
@@ -2202,7 +2495,7 @@ Default value: ['127.0.0.1','::1']
 
 Data type: `Any`
 
-
+Version of Apache to install module on.
 
 Default value: `undef`
 
@@ -2210,7 +2503,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether to restrict access to info path. If `false`, the `allow_from` whitelist is ignored and any IP address can
+access the info path.
 
 Default value: `true`
 
@@ -2218,17 +2512,25 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Path on server to file containing server configuration information.
 
 Default value: '/server-info'
 
 ### apache::mod::intercept_form_submit
 
-The apache::mod::intercept_form_submit class.
+Installs Adelton mod_intercept_form_submit
+
+* **See also**
+https://www.adelton.com/apache/mod_intercept_form_submit
+for additional documentation.
 
 ### apache::mod::itk
 
-The apache::mod::itk class.
+Installs MPM mod_itk.
+
+* **See also**
+http://mpm-itk.sesse.net
+for additional documentation.
 
 #### Parameters
 
@@ -2238,7 +2540,7 @@ The following parameters are available in the `apache::mod::itk` class.
 
 Data type: `Any`
 
-
+Number of child server processes created on startup.
 
 Default value: '8'
 
@@ -2246,7 +2548,7 @@ Default value: '8'
 
 Data type: `Any`
 
-
+Minimum number of idle child server processes.
 
 Default value: '5'
 
@@ -2254,7 +2556,7 @@ Default value: '5'
 
 Data type: `Any`
 
-
+Maximum number of idle child server processes.
 
 Default value: '20'
 
@@ -2262,7 +2564,7 @@ Default value: '20'
 
 Data type: `Any`
 
-
+Maximum configured value for `MaxRequestWorkers` for the lifetime of the Apache httpd process.
 
 Default value: '256'
 
@@ -2270,7 +2572,7 @@ Default value: '256'
 
 Data type: `Any`
 
-
+Limit on the number of simultaneous requests that will be served.
 
 Default value: '256'
 
@@ -2278,7 +2580,7 @@ Default value: '256'
 
 Data type: `Any`
 
-
+Limit on the number of connections that an individual child server process will handle.
 
 Default value: '4000'
 
@@ -2286,7 +2588,9 @@ Default value: '4000'
 
 Data type: `Any`
 
-
+Drop most root capabilities in the parent process, and instead run as the user given by the User/Group directives with some extra
+capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor
+capabilities, such as NFS.
 
 Default value: `undef`
 
@@ -2294,21 +2598,54 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
 ### apache::mod::jk
 
-Class apache::mod::jk
+Installs Tomcat mod_jk.
 
-Manages mod_jk connector
+* **Note** shm_file and log_file
+Depending on how these files are specified, the class creates their final path differently:
 
-All parameters are optional. When undefined, some receive default values,
-while others cause an optional directive to be absent
+Relative path: prepends supplied path with logroot (see below)
+Absolute path or pipe: uses supplied path as-is
 
-For help on parameters, pls see official reference at:
+```
+shm_file => 'shm_file'
+# Ends up in
+$shm_path = '/var/log/httpd/shm_file'
+
+shm_file => '/run/shm_file'
+# Ends up in
+$shm_path = '/run/shm_file'
+
+shm_file => '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+# Ends up in
+$shm_path = '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+```
+
+* **See also**
 https://tomcat.apache.org/connectors-doc/reference/apache.html
+for additional documentation.
+
+#### Examples
+
+##### 
+
+```puppet
+class { '::apache::mod::jk':
+  ip                   => '192.168.2.15',
+  workers_file         => 'conf/workers.properties',
+  mount_file           => 'conf/uriworkermap.properties',
+  shm_file             => 'run/jk.shm',
+  shm_size             => '50M',
+  workers_file_content => {
+    <Content>
+  },
+}
+```
 
 #### Parameters
 
@@ -2318,7 +2655,7 @@ The following parameters are available in the `apache::mod::jk` class.
 
 Data type: `Optional[String]`
 
-
+IP for binding to mod_jk. Useful when the binding address is not the primary network interface IP.
 
 Default value: `undef`
 
@@ -2326,7 +2663,8 @@ Default value: `undef`
 
 Data type: `Integer`
 
-
+Port for binding to mod_jk. Useful when something else, like a reverse proxy or cache, is receiving requests at port 80, then
+needs to forward them to Apache at a different port.
 
 Default value: 80
 
@@ -2334,7 +2672,9 @@ Default value: 80
 
 Data type: `Boolean`
 
-
+Defines if a Listen directive according to parameters ip and port (see below), so that Apache listens to the IP/port combination
+and redirect to mod_jk. Useful when another Listen directive, like Listen *:<Port> or Listen <Port>, can conflict with the one
+necessary for mod_jk binding.
 
 Default value: `true`
 
@@ -2342,7 +2682,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+The name of a worker file for the Tomcat servlet containers.
 
 Default value: `undef`
 
@@ -2350,7 +2690,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables setting worker properties inside Apache configuration file.
 
 Default value: {}
 
@@ -2358,7 +2698,8 @@ Default value: {}
 
 Data type: `Any`
 
-
+The base directory for shm_file and log_file is determined by the logroot parameter. If unspecified, defaults to
+apache::params::logroot. The default logroot is sane enough therefore it is not recommended to override it.
 
 Default value: `undef`
 
@@ -2366,7 +2707,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Shared memory file name.
 
 Default value: 'jk-runtime-status'
 
@@ -2374,7 +2715,7 @@ Default value: 'jk-runtime-status'
 
 Data type: `Any`
 
-
+Size of the shared memory file name.
 
 Default value: `undef`
 
@@ -2382,7 +2723,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+File containing multiple mappings from a context to a Tomcat worker.
 
 Default value: `undef`
 
@@ -2390,7 +2731,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This directive configures the reload check interval in seconds.
 
 Default value: `undef`
 
@@ -2398,7 +2739,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+A mount point from a context to a Tomcat worker.
 
 Default value: {}
 
@@ -2406,7 +2747,7 @@ Default value: {}
 
 Data type: `Any`
 
-
+An exclusion mount point from a context to a Tomcat worker.
 
 Default value: {}
 
@@ -2414,7 +2755,7 @@ Default value: {}
 
 Data type: `Any`
 
-
+Automatically Alias webapp context directories into the Apache document space
 
 Default value: `undef`
 
@@ -2422,7 +2763,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+If this directive is set to "On" in some virtual server, the mounts from the global server will be copied
+to this virtual server, more precisely all mounts defined by JkMount or JkUnMount.
 
 Default value: `undef`
 
@@ -2430,7 +2772,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that can be used to set worker names in combination with SetHandler
+jakarta-servlet.
 
 Default value: `undef`
 
@@ -2438,7 +2781,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This directive configures the watchdog thread interval in seconds.
 
 Default value: `undef`
 
@@ -2446,7 +2789,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Full or server relative path to the mod_jk log file.
 
 Default value: 'mod_jk.log'
 
@@ -2454,7 +2797,7 @@ Default value: 'mod_jk.log'
 
 Data type: `Any`
 
-
+The mod_jk log level, can be debug, info, warn error or trace.
 
 Default value: `undef`
 
@@ -2462,7 +2805,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The mod_jk date log format, using an extended strftime syntax.
 
 Default value: `undef`
 
@@ -2470,7 +2813,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Request log format string.
 
 Default value: `undef`
 
@@ -2478,7 +2821,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Turns on SSL processing and information gathering by mod_jk.
 
 Default value: `undef`
 
@@ -2486,7 +2829,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains SSL indication.
 
 Default value: `undef`
 
@@ -2494,7 +2837,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains the SSL protocol name.
 
 Default value: `undef`
 
@@ -2502,7 +2845,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains SSL client certificates.
 
 Default value: `undef`
 
@@ -2510,7 +2853,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains SSL client cipher.
 
 Default value: `undef`
 
@@ -2518,7 +2861,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment (prefix) that contains SSL client chain certificates.
 
 Default value: `undef`
 
@@ -2526,7 +2869,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains SSL session.
 
 Default value: `undef`
 
@@ -2534,7 +2877,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable that contains SSL key size in use.
 
 Default value: `undef`
 
@@ -2542,7 +2885,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded local name.
 
 Default value: `undef`
 
@@ -2550,7 +2893,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which forces to ignore an existing Content-Length request header.
 
 Default value: `undef`
 
@@ -2558,7 +2901,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded local IP address.
 
 Default value: `undef`
 
@@ -2566,7 +2909,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded local port.
 
 Default value: `undef`
 
@@ -2574,7 +2917,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) host name.
 
 Default value: `undef`
 
@@ -2582,7 +2925,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) IP address.
 
 Default value: `undef`
 
@@ -2590,7 +2933,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) IP address.
 
 Default value: `undef`
 
@@ -2598,7 +2941,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded user name.
 
 Default value: `undef`
 
@@ -2606,7 +2949,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Apache environment variable which can be used to overwrite the forwarded authentication type.
 
 Default value: `undef`
 
@@ -2614,7 +2957,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Set one of more options to configure the mod_jk module.
 
 Default value: []
 
@@ -2622,7 +2965,7 @@ Default value: []
 
 Data type: `Any`
 
-
+Adds a name and an optional default value of environment variable that should be sent to servlet-engine as a request attribute.
 
 Default value: {}
 
@@ -2630,15 +2973,8 @@ Default value: {}
 
 Data type: `Any`
 
-
-
-Default value: `undef`
-
-##### `location_list`
-
-Data type: `Any`
-
-
+If this directive is set to On in some virtual server, the session IDs ;jsessionid=... will be removed for URLs which are not
+forwarded but instead are handled by the local server.
 
 Default value: []
 
@@ -2646,7 +2982,43 @@ Default value: []
 
 Data type: `Any`
 
+Each directive has the format worker.<Worker name>.<Property>=<Value>. This maps as a hash of hashes, where the outer hash specifies
+workers, and each inner hash specifies each worker properties and values. Plus, there are two global directives, 'worker.list' and
+'worker.maintain' For example, the workers file below should be parameterized as follows:
 
+Worker file:
+```
+worker.list = status
+worker.list = some_name,other_name
+
+worker.maintain = 60
+
+# Optional comment
+worker.some_name.type=ajp13
+worker.some_name.socket_keepalive=true
+
+# I just like comments
+worker.other_name.type=ajp12 (why would you?)
+worker.other_name.socket_keepalive=false
+```
+
+Puppet file:
+```
+$workers_file_content = {
+  worker_lists    => ['status', 'some_name,other_name'],
+  worker_maintain => '60',
+  some_name       => {
+    comment          => 'Optional comment',
+    type             => 'ajp13',
+    socket_keepalive => 'true',
+  },
+  other_name      => {
+    comment          => 'I just like comments',
+    type             => 'ajp12',
+    socket_keepalive => 'false',
+  },
+}
+```
 
 Default value: {}
 
@@ -2654,13 +3026,62 @@ Default value: {}
 
 Data type: `Any`
 
+Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items:
+- uri_list—an array with URIs to be mapped to the worker
+- comment—an optional string with a comment for the worker. For example, the mount file below should be parameterized as Figure 2:
 
+Worker file:
+```
+# Worker 1
+/context_1/ = worker_1
+/context_1/* = worker_1
+
+# Worker 2
+/ = worker_2
+/context_2/ = worker_2
+/context_2/* = worker_2
+```
+
+Puppet file:
+```
+$mount_file_content = {
+  worker_1 => {
+    uri_list => ['/context_1/', '/context_1/*'],
+    comment  => 'Worker 1',
+  },
+  worker_2 => {
+    uri_list => ['/context_2/', '/context_2/*'],
+    comment  => 'Worker 2',
+  },
+},
+```
 
 Default value: {}
 
 ### apache::mod::ldap
 
-The apache::mod::ldap class.
+Installs and configures Apache mod_ldap.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_ldap.html
+for additional documentation.
+
+#### Examples
+
+##### 
+
+```puppet
+class { 'apache::mod::ldap':
+  ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
+  ldap_trusted_global_cert_type => 'CA_DER',
+  ldap_trusted_mode             => 'TLS',
+  ldap_shared_cache_size        => '500000',
+  ldap_cache_entries            => '1024',
+  ldap_cache_ttl                => '600',
+  ldap_opcache_entries          => '1024',
+  ldap_opcache_ttl              => '600',
+}
+```
 
 #### Parameters
 
@@ -2670,7 +3091,7 @@ The following parameters are available in the `apache::mod::ldap` class.
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -2678,7 +3099,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the custom package name.
 
 Default value: `undef`
 
@@ -2686,7 +3107,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Sets the file or database containing global trusted Certificate Authority or global client certificates.
 
 Default value: `undef`
 
@@ -2694,7 +3115,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Sets the the certificate parameter of the global trusted Certificate Authority or global client certificates.
 
 Default value: 'CA_BASE64'
 
@@ -2702,7 +3123,7 @@ Default value: 'CA_BASE64'
 
 Data type: `Any`
 
-
+Size in bytes of the shared-memory cache
 
 Default value: `undef`
 
@@ -2710,7 +3131,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Maximum number of entries in the primary LDAP cache
 
 Default value: `undef`
 
@@ -2718,7 +3139,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Time that cached items remain valid (in seconds).
 
 Default value: `undef`
 
@@ -2726,7 +3147,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Number of entries used to cache LDAP compare operations
 
 Default value: `undef`
 
@@ -2734,7 +3155,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Time that entries in the operation cache remain valid (in seconds).
 
 Default value: `undef`
 
@@ -2742,21 +3163,33 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the SSL/TLS mode to be used when connecting to an LDAP server.
 
 Default value: `undef`
 
 ### apache::mod::lookup_identity
 
-The apache::mod::lookup_identity class.
+Installs Adelton mod_lookup_identity
+
+* **See also**
+https://www.adelton.com/apache/mod_lookup_identity
+for additional documentation.
 
 ### apache::mod::macro
 
-The apache::mod::macro class.
+Installs Apache mod_macro.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_macro.html
+for additional documentation.
 
 ### apache::mod::mime
 
-The apache::mod::mime class.
+Installs Apache mod_mime.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_mime.html
+for additional documentation.
 
 #### Parameters
 
@@ -2766,7 +3199,7 @@ The following parameters are available in the `apache::mod::mime` class.
 
 Data type: `Any`
 
-
+Name of the MIME package to be installed.
 
 Default value: $::apache::params::mime_support_package
 
@@ -2774,7 +3207,7 @@ Default value: $::apache::params::mime_support_package
 
 Data type: `Any`
 
-
+The location of the mime.types file.
 
 Default value: $::apache::params::mime_types_config
 
@@ -2782,13 +3215,17 @@ Default value: $::apache::params::mime_types_config
 
 Data type: `Any`
 
-
+List of additional MIME types to include.
 
 Default value: `undef`
 
 ### apache::mod::mime_magic
 
-The apache::mod::mime_magic class.
+Installs Apache mod_mime_magic.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_mime_magic.html
+for additional documentation.
 
 #### Parameters
 
@@ -2798,13 +3235,17 @@ The following parameters are available in the `apache::mod::mime_magic` class.
 
 Data type: `Any`
 
-
+Enable MIME-type determination based on file contents using the specified magic file.
 
 Default value: `undef`
 
 ### apache::mod::negotiation
 
-The apache::mod::negotiation class.
+Installs Apache mod_negotiation.
+
+* **See also**
+[https://httpd.apache.org/docs/current/mod/mod_negotiation.html
+for additional documentation.
 
 #### Parameters
 
@@ -2814,7 +3255,7 @@ The following parameters are available in the `apache::mod::negotiation` class.
 
 Data type: `Variant[Array[String], String]`
 
-
+Action to take if a single acceptable document is not found.
 
 Default value: 'Prefer Fallback'
 
@@ -2822,7 +3263,7 @@ Default value: 'Prefer Fallback'
 
 Data type: `Variant[Array[String], String]`
 
-
+The precedence of language variants for cases where the client does not express a preference.
 
 Default value: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
                         'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn',
@@ -2831,7 +3272,11 @@ Default value: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
 
 ### apache::mod::nss
 
-The apache::mod::nss class.
+Installs mod_nss.
+
+* **See also**
+https://pagure.io/mod_nss
+for additional documentation.
 
 #### Parameters
 
@@ -2841,9 +3286,29 @@ The following parameters are available in the `apache::mod::nss` class.
 
 Data type: `Any`
 
-
+Path to `access.log`.
 
 Default value: "${::apache::params::logroot}/access.log"
+
+##### `error_Log`
+
+Path to `error.log`
+
+##### `passwd_file`
+
+Data type: `Any`
+
+Path to file containing token passwords used for NSSPassPhraseDialog.
+
+Default value: `undef`
+
+##### `port`
+
+Data type: `Any`
+
+Sets the SSL port that should be used by mod_nss.
+
+Default value: 8443
 
 ##### `error_log`
 
@@ -2853,25 +3318,19 @@ Data type: `Any`
 
 Default value: "${::apache::params::logroot}/error.log"
 
-##### `passwd_file`
-
-Data type: `Any`
-
-
-
-Default value: `undef`
-
-##### `port`
-
-Data type: `Any`
-
-
-
-Default value: 8443
-
 ### apache::mod::pagespeed
 
-The apache::mod::pagespeed class.
+Although this apache module requires the mod-pagespeed-stable package, Puppet does not manage the software repositories required to
+automatically install the package. If you declare this class when the package is either not installed or not available to your
+package manager, your Puppet run will fail.
+
+* **TODO** Add docs
+
+* **Note** Verify that your system is compatible with the latest Google Pagespeed requirements.
+
+* **See also**
+https://developers.google.com/speed/pagespeed/module/
+for additional documentation.
 
 #### Parameters
 
@@ -3159,20 +3618,22 @@ Default value: `undef`
 
 ### apache::mod::passenger
 
-Manages the settings for the mod_passenger
-The result is the /etc/mods-available/mod_passenger.conf file
-
-Where do we get these settings?
-  Settings are dervied from https://www.phusionpassenger.com/library/config/apache/reference
-  Also in passenger source code you can strip out what are all the available options by looking in
-    * src/apache2_module/Configuration.cpp
-    * src/apache2_module/ConfigurationCommands.cpp
-  Note: in the src there are several undocumented settings.
+The current set of server configurations settings were taken directly from the Passenger Reference. To enable deprecation warnings
+and removal failure messages, set the passenger_installed_version to the version number installed on the server.
 
 Change Log:
-  * As of 08/13/2017 there are 84 available/deprecated/removed settings.
-  * Around 08/20/2017 UnionStation was discontinued options were removed.
-  * As of 08/20/2017 there are 77 available/deprecated/removed settings.
+  - As of 08/13/2017 there are 84 available/deprecated/removed settings.
+  - Around 08/20/2017 UnionStation was discontinued options were removed.
+  - As of 08/20/2017 there are 77 available/deprecated/removed settings.
+
+* **Note** In Passenger source code you can strip out what are all the available options by looking in
+  - src/apache2_module/Configuration.cpp
+  - src/apache2_module/ConfigurationCommands.cpp
+There are also several undocumented settings.
+
+* **See also**
+https://www.phusionpassenger.com/library/config/apache/reference/
+for additional documentation.
 
 #### Parameters
 
@@ -3182,7 +3643,7 @@ The following parameters are available in the `apache::mod::passenger` class.
 
 Data type: `Any`
 
-
+Toggle whether to manage yum repo if on a RedHat node.
 
 Default value: `true`
 
@@ -3190,7 +3651,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Specifies the package id.
 
 Default value: `undef`
 
@@ -3198,7 +3659,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Defines the module's shared object name. Do not configure manually without special reason.
 
 Default value: `undef`
 
@@ -3206,7 +3667,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies a path to the module's libraries. Do not manually set this parameter without special reason. The `path` parameter overrides
+this value.
 
 Default value: `undef`
 
@@ -3214,7 +3676,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the module package to install.
 
 Default value: `undef`
 
@@ -3222,7 +3684,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Determines whether Puppet ensures the module should be installed.
 
 Default value: `undef`
 
@@ -3230,7 +3692,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies a path to the module. Do not manually set this parameter without a special reason.
 
 Default value: `undef`
 
@@ -3238,7 +3700,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggle whether URLs with encoded slashes (%2f) can be used (by default Apache does not support this).
 
 Default value: `undef`
 
@@ -3246,7 +3708,12 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option sets, for the current application, the value of the following environment variables:
+- RAILS_ENV
+- RACK_ENV
+- WSGI_ENV
+- NODE_ENV
+- PASSENGER_APP_ENV
 
 Default value: `undef`
 
@@ -3254,7 +3721,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Sets the name of the application group that the current application should belong to.
 
 Default value: `undef`
 
@@ -3262,7 +3729,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Path to the application root which allows access independent from the DocumentRoot.
 
 Default value: `undef`
 
@@ -3270,7 +3737,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the type of the application. If you set this option, then you must also set PassengerAppRoot, otherwise Passenger will
+not properly recognize your application.
 
 Default value: `undef`
 
@@ -3278,7 +3746,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Used to specify that the given URI is an distinct application that should be served by Passenger.
 
 Default value: `undef`
 
@@ -3286,7 +3754,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggle whether application-generated responses are buffered by Apache. Buffering will happen in memory.
 
 Default value: `undef`
 
@@ -3294,7 +3762,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggle whether HTTP client request bodies are buffered before they are sent to the application.
 
 Default value: `undef`
 
@@ -3302,7 +3770,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the I/O concurrency model that should be used for Ruby application processes.
 
 Default value: `undef`
 
@@ -3326,7 +3794,7 @@ Default value: $::apache::params::passenger_conf_package_file
 
 Data type: `Any`
 
-
+Specifies the directory in which to store data buffers.
 
 Default value: `undef`
 
@@ -3342,7 +3810,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Turns support for Ruby application debugging on or off.
 
 Default value: `undef`
 
@@ -3350,7 +3818,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Allows you to specify the group that applications must run as, if user switching fails or is disabled.
 
 Default value: `undef`
 
@@ -3358,7 +3826,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+File path to desired ruby interpreter to use by default.
 
 Default value: $::apache::params::passenger_default_ruby
 
@@ -3366,7 +3834,7 @@ Default value: $::apache::params::passenger_default_ruby
 
 Data type: `Any`
 
-
+Allows you to specify the user that applications must run as, if user switching fails or is disabled.
 
 Default value: `undef`
 
@@ -3374,7 +3842,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Allows disabling the Passenger security update check, a daily check with https://securitycheck.phusionpassenger.com for important
+security updates that might be available.
 
 Default value: `undef`
 
@@ -3382,7 +3851,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether Passenger should be enabled for that particular context.
 
 Default value: `undef`
 
@@ -3390,7 +3859,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether Apache will intercept and handle responses with HTTP status codes of 400 and higher.
 
 Default value: `undef`
 
@@ -3398,7 +3867,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Log file descriptor debug tracing messages to the given file.
 
 Default value: `undef`
 
@@ -3406,7 +3875,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables the Flying Passenger mode, and configures Apache to connect to the Flying Passenger daemon that's listening on the
+given socket filename.
 
 Default value: `undef`
 
@@ -3414,7 +3884,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Use this option to tell Passenger how many concurrent requests the application can handle per process.
 
 Default value: `undef`
 
@@ -3422,7 +3892,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether Passenger should display friendly error pages whenever an application fails to start.
 
 Default value: `undef`
 
@@ -3430,7 +3900,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Allows you to override that behavior and explicitly set a group to run the web application as, regardless of the ownership of the
+startup file.
 
 Default value: `undef`
 
@@ -3438,7 +3909,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether to enable PassengerHighPerformance which will make Passenger will be a little faster, in return for reduced
+compatibility with other Apache modules.
 
 Default value: `undef`
 
@@ -3454,7 +3926,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the directory that Passenger should use for registering its current instance.
 
 Default value: `undef`
 
@@ -3462,7 +3934,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables or disables the loading of shell environment variables before spawning the application.
 
 Default value: `undef`
 
@@ -3470,7 +3942,7 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+File path to log file. By default Passenger log messages are written to the Apache global error log.
 
 Default value: `undef`
 
@@ -3478,7 +3950,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies how much information Passenger should log to its log file. A higher log level value means that more
+information will be logged.
 
 Default value: `undef`
 
@@ -3486,7 +3959,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+When using Passenger on a LVE-enabled kernel, a security check (enter) is run for spawning application processes. This options
+tells the check to only allow processes with UIDs equal to, or higher than, the specified value.
 
 Default value: `undef`
 
@@ -3494,7 +3968,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum number of application processes that may simultaneously exist for an application.
 
 Default value: `undef`
 
@@ -3502,7 +3976,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum number of application processes that may simultaneously exist for a single application.
 
 Default value: `undef`
 
@@ -3510,7 +3984,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum number of application processes that may simultaneously exist.
 
 Default value: `undef`
 
@@ -3518,7 +3992,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Set the preloader's idle timeout, in seconds. A value of 0 means that it should never idle timeout.
 
 Default value: `undef`
 
@@ -3526,7 +4000,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the maximum size for the queue of all incoming requests.
 
 Default value: `undef`
 
@@ -3534,7 +4008,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum amount of time, in seconds, that an application process may take to process a request.
 
 Default value: `undef`
 
@@ -3542,7 +4016,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum number of requests an application process will process.
 
 Default value: `undef`
 
@@ -3550,7 +4024,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum amount of memory that an application process may use, in megabytes.
 
 Default value: `undef`
 
@@ -3558,7 +4032,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+When using a Meteor application in non-bundled mode, use this option to specify a JSON file with settings for the application.
 
 Default value: `undef`
 
@@ -3566,7 +4040,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the minimum number of application processes that should exist for a given application.
 
 Default value: `undef`
 
@@ -3574,7 +4048,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the Node.js command to use for serving Node.js web applications.
 
 Default value: `undef`
 
@@ -3582,7 +4056,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+The maximum number of seconds that an application process may be idle.
 
 Default value: `undef`
 
@@ -3590,7 +4064,7 @@ Default value: `undef`
 
 Data type: `Optional[Variant[String,Array[String]]]`
 
-
+URL of the web application you want to pre-start.
 
 Default value: `undef`
 
@@ -3598,7 +4072,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the Python interpreter to use for serving Python web applications.
 
 Default value: `undef`
 
@@ -3606,7 +4080,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables or disables resistance against deployment errors.
 
 Default value: `undef`
 
@@ -3614,7 +4088,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option is no longer available in version 5.2.0. Switch to PassengerAppRoot if you are setting the application root via a
+document root containing symlinks.
 
 Default value: `undef`
 
@@ -3622,7 +4097,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Configures the maximum size of the real-time disk-backed response buffering system.
 
 Default value: `undef`
 
@@ -3630,7 +4105,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Path to directory containing restart.txt file. Can be either absolute or relative.
 
 Default value: `undef`
 
@@ -3638,7 +4113,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables or disables support for zero-downtime application restarts through restart.txt.
 
 Default value: `undef`
 
@@ -3646,7 +4121,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Refers to the location to the Passenger root directory, or to a location configuration file.
 
 Default value: $::apache::params::passenger_root
 
@@ -3654,7 +4129,7 @@ Default value: $::apache::params::passenger_root
 
 Data type: `Any`
 
-
+Specifies the Ruby interpreter to use for serving Ruby web applications.
 
 Default value: $::apache::params::passenger_ruby
 
@@ -3662,7 +4137,7 @@ Default value: $::apache::params::passenger_ruby
 
 Data type: `Any`
 
-
+Allows use of an intermediate proxy for the Passenger security update check.
 
 Default value: `undef`
 
@@ -3670,7 +4145,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggle whether Passenger will output its version number in the X-Powered-By header in all Passenger-served requests:
 
 Default value: `undef`
 
@@ -3678,7 +4153,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option can be raised if Apache manages to overflow the backlog queue.
 
 Default value: `undef`
 
@@ -3686,7 +4161,7 @@ Default value: `undef`
 
 Data type: `Optional[Enum['smart', 'direct', 'smart-lv2', 'conservative']]`
 
-
+Controls whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 
 Default value: `undef`
 
@@ -3694,7 +4169,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies a timeout for the startup of application processes.
 
 Default value: `undef`
 
@@ -3702,7 +4177,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the startup file that Passenger should use when loading the application.
 
 Default value: `undef`
 
@@ -3710,7 +4185,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Setting this option to a value of x means that certain filesystem checks will be performed at most once every x seconds.
 
 Default value: `undef`
 
@@ -3718,7 +4193,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether all requests that a client sends will be routed to the same originating application process, whenever possible.
 
 Default value: `undef`
 
@@ -3726,7 +4201,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Sets the name of the sticky sessions cookie.
 
 Default value: `undef`
 
@@ -3734,7 +4209,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies the number of threads that Passenger should spawn per Ruby application process.
 
 Default value: `undef`
 
@@ -3742,7 +4217,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+N/A.
 
 Default value: `undef`
 
@@ -3750,7 +4225,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Allows you to override that behavior and explicitly set a user to run the web application as, regardless of the ownership of the
+startup file.
 
 Default value: `undef`
 
@@ -3758,7 +4234,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether to attempt to enable user account sandboxing, also known as user switching.
 
 Default value: `undef`
 
@@ -3766,7 +4242,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
@@ -3774,7 +4250,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
@@ -3782,7 +4258,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerBaseURI.
 
 Default value: `undef`
 
@@ -3790,7 +4266,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Alias for PassengerAppEnv.
 
 Default value: `undef`
 
@@ -3798,7 +4274,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option doesn't do anything anymore since version 4.0.0.
 
 Default value: `undef`
 
@@ -3806,7 +4282,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0, and replaced with PassengerMaxPreloaderIdleTime.
 
 Default value: `undef`
 
@@ -3814,7 +4290,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
@@ -3822,7 +4298,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
@@ -3830,7 +4306,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerBaseURI.
 
 Default value: `undef`
 
@@ -3838,7 +4314,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerDefaultUser
 
 Default value: `undef`
 
@@ -3846,7 +4322,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Alias for PassengerAppEnv.
 
 Default value: `undef`
 
@@ -3854,7 +4330,8 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option is no longer available in version 4.0.0. There is no alternative because framework spawning has been removed
+altogether. You should use smart spawning instead.
 
 Default value: `undef`
 
@@ -3862,7 +4339,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerRuby.
 
 Default value: `undef`
 
@@ -3870,7 +4347,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerSpawnMethod.
 
 Default value: `undef`
 
@@ -3878,7 +4355,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Deprecated in 3.0.0 in favor of PassengerUserSwitching.
 
 Default value: `undef`
 
@@ -3886,17 +4363,23 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
 ### apache::mod::perl
 
-The apache::mod::perl class.
+Installs Apache mod_perl.
+
+* **See also**
+https://perl.apache.org
+for additional documentation.
 
 ### apache::mod::peruser
 
-The apache::mod::peruser class.
+Installs mod_peruser.
+
+* **TODO** Add docs
 
 #### Parameters
 
@@ -3968,7 +4451,9 @@ Default value: 'Off'
 
 ### apache::mod::php
 
-The apache::mod::php class.
+Installs mod_php.
+
+* **TODO** Add docs
 
 #### Parameters
 
@@ -4056,7 +4541,11 @@ Default value: 'libphp'
 
 ### apache::mod::prefork
 
-The apache::mod::prefork class.
+Installs and configures Apache prefork.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/prefork.html
+for additional documentation.
 
 #### Parameters
 
@@ -4066,7 +4555,7 @@ The following parameters are available in the `apache::mod::prefork` class.
 
 Data type: `Any`
 
-
+Number of child server processes created at startup.
 
 Default value: '8'
 
@@ -4074,7 +4563,7 @@ Default value: '8'
 
 Data type: `Any`
 
-
+Minimum number of idle child server processes.
 
 Default value: '5'
 
@@ -4082,7 +4571,7 @@ Default value: '5'
 
 Data type: `Any`
 
-
+Maximum number of idle child server processes.
 
 Default value: '20'
 
@@ -4090,7 +4579,7 @@ Default value: '20'
 
 Data type: `Any`
 
-
+Upper limit on configurable number of processes.
 
 Default value: '256'
 
@@ -4098,7 +4587,7 @@ Default value: '256'
 
 Data type: `Any`
 
-
+Old alias for MaxRequestWorkers.
 
 Default value: '256'
 
@@ -4106,7 +4595,7 @@ Default value: '256'
 
 Data type: `Any`
 
-
+Maximum number of connections that will be processed simultaneously.
 
 Default value: `undef`
 
@@ -4114,7 +4603,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Old alias for MaxConnectionsPerChild.
 
 Default value: '4000'
 
@@ -4122,7 +4611,7 @@ Default value: '4000'
 
 Data type: `Any`
 
-
+Limit on the number of connections that an individual child server will handle during its life.
 
 Default value: `undef`
 
@@ -4130,7 +4619,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -4138,13 +4627,17 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Maximum length of the queue of pending connections.
 
 Default value: '511'
 
 ### apache::mod::proxy
 
-The apache::mod::proxy class.
+Installs and configures Apache mod_proxy.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy.html
+for additional documentation.
 
 #### Parameters
 
@@ -4154,7 +4647,7 @@ The following parameters are available in the `apache::mod::proxy` class.
 
 Data type: `Any`
 
-
+Enables forward (standard) proxy requests.
 
 Default value: 'Off'
 
@@ -4162,7 +4655,7 @@ Default value: 'Off'
 
 Data type: `Any`
 
-
+List of IPs allowed to access proxy.
 
 Default value: `undef`
 
@@ -4170,7 +4663,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -4178,7 +4671,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the proxy package to install.
 
 Default value: `undef`
 
@@ -4186,7 +4679,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Set local IP address for outgoing proxy connections.
 
 Default value: 'On'
 
@@ -4194,17 +4687,25 @@ Default value: 'On'
 
 Data type: `Any`
 
-
+Network timeout for proxied requests.
 
 Default value: '60'
 
 ### apache::mod::proxy_ajp
 
-The apache::mod::proxy_ajp class.
+Installs Apache mod_proxy_ajp.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_ajp.html
+for additional documentation.
 
 ### apache::mod::proxy_balancer
 
-The apache::mod::proxy_balancer class.
+Installs and configures Apache mod_proxy_balancer.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
+for additional documentation.
 
 #### Parameters
 
@@ -4214,9 +4715,29 @@ The following parameters are available in the `apache::mod::proxy_balancer` clas
 
 Data type: `Boolean`
 
-
+Toggle whether to enable balancer manager support.
 
 Default value: `false`
+
+##### `maanger_path`
+
+Server relative path to balancer manager.
+
+##### `allow_from`
+
+Data type: `Array`
+
+List of IPs from which the balancer manager can be accessed.
+
+Default value: ['127.0.0.1','::1']
+
+##### `apache_version`
+
+Data type: `Any`
+
+Version of Apache to install module on.
+
+Default value: $::apache::apache_version
 
 ##### `manager_path`
 
@@ -4226,25 +4747,13 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: '/balancer-manager'
 
-##### `allow_from`
-
-Data type: `Array`
-
-
-
-Default value: ['127.0.0.1','::1']
-
-##### `apache_version`
-
-Data type: `Any`
-
-
-
-Default value: $::apache::apache_version
-
 ### apache::mod::proxy_connect
 
-The apache::mod::proxy_connect class.
+Installs Apache mod_proxy_connect.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_connect.html
+for additional documentation.
 
 #### Parameters
 
@@ -4254,29 +4763,49 @@ The following parameters are available in the `apache::mod::proxy_connect` class
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
 ### apache::mod::proxy_fcgi
 
-The apache::mod::proxy_fcgi class.
+Installs Apache mod_proxy_fcgi.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_fcgi.html
+for additional documentation.
 
 ### apache::mod::proxy_html
 
-The apache::mod::proxy_html class.
+Installs Apache mod_proxy_html
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_html.html
+for additional documentation.
 
 ### apache::mod::proxy_http
 
-The apache::mod::proxy_http class.
+Installs Apache mod_proxy_http.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_http.html
+for additional documentation.
 
 ### apache::mod::proxy_wstunnel
 
-The apache::mod::proxy_wstunnel class.
+Installs Apache mod_proxy_wstunnel.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_proxy_wstunnel.html
+for additional documentation.
 
 ### apache::mod::python
 
-The apache::mod::python class.
+Installs Grisha mod_python.
+
+* **See also**
+https://github.com/grisha/mod_python
+for additional documentation.
 
 #### Parameters
 
@@ -4286,13 +4815,18 @@ The following parameters are available in the `apache::mod::python` class.
 
 Data type: `Optional[String]`
 
-
+Sets the name of the configuration file that is used to load the python module.
 
 Default value: `undef`
 
 ### apache::mod::remoteip
 
-The apache::mod::remoteip class.
+Install and configure Apache `mod_remoteip`
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_remoteip.html
+https://httpd.apache.org/docs/current/mod/mod_remoteip.html
+for additional documentation.
 
 #### Parameters
 
@@ -4302,7 +4836,7 @@ The following parameters are available in the `apache::mod::remoteip` class.
 
 Data type: `String`
 
-
+The header field in which `mod_remoteip` will look for the useragent IP.
 
 Default value: 'X-Forwarded-For'
 
@@ -4310,7 +4844,10 @@ Default value: 'X-Forwarded-For'
 
 Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
 
-
+A list of IP addresses, IP blocks or hostname that are trusted to set a
+valid value inside specified header. Unlike the `$trusted_proxy_ips`
+parameter, any IP address (including private addresses) presented by these
+proxies will trusted by `mod_remoteip`.
 
 Default value: `undef`
 
@@ -4318,7 +4855,7 @@ Default value: `undef`
 
 Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
 
-
+*Deprecated*: use `$internal_proxy` instead.
 
 Default value: `undef`
 
@@ -4326,7 +4863,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to a file containing a list of IP addresses, IP blocks or hostname
+that are trusted to set a valid value inside the specified header. See
+`$internal_proxy` for details.
 
 Default value: `undef`
 
@@ -4334,7 +4873,9 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+A header into which `mod_remoteip` will collect a list of all of the
+intermediate client IP addresses trusted to resolve the useragent IP of the
+request (e.g. `X-Forwarded-By`).
 
 Default value: `undef`
 
@@ -4342,7 +4883,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+Wether or not to enable the PROXY protocol header handling. If enabled
+upstream clients must set the header every time they open a connection.
 
 Default value: `false`
 
@@ -4350,7 +4892,8 @@ Default value: `false`
 
 Data type: `Optional[Array[Stdlib::Host]]`
 
-
+A list of IP address or IP blocks that are not required to use the PROXY
+protocol.
 
 Default value: `undef`
 
@@ -4358,7 +4901,10 @@ Default value: `undef`
 
 Data type: `Optional[Array[Stdlib::Host]]`
 
-
+A list of IP addresses, IP blocks or hostname that are trusted to set a
+valid value inside the specified header. Unlike the `$proxy_ips` parameter,
+any private IP presented by these proxies will be disgarded by
+`mod_remoteip`.
 
 Default value: `undef`
 
@@ -4366,7 +4912,7 @@ Default value: `undef`
 
 Data type: `Optional[Array[Stdlib::Host]]`
 
-
+*Deprecated*: use `$trusted_proxy` instead.
 
 Default value: `undef`
 
@@ -4374,7 +4920,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to a file containing a list of IP addresses, IP blocks or hostname
+that are trusted to set a valid value inside the specified header. See
+`$trusted_proxy` for details.
 
 Default value: `undef`
 
@@ -4382,13 +4930,18 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+A version string used to validate that your apache version supports
+`mod_remoteip`. If not specified, `$::apache::apache_version` is used.
 
 Default value: `undef`
 
 ### apache::mod::reqtimeout
 
-The apache::mod::reqtimeout class.
+Installs and configures Apache mod_reqtimeout.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html
+for additional documentation.
 
 #### Parameters
 
@@ -4398,17 +4951,25 @@ The following parameters are available in the `apache::mod::reqtimeout` class.
 
 Data type: `Any`
 
-
+List of timeouts and data rates for receiving requests.
 
 Default value: ['header=20-40,minrate=500', 'body=10,minrate=500']
 
 ### apache::mod::rewrite
 
-The apache::mod::rewrite class.
+Installs Apache mod_rewrite.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_rewrite.html
+for additional documentation.
 
 ### apache::mod::rpaf
 
-The apache::mod::rpaf class.
+Installs and configures Apache mod_rpaf.
+
+* **See also**
+https://github.com/gnif/mod_rpaf
+for additional documentation.
 
 #### Parameters
 
@@ -4418,7 +4979,7 @@ The following parameters are available in the `apache::mod::rpaf` class.
 
 Data type: `Any`
 
-
+Toggles whether to update vhost name so ServerName and ServerAlias work.
 
 Default value: `true`
 
@@ -4426,7 +4987,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+List of IPs & bitmasked subnets to adjust requests for
 
 Default value: [ '127.0.0.1' ]
 
@@ -4434,7 +4995,7 @@ Default value: [ '127.0.0.1' ]
 
 Data type: `Any`
 
-
+Header to use for the real IP address.
 
 Default value: 'X-Forwarded-For'
 
@@ -4442,13 +5003,17 @@ Default value: 'X-Forwarded-For'
 
 Data type: `Any`
 
-
+Path to template to use for configuring mod_rpaf.
 
 Default value: 'apache/mod/rpaf.conf.erb'
 
 ### apache::mod::security
 
-The apache::mod::security class.
+Installs and configures Trustwaave mod_security.
+
+* **See also**
+https://github.com/SpiderLabs/ModSecurity/wiki
+for additional documentation.
 
 #### Parameters
 
@@ -4458,7 +5023,7 @@ The following parameters are available in the `apache::mod::security` class.
 
 Data type: `Any`
 
-
+Configures the location of audit and debug logs.
 
 Default value: $::apache::params::logroot
 
@@ -4466,7 +5031,7 @@ Default value: $::apache::params::logroot
 
 Data type: `Any`
 
-
+Name of package that installs CRS rules.
 
 Default value: $::apache::params::modsec_crs_package
 
@@ -4474,7 +5039,7 @@ Default value: $::apache::params::modsec_crs_package
 
 Data type: `Any`
 
-
+An array of rules from the modsec_crs_path or absolute to activate via symlinks.
 
 Default value: $::apache::params::modsec_default_rules
 
@@ -4482,7 +5047,7 @@ Default value: $::apache::params::modsec_default_rules
 
 Data type: `Any`
 
-
+Defines the path where Puppet installs the modsec configuration and activated rules links.
 
 Default value: $::apache::params::modsec_dir
 
@@ -4490,7 +5055,7 @@ Default value: $::apache::params::modsec_dir
 
 Data type: `Any`
 
-
+Configures the rules engine.
 
 Default value: $::apache::params::modsec_secruleengine
 
@@ -4498,7 +5063,7 @@ Default value: $::apache::params::modsec_secruleengine
 
 Data type: `Any`
 
-
+Configures which response status code is to be considered relevant for the purpose of audit logging.
 
 Default value: '^(?:5|4(?!04))'
 
@@ -4506,7 +5071,8 @@ Default value: '^(?:5|4(?!04))'
 
 Data type: `Any`
 
-
+Defines which parts of each transaction are going to be recorded in the audit log. Each part is assigned a single letter; when a
+letter appears in the list then the equivalent part will be recorded.
 
 Default value: $::apache::params::modsec_audit_log_parts
 
@@ -4514,7 +5080,7 @@ Default value: $::apache::params::modsec_audit_log_parts
 
 Data type: `Any`
 
-
+Sets the match limit in the PCRE library.
 
 Default value: $::apache::params::secpcrematchlimit
 
@@ -4522,7 +5088,7 @@ Default value: $::apache::params::secpcrematchlimit
 
 Data type: `Any`
 
-
+Sets the match limit recursion in the PCRE library.
 
 Default value: $::apache::params::secpcrematchlimitrecursion
 
@@ -4530,7 +5096,7 @@ Default value: $::apache::params::secpcrematchlimitrecursion
 
 Data type: `Any`
 
-
+A space-separated list of allowed HTTP methods.
 
 Default value: 'GET HEAD POST OPTIONS'
 
@@ -4538,7 +5104,7 @@ Default value: 'GET HEAD POST OPTIONS'
 
 Data type: `Any`
 
-
+A list of one or more allowed MIME types.
 
 Default value: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'
 
@@ -4546,7 +5112,7 @@ Default value: 'application/x-www-form-urlencoded|multipart/form-data|text/xml|a
 
 Data type: `Any`
 
-
+A space-sparated list of prohibited file extensions.
 
 Default value: '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/'
 
@@ -4554,7 +5120,7 @@ Default value: '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/
 
 Data type: `Any`
 
-
+A list of restricted headers separated by slashes and spaces.
 
 Default value: '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'
 
@@ -4562,7 +5128,7 @@ Default value: '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via
 
 Data type: `Any`
 
-
+Defines the default list of actions, which will be inherited by the rules in the same configuration context.
 
 Default value: 'deny'
 
@@ -4570,7 +5136,7 @@ Default value: 'deny'
 
 Data type: `Any`
 
-
+Activates or deactivates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set.
 
 Default value: 'off'
 
@@ -4578,7 +5144,7 @@ Default value: 'off'
 
 Data type: `Any`
 
-
+Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 
 Default value: '5'
 
@@ -4586,7 +5152,7 @@ Default value: '5'
 
 Data type: `Any`
 
-
+Sets the scoring threshold level of the outbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 
 Default value: '4'
 
@@ -4594,7 +5160,7 @@ Default value: '4'
 
 Data type: `Any`
 
-
+Sets the Anomaly Score for rules assigned with a critical severity.
 
 Default value: '5'
 
@@ -4602,7 +5168,7 @@ Default value: '5'
 
 Data type: `Any`
 
-
+Sets the Anomaly Score for rules assigned with a error severity.
 
 Default value: '4'
 
@@ -4610,7 +5176,7 @@ Default value: '4'
 
 Data type: `Any`
 
-
+Sets the Anomaly Score for rules assigned with a warning severity.
 
 Default value: '3'
 
@@ -4618,7 +5184,7 @@ Default value: '3'
 
 Data type: `Any`
 
-
+Sets the Anomaly Score for rules assigned with a notice severity.
 
 Default value: '2'
 
@@ -4626,7 +5192,7 @@ Default value: '2'
 
 Data type: `Any`
 
-
+Sets the maximum number of arguments in the request.
 
 Default value: '255'
 
@@ -4634,7 +5200,7 @@ Default value: '255'
 
 Data type: `Any`
 
-
+Sets the maximum request body size ModSecurity will accept for buffering.
 
 Default value: '13107200'
 
@@ -4642,7 +5208,8 @@ Default value: '13107200'
 
 Data type: `Any`
 
-
+Configures the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported
+in the request.
 
 Default value: '131072'
 
@@ -4650,7 +5217,7 @@ Default value: '131072'
 
 Data type: `Any`
 
-
+Configures the maximum request body size that ModSecurity will store in memory.
 
 Default value: '131072'
 
@@ -4658,17 +5225,29 @@ Default value: '131072'
 
 Data type: `Any`
 
-
+Toggles whether to manage ModSecurity Core Rule Set
 
 Default value: `true`
 
 ### apache::mod::setenvif
 
-The apache::mod::setenvif class.
+Installs Apache mod_setenvif.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_setenvif.html
+for additional documentation.
 
 ### apache::mod::shib
 
-The apache::mod::shib class.
+This class installs and configures only the Apache components of a web application that consumes Shibboleth SSO identities. You
+can manage the Shibboleth configuration manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
+
+* **Note** The Shibboleth module isn't available on RH/CentOS without providing dependency packages provided by Shibboleth's repositories.
+See the [Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/tech-info/sp-install-guide).
+
+* **See also**
+https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig
+for additional documentation.
 
 #### Parameters
 
@@ -4678,7 +5257,7 @@ The following parameters are available in the `apache::mod::shib` class.
 
 Data type: `Any`
 
-
+Toggles whether to trigger warning on RedHat nodes.
 
 Default value: `false`
 
@@ -4686,7 +5265,7 @@ Default value: `false`
 
 Data type: `Any`
 
-
+Specifies a path to the module. Do not manually set this parameter without a special reason.
 
 Default value: `undef`
 
@@ -4694,7 +5273,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of the Shibboleth package to be installed
 
 Default value: `undef`
 
@@ -4702,21 +5281,38 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Specifies a path to the module's libraries. Do not manually set this parameter without special reason. The `path` parameter
+overrides this value.
 
 Default value: `undef`
 
 ### apache::mod::socache_shmcb
 
-The apache::mod::socache_shmcb class.
+Installs Apache mod_socache_shmcb.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_socache_shmcb.html
+for additional documentation.
 
 ### apache::mod::speling
 
-The apache::mod::speling class.
+Installs Apache mod_spelling.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_speling.html
+for additional documentation.
 
 ### apache::mod::ssl
 
-The apache::mod::ssl class.
+On most operating systems, the ssl.conf is placed in the module configuration directory. On Red Hat based operating systems, this
+file is placed in /etc/httpd/conf.d, the same location in which the RPM stores the configuration.
+
+To use SSL with a virtual host, you must either set the default_ssl_vhost parameter in ::apache to true or the ssl parameter in
+apache::vhost to true.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_ssl.html
+for additional documentation.
 
 #### Parameters
 
@@ -4726,7 +5322,7 @@ The following parameters are available in the `apache::mod::ssl` class.
 
 Data type: `Boolean`
 
-
+Enable compression on the SSL level.
 
 Default value: `false`
 
@@ -4734,7 +5330,7 @@ Default value: `false`
 
 Data type: `Any`
 
-
+Enable use of a cryptographic hardware accelerator.
 
 Default value: 'builtin'
 
@@ -4742,7 +5338,7 @@ Default value: 'builtin'
 
 Data type: `Any`
 
-
+Configure various SSL engine run-time options.
 
 Default value: [ 'StdEnvVars' ]
 
@@ -4750,7 +5346,7 @@ Default value: [ 'StdEnvVars' ]
 
 Data type: `Any`
 
-
+Configure OpenSSL parameters through its SSL_CONF API.
 
 Default value: `undef`
 
@@ -4758,7 +5354,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Path to server PEM-encoded X.509 certificate data file.
 
 Default value: `undef`
 
@@ -4766,7 +5362,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+Path to server PEM-encoded private key file
 
 Default value: `undef`
 
@@ -4774,7 +5370,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+File of concatenated PEM-encoded CA Certificates for Client Auth.
 
 Default value: `undef`
 
@@ -4782,7 +5378,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Cipher Suite available for negotiation in SSL handshake.
 
 Default value: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'
 
@@ -4790,7 +5386,7 @@ Default value: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'
 
 Data type: `Variant[Boolean, Enum['on', 'off']]`
 
-
+Option to prefer the server's cipher preference order.
 
 Default value: `true`
 
@@ -4798,7 +5394,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Configure usable SSL/TLS protocol versions.
 
 Default value: [ 'all', '-SSLv2', '-SSLv3' ]
 
@@ -4806,7 +5402,7 @@ Default value: [ 'all', '-SSLv2', '-SSLv3' ]
 
 Data type: `Array`
 
-
+Configure usable SSL protocol flavors for proxy usage.
 
 Default value: []
 
@@ -4814,7 +5410,7 @@ Default value: []
 
 Data type: `Any`
 
-
+Type of pass phrase dialog for encrypted private keys.
 
 Default value: 'builtin'
 
@@ -4822,7 +5418,7 @@ Default value: 'builtin'
 
 Data type: `Any`
 
-
+Pseudo Random Number Generator (PRNG) seeding source.
 
 Default value: '512'
 
@@ -4830,7 +5426,7 @@ Default value: '512'
 
 Data type: `String`
 
-
+Configures the storage type of the global/inter-process SSL Session Cache
 
 Default value: $::apache::params::ssl_sessioncache
 
@@ -4838,7 +5434,7 @@ Default value: $::apache::params::ssl_sessioncache
 
 Data type: `Any`
 
-
+Number of seconds before an SSL session expires in the Session Cache.
 
 Default value: '300'
 
@@ -4846,7 +5442,7 @@ Default value: '300'
 
 Data type: `Boolean`
 
-
+Enable stapling of OCSP responses in the TLS handshake.
 
 Default value: `false`
 
@@ -4854,7 +5450,7 @@ Default value: `false`
 
 Data type: `Optional[Boolean]`
 
-
+Pass stapling related OCSP errors on to client.
 
 Default value: `undef`
 
@@ -4862,7 +5458,12 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Configures mutex mechanism and lock file directory for all or specified mutexes.
+Default based on the OS and/or Apache version:
+- RedHat/FreeBSD/Suse/Gentoo: 'default'.
+- Debian/Ubuntu + Apache >= 2.4: 'default'.
+- Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
+- Ubuntu 10.04: 'file:/var/run/apache2/ssl_mutex'.
 
 Default value: `undef`
 
@@ -4870,7 +5471,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -4878,27 +5479,28 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Name of ssl package to install.
 
 Default value: `undef`
 
 ### apache::mod::status
 
-See: http://httpd.apache.org/docs/current/mod/mod_status.html
+Installs and configures Apache mod_status
 
-Parameters:
-Actions:
-- Enable and configure Apache mod_status
+* **See also**
+http://httpd.apache.org/docs/current/mod/mod_status.html
+for additional documentation.
 
-Requires:
-- The apache class
+#### Examples
 
-Sample Usage:
+##### 
 
- # Simple usage allowing access from localhost and a private subnet
- class { 'apache::mod::status':
-   $allow_from => ['127.0.0.1', '10.10.10.10/24'],
- }
+```puppet
+# Simple usage allowing access from localhost and a private subnet
+class { 'apache::mod::status':
+  $allow_from => ['127.0.0.1', '10.10.10.10/24'],
+}
+```
 
 #### Parameters
 
@@ -4908,10 +5510,9 @@ The following parameters are available in the `apache::mod::status` class.
 
 Data type: `Optional[Array]`
 
-is an array of hosts, ip addresses, partial network numbers
-or networks in CIDR notation specifying what hosts can view the special
+Array of hosts, ip addresses, partial network numbers or networks, in CIDR notation specifying what hosts can view the special
 /server-status URL.  Defaults to ['127.0.0.1', '::1'].
-> Creates Apache < 2.4 directive "Allow from"
+> Creates Apache < 2.4 directive "Allow from".
 
 Default value: `undef`
 
@@ -4919,7 +5520,7 @@ Default value: `undef`
 
 Data type: `Optional[Variant[String, Array, Hash]]`
 
-is either a:
+A Variant type that can be:
 - String with:
   - '' or 'unmanaged' - Host auth control done elsewhere
   - 'ip <List of IPs>' - Allowed IPs/ranges
@@ -4939,8 +5540,7 @@ Default value: `undef`
 
 Data type: `Enum['On', 'Off', 'on', 'off']`
 
-track and display extended status information. Valid
-values are 'On' or 'Off'.  Defaults to 'On'.
+Determines whether to track extended status information for each request, via the ExtendedStatus directive.
 
 Default value: 'On'
 
@@ -4948,8 +5548,7 @@ Default value: 'On'
 
 Data type: `Any`
 
-is the path assigned to the Location directive which
-defines the URL to access the server status. Defaults to '/server-status'.
+Path assigned to the Location directive which defines the URL to access the server status.
 
 Default value: '/server-status'
 
@@ -4957,21 +5556,33 @@ Default value: '/server-status'
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
 ### apache::mod::suexec
 
-The apache::mod::suexec class.
+Installs Apache mod_suexec.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_suexec.html
+for additional documentation.
 
 ### apache::mod::suphp
 
-The apache::mod::suphp class.
+Installs suPHP mod_suphp.
+
+* **See also**
+https://www.suphp.org/DocumentationView.html?file=apache/INSTALL
+for additional documentation.
 
 ### apache::mod::userdir
 
-The apache::mod::userdir class.
+Installs and configures Apache mod_userdir.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_userdir.html
+for additional documentation.
 
 #### Parameters
 
@@ -4981,7 +5592,7 @@ The following parameters are available in the `apache::mod::userdir` class.
 
 Data type: `Any`
 
-
+*Deprecated* Path to system home directory.
 
 Default value: `undef`
 
@@ -4989,7 +5600,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+*Deprecated* Path from user's home directory to public directory.
 
 Default value: `undef`
 
@@ -4997,7 +5608,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Toggles whether to allow use of root directory.
 
 Default value: `true`
 
@@ -5005,7 +5616,7 @@ Default value: `true`
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -5013,7 +5624,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Path to directory or pattern from which to find user-specific directories.
 
 Default value: '/home/*/public_html'
 
@@ -5021,7 +5632,7 @@ Default value: '/home/*/public_html'
 
 Data type: `Any`
 
-
+Array of directives that are allowed in .htaccess files.
 
 Default value: [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]
 
@@ -5029,13 +5640,17 @@ Default value: [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]
 
 Data type: `Any`
 
-
+Configures what features are available in a particular directory.
 
 Default value: [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ]
 
 ### apache::mod::version
 
-The apache::mod::version class.
+Installs Apache mod_version.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_version.html
+for additional documentation.
 
 #### Parameters
 
@@ -5045,17 +5660,25 @@ The following parameters are available in the `apache::mod::version` class.
 
 Data type: `Any`
 
-
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: $::apache::apache_version
 
 ### apache::mod::vhost_alias
 
-The apache::mod::vhost_alias class.
+Installs Apache mod_vhost_alias.
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/mod_vhost_alias.html
+for additional documentation.
 
 ### apache::mod::worker
 
-The apache::mod::worker class.
+Manages the Apache worker MPM
+
+* **See also**
+https://httpd.apache.org/docs/current/mod/worker.html
+for additional documentation.
 
 #### Parameters
 
@@ -5065,7 +5688,8 @@ The following parameters are available in the `apache::mod::worker` class.
 
 Data type: `Any`
 
-
+(optional) The number of child server processes created on startup
+Defaults is '2'
 
 Default value: '2'
 
@@ -5073,7 +5697,10 @@ Default value: '2'
 
 Data type: `Any`
 
-
+(optional) The max number of simultaneous requests that will be served.
+This is the old name and is still supported. The new name is
+MaxRequestWorkers as of 2.3.13.
+Default is '150'
 
 Default value: '150'
 
@@ -5081,7 +5708,8 @@ Default value: '150'
 
 Data type: `Any`
 
-
+(optional) Minimum number of idle threads to handle request spikes.
+Default is '25'
 
 Default value: '25'
 
@@ -5089,7 +5717,8 @@ Default value: '25'
 
 Data type: `Any`
 
-
+(optional) Maximum number of idle threads.
+Default is '75'
 
 Default value: '75'
 
@@ -5097,7 +5726,8 @@ Default value: '75'
 
 Data type: `Any`
 
-
+(optional) The number of threads created by each child process.
+Default is '25'
 
 Default value: '25'
 
@@ -5105,7 +5735,10 @@ Default value: '25'
 
 Data type: `Any`
 
-
+(optional) Limit on the number of connectiojns an individual child server
+process will handle. This is the old name and is still supported. The new
+name is MaxConnectionsPerChild as of 2.3.9+.
+Default is '0'
 
 Default value: '0'
 
@@ -5113,7 +5746,12 @@ Default value: '0'
 
 Data type: `Any`
 
-
+(optional) With worker, use this directive only if your MaxRequestWorkers
+and ThreadsPerChild settings require more than 16 server processes
+(default). Do not set the value of this directive any higher than the
+number of server processes required by what you may want for
+MaxRequestWorkers and ThreadsPerChild.
+Default is '25'
 
 Default value: '25'
 
@@ -5121,7 +5759,9 @@ Default value: '25'
 
 Data type: `Any`
 
-
+(optional) This directive sets the maximum configured value for
+ThreadsPerChild for the lifetime of the Apache httpd process.
+Default is '64'
 
 Default value: '64'
 
@@ -5129,7 +5769,8 @@ Default value: '64'
 
 Data type: `Any`
 
-
+(optional) Maximum length of the queue of pending connections.
+Defaults is '511'
 
 Default value: '511'
 
@@ -5137,13 +5778,18 @@ Default value: '511'
 
 Data type: `Any`
 
-
+(optional)
+Default is $::apache::apache_version
 
 Default value: `undef`
 
 ### apache::mod::wsgi
 
-The apache::mod::wsgi class.
+Installs and configures Graham Dumpleton mod_wsgi.
+
+* **See also**
+https://github.com/GrahamDumpleton/mod_wsgi
+for additional documentation.
 
 #### Parameters
 
@@ -5153,7 +5799,7 @@ The following parameters are available in the `apache::mod::wsgi` class.
 
 Data type: `Any`
 
-
+Enable restrictions on use of embedded mode.
 
 Default value: `undef`
 
@@ -5161,7 +5807,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Configure directory to use for daemon sockets.
 
 Default value: $::apache::params::wsgi_socket_prefix
 
@@ -5169,7 +5815,7 @@ Default value: $::apache::params::wsgi_socket_prefix
 
 Data type: `Any`
 
-
+Additional directories to search for Python modules.
 
 Default value: `undef`
 
@@ -5177,7 +5823,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Absolute path to Python prefix/exec_prefix directories.
 
 Default value: `undef`
 
@@ -5185,7 +5831,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Enables basic Python optimisation features.
 
 Default value: `undef`
 
@@ -5193,7 +5839,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Sets which application group WSGI application belongs to.
 
 Default value: `undef`
 
@@ -5201,7 +5847,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Names of package that installs mod_wsgi.
 
 Default value: `undef`
 
@@ -5209,13 +5855,17 @@ Default value: `undef`
 
 Data type: `Any`
 
-
+Defines the path to the mod_wsgi shared object (.so) file.
 
 Default value: `undef`
 
 ### apache::mod::xsendfile
 
-The apache::mod::xsendfile class.
+Installs tn123 mod_xsendfile.
+
+* **See also**
+https://tn123.org/mod_xsendfile/
+for additional documentation.
 
 ### apache::vhosts
 

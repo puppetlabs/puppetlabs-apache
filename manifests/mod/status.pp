@@ -1,16 +1,15 @@
 
 #
 # @summary
-#   This class enables and configures Apache mod_status
+#   Installs and configures Apache mod_status
 #
-# See: http://httpd.apache.org/docs/current/mod/mod_status.html
+# @param allow_from
+#   Array of hosts, ip addresses, partial network numbers or networks, in CIDR notation specifying what hosts can view the special
+#   /server-status URL.  Defaults to ['127.0.0.1', '::1']. 
+#   > Creates Apache < 2.4 directive "Allow from".
 #
-# Parameters:
-# @param allow_from is an array of hosts, ip addresses, partial network numbers
-#   or networks in CIDR notation specifying what hosts can view the special
-#   /server-status URL.  Defaults to ['127.0.0.1', '::1'].
-#   > Creates Apache < 2.4 directive "Allow from"
-# @param requires is either a:
+# @param requires
+#   A Variant type that can be:
 #   - String with:
 #     - '' or 'unmanaged' - Host auth control done elsewhere
 #     - 'ip <List of IPs>' - Allowed IPs/ranges
@@ -23,24 +22,23 @@
 #       This encloses "Require" directives in "<Require(Any|All|None)>" block
 #       Optional - If unspecified, "Require" directives follow current flow
 #   > Creates Apache >= 2.4 directives "Require"
-# @param extended_status track and display extended status information. Valid
-#   values are 'On' or 'Off'.  Defaults to 'On'.
-# @param status_path is the path assigned to the Location directive which
-#   defines the URL to access the server status. Defaults to '/server-status'.
+#
+# @param extended_status
+#   Determines whether to track extended status information for each request, via the ExtendedStatus directive.
+#
+# @param status_path 
+#   Path assigned to the Location directive which defines the URL to access the server status.
+#
 # @param apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
 #
-# Actions:
-# - Enable and configure Apache mod_status
+# @example
+#   # Simple usage allowing access from localhost and a private subnet
+#   class { 'apache::mod::status':
+#     $allow_from => ['127.0.0.1', '10.10.10.10/24'],
+#   }
 #
-# Requires:
-# - The apache class
-#
-# Sample Usage:
-#
-#  # Simple usage allowing access from localhost and a private subnet
-#  class { 'apache::mod::status':
-#    $allow_from => ['127.0.0.1', '10.10.10.10/24'],
-#  }
+# @see http://httpd.apache.org/docs/current/mod/mod_status.html for additional documentation.
 #
 class apache::mod::status (
   Optional[Array] $allow_from                      = undef,

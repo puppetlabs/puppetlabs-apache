@@ -1,8 +1,8 @@
 # @summary
-#   This class enables Apache mod_auth_gsappi
+#   Installs Apache mod_auth_gsappi
 # 
-# See [`Apache mod_auth_gsappi`](https://github.com/modauthgssapi/mod_auth_gssapi) 
-# for more information.
+# @see https://github.com/modauthgssapi/mod_auth_gssapi for additional documentation.
+#
 class apache::mod::auth_gssapi {
   include apache
   include apache::mod::authn_core

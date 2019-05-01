@@ -1,8 +1,8 @@
 # @summary
-#   This class enables Apache mod_auth_basic
+#   Installs Apache mod_auth_basic
 # 
-# See [`Apache mod_auth_basic`](https://httpd.apache.org/docs/current/mod/mod_auth_basic.html) 
-# for more information.
+# @see https://httpd.apache.org/docs/current/mod/mod_auth_basic.html for additional documentation.
+#
 class apache::mod::auth_basic {
   ::apache::mod { 'auth_basic': }
 }

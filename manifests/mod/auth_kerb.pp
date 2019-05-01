@@ -1,5 +1,7 @@
 # @summary
-#   This class enables Apache mod_auth_kerb
+#   Installs Apache mod_auth_kerb
+#
+# @see http://modauthkerb.sourceforge.net for additional documentation.
 class apache::mod::auth_kerb {
   include ::apache
   include ::apache::mod::authn_core

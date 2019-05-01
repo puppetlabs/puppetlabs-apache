@@ -50,7 +50,8 @@
 #   (optional)
 #   Default is $::apache::apache_version
 #
-
+# @see https://httpd.apache.org/docs/current/mod/worker.html for additional documentation.
+#
 class apache::mod::worker (
   $startservers        = '2',
   $maxclients          = '150',

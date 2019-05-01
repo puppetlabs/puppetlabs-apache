@@ -1,5 +1,5 @@
 # @summary
-#   This class enables Apache mod_authn_dbd
+#   Installs Apache mod_authn_dbd
 # 
 # @param authn_dbd_params
 #   The params needed for the mod to function.
@@ -24,8 +24,8 @@
 #   
 # @param authn_dbd_alias
 # 
-# See [`Apache mod_authn_dbd`](https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html) 
-# for more information.
+# @see https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
+#
 class apache::mod::authn_dbd (
   $authn_dbd_params,
   $authn_dbd_dbdriver    = 'mysql',

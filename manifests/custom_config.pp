@@ -7,7 +7,7 @@
 # @param ensure
 #   Specifies whether the configuration file should be present.
 #
-#@param confdir
+# @param confdir
 #   Sets the directory in which Puppet places configuration files.
 #
 # @param content
