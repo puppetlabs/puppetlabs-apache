@@ -1,3 +1,6 @@
+# @summary
+#   Enables the `Peruser` module for FreeBSD only.
+#
 # @api private
 define apache::peruser::processor (
   $user,

@@ -1,12 +1,8 @@
 # @summary
-#   This class enabled the proxy module for Apache
+#   This class enabled the proxy module for Apache.
 #
-# Actions:
-#   - Enables Apache Proxy module
-#
-# Requires:
-#
-# Sample Usage:
+# @note
+#   This class is deprecated.
 #
 # @api private
 class apache::proxy {

@@ -8,11 +8,10 @@
 # balancer members, and then collect them on a single apache load balancer
 # server.
 #
-# #### Requirement/Dependencies:
-#
-# Currently requires the puppetlabs/concat module on the Puppet Forge and uses
-# storeconfigs on the Puppet Master to export/collect resources from all
-# balancer members.
+# @note 
+#   Currently requires the puppetlabs/concat module on the Puppet Forge and uses
+#   storeconfigs on the Puppet Master to export/collect resources from all
+#   balancer members.
 #
 # @param name
 #   The namevar of the defined resource type is the balancer clusters name.<br />

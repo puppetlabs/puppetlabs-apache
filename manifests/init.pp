@@ -8,10 +8,8 @@
 # - Creates a document root directory determined by your operating system, typically `/var/www`.
 # - Starts the Apache service.
 #
-# You can simply declare the default `apache` class:
-# ``` puppet
-# class { 'apache': }
-# ```
+# @example
+#   class { 'apache': }
 #
 # @param allow_encoded_slashes
 #   Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the 

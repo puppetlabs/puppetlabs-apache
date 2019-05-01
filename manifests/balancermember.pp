@@ -11,11 +11,10 @@
 # implement this is to export this resource for all apache balancer member
 # servers, and then collect them on the main apache load balancer.
 #
-# #### Requirement/Dependencies:
-#
-# Currently requires the puppetlabs/concat module on the Puppet Forge and
-# uses storeconfigs on the Puppet Master to export/collect resources
-# from all balancer members.
+# @note
+#   Currently requires the puppetlabs/concat module on the Puppet Forge and
+#   uses storeconfigs on the Puppet Master to export/collect resources
+#   from all balancer members.
 #
 # @param name
 #   The title of the resource is arbitrary and only utilized in the concat

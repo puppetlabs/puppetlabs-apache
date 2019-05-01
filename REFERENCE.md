@@ -103,8 +103,8 @@ _Private Classes_
 * `apache::default_mods`: 
 * `apache::package`: 
 * `apache::params`: This class manages Apache parameters
-* `apache::php`: This class installs PHP for Apache
-* `apache::proxy`: This class enabled the proxy module for Apache
+* `apache::php`: This class installs PHP for Apache.
+* `apache::proxy`: This class enabled the proxy module for Apache.
 * `apache::python`: This class installs Python for Apache
 * `apache::service`: 
 * `apache::ssl`: This class installs Apache SSL capabilities
@@ -133,9 +133,9 @@ _Private Defined types_
 
 * `apache::default_mods::load`: 
 * `apache::mpm`: 
-* `apache::peruser::multiplexer`: 
-* `apache::peruser::processor`: 
-* `apache::security::rule_link`: 
+* `apache::peruser::multiplexer`: Checks if an Apache module has a class.
+* `apache::peruser::processor`: Enables the `Peruser` module for FreeBSD only.
+* `apache::security::rule_link`: Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.
 
 **Resource types**
 
@@ -165,8 +165,11 @@ When this class is declared with the default options, Puppet:
 - Creates a document root directory determined by your operating system, typically `/var/www`.
 - Starts the Apache service.
 
-You can simply declare the default `apache` class:
-``` puppet
+#### Examples
+
+##### 
+
+```puppet
 class { 'apache': }
 ```
 
@@ -1026,9 +1029,8 @@ Default value: $::apache::params::mime_types_additional
 
 ### apache::dev
 
-Default: Depends on the operating system:`dev_packages` parameter of the `apache::params`
+The libraries installed depends on the `dev_packages` parameter of the `apache::params`
 class, based on your operating system:
-
 - **Debian** : `libaprutil1-dev`, `libapr1-dev`; `apache2-dev` on Ubuntu 13.10 and Debian 8; `apache2-prefork-dev` on other versions.
 - **FreeBSD**: `undef`; on FreeBSD, you must declare the `apache::package` or `apache` classes before declaring `apache::dev`.
 - **Gentoo**: `undef`.
@@ -5869,15 +5871,15 @@ for additional documentation.
 
 ### apache::vhosts
 
-Creates `apache::vhost` defined types.
-
-> **Note**: See the `apache::vhost` defined type's reference for a list of all virtual
 host parameters or Configuring virtual hosts in the README section.
 
-For example, to create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html)
-`custom_vhost_1`, declare the following manifest:
+* **Note** See the `apache::vhost` defined type's reference for a list of all virtual
 
-``` puppet
+#### Examples
+
+##### To create a [name-based virtual host](https://httpd.apache.org/docs/current/vhosts/name-based.html) `custom_vhost_1`
+
+```puppet
 class { 'apache::vhosts':
   vhosts => {
     'custom_vhost_1' => {
@@ -5911,9 +5913,7 @@ storeconfigs, you can export the apache::balancermember resources on all
 balancer members, and then collect them on a single apache load balancer
 server.
 
-#### Requirement/Dependencies:
-
-Currently requires the puppetlabs/concat module on the Puppet Forge and uses
+* **Note** Currently requires the puppetlabs/concat module on the Puppet Forge and uses
 storeconfigs on the Puppet Master to export/collect resources from all
 balancer members.
 
@@ -5988,9 +5988,7 @@ array of options. More features can be added as needed. The best way to
 implement this is to export this resource for all apache balancer member
 servers, and then collect them on the main apache load balancer.
 
-#### Requirement/Dependencies:
-
-Currently requires the puppetlabs/concat module on the Puppet Forge and
+* **Note** Currently requires the puppetlabs/concat module on the Puppet Forge and
 uses storeconfigs on the Puppet Master to export/collect resources
 from all balancer members.
 
