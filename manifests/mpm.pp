@@ -1,3 +1,5 @@
+# @summary Enables the use of Apache MPMs.
+#
 # @api private
 define apache::mpm (
   $lib_path       = $::apache::lib_path,

@@ -1,3 +1,6 @@
+# @summary
+#   Helper for setting up default conf.d files.
+#
 # @api private
 class apache::default_confd_files (
   $all = true,

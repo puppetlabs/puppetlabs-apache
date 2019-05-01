@@ -1,3 +1,6 @@
+# @summary
+#   Installs and configures Apache service.
+#
 # @api private
 class apache::service (
   $service_name           = $::apache::params::service_name,

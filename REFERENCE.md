@@ -98,15 +98,15 @@ _Public Classes_
 
 _Private Classes_
 
-* `apache::confd::no_accf`: 
-* `apache::default_confd_files`: 
-* `apache::default_mods`: 
-* `apache::package`: 
+* `apache::confd::no_accf`: Manages the `no-accf.conf` file.
+* `apache::default_confd_files`: Helper for setting up default conf.d files.
+* `apache::default_mods`: Installs and congfigures default mods for Apache
+* `apache::package`: Installs an Apache MPM.
 * `apache::params`: This class manages Apache parameters
 * `apache::php`: This class installs PHP for Apache.
 * `apache::proxy`: This class enabled the proxy module for Apache.
 * `apache::python`: This class installs Python for Apache
-* `apache::service`: 
+* `apache::service`: Installs and configures Apache service.
 * `apache::ssl`: This class installs Apache SSL capabilities
 * `apache::version`: Try to automatically detect the version by OS
 
@@ -131,8 +131,8 @@ outside of the defaults.
 
 _Private Defined types_
 
-* `apache::default_mods::load`: 
-* `apache::mpm`: 
+* `apache::default_mods::load`: Helper used by `apache::default_mods`
+* `apache::mpm`: Enables the use of Apache MPMs.
 * `apache::peruser::multiplexer`: Checks if an Apache module has a class.
 * `apache::peruser::processor`: Enables the `Peruser` module for FreeBSD only.
 * `apache::security::rule_link`: Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.

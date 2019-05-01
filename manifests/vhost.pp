@@ -1,5 +1,5 @@
 # @summary
-#   Allows specialised cnfigurations for virtual hosts that possess requirements 
+#   Allows specialised configurations for virtual hosts that possess requirements 
 #   outside of the defaults.
 #
 # The apache module allows a lot of flexibility in the setup and configuration of virtual hosts. 

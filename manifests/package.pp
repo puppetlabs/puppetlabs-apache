@@ -1,3 +1,6 @@
+# @summary
+#   Installs an Apache MPM.
+#
 # @api private
 class apache::package (
   $ensure     = 'present',
