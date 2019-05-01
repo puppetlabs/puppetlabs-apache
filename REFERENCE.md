@@ -5338,6 +5338,15 @@ Enable compression on the SSL level.
 
 Default value: `false`
 
+##### `ssl_sessiontickets`
+
+Data type: `Boolean`
+
+Enable the use of TLS session tickets (RFC 5077).
+Ignored on Ubuntu 14.04 since Apache 2.4.11 or newer is needed.
+
+Default: `true`.
+
 ##### `ssl_cryptodevice`
 
 Data type: `Any`

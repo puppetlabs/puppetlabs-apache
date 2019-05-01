@@ -255,6 +255,27 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCompression On$}) }
     end
+
+    context 'with Apache version >= 2.4 - ssl_sessiontickets with default value' do
+      let :params do
+        {
+          apache_version: '2.4',
+        }
+      end
+
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets On$}) }
+    end
+    context 'with Apache version >= 2.4 - setting ssl_sessiontickets to false' do
+      let :params do
+        {
+          apache_version: '2.4',
+          ssl_sessiontickets: false,
+        }
+      end
+
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets Off$}) }
+    end
+
     context 'with Apache version >= 2.4 - setting ssl_stapling to true' do
       let :params do
         {
@@ -332,6 +353,31 @@ describe 'apache::mod::ssl', type: :class do
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLProxyProtocol -ALL \+TLSv1$}) }
+    end
+  end
+  # Template config parts varying by distro
+  context 'on Ubuntu 14.04' do
+    let :facts do
+      {
+        osfamily: 'Debian',
+        operatingsystem: 'Ubuntu',
+        operatingsystemrelease: '14.04',
+        lsbdistrelease: '14.04',
+        kernel: 'Linux',
+        id: 'root',
+        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        is_pe: false,
+      }
+    end
+
+    context 'with Apache version >= 2.4 - setting ssl_sessiontickets to false' do
+      let :params do
+        {
+          apache_version: '2.4',
+        }
+      end
+
+      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets Off$}) }
     end
   end
 end

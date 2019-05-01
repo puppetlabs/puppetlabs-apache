@@ -15,6 +15,9 @@
     <%- if @ssl_compression -%>
   SSLCompression <%= scope.call_function('apache::bool2httpd', [@ssl_compression]) %>
     <%- end -%>
+    <%- unless @_ssl_sessiontickets.nil? -%>
+  SSLSessionTickets <%= scope.call_function('apache::bool2httpd', [@_ssl_sessiontickets]) %>
+    <%- end -%>
   <%- else -%>
   SSLMutex <%= @_ssl_mutex %>
   <%- end -%>
