@@ -284,13 +284,13 @@ class apache::mod::jk (
   $env_var                     = {},
   $strip_session               = undef,
   # Location list
-  # @see comments in template mod/jk.conf.erb
-  $strip_session               = [],
+  # See comments in template mod/jk.conf.erb
+  $location_list               = [],
   # Workers file content
-  # @see comments in template mod/jk/workers.properties.erb
+  # See comments in template mod/jk/workers.properties.erb
   $workers_file_content        = {},
   # Mount file content
-  # @see comments in template mod/jk/uriworkermap.properties.erb
+  # See comments in template mod/jk/uriworkermap.properties.erb
   $mount_file_content          = {},
 ){
 
