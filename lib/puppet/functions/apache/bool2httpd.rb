@@ -15,7 +15,7 @@ Puppet::Functions.create_function(:'apache::bool2httpd') do
   #   bool2httpd($trace_enable) # returns 'Off'
   #   bool2httpd($server_signature) # returns 'mail'
   #   bool2httpd(undef) # returns 'Off'
-  #   
+  #
   def bool2httpd(arg)
     return 'Off' if arg.nil? || arg == false || arg =~ %r{false}i || arg == :undef
     return 'On' if arg == true || arg =~ %r{true}i
