@@ -798,7 +798,7 @@ For information on classes, types and functions see the [REFERENCE.md](https://g
 
 ### Templates
 
-The Apache module relies heavily on templates to enable the [`apache::vhost`][] and [`apache::mod`][] defined types. These templates are built based on [Facter][] facts specific to your operating system. Unless explicitly called out, most templates are not meant for configuration.
+The Apache module relies heavily on templates to enable the [`apache::vhost`][] and [`apache::mod`][] defined types. These templates are built based on [Facter][] facts that are specific to your operating system. Unless explicitly called out, most templates are not meant for configuration.
 
 ### Tasks
 
