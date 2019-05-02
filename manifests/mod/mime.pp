@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_mime.
+#   Installs and configures `mod_mime`.
 # 
 # @param mime_support_package
 #   Name of the MIME package to be installed.

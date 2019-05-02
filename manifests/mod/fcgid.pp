@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_fcgid.
+#   Installs and configures `mod_fcgid`.
 # 
 # @param expires_active
 #   Enables generation of Expires headers.

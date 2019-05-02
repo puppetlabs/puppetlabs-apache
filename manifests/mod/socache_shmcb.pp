@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_socache_shmcb.
+#   Installs `mod_socache_shmcb`.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_socache_shmcb.html for additional documentation.
 #

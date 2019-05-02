@@ -134,7 +134,7 @@
 #   Sets the default `DocumentRoot` location.
 #
 # @param error_documents
-#   Determines whether to enable custom error documents on the Apache server.
+#   Determines whether to enable [custom error documents](https://httpd.apache.org/docs/current/custom-error.html) on the Apache server.
 #
 # @param group
 #   Sets the group ID that owns any Apache processes spawned to answer requests.<br />
@@ -248,7 +248,7 @@
 #   ```
 #
 # @param mpm_module
-#   Determines which multi-processing module (MPM) is loaded and configured for the 
+#   Determines which [multi-processing module](https://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the 
 #   HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
 #   You must set this to `false` to explicitly declare the following classes with custom parameters:
 #   - `apache::mod::event`

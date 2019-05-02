@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_proxy_wstunnel.
+#   Installs `mod_proxy_wstunnel`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy_wstunnel.html for additional documentation.
 #

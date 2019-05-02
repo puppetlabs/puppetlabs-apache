@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_cgi.
+#   Installs `mod_cgi`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_cgi.html for additional documentation.
 #

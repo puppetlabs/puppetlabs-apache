@@ -1,5 +1,5 @@
 # @summary
-#   Installs Tomcat mod_jk.
+#   Installs `mod_jk`.
 # 
 # @param ip
 #  IP for binding to mod_jk. Useful when the binding address is not the primary network interface IP.
@@ -129,8 +129,8 @@
 #   forwarded but instead are handled by the local server. 
 #
 # @param workers_file_content
-#   Each directive has the format worker.<Worker name>.<Property>=<Value>. This maps as a hash of hashes, where the outer hash specifies 
-#   workers, and each inner hash specifies each worker properties and values. Plus, there are two global directives, 'worker.list' and 
+#   Each directive has the format worker.<Worker name>.<Property>=<Value>. This maps as a hash of hashes, where the outer hash specifies
+#   workers, and each inner hash specifies each worker properties and values. Plus, there are two global directives, 'worker.list' and
 #   'worker.maintain' For example, the workers file below should be parameterized as follows:
 #
 #   Worker file:
@@ -168,7 +168,8 @@
 #   ```
 #
 # @param mount_file_content
-#   Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items:
+#   Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and 
+#   each inner hash contains two items:
 #   - uri_list—an array with URIs to be mapped to the worker
 #   - comment—an optional string with a comment for the worker. For example, the mount file below should be parameterized as Figure 2:
 #

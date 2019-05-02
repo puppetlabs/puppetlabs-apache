@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_auth_gsappi
+#   Installs `mod_auth_gsappi`.
 # 
 # @see https://github.com/modauthgssapi/mod_auth_gssapi for additional documentation.
 #

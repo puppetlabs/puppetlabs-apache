@@ -1,5 +1,5 @@
 # @summary
-#   Installs mod_fastcgi
+#   Installs `mod_fastcgi`.
 # 
 # @see https://github.com/FastCGI-Archives/mod_fastcgi for additional documentation.
 #

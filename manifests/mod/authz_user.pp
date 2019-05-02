@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_authz_user
+#   Installs `mod_authz_user`
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_authz_user.html for additional documentation.
 #

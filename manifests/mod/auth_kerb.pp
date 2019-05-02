@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_auth_kerb
+#   Installs `mod_auth_kerb`
 #
 # @see http://modauthkerb.sourceforge.net for additional documentation.
 class apache::mod::auth_kerb {

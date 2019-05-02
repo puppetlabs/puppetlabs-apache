@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_proxy_balancer.
+#   Installs and configures `mod_proxy_balancer`.
 # 
 # @param manager
 #   Toggle whether to enable balancer manager support.

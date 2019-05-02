@@ -1,7 +1,5 @@
-
-#
 # @summary
-#   Installs and configures Apache mod_status
+#   Installs and configures `mod_status`.
 #
 # @param allow_from
 #   Array of hosts, ip addresses, partial network numbers or networks, in CIDR notation specifying what hosts can view the special

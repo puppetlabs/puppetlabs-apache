@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_info.
+#   Installs and configures `mod_info`.
 # 
 # @param allow_from
 #   Whitelist of IPv4 or IPv6 addresses or ranges that can access the info path.

@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_proxy_fcgi.
+#   Installs `mod_proxy_fcgi`.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy_fcgi.html for additional documentation.
 #

@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_negotiation.
+#   Installs and configures `mod_negotiation`.
 # 
 # @param force_language_priority
 #   Action to take if a single acceptable document is not found.

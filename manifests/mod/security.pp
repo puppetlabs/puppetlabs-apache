@@ -1,6 +1,6 @@
 
 # @summary
-#   Installs and configures Trustwaave mod_security.
+#   Installs and configures `mod_security`.
 # 
 # @param logroot
 #   Configures the location of audit and debug logs.

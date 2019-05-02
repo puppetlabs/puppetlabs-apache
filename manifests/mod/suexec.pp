@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_suexec.
+#   Installs `mod_suexec`.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_suexec.html for additional documentation.
 #

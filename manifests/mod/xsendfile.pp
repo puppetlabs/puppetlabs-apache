@@ -1,5 +1,5 @@
 # @summary
-#   Installs tn123 mod_xsendfile.
+#   Installs `mod_xsendfile`.
 # 
 # @see https://tn123.org/mod_xsendfile/ for additional documentation.
 #

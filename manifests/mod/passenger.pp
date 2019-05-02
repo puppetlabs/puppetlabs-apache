@@ -1,5 +1,5 @@
 # @summary
-#   Installs Phusion mod_pasenger.
+#   Installs `mod_pasenger`.
 #
 # @param manage_repo
 #   Toggle whether to manage yum repo if on a RedHat node.

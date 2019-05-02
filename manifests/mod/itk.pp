@@ -1,5 +1,5 @@
 # @summary
-#   Installs MPM mod_itk.
+#   Installs MPM `mod_itk`.
 # 
 # @param startservers
 #   Number of child server processes created on startup.

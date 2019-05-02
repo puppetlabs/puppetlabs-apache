@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_authz_default.
+#   Installs and configures `mod_authz_default`.
 # 
 # @param apache_version
 #   Version of Apache to install module on.

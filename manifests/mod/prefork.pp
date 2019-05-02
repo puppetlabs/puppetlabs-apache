@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache prefork.
+#   Installs and configures MPM `prefork`.
 # 
 # @param startservers
 #   Number of child server processes created at startup.

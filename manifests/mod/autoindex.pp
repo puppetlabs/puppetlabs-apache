@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_autoindex
+#   Installs `mod_autoindex`
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_autoindex.html for additional documentation.
 #

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_expires.
+#   Installs and configures `mod_expires`.
 # 
 # @param expires_active
 #   Enables generation of Expires headers.

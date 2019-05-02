@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_event.
+#   Installs and configures `mod_event`.
 # 
 # @param startservers
 #   Sets the number of child server processes created at startup, via the module's `StartServers` directive. Setting this to `false` 

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_proxy.
+#   Installs and configures `mod_proxy`.
 # 
 # @param proxy_requests
 #   Enables forward (standard) proxy requests.

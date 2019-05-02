@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_spelling.
+#   Installs `mod_spelling`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_speling.html for additional documentation.
 #

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_dav_svn.
+#   Installs and configures `mod_dav_svn`.
 # 
 # @param authz_svn_enabled
 #   Specifies whether to install Apache mod_authz_svn

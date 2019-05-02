@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_dav_fs.
+#   Installs `mod_dav_fs`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_dav_fs.html for additional documentation.
 #

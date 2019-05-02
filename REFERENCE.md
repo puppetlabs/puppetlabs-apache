@@ -10,90 +10,90 @@ _Public Classes_
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
 * [`apache::dev`](#apachedev): Installs Apache development libraries.
 * [`apache::mod::actions`](#apachemodactions): Installs Apache mod_actions
-* [`apache::mod::alias`](#apachemodalias): Installs and configures Apache mod_alias
-* [`apache::mod::auth_basic`](#apachemodauth_basic): Installs Apache mod_auth_basic
-* [`apache::mod::auth_cas`](#apachemodauth_cas): Installs and configures Apache mod_auth_cas
-* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): Installs Apache mod_auth_gsappi
-* [`apache::mod::auth_kerb`](#apachemodauth_kerb): Installs Apache mod_auth_kerb
-* [`apache::mod::auth_mellon`](#apachemodauth_mellon): Installs and configures Apache mod_auth_mellon
-* [`apache::mod::authn_core`](#apachemodauthn_core): Installs Apache mod_authn_core
-* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): Installs Apache mod_authn_dbd
-* [`apache::mod::authn_file`](#apachemodauthn_file): Installs Apache mod_authn_file
-* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): Installs Apache mod_authnz_ldap
-* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): Installs Adelton mod_authnz_pam
-* [`apache::mod::authz_default`](#apachemodauthz_default): Installs and configures Apache mod_authz_default.
-* [`apache::mod::authz_user`](#apachemodauthz_user): Installs Apache mod_authz_user
-* [`apache::mod::autoindex`](#apachemodautoindex): Installs Apache mod_autoindex
-* [`apache::mod::cache`](#apachemodcache): Installs Apache mod_cache
-* [`apache::mod::cgi`](#apachemodcgi): Installs Apache mod_cgi.
-* [`apache::mod::cgid`](#apachemodcgid): Installs Apache mod_cgid.
-* [`apache::mod::cluster`](#apachemodcluster): Installs mod_cluster.
-* [`apache::mod::data`](#apachemoddata): Installs and configures Apache mod_data.
-* [`apache::mod::dav`](#apachemoddav): Installs Apache mod_dav.
-* [`apache::mod::dav_fs`](#apachemoddav_fs): Installs Apache mod_dav_fs.
-* [`apache::mod::dav_svn`](#apachemoddav_svn): Installs and configures Apache mod_dav_svn.
-* [`apache::mod::dbd`](#apachemoddbd): Installs Apache mod_dbd.
-* [`apache::mod::deflate`](#apachemoddeflate): Installs and configures Apache mod_deflate.
-* [`apache::mod::dev`](#apachemoddev): Installs Apache mod_dev.
-* [`apache::mod::dir`](#apachemoddir): Installs and configures Apache mod_dir.
-* [`apache::mod::disk_cache`](#apachemoddisk_cache): Installs and configures Apache mod_disk_cache.
-* [`apache::mod::dumpio`](#apachemoddumpio): Installs and configures Apache mod_dumpio.
-* [`apache::mod::env`](#apachemodenv): Installs Apache mod_env.
-* [`apache::mod::event`](#apachemodevent): Installs and configures Apache mod_event.
-* [`apache::mod::expires`](#apachemodexpires): Installs and configures Apache mod_expires.
-* [`apache::mod::ext_filter`](#apachemodext_filter): Installs and configures Apache mod_ext_filter.
-* [`apache::mod::fastcgi`](#apachemodfastcgi): Installs mod_fastcgi
-* [`apache::mod::fcgid`](#apachemodfcgid): Installs and configures Apache mod_fcgid.
-* [`apache::mod::filter`](#apachemodfilter): Installs Apache mod_filter
-* [`apache::mod::geoip`](#apachemodgeoip): Installs and configures MaxMind mod_geoip.
-* [`apache::mod::headers`](#apachemodheaders): Installs and configures Apache mod_headers.
-* [`apache::mod::http2`](#apachemodhttp2): Installs and configures Apache mod_http2.
-* [`apache::mod::include`](#apachemodinclude): Installs Apache mod_include
-* [`apache::mod::info`](#apachemodinfo): Installs and configures Apache mod_info.
-* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): Installs Adelton mod_intercept_form_submit
-* [`apache::mod::itk`](#apachemoditk): Installs MPM mod_itk.
-* [`apache::mod::jk`](#apachemodjk): Installs Tomcat mod_jk.
-* [`apache::mod::ldap`](#apachemodldap): Installs and configures Apache mod_ldap.
-* [`apache::mod::lookup_identity`](#apachemodlookup_identity): Installs Adelton mod_lookup_identity
-* [`apache::mod::macro`](#apachemodmacro): Installs Apache mod_macro.
-* [`apache::mod::mime`](#apachemodmime): Installs Apache mod_mime.
-* [`apache::mod::mime_magic`](#apachemodmime_magic): Installs Apache mod_mime_magic.
-* [`apache::mod::negotiation`](#apachemodnegotiation): Installs Apache mod_negotiation.
-* [`apache::mod::nss`](#apachemodnss): Installs mod_nss.
-* [`apache::mod::pagespeed`](#apachemodpagespeed): Installs and configures Google mod_pagespeed.
-* [`apache::mod::passenger`](#apachemodpassenger): Installs Phusion mod_pasenger.
-* [`apache::mod::perl`](#apachemodperl): Installs Apache mod_perl.
-* [`apache::mod::peruser`](#apachemodperuser): Installs mod_peruser.
-* [`apache::mod::php`](#apachemodphp): Installs mod_php.
-* [`apache::mod::prefork`](#apachemodprefork): Installs and configures Apache prefork.
-* [`apache::mod::proxy`](#apachemodproxy): Installs and configures Apache mod_proxy.
-* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): Installs Apache mod_proxy_ajp.
-* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): Installs and configures Apache mod_proxy_balancer.
-* [`apache::mod::proxy_connect`](#apachemodproxy_connect): Installs Apache mod_proxy_connect.
-* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): Installs Apache mod_proxy_fcgi.
-* [`apache::mod::proxy_html`](#apachemodproxy_html): Installs Apache mod_proxy_html
-* [`apache::mod::proxy_http`](#apachemodproxy_http): Installs Apache mod_proxy_http.
-* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): Installs Apache mod_proxy_wstunnel.
-* [`apache::mod::python`](#apachemodpython): Installs Grisha mod_python.
-* [`apache::mod::remoteip`](#apachemodremoteip): Install and configure Apache `mod_remoteip`
-* [`apache::mod::reqtimeout`](#apachemodreqtimeout): Installs and configures Apache mod_reqtimeout.
-* [`apache::mod::rewrite`](#apachemodrewrite): Installs Apache mod_rewrite.
-* [`apache::mod::rpaf`](#apachemodrpaf): Installs and configures Apache mod_rpaf.
-* [`apache::mod::security`](#apachemodsecurity): Installs and configures Trustwaave mod_security.
-* [`apache::mod::setenvif`](#apachemodsetenvif): Installs Apache mod_setenvif.
-* [`apache::mod::shib`](#apachemodshib): Installs and configures Shibboleth mod_shib.
-* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): Installs Apache mod_socache_shmcb.
-* [`apache::mod::speling`](#apachemodspeling): Installs Apache mod_spelling.
-* [`apache::mod::ssl`](#apachemodssl): Installs Apache mod_ssl.
-* [`apache::mod::status`](#apachemodstatus): Installs and configures Apache mod_status
-* [`apache::mod::suexec`](#apachemodsuexec): Installs Apache mod_suexec.
-* [`apache::mod::suphp`](#apachemodsuphp): Installs suPHP mod_suphp.
-* [`apache::mod::userdir`](#apachemoduserdir): Installs and configures Apache mod_userdir.
-* [`apache::mod::version`](#apachemodversion): Installs Apache mod_version.
-* [`apache::mod::vhost_alias`](#apachemodvhost_alias): Installs Apache mod_vhost_alias.
-* [`apache::mod::worker`](#apachemodworker): Manages the Apache worker MPM
-* [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures Graham Dumpleton mod_wsgi.
-* [`apache::mod::xsendfile`](#apachemodxsendfile): Installs tn123 mod_xsendfile.
+* [`apache::mod::alias`](#apachemodalias): Installs and configures `mod_alias`.
+* [`apache::mod::auth_basic`](#apachemodauth_basic): Installs `mod_auth_basic`
+* [`apache::mod::auth_cas`](#apachemodauth_cas): Installs and configures `mod_auth_cas`.
+* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): Installs `mod_auth_gsappi`.
+* [`apache::mod::auth_kerb`](#apachemodauth_kerb): Installs `mod_auth_kerb`
+* [`apache::mod::auth_mellon`](#apachemodauth_mellon): Installs and configures `mod_auth_mellon`.
+* [`apache::mod::authn_core`](#apachemodauthn_core): Installs `mod_authn_core`.
+* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): Installs `mod_authn_dbd`.
+* [`apache::mod::authn_file`](#apachemodauthn_file): Installs `mod_authn_file`.
+* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): Installs `mod_authnz_ldap`.
+* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): Installs `mod_authnz_pam`.
+* [`apache::mod::authz_default`](#apachemodauthz_default): Installs and configures `mod_authz_default`.
+* [`apache::mod::authz_user`](#apachemodauthz_user): Installs `mod_authz_user`
+* [`apache::mod::autoindex`](#apachemodautoindex): Installs `mod_autoindex`
+* [`apache::mod::cache`](#apachemodcache): Installs `mod_cache`
+* [`apache::mod::cgi`](#apachemodcgi): Installs `mod_cgi`.
+* [`apache::mod::cgid`](#apachemodcgid): Installs `mod_cgid`.
+* [`apache::mod::cluster`](#apachemodcluster): Installs `mod_cluster`.
+* [`apache::mod::data`](#apachemoddata): Installs and configures `mod_data`.
+* [`apache::mod::dav`](#apachemoddav): Installs `mod_dav`.
+* [`apache::mod::dav_fs`](#apachemoddav_fs): Installs `mod_dav_fs`.
+* [`apache::mod::dav_svn`](#apachemoddav_svn): Installs and configures `mod_dav_svn`.
+* [`apache::mod::dbd`](#apachemoddbd): Installs `mod_dbd`.
+* [`apache::mod::deflate`](#apachemoddeflate): Installs and configures `mod_deflate`.
+* [`apache::mod::dev`](#apachemoddev): Installs `mod_dev`.
+* [`apache::mod::dir`](#apachemoddir): Installs and configures `mod_dir`.
+* [`apache::mod::disk_cache`](#apachemoddisk_cache): Installs and configures `mod_disk_cache`.
+* [`apache::mod::dumpio`](#apachemoddumpio): Installs and configures `mod_dumpio`.
+* [`apache::mod::env`](#apachemodenv): Installs `mod_env`.
+* [`apache::mod::event`](#apachemodevent): Installs and configures `mod_event`.
+* [`apache::mod::expires`](#apachemodexpires): Installs and configures `mod_expires`.
+* [`apache::mod::ext_filter`](#apachemodext_filter): Installs and configures `mod_ext_filter`.
+* [`apache::mod::fastcgi`](#apachemodfastcgi): Installs `mod_fastcgi`.
+* [`apache::mod::fcgid`](#apachemodfcgid): Installs and configures `mod_fcgid`.
+* [`apache::mod::filter`](#apachemodfilter): Installs `mod_filter`.
+* [`apache::mod::geoip`](#apachemodgeoip): Installs and configures `mod_geoip`.
+* [`apache::mod::headers`](#apachemodheaders): Installs and configures `mod_headers`.
+* [`apache::mod::http2`](#apachemodhttp2): Installs and configures `mod_http2`.
+* [`apache::mod::include`](#apachemodinclude): Installs `mod_include`.
+* [`apache::mod::info`](#apachemodinfo): Installs and configures `mod_info`.
+* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): Installs `mod_intercept_form_submit`.
+* [`apache::mod::itk`](#apachemoditk): Installs MPM `mod_itk`.
+* [`apache::mod::jk`](#apachemodjk): Installs `mod_jk`.
+* [`apache::mod::ldap`](#apachemodldap): Installs and configures `mod_ldap`.
+* [`apache::mod::lookup_identity`](#apachemodlookup_identity): Installs `mod_lookup_identity`
+* [`apache::mod::macro`](#apachemodmacro): Installs `mod_macro`.
+* [`apache::mod::mime`](#apachemodmime): Installs and configures `mod_mime`.
+* [`apache::mod::mime_magic`](#apachemodmime_magic): Installs and configures `mod_mime_magic`.
+* [`apache::mod::negotiation`](#apachemodnegotiation): Installs and configures `mod_negotiation`.
+* [`apache::mod::nss`](#apachemodnss): Installs and configures `mod_nss`.
+* [`apache::mod::pagespeed`](#apachemodpagespeed): Installs and configures `mod_pagespeed`.
+* [`apache::mod::passenger`](#apachemodpassenger): Installs `mod_pasenger`.
+* [`apache::mod::perl`](#apachemodperl): Installs `mod_perl`.
+* [`apache::mod::peruser`](#apachemodperuser): Installs `mod_peruser`.
+* [`apache::mod::php`](#apachemodphp): Installs `mod_php`.
+* [`apache::mod::prefork`](#apachemodprefork): Installs and configures MPM `prefork`.
+* [`apache::mod::proxy`](#apachemodproxy): Installs and configures `mod_proxy`.
+* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): Installs `mod_proxy_ajp`.
+* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): Installs and configures `mod_proxy_balancer`.
+* [`apache::mod::proxy_connect`](#apachemodproxy_connect): Installs `mod_proxy_connect`.
+* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): Installs `mod_proxy_fcgi`.
+* [`apache::mod::proxy_html`](#apachemodproxy_html): Installs `mod_proxy_html`.
+* [`apache::mod::proxy_http`](#apachemodproxy_http): Installs `mod_proxy_http`.
+* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): Installs `mod_proxy_wstunnel`.
+* [`apache::mod::python`](#apachemodpython): Installs and configures `mod_python`.
+* [`apache::mod::remoteip`](#apachemodremoteip): Installs and configures `mod_remoteip`.
+* [`apache::mod::reqtimeout`](#apachemodreqtimeout): Installs and configures `mod_reqtimeout`.
+* [`apache::mod::rewrite`](#apachemodrewrite): Installs `mod_rewrite`.
+* [`apache::mod::rpaf`](#apachemodrpaf): Installs and configures `mod_rpaf`.
+* [`apache::mod::security`](#apachemodsecurity): Installs and configures `mod_security`.
+* [`apache::mod::setenvif`](#apachemodsetenvif): Installs `mod_setenvif`.
+* [`apache::mod::shib`](#apachemodshib): Installs and configures `mod_shib`.
+* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): Installs `mod_socache_shmcb`.
+* [`apache::mod::speling`](#apachemodspeling): Installs `mod_spelling`.
+* [`apache::mod::ssl`](#apachemodssl): Installs `mod_ssl`.
+* [`apache::mod::status`](#apachemodstatus): Installs and configures `mod_status`.
+* [`apache::mod::suexec`](#apachemodsuexec): Installs `mod_suexec`.
+* [`apache::mod::suphp`](#apachemodsuphp): Installs `mod_suphp`.
+* [`apache::mod::userdir`](#apachemoduserdir): Installs and configures `mod_userdir`.
+* [`apache::mod::version`](#apachemodversion): Installs `mod_version`.
+* [`apache::mod::vhost_alias`](#apachemodvhost_alias): Installs Apache `mod_vhost_alias`.
+* [`apache::mod::worker`](#apachemodworker): Installs and manages the MPM `worker`.
+* [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures `mod_wsgi`.
+* [`apache::mod::xsendfile`](#apachemodxsendfile): Installs `mod_xsendfile`.
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -403,7 +403,7 @@ Default value: $::apache::params::docroot
 
 Data type: `Any`
 
-Determines whether to enable custom error documents on the Apache server.
+Determines whether to enable [custom error documents](https://httpd.apache.org/docs/current/custom-error.html) on the Apache server.
 
 Default value: `false`
 
@@ -612,7 +612,7 @@ Default value: $::apache::params::mod_packages
 
 Data type: `Any`
 
-Determines which multi-processing module (MPM) is loaded and configured for the
+Determines which [multi-processing module](https://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the
 HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
 You must set this to `false` to explicitly declare the following classes with custom parameters:
 - `apache::mod::event`
@@ -1046,7 +1046,7 @@ for additional documentation.
 
 ### apache::mod::alias
 
-Installs and configures Apache mod_alias
+Installs and configures `mod_alias`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_alias.html
@@ -1087,7 +1087,7 @@ Default value: $::apache::params::alias_icons_path
 
 ### apache::mod::auth_basic
 
-Installs Apache mod_auth_basic
+Installs `mod_auth_basic`
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_auth_basic.html
@@ -1095,7 +1095,7 @@ for additional documentation.
 
 ### apache::mod::auth_cas
 
-Installs and configures Apache mod_auth_cas
+Installs and configures `mod_auth_cas`.
 
 * **Note** The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
 
@@ -1308,7 +1308,7 @@ Default value: `undef`
 
 ### apache::mod::auth_gssapi
 
-Installs Apache mod_auth_gsappi
+Installs `mod_auth_gsappi`.
 
 * **See also**
 https://github.com/modauthgssapi/mod_auth_gssapi
@@ -1316,7 +1316,7 @@ for additional documentation.
 
 ### apache::mod::auth_kerb
 
-Installs Apache mod_auth_kerb
+Installs `mod_auth_kerb`
 
 * **See also**
 http://modauthkerb.sourceforge.net
@@ -1324,7 +1324,7 @@ for additional documentation.
 
 ### apache::mod::auth_mellon
 
-Installs and configures Apache mod_auth_mellon
+Installs and configures `mod_auth_mellon`.
 
 * **See also**
 https://github.com/Uninett/mod_auth_mellon
@@ -1392,7 +1392,7 @@ Default value: `undef`
 
 ### apache::mod::authn_core
 
-Installs Apache mod_authn_core
+Installs `mod_authn_core`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_authn_core.html
@@ -1406,16 +1406,17 @@ The following parameters are available in the `apache::mod::authn_core` class.
 
 Data type: `Any`
 
-The version of apache being run
+The version of apache being run.
 
 Default value: $::apache::apache_version
 
 ### apache::mod::authn_dbd
 
-Installs Apache mod_authn_dbd
+Installs `mod_authn_dbd`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
+for additional documentation.
 
 #### Parameters
 
@@ -1480,13 +1481,13 @@ Default value: '300'
 
 Data type: `Any`
 
-
+Sets an alias for `AuthnProvider.
 
 Default value: `undef`
 
 ### apache::mod::authn_file
 
-Installs Apache mod_authn_file
+Installs `mod_authn_file`.
 
 * **See also**
 https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html
@@ -1494,7 +1495,7 @@ for additional documentation.
 
 ### apache::mod::authnz_ldap
 
-Installs Apache mod_authnz_ldap
+Installs `mod_authnz_ldap`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html
@@ -1516,13 +1517,13 @@ Default value: `true`
 
 Data type: `Any`
 
-The name of the ldap package
+The name of the ldap package.
 
 Default value: `undef`
 
 ### apache::mod::authnz_pam
 
-Installs Adelton mod_authnz_pam
+Installs `mod_authnz_pam`.
 
 * **See also**
 https://www.adelton.com/apache/mod_authnz_pam
@@ -1530,7 +1531,7 @@ for additional documentation.
 
 ### apache::mod::authz_default
 
-Installs and configures Apache mod_authz_default.
+Installs and configures `mod_authz_default`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_authz_default.html
@@ -1550,7 +1551,7 @@ Default value: $::apache::apache_version
 
 ### apache::mod::authz_user
 
-Installs Apache mod_authz_user
+Installs `mod_authz_user`
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_authz_user.html
@@ -1558,7 +1559,7 @@ for additional documentation.
 
 ### apache::mod::autoindex
 
-Installs Apache mod_autoindex
+Installs `mod_autoindex`
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_autoindex.html
@@ -1566,7 +1567,7 @@ for additional documentation.
 
 ### apache::mod::cache
 
-Installs Apache mod_cache
+Installs `mod_cache`
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_cache.html
@@ -1574,7 +1575,7 @@ for additional documentation.
 
 ### apache::mod::cgi
 
-Installs Apache mod_cgi.
+Installs `mod_cgi`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_cgi.html
@@ -1582,14 +1583,14 @@ for additional documentation.
 
 ### apache::mod::cgid
 
-Installs Apache mod_cgid.
+Installs `mod_cgid`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_cgid.html
 
 ### apache::mod::cluster
 
-Installs mod_cluster.
+Installs `mod_cluster`.
 
 * **Note** There is no official package available for mod_cluster, so you must make it available outside of the apache module.
 Binaries can be found [here](https://modcluster.io/).
@@ -1697,7 +1698,7 @@ Default value: `undef`
 
 ### apache::mod::data
 
-Installs and configures Apache mod_data.
+Installs and configures `mod_data`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_data.html
@@ -1717,7 +1718,7 @@ Default value: `undef`
 
 ### apache::mod::dav
 
-Installs Apache mod_dav.
+Installs `mod_dav`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_dav.html
@@ -1725,7 +1726,7 @@ for additional documentation.
 
 ### apache::mod::dav_fs
 
-Installs Apache mod_dav_fs.
+Installs `mod_dav_fs`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_dav_fs.html
@@ -1733,7 +1734,7 @@ for additional documentation.
 
 ### apache::mod::dav_svn
 
-Installs and configures Apache mod_dav_svn.
+Installs and configures `mod_dav_svn`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_dav_svn.html
@@ -1753,7 +1754,7 @@ Default value: `false`
 
 ### apache::mod::dbd
 
-Installs Apache mod_dbd.
+Installs `mod_dbd`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_dbd.html
@@ -1769,7 +1770,7 @@ Used to verify that the Apache version you have requested is compatible with the
 
 ### apache::mod::deflate
 
-Installs and configures Apache mod_deflate.
+Installs and configures `mod_deflate`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_deflate.html
@@ -1807,13 +1808,13 @@ Default value: {
 
 ### apache::mod::dev
 
-Installs Apache mod_dev.
+Installs `mod_dev`.
 
 * **Note** This module is deprecated. Please use `apache::dev`.
 
 ### apache::mod::dir
 
-Installs and configures Apache mod_dir.
+Installs and configures `mod_dir`.
 
 * **TODO** This sets the global DirectoryIndex directive, so it may be necessary to consider being able to modify the apache::vhost to declare
 DirectoryIndex statements in a vhost configuration
@@ -1848,7 +1849,7 @@ Default value: 'public_html'
 
 ### apache::mod::disk_cache
 
-Installs and configures Apache mod_disk_cache.
+Installs and configures `mod_disk_cache`.
 
 * **Note** Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
 
@@ -1883,7 +1884,7 @@ Default value: `undef`
 
 ### apache::mod::dumpio
 
-Installs and configures Apache mod_dumpio.
+Installs and configures `mod_dumpio`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_dumpio.html
@@ -1926,7 +1927,7 @@ Default value: 'Off'
 
 ### apache::mod::env
 
-Installs Apache mod_env.
+Installs `mod_env`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_env.html
@@ -1934,7 +1935,7 @@ for additional documentation.
 
 ### apache::mod::event
 
-Installs and configures Apache mod_event.
+Installs and configures `mod_event`.
 
 * **Note** You cannot include apache::mod::event with apache::mod::itk, apache::mod::peruser, apache::mod::prefork, or
 apache::mod::worker on the same server.
@@ -2048,7 +2049,7 @@ Default value: '511'
 
 ### apache::mod::expires
 
-Installs and configures Apache mod_expires.
+Installs and configures `mod_expires`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_expires.html
@@ -2086,7 +2087,7 @@ Default value: `undef`
 
 ### apache::mod::ext_filter
 
-Installs and configures Apache mod_ext_filter.
+Installs and configures `mod_ext_filter`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_ext_filter.html
@@ -2119,7 +2120,7 @@ Default value: `undef`
 
 ### apache::mod::fastcgi
 
-Installs mod_fastcgi
+Installs `mod_fastcgi`.
 
 * **See also**
 https://github.com/FastCGI-Archives/mod_fastcgi
@@ -2190,7 +2191,7 @@ Default value: {}
 
 ### apache::mod::filter
 
-Installs Apache mod_filter
+Installs `mod_filter`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_filter.html
@@ -2198,7 +2199,7 @@ for additional documentation.
 
 ### apache::mod::geoip
 
-Installs and configures MaxMind mod_geoip.
+Installs and configures `mod_geoip`.
 
 * **See also**
 https://dev.maxmind.com/geoip/legacy/mod_geoip2
@@ -2278,7 +2279,7 @@ Default value: `undef`
 
 ### apache::mod::headers
 
-Installs and configures Apache mod_headers.
+Installs and configures `mod_headers`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_headers.html
@@ -2294,7 +2295,7 @@ Version of Apache to install module on.
 
 ### apache::mod::http2
 
-Installs and configures Apache mod_http2.
+Installs and configures `mod_http2`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_http2.html
@@ -2467,7 +2468,7 @@ Default value: []
 
 ### apache::mod::include
 
-Installs Apache mod_include
+Installs `mod_include`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_include.html
@@ -2475,7 +2476,7 @@ for additional documentation.
 
 ### apache::mod::info
 
-Installs and configures Apache mod_info.
+Installs and configures `mod_info`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_info.html
@@ -2520,7 +2521,7 @@ Default value: '/server-info'
 
 ### apache::mod::intercept_form_submit
 
-Installs Adelton mod_intercept_form_submit
+Installs `mod_intercept_form_submit`.
 
 * **See also**
 https://www.adelton.com/apache/mod_intercept_form_submit
@@ -2528,7 +2529,7 @@ for additional documentation.
 
 ### apache::mod::itk
 
-Installs MPM mod_itk.
+Installs MPM `mod_itk`.
 
 * **See also**
 http://mpm-itk.sesse.net
@@ -2606,7 +2607,7 @@ Default value: `undef`
 
 ### apache::mod::jk
 
-Installs Tomcat mod_jk.
+Installs `mod_jk`.
 
 * **Note** shm_file and log_file
 Depending on how these files are specified, the class creates their final path differently:
@@ -3028,7 +3029,8 @@ Default value: {}
 
 Data type: `Any`
 
-Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and each inner hash contains two items:
+Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and
+each inner hash contains two items:
 - uri_list—an array with URIs to be mapped to the worker
 - comment—an optional string with a comment for the worker. For example, the mount file below should be parameterized as Figure 2:
 
@@ -3070,7 +3072,7 @@ Default value: []
 
 ### apache::mod::ldap
 
-Installs and configures Apache mod_ldap.
+Installs and configures `mod_ldap`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_ldap.html
@@ -3179,7 +3181,7 @@ Default value: `undef`
 
 ### apache::mod::lookup_identity
 
-Installs Adelton mod_lookup_identity
+Installs `mod_lookup_identity`
 
 * **See also**
 https://www.adelton.com/apache/mod_lookup_identity
@@ -3187,7 +3189,7 @@ for additional documentation.
 
 ### apache::mod::macro
 
-Installs Apache mod_macro.
+Installs `mod_macro`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_macro.html
@@ -3195,7 +3197,7 @@ for additional documentation.
 
 ### apache::mod::mime
 
-Installs Apache mod_mime.
+Installs and configures `mod_mime`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_mime.html
@@ -3231,7 +3233,7 @@ Default value: `undef`
 
 ### apache::mod::mime_magic
 
-Installs Apache mod_mime_magic.
+Installs and configures `mod_mime_magic`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_mime_magic.html
@@ -3251,7 +3253,7 @@ Default value: `undef`
 
 ### apache::mod::negotiation
 
-Installs Apache mod_negotiation.
+Installs and configures `mod_negotiation`.
 
 * **See also**
 [https://httpd.apache.org/docs/current/mod/mod_negotiation.html
@@ -3282,7 +3284,7 @@ Default value: [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
 
 ### apache::mod::nss
 
-Installs mod_nss.
+Installs and configures `mod_nss`.
 
 * **See also**
 https://pagure.io/mod_nss
@@ -4379,7 +4381,7 @@ Default value: `undef`
 
 ### apache::mod::perl
 
-Installs Apache mod_perl.
+Installs `mod_perl`.
 
 * **See also**
 https://perl.apache.org
@@ -4387,7 +4389,7 @@ for additional documentation.
 
 ### apache::mod::peruser
 
-Installs mod_peruser.
+Installs `mod_peruser`.
 
 * **TODO** Add docs
 
@@ -4461,7 +4463,7 @@ Default value: 'Off'
 
 ### apache::mod::php
 
-Installs mod_php.
+Installs `mod_php`.
 
 * **TODO** Add docs
 
@@ -4551,7 +4553,7 @@ Default value: 'libphp'
 
 ### apache::mod::prefork
 
-Installs and configures Apache prefork.
+Installs and configures MPM `prefork`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/prefork.html
@@ -4643,7 +4645,7 @@ Default value: '511'
 
 ### apache::mod::proxy
 
-Installs and configures Apache mod_proxy.
+Installs and configures `mod_proxy`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy.html
@@ -4703,7 +4705,7 @@ Default value: '60'
 
 ### apache::mod::proxy_ajp
 
-Installs Apache mod_proxy_ajp.
+Installs `mod_proxy_ajp`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_ajp.html
@@ -4711,7 +4713,7 @@ for additional documentation.
 
 ### apache::mod::proxy_balancer
 
-Installs and configures Apache mod_proxy_balancer.
+Installs and configures `mod_proxy_balancer`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html
@@ -4759,7 +4761,7 @@ Default value: '/balancer-manager'
 
 ### apache::mod::proxy_connect
 
-Installs Apache mod_proxy_connect.
+Installs `mod_proxy_connect`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_connect.html
@@ -4779,7 +4781,7 @@ Default value: `undef`
 
 ### apache::mod::proxy_fcgi
 
-Installs Apache mod_proxy_fcgi.
+Installs `mod_proxy_fcgi`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_fcgi.html
@@ -4787,7 +4789,7 @@ for additional documentation.
 
 ### apache::mod::proxy_html
 
-Installs Apache mod_proxy_html
+Installs `mod_proxy_html`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_html.html
@@ -4795,7 +4797,7 @@ for additional documentation.
 
 ### apache::mod::proxy_http
 
-Installs Apache mod_proxy_http.
+Installs `mod_proxy_http`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_http.html
@@ -4803,7 +4805,7 @@ for additional documentation.
 
 ### apache::mod::proxy_wstunnel
 
-Installs Apache mod_proxy_wstunnel.
+Installs `mod_proxy_wstunnel`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_proxy_wstunnel.html
@@ -4811,7 +4813,7 @@ for additional documentation.
 
 ### apache::mod::python
 
-Installs Grisha mod_python.
+Installs and configures `mod_python`.
 
 * **See also**
 https://github.com/grisha/mod_python
@@ -4831,7 +4833,7 @@ Default value: `undef`
 
 ### apache::mod::remoteip
 
-Install and configure Apache `mod_remoteip`
+Installs and configures `mod_remoteip`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_remoteip.html
@@ -4947,7 +4949,7 @@ Default value: `undef`
 
 ### apache::mod::reqtimeout
 
-Installs and configures Apache mod_reqtimeout.
+Installs and configures `mod_reqtimeout`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html
@@ -4967,7 +4969,7 @@ Default value: ['header=20-40,minrate=500', 'body=10,minrate=500']
 
 ### apache::mod::rewrite
 
-Installs Apache mod_rewrite.
+Installs `mod_rewrite`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_rewrite.html
@@ -4975,7 +4977,7 @@ for additional documentation.
 
 ### apache::mod::rpaf
 
-Installs and configures Apache mod_rpaf.
+Installs and configures `mod_rpaf`.
 
 * **See also**
 https://github.com/gnif/mod_rpaf
@@ -5019,7 +5021,7 @@ Default value: 'apache/mod/rpaf.conf.erb'
 
 ### apache::mod::security
 
-Installs and configures Trustwaave mod_security.
+Installs and configures `mod_security`.
 
 * **See also**
 https://github.com/SpiderLabs/ModSecurity/wiki
@@ -5241,7 +5243,7 @@ Default value: `true`
 
 ### apache::mod::setenvif
 
-Installs Apache mod_setenvif.
+Installs `mod_setenvif`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_setenvif.html
@@ -5283,7 +5285,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Name of the Shibboleth package to be installed
+Name of the Shibboleth package to be installed.
 
 Default value: `undef`
 
@@ -5298,7 +5300,7 @@ Default value: `undef`
 
 ### apache::mod::socache_shmcb
 
-Installs Apache mod_socache_shmcb.
+Installs `mod_socache_shmcb`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_socache_shmcb.html
@@ -5306,7 +5308,7 @@ for additional documentation.
 
 ### apache::mod::speling
 
-Installs Apache mod_spelling.
+Installs `mod_spelling`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_speling.html
@@ -5495,7 +5497,7 @@ Default value: `undef`
 
 ### apache::mod::status
 
-Installs and configures Apache mod_status
+Installs and configures `mod_status`.
 
 * **See also**
 http://httpd.apache.org/docs/current/mod/mod_status.html
@@ -5572,7 +5574,7 @@ Default value: `undef`
 
 ### apache::mod::suexec
 
-Installs Apache mod_suexec.
+Installs `mod_suexec`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_suexec.html
@@ -5580,7 +5582,7 @@ for additional documentation.
 
 ### apache::mod::suphp
 
-Installs suPHP mod_suphp.
+Installs `mod_suphp`.
 
 * **See also**
 https://www.suphp.org/DocumentationView.html?file=apache/INSTALL
@@ -5588,7 +5590,7 @@ for additional documentation.
 
 ### apache::mod::userdir
 
-Installs and configures Apache mod_userdir.
+Installs and configures `mod_userdir`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_userdir.html
@@ -5656,7 +5658,7 @@ Default value: [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExe
 
 ### apache::mod::version
 
-Installs Apache mod_version.
+Installs `mod_version`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_version.html
@@ -5676,7 +5678,7 @@ Default value: $::apache::apache_version
 
 ### apache::mod::vhost_alias
 
-Installs Apache mod_vhost_alias.
+Installs Apache `mod_vhost_alias`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/mod_vhost_alias.html
@@ -5684,7 +5686,7 @@ for additional documentation.
 
 ### apache::mod::worker
 
-Manages the Apache worker MPM
+Installs and manages the MPM `worker`.
 
 * **See also**
 https://httpd.apache.org/docs/current/mod/worker.html
@@ -5698,8 +5700,7 @@ The following parameters are available in the `apache::mod::worker` class.
 
 Data type: `Any`
 
-(optional) The number of child server processes created on startup
-Defaults is '2'
+The number of child server processes created on startup
 
 Default value: '2'
 
@@ -5707,10 +5708,9 @@ Default value: '2'
 
 Data type: `Any`
 
-(optional) The max number of simultaneous requests that will be served.
+The max number of simultaneous requests that will be served.
 This is the old name and is still supported. The new name is
 MaxRequestWorkers as of 2.3.13.
-Default is '150'
 
 Default value: '150'
 
@@ -5718,8 +5718,7 @@ Default value: '150'
 
 Data type: `Any`
 
-(optional) Minimum number of idle threads to handle request spikes.
-Default is '25'
+Minimum number of idle threads to handle request spikes.
 
 Default value: '25'
 
@@ -5727,8 +5726,7 @@ Default value: '25'
 
 Data type: `Any`
 
-(optional) Maximum number of idle threads.
-Default is '75'
+Maximum number of idle threads.
 
 Default value: '75'
 
@@ -5736,8 +5734,7 @@ Default value: '75'
 
 Data type: `Any`
 
-(optional) The number of threads created by each child process.
-Default is '25'
+The number of threads created by each child process.
 
 Default value: '25'
 
@@ -5745,10 +5742,9 @@ Default value: '25'
 
 Data type: `Any`
 
-(optional) Limit on the number of connectiojns an individual child server
+Limit on the number of connectiojns an individual child server
 process will handle. This is the old name and is still supported. The new
 name is MaxConnectionsPerChild as of 2.3.9+.
-Default is '0'
 
 Default value: '0'
 
@@ -5756,12 +5752,11 @@ Default value: '0'
 
 Data type: `Any`
 
-(optional) With worker, use this directive only if your MaxRequestWorkers
+With worker, use this directive only if your MaxRequestWorkers
 and ThreadsPerChild settings require more than 16 server processes
 (default). Do not set the value of this directive any higher than the
 number of server processes required by what you may want for
 MaxRequestWorkers and ThreadsPerChild.
-Default is '25'
 
 Default value: '25'
 
@@ -5769,9 +5764,8 @@ Default value: '25'
 
 Data type: `Any`
 
-(optional) This directive sets the maximum configured value for
+This directive sets the maximum configured value for
 ThreadsPerChild for the lifetime of the Apache httpd process.
-Default is '64'
 
 Default value: '64'
 
@@ -5779,8 +5773,7 @@ Default value: '64'
 
 Data type: `Any`
 
-(optional) Maximum length of the queue of pending connections.
-Defaults is '511'
+Maximum length of the queue of pending connections.
 
 Default value: '511'
 
@@ -5788,14 +5781,13 @@ Default value: '511'
 
 Data type: `Any`
 
-(optional)
-Default is $::apache::apache_version
+Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
 ### apache::mod::wsgi
 
-Installs and configures Graham Dumpleton mod_wsgi.
+Installs and configures `mod_wsgi`.
 
 * **See also**
 https://github.com/GrahamDumpleton/mod_wsgi
@@ -5871,7 +5863,7 @@ Default value: `undef`
 
 ### apache::mod::xsendfile
 
-Installs tn123 mod_xsendfile.
+Installs `mod_xsendfile`.
 
 * **See also**
 https://tn123.org/mod_xsendfile/

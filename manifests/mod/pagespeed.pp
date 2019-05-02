@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Google mod_pagespeed.
+#   Installs and configures `mod_pagespeed`.
 # 
 # @todo
 #   Add docs

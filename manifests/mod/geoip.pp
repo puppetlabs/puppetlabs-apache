@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures MaxMind mod_geoip.
+#   Installs and configures `mod_geoip`.
 # 
 # @param enable
 #   Toggles whether to enable geoip.

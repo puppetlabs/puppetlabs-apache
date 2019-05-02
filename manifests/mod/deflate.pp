@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_deflate.
+#   Installs and configures `mod_deflate`.
 # 
 # @param types
 #   An array of MIME types to be deflated. See https://www.iana.org/assignments/media-types/media-types.xhtml.

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_headers.
+#   Installs and configures `mod_headers`.
 # 
 # @param apache_version
 #   Version of Apache to install module on.

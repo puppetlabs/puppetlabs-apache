@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_ssl.
+#   Installs `mod_ssl`.
 # 
 # @param ssl_compression
 #   Enable compression on the SSL level.

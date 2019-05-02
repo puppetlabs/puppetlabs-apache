@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_dev.
+#   Installs `mod_dev`.
 #
 # @note
 #   This module is deprecated. Please use `apache::dev`.

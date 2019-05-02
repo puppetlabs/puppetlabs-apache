@@ -1,11 +1,11 @@
 # @summary
-#   Installs Apache mod_authnz_ldap
+#   Installs `mod_authnz_ldap`.
 # 
 # @param verify_server_cert
 #   Whether to force te verification of a server cert or not.
 # 
 # @param package_name
-#   The name of the ldap package
+#   The name of the ldap package.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html for additional documentation.
 #

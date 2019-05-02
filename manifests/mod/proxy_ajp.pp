@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_proxy_ajp.
+#   Installs `mod_proxy_ajp`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy_ajp.html for additional documentation.
 #

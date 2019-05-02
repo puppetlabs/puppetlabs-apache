@@ -1,5 +1,5 @@
 # @summary
-#   Installs suPHP mod_suphp.
+#   Installs `mod_suphp`.
 #
 # @see https://www.suphp.org/DocumentationView.html?file=apache/INSTALL for additional documentation.
 #

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_dir.
+#   Installs and configures `mod_dir`.
 # 
 # @param types
 #   Specifies the text-based content types to compress.

@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_version.
+#   Installs `mod_version`.
 # 
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.

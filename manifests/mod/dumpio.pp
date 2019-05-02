@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_dumpio.
+#   Installs and configures `mod_dumpio`.
 # 
 # @param dump_io_input
 #   Dump all input data to the error log

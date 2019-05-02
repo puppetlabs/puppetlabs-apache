@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_ldap.
+#   Installs and configures `mod_ldap`.
 # 
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.

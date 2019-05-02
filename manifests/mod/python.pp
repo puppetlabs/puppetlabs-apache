@@ -1,5 +1,5 @@
 # @summary
-#   Installs Grisha mod_python.
+#   Installs and configures `mod_python`.
 # 
 # @param loadfile_name
 #   Sets the name of the configuration file that is used to load the python module.

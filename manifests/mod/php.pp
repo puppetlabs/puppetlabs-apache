@@ -1,5 +1,5 @@
 # @summary
-#   Installs mod_php.
+#   Installs `mod_php`.
 # 
 # @todo
 #   Add docs

@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_authn_dbd
+#   Installs `mod_authn_dbd`.
 # 
 # @param authn_dbd_params
 #   The params needed for the mod to function.
@@ -23,8 +23,9 @@
 #   connections specified in DBDKeep has been exceeded.
 #   
 # @param authn_dbd_alias
-# 
-# @see https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
+#   Sets an alias for `AuthnProvider.
+#
+# @see https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html for additional documentation.
 #
 class apache::mod::authn_dbd (
   $authn_dbd_params,

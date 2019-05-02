@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_reqtimeout.
+#   Installs and configures `mod_reqtimeout`.
 # 
 # @param timeouts
 #   List of timeouts and data rates for receiving requests.

@@ -1,5 +1,5 @@
 # @summary
-#   Installs mod_cluster.
+#   Installs `mod_cluster`.
 # 
 # @param allowed_network
 #   Balanced members network.

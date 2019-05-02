@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_dbd.
+#   Installs `mod_dbd`.
 # 
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.

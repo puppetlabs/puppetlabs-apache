@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_proxy_connect.
+#   Installs `mod_proxy_connect`.
 # 
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.

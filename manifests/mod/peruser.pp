@@ -1,5 +1,5 @@
 # @summary
-#   Installs mod_peruser.
+#   Installs `mod_peruser`.
 # 
 # @todo
 #   Add docs

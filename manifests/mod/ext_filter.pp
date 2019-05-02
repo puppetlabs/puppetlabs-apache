@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_ext_filter.
+#   Installs and configures `mod_ext_filter`.
 # 
 # @param ext_filter_define
 #   Hash of filter names and their parameters.

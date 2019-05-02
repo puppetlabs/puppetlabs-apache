@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_mime_magic.
+#   Installs and configures `mod_mime_magic`.
 # 
 # @param magic_file
 #   Enable MIME-type determination based on file contents using the specified magic file.

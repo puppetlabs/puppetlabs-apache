@@ -1,5 +1,5 @@
 # @summary
-#   Installs mod_nss.
+#   Installs and configures `mod_nss`.
 # 
 # @param transfer_log
 #   Path to `access.log`.

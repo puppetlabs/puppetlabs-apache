@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_perl.
+#   Installs `mod_perl`.
 # 
 # @see https://perl.apache.org for additional documentation.
 #

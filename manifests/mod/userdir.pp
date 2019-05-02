@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_userdir.
+#   Installs and configures `mod_userdir`.
 # 
 # @param home
 #   *Deprecated* Path to system home directory.

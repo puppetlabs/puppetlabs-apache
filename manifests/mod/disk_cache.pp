@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_disk_cache.
+#   Installs and configures `mod_disk_cache`.
 # 
 # @param cache_root
 #   Defines the name of the directory on the disk to contain cache files.

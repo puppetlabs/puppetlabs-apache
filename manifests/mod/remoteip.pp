@@ -1,4 +1,5 @@
-# @summary Install and configure Apache `mod_remoteip`
+# @summary 
+#   Installs and configures `mod_remoteip`.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_remoteip.html
 #

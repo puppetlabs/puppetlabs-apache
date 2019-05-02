@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_auth_mellon
+#   Installs and configures `mod_auth_mellon`.
 # 
 # @param mellon_cache_size
 #   Maximum number of sessions which can be active at once.

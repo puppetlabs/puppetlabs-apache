@@ -1,54 +1,44 @@
 # @summary
-#   Manages the Apache worker MPM
+#   Installs and manages the MPM `worker`.
 #
 # @param startservers
-#   (optional) The number of child server processes created on startup
-#   Defaults is '2'
+#   The number of child server processes created on startup
 #
 # @param maxclients
-#   (optional) The max number of simultaneous requests that will be served.
+#   The max number of simultaneous requests that will be served.
 #   This is the old name and is still supported. The new name is
 #   MaxRequestWorkers as of 2.3.13.
-#   Default is '150'
 #
 # @param minsparethreads
-#   (optional) Minimum number of idle threads to handle request spikes.
-#   Default is '25'
+#   Minimum number of idle threads to handle request spikes.
 #
 # @param maxsparethreads
-#   (optional) Maximum number of idle threads.
-#   Default is '75'
+#   Maximum number of idle threads.
 #
 # @param threadsperchild
-#   (optional) The number of threads created by each child process.
-#   Default is '25'
+#   The number of threads created by each child process.
 #
 # @param maxrequestsperchild
-#   (optional) Limit on the number of connectiojns an individual child server
+#   Limit on the number of connectiojns an individual child server
 #   process will handle. This is the old name and is still supported. The new
 #   name is MaxConnectionsPerChild as of 2.3.9+.
-#   Default is '0'
 #
 # @param serverlimit
-#   (optional) With worker, use this directive only if your MaxRequestWorkers
+#   With worker, use this directive only if your MaxRequestWorkers
 #   and ThreadsPerChild settings require more than 16 server processes
 #   (default). Do not set the value of this directive any higher than the
 #   number of server processes required by what you may want for
 #   MaxRequestWorkers and ThreadsPerChild.
-#   Default is '25'
 #
 # @param threadlimit
-#   (optional) This directive sets the maximum configured value for
+#   This directive sets the maximum configured value for
 #   ThreadsPerChild for the lifetime of the Apache httpd process.
-#   Default is '64'
 #
 # @param listenbacklog
-#    (optional) Maximum length of the queue of pending connections.
-#    Defaults is '511'
+#    Maximum length of the queue of pending connections.
 #
 # @param apache_version
-#   (optional)
-#   Default is $::apache::apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
 #
 # @see https://httpd.apache.org/docs/current/mod/worker.html for additional documentation.
 #

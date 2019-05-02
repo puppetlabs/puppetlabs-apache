@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Graham Dumpleton mod_wsgi.
+#   Installs and configures `mod_wsgi`.
 # 
 # @param wsgi_restrict_embedded
 #   Enable restrictions on use of embedded mode.

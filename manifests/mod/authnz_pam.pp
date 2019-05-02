@@ -1,5 +1,5 @@
 # @summary
-#   Installs Adelton mod_authnz_pam
+#   Installs `mod_authnz_pam`.
 # 
 # @see https://www.adelton.com/apache/mod_authnz_pam for additional documentation.
 #

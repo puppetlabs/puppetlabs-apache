@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Shibboleth mod_shib.
+#   Installs and configures `mod_shib`.
 # 
 # @param suppress_warning
 #   Toggles whether to trigger warning on RedHat nodes.
@@ -8,7 +8,7 @@
 #   Specifies a path to the module. Do not manually set this parameter without a special reason.
 # 
 # @param package_name
-#   Name of the Shibboleth package to be installed
+#   Name of the Shibboleth package to be installed.
 # 
 # @param mod_lib
 #   Specifies a path to the module's libraries. Do not manually set this parameter without special reason. The `path` parameter 

@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_authn_file
+#   Installs `mod_authn_file`.
 # 
 # @see https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html for additional documentation.
 #

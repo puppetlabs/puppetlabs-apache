@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_data.
+#   Installs and configures `mod_data`.
 # 
 # @param apache_version
 #   Version of Apache to install module on.

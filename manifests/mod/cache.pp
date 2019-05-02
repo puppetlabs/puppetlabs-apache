@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_cache
+#   Installs `mod_cache`
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_cache.html for additional documentation.
 #

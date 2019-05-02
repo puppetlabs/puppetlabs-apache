@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_http2.
+#   Installs and configures `mod_http2`.
 # 
 # @param h2_copy_files
 #   Determine file handling in responses.

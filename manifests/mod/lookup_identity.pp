@@ -1,5 +1,5 @@
 # @summary
-#   Installs Adelton mod_lookup_identity
+#   Installs `mod_lookup_identity`
 # 
 # @see https://www.adelton.com/apache/mod_lookup_identity for additional documentation.
 #

@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_alias
+#   Installs and configures `mod_alias`.
 # 
 # @param apache_version
 #   The version of Apache, if not set will be retrieved from the init class.

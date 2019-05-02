@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_proxy_http.
+#   Installs `mod_proxy_http`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy_http.html for additional documentation.
 #

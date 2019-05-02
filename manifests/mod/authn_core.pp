@@ -1,8 +1,8 @@
 # @summary
-#   Installs Apache mod_authn_core
+#   Installs `mod_authn_core`.
 # 
 # @param apache_version
-#   The version of apache being run
+#   The version of apache being run.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_authn_core.html for additional documentation.
 #

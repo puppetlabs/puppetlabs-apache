@@ -1,5 +1,5 @@
 # @summary
-#   Installs and configures Apache mod_rpaf.
+#   Installs and configures `mod_rpaf`.
 # 
 # @param sethostname
 #   Toggles whether to update vhost name so ServerName and ServerAlias work.

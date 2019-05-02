@@ -1,5 +1,5 @@
 # @summary
-#   Installs Apache mod_setenvif.
+#   Installs `mod_setenvif`.
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_setenvif.html for additional documentation.
 #
