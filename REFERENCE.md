@@ -5466,6 +5466,20 @@ Pass stapling related OCSP errors on to client.
 
 Default value: `undef`
 
+##### `stapling_cache`
+
+Data type: `String`
+
+Configures the storage type of the global/inter-process SSL Stapling Cache.
+Only cache type 'shmcb' is supported.
+Default based on the OS:
+- Debian/Ubuntu: '${APACHE_RUN_DIR}/ocsp(32768)'.
+- RedHat: '/run/httpd/ssl_stapling(32768)'.
+- FreeBSD/Gentoo: '/var/run/ssl_stapling(32768)'.
+- Suse: '/var/lib/apache2/ssl_stapling(32768)'.
+
+Default value: `undef`
+
 ##### `ssl_mutex`
 
 Data type: `Any`
