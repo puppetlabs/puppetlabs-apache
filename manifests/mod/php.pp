@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_php`.
+# 
+# @todo
+#   Add docs
 class apache::mod::php (
   $package_name     = undef,
   $package_ensure   = 'present',

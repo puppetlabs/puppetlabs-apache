@@ -1,3 +1,19 @@
+# @summary
+#   Installs and configures `mod_ext_filter`.
+# 
+# @param ext_filter_define
+#   Hash of filter names and their parameters.
+#
+# @example
+#   class { 'apache::mod::ext_filter':
+#     ext_filter_define => {
+#       'slowdown'       => 'mode=output cmd=/bin/cat preservescontentlength',
+#       'puppetdb-strip' => 'mode=output outtype=application/json cmd="pdb-resource-filter"',
+#     },
+#   }
+#
+# @see https://httpd.apache.org/docs/current/mod/mod_ext_filter.html for additional documentation.
+#
 class apache::mod::ext_filter(
   Optional[Hash] $ext_filter_define = undef
 ) {

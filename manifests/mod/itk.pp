@@ -1,3 +1,34 @@
+# @summary
+#   Installs MPM `mod_itk`.
+# 
+# @param startservers
+#   Number of child server processes created on startup.
+#
+# @param minspareservers
+#   Minimum number of idle child server processes.
+#
+# @param maxspareservers
+#   Maximum number of idle child server processes.
+#
+# @param serverlimit
+#   Maximum configured value for `MaxRequestWorkers` for the lifetime of the Apache httpd process.
+#
+# @param maxclients
+#   Limit on the number of simultaneous requests that will be served.
+#
+# @param maxrequestsperchild
+#   Limit on the number of connections that an individual child server process will handle.
+#
+# @param enablecapabilities
+#   Drop most root capabilities in the parent process, and instead run as the user given by the User/Group directives with some extra
+#   capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor 
+#   capabilities, such as NFS.
+#
+# @param apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
+# 
+# @see http://mpm-itk.sesse.net for additional documentation.
+#
 class apache::mod::itk (
   $startservers        = '8',
   $minspareservers     = '5',

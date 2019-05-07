@@ -1,14 +1,10 @@
-# Class: apache::proxy
+# @summary
+#   This class enabled the proxy module for Apache.
 #
-# This class enabled the proxy module for Apache
+# @note
+#   This class is deprecated.
 #
-# Actions:
-#   - Enables Apache Proxy module
-#
-# Requires:
-#
-# Sample Usage:
-#
+# @api private
 class apache::proxy {
   warning('apache::proxy is deprecated; please use apache::mod::proxy')
   include ::apache::mod::proxy

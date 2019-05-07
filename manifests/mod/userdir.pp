@@ -1,3 +1,29 @@
+# @summary
+#   Installs and configures `mod_userdir`.
+# 
+# @param home
+#   *Deprecated* Path to system home directory.
+#   
+# @param dir
+#   *Deprecated* Path from user's home directory to public directory.
+# 
+# @param disable_root
+#   Toggles whether to allow use of root directory.
+# 
+# @param apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
+# 
+# @param path
+#   Path to directory or pattern from which to find user-specific directories.
+# 
+# @param overrides
+#   Array of directives that are allowed in .htaccess files.
+# 
+# @param options
+#   Configures what features are available in a particular directory.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_userdir.html for additional documentation.
+#
 class apache::mod::userdir (
   $home = undef,
   $dir = undef,

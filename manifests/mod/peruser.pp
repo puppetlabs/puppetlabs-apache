@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_peruser`.
+# 
+# @todo
+#   Add docs
 class apache::mod::peruser (
   $minspareprocessors = '2',
   $minprocessors = '2',

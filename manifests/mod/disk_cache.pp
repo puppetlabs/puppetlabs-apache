@@ -1,3 +1,22 @@
+# @summary
+#   Installs and configures `mod_disk_cache`.
+# 
+# @param cache_root
+#   Defines the name of the directory on the disk to contain cache files.
+#   Default depends on the Apache version and operating system:
+#   - Debian: /var/cache/apache2/mod_cache_disk
+#   - FreeBSD: /var/cache/mod_cache_disk
+#   - Red Hat, Apache 2.4: /var/cache/httpd/proxy
+#   - Red Hat, Apache 2.2: /var/cache/mod_proxy
+#
+# @param cache_ignore_headers
+#   Specifies HTTP header(s) that should not be stored in the cache.
+#
+# @note
+#   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+#
+# @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation.
+#
 class apache::mod::disk_cache (
   $cache_root           = undef,
   $cache_ignore_headers = undef,

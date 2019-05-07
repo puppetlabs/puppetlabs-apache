@@ -1,3 +1,14 @@
+# @summary
+#   Installs and configures `mod_negotiation`.
+# 
+# @param force_language_priority
+#   Action to take if a single acceptable document is not found.
+#
+# @param language_priority
+#   The precedence of language variants for cases where the client does not express a preference.
+# 
+# @see [https://httpd.apache.org/docs/current/mod/mod_negotiation.html for additional documentation.
+#
 class apache::mod::negotiation (
   Variant[Array[String], String] $force_language_priority = 'Prefer Fallback',
   Variant[Array[String], String] $language_priority = [ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',

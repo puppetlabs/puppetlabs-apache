@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_cgid`.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_cgid.html
+#
 class apache::mod::cgid {
   include ::apache
   case $::osfamily {

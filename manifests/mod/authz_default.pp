@@ -1,3 +1,11 @@
+# @summary
+#   Installs and configures `mod_authz_default`.
+# 
+# @param apache_version
+#   Version of Apache to install module on.
+#
+# @see https://httpd.apache.org/docs/current/mod/mod_authz_default.html for additional documentation.
+#
 class apache::mod::authz_default(
     $apache_version = $::apache::apache_version
 ) {

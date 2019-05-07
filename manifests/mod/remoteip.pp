@@ -1,4 +1,5 @@
-# @summary Setup and load Apache `mod_remoteip`
+# @summary 
+#   Installs and configures `mod_remoteip`.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_remoteip.html
 #
@@ -49,6 +50,8 @@
 # @param apache_version
 #   A version string used to validate that your apache version supports
 #   `mod_remoteip`. If not specified, `$::apache::apache_version` is used.
+#
+# @see https://httpd.apache.org/docs/current/mod/mod_remoteip.html for additional documentation.
 #
 class apache::mod::remoteip (
   String                                                     $header                    = 'X-Forwarded-For',

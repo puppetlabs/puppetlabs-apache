@@ -1,3 +1,20 @@
+# @summary
+#   Installs and configures `mod_nss`.
+# 
+# @param transfer_log
+#   Path to `access.log`.
+#
+# @param error_Log
+#   Path to `error.log`
+#
+# @param passwd_file
+#   Path to file containing token passwords used for NSSPassPhraseDialog.
+#
+# @param port
+#   Sets the SSL port that should be used by mod_nss.
+# 
+# @see https://pagure.io/mod_nss for additional documentation.
+#
 class apache::mod::nss (
   $transfer_log = "${::apache::params::logroot}/access.log",
   $error_log    = "${::apache::params::logroot}/error.log",

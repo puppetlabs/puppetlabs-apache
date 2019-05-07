@@ -1,3 +1,17 @@
+# @summary
+#   Installs and configures `mod_mime`.
+# 
+# @param mime_support_package
+#   Name of the MIME package to be installed.
+#
+# @param mime_types_config
+#   The location of the mime.types file.
+#
+# @param mime_types_additional
+#   List of additional MIME types to include.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_mime.html for additional documentation.
+#
 class apache::mod::mime (
   $mime_support_package = $::apache::params::mime_support_package,
   $mime_types_config    = $::apache::params::mime_types_config,

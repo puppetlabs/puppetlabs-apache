@@ -1,3 +1,38 @@
+# @summary
+#   Installs and configures MPM `prefork`.
+# 
+# @param startservers
+#   Number of child server processes created at startup.
+#
+# @param minspareservers
+#   Minimum number of idle child server processes.
+# 
+# @param maxspareservers
+#   Maximum number of idle child server processes.
+# 
+# @param serverlimit
+#   Upper limit on configurable number of processes.
+# 
+# @param maxclients
+#   Old alias for MaxRequestWorkers.
+# 
+# @param maxrequestworkers
+#   Maximum number of connections that will be processed simultaneously.
+# 
+# @param maxrequestsperchild
+#  Old alias for MaxConnectionsPerChild.
+# 
+# @param maxconnectionsperchild
+#   Limit on the number of connections that an individual child server will handle during its life.
+#
+# @param apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
+#
+# @param listenbacklog
+#   Maximum length of the queue of pending connections.
+# 
+# @see https://httpd.apache.org/docs/current/mod/prefork.html for additional documentation.
+#
 class apache::mod::prefork (
   $startservers           = '8',
   $minspareservers        = '5',

@@ -1,4 +1,41 @@
-# See README.md for usage information
+# @summary
+#   Adds a custom configuration file to the Apache server's `conf.d` directory. 
+#
+# If the file is invalid and this defined type's `verify_config` parameter's value is 
+# `true`, Puppet throws an error during a Puppet run.
+#
+# @param ensure
+#   Specifies whether the configuration file should be present.
+#
+# @param confdir
+#   Sets the directory in which Puppet places configuration files.
+#
+# @param content
+#   Sets the configuration file's content. The `content` and `source` parameters are exclusive 
+#   of each other.
+#
+# @param filename
+#   Sets the name of the file under `confdir` in which Puppet stores the configuration.
+#
+# @param priority
+#   Sets the configuration file's priority by prefixing its filename with this parameter's 
+#   numeric value, as Apache processes configuration files in alphanumeric order.<br />
+#   To omit the priority prefix in the configuration file's name, set this parameter to `false`.
+#
+# @param source
+#   Points to the configuration file's source. The `content` and `source` parameters are 
+#   exclusive of each other.
+#
+# @param verify_command
+#   Specifies the command Puppet uses to verify the configuration file. Use a fully qualified 
+#   command.<br />
+#   This parameter is used only if the `verify_config` parameter's value is `true`. If the 
+#   `verify_command` fails, the Puppet run deletes the configuration file and raises an error, 
+#   but does not notify the Apache service.
+#
+# @param verify_config
+#   Specifies whether to validate the configuration file before notifying the Apache service.
+#
 define apache::custom_config (
   Enum['absent', 'present'] $ensure = 'present',
   $confdir                          = $::apache::confd_dir,

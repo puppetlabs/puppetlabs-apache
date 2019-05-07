@@ -1,3 +1,7 @@
+# @summary
+#   Installs and congfigures default mods for Apache
+#
+# @api private
 class apache::default_mods (
   $all            = true,
   $mods           = undef,
