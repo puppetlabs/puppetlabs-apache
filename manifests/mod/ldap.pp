@@ -31,6 +31,9 @@
 # @param ldap_trusted_mode
 #   Specifies the SSL/TLS mode to be used when connecting to an LDAP server.
 #
+# @param ldap_path
+#   The server location of the ldap status page.
+#
 # @example 
 #   class { 'apache::mod::ldap':
 #     ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
