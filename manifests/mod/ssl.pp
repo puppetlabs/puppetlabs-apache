@@ -91,6 +91,7 @@ class apache::mod::ssl (
   String $ssl_sessioncache                                  = $::apache::params::ssl_sessioncache,
   $ssl_sessioncachetimeout                                  = '300',
   Boolean $ssl_stapling                                     = false,
+  Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
   $ssl_mutex                                                = undef,
   $apache_version                                           = undef,
@@ -141,12 +142,16 @@ class apache::mod::ssl (
     }
   }
 
-  $stapling_cache = $::osfamily ? {
-    'debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
-    'redhat'  => '/run/httpd/ssl_stapling(32768)',
-    'freebsd' => '/var/run/ssl_stapling(32768)',
-    'gentoo'  => '/var/run/ssl_stapling(32768)',
-    'Suse'    => '/var/lib/apache2/ssl_stapling(32768)',
+  if $stapling_cache =~ Undef {
+    $_stapling_cache = $::osfamily ? {
+      'debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
+      'redhat'  => '/run/httpd/ssl_stapling(32768)',
+      'freebsd' => '/var/run/ssl_stapling(32768)',
+      'gentoo'  => '/var/run/ssl_stapling(32768)',
+      'Suse'    => '/var/lib/apache2/ssl_stapling(32768)',
+    }
+  } else {
+    $_stapling_cache = $stapling_cache
   }
 
   if $::osfamily == 'Suse' {
@@ -179,7 +184,7 @@ class apache::mod::ssl (
   # $ssl_options
   # $ssl_openssl_conf_cmd
   # $ssl_sessioncache
-  # $stapling_cache
+  # $_stapling_cache
   # $ssl_mutex
   # $ssl_random_seed_bytes
   # $ssl_sessioncachetimeout
