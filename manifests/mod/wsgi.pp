@@ -1,3 +1,32 @@
+# @summary
+#   Installs and configures `mod_wsgi`.
+# 
+# @param wsgi_restrict_embedded
+#   Enable restrictions on use of embedded mode.
+# 
+# @param wsgi_socket_prefix
+#   Configure directory to use for daemon sockets.
+# 
+# @param wsgi_python_path
+#   Additional directories to search for Python modules.
+# 
+# @param wsgi_python_home
+#   Absolute path to Python prefix/exec_prefix directories.
+# 
+# @param wsgi_python_optimize
+#   Enables basic Python optimisation features.
+# 
+# @param wsgi_application_group
+#   Sets which application group WSGI application belongs to.
+# 
+# @param package_name
+#   Names of package that installs mod_wsgi.
+# 
+# @param mod_path
+#   Defines the path to the mod_wsgi shared object (.so) file.
+# 
+# @see https://github.com/GrahamDumpleton/mod_wsgi for additional documentation.
+#
 class apache::mod::wsgi (
   $wsgi_restrict_embedded = undef,
   $wsgi_socket_prefix     = $::apache::params::wsgi_socket_prefix,

@@ -1,3 +1,18 @@
+# @summary
+#   Installs and configures `mod_pagespeed`.
+# 
+# @todo
+#   Add docs
+#
+# @note
+#   Verify that your system is compatible with the latest Google Pagespeed requirements.
+#
+# Although this apache module requires the mod-pagespeed-stable package, Puppet does not manage the software repositories required to
+# automatically install the package. If you declare this class when the package is either not installed or not available to your 
+# package manager, your Puppet run will fail.
+# 
+# @see https://developers.google.com/speed/pagespeed/module/ for additional documentation.
+#
 class apache::mod::pagespeed (
   $inherit_vhost_config          = 'on',
   $filter_xhtml                  = false,

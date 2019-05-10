@@ -1,3 +1,37 @@
+# @summary
+#   Installs packages for an Apache module that doesn't have a corresponding 
+#   `apache::mod::<MODULE NAME>` class.
+#
+# Checks for or places the module's default configuration files in the Apache server's 
+# `module` and `enable` directories. The default locations depend on your operating system.
+#
+# @param package
+#   **Required**.<br />
+#   Names the package Puppet uses to install the Apache module.
+#
+# @param package_ensure
+#   Determines whether Puppet ensures the Apache module should be installed.
+#
+# @param lib
+#   Defines the module's shared object name. Do not configure manually without special reason.
+#
+# @param lib_path
+#   Specifies a path to the module's libraries. Do not manually set this parameter 
+#   without special reason. The `path` parameter overrides this value.
+#
+# @param loadfile_name
+#   Sets the filename for the module's `LoadFile` directive, which can also set 
+#   the module load order as Apache processes them in alphanumeric order.
+#
+# @param id
+#   Specifies the package id
+#
+# @param loadfiles
+#   Specifies an array of `LoadFile` directives.
+#
+# @param path
+#   Specifies a path to the module. Do not manually set this parameter without a special reason.
+#
 define apache::mod (
   $package        = undef,
   $package_ensure = 'present',

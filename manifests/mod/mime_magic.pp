@@ -1,3 +1,11 @@
+# @summary
+#   Installs and configures `mod_mime_magic`.
+# 
+# @param magic_file
+#   Enable MIME-type determination based on file contents using the specified magic file.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_mime_magic.html for additional documentation.
+#
 class apache::mod::mime_magic (
   $magic_file = undef,
 ) {

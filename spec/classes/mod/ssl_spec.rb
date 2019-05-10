@@ -275,6 +275,16 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLStaplingReturnResponderErrors On$}) }
     end
+    context 'with Apache version >= 2.4 - setting stapling_cache' do
+      let :params do
+        {
+          apache_version: '2.4',
+          stapling_cache: '/tmp/customstaplingcache(51200)',
+        }
+      end
+
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLStaplingCache "shmcb:/tmp/customstaplingcache\(51200\)"$}) }
+    end
 
     context 'setting ssl_pass_phrase_dialog' do
       let :params do

@@ -1,3 +1,21 @@
+# @summary
+#   Installs and configures `mod_info`.
+# 
+# @param allow_from
+#   Whitelist of IPv4 or IPv6 addresses or ranges that can access the info path.
+# 
+# @param apache_version
+#   Version of Apache to install module on.
+# 
+# @param restrict_access
+#   Toggles whether to restrict access to info path. If `false`, the `allow_from` whitelist is ignored and any IP address can
+#   access the info path.
+# 
+# @param info_path
+#   Path on server to file containing server configuration information.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_info.html for additional documentation.
+#
 class apache::mod::info (
   $allow_from      = ['127.0.0.1','::1'],
   $apache_version  = undef,

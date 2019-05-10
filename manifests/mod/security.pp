@@ -1,3 +1,89 @@
+
+# @summary
+#   Installs and configures `mod_security`.
+# 
+# @param logroot
+#   Configures the location of audit and debug logs.
+# 
+# @param crs_package
+#   Name of package that installs CRS rules.
+# 
+# @param activated_rules
+#   An array of rules from the modsec_crs_path or absolute to activate via symlinks.
+# 
+# @param modsec_dir
+#   Defines the path where Puppet installs the modsec configuration and activated rules links.
+# 
+# @param modsec_secruleengine
+#   Configures the rules engine.
+# 
+# @param audit_log_relevant_status
+#   Configures which response status code is to be considered relevant for the purpose of audit logging.
+# 
+# @param audit_log_parts
+#   Defines which parts of each transaction are going to be recorded in the audit log. Each part is assigned a single letter; when a
+#   letter appears in the list then the equivalent part will be recorded.
+# 
+# @param secpcrematchlimit
+#   Sets the match limit in the PCRE library.
+# 
+# @param secpcrematchlimitrecursion
+#   Sets the match limit recursion in the PCRE library.
+# 
+# @param allowed_methods
+#   A space-separated list of allowed HTTP methods.
+# 
+# @param content_types
+#   A list of one or more allowed MIME types.
+# 
+# @param restricted_extensions
+#   A space-sparated list of prohibited file extensions.
+# 
+# @param restricted_headers
+#   A list of restricted headers separated by slashes and spaces.
+# 
+# @param secdefaultaction
+#   Defines the default list of actions, which will be inherited by the rules in the same configuration context.
+# 
+# @param anomaly_score_blocking
+#   Activates or deactivates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set.
+# 
+# @param inbound_anomaly_threshold
+#   Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
+# 
+# @param outbound_anomaly_threshold
+#   Sets the scoring threshold level of the outbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
+# 
+# @param critical_anomaly_score
+#   Sets the Anomaly Score for rules assigned with a critical severity.
+# 
+# @param error_anomaly_score
+#   Sets the Anomaly Score for rules assigned with a error severity.
+# 
+# @param warning_anomaly_score
+#   Sets the Anomaly Score for rules assigned with a warning severity.
+# 
+# @param notice_anomaly_score
+#   Sets the Anomaly Score for rules assigned with a notice severity.
+# 
+# @param secrequestmaxnumargs
+#   Sets the maximum number of arguments in the request.
+# 
+# @param secrequestbodylimit
+#   Sets the maximum request body size ModSecurity will accept for buffering.
+# 
+# @param secrequestbodynofileslimit
+#   Configures the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported 
+#   in the request.
+# 
+# @param secrequestbodyinmemorylimit
+#   Configures the maximum request body size that ModSecurity will store in memory.
+# 
+# @param manage_security_crs
+#   Toggles whether to manage ModSecurity Core Rule Set 
+#
+# @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
+#
 class apache::mod::security (
   $logroot                    = $::apache::params::logroot,
   $crs_package                 = $::apache::params::modsec_crs_package,

@@ -1,49 +1,46 @@
-# == Define Resource Type: apache::balancer
+# @summary
+#   This type will create an apache balancer cluster file inside the conf.d
+#   directory. 
 #
-# This type will create an apache balancer cluster file inside the conf.d
-# directory. Each balancer cluster needs one or more balancer members (that can
+# Each balancer cluster needs one or more balancer members (that can
 # be declared with the apache::balancermember defined resource type). Using
 # storeconfigs, you can export the apache::balancermember resources on all
 # balancer members, and then collect them on a single apache load balancer
 # server.
 #
-# === Requirement/Dependencies:
+# @note 
+#   Currently requires the puppetlabs/concat module on the Puppet Forge and uses
+#   storeconfigs on the Puppet Master to export/collect resources from all
+#   balancer members.
 #
-# Currently requires the puppetlabs/concat module on the Puppet Forge and uses
-# storeconfigs on the Puppet Master to export/collect resources from all
-# balancer members.
+# @param name
+#   The namevar of the defined resource type is the balancer clusters name.<br />
+#   This name is also used in the name of the conf.d file
 #
-# === Parameters
+# @param proxy_set
+#   Configures key-value pairs to be used as a ProxySet lines in the configuration.
 #
-# [*name*]
-# The namevar of the defined resource type is the balancer clusters name.
-# This name is also used in the name of the conf.d file
+# @param target
+#   The path to the file the balancer definition will be written in.
 #
-# [*proxy_set*]
-# Hash, default empty. If given, each key-value pair will be used as a ProxySet
-# line in the configuration.
+# @param collect_exported
+#   Determines whether to use exported resources.<br />
+#   If you statically declare all of your backend servers, set this parameter to false to rely 
+#   on existing, declared balancer member resources. Also, use apache::balancermember with array 
+#   arguments.<br />
+#   To dynamically declare backend servers via exported resources collected on a central node, 
+#   set this parameter to true to collect the balancer member resources exported by the balancer 
+#   member nodes.<br />
+#   If you don't use exported resources, a single Puppet run configures all balancer members. If 
+#   you use exported resources, Puppet has to run on the balanced nodes first, then run on the 
+#   balancer.
 #
-# [*target*]
-# String, default undef. If given, path to the file the balancer definition will
-# be written.
+# @param options
+#   Specifies an array of [options](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember) 
+#   after the balancer URL, and accepts any key-value pairs available to `ProxyPass`.
 #
-# [*collect_exported*]
-# Boolean, default 'true'. True means 'collect exported @@balancermember
-# resources' (for the case when every balancermember node exports itself),
-# false means 'rely on the existing declared balancermember resources' (for the
-# case when you know the full set of balancermembers in advance and use
-# apache::balancermember with array arguments, which allows you to deploy
-# everything in 1 run)
-#
-# [*options*]
-# Array, default empty. If given, additional directives may be added to the
-# <Proxy balancer://xyz OPTIONS> block.
-#
-# === Examples
-#
-# Exporting the resource for a balancer member:
-#
-# apache::balancer { 'puppet00': }
+# @example
+#   apache::balancer { 'puppet00': }
 #
 define apache::balancer (
   $proxy_set = {},

@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_setenvif`.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_setenvif.html for additional documentation.
+#
 class apache::mod::setenvif {
   include ::apache
   ::apache::mod { 'setenvif': }

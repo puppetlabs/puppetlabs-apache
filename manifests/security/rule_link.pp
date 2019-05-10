@@ -1,3 +1,7 @@
+# @summary
+#   Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.
+#
+# @api private
 define apache::security::rule_link () {
 
   $parts = split($title, '/')

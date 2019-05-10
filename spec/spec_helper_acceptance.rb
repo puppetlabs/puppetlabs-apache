@@ -61,10 +61,20 @@ RSpec.configure do |c|
       if host_inventory['facter']['os']['family'] == 'RedHat'
         on host, puppet('module', 'install', 'stahnma/epel')
         on host, puppet('module', 'install', 'puppetlabs/inifile')
-        # we need epel installed, so we can get plugins, wsgi, mime ...
-        pp = <<-EOS
-          class { 'epel': }
-        EOS
+        # We need epel installed, so we can get plugins, wsgi, mime ...
+        # The osmirror is required as epel no longer supports el5
+        pp = <<-PUPPETCODE
+          if $::osfamily == 'RedHat' {
+            if $::operatingsystemmajrelease == '5' or ($::operatingsystem == 'OracleLinux' and $::operatingsystemmajrelease == '6'){
+              class { 'epel':
+                epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+                epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+              }
+            } else {
+              class { 'epel': }
+            }
+          }
+        PUPPETCODE
 
         apply_manifest_on(host, pp, catch_failures: true)
       end

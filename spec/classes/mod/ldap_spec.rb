@@ -42,6 +42,7 @@ describe 'apache::mod::ldap', type: :class do
           ldap_cache_ttl: '600',
           ldap_opcache_entries: '1024',
           ldap_opcache_ttl: '600',
+          ldap_path: '/custom-ldap-status',
         }
       end
 
@@ -52,6 +53,13 @@ describe 'apache::mod::ldap', type: :class do
       it { is_expected.to contain_file('apache-mod-ldap.conf').with_content(%r{^LDAPCacheTTL 600$}) }
       it { is_expected.to contain_file('apache-mod-ldap.conf').with_content(%r{^LDAPOpCacheEntries 1024$}) }
       it { is_expected.to contain_file('apache-mod-ldap.conf').with_content(%r{^LDAPOpCacheTTL 600$}) }
+
+      expected_ldap_path_re =
+        "<Location /custom-ldap-status>\n"\
+        "\s*SetHandler ldap-status\n"\
+        ".*\n"\
+        "</Location>\n"
+      it { is_expected.to contain_file('apache-mod-ldap.conf').with_content(%r{#{expected_ldap_path_re}}m) }
     end
   end # Debian
 
@@ -91,6 +99,18 @@ describe 'apache::mod::ldap', type: :class do
       end
 
       it { is_expected.to contain_file('apache-mod-ldap.conf').with_content(%r{^LDAPTrustedGlobalCert CA_DER ca\.pem$}) }
+    end
+
+    context 'SCL' do
+      let(:pre_condition) do
+        "class { 'apache::version':
+          scl_httpd_version => '2.4',
+          scl_php_version   => '7.0',
+        }
+        include apache"
+      end
+
+      it { is_expected.to contain_package('httpd24-mod_ldap') }
     end
   end # Redhat
 end

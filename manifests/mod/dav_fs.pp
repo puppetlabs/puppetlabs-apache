@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_dav_fs`.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_dav_fs.html for additional documentation.
+#
 class apache::mod::dav_fs {
   include ::apache
   $dav_lock = $::osfamily ? {

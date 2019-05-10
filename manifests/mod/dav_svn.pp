@@ -1,3 +1,11 @@
+# @summary
+#   Installs and configures `mod_dav_svn`.
+# 
+# @param authz_svn_enabled
+#   Specifies whether to install Apache mod_authz_svn
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_dav_svn.html for additional documentation.
+#
 class apache::mod::dav_svn (
   $authz_svn_enabled = false,
 ) {

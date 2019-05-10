@@ -1,15 +1,21 @@
 Puppet::Parser::Functions.newfunction(:bool2httpd, type: :rvalue, doc: <<-DOC
-  Transform a supposed boolean to On or Off. Pass all other values through.
-  Given a nil value (undef), bool2httpd will return 'Off'
-  Example:
-      $trace_enable     = false
-      $server_signature = 'mail'
-      bool2httpd($trace_enable)
-      # => 'Off'
-      bool2httpd($server_signature)
-      # => 'mail'
-      bool2httpd(undef)
-      # => 'Off'
+  @summary
+    Transform a supposed boolean to On or Off. Pass all other values through.
+
+  @param arg
+    The value to be converted into a string.
+
+  @return
+    Will return either `On` or `Off` if given a boolean value. Return's a string of any
+    other given value.
+
+  @example
+    $trace_enable     = false
+    $server_signature = 'mail'
+
+    bool2httpd($trace_enable) # returns 'Off'
+    bool2httpd($server_signature) # returns 'mail'
+    bool2httpd(undef) # returns 'Off'
 DOC
                                      ) do |args|
   raise(Puppet::ParseError, "bool2httpd() wrong number of arguments. Given: #{args.size} for 1)") if args.size != 1

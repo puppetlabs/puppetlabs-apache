@@ -1,3 +1,11 @@
+# @summary
+#   Installs `mod_proxy_connect`.
+# 
+# @param apache_version
+#   Used to verify that the Apache version you have requested is compatible with the module.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_proxy_connect.html for additional documentation.
+#
 class apache::mod::proxy_connect (
   $apache_version  = undef,
 ) {

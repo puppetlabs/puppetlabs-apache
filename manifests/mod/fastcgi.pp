@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_fastcgi`.
+# 
+# @see https://github.com/FastCGI-Archives/mod_fastcgi for additional documentation.
+#
 class apache::mod::fastcgi {
   include ::apache
   if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemrelease, '7.0') >= 0) {

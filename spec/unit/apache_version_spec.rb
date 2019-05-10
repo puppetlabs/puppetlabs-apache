@@ -8,8 +8,8 @@ describe Facter::Util::Fact do
     context 'with value' do
       before :each do
         allow(Facter.fact(:kernel)).to receive(:value).and_return('Linux')
-        expect(Facter::Util::Resolution).to receive(:which).with('apachectl') { true }
-        expect(Facter::Util::Resolution).to receive(:exec).with('apachectl -v 2>&1') {
+        expect(Facter::Util::Resolution).to receive(:which).with('httpd') { true }
+        expect(Facter::Util::Resolution).to receive(:exec).with('httpd -V 2>&1') {
           'Server version: Apache/2.4.16 (Unix)
            Server built:   Jul 31 2015 15:53:26'
         }
@@ -24,8 +24,8 @@ describe Facter::Util::Fact do
     context 'with value' do
       before :each do
         allow(Facter.fact(:kernel)).to receive(:value).and_return('Linux')
-        expect(Facter::Util::Resolution).to receive(:which).with('apachectl') { true }
-        expect(Facter::Util::Resolution).to receive(:exec).with('apachectl -v 2>&1') {
+        expect(Facter::Util::Resolution).to receive(:which).with('httpd') { true }
+        expect(Facter::Util::Resolution).to receive(:exec).with('httpd -V 2>&1') {
           'Server version: Apache/2.4.6 ()
            Server built:   Nov 21 2015 05:34:59'
         }

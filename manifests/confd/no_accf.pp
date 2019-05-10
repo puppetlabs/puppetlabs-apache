@@ -1,3 +1,7 @@
+# @summary
+#   Manages the `no-accf.conf` file.
+#
+# @api private
 class apache::confd::no_accf {
   # Template uses no variables
   file { 'no-accf.conf':

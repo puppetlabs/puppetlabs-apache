@@ -1,4 +1,7 @@
-# private define
+# @summary
+#   Helper used by `apache::default_mods`
+#
+# @api private
 define apache::default_mods::load ($module = $title) {
   if defined("apache::mod::${module}") {
     include "::apache::mod::${module}"

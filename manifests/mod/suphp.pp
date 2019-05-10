@@ -1,3 +1,8 @@
+# @summary
+#   Installs `mod_suphp`.
+#
+# @see https://www.suphp.org/DocumentationView.html?file=apache/INSTALL for additional documentation.
+#
 class apache::mod::suphp (
 ){
   if  ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '15.10') >= 0) or

@@ -1,3 +1,11 @@
+# @summary
+#   Installs and configures `mod_reqtimeout`.
+# 
+# @param timeouts
+#   List of timeouts and data rates for receiving requests.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html for additional documentation.
+#
 class apache::mod::reqtimeout (
   $timeouts = ['header=20-40,minrate=500', 'body=10,minrate=500']
 ){

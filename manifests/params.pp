@@ -1,23 +1,7 @@
-# Class: apache::params
+# @summary
+#   This class manages Apache parameters
 #
-# This class manages Apache parameters
-#
-# Parameters:
-# - The $user that Apache runs as
-# - The $group that Apache runs as
-# - The $apache_name is the name of the package and service on the relevant
-#   distribution
-# - The $php_package is the name of the package that provided PHP
-# - The $ssl_package is the name of the Apache SSL package
-# - The $apache_dev is the name of the Apache development libraries package
-# - The $conf_contents is the contents of the Apache configuration file
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
+# @api private
 class apache::params inherits ::apache::version {
   if($::fqdn) {
     $servername = $::fqdn
@@ -81,6 +65,7 @@ class apache::params inherits ::apache::version {
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef
     $conf_file            = 'httpd.conf'
+    $conf_enabled         = undef
     $ports_file           = "${conf_dir}/ports.conf"
     $pidfile              = 'run/httpd.pid'
     $logroot              = "/var/log/${_scl_httpd_name}"
@@ -101,6 +86,8 @@ class apache::params inherits ::apache::version {
     $suphp_configpath     = undef
     $php_version          = $::apache::version::scl_php_version
     $mod_packages         = {
+      'authnz_ldap' => "${_scl_httpd_name}-mod_ldap",
+      'ldap' => "${_scl_httpd_name}-mod_ldap",
       "php${::apache::version::scl_php_version}" => "rh-php${_scl_php_version_no_dot}-php",
       'ssl'                   => "${_scl_httpd_name}-mod_ssl",
     }

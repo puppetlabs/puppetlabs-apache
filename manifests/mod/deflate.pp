@@ -1,3 +1,14 @@
+# @summary
+#   Installs and configures `mod_deflate`.
+# 
+# @param types
+#   An array of MIME types to be deflated. See https://www.iana.org/assignments/media-types/media-types.xhtml.
+#
+# @param notes
+#   A Hash where the key represents the type and the value represents the note name.
+# 
+# @see https://httpd.apache.org/docs/current/mod/mod_deflate.html for additional documentation.
+#
 class apache::mod::deflate (
   $types = [
     'text/html text/plain text/xml',
