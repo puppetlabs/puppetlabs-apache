@@ -3113,7 +3113,7 @@ Data type: `Any`
 
 Specifies the custom package name.
 
-Default value: `undef`
+Default value: `mod_ldap`
 
 ##### `ldap_trusted_global_cert_file`
 
