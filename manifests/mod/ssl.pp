@@ -76,6 +76,7 @@
 #
 class apache::mod::ssl (
   Boolean $ssl_compression                                  = false,
+  Boolean $ssl_sessiontickets                               = true,
   $ssl_cryptodevice                                         = 'builtin',
   $ssl_options                                              = [ 'StdEnvVars' ],
   $ssl_openssl_conf_cmd                                     = undef,
@@ -170,6 +171,12 @@ class apache::mod::ssl (
     }
   }
 
+  if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' {
+    $_ssl_sessiontickets = undef
+  } else {
+    $_ssl_sessiontickets = $ssl_sessiontickets
+  }
+
   if versioncmp($_apache_version, '2.4') >= 0 {
     include ::apache::mod::socache_shmcb
   }
@@ -177,6 +184,7 @@ class apache::mod::ssl (
   # Template uses
   #
   # $ssl_compression
+  # $_ssl_sessiontickets
   # $ssl_cryptodevice
   # $ssl_ca
   # $ssl_cipher
