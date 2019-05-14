@@ -15,6 +15,7 @@ class apache::mod::reqtimeout (
   file { 'reqtimeout.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/reqtimeout.conf",
+    mode    => $::apache::file_mode,
     content => template('apache/mod/reqtimeout.conf.erb'),
     require => Exec["mkdir ${::apache::mod_dir}"],
     before  => File[$::apache::mod_dir],

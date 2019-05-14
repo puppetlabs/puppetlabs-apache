@@ -78,6 +78,7 @@ define apache::custom_config (
   file { "apache_${name}":
     ensure  => $ensure,
     path    => "${confdir}/${_filename}",
+    mode    => $::apache::file_mode,
     content => $content,
     source  => $source,
     require => Package['httpd'],

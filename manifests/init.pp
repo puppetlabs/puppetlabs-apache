@@ -776,6 +776,7 @@ class apache (
     # - $root_directory_secured
     file { "${::apache::conf_dir}/${::apache::params::conf_file}":
       ensure  => file,
+      mode    => $::apache::file_mode,
       content => template($conf_template),
       notify  => Class['Apache::Service'],
       require => [Package['httpd'], Concat[$ports_file]],
