@@ -76,7 +76,7 @@
 #
 class apache::mod::ssl (
   Boolean $ssl_compression                                  = false,
-  Boolean $ssl_sessiontickets                               = true,
+  Boolean $ssl_sessiontickets                               = false,
   $ssl_cryptodevice                                         = 'builtin',
   $ssl_options                                              = [ 'StdEnvVars' ],
   $ssl_openssl_conf_cmd                                     = undef,
@@ -172,8 +172,11 @@ class apache::mod::ssl (
   }
 
   if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' {
-    $_ssl_sessiontickets = undef
-  } else {
+    $_ssl_sessiontickets = false
+  } elseif $::operatingsystem == 'Debian' and $::operatingsystemrelease == '8' {
+    $_ssl_sessiontickets = false
+  }
+  else {
     $_ssl_sessiontickets = $ssl_sessiontickets
   }
 

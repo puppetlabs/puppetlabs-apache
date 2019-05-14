@@ -260,6 +260,7 @@ describe 'apache::mod::ssl', type: :class do
       let :params do
         {
           apache_version: '2.4',
+          ssl_sessiontickets: true,
         }
       end
 
@@ -269,7 +270,6 @@ describe 'apache::mod::ssl', type: :class do
       let :params do
         {
           apache_version: '2.4',
-          ssl_sessiontickets: false,
         }
       end
 
