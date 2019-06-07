@@ -290,6 +290,9 @@
     <%- if directory['auth_merging'] -%>
     AuthMerging <%= directory['auth_merging'] %>
     <%- end -%>
+    <%- if directory['auth_ldap_referrals'] -%>
+    LDAPReferrals <%= directory['auth_ldap_referrals'] %>
+    <%- end -%>
     <%- if directory['auth_ldap_url'] -%>
     AuthLDAPURL <%= directory['auth_ldap_url'] %>
     <%- end -%>
