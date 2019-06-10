@@ -247,7 +247,7 @@ describe 'apache', type: :class do
     context '8' do
       let :facts do
         super().merge(lsbdistcodename: 'jessie',
-                      operatingsystemrelease: '8')
+                      operatingsystemrelease: '8.0.0')
       end
 
       it {
@@ -255,7 +255,15 @@ describe 'apache', type: :class do
           'ensure' => 'directory',
         )
       }
+      describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
+        let :params do
+          { mpm_module: 'worker' }
+        end
+
+        it { is_expected.to contain_exec('/usr/sbin/a2dismod mpm_event') }
+      end
     end
+
     context 'on Ubuntu 14.04' do
       let :facts do
         super().merge(operatingsystem: 'Ubuntu',
