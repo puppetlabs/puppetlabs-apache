@@ -84,13 +84,10 @@ define apache::mpm (
         }
       }
 
+
       if $mpm == 'itk' {
         if ( ( $::operatingsystem == 'Ubuntu' ) or ( ($::operatingsystem == 'Debian') and ( versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) ) {
-          ensure_resource('exec', '/usr/sbin/a2dismod mpm_event', {
-            onlyif  => "/usr/bin/test -e ${apache::mod_enable_dir}/mpm_event.load",
-            require => Package['httpd'],
-            before  => Class['apache::service'],
-          })
+          include apache::mpm::disable_mpm_event
         }
 
         package { 'libapache2-mpm-itk':
@@ -104,11 +101,13 @@ define apache::mpm (
 
       if $mpm == 'prefork' {
         if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9.0.0') >= 0 ) ) {
-          ensure_resource('exec', '/usr/sbin/a2dismod mpm_event', {
-            onlyif  => "/usr/bin/test -e ${apache::mod_enable_dir}/mpm_event.load",
-            require => Package['httpd'],
-            before  => Class['apache::service'],
-          })
+          include apache::mpm::disable_mpm_event
+        }
+      }
+
+      if $mpm == 'worker' {
+        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) {
+          include apache::mpm::disable_mpm_event
         }
       }
 

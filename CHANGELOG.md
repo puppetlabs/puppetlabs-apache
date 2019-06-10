@@ -2,7 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [4.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/4.1.0) (2019-04-03)
+## [v5.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.0.0) (2019-05-20)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.1.0...v5.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#1908](https://github.com/puppetlabs/puppetlabs-apache/pull/1908) ([david22swan](https://github.com/david22swan))
+
+### Added
+
+- \(FM-7923\) Implement Puppet Strings [\#1916](https://github.com/puppetlabs/puppetlabs-apache/pull/1916) ([eimlav](https://github.com/eimlav))
+- Define SCL package name for mod\_ldap [\#1893](https://github.com/puppetlabs/puppetlabs-apache/pull/1893) ([treydock](https://github.com/treydock))
+
+### Fixed
+
+- \(MODULES-9014\) Improve SSLSessionTickets handling [\#1923](https://github.com/puppetlabs/puppetlabs-apache/pull/1923) ([FredericLespez](https://github.com/FredericLespez))
+- \(MODULES-8931\) Fix stahnma/epel failures [\#1914](https://github.com/puppetlabs/puppetlabs-apache/pull/1914) ([eimlav](https://github.com/eimlav))
+- Fix wsgi\_daemon\_process to support hash data type [\#1884](https://github.com/puppetlabs/puppetlabs-apache/pull/1884) ([mdechiaro](https://github.com/mdechiaro))
+
+## [4.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/4.1.0) (2019-04-05)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.0.0...4.1.0)
 
