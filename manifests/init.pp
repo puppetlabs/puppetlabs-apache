@@ -174,6 +174,22 @@
 #   CGIs/SSIs in REMOTE_HOST.<br />
 #   > **Note**: If enabled, it impacts performance significantly.
 #
+# @param ldap_trusted_mode
+#  The following modes are supported:
+#
+#    NONE - no encryption
+#    SSL - ldaps:// encryption on default port 636
+#    TLS - STARTTLS encryption on default port 389
+#  Not all LDAP toolkits support all the above modes. An error message will be logged at
+#  runtime if a mode is not supported, and the connection to the LDAP server will fail.
+#
+#If an ldaps:// URL is specified, the mode becomes SSL and the setting of LDAPTrustedMode is ignored.
+#
+# @param ldap_verify_server_cert
+#  Specifies whether to force the verification of a server certificate when establishing an SSL
+#  connection to the LDAP server.
+#  On|Off
+#
 # @param lib_path
 #   Specifies the location whereApache module files are stored.<br />
 #   > **Note**: Do not configure this parameter manually without special reason.
@@ -468,6 +484,8 @@ class apache (
   $purge_vdir                                                           = false,
   $serveradmin                                                          = 'root@localhost',
   Enum['On', 'Off', 'on', 'off'] $sendfile                              = 'On',
+  $ldap_verify_server_cert                                              = undef,
+  $ldap_trusted_mode                                                    = undef,
   $error_documents                                                      = false,
   $timeout                                                              = '60',
   $httpd_dir                                                            = $::apache::params::httpd_dir,
