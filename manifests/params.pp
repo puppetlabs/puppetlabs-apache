@@ -214,10 +214,7 @@ class apache::params inherits ::apache::version {
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
-      'ldap'                  => $::apache::version::distrelease ? {
-        '7'     => 'mod_ldap',
-        default => undef,
-      },
+      'ldap'                  => 'mod_ldap',
       'lookup_identity'       => 'mod_lookup_identity',
       'pagespeed'             => 'mod-pagespeed-stable',
       # NOTE: The passenger module isn't available on RH/CentOS without
