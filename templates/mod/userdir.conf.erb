@@ -4,6 +4,7 @@
 <% end -%>
   UserDir <%= @_path %>
 
+<%- if ! @unmanaged_path -%>
   <Directory "<%= @_path %>">
     AllowOverride <%= @overrides.join(' ') %>
     Options <%= @options.join(' ') %>
@@ -24,4 +25,8 @@
       <%- end -%>
     </LimitExcept>
   </Directory>
+<%- end -%>
+<%- if @custom_fragment -%>
+<%= @custom_fragment %>
+<%- end -%>
 </IfModule>
