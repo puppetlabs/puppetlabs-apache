@@ -62,7 +62,7 @@ describe 'apache::mod::userdir', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+$/home/\*/public_html$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/public_html$}) }
       it { is_expected.not_to contain_file('userdir.conf').with_content(%r{^\s*\<Directory }) }
     end
     context 'with custom_fragment set to something' do
