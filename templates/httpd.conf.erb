@@ -134,6 +134,12 @@ IncludeOptional "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
 Include "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
 <%- end -%>
 <% end -%>
+<% if @ldap_verify_server_cert -%>
+LDAPVerifyServerCert <%= @ldap_verify_server_cert %>
+<% end -%>
+<% if @ldap_verify_server_cert -%>
+LDAPTrustedMode <%= @ldap_trusted_mode %>
+<% end -%>
 
 <% if @error_documents -%>
 # /usr/share/apache2/error on debian
