@@ -21,6 +21,12 @@
 # 
 # @param options
 #   Configures what features are available in a particular directory.
+#
+# @param unmanaged_path
+#   Toggles whether to manage path in userdir.conf
+#
+# @param custom_fragment
+#   Custom configuration to be added to userdir.conf
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_userdir.html for additional documentation.
 #
@@ -32,6 +38,8 @@ class apache::mod::userdir (
   $path = '/home/*/public_html',
   $overrides = [ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ],
   $options = [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ],
+  $unmanaged_path = false,
+  $custom_fragment = undef,
 ) {
   include ::apache
   $_apache_version = pick($apache_version, $apache::apache_version)

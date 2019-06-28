@@ -55,5 +55,24 @@ describe 'apache::mod::userdir', type: :class do
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+public_html /usr/web http://www\.example\.com/$}) }
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"public_html /usr/web http://www\.example\.com/\"\>$}) }
     end
+    context 'with unmanaged_path set to true' do
+      let :params do
+        {
+          unmanaged_path: true,
+        }
+      end
+
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/public_html$}) }
+      it { is_expected.not_to contain_file('userdir.conf').with_content(%r{^\s*\<Directory }) }
+    end
+    context 'with custom_fragment set to something' do
+      let :params do
+        {
+          custom_fragment: 'custom_test_string',
+        }
+      end
+
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{custom_test_string}) }
+    end
   end
 end
