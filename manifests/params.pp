@@ -362,8 +362,10 @@ class apache::params inherits ::apache::version {
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
     } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) {
-      # Debian stretch uses a different dav_svn from Ubuntu Xenial
-      $php_version = '7.0'
+      $php_version = $facts['operatingsystemmajrelease'] ? {
+        '9'     => '7.0', # Debian Stretch
+        '10'    => '7.3', # Debian Buster
+      }
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
