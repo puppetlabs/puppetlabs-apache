@@ -26,7 +26,7 @@ GetText:
 GetText/DecorateString:
   Description: We don't want to decorate test output.
   Exclude:
-  - spec/*
+  - spec/**/*
 RSpec/BeforeAfterAll:
   Description: Beware of using after(:all) as it may cause state to leak between tests.
     A necessary evil in acceptance testing.
