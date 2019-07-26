@@ -1,102 +1,59 @@
-require 'beaker-pe'
-require 'beaker-puppet'
-require 'puppet'
-require 'beaker-rspec/spec_helper'
-require 'beaker-rspec/helpers/serverspec'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
-require 'beaker-task_helper'
+# frozen_string_literal: true
 
-run_puppet_install_helper
-configure_type_defaults_on(hosts)
-install_bolt_on(hosts) unless pe_install?
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'serverspec'
+require 'puppet_litmus'
+require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
+include PuppetLitmus
 
-RSpec.configure do |c|
-  c.filter_run focus: true
-  c.run_all_when_everything_filtered = true
-  # IPv6 is not enabled by default in the new travis-ci Trusty environment (see https://github.com/travis-ci/travis-ci/issues/8891 )
-  if fact('network6_lo') != '::1'
-    c.filter_run_excluding ipv6: true
+if ENV['TARGET_HOST'].nil? || ENV['TARGET_HOST'] == 'localhost'
+  puts 'Running tests against this machine !'
+  if Gem.win_platform?
+    set :backend, :cmd
+  else
+    set :backend, :exec
   end
+else
+  # load inventory
+  inventory_hash = inventory_hash_from_inventory_file
+  node_config = config_from_node(inventory_hash, ENV['TARGET_HOST'])
 
-  # Readable test descriptions
-  c.formatter = :documentation
+  if target_in_group(inventory_hash, ENV['TARGET_HOST'], 'docker_nodes')
+    host = ENV['TARGET_HOST']
+    set :backend, :docker
+    set :docker_container, host
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'ssh_nodes')
+    set :backend, :ssh
+    options = Net::SSH::Config.for(host)
+    options[:user] = node_config.dig('ssh', 'user') unless node_config.dig('ssh', 'user').nil?
+    options[:port] = node_config.dig('ssh', 'port') unless node_config.dig('ssh', 'port').nil?
+    options[:keys] = node_config.dig('ssh', 'private-key') unless node_config.dig('ssh', 'private-key').nil?
+    options[:password] = node_config.dig('ssh', 'password') unless node_config.dig('ssh', 'password').nil?
+    options[:verify_host_key] = Net::SSH::Verifiers::Null.new unless node_config.dig('ssh', 'host-key-check').nil?
+    host = if ENV['TARGET_HOST'].include?(':')
+             ENV['TARGET_HOST'].split(':').first
+           else
+             ENV['TARGET_HOST']
+           end
+    set :host,        options[:host_name] || host
+    set :ssh_options, options
+    set :request_pty, true
+  elsif target_in_group(inventory_hash, ENV['TARGET_HOST'], 'winrm_nodes')
+    require 'winrm'
 
-  # detect the situation where PUP-5016 is triggered and skip the idempotency tests in that case
-  # also note how fact('puppetversion') is not available because of PUP-4359
-  if host_inventory['facter']['os']['family'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8' && shell('puppet --version').stdout =~ %r{^4\.2}
-    c.filter_run_excluding skip_pup_5016: true
-  end
+    set :backend, :winrm
+    set :os, family: 'windows'
+    user = node_config.dig('winrm', 'user') unless node_config.dig('winrm', 'user').nil?
+    pass = node_config.dig('winrm', 'password') unless node_config.dig('winrm', 'password').nil?
+    endpoint = "http://#{ENV['TARGET_HOST']}:5985/wsman"
 
-  # Configure all nodes in nodeset
-  c.before :suite do
-    run_puppet_access_login(user: 'admin') if pe_install? && (Gem::Version.new(puppet_version) >= Gem::Version.new('5.0.0'))
-    # net-tools required for netstat utility being used by be_listening
-    if (host_inventory['facter']['os']['family'] == 'RedHat' && host_inventory['facter']['os']['release']['major'] == '7') ||
-       (host_inventory['facter']['os']['family'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '9') ||
-       (host_inventory['facter']['os']['name'] == 'Ubuntu' && host_inventory['facter']['os']['release']['full'] == '18.04')
-      pp = <<-EOS
-        package { 'net-tools': ensure => installed }
-      EOS
+    opts = {
+      user: user,
+      password: pass,
+      endpoint: endpoint,
+      operation_timeout: 300,
+    }
 
-      apply_manifest_on(agents, pp, catch_failures: false)
-    elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
-      pp = <<-EOS
-        package { 'net-tools-deprecated': ensure => installed }
-      EOS
-
-      apply_manifest_on(agents, pp, catch_failures: false)
-    end
-
-    if host_inventory['facter']['os']['family'] == 'Debian'
-      # Make sure snake-oil certs are installed.
-      shell 'apt-get install -y ssl-cert'
-    end
-
-    # Install module and dependencies
-    hosts.each do |host|
-      # Required for mod_passenger tests.
-      if host_inventory['facter']['os']['family'] == 'RedHat'
-        on host, puppet('module', 'install', 'stahnma/epel')
-        on host, puppet('module', 'install', 'puppetlabs/inifile')
-        # We need epel installed, so we can get plugins, wsgi, mime ...
-        # The osmirror is required as epel no longer supports el5
-        pp = <<-PUPPETCODE
-          if $::osfamily == 'RedHat' {
-            if $::operatingsystemmajrelease == '5' or ($::operatingsystem == 'OracleLinux' and $::operatingsystemmajrelease == '6'){
-              class { 'epel':
-                epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-                epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-              }
-            } else {
-              class { 'epel': }
-            }
-          }
-        PUPPETCODE
-
-        apply_manifest_on(host, pp, catch_failures: true)
-      end
-
-      # Required for manifest to make mod_pagespeed repository available
-      if host_inventory['facter']['os']['family'] == 'Debian'
-        on host, puppet('module', 'install', 'puppetlabs-apt')
-      end
-
-      # Make sure selinux is disabled so the tests work.
-      on host, puppet('apply', '-e',
-                      %("exec { 'setenforce 0': path   => '/bin:/sbin:/usr/bin:/usr/sbin', onlyif => 'which setenforce && getenforce | grep Enforcing', }"))
-    end
-  end
-end
-
-shared_examples 'a idempotent resource' do
-  it 'applies with no errors' do
-    apply_manifest(pp, catch_failures: true)
-  end
-
-  it 'applies a second time without changes', :skip_pup_5016 do
-    apply_manifest(pp, catch_changes: true)
+    winrm = WinRM::Connection.new opts
+    Specinfra.configuration.winrm = winrm
   end
 end

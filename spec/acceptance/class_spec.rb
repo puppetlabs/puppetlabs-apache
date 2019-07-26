@@ -1,11 +1,12 @@
 require 'spec_helper_acceptance'
-require_relative './version.rb'
-
+apache_hash = apache_settings_hash
 describe 'apache class' do
   context 'default parameters' do
     let(:pp) { "class { 'apache': }" }
 
-    it_behaves_like 'a idempotent resource'
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
 
     describe 'apache_version fact' do
       let(:result) do
@@ -17,22 +18,16 @@ describe 'apache class' do
       end
 
       it {
-        expect(result.output).to match(%r{apache_version = >#{$apache_version}.*<})
+        expect(result.stdout).to match(%r{apache_version = >#{apache_hash['version']}.*<})
       }
     end
 
-    describe package($package_name) do
+    describe package(apache_hash['package_name']) do
       it { is_expected.to be_installed }
     end
 
-    describe service($service_name) do
-      if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
+    describe service(apache_hash['service_name']) do
+      it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
 
@@ -42,7 +37,6 @@ describe 'apache class' do
   end
 
   context 'custom site/mod dir parameters' do
-    # Using puppet_apply as a helper
     let(:pp) do
       <<-MANIFEST
         if $::osfamily == 'RedHat' and "$::selinux" == "true" {
@@ -76,17 +70,12 @@ describe 'apache class' do
       MANIFEST
     end
 
-    # Run it twice and test for idempotency
-    it_behaves_like 'a idempotent resource'
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
 
-    describe service($service_name) do
-      if host_inventory['facter']['os']['name'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif host_inventory['facter']['os']['name'] == 'SLES' && host_inventory['facter']['os']['release']['major'] == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
+    describe service(apache_hash['service_name']) do
+      it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
   end
