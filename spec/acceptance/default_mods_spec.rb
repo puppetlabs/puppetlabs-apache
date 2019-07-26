@@ -1,6 +1,5 @@
 require 'spec_helper_acceptance'
-require_relative './version.rb'
-
+apache_hash = apache_settings_hash
 describe 'apache::default_mods class' do
   describe 'no default mods' do
     # Using puppet_apply as a helper
@@ -12,14 +11,16 @@ describe 'apache::default_mods class' do
       MANIFEST
     end
 
-    # Run it twice and test for idempotency
-    it_behaves_like 'a idempotent resource'
-    describe service($service_name) do
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
+
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
   end
 
-  unless host_inventory['facter']['os']['name'] == 'SLES' && os[:release].to_i >= 12
+  unless os[:family] == 'sles' && os[:release].to_i >= 12
     describe 'no default mods and failing' do
       before :all do
         pp = <<-PP
@@ -34,14 +35,14 @@ describe 'apache::default_mods class' do
             default_mods => false,
           }
           apache::vhost { 'defaults.example.com':
-            docroot     => '#{$doc_root}/defaults',
+            docroot     => '#{apache_hash['doc_root']}/defaults',
             aliases     => {
               alias => '/css',
-              path  => '#{$doc_root}/css',
+              path  => '#{apache_hash['doc_root']}/css',
             },
             directories => [
             {
-                'path'            => "#{$doc_root}/admin",
+                'path'            => "#{apache_hash['doc_root']}/admin",
                 'auth_basic_fake' => 'demo demopass',
               }
             ],
@@ -53,7 +54,7 @@ describe 'apache::default_mods class' do
       end
     end
 
-    describe service($service_name) do
+    describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
     end
   end
@@ -72,19 +73,21 @@ describe 'apache::default_mods class' do
           ],
         }
         apache::vhost { 'defaults.example.com':
-          docroot => '#{$doc_root}/defaults',
+          docroot => '#{apache_hash['doc_root']}/defaults',
           aliases => {
             alias => '/css',
-            path  => '#{$doc_root}/css',
+            path  => '#{apache_hash['doc_root']}/css',
           },
           setenv  => 'TEST1 one',
         }
       MANIFEST
     end
 
-    it_behaves_like 'a idempotent resource'
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
 
-    describe service($service_name) do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
   end
@@ -99,13 +102,15 @@ describe 'apache::default_mods class' do
       MANIFEST
     end
 
-    # Run it twice and test for idempotency
-    it_behaves_like 'a idempotent resource'
-    describe service($service_name) do
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
+
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
 
-    describe file("#{$mod_dir}/zz_auth_basic.load") do
+    describe file("#{apache_hash['mod_dir']}/zz_auth_basic.load") do
       it { is_expected.to be_file }
     end
   end

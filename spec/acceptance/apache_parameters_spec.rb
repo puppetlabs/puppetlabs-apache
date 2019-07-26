@@ -1,6 +1,5 @@
 require 'spec_helper_acceptance'
-require_relative './version.rb'
-
+apache_hash = apache_settings_hash
 describe 'apache parameters' do
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do
@@ -9,8 +8,8 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if host_inventory['facter']['os']['family'] == 'FreeBSD'
-      describe file("#{$confd_dir}/no-accf.conf.erb") do
+    if os[:family] == 'freebsd'
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
         it { is_expected.not_to be_file }
       end
     end
@@ -21,8 +20,8 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    if host_inventory['facter']['os']['family'] == 'FreeBSD'
-      describe file("#{$confd_dir}/no-accf.conf.erb") do
+    if os[:family] == 'freebsd'
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
         it { is_expected.to be_file }
       end
     end
@@ -34,7 +33,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($ports_file) do
+    describe file(apache_hash['ports_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Listen 10.1.1.1' }
     end
@@ -52,15 +51,9 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service($service_name) do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
-      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.to be_enabled }
-      end
+      it { is_expected.to be_enabled }
     end
   end
 
@@ -75,15 +68,9 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service($service_name) do
+    describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
-      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.not_to be_enabled }
-      end
+      it { is_expected.not_to be_enabled }
     end
   end
 
@@ -99,19 +86,13 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service($service_name) do
+    describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
-      if host_inventory['facter']['os']['name'] == 'debian' && os[:release][0] == '8'
-        pending 'Should be enabled - Bug 760616 on Debian 8'
-      elsif host_inventory['facter']['os']['name'] == 'sles' && os[:release][0..1] == '15'
-        pending 'Should be enabled - MODULES-8379 `be_enabled` check does not currently work for apache2 on SLES 15'
-      else
-        it { is_expected.not_to be_enabled }
-      end
+      it { is_expected.not_to be_enabled }
     end
   end
 
-  if host_inventory['facter']['os']['family'] == 'Debian'
+  if os[:family] == 'debian'
     describe 'conf_enabled => /etc/apache2/conf-enabled' do
       pp = <<-MANIFEST
           class { 'apache':
@@ -120,7 +101,7 @@ describe 'apache parameters' do
           }
       MANIFEST
       it 'applies cleanly' do
-        shell('touch /etc/apache2/conf-enabled/test.conf')
+        run_shell('touch /etc/apache2/conf-enabled/test.conf')
         apply_manifest(pp, catch_failures: true)
       end
 
@@ -141,44 +122,44 @@ describe 'apache parameters' do
         class { 'apache':
           purge_configs   => false,
           purge_vhost_dir => false,
-          vhost_dir       => "#{$confd_dir}.vhosts"
+          vhost_dir       => "#{apache_hash['confd_dir']}.vhosts"
         }
     MANIFEST
     it 'applies cleanly' do
-      shell("touch #{$confd_dir}/test.conf")
-      shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
+      run_shell("touch #{apache_hash['confd_dir']}/test.conf")
+      run_shell("mkdir -p #{apache_hash['confd_dir']}.vhosts && touch #{apache_hash['confd_dir']}.vhosts/test.conf")
       apply_manifest(pp, catch_failures: true)
     end
 
     # Ensure the files didn't disappear.
-    describe file("#{$confd_dir}/test.conf") do
+    describe file("#{apache_hash['confd_dir']}/test.conf") do
       it { is_expected.to be_file }
     end
-    describe file("#{$confd_dir}.vhosts/test.conf") do
+    describe file("#{apache_hash['confd_dir']}.vhosts/test.conf") do
       it { is_expected.to be_file }
     end
   end
 
-  if host_inventory['facter']['os']['family'] != 'Debian'
+  if os[:family] != 'debian'
     describe 'purge parameters => true' do
       pp = <<-MANIFEST
           class { 'apache':
             purge_configs   => true,
             purge_vhost_dir => true,
-            vhost_dir       => "#{$confd_dir}.vhosts"
+            vhost_dir       => "#{apache_hash['confd_dir']}.vhosts"
           }
       MANIFEST
       it 'applies cleanly' do
-        shell("touch #{$confd_dir}/test.conf")
-        shell("mkdir -p #{$confd_dir}.vhosts && touch #{$confd_dir}.vhosts/test.conf")
+        run_shell("touch #{apache_hash['confd_dir']}/test.conf")
+        run_shell("mkdir -p #{apache_hash['confd_dir']}.vhosts && touch #{apache_hash['confd_dir']}.vhosts/test.conf")
         apply_manifest(pp, catch_failures: true)
       end
 
       # File should be gone
-      describe file("#{$confd_dir}/test.conf") do
+      describe file("#{apache_hash['confd_dir']}/test.conf") do
         it { is_expected.not_to be_file }
       end
-      describe file("#{$confd_dir}.vhosts/test.conf") do
+      describe file("#{apache_hash['confd_dir']}.vhosts/test.conf") do
         it { is_expected.not_to be_file }
       end
     end
@@ -190,7 +171,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($vhost) do
+    describe file(apache_hash['vhost']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerAdmin test@example.com' }
     end
@@ -204,7 +185,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'EnableSendfile On' }
     end
@@ -216,7 +197,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Sendfile Off' }
     end
@@ -230,7 +211,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Alias /error/' }
     end
@@ -244,7 +225,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Timeout 1234' }
     end
@@ -261,7 +242,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file("#{$mod_dir}/mime.conf") do
+    describe file("#{apache_hash['mod_dir']}/mime.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AddLanguage eo .eo' }
     end
@@ -271,7 +252,7 @@ describe 'apache parameters' do
     # Actually >= 2.4.24, but the minor version is not provided
     # https://bugs.launchpad.net/ubuntu/+source/apache2/2.4.7-1ubuntu4.15
     # basically versions of the ubuntu or sles  apache package cause issue
-    if $apache_version >= '2.4' && host_inventory['facter']['os']['name'] !~ %r{Ubuntu|SLES}
+    if apache_hash['version'] >= '2.4' && os[:family] !~ %r{ubuntu|sles}
       describe 'setup' do
         it 'applies cleanly' do
           pp = "class { 'apache': http_protocol_options => 'Unsafe RegisteredMethods Require1.0'}"
@@ -279,7 +260,7 @@ describe 'apache parameters' do
         end
       end
 
-      describe file($conf_file) do
+      describe file(apache_hash['conf_file']) do
         it { is_expected.to be_file }
         it { is_expected.to contain 'HttpProtocolOptions Unsafe RegisteredMethods Require1.0' }
       end
@@ -294,7 +275,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerRoot "/tmp/root"' }
     end
@@ -308,13 +289,13 @@ describe 'apache parameters' do
       end
     end
 
-    if $apache_version == '2.4'
-      describe file($conf_file) do
+    if apache_hash['version'] == '2.4'
+      describe file(apache_hash['conf_file']) do
         it { is_expected.to be_file }
         it { is_expected.to contain 'IncludeOptional "/tmp/root/*.conf"' }
       end
     else
-      describe file($conf_file) do
+      describe file(apache_hash['conf_file']) do
         it { is_expected.to be_file }
         it { is_expected.to contain 'Include "/tmp/root/*.conf"' }
       end
@@ -325,13 +306,13 @@ describe 'apache parameters' do
     describe 'setup' do
       it 'applies cleanly' do
         pp = "class { 'apache': conf_template => 'another/test.conf.erb', service_ensure => stopped }"
-        shell("mkdir -p #{default['distmoduledir']}/another/templates")
-        shell("echo 'testcontent' >> #{default['distmoduledir']}/another/templates/test.conf.erb")
+        run_shell('mkdir -p /etc/puppetlabs/code/environments/production/modules/another/templates')
+        run_shell("echo 'testcontent' >>  /etc/puppetlabs/code/environments/production/modules/another/templates/test.conf.erb")
         apply_manifest(pp, catch_failures: true)
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'testcontent' }
     end
@@ -345,7 +326,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerName "test.server"' }
     end
@@ -391,7 +372,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common' }
       it { is_expected.to contain 'LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined' }
@@ -406,7 +387,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'KeepAlive Off' }
       it { is_expected.to contain 'KeepAliveTimeout 30' }
@@ -422,7 +403,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'LimitRequestFieldSize 16830' }
     end
@@ -436,7 +417,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'LimitRequestFields 120' }
     end
@@ -472,7 +453,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file("/apache_spec/#{$error_log}") do
+    describe file("/apache_spec/#{apache_hash['error_log']}") do
       it { is_expected.to be_file }
     end
   end
@@ -506,7 +487,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerTokens Minor' }
     end
@@ -523,7 +504,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerSignature testsig' }
     end
@@ -537,7 +518,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'HostnameLookups On' }
     end
@@ -549,7 +530,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'HostnameLookups Off' }
     end
@@ -561,7 +542,7 @@ describe 'apache parameters' do
       end
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'HostnameLookups Double' }
     end
@@ -577,7 +558,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'TraceEnable Off' }
     end
@@ -593,7 +574,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file($conf_file) do
+    describe file(apache_hash['conf_file']) do
       it { is_expected.to be_file }
       it { is_expected.to contain 'FileETag None' }
     end
@@ -609,7 +590,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe package($package_name) do
+    describe package(apache_hash['package_name']) do
       it { is_expected.to be_installed }
     end
   end
