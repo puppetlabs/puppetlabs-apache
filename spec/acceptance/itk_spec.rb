@@ -1,10 +1,11 @@
 require 'spec_helper_acceptance'
+
 case os[:family]
 when 'debian', 'ubuntu'
   service_name = 'apache2'
   variant = :prefork
 when 'redhat'
-  unless os[:release] == '5'
+  unless os[:release] =~ %r{^5}
     variant = (os[:release].to_i >= 7) ? :prefork : :itk_only
     service_name = 'httpd'
   end
