@@ -155,155 +155,6 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'new vhost on port 80' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      apache::vhost { 'first.example.com':
-        port    => '80',
-        docroot => '/var/www/first',
-      }
-      host { 'first.example.com': ip => '127.0.0.1', }
-      file { '/var/www/first/index.html':
-        ensure  => file,
-        content => "Hello from first\\n",
-      }
-      apache::vhost { 'second.example.com':
-        port    => '80',
-        docroot => '/var/www/second',
-      }
-      host { 'second.example.com': ip => '127.0.0.1', }
-      file { '/var/www/second/index.html':
-        ensure  => file,
-        content => "Hello from second\\n",
-      }
-    MANIFEST
-    it 'configures two apache vhosts' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe service(apache_hash['service_name']) do
-      it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
-    end
-
-    it 'answers to first.example.com' do
-      run_shell('/usr/bin/curl first.example.com:80', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from first\n")
-      end
-    end
-
-    it 'answers to second.example.com' do
-      run_shell('/usr/bin/curl second.example.com:80', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from second\n")
-      end
-    end
-  end
-
-  context 'new vhost with multiple IP addresses on port 80' do
-    pp = <<-MANIFEST
-      class { 'apache':
-        default_vhost => false,
-      }
-      apache::vhost { 'example.com':
-        port     => '80',
-        ip       => ['127.0.0.1','127.0.0.2'],
-        ip_based => true,
-        docroot  => '/var/www/html',
-      }
-      host { 'host1.example.com': ip => '127.0.0.1', }
-      host { 'host2.example.com': ip => '127.0.0.2', }
-      file { '/var/www/html/index.html':
-        ensure  => file,
-        content => "Hello from vhost\\n",
-      }
-    MANIFEST
-    it 'configures one apache vhost with 2 ip addresses' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe service(apache_hash['service_name']) do
-      it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-example.com.conf") do
-      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.2:80>' }
-      it { is_expected.to contain 'ServerName example.com' }
-    end
-
-    describe file(apache_hash['ports_file']) do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'Listen 127.0.0.1:80' }
-      it { is_expected.to contain 'Listen 127.0.0.2:80' }
-      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
-      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.2:80' }
-    end
-
-    it 'answers to host1.example.com' do
-      run_shell('/usr/bin/curl host1.example.com:80', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from vhost\n")
-      end
-    end
-
-    it 'answers to host2.example.com' do
-      run_shell('/usr/bin/curl host2.example.com:80', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from vhost\n")
-      end
-    end
-  end
-
-  context 'new vhost with multiple ports on 1 IP address' do
-    pp = <<-MANIFEST
-      class { 'apache':
-        default_vhost => false,
-      }
-      apache::vhost { 'example.com':
-        port     => ['80','8080'],
-        ip       => '127.0.0.1',
-        ip_based => true,
-        docroot  => '/var/www/html',
-      }
-      host { 'host1.example.com': ip => '127.0.0.1', }
-      file { '/var/www/html/index.html':
-        ensure  => file,
-        content => "Hello from vhost\\n",
-      }
-    MANIFEST
-    it 'configures one apache vhost with 2 ports' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe service(apache_hash['service_name']) do
-      it { is_expected.to be_enabled }
-      it { is_expected.to be_running }
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-example.com.conf") do
-      it { is_expected.to contain '<VirtualHost 127.0.0.1:80 127.0.0.1:8080>' }
-      it { is_expected.to contain 'ServerName example.com' }
-    end
-
-    describe file(apache_hash['ports_file']) do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'Listen 127.0.0.1:80' }
-      it { is_expected.to contain 'Listen 127.0.0.1:8080' }
-      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:80' }
-      it { is_expected.not_to contain 'NameVirtualHost 127.0.0.1:8080' }
-    end
-
-    it 'answers to host1.example.com port 80' do
-      run_shell('/usr/bin/curl host1.example.com:80', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from vhost\n")
-      end
-    end
-
-    it 'answers to host1.example.com port 8080' do
-      run_shell('/usr/bin/curl host1.example.com:8080', acceptable_exit_codes: 0) do |r|
-        expect(r.stdout).to eq("Hello from vhost\n")
-      end
-    end
-  end
-
   context 'new vhost with multiple IP addresses on multiple ports' do
     pp = <<-MANIFEST
       class { 'apache':
@@ -1203,19 +1054,16 @@ describe 'apache::vhost define' do
 
   describe 'rack_base_uris' do
     unless os[:family] =~ %r{redhat|sles}
-      test = -> do
-        pp = <<-MANIFEST
-          class { 'apache': }
-          host { 'test.server': ip => '127.0.0.1' }
-          apache::vhost { 'test.server':
-            docroot          => '/tmp',
-            rack_base_uris  => ['/test'],
-          }
-        MANIFEST
-        it 'applies cleanly' do
-          apply_manifest(pp, catch_failures: true)
-        end
-        test.call
+      pp = <<-MANIFEST
+        class { 'apache': }
+        host { 'test.server': ip => '127.0.0.1' }
+        apache::vhost { 'test.server':
+          docroot          => '/tmp',
+          rack_base_uris  => ['/test'],
+        }
+      MANIFEST
+      it 'applies cleanly' do
+        apply_manifest(pp, catch_failures: true)
       end
     end
   end

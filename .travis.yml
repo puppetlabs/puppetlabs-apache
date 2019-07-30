@@ -30,7 +30,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=deb_puppet5
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_deb]'
       - bundle exec bolt command run 'apt-get install wget -y' --inventoryfile inventory.yaml --nodes='*'
@@ -44,7 +44,7 @@ matrix:
       bundler_args:
       dist: trusty
       env: PLATFORMS=deb_puppet6
-      rvm: 2.5.1
+      rvm: 2.5.3
       before_script:
       - bundle exec rake 'litmus:provision_list[travis_deb]'
       - bundle exec bolt command run 'apt-get install wget -y' --inventoryfile inventory.yaml --nodes='*'
@@ -57,10 +57,10 @@ matrix:
     -
       bundler_args:
       dist: trusty
-      env: PLATFORMS=el_puppet5
-      rvm: 2.5.1
+      env: PLATFORMS=scientific6_puppet5
+      rvm: 2.5.3
       before_script:
-      - bundle exec rake 'litmus:provision_list[travis_el]'
+      - bundle exec rake 'litmus:provision[docker, waffleimage/scientificlinux6]'
       - bundle exec rake 'litmus:install_agent[puppet5]'
       - bundle exec rake litmus:install_module
       script:
@@ -70,10 +70,63 @@ matrix:
     -
       bundler_args:
       dist: trusty
-      env: PLATFORMS=el_puppet6
-      rvm: 2.5.1
+      env: PLATFORMS=scientific6_puppet6
+      rvm: 2.5.3
       before_script:
-      - bundle exec rake 'litmus:provision_list[travis_el]'
+      - bundle exec rake 'litmus:provision[docker, waffleimage/scientificlinux6]'
+      - bundle exec rake 'litmus:install_agent[puppet6]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=centos6_puppet5
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision[docker, waffleimage/centos6]'
+      - bundle exec rake 'litmus:install_agent[puppet5]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=centos6_puppet6
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision[docker, waffleimage/centos6]'
+      - bundle exec rake 'litmus:install_agent[puppet6]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=el7_puppet5
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision_list[travis_el7]'
+      - bundle exec rake 'litmus:install_agent[puppet5]'
+      - bundle exec rake litmus:install_module
+      script:
+      - bundle exec rake litmus:acceptance:parallel
+      services: docker
+      sudo: required
+    -
+      bundler_args:
+      dist: trusty
+      env: PLATFORMS=el7_puppet6
+      rvm: 2.5.3
+      before_script:
+      - bundle exec rake 'litmus:provision_list[travis_el7]'
       - bundle exec rake 'litmus:install_agent[puppet6]'
       - bundle exec rake litmus:install_module
       script:
