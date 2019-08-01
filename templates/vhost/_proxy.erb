@@ -1,11 +1,11 @@
 <% if @proxy_dest or @proxy_pass or @proxy_pass_match or @proxy_dest_match -%>
 
   ## Proxy rules
-  <% if @proxy_requests -%>
+<% if @proxy_requests -%>
   ProxyRequests On
-  <% else -%>
+<% else -%>
   ProxyRequests Off
-  <%- end -%>
+<%- end -%>
 <%- end -%>
 <% if @proxy_preserve_host -%>
   ProxyPreserveHost On
