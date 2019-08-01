@@ -279,6 +279,7 @@ describe 'apache::vhost', type: :define do
                   'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
                 },
               ],
+              'proxy_requests'              => false,
               'suphp_addhandler'            => 'foo',
               'suphp_engine'                => 'on',
               'suphp_configpath'            => '/var/www/html',
