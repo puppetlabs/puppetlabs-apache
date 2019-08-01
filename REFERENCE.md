@@ -7369,6 +7369,16 @@ X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
 
 Default value: `undef`
 
+##### `proxy_requests`
+
+Data type: `Any`
+
+Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyrequests).
+This prarmeter allows or prevents Apache httpd from functioning as a forward proxy server.
+(Setting ProxyRequests to Off does not disable use of the ProxyPass directive.)
+
+Default value: `false`
+
 ##### `proxy_error_override`
 
 Data type: `Any`

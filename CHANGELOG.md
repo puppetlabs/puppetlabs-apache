@@ -808,6 +808,7 @@ This release features many improvements and bugfixes, including several new defi
   - passenger_ruby
   - passenger_start_timeout
   - proxy_preserve_host
+  - proxy_requests
   - redirectmatch_dest
   - ssl_crl_check
   - wsgi_chunked_request
