@@ -752,11 +752,108 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'options' do
+  describe 'parameter tests' do
     pp = <<-MANIFEST
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.itk': ip => '127.0.0.1' }
+      apache::vhost { 'test.itk':
+        docroot  => '/tmp',
+        itk      => { user => 'nobody', group => 'nobody' }
+      }
+      host { 'test.custom_fragment': ip => '127.0.0.1' }
+      apache::vhost { 'test.custom_fragment':
+        docroot  => '/tmp',
+        custom_fragment => inline_template('#weird test string'),
+      }
+      apache::vhost { 'test.without_priority_prefix':
+        priority => false,
+        docroot => '/tmp'
+      }
+      apache::vhost { 'test.ssl_protool':
+        docroot      => '/tmp',
+        ssl          => true,
+        ssl_protocol => ['All', '-SSLv2'],
+      }
+      apache::vhost { 'test.block':
+        docroot  => '/tmp',
+        block    => 'scm',
+      }
+      apache::vhost { 'test.setenv_setenvif':
+        docroot  => '/tmp',
+        setenv   => ['TEST /test'],
+        setenvif => ['Request_URI "\.gif$" object_is_image=gif']
+      }
+      apache::vhost { 'test.rewrite':
+        docroot          => '/tmp',
+        rewrites => [
+          { comment => 'test',
+            rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
+            rewrite_rule => ['^index\.html$ welcome.html'],
+            rewrite_map  => ['lc int:tolower'],
+          }
+        ],
+      }
+      apache::vhost { 'test.request_headers':
+        docroot          => '/tmp',
+        request_headers  => ['append MirrorID "mirror 12"'],
+      }
+      apache::vhost { 'test.redirect':
+        docroot          => '/tmp',
+        redirect_source  => ['/images'],
+        redirect_dest    => ['http://test.server/'],
+        redirect_status  => ['permanent'],
+      }
+      apache::vhost { 'test.no_proxy_uris':
+        docroot          => '/tmp',
+        proxy_dest       => 'http://test2',
+        no_proxy_uris    => [ 'http://test2/test' ],
+      }
+      apache::vhost { 'test.proxy':
+        docroot    => '/tmp',
+        proxy_dest => 'test2',
+      }
+      apache::vhost { 'test.scriptaliases':
+        docroot    => '/tmp',
+        scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
+      }
+      apache::vhost { 'test.aliases':
+        docroot    => '/tmp',
+        aliases => [
+          { alias       => '/image'    , path => '/ftp/pub/image' }   ,
+          { scriptalias => '/myscript' , path => '/usr/share/myscript' }
+        ],
+      }
+      apache::vhost { 'test.access_logs':
+        docroot            => '/tmp',
+        logroot            => '/tmp',
+        access_logs => [
+          {'file' => 'log1'},
+          {'file' => 'log2', 'env' => 'admin' },
+          {'file' => '/var/tmp/log3', 'format' => '%h %l'},
+          {'syslog' => 'syslog' }
+        ]
+      }
+      apache::vhost { 'test.access_log_env_var':
+        docroot            => '/tmp',
+        logroot            => '/tmp',
+        access_log_syslog  => 'syslog',
+        access_log_env_var => 'admin',
+      }
+      apache::vhost { 'test.access_log_format':
+        docroot    => '/tmp',
+        logroot    => '/tmp',
+        access_log_syslog => 'syslog',
+        access_log_format => '%h %l',
+      }
+      apache::vhost { 'test.logroot':
+        docroot    => '/tmp',
+        logroot    => '/tmp',
+      }
+      apache::vhost { 'test.override':
+        docroot    => '/tmp',
+        override   => ['All'],
+      }
+      apache::vhost { 'test.options':
         docroot    => '/tmp',
         options    => ['Indexes','FollowSymLinks', 'ExecCGI'],
       }
@@ -765,47 +862,89 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.itk.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
+      it { is_expected.to contain 'AssignUserId nobody nobody' }
     end
-  end
-
-  describe 'override' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        override   => ['All'],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
+    describe file("#{apache_hash['vhost_dir']}/25-test.custom_fragment.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain '#weird test string' }
     end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/test.without_priority_prefix.conf") do
+      it { is_expected.to be_file }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protool.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.block.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.setenv_setenvif.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'SetEnv TEST /test' }
+      it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.rewrite.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain '#test' }
+      it { is_expected.to contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
+      it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
+      it { is_expected.to contain 'RewriteMap lc int:tolower' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.request_headers.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'append MirrorID "mirror 12"' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.redirect.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Redirect permanent /images http://test.server/' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.no_proxy_uris.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ProxyPass        http://test2/test !' }
+      it { is_expected.to contain 'ProxyPass        / http://test2/' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ProxyPass        / test2/' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.aliases.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
+      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.access_logs.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
+      it { is_expected.to contain 'CustomLog "/tmp/log2" combined env=admin' }
+      it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
+      it { is_expected.to contain 'CustomLog "syslog" combined' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.access_log_env_var.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'CustomLog "syslog" combined env=admin' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.access_log_format.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'CustomLog "syslog" "%h %l"' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.logroot.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain '  CustomLog "/tmp' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.override.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AllowOverride All' }
     end
-  end
-
-  describe 'logroot' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        logroot    => '/tmp',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.options.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain '  CustomLog "/tmp' }
+      it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
     end
   end
 
@@ -878,137 +1017,6 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'access_log_format' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        logroot    => '/tmp',
-        access_log_syslog => 'syslog',
-        access_log_format => '%h %l',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'CustomLog "syslog" "%h %l"' }
-    end
-  end
-
-  describe 'access_log_env_var' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot            => '/tmp',
-        logroot            => '/tmp',
-        access_log_syslog  => 'syslog',
-        access_log_env_var => 'admin',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'CustomLog "syslog" combined env=admin' }
-    end
-  end
-
-  describe 'multiple access_logs' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot            => '/tmp',
-        logroot            => '/tmp',
-        access_logs => [
-          {'file' => 'log1'},
-          {'file' => 'log2', 'env' => 'admin' },
-          {'file' => '/var/tmp/log3', 'format' => '%h %l'},
-          {'syslog' => 'syslog' }
-        ]
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
-      it { is_expected.to contain 'CustomLog "/tmp/log2" combined env=admin' }
-      it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
-      it { is_expected.to contain 'CustomLog "syslog" combined' }
-    end
-  end
-
-  describe 'aliases' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        aliases => [
-          { alias       => '/image'    , path => '/ftp/pub/image' }   ,
-          { scriptalias => '/myscript' , path => '/usr/share/myscript' }
-        ],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
-      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
-    end
-  end
-
-  describe 'scriptaliases' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
-    end
-  end
-
-  describe 'proxy' do
-    pp = <<-MANIFEST
-      class { 'apache': service_ensure => stopped, }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot    => '/tmp',
-        proxy_dest => 'test2',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'ProxyPass        / test2/' }
-    end
-  end
-
   describe 'actions' do
     pp = <<-MANIFEST
       class { 'apache': }
@@ -1049,111 +1057,6 @@ describe 'apache::vhost define' do
       it { is_expected.to contain "suPHP_AddHandler #{apache_hash['suphp_handler']}" }
       it { is_expected.to contain 'suPHP_Engine on' }
       it { is_expected.to contain "suPHP_ConfigPath \"#{apache_hash['suphp_configpath']}\"" }
-    end
-  end
-
-  describe 'rack_base_uris' do
-    unless os[:family] =~ %r{redhat|sles}
-      pp = <<-MANIFEST
-        class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot          => '/tmp',
-          rack_base_uris  => ['/test'],
-        }
-      MANIFEST
-      it 'applies cleanly' do
-        apply_manifest(pp, catch_failures: true)
-      end
-    end
-  end
-
-  describe 'no_proxy_uris' do
-    pp = <<-MANIFEST
-      class { 'apache': service_ensure => stopped, }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot          => '/tmp',
-        proxy_dest       => 'http://test2',
-        no_proxy_uris    => [ 'http://test2/test' ],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'ProxyPass        http://test2/test !' }
-      it { is_expected.to contain 'ProxyPass        / http://test2/' }
-    end
-  end
-
-  describe 'redirect' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot          => '/tmp',
-        redirect_source  => ['/images'],
-        redirect_dest    => ['http://test.server/'],
-        redirect_status  => ['permanent'],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'Redirect permanent /images http://test.server/' }
-    end
-  end
-
-  describe 'request_headers' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot          => '/tmp',
-        request_headers  => ['append MirrorID "mirror 12"'],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'append MirrorID "mirror 12"' }
-    end
-  end
-
-  describe 'rewrite rules' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot          => '/tmp',
-        rewrites => [
-          { comment => 'test',
-            rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
-            rewrite_rule => ['^index\.html$ welcome.html'],
-            rewrite_map  => ['lc int:tolower'],
-          }
-        ],
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain '#test' }
-      it { is_expected.to contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
-      it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
-      it { is_expected.to contain 'RewriteMap lc int:tolower' }
     end
   end
 
@@ -1199,46 +1102,6 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'setenv/setenvif' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot  => '/tmp',
-        setenv   => ['TEST /test'],
-        setenvif => ['Request_URI "\.gif$" object_is_image=gif']
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'SetEnv TEST /test' }
-      it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
-    end
-  end
-
-  describe 'block' do
-    pp = <<-MANIFEST
-        class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
-          docroot  => '/tmp',
-          block    => 'scm',
-        }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
-    end
-  end
-
   describe 'wsgi' do
     context 'filter on OS', unless: (os[:family] =~ %r{sles|redhat}) do
       pp = <<-MANIFEST
@@ -1262,7 +1125,6 @@ describe 'apache::vhost define' do
       it 'import_script applies cleanly' do
         apply_manifest(pp, catch_failures: true)
       end
-
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
@@ -1274,44 +1136,6 @@ describe 'apache::vhost define' do
         it { is_expected.to contain 'WSGIPassAuthorization On' }
         it { is_expected.to contain 'WSGIChunkedRequest On' }
       end
-    end
-  end
-
-  describe 'custom_fragment' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot  => '/tmp',
-        custom_fragment => inline_template('#weird test string'),
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain '#weird test string' }
-    end
-  end
-
-  describe 'itk' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot  => '/tmp',
-        itk      => { user => 'nobody', group => 'nobody' }
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'AssignUserId nobody nobody' }
     end
   end
 
@@ -1351,52 +1175,6 @@ describe 'apache::vhost define' do
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Include "/apache_spec/include"' }
-    end
-  end
-
-  describe 'virtualhost without priority prefix' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      apache::vhost { 'test.server':
-        priority => false,
-        docroot => '/tmp'
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/test.server.conf") do
-      it { is_expected.to be_file }
-    end
-  end
-
-  describe 'SSLProtocol directive' do
-    pp = <<-MANIFEST
-      class { 'apache': }
-      apache::vhost { 'test.server':
-        docroot      => '/tmp',
-        ssl          => true,
-        ssl_protocol => ['All', '-SSLv2'],
-      }
-      apache::vhost { 'test2.server':
-        docroot      => '/tmp',
-        ssl          => true,
-        ssl_protocol => 'All -SSLv2',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test2.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
     end
   end
 
