@@ -1705,7 +1705,7 @@ define apache::vhost(
   $proxy_dest_reverse_match                                                         = undef,
   $proxy_pass                                                                       = undef,
   $proxy_pass_match                                                                 = undef,
-  Optional[Boolean] $proxy_requests                                                 = false,
+  Boolean $proxy_requests                                                           = false,
   $suphp_addhandler                                                                 = $::apache::params::suphp_addhandler,
   Enum['on', 'off'] $suphp_engine                                                   = $::apache::params::suphp_engine,
   $suphp_configpath                                                                 = $::apache::params::suphp_configpath,
