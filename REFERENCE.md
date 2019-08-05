@@ -4657,7 +4657,7 @@ The following parameters are available in the `apache::mod::proxy` class.
 
 ##### `proxy_requests`
 
-Data type: `Any`
+Data type: `Boolean`
 
 Enables forward (standard) proxy requests.
 
