@@ -6,6 +6,17 @@ RSpec.configure do |c|
     c.filter_run_excluding ipv6: true
   end
   c.before :suite do
+    if os[:family] == 'redhat'
+      run_shell('yum update -y')
+      run_shell('yum install -y crontabs tar wget openssl sysvinit-tools iproute which initscripts')
+    elsif os[:family] == 'ubuntu'
+      run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
+      run_shell('apt-get update && apt-get install -y net-tools wget')
+    elsif os[:family] == 'debian'
+      run_shell('apt-get update && apt-get install -y net-tools wget locales strace lsof')
+      run_shell('echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen')
+
+    end
     run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE
     # needed by tests
