@@ -61,7 +61,7 @@ matrix:
       - bundle exec rake 'litmus:install_agent[puppet5]'
       - bundle exec rake litmus:install_module
       script:
-      - TARGET_HOST=localhost:2222 bundle exec rspec ./spec/acceptance/apache_parameters_spec.rb
+      - bundle exec rake 'litmus:acceptance:parallel'
       services: docker
       sudo: required
     -
@@ -74,36 +74,9 @@ matrix:
       - bundle exec rake 'litmus:install_agent[puppet6]'
       - bundle exec rake litmus:install_module
       script:
-      - TARGET_HOST=localhost:2222 bundle exec rspec ./spec/acceptance/apache_parameters_spec.rb
+      - bundle exec rake litmus:acceptance:parallel
       services: docker
       sudo: required
-    -
-      bundler_args:
-      dist: trusty
-      env: PLATFORMS=centos6_puppet5
-      rvm: 2.5.3
-      before_script:
-      - bundle exec rake 'litmus:provision[docker, waffleimage/centos6]'
-      - bundle exec rake 'litmus:install_agent[puppet5]'
-      - bundle exec rake litmus:install_module
-      script:
-      - TARGET_HOST=localhost:2222 bundle exec rspec ./spec/acceptance/apache_parameters_spec.rb
-      services: docker
-      sudo: required
-    -
-      bundler_args:
-      dist: trusty
-      env: PLATFORMS=centos6_puppet6
-      rvm: 2.5.3
-      before_script:
-      - bundle exec rake 'litmus:provision[docker, waffleimage/centos6]'
-      - bundle exec rake 'litmus:install_agent[puppet6]'
-      - bundle exec rake litmus:install_module
-      script:
-      - TARGET_HOST=localhost:2222 bundle exec rspec ./spec/acceptance/apache_parameters_spec.rb
-      services: docker
-      sudo: required
-
     -
       bundler_args:
       dist: trusty
