@@ -6,17 +6,6 @@ RSpec.configure do |c|
     c.filter_run_excluding ipv6: true
   end
   c.before :suite do
-    if os[:family] == 'redhat'
-      run_shell('yum update -y')
-      run_shell('yum install -y crontabs tar wget openssl sysvinit-tools iproute which initscripts')
-    elsif os[:family] == 'ubuntu'
-      run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
-      run_shell('apt-get update && apt-get install -y net-tools wget')
-    elsif os[:family] == 'debian'
-      run_shell('apt-get update && apt-get install -y net-tools wget locales strace lsof')
-      run_shell('echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen')
-
-    end
     run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE
     # needed by tests
@@ -36,17 +25,31 @@ RSpec.configure do |c|
       }
     }
     if $::osfamily == 'RedHat' {
-      if $::operatingsystemmajrelease == '5' or $::operatingsystemmajrelease == '6'{
+      if $::operatingsystemmajrelease == '5' {
         class { 'epel':
           epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
           epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
         }
       } else {
-        class { 'epel': }
+	if $::operatingsystemmajrelease != '8' {
+          class { 'epel': }
+	}
       }
     }
     PUPPETCODE
     apply_manifest(pp)
+
+    if os[:family] == 'redhat'
+      run_shell('yum update -y 2>/dev/null')
+      run_shell('yum install -y crontabs tar wget openssl iproute which initscripts mod_ssl')
+    elsif os[:family] == 'ubuntu'
+      run_shell('rm /usr/sbin/policy-rc.d && rm /sbin/initctl && dpkg-divert --rename --remove /sbin/initctl', expect_failures: true)
+      run_shell('apt-get update && apt-get install -y net-tools wget')
+    elsif os[:family] == 'debian'
+      run_shell('apt-get update && apt-get install -y net-tools wget locales strace lsof')
+      run_shell('echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen')
+
+    end
 
     # Make sure selinux is disabled so the tests work.
     run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}

@@ -70,7 +70,9 @@ describe 'apache parameters' do
 
     describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
-      it { is_expected.not_to be_enabled }
+      unless os[:family] == 'redhat' && os[:release] =~ %r{6}
+        it { is_expected.not_to be_enabled }
+      end
     end
   end
 
@@ -88,7 +90,9 @@ describe 'apache parameters' do
 
     describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
-      it { is_expected.not_to be_enabled }
+      unless os[:family] == 'redhat' && os[:release] =~ %r{6}
+        it { is_expected.not_to be_enabled }
+      end
     end
   end
 
