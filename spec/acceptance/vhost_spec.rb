@@ -996,7 +996,7 @@ describe 'apache::vhost define' do
 
     describe file($ports_file) do
       it { is_expected.to be_file }
-      if fact('osfamily') == 'RedHat' && host_inventory['facter']['os']['release']['major'] == '7' ||
+      if fact('osfamily') == 'RedHat' && (host_inventory['facter']['os']['release']['major'] == '7' || host_inventory['facter']['os']['release']['major'] == '8') ||
          fact('osfamily') == 'Debian' ||
          host_inventory['facter']['os']['name'] == 'SLES' && fact('operatingsystemrelease') >= '12'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }

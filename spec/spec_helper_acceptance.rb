@@ -34,7 +34,7 @@ RSpec.configure do |c|
   c.before :suite do
     run_puppet_access_login(user: 'admin') if pe_install? && (Gem::Version.new(puppet_version) >= Gem::Version.new('5.0.0'))
     # net-tools required for netstat utility being used by be_listening
-    if (host_inventory['facter']['os']['family'] == 'RedHat' && host_inventory['facter']['os']['release']['major'] == '7') ||
+    if (host_inventory['facter']['os']['family'] == 'RedHat' && host_inventory['facter']['os']['release']['major'] == %r{7|8}) ||
        (host_inventory['facter']['os']['family'] == 'Debian' && host_inventory['facter']['os']['release']['major'] == '9') ||
        (host_inventory['facter']['os']['name'] == 'Ubuntu' && host_inventory['facter']['os']['release']['full'] == '18.04')
       pp = <<-EOS
@@ -69,6 +69,12 @@ RSpec.configure do |c|
               class { 'epel':
                 epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
                 epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
+              }
+            } elsif $::operatingsystemmajrelease == '8' {
+              class { 'epel':
+                    os_maj_release => "7",
+                    epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel7-\\$basearch/RPMS.all",
+                    epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel7-\\$basearch/RPMS.all",
               }
             } else {
               class { 'epel': }
