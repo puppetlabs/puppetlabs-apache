@@ -7373,7 +7373,7 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyrequests).
+Sets the [ProxyRequests Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyrequests).
 This prarmeter allows or prevents Apache httpd from functioning as a forward proxy server.
 (Setting ProxyRequests to Off does not disable use of the ProxyPass directive.)
 
