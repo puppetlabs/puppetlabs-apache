@@ -424,8 +424,10 @@ class apache::params inherits ::apache::version {
     $access_log_file     = 'access.log'
     if $::osfamily == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0 {
       $shib2_lib = 'mod_shib_22.so'
-    } else {
+    } elsif ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '19.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '10') < 0) {
       $shib2_lib = 'mod_shib2.so'
+    } else {
+      $shib2_lib = 'mod_shib.so'
     }
     $mod_libs             = {
       'shib2' => $shib2_lib,
