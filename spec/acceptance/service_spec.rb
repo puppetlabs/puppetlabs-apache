@@ -12,7 +12,8 @@ describe 'apache::service class' do
       MANIFEST
     end
 
-    # Run it twice and test for idempotency
-    it_behaves_like 'a idempotent resource'
+    it 'behaves idempotently' do
+      idempotent_apply(pp)
+    end
   end
 end

@@ -1,6 +1,5 @@
 require 'spec_helper_acceptance'
-require_relative './version.rb'
-
+apache_hash = apache_settings_hash
 describe 'apache::custom_config define' do
   context 'invalid config' do
     pp = <<-MANIFEST
@@ -13,7 +12,7 @@ describe 'apache::custom_config define' do
       apply_manifest(pp, expect_failures: true)
     end
 
-    describe file("#{$confd_dir}/25-acceptance_test.conf") do
+    describe file("#{apache_hash['confd_dir']}/25-acceptance_test.conf") do
       it { expect(file).not_to exist }
     end
   end
@@ -29,7 +28,7 @@ describe 'apache::custom_config define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{$confd_dir}/25-acceptance_test.conf") do
+    describe file("#{apache_hash['confd_dir']}/25-acceptance_test.conf") do
       it { is_expected.to contain '# just a comment' }
     end
   end
@@ -46,7 +45,7 @@ describe 'apache::custom_config define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{$confd_dir}/custom_filename") do
+    describe file("#{apache_hash['confd_dir']}/custom_filename") do
       it { is_expected.to contain '# just another comment' }
     end
   end
@@ -63,7 +62,7 @@ describe 'apache::custom_config define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{$confd_dir}/prefix_test.conf") do
+    describe file("#{apache_hash['confd_dir']}/prefix_test.conf") do
       it { is_expected.to be_file }
     end
   end
@@ -78,13 +77,13 @@ describe 'apache::custom_config define' do
 
         # Try to wedge the apache::custom_config call between when httpd.conf is written and
         # ports.conf is written. This should trigger a dependency cycle
-        File["#{$conf_file}"] -> Apache::Custom_config['ordering_test'] -> Concat["#{$ports_file}"]
+        File["#{apache_hash['conf_file']}"] -> Apache::Custom_config['ordering_test'] -> Concat["#{apache_hash['ports_file']}"]
     MANIFEST
     it 'applies in the right order' do
       expect(apply_manifest(pp, expect_failures: true).stderr).to match(%r{Found 1 dependency cycle}i)
     end
 
-    describe file("#{$confd_dir}/25-ordering_test.conf") do
+    describe file("#{apache_hash['confd_dir']}/25-ordering_test.conf") do
       it { is_expected.not_to be_file }
     end
   end

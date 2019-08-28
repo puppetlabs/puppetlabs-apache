@@ -1,6 +1,5 @@
 require 'spec_helper_acceptance'
-require_relative './version.rb'
-
+apache_hash = apache_settings_hash
 describe 'apache::vhosts class' do
   context 'custom vhosts defined via class apache::vhosts' do
     pp = <<-MANIFEST
@@ -21,11 +20,11 @@ describe 'apache::vhosts class' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{$vhost_dir}/25-custom_vhost_1.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-custom_vhost_1.conf") do
       it { is_expected.to contain '<VirtualHost \*:81>' }
     end
 
-    describe file("#{$vhost_dir}/25-custom_vhost_2.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-custom_vhost_2.conf") do
       it { is_expected.to contain '<VirtualHost \*:82>' }
     end
   end
