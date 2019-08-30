@@ -3,9 +3,9 @@ require 'spec_helper'
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
     on_supported_os.each do |os, facts|
-      # this setup uses fastcgi wich isn't available on RHEL 7 / Ubuntu 18.04
+      # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Ubuntu 18.04
       next if facts[:os]['release']['major'] == '18.04'
-      next if facts[:os]['release']['major'] == '7' && facts[:os]['family']['RedHat']
+      next if (facts[:os]['release']['major'] == '7' || facts[:os]['release']['major'] == '8') && facts[:os]['family']['RedHat']
       # next if facts[:os]['name'] == 'SLES'
 
       apache_name = case facts[:os]['family']
@@ -44,7 +44,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
           # namebased virualhost is only created on apache 2.2 and older
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
+          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 8) ||
              (facts[:os]['name'] == 'Amazon') ||
              (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
             it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }

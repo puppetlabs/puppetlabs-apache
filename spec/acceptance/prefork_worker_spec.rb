@@ -16,7 +16,7 @@ describe 'prefork_worker_spec.rb', unless: (os[:family] =~ %r{sles}) do
       end
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -37,7 +37,7 @@ describe 'prefork_worker_spec.rb', unless: (os[:family] =~ %r{sles}) do
       end
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -59,7 +59,7 @@ describe 'prefork_worker_spec.rb', unless: (os[:family] =~ %r{sles}) do
       end
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end

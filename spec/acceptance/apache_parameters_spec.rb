@@ -51,7 +51,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -68,7 +68,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.not_to be_running }
       it { is_expected.not_to be_enabled }
     end
@@ -86,7 +86,7 @@ describe 'apache parameters' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.not_to be_running }
       it { is_expected.not_to be_enabled }
     end

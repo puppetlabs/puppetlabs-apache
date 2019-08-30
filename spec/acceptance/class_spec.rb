@@ -26,7 +26,7 @@ describe 'apache class' do
       it { is_expected.to be_installed }
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -74,7 +74,7 @@ describe 'apache class' do
       idempotent_apply(pp)
     end
 
-    describe service(apache_hash['service_name']) do
+    describe service(apache_hash['service_name']), skip: 'FM-8483' do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
