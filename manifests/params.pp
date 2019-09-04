@@ -89,7 +89,9 @@ class apache::params inherits ::apache::version {
       'authnz_ldap' => "${_scl_httpd_name}-mod_ldap",
       'ldap' => "${_scl_httpd_name}-mod_ldap",
       "php${::apache::version::scl_php_version}" => "rh-php${_scl_php_version_no_dot}-php",
+      'proxy_html'            => "${_scl_httpd_name}-mod_proxy_html",
       'ssl'                   => "${_scl_httpd_name}-mod_ssl",
+      'xml2enc'               => "${_scl_httpd_name}-mod_proxy_html",
     }
     $mod_libs             = {
       'nss' => 'libmodnss.so',
@@ -242,6 +244,7 @@ class apache::params inherits ::apache::version {
       'xsendfile'             => 'mod_xsendfile',
       'nss'                   => 'mod_nss',
       'shib2'                 => 'shibboleth',
+      'xml2enc'               => 'mod_proxy_html',
     }
     $mod_libs             = {
       'nss' => 'libmodnss.so',
