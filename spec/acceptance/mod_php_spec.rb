@@ -23,7 +23,7 @@ unless os[:family] == 'sles' && os[:release].to_i >= 12
       end
 
       if (os[:family] == 'ubuntu' && os[:release] == '16.04') ||
-         (os[:family] == 'debian' && os[:release] =~ %r{9})
+         (os[:family] == 'debian' && os[:release] =~ %r{9|10})
         describe file("#{apache_hash['mod_dir']}/php7.0.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
