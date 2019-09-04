@@ -36,6 +36,18 @@
 # @param verify_config
 #   Specifies whether to validate the configuration file before notifying the Apache service.
 #
+# @param owner
+#   File owner of configuration file
+#
+# @param group
+#   File group of configuration file
+#
+# @param file_mode
+#   File mode of configuration file
+#
+# @param show_diff
+#   show_diff property for configuration file resource
+#
 define apache::custom_config (
   Enum['absent', 'present'] $ensure = 'present',
   $confdir                          = $::apache::confd_dir,
@@ -45,6 +57,10 @@ define apache::custom_config (
   $verify_command                   = $::apache::params::verify_command,
   Boolean $verify_config            = true,
   $filename                         = undef,
+  $owner                            = undef,
+  $group                            = undef,
+  $file_mode                        = undef,
+  Boolean $show_diff                = true,
 ) {
 
   if $content and $source {
@@ -75,14 +91,19 @@ define apache::custom_config (
     $notifies = undef
   }
 
+  $_file_mode = pick($file_mode, $::apache::file_mode)
+
   file { "apache_${name}":
-    ensure  => $ensure,
-    path    => "${confdir}/${_filename}",
-    mode    => $::apache::file_mode,
-    content => $content,
-    source  => $source,
-    require => Package['httpd'],
-    notify  => $notifies,
+    ensure    => $ensure,
+    path      => "${confdir}/${_filename}",
+    owner     => $owner,
+    group     => $group,
+    mode      => $_file_mode,
+    content   => $content,
+    source    => $source,
+    show_diff => $show_diff,
+    require   => Package['httpd'],
+    notify    => $notifies,
   }
 
   if $ensure == 'present' and $verify_config {
