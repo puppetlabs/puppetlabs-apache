@@ -39,7 +39,7 @@ describe 'apache::mod::itk class', if: service_name do
     end
   end
 
-  describe service(service_name) do
+  describe service(service_name), skip: 'FM-8483' do
     it { is_expected.to be_running }
     it { is_expected.to be_enabled }
   end

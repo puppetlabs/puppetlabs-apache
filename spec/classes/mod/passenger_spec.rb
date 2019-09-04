@@ -424,6 +424,16 @@ describe 'apache::mod::passenger', type: :class do
                 is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
               }
             end
+          when '8'
+
+            context 'on EL8' do
+              it {
+                is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
+              }
+              it {
+                is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.d/zpassenger.load')
+              }
+            end
           end
         end
       when 'FreeBSD'
