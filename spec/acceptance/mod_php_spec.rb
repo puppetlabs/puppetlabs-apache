@@ -23,8 +23,13 @@ unless os[:family] == 'sles' && os[:release].to_i >= 12
       end
 
       if (os[:family] == 'ubuntu' && os[:release] == '16.04') ||
-         (os[:family] == 'debian' && os[:release] =~ %r{9|10})
+         (os[:family] == 'debian' && os[:release] =~ %r{9})
         describe file("#{apache_hash['mod_dir']}/php7.0.conf") do
+          it { is_expected.to contain 'DirectoryIndex index.php' }
+        end
+      elsif os[:family] == 'debian' && os[:release] =~ %r{10}
+        require 'pry'; binding.pry
+        describe file("#{apache_hash['mod_dir']}/php7.3.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
       elsif os[:family] == 'ubuntu' && os[:release] == '18.04'
