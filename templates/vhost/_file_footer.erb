@@ -1,3 +1,6 @@
+<% @define.each do | k, v| -%>
+  Undefine <%= k %>
+<% end -%>
 </VirtualHost>
 <% if @passenger_pre_start -%>
   <%- [@passenger_pre_start].flatten.compact.each do |passenger_pre_start| -%>

@@ -1622,6 +1622,10 @@
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
 # 
+# @param define
+#   this lets you define configuration variables inside a vhost using [`Define`](https://httpd.apache.org/docs/2.4/mod/core.html#define),
+#   these can then be used to replace configuration values. All Defines are Undefined at the end of the VirtualHost.
+#
 define apache::vhost(
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
@@ -1850,6 +1854,7 @@ define apache::vhost(
   Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
   Optional[Variant[String,Array[String]]] $comment                                  = undef,
+  Hash $define                                                                      = {},
 ) {
 
   # The base class must be included first because it is used by parameter defaults
