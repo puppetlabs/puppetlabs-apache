@@ -50,7 +50,7 @@ describe 'apache ssl' do
           ssl_ca               => '/tmp/ssl_ca',
           ssl_crl_path         => '/tmp/ssl_crl_path',
           ssl_crl              => '/tmp/ssl_crl',
-          ssl_crl_check        => 'chain',
+          ssl_crl_check        => 'chain flag',
           ssl_certs_dir        => '/tmp',
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
@@ -83,7 +83,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLVerifyDepth          test' }
       it { is_expected.to contain 'SSLOptions test test1' }
       if apache_hash['version'] == '2.4'
-        it { is_expected.to contain 'SSLCARevocationCheck    "chain"' }
+        it { is_expected.to contain 'SSLCARevocationCheck    chain flag' }
       else
         it { is_expected.not_to contain 'SSLCARevocationCheck' }
       end
