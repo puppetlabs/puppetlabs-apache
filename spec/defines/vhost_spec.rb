@@ -184,6 +184,11 @@ describe 'apache::vhost', type: :define do
                   ],
                 },
                 {
+                  'path'                => '/',
+                  'provider'            => 'location',
+                  'auth_ldap_referrals' => 'off',
+                },
+                {
                   'path'                                                => '/var/www/node-app/public',
                   'passenger_enabled'                                   => true,
                   'passenger_base_uri'                                  => '/app',
@@ -599,6 +604,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+Require any-valid2$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+LDAPReferrals off$},
             )
           }
           it {
