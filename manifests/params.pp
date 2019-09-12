@@ -361,9 +361,12 @@ class apache::params inherits ::apache::version {
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
-    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) {
-      # Debian stretch uses a different dav_svn from Ubuntu Xenial
-      $php_version = '7.0'
+    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+      $php_version = $facts['operatingsystemmajrelease'] ? {
+        '9'     => '7.0', # Debian Stretch
+        '10'    => '7.3', # Debian Buster
+        default => '7.2', # Ubuntu Bionic, Cosmic and Disco
+      }
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
@@ -372,35 +375,6 @@ class apache::params inherits ::apache::version {
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn',
         'fastcgi'               => 'libapache2-mod-fastcgi',
-        'fcgid'                 => 'libapache2-mod-fcgid',
-        'geoip'                 => 'libapache2-mod-geoip',
-        'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
-        'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
-        'pagespeed'             => 'mod-pagespeed-stable',
-        'passenger'             => 'libapache2-mod-passenger',
-        'perl'                  => 'libapache2-mod-perl2',
-        'phpXXX'                => 'libapache2-mod-phpXXX',
-        'python'                => 'libapache2-mod-python',
-        'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-mod-security2',
-        'shib2'                 => 'libapache2-mod-shib2',
-        'suphp'                 => 'libapache2-mod-suphp',
-        'wsgi'                  => 'libapache2-mod-wsgi',
-        'xsendfile'             => 'libapache2-mod-xsendfile',
-      }
-    } elsif ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
-      # major.minor version used since Debian stretch and Ubuntu Xenial
-      $php_version = '7.2' # different to Ubuntu 16.04
-      # fastcgi and suphp got removed from #mod_packages, they aren't supported anymore
-      $mod_packages = {
-        'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
-        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
-        'auth_mellon'           => 'libapache2-mod-auth-mellon',
-        'authnz_pam'            => 'libapache2-mod-authnz-pam',
-        'dav_svn'               => 'libapache2-mod-svn', # different to Ubuntu16.04
-        'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
         'lookup_identity'       => 'libapache2-mod-lookup-identity',
@@ -417,7 +391,7 @@ class apache::params inherits ::apache::version {
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
     } else {
-      # major.minor version used since Debian stretch and Ubuntu Xenial
+      # Ubuntu Xenial
       $php_version = '7.0'
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',

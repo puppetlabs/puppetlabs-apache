@@ -27,6 +27,10 @@ unless os[:family] == 'sles' && os[:release].to_i >= 12
         describe file("#{apache_hash['mod_dir']}/php7.0.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
+      elsif os[:family] == 'debian' && os[:release] =~ %r{10}
+        describe file("#{apache_hash['mod_dir']}/php7.3.conf") do
+          it { is_expected.to contain 'DirectoryIndex index.php' }
+        end
       elsif os[:family] == 'ubuntu' && os[:release] == '18.04'
         describe file("#{apache_hash['mod_dir']}/php7.2.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
