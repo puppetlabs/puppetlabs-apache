@@ -94,6 +94,7 @@ _Public Classes_
 * [`apache::mod::worker`](#apachemodworker): Installs and manages the MPM `worker`.
 * [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures `mod_wsgi`.
 * [`apache::mod::xsendfile`](#apachemodxsendfile): Installs `mod_xsendfile`.
+* [`apache::mpm::disable_mpm_event`](#apachempmdisable_mpm_event): 
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -164,6 +165,8 @@ When this class is declared with the default options, Puppet:
 - Configures the server with a default virtual host and standard port (`80`) and address (`\*`) bindings.
 - Creates a document root directory determined by your operating system, typically `/var/www`.
 - Starts the Apache service.
+
+If an ldaps:// URL is specified, the mode becomes SSL and the setting of LDAPTrustedMode is ignored.
 
 #### Examples
 
@@ -479,6 +482,30 @@ CGIs/SSIs in REMOTE_HOST.<br />
 > **Note**: If enabled, it impacts performance significantly.
 
 Default value: $::apache::params::hostname_lookups
+
+##### `ldap_trusted_mode`
+
+Data type: `Any`
+
+The following modes are supported:
+
+  NONE - no encryption
+  SSL - ldaps:// encryption on default port 636
+  TLS - STARTTLS encryption on default port 389
+Not all LDAP toolkits support all the above modes. An error message will be logged at
+runtime if a mode is not supported, and the connection to the LDAP server will fail.
+
+Default value: `undef`
+
+##### `ldap_verify_server_cert`
+
+Data type: `Any`
+
+Specifies whether to force the verification of a server certificate when establishing an SSL
+connection to the LDAP server.
+On|Off
+
+Default value: `undef`
 
 ##### `lib_path`
 
@@ -3179,6 +3206,14 @@ Specifies the SSL/TLS mode to be used when connecting to an LDAP server.
 
 Default value: `undef`
 
+##### `ldap_path`
+
+Data type: `String`
+
+The server location of the ldap status page.
+
+Default value: '/ldap-status'
+
 ### apache::mod::lookup_identity
 
 Installs `mod_lookup_identity`
@@ -4657,7 +4692,7 @@ The following parameters are available in the `apache::mod::proxy` class.
 
 ##### `proxy_requests`
 
-Data type: `Boolean`
+Data type: `Any`
 
 Enables forward (standard) proxy requests.
 
@@ -5338,15 +5373,6 @@ Enable compression on the SSL level.
 
 Default value: `false`
 
-##### `ssl_sessiontickets`
-
-Data type: `Optional[Boolean]`
-
-Enable the use of TLS session tickets (RFC 5077).
-Available since Apache 2.4.11.
-
-Default: `undef`.
-
 ##### `ssl_cryptodevice`
 
 Data type: `Any`
@@ -5475,20 +5501,6 @@ Pass stapling related OCSP errors on to client.
 
 Default value: `undef`
 
-##### `stapling_cache`
-
-Data type: `String`
-
-Configures the storage type of the global/inter-process SSL Stapling Cache.
-Only cache type 'shmcb' is supported.
-Default based on the OS:
-- Debian/Ubuntu: '${APACHE_RUN_DIR}/ocsp(32768)'.
-- RedHat: '/run/httpd/ssl_stapling(32768)'.
-- FreeBSD/Gentoo: '/var/run/ssl_stapling(32768)'.
-- Suse: '/var/lib/apache2/ssl_stapling(32768)'.
-
-Default value: `undef`
-
 ##### `ssl_mutex`
 
 Data type: `Any`
@@ -5515,6 +5527,22 @@ Default value: `undef`
 Data type: `Any`
 
 Name of ssl package to install.
+
+Default value: `undef`
+
+##### `ssl_sessiontickets`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### `stapling_cache`
+
+Data type: `Optional[String]`
+
+
 
 Default value: `undef`
 
@@ -5678,6 +5706,22 @@ Data type: `Any`
 Configures what features are available in a particular directory.
 
 Default value: [ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ]
+
+##### `unmanaged_path`
+
+Data type: `Any`
+
+Toggles whether to manage path in userdir.conf
+
+Default value: `false`
+
+##### `custom_fragment`
+
+Data type: `Any`
+
+Custom configuration to be added to userdir.conf
+
+Default value: `undef`
 
 ### apache::mod::version
 
@@ -5891,6 +5935,10 @@ Installs `mod_xsendfile`.
 * **See also**
 https://tn123.org/mod_xsendfile/
 for additional documentation.
+
+### apache::mpm::disable_mpm_event
+
+The apache::mpm::disable_mpm_event class.
 
 ### apache::vhosts
 
@@ -7368,16 +7416,6 @@ This parameter controlls whether proxy-related HTTP headers (X-Forwarded-For,
 X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
 
 Default value: `undef`
-
-##### `proxy_requests`
-
-Data type: `Boolean`
-
-Sets the [ProxyRequests Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyrequests).
-This prarmeter allows or prevents Apache httpd from functioning as a forward proxy server.
-(Setting ProxyRequests to Off does not disable use of the ProxyPass directive.)
-
-Default value: `false`
 
 ##### `proxy_error_override`
 
@@ -9083,6 +9121,14 @@ Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache
 which allows you to configure how the server determines it's own name and port.
 
 Default value: `undef`
+
+##### `proxy_requests`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
 
 ### apache::vhost::custom
 
