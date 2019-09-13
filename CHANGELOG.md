@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.1.0) (2019-09-13)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.0.0...v5.1.0)
+
+### Added
+
+- \(FM-8393\) add support on Debian 10 [\#1945](https://github.com/puppetlabs/puppetlabs-apache/pull/1945) ([ThoughtCrhyme](https://github.com/ThoughtCrhyme))
+- FM-8140 Add Redhat 8 support [\#1941](https://github.com/puppetlabs/puppetlabs-apache/pull/1941) ([sheenaajay](https://github.com/sheenaajay))
+- \(FM-8214\) converted to use litmus [\#1938](https://github.com/puppetlabs/puppetlabs-apache/pull/1938) ([tphoney](https://github.com/tphoney))
+- \(MODULES-9668 \) Please make ProxyRequests setting in vhost.pp configurable [\#1935](https://github.com/puppetlabs/puppetlabs-apache/pull/1935) ([aukesj](https://github.com/aukesj))
+- Added unmanaged\_path and custom\_fragment options to userdir [\#1931](https://github.com/puppetlabs/puppetlabs-apache/pull/1931) ([GeorgeCox](https://github.com/GeorgeCox))
+- Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
+- Add LDAPReferrals configuration parameter [\#1928](https://github.com/puppetlabs/puppetlabs-apache/pull/1928) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
+
+### Fixed
+
+- \(MODULES-9104\) Add file\_mode to config files. [\#1922](https://github.com/puppetlabs/puppetlabs-apache/pull/1922) ([stevegarn](https://github.com/stevegarn))
+- \(bugfix\) Add default package name for mod\_ldap [\#1913](https://github.com/puppetlabs/puppetlabs-apache/pull/1913) ([turnopil](https://github.com/turnopil))
+- Remove event mpm when using prefork, worker or itk [\#1905](https://github.com/puppetlabs/puppetlabs-apache/pull/1905) ([tuxmea](https://github.com/tuxmea))
+
 ## [v5.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.0.0) (2019-05-20)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/4.1.0...v5.0.0)
