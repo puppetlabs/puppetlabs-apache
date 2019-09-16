@@ -5,6 +5,9 @@
 <%= [@comment].flatten.collect{|c| "# #{c}"}.join("\n") -%>
 
 <VirtualHost <%= [@nvh_addr_port].flatten.compact.join(' ') %>>
+<% @define.each do | k, v| -%>
+  Define <%= k %> <%= v %>
+<% end -%>
 <% if @servername and not @servername.empty? -%>
   ServerName <%= @servername %>
 <% end -%>
