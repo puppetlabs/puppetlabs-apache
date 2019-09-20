@@ -182,6 +182,21 @@ describe 'apache::mod::security', type: :class do
               }
             end
           end
+
+          describe 'with mod security version' do
+            let :params do
+              {
+                version: 2,
+              }
+            end
+
+            it { is_expected.to contain_apache__mod('security2') }
+            it {
+              is_expected.to contain_file('security.conf').with(
+                path: '/etc/apache2/mods-available/security2.conf',
+              )
+            }
+          end
         end
       end
     end

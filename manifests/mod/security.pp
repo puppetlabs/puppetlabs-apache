@@ -2,6 +2,9 @@
 # @summary
 #   Installs and configures `mod_security`.
 # 
+# @param version
+#   Manage mod_security or mod_security2
+#
 # @param logroot
 #   Configures the location of audit and debug logs.
 # 
@@ -86,6 +89,7 @@
 #
 class apache::mod::security (
   $logroot                    = $::apache::params::logroot,
+  $version                     = $::apache::params::modsec_version,
   $crs_package                 = $::apache::params::modsec_crs_package,
   $activated_rules             = $::apache::params::modsec_default_rules,
   $modsec_dir                  = $::apache::params::modsec_dir,
@@ -127,7 +131,20 @@ class apache::mod::security (
     fail('SLES 10 is not currently supported.')
   }
 
-  ::apache::mod { 'security':
+  case $version {
+    1: {
+      $mod_name = 'security'
+      $mod_conf_name = 'security.conf'
+    }
+    2: {
+      $mod_name = 'security2'
+      $mod_conf_name = 'security2.conf'
+    }
+    default: {
+      fail('Unsuported version for mod security')
+    }
+  }
+  ::apache::mod { $mod_name:
     id  => 'security2_module',
     lib => 'mod_security2.so',
   }
@@ -161,7 +178,7 @@ class apache::mod::security (
     ensure  => file,
     content => template('apache/mod/security.conf.erb'),
     mode    => $::apache::file_mode,
-    path    => "${::apache::mod_dir}/security.conf",
+    path    => "${::apache::mod_dir}/${mod_conf_name}",
     owner   => $::apache::params::user,
     group   => $::apache::params::group,
     require => Exec["mkdir ${::apache::mod_dir}"],
