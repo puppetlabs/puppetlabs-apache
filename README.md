@@ -720,6 +720,28 @@ There are several optional parameters you can specify when defining Apache modul
 <a id="configuring-fastcgi-servers-to-handle-php-files"></a>
 ### Configuring FastCGI servers to handle PHP files
 
+#### FastCGI on Ubuntu 18.04
+
+On Ubuntu 18.04, `mod_fastcgi` is no longer supported. So considering:
+
+* an Apache Vhost with docroot set to `/var/www/html`
+* a FastCGI server listening on `127.0.0.1:9000`
+
+you can then use the [`custom_fragment`][] parameter to configure the virtual host to have the FastCGI server handle the specified file type:
+
+``` puppet
+apache::vhost { 'www':
+  ...
+  docroot         => '/var/www/html/',
+  custom_fragment => 'ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/var/www/html/$1',
+  ...
+}
+```
+
+Please note you have to adjust the second ProxyPassMatch parameter to you docroot value (here `/var/www/html/`).
+
+#### Other OSes
+
 Add the [`apache::fastcgi::server`][] defined type to allow [FastCGI][] servers to handle requests for specific files. For example, the following defines a FastCGI server at 127.0.0.1 (localhost) on port 9000 to handle PHP requests:
 
 ``` puppet
