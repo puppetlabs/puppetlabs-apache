@@ -810,7 +810,7 @@ describe 'apache::vhost define' do
       }
       apache::vhost { 'test.proxy':
         docroot    => '/tmp',
-        proxy_dest => 'test2',
+        proxy_dest => 'http://testproxy',
       }
       apache::vhost { 'test.scriptaliases':
         docroot    => '/tmp',
@@ -908,7 +908,7 @@ describe 'apache::vhost define' do
     end
     describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain 'ProxyPass        / test2/' }
+      it { is_expected.to contain 'ProxyPass        / http://testproxy/' }
     end
     describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
       it { is_expected.to be_file }
@@ -1027,7 +1027,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse}
+      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse|ubuntu}
       apply_manifest(pp, catch_failures: true)
     end
 
