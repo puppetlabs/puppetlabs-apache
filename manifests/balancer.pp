@@ -55,7 +55,9 @@ define apache::balancer (
       undef   => 'byrequests',
       default => $proxy_set['lbmethod'],
     }
-    ensure_resource('apache::mod', "lbmethod_${lbmethod}")
+    ensure_resource('apache::mod', "lbmethod_${lbmethod}", {
+      'loadfile_name' => "proxy_balancer_lbmethod_${lbmethod}.load"
+    })
   }
 
   if $target {
