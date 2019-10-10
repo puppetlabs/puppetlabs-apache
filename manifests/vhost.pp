@@ -1691,7 +1691,7 @@ define apache::vhost(
   $access_log_env_var                                                               = false,
   Optional[Array] $access_logs                                                      = undef,
   $aliases                                                                          = undef,
-  Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                  = undef,
+  Optional[Variant[Apache::Vhost::Directory, Array[Variant[Apache::Vhost::Directory, Array]]]] $directories = undef,
   Boolean $error_log                                                                = true,
   $error_log_file                                                                   = undef,
   $error_log_pipe                                                                   = undef,
@@ -2119,7 +2119,7 @@ define apache::vhost(
 
   ## Create a default directory list if none defined
   if $directories {
-    $_directories = $directories
+    $_directories = flatten([$directories])
   } elsif $docroot {
     $_directory = {
       provider       => 'directory',
@@ -2142,7 +2142,19 @@ define apache::vhost(
 
     $_directories = [ merge($_directory, $_directory_version) ]
   } else {
-    $_directories = undef
+    $_directories = []
+  }
+
+  assert_type(Array[Apache::Vhost::Directory], $_directories)
+  $_directories.each |$directory| {
+    $directory.each |$key, $value| {
+      case $key {
+        /^expires_(active|default|expires_by_type)$/: { include apache::mod::expires }
+        /^passenger_.+$/: { include apache::mod::passenger }
+        /^dav(_(depth_infinity|min_timeout))?$/: { include apache::mod::dav }
+        default: {}
+      }
+    }
   }
 
   ## Create a global LocationMatch if locations aren't defined
