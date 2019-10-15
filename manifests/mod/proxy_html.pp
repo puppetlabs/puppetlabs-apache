@@ -28,6 +28,7 @@ class apache::mod::proxy_html {
         ::apache::mod { 'xml2enc': }
       }
     }
+    default: { }
   }
 
   ::apache::mod { 'proxy_html':
