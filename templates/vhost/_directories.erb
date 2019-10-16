@@ -320,7 +320,7 @@
     ExpiresActive <%= directory['expires_active'] %>
     <%- end -%>
     <%- if directory['expires_default'] -%>
-    ExpiresDefault <%= directory['expires_default'] %>
+    ExpiresDefault "<%= directory['expires_default'] %>"
     <%- end -%>
     <%- if directory['expires_by_type'] -%>
     <%- Array(directory['expires_by_type']).each do |rule| -%>
