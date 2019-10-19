@@ -109,6 +109,7 @@ define apache::mpm (
       if $mpm == 'worker' {
         if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) {
           include apache::mpm::disable_mpm_event
+          include apache::mpm::disable_mpm_prefork
         }
       }
 
