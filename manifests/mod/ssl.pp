@@ -159,7 +159,7 @@ class apache::mod::ssl (
     if defined(Class['::apache::mod::worker']){
       $suse_path = '/usr/lib64/apache2-worker'
     } else {
-      $suse_path = '/usr/lib64/apache2-worker'
+      $suse_path = '/usr/lib64/apache2-prefork'
     }
     ::apache::mod { 'ssl':
       package  => $package_name,
