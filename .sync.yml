@@ -7,16 +7,7 @@
     - ---.project
 
 .travis.yml:
-  global_env:
-    - PARALLEL_TEST_PROCESSORS=16  
-  docker_sets:
-    - set: docker/centos-7
-    - set: docker/ubuntu-14.04
-  docker_defaults:
-    bundler_args: ""
-  secure: ""
-  branches:
-    - release
+  unmanaged: true
 
 Gemfile:
   optional:
