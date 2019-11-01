@@ -95,6 +95,7 @@ _Public Classes_
 * [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures `mod_wsgi`.
 * [`apache::mod::xsendfile`](#apachemodxsendfile): Installs `mod_xsendfile`.
 * [`apache::mpm::disable_mpm_event`](#apachempmdisable_mpm_event): 
+* [`apache::mpm::disable_mpm_worker`](#apachempmdisable_mpm_worker): 
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
 _Private Classes_
@@ -5066,6 +5067,14 @@ for additional documentation.
 
 The following parameters are available in the `apache::mod::security` class.
 
+##### `version`
+
+Data type: `Any`
+
+Manage mod_security or mod_security2
+
+Default value: $::apache::params::modsec_version
+
 ##### `logroot`
 
 Data type: `Any`
@@ -5940,6 +5949,10 @@ for additional documentation.
 
 The apache::mpm::disable_mpm_event class.
 
+### apache::mpm::disable_mpm_worker
+
+The apache::mpm::disable_mpm_worker class.
+
 ### apache::vhosts
 
 host parameters or Configuring virtual hosts in the README section.
@@ -6186,6 +6199,38 @@ Default value: $::apache::params::verify_command
 Data type: `Boolean`
 
 Specifies whether to validate the configuration file before notifying the Apache service.
+
+Default value: `true`
+
+##### `owner`
+
+Data type: `Any`
+
+File owner of configuration file
+
+Default value: `undef`
+
+##### `group`
+
+Data type: `Any`
+
+File group of configuration file
+
+Default value: `undef`
+
+##### `file_mode`
+
+Data type: `Any`
+
+File mode of configuration file
+
+Default value: `undef`
+
+##### `show_diff`
+
+Data type: `Boolean`
+
+show_diff property for configuration file resource
 
 Default value: `true`
 
@@ -9121,6 +9166,15 @@ Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache
 which allows you to configure how the server determines it's own name and port.
 
 Default value: `undef`
+
+##### `define`
+
+Data type: `Hash`
+
+this lets you define configuration variables inside a vhost using [`Define`](https://httpd.apache.org/docs/2.4/mod/core.html#define),
+these can then be used to replace configuration values. All Defines are Undefined at the end of the VirtualHost.
+
+Default value: {}
 
 ##### `proxy_requests`
 

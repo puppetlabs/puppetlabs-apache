@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.2.0) (2019-11-01)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.1.0...v5.2.0)
+
+### Added
+
+- Add parameter version for mod security [\#1953](https://github.com/puppetlabs/puppetlabs-apache/pull/1953) ([tuxmea](https://github.com/tuxmea))
+- add possibility to define variables inside VirtualHost definition [\#1947](https://github.com/puppetlabs/puppetlabs-apache/pull/1947) ([trefzer](https://github.com/trefzer))
+
+### Fixed
+
+- \(FM-8662\) Correct  in manifests/mod/ssl.pp for SLES 11 [\#1963](https://github.com/puppetlabs/puppetlabs-apache/pull/1963) ([cmccrisken-puppet](https://github.com/cmccrisken-puppet))
+- always quote ExpiresDefault in vhost::directories [\#1958](https://github.com/puppetlabs/puppetlabs-apache/pull/1958) ([evgeni](https://github.com/evgeni))
+- MODULES-9904 Fix lbmethod module load order [\#1956](https://github.com/puppetlabs/puppetlabs-apache/pull/1956) ([optiz0r](https://github.com/optiz0r))
+- Add owner, group, file\_mode and show\_diff to apache::custom\_config [\#1942](https://github.com/puppetlabs/puppetlabs-apache/pull/1942) ([treydock](https://github.com/treydock))
+- Add shibboleth support for Debian 10 [\#1939](https://github.com/puppetlabs/puppetlabs-apache/pull/1939) ([fabbks](https://github.com/fabbks))
+
 ## [v5.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.1.0) (2019-09-13)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.0.0...v5.1.0)
