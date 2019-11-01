@@ -1027,7 +1027,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse|ubuntu}
+      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse|ubuntu|sles}
       apply_manifest(pp, catch_failures: true)
     end
 
