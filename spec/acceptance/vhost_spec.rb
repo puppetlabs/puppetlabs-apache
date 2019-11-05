@@ -49,7 +49,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'default vhost with ssl' do
+  context 'default vhost with ssl', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
     pp = <<-MANIFEST
       file { '#{apache_hash['run_dir']}':
         ensure  => 'directory',
@@ -752,7 +752,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'parameter tests' do
+  describe 'parameter tests', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
     pp = <<-MANIFEST
       class { 'apache': }
       host { 'test.itk': ip => '127.0.0.1' }
