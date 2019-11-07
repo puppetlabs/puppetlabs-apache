@@ -915,8 +915,6 @@ The [`apache::mod::suphp`][] class is untested since repositories are missing co
 
 ### Testing
 
-Due to the difficult and specialised nature of acceptance testing mods in apache IE (high OS specificity), we have replaced  acceptance tests with unit tests.
-
 To run the unit tests, install the necessary gems:
 
 ```
@@ -935,10 +933,19 @@ To check the code coverage, run:
 COVERAGE=yes bundle exec rake parallel_spec
 ```
 
-### Contributing
+## Development
 
-[Puppet][] modules on the [Puppet Forge][] are open projects, and community contributions are essential for keeping them great. We can’t access the huge number of platforms and myriad hardware, software, and deployment configurations that Puppet is intended to serve.
+Acceptance tests for this module leverage [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
+To run the acceptance tests follow the instructions [here](https://github.com/puppetlabs/puppet_litmus/wiki/Tutorial:-use-Litmus-to-execute-acceptance-tests-with-a-sample-module-(MoTD)#install-the-necessary-gems-for-the-module).
+You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
 
-We want to make it as easy as possible to contribute changes so our modules work in your environment, but we also need contributors to follow a few guidelines to help us maintain and improve the modules' quality.
+If you run into an issue with this module, or if you would like to request a feature, please [file a ticket](https://tickets.puppetlabs.com/browse/MODULES/).
+Every Monday the Puppet IA Content Team has [office hours](https://puppet.com/community/office-hours) in the [Puppet Community Slack](http://slack.puppet.com/), alternating between an EMEA friendly time (1300 UTC) and an Americas friendly time (0900 Pacific, 1700 UTC).
 
-For more information, please read the complete [module contribution guide][] and check out [CONTRIBUTING.md][].
+If you have problems getting this module up and running, please [contact Support](http://puppetlabs.com/services/customer-support).
+
+If you submit a change to this module, be sure to regenerate the reference documentation as follows:
+
+```bash
+puppet strings generate --format markdown --out REFERENCE.md
+```
