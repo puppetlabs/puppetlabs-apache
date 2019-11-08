@@ -25,5 +25,7 @@
   # Set to one of: Off | On | Full | Block
   ProxyVia <%= @proxy_via %>
 
+  <%- if @proxy_timeout -%>
   ProxyTimeout <%= @proxy_timeout %>
+  <%- end -%>
 </IfModule>
