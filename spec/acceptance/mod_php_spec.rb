@@ -35,6 +35,10 @@ unless os[:family] == 'sles' && os[:release].to_i >= 12
         describe file("#{apache_hash['mod_dir']}/php7.2.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
         end
+      elsif os[:family] == 'redhat' && os[:release] =~ %r{^8}
+        describe file("#{apache_hash['mod_dir']}/php7.conf") do
+          it { is_expected.to contain 'DirectoryIndex index.php' }
+        end
       else
         describe file("#{apache_hash['mod_dir']}/php5.conf") do
           it { is_expected.to contain 'DirectoryIndex index.php' }
