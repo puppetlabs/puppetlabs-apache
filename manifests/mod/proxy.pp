@@ -27,9 +27,10 @@ class apache::mod::proxy (
   $apache_version = undef,
   $package_name   = undef,
   $proxy_via      = 'On',
-  $proxy_timeout  = $apache::timeout,
+  $proxy_timeout  = undef,
 ) {
   include ::apache
+  $_proxy_timeout = $apache::timeout
   $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'proxy':
     package => $package_name,
