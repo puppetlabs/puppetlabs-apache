@@ -63,6 +63,7 @@
   secure: ''
   branches:
   - release
+  simplecov: true
 appveyor.yml:
   delete: true
 Gemfile:
