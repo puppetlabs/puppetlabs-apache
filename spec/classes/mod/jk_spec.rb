@@ -114,6 +114,7 @@ describe 'apache::mod::jk', type: :class do
     it_behaves_like 'minimal resources', mod_dir
     it_behaves_like 'specific workers_file', mod_dir
     it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
+    it { is_expected.to contain_package('libapache2-mod-jk') }
     it {
       verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
     }
