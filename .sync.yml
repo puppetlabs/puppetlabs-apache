@@ -5,6 +5,8 @@
   default_configs:
     inherit_from: ".rubocop_todo.yml"
 ".travis.yml":
+  deploy_to_forge:
+    enabled: false
   includes:
   - bundler_args: 
     dist: trusty
