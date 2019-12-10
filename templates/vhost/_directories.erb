@@ -460,7 +460,7 @@
     <%- end -%>
     <%- if directory['proxy_pass'] and directory['provider'] and directory['provider'].match('location') -%>
       <%- directory['proxy_pass'].flatten.compact.each do |proxy| -%>
-    ProxyPass <%= proxy['url'] %>
+    ProxyPass <%= proxy['url'] -%>
         <%- if proxy['params'] -%>
           <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
           <%- end -%>
