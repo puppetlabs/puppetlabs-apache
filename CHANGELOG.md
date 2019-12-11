@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.3.0) (2019-12-11)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.2.0...v5.3.0)
+
+### Added
+
+- \(FM-8672\) - Addition of Support for CentOS 8 [\#1977](https://github.com/puppetlabs/puppetlabs-apache/pull/1977) ([david22swan](https://github.com/david22swan))
+- \(MODULES-9948\) Allow switching of thread modules [\#1961](https://github.com/puppetlabs/puppetlabs-apache/pull/1961) ([tuxmea](https://github.com/tuxmea))
+
+### Fixed
+
+- Fix newline being added before proxy params [\#1984](https://github.com/puppetlabs/puppetlabs-apache/pull/1984) ([oxc](https://github.com/oxc))
+- When using mod jk, we expect the libapache2-mod-jk package to be installed [\#1979](https://github.com/puppetlabs/puppetlabs-apache/pull/1979) ([tuxmea](https://github.com/tuxmea))
+- move unless into manage\_security\_corerules [\#1976](https://github.com/puppetlabs/puppetlabs-apache/pull/1976) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+- Change mod\_proxy's ProxyTimeout to follow Apache's global timeout [\#1975](https://github.com/puppetlabs/puppetlabs-apache/pull/1975) ([gcoxmoz](https://github.com/gcoxmoz))
+- \(FM-8721\) fix php version and ssl error on redhat8 [\#1973](https://github.com/puppetlabs/puppetlabs-apache/pull/1973) ([sheenaajay](https://github.com/sheenaajay))
+
 ## [v5.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.2.0) (2019-11-01)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.1.0...v5.2.0)

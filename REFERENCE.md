@@ -95,6 +95,7 @@ _Public Classes_
 * [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures `mod_wsgi`.
 * [`apache::mod::xsendfile`](#apachemodxsendfile): Installs `mod_xsendfile`.
 * [`apache::mpm::disable_mpm_event`](#apachempmdisable_mpm_event): 
+* [`apache::mpm::disable_mpm_prefork`](#apachempmdisable_mpm_prefork): 
 * [`apache::mpm::disable_mpm_worker`](#apachempmdisable_mpm_worker): 
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
 
@@ -4737,7 +4738,7 @@ Data type: `Any`
 
 Network timeout for proxied requests.
 
-Default value: '60'
+Default value: `undef`
 
 ### apache::mod::proxy_ajp
 
@@ -5452,7 +5453,7 @@ Data type: `Any`
 
 Configure usable SSL/TLS protocol versions.
 
-Default value: [ 'all', '-SSLv2', '-SSLv3' ]
+Default value: ['all']
 
 ##### `ssl_proxy_protocol`
 
@@ -5948,6 +5949,10 @@ for additional documentation.
 ### apache::mpm::disable_mpm_event
 
 The apache::mpm::disable_mpm_event class.
+
+### apache::mpm::disable_mpm_prefork
+
+The apache::mpm::disable_mpm_prefork class.
 
 ### apache::mpm::disable_mpm_worker
 
