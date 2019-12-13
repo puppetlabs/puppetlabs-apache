@@ -458,6 +458,14 @@ describe 'apache::vhost', type: :define do
               'max_keepalive_requests'      => '1000',
               'protocols'                   => ['h2', 'http/1.1'],
               'protocols_honor_order'       => true,
+              'auth_oidc'                   => true,
+              'oidc_settings'               => { 'ProviderMetadataURL'       => 'https://login.example.com/.well-known/openid-configuration',
+                                                 'ClientID'                  => 'test',
+                                                 'RedirectURI'               => 'https://login.example.com/redirect_uri',
+                                                 'ProviderTokenEndpointAuth' => 'client_secret_basic',
+                                                 'RemoteUserClaim'           => 'sub',
+                                                 'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                                 'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
             }
           end
 
@@ -1376,6 +1384,41 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
               content: %r{^\s+PassengerLveMinUid\s500$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCProviderMetadataURL\shttps:\/\/login.example.com\/\.well-known\/openid-configuration$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCClientID\stest$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCRedirectURI\shttps:\/\/login\.example.com\/redirect_uri$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCProviderTokenEndpointAuth\sclient_secret_basic$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCRemoteUserClaim\ssub$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCClientSecret\saae053a9-4abf-4824-8956-e94b2af335c8$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+              content: %r{^\s+OIDCCryptoPassphrase\s4ad1bb46-9979-450e-ae58-c696967df3cd$},
             )
           }
         end
