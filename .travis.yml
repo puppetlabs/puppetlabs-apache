@@ -80,3 +80,5 @@ branches:
     - release
 notifications:
   email: false
+  slack:
+    secure: MrXQwGIUO7WNmLbe7iiWgURiZPUgyvDLkKe3d9S58ohE6gdN6pqlsjP8YgodK8JmIBV1zp5Wj/0cXUmY3xvCtnDmII0DCEk2Y1Cs/W1drKZtS/0BsUpJkj0rDP2fSlKsY5ifESdEta/y8+NkjRnqadbl7SQPYeek4IjAfxjjuig=
