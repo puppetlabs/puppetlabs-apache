@@ -35,6 +35,7 @@ class apache::params inherits ::apache::version {
   $vhost_include_pattern = '*'
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
+  $modsec_audit_log_type = 'Serial'
 
   # no client certs should be trusted for auth by default.
   $ssl_certs_dir          = undef

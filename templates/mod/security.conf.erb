@@ -45,7 +45,10 @@
     SecAuditEngine RelevantOnly
     SecAuditLogRelevantStatus "<%= @audit_log_relevant_status %>"
     SecAuditLogParts <%= @audit_log_parts %>
-    SecAuditLogType Serial
+    SecAuditLogType <%= @audit_log_type %>
+    <%- if @audit_log_storage_dir -%>
+    SecAuditLogStorageDir <%= @audit_log_storage_dir %>
+    <%- end -%>
     SecArgumentSeparator &
     SecCookieFormat 0
 <%- if scope.lookupvar('::osfamily') == 'Debian' -%>

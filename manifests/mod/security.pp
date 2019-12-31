@@ -27,6 +27,12 @@
 #   Defines which parts of each transaction are going to be recorded in the audit log. Each part is assigned a single letter; when a
 #   letter appears in the list then the equivalent part will be recorded.
 # 
+# @param audit_log_type
+#   Defines the type of audit logging mechanism to be used.
+# 
+# @param audit_log_storage_dir
+#   Defines the directory where concurrent audit log entries are to be stored. This directive is only needed when concurrent audit logging is used.
+# 
 # @param secpcrematchlimit
 #   Sets the match limit in the PCRE library.
 # 
@@ -96,6 +102,8 @@ class apache::mod::security (
   $modsec_secruleengine        = $::apache::params::modsec_secruleengine,
   $audit_log_relevant_status   = '^(?:5|4(?!04))',
   $audit_log_parts             = $::apache::params::modsec_audit_log_parts,
+  $audit_log_type              = $::apache::params::modsec_audit_log_type,
+  $audit_log_storage_dir       = undef,
   $secpcrematchlimit           = $::apache::params::secpcrematchlimit,
   $secpcrematchlimitrecursion  = $::apache::params::secpcrematchlimitrecursion,
   $allowed_methods             = 'GET HEAD POST OPTIONS',
@@ -169,6 +177,8 @@ class apache::mod::security (
   # - logroot
   # - $modsec_dir
   # - $audit_log_parts
+  # - $audit_log_type
+  # - $audit_log_storage_dir
   # - secpcrematchlimit
   # - secpcrematchlimitrecursion
   # - secrequestbodylimit
