@@ -2377,6 +2377,24 @@ define apache::vhost(
   }
 
   # Template uses:
+  # - $ssl_proxyengine
+  # - $ssl_proxy_verify
+  # - $ssl_proxy_verify_depth
+  # - $ssl_proxy_ca_cert
+  # - $ssl_proxy_check_peer_cn
+  # - $ssl_proxy_check_peer_name
+  # - $ssl_proxy_check_peer_expire
+  # - $ssl_proxy_machine_cert
+  # - $ssl_proxy_protocol
+  if $ssl_proxyengine {
+    concat::fragment { "${name}-sslproxy":
+      target  => "${priority_real}${filename}.conf",
+      order   => 160,
+      content => template('apache/vhost/_sslproxy.erb'),
+    }
+  }
+
+  # Template uses:
   # - $proxy_dest
   # - $proxy_pass
   # - $proxy_pass_match
@@ -2386,7 +2404,7 @@ define apache::vhost(
   if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host {
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
-      order   => 160,
+      order   => 170,
       content => template('apache/vhost/_proxy.erb'),
     }
   }
@@ -2482,24 +2500,6 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 230,
       content => template('apache/vhost/_ssl.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $ssl_proxyengine
-  # - $ssl_proxy_verify
-  # - $ssl_proxy_verify_depth
-  # - $ssl_proxy_ca_cert
-  # - $ssl_proxy_check_peer_cn
-  # - $ssl_proxy_check_peer_name
-  # - $ssl_proxy_check_peer_expire
-  # - $ssl_proxy_machine_cert
-  # - $ssl_proxy_protocol
-  if $ssl_proxyengine {
-    concat::fragment { "${name}-sslproxy":
-      target  => "${priority_real}${filename}.conf",
-      order   => 230,
-      content => template('apache/vhost/_sslproxy.erb'),
     }
   }
 
