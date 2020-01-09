@@ -791,4 +791,10 @@ class apache::params inherits ::apache::version {
   } else {
     $verify_command = '/usr/sbin/apachectl -t'
   }
+
+  if ($::operatingsystem == 'RedHat' and ($facts['operatingsystemmajrelease'] == '8') ) {
+    $ssl_protocol = ['all'] # Implementations of the SSLv2 and SSLv3 protocol versions have been removed from OpenSSL (and hence mod_ssl) because these are no longer considered secure. For additional documentation https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deploying_different_types_of_servers/setting-apache-web-server_deploying-different-types-of-servers
+  } else {
+    $ssl_protocol = [ 'all', '-SSLv2', '-SSLv3' ]
+  }
 }
