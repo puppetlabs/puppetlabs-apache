@@ -6,7 +6,7 @@
 class apache::mod::autoindex {
   include ::apache
   ::apache::mod { 'autoindex': }
-  # Template uses no variables
+  # Template changes content based on @osfamily
   file { 'autoindex.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/autoindex.conf",
