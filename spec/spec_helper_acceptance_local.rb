@@ -67,17 +67,21 @@ def apache_settings_hash
     apache['suphp_handler']    = 'php5-script'
     apache['suphp_configpath'] = 'undef'
     if (operatingsystemrelease >= 7 && operatingsystemrelease < 8) && (osfamily == 'redhat')
-      apache['version'] = '2.4'
-      apache['mod_dir'] = '/etc/httpd/conf.modules.d'
+      apache['version']     = '2.4'
+      apache['mod_dir']     = '/etc/httpd/conf.modules.d'
+      apache['mod_ssl_dir'] = apache['confd_dir']
     elsif operatingsystemrelease >= 8 && osfamily == 'redhat'
-      apache['version'] = '2.4'
-      apache['mod_dir'] = '/etc/httpd/conf.d'
+      apache['version']     = '2.4'
+      apache['mod_dir']     = '/etc/httpd/conf.d'
+      apache['mod_ssl_dir'] = apache['mod_dir']
     elsif operatingsystemrelease >= 7 && osfamily == 'oracle'
-      apache['version'] = '2.4'
-      apache['mod_dir'] = '/etc/httpd/conf.modules.d'
+      apache['version']     = '2.4'
+      apache['mod_dir']     = '/etc/httpd/conf.modules.d'
+      apache['mod_ssl_dir'] = apache['confd_dir']
     else
-      apache['version'] = '2.2'
-      apache['mod_dir'] = '/etc/httpd/conf.d'
+      apache['version']     = '2.2'
+      apache['mod_dir']     = '/etc/httpd/conf.d'
+      apache['mod_ssl_dir'] = apache['mod_dir']
     end
   when 'debian', 'ubuntu'
     apache['confd_dir']        = '/etc/apache2/conf.d'
@@ -100,6 +104,7 @@ def apache_settings_hash
                         else
                           '2.2'
                         end
+    apache['mod_ssl_dir']      = apache['mod_dir']
   when 'freebsd'
     apache['confd_dir']        = '/usr/local/etc/apache24/Includes'
     apache['mod_dir']          = '/usr/local/etc/apache24/Modules'
@@ -112,7 +117,8 @@ def apache_settings_hash
     apache['service_name']     = 'apache24'
     apache['package_name']     = 'apache24'
     apache['error_log']        = 'http-error.log'
-    apache['version'] = '2.2'
+    apache['version']          = '2.2'
+    apache['mod_ssl_dir']      = apache['mod_dir']
   when 'gentoo'
     apache['confd_dir']        = '/etc/apache2/conf.d'
     apache['mod_dir']          = '/etc/apache2/modules.d'
@@ -125,7 +131,8 @@ def apache_settings_hash
     apache['service_name']     = 'apache2'
     apache['package_name']     = 'www-servers/apache'
     apache['error_log']        = 'http-error.log'
-    apache['version'] = '2.4'
+    apache['version']          = '2.4'
+    apache['mod_ssl_dir']      = apache['mod_dir']
   when 'suse', 'sles'
     apache['confd_dir']        = '/etc/apache2/conf.d'
     apache['mod_dir']          = '/etc/apache2/mods-available'
@@ -143,6 +150,7 @@ def apache_settings_hash
                         else
                           '2.4'
                         end
+    apache['mod_ssl_dir'] = apache['mod_dir']
   else
     raise 'unable to figure out what apache version'
   end

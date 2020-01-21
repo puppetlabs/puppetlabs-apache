@@ -36,6 +36,26 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('mod_ssl') }
       it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf') }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
+    end
+    context '8 OS' do
+      let :facts do
+        {
+          osfamily: 'RedHat',
+          operatingsystemrelease: '8',
+          operatingsystem: 'RedHat',
+          id: 'root',
+          kernel: 'Linux',
+          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          is_pe: false,
+        }
+      end
+
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_apache__mod('ssl') }
+      it { is_expected.to contain_package('mod_ssl') }
+      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf') }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all}) }
     end
     context '6 OS with a custom package_name parameter' do
       let :facts do
@@ -104,8 +124,8 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.not_to contain_package('libapache2-mod-ssl') }
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
   end
-
   context 'on a FreeBSD OS' do
     let :facts do
       {

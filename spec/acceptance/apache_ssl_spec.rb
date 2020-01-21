@@ -19,6 +19,15 @@ describe 'apache ssl' do
       idempotent_apply(pp)
     end
 
+    describe file("#{apache_hash['mod_ssl_dir']}/ssl.conf") do
+      it { is_expected.to be_file }
+      if os[:family] =~ %r{redhat} && os[:release].to_i == 8
+        it { is_expected.to contain 'SSLProtocol all' }
+      else
+        it { is_expected.to contain 'SSLProtocol all -SSLv2 -SSLv3' }
+      end
+    end
+
     describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }

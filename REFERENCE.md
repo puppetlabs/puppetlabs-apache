@@ -5453,7 +5453,7 @@ Data type: `Any`
 
 Configure usable SSL/TLS protocol versions.
 
-Default value: ['all']
+Default value: ['all', '-SSLv2', '-SSLv3']
 
 ##### `ssl_proxy_protocol`
 
