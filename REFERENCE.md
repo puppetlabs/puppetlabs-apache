@@ -131,6 +131,7 @@ Apache server's or a virtual host's listening address and port.
 * [`apache::vhost`](#apachevhost): Allows specialised configurations for virtual hosts that possess requirements
 outside of the defaults.
 * [`apache::vhost::custom`](#apachevhostcustom): A wrapper around the `apache::custom_config` defined type.
+* [`apache::vhost::fragment`](#apachevhostfragment): Define a fragment within a vhost
 
 _Private Defined types_
 
@@ -5452,8 +5453,11 @@ Default value: `true`
 Data type: `Any`
 
 Configure usable SSL/TLS protocol versions.
+Default based on the OS:
+- RedHat 8: [ 'all' ].
+- Other Platforms: [ 'all', '-SSLv2', '-SSLv3' ].
 
-Default value: ['all', '-SSLv2', '-SSLv3']
+Default value: $::apache::params::ssl_protocol
 
 ##### `ssl_proxy_protocol`
 
@@ -9226,6 +9230,99 @@ Data type: `Any`
 Specifies whether to validate the configuration file before notifying the Apache service.
 
 Default value: `true`
+
+### apache::vhost::fragment
+
+Define a fragment within a vhost
+
+#### Examples
+
+##### With a vhost without priority
+
+```puppet
+include apache
+apache::vhost { 'myvhost':
+}
+apache::vhost::fragment { 'myfragment':
+  vhost   => 'myvhost',
+  content => '# Foo',
+}
+```
+
+##### With a vhost with priority
+
+```puppet
+include apache
+apache::vhost { 'myvhost':
+  priority => '42',
+}
+apache::vhost::fragment { 'myfragment':
+  vhost    => 'myvhost',
+  priority => '42',
+  content  => '# Foo',
+}
+```
+
+##### With a vhost with default vhost
+
+```puppet
+include apache
+apache::vhost { 'myvhost':
+  default_vhost => true,
+}
+apache::vhost::fragment { 'myfragment':
+  vhost    => 'myvhost',
+  priority => '10', # default_vhost implies priority 10
+  content  => '# Foo',
+}
+```
+
+##### Adding a fragment to the built in default vhost
+
+```puppet
+include apache
+apache::vhost::fragment { 'myfragment':
+  vhost    => 'default',
+  priority => '15',
+  content  => '# Foo',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `apache::vhost::fragment` defined type.
+
+##### `vhost`
+
+Data type: `String[1]`
+
+The title of the vhost resource to append to
+
+##### `priority`
+
+Data type: `Any`
+
+Set the priority to match the one `apache::vhost` sets. This must match the
+one `apache::vhost` sets or else the concat fragment won't be found.
+
+Default value: `undef`
+
+##### `content`
+
+Data type: `Optional[String]`
+
+The content to put in the fragment. Only when it's non-empty the actual
+fragment will be created.
+
+Default value: `undef`
+
+##### `order`
+
+Data type: `Integer[0]`
+
+The order to insert the fragment at
+
+Default value: 900
 
 ## Resource types
 
