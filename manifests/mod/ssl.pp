@@ -30,6 +30,9 @@
 #
 # @param ssl_protocol
 #   Configure usable SSL/TLS protocol versions.
+#   Default based on the OS:
+#   - RedHat 8: [ 'all' ].
+#   - Other Platforms: [ 'all', '-SSLv2', '-SSLv3' ].
 #
 # @param ssl_proxy_protocol
 #   Configure usable SSL protocol flavors for proxy usage.

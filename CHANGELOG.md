@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.4.0) (2020-01-21)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.3.0...v5.4.0)
+
+### Added
+
+- Add an apache::vhost::fragment define [\#1980](https://github.com/puppetlabs/puppetlabs-apache/pull/1980) ([ekohl](https://github.com/ekohl))
+
+### Fixed
+
+- \(MODULES-10391\) ssl\_protocol includes SSLv2 and SSLv3 on all platforms [\#1990](https://github.com/puppetlabs/puppetlabs-apache/pull/1990) ([legooolas](https://github.com/legooolas))
+
 ## [v5.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.3.0) (2019-12-11)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.2.0...v5.3.0)
