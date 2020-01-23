@@ -10,10 +10,10 @@ class apache::mod::autoindex {
   # Determine icon filename suffix for autoindex.conf.erb
   case $operatingsystem {
     'Debian', 'Ubuntu': {
-      $icon_suffix = '-20x22'
+      $::icon_suffix = '-20x22'
     }
     default: {
-      $icon_suffix = ''
+      $::icon_suffix = ''
     }
   }
 
