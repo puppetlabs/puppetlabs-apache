@@ -1017,6 +1017,32 @@ describe 'apache::vhost define' do
     end
   end
 
+  describe 'error_log_format is set' do
+    pp = <<-MANIFEST
+      class { 'apache': }
+      host { 'test.server': ip => '127.0.0.1' }
+      apache::vhost { 'test.server':
+        docroot          => '/tmp',
+        error_log        => true,
+        error_log_file   => 'error.log',
+        error_log_format => ['%{Referer}i'],
+      }
+    MANIFEST
+
+    it 'applies cleanly' do
+      apply_manifest(pp, catch_failures: true)
+    end
+
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      if apache_hash['version'] == '2.4'
+        it { is_expected.to contain '  ErrorLogFormat "%{Referer}i"' }
+      else
+        it { is_expected.not_to contain 'ErrorLogFormat' }
+      end
+    end
+  end
+
   describe 'actions' do
     pp = <<-MANIFEST
       class { 'apache': }
