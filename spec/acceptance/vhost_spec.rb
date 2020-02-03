@@ -1198,7 +1198,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'auth_oidc', unless: (os[:family] == 'ubuntu' && os[:release].to_f == '14.04') do
+  describe 'auth_oidc', unless: (os[:family] == 'ubuntu' && os[:release].to_f == 14.04) do
     pp = <<-MANIFEST
         class { 'apache': }
         apache::vhost { 'test.server':
