@@ -246,6 +246,7 @@ describe 'apache::vhost', type: :define do
               'error_log'                   => false,
               'error_log_file'              => 'httpd_error_log',
               'error_log_syslog'            => true,
+              'error_log_format'            => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
               'error_documents'             => 'true',
               'fallbackresource'            => '/index.php',
               'scriptalias'                 => '/usr/lib/cgi-bin',
@@ -877,6 +878,10 @@ describe 'apache::vhost', type: :define do
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-logging')
+              .with_content(%r{^\s+ErrorLogFormat "\[%t\] \[%l\] %7F: %E: \[client\\ %a\] %M% ,\\ referer\\ %\{Referer\}i"$})
+          }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-access_log') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-action') }
@@ -1903,6 +1908,84 @@ describe 'apache::vhost', type: :define do
             }
           end
         end # access logs
+        describe 'error logs format' do
+          context 'on Apache 2.2' do
+            let(:params) do
+              {
+                'docroot'         => '/rspec/docroot',
+                'apache_version'  => '2.2',
+                'error_log_format' => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
+              }
+            end
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging')
+                .without_content(%r{ErrorLogFormat})
+            }
+          end
+
+          context 'single log format directive as a string' do
+            let(:params) do
+              {
+                'docroot'          => '/rspec/docroot',
+                'apache_version'   => '2.4',
+                'error_log_format' => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
+              }
+            end
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat "\[%t\] \[%l\] %7F: %E: \[client\\ %a\] %M% ,\\ referer\\ %\{Referer\}i"$},
+              )
+            }
+          end
+
+          context 'multiple log format directives' do
+            let(:params) do
+              {
+                'docroot'          => '/rspec/docroot',
+                'apache_version'   => '2.4',
+                'error_log_format' => [ 
+                  '[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M',
+                  { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' }, 
+                  { "[%{uc}t] [R:%L] UA:'%+{User-Agent}i'" => 'request' },
+                  { "[%{uc}t] [R:%L] Referer:'%+{Referer}i'" => 'request' },
+                  { '[%{uc}t] [C:%{c}L] local\ %a remote\ %A' => 'connection' },
+                ],
+              }
+            end
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat "\[%\{uc\}t\] \[%-m:%-l\] \[R:%L\] \[C:%\{C\}L\] %7F: %E: %M"$},
+              )
+            }
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Request %k on C:%\{c\}L pid:%P tid:%T"$},
+              )
+            }
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] UA:'%\+\{User-Agent\}i'"$},
+              )
+            }
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Referer:'%\+\{Referer\}i'"$},
+              )
+            }
+
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
+                content: %r{^\s+ErrorLogFormat connection "\[%\{uc\}t\] \[C:%\{c\}L\] local\\ %a remote\\ %A"$},
+              )
+            }
+          end
+        end # error logs format
         describe 'validation' do
           context 'bad ensure' do
             let :params do
@@ -2079,6 +2162,18 @@ describe 'apache::vhost', type: :define do
               {
                 'docroot'   => '/rspec/docroot',
                 'log_level' => 'bogus',
+              }
+            end
+
+            it { is_expected.to raise_error(Puppet::Error) }
+          end
+          context 'bad error_log_format flag' do
+            let :params do
+              {
+                'docroot'   => '/rspec/docroot',
+                'error_log_format' => [
+                  { 'some format' => 'bogus' },
+                ],
               }
             end
 
