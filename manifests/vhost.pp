@@ -1626,6 +1626,12 @@
 #   this lets you define configuration variables inside a vhost using [`Define`](https://httpd.apache.org/docs/2.4/mod/core.html#define),
 #   these can then be used to replace configuration values. All Defines are Undefined at the end of the VirtualHost.
 #
+# @param auth_oidc
+#   Enable `mod_auth_openidc` parameters for OpenID Connect authentication.
+#
+# @param oidc_settings
+#   An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf].
+#
 define apache::vhost(
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
@@ -1855,6 +1861,8 @@ define apache::vhost(
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
   Optional[Variant[String,Array[String]]] $comment                                  = undef,
   Hash $define                                                                      = {},
+  Boolean $auth_oidc                                                                = false,
+  Optional[Apache::OIDCSettings] $oidc_settings                                     = undef,
 ) {
 
   # The base class must be included first because it is used by parameter defaults
@@ -1899,6 +1907,10 @@ define apache::vhost(
 
   if $auth_kerb and $ensure == 'present' {
     include ::apache::mod::auth_kerb
+  }
+
+  if $auth_oidc and $ensure == 'present' {
+    include ::apache::mod::auth_openidc
   }
 
   if $virtual_docroot {
@@ -2713,6 +2725,17 @@ define apache::vhost(
       target  => "${priority_real}${filename}.conf",
       order   => 350,
       content => template('apache/vhost/_http_protocol_options.erb'),
+    }
+  }
+
+  # Template uses:
+  # - $auth_oidc
+  # - $oidc_settings
+  if $auth_oidc {
+    concat::fragment { "${name}-auth_oidc":
+      target  => "${priority_real}${filename}.conf",
+      order   => 360,
+      content => template('apache/vhost/_auth_oidc.erb'),
     }
   }
 

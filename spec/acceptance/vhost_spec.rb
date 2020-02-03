@@ -1197,4 +1197,37 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ShibCompatValidUser On' }
     end
   end
+
+  describe 'auth_oidc', unless: (os[:family] == 'ubuntu' && os[:release].to_f == 14.04) do
+    pp = <<-MANIFEST
+        class { 'apache': }
+        apache::vhost { 'test.server':
+          port    => '80',
+          docroot => '/var/www/html',
+          auth_oidc     => true,
+          oidc_settings => {
+            'ProviderMetadataURL'       => 'https://login.example.com/.well-known/openid-configuration',
+            'ClientID'                  => 'test',
+            'RedirectURI'               => 'https://login.example.com/redirect_uri',
+            'ProviderTokenEndpointAuth' => 'client_secret_basic',
+            'RemoteUserClaim'           => 'sub',
+            'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+            'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd'
+          }
+        }
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'OIDCProviderMetadataURL https://login.example.com/.well-known/openid-configuration' }
+      it { is_expected.to contain 'OIDCClientID test' }
+      it { is_expected.to contain 'OIDCRedirectURI https://login.example.com/redirect_uri' }
+      it { is_expected.to contain 'OIDCProviderTokenEndpointAuth client_secret_basic' }
+      it { is_expected.to contain 'OIDCRemoteUserClaim sub' }
+      it { is_expected.to contain 'OIDCClientSecret aae053a9-4abf-4824-8956-e94b2af335c8' }
+      it { is_expected.to contain 'OIDCCryptoPassphrase 4ad1bb46-9979-450e-ae58-c696967df3cd' }
+    end
+  end
 end

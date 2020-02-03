@@ -1,0 +1,5 @@
+<% if @auth_oidc -%>
+<% @oidc_settings.each do |key, value| %>
+  OIDC<%= key %> <%= value -%>
+<% end %>
+<% end -%>

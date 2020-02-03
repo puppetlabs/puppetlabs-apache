@@ -206,6 +206,7 @@ class apache::params inherits ::apache::version {
       'auth_kerb'             => 'mod_auth_kerb',
       'auth_gssapi'           => 'mod_auth_gssapi',
       'auth_mellon'           => 'mod_auth_mellon',
+      'auth_openidc'          => 'mod_auth_openidc',
       'authnz_ldap'           => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
         default => 'mod_authz_ldap',
@@ -344,6 +345,7 @@ class apache::params inherits ::apache::version {
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
+        'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
@@ -377,6 +379,7 @@ class apache::params inherits ::apache::version {
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
+        'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
@@ -404,6 +407,7 @@ class apache::params inherits ::apache::version {
       $mod_packages = {
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
+        'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
@@ -579,6 +583,7 @@ class apache::params inherits ::apache::version {
       # NOTE: not sure where the shibboleth should come from
       'auth_kerb'   => 'www/mod_auth_kerb2',
       'auth_gssapi' => 'www/mod_auth_gssapi',
+      'auth_openidc'=> 'www/mod_auth_openidc',
       'fcgid'       => 'www/mod_fcgid',
       'passenger'   => 'www/rubygem-passenger',
       'perl'        => 'www/mod_perl2',
