@@ -246,7 +246,7 @@ describe 'apache::vhost', type: :define do
               'error_log'                   => false,
               'error_log_file'              => 'httpd_error_log',
               'error_log_syslog'            => true,
-              'error_log_format'            => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
+              'error_log_format'            => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
               'error_documents'             => 'true',
               'fallbackresource'            => '/index.php',
               'scriptalias'                 => '/usr/lib/cgi-bin',
@@ -1914,7 +1914,7 @@ describe 'apache::vhost', type: :define do
               {
                 'docroot'         => '/rspec/docroot',
                 'apache_version'  => '2.2',
-                'error_log_format' => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
+                'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
               }
             end
 
@@ -1929,7 +1929,7 @@ describe 'apache::vhost', type: :define do
               {
                 'docroot'          => '/rspec/docroot',
                 'apache_version'   => '2.4',
-                'error_log_format' => [ '[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i' ],
+                'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
               }
             end
 
@@ -1945,9 +1945,9 @@ describe 'apache::vhost', type: :define do
               {
                 'docroot'          => '/rspec/docroot',
                 'apache_version'   => '2.4',
-                'error_log_format' => [ 
+                'error_log_format' => [
                   '[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M',
-                  { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' }, 
+                  { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' },
                   { "[%{uc}t] [R:%L] UA:'%+{User-Agent}i'" => 'request' },
                   { "[%{uc}t] [R:%L] Referer:'%+{Referer}i'" => 'request' },
                   { '[%{uc}t] [C:%{c}L] local\ %a remote\ %A' => 'connection' },
