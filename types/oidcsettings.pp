@@ -21,7 +21,7 @@ type Apache::OIDCSettings = Struct[
     Optional['AuthRequestParams']                       => Pattern['/^[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+(&[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+)*$/'],
     Optional['SSLValidateServer']                       => Enum['On','Off'],
     Optional['UserInfoRefreshInterval']                 => Integer,
-    Optional['JWKSRefreshInterval']                     => Interger,
+    Optional['JWKSRefreshInterval']                     => Integer,
     Optional['UserInfoTokenMethod']                     => Enum['authz_header','post_param'],
     Optional['ProviderAuthRequestMethod']               => Enum['GET','POST'],
     Optional['PublicKeyFiles']                          => String,
