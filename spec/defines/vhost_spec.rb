@@ -259,6 +259,10 @@ describe 'apache::vhost', type: :define do
                   'path'       => '/usr/share/fooscripts$1',
                 },
               ],
+              'limitreqfieldsize'           => 8190,
+              'limitreqfields'              => 100,
+              'limitreqline'                => 8190,
+              'limitreqbody'                => 0,
               'proxy_dest'                  => '/',
               'proxy_pass'                  => [
                 {
@@ -518,6 +522,26 @@ describe 'apache::vhost', type: :define do
             }
           end
           it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+LimitRequestFieldSize 8190$},
+            ) 
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+LimitRequestFields 100$},
+            ) 
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+LimitRequestLine 8190$},
+            ) 
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+LimitRequestBody 0$},
+            ) 
+          }
           it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-aliases') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }

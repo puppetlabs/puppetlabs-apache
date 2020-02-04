@@ -23,3 +23,15 @@
   ProtocolsHonorOrder <%= scope.call_function('apache::bool2httpd', [@protocols_honor_order]) %>
   <%- end -%>
 <% end -%>
+<% if @limitreqfieldsize -%>
+  LimitRequestFieldSize <%= @limitreqfieldsize %>
+<% end -%>
+<% if @limitreqfields -%>
+  LimitRequestFields <%= @limitreqfields %>
+<% end -%>
+<% if @limitreqline -%>
+  LimitRequestLine <%= @limitreqline %>
+<% end -%>
+<% if @limitreqbody -%>
+  LimitRequestBody <%= @limitreqbody %>
+<% end -%>
