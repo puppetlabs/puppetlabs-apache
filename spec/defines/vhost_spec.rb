@@ -525,22 +525,22 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+LimitRequestFieldSize 8190$},
-            ) 
+            )
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+LimitRequestFields 100$},
-            ) 
+            )
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+LimitRequestLine 8190$},
-            ) 
+            )
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+LimitRequestBody 0$},
-            ) 
+            )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-aliases') }
