@@ -137,7 +137,7 @@ Include "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
 <% if @ldap_verify_server_cert -%>
 LDAPVerifyServerCert <%= @ldap_verify_server_cert %>
 <% end -%>
-<% if @ldap_verify_server_cert -%>
+<% if @ldap_trusted_mode -%>
 LDAPTrustedMode <%= @ldap_trusted_mode %>
 <% end -%>
 
