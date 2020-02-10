@@ -1632,6 +1632,36 @@
 # @param oidc_settings
 #   An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf].
 #
+# @param limitreqfields
+#   The `limitreqfields` parameter sets the maximum number of request header fields in
+#   an HTTP request. This directive gives the server administrator greater control over
+#   abnormal client request behavior, which may be useful for avoiding some forms of
+#   denial-of-service attacks. The value should be increased if normal clients see an error
+#   response from the server that indicates too many fields were sent in the request.
+#
+# @param limitreqfieldsize
+#   The `limitreqfieldsize` parameter sets the maximum ammount of _bytes_ that will
+#   be allowed within a request header.
+#
+# @param limitreqline
+#   Limit the size of the HTTP request line that will be accepted from the client
+#   This directive sets the number of bytes that will be allowed on the HTTP
+#   request-line. The LimitRequestLine directive allows the server administrator
+#   to set the limit on the allowed size of a client's HTTP request-line. Since
+#   the request-line consists of the HTTP method, URI, and protocol version, the
+#   LimitRequestLine directive places a restriction on the length of a request-URI
+#   allowed for a request on the server. A server needs this value to be large
+#   enough to hold any of its resource names, including any information that might
+#   be passed in the query part of a GET request.
+#
+# @param limitreqbody
+#   Restricts the total size of the HTTP request body sent from the client
+#   The LimitRequestBody directive allows the user to set a limit on the allowed
+#   size of an HTTP request message body within the context in which the
+#   directive is given (server, per-directory, per-file or per-location). If the
+#   client request exceeds that limit, the server will return an error response
+#   instead of servicing the request.
+#
 define apache::vhost(
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
@@ -1710,6 +1740,10 @@ define apache::vhost(
   Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]] $fallbackresource       = undef,
   $scriptalias                                                                      = undef,
   $scriptaliases                                                                    = [],
+  Optional[Integer] $limitreqfieldsize                                              = undef,
+  Optional[Integer] $limitreqfields                                                 = undef,
+  Optional[Integer] $limitreqline                                                   = undef,
+  Optional[Integer] $limitreqbody                                                   = undef,
   $proxy_dest                                                                       = undef,
   $proxy_dest_match                                                                 = undef,
   $proxy_dest_reverse_match                                                         = undef,
