@@ -8,3 +8,14 @@
 <% if @log_level -%>
   LogLevel <%= @log_level %>
 <% end -%>
+<% if @error_log_format24 -%>
+  <%- @error_log_format24.each do |lfmt| -%>
+    <%- if lfmt.is_a?(Hash) -%>
+      <%- lfmt.each do |fmt, flag| -%>
+  ErrorLogFormat <%= flag %> "<%= fmt %>"
+      <%- end -%>
+    <%- else -%>
+  ErrorLogFormat "<%= lfmt %>"
+    <%- end -%>
+  <%- end -%>
+<% end -%>

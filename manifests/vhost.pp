@@ -216,6 +216,23 @@
 #   parameters has a value. If none of these parameters has a value, given a virtual host 
 #   `example.com`, Puppet defaults to `$logroot/example.com_error_ssl.log` for SSL virtual 
 #   hosts and `$logroot/example.com_error.log` for non-SSL virtual hosts.
+#
+# @param error_log_format
+#   Sets the [ErrorLogFormat](https://httpd.apache.org/docs/current/mod/core.html#errorlogformat)
+#   format specification for error log entries inside virtual host
+#   For example:
+#   ``` puppet
+#   apache::vhost { 'site.name.fdqn':
+#     ...
+#     error_log_format => [
+#       '[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M',
+#       { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' }, 
+#       { "[%{uc}t] [R:%L] UA:'%+{User-Agent}i'" => 'request' },
+#       { "[%{uc}t] [R:%L] Referer:'%+{Referer}i'" => 'request' },
+#       { '[%{uc}t] [C:%{c}L] local\ %a remote\ %A' => 'connection' },
+#     ],
+#   }
+#   ```
 # 
 # @param error_documents
 #   A list of hashes which can be used to override the 
@@ -1732,6 +1749,14 @@ define apache::vhost(
   $error_log_file                                                                   = undef,
   $error_log_pipe                                                                   = undef,
   $error_log_syslog                                                                 = undef,
+  Optional[
+    Array[
+      Variant[
+        String,
+        Hash[String, Enum['connection', 'request']]
+      ]
+    ]
+  ]       $error_log_format                                                         = undef,
   Optional[Pattern[/^((Strict|Unsafe)?\s*(\b(Registered|Lenient)Methods)?\s*(\b(Allow0\.9|Require1\.0))?)$/]] $http_protocol_options = undef,
   $modsec_audit_log                                                                 = undef,
   $modsec_audit_log_file                                                            = undef,
@@ -2040,6 +2065,13 @@ define apache::vhost(
     }
   }
 
+  if versioncmp($apache_version, '2.4') >= 0 {
+    $error_log_format24 = $error_log_format
+  }
+  else {
+    $error_log_format24 = undef
+  }
+
   if $modsec_audit_log == false {
     $modsec_audit_log_destination = undef
   } elsif $modsec_audit_log_file {
@@ -2338,6 +2370,7 @@ define apache::vhost(
 
   # Template uses:
   # - $error_log
+  # - $error_log_format24
   # - $log_level
   # - $error_log_destination
   # - $log_level
