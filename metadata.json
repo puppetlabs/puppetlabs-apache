@@ -84,5 +84,5 @@
   "description": "Module for Apache configuration",
   "pdk-version": "1.16.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates#master",
-  "template-ref": "heads/master-0-g5d52853"
+  "template-ref": "heads/master-0-g88c96ab"
 }
