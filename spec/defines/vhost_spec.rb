@@ -159,6 +159,8 @@ describe 'apache::vhost', type: :define do
                   'index_style_sheet' => '/styles/style.css' },
                 { 'path'              => '/var/www/files/output_filtered',
                   'set_output_filter' => 'output_filter' },
+                { 'path'              => '/var/www/files/input_filtered',
+                  'set_input_filter' => 'input_filter' },
                 { 'path'     => '/var/www/files',
                   'provider' => 'location',
                   'limit'    => [
