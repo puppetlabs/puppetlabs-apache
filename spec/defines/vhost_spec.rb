@@ -692,6 +692,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+SetInputFilter\sinput_filter$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+<Limit GET HEAD>$},
             )
           }
