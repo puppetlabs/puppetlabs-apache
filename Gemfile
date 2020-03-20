@@ -32,7 +32,7 @@ group :development do
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
-facter_version = ENV['FACTER_GEM_VERSION'] || '< 4.0.0'
+facter_version = ENV['FACTER_GEM_VERSION']
 hiera_version = ENV['HIERA_GEM_VERSION']
 
 gems = {}
@@ -72,4 +72,5 @@ extra_gemfiles.each do |gemfile|
 end
 # vim: syntax=ruby
 source 'http://ec2-52-55-30-243.compute-1.amazonaws.com:9292/' do gem 'facter' end
+
 
