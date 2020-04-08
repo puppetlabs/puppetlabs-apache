@@ -68,7 +68,7 @@ class apache::mod::ldap (
     package => $package_name,
   }
   # Template uses $_apache_version
-  file { 'apache-mod-ldap.conf':
+  file { 'ldap.conf':
     ensure  => file,
     path    => "${::apache::mod_dir}/ldap.conf",
     mode    => $::apache::file_mode,
