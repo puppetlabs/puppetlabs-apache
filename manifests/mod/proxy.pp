@@ -19,6 +19,9 @@
 # @param proxy_timeout
 #   Network timeout for proxied requests.
 #
+# @param proxy_iobuffersize
+#   Set the size of internal data throughput buffer
+#
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy.html for additional documentation.
 #
 class apache::mod::proxy (
@@ -28,7 +31,7 @@ class apache::mod::proxy (
   $package_name       = undef,
   $proxy_via          = 'On',
   $proxy_timeout      = undef,
-  $proxyiobuffersize  = undef,
+  $proxy_iobuffersize = undef,
 ) {
   include ::apache
   $_proxy_timeout = $apache::timeout
