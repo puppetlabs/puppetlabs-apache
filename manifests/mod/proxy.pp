@@ -1,33 +1,37 @@
 # @summary
 #   Installs and configures `mod_proxy`.
-# 
+#
 # @param proxy_requests
 #   Enables forward (standard) proxy requests.
-# 
+#
 # @param allow_from
 #   List of IPs allowed to access proxy.
-# 
+#
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.
-# 
+#
 # @param package_name
 #   Name of the proxy package to install.
-# 
+#
 # @param proxy_via
 #   Set local IP address for outgoing proxy connections.
-# 
+#
 # @param proxy_timeout
 #   Network timeout for proxied requests.
-# 
+#
+# @param proxy_iobuffersize
+#   Set the size of internal data throughput buffer
+#
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy.html for additional documentation.
 #
 class apache::mod::proxy (
-  $proxy_requests = 'Off',
-  $allow_from     = undef,
-  $apache_version = undef,
-  $package_name   = undef,
-  $proxy_via      = 'On',
-  $proxy_timeout  = undef,
+  $proxy_requests     = 'Off',
+  $allow_from         = undef,
+  $apache_version     = undef,
+  $package_name       = undef,
+  $proxy_via          = 'On',
+  $proxy_timeout      = undef,
+  $proxy_iobuffersize = undef,
 ) {
   include ::apache
   $_proxy_timeout = $apache::timeout
