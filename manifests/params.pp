@@ -210,6 +210,7 @@ class apache::params inherits ::apache::version {
       'auth_openidc'          => 'mod_auth_openidc',
       'authnz_ldap'           => $::apache::version::distrelease ? {
         '7'     => 'mod_ldap',
+        '8'     => 'mod_ldap',
         default => 'mod_authz_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
