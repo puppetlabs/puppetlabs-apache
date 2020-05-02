@@ -195,8 +195,8 @@
 #   > **Note**: Do not configure this parameter manually without special reason.
 #
 # @param log_level
-#   Changes the error log's verbosity. Valid options are: `alert`, `crit`, `debug`, `emerg`, `error`, 
-#   `info`, `notice` and `warn`.
+#   Configures the apache [LogLevel](https://httpd.apache.org/docs/current/mod/core.html#loglevel) directive
+#   which adjusts the verbosity of the messages recorded in the error logs.
 #
 # @param log_formats
 #   Define additional `LogFormat` directives. Values: A hash, such as:
@@ -520,7 +520,7 @@ class apache (
   $limitreqfields                                                       = '100',
   $logroot                                                              = $::apache::params::logroot,
   $logroot_mode                                                         = $::apache::params::logroot_mode,
-  $log_level                                                            = $::apache::params::log_level,
+  Apache::LogLevel $log_level                                           = $::apache::params::log_level,
   $log_formats                                                          = {},
   $ssl_file                                                             = undef,
   $ports_file                                                           = $::apache::params::ports_file,
@@ -601,8 +601,6 @@ class apache (
       require => Package['httpd'],
     }
   }
-
-  apache::validate_apache_log_level($log_level)
 
   class { '::apache::service':
     service_name    => $service_name,
