@@ -382,6 +382,19 @@
 #   used to allow access to these resources (for example, in a directory block using the 
 #   `directories` parameter).
 #
+# @param enable_varwww_directory
+#   Enables the /var/www directory in httpd.conf
+#
+# @param varwww_directory_options
+#   Array of the desired options for the `/var/www` directory in httpd.conf.
+#
+# @param varwww_directory_secured
+#   Sets the default access policy for the `/` directory in httpd.conf. A value of `false` 
+#   allows access to all resources that are missing a more specific access policy. A value of 
+#   `true` denies access to all resources by default. If `true`, more specific rules must be 
+#   used to allow access to these resources (for example, in a directory block using the 
+#   `directories` parameter).
+#
 # @param vhost_dir
 #   Changes your virtual host configuration files' location.
 #
