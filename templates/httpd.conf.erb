@@ -142,11 +142,11 @@ IncludeOptional "<%= @confd_dir %>/*.conf"
 <%- else -%>
 Include "<%= @confd_dir %>/*.conf"
 <%- end -%>
-<% if @vhost_load_dir != @confd_dir -%>
+<% if @vhost_dir != @confd_dir -%>
 <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-IncludeOptional "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
+IncludeOptional "<%= @vhost_dir %>/<%= @vhost_include_pattern %>"
 <%- else -%>
-Include "<%= @vhost_load_dir %>/<%= @vhost_include_pattern %>"
+Include "<%= @vhost_dir %>/<%= @vhost_include_pattern %>"
 <%- end -%>
 <% end -%>
 <% if @ldap_verify_server_cert -%>
