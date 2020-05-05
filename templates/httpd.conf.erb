@@ -58,6 +58,21 @@ AccessFileName .htaccess
 <%- end -%>
 </Directory>
 
+<%- if @enable_varwww_directory -%>
+<Directory /var/www/>
+  Options <%= Array(@varwww_directory_options).join(' ') %>
+  AllowOverride None
+<%- if @varwww_directory_secured  -%>
+<%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  Require all denied
+<%- else -%>
+  Order deny,allow
+  Deny from all
+<%- end -%>
+<%- end -%>
+</Directory>
+<%- end -%>
+
 <% if @default_charset -%>
 AddDefaultCharset <%= @default_charset %>
 <% end -%>

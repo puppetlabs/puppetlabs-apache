@@ -32,6 +32,9 @@ class apache::params inherits ::apache::version {
   # Default options for / directory
   $root_directory_options = ['FollowSymLinks']
 
+  # Default options for /var/www directory
+  $varwww_directory_options = ['FollowSymLinks']
+
   $vhost_include_pattern = '*'
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
