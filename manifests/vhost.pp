@@ -1735,7 +1735,7 @@ define apache::vhost(
   $logroot_mode                                                                     = undef,
   $logroot_owner                                                                    = undef,
   $logroot_group                                                                    = undef,
-  $log_level                                                                        = undef,
+  Optional[Apache::LogLevel] $log_level                                             = undef,
   Boolean $access_log                                                               = true,
   $access_log_file                                                                  = false,
   $access_log_pipe                                                                  = false,
@@ -1939,10 +1939,6 @@ define apache::vhost(
   }
 
   # Input validation begins
-
-  if $log_level {
-    apache::validate_apache_log_level($log_level)
-  }
 
   if $access_log_file and $access_log_pipe {
     fail("Apache::Vhost[${name}]: 'access_log_file' and 'access_log_pipe' cannot be defined at the same time")
