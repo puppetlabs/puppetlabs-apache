@@ -6,15 +6,15 @@ Puppet::Functions.create_function(:'apache::bool2httpd') do
   #   The value to be converted into a string.
   #
   # @return
-  #   Will return either `On` or `Off` if given a boolean value. Return's a string of any
+  #   Will return either `On` or `Off` if given a boolean value. Returns a string of any
   #   other given value.
   # @example
   #   $trace_enable     = false
   #   $server_signature = 'mail'
   #
-  #   bool2httpd($trace_enable) # returns 'Off'
-  #   bool2httpd($server_signature) # returns 'mail'
-  #   bool2httpd(undef) # returns 'Off'
+  #   apache::bool2httpd($trace_enable) # returns 'Off'
+  #   apache::bool2httpd($server_signature) # returns 'mail'
+  #   apache::bool2httpd(undef) # returns 'Off'
   #
   def bool2httpd(arg)
     return 'Off' if arg.nil? || arg == false || arg =~ %r{false}i || arg == :undef
