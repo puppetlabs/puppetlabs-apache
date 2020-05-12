@@ -1198,6 +1198,8 @@ describe 'apache::vhost define' do
     end
   end
 
+  # IAC-587: These tests do not currently run successfully on certain RHEL OSs due to dependency issues with the
+  # mod_auth_openidc module.
   describe 'auth_oidc', if: (os[:family] == 'ubuntu' && os[:release].to_i > 14 || os[:family] == 'debian') do
     pp = <<-MANIFEST
         class { 'apache': }
