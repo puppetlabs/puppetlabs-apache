@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
+require 'singleton'
+
+class LitmusHelper
+  include Singleton
+  include PuppetLitmus
+end
+
 RSpec.configure do |c|
   # IPv6 is not enabled by default in the new travis-ci Trusty environment (see https://github.com/travis-ci/travis-ci/issues/8891 )
   if ENV['CI'] == 'true'
     c.filter_run_excluding ipv6: true
   end
   c.before :suite do
-    run_shell('puppet module install stahnma/epel')
+    LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
@@ -41,10 +48,10 @@ RSpec.configure do |c|
       }
     }
     PUPPETCODE
-    apply_manifest(pp)
+    LitmusHelper.instance.apply_manifest(pp)
 
     # Make sure selinux is disabled so the tests work.
-    run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
+    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
   end
 end
 
