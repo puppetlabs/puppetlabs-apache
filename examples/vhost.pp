@@ -254,3 +254,9 @@ apache::vhost { 'twentysecond.example.com':
   docroot        => '/var/www/twentysecond',
   rack_base_uris => ['/passengerapp1', '/passengerapp2'],
 }
+
+# Disabled basic vhost
+apache::vhost { 'twentythird.example.com':
+  port    => '80',
+  docroot => '/var/www/twentythird',
+}

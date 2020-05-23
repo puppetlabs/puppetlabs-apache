@@ -1769,6 +1769,7 @@ define apache::vhost (
   $override                                                                         = ['None'],
   $directoryindex                                                                   = '',
   $vhost_name                                                                       = '*',
+  Boolean $enable                                                                   = true,
   $logroot                                                                          = $apache::logroot,
   Enum['directory', 'absent'] $logroot_ensure                                       = 'directory',
   $logroot_mode                                                                     = undef,
@@ -2296,7 +2297,7 @@ define apache::vhost (
   }
   # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
   # needs to be converted into something generic.
-  if $apache::vhost_enable_dir {
+  if $enable and $apache::vhost_enable_dir {
     $vhost_enable_dir = $apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
       'present' => link,
@@ -2312,6 +2313,11 @@ define apache::vhost (
       require => Concat["${priority_real}${filename}.conf"],
       notify  => Class['apache::service'],
     }
+  } elsif !$enable and $apache::vhost_enable_dir {
+    file { "${priority_real}${filename}.conf symlink":
+      ensure => 'absent',
+      path   => "${vhost_enable_dir}/${priority_real}${filename}.conf",
+      notify  => Class['apache::service'],
   }
 
   # Template uses:
