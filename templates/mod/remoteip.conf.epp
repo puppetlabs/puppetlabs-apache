@@ -4,7 +4,7 @@
   Optional[Stdlib::Absolutepath]                             $internal_proxy_list       = undef,
   Optional[String]                                           $proxies_header            = undef,
   Boolean                                                    $proxy_protocol            = undef,
-  Optional[Array[Stdlib::IP::Address]]                       $proxy_protocol_exceptions = undef,
+  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $proxy_protocol_exceptions = undef,
   Optional[Array[Stdlib::IP::Address]]                       $trusted_proxy             = undef,
   Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
 | -%>
