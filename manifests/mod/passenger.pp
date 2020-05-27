@@ -818,7 +818,7 @@ class apache::mod::passenger (
       descr         => 'passenger',
       enabled       => '1',
       gpgcheck      => '0',
-      gpgkey        => 'https://packagecloud.io/phusion/passenger/gpgkey',
+      gpgkey        => 'https://oss-binaries.phusionpassenger.com/auto-software-signing-gpg-key.txt',
       repo_gpgcheck => '1',
       sslcacert     => '/etc/pki/tls/certs/ca-bundle.crt',
       sslverify     => '1',
