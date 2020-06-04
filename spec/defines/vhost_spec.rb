@@ -4,7 +4,7 @@ describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
     on_supported_os.each do |os, facts|
       # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Ubuntu 18.04
-      next if facts[:os]['release']['major'] == '18.04'
+      next if facts[:os]['release']['major'] == '18.04' || facts[:os]['release']['major'] == '20.04'
       next if (facts[:os]['release']['major'] == '7' || facts[:os]['release']['major'] == '8') && facts[:os]['family']['RedHat']
       # next if facts[:os]['name'] == 'SLES'
 
