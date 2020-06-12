@@ -54,7 +54,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('mod_ssl') }
-      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.d/ssl.conf') }
+      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.modules.d/ssl.conf') }
       it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all}) }
     end
     context '6 OS with a custom package_name parameter' do
