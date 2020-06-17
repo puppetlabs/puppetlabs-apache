@@ -171,6 +171,7 @@ class apache::params inherits ::apache::version {
     } else {
       $mod_dir              = $::apache::version::distrelease ? {
         '7'     => "${httpd_dir}/conf.modules.d",
+        '8'     => "${httpd_dir}/conf.modules.d",
         default => "${httpd_dir}/conf.d",
       }
     }
@@ -263,10 +264,12 @@ class apache::params inherits ::apache::version {
     $docroot              = '/var/www/html'
     $alias_icons_path     = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/icons',
+      '8'     => '/usr/share/httpd/icons',
       default => '/var/www/icons',
     }
     $error_documents_path = $::apache::version::distrelease ? {
       '7'     => '/usr/share/httpd/error',
+      '8'     => '/usr/share/httpd/error',
       default => '/var/www/error'
     }
     if $::osfamily == 'RedHat' {

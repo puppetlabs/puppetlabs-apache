@@ -34,7 +34,7 @@ describe 'apache::mod::security', type: :class do
           if facts[:os]['release']['major'].to_i >= 8
             it {
               is_expected.to contain_file('security.conf').with(
-                path: '/etc/httpd/conf.d/security.conf',
+                path: '/etc/httpd/conf.modules.d/security.conf',
               )
             }
           end
