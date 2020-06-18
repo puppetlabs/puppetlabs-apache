@@ -18,6 +18,7 @@
     - ---travis_el
     - travis_deb
     - travis_el7
+    - travis_el8
     complex:
     - collection:
         puppet_collection:
