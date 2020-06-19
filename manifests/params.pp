@@ -199,7 +199,7 @@ class apache::params inherits ::apache::version {
     $suphp_configpath     = undef
     $php_version = $facts['operatingsystemmajrelease'] ? {
         '8'     => '7', # RedHat8
-        default => '5', # RedHat5, RedHat6, RedHat7 
+        default => '5', # RedHat5, RedHat6, RedHat7
       }
     $mod_packages         = {
       # NOTE: The auth_cas module isn't available on RH/CentOS without providing dependency packages provided by EPEL.
@@ -221,7 +221,11 @@ class apache::params inherits ::apache::version {
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
-      'ldap'                  => 'mod_ldap',
+      'ldap'                  => $::apache::version::distrelease ? {
+        '5'     => undef,
+        '6'     => undef,
+        default => 'mod_ldap',
+      },
       'lookup_identity'       => 'mod_lookup_identity',
       'pagespeed'             => 'mod-pagespeed-stable',
       # NOTE: The passenger module isn't available on RH/CentOS without
