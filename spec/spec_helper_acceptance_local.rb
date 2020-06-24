@@ -73,10 +73,11 @@ def apache_settings_hash
     apache['error_log']        = 'error_log'
     apache['suphp_handler']    = 'php5-script'
     apache['suphp_configpath'] = 'undef'
-    if (operatingsystemrelease >= 7 && operatingsystemrelease < 8) && (osfamily == 'redhat')
+    if (operatingsystemrelease >= 7 && operatingsystemrelease < 9) && (osfamily == 'redhat')
       apache['version']     = '2.4'
       apache['mod_dir']     = '/etc/httpd/conf.modules.d'
       apache['mod_ssl_dir'] = apache['confd_dir']
+      apache['mod_ssl_dir'] = apache['mod_dir'] if operatingsystemrelease >= 8
     elsif operatingsystemrelease >= 8 && osfamily == 'redhat'
       apache['version']     = '2.4'
       apache['mod_dir']     = '/etc/httpd/conf.d'
