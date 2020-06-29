@@ -75,7 +75,7 @@ def apache_settings_hash
     apache['suphp_configpath'] = 'undef'
     if operatingsystemrelease >= 8 && osfamily == 'redhat'
       apache['version']     = '2.4'
-      apache['mod_dir']     = '/etc/httpd/conf.d'
+      apache['mod_dir']     = '/etc/httpd/conf.modules.d'
       apache['mod_ssl_dir'] = apache['mod_dir']
     elsif operatingsystemrelease >= 7 && osfamily == 'redhat'
       apache['version']     = '2.4'
