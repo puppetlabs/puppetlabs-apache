@@ -19,6 +19,9 @@ describe 'apache::mod_authnz_ldap', if: os[:family] == 'redhat' && os[:release].
       MANIFEST
          else
            <<-MANIFEST
+        package { 'epel-release':
+          ensure => present,
+        }
         class { 'apache': }
         class { 'apache::mod::authnz_ldap': }
         MANIFEST
