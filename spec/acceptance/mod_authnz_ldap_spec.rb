@@ -5,10 +5,24 @@ apache_hash = apache_settings_hash
 # dependency issues to solve on all supported platforms.
 describe 'apache::mod_authnz_ldap', if: os[:family] == 'redhat' && os[:release].to_i > 6 do
   context 'Default mod_authnz_ldap module installation' do
-    pp = <<-MANIFEST
+    pp = if run_shell("grep 'Oracle Linux Server' /etc/os-release", expect_failures: true).exit_status == 0
+           <<-MANIFEST
+      yumrepo { 'ol7_optional_latest':
+        name 	  => 'ol7_optional_latest',
+        baseurl 	  => 'https://yum.oracle.com/repo/OracleLinux/OL7/optional/latest/x86_64/',
+        gpgkey 	  => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle',
+        gpgcheck => 1,
+        enabled	   => 1,
+      }
       class { 'apache': }
       class { 'apache::mod::authnz_ldap': }
       MANIFEST
+         else
+           <<-MANIFEST
+        class { 'apache': }
+        class { 'apache::mod::authnz_ldap': }
+        MANIFEST
+         end
 
     it 'succeeds in installing the mod_authnz_ldap module' do
       apply_manifest(pp, catch_failures: true)
