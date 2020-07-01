@@ -1200,7 +1200,7 @@ describe 'apache::vhost define' do
 
   # IAC-587: These tests do not currently run successfully on certain RHEL OSs due to dependency issues with the
   # mod_auth_openidc module.
-  describe 'auth_oidc', if: (os[:family] == 'ubuntu' && os[:release].to_i > 14 || os[:family] == 'debian') do
+  describe 'auth_oidc', if: mod_supported_on_platform?('apache::mod::authnz_ldap') do
     pp = <<-MANIFEST
         class { 'apache': }
         apache::vhost { 'test.server':
