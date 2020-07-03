@@ -2,7 +2,38 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v5.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.4.0) (2020-01-21)
+## [v5.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.5.0) (2020-07-01)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.4.0...v5.5.0)
+
+### Added
+
+- Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
+- \(IAC-746\) - Add ubuntu 20.04 support [\#2032](https://github.com/puppetlabs/puppetlabs-apache/pull/2032) ([david22swan](https://github.com/david22swan))
+- Replace legacy `bool2httpd\(\)` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
+- Tidy up `pw\_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
+- Replace validate\_apache\_loglevel\(\) with data type [\#2023](https://github.com/puppetlabs/puppetlabs-apache/pull/2023) ([alexjfisher](https://github.com/alexjfisher))
+- Add ProxyIOBufferSize option [\#2014](https://github.com/puppetlabs/puppetlabs-apache/pull/2014) ([jplindquist](https://github.com/jplindquist))
+- Add support for SetInputFilter directive [\#2007](https://github.com/puppetlabs/puppetlabs-apache/pull/2007) ([HoucemEddine](https://github.com/HoucemEddine))
+- \[MODULES-10530\] Add request limiting directives on virtual host level [\#1996](https://github.com/puppetlabs/puppetlabs-apache/pull/1996) ([aursu](https://github.com/aursu))
+- \[MODULES-10528\] Add ErrorLogFormat directive on virtual host level [\#1995](https://github.com/puppetlabs/puppetlabs-apache/pull/1995) ([aursu](https://github.com/aursu))
+- Add template variables and parameters for ModSecurity Audit Logs [\#1988](https://github.com/puppetlabs/puppetlabs-apache/pull/1988) ([jplindquist](https://github.com/jplindquist))
+- \(MODULES-10432\) Add mod\_auth\_openidc support [\#1987](https://github.com/puppetlabs/puppetlabs-apache/pull/1987) ([asieraguado](https://github.com/asieraguado))
+
+### Fixed
+
+- \(MODULES-10712\) Fix mod\_ldap on RH/CentOS 5 and 6 [\#2041](https://github.com/puppetlabs/puppetlabs-apache/pull/2041) ([h-haaks](https://github.com/h-haaks))
+- Update mod\_dir, alias\_icons\_path, error\_documents\_path for CentOS 8 [\#2038](https://github.com/puppetlabs/puppetlabs-apache/pull/2038) ([initrd](https://github.com/initrd))
+- Ensure switching of thread module works on Debian 10 / Ubuntu 20.04 [\#2034](https://github.com/puppetlabs/puppetlabs-apache/pull/2034) ([tuxmea](https://github.com/tuxmea))
+- MODULES-10586 Centos 8: wrong package used to install mod\_authnz\_ldap [\#2021](https://github.com/puppetlabs/puppetlabs-apache/pull/2021) ([farebers](https://github.com/farebers))
+- Re-add package for fcgid on debian/ubuntu machines [\#2006](https://github.com/puppetlabs/puppetlabs-apache/pull/2006) ([vStone](https://github.com/vStone))
+- Use ldap\_trusted\_mode in conditional [\#1999](https://github.com/puppetlabs/puppetlabs-apache/pull/1999) ([dacron](https://github.com/dacron))
+- Typo in oidcsettings.pp [\#1997](https://github.com/puppetlabs/puppetlabs-apache/pull/1997) ([asieraguado](https://github.com/asieraguado))
+- Fix proxy\_html Module to work on Debian 10 [\#1994](https://github.com/puppetlabs/puppetlabs-apache/pull/1994) ([buchstabensalat](https://github.com/buchstabensalat))
+- \(MODULES-10360\) Fix icon paths for RedHat systems [\#1991](https://github.com/puppetlabs/puppetlabs-apache/pull/1991) ([2and3makes23](https://github.com/2and3makes23))
+- SSLProxyEngine on has to be set before any Proxydirective using it [\#1989](https://github.com/puppetlabs/puppetlabs-apache/pull/1989) ([zivis](https://github.com/zivis))
+
+## [v5.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.4.0) (2020-01-22)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.3.0...v5.4.0)
 
@@ -42,7 +73,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- \(FM-8662\) Correct  in manifests/mod/ssl.pp for SLES 11 [\#1963](https://github.com/puppetlabs/puppetlabs-apache/pull/1963) ([cmccrisken-puppet](https://github.com/cmccrisken-puppet))
+- \(FM-8662\) Correct  in manifests/mod/ssl.pp for SLES 11 [\#1963](https://github.com/puppetlabs/puppetlabs-apache/pull/1963) ([sanfrancrisko](https://github.com/sanfrancrisko))
 - always quote ExpiresDefault in vhost::directories [\#1958](https://github.com/puppetlabs/puppetlabs-apache/pull/1958) ([evgeni](https://github.com/evgeni))
 - MODULES-9904 Fix lbmethod module load order [\#1956](https://github.com/puppetlabs/puppetlabs-apache/pull/1956) ([optiz0r](https://github.com/optiz0r))
 - Add owner, group, file\_mode and show\_diff to apache::custom\_config [\#1942](https://github.com/puppetlabs/puppetlabs-apache/pull/1942) ([treydock](https://github.com/treydock))
@@ -118,7 +149,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(Modules 8141/Modules 8379\) - Addition of support for SLES 15 [\#1862](https://github.com/puppetlabs/puppetlabs-apache/pull/1862) ([david22swan](https://github.com/david22swan))
-- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
 
 ### Fixed
 
@@ -153,6 +183,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - pdksync - \(FM-7392\) - Puppet 6 Testing Changes [\#1838](https://github.com/puppetlabs/puppetlabs-apache/pull/1838) ([pmcmaw](https://github.com/pmcmaw))
 - pdksync - \(MODULES-6805\) metadata.json shows support for puppet 6 [\#1836](https://github.com/puppetlabs/puppetlabs-apache/pull/1836) ([tphoney](https://github.com/tphoney))
+- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
 
 ### Fixed
 
