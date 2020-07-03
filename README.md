@@ -1001,7 +1001,8 @@ The `mod_supported_on_platform` helper method takes the [Apache Module][Apache M
 This functionality can be disabled by setting the `DISABLE_MOD_TEST_EXCLUSION` environment variable.
 When set, all exclusions will be ignored.
 #### Test Support Lifecycle
-Given the breadth of compatible platforms that this module is supported on, and the amount of [Apache Modules][Apache Modules] supported, it is quite common for an [Apache Module's][Apache Modules] test(s) to start failing due to the package or package dependencies being removed from a particular Linux distro's repositories.
-Whilst all reasonable effort will be made by the [IAC Team][IAC Team] to resolve these issues and update setup instructions for a particular [Apache Module][Apache Modules], given the limited time and resources available, it will mean that in some cases, the effort required to continue maintaining a particular module's test(s) and installation instructions exceeds an acceptable limit.
-In these cases, we will begin excluding test(s) from certain platforms using the functionality outlined above.
-**This does not prevent any members within the community from undertaking this task, if they so wish, and the [IAC Team][IAC Team] will be more than happy to assist in this process, as much as we can.**
+The puppetlabs-apache module supports a large number of compatible platforms and [Apache Modules][Apache modules].
+As a result, Apache Module tests can fail because a package or package dependency has been removed from a Linux distribution repository.
+The [IAC Team][IAC Team] will try to resolve these issues and keep instructions updated, but due to limited resources this won’t always be possible.
+In these cases, we will exclude test(s) from certain platforms.
+As always, we welcome help from our community members, and the IAC team is here to assist and answer questions.
