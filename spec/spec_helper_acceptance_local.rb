@@ -1,10 +1,30 @@
 # frozen_string_literal: true
 
 require 'singleton'
+require_relative '../util/apache_mod_platform_support'
 
 class LitmusHelper
   include Singleton
   include PuppetLitmus
+end
+
+class ApacheModTestFilterHelper
+  include Singleton
+
+  def initialize_ampc(os)
+    @ampc = ApacheModPlatformCompatibility.new
+    @ampc.generate_supported_platforms_versions
+    @ampc.register_running_platform(os)
+    @ampc.generate_mod_platform_exclusions
+  end
+
+  def mod_supported_on_platform?(mod)
+    @ampc.mod_supported_on_platform?(mod)
+  end
+
+  def print_parsing_errors
+    @ampc.print_parsing_errors
+  end
 end
 
 RSpec.configure do |c|
@@ -52,6 +72,10 @@ RSpec.configure do |c|
 
     # Make sure selinux is disabled so the tests work.
     LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
+  end
+
+  c.after :suite do
+    ApacheModTestFilterHelper.instance.print_parsing_errors
   end
 end
 
@@ -162,4 +186,9 @@ def apache_settings_hash
     raise 'unable to figure out what apache version'
   end
   apache
+end
+
+def mod_supported_on_platform?(mod)
+  return false if ENV['DISABLE_MOD_TEST_EXCLUSION']
+  ApacheModTestFilterHelper.instance.mod_supported_on_platform?(mod)
 end

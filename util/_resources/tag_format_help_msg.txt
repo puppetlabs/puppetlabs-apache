@@ -1,0 +1,22 @@
+Tags to mark an Apache MOD as unsupported on a specific OS version must be in the following format:
+
+# @note Unsupported platforms: OS: ver, ver; OS: ver, ver, ver; OS: all'
+class apache::mod::foobar {
+...
+
+For example:
+# @note Unsupported platforms: RedHat: 5, 6; Ubuntu: 14.04; SLES: all; Scientific: 11 SP1'
+class apache::mod::actions {
+...
+
+- All OS/Version declarations must be preceded with '@note Unsupported platforms:'
+- The tag must be declared ABOVE the class declaration (i.e. not as footer at the bottom of the file)
+- Each OS/Version declaration must be separated by semicolons (;)
+- Each version must be separated by a comma (,)
+- Versions CANNOT be declared in ranges (e.g. 'RedHat:5-7'), they should be explicitly declared (e.g. 'RedHat:5,6,7')
+- However, to declare all versions of an OS as unsupported, use the word 'all' (e.g. SLES:all)
+- OSs with word characters as part of their versions are acceptable (e.g. 'Scientific: 11 SP1, 11 SP2, 12, 13')
+- Spaces are permitted between OS/Version declarations and version numbers within a declaration
+- Refer to the 'operatingsystem_support' values in the metadata.json to find the acceptable OS name and version syntax:
+--- E.g. OracleLinux OR oraclelinux, not: [Oracle, OraLinux]
+--- E.g. RedHat OR redhat, not: [Red Hat Enterprise Linux, RHEL, Red Hat]

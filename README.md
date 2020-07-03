@@ -129,6 +129,7 @@
 [Hash]: https://docs.puppet.com/puppet/latest/reference/lang_data_hash.html
 [`HttpProtocolOptions`]: http://httpd.apache.org/docs/current/mod/core.html#httpprotocoloptions
 
+[IAC Team]: https://puppetlabs.github.io/iac/
 [`IncludeOptional`]: https://httpd.apache.org/docs/current/mod/core.html#includeoptional
 [`Include`]: https://httpd.apache.org/docs/current/mod/core.html#include
 [interval syntax]: https://httpd.apache.org/docs/current/mod/mod_expires.html#AltSyn
@@ -933,12 +934,13 @@ To check the code coverage, run:
 COVERAGE=yes bundle exec rake parallel_spec
 ```
 
-## Development
+
 
 Acceptance tests for this module leverage [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
 To run the acceptance tests follow the instructions [here](https://github.com/puppetlabs/puppet_litmus/wiki/Tutorial:-use-Litmus-to-execute-acceptance-tests-with-a-sample-module-(MoTD)#install-the-necessary-gems-for-the-module).
 You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
 
+### Development Support
 If you run into an issue with this module, or if you would like to request a feature, please [file a ticket](https://tickets.puppetlabs.com/browse/MODULES/).
 Every Monday the Puppet IA Content Team has [office hours](https://puppet.com/community/office-hours) in the [Puppet Community Slack](http://slack.puppet.com/), alternating between an EMEA friendly time (1300 UTC) and an Americas friendly time (0900 Pacific, 1700 UTC).
 
@@ -949,3 +951,57 @@ If you submit a change to this module, be sure to regenerate the reference docum
 ```bash
 puppet strings generate --format markdown --out REFERENCE.md
 ```
+
+### Apache MOD Test & Support Lifecycle
+#### Adding Support for a new Apache MOD
+Support for new [Apache Modules] can be added under the [`apache::mod`] namespace.
+Acceptance tests should be added for each new [Apache Module][Apache Modules] added.
+Ideally, the acceptance tests should run on all compatible platforms that this module is supported on (see `metdata.json`), however there are cases when a more niche module is difficult to set up and install on a particular Linux distro.
+This could be for one or more of the following reasons:
+- Package not available in default repositories of distro
+- Package dependencies not available in default repositories of distro
+- Package (and/or its dependencies) are only available in a specific version of an OS
+
+In these cases, it is possible to exclude a module from a test platform using a specific tag, defined above the class declaration:
+```puppet
+# @note Unsupported platforms: OS: ver, ver; OS: ver, ver, ver; OS: all
+class apache::mod::foobar {
+...
+}
+```
+For example:
+```puppet
+# @note Unsupported platforms: RedHat: 5, 6; Ubuntu: 14.04; SLES: all; Scientific: 11 SP1
+class apache::mod::actions {
+...
+}
+```
+Please be aware of the following format guidelines for the tag:
+- All OS/Version declarations must be preceded with `@note Unsupported platforms:`
+- The tag must be declared ABOVE the class declaration (i.e. not as footer at the bottom of the file)
+- Each OS/Version declaration must be separated by semicolons (`;`)
+- Each version must be separated by a comma (`,`)
+- Versions CANNOT be declared in ranges (e.g. `RedHat:5-7`), they should be explicitly declared (e.g. `RedHat:5,6,7`)
+- However, to declare all versions of an OS as unsupported, use the word `all` (e.g. `SLES:all`)
+- OSs with word characters as part of their versions are acceptable (e.g. `Scientific: 11 SP1, 11 SP2, 12, 13`)
+- Spaces are permitted between OS/Version declarations and version numbers within a declaration
+- Refer to the `operatingsystem_support` values in the `metadata.json` to find the acceptable OS name and version syntax:
+  - E.g. `OracleLinux` OR `oraclelinux`, not: `Oracle` or `OraLinux`
+  - E.g. `RedHat` OR `redhat`, not: `Red Hat Enterprise Linux`, `RHEL`, or `Red Hat`
+
+If the tag is incorrectly formatted, a warning will be printed out at the end of the test run, indicating what tag(s) could not be parsed.
+This will not halt the execution of other tests.  
+
+Once the class is tagged, it is possible to exclude a test for that particular [Apache MOD][Apache Modules] using RSpec's filtering and a helper method:
+```ruby
+describe 'auth_oidc', if: mod_supported_on_platform('apache::mod::auth_openidc') do
+```
+The `mod_supported_on_platform` helper method takes the [Apache Module][Apache Modules] class definition as defined in the manifests under `manifest/mod`.
+
+This functionality can be disabled by setting the `DISABLE_MOD_TEST_EXCLUSION` environment variable.
+When set, all exclusions will be ignored.
+#### Test Support Lifecycle
+Given the breadth of compatible platforms that this module is supported on, and the amount of [Apache Modules][Apache Modules] supported, it is quite common for an [Apache Module's][Apache Modules] test(s) to start failing due to the package or package dependencies being removed from a particular Linux distro's repositories.
+Whilst all reasonable effort will be made by the [IAC Team][IAC Team] to resolve these issues and update setup instructions for a particular [Apache Module][Apache Modules], given the limited time and resources available, it will mean that in some cases, the effort required to continue maintaining a particular module's test(s) and installation instructions exceeds an acceptable limit.
+In these cases, we will begin excluding test(s) from certain platforms using the functionality outlined above.
+**This does not prevent any members within the community from undertaking this task, if they so wish, and the [IAC Team][IAC Team] will be more than happy to assist in this process, as much as we can.**
