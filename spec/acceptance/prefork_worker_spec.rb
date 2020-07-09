@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
-describe 'prefork_worker_spec.rb', unless: (os[:family] =~ %r{sles}) do
+describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::event') do
   describe 'apache::mod::event class' do
     describe 'running puppet code' do
       let(:pp) do

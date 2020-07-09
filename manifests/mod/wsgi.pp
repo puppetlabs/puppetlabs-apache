@@ -26,7 +26,7 @@
 #   Defines the path to the mod_wsgi shared object (.so) file.
 # 
 # @see https://github.com/GrahamDumpleton/mod_wsgi for additional documentation.
-#
+# @note Unsupported platforms: SLES: all; RedHat: all; CentOS: all; OracleLinux: all; Scientific: all
 class apache::mod::wsgi (
   $wsgi_restrict_embedded = undef,
   $wsgi_socket_prefix     = $::apache::params::wsgi_socket_prefix,

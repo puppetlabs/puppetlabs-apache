@@ -3,6 +3,7 @@
 # 
 # @todo
 #   Add docs
+# @note Unsupported platforms: SLES: all
 class apache::mod::php (
   $package_name     = undef,
   $package_ensure   = 'present',
