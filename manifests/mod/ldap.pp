@@ -47,7 +47,7 @@
 #   }
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_ldap.html for additional documentation.
-#
+# @note Unsupported platforms: CentOS: 8; RedHat: 8
 class apache::mod::ldap (
   $apache_version                                  = undef,
   $package_name                                    = undef,

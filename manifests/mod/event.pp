@@ -45,7 +45,7 @@
 #   apache::mod::worker on the same server.
 #
 # @see https://httpd.apache.org/docs/current/mod/event.html for additional documentation.
-#
+# @note Unsupported platforms: SLES: all
 class apache::mod::event (
   $startservers           = '2',
   $maxclients             = '150',

@@ -22,7 +22,7 @@
 #   See the [Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/tech-info/sp-install-guide).
 #
 # @see https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig for additional documentation.
-#
+# @note Unsupported platforms: RedHat: all; CentOS: all; Scientific: all; SLES: all; Debian: 7, 8; Ubuntu: all; OracleLinux: all
 class apache::mod::shib (
   $suppress_warning = false,
   $mod_full_path    = undef,

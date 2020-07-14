@@ -94,7 +94,7 @@ describe 'apache parameters' do
 
   # IAC-785: The Shibboleth mod does not seem to be configured correctly on Debian 10 systems. We should reenable
   # this test on Debian 10 systems once the issue has been RCA'd and resolved.
-  describe 'conf_enabled => /etc/apache2/conf-enabled', if: os[:family] == 'debian' && os[:release].to_i < 10 do
+  describe 'conf_enabled => /etc/apache2/conf-enabled', skip: 'IAC-785' do
     pp = <<-MANIFEST
         class { 'apache':
           purge_configs   => false,

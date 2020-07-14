@@ -752,7 +752,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'parameter tests', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
+  describe 'parameter tests', if: mod_supported_on_platform?('apache::mod::itk') do
     pp = <<-MANIFEST
       class { 'apache': }
       host { 'test.itk': ip => '127.0.0.1' }
@@ -1103,7 +1103,7 @@ describe 'apache::vhost define' do
   end
 
   describe 'wsgi' do
-    context 'filter on OS', unless: (os[:family] =~ %r{sles|redhat}) do
+    context 'filter on OS', if: mod_supported_on_platform?('apache::mod::wsgi') do
       pp = <<-MANIFEST
       class { 'apache': }
       class { 'apache::mod::wsgi': }

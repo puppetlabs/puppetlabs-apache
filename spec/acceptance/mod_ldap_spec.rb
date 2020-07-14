@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 
-describe 'apache::mod::ldap', unless: os[:family] == 'redhat' && os[:release].to_i >= 8 do
+describe 'apache::mod::ldap', if: mod_supported_on_platform?('apache::mod::ldap') do
   context 'Default ldap module installation' do
     pp = <<-MANIFEST
         class { 'apache': }

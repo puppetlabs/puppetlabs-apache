@@ -28,7 +28,7 @@
 #   Used to verify that the Apache version you have requested is compatible with the module.
 # 
 # @see http://mpm-itk.sesse.net for additional documentation.
-#
+# @note Unsupported platforms: CentOS: 8; RedHat: 8; SLES: all
 class apache::mod::itk (
   $startservers        = '8',
   $minspareservers     = '5',

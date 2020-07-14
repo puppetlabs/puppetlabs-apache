@@ -16,7 +16,7 @@ end
 
 # IAC-787: The http-itk mod package is not available in any of the standard RHEL/CentOS 8.x repos. Disable this test
 # on those platforms until we can find a suitable source for this package.
-describe 'apache::mod::itk class', if: service_name, unless: os[:family] == 'redhat' && os[:release].to_i >= 8 do
+describe 'apache::mod::itk class', if: service_name && mod_supported_on_platform?('apache::mod::itk') do
   describe 'running puppet code' do
     let(:pp) do
       case variant
