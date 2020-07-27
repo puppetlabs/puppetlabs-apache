@@ -248,7 +248,10 @@ class apache::params inherits ::apache::version {
       # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
       'shibboleth'            => 'shibboleth',
       'ssl'                   => 'mod_ssl',
-      'wsgi'                  => 'mod_wsgi',
+      'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
+        '8'     => 'python3-mod_wsgi', # RedHat8
+        default => 'mod_wsgi',         # RedHat5, RedHat6, RedHat7
+      },
       'dav_svn'               => 'mod_dav_svn',
       'suphp'                 => 'mod_suphp',
       'xsendfile'             => 'mod_xsendfile',
