@@ -197,7 +197,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
-    $php_version = $facts['operatingsystemmajrelease'] ? {
+    $php_version = $::apache::version::distrelease ? {
         '8'     => '7', # RedHat8
         default => '5', # RedHat5, RedHat6, RedHat7
       }
@@ -248,7 +248,7 @@ class apache::params inherits ::apache::version {
       # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
       'shibboleth'            => 'shibboleth',
       'ssl'                   => 'mod_ssl',
-      'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
+      'wsgi'                  => $::apache::version::distrelease ? {
         '8'     => 'python3-mod_wsgi', # RedHat8
         default => 'mod_wsgi',         # RedHat5, RedHat6, RedHat7
       },
