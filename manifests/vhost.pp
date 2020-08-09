@@ -657,6 +657,10 @@
 #   Sets [PassengerAppGroupName](https://www.phusionpassenger.com/library/config/apache/reference/#passengerappgroupname), 
 #    the name of the application group that the current application should belong to.
 # 
+# @param passenger_app_start_command
+#   Sets [PassengerAppStartCommand](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappstartcommand),
+#    how Passenger should start your app on a specific port.
+#
 # @param passenger_app_type
 #   Sets [PassengerAppType](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapptype), 
 #    to force Passenger to recognize the application as a specific type.
@@ -791,12 +795,20 @@
 # @param passenger_sticky_sessions_cookie_name
 #   Sets [PassengerStickySessionsCookieName](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessionscookiename), 
 #   to specify the name of the sticky sessions cookie.
+#
+# @param passenger_sticky_sessions_cookie_attributes
+#   Sets [PassengerStickySessionsCookieAttributes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookieattributes),
+#   the attributes of the sticky sessions cookie.
 # 
 # @param passenger_allow_encoded_slashes
 #   Sets [PassengerAllowEncodedSlashes](https://www.phusionpassenger.com/library/config/apache/reference/#passengerallowencodedslashes), 
 #   to allow URLs with encoded slashes. Please note that this feature will not work properly
 #   unless Apache's `AllowEncodedSlashes` is also enabled.
 # 
+# @param passenger_app_log_file
+#   Sets [PassengerAppLogFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapplogfile),
+#   app specific messages logged to a different file in addition to Passenger log file.
+#
 # @param passenger_debugger
 #   Sets [PassengerDebugger](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdebugger), 
 #   to turn support for Ruby application debugging on or off. 
@@ -1854,6 +1866,7 @@ define apache::vhost(
   Optional[String] $passenger_app_env                                               = undef,
   Optional[Stdlib::Absolutepath] $passenger_app_root                                = undef,
   Optional[String] $passenger_app_group_name                                        = undef,
+  Optional[String] $passenger_app_start_command                                     = undef,
   Optional[Enum['meteor', 'node', 'rack', 'wsgi']] $passenger_app_type              = undef,
   Optional[String] $passenger_startup_file                                          = undef,
   Optional[String] $passenger_restart_dir                                           = undef,
@@ -1884,7 +1897,9 @@ define apache::vhost(
   Optional[Integer] $passenger_max_request_queue_time                               = undef,
   Optional[Boolean] $passenger_sticky_sessions                                      = undef,
   Optional[String] $passenger_sticky_sessions_cookie_name                           = undef,
+  Optional[String] $passenger_sticky_sessions_cookie_attributes                     = undef,
   Optional[Boolean] $passenger_allow_encoded_slashes                                = undef,
+  Optional[String] $passenger_app_log_file                                          = undef,
   Optional[Boolean] $passenger_debugger                                             = undef,
   Optional[Integer] $passenger_lve_min_uid                                          = undef,
   $add_default_charset                                                              = undef,

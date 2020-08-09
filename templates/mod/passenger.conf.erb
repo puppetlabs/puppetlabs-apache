@@ -4,6 +4,9 @@
   <%- if @passenger_allow_encoded_slashes -%>
   PassengerAllowEncodedSlashes <%= @passenger_allow_encoded_slashes %>
   <%- end -%>
+  <%- if @passenger_anonymous_telemetry_proxy -%>
+  PassengerAnonymousTelemetryProxy <%= @passenger_anonymous_telemetry_proxy %>
+  <%- end -%>
   <%- if @passenger_app_env -%>
   PassengerAppEnv <%= @passenger_app_env %>
   <%- end -%>
@@ -45,6 +48,12 @@
   <%- end -%>
   <%- if @passenger_default_user -%>
   PassengerDefaultUser <%= @passenger_default_user %>
+  <%- end -%>
+  <%- unless @passenger_disable_anonymous_telemetry.nil? -%>
+  PassengerDisableAnonymousTelemetry <%= scope.call_function('apache::bool2httpd', [@passenger_disable_anonymous_telemetry]) %>
+  <%- end -%>
+  <%- unless @passenger_disable_log_prefix.nil? -%>
+  PassengerDisableLogPrefix <%= scope.call_function('apache::bool2httpd', [@passenger_disable_log_prefix]) %>
   <%- end -%>
   <%- if @passenger_disable_security_update_check -%>
   PassengerDisableSecurityUpdateCheck <%= @passenger_disable_security_update_check %>
@@ -162,6 +171,9 @@
   <%- if @passenger_socket_backlog -%>
   PassengerSocketBacklog <%= @passenger_socket_backlog %>
   <%- end -%>
+  <%- if @passenger_spawn_dir -%>
+  PassengerSpawnDir "<%= @passenger_spawn_dir %>"
+  <%- end -%>
   <%- if @passenger_spawn_method -%>
   PassengerSpawnMethod <%= @passenger_spawn_method %>
   <%- end -%>
@@ -179,6 +191,9 @@
   <%- end -%>
   <%- if @passenger_sticky_sessions_cookie_name -%>
   PassengerStickySessionsCookieName <%= @passenger_sticky_sessions_cookie_name %>
+  <%- end -%>
+  <%- if @passenger_sticky_sessions_cookie_attributes -%>
+  PassengerStickySessionsCookieAttributes "<%= @passenger_sticky_sessions_cookie_attributes %>"
   <%- end -%>
   <%- if @passenger_thread_count -%>
   PassengerThreadCount <%= @passenger_thread_count %>
