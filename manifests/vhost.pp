@@ -1980,7 +1980,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_group or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
+  if $passenger_spawn_method != undef or $passenger_app_root != undef or $passenger_app_env != undef or $passenger_ruby != undef or $passenger_min_instances != undef or $passenger_max_requests != undef or $passenger_start_timeout != undef or $passenger_pre_start != undef or $passenger_user != undef or $passenger_group != undef or $passenger_high_performance != undef or $passenger_nodejs != undef or $passenger_sticky_sessions != undef or $passenger_startup_file != undef {
     include ::apache::mod::passenger
   }
 
@@ -2705,7 +2705,7 @@ define apache::vhost(
   # - $passenger_nodejs
   # - $passenger_sticky_sessions
   # - $passenger_startup_file
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_user or $passenger_group or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
+  if $passenger_spawn_method != undef or $passenger_app_root != undef or $passenger_app_env != undef or $passenger_ruby != undef or $passenger_min_instances != undef or $passenger_start_timeout != undef or $passenger_user != undef or $passenger_group != undef or $passenger_nodejs != undef or $passenger_sticky_sessions != undef or $passenger_startup_file != undef {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
