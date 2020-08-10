@@ -1995,7 +1995,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_spawn_method != undef or $passenger_app_root != undef or $passenger_app_env != undef or $passenger_ruby != undef or $passenger_min_instances != undef or $passenger_max_requests != undef or $passenger_start_timeout != undef or $passenger_pre_start != undef or $passenger_user != undef or $passenger_group != undef or $passenger_high_performance != undef or $passenger_nodejs != undef or $passenger_sticky_sessions != undef or $passenger_startup_file != undef {
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     include ::apache::mod::passenger
   }
 
@@ -2708,19 +2708,50 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $passenger_spawn_method
-  # - $passenger_app_root
-  # - $passenger_app_env
-  # - $passenger_ruby
-  # - $passenger_min_instances
-  # - $passenger_max_requests
+  # - $passenger_enabled
   # - $passenger_start_timeout
+  # - $passenger_ruby
+  # - $passenger_python
+  # - $passenger_nodejs
+  # - $passenger_meteor_app_settings
+  # - $passenger_app_env
+  # - $passenger_app_root
+  # - $passenger_app_group_name
+  # - $passenger_app_start_command
+  # - $passenger_app_type
+  # - $passenger_startup_file
+  # - $passenger_restart_dir
+  # - $passenger_spawn_method
+  # - $passenger_load_shell_envvars
+  # - $passenger_rolling_restarts
+  # - $passenger_resist_deployment_errors
+  # - $passenger_min_instances
+  # - $passenger_max_instances
+  # - $passenger_max_preloader_idle_time
+  # - $passenger_force_max_concurrent_requests_per_process
+  # - $passenger_concurrency_model
+  # - $passenger_thread_count
+  # - $passenger_high_performance
+  # - $passenger_max_request_queue_size
+  # - $passenger_max_request_queue_time
   # - $passenger_user
   # - $passenger_group
-  # - $passenger_nodejs
+  # - $passenger_friendly_error_pages
+  # - $passenger_buffer_upload
+  # - $passenger_buffer_response
+  # - $passenger_allow_encoded_slashes
+  # - $passenger_lve_min_uid
+  # - $passenger_base_uri
+  # - $passenger_error_override
   # - $passenger_sticky_sessions
-  # - $passenger_startup_file
-  if $passenger_spawn_method != undef or $passenger_app_root != undef or $passenger_app_env != undef or $passenger_ruby != undef or $passenger_min_instances != undef or $passenger_start_timeout != undef or $passenger_user != undef or $passenger_group != undef or $passenger_nodejs != undef or $passenger_sticky_sessions != undef or $passenger_startup_file != undef {
+  # - $passenger_sticky_sessions_cookie_name
+  # - $passenger_sticky_sessions_cookie_attributes
+  # - $passenger_app_log_file
+  # - $passenger_debugger
+  # - $passenger_max_requests
+  # - $passenger_max_request_time
+  # - $passenger_memory_limit
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
