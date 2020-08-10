@@ -301,7 +301,7 @@
 #   - Around 08/20/2017 UnionStation was discontinued options were removed.
 #   - As of 08/20/2017 there are 77 available/deprecated/removed settings.
 #
-# @see https://www.phusionpassenger.com/library/config/apache/reference/ for additional documentation.
+# @see https://www.phusionpassenger.com/docs/references/config_reference/apache/ for additional documentation.
 #
 class apache::mod::passenger (
   $manage_repo                                                                               = true,
