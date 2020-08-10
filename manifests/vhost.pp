@@ -624,185 +624,197 @@
 #   using the PassengerEnabled directive with the PassengerHighPerformance directive.
 # 
 # @param passenger_base_uri
-#   Sets [PassengerBaseURI](https://www.phusionpassenger.com/library/config/apache/reference/#passengerbase_rui), 
+#   Sets [PassengerBaseURI](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbase_rui),
 #    to specify that the given URI is a distinct application served by Passenger.
 # 
 # @param passenger_ruby
-#   Sets [PassengerRuby](https://www.phusionpassenger.com/library/config/apache/reference/#passengerruby), 
+#   Sets [PassengerRuby](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerruby),
 #   specifying the Ruby interpreter to use when serving the relevant web applications.
 # 
 # @param passenger_python
-#   Sets [PassengerPython](https://www.phusionpassenger.com/library/config/apache/reference/#passengerpython), 
+#   Sets [PassengerPython](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpython),
 #   specifying the Python interpreter to use when serving the relevant web applications.
 # 
 # @param passenger_nodejs
-#   Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/library/config/apache/reference/#passengernodejs), 
+#   Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengernodejs),
 #   specifying Node.js command to use when serving the relevant web applications.
 # 
 # @param passenger_meteor_app_settings
-#   Sets [PassengerMeteorAppSettings](https://www.phusionpassenger.com/library/config/apache/reference/#passengermeteorappsettings), 
+#   Sets [PassengerMeteorAppSettings](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermeteorappsettings),
 #   specifying a JSON file with settings for the application when using a Meteor 
 #   application in non-bundled mode.
 # 
 # @param passenger_app_env
-#   Sets [PassengerAppEnv](https://www.phusionpassenger.com/library/config/apache/reference/#passengerappenv), 
+#   Sets [PassengerAppEnv](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappenv),
 #   the environment for the Passenger application. If not specified, defaults to the global 
 #   setting or 'production'.
 # 
 # @param passenger_app_root
-#   Sets [PassengerRoot](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapproot), 
+#   Sets [PassengerRoot](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapproot),
 #   the location of the Passenger application root if different from the DocumentRoot.
 # 
 # @param passenger_app_group_name
-#   Sets [PassengerAppGroupName](https://www.phusionpassenger.com/library/config/apache/reference/#passengerappgroupname), 
+#   Sets [PassengerAppGroupName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappgroupname),
 #    the name of the application group that the current application should belong to.
 # 
+# @param passenger_app_start_command
+#   Sets [PassengerAppStartCommand](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappstartcommand),
+#    how Passenger should start your app on a specific port.
+#
 # @param passenger_app_type
-#   Sets [PassengerAppType](https://www.phusionpassenger.com/library/config/apache/reference/#passengerapptype), 
+#   Sets [PassengerAppType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapptype),
 #    to force Passenger to recognize the application as a specific type.
 # 
 # @param passenger_startup_file
-#   Sets the [PassengerStartupFile](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstartupfile) 
+#   Sets the [PassengerStartupFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstartupfile),
 #   path. This path is relative to the application root.
 # 
 # @param passenger_restart_dir
-#   Sets the [PassengerRestartDir](https://www.phusionpassenger.com/library/config/apache/reference/#passengerrestartdir) 
+#   Sets the [PassengerRestartDir](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrestartdir),
 #    to customize the directory in which `restart.txt` is searched for.
 # 
 # @param passenger_spawn_method
-#   Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/library/config/apache/reference/#passengerspawnmethod), 
+#   Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerspawnmethod),
 #   whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 # 
 # @param passenger_load_shell_envvars
-#   Sets [PassengerLoadShellEnvvars](https://www.phusionpassenger.com/library/config/apache/reference/#passengerloadshellenvvars), 
+#   Sets [PassengerLoadShellEnvvars](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerloadshellenvvars),
 #   to enable or disable the loading of shell environment variables before spawning the application.
 # 
 # @param passenger_rolling_restarts
-#   Sets [PassengerRollingRestarts](https://www.phusionpassenger.com/library/config/apache/reference/#passengerrollingrestarts), 
+#   Sets [PassengerRollingRestarts](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrollingrestarts),
 #   to enable or disable support for zero-downtime application restarts through `restart.txt`.
 # 
 # @param passenger_resist_deployment_errors
-#   Sets [PassengerResistDeploymentErrors](https://www.phusionpassenger.com/library/config/apache/reference/#passengerresistdeploymenterrors), 
+#   Sets [PassengerResistDeploymentErrors](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerresistdeploymenterrors),
 #   to enable or disable resistance against deployment errors.
 # 
 # @param passenger_user
-#   Sets [PassengerUser](https://www.phusionpassenger.com/library/config/apache/reference/#passengeruser), 
+#   Sets [PassengerUser](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeruser),
 #   the running user for sandboxing applications.
 # 
 # @param passenger_group
-#   Sets [PassengerGroup](https://www.phusionpassenger.com/library/config/apache/reference/#passengergroup), 
+#   Sets [PassengerGroup](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengergroup),
 #   the running group for sandboxing applications.
 # 
 # @param passenger_friendly_error_pages
-#   Sets [PassengerFriendlyErrorPages](https://www.phusionpassenger.com/library/config/apache/reference/#passengerfriendlyerrorpages), 
+#   Sets [PassengerFriendlyErrorPages](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerfriendlyerrorpages),
 #   which can display friendly error pages whenever an application fails to start. This 
 #   friendly error page presents the startup error message, some suggestions for solving 
 #   the problem, a backtrace and a dump of the environment variables.
 # 
 # @param passenger_min_instances
-#   Sets [PassengerMinInstances](https://www.phusionpassenger.com/library/config/apache/reference/#passengermininstances), 
+#   Sets [PassengerMinInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermininstances),
 #   the minimum number of application processes to run.
 # 
 # @param passenger_max_instances
-#   Sets [PassengerMaxInstances](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxinstances), 
+#   Sets [PassengerMaxInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxinstances),
 #   the maximum number of application processes to run.
 # 
 # @param passenger_max_preloader_idle_time
-#   Sets [PassengerMaxPreloaderIdleTime](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxpreloaderidletime), 
+#   Sets [PassengerMaxPreloaderIdleTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxpreloaderidletime),
 #   the maximum amount of time the preloader waits before shutting down an idle process.
 # 
 # @param passenger_force_max_concurrent_requests_per_process
-#   Sets [PassengerForceMaxConcurrentRequestsPerProcess](https://www.phusionpassenger.com/library/config/apache/reference/#passengerforcemaxconcurrentrequestsperprocess), 
+#   Sets [PassengerForceMaxConcurrentRequestsPerProcess](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerforcemaxconcurrentrequestsperprocess),
 #   the maximum amount of concurrent requests the application can handle per process.
 # 
 # @param passenger_start_timeout
-#   Sets [PassengerStartTimeout](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstarttimeout), 
+#   Sets [PassengerStartTimeout](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstarttimeout),
 #   the timeout for the application startup.
 # 
 # @param passenger_concurrency_model
-#   Sets [PassengerConcurrencyModel](https://www.phusionpassenger.com/library/config/apache/reference/#passengerconcurrencyodel), 
+#   Sets [PassengerConcurrencyModel](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerconcurrencyodel),
 #   to specify the I/O concurrency model that should be used for Ruby application processes. 
 #   Passenger supports two concurrency models:<br />
 #   * `process` – single-threaded, multi-processed I/O concurrency.
 #   * `thread` – multi-threaded, multi-processed I/O concurrency.
 # 
 # @param passenger_thread_count
-#   Sets [PassengerThreadCount](https://www.phusionpassenger.com/library/config/apache/reference/#passengerthreadcount), 
+#   Sets [PassengerThreadCount](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerthreadcount),
 #   the number of threads that Passenger should spawn per Ruby application process.<br />
 #   This option only has effect if PassengerConcurrencyModel is `thread`.
 # 
 # @param passenger_max_requests
-#   Sets [PassengerMaxRequests](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequests), 
+#   Sets [PassengerMaxRequests](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequests),
 #   the maximum number of requests an application process will process.
 # 
 # @param passenger_max_request_time
-#   Sets [PassengerMaxRequestTime](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequesttime), 
+#   Sets [PassengerMaxRequestTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequesttime),
 #   the maximum amount of time, in seconds, that an application process may take to 
 #   process a request.
 # 
 # @param passenger_memory_limit
-#   Sets [PassengerMemoryLimit](https://www.phusionpassenger.com/library/config/apache/reference/#passengermemorylimit), 
+#   Sets [PassengerMemoryLimit](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermemorylimit),
 #   the maximum amount of memory that an application process may use, in megabytes.
 # 
 # @param passenger_stat_throttle_rate
-#   Sets [PassengerStatThrottleRate](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstatthrottlerate), 
+#   Sets [PassengerStatThrottleRate](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstatthrottlerate),
 #   to set a limit, in seconds, on how often Passenger will perform it's filesystem checks.
 # 
 # @param passenger_pre_start
-#   Sets [PassengerPreStart](https://www.phusionpassenger.com/library/config/apache/reference/#passengerprestart), 
+#   Sets [PassengerPreStart](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerprestart),
 #   the URL of the application if pre-starting is required.
 # 
 # @param passenger_high_performance
-#   Sets [PassengerHighPerformance](https://www.phusionpassenger.com/library/config/apache/reference/#passengerhighperformance), 
+#   Sets [PassengerHighPerformance](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerhighperformance),
 #   to enhance performance in return for reduced compatibility.
 # 
 # @param passenger_buffer_upload
-#   Sets [PassengerBufferUpload](https://www.phusionpassenger.com/library/config/apache/reference/#passengerbufferupload),
+#   Sets [PassengerBufferUpload](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferupload),
 #   to buffer HTTP client request bodies before they are sent to the application.
 # 
 # @param passenger_buffer_response
-#   Sets [PassengerBufferResponse](https://www.phusionpassenger.com/library/config/apache/reference/#passengerbufferresponse),
+#   Sets [PassengerBufferResponse](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferresponse),
 #   to buffer Happlication-generated responses.
 # 
 # @param passenger_error_override
-#   Sets [PassengerErrorOverride](https://www.phusionpassenger.com/library/config/apache/reference/#passengererroroverride),
+#   Sets [PassengerErrorOverride](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengererroroverride),
 #   to specify whether Apache will intercept and handle response with HTTP status codes of
 #   400 and higher.
 # 
 # @param passenger_max_request_queue_size
-#   Sets [PassengerMaxRequestQueueSize](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuesize),
+#   Sets [PassengerMaxRequestQueueSize](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequestqueuesize),
 #   to specify the maximum amount of requests that are allowed to queue whenever the maximum
 #   concurrent request limit is reached. If the queue is already at this specified limit, then 
 #   Passenger immediately sends a "503 Service Unavailable" error to any incoming requests.<br />
 #   A value of 0 means that the queue size is unbounded.
 # 
 # @param passenger_max_request_queue_time
-#   Sets [PassengerMaxRequestQueueTime](https://www.phusionpassenger.com/library/config/apache/reference/#passengermaxrequestqueuetime),
+#   Sets [PassengerMaxRequestQueueTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequestqueuetime),
 #   to specify the maximum amount of time that requests are allowed to stay in the queue 
 #   whenever the maximum concurrent request limit is reached. If a request reaches this specified 
 #   limit, then Passenger immeaditly sends a "504 Gateway Timeout" error for that request.<br />
 #   A value of 0 means that the queue time is unbounded.
 # 
 # @param passenger_sticky_sessions
-#   Sets [PassengerStickySessions](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessions), 
+#   Sets [PassengerStickySessions](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessions),
 #   to specify that, whenever possible, all requests sent by a client will be routed to the same 
 #   originating application process.
 # 
 # @param passenger_sticky_sessions_cookie_name
-#   Sets [PassengerStickySessionsCookieName](https://www.phusionpassenger.com/library/config/apache/reference/#passengerstickysessionscookiename), 
+#   Sets [PassengerStickySessionsCookieName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookiename),
 #   to specify the name of the sticky sessions cookie.
+#
+# @param passenger_sticky_sessions_cookie_attributes
+#   Sets [PassengerStickySessionsCookieAttributes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookieattributes),
+#   the attributes of the sticky sessions cookie.
 # 
 # @param passenger_allow_encoded_slashes
-#   Sets [PassengerAllowEncodedSlashes](https://www.phusionpassenger.com/library/config/apache/reference/#passengerallowencodedslashes), 
+#   Sets [PassengerAllowEncodedSlashes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerallowencodedslashes),
 #   to allow URLs with encoded slashes. Please note that this feature will not work properly
 #   unless Apache's `AllowEncodedSlashes` is also enabled.
 # 
+# @param passenger_app_log_file
+#   Sets [PassengerAppLogFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapplogfile),
+#   app specific messages logged to a different file in addition to Passenger log file.
+#
 # @param passenger_debugger
-#   Sets [PassengerDebugger](https://www.phusionpassenger.com/library/config/apache/reference/#passengerdebugger), 
+#   Sets [PassengerDebugger](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerdebugger),
 #   to turn support for Ruby application debugging on or off. 
 # 
 # @param passenger_lve_min_uid
-#   Sets [PassengerLveMinUid](https://www.phusionpassenger.com/library/config/apache/reference/#passengerlveminuid), 
+#   Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
 #   to only allow the spawning of application processes with UIDs equal to, or higher than, this 
 #   specified value on LVE-enabled kernels.
 # 
@@ -1854,6 +1866,7 @@ define apache::vhost(
   Optional[String] $passenger_app_env                                               = undef,
   Optional[Stdlib::Absolutepath] $passenger_app_root                                = undef,
   Optional[String] $passenger_app_group_name                                        = undef,
+  Optional[String] $passenger_app_start_command                                     = undef,
   Optional[Enum['meteor', 'node', 'rack', 'wsgi']] $passenger_app_type              = undef,
   Optional[String] $passenger_startup_file                                          = undef,
   Optional[String] $passenger_restart_dir                                           = undef,
@@ -1884,7 +1897,9 @@ define apache::vhost(
   Optional[Integer] $passenger_max_request_queue_time                               = undef,
   Optional[Boolean] $passenger_sticky_sessions                                      = undef,
   Optional[String] $passenger_sticky_sessions_cookie_name                           = undef,
+  Optional[String] $passenger_sticky_sessions_cookie_attributes                     = undef,
   Optional[Boolean] $passenger_allow_encoded_slashes                                = undef,
+  Optional[String] $passenger_app_log_file                                          = undef,
   Optional[Boolean] $passenger_debugger                                             = undef,
   Optional[Integer] $passenger_lve_min_uid                                          = undef,
   $add_default_charset                                                              = undef,
@@ -1980,7 +1995,7 @@ define apache::vhost(
     include ::apache::mod::suexec
   }
 
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_max_requests or $passenger_start_timeout or $passenger_pre_start or $passenger_user or $passenger_group or $passenger_high_performance or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file {
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     include ::apache::mod::passenger
   }
 
@@ -2693,19 +2708,50 @@ define apache::vhost(
   }
 
   # Template uses:
-  # - $passenger_spawn_method
-  # - $passenger_app_root
-  # - $passenger_app_env
-  # - $passenger_ruby
-  # - $passenger_min_instances
-  # - $passenger_max_requests
+  # - $passenger_enabled
   # - $passenger_start_timeout
+  # - $passenger_ruby
+  # - $passenger_python
+  # - $passenger_nodejs
+  # - $passenger_meteor_app_settings
+  # - $passenger_app_env
+  # - $passenger_app_root
+  # - $passenger_app_group_name
+  # - $passenger_app_start_command
+  # - $passenger_app_type
+  # - $passenger_startup_file
+  # - $passenger_restart_dir
+  # - $passenger_spawn_method
+  # - $passenger_load_shell_envvars
+  # - $passenger_rolling_restarts
+  # - $passenger_resist_deployment_errors
+  # - $passenger_min_instances
+  # - $passenger_max_instances
+  # - $passenger_max_preloader_idle_time
+  # - $passenger_force_max_concurrent_requests_per_process
+  # - $passenger_concurrency_model
+  # - $passenger_thread_count
+  # - $passenger_high_performance
+  # - $passenger_max_request_queue_size
+  # - $passenger_max_request_queue_time
   # - $passenger_user
   # - $passenger_group
-  # - $passenger_nodejs
+  # - $passenger_friendly_error_pages
+  # - $passenger_buffer_upload
+  # - $passenger_buffer_response
+  # - $passenger_allow_encoded_slashes
+  # - $passenger_lve_min_uid
+  # - $passenger_base_uri
+  # - $passenger_error_override
   # - $passenger_sticky_sessions
-  # - $passenger_startup_file
-  if $passenger_spawn_method or $passenger_app_root or $passenger_app_env or $passenger_ruby or $passenger_min_instances or $passenger_start_timeout or $passenger_user or $passenger_group or $passenger_nodejs or $passenger_sticky_sessions or $passenger_startup_file{
+  # - $passenger_sticky_sessions_cookie_name
+  # - $passenger_sticky_sessions_cookie_attributes
+  # - $passenger_app_log_file
+  # - $passenger_debugger
+  # - $passenger_max_requests
+  # - $passenger_max_request_time
+  # - $passenger_memory_limit
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,

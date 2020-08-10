@@ -22,6 +22,7 @@ describe 'apache::mod::passenger', type: :class do
 
           passenger_config_options = {
             'passenger_allow_encoded_slashes' => { type: 'OnOff', pass_opt: :PassengerAllowEncodedSlashes },
+            'passenger_anonymous_telemetry_proxy' => { type: 'String', pass_opt: :PassengerAnonymousTelemetryProxy },
             'passenger_app_env' => { type: 'String', pass_opt: :PassengerAppEnv },
             'passenger_app_group_name' => { type: 'String', pass_opt: :PassengerAppGroupName },
             'passenger_app_root' => { type: 'FullPath', pass_opt: :PassengerAppRoot },
@@ -36,6 +37,8 @@ describe 'apache::mod::passenger', type: :class do
             'passenger_default_group' => { type: 'String', pass_opt: :PassengerDefaultGroup },
             'passenger_default_ruby' => { type: 'FullPath', pass_opt: :PassengerDefaultRuby },
             'passenger_default_user' => { type: 'String', pass_opt: :PassengerDefaultUser },
+            'passenger_disable_anonymous_telemetry' => { type: 'Boolean', pass_opt: :PassengerDisableAnonymousTelemetry },
+            'passenger_disable_log_prefix' => { type: 'Boolean', pass_opt: :PassengerDisableLogPrefix },
             'passenger_disable_security_update_check' => { type: 'OnOff', pass_opt: :PassengerDisableSecurityUpdateCheck },
             'passenger_enabled' => { type: 'OnOff', pass_opt: :PassengerEnabled },
             'passenger_error_override' => { type: 'OnOff', pass_opt: :PassengerErrorOverride },
@@ -74,12 +77,14 @@ describe 'apache::mod::passenger', type: :class do
             'passenger_security_update_check_proxy' => { type: 'URI', pass_opt: :PassengerSecurityUpdateCheckProxy },
             'passenger_show_version_in_header' => { type: 'OnOff', pass_opt: :PassengerShowVersionInHeader },
             'passenger_socket_backlog' => { type: 'Integer', pass_opt: :PassengerSocketBacklog },
+            'passenger_spawn_dir' => { type: 'FullPath', pass_opt: :PassengerSpawnDir },
             'passenger_spawn_method' => { type: ['smart', 'direct'], pass_opt: :PassengerSpawnMethod },
             'passenger_start_timeout' => { type: 'Integer', pass_opt: :PassengerStartTimeout },
             'passenger_startup_file' => { type: 'RelPath', pass_opt: :PassengerStartupFile },
             'passenger_stat_throttle_rate' => { type: 'Integer', pass_opt: :PassengerStatThrottleRate },
             'passenger_sticky_sessions' => { type: 'OnOff', pass_opt: :PassengerStickySessions },
             'passenger_sticky_sessions_cookie_name' => { type: 'String', pass_opt: :PassengerStickySessionsCookieName },
+            'passenger_sticky_sessions_cookie_attributes' => { type: 'QuotedString', pass_opt: :PassengerStickySessionsCookieAttributes },
             'passenger_thread_count' => { type: 'Integer', pass_opt: :PassengerThreadCount },
             'passenger_use_global_queue' => { type: 'String', pass_opt: :PassengerUseGlobalQueue },
             'passenger_user' => { type: 'String', pass_opt: :PassengerUser },
@@ -147,6 +152,24 @@ describe 'apache::mod::passenger', type: :class do
                   end
 
                   it { is_expected.to contain_file('passenger.conf').with_content(%r{^  #{config_hash[:pass_opt]} #{valid_value}$}) }
+                end
+              end
+            when 'Boolean'
+              valid_config_values = [true, false]
+              valid_config_values.each do |valid_value|
+                describe "with #{puppetized_config_option} => #{valid_value}" do
+                  let :params do
+                    { puppetized_config_option.to_sym => valid_value }
+                  end
+
+                  let :expected_value do
+                    {
+                      true => 'On',
+                      false => 'Off',
+                    }[valid_value]
+                  end
+
+                  it { is_expected.to contain_file('passenger.conf').with_content(%r{^  #{config_hash[:pass_opt]} #{expected_value}$}) }
                 end
               end
             else

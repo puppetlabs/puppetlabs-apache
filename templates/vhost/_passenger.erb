@@ -28,6 +28,9 @@
 <% if @passenger_app_group_name -%>
   PassengerAppGroupName <%= @passenger_app_group_name %>
 <% end -%>
+<% if @passenger_app_start_command -%>
+  PassengerAppStartCommand <%= @passenger_app_start_command %>
+<% end -%>
 <% if @passenger_app_type -%>
   PassengerAppType <%= @passenger_app_type %>
 <% end -%>
@@ -118,9 +121,15 @@
 <% if @passenger_sticky_sessions_cookie_name -%>
   PassengerStickySessionsCookieName <%= @passenger_sticky_sessions_cookie_name %>
 <% end -%>
+<% if @passenger_sticky_sessions_cookie_attributes -%>
+  PassengerStickySessionsCookieAttributes <%= @passenger_sticky_sessions_cookie_attributes %>
+<% end -%>
 <%# 7 - Compatibility options -%>
 <% unless @passenger_allow_encoded_slashes.nil? -%>
   PassengerAllowEncodedSlashes <%= scope.call_function('apache::bool2httpd', [@passenger_allow_encoded_slashes]) %>
+<% end -%>
+<% if @passenger_app_log_file -%>
+  PassengerAppLogFile <%= @passenger_app_log_file %>
 <% end -%>
 <%# 8 - Logging and debugging options -%>
 <% unless @passenger_debugger.nil? -%>
