@@ -5,10 +5,12 @@ shared_examples 'apache::bool2httpd function' do
   it { is_expected.to run.with_params.and_raise_error(ArgumentError) }
   it { is_expected.to run.with_params('1', '2').and_raise_error(ArgumentError) }
   it { is_expected.to run.with_params(true).and_return('On') }
+  it { is_expected.to run.with_params('true').and_return('On') }
   it 'expected to return a string "On"' do
     expect(subject.execute(true)).to be_an_instance_of(String)
   end
   it { is_expected.to run.with_params(false).and_return('Off') }
+  it { is_expected.to run.with_params('false').and_return('Off') }
   it 'expected to return a string "Off"' do
     expect(subject.execute(false)).to be_an_instance_of(String)
   end
