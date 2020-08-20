@@ -13,7 +13,7 @@
 #
 # @note
 #   Currently requires the puppetlabs/concat module on the Puppet Forge and
-#   uses storeconfigs on the Puppet Master to export/collect resources
+#   uses storeconfigs on the Puppet Main to export/collect resources
 #   from all balancer members.
 #
 # @param name
