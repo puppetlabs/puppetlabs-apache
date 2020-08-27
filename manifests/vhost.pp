@@ -1659,7 +1659,7 @@
 #   Enable `mod_auth_openidc` parameters for OpenID Connect authentication.
 #
 # @param oidc_settings
-#   An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/main/auth_openidc.conf].
+#   An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf].
 #
 # @param limitreqfields
 #   The `limitreqfields` parameter sets the maximum number of request header fields in

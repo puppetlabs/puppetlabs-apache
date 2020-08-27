@@ -1,4 +1,4 @@
-# https://github.com/zmartzone/mod_auth_openidc/blob/main/auth_openidc.conf
+# https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
 type Apache::OIDCSettings = Struct[
   {
     Optional['RedirectURI']                             => Variant[Stdlib::HTTPSUrl,Stdlib::HttpUrl],
