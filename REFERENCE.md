@@ -2520,7 +2520,7 @@ The following parameters are available in the `apache::mod::info` class.
 
 Data type: `Any`
 
-Whitelist of IPv4 or IPv6 addresses or ranges that can access the info path.
+Allowlist of IPv4 or IPv6 addresses or ranges that can access the info path.
 
 Default value: ['127.0.0.1','::1']
 
@@ -2536,7 +2536,7 @@ Default value: `undef`
 
 Data type: `Any`
 
-Toggles whether to restrict access to info path. If `false`, the `allow_from` whitelist is ignored and any IP address can
+Toggles whether to restrict access to info path. If `false`, the `allow_from` allowlist is ignored and any IP address can
 access the info path.
 
 Default value: `true`
@@ -6007,7 +6007,7 @@ balancer members, and then collect them on a single apache load balancer
 server.
 
 * **Note** Currently requires the puppetlabs/concat module on the Puppet Forge and uses
-storeconfigs on the Puppet Master to export/collect resources from all
+storeconfigs on the Puppet Server to export/collect resources from all
 balancer members.
 
 #### Examples
@@ -6082,7 +6082,7 @@ implement this is to export this resource for all apache balancer member
 servers, and then collect them on the main apache load balancer.
 
 * **Note** Currently requires the puppetlabs/concat module on the Puppet Forge and
-uses storeconfigs on the Puppet Master to export/collect resources
+uses storeconfigs on the Puppet Server to export/collect resources
 from all balancer members.
 
 #### Examples

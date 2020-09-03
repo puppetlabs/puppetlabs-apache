@@ -81,6 +81,6 @@ METADATA_JSON = '{
   ],
   "description": "Module for Apache configuration",
   "pdk-version": "1.17.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#master",
-  "template-ref": "heads/master-0-g095317c"
+  "template-url": "https://github.com/puppetlabs/pdk-templates#main",
+  "template-ref": "heads/main-0-g095317c"
 }'.freeze

@@ -222,7 +222,7 @@
 [Puppet Forge]: https://forge.puppet.com
 [Puppet]: https://puppet.com
 [Puppetモジュール]: https://docs.puppet.com/puppet/latest/reference/modules_fundamentals.html
-[Puppetモジュールのコード]: https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp
+[Puppetモジュールのコード]: https://github.com/puppetlabs/puppetlabs-apache/blob/main/manifests/default_mods.pp
 [`purge_configs`]: #purge_configs
 [`purge_vhost_dir`]: #purge_vhost_dir
 [Python]: https://www.python.org/
@@ -5660,7 +5660,7 @@ Apacheが読みこむhtpasswdファイルに適したフォーマットでパス
 <a id="limitations"></a>
 ## 制約事項
 
- サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)を参照してください。
+ サポートされているオペレーティングシステムの一覧については、[metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/main/metadata.json)を参照してください。
 
 ### FreeBSD
 

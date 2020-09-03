@@ -219,7 +219,7 @@
 [Puppet Forge]: https://forge.puppet.com
 [Puppet]: https://puppet.com
 [Puppet module]: https://docs.puppet.com/puppet/latest/reference/modules_fundamentals.html
-[Puppet module's code]: https://github.com/puppetlabs/puppetlabs-apache/blob/master/manifests/default_mods.pp
+[Puppet module's code]: https://github.com/puppetlabs/puppetlabs-apache/blob/main/manifests/default_mods.pp
 [`purge_configs`]: #purge_configs
 [`purge_vhost_dir`]: #purge_vhost_dir
 [Python]: https://www.python.org/
@@ -817,7 +817,7 @@ Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balanc
 <a id="reference"></a> 
 ## Reference
 
-For information on classes, types and functions see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apache/blob/master/REFERENCE.md)
+For information on classes, types and functions see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apache/blob/main/REFERENCE.md)
 
 ### Templates
 
@@ -830,7 +830,7 @@ The Apache module has a task that allows a user to reload the Apache config with
 <a id="limitations"></a>
 ## Limitations
 
-For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/master/metadata.json)
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-apache/blob/main/metadata.json)
 
 ### FreeBSD
 
