@@ -45,6 +45,16 @@ describe 'apache::mod::wsgi', type: :class do
     }
     it { is_expected.to contain_package('mod_wsgi') }
 
+    context 'on RHEL8' do
+      let(:facts) do
+        super().merge(operatingsystemrelease: '8')
+      end
+
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module modules/mod_wsgi_python3.so}) }
+      it { is_expected.to contain_package('python3-mod_wsgi') }
+    end
+
     describe 'with WSGIRestrictEmbedded enabled' do
       let :params do
         { wsgi_restrict_embedded: 'On' }

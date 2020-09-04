@@ -260,6 +260,10 @@ class apache::params inherits ::apache::version {
     }
     $mod_libs             = {
       'nss' => 'libmodnss.so',
+      'wsgi'                  => $::apache::version::distrelease ? {
+        '8'     => 'mod_wsgi_python3.so',
+        default => 'mod_wsgi.so',
+      },
     }
     $conf_template        = 'apache/httpd.conf.erb'
     $http_protocol_options  = undef
