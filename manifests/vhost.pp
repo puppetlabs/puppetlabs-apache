@@ -2070,9 +2070,9 @@ define apache::vhost(
     $error_log_destination = $error_log_syslog
   } else {
     if $ssl {
-      $error_log_destination = "${logroot}/${name}_error_ssl.log"
+      $error_log_destination = "${logroot}/${filename}_error_ssl.log"
     } else {
-      $error_log_destination = "${logroot}/${name}_error.log"
+      $error_log_destination = "${logroot}/${filename}_error.log"
     }
   }
 
@@ -2091,9 +2091,9 @@ define apache::vhost(
     $modsec_audit_log_destination = $modsec_audit_log_pipe
   } elsif $modsec_audit_log {
     if $ssl {
-      $modsec_audit_log_destination = "${logroot}/${name}_security_ssl.log"
+      $modsec_audit_log_destination = "${logroot}/${filename}_security_ssl.log"
     } else {
-      $modsec_audit_log_destination = "${logroot}/${name}_security.log"
+      $modsec_audit_log_destination = "${logroot}/${filename}_security.log"
     }
   } else {
     $modsec_audit_log_destination = undef
