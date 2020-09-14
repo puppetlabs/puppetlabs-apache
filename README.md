@@ -902,6 +902,9 @@ apache::vhost { 'test.server':
 }
 ```
 
+**NOTE:** On RHEL 8, the SELinux packages contained in `policycoreutils-python` have been replaced by the `policycoreutils-python-utils` package.
+See [here](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/considerations_in_adopting_rhel_8/index#selinux-python3_security) for more details.
+
 You must set the contexts using `semanage fcontext` instead of `chcon` because Puppet's `file` resources reset the values' context in the database if the resource doesn't specify it.
 
 ### Ubuntu 10.04
