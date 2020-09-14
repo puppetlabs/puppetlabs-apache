@@ -6803,8 +6803,7 @@ Determines whether to send all error log messages to syslog.
 This parameter has no effect if either of the `error_log_file` or `error_log_pipe`
 parameters has a value. If none of these parameters has a value, given a virtual host
 `my example.com`, Puppet defaults to `$logroot/my_example.com_error_ssl.log` for SSL virtual
-hosts and `$logroot/my_example.com_error.log` for non-SSL virtual hosts. Any spaces in the
-vhost name will be replaced with underscores in the filename.
+hosts and `$logroot/my_example.com_error.log` for non-SSL virtual hosts. 
 
 Default value: `undef`
 
@@ -7427,8 +7426,7 @@ Data type: `Any`
 
 If `modsec_audit_log` is `true`, given a virtual host ---for instance, `my example.com` --- it
 defaults to `my_example.com\_security\_ssl.log` for SSL-encrypted virtual hosts
-and `my_example.com\_security.log` for unencrypted virtual hosts. Any spaces in the vhost
-name will be replaced with underscores in the filename. <br />
+and `my_example.com\_security.log` for unencrypted virtual hosts. <br />
 One of the parameters that determines how to send `mod_security` audit
 log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).<br />
 If none of those parameters are set, the global audit log is used
