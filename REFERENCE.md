@@ -6468,9 +6468,9 @@ Default value: `false`
 Data type: `Any`
 
 Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host ---for
-instance, example.com--- it defaults to 'example.com_ssl.log' for
+instance, `my example.com` --- it defaults to 'my_example.com_ssl.log' for
 [SSL-encrypted](https://httpd.apache.org/docs/current/ssl/index.html) virtual hosts and
-`example.com_access.log` for unencrypted virtual hosts.
+`my_example.com_access.log` for unencrypted virtual hosts.
 
 Default value: `false`
 
@@ -6779,9 +6779,9 @@ Data type: `Any`
 
 Points the virtual host's error logs to a `*_error.log` file. If this parameter is
 undefined, Puppet checks for values in `error_log_pipe`, then `error_log_syslog`.<br />
-If none of these parameters is set, given a virtual host `example.com`, Puppet defaults
-to `$logroot/example.com_error_ssl.log` for SSL virtual hosts and
-`$logroot/example.com_error.log` for non-SSL virtual hosts.
+If none of these parameters is set, given a virtual host `my example.com`, Puppet defaults
+to `$logroot/my_example.com_error_ssl.log` for SSL virtual hosts and
+`$logroot/my_example.com_error.log` for non-SSL virtual hosts.
 
 Default value: `undef`
 
@@ -6802,8 +6802,9 @@ Data type: `Any`
 Determines whether to send all error log messages to syslog.
 This parameter has no effect if either of the `error_log_file` or `error_log_pipe`
 parameters has a value. If none of these parameters has a value, given a virtual host
-`example.com`, Puppet defaults to `$logroot/example.com_error_ssl.log` for SSL virtual
-hosts and `$logroot/example.com_error.log` for non-SSL virtual hosts.
+`my example.com`, Puppet defaults to `$logroot/my_example.com_error_ssl.log` for SSL virtual
+hosts and `$logroot/my_example.com_error.log` for non-SSL virtual hosts. Any spaces in the
+vhost name will be replaced with underscores in the filename.
 
 Default value: `undef`
 
@@ -7424,9 +7425,10 @@ Default value: `undef`
 
 Data type: `Any`
 
-If `modsec_audit_log` is `true`, given a virtual host ---for instance, example.com--- it
-defaults to `example.com\_security\_ssl.log` for SSL-encrypted virtual hosts
-and `example.com\_security.log` for unencrypted virtual hosts.<br />
+If `modsec_audit_log` is `true`, given a virtual host ---for instance, `my example.com` --- it
+defaults to `my_example.com\_security\_ssl.log` for SSL-encrypted virtual hosts
+and `my_example.com\_security.log` for unencrypted virtual hosts. Any spaces in the vhost
+name will be replaced with underscores in the filename. <br />
 One of the parameters that determines how to send `mod_security` audit
 log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).<br />
 If none of those parameters are set, the global audit log is used
