@@ -1144,6 +1144,7 @@ describe 'apache::vhost define' do
       if $::osfamily == 'RedHat' and "$::selinux" == "true" {
         $semanage_package = $::operatingsystemmajrelease ? {
           '5'     => 'policycoreutils',
+          '8'     => 'policycoreutils-python-utils',
           default => 'policycoreutils-python',
         }
         exec { 'set_apache_defaults':
