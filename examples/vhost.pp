@@ -5,7 +5,7 @@
 # Base class. Declares default vhost on port 80 and default ssl
 # vhost on port 443 listening on all interfaces and serving
 # $apache::docroot
-class { '::apache': }
+class { 'apache': }
 
 # Most basic vhost
 apache::vhost { 'first.example.com':
@@ -141,7 +141,6 @@ apache::vhost { 'fifteenth.example.com':
   rack_base_uris => ['/rackapp1', '/rackapp2'],
 }
 
-
 # Vhost to redirect non-ssl to ssl
 apache::vhost { 'sixteenth.example.com non-ssl':
   servername => 'sixteenth.example.com',
@@ -255,4 +254,3 @@ apache::vhost { 'twentysecond.example.com':
   docroot        => '/var/www/twentysecond',
   rack_base_uris => ['/passengerapp1', '/passengerapp2'],
 }
-

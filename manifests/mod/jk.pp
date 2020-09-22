@@ -293,10 +293,9 @@ class apache::mod::jk (
   # Mount file content
   # See comments in template mod/jk/uriworkermap.properties.erb
   $mount_file_content          = {},
-){
-
+) {
   # Provides important variables
-  include ::apache
+  include apache
   # Manages basic module config
   ::apache::mod { 'jk': }
 
@@ -305,7 +304,6 @@ class apache::mod::jk (
   if !empty($workers_file_content) and has_key($workers_file_content, 'worker_mantain') {
     fail('Please replace $workers_file_content[\'worker_mantain\'] by $workers_file_content[\'worker_maintain\']. See MODULES-6225 for details.')
   }
-
 
   # Binding to mod_jk
   if $add_listen {
@@ -319,14 +317,14 @@ class apache::mod::jk (
   # File resource common parameters
   File {
     ensure  => file,
-    mode    => $::apache::file_mode,
+    mode    => $apache::file_mode,
     notify  => Class['apache::service'],
   }
 
   # Shared memory and log paths
   # If logroot unspecified, use default
   $log_dir = $logroot ? {
-    undef   => $::apache::logroot,
+    undef   => $apache::logroot,
     default => $logroot,
   }
   # If absolute path or pipe, use as-is
@@ -344,8 +342,8 @@ class apache::mod::jk (
   }
 
   # Main config file
-  $mod_dir = $::apache::mod_dir
-  file {'jk.conf':
+  $mod_dir = $apache::mod_dir
+  file { 'jk.conf':
     path    => "${mod_dir}/jk.conf",
     content => template('apache/mod/jk.conf.erb'),
     require => [
@@ -377,5 +375,4 @@ class apache::mod::jk (
       require => Package['httpd'],
     }
   }
-
 }

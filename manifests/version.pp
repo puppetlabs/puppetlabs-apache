@@ -2,7 +2,7 @@
 #   Try to automatically detect the version by OS
 #
 # @api private
-class apache::version(
+class apache::version (
   Optional[String] $scl_httpd_version = undef,
   Optional[String] $scl_php_version   = undef,
 ) {
@@ -42,7 +42,7 @@ class apache::version(
       $default = '2.4'
     }
     'Suse': {
-      if ($::operatingsystem == 'SLES' and $::operatingsystemrelease >= '12') or ($::operatingsystem == 'OpenSuSE' and $::operatingsystemrelease >= '42') {
+      if ($::operatingsystem == 'SLES' and versioncmp($::operatingsystemrelease, '12') >= 0) or ($::operatingsystem == 'OpenSuSE' and versioncmp($::operatingsystemrelease, '42') >= 0) {
         $default = '2.4'
       } else {
         $default = '2.2'

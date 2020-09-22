@@ -21,11 +21,11 @@ class apache::mod::disk_cache (
   $cache_root           = undef,
   $cache_ignore_headers = undef,
 ) {
-  include ::apache
+  include apache
   if $cache_root {
     $_cache_root = $cache_root
   }
-  elsif versioncmp($::apache::apache_version, '2.4') >= 0 {
+  elsif versioncmp($apache::apache_version, '2.4') >= 0 {
     $_cache_root = $::osfamily ? {
       'debian'  => '/var/cache/apache2/mod_cache_disk',
       'redhat'  => '/var/cache/httpd/proxy',
@@ -40,7 +40,7 @@ class apache::mod::disk_cache (
     }
   }
 
-  if versioncmp($::apache::apache_version, '2.4') >= 0 {
+  if versioncmp($apache::apache_version, '2.4') >= 0 {
     apache::mod { 'cache_disk': }
   }
   else {
@@ -52,11 +52,11 @@ class apache::mod::disk_cache (
   # Template uses $_cache_root
   file { 'disk_cache.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/disk_cache.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/disk_cache.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/disk_cache.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

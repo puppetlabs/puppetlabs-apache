@@ -50,11 +50,11 @@
 #
 define apache::custom_config (
   Enum['absent', 'present'] $ensure = 'present',
-  $confdir                          = $::apache::confd_dir,
+  $confdir                          = $apache::confd_dir,
   $content                          = undef,
   $priority                         = '25',
   $source                           = undef,
-  $verify_command                   = $::apache::params::verify_command,
+  $verify_command                   = $apache::params::verify_command,
   Boolean $verify_config            = true,
   $filename                         = undef,
   $owner                            = undef,
@@ -62,7 +62,6 @@ define apache::custom_config (
   $file_mode                        = undef,
   Boolean $show_diff                = true,
 ) {
-
   if $content and $source {
     fail('Only one of $content and $source can be specified.')
   }
@@ -91,7 +90,7 @@ define apache::custom_config (
     $notifies = undef
   }
 
-  $_file_mode = pick($file_mode, $::apache::file_mode)
+  $_file_mode = pick($file_mode, $apache::file_mode)
 
   file { "apache_${name}":
     ensure    => $ensure,

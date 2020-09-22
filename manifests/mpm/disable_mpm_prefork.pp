@@ -4,5 +4,4 @@ class apache::mpm::disable_mpm_prefork {
     require => Package['httpd'],
     before  => Class['apache::service'],
   }
-
 }

@@ -9,7 +9,7 @@ define apache::namevirtualhost {
 
   # Template uses: $addr_port
   concat::fragment { "NameVirtualHost ${addr_port}":
-    target  => $::apache::ports_file,
+    target  => $apache::ports_file,
     content => template('apache/namevirtualhost.erb'),
   }
 }

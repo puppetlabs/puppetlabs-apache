@@ -1691,7 +1691,7 @@
 #   client request exceeds that limit, the server will return an error response
 #   instead of servicing the request.
 #
-define apache::vhost(
+define apache::vhost (
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
   $virtual_docroot                                                                  = false,
@@ -1700,20 +1700,20 @@ define apache::vhost(
   Boolean $ip_based                                                                 = false,
   $add_listen                                                                       = true,
   $docroot_owner                                                                    = 'root',
-  $docroot_group                                                                    = $::apache::params::root_group,
+  $docroot_group                                                                    = $apache::params::root_group,
   $docroot_mode                                                                     = undef,
   Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                                   = [],
   Optional[Boolean] $protocols_honor_order                                          = undef,
   $serveradmin                                                                      = undef,
   Boolean $ssl                                                                      = false,
-  $ssl_cert                                                                         = $::apache::default_ssl_cert,
-  $ssl_key                                                                          = $::apache::default_ssl_key,
-  $ssl_chain                                                                        = $::apache::default_ssl_chain,
-  $ssl_ca                                                                           = $::apache::default_ssl_ca,
-  $ssl_crl_path                                                                     = $::apache::default_ssl_crl_path,
-  $ssl_crl                                                                          = $::apache::default_ssl_crl,
-  $ssl_crl_check                                                                    = $::apache::default_ssl_crl_check,
-  $ssl_certs_dir                                                                    = $::apache::params::ssl_certs_dir,
+  $ssl_cert                                                                         = $apache::default_ssl_cert,
+  $ssl_key                                                                          = $apache::default_ssl_key,
+  $ssl_chain                                                                        = $apache::default_ssl_chain,
+  $ssl_ca                                                                           = $apache::default_ssl_ca,
+  $ssl_crl_path                                                                     = $apache::default_ssl_crl_path,
+  $ssl_crl                                                                          = $apache::default_ssl_crl,
+  $ssl_crl_check                                                                    = $apache::default_ssl_crl_check,
+  $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   $ssl_honorcipherorder                                                             = undef,
@@ -1742,7 +1742,7 @@ define apache::vhost(
   $override                                                                         = ['None'],
   $directoryindex                                                                   = '',
   $vhost_name                                                                       = '*',
-  $logroot                                                                          = $::apache::logroot,
+  $logroot                                                                          = $apache::logroot,
   Enum['directory', 'absent'] $logroot_ensure                                       = 'directory',
   $logroot_mode                                                                     = undef,
   $logroot_owner                                                                    = undef,
@@ -1787,9 +1787,9 @@ define apache::vhost(
   $proxy_pass                                                                       = undef,
   $proxy_pass_match                                                                 = undef,
   Boolean $proxy_requests                                                           = false,
-  $suphp_addhandler                                                                 = $::apache::params::suphp_addhandler,
-  Enum['on', 'off'] $suphp_engine                                                   = $::apache::params::suphp_engine,
-  $suphp_configpath                                                                 = $::apache::params::suphp_configpath,
+  $suphp_addhandler                                                                 = $apache::params::suphp_addhandler,
+  Enum['on', 'off'] $suphp_engine                                                   = $apache::params::suphp_engine,
+  $suphp_configpath                                                                 = $apache::params::suphp_configpath,
   $php_flags                                                                        = {},
   $php_values                                                                       = {},
   $php_admin_flags                                                                  = {},
@@ -1836,8 +1836,8 @@ define apache::vhost(
   $fastcgi_dir                                                                      = undef,
   $fastcgi_idle_timeout                                                             = undef,
   $additional_includes                                                              = [],
-  $use_optional_includes                                                            = $::apache::use_optional_includes,
-  $apache_version                                                                   = $::apache::apache_version,
+  $use_optional_includes                                                            = $apache::use_optional_includes,
+  $apache_version                                                                   = $apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                    = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                           = undef,
 
@@ -1938,13 +1938,12 @@ define apache::vhost(
   Boolean $auth_oidc                                                                = false,
   Optional[Apache::OIDCSettings] $oidc_settings                                     = undef,
 ) {
-
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
   }
 
-  $apache_name = $::apache::apache_name
+  $apache_name = $apache::apache_name
 
   if $rewrites {
     unless empty($rewrites) {
@@ -1970,33 +1969,33 @@ define apache::vhost(
   # Input validation ends
 
   if $ssl and $ensure == 'present' {
-    include ::apache::mod::ssl
+    include apache::mod::ssl
     # Required for the AddType lines.
-    include ::apache::mod::mime
+    include apache::mod::mime
   }
 
   if $auth_kerb and $ensure == 'present' {
-    include ::apache::mod::auth_kerb
+    include apache::mod::auth_kerb
   }
 
   if $auth_oidc and $ensure == 'present' {
-    include ::apache::mod::auth_openidc
+    include apache::mod::auth_openidc
   }
 
   if $virtual_docroot {
-    include ::apache::mod::vhost_alias
+    include apache::mod::vhost_alias
   }
 
   if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
-    include ::apache::mod::wsgi
+    include apache::mod::wsgi
   }
 
   if $suexec_user_group {
-    include ::apache::mod::suexec
+    include apache::mod::suexec
   }
 
   if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
-    include ::apache::mod::passenger
+    include apache::mod::passenger
   }
 
   # Configure the defaultness of a vhost
@@ -2047,11 +2046,11 @@ define apache::vhost(
 
   if $access_log and !$access_logs {
     $_access_logs = [{
-      'file'        => $access_log_file,
-      'pipe'        => $access_log_pipe,
-      'syslog'      => $access_log_syslog,
-      'format'      => $access_log_format,
-      'env'         => $access_log_env_var
+        'file'        => $access_log_file,
+        'pipe'        => $access_log_pipe,
+        'syslog'      => $access_log_syslog,
+        'format'      => $access_log_format,
+        'env'         => $access_log_env_var
     }]
   } elsif $access_logs {
     $_access_logs = $access_logs
@@ -2099,7 +2098,6 @@ define apache::vhost(
     $modsec_audit_log_destination = undef
   }
 
-
   if $ip {
     $_ip = any2array(enclose_ipv6($ip))
     if $port {
@@ -2143,48 +2141,48 @@ define apache::vhost(
   # Load mod_rewrite if needed and not yet loaded
   if $rewrites or $rewrite_cond {
     if ! defined(Class['apache::mod::rewrite']) {
-      include ::apache::mod::rewrite
+      include apache::mod::rewrite
     }
   }
 
   # Load mod_alias if needed and not yet loaded
   if ($scriptalias or $scriptaliases != [])
-    or ($aliases and $aliases != [])
-    or ($redirect_source and $redirect_dest)
-    or ($redirectmatch_regexp or $redirectmatch_status or $redirectmatch_dest){
+  or ($aliases and $aliases != [])
+  or ($redirect_source and $redirect_dest)
+  or ($redirectmatch_regexp or $redirectmatch_status or $redirectmatch_dest) {
     if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
-      include ::apache::mod::alias
+      include apache::mod::alias
     }
   }
 
   # Load mod_proxy if needed and not yet loaded
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
     if ! defined(Class['apache::mod::proxy']) {
-      include ::apache::mod::proxy
+      include apache::mod::proxy
     }
     if ! defined(Class['apache::mod::proxy_http']) {
-      include ::apache::mod::proxy_http
+      include apache::mod::proxy_http
     }
   }
 
   # Load mod_fastcgi if needed and not yet loaded
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
-      include ::apache::mod::fastcgi
+      include apache::mod::fastcgi
     }
   }
 
   # Check if mod_headers is required to process $headers/$request_headers
   if $headers or $request_headers {
     if ! defined(Class['apache::mod::headers']) {
-      include ::apache::mod::headers
+      include apache::mod::headers
     }
   }
 
   # Check if mod_filter is required to process $filters
   if $filters {
     if ! defined(Class['apache::mod::filter']) {
-      include ::apache::mod::filter
+      include apache::mod::filter
     }
   }
 
@@ -2193,7 +2191,7 @@ define apache::vhost(
   $use_env_mod = $setenv and ! empty($setenv)
   if ($use_env_mod) {
     if ! defined(Class['apache::mod::env']) {
-      include ::apache::mod::env
+      include apache::mod::env
     }
   }
   # Check if mod_setenvif is required and not yet loaded.
@@ -2202,7 +2200,7 @@ define apache::vhost(
 
   if ($use_setenvif_mod) {
     if ! defined(Class['apache::mod::setenvif']) {
-      include ::apache::mod::setenvif
+      include apache::mod::setenvif
     }
   }
 
@@ -2229,7 +2227,7 @@ define apache::vhost(
       }
     }
 
-    $_directories = [ merge($_directory, $_directory_version) ]
+    $_directories = [merge($_directory, $_directory_version)]
   } else {
     $_directories = undef
   }
@@ -2261,29 +2259,29 @@ define apache::vhost(
 
   concat { "${priority_real}${filename}.conf":
     ensure  => $ensure,
-    path    => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
+    path    => "${apache::vhost_dir}/${priority_real}${filename}.conf",
     owner   => 'root',
-    group   => $::apache::params::root_group,
-    mode    => $::apache::file_mode,
+    group   => $apache::params::root_group,
+    mode    => $apache::file_mode,
     order   => 'numeric',
     require => Package['httpd'],
     notify  => Class['apache::service'],
   }
   # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
   # needs to be converted into something generic.
-  if $::apache::vhost_enable_dir {
-    $vhost_enable_dir = $::apache::vhost_enable_dir
+  if $apache::vhost_enable_dir {
+    $vhost_enable_dir = $apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
-      present => link,
+      'present' => link,
       default => $ensure,
     }
-    file{ "${priority_real}${filename}.conf symlink":
+    file { "${priority_real}${filename}.conf symlink":
       ensure  => $vhost_symlink_ensure,
       path    => "${vhost_enable_dir}/${priority_real}${filename}.conf",
-      target  => "${::apache::vhost_dir}/${priority_real}${filename}.conf",
+      target  => "${apache::vhost_dir}/${priority_real}${filename}.conf",
       owner   => 'root',
-      group   => $::apache::params::root_group,
-      mode    => $::apache::file_mode,
+      group   => $apache::params::root_group,
+      mode    => $apache::file_mode,
       require => Concat["${priority_real}${filename}.conf"],
       notify  => Class['apache::service'],
     }
@@ -2537,7 +2535,7 @@ define apache::vhost(
   # Template uses:
   # - $scriptaliases
   # - $scriptalias
-  if ( $scriptalias or $scriptaliases != [] ) {
+  if ( $scriptalias or $scriptaliases != []) {
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
@@ -2698,7 +2696,7 @@ define apache::vhost(
   }
 
   if $h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef {
-    include ::apache::mod::http2
+    include apache::mod::http2
 
     concat::fragment { "${name}-http2":
       target  => "${priority_real}${filename}.conf",

@@ -321,16 +321,16 @@ class apache::mod::passenger (
   $passenger_buffer_response                                                                 = undef,
   $passenger_buffer_upload                                                                   = undef,
   $passenger_concurrency_model                                                               = undef,
-  $passenger_conf_file                                                                       = $::apache::params::passenger_conf_file,
-  $passenger_conf_package_file                                                               = $::apache::params::passenger_conf_package_file,
+  $passenger_conf_file                                                                       = $apache::params::passenger_conf_file,
+  $passenger_conf_package_file                                                               = $apache::params::passenger_conf_package_file,
   $passenger_data_buffer_dir                                                                 = undef,
   $passenger_debug_log_file                                                                  = undef,
   $passenger_debugger                                                                        = undef,
   $passenger_default_group                                                                   = undef,
-  $passenger_default_ruby                                                                    = $::apache::params::passenger_default_ruby,
+  $passenger_default_ruby                                                                    = $apache::params::passenger_default_ruby,
   $passenger_default_user                                                                    = undef,
   Optional[Boolean] $passenger_disable_anonymous_telemetry                                   = undef,
-  Optional[Boolean ] $passenger_disable_log_prefix                                           = undef,
+  Optional[Boolean] $passenger_disable_log_prefix                                           = undef,
   $passenger_disable_security_update_check                                                   = undef,
   $passenger_enabled                                                                         = undef,
   $passenger_error_override                                                                  = undef,
@@ -365,8 +365,8 @@ class apache::mod::passenger (
   $passenger_response_buffer_high_watermark                                                  = undef,
   $passenger_restart_dir                                                                     = undef,
   $passenger_rolling_restarts                                                                = undef,
-  $passenger_root                                                                            = $::apache::params::passenger_root,
-  $passenger_ruby                                                                            = $::apache::params::passenger_ruby,
+  $passenger_root                                                                            = $apache::params::passenger_root,
+  $passenger_ruby                                                                            = $apache::params::passenger_ruby,
   $passenger_security_update_check_proxy                                                     = undef,
   $passenger_show_version_in_header                                                          = undef,
   $passenger_socket_backlog                                                                  = undef,
@@ -399,7 +399,7 @@ class apache::mod::passenger (
   $rails_user_switching                                                                      = undef,
   $wsgi_auto_detect                                                                          = undef,
 ) inherits ::apache::params {
-  include ::apache
+  include apache
   if $passenger_installed_version {
     if $passenger_allow_encoded_slashes {
       if (versioncmp($passenger_installed_version, '4.0.0') < 0) {
@@ -818,7 +818,7 @@ class apache::mod::passenger (
   # Managed by the package, but declare it to avoid purging
   if $passenger_conf_package_file {
     file { 'passenger_package.conf':
-      path => "${::apache::confd_dir}/${passenger_conf_package_file}",
+      path => "${apache::confd_dir}/${passenger_conf_package_file}",
     }
   }
 
@@ -952,10 +952,10 @@ class apache::mod::passenger (
   # - $rack_autodetect : this options is only for backward compatiblity with older versions of this class
   file { 'passenger.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/${passenger_conf_file}",
+    path    => "${apache::mod_dir}/${passenger_conf_file}",
     content => template('apache/mod/passenger.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

@@ -13,9 +13,8 @@ class apache::mod::authnz_ldap (
   Boolean $verify_server_cert = true,
   $package_name               = undef,
 ) {
-
-  include ::apache
-  include '::apache::mod::ldap'
+  include apache
+  include 'apache::mod::ldap'
   ::apache::mod { 'authnz_ldap':
     package => $package_name,
   }
@@ -24,11 +23,11 @@ class apache::mod::authnz_ldap (
   # - $verify_server_cert
   file { 'authnz_ldap.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/authnz_ldap.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/authnz_ldap.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/authnz_ldap.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

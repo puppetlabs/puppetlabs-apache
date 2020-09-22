@@ -86,7 +86,7 @@ class apache::mod::http2 (
   Optional[Integer] $h2_window_size             = undef,
   Optional[String]  $apache_version             = undef,
 ) {
-  include ::apache
+  include apache
   apache::mod { 'http2': }
 
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -94,12 +94,12 @@ class apache::mod::http2 (
   file { 'http2.conf':
     ensure  => file,
     content => template('apache/mod/http2.conf.erb'),
-    mode    => $::apache::file_mode,
-    path    => "${::apache::mod_dir}/http2.conf",
-    owner   => $::apache::params::user,
-    group   => $::apache::params::group,
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    mode    => $apache::file_mode,
+    path    => "${apache::mod_dir}/http2.conf",
+    owner   => $apache::params::user,
+    group   => $apache::params::group,
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

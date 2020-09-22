@@ -14,5 +14,5 @@
 # @api private
 class apache::python {
   warning('apache::python is deprecated; please use apache::mod::python')
-  include ::apache::mod::python
+  include apache::mod::python
 }

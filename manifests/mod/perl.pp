@@ -4,6 +4,6 @@
 # @see https://perl.apache.org for additional documentation.
 #
 class apache::mod::perl {
-  include ::apache
+  include apache
   ::apache::mod { 'perl': }
 }

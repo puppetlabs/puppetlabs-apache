@@ -1,5 +1,5 @@
 # Base class. Declares default vhost on port 80 with filters.
-class { '::apache': }
+class { 'apache': }
 
 # Example from README adapted.
 apache::vhost { 'readme.example.net':
@@ -14,4 +14,3 @@ apache::vhost { 'readme.example.net':
     'FilterProtocol  COMPRESS  DEFLATE change=yes;byteranges=no',
   ],
 }
-

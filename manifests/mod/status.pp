@@ -45,8 +45,7 @@ class apache::mod::status (
   $apache_version                                  = undef,
   $status_path                                     = '/server-status',
 ) inherits ::apache::params {
-
-  include ::apache
+  include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'status': }
 
@@ -57,11 +56,11 @@ class apache::mod::status (
   # Template uses $allow_from, $extended_status, $_apache_version, $status_path
   file { 'status.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/status.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/status.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/status.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

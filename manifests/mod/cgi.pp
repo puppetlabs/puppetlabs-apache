@@ -4,7 +4,7 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_cgi.html for additional documentation.
 #
 class apache::mod::cgi {
-  include ::apache
+  include apache
   case $::osfamily {
     'FreeBSD': {}
     default: {
@@ -25,5 +25,4 @@ class apache::mod::cgi {
   } else {
     ::apache::mod { 'cgi': }
   }
-
 }

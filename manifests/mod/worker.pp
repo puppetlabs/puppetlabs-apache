@@ -54,7 +54,7 @@ class apache::mod::worker (
   $listenbacklog       = '511',
   $apache_version      = undef,
 ) {
-  include ::apache
+  include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
 
   if defined(Class['apache::mod::event']) {
@@ -71,8 +71,8 @@ class apache::mod::worker (
   }
   File {
     owner => 'root',
-    group => $::apache::params::root_group,
-    mode  => $::apache::file_mode,
+    group => $apache::params::root_group,
+    mode  => $apache::file_mode,
   }
 
   # Template uses:
@@ -85,19 +85,18 @@ class apache::mod::worker (
   # - $serverlimit
   # - $threadLimit
   # - $listenbacklog
-  file { "${::apache::mod_dir}/worker.conf":
+  file { "${apache::mod_dir}/worker.conf":
     ensure  => file,
     content => template('apache/mod/worker.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 
   case $::osfamily {
     'redhat': {
-
       if versioncmp($_apache_version, '2.4') >= 0 {
-        ::apache::mpm{ 'worker':
+        ::apache::mpm { 'worker':
           apache_version => $_apache_version,
         }
       }
@@ -114,7 +113,7 @@ class apache::mod::worker (
     }
 
     'debian', 'freebsd': {
-      ::apache::mpm{ 'worker':
+      ::apache::mpm { 'worker':
         apache_version => $_apache_version,
       }
     }

@@ -16,5 +16,4 @@ class apache::mpm::disable_mpm_event {
     require => Package['httpd'],
     before  => Class['apache::service'],
   }
-
 }

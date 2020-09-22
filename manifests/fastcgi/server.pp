@@ -37,7 +37,7 @@ define apache::fastcgi::server (
   $file_type     = 'application/x-httpd-php',
   $pass_header   = undef,
 ) {
-  include ::apache::mod::fastcgi
+  include apache::mod::fastcgi
 
   Apache::Mod['fastcgi'] -> Apache::Fastcgi::Server[$title]
 
@@ -47,13 +47,13 @@ define apache::fastcgi::server (
 
   file { "fastcgi-pool-${name}.conf":
     ensure  => file,
-    path    => "${::apache::confd_dir}/fastcgi-pool-${name}.conf",
+    path    => "${apache::confd_dir}/fastcgi-pool-${name}.conf",
     owner   => 'root',
-    group   => $::apache::params::root_group,
-    mode    => $::apache::file_mode,
+    group   => $apache::params::root_group,
+    mode    => $apache::file_mode,
     content => template('apache/fastcgi/server.erb'),
-    require => Exec["mkdir ${::apache::confd_dir}"],
-    before  => File[$::apache::confd_dir],
+    require => Exec["mkdir ${apache::confd_dir}"],
+    before  => File[$apache::confd_dir],
     notify  => Class['apache::service'],
   }
 }

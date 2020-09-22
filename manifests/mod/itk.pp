@@ -39,7 +39,7 @@ class apache::mod::itk (
   $enablecapabilities  = undef,
   $apache_version      = undef,
 ) {
-  include ::apache
+  include apache
 
   $_apache_version = pick($apache_version, $apache::apache_version)
 
@@ -61,7 +61,7 @@ class apache::mod::itk (
       }
     } else {
       if ! defined(Class['apache::mod::prefork']) {
-        include ::apache::mod::prefork
+        include apache::mod::prefork
       }
     }
   }
@@ -70,8 +70,8 @@ class apache::mod::itk (
   }
   File {
     owner => 'root',
-    group => $::apache::params::root_group,
-    mode  => $::apache::file_mode,
+    group => $apache::params::root_group,
+    mode  => $apache::file_mode,
   }
 
   # Template uses:
@@ -81,12 +81,12 @@ class apache::mod::itk (
   # - $serverlimit
   # - $maxclients
   # - $maxrequestsperchild
-  file { "${::apache::mod_dir}/itk.conf":
+  file { "${apache::mod_dir}/itk.conf":
     ensure  => file,
-    mode    => $::apache::file_mode,
+    mode    => $apache::file_mode,
     content => template('apache/mod/itk.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 
@@ -96,7 +96,7 @@ class apache::mod::itk (
         ensure => present,
       }
       if versioncmp($_apache_version, '2.4') >= 0 {
-        ::apache::mpm{ 'itk':
+        ::apache::mpm { 'itk':
           apache_version => $_apache_version,
         }
       }
@@ -112,7 +112,7 @@ class apache::mod::itk (
       }
     }
     'debian', 'freebsd': {
-      apache::mpm{ 'itk':
+      apache::mpm { 'itk':
         apache_version => $_apache_version,
       }
     }
