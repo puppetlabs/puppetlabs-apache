@@ -3157,7 +3157,7 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-Sets the the certificate parameter of the global trusted Certificate Authority or global client certificates.
+Sets the certificate parameter of the global trusted Certificate Authority or global client certificates.
 
 Default value: 'CA_BASE64'
 

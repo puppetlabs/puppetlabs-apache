@@ -851,7 +851,7 @@ The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are u
 
 #### RHEL/CentOS 6
 
-The [`apache::mod::passenger`][] class is not installing, because the the EL6 repository is missing compatible packages.
+The [`apache::mod::passenger`][] class is not installing, because the EL6 repository is missing compatible packages.
 
 #### RHEL/CentOS 7
 
