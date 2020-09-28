@@ -170,8 +170,8 @@
 # @param mount_file_content
 #   Each directive has the format <URI> = <Worker name>. This maps as a hash of hashes, where the outer hash specifies workers, and 
 #   each inner hash contains two items:
-#   - uri_list—an array with URIs to be mapped to the worker
-#   - comment—an optional string with a comment for the worker. For example, the mount file below should be parameterized as Figure 2:
+#   - uri_list-an array with URIs to be mapped to the worker
+#   - comment-an optional string with a comment for the worker. For example, the mount file below should be parameterized as Figure 2:
 #
 #   Worker file:
 #   ```
