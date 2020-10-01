@@ -2,7 +2,22 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v5.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.5.0) (2020-07-01)
+## [v5.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.6.0) (2020-10-01)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.5.0...v5.6.0)
+
+### Added
+
+- Configure default shared lib path for mod\_wsgi on RHEL8 [\#2063](https://github.com/puppetlabs/puppetlabs-apache/pull/2063) ([nbarrientos](https://github.com/nbarrientos))
+- Various enhancements to apache::mod::passenger [\#2058](https://github.com/puppetlabs/puppetlabs-apache/pull/2058) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- make apache::mod::fcgid redhat 8 compatible [\#2071](https://github.com/puppetlabs/puppetlabs-apache/pull/2071) ([creativefre](https://github.com/creativefre))
+- pdksync - \(feat\) - Removal of inappropriate terminology [\#2062](https://github.com/puppetlabs/puppetlabs-apache/pull/2062) ([pmcmaw](https://github.com/pmcmaw))
+- Use python3-mod\_wsgi instead of mod\_wsgi on CentOS8 [\#2052](https://github.com/puppetlabs/puppetlabs-apache/pull/2052) ([kajinamit](https://github.com/kajinamit))
+
+## [v5.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.5.0) (2020-07-03)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.4.0...v5.5.0)
 
@@ -73,7 +88,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- \(FM-8662\) Correct  in manifests/mod/ssl.pp for SLES 11 [\#1963](https://github.com/puppetlabs/puppetlabs-apache/pull/1963) ([sanfrancrisko](https://github.com/sanfrancrisko))
+- \(FM-8662\) Correction in manifests/mod/ssl.pp for SLES 11 [\#1963](https://github.com/puppetlabs/puppetlabs-apache/pull/1963) ([sanfrancrisko](https://github.com/sanfrancrisko))
 - always quote ExpiresDefault in vhost::directories [\#1958](https://github.com/puppetlabs/puppetlabs-apache/pull/1958) ([evgeni](https://github.com/evgeni))
 - MODULES-9904 Fix lbmethod module load order [\#1956](https://github.com/puppetlabs/puppetlabs-apache/pull/1956) ([optiz0r](https://github.com/optiz0r))
 - Add owner, group, file\_mode and show\_diff to apache::custom\_config [\#1942](https://github.com/puppetlabs/puppetlabs-apache/pull/1942) ([treydock](https://github.com/treydock))
@@ -149,6 +164,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(Modules 8141/Modules 8379\) - Addition of support for SLES 15 [\#1862](https://github.com/puppetlabs/puppetlabs-apache/pull/1862) ([david22swan](https://github.com/david22swan))
+- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
 
 ### Fixed
 
@@ -183,7 +199,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - pdksync - \(FM-7392\) - Puppet 6 Testing Changes [\#1838](https://github.com/puppetlabs/puppetlabs-apache/pull/1838) ([pmcmaw](https://github.com/pmcmaw))
 - pdksync - \(MODULES-6805\) metadata.json shows support for puppet 6 [\#1836](https://github.com/puppetlabs/puppetlabs-apache/pull/1836) ([tphoney](https://github.com/tphoney))
-- SCL support for httpd and php7.1 [\#1822](https://github.com/puppetlabs/puppetlabs-apache/pull/1822) ([mmoll](https://github.com/mmoll))
 
 ### Fixed
 
