@@ -7,5 +7,5 @@
 # @api private
 class apache::proxy {
   warning('apache::proxy is deprecated; please use apache::mod::proxy')
-  include ::apache::mod::proxy
+  include apache::mod::proxy
 }

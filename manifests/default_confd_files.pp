@@ -9,7 +9,7 @@ class apache::default_confd_files (
   if $all {
     case $::osfamily {
       'freebsd': {
-        include ::apache::confd::no_accf
+        include apache::confd::no_accf
       }
       default: {
         # do nothing

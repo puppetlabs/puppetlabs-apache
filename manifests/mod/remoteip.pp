@@ -66,7 +66,7 @@ class apache::mod::remoteip (
   Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
   Optional[String]                                           $apache_version            = undef,
 ) {
-  include ::apache
+  include apache
 
   $_apache_version = pick($apache_version, $apache::apache_version)
   if versioncmp($_apache_version, '2.4') < 0 {
@@ -104,11 +104,11 @@ class apache::mod::remoteip (
 
   file { 'remoteip.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/remoteip.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/remoteip.conf",
+    mode    => $apache::file_mode,
     content => epp('apache/mod/remoteip.conf.epp', $template_parameters),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

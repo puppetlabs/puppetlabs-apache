@@ -1,1 +1,1 @@
-include ::apache
+include apache

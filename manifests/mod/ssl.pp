@@ -81,18 +81,18 @@ class apache::mod::ssl (
   Boolean $ssl_compression                                  = false,
   Optional[Boolean] $ssl_sessiontickets                     = undef,
   $ssl_cryptodevice                                         = 'builtin',
-  $ssl_options                                              = [ 'StdEnvVars' ],
+  $ssl_options                                              = ['StdEnvVars'],
   $ssl_openssl_conf_cmd                                     = undef,
   Optional[String] $ssl_cert                                = undef,
   Optional[String] $ssl_key                                 = undef,
   $ssl_ca                                                   = undef,
   $ssl_cipher                                               = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
   Variant[Boolean, Enum['on', 'off']] $ssl_honorcipherorder = true,
-  $ssl_protocol                                             = $::apache::params::ssl_protocol,
+  $ssl_protocol                                             = $apache::params::ssl_protocol,
   Array $ssl_proxy_protocol                                 = [],
   $ssl_pass_phrase_dialog                                   = 'builtin',
   $ssl_random_seed_bytes                                    = '512',
-  String $ssl_sessioncache                                  = $::apache::params::ssl_sessioncache,
+  String $ssl_sessioncache                                  = $apache::params::ssl_sessioncache,
   $ssl_sessioncachetimeout                                  = '300',
   Boolean $ssl_stapling                                     = false,
   Optional[String] $stapling_cache                          = undef,
@@ -101,9 +101,8 @@ class apache::mod::ssl (
   $apache_version                                           = undef,
   $package_name                                             = undef,
 ) inherits ::apache::params {
-
-  include ::apache
-  include ::apache::mod::mime
+  include apache
+  include apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
   if $ssl_mutex {
     $_ssl_mutex = $ssl_mutex
@@ -159,7 +158,7 @@ class apache::mod::ssl (
   }
 
   if $::osfamily == 'Suse' {
-    if defined(Class['::apache::mod::worker']){
+    if defined(Class['::apache::mod::worker']) {
       $suse_path = '/usr/lib64/apache2-worker'
     } else {
       $suse_path = '/usr/lib64/apache2-prefork'
@@ -175,7 +174,7 @@ class apache::mod::ssl (
   }
 
   if versioncmp($_apache_version, '2.4') >= 0 {
-    include ::apache::mod::socache_shmcb
+    include apache::mod::socache_shmcb
   }
 
   # Template uses
@@ -196,11 +195,11 @@ class apache::mod::ssl (
   # $_apache_version
   file { 'ssl.conf':
     ensure  => file,
-    path    => $::apache::_ssl_file,
-    mode    => $::apache::file_mode,
+    path    => $apache::_ssl_file,
+    mode    => $apache::file_mode,
     content => template('apache/mod/ssl.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

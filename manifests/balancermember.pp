@@ -38,12 +38,11 @@
 #     options          => ['ping=5', 'disablereuse=on', 'retry=5', 'ttl=120'],
 #   }
 #
-define apache::balancermember(
+define apache::balancermember (
   $balancer_cluster,
   $url = "http://${::fqdn}/",
   $options = [],
 ) {
-
   concat::fragment { "BalancerMember ${name}":
     target  => "apache_balancer_${balancer_cluster}",
     content => inline_template(" BalancerMember ${url} <%= @options.join ' ' %>\n"),

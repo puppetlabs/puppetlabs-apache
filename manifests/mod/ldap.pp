@@ -60,9 +60,8 @@ class apache::mod::ldap (
   $ldap_opcache_ttl                                = undef,
   $ldap_trusted_mode                               = undef,
   String $ldap_path                                = '/ldap-status',
-){
-
-  include ::apache
+) {
+  include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'ldap':
     package => $package_name,
@@ -70,11 +69,11 @@ class apache::mod::ldap (
   # Template uses $_apache_version
   file { 'ldap.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/ldap.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/ldap.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/ldap.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

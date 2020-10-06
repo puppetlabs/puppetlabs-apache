@@ -4,10 +4,9 @@
 
 # Base class. Turn off the default vhosts; we will be declaring
 # all vhosts below.
-class { '::apache':
+class { 'apache':
   default_vhost => false,
 }
-
 
 # Add two an IP-based vhost on 10.0.0.10, ssl and non-ssl
 apache::vhost { 'The first IP-based vhost, non-ssl':

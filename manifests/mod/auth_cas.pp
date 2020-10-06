@@ -84,7 +84,7 @@
 class apache::mod::auth_cas (
   String $cas_login_url,
   String $cas_validate_url,
-  String $cas_cookie_path    = $::apache::params::cas_cookie_path,
+  String $cas_cookie_path    = $apache::params::cas_cookie_path,
   $cas_cookie_path_mode      = '0750',
   $cas_version               = 2,
   $cas_debug                 = 'Off',
@@ -107,12 +107,11 @@ class apache::mod::auth_cas (
   $cas_scrub_request_headers = undef,
   $suppress_warning          = false,
 ) inherits ::apache::params {
-
   if $::osfamily == 'RedHat' and ! $suppress_warning {
     warning('RedHat distributions do not have Apache mod_auth_cas in their default package repositories.')
   }
 
-  include ::apache
+  include apache
   ::apache::mod { 'auth_cas': }
 
   file { $cas_cookie_path:
@@ -127,12 +126,11 @@ class apache::mod::auth_cas (
   # - All variables beginning with cas_
   file { 'auth_cas.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/auth_cas.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/auth_cas.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/auth_cas.conf.erb'),
-    require => [ Exec["mkdir ${::apache::mod_dir}"], ],
-    before  => File[$::apache::mod_dir],
+    require => [Exec["mkdir ${apache::mod_dir}"],],
+    before  => File[$apache::mod_dir],
     notify  => Class['Apache::Service'],
   }
-
 }

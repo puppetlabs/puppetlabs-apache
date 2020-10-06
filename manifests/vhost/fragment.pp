@@ -53,7 +53,7 @@
 #     content  => '# Foo',
 #   }
 #
-define apache::vhost::fragment(
+define apache::vhost::fragment (
   String[1] $vhost,
   $priority = undef,
   Optional[String] $content = undef,

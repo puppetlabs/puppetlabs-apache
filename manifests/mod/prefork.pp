@@ -45,7 +45,7 @@ class apache::mod::prefork (
   $apache_version         = undef,
   $listenbacklog          = '511'
 ) {
-  include ::apache
+  include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::prefork and apache::mod::event on the same node')
@@ -72,8 +72,8 @@ class apache::mod::prefork (
 
   File {
     owner => 'root',
-    group => $::apache::params::root_group,
-    mode  => $::apache::file_mode,
+    group => $apache::params::root_group,
+    mode  => $apache::file_mode,
   }
 
   # Template uses:
@@ -85,18 +85,18 @@ class apache::mod::prefork (
   # - $maxrequestworkers
   # - $maxrequestsperchild
   # - $maxconnectionsperchild
-  file { "${::apache::mod_dir}/prefork.conf":
+  file { "${apache::mod_dir}/prefork.conf":
     ensure  => file,
     content => template('apache/mod/prefork.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 
   case $::osfamily {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
-        ::apache::mpm{ 'prefork':
+        ::apache::mpm { 'prefork':
           apache_version => $_apache_version,
         }
       }
@@ -112,12 +112,12 @@ class apache::mod::prefork (
       }
     }
     'debian', 'freebsd': {
-      ::apache::mpm{ 'prefork':
+      ::apache::mpm { 'prefork':
         apache_version => $_apache_version,
       }
     }
     'Suse': {
-      ::apache::mpm{ 'prefork':
+      ::apache::mpm { 'prefork':
         apache_version => $apache_version,
         lib_path       => '/usr/lib64/apache2-prefork',
       }

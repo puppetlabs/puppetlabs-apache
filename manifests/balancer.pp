@@ -48,7 +48,7 @@ define apache::balancer (
   $target = undef,
   $options = [],
 ) {
-  include ::apache::mod::proxy_balancer
+  include apache::mod::proxy_balancer
 
   if versioncmp($apache::mod::proxy_balancer::apache_version, '2.4') >= 0 {
     $lbmethod = $proxy_set['lbmethod'] ? {
@@ -56,14 +56,14 @@ define apache::balancer (
       default => $proxy_set['lbmethod'],
     }
     ensure_resource('apache::mod', "lbmethod_${lbmethod}", {
-      'loadfile_name' => "proxy_balancer_lbmethod_${lbmethod}.load"
+        'loadfile_name' => "proxy_balancer_lbmethod_${lbmethod}.load"
     })
   }
 
   if $target {
     $_target = $target
   } else {
-    $_target = "${::apache::confd_dir}/balancer_${name}.conf"
+    $_target = "${apache::confd_dir}/balancer_${name}.conf"
   }
 
   if !empty($options) {
@@ -76,7 +76,7 @@ define apache::balancer (
     owner  => '0',
     group  => '0',
     path   => $_target,
-    mode   => $::apache::file_mode,
+    mode   => $apache::file_mode,
     notify => Class['Apache::Service'],
   }
 

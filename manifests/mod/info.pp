@@ -21,12 +21,12 @@ class apache::mod::info (
   $apache_version  = undef,
   $restrict_access = true,
   $info_path       = '/server-info',
-){
-  include ::apache
+) {
+  include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
 
   if $::osfamily == 'Suse' {
-    if defined(Class['::apache::mod::worker']){
+    if defined(Class['::apache::mod::worker']) {
       $suse_path = '/usr/lib64/apache2-worker'
     } else {
       $suse_path = '/usr/lib64/apache2-prefork'
@@ -41,11 +41,11 @@ class apache::mod::info (
   # Template uses $allow_from, $_apache_version
   file { 'info.conf':
     ensure  => file,
-    path    => "${::apache::mod_dir}/info.conf",
-    mode    => $::apache::file_mode,
+    path    => "${apache::mod_dir}/info.conf",
+    mode    => $apache::file_mode,
     content => template('apache/mod/info.conf.erb'),
-    require => Exec["mkdir ${::apache::mod_dir}"],
-    before  => File[$::apache::mod_dir],
+    require => Exec["mkdir ${apache::mod_dir}"],
+    before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
   }
 }

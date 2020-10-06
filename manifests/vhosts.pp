@@ -21,6 +21,6 @@
 class apache::vhosts (
   $vhosts = {},
 ) {
-  include ::apache
+  include apache
   create_resources('apache::vhost', $vhosts)
 }
