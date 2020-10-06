@@ -596,7 +596,7 @@
 #   Sets the `Options` for the specified virtual host. For example:
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     options => ['Indexes','FollowSymLinks','MultiViews'],
 #   }
 #   ```
@@ -727,8 +727,8 @@
 #   Sets [PassengerConcurrencyModel](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerconcurrencyodel),
 #   to specify the I/O concurrency model that should be used for Ruby application processes. 
 #   Passenger supports two concurrency models:<br />
-#   * `process` – single-threaded, multi-processed I/O concurrency.
-#   * `thread` – multi-threaded, multi-processed I/O concurrency.
+#   * `process` - single-threaded, multi-processed I/O concurrency.
+#   * `thread` - multi-threaded, multi-processed I/O concurrency.
 # 
 # @param passenger_thread_count
 #   Sets [PassengerThreadCount](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerthreadcount),
@@ -868,7 +868,7 @@
 #   configuration. Optionally, parameters can be added as an array.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     proxy_pass => [
 #       { 'path' => '/a', 'url' => 'http://backend-a/' },
 #       { 'path' => '/b', 'url' => 'http://backend-b/' },
@@ -917,7 +917,7 @@
 #   length, and the items are order-dependent.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     redirect_source => ['/images','/downloads'],
 #     redirect_dest   => ['http://img.example.com/','http://downloads.example.com/'],
 #   }
@@ -927,7 +927,7 @@
 #   Specifies the status to append to the redirect.
 #   ``` puppet
 #     apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     redirect_status => ['temp','permanent'],
 #   }
 #   ```
@@ -938,7 +938,7 @@
 #   and redirectmatch_dest.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     redirectmatch_status => ['404','404'],
 #     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
 #     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
@@ -951,7 +951,7 @@
 #   and redirectmatch_dest.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     redirectmatch_status => ['404','404'],
 #     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
 #     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
@@ -964,7 +964,7 @@
 #   and redirectmatch_regexp.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     redirectmatch_status => ['404','404'],
 #     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
 #     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
@@ -977,7 +977,7 @@
 #   and so on.
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     request_headers => [
 #       'append MirrorID "mirror 12"',
 #       'unset MirrorID',
@@ -992,7 +992,7 @@
 #   For example, you can specify that anyone trying to access index.html is served welcome.html
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     rewrites => [ { rewrite_rule => ['^index\.html$ welcome.html'] } ]
 #   }
 #   ```
@@ -1000,7 +1000,7 @@
 #   For instance, if you wanted to rewrite URLs only if the visitor is using IE
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     rewrites => [
 #       {
 #         comment      => 'redirect IE',
@@ -1014,7 +1014,7 @@
 #   only when the browser is Lynx or Mozilla (version 1 or 2)
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     rewrites => [
 #       {
 #         comment      => 'Lynx or Mozilla v1/2',
@@ -1027,7 +1027,7 @@
 #   Multiple rewrites and conditions are also possible
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     rewrites => [
 #       {
 #         comment      => 'Lynx or Mozilla v1/2',
@@ -1079,7 +1079,7 @@
 #   `rewrite_inherit` parameter to `true`:
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
-#     …
+#     ...
 #     rewrites => [
 #       <rules>,
 #     ],
@@ -1363,7 +1363,7 @@
 #   configuration.
 #   ``` puppet
 #   apache::vhost { 'monitor':
-#     …
+#     ...
 #     directories => [
 #       {
 #         path => '/path/to/directory',
@@ -1534,7 +1534,7 @@
 #   directive, which sets the certificate verification level for client authentication.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
-#     …
+#     ...
 #     ssl_verify_client => 'optional',
 #   }
 #   ```
@@ -1545,7 +1545,7 @@
 #   verification. You must set `ssl_verify_client` for it to take effect.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
-#     …
+#     ...
 #     ssl_verify_client => 'require',
 #     ssl_verify_depth => 1,
 #   }
@@ -1588,7 +1588,7 @@
 #   concatenation of the PEM-encoded certificate files in order of preference.
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
-#     …
+#     ...
 #     ssl_proxy_machine_cert => '/etc/httpd/ssl/client_certificate.pem',
 #   }
 #   ```
@@ -1615,14 +1615,14 @@
 #   A string:
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
-#     …
+#     ...
 #     ssl_options => '+ExportCertData',
 #   }
 #   ```
 #   An array:
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
-#     …
+#     ...
 #     ssl_options => ['+StrictRequire', '+ExportCertData'],
 #   }
 #   ```
