@@ -1,7 +1,7 @@
 # https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
 type Apache::OIDCSettings = Struct[
   {
-    Optional['RedirectURI']                             => Variant[Stdlib::HTTPSUrl,Stdlib::HttpUrl],
+    Optional['RedirectURI']                             => Variant[Stdlib::HTTPSUrl,Stdlib::HttpUrl,Pattern[/^\/[A-Za-z0-9\-\._%\/]*$/]],
     Optional['CryptoPassphrase']                        => String,
     Optional['MetadataDir']                             => String,
     Optional['ProviderMetadataURL']                     => Stdlib::HTTPSUrl,
