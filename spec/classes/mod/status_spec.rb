@@ -200,6 +200,32 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
       end
+
+      context "on a RedHat 8 OS with default params and #{req_key} requires" do
+        let :facts do
+          {
+            osfamily: 'RedHat',
+            operatingsystemrelease: '8',
+            operatingsystem: 'RedHat',
+            id: 'root',
+            kernel: 'Linux',
+            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+            is_pe: false,
+          }
+        end
+
+        let :params do
+          {
+            requires: req_value,
+          }
+        end
+
+        it { is_expected.to contain_apache__mod('status') }
+
+        status_conf_spec_require(req_value, 'On', '/server-status')
+
+        it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
+      end
     end
 
     context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
