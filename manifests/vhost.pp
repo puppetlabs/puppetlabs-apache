@@ -1475,6 +1475,24 @@
 #   }
 #   ```
 # 
+# @param gssapi
+#  Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
+#  ```puppet
+#   include apache::mod::auth_gssapi
+#   apache::vhost { 'sample.example.net':
+#     docroot     => '/path/to/directory',
+#     directories => [
+#       { path   => '/path/to/different/dir',
+#         gssapi => {
+#           credstore => 'keytab:/foo/bar.keytab',
+#           localname => 'Off',
+#           sslonly   => 'On',
+#         }
+#       },
+#     ],
+#   }
+#   ```
+#
 # @param ssl
 #   Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS queries.
 #

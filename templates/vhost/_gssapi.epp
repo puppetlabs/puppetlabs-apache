@@ -1,0 +1,16 @@
+<%|
+  # https://github.com/gssapi/mod_auth_gssapi
+  Optional[String[1]]        $credstore = undef,
+  Optional[Enum['On','Off']] $sslonly   = undef,
+  Optional[Enum['On','Off']] $localname = undef,
+|%>
+# mod_auth_gssapi configuration
+<% if $sslonly { -%>
+    GssapiSSLonly <%= $sslonly %>
+<% } -%>
+<% if $localname { -%>
+    GssapiLocalName <%= $localname %>
+<% } -%>
+<% if $credstore { -%>
+    GssapiCredStore <%= $credstore %>
+<% } -%>

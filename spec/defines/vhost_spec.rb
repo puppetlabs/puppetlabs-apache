@@ -246,6 +246,11 @@ describe 'apache::vhost', type: :define do
                   'passenger_allow_encoded_slashes'                     => false,
                   'passenger_app_log_file'                              => '/tmp/app.log',
                   'passenger_debugger'                                  => false,
+                  'gssapi'                                              => {
+                    'credstore' => 'keytab:/foo/bar.keytab',
+                    'localname' => 'On',
+                    'sslonly'   => 'Off',
+                  },
                 },
               ],
               'error_log'                   => false,
@@ -919,6 +924,21 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerDebugger\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiCredStore\skeytab:/foo/bar.keytab$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiSSLonly\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiLocalName\sOn$},
             )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
