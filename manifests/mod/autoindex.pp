@@ -3,7 +3,9 @@
 # 
 # @see https://httpd.apache.org/docs/current/mod/mod_autoindex.html for additional documentation.
 #
-class apache::mod::autoindex {
+class apache::mod::autoindex (
+  $icons_prefix   = $apache::params::icons_prefix
+) inherits ::apache::params {
   include apache
   ::apache::mod { 'autoindex': }
 

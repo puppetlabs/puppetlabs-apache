@@ -1,5 +1,5 @@
 <IfModule alias_module>
-Alias /icons/ "<%= @icons_path %>/"
+Alias /<%= @icons_prefix %>/ "<%= @icons_path %>/"
 <Directory "<%= @icons_path %>">
     Options <%= @icons_options %>
     AllowOverride None

@@ -77,6 +77,30 @@ describe 'apache::mod::alias', type: :class do
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Options foo}) }
     end
+    context 'with icons path change', :compile do
+      let :pre_condition do
+        'class { apache: default_mods => false }'
+      end
+      let :facts do
+        {
+          id: 'root',
+          kernel: 'Linux',
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemrelease: '7',
+          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+          is_pe: false,
+        }
+      end
+      let :params do
+        {
+          'icons_prefix' => 'apache-icons',
+        }
+      end
+
+      it { is_expected.to contain_apache__mod('alias') }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/apache-icons\/ "\/usr\/share\/httpd\/icons\/"}) }
+    end
     context 'on a FreeBSD OS', :compile do
       let :facts do
         {
