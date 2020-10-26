@@ -1121,6 +1121,20 @@ Sets the local path for an /icons/ Alias. Default depends on operating system:
 
 Default value: `$::apache::params::alias_icons_path`
 
+##### `icons_path`
+
+Change the alias for /icons/.
+
+Default value: `$::apache::params::alias_icons_path`
+
+##### `icons_prefix`
+
+Data type: `Any`
+
+
+
+Default value: `$::apache::params::icons_prefix`
+
 ### `apache::mod::auth_basic`
 
 Installs `mod_auth_basic`
@@ -1610,6 +1624,18 @@ Installs `mod_autoindex`
 * **See also**
   * https://httpd.apache.org/docs/current/mod/mod_autoindex.html
     * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::autoindex` class.
+
+##### `icons_prefix`
+
+Data type: `Any`
+
+
+
+Default value: `$::apache::params::icons_prefix`
 
 ### `apache::mod::cache`
 
@@ -3335,10 +3361,10 @@ Data type: `Variant[Array[String], String]`
 
 The precedence of language variants for cases where the client does not express a preference.
 
-Default value: `[ 'en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
-                        'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn',
-                        'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN',
-                        'zh-TW' ]`
+Default value: `['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
+    'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn',
+    'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN',
+  'zh-TW']`
 
 ### `apache::mod::nss`
 
@@ -4455,7 +4481,7 @@ Default value: ``undef``
 
 ##### `passenger_disable_log_prefix`
 
-Data type: `Optional[Boolean ]`
+Data type: `Optional[Boolean]`
 
 
 
@@ -5109,7 +5135,7 @@ Data type: `Any`
 
 List of IPs & bitmasked subnets to adjust requests for
 
-Default value: `[ '127.0.0.1' ]`
+Default value: `['127.0.0.1']`
 
 ##### `header`
 
@@ -5484,7 +5510,7 @@ Data type: `Any`
 
 Configure various SSL engine run-time options.
 
-Default value: `[ 'StdEnvVars' ]`
+Default value: `['StdEnvVars']`
 
 ##### `ssl_openssl_conf_cmd`
 
@@ -5797,7 +5823,7 @@ Data type: `Any`
 
 Array of directives that are allowed in .htaccess files.
 
-Default value: `[ 'FileInfo', 'AuthConfig', 'Limit', 'Indexes' ]`
+Default value: `['FileInfo', 'AuthConfig', 'Limit', 'Indexes']`
 
 ##### `options`
 
@@ -5805,7 +5831,7 @@ Data type: `Any`
 
 Configures what features are available in a particular directory.
 
-Default value: `[ 'MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec' ]`
+Default value: `['MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec']`
 
 ##### `unmanaged_path`
 

@@ -40,6 +40,9 @@ class apache::params inherits ::apache::version {
   # no client certs should be trusted for auth by default.
   $ssl_certs_dir          = undef
 
+  # Allow overriding the autoindex alias location
+  $icons_prefix = 'icons'
+
   if ($apache::version::scl_httpd_version) {
     if $apache::version::scl_php_version == undef {
       fail('If you define apache::version::scl_httpd_version, you also need to specify apache::version::scl_php_version')
