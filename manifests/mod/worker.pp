@@ -53,6 +53,7 @@ class apache::mod::worker (
   Integer $threadlimit             = 64,
   Integer $listenbacklog           = 511,
   Optional[String] $apache_version = undef,
+  Optional[Integer] $maxrequestworkers = undef,
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
