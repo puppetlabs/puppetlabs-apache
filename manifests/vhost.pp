@@ -1610,6 +1610,14 @@
 #     ssl_proxy_machine_cert => '/etc/httpd/ssl/client_certificate.pem',
 #   }
 #   ```
+# @param ssl_proxy_machine_cert_chain
+#   Sets the [SSLProxyMachineCertificateChainFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatechainfile)
+#   directive, which specifies an all-in-one file where you keep the certificate chain for
+#   all of the client certs in use. This directive will be needed if the remote server
+#   presents a list of CA certificates that are not direct signers of one of the configured
+#   client certificates. This referenced file is simply the concatenation of the various
+#   PEM-encoded certificate files. Upon startup, each client certificate configured will be
+#   examined and a chain of trust will be constructed.
 #
 # @param ssl_proxy_check_peer_cn
 #   Sets the [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxycheckpeercn) 
@@ -1744,6 +1752,7 @@ define apache::vhost (
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                            = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                          = undef,
   $ssl_proxy_machine_cert                                                           = undef,
+  $ssl_proxy_machine_cert_chain                                                     = undef,
   $ssl_proxy_cipher_suite                                                           = undef,
   $ssl_proxy_protocol                                                               = undef,
   $ssl_options                                                                      = undef,
@@ -2491,6 +2500,7 @@ define apache::vhost (
   # - $ssl_proxy_check_peer_name
   # - $ssl_proxy_check_peer_expire
   # - $ssl_proxy_machine_cert
+  # - $ssl_proxy_machine_cert_chain
   # - $ssl_proxy_protocol
   if $ssl_proxyengine {
     concat::fragment { "${name}-sslproxy":

@@ -9240,6 +9240,20 @@ apache::vhost { 'sample.example.net':
 
 Default value: ``undef``
 
+##### `ssl_proxy_machine_cert_chain`
+
+Data type: `Any`
+
+Sets the [SSLProxyMachineCertificateChainFile](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxymachinecertificatechainfile)
+directive, which specifies an all-in-one file where you keep the certificate chain for
+all of the client certs in use. This directive will be needed if the remote server
+presents a list of CA certificates that are not direct signers of one of the configured
+client certificates. This referenced file is simply the concatenation of the various
+PEM-encoded certificate files. Upon startup, each client certificate configured will be
+examined and a chain of trust will be constructed.
+
+Default value: `undef`
+
 ##### `ssl_proxy_check_peer_cn`
 
 Data type: `Optional[Enum['on', 'off']]`
