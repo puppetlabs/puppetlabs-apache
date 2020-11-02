@@ -339,6 +339,12 @@
     <%- if directory['ssl_options'] -%>
     SSLOptions <%= Array(directory['ssl_options']).join(' ') %>
     <%- end -%>
+    <%- if directory['ssl_verify_client'] and directory['ssl_verify_client'].match('(none|optional|require|optional_no_ca)') -%>
+    SSLVerifyClient <%= directory['ssl_verify_client'] %>
+    <%- if directory['ssl_verify_depth'] -%>
+    SSLVerifyDepth <%= directory['ssl_verify_depth'] %>
+    <%- end -%>
+    <%- end -%>
     <%- if directory['suphp'] and @suphp_engine == 'on' -%>
     suPHP_UserGroup <%= directory['suphp']['user'] %> <%= directory['suphp']['group'] %>
     <%- end -%>

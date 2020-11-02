@@ -1498,7 +1498,7 @@
 #
 # @param ssl_ca
 #   Specifies the SSL certificate authority to be used to verify client certificates used 
-#   for authentication. You must also set `ssl_verify_client` to use this.
+#   for authentication.
 #
 # @param ssl_cert
 #   Specifies the SSL certification.
@@ -1516,8 +1516,7 @@
 #   preferred order.
 #
 # @param ssl_certs_dir
-#   Specifies the location of the SSL certification directory to verify client certs. Will not 
-#   be used unless `ssl_verify_client` is also set (see below).
+#   Specifies the location of the SSL certification directory to verify client certs.
 #
 # @param ssl_chain
 #   Specifies the SSL chain. This default works out of the box, but it must be updated in 
@@ -1743,7 +1742,7 @@ define apache::vhost (
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   $ssl_honorcipherorder                                                             = undef,
-  $ssl_verify_client                                                                = undef,
+  Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client = undef,
   $ssl_verify_depth                                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
   Optional[Integer[0]] $ssl_proxy_verify_depth                                      = undef,
