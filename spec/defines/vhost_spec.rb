@@ -2411,6 +2411,46 @@ describe 'apache::vhost', type: :define do
             end
           end
         end
+        context 'oidc_settings RedirectURL' do
+          describe 'with VALID relative URI' do
+            let :params do
+              default_params.merge(
+                'auth_oidc' => true,
+                'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
+                                     'ClientID'                  => 'test',
+                                     'RedirectURI'               => '/some/valid/relative/uri',
+                                     'ProviderTokenEndpointAuth' => 'client_secret_basic',
+                                     'RemoteUserClaim'           => 'sub',
+                                     'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                     'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+              )
+            end
+
+            it { is_expected.to compile }
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
+                content: %r{^\s+OIDCRedirectURI\s/some/valid/relative/uri$},
+              )
+            }
+          end
+
+          describe 'with INVALID relative URI' do
+            let :params do
+              default_params.merge(
+                'auth_oidc' => true,
+                'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
+                                     'ClientID'                  => 'test',
+                                     'RedirectURI'               => 'invalid_uri',
+                                     'ProviderTokenEndpointAuth' => 'client_secret_basic',
+                                     'RemoteUserClaim'           => 'sub',
+                                     'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                     'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+              )
+            end
+
+            it { is_expected.not_to compile }
+          end
+        end
       end
     end
   end
