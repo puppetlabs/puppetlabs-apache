@@ -2440,7 +2440,7 @@ describe 'apache::vhost', type: :define do
                 'auth_oidc' => true,
                 'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
                                      'ClientID'                  => 'test',
-                                     'RedirectURI'               => 'total_garbage',
+                                     'RedirectURI'               => 'invalid_uri',
                                      'ProviderTokenEndpointAuth' => 'client_secret_basic',
                                      'RemoteUserClaim'           => 'sub',
                                      'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
