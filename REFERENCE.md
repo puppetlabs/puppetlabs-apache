@@ -158,7 +158,7 @@ outside of the defaults.
 ### Data types
 
 * [`Apache::LogLevel`](#apacheloglevel): A string that conforms to the Apache `LogLevel` syntax.
-* [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
+* [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/main/auth_openidc.conf
 
 ### Tasks
 
@@ -9381,7 +9381,7 @@ Default value: ``false``
 
 Data type: `Optional[Apache::OIDCSettings]`
 
-An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf].
+An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/main/auth_openidc.conf].
 
 Default value: ``undef``
 
@@ -9770,7 +9770,7 @@ Alias of `Pattern[/(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])/]`
 
 ### `Apache::OIDCSettings`
 
-https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
+https://github.com/zmartzone/mod_auth_openidc/blob/main/auth_openidc.conf
 
 Alias of `Struct[{
     Optional['RedirectURI']                             => Variant[Stdlib::HTTPSUrl,Stdlib::HttpUrl],
