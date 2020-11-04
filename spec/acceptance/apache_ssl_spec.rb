@@ -64,7 +64,7 @@ describe 'apache ssl' do
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
           ssl_honorcipherorder => 'test',
-          ssl_verify_client    => 'test',
+          ssl_verify_client    => 'optional',
           ssl_verify_depth     => 'test',
           ssl_options          => ['test', 'test1'],
           ssl_proxyengine      => true,
@@ -88,7 +88,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLProtocol             test' }
       it { is_expected.to contain 'SSLCipherSuite          test' }
       it { is_expected.to contain 'SSLHonorCipherOrder     test' }
-      it { is_expected.to contain 'SSLVerifyClient         test' }
+      it { is_expected.to contain 'SSLVerifyClient         optional' }
       it { is_expected.to contain 'SSLVerifyDepth          test' }
       it { is_expected.to contain 'SSLOptions test test1' }
       if apache_hash['version'] == '2.4'
@@ -111,7 +111,7 @@ describe 'apache ssl' do
           ssl_cert             => '/tmp/ssl_cert',
           ssl_key              => '/tmp/ssl_key',
           ssl_ca               => '/tmp/ssl_ca',
-          ssl_verify_client    => 'test',
+          ssl_verify_client    => 'optional',
         }
     MANIFEST
     it 'runs without error' do
@@ -139,7 +139,7 @@ describe 'apache ssl' do
           ssl_cert             => '/tmp/ssl_cert',
           ssl_key              => '/tmp/ssl_key',
           ssl_certs_dir        => '/tmp',
-          ssl_verify_client    => 'test',
+          ssl_verify_client    => 'optional',
         }
     MANIFEST
     it 'runs without error' do
@@ -151,7 +151,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
       it { is_expected.to contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
       it { is_expected.to contain 'SSLCACertificatePath    "/tmp"' }
-      it { is_expected.to contain 'SSLVerifyClient         test' }
+      it { is_expected.to contain 'SSLVerifyClient         optional' }
       it { is_expected.not_to contain 'SSLCACertificateFile' }
     end
   end

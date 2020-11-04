@@ -1743,7 +1743,7 @@ define apache::vhost (
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   $ssl_honorcipherorder                                                             = undef,
-  $ssl_verify_client                                                                = undef,
+  Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client = undef,
   $ssl_verify_depth                                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
   Optional[Integer[0]] $ssl_proxy_verify_depth                                      = undef,
