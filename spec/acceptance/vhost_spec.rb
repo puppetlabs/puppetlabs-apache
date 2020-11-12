@@ -948,6 +948,58 @@ describe 'apache::vhost define' do
     end
   end
 
+  context 'when a manifest defines $servername' do
+    describe 'when the $use_servername_for_filenames parameter is set to true' do
+      pp = <<-MANIFEST
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            use_servername_for_filenames  => true,
+            servername                    => 'test.servername',
+            docroot                       => '/tmp',
+            logroot                       => '/tmp',
+          }
+      MANIFEST
+      it 'applies cleanly and DOES NOT print warning about $use_servername_for_filenames usage for test.server vhost' do
+        result = apply_manifest(pp, catch_failures: true)
+        expect(result.stderr).not_to contain %r{
+          .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
+          It\sis\spossible\sfor\sthe\s\$name\sparameter.*
+          sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
+        }xm
+      end
+      describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
+        it { is_expected.to be_file }
+        it { is_expected.to contain '  ErrorLog "/tmp/test.servername_error.log' }
+        it { is_expected.to contain '  CustomLog "/tmp/test.servername_access.log' }
+      end
+    end
+    describe 'when the $use_servername_for_filenames parameter is NOT defined' do
+      pp = <<-MANIFEST
+          class { 'apache': }
+          host { 'test.server': ip => '127.0.0.1' }
+          apache::vhost { 'test.server':
+            servername                    => 'test.servername',
+            docroot                       => '/tmp',
+            logroot                       => '/tmp',
+          }
+      MANIFEST
+      it 'applies cleanly and prints warning about $use_servername_for_filenames usage for test.server vhost' do
+        result = apply_manifest(pp, catch_failures: true)
+        expect(result.stderr).to contain %r{
+          .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
+          It\sis\spossible\sfor\sthe\s\$name\sparameter.*
+          sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
+        }xm
+      end
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+        it { is_expected.to be_file }
+        it { is_expected.to contain '  ErrorLog "/tmp/test.server_error.log' }
+        it { is_expected.to contain '  CustomLog "/tmp/test.server_access.log' }
+      end
+    end
+  end
+
   ['access', 'error'].each do |logtype|
     case logtype
     when 'access'
