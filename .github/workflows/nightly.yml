@@ -1,0 +1,146 @@
+name: "nightly"
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+env:
+  HONEYCOMB_WRITEKEY: 7f3c63a70eecc61d635917de46bea4e6
+  HONEYCOMB_DATASET: litmus tests
+
+jobs:
+  setup_matrix:
+    name: "Setup Test Matrix"
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+    - name: Checkout Source
+      uses: actions/checkout@v2
+
+    - name: Activate Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: "2.7"
+
+    - name: Cache gems
+      uses: actions/cache@v2
+      with:
+        path: vendor/gems
+        key: ${{ runner.os }}-nightly-${{ hashFiles('**/Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-nightly-
+          ${{ runner.os }}-
+
+    - name: Install gems
+      run: |
+        bundle config path vendor/gems
+        bundle config jobs 8
+        bundle config retry 3
+        bundle install
+        bundle clean
+
+    - name: Setup Acceptance Test Matrix
+      id: get-matrix
+      run: "bundle exec matrix_from_metadata"
+
+  Acceptance:
+    needs:
+      - setup_matrix
+
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.setup_matrix.outputs.matrix)}}
+
+    steps:
+    - name: Checkout Source
+      uses: actions/checkout@v2
+
+    - name: Activate Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: "2.7"
+
+    - name: Cache gems
+      uses: actions/cache@v2
+      with:
+        path: vendor/gems
+        key: ${{ runner.os }}-nightly-${{ hashFiles('**/Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-nightly-
+          ${{ runner.os }}-
+
+    - name: Install gems
+      run: |
+        bundle config path vendor/gems
+        bundle config jobs 8
+        bundle config retry 3
+        bundle install
+        bundle clean
+
+    - name: bundler environment
+      run: |
+        bundle env
+
+    - name: Provision test environment
+      run: |
+        bundle exec rake 'litmus:provision[provision::provision_service,${{ matrix.platform }}]'
+        echo ::group::=== REQUEST ===
+        cat request.json || true
+        echo
+        echo ::endgroup::
+        echo ::group::=== INVENTORY ===
+        sed -e 's/password: .*/password: "[redacted]"/' < inventory.yaml || true
+        echo ::endgroup::
+
+    # The provision service hands out machines as soon as they're provisioned.
+    # The GCP VMs might still take a while to spool up and configure themselves fully.
+    # This retry loop spins until all agents have been installed successfully.
+    - name: Install agent
+      uses: nick-invision/retry@v1
+      with:
+        timeout_minutes: 30
+        max_attempts: 5
+        retry_wait_seconds: 90
+        command: bundle exec rake 'litmus:install_agent[${{ matrix.collection }}]'
+
+    # The agent installer on windows does not finish in time for this to work. To
+    # work around this for now, retry after a minute if installing the module failed.
+    - name: Install module
+      uses: nick-invision/retry@v1
+      with:
+        timeout_minutes: 30
+        max_attempts: 5
+        retry_wait_seconds: 60
+        command: bundle exec rake 'litmus:install_module'
+
+    - name: Run acceptance tests
+      run: bundle exec rake 'litmus:acceptance:parallel'
+
+    - name: Remove test environment
+      if: ${{ always() }}
+      run: |
+        bundle exec rake 'litmus:tear_down'
+        echo ::group::=== REQUEST ===
+        cat request.json || true
+        echo
+        echo ::endgroup::
+
+  slack-workflow-status:
+    if: always()
+    name: Post Workflow Status To Slack
+    needs:
+      - Acceptance
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Slack Workflow Notification
+        uses: Gamesight/slack-workflow-status@master
+        with:
+          # Required Input
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK}}
+          # Optional Input
+          channel: '#team-ia-bots'
+          name: 'GABot'
