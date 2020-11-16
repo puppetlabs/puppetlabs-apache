@@ -150,6 +150,10 @@
 # @param cas_validate_url
 #   Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 # 
+# @param cas_cookie_path
+#   Sets the location where information on the current session should be stored. This should
+#   be writable by the web server only.
+#
 # @param comment
 #   Adds comments to the header of the configuration file. Pass as string or an array of strings.
 #   For example:
@@ -1965,6 +1969,7 @@ define apache::vhost (
   $cas_login_url                                                                    = undef,
   $cas_validate_url                                                                 = undef,
   $cas_validate_saml                                                                = undef,
+  $cas_cookie_path                                                                  = undef,
   Optional[String] $shib_compat_valid_user                                          = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name        = undef,
   Optional[Variant[String,Array[String]]] $comment                                  = undef,

@@ -63,7 +63,7 @@ describe 'apache::mod::auth_cas', type: :class do
 
     context 'vhost setup', :compile do
       let :pre_condition do
-        "class { 'apache': } apache::vhost { 'test.server': docroot => '/var/www/html', cas_root_proxied_as => 'http://test.server'} "
+        "class { 'apache': } apache::vhost { 'test.server': docroot => '/var/www/html', cas_root_proxied_as => 'http://test.server', cas_cookie_path => '/my/cas/path'} "
       end
 
       let :facts do
@@ -85,6 +85,7 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_file('/var/cache/mod_auth_cas/').with_owner('apache') }
       it {
         is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASRootProxiedAs http://test.server$})
+        is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASCookiePath /my/cas/path$})
       }
     end
   end
