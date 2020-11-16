@@ -3,6 +3,14 @@
 # Managed by Puppet
 # ************************************
 <%= [@comment].flatten.collect{|c| "# #{c}"}.join("\n") -%>
+<% if @mdomain -%>
+
+  <%- if @mdomain.is_a?(String) -%>
+MDomain <%= @mdomain %>
+  <%- else -%>
+MDomain <%= @servername %>
+  <%- end -%>
+<% end -%>
 
 <VirtualHost <%= [@nvh_addr_port].flatten.compact.join(' ') %>>
 <% @define.each do | k, v| -%>
