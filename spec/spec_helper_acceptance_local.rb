@@ -33,6 +33,9 @@ RSpec.configure do |c|
     c.filter_run_excluding ipv6: true
   end
   c.before :suite do
+    # Make sure selinux is disabled so the tests work.
+    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
+
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE
     # needed by tests
@@ -69,9 +72,6 @@ RSpec.configure do |c|
     }
     PUPPETCODE
     LitmusHelper.instance.apply_manifest(pp)
-
-    # Make sure selinux is disabled so the tests work.
-    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
   end
 
   c.after :suite do
