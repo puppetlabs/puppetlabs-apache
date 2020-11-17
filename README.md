@@ -841,6 +841,7 @@ In order to use this module on FreeBSD, you _must_ use apache24-2.4.12 (www/apac
 On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module. Although several options apply or enable certain features and settings for Gentoo, it is not a [supported operating system][] for this module.
 
 ### RHEL/CentOS
+
 The [`apache::mod::auth_cas`][], [`apache::mod::passenger`][], [`apache::mod::proxy_html`][] and [`apache::mod::shib`][] classes are not functional on RH/CentOS without providing dependency packages from extra repositories.
 
 See their respective documentation below for related repositories and packages.
