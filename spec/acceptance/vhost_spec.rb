@@ -1199,12 +1199,12 @@ describe 'apache::vhost define' do
           '8'     => 'policycoreutils-python-utils',
           default => 'policycoreutils-python',
         }
+        package { $semanage_package: ensure => installed }
         exec { 'set_apache_defaults':
           command => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
           path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
           require => Package[$semanage_package],
         }
-        package { $semanage_package: ensure => installed }
         exec { 'restorecon_apache':
           command => 'restorecon -Rv /apache_spec',
           path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
@@ -1222,7 +1222,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_failures: false)
     end
 
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
