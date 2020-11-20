@@ -85,6 +85,7 @@ describe 'apache::vhost', type: :define do
               'ssl_proxyengine'             => true,
               'ssl_proxy_cipher_suite'      => 'HIGH',
               'ssl_proxy_protocol'          => 'TLSv1.2',
+              'ssl_user_name'               => 'SSL_CLIENT_S_DN_CN',
               'priority'                    => '30',
               'default_vhost'               => true,
               'servername'                  => 'example.com',
@@ -1025,6 +1026,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
               content: %r{^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+              content: %r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$},
             )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy') }

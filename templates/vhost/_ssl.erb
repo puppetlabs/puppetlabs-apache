@@ -52,4 +52,7 @@
   <%- if (not @ssl_stapling_return_errors.nil?) && (scope.function_versioncmp([@apache_version, '2.4']) >= 0) -%>
   SSLStaplingReturnResponderErrors <%= scope.call_function('apache::bool2httpd', [@ssl_stapling_return_errors]) %>
   <%- end -%>
+  <%- if @ssl_user_name -%>
+  SSLUserName             <%= @ssl_user_name %>
+  <%- end -%>
 <% end -%>
