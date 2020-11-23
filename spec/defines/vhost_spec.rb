@@ -252,6 +252,13 @@ describe 'apache::vhost', type: :define do
                     'sslonly'   => 'Off',
                   },
                 },
+                {
+                  'path'              => '/private_1',
+                  'provider'          => 'location',
+                  'ssl_options'       => ['+ExportCertData', '+StdEnvVars'],
+                  'ssl_verify_client' => 'optional',
+                  'ssl_verify_depth'  => '10',
+                },
               ],
               'error_log'                   => false,
               'error_log_file'              => 'httpd_error_log',
@@ -939,6 +946,16 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+GssapiLocalName\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+SSLVerifyClient\soptional$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+SSLVerifyDepth\s10$},
             )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }

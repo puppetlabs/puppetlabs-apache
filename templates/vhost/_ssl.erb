@@ -18,6 +18,10 @@
   <%- end -%>
   <%- if @ssl_verify_client -%>
   SSLVerifyClient         <%= @ssl_verify_client %>
+  <%- if @ssl_verify_depth -%>
+  SSLVerifyDepth          <%= @ssl_verify_depth %>
+  <%- end -%>
+  <%- end -%>
   <%- if @ssl_certs_dir && @ssl_certs_dir != '' -%>
   SSLCACertificatePath    "<%= @ssl_certs_dir %>"
   <%- end -%>
@@ -30,12 +34,8 @@
   <%- if @ssl_crl -%>
   SSLCARevocationFile     "<%= @ssl_crl %>"
   <%- end -%>
-  <%- if @ssl_verify_depth -%>
-  SSLVerifyDepth          <%= @ssl_verify_depth %>
-  <%- end -%>
   <%- if @ssl_crl_check && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
   SSLCARevocationCheck    <%= @ssl_crl_check %>
-  <%- end -%>
   <%- end -%>
   <%- if @ssl_options -%>
   SSLOptions <%= Array(@ssl_options).join(' ') %>
