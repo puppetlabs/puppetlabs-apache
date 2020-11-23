@@ -89,6 +89,8 @@
 #  certificate.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_md.html for additional documentation.
+#
+# @note Unsupported platforms: CentOS: 6, 7; Debian: 8, 9; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
 class apache::mod::md (
   Optional[String]                                          $md_activation_delay       = undef,
   Optional[Enum['on', 'off']]                               $md_base_server            = undef,
