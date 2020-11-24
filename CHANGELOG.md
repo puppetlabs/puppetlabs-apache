@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.7.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.7.0) (2020-11-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.6.0...v5.7.0)
+
+### Added
+
+- Add cas\_cookie\_path in vhosts [\#2089](https://github.com/puppetlabs/puppetlabs-apache/pull/2089) ([yakatz](https://github.com/yakatz))
+- \(IAC-1186\) Add new $use\_servername\_for\_filenames parameter [\#2086](https://github.com/puppetlabs/puppetlabs-apache/pull/2086) ([sanfrancrisko](https://github.com/sanfrancrisko))
+- Allow relative paths in oidc\_redirect\_uri [\#2082](https://github.com/puppetlabs/puppetlabs-apache/pull/2082) ([sanfrancrisko](https://github.com/sanfrancrisko))
+- Improve SSLVerify options [\#2081](https://github.com/puppetlabs/puppetlabs-apache/pull/2081) ([bovy89](https://github.com/bovy89))
+- Add ssl\_proxy\_machine\_cert\_chain param to vhost class [\#2072](https://github.com/puppetlabs/puppetlabs-apache/pull/2072) ([AbelNavarro](https://github.com/AbelNavarro))
+
+### Fixed
+
+- Use Ruby 2.7 compatible string matching [\#2074](https://github.com/puppetlabs/puppetlabs-apache/pull/2074) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+### UNCATEGORIZED PRS; LABEL THEM ON GITHUB
+
+- Change icon path [\#2079](https://github.com/puppetlabs/puppetlabs-apache/pull/2079) ([yakatz](https://github.com/yakatz))
+- Support mod\_auth\_gssapi parameters [\#2078](https://github.com/puppetlabs/puppetlabs-apache/pull/2078) ([traylenator](https://github.com/traylenator))
+
 ## [v5.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.6.0) (2020-10-01)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.5.0...v5.6.0)
@@ -107,6 +128,7 @@ All notable changes to this project will be documented in this file. The format 
 - Added unmanaged\_path and custom\_fragment options to userdir [\#1931](https://github.com/puppetlabs/puppetlabs-apache/pull/1931) ([GeorgeCox](https://github.com/GeorgeCox))
 - Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
 - Add LDAPReferrals configuration parameter [\#1928](https://github.com/puppetlabs/puppetlabs-apache/pull/1928) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
+- Define SCL package name for mod\_ldap [\#1893](https://github.com/puppetlabs/puppetlabs-apache/pull/1893) ([treydock](https://github.com/treydock))
 
 ### Fixed
 
@@ -125,7 +147,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(FM-7923\) Implement Puppet Strings [\#1916](https://github.com/puppetlabs/puppetlabs-apache/pull/1916) ([eimlav](https://github.com/eimlav))
-- Define SCL package name for mod\_ldap [\#1893](https://github.com/puppetlabs/puppetlabs-apache/pull/1893) ([treydock](https://github.com/treydock))
 
 ### Fixed
 
