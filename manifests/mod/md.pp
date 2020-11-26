@@ -65,6 +65,7 @@
 #
 # @param md_require_https
 #   Redirects http: traffic to https: for Managed Domains.
+#   An http: Virtual Host must nevertheless be setup for that domain.
 #
 # @param md_server_status
 #   Control if Managed Domain information is added to server-status.
