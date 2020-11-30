@@ -396,6 +396,7 @@ class apache::params inherits ::apache::version {
         default => '7.2', # Ubuntu Bionic, Cosmic and Disco
       }
       $mod_packages = {
+        'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
         'auth_kerb'             => 'libapache2-mod-auth-kerb',
         'auth_openidc'          => 'libapache2-mod-auth-openidc',
