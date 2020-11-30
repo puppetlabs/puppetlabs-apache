@@ -1,5 +1,5 @@
 require 'spec_helper_acceptance'
-apache_hash = apache_settings_hash
+_apache_hash = apache_settings_hash
 
 describe 'apache::mod::apreq2', if: mod_supported_on_platform?('apache::mod::apreq2') do
   pp = <<-MANIFEST
