@@ -1,7 +1,32 @@
 CacheEnable disk /
 CacheRoot "<%= @_cache_root %>"
-CacheDirLevels 2
-CacheDirLength 1
+<% if @cache_dir_length -%>
+  CacheDirLength <%= @cache_dir_length %>
+<% end -%>
+<% if @cache_dir_levels -%>
+  CacheDirLevels <%= @cache_dir_levels %>
+<% end -%>
+<% if @cache_default_expire -%>
+CacheDefaultExpire <%= @cache_default_expire %>
+<% end -%>
+<% if @cache_max_expire -%>
+CacheMaxExpire <%= @cache_max_expire %>
+<% end -%>
+<% if @cache_ignore_no_lastmod -%>
+CacheIgnoreNoLastMod <%= @cache_ignore_no_lastmod %>
+<% end -%>
+<% if @cache_header -%>
+CacheHeader <%= @cache_header %>
+<% end -%>
+<% if @cache_lock -%>
+CacheLock <%= @cache_lock %>
+<% end -%>
+<% if @cache_ignore_cache_control -%>
+CacheIgnoreCacheControl <%= @cache_ignore_cache_control %>
+<% end -%>
+<% if @cache_max_filesize -%>
+CacheMaxFileSize <%= @cache_max_filesize %>
+<% end -%>
 <% if @cache_ignore_headers -%>
-CacheIgnoreHeaders <%= @cache_ignore_headers -%>
+  CacheIgnoreHeaders <%= @cache_ignore_headers -%>
 <% end -%>
