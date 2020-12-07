@@ -1,8 +1,7 @@
 <% if @requires != nil -%>
   <%- _requires = @requires -%>
 <% elsif @allow_from != nil and ! @allow_from.empty? -%>
-  <%- scope.function_warning(["Class #{@title}: Using Allow"]) -%>
-  <%- scope.function_warning(["is deprecated in Apache #{@_apache_version}"]) -%>
+  <%- scope.function_warning(["Class #{@title}: Using Allow is deprecated in Apache #{@_apache_version}"]) -%>
   <%- _requires = 'ip ' + Array(@allow_from).join(" ") -%>
 <% else -%>
   <%- _requires = @requires_defaults -%>
@@ -24,8 +23,7 @@
     <%- indentation = '    ' -%>
   <%- else -%>
     <%- if _requires.has_key?('enforce') -%>
-      <%- scope.function_warning(["Class #{@title}: Require can only"]) -%>
-      <%- scope.function_warning(["be overwritten with all, none or any."]) -%>
+      <%- scope.function_warning(["Class #{@title}: Require can only be overwritten with all, none or any."]) -%>
     <%- end -%>
     <%- enforce_open = '' -%>
     <%- enforce_close = '' -%>
@@ -38,7 +36,6 @@
       <%- end -%>
 <%# %><%= enforce_close -%>
   <%- else -%>
-    <%- scope.function_warning(["Class #{@title}: Require hash must have"]) -%>
-    <%- scope.function_warning(["a key named \"requires\" with array value"]) -%>
+    <%- scope.function_warning(["Class #{@title}: Require hash must have a key named \"requires\" with array value"]) -%>
   <%- end -%>
 <% end -%>
