@@ -826,33 +826,35 @@ class apache (
     }
 
     ::apache::vhost { 'default':
-      ensure          => $default_vhost_ensure,
-      port            => '80',
-      docroot         => $docroot,
-      scriptalias     => $scriptalias,
-      serveradmin     => $serveradmin,
-      access_log_file => $access_log_file,
-      priority        => '15',
-      ip              => $ip,
-      logroot_mode    => $logroot_mode,
-      manage_docroot  => $default_vhost,
+      ensure                       => $default_vhost_ensure,
+      port                         => '80',
+      docroot                      => $docroot,
+      scriptalias                  => $scriptalias,
+      serveradmin                  => $serveradmin,
+      access_log_file              => $access_log_file,
+      priority                     => '15',
+      ip                           => $ip,
+      logroot_mode                 => $logroot_mode,
+      manage_docroot               => $default_vhost,
+      use_servername_for_filenames => true,
     }
     $ssl_access_log_file = $::osfamily ? {
       'freebsd' => $access_log_file,
       default   => "ssl_${access_log_file}",
     }
     ::apache::vhost { 'default-ssl':
-      ensure          => $default_ssl_vhost_ensure,
-      port            => '443',
-      ssl             => true,
-      docroot         => $docroot,
-      scriptalias     => $scriptalias,
-      serveradmin     => $serveradmin,
-      access_log_file => $ssl_access_log_file,
-      priority        => '15',
-      ip              => $ip,
-      logroot_mode    => $logroot_mode,
-      manage_docroot  => $default_ssl_vhost,
+      ensure                       => $default_ssl_vhost_ensure,
+      port                         => '443',
+      ssl                          => true,
+      docroot                      => $docroot,
+      scriptalias                  => $scriptalias,
+      serveradmin                  => $serveradmin,
+      access_log_file              => $ssl_access_log_file,
+      priority                     => '15',
+      ip                           => $ip,
+      logroot_mode                 => $logroot_mode,
+      manage_docroot               => $default_ssl_vhost,
+      use_servername_for_filenames => true,
     }
   }
 
