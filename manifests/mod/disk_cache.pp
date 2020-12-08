@@ -41,6 +41,7 @@
 #
 # @note
 #   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+#   This class is deprecated, use mode_cache_disk instead
 #
 # @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation on version 2.2.
 #
@@ -49,64 +50,11 @@
 class apache::mod::disk_cache (
   $cache_root                 = undef,
   $cache_ignore_headers       = undef,
-  $cache_dir_length           = undef,
-  $cache_dir_levels           = undef,
-  $cache_default_expire       = undef,
-  $cache_max_expire           = undef,
-  $cache_ignore_no_lastmod    = undef,
-  $cache_header               = undef,
-  $cache_lock                 = undef,
-  $cache_ignore_cache_control = undef,
-  $cache_max_filesize         = undef,
 ) {
-  include apache
-  if $cache_root {
-    $_cache_root = $cache_root
-  }
-  elsif versioncmp($apache::apache_version, '2.4') >= 0 {
-    $_module_name = 'cache_disk'
-    $_cache_root = $::osfamily ? {
-      'debian'  => '/var/cache/apache2/mod_cache_disk',
-      'redhat'  => '/var/cache/httpd/proxy',
-      'freebsd' => '/var/cache/mod_cache_disk',
-    }
-  }
-  else {
-    $_module_name = 'disk_cache'
-    $_cache_root = $::osfamily ? {
-      'debian'  => '/var/cache/apache2/mod_disk_cache',
-      'redhat'  => '/var/cache/mod_proxy',
-      'freebsd' => '/var/cache/mod_disk_cache',
-    }
-  }
-  $_configuration_file_name = "${_module_name}.conf"
-  $_class_name = "::apache::mod::${_module_name}"
+  warning('apache::mod::disk_cache is deprecated; please use apache::mod::cache_disk')
 
-  apache::mod { $_module_name: }
-
-  Class['::apache::mod::cache'] -> Class[$_class_name]
-
-  # Template uses
-  # - $_cache_root
-  # - $cache_dir_length
-  # - $cache_ignore_headers
-  # - $cache_dir_length
-  # - $cache_dir_levels
-  # - $cache_default_expire
-  # - $cache_max_expire
-  # - $cache_ignore_no_lastmod
-  # - $cache_header
-  # - $cache_lock
-  # - $cache_ignore_cache_control
-  # - $cache_max_filesize
-  file { 'disk_cache.conf':
-
-    ensure  => file,
-    path    => "${apache::mod_dir}/${_configuration_file_name}",
-    mode    => $apache::file_mode,
-    content => template('apache/mod/disk_cache.conf.erb'),
-    require => Exec["mkdir ${apache::mod_dir}"],
-    before  => File[$apache::mod_dir],
-    notify  => Class['apache::service'],
+  class { 'apache::mod::cache_disk':
+    cache_root                 => $cache_root,
+    cache_ignore_headers       => $cache_ignore_headers,
   }
 }
