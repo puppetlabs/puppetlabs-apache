@@ -104,8 +104,7 @@ class apache::mod::cache_disk (
   # - $cache_lock
   # - $cache_ignore_cache_control
   # - $cache_max_filesize
-  file { 'disk_cache.conf':
-
+  file { $_configuration_file_name:
     ensure  => file,
     path    => "${apache::mod_dir}/${_configuration_file_name}",
     mode    => $apache::file_mode,
