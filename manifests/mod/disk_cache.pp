@@ -51,7 +51,7 @@ class apache::mod::disk_cache (
   $cache_root                 = undef,
   $cache_ignore_headers       = undef,
 ) {
-  warning('apache::mod::disk_cache is deprecated; please use apache::mod::cache_disk')
+  deprecation('apache::mod::disk_cache','This module is deprecated; please use apache::mod::cache_disk')
 
   class { 'apache::mod::cache_disk':
     cache_root                 => $cache_root,
