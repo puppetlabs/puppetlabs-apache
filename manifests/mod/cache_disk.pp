@@ -58,7 +58,7 @@ class apache::mod::cache_disk (
   Optional[Integer] $cache_dir_levels                     = undef,
   Optional[Integer] $cache_default_expire                 = undef,
   Optional[Integer] $cache_max_expire                     = undef,
-  Optional[Enum['off', 'on']] $cache_ignore_no_lastmod    = undef,
+  Optional[Enum['Off', 'On']] $cache_ignore_no_lastmod    = undef,
   Optional[Enum['off', 'on']] $cache_header               = undef,
   Optional[Enum['off', 'on']] $cache_lock                 = undef,
   Optional[Enum['Off', 'On']] $cache_ignore_cache_control = undef,
