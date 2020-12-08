@@ -109,7 +109,7 @@ class apache::mod::cache_disk (
     ensure  => file,
     path    => "${apache::mod_dir}/${_configuration_file_name}",
     mode    => $apache::file_mode,
-    content => template('apache/mod/disk_cache.conf.erb'),
+    content => template('apache/mod/cache_disk.conf.erb'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
