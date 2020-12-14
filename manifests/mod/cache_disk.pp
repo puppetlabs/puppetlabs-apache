@@ -14,6 +14,9 @@
 #   - Red Hat, Apache 2.4: /var/cache/httpd/proxy
 #   - Red Hat, Apache 2.2: /var/cache/mod_proxy
 #
+# @param cache_enable
+#   Defines an array of directories to cache, the default is none
+#
 # @param cache_ignore_headers
 #   Specifies HTTP header(s) that should not be stored in the cache.
 #
@@ -53,6 +56,7 @@
 #
 class apache::mod::cache_disk (
   $cache_root                                             = undef,
+  Array[String] $cache_enable                             = [],
   Optional[String] $cache_ignore_headers                  = undef,
   Optional[Integer] $cache_dir_length                     = undef,
   Optional[Integer] $cache_dir_levels                     = undef,
@@ -93,6 +97,7 @@ class apache::mod::cache_disk (
 
   # Template uses
   # - $_cache_root
+  # - $cache_enable
   # - $cache_dir_length
   # - $cache_ignore_headers
   # - $cache_dir_length
