@@ -12,33 +12,6 @@
 # @param cache_ignore_headers
 #   Specifies HTTP header(s) that should not be stored in the cache.
 #
-# @param cache_dir_length
-#   The number of characters in subdirectory names
-#
-# @param cache_dir_levels
-#   The number of levels of subdirectories in the cache.
-#
-# @param cache_default_expire
-#   The default duration to cache a document when no expiry date is specified.
-#
-# @param cache_max_expire
-#   The maximum time in seconds to cache a document
-#
-# @param cache_ignore_no_lastmod
-#   Ignore the fact that a response has no Last Modified header.
-#
-# @param cache_header
-#   Add an X-Cache header to the response.
-#
-# @param cache_lock
-#   Enable the thundering herd lock.
-#
-# @param cache_ignore_cache_control
-#   Ignore request to not serve cached content to client
-#
-# @param cache_max_filesize
-#   The maximum size (in bytes) of a document to be placed in the cache
-#
 # @note
 #   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
 #   This class is deprecated, use mode_cache_disk instead
@@ -55,6 +28,7 @@ class apache::mod::disk_cache (
 
   class { 'apache::mod::cache_disk':
     cache_root                 => $cache_root,
+    cache_enaable              => ['/'],
     cache_ignore_headers       => $cache_ignore_headers,
   }
 }
