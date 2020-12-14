@@ -1725,6 +1725,10 @@
 #   value of the $servername parameter.
 #   When set to false (default), the existing behaviour of using the $name parameter
 #   will remain.
+#
+# @param $mdomain
+#   All the names in the list are managed as one Managed Domain (MD). mod_md will request
+#   one single certificate that is valid for all these names.
 
 define apache::vhost (
   Variant[Boolean,String] $docroot,
@@ -1975,6 +1979,7 @@ define apache::vhost (
   Hash $define                                                                      = {},
   Boolean $auth_oidc                                                                = false,
   Optional[Apache::OIDCSettings] $oidc_settings                                     = undef,
+  Optional[Variant[Boolean,String]] $mdomain                                        = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -2773,6 +2778,10 @@ define apache::vhost (
       order   => 300,
       content => template('apache/vhost/_http2.erb'),
     }
+  }
+
+  if $mdomain {
+    include apache::mod::md
   }
 
   # Template uses:

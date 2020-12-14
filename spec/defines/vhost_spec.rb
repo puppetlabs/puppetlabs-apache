@@ -491,6 +491,7 @@ describe 'apache::vhost', type: :define do
                                                  'RemoteUserClaim'           => 'sub',
                                                  'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
                                                  'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+              'mdomain'                     => 'example.com example.net auto',
             }
           end
 
@@ -1500,6 +1501,12 @@ describe 'apache::vhost', type: :define do
               content: %r{^\s+OIDCCryptoPassphrase\s4ad1bb46-9979-450e-ae58-c696967df3cd$},
             )
           }
+          it { is_expected.to contain_class('apache::mod::md') }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^MDomain example\.com example\.net auto$},
+            )
+          }
         end
         context 'vhost with multiple ip addresses' do
           let :params do
@@ -2467,6 +2474,19 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.not_to compile }
           end
+        end
+        context 'mdomain' do
+          let :params do
+            default_params.merge(
+              'mdomain' => true,
+            )
+          end
+
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^MDomain rspec.example.com$},
+            )
+          }
         end
       end
     end
