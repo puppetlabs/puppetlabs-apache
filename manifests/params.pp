@@ -231,6 +231,7 @@ class apache::params inherits ::apache::version {
         default => 'mod_ldap',
       },
       'lookup_identity'       => 'mod_lookup_identity',
+      'md'                    => 'mod_md',
       'pagespeed'             => 'mod-pagespeed-stable',
       # NOTE: The passenger module isn't available on RH/CentOS without
       # providing dependency packages provided by EPEL and passenger

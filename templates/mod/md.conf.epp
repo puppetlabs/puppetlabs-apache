@@ -1,0 +1,84 @@
+<% if $apache::mod::md::md_activation_delay { -%>
+MDActivationDelay <%= $apache::mod::md::md_activation_delay %>
+<% } -%>
+<% if $apache::mod::md::md_base_server { -%>
+MDBaseServer <%= $apache::mod::md::md_base_server %>
+<% } -%>
+<% if $apache::mod::md::md_ca_challenges { -%>
+MDCAChallenges <%= $apache::mod::md::md_ca_challenges.join(' ') %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_agreement { -%>
+MDCertificateAgreement <%= $apache::mod::md::md_certificate_agreement %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_authority { -%>
+MDCertificateAuthority <%= $apache::mod::md::md_certificate_authority %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_check { -%>
+MDCertificateCheck <%= $apache::mod::md::md_certificate_check %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_monitor { -%>
+MDCertificateMonitor <%= $apache::mod::md::md_certificate_monitor %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_protocol { -%>
+MDCertificateProtocol <%= $apache::mod::md::md_certificate_protocol %>
+<% } -%>
+<% if $apache::mod::md::md_certificate_status { -%>
+MDCertificateStatus <%= $apache::mod::md::md_certificate_status %>
+<% } -%>
+<% if $apache::mod::md::md_challenge_dns01 { -%>
+MDChallengeDns01 "<%= $apache::mod::md::md_challenge_dns01 %>"
+<% } -%>
+<% if $apache::mod::md::md_contact_email { -%>
+MDContactEmail <%= $apache::mod::md::md_contact_email %>
+<% } -%>
+<% if $apache::mod::md::md_http_proxy { -%>
+MDHttpProxy <%= $apache::mod::md::md_http_proxy %>
+<% } -%>
+<% if $apache::mod::md::md_members { -%>
+MDMembers <%= $apache::mod::md::md_members %>
+<% } -%>
+<% if $apache::mod::md::md_message_cmd { -%>
+MDMessageCmd "<%= $apache::mod::md::md_message_cmd %>"
+<% } -%>
+<% if $apache::mod::md::md_must_staple { -%>
+MDMustStaple <%= $apache::mod::md::md_must_staple %>
+<% } -%>
+<% if $apache::mod::md::md_notify_cmd { -%>
+MDNotifyCmd "<%= $apache::mod::md::md_notify_cmd %>"
+<% } -%>
+<% if $apache::mod::md::md_port_map { -%>
+MDPortMap <%= $apache::mod::md::md_port_map %>
+<% } -%>
+<% if $apache::mod::md::md_private_keys { -%>
+MDPrivateKeys <%= $apache::mod::md::md_private_keys %>
+<% } -%>
+<% if $apache::mod::md::md_renew_mode { -%>
+MDRenewMode <%= $apache::mod::md::md_renew_mode %>
+<% } -%>
+<% if $apache::mod::md::md_renew_window { -%>
+MDRenewWindow <%= $apache::mod::md::md_renew_window %>
+<% } -%>
+<% if $apache::mod::md::md_require_https { -%>
+MDRequireHttps <%= $apache::mod::md::md_require_https %>
+<% } -%>
+<% if $apache::mod::md::md_server_status { -%>
+MDServerStatus <%= $apache::mod::md::md_server_status %>
+<% } -%>
+<% if $apache::mod::md::md_staple_others { -%>
+MDStapleOthers <%= $apache::mod::md::md_staple_others %>
+<% } -%>
+<% if $apache::mod::md::md_stapling { -%>
+MDStapling <%= $apache::mod::md::md_stapling %>
+<% } -%>
+<% if $apache::mod::md::md_stapling_keep_response { -%>
+MDStaplingKeepResponse <%= $apache::mod::md::md_stapling_keep_response %>
+<% } -%>
+<% if $apache::mod::md::md_stapling_renew_window { -%>
+MDStaplingRenewWindow <%= $apache::mod::md::md_stapling_renew_window %>
+<% } -%>
+<% if $apache::mod::md::md_store_dir { -%>
+MDStoreDir "<%= $apache::mod::md::md_store_dir %>"
+<% } -%>
+<% if $apache::mod::md::md_warn_window { -%>
+MDWarnWindow <%= $apache::mod::md::md_warn_window %>
+<% } -%>
