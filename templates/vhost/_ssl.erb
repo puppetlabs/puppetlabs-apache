@@ -2,8 +2,10 @@
 
   ## SSL directives
   SSLEngine on
+  <%- unless @mdomain -%>
   SSLCertificateFile      "<%= @ssl_cert %>"
   SSLCertificateKeyFile   "<%= @ssl_key %>"
+  <%- end -%>
   <%- if @ssl_chain -%>
   SSLCertificateChainFile "<%= @ssl_chain %>"
   <%- end -%>

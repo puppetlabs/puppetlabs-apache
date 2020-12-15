@@ -25,6 +25,10 @@ Puppet::Functions.create_function(:'apache::bool2httpd') do
   private
 
   def matches_string?(value, matcher)
-    value.is_a?(String) && value.match?(matcher)
+    if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.4.0')
+      value =~ matcher
+    else
+      value.is_a?(String) && value.match?(matcher)
+    end
   end
 end

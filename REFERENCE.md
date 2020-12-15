@@ -12,6 +12,7 @@
 * [`apache::dev`](#apachedev): Installs Apache development libraries.
 * [`apache::mod::actions`](#apachemodactions): Installs Apache mod_actions
 * [`apache::mod::alias`](#apachemodalias): Installs and configures `mod_alias`.
+* [`apache::mod::apreq2`](#apachemodapreq2): Installs `mod_apreq2`.
 * [`apache::mod::auth_basic`](#apachemodauth_basic): Installs `mod_auth_basic`
 * [`apache::mod::auth_cas`](#apachemodauth_cas): Installs and configures `mod_auth_cas`.
 * [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): Installs `mod_auth_gsappi`.
@@ -1133,6 +1134,16 @@ Data type: `Any`
 
 
 Default value: `$apache::params::icons_prefix`
+
+### `apache::mod::apreq2`
+
+Installs `mod_apreq2`.
+
+* **Note** Unsupported platforms: CentOS: all; Debian: 8; OracleLinux: all; RedHat: all; Scientific: all; SLES: all; Ubuntu: all
+
+* **See also**
+  * http://httpd.apache.org/apreq/docs/libapreq2/group__mod__apreq2.html
+    * for additional documentation.
 
 ### `apache::mod::auth_basic`
 
