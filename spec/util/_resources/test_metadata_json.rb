@@ -85,4 +85,4 @@ METADATA_JSON = '{
   "pdk-version": "1.17.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates#main",
   "template-ref": "heads/main-0-g095317c"
-}'.freeze
+}'

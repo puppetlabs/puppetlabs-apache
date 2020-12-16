@@ -94,7 +94,7 @@ class ApacheModPlatformCompatibility
     platforms_versions = {}
     os_ver_groups = line.delete(' ').downcase
     # E.g. "debian:5,6;centos:5;sles:11sp1,12;scientific:all;ubuntu:14.04,16.04"
-    if %r{^((?:\w+:(?:(?:\d+(?:\.\d+|sp\d+)?|all),?)+;?)+)$}i =~ os_ver_groups
+    if %r{^((?:\w+:(?:(?:\d+(?:\.\d+|sp\d+)?|all),?)+;?)+)$}i.match?(os_ver_groups)
       os_ver_groups.split(';').each do |os_vers|
         os, vers = os_vers.split(':')
         vers.gsub!(%r{sp\d+}, '') # Remove SP ver as we cannot determine this level of granularity from values from Litmus
@@ -106,7 +106,7 @@ class ApacheModPlatformCompatibility
 
   def process_line(line)
     data = {}
-    return data unless line =~ %r{@note\sUnsupported\splatforms?:\s?|class\sapache::mod}i
+    return data unless %r{@note\sUnsupported\splatforms?:\s?|class\sapache::mod}i.match?(line)
     if (match = %r{@note\sUnsupported\splatforms?:\s?(?<os_vers>.*)$}i.match(line))
       data[:type] = :unsupported_platform_declaration
       data[:value] = match[:os_vers]

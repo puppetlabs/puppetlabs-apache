@@ -10,7 +10,7 @@ describe provider_class do
   end
 
   [:conf_file, :instances, :modules, :initvars, :conf_file, :clear].each do |method|
-    it "should respond to the class method #{method}" do
+    it "responds to the class method #{method}" do
       expect(provider_class).to respond_to(method)
     end
   end
