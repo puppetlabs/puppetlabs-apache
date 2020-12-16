@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @summary
 #   Transform a supposed boolean to On or Off. Passes all other values through.
 #

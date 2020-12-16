@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 provider_class = Puppet::Type.type(:a2mod).provider(:gentoo)

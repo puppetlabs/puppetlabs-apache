@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 METADATA_JSON = '{
   "name": "puppetlabs-apache",
   "version": "5.4.0",

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache', type: :class do
@@ -620,7 +622,7 @@ describe 'apache', type: :class do
       it 'fails' do
         expect {
           catalogue
-        }.to raise_error(Puppet::PreformattedError, %r{Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\]}) # rubocop:disable Metrics/LineLength
+        }.to raise_error(Puppet::PreformattedError, %r{Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\]}) # rubocop:disable Layout/LineLength
       end
     end
     describe 'sendfile On' do

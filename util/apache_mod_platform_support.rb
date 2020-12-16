@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 # Helper class to facilitate exclusion of tests that use an Apache MOD on platforms it isn't supported on.
 # All Apache MOD classes are defined under 'manifests/mod'. The exclusion should be in the format:
