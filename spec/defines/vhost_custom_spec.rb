@@ -27,6 +27,8 @@ describe 'apache::vhost::custom', type: :define do
       end
       let(:params) { default_params }
       let(:facts) { default_facts }
+
+      it { is_expected.to compile }
     end
     context 'on Debian based systems' do
       let :default_facts do

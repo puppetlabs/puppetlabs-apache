@@ -51,7 +51,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'default vhost with ssl', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
+  context 'default vhost with ssl', unless: (os[:family].inclde?(redhat) && os[:release].to_i == 8) do
     pp = <<-MANIFEST
       file { '#{apache_hash['run_dir']}':
         ensure  => 'directory',

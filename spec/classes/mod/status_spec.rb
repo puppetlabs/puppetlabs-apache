@@ -18,7 +18,7 @@ def status_conf_spec(allow_from, extended_status, status_path)
     "    # Show Proxy LoadBalancer status in mod_status\n"\
     "    ProxyStatus On\n"\
     "</IfModule>\n"
-  it do
+  it('status conf') do
     is_expected.to contain_file('status.conf').with_content(expected)
   end
 end
@@ -59,7 +59,7 @@ def status_conf_spec_require(requires, extended_status, status_path)
     "    # Show Proxy LoadBalancer status in mod_status\n"\
     "    ProxyStatus On\n"\
     "</IfModule>\n"
-  it do
+  it('status conf require') do
     is_expected.to contain_file('status.conf').with_content(expected)
   end
 end
@@ -250,6 +250,8 @@ describe 'apache::mod::status', type: :class do
           status_path: '/custom-status',
         }
       end
+
+      it { is_expected.to compile }
 
       status_conf_spec(['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status')
     end

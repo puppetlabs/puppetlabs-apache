@@ -69,7 +69,7 @@ class ApacheModPlatformCompatibility
   end
 
   def valid_os?(os)
-    @compatible_platform_versions.keys.include? os
+    @compatible_platform_versions.key?(os)
   end
 
   def register_error(manifest, line_num, error_type, error_detail)
@@ -77,7 +77,7 @@ class ApacheModPlatformCompatibility
   end
 
   def register_unsupported_platforms(manifest, line_num, mod, platforms_versions)
-    platforms_versions.keys.each do |os|
+    platforms_versions.each_key do |os|
       unless valid_os?(os)
         register_error(manifest, line_num, :os_parse, os)
         next

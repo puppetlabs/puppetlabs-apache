@@ -28,7 +28,7 @@ describe 'apache::fastcgi::server', type: :define do
             path: "/etc/httpd/conf.d/fastcgi-pool-#{title}.conf",
           )
         }
-      when 'Debian'
+      when 'Debian', 'Gentoo'
         it {
           is_expected.to contain_file("fastcgi-pool-#{title}.conf").with(
             ensure: 'file',
@@ -40,13 +40,6 @@ describe 'apache::fastcgi::server', type: :define do
           is_expected.to contain_file("fastcgi-pool-#{title}.conf").with(
             ensure: 'file',
             path: "/usr/local/etc/apache24/Includes/fastcgi-pool-#{title}.conf",
-          )
-        }
-      when 'Gentoo'
-        it {
-          is_expected.to contain_file("fastcgi-pool-#{title}.conf").with(
-            ensure: 'file',
-            path: "/etc/apache2/conf.d/fastcgi-pool-#{title}.conf",
           )
         }
       end

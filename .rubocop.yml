@@ -18,6 +18,7 @@ AllCops:
   - "**/Puppetfile"
   - "**/Vagrantfile"
   - "**/Guardfile"
+inherit_from: ".rubocop_todo.yml"
 Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
@@ -89,6 +90,8 @@ Performance/CaseWhenSplat:
 Performance/Casecmp:
   Enabled: true
 Performance/CollectionLiteralInLoop:
+  Exclude:
+  - spec/**/*
   Enabled: true
 Performance/CompareWithBlock:
   Enabled: true
@@ -307,6 +310,8 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 Migration/DepartmentName:
+  Enabled: false
+Naming/AccessorMethodName:
   Enabled: false
 Naming/BlockParameterName:
   Enabled: false
