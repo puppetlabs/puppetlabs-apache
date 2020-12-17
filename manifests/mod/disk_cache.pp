@@ -28,7 +28,7 @@ class apache::mod::disk_cache (
 
   class { 'apache::mod::cache_disk':
     cache_root                 => $cache_root,
-    cache_enaable              => ['/'],
+    cache_enable              => ['/'],
     cache_ignore_headers       => $cache_ignore_headers,
   }
 }
