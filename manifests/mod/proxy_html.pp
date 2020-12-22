@@ -21,13 +21,13 @@ class apache::mod::proxy_html {
       }
       case $::operatingsystem {
         'Ubuntu': {
-          $loadfiles = $apache::params::distrelease ? {
+          $loadfiles = $facts['operatingsystemmajrelease'] ? {
             '10'    => ['/usr/lib/libxml2.so.2'],
             default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
           }
         }
         'Debian': {
-          $loadfiles = $apache::params::distrelease ? {
+          $loadfiles = $facts['operatingsystemmajrelease'] ? {
             '6'     => ['/usr/lib/libxml2.so.2'],
             default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
           }
