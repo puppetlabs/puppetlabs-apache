@@ -781,7 +781,7 @@ class apache::params inherits ::apache::version {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
 
-  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::operatingsystem == 'SLES') {
+  if $::operatingsystem == 'SLES' {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
     $verify_command = '/usr/local/sbin/apachectl -t'

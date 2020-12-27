@@ -6492,7 +6492,6 @@ Default based on the OS and/or Apache version:
 - RedHat/FreeBSD/Suse/Gentoo: 'default'.
 - Debian/Ubuntu + Apache >= 2.4: 'default'.
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
-- Ubuntu 10.04: 'file:/var/run/apache2/ssl_mutex'.
 
 Default value: ``undef``
 
