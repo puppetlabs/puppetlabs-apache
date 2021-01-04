@@ -769,10 +769,11 @@ describe 'apache::vhost define' do
         priority => false,
         docroot => '/tmp'
       }
-      apache::vhost { 'test.ssl_protool':
-        docroot      => '/tmp',
-        ssl          => true,
-        ssl_protocol => ['All', '-SSLv2'],
+      apache::vhost { 'test.ssl_protocol':
+        docroot       => '/tmp',
+        ssl           => true,
+        ssl_protocol  => ['All', '-SSLv2'],
+        ssl_user_name => 'SSL_CLIENT_S_DN_CN',
       }
       apache::vhost { 'test.block':
         docroot  => '/tmp',
@@ -873,9 +874,10 @@ describe 'apache::vhost define' do
     describe file("#{apache_hash['vhost_dir']}/test.without_priority_prefix.conf") do
       it { is_expected.to be_file }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protool.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protocol.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
+      it { is_expected.to contain 'SSLUserName  *SSL_CLIENT_S_DN_CN' }
     end
     describe file("#{apache_hash['vhost_dir']}/25-test.block.conf") do
       it { is_expected.to be_file }
