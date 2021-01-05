@@ -292,7 +292,7 @@ describe 'apache::mod::php', type: :class do
           end
 
           it 'raises an error' do
-            expect { expect(subject).to contain_apache__mod('php5') }.to raise_error Puppet::Error, %r{mpm_module => 'prefork' or mpm_module => 'itk'}
+            is_expected.to compile.and_raise_error(%r{mpm_module => 'prefork' or mpm_module => 'itk'})
           end
         end
       end

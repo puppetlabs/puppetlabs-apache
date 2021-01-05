@@ -128,7 +128,7 @@ describe 'apache::mod::wsgi', type: :class do
         }
       end
 
-      it { expect { catalogue }.to raise_error Puppet::Error, %r{apache::mod::wsgi - both package_name and mod_path must be specified!} }
+      it { is_expected.to compile.and_raise_error(%r{apache::mod::wsgi - both package_name and mod_path must be specified!}) }
     end
     describe 'with mod_path but no package_name' do
       let :params do
@@ -137,7 +137,7 @@ describe 'apache::mod::wsgi', type: :class do
         }
       end
 
-      it { expect { catalogue }.to raise_error Puppet::Error, %r{apache::mod::wsgi - both package_name and mod_path must be specified!} }
+      it { is_expected.to compile.and_raise_error(%r{apache::mod::wsgi - both package_name and mod_path must be specified!}) }
     end
   end
   context 'on a FreeBSD OS' do

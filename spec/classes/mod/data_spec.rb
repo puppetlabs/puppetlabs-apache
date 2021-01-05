@@ -26,9 +26,7 @@ describe 'apache::mod::data', type: :class do
         { apache_version: '2.2' }
       end
 
-      it 'fails' do
-        expect { catalogue }.to raise_error(Puppet::Error, %r{mod_data is only available in Apache 2.3 and later})
-      end
+      it { is_expected.to compile.and_raise_error(%r{mod_data is only available in Apache 2.3 and later}) }
     end
   end
 end
