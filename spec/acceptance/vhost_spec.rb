@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache::vhost define' do
@@ -49,7 +51,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'default vhost with ssl', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
+  context 'default vhost with ssl', unless: (os[:family].include?('redhat') && os[:release].to_i == 8) do
     pp = <<-MANIFEST
       file { '#{apache_hash['run_dir']}':
         ensure  => 'directory',
@@ -1081,7 +1083,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse|ubuntu|sles}
+      pp += "\nclass { 'apache::mod::actions': }" if %r{debian|suse|ubuntu|sles}.match?(os[:family])
       apply_manifest(pp, catch_failures: true)
     end
 

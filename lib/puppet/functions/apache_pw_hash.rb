@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @summary DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
 Puppet::Functions.create_function(:apache_pw_hash) do
   dispatch :deprecation_gen do

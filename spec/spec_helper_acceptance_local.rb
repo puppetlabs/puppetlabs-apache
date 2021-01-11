@@ -34,7 +34,7 @@ RSpec.configure do |c|
   end
   c.before :suite do
     # Make sure selinux is disabled so the tests work.
-    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
+    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE

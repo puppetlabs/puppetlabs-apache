@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # a2mod.rb
 class Puppet::Provider::A2mod < Puppet::Provider
   # Fetches the mod provider

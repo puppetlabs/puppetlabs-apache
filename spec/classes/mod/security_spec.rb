@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -23,21 +24,17 @@ describe 'apache::mod::security', type: :class do
               lib: 'mod_unique_id.so',
             )
           }
+
           it { is_expected.to contain_package('mod_security_crs') }
-          if facts[:os]['release']['major'].to_i > 6 && facts[:os]['release']['major'].to_i <= 7
+
+          if (facts[:os]['release']['major'].to_i > 6 && facts[:os]['release']['major'].to_i <= 7) || (facts[:os]['release']['major'].to_i >= 8)
             it {
               is_expected.to contain_file('security.conf').with(
                 path: '/etc/httpd/conf.modules.d/security.conf',
               )
             }
           end
-          if facts[:os]['release']['major'].to_i >= 8
-            it {
-              is_expected.to contain_file('security.conf').with(
-                path: '/etc/httpd/conf.modules.d/security.conf',
-              )
-            }
-          end
+
           it {
             is_expected.to contain_file('security.conf')
               .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})

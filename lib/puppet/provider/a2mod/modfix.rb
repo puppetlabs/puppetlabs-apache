@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.type(:a2mod).provide :modfix do
   desc "Dummy provider for A2mod.
   Fake nil resources when there is no crontab binary available. Allows

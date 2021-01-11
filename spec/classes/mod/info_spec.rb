@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # This function is called inside the OS specific contexts
-def general_info_specs_22
+def general_info_specs_apache22
   it { is_expected.to contain_apache__mod('info') }
 
   context 'passing no parameters' do
@@ -62,7 +64,7 @@ def general_info_specs_22
   end
 end
 
-def general_info_specs_24
+def general_info_specs_apache24
   it { is_expected.to contain_apache__mod('info') }
 
   context 'passing no parameters' do
@@ -136,7 +138,7 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_22
+    general_info_specs_apache22
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -162,7 +164,7 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_22
+    general_info_specs_apache22
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -184,7 +186,7 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_24
+    general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -206,7 +208,7 @@ describe 'apache::mod::info', type: :class do
     end
 
     # Load the more generic tests for this context
-    general_info_specs_24
+    general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
