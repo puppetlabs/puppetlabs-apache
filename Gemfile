@@ -31,8 +31,8 @@ group :development do
   gem "github_changelog_generator",                              require: false
 end
 group :system_tests do
-  gem "puppet-module-posix-system-r#{minor_version}", '~> 1.0', require: false, platforms: [:ruby] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup))
-  gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup))
+  gem "puppet-module-posix-system-r#{minor_version}", '~> 1.0', require: false, platforms: [:ruby] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup)) || puppet_version.nil? 
+  gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup)) || puppet_version.nil?
 end
 
 gems = {}
