@@ -85,3 +85,4 @@ EOM
   end
 end
 
+FastGettext.default_text_domain = 'default-text-domain'
