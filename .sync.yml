@@ -50,3 +50,6 @@ spec/spec_helper.rb:
   unmanaged: false
 .github/workflows/pr_test.yml:
   unmanaged: false
+Rakefile:
+  extras:
+    "FastGettext.default_text_domain = 'default-text-domain'"
