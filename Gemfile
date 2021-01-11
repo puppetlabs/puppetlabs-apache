@@ -16,6 +16,10 @@ end
 ruby_version_segments = Gem::Version.new(RUBY_VERSION.dup).segments
 minor_version = ruby_version_segments[0..1].join('.')
 
+puppet_version = ENV['PUPPET_GEM_VERSION']
+facter_version = ENV['FACTER_GEM_VERSION']
+hiera_version = ENV['HIERA_GEM_VERSION']
+
 group :development do
   gem "json", '= 2.0.4',                                         require: false if Gem::Requirement.create('~> 2.4.2').satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "json", '= 2.1.0',                                         require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
@@ -27,13 +31,9 @@ group :development do
   gem "github_changelog_generator",                              require: false
 end
 group :system_tests do
-  gem "puppet-module-posix-system-r#{minor_version}", '~> 1.0', require: false, platforms: [:ruby]
-  gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "puppet-module-posix-system-r#{minor_version}", '~> 1.0', require: false, platforms: [:ruby] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup))
+  gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw] if Gem::Requirement.create(['>= 6.11.0', '< 8.0.0']).satisfied_by?(Gem::Version.new(puppet_version.dup))
 end
-
-puppet_version = ENV['PUPPET_GEM_VERSION']
-facter_version = ENV['FACTER_GEM_VERSION']
-hiera_version = ENV['HIERA_GEM_VERSION']
 
 gems = {}
 
