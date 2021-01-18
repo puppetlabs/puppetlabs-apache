@@ -389,9 +389,10 @@ class apache::params inherits ::apache::version {
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
-    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+    } else {
       $php_version = $facts['operatingsystemmajrelease'] ? {
         '9'     => '7.0', # Debian Stretch
+        '16.04' => '7.0', # Ubuntu Xenial
         '10'    => '7.3', # Debian Buster
         '20.04' => '7.4', # Ubuntu Foccal Fossal
         default => '7.2', # Ubuntu Bionic, Cosmic and Disco
@@ -420,36 +421,6 @@ class apache::params inherits ::apache::version {
         'rpaf'                  => 'libapache2-mod-rpaf',
         'security'              => 'libapache2-mod-security2',
         'shib2'                 => 'libapache2-mod-shib2',
-        'wsgi'                  => 'libapache2-mod-wsgi',
-        'xsendfile'             => 'libapache2-mod-xsendfile',
-      }
-    } else {
-      # Ubuntu Xenial
-      $php_version = '7.0'
-      $mod_packages = {
-        'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
-        'auth_openidc'          => 'libapache2-mod-auth-openidc',
-        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
-        'auth_mellon'           => 'libapache2-mod-auth-mellon',
-        'authnz_pam'            => 'libapache2-mod-authnz-pam',
-        'dav_svn'               => 'libapache2-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
-        'fcgid'                 => 'libapache2-mod-fcgid',
-        'geoip'                 => 'libapache2-mod-geoip',
-        'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
-        'jk'                    => 'libapache2-mod-jk',
-        'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
-        'pagespeed'             => 'mod-pagespeed-stable',
-        'passenger'             => 'libapache2-mod-passenger',
-        'perl'                  => 'libapache2-mod-perl2',
-        'phpXXX'                => 'libapache2-mod-phpXXX',
-        'python'                => 'libapache2-mod-python',
-        'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-modsecurity',
-        'shib2'                 => 'libapache2-mod-shib2',
-        'suphp'                 => 'libapache2-mod-suphp',
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
