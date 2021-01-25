@@ -503,7 +503,7 @@ describe 'apache', type: :class do
 
       it {
         is_expected.to contain_file('/opt/rh/root/etc/httpd/conf/httpd.conf').with(
-          'ensure'  => 'file',
+          'ensure' => 'file',
         ).that_notifies('Class[Apache::Service]').that_requires(['Package[httpd]', 'Concat[/etc/httpd/conf/ports.conf]'])
       }
     end
@@ -516,7 +516,7 @@ describe 'apache', type: :class do
       it {
         is_expected.to contain_file('/etc/httpd/special_conf.d').with(
           'ensure' => 'directory', 'recurse' => 'true',
-          'purge' => 'true',
+          'purge' => 'true'
         ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
       }
     end
@@ -733,7 +733,7 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_concat('/usr/local/etc/apache24/ports.conf').with(
         'owner' => 'root', 'group' => 'wheel',
-        'mode' => '0644',
+        'mode' => '0644'
       ).that_notifies('Class[Apache::Service]')
     }
     # Assert that load files are placed for these mods, but no conf file.
@@ -800,7 +800,7 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_concat('/etc/apache2/ports.conf').with(
         'owner' => 'root', 'group' => 'wheel',
-        'mode' => '0644',
+        'mode' => '0644'
       ).that_notifies('Class[Apache::Service]')
     }
   end

@@ -295,7 +295,7 @@ describe 'apache::mod::status', type: :class do
       end
 
       it 'expects to fail array validation' do
-        is_expected.to compile.and_raise_error(/allow_from/)
+        is_expected.to compile.and_raise_error(%r{allow_from})
       end
     end
 
@@ -342,7 +342,7 @@ describe 'apache::mod::status', type: :class do
         end
 
         it 'expects to fail regular expression validation' do
-          is_expected.to compile.and_raise_error(/extended_status/)
+          is_expected.to compile.and_raise_error(%r{extended_status})
         end
       end
     end
