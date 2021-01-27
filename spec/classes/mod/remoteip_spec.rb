@@ -119,7 +119,7 @@ describe 'apache::mod::remoteip', type: :class do
         { apache_version: '2.2' }
       end
 
-      it { expect { catalogue }.to raise_error(Puppet::Error, %r{mod_remoteip is only available in Apache 2.4}) }
+      it { is_expected.to compile.and_raise_error(%r{mod_remoteip is only available in Apache 2.4}) }
     end
   end
 end

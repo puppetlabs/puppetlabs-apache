@@ -35,29 +35,26 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_file('/etc/apache2/sites-enabled').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_file('/etc/apache2/mods-enabled').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_file('/etc/apache2/mods-available').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'false', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'false'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_concat('/etc/apache2/ports.conf').with(
         'owner' => 'root', 'group' => 'root',
-        'mode' => '0644', 'notify' => 'Class[Apache::Service]'
-      )
+        'mode' => '0644'
+      ).that_notifies('Class[Apache::Service]')
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
     ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
@@ -313,15 +310,14 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_file('/etc/httpd/conf.d').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_concat('/etc/httpd/conf/ports.conf').with(
         'owner' => 'root', 'group' => 'root',
-        'mode' => '0644', 'notify' => 'Class[Apache::Service]'
-      )
+        'mode' => '0644'
+      ).that_notifies('Class[Apache::Service]')
     }
     describe 'Alternate confd/mod/vhosts directory' do
       let :params do
@@ -336,9 +332,8 @@ describe 'apache', type: :class do
         it {
           is_expected.to contain_file("/etc/httpd/#{dir}").with(
             'ensure' => 'directory', 'recurse' => 'true',
-            'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-            'require' => 'Package[httpd]'
-          )
+            'purge' => 'true'
+          ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
         }
       end
 
@@ -508,10 +503,8 @@ describe 'apache', type: :class do
 
       it {
         is_expected.to contain_file('/opt/rh/root/etc/httpd/conf/httpd.conf').with(
-          'ensure'  => 'file',
-          'notify'  => 'Class[Apache::Service]',
-          'require' => ['Package[httpd]', 'Concat[/etc/httpd/conf/ports.conf]'],
-        )
+          'ensure' => 'file',
+        ).that_notifies('Class[Apache::Service]').that_requires(['Package[httpd]', 'Concat[/etc/httpd/conf/ports.conf]'])
       }
     end
 
@@ -523,9 +516,8 @@ describe 'apache', type: :class do
       it {
         is_expected.to contain_file('/etc/httpd/special_conf.d').with(
           'ensure' => 'directory', 'recurse' => 'true',
-          'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-          'require' => 'Package[httpd]'
-        )
+          'purge' => 'true'
+        ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
       }
     end
 
@@ -729,22 +721,20 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_file('/usr/local/etc/apache24/Vhosts').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_file('/usr/local/etc/apache24/Modules').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_concat('/usr/local/etc/apache24/ports.conf').with(
         'owner' => 'root', 'group' => 'wheel',
-        'mode' => '0644', 'notify' => 'Class[Apache::Service]'
-      )
+        'mode' => '0644'
+      ).that_notifies('Class[Apache::Service]')
     }
     # Assert that load files are placed for these mods, but no conf file.
     ['auth_basic', 'authn_core', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
@@ -798,22 +788,20 @@ describe 'apache', type: :class do
     it {
       is_expected.to contain_file('/etc/apache2/vhosts.d').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_file('/etc/apache2/modules.d').with(
         'ensure' => 'directory', 'recurse' => 'true',
-        'purge' => 'true', 'notify' => 'Class[Apache::Service]',
-        'require' => 'Package[httpd]'
-      )
+        'purge' => 'true'
+      ).that_notifies('Class[Apache::Service]').that_requires('Package[httpd]')
     }
     it {
       is_expected.to contain_concat('/etc/apache2/ports.conf').with(
         'owner' => 'root', 'group' => 'wheel',
-        'mode' => '0644', 'notify' => 'Class[Apache::Service]'
-      )
+        'mode' => '0644'
+      ).that_notifies('Class[Apache::Service]')
     }
   end
   context 'on all OSes' do
@@ -838,10 +826,9 @@ describe 'apache', type: :class do
 
       it {
         is_expected.to contain_package('httpd').with(
-          'notify' => 'Class[Apache::Service]',
           'ensure' => 'installed',
           'name'   => 'httpd24-httpd',
-        )
+        ).that_notifies('Class[Apache::Service]')
       }
     end
     context 'with a custom file_mode parameter' do
@@ -919,10 +906,6 @@ describe 'apache', type: :class do
         is_pe: false }
     end
 
-    it do
-      expect {
-        catalogue
-      }.to raise_error(Puppet::Error, %r{Unsupported osfamily})
-    end
+    it { is_expected.to compile.and_raise_error(%r{Unsupported osfamily}) }
   end
 end
