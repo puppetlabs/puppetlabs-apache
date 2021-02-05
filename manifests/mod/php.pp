@@ -17,7 +17,11 @@ class apache::mod::php (
   $libphp_prefix    = 'libphp'
 ) inherits apache::params {
   include apache
-  $mod = "php${php_version}"
+  if $php_version <= '7' {
+    $mod = "php${php_version}"
+  } else {
+    $mod = "php"
+  }
 
   if $apache::version::scl_httpd_version == undef and $apache::version::scl_php_version != undef {
     fail('If you define apache::version::scl_php_version, you also need to specify apache::version::scl_httpd_version')
@@ -75,13 +79,21 @@ class apache::mod::php (
       id             => "php${_php_major}_module",
       path           => "${apache::lib_path}/mod_${mod}.so",
     }
-  } else {
+  } elsif $php_version <= '7' {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
       lib            => $_lib,
       id             => "php${_php_major}_module",
       path           => $path,
+    }
+  } else {
+    ::apache::mod { $mod:
+        package        => $_package_name,
+        package_ensure => $package_ensure,
+        lib            => "${libphp_prefix}.so",
+        id             => "php_module",
+        path           => $path,
     }
   }
 
