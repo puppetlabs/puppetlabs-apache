@@ -6,7 +6,7 @@ describe 'apache::vhost::custom', type: :define do
   let :title do
     'rspec.example.com'
   end
-  let :default_params do
+  let(:params) do
     {
       content: 'foobar',
     }
@@ -15,13 +15,11 @@ describe 'apache::vhost::custom', type: :define do
   describe 'os-dependent items' do
     context 'on RedHat based systems' do
       include_examples 'RedHat 6'
-      let(:params) { default_params }
 
       it { is_expected.to compile }
     end
     context 'on Debian based systems' do
       include_examples 'Debian 8'
-      let(:params) { default_params }
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(
@@ -40,7 +38,6 @@ describe 'apache::vhost::custom', type: :define do
     end
     context 'on FreeBSD systems' do
       include_examples 'FreeBSD 9'
-      let(:params) { default_params }
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(
@@ -52,7 +49,6 @@ describe 'apache::vhost::custom', type: :define do
     end
     context 'on Gentoo systems' do
       include_examples 'Gentoo'
-      let(:params) { default_params }
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(

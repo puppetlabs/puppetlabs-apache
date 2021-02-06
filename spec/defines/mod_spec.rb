@@ -7,14 +7,14 @@ describe 'apache::mod', type: :define do
     'include apache'
   end
 
+  let :title do
+    'spec_m'
+  end
+
   context 'on a RedHat osfamily' do
     include_examples 'RedHat 6'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.d/spec_m.load',
@@ -28,9 +28,6 @@ describe 'apache::mod', type: :define do
     describe 'with file_mode set' do
       let :pre_condition do
         "class {'::apache': file_mode => '0640'}"
-      end
-      let :title do
-        'spec_m'
       end
 
       it 'manages the module load file' do
@@ -55,10 +52,6 @@ describe 'apache::mod', type: :define do
     include_examples 'Debian 8'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/apache2/mods-available/spec_m.load',
@@ -81,10 +74,6 @@ describe 'apache::mod', type: :define do
     include_examples 'FreeBSD 9'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/usr/local/etc/apache24/Modules/spec_m.load',
@@ -100,10 +89,6 @@ describe 'apache::mod', type: :define do
     include_examples 'Gentoo'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/apache2/modules.d/spec_m.load',
