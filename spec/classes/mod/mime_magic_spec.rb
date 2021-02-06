@@ -11,7 +11,7 @@ describe 'apache::mod::mime_magic', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS with default params' do
-    include_examples 'Debian 6'
+    include_examples 'Debian 8'
 
     general_mime_magic_specs
 
@@ -58,7 +58,7 @@ describe 'apache::mod::mime_magic', type: :class do
   end
 
   context 'with magic_file => /tmp/magic' do
-    include_examples 'Debian 6'
+    include_examples 'Debian 8'
 
     let :params do
       { magic_file: '/tmp/magic' }

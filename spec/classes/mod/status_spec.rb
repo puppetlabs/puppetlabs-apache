@@ -68,13 +68,13 @@ describe 'apache::mod::status', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters' do
-    context 'on a Debian 6 OS' do
-      include_examples 'Debian 6'
+    context 'on a Debian 8 OS' do
+      include_examples 'Debian 8'
 
       context 'with default params' do
         it { is_expected.to contain_apache__mod('status') }
 
-        include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
+        include_examples 'status_conf_spec_require', 'ip 127.0.0.1 ::1', 'On', '/server-status'
 
         it {
           is_expected.to contain_file('status.conf').with(ensure: 'file',
@@ -98,7 +98,7 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to compile }
 
-        include_examples 'status_conf_spec', ['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status'
+        include_examples 'status_conf_spec_require', 'ip 10.10.10.10 11.11.11.11', 'Off', '/custom-status'
       end
 
       context "with valid parameter type $allow_from => ['10.10.10.10']" do

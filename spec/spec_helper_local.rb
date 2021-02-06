@@ -37,19 +37,6 @@ shared_context 'a mod class, without including apache' do
   let(:facts) { on_supported_os['debian-8-x86_64'] }
 end
 
-shared_context 'Debian 6' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'Debian',
-      operatingsystem: 'Debian',
-      operatingsystemrelease: '6',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
-end
-
 shared_context 'Debian 8' do
   let(:facts) { on_supported_os['debian-8-x86_64'] }
 end

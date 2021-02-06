@@ -7,7 +7,7 @@ describe 'apache::mod::auth_kerb', type: :class do
 
   context 'default configuration with parameters' do
     context 'on a Debian OS', :compile do
-      include_examples 'Debian 6'
+      include_examples 'Debian 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('auth_kerb') }

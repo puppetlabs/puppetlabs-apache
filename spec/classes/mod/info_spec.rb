@@ -124,10 +124,10 @@ describe 'apache::mod::info', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS' do
-    include_examples 'Debian 6'
+    include_examples 'Debian 8'
 
     # Load the more generic tests for this context
-    general_info_specs_apache22
+    general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',

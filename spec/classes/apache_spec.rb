@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'apache', type: :class do
   context 'on a Debian OS' do
-    include_examples 'Debian 6'
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -17,7 +17,7 @@ describe 'apache', type: :class do
     it { is_expected.to contain_group('www-data') }
     it { is_expected.to contain_class('apache::service') }
     it {
-      is_expected.to contain_file('/var/www').with(
+      is_expected.to contain_file('/var/www/html').with(
         'ensure' => 'directory',
       )
     }
@@ -46,7 +46,7 @@ describe 'apache', type: :class do
       ).that_notifies('Class[Apache::Service]')
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
-    ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+    ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/etc/apache2/mods-available/#{modname}.load",
@@ -232,22 +232,13 @@ describe 'apache', type: :class do
       end
     end
 
-    context '8' do
-      include_examples 'Debian 8'
-
-      it {
-        is_expected.to contain_file('/var/www/html').with(
-          'ensure' => 'directory',
-        )
-      }
-      describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
-        let :params do
-          { mpm_module: 'worker' }
-        end
-
-        it { is_expected.to contain_exec('/usr/sbin/a2dismod event') }
-        it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
+    describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
+      let :params do
+        { mpm_module: 'worker' }
       end
+
+      it { is_expected.to contain_exec('/usr/sbin/a2dismod event') }
+      it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
     end
 
     context 'on Ubuntu 14.04' do
