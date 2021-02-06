@@ -4,17 +4,7 @@ require 'spec_helper'
 
 describe 'apache::mod::remoteip', type: :class do
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      }
-    end
+    include_examples 'Debian 8'
     let :params do
       { apache_version: '2.4' }
     end

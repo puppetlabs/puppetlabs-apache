@@ -69,18 +69,7 @@ describe 'apache::mod::status', type: :class do
 
   context 'default configuration with parameters' do
     context 'on a Debian 6 OS' do
-      let :facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '6',
-          lsbdistcodename: 'squeeze',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'Debian 6'
 
       context 'with default params' do
         it { is_expected.to contain_apache__mod('status') }
@@ -123,17 +112,6 @@ describe 'apache::mod::status', type: :class do
       end
 
       context "with invalid parameter type $allow_from => '10.10.10.10'" do
-        let :facts do
-          {
-            osfamily: 'Debian',
-            operatingsystemrelease: '6',
-            operatingsystem: 'Debian',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
-          }
-        end
         let :params do
           { allow_from: '10.10.10.10' }
         end
@@ -170,17 +148,7 @@ describe 'apache::mod::status', type: :class do
     end
 
     context 'on a RedHat 6 OS' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
 
       context 'with default params' do
         it { is_expected.to contain_apache__mod('status') }
@@ -224,18 +192,7 @@ describe 'apache::mod::status', type: :class do
         end
 
         context 'on a Debian 8 OS' do
-          let :facts do
-            {
-              osfamily: 'Debian',
-              operatingsystemrelease: '8',
-              lsbdistcodename: 'squeeze',
-              operatingsystem: 'Debian',
-              id: 'root',
-              kernel: 'Linux',
-              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-              is_pe: false,
-            }
-          end
+          include_examples 'Debian 8'
 
           it { is_expected.to contain_apache__mod('status') }
 
@@ -253,17 +210,7 @@ describe 'apache::mod::status', type: :class do
         end
 
         context 'on a RedHat 7 OS' do
-          let :facts do
-            {
-              osfamily: 'RedHat',
-              operatingsystemrelease: '7',
-              operatingsystem: 'RedHat',
-              id: 'root',
-              kernel: 'Linux',
-              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-              is_pe: false,
-            }
-          end
+          include_examples 'RedHat 7'
 
           it { is_expected.to contain_apache__mod('status') }
 
@@ -273,17 +220,7 @@ describe 'apache::mod::status', type: :class do
         end
 
         context 'on a RedHat 8 OS' do
-          let :facts do
-            {
-              osfamily: 'RedHat',
-              operatingsystemrelease: '8',
-              operatingsystem: 'RedHat',
-              id: 'root',
-              kernel: 'Linux',
-              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-              is_pe: false,
-            }
-          end
+          include_examples 'RedHat 8'
 
           it { is_expected.to contain_apache__mod('status') }
 

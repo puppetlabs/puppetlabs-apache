@@ -6,18 +6,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters on a Debian OS' do
-    let :facts do
-      {
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        id: 'root',
-        kernel: 'Linux',
-        operatingsystem: 'Debian',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_class('apache::mod::ldap') }

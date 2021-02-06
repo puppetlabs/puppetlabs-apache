@@ -11,22 +11,8 @@ describe 'apache::mod::proxy_connect', type: :class do
 
   it_behaves_like 'a mod class, without including apache'
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
-
     context 'with Apache version < 2.2' do
-      let :facts do
-        super().merge(operatingsystemrelease: '7.0',
-                      lsbdistcodename: 'wheezy')
-      end
+      include_examples 'Debian 7'
       let :params do
         {
           apache_version: '2.1',
@@ -36,10 +22,7 @@ describe 'apache::mod::proxy_connect', type: :class do
       it { is_expected.not_to contain_apache__mod('proxy_connect') }
     end
     context 'with Apache version = 2.2' do
-      let :facts do
-        super().merge(operatingsystemrelease: '7.0',
-                      lsbdistcodename: 'wheezy')
-      end
+      include_examples 'Debian 7'
       let :params do
         {
           apache_version: '2.2',
@@ -49,10 +32,7 @@ describe 'apache::mod::proxy_connect', type: :class do
       it { is_expected.to contain_apache__mod('proxy_connect') }
     end
     context 'with Apache version >= 2.4' do
-      let :facts do
-        super().merge(operatingsystemrelease: '8.0',
-                      lsbdistcodename: 'jessie')
-      end
+      include_examples 'Debian 8'
       let :params do
         {
           apache_version: '2.4',

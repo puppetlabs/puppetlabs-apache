@@ -24,18 +24,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
 
   context 'default configuration with default parameters' do
     context 'on a Debian OS' do
-      let :facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '8',
-          lsbdistcodename: 'jessie',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'Debian 8'
 
       it { is_expected.to contain_apache__mod('proxy_balancer') }
 
@@ -44,17 +33,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
     end
 
     context 'on a RedHat OS' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
 
       it { is_expected.to contain_apache__mod('proxy_balancer') }
 
@@ -63,18 +42,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
     end
   end
   context "default configuration with custom parameters $manager => true, $allow_from => ['10.10.10.10','11.11.11.11'], $status_path => '/custom-manager' on a Debian OS" do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
     let :params do
       {
         manager: true,

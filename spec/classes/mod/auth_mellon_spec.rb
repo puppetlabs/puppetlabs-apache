@@ -6,19 +6,7 @@ describe 'apache::mod::auth_mellon', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        fqdn: 'test.example.com',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     describe 'with no parameters' do
       it { is_expected.to contain_apache__mod('auth_mellon') }
@@ -47,18 +35,7 @@ describe 'apache::mod::auth_mellon', type: :class do
     end
   end
   context 'default configuration with parameters on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        fqdn: 'test.example.com',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     describe 'with no parameters' do
       it { is_expected.to contain_apache__mod('auth_mellon') }

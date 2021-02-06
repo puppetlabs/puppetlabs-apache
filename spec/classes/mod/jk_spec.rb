@@ -64,14 +64,7 @@ describe 'apache::mod::jk', type: :class do
   altern8_port = 8008
 
   context 'Debian 8' do
-    let(:facts) do
-      {
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        operatingsystemrelease: '8',
-        ipaddress: default_ip,
-      }
-    end
+    include_examples 'Debian 8'
 
     context 'with only required facts and default parameters' do
       let(:facts) { super().merge('ipaddress' => default_ip) }
@@ -98,14 +91,7 @@ describe 'apache::mod::jk', type: :class do
   end
 
   context 'RHEL 6' do
-    let(:facts) do
-      {
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        ipaddress: default_ip,
-      }
-    end
+    include_examples 'RedHat 6'
     let(:pre_condition) do
       'include apache'
     end

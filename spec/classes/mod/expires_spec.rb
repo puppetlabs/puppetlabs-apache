@@ -6,18 +6,7 @@ describe 'apache::mod::expires', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'with expires active', :compile do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        operatingsystemrelease: '8',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_apache__mod('expires') }
     it { is_expected.to contain_file('expires.conf').with(content: %r{ExpiresActive On\n}) }
@@ -26,22 +15,13 @@ describe 'apache::mod::expires', type: :class do
     let :pre_condition do
       'class { apache: default_mods => false }'
     end
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '7',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
     let :params do
       {
         'expires_default' => 'access plus 1 month',
       }
     end
+
+    include_examples 'RedHat 7'
 
     it { is_expected.to contain_apache__mod('expires') }
     it {
@@ -55,17 +35,6 @@ describe 'apache::mod::expires', type: :class do
     let :pre_condition do
       'class { apache: default_mods => false }'
     end
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '7',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
     let :params do
       {
         'expires_by_type' => [
@@ -74,6 +43,8 @@ describe 'apache::mod::expires', type: :class do
         ],
       }
     end
+
+    include_examples 'RedHat 7'
 
     it { is_expected.to contain_apache__mod('expires') }
     it {

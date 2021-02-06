@@ -9,18 +9,8 @@ describe 'apache::custom_config', type: :define do
   let :title do
     'rspec'
   end
-  let :facts do
-    {
-      osfamily: 'Debian',
-      operatingsystemrelease: '8',
-      lsbdistcodename: 'jessie',
-      operatingsystem: 'Debian',
-      id: 'root',
-      kernel: 'Linux',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      is_pe: false,
-    }
-  end
+
+  include_examples 'Debian 8'
 
   context 'defaults with content' do
     let :params do

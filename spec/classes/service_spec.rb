@@ -8,18 +8,7 @@ describe 'apache::service', type: :class do
   end
 
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it {
       is_expected.to contain_service('httpd').with(
@@ -107,17 +96,7 @@ describe 'apache::service', type: :class do
   end
 
   context 'on a RedHat 5 OS, do not manage service' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '5',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 5'
     let(:params) do
       {
         'service_ensure' => 'running',
@@ -129,18 +108,8 @@ describe 'apache::service', type: :class do
     it { is_expected.not_to contain_service('httpd') }
   end
 
-  context 'on a FreeBSD 5 OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '9',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+  context 'on a FreeBSD 9 OS' do
+    include_examples 'FreeBSD 9'
 
     it {
       is_expected.to contain_service('httpd').with(
@@ -152,17 +121,7 @@ describe 'apache::service', type: :class do
   end
 
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it {
       is_expected.to contain_service('httpd').with(
