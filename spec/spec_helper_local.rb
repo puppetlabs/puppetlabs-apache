@@ -64,16 +64,7 @@ shared_context 'Debian 7' do
 end
 
 shared_context 'Debian 8' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'Debian',
-      operatingsystem: 'Debian',
-      operatingsystemrelease: '8.0.0',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
+  let(:facts) { on_supported_os['debian-8-x86_64'] }
 end
 
 shared_context 'Ubuntu 14.04' do
@@ -104,42 +95,15 @@ shared_context 'RedHat 5' do
 end
 
 shared_context 'RedHat 6' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'RedHat',
-      operatingsystem: 'RedHat',
-      operatingsystemrelease: '6',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
+  let(:facts) { on_supported_os['redhat-6-x86_64'] }
 end
 
 shared_context 'RedHat 7' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'RedHat',
-      operatingsystem: 'RedHat',
-      operatingsystemrelease: '7',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
+  let(:facts) { on_supported_os['redhat-7-x86_64'] }
 end
 
 shared_context 'RedHat 8' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'RedHat',
-      operatingsystem: 'RedHat',
-      operatingsystemrelease: '8',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
+  let(:facts) { on_supported_os['redhat-8-x86_64'] }
 end
 
 shared_context 'Fedora 17' do
@@ -256,14 +220,5 @@ shared_context 'Unsupported OS' do
 end
 
 shared_context 'SLES 12' do
-  let :facts do
-    {
-      osfamily: 'Suse',
-      operatingsystem: 'SLES',
-      operatingsystemrelease: '12',
-      id: 'root',
-      kernel: 'Linux',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-    }
-  end
+  let(:facts) { on_supported_os['sles-12-x86_64'] }
 end
