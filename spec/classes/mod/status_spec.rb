@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # Helper function for testing the contents of `status.conf`
 # Apache < 2.4
-def status_conf_spec(allow_from, extended_status, status_path)
+shared_examples 'status_conf_spec' do |allow_from, extended_status, status_path|
   expected =
     "<Location #{status_path}>\n"\
     "    SetHandler server-status\n"\
@@ -47,7 +47,7 @@ def require_directives(requires)
   end
 end
 
-def status_conf_spec_require(requires, extended_status, status_path)
+shared_examples 'status_conf_spec_require' do |requires, extended_status, status_path|
   expected =
     "<Location #{status_path}>\n"\
     "    SetHandler server-status\n"\
@@ -84,7 +84,7 @@ describe 'apache::mod::status', type: :class do
 
       it { is_expected.to contain_apache__mod('status') }
 
-      status_conf_spec(['127.0.0.1', '::1'], 'On', '/server-status')
+      include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
 
       it {
         is_expected.to contain_file('status.conf').with(ensure: 'file',
@@ -112,7 +112,7 @@ describe 'apache::mod::status', type: :class do
 
       it { is_expected.to contain_apache__mod('status') }
 
-      status_conf_spec(['127.0.0.1', '::1'], 'On', '/server-status')
+      include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
 
       it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.d/status.conf') }
     end
@@ -164,7 +164,7 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to contain_apache__mod('status') }
 
-        status_conf_spec_require(req_value, 'On', '/server-status')
+        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
         it {
           is_expected.to contain_file('status.conf').with(ensure: 'file',
@@ -198,7 +198,7 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to contain_apache__mod('status') }
 
-        status_conf_spec_require(req_value, 'On', '/server-status')
+        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
         it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
       end
@@ -224,7 +224,7 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to contain_apache__mod('status') }
 
-        status_conf_spec_require(req_value, 'On', '/server-status')
+        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
         it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
       end
@@ -253,7 +253,7 @@ describe 'apache::mod::status', type: :class do
 
       it { is_expected.to compile }
 
-      status_conf_spec(['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status')
+      include_examples 'status_conf_spec', ['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status'
     end
 
     context "with valid parameter type $allow_from => ['10.10.10.10']" do
