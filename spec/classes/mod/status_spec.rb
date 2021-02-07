@@ -68,7 +68,7 @@ describe 'apache::mod::status', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters' do
-    context 'on a Debian 6 OS with default params' do
+    context 'on a Debian 6 OS' do
       let :facts do
         {
           osfamily: 'Debian',
@@ -82,22 +82,94 @@ describe 'apache::mod::status', type: :class do
         }
       end
 
-      it { is_expected.to contain_apache__mod('status') }
+      context 'with default params' do
+        it { is_expected.to contain_apache__mod('status') }
 
-      include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
+        include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
 
-      it {
-        is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                        path: '/etc/apache2/mods-available/status.conf')
-      }
+        it {
+          is_expected.to contain_file('status.conf').with(ensure: 'file',
+                                                          path: '/etc/apache2/mods-available/status.conf')
+        }
 
-      it {
-        is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                path: '/etc/apache2/mods-enabled/status.conf')
-      }
+        it {
+          is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                  path: '/etc/apache2/mods-enabled/status.conf')
+        }
+      end
+
+      context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
+        let :params do
+          {
+            allow_from: ['10.10.10.10', '11.11.11.11'],
+            extended_status: 'Off',
+            status_path: '/custom-status',
+          }
+        end
+
+        it { is_expected.to compile }
+
+        include_examples 'status_conf_spec', ['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status'
+      end
+
+      context "with valid parameter type $allow_from => ['10.10.10.10']" do
+        let :params do
+          { allow_from: ['10.10.10.10'] }
+        end
+
+        it 'expects to succeed array validation' do
+          is_expected.to compile
+        end
+      end
+
+      context "with invalid parameter type $allow_from => '10.10.10.10'" do
+        let :facts do
+          {
+            osfamily: 'Debian',
+            operatingsystemrelease: '6',
+            operatingsystem: 'Debian',
+            id: 'root',
+            kernel: 'Linux',
+            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+            is_pe: false,
+          }
+        end
+        let :params do
+          { allow_from: '10.10.10.10' }
+        end
+
+        it 'expects to fail array validation' do
+          is_expected.to compile.and_raise_error(%r{allow_from})
+        end
+      end
+
+      # Only On or Off are valid options
+      ['On', 'Off'].each do |valid_param|
+        context "with valid value $extended_status => '#{valid_param}'" do
+          let :params do
+            { extended_status: valid_param }
+          end
+
+          it 'expects to succeed regular expression validation' do
+            is_expected.to compile
+          end
+        end
+      end
+
+      ['Yes', 'No'].each do |invalid_param|
+        context "with invalid value $extended_status => '#{invalid_param}'" do
+          let :params do
+            { extended_status: invalid_param }
+          end
+
+          it 'expects to fail regular expression validation' do
+            is_expected.to compile.and_raise_error(%r{extended_status})
+          end
+        end
+      end
     end
 
-    context 'on a RedHat 6 OS with default params' do
+    context 'on a RedHat 6 OS' do
       let :facts do
         {
           osfamily: 'RedHat',
@@ -110,11 +182,13 @@ describe 'apache::mod::status', type: :class do
         }
       end
 
-      it { is_expected.to contain_apache__mod('status') }
+      context 'with default params' do
+        it { is_expected.to contain_apache__mod('status') }
 
-      include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
+        include_examples 'status_conf_spec', ['127.0.0.1', '::1'], 'On', '/server-status'
 
-      it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.d/status.conf') }
+        it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.d/status.conf') }
+      end
     end
 
     valid_requires = {
@@ -142,207 +216,80 @@ describe 'apache::mod::status', type: :class do
       },
     }
     valid_requires.each do |req_key, req_value|
-      context "on a Debian 8 OS with default params and #{req_key} requires" do
-        let :facts do
-          {
-            osfamily: 'Debian',
-            operatingsystemrelease: '8',
-            lsbdistcodename: 'squeeze',
-            operatingsystem: 'Debian',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
-          }
-        end
-
+      context "with default params and #{req_key} requires" do
         let :params do
           {
             requires: req_value,
           }
         end
 
-        it { is_expected.to contain_apache__mod('status') }
+        context 'on a Debian 8 OS' do
+          let :facts do
+            {
+              osfamily: 'Debian',
+              operatingsystemrelease: '8',
+              lsbdistcodename: 'squeeze',
+              operatingsystem: 'Debian',
+              id: 'root',
+              kernel: 'Linux',
+              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+              is_pe: false,
+            }
+          end
 
-        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
+          it { is_expected.to contain_apache__mod('status') }
 
-        it {
-          is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                          path: '/etc/apache2/mods-available/status.conf')
-        }
+          include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
-        it {
-          is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                  path: '/etc/apache2/mods-enabled/status.conf')
-        }
-      end
+          it {
+            is_expected.to contain_file('status.conf').with(ensure: 'file',
+                                                            path: '/etc/apache2/mods-available/status.conf')
+          }
 
-      context "on a RedHat 7 OS with default params and #{req_key} requires" do
-        let :facts do
-          {
-            osfamily: 'RedHat',
-            operatingsystemrelease: '7',
-            operatingsystem: 'RedHat',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
+          it {
+            is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                    path: '/etc/apache2/mods-enabled/status.conf')
           }
         end
 
-        let :params do
-          {
-            requires: req_value,
-          }
+        context 'on a RedHat 7 OS' do
+          let :facts do
+            {
+              osfamily: 'RedHat',
+              operatingsystemrelease: '7',
+              operatingsystem: 'RedHat',
+              id: 'root',
+              kernel: 'Linux',
+              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+              is_pe: false,
+            }
+          end
+
+          it { is_expected.to contain_apache__mod('status') }
+
+          include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
+
+          it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
         end
 
-        it { is_expected.to contain_apache__mod('status') }
+        context 'on a RedHat 8 OS' do
+          let :facts do
+            {
+              osfamily: 'RedHat',
+              operatingsystemrelease: '8',
+              operatingsystem: 'RedHat',
+              id: 'root',
+              kernel: 'Linux',
+              path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+              is_pe: false,
+            }
+          end
 
-        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
+          it { is_expected.to contain_apache__mod('status') }
 
-        it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
-      end
+          include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
-      context "on a RedHat 8 OS with default params and #{req_key} requires" do
-        let :facts do
-          {
-            osfamily: 'RedHat',
-            operatingsystemrelease: '8',
-            operatingsystem: 'RedHat',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
-          }
-        end
-
-        let :params do
-          {
-            requires: req_value,
-          }
-        end
-
-        it { is_expected.to contain_apache__mod('status') }
-
-        include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
-
-        it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
-      end
-    end
-
-    context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
-      let :facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '6',
-          lsbdistcodename: 'squeeze',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let :params do
-        {
-          allow_from: ['10.10.10.10', '11.11.11.11'],
-          extended_status: 'Off',
-          status_path: '/custom-status',
-        }
-      end
-
-      it { is_expected.to compile }
-
-      include_examples 'status_conf_spec', ['10.10.10.10', '11.11.11.11'], 'Off', '/custom-status'
-    end
-
-    context "with valid parameter type $allow_from => ['10.10.10.10']" do
-      let :facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '6',
-          lsbdistcodename: 'squeeze',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let :params do
-        { allow_from: ['10.10.10.10'] }
-      end
-
-      it 'expects to succeed array validation' do
-        is_expected.to compile
-      end
-    end
-
-    context "with invalid parameter type $allow_from => '10.10.10.10'" do
-      let :facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '6',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let :params do
-        { allow_from: '10.10.10.10' }
-      end
-
-      it 'expects to fail array validation' do
-        is_expected.to compile.and_raise_error(%r{allow_from})
-      end
-    end
-
-    # Only On or Off are valid options
-    ['On', 'Off'].each do |valid_param|
-      context "with valid value $extended_status => '#{valid_param}'" do
-        let :facts do
-          {
-            osfamily: 'Debian',
-            operatingsystemrelease: '6',
-            lsbdistcodename: 'squeeze',
-            operatingsystem: 'Debian',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
-          }
-        end
-        let :params do
-          { extended_status: valid_param }
-        end
-
-        it 'expects to succeed regular expression validation' do
-          is_expected.to compile
-        end
-      end
-    end
-
-    ['Yes', 'No'].each do |invalid_param|
-      context "with invalid value $extended_status => '#{invalid_param}'" do
-        let :facts do
-          {
-            osfamily: 'Debian',
-            operatingsystemrelease: '6',
-            operatingsystem: 'Debian',
-            id: 'root',
-            kernel: 'Linux',
-            path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            is_pe: false,
-          }
-        end
-        let :params do
-          { extended_status: invalid_param }
-        end
-
-        it 'expects to fail regular expression validation' do
-          is_expected.to compile.and_raise_error(%r{extended_status})
+          it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
         end
       end
     end
