@@ -95,8 +95,8 @@ describe 'apache::service', type: :class do
     end
   end
 
-  context 'on a RedHat 5 OS, do not manage service' do
-    include_examples 'RedHat 5'
+  context 'on a RedHat 8 OS, do not manage service' do
+    include_examples 'RedHat 8'
     let(:params) do
       {
         'service_ensure' => 'running',

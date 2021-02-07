@@ -252,8 +252,8 @@ describe 'apache', type: :class do
     end
   end
 
-  context 'on a RedHat 5 OS' do
-    include_examples 'RedHat 5'
+  context 'on a RedHat 8 OS' do
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -301,7 +301,7 @@ describe 'apache', type: :class do
       end
 
       # Assert that load files are placed for these mods, but no conf file.
-      ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+      ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
         it {
           is_expected.to contain_file("#{modname}.load").with_path(
             "/etc/httpd/mod.d/#{modname}.load",
@@ -328,7 +328,7 @@ describe 'apache', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/site\.d/\*"$} }
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/site\.d/\*"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end

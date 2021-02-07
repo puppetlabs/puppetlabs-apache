@@ -55,19 +55,6 @@ shared_context 'Ubuntu 14.04' do
   end
 end
 
-shared_context 'RedHat 5' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'RedHat',
-      operatingsystem: 'RedHat',
-      operatingsystemrelease: '5',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
-end
-
 shared_context 'RedHat 6' do
   let(:facts) { on_supported_os['redhat-6-x86_64'] }
 end
