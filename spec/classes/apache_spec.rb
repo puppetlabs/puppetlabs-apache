@@ -241,8 +241,8 @@ describe 'apache', type: :class do
       it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
     end
 
-    context 'on Ubuntu 14.04' do
-      include_examples 'Ubuntu 14.04'
+    context 'on Ubuntu 18.04' do
+      include_examples 'Ubuntu 18.04'
 
       it {
         is_expected.to contain_file('/var/www/html').with(

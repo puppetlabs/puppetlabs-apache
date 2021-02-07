@@ -41,18 +41,8 @@ shared_context 'Debian 8' do
   let(:facts) { on_supported_os['debian-8-x86_64'] }
 end
 
-shared_context 'Ubuntu 14.04' do
-  let :facts do
-    {
-      id: 'root',
-      kernel: 'Linux',
-      osfamily: 'Debian',
-      operatingsystem: 'Ubuntu',
-      operatingsystemrelease: '14.04',
-      lsbdistrelease: '14.04',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-    }
-  end
+shared_context 'Ubuntu 18.04' do
+  let(:facts) { on_supported_os['ubuntu-18.04-x86_64'] }
 end
 
 shared_context 'RedHat 6' do
