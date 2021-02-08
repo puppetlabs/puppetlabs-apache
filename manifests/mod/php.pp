@@ -19,7 +19,7 @@ class apache::mod::php (
   if (versioncmp($php_version, '7') <= 0) {
     $mod = "php${php_version}"
   } else {
-    $mod = "php"
+    $mod = 'php'
   }
 
   if $apache::version::scl_httpd_version == undef and $apache::version::scl_php_version != undef {
@@ -91,7 +91,7 @@ class apache::mod::php (
         package        => $_package_name,
         package_ensure => $package_ensure,
         lib            => "${libphp_prefix}.so",
-        id             => "php_module",
+        id             => 'php_module',
         path           => $path,
     }
   }
