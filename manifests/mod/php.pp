@@ -16,7 +16,7 @@ class apache::mod::php (
   $libphp_prefix    = 'libphp'
 ) inherits apache::params {
   include apache
-  if (versioncmp($php_version, '7') <= 0) {
+  if (versioncmp($php_version, '8') < 0) {
     $mod = "php${php_version}"
   } else {
     $mod = 'php'
@@ -78,7 +78,7 @@ class apache::mod::php (
       id             => "php${_php_major}_module",
       path           => "${apache::lib_path}/mod_${mod}.so",
     }
-  } elsif (versioncmp($php_version, '7') <= 0) {
+  } elsif (versioncmp($php_version, '8') < 0) {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
