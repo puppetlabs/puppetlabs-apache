@@ -207,6 +207,7 @@ describe 'apache::mod::php', type: :class do
 
       # all the following tests are for legacy php/apache versions. They don't work on modern ubuntu and redhat 8
       next if (facts[:os]['release']['major'].to_i > 15 && facts[:os]['name'] == 'Ubuntu') ||
+              (facts[:os]['release']['major'].to_i >= 15 && facts[:os]['name'] == 'SLES')  ||
               (facts[:os]['release']['major'].to_i >= 9 && facts[:os]['name'] == 'Debian') ||
               (facts[:os]['release']['major'].to_i >= 8 && (facts[:os]['name'] == 'RedHat' || facts[:os]['name'] == 'CentOS'))
 
