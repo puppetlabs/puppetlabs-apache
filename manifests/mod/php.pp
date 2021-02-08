@@ -3,7 +3,6 @@
 # 
 # @todo
 #   Add docs
-# @note Unsupported platforms: SLES: all
 class apache::mod::php (
   $package_name     = undef,
   $package_ensure   = 'present',
@@ -17,7 +16,7 @@ class apache::mod::php (
   $libphp_prefix    = 'libphp'
 ) inherits apache::params {
   include apache
-  if $php_version <= '7' {
+  if (versioncmp($php_version, '7') <= 0) {
     $mod = "php${php_version}"
   } else {
     $mod = "php"
@@ -79,7 +78,7 @@ class apache::mod::php (
       id             => "php${_php_major}_module",
       path           => "${apache::lib_path}/mod_${mod}.so",
     }
-  } elsif $php_version <= '7' {
+  } elsif (versioncmp($php_version, '7') <= 0) {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
