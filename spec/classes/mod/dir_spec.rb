@@ -11,21 +11,23 @@ describe 'apache::mod::dir', type: :class do
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('dir') }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{^DirectoryIndex }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html\.var }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.cgi }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.pl }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.php }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.xhtml$}) }
+      it do
+        is_expected.to contain_file('dir.conf')
+          .with_content(%r{^DirectoryIndex })
+          .with_content(%r{ index\.html })
+          .with_content(%r{ index\.html\.var })
+          .with_content(%r{ index\.cgi })
+          .with_content(%r{ index\.pl })
+          .with_content(%r{ index\.php })
+          .with_content(%r{ index\.xhtml$})
+      end
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         { indexes: ['example.txt', 'fearsome.aspx'] }
       end
 
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ fearsome\.aspx$}) }
+      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }).with_content(%r{ fearsome\.aspx$}) }
     end
   end
   context 'default configuration with parameters on a RedHat OS' do
@@ -34,21 +36,23 @@ describe 'apache::mod::dir', type: :class do
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('dir') }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{^DirectoryIndex }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html\.var }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.cgi }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.pl }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.php }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.xhtml$}) }
+      it do
+        is_expected.to contain_file('dir.conf')
+          .with_content(%r{^DirectoryIndex })
+          .with_content(%r{ index\.html })
+          .with_content(%r{ index\.html\.var })
+          .with_content(%r{ index\.cgi })
+          .with_content(%r{ index\.pl })
+          .with_content(%r{ index\.php })
+          .with_content(%r{ index\.xhtml$})
+      end
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         { indexes: ['example.txt', 'fearsome.aspx'] }
       end
 
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ fearsome\.aspx$}) }
+      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }).with_content(%r{ fearsome\.aspx$}) }
     end
   end
   context 'default configuration with parameters on a FreeBSD OS' do
@@ -57,21 +61,23 @@ describe 'apache::mod::dir', type: :class do
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('dir') }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{^DirectoryIndex }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html\.var }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.cgi }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.pl }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.php }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.xhtml$}) }
+      it do
+        is_expected.to contain_file('dir.conf')
+          .with_content(%r{^DirectoryIndex })
+          .with_content(%r{ index\.html })
+          .with_content(%r{ index\.html\.var })
+          .with_content(%r{ index\.cgi })
+          .with_content(%r{ index\.pl })
+          .with_content(%r{ index\.php })
+          .with_content(%r{ index\.xhtml$})
+      end
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         { indexes: ['example.txt', 'fearsome.aspx'] }
       end
 
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ fearsome\.aspx$}) }
+      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }).with_content(%r{ fearsome\.aspx$}) }
     end
   end
   context 'default configuration with parameters on a Gentoo OS' do
@@ -80,21 +86,23 @@ describe 'apache::mod::dir', type: :class do
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('dir') }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{^DirectoryIndex }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.html\.var }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.cgi }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.pl }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.php }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ index\.xhtml$}) }
+      it do
+        is_expected.to contain_file('dir.conf')
+          .with_content(%r{^DirectoryIndex })
+          .with_content(%r{ index\.html })
+          .with_content(%r{ index\.html\.var })
+          .with_content(%r{ index\.cgi })
+          .with_content(%r{ index\.pl })
+          .with_content(%r{ index\.php })
+          .with_content(%r{ index\.xhtml$})
+      end
     end
     context "passing indexes => ['example.txt','fearsome.aspx']" do
       let :params do
         { indexes: ['example.txt', 'fearsome.aspx'] }
       end
 
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }) }
-      it { is_expected.to contain_file('dir.conf').with_content(%r{ fearsome\.aspx$}) }
+      it { is_expected.to contain_file('dir.conf').with_content(%r{ example\.txt }).with_content(%r{ fearsome\.aspx$}) }
     end
   end
 end
