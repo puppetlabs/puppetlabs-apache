@@ -1676,6 +1676,9 @@
 #   Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive.<br />
 #   This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 #
+# @param ssl_user_name
+#   Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
+#
 # @param use_canonical_name
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
@@ -1774,6 +1777,7 @@ define apache::vhost (
   Optional[Boolean] $ssl_stapling                                                   = undef,
   $ssl_stapling_timeout                                                             = undef,
   $ssl_stapling_return_errors                                                       = undef,
+  Optional[String] $ssl_user_name                                                   = undef,
   $priority                                                                         = undef,
   Boolean $default_vhost                                                            = false,
   $servername                                                                       = $name,
