@@ -30,7 +30,7 @@ describe 'apache ssl' do
       end
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-ssl-443.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
       it { is_expected.to contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }

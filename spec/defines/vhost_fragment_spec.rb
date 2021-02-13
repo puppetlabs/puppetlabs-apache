@@ -14,6 +14,7 @@ describe 'apache::vhost::fragment' do
         let(:params) do
           {
             vhost: 'default',
+            port: 80,
             priority: '15',
           }
         end
@@ -23,9 +24,9 @@ describe 'apache::vhost::fragment' do
 
           it 'creates a vhost concat fragment' do
             is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('15-default.conf')
+            is_expected.to contain_concat('15-default-80.conf')
             is_expected.to create_concat__fragment('default-myfragment')
-              .with_target('15-default.conf')
+              .with_target('15-default-80.conf')
               .with_order(900)
               .with_content('# Foo')
           end
@@ -36,7 +37,7 @@ describe 'apache::vhost::fragment' do
 
           it 'does not create a vhost concat fragment' do
             is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('15-default.conf')
+            is_expected.to contain_concat('15-default-80.conf')
             is_expected.not_to contain_concat__fragment('default-myfragment')
           end
         end
