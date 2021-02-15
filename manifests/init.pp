@@ -837,6 +837,7 @@ class apache (
       logroot_mode                 => $logroot_mode,
       manage_docroot               => $default_vhost,
       use_servername_for_filenames => true,
+      use_port_for_filenames       => true,
     }
     $ssl_access_log_file = $::osfamily ? {
       'freebsd' => $access_log_file,
@@ -855,6 +856,7 @@ class apache (
       logroot_mode                 => $logroot_mode,
       manage_docroot               => $default_ssl_vhost,
       use_servername_for_filenames => true,
+      use_port_for_filenames       => true,
     }
   }
 
