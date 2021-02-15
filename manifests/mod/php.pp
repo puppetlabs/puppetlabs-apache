@@ -69,30 +69,27 @@ class apache::mod::php (
     # Controls php version and libphp prefix
     $_lib = "${libphp_prefix}${php_version}.so"
   }
+  $_module_id = $_php_major ? {
+    '5'     => 'php5_module',
+    '7'     => 'php7_module',
+    default => 'php_module',
+  }
 
   if $::operatingsystem == 'SLES' {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
       lib            => "mod_${mod}.so",
-      id             => "php${_php_major}_module",
+      id             => $_module_id,
       path           => "${apache::lib_path}/mod_${mod}.so",
     }
-  } elsif (versioncmp($php_version, '8') < 0) {
+  } else {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
       lib            => $_lib,
-      id             => "php${_php_major}_module",
+      id             => $_module_id,
       path           => $path,
-    }
-  } else {
-    ::apache::mod { $mod:
-        package        => $_package_name,
-        package_ensure => $package_ensure,
-        lib            => "${libphp_prefix}.so",
-        id             => 'php_module',
-        path           => $path,
     }
   }
 
