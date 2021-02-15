@@ -124,21 +124,10 @@ describe 'apache::mod::info', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'squeeze',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     # Load the more generic tests for this context
-    general_info_specs_apache22
+    general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with(ensure: 'file',
@@ -151,17 +140,7 @@ describe 'apache::mod::info', type: :class do
   end
 
   context 'on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     # Load the more generic tests for this context
     general_info_specs_apache22
@@ -173,17 +152,7 @@ describe 'apache::mod::info', type: :class do
   end
 
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '10',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 10'
 
     # Load the more generic tests for this context
     general_info_specs_apache24
@@ -195,17 +164,7 @@ describe 'apache::mod::info', type: :class do
   end
 
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     # Load the more generic tests for this context
     general_info_specs_apache24

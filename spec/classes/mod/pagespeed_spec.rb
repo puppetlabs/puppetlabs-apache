@@ -4,18 +4,7 @@ require 'spec_helper'
 
 describe 'apache::mod::pagespeed', type: :class do
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('pagespeed') }
@@ -39,17 +28,7 @@ describe 'apache::mod::pagespeed', type: :class do
   end
 
   context 'on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('pagespeed') }

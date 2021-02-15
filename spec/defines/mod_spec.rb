@@ -7,24 +7,14 @@ describe 'apache::mod', type: :define do
     'include apache'
   end
 
+  let :title do
+    'spec_m'
+  end
+
   context 'on a RedHat osfamily' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.d/spec_m.load',
@@ -38,9 +28,6 @@ describe 'apache::mod', type: :define do
     describe 'with file_mode set' do
       let :pre_condition do
         "class {'::apache': file_mode => '0640'}"
-      end
-      let :title do
-        'spec_m'
       end
 
       it 'manages the module load file' do
@@ -62,24 +49,9 @@ describe 'apache::mod', type: :define do
   end
 
   context 'on a Debian osfamily' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/apache2/mods-available/spec_m.load',
@@ -99,23 +71,9 @@ describe 'apache::mod', type: :define do
   end
 
   context 'on a FreeBSD osfamily' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '9',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 9'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/usr/local/etc/apache24/Modules/spec_m.load',
@@ -128,23 +86,9 @@ describe 'apache::mod', type: :define do
   end
 
   context 'on a Gentoo osfamily' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     describe 'for non-special modules' do
-      let :title do
-        'spec_m'
-      end
-
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
         is_expected.to contain_file('spec_m.load').with(path: '/etc/apache2/modules.d/spec_m.load',

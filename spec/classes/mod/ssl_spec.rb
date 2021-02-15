@@ -5,34 +5,14 @@ require 'spec_helper'
 describe 'apache::mod::ssl', type: :class do
   it_behaves_like 'a mod class, without including apache'
   context 'on an unsupported OS' do
-    let :facts do
-      {
-        osfamily: 'Magic',
-        operatingsystemrelease: '0',
-        operatingsystem: 'Magic',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Unsupported OS'
 
     it { is_expected.to compile.and_raise_error(%r{Unsupported osfamily:}) }
   end
 
   context 'on a RedHat' do
     context '6 OS' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
@@ -41,17 +21,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
     end
     context '8 OS' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '8',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
@@ -60,17 +30,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all}) }
     end
     context '6 OS with a custom package_name parameter' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
       let :params do
         { package_name: 'httpd24-mod_ssl' }
       end
@@ -83,17 +43,7 @@ describe 'apache::mod::ssl', type: :class do
     end
 
     context '7 OS with custom directories for PR#1635' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '7',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 7'
       let :pre_condition do
         "class { 'apache':
           confd_dir           => '/etc/httpd/conf.puppet.d',
@@ -110,18 +60,7 @@ describe 'apache::mod::ssl', type: :class do
   end
 
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
@@ -129,34 +68,14 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
   end
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '9',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 9'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
   end
 
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
@@ -164,17 +83,7 @@ describe 'apache::mod::ssl', type: :class do
   end
 
   context 'on a Suse OS' do
-    let :facts do
-      {
-        osfamily: 'Suse',
-        operatingsystem: 'SLES',
-        operatingsystemrelease: '12',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'SLES 12'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
@@ -182,17 +91,7 @@ describe 'apache::mod::ssl', type: :class do
   end
   # Template config doesn't vary by distro
   context 'on all distros' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystem: 'CentOS',
-        operatingsystemrelease: '6',
-        kernel: 'Linux',
-        id: 'root',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     context 'not setting ssl_pass_phrase_dialog' do
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLPassPhraseDialog builtin$}) }

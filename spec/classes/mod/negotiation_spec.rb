@@ -5,18 +5,7 @@ require 'spec_helper'
 describe 'apache::mod::negotiation', type: :class do
   it_behaves_like 'a mod class, without including apache'
   describe 'OS independent tests' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        kernel: 'Linux',
-        lsbdistcodename: 'jessie',
-        operatingsystemrelease: '8',
-        id: 'root',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     context 'default params' do
       it { is_expected.to contain_class('apache') }

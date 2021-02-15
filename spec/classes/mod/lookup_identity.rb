@@ -7,18 +7,7 @@ describe 'apache::mod::lookup_identity', type: :class do
 
   context 'default configuration with parameters' do
     context 'on a Debian OS' do
-      let :facts do
-        {
-          lsbdistcodename: 'jessie',
-          osfamily: 'Debian',
-          operatingsystemrelease: '8',
-          id: 'root',
-          kernel: 'Linux',
-          operatingsystem: 'Debian',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'Debian 8'
 
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('libapache2-mod-lookup-identity') }
@@ -26,17 +15,7 @@ describe 'apache::mod::lookup_identity', type: :class do
     end # Debian
 
     context 'on a RedHat OS' do
-      let :facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          id: 'root',
-          kernel: 'Linux',
-          operatingsystem: 'RedHat',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_lookup_identity') }

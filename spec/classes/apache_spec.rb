@@ -4,18 +4,7 @@ require 'spec_helper'
 
 describe 'apache', type: :class do
   context 'on a Debian OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        lsbdistcodename: 'squeeze',
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        operatingsystemrelease: '6',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -28,7 +17,7 @@ describe 'apache', type: :class do
     it { is_expected.to contain_group('www-data') }
     it { is_expected.to contain_class('apache::service') }
     it {
-      is_expected.to contain_file('/var/www').with(
+      is_expected.to contain_file('/var/www/html').with(
         'ensure' => 'directory',
       )
     }
@@ -57,7 +46,7 @@ describe 'apache', type: :class do
       ).that_notifies('Class[Apache::Service]')
     }
     # Assert that load files are placed and symlinked for these mods, but no conf file.
-    ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+    ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
           'path'   => "/etc/apache2/mods-available/#{modname}.load",
@@ -243,33 +232,17 @@ describe 'apache', type: :class do
       end
     end
 
-    context '8' do
-      let :facts do
-        super().merge(lsbdistcodename: 'jessie',
-                      operatingsystemrelease: '8.0.0')
+    describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
+      let :params do
+        { mpm_module: 'worker' }
       end
 
-      it {
-        is_expected.to contain_file('/var/www/html').with(
-          'ensure' => 'directory',
-        )
-      }
-      describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
-        let :params do
-          { mpm_module: 'worker' }
-        end
-
-        it { is_expected.to contain_exec('/usr/sbin/a2dismod event') }
-        it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
-      end
+      it { is_expected.to contain_exec('/usr/sbin/a2dismod event') }
+      it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
     end
 
-    context 'on Ubuntu 14.04' do
-      let :facts do
-        super().merge(operatingsystem: 'Ubuntu',
-                      lsbdistrelease: '14.04',
-                      operatingsystemrelease: '14.04')
-      end
+    context 'on Ubuntu 18.04' do
+      include_examples 'Ubuntu 18.04'
 
       it {
         is_expected.to contain_file('/var/www/html').with(
@@ -279,18 +252,8 @@ describe 'apache', type: :class do
     end
   end
 
-  context 'on a RedHat 5 OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '5',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+  context 'on a RedHat 8 OS' do
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -338,7 +301,7 @@ describe 'apache', type: :class do
       end
 
       # Assert that load files are placed for these mods, but no conf file.
-      ['auth_basic', 'authn_file', 'authz_default', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
+      ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
         it {
           is_expected.to contain_file("#{modname}.load").with_path(
             "/etc/httpd/mod.d/#{modname}.load",
@@ -365,7 +328,7 @@ describe 'apache', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/site\.d/\*"$} }
+      it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/site\.d/\*"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
@@ -667,46 +630,24 @@ describe 'apache', type: :class do
     end
 
     context 'on Fedora 21' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: '21',
-                      operatingsystemrelease: '21')
-      end
+      include_examples 'Fedora 21'
 
       it { is_expected.to contain_class('apache').with_apache_version('2.4') }
     end
     context 'on Fedora Rawhide' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: 'Rawhide',
-                      operatingsystemrelease: 'Rawhide')
-      end
+      include_examples 'Fedora Rawhide'
 
       it { is_expected.to contain_class('apache').with_apache_version('2.4') }
     end
     # kinda obsolete
     context 'on Fedora 17' do
-      let :facts do
-        super().merge(operatingsystem: 'Fedora',
-                      lsbdistrelease: '17',
-                      operatingsystemrelease: '17')
-      end
+      include_examples 'Fedora 17'
 
       it { is_expected.to contain_class('apache').with_apache_version('2.2') }
     end
   end
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'FreeBSD',
-        osfamily: 'FreeBSD',
-        operatingsystem: 'FreeBSD',
-        operatingsystemrelease: '10',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 10'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_class('apache::package').with('ensure' => 'present') }
@@ -764,17 +705,7 @@ describe 'apache', type: :class do
     end
   end
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_user('apache') }
@@ -805,17 +736,7 @@ describe 'apache', type: :class do
     }
   end
   context 'on all OSes' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     context 'with a custom apache_name parameter' do
       let :params do
@@ -900,11 +821,7 @@ describe 'apache', type: :class do
     end
   end
   context 'with unsupported osfamily' do
-    let :facts do
-      { osfamily: 'Darwin',
-        operatingsystemrelease: '13.1.0',
-        is_pe: false }
-    end
+    include_examples 'Darwin'
 
     it { is_expected.to compile.and_raise_error(%r{Unsupported osfamily}) }
   end

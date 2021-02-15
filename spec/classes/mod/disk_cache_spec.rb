@@ -4,18 +4,7 @@ require 'spec_helper'
 
 describe 'apache::mod::disk_cache', type: :class do
   context 'on a Debian OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        operatingsystem: 'Debian',
-        operatingsystemrelease: '8',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     let(:params) do
       {
@@ -61,17 +50,7 @@ describe 'apache::mod::disk_cache', type: :class do
   end
 
   context 'on a RedHat 6-based OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     let(:params) do
       {
@@ -111,17 +90,7 @@ describe 'apache::mod::disk_cache', type: :class do
     end
   end
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'FreeBSD',
-        osfamily: 'FreeBSD',
-        operatingsystem: 'FreeBSD',
-        operatingsystemrelease: '10',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 10'
 
     let(:params) do
       {
