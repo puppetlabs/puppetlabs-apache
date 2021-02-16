@@ -45,6 +45,10 @@ describe 'apache::mod::php class', if: mod_supported_on_platform?('apache::mod::
       describe file("#{apache_hash['mod_dir']}/php7.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
+    elsif os[:family] == 'sles' && os[:release].to_i >= 15
+      describe file("#{apache_hash['mod_dir']}/php7.conf") do
+        it { is_expected.to contain 'DirectoryIndex index.php' }
+      end
     else
       describe file("#{apache_hash['mod_dir']}/php5.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }

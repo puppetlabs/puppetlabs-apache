@@ -698,26 +698,27 @@ class apache::params inherits ::apache::version {
     $logroot_mode        = undef
     $lib_path            = '/usr/lib64/apache2' #changes for some modules based on mpm
     $mpm_module          = 'prefork'
-
     if versioncmp($::operatingsystemrelease, '15') < 0 {
       $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
       $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
+      $php_version         = '5'
     } else {
       $default_ssl_cert    = '/etc/apache2/ssl.crt/default-server.crt'
       $default_ssl_key     = '/etc/apache2/ssl.key/default-server.key'
+      $php_version         = '7'
     }
+    $suphp_configpath    = "/etc/php${php_version}/apache2"
     $ssl_sessioncache    = '/var/lib/apache2/ssl_scache(512000)'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
-    $suphp_configpath    = '/etc/php5/apache2'
-    $php_version         = '5'
     if versioncmp($::operatingsystemrelease, '11') < 0 or versioncmp($::operatingsystemrelease, '12') >= 0 {
-      $mod_packages      = {
+      $mod_packages = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
         'auth_gssapi' => 'apache2-mod_auth_gssapi',
         'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
+        'php7'        => 'apache2-mod_php7',
         'python'      => 'apache2-mod_python',
         'security'    => 'apache2-mod_security2',
         'worker'      => 'apache2-worker',
