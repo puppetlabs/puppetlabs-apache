@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.10.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.10.0) (2021-02-16)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.9.0...v5.10.0)
+
+### Added
+
+- \(IAC-1186\) Add $use\_port\_for\_filenames parameter [\#2122](https://github.com/puppetlabs/puppetlabs-apache/pull/2122) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(MODULES-10899\) Handle PHP8 MOD package naming convention changes [\#2121](https://github.com/puppetlabs/puppetlabs-apache/pull/2121) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
 ## [v5.9.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.9.0) (2021-01-25)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.8.0...v5.9.0)
@@ -114,6 +126,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - \(FM-8672\) - Addition of Support for CentOS 8 [\#1977](https://github.com/puppetlabs/puppetlabs-apache/pull/1977) ([david22swan](https://github.com/david22swan))
+- \(MODULES-9948\) Allow switching of thread modules [\#1961](https://github.com/puppetlabs/puppetlabs-apache/pull/1961) ([tuxmea](https://github.com/tuxmea))
 
 ### Fixed
 
@@ -129,7 +142,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- \(MODULES-9948\) Allow switching of thread modules [\#1961](https://github.com/puppetlabs/puppetlabs-apache/pull/1961) ([tuxmea](https://github.com/tuxmea))
 - Add parameter version for mod security [\#1953](https://github.com/puppetlabs/puppetlabs-apache/pull/1953) ([tuxmea](https://github.com/tuxmea))
 - add possibility to define variables inside VirtualHost definition [\#1947](https://github.com/puppetlabs/puppetlabs-apache/pull/1947) ([trefzer](https://github.com/trefzer))
 
