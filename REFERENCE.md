@@ -5332,8 +5332,6 @@ Installs `mod_php`.
 
 * **TODO** Add docs
 
-* **Note** Unsupported platforms: SLES: all
-
 #### Parameters
 
 The following parameters are available in the `apache::mod::php` class:
@@ -7552,6 +7550,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`access_log_env_var`](#access_log_env_var)
 * [`access_logs`](#access_logs)
 * [`use_servername_for_filenames`](#use_servername_for_filenames)
+* [`use_port_for_filenames`](#use_port_for_filenames)
 * [`aliases`](#aliases)
 * [`directories`](#directories)
 * [`error_log`](#error_log)
@@ -8247,6 +8246,14 @@ Data type: `Optional[Array]`
 Default value: ``undef``
 
 ##### <a name="use_servername_for_filenames"></a>`use_servername_for_filenames`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: ``false``
+
+##### <a name="use_port_for_filenames"></a>`use_port_for_filenames`
 
 Data type: `Optional[Boolean]`
 
@@ -9769,6 +9776,7 @@ The following parameters are available in the `apache::vhost::fragment` defined 
 * [`priority`](#priority)
 * [`content`](#content)
 * [`order`](#order)
+* [`port`](#port)
 
 ##### <a name="vhost"></a>`vhost`
 
@@ -9801,6 +9809,14 @@ Data type: `Integer[0]`
 The order to insert the fragment at
 
 Default value: `900`
+
+##### <a name="port"></a>`port`
+
+Data type: `Optional[Integer[0]]`
+
+
+
+Default value: ``undef``
 
 ## Resource types
 
