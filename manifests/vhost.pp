@@ -2380,6 +2380,12 @@ define apache::vhost (
     }
   }
 
+  if ($ssl) {
+    check_http { "https://${servername}": }
+  } else {
+    check_http { "http://${servername}": }
+  }
+
   concat { "${priority_real}${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}${filename}.conf",
