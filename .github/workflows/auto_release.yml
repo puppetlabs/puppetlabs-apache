@@ -46,7 +46,7 @@ jobs:
       if: ${{ github.repository_owner == 'puppetlabs' }}
       id: gv
       run: |
-        echo "::set-output name=ver::$(cat metadata.json | jq .version | tr -d \")"
+        echo "::set-output name=ver::$(jq --raw-output .version metadata.json)"
 
     - name: "Commit changes"
       if: ${{ github.repository_owner == 'puppetlabs' }}
