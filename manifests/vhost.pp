@@ -2078,10 +2078,10 @@ define apache::vhost (
   # We will retain the default behaviour for filenames but allow the use of a sanitized version of $servername to be
   # used, using the new $use_servername_for_filenames and $use_port_for_filenames parameters.
   #
-  # This will default to false until the next major release (v6.0.0), at which point, we will default this to true and
-  # warn about it's imminent deprecation in the subsequent major release (v7.0.0)
+  # This will default to false until the next major release (v7.0.0), at which point, we will default this to true and
+  # warn about it's imminent deprecation in the subsequent major release (v8.0.0)
   #
-  # In v7.0.0, we will deprecate the $use_servername_for_filenames and $use_port_for_filenames parameters altogether
+  # In v8.0.0, we will deprecate the $use_servername_for_filenames and $use_port_for_filenames parameters altogether
   # and use the sanitized value of $servername for default log / config filenames.
   $filename = $use_servername_for_filenames ? {
     true => $use_port_for_filenames ? {
@@ -2098,7 +2098,7 @@ define apache::vhost (
     When $use_servername_for_filenames = true, the $servername parameter, sanitized, is used to construct log and config
     file names.
 
-    From version v6.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v7.0.0 of the
+    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
     module, the $use_servername_for_filenames will be removed and log/config file names will be dervied from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_servername_for_filenames_warn_msg)
@@ -2109,7 +2109,7 @@ define apache::vhost (
     When $use_port_for_filenames = true, the $servername and $port parameters, sanitized, are used to construct log and
     config file names.
 
-    From version v6.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v7.0.0 of the
+    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
     module, the $use_port_for_filenames will be removed and log/config file names will be dervied from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_port_for_filenames_warn_msg)
