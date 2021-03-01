@@ -24,7 +24,7 @@ describe 'apache::mod::dav_svn', type: :class do
         it { is_expected.to contain_apache__mod('dav_svn') }
         it { is_expected.to contain_package('libapache2-svn') }
         it { is_expected.to contain_apache__mod('authz_svn') }
-        it { is_expected.to contain_file('authz_svn.load').with_content(%r{LoadModule authz_svn_module}) }
+        it { is_expected.to contain_file('dav_svn_authz_svn.load').with_content(%r{LoadModule authz_svn_module}) }
       end
     end
     context 'on a RedHat OS' do
