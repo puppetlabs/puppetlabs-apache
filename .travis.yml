@@ -39,17 +39,6 @@ jobs:
       services: docker
       stage: acceptance
     - before_script:
-      - "bundle exec rake 'litmus:provision_list[travis_ub_5]'"
-      - "bundle exec rake 'litmus:install_agent[puppet5]'"
-      - "bundle exec rake litmus:install_module"
-      env:
-        PLATFORMS: travis_ub_5_puppet5
-        BUNDLE_WITH: system_tests
-      rvm: 2.5.7
-      script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
-      services: docker
-      stage: acceptance
-    - before_script:
       - "bundle exec rake 'litmus:provision_list[travis_deb]'"
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
