@@ -551,7 +551,7 @@ class apache (
     default => '(event|itk|prefork|worker)'
   }
 
-  if $::osfamily == 'RedHat' and $apache::version::distrelease == '7' {
+  if $::osfamily == 'RedHat' and $facts['operatingsystemmajrelease'] == '7' {
     # On redhat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
     # when all other module configs live in /etc/httpd/conf.modules.d (the
     # mod_dir). On all other platforms and versions, ssl.conf lives in the

@@ -65,6 +65,7 @@ shared_context 'Fedora 17' do
       osfamily: 'RedHat',
       operatingsystem: 'Fedora',
       operatingsystemrelease: '17',
+      operatingsystemmajrelease: '17',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end
@@ -78,6 +79,7 @@ shared_context 'Fedora 21' do
       osfamily: 'RedHat',
       operatingsystem: 'Fedora',
       operatingsystemrelease: '21',
+      operatingsystemmajrelease: '21',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end
@@ -91,6 +93,7 @@ shared_context 'Fedora 28' do
       osfamily: 'RedHat',
       operatingsystem: 'Fedora',
       operatingsystemrelease: '28',
+      operatingsystemmajrelease: '28',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end
@@ -104,6 +107,7 @@ shared_context 'Fedora Rawhide' do
       osfamily: 'RedHat',
       operatingsystem: 'Fedora',
       operatingsystemrelease: 'Rawhide',
+      operatingsystemmajrelease: 'Rawhide',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   end
@@ -142,7 +146,8 @@ shared_context 'Gentoo' do
       kernel: 'Linux',
       osfamily: 'Gentoo',
       operatingsystem: 'Gentoo',
-      operatingsystemrelease: '3.16.1-gentoo',
+      operatingsystemrelease: '2.7',
+      operatingsystemmajrelease: '2.7',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
     }
   end
