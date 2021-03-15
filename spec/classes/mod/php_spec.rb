@@ -62,19 +62,20 @@ describe 'apache::mod::php', type: :class do
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.3.so\n",
                 )
               }
-            end
-            context 'on buster with experimental php8.0' do
-              let :params do
-                { php_version: '8.0' }
-              end
 
-              it { is_expected.to contain_apache__mod('php') }
-              it { is_expected.to contain_package('libapache2-mod-php8.0') }
-              it {
-                is_expected.to contain_file('php.load').with(
-                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
-                )
-              }
+              context 'with experimental php8.0' do
+                let :params do
+                  { php_version: '8.0' }
+                end
+
+                it { is_expected.to contain_apache__mod('php') }
+                it { is_expected.to contain_package('libapache2-mod-php8.0') }
+                it {
+                  is_expected.to contain_file('php.load').with(
+                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
+                  )
+                }
+              end
             end
           when '11'
             context 'on bullseye' do
@@ -85,19 +86,20 @@ describe 'apache::mod::php', type: :class do
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.4.so\n",
                 )
               }
-            end
-            context 'on bullseye with experimental php8.0' do
-              let :params do
-                { php_version: '8.0' }
-              end
 
-              it { is_expected.to contain_apache__mod('php') }
-              it { is_expected.to contain_package('libapache2-mod-php8.0') }
-              it {
-                is_expected.to contain_file('php.load').with(
-                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
-                )
-              }
+              context 'with experimental php8.0' do
+                let :params do
+                  { php_version: '8.0' }
+                end
+
+                it { is_expected.to contain_apache__mod('php') }
+                it { is_expected.to contain_package('libapache2-mod-php8.0') }
+                it {
+                  is_expected.to contain_file('php.load').with(
+                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
+                  )
+                }
+              end
             end
           when '16.04'
             context 'on xenial' do
