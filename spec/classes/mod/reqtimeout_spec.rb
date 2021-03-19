@@ -1,20 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::reqtimeout', type: :class do
   it_behaves_like 'a mod class, without including apache'
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        lsbdistcodename: 'jessie',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
@@ -41,17 +32,7 @@ describe 'apache::mod::reqtimeout', type: :class do
     end
   end
   context 'on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'Redhat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
@@ -78,17 +59,7 @@ describe 'apache::mod::reqtimeout', type: :class do
     end
   end
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '9',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 9'
 
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }
@@ -115,17 +86,7 @@ describe 'apache::mod::reqtimeout', type: :class do
     end
   end
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }

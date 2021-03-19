@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet/provider/a2mod'
 
 Puppet::Type.type(:a2mod).provide(:a2mod, parent: Puppet::Provider::A2mod) do

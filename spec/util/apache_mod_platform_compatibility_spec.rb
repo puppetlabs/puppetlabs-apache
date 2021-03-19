@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rspec'
 require 'rspec-puppet-facts'
 require_relative '../../util/apache_mod_platform_support'
@@ -103,7 +105,7 @@ describe ApacheModPlatformCompatibility do
       context 'after parsing the metadata.json' do
         expected_compatible_platform_versions.each do |os, vers|
           vers.each do |ver|
-            it "should state #{os} version #{ver} IS a compatible platform" do
+            it "states #{os} version #{ver} IS a compatible platform" do
               ampc.register_running_platform(family: os, version: ver)
               expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(true)
             end

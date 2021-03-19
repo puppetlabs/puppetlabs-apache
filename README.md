@@ -908,10 +908,6 @@ See [here](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linu
 
 You must set the contexts using `semanage fcontext` instead of `chcon` because Puppet's `file` resources reset the values' context in the database if the resource doesn't specify it.
 
-### Ubuntu 10.04
-
-The [`apache::vhost::WSGIImportScript`][] parameter creates a statement inside the virtual host that is unsupported on older versions of Apache, causing it to fail. This will be remedied in a future refactoring.
-
 ### Ubuntu 16.04
 The [`apache::mod::suphp`][] class is untested since repositories are missing compatible packages.
 

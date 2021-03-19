@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.0.0) (2021-03-02)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.10.0...v6.0.0)
+
+### Changed
+
+- pdksync - \(MAINT\) Remove SLES 11 support [\#2132](https://github.com/puppetlabs/puppetlabs-apache/pull/2132) ([sanfrancrisko](https://github.com/sanfrancrisko))
+- pdksync - Remove Puppet 5 from testing and bump minimal version to 6.0.0 [\#2125](https://github.com/puppetlabs/puppetlabs-apache/pull/2125) ([carabasdaniel](https://github.com/carabasdaniel))
+
+## [v5.10.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.10.0) (2021-02-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.9.0...v5.10.0)
+
+### Added
+
+- \(IAC-1186\) Add $use\_port\_for\_filenames parameter [\#2122](https://github.com/puppetlabs/puppetlabs-apache/pull/2122) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(MODULES-10899\) Handle PHP8 MOD package naming convention changes [\#2121](https://github.com/puppetlabs/puppetlabs-apache/pull/2121) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+## [v5.9.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.9.0) (2021-01-25)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.8.0...v5.9.0)
+
+### Added
+
+- Add ssl\_user\_name vhost parameter [\#2093](https://github.com/puppetlabs/puppetlabs-apache/pull/2093) ([bodgit](https://github.com/bodgit))
+- Add support for mod\_md [\#2090](https://github.com/puppetlabs/puppetlabs-apache/pull/2090) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(FIX\) Correct PHP packages on Ubuntu 16.04 [\#2111](https://github.com/puppetlabs/puppetlabs-apache/pull/2111) ([ekohl](https://github.com/ekohl))
+
 ## [v5.8.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.8.0) (2020-12-07)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.7.0...v5.8.0)
@@ -42,8 +76,8 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- Configure default shared lib path for mod\_wsgi on RHEL8 [\#2063](https://github.com/puppetlabs/puppetlabs-apache/pull/2063) ([nbarrientos](https://github.com/nbarrientos))
 - Various enhancements to apache::mod::passenger [\#2058](https://github.com/puppetlabs/puppetlabs-apache/pull/2058) ([smortex](https://github.com/smortex))
+- Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
 
 ### Fixed
 
@@ -57,7 +91,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
+- Configure default shared lib path for mod\_wsgi on RHEL8 [\#2063](https://github.com/puppetlabs/puppetlabs-apache/pull/2063) ([nbarrientos](https://github.com/nbarrientos))
 - \(IAC-746\) - Add ubuntu 20.04 support [\#2032](https://github.com/puppetlabs/puppetlabs-apache/pull/2032) ([david22swan](https://github.com/david22swan))
 - Replace legacy `bool2httpd\(\)` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
 - Tidy up `pw\_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
@@ -119,6 +153,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - Add parameter version for mod security [\#1953](https://github.com/puppetlabs/puppetlabs-apache/pull/1953) ([tuxmea](https://github.com/tuxmea))
 - add possibility to define variables inside VirtualHost definition [\#1947](https://github.com/puppetlabs/puppetlabs-apache/pull/1947) ([trefzer](https://github.com/trefzer))
+- Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
 
 ### Fixed
 
@@ -139,7 +174,6 @@ All notable changes to this project will be documented in this file. The format 
 - \(FM-8214\) converted to use litmus [\#1938](https://github.com/puppetlabs/puppetlabs-apache/pull/1938) ([tphoney](https://github.com/tphoney))
 - \(MODULES-9668 \) Please make ProxyRequests setting in vhost.pp configurable [\#1935](https://github.com/puppetlabs/puppetlabs-apache/pull/1935) ([aukesj](https://github.com/aukesj))
 - Added unmanaged\_path and custom\_fragment options to userdir [\#1931](https://github.com/puppetlabs/puppetlabs-apache/pull/1931) ([GeorgeCox](https://github.com/GeorgeCox))
-- Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
 - Add LDAPReferrals configuration parameter [\#1928](https://github.com/puppetlabs/puppetlabs-apache/pull/1928) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
 
 ### Fixed
@@ -181,6 +215,7 @@ All notable changes to this project will be documented in this file. The format 
 - Add support for mod\_http2 [\#1867](https://github.com/puppetlabs/puppetlabs-apache/pull/1867) ([smortex](https://github.com/smortex))
 - Added code to paramertize the libphp prefix [\#1852](https://github.com/puppetlabs/puppetlabs-apache/pull/1852) ([grahamuk2018](https://github.com/grahamuk2018))
 - Added WSGI Options WSGIApplicationGroup and WSGIPythonOptimize [\#1847](https://github.com/puppetlabs/puppetlabs-apache/pull/1847) ([emetriqLikedeeler](https://github.com/emetriqLikedeeler))
+- Add option to add comments to the header of a vhost file [\#1841](https://github.com/puppetlabs/puppetlabs-apache/pull/1841) ([jovandeginste](https://github.com/jovandeginste))
 
 ### Fixed
 
@@ -214,7 +249,6 @@ All notable changes to this project will be documented in this file. The format 
 - \(MODULES-5990\) Addition of 'IncludeOptional conf-enabled/\*.conf' to apache2.conf' on Debian Family OS [\#1851](https://github.com/puppetlabs/puppetlabs-apache/pull/1851) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8107\) - Support added for Ubuntu 18.04. [\#1850](https://github.com/puppetlabs/puppetlabs-apache/pull/1850) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8108\) - Support added for Debian 9 [\#1849](https://github.com/puppetlabs/puppetlabs-apache/pull/1849) ([david22swan](https://github.com/david22swan))
-- Add option to add comments to the header of a vhost file [\#1841](https://github.com/puppetlabs/puppetlabs-apache/pull/1841) ([jovandeginste](https://github.com/jovandeginste))
 
 ### Fixed
 
@@ -1347,4 +1381,4 @@ worker/prefork
 [0.0.4]:https://github.com/puppetlabs/puppetlabs-apache/commits/0.0.4
 
 
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

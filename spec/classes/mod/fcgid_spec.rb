@@ -1,22 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::fcgid', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        operatingsystemmajrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -26,18 +16,7 @@ describe 'apache::mod::fcgid', type: :class do
   end
 
   context 'on a RHEL6' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystemmajrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     describe 'without parameters' do
       it { is_expected.to contain_class('apache::params') }
@@ -75,18 +54,7 @@ describe 'apache::mod::fcgid', type: :class do
   end
 
   context 'on RHEL7' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '7',
-        operatingsystemmajrelease: '7',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 7'
 
     describe 'without parameters' do
       it { is_expected.to contain_class('apache::params') }
@@ -98,18 +66,7 @@ describe 'apache::mod::fcgid', type: :class do
   end
 
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '10',
-        operatingsystemmajrelease: '10',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 10'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -119,17 +76,7 @@ describe 'apache::mod::fcgid', type: :class do
   end
 
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
     it {

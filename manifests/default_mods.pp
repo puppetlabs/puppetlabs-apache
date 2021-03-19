@@ -17,7 +17,7 @@ class apache::default_mods (
       if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
         # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
-        if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemrelease, '7.0') == -1) and !($::operatingsystem == 'Amazon') ) {
+        if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemmajrelease, '7') == -1) and !($::operatingsystem == 'Amazon') ) {
           if ($use_systemd) {
             ::apache::mod { 'systemd': }
           }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @summary DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
 Puppet::Functions.create_function(:bool2httpd) do
   dispatch :deprecation_gen do

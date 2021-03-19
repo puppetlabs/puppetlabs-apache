@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::peruser', type: :class do
@@ -6,36 +8,12 @@ describe 'apache::mod::peruser', type: :class do
   end
 
   context 'on a FreeBSD OS' do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '10',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 10'
 
-    it do
-      expect {
-        catalogue
-      }.to raise_error(Puppet::Error, %r{Unsupported osfamily FreeBSD})
-    end
+    it { is_expected.to compile.and_raise_error(%r{Unsupported osfamily FreeBSD}) }
   end
   context 'on a Gentoo OS' do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('peruser') }

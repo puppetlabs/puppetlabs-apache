@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Puppet::Type.newtype(:a2mod) do
   @doc = 'Manage Apache 2 modules'
 

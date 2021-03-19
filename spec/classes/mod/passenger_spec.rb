@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::passenger', type: :class do
@@ -221,9 +223,6 @@ describe 'apache::mod::passenger', type: :class do
           end
 
           describe 'warns when an option is deprecated' do
-            puts facts[:os]['family']
-            puts facts[:os]['release']
-
             let :params do
               {
                 passenger_installed_version: '5.0.0',

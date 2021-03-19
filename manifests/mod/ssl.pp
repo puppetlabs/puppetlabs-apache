@@ -61,7 +61,6 @@
 #   - RedHat/FreeBSD/Suse/Gentoo: 'default'.
 #   - Debian/Ubuntu + Apache >= 2.4: 'default'.
 #   - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
-#   - Ubuntu 10.04: 'file:/var/run/apache2/ssl_mutex'.
 #
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.
@@ -111,8 +110,6 @@ class apache::mod::ssl (
       'debian': {
         if versioncmp($_apache_version, '2.4') >= 0 {
           $_ssl_mutex = 'default'
-        } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
-          $_ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
         } else {
           $_ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
         }

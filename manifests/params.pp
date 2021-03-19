@@ -61,7 +61,7 @@ class apache::params inherits ::apache::version {
     $server_root          = "${httpd_root}/etc/httpd"
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
-    $mod_dir              = $apache::version::distrelease ? {
+    $mod_dir              = $facts['operatingsystemmajrelease'] ? {
       '7'     => "${httpd_dir}/conf.modules.d",
       default => "${httpd_dir}/conf.d",
     }
@@ -107,11 +107,11 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = "${httpd_root}/var/www/html"
-    $alias_icons_path     = $apache::version::distrelease ? {
+    $alias_icons_path     = $facts['operatingsystemmajrelease'] ? {
       '7'     => "${httpd_root}/usr/share/httpd/icons",
       default => '/var/www/icons',
     }
-    $error_documents_path = $apache::version::distrelease ? {
+    $error_documents_path = $facts['operatingsystemmajrelease'] ? {
       '7'     => "${httpd_root}/usr/share/httpd/error",
       default => '/var/www/error'
     }
@@ -172,7 +172,7 @@ class apache::params inherits ::apache::version {
       # Amazon Linux 2 uses the /conf.modules.d/ dir
       $mod_dir            = "${httpd_dir}/conf.modules.d"
     } else {
-      $mod_dir              = $apache::version::distrelease ? {
+      $mod_dir              = $facts['operatingsystemmajrelease'] ? {
         '7'     => "${httpd_dir}/conf.modules.d",
         '8'     => "${httpd_dir}/conf.modules.d",
         default => "${httpd_dir}/conf.d",
@@ -200,7 +200,7 @@ class apache::params inherits ::apache::version {
     $suphp_addhandler     = 'php5-script'
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
-    $php_version = $apache::version::distrelease ? {
+    $php_version = $facts['operatingsystemmajrelease'] ? {
       '8'     => '7', # RedHat8
       default => '5', # RedHat5, RedHat6, RedHat7
     }
@@ -211,13 +211,13 @@ class apache::params inherits ::apache::version {
       'auth_gssapi'           => 'mod_auth_gssapi',
       'auth_mellon'           => 'mod_auth_mellon',
       'auth_openidc'          => 'mod_auth_openidc',
-      'authnz_ldap'           => $apache::version::distrelease ? {
+      'authnz_ldap'           => $facts['operatingsystemmajrelease'] ? {
         '7'     => 'mod_ldap',
         '8'     => 'mod_ldap',
         default => 'mod_authz_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
-      'fastcgi'               => $apache::version::distrelease ? {
+      'fastcgi'               => $facts['operatingsystemmajrelease'] ? {
         '5'     => 'mod_fastcgi',
         '6'     => 'mod_fastcgi',
         default => undef,
@@ -225,7 +225,7 @@ class apache::params inherits ::apache::version {
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
-      'ldap'                  => $apache::version::distrelease ? {
+      'ldap'                  => $facts['operatingsystemmajrelease'] ? {
         '5'     => undef,
         '6'     => undef,
         default => 'mod_ldap',
@@ -239,7 +239,7 @@ class apache::params inherits ::apache::version {
       # https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
       'passenger'             => 'mod_passenger',
       'perl'                  => 'mod_perl',
-      'php5'                  => $apache::version::distrelease ? {
+      'php5'                  => $facts['operatingsystemmajrelease'] ? {
         '5'     => 'php53',
         default => 'php',
       },
@@ -252,7 +252,7 @@ class apache::params inherits ::apache::version {
       # See http://wiki.aaf.edu.au/tech-info/sp-install-guide
       'shibboleth'            => 'shibboleth',
       'ssl'                   => 'mod_ssl',
-      'wsgi'                  => $apache::version::distrelease ? {
+      'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
         '8'     => 'python3-mod_wsgi', # RedHat8
         default => 'mod_wsgi',         # RedHat5, RedHat6, RedHat7
       },
@@ -264,7 +264,7 @@ class apache::params inherits ::apache::version {
     }
     $mod_libs             = {
       'nss' => 'libmodnss.so',
-      'wsgi'                  => $apache::version::distrelease ? {
+      'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
         '8'     => 'mod_wsgi_python3.so',
         default => 'mod_wsgi.so',
       },
@@ -278,12 +278,12 @@ class apache::params inherits ::apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
-    $alias_icons_path     = $apache::version::distrelease ? {
+    $alias_icons_path     = $facts['operatingsystemmajrelease'] ? {
       '7'     => '/usr/share/httpd/icons',
       '8'     => '/usr/share/httpd/icons',
       default => '/var/www/icons',
     }
-    $error_documents_path = $apache::version::distrelease ? {
+    $error_documents_path = $facts['operatingsystemmajrelease'] ? {
       '7'     => '/usr/share/httpd/error',
       '8'     => '/usr/share/httpd/error',
       default => '/var/www/error'
@@ -389,9 +389,10 @@ class apache::params inherits ::apache::version {
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
-    } elsif ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+    } else {
       $php_version = $facts['operatingsystemmajrelease'] ? {
         '9'     => '7.0', # Debian Stretch
+        '16.04' => '7.0', # Ubuntu Xenial
         '10'    => '7.3', # Debian Buster
         '20.04' => '7.4', # Ubuntu Foccal Fossal
         default => '7.2', # Ubuntu Bionic, Cosmic and Disco
@@ -420,36 +421,6 @@ class apache::params inherits ::apache::version {
         'rpaf'                  => 'libapache2-mod-rpaf',
         'security'              => 'libapache2-mod-security2',
         'shib2'                 => 'libapache2-mod-shib2',
-        'wsgi'                  => 'libapache2-mod-wsgi',
-        'xsendfile'             => 'libapache2-mod-xsendfile',
-      }
-    } else {
-      # Ubuntu Xenial
-      $php_version = '7.0'
-      $mod_packages = {
-        'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
-        'auth_openidc'          => 'libapache2-mod-auth-openidc',
-        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
-        'auth_mellon'           => 'libapache2-mod-auth-mellon',
-        'authnz_pam'            => 'libapache2-mod-authnz-pam',
-        'dav_svn'               => 'libapache2-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
-        'fcgid'                 => 'libapache2-mod-fcgid',
-        'geoip'                 => 'libapache2-mod-geoip',
-        'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
-        'jk'                    => 'libapache2-mod-jk',
-        'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
-        'pagespeed'             => 'mod-pagespeed-stable',
-        'passenger'             => 'libapache2-mod-passenger',
-        'perl'                  => 'libapache2-mod-perl2',
-        'phpXXX'                => 'libapache2-mod-phpXXX',
-        'python'                => 'libapache2-mod-python',
-        'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-modsecurity',
-        'shib2'                 => 'libapache2-mod-shib2',
-        'suphp'                 => 'libapache2-mod-suphp',
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
@@ -727,26 +698,27 @@ class apache::params inherits ::apache::version {
     $logroot_mode        = undef
     $lib_path            = '/usr/lib64/apache2' #changes for some modules based on mpm
     $mpm_module          = 'prefork'
-
     if versioncmp($::operatingsystemrelease, '15') < 0 {
       $default_ssl_cert    = '/etc/apache2/ssl.crt/server.crt'
       $default_ssl_key     = '/etc/apache2/ssl.key/server.key'
+      $php_version         = '5'
     } else {
       $default_ssl_cert    = '/etc/apache2/ssl.crt/default-server.crt'
       $default_ssl_key     = '/etc/apache2/ssl.key/default-server.key'
+      $php_version         = '7'
     }
+    $suphp_configpath    = "/etc/php${php_version}/apache2"
     $ssl_sessioncache    = '/var/lib/apache2/ssl_scache(512000)'
     $suphp_addhandler    = 'x-httpd-php'
     $suphp_engine        = 'off'
-    $suphp_configpath    = '/etc/php5/apache2'
-    $php_version         = '5'
     if versioncmp($::operatingsystemrelease, '11') < 0 or versioncmp($::operatingsystemrelease, '12') >= 0 {
-      $mod_packages      = {
+      $mod_packages = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
         'auth_gssapi' => 'apache2-mod_auth_gssapi',
         'dav_svn'     => 'subversion-server',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
+        'php7'        => 'apache2-mod_php7',
         'python'      => 'apache2-mod_python',
         'security'    => 'apache2-mod_security2',
         'worker'      => 'apache2-worker',
@@ -809,7 +781,7 @@ class apache::params inherits ::apache::version {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }
 
-  if ($::operatingsystem == 'Ubuntu' and $::lsbdistrelease == '10.04') or ($::operatingsystem == 'SLES') {
+  if $::operatingsystem == 'SLES' {
     $verify_command = '/usr/sbin/apache2ctl -t'
   } elsif $::operatingsystem == 'FreeBSD' {
     $verify_command = '/usr/local/sbin/apachectl -t'
@@ -819,7 +791,7 @@ class apache::params inherits ::apache::version {
     $verify_command = '/usr/sbin/apachectl -t'
   }
 
-  if $::osfamily == 'RedHat' and versioncmp($::operatingsystemrelease, '8.0') >= 0 {
+  if $::osfamily == 'RedHat' and versioncmp($facts['operatingsystemmajrelease'], '8') >= 0 {
     $ssl_protocol = ['all'] # Implementations of the SSLv2 and SSLv3 protocol versions have been removed from OpenSSL (and hence mod_ssl) because these are no longer considered secure. For additional documentation https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deploying_different_types_of_servers/setting-apache-web-server_deploying-different-types-of-servers
   } else {
     $ssl_protocol = ['all', '-SSLv2', '-SSLv3']

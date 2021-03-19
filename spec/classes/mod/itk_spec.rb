@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::itk', type: :class do
@@ -6,18 +8,7 @@ describe 'apache::mod::itk', type: :class do
   end
 
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }
@@ -79,17 +70,7 @@ describe 'apache::mod::itk', type: :class do
   end
 
   context 'on a RedHat OS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }
@@ -154,18 +135,8 @@ describe 'apache::mod::itk', type: :class do
       'class { "apache": mpm_module => false, }'
     end
 
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '10',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-        mpm_module: 'itk',
-      }
-    end
+    include_examples 'FreeBSD 10'
+    # TODO: fact mpm_module itk?
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }

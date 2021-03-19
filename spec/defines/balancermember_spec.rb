@@ -1,21 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::balancermember', type: :define do
   let :pre_condition do
     'include apache'
   end
-  let :facts do
-    {
-      osfamily: 'Debian',
-      operatingsystem: 'Debian',
-      operatingsystemrelease: '8',
-      lsbdistcodename: 'jessie',
-      id: 'root',
-      path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      kernel: 'Linux',
-      is_pe: false,
-    }
-  end
+
+  include_examples 'Debian 8'
 
   describe 'allows multiple balancermembers with the same url' do
     let :pre_condition do

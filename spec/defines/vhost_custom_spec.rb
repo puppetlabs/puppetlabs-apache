@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::vhost::custom', type: :define do
   let :title do
     'rspec.example.com'
   end
-  let :default_params do
+  let(:params) do
     {
       content: 'foobar',
     }
@@ -12,35 +14,12 @@ describe 'apache::vhost::custom', type: :define do
 
   describe 'os-dependent items' do
     context 'on RedHat based systems' do
-      let :default_facts do
-        {
-          osfamily: 'RedHat',
-          operatingsystemrelease: '6',
-          operatingsystem: 'RedHat',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let(:params) { default_params }
-      let(:facts) { default_facts }
+      include_examples 'RedHat 6'
+
+      it { is_expected.to compile }
     end
     context 'on Debian based systems' do
-      let :default_facts do
-        {
-          osfamily: 'Debian',
-          operatingsystemrelease: '8',
-          lsbdistcodename: 'jessie',
-          operatingsystem: 'Debian',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let(:params) { default_params }
-      let(:facts) { default_facts }
+      include_examples 'Debian 8'
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(
@@ -58,19 +37,7 @@ describe 'apache::vhost::custom', type: :define do
       }
     end
     context 'on FreeBSD systems' do
-      let :default_facts do
-        {
-          osfamily: 'FreeBSD',
-          operatingsystemrelease: '9',
-          operatingsystem: 'FreeBSD',
-          id: 'root',
-          kernel: 'FreeBSD',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
-      let(:params) { default_params }
-      let(:facts) { default_facts }
+      include_examples 'FreeBSD 9'
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(
@@ -81,19 +48,7 @@ describe 'apache::vhost::custom', type: :define do
       }
     end
     context 'on Gentoo systems' do
-      let :default_facts do
-        {
-          osfamily: 'Gentoo',
-          operatingsystem: 'Gentoo',
-          operatingsystemrelease: '3.16.1-gentoo',
-          id: 'root',
-          kernel: 'Linux',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-          is_pe: false,
-        }
-      end
-      let(:params) { default_params }
-      let(:facts) { default_facts }
+      include_examples 'Gentoo'
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 # Helper class to facilitate exclusion of tests that use an Apache MOD on platforms it isn't supported on.
 # All Apache MOD classes are defined under 'manifests/mod'. The exclusion should be in the format:
@@ -67,7 +69,7 @@ class ApacheModPlatformCompatibility
   end
 
   def valid_os?(os)
-    @compatible_platform_versions.keys.include? os
+    @compatible_platform_versions.key?(os)
   end
 
   def register_error(manifest, line_num, error_type, error_detail)
@@ -75,7 +77,7 @@ class ApacheModPlatformCompatibility
   end
 
   def register_unsupported_platforms(manifest, line_num, mod, platforms_versions)
-    platforms_versions.keys.each do |os|
+    platforms_versions.each_key do |os|
       unless valid_os?(os)
         register_error(manifest, line_num, :os_parse, os)
         next
@@ -92,7 +94,7 @@ class ApacheModPlatformCompatibility
     platforms_versions = {}
     os_ver_groups = line.delete(' ').downcase
     # E.g. "debian:5,6;centos:5;sles:11sp1,12;scientific:all;ubuntu:14.04,16.04"
-    if %r{^((?:\w+:(?:(?:\d+(?:\.\d+|sp\d+)?|all),?)+;?)+)$}i =~ os_ver_groups
+    if %r{^((?:\w+:(?:(?:\d+(?:\.\d+|sp\d+)?|all),?)+;?)+)$}i.match?(os_ver_groups)
       os_ver_groups.split(';').each do |os_vers|
         os, vers = os_vers.split(':')
         vers.gsub!(%r{sp\d+}, '') # Remove SP ver as we cannot determine this level of granularity from values from Litmus
@@ -104,7 +106,7 @@ class ApacheModPlatformCompatibility
 
   def process_line(line)
     data = {}
-    return data unless line =~ %r{@note\sUnsupported\splatforms?:\s?|class\sapache::mod}i
+    return data unless %r{@note\sUnsupported\splatforms?:\s?|class\sapache::mod}i.match?(line)
     if (match = %r{@note\sUnsupported\splatforms?:\s?(?<os_vers>.*)$}i.match(line))
       data[:type] = :unsupported_platform_declaration
       data[:value] = match[:os_vers]

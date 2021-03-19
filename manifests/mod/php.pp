@@ -3,7 +3,6 @@
 # 
 # @todo
 #   Add docs
-# @note Unsupported platforms: SLES: all
 class apache::mod::php (
   $package_name     = undef,
   $package_ensure   = 'present',
@@ -17,7 +16,11 @@ class apache::mod::php (
   $libphp_prefix    = 'libphp'
 ) inherits apache::params {
   include apache
-  $mod = "php${php_version}"
+  if (versioncmp($php_version, '8') < 0) {
+    $mod = "php${php_version}"
+  } else {
+    $mod = 'php'
+  }
 
   if $apache::version::scl_httpd_version == undef and $apache::version::scl_php_version != undef {
     fail('If you define apache::version::scl_php_version, you also need to specify apache::version::scl_httpd_version')
@@ -66,13 +69,18 @@ class apache::mod::php (
     # Controls php version and libphp prefix
     $_lib = "${libphp_prefix}${php_version}.so"
   }
+  $_module_id = $_php_major ? {
+    '5'     => 'php5_module',
+    '7'     => 'php7_module',
+    default => 'php_module',
+  }
 
   if $::operatingsystem == 'SLES' {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
       lib            => "mod_${mod}.so",
-      id             => "php${_php_major}_module",
+      id             => $_module_id,
       path           => "${apache::lib_path}/mod_${mod}.so",
     }
   } else {
@@ -80,7 +88,7 @@ class apache::mod::php (
       package        => $_package_name,
       package_ensure => $package_ensure,
       lib            => $_lib,
-      id             => "php${_php_major}_module",
+      id             => $_module_id,
       path           => $path,
     }
   }

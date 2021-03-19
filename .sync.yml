@@ -2,10 +2,9 @@
 ".gitlab-ci.yml":
   delete: true
 ".rubocop.yml":
-  default_configs:
-    inherit_from: ".rubocop_todo.yml"
+  include_todos: true
 ".travis.yml":
-  global_env: 
+  global_env:
     - HONEYCOMB_WRITEKEY="7f3c63a70eecc61d635917de46bea4e6",HONEYCOMB_DATASET="litmus tests"
   deploy_to_forge:
     enabled: false
@@ -25,11 +24,6 @@
         - puppet6
         provision_list:
         - travis_ub_6
-    - collection:
-        puppet_collection:
-        - puppet5
-        provision_list:
-        - travis_ub_5
   simplecov: true
   notifications:
     slack:
@@ -40,12 +34,6 @@ Gemfile:
   optional:
     ":development":
     - gem: github_changelog_generator
-      git: https://github.com/skywinder/github-changelog-generator
-      ref: 20ee04ba1234e9e83eb2ffb5056e23d641c7a018
-      condition: Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')
-Rakefile:
-  requires:
-  - puppet-lint/tasks/puppet-lint
 spec/spec_helper.rb:
   mock_with: ":rspec"
   coverage_report: true
@@ -57,3 +45,8 @@ spec/spec_helper.rb:
   unmanaged: false
 .github/workflows/pr_test.yml:
   unmanaged: false
+.github/workflows/auto_release.yml:
+  unmanaged: false
+Rakefile:
+  extras:
+    "FastGettext.default_text_domain = 'default-text-domain'"

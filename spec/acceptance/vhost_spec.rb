@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache::vhost define' do
@@ -23,11 +25,11 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-80.conf") do
       it { is_expected.not_to be_file }
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-ssl-443.conf") do
       it { is_expected.not_to be_file }
     end
   end
@@ -40,16 +42,16 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-80.conf") do
       it { is_expected.to contain '<VirtualHost \*:80>' }
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-ssl-443.conf") do
       it { is_expected.not_to be_file }
     end
   end
 
-  context 'default vhost with ssl', unless: (os[:family] =~ %r{redhat} && os[:release].to_i == 8) do
+  context 'default vhost with ssl', unless: (os[:family].include?('redhat') && os[:release].to_i == 8) do
     pp = <<-MANIFEST
       file { '#{apache_hash['run_dir']}':
         ensure  => 'directory',
@@ -65,11 +67,11 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-80.conf") do
       it { is_expected.to contain '<VirtualHost \*:80>' }
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-ssl-443.conf") do
       it { is_expected.to contain '<VirtualHost \*:443>' }
       it { is_expected.to contain 'SSLEngine on' }
     end
@@ -1081,7 +1083,7 @@ describe 'apache::vhost define' do
       }
     MANIFEST
     it 'applies cleanly' do
-      pp += "\nclass { 'apache::mod::actions': }" if os[:family] =~ %r{debian|suse|ubuntu|sles}
+      pp += "\nclass { 'apache::mod::actions': }" if %r{debian|suse|ubuntu|sles}.match?(os[:family])
       apply_manifest(pp, catch_failures: true)
     end
 
