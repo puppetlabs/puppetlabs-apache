@@ -131,7 +131,14 @@ jobs:
         echo
         echo ::endgroup::
         echo ::group::=== INVENTORY ===
-        sed -e 's/password: .*/password: "[redacted]"/' < inventory.yaml || true
+        if [ -f 'spec/fixtures/litmus_inventory.yaml' ];
+        then
+          FILE='spec/fixtures/litmus_inventory.yaml'
+        elif [ -f 'inventory.yaml' ];
+        then
+          FILE='inventory.yaml'
+        fi
+        sed -e 's/password: .*/password: "[redacted]"/' < $FILE || true
         echo ::endgroup::
 
     - name: Install agent
@@ -166,7 +173,7 @@ jobs:
       if: ${{ always() }}
       continue-on-error: true
       run: |
-        if [ -f inventory.yaml ]; then
+        if [[ -f inventory.yaml || -f spec/fixtures/litmus_inventory.yaml ]]; then
           buildevents cmd $TRACE_ID $STEP_ID 'rake litmus:tear_down' -- bundle exec rake 'litmus:tear_down'
           echo ::group::=== REQUEST ===
           cat request.json || true
