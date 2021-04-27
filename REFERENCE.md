@@ -5969,6 +5969,8 @@ The following parameters are available in the `apache::mod::security` class:
 * [`activated_rules`](#activated_rules)
 * [`modsec_dir`](#modsec_dir)
 * [`modsec_secruleengine`](#modsec_secruleengine)
+* [`custom_rules`](#custom_rules)
+* [`custom_rules_set`](#custom_rules_set)
 * [`audit_log_relevant_status`](#audit_log_relevant_status)
 * [`audit_log_parts`](#audit_log_parts)
 * [`audit_log_type`](#audit_log_type)
@@ -6041,6 +6043,21 @@ Configures the rules engine.
 
 Default value: `$apache::params::modsec_secruleengine`
 
+##### <a name="custom_rules"></a>`custom_rules`
+
+Data type: `Boolean`
+
+Enable Custom rules for security module.
+
+Default value: `$apache::params::modsec_custom_rules`
+
+##### <a name="custom_rules_set"></a>`custom_rules_set`
+
+Data type: `[Array]`
+
+Configures the set of custom rules.
+
+Default value: `$apache::params::modsec_custom_rules_set`
 ##### <a name="audit_log_relevant_status"></a>`audit_log_relevant_status`
 
 Data type: `Any`

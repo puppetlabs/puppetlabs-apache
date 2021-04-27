@@ -56,6 +56,12 @@ describe 'apache::mod::security', type: :class do
             )
           }
           it {
+            is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules').with(
+              ensure: 'directory', path: '/etc/httpd/modsecurity.d/custom_rules',
+              owner: 'apache', group: 'apache'
+            )
+          }
+          it {
             is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
               path: '/etc/httpd/modsecurity.d/security_crs.conf',
             )
