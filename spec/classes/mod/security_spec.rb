@@ -192,35 +192,14 @@ describe 'apache::mod::security', type: :class do
           describe 'with parameters' do
             let :params do
               {
-                activated_rules: [
-                  '/tmp/foo/bar.conf',
-                ],
-                audit_log_relevant_status: '^(?:5|4(?!01|04))',
-                audit_log_parts: 'ABCDZ',
-                audit_log_type: 'Concurrent',
-                audit_log_storage_dir: '/var/log/httpd/audit',
-                secdefaultaction: 'deny,status:406,nolog,auditlog',
                 custom_rules: true,
                 custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"'],
               }
             end
-
-            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
-            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
-            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogType Concurrent$} }
-            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
-            it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
-            it {
-              is_expected.to contain_file('bar.conf').with(
-                path: '/etc/httpd/modsecurity.d/activated_rules/bar.conf',
-                target: '/tmp/foo/bar.conf',
-              )
-            }
             it {
               is_expected.to contain_file('custom_01_rules.conf').with_content %r{^\sSecRule REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$}
             }
           end
-
           describe 'with mod security version' do
             let :params do
               {
