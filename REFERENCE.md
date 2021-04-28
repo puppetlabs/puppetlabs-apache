@@ -6047,7 +6047,8 @@ Default value: `$apache::params::modsec_secruleengine`
 
 Data type: `Boolean`
 
-Enable Custom rules for security module.
+Enable Custom rules for security, this does not create or provide any rules rather it facilitate to add custom rules.
+If enabled, must provide `custom_rules_set`.
 
 Default value: `$apache::params::modsec_custom_rules`
 
@@ -6055,6 +6056,7 @@ Default value: `$apache::params::modsec_custom_rules`
 
 Data type: `[Array]`
 
+Customrules must be array of rules, for an example `REMOTE_ADDR "^127.0.0.1" "id:'199999'phase:1,nolog,allow,ctl:ruleEngine=off"`.
 Configures the set of custom rules.
 
 Default value: `$apache::params::modsec_custom_rules_set`

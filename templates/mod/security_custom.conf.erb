@@ -1,3 +1,6 @@
+# This file is managed by puppet, any direct modification will be overwritten.
+<% unless @custom_rules_set.empty? -%>
 <% @custom_rules_set.each do |secrule| -%>
 SecRule <%= secrule %>
+<% end -%>
 <% end -%>
