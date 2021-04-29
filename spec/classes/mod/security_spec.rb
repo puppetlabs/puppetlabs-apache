@@ -103,6 +103,33 @@ describe 'apache::mod::security', type: :class do
 
             it { is_expected.not_to contain_file('/etc/httpd/modsecurity.d/security_crs.conf') }
           end
+          describe 'with custom parameters' do
+            let :params do
+              {
+                custom_rules: false,
+              }
+            end
+
+            it {
+              is_expected.not_to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf')
+            }
+          end
+          describe 'with parameters' do
+            let :params do
+              {
+                custom_rules: true,
+                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"'],
+              }
+            end
+
+            it {
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules').with(
+                ensure: 'directory', path: '/etc/httpd/modsecurity.d/custom_rules',
+                owner: 'apache', group: 'apache'
+              )
+            }
+            it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
+          end
         end
       when 'Debian'
         context 'on Debian based systems' do
@@ -187,6 +214,35 @@ describe 'apache::mod::security', type: :class do
                 )
               }
             end
+          end
+
+          describe 'with custom parameters' do
+            let :params do
+              {
+                custom_rules: false,
+              }
+            end
+
+            it {
+              is_expected.not_to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf')
+            }
+          end
+
+          describe 'with parameters' do
+            let :params do
+              {
+                custom_rules: true,
+                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"'],
+              }
+            end
+
+            it {
+              is_expected.to contain_file('/etc/modsecurity/custom_rules').with(
+                ensure: 'directory', path: '/etc/modsecurity/custom_rules',
+                owner: 'www-data', group: 'www-data'
+              )
+            }
+            it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
           end
 
           describe 'with mod security version' do
