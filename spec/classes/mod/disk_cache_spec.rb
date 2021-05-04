@@ -64,7 +64,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = true' do
@@ -84,7 +84,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = foo' do
@@ -104,7 +104,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
           .to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
       }
     end
@@ -166,7 +166,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = true' do
@@ -186,7 +186,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = foo' do
@@ -206,7 +206,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
           .to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
       }
     end
@@ -273,7 +273,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = true' do
@@ -293,7 +293,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
     context 'with $default_cache_enable = foo' do
@@ -313,7 +313,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to contain_apache_mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
           .to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
       }
     end
