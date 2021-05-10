@@ -33,3 +33,4 @@ Rakefile:
     unmanaged: false
   .travis.yml:
     delete: true
+changelog_since_tag: "3.2.0"
