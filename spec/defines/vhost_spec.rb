@@ -1050,6 +1050,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+              content: %r{^\s+SSLHonorCipherOrder\s+Off$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
               content: %r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$},
             )
           }
