@@ -1765,7 +1765,7 @@ define apache::vhost (
   $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
-  $ssl_honorcipherorder                                                             = undef,
+  Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder     = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client = undef,
   $ssl_verify_depth                                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
@@ -2027,6 +2027,18 @@ define apache::vhost (
     include apache::mod::ssl
     # Required for the AddType lines.
     include apache::mod::mime
+  }
+
+  if $ssl_honorcipherorder =~ Boolean or $ssl_honorcipherorder == undef {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder
+  } else {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder ? {
+      'on'    => true,
+      'On'    => true,
+      'off'   => false,
+      'Off'   => false,
+      default => true,
+    }
   }
 
   if $auth_kerb and $ensure == 'present' {
@@ -2680,7 +2692,7 @@ define apache::vhost (
   # - $ssl_crl_check
   # - $ssl_protocol
   # - $ssl_cipher
-  # - $ssl_honorcipherorder
+  # - $_ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
   # - $ssl_options
