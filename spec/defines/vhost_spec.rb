@@ -1986,6 +1986,48 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-sslproxy') }
         end
+        context 'ssl_honorcipherorder' do
+          let :params do
+            {
+              'docroot'            => '/rspec/docroot',
+              'ssl'                => true,
+            }
+          end
+
+          context 'ssl_honorcipherorder default' do
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').without_content(%r{^\s*SSLHonorCipherOrder}i) }
+          end
+
+          context 'ssl_honorcipherorder on' do
+            let :params do
+              super().merge({'ssl_honorcipherorder' => 'on',})
+            end
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
+          end
+          context 'ssl_honorcipherorder true' do
+            let :params do
+              super().merge({'ssl_honorcipherorder' => true,})
+            end
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
+          end
+          context 'ssl_honorcipherorder off' do
+            let :params do
+              super().merge({'ssl_honorcipherorder' => 'off',})
+            end
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
+          end
+          context 'ssl_honorcipherorder false' do
+            let :params do
+              super().merge({'ssl_honorcipherorder' => false,})
+            end
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
+          end
+        end
         describe 'access logs' do
           context 'single log file' do
             let(:params) do
