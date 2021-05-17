@@ -1521,6 +1521,102 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+        context 'vhost with scheme and port in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'https://www.example.com:443',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName https:\/\/www\.example\.com:443$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with scheme in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'https://www.example.com',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName https:\/\/www\.example\.com$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with port in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'www.example.com:443',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName www\.example\.com:443$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'www.example.com',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName www\.example\.com$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
         context 'vhost with multiple ip addresses' do
           let :params do
             {

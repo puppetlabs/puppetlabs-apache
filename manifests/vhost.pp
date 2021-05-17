@@ -2064,6 +2064,14 @@ define apache::vhost (
     $priority_real = '25-'
   }
 
+  # https://httpd.apache.org/docs/2.4/fr/mod/core.html#servername
+  # Syntax:	ServerName [scheme://]domain-name|ip-address[:port]
+  # Sometimes, the server runs behind a device that processes SSL, such as a reverse proxy, load balancer or SSL offload
+  # appliance.
+  # When this is the case, specify the https:// scheme and the port number to which the clients connect in the ServerName
+  # directive to make sure that the server generates the correct self-referential URLs.
+  $normalized_servername = regsubst($servername, '(https?:\/\/)?([a-z0-9\/%_+.,#?!@&=-]+)(:?\d+)?', '\2', 'G')
+
   # IAC-1186: A number of configuration and log file names are generated using the $name parameter. It is possible for
   # the $name parameter to contain spaces, which could then be transferred to the log / config filenames. Although
   # POSIX compliant, this can be cumbersome.
@@ -2085,8 +2093,8 @@ define apache::vhost (
   # and use the sanitized value of $servername for default log / config filenames.
   $filename = $use_servername_for_filenames ? {
     true => $use_port_for_filenames ? {
-      true  => regsubst("${servername}-${port}", ' ', '_', 'G'),
-      false => regsubst($servername, ' ', '_', 'G'),
+      true  => regsubst("${normalized_servername}-${port}", ' ', '_', 'G'),
+      false => regsubst($normalized_servername, ' ', '_', 'G'),
     },
     false => $name,
   }
