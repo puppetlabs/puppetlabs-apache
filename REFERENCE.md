@@ -5969,8 +5969,6 @@ The following parameters are available in the `apache::mod::security` class:
 * [`activated_rules`](#activated_rules)
 * [`modsec_dir`](#modsec_dir)
 * [`modsec_secruleengine`](#modsec_secruleengine)
-* [`custom_rules`](#custom_rules)
-* [`custom_rules_set`](#custom_rules_set)
 * [`audit_log_relevant_status`](#audit_log_relevant_status)
 * [`audit_log_parts`](#audit_log_parts)
 * [`audit_log_type`](#audit_log_type)
@@ -5994,6 +5992,8 @@ The following parameters are available in the `apache::mod::security` class:
 * [`secrequestbodynofileslimit`](#secrequestbodynofileslimit)
 * [`secrequestbodyinmemorylimit`](#secrequestbodyinmemorylimit)
 * [`manage_security_crs`](#manage_security_crs)
+* [`custom_rules`](#custom_rules)
+* [`custom_rules_set`](#custom_rules_set)
 
 ##### <a name="version"></a>`version`
 
@@ -6043,23 +6043,6 @@ Configures the rules engine.
 
 Default value: `$apache::params::modsec_secruleengine`
 
-##### <a name="custom_rules"></a>`custom_rules`
-
-Data type: `Boolean`
-
-Enable Custom rules for security, this does not create or provide any rules rather it facilitate to add custom rules.
-If enabled, must provide `custom_rules_set`.
-
-Default value: `$apache::params::modsec_custom_rules`
-
-##### <a name="custom_rules_set"></a>`custom_rules_set`
-
-Data type: `[Array]`
-
-Customrules must be array of rules, for an example `['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"']`.
-Configures the set of custom rules.
-
-Default value: `$apache::params::modsec_custom_rules_set`
 ##### <a name="audit_log_relevant_status"></a>`audit_log_relevant_status`
 
 Data type: `Any`
@@ -6245,6 +6228,22 @@ Data type: `Any`
 Toggles whether to manage ModSecurity Core Rule Set
 
 Default value: ``true``
+
+##### <a name="custom_rules"></a>`custom_rules`
+
+Data type: `Any`
+
+
+
+Default value: `$apache::params::modsec_custom_rules`
+
+##### <a name="custom_rules_set"></a>`custom_rules_set`
+
+Data type: `Any`
+
+
+
+Default value: `$apache::params::modsec_custom_rules_set`
 
 ### <a name="apachemodsetenvif"></a>`apache::mod::setenvif`
 
