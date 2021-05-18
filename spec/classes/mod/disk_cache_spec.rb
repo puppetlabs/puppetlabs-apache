@@ -155,7 +155,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
@@ -175,7 +175,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
