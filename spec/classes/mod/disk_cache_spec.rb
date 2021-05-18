@@ -61,7 +61,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
@@ -81,7 +81,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
@@ -98,13 +98,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       let(:params) { { 'default_cache_enable' => 'foo' } }
 
-      it { is_expected.to compile }
-      it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
-      it {
-        is_expected.to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
-      }
+      it { is_expected.not_to compile }
     end
   end
 
@@ -198,13 +192,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       let(:params) { { 'default_cache_enable' => 'foo' } }
 
-      it { is_expected.to compile }
-      it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
-      it {
-        is_expected.to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
-      }
+      it { is_expected.not_to compile }
     end
   end
   context 'on a FreeBSD OS' do
@@ -266,7 +254,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
@@ -286,7 +274,7 @@ describe 'apache::mod::disk_cache', type: :class do
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
       it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
+      it { is_expected.to contain_apache__mod('cache_disk') }
       it {
         is_expected.to contain_file('disk_cache.conf')
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
@@ -303,13 +291,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       let(:params) { { 'default_cache_enable' => 'foo' } }
 
-      it { is_expected.to compile }
-      it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
-      it { is_expected.to contain_apache_mod('cache_disk') }
-      it {
-        is_expected.to raise_error(Puppet::Error, 'default_cache_enable must be true or false')
-      }
+      it { is_expected.not_to compile }
     end
   end
 end

@@ -20,7 +20,7 @@
 class apache::mod::disk_cache (
   $cache_root           = undef,
   $cache_ignore_headers = undef,
-  $default_cache_enable = true,
+  Boolean $default_cache_enable = true,
 ) {
   include apache
   if $cache_root {
