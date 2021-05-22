@@ -7936,7 +7936,7 @@ Default value: ``undef``
 
 ##### <a name="ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
-Data type: `Any`
+Data type: `Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef]`
 
 
 
