@@ -55,7 +55,6 @@ if Bundler.rubygems.find_name('github_changelog_generator').any?
     config.add_pr_wo_labels = true
     config.issues = false
     config.merge_prefix = "### UNCATEGORIZED PRS; LABEL THEM ON GITHUB"
-    config.max_issues = 500
     config.configure_sections = {
       "Changed" => {
         "prefix" => "### Changed",
