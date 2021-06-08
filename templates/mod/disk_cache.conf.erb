@@ -1,4 +1,6 @@
+<% if @default_cache_enable -%>
 CacheEnable disk /
+<% end -%>
 CacheRoot "<%= @_cache_root %>"
 CacheDirLevels 2
 CacheDirLength 1
