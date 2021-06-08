@@ -12,6 +12,11 @@
 # @param cache_ignore_headers
 #   Specifies HTTP header(s) that should not be stored in the cache.
 #
+# @param default_cache_enable
+#   Default value is true, which enables "CacheEnable disk /" in disk_cache.conf for the webserver. This would cache
+#   every request to apache by default for every vhost. If set to false the default cache all behaviour is supressed.
+#   You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
+#
 # @note
 #   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
 #
