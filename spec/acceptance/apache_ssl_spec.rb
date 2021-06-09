@@ -65,7 +65,7 @@ describe 'apache ssl' do
           ssl_certs_dir        => '/tmp',
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
-          ssl_honorcipherorder => 'test',
+          ssl_honorcipherorder => true,
           ssl_verify_client    => 'require',
           ssl_verify_depth     => 'test',
           ssl_options          => ['test', 'test1'],
@@ -89,7 +89,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLProxyEngine On' }
       it { is_expected.to contain 'SSLProtocol             test' }
       it { is_expected.to contain 'SSLCipherSuite          test' }
-      it { is_expected.to contain 'SSLHonorCipherOrder     test' }
+      it { is_expected.to contain 'SSLHonorCipherOrder     On' }
       it { is_expected.to contain 'SSLVerifyClient         require' }
       it { is_expected.to contain 'SSLVerifyDepth          test' }
       it { is_expected.to contain 'SSLOptions test test1' }

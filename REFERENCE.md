@@ -5992,6 +5992,8 @@ The following parameters are available in the `apache::mod::security` class:
 * [`secrequestbodynofileslimit`](#secrequestbodynofileslimit)
 * [`secrequestbodyinmemorylimit`](#secrequestbodyinmemorylimit)
 * [`manage_security_crs`](#manage_security_crs)
+* [`custom_rules`](#custom_rules)
+* [`custom_rules_set`](#custom_rules_set)
 
 ##### <a name="version"></a>`version`
 
@@ -6226,6 +6228,22 @@ Data type: `Any`
 Toggles whether to manage ModSecurity Core Rule Set
 
 Default value: ``true``
+
+##### <a name="custom_rules"></a>`custom_rules`
+
+Data type: `Any`
+
+
+
+Default value: `$apache::params::modsec_custom_rules`
+
+##### <a name="custom_rules_set"></a>`custom_rules_set`
+
+Data type: `Any`
+
+
+
+Default value: `$apache::params::modsec_custom_rules_set`
 
 ### <a name="apachemodsetenvif"></a>`apache::mod::setenvif`
 
@@ -7918,7 +7936,7 @@ Default value: ``undef``
 
 ##### <a name="ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
-Data type: `Any`
+Data type: `Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef]`
 
 
 

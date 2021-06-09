@@ -3,33 +3,9 @@
   delete: true
 ".rubocop.yml":
   include_todos: true
-".travis.yml":
-  global_env:
-    - HONEYCOMB_WRITEKEY="7f3c63a70eecc61d635917de46bea4e6",HONEYCOMB_DATASET="litmus tests"
-  deploy_to_forge:
-    enabled: false
-  secure: ''
-  branches:
-  - release
-  use_litmus: true
-  litmus:
-    provision_list:
-    - ---travis_el
-    - travis_deb
-    - travis_el7
-    - travis_el8
-    complex:
-    - collection:
-        puppet_collection:
-        - puppet6
-        provision_list:
-        - travis_ub_6
-  simplecov: true
-  notifications:
-    slack:
-      secure: MrXQwGIUO7WNmLbe7iiWgURiZPUgyvDLkKe3d9S58ohE6gdN6pqlsjP8YgodK8JmIBV1zp5Wj/0cXUmY3xvCtnDmII0DCEk2Y1Cs/W1drKZtS/0BsUpJkj0rDP2fSlKsY5ifESdEta/y8+NkjRnqadbl7SQPYeek4IjAfxjjuig=
 appveyor.yml:
   delete: true
+
 Gemfile:
   optional:
     ":development":
@@ -50,3 +26,11 @@ spec/spec_helper.rb:
 Rakefile:
   extras:
     "FastGettext.default_text_domain = 'default-text-domain'"
+  .github/workflows/spec.yml:
+    checks: 'syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop'
+    unmanaged: false
+  .github/workflows/release.yml:
+    unmanaged: false
+  .travis.yml:
+    delete: true
+changelog_since_tag: "3.2.0"

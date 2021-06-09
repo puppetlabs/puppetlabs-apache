@@ -285,5 +285,51 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLProxyProtocol -ALL \+TLSv1$}) }
     end
+
+    context 'setting ssl_honorcipherorder' do
+      context 'default value' do
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLHonorCipherOrder On$}) }
+      end
+
+      context 'force on' do
+        let :params do
+          {
+            ssl_honorcipherorder: true,
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLHonorCipherOrder On$}) }
+      end
+
+      context 'force off' do
+        let :params do
+          {
+            ssl_honorcipherorder: false,
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLHonorCipherOrder Off$}) }
+      end
+
+      context 'set on' do
+        let :params do
+          {
+            ssl_honorcipherorder: 'on',
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLHonorCipherOrder On$}) }
+      end
+
+      context 'set off' do
+        let :params do
+          {
+            ssl_honorcipherorder: 'off',
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLHonorCipherOrder Off$}) }
+      end
+    end
   end
 end

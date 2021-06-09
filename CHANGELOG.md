@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-22)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.1.0...v6.2.0)
+
+### Added
+
+- \(MODULES-11068\) Allow apache::vhost ssl\_honorcipherorder to take boolean parameter [\#2152](https://github.com/puppetlabs/puppetlabs-apache/pull/2152) ([davidc](https://github.com/davidc))
+
+## [v6.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.1.0) (2021-05-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.0.1...v6.1.0)
+
+### Added
+
+- support for uri for severname with use\_servername\_for\_filenames [\#2150](https://github.com/puppetlabs/puppetlabs-apache/pull/2150) ([Zarne](https://github.com/Zarne))
+- \(MODULES-11061\) mod\_security custom rule functionality [\#2145](https://github.com/puppetlabs/puppetlabs-apache/pull/2145) ([k2patel](https://github.com/k2patel))
+
+## [v6.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.0.1) (2021-05-10)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.0.0...v6.0.1)
+
+### Fixed
+
+- Fix HEADER\* and README\* wildcards in IndexIgnore [\#2138](https://github.com/puppetlabs/puppetlabs-apache/pull/2138) ([keto](https://github.com/keto))
+- Fix dav\_svn for Debian 10 [\#2135](https://github.com/puppetlabs/puppetlabs-apache/pull/2135) ([martijndegouw](https://github.com/martijndegouw))
+
 ## [v6.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.0.0) (2021-03-02)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.10.0...v6.0.0)
@@ -42,7 +68,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- \(MODULES-10887\) Set `use\_servername\_for\_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
+- \(MODULES-10887\) Set `use_servername_for_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
 - pdksync - \(feat\) Add support for Puppet 7 [\#2101](https://github.com/puppetlabs/puppetlabs-apache/pull/2101) ([daianamezdrea](https://github.com/daianamezdrea))
 - \(feat\) Add support for apreq2 MOD on Debian 9, 10 [\#2085](https://github.com/puppetlabs/puppetlabs-apache/pull/2085) ([TigerKriika](https://github.com/TigerKriika))
 
@@ -76,8 +102,8 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
+- Configure default shared lib path for mod\_wsgi on RHEL8 [\#2063](https://github.com/puppetlabs/puppetlabs-apache/pull/2063) ([nbarrientos](https://github.com/nbarrientos))
 - Various enhancements to apache::mod::passenger [\#2058](https://github.com/puppetlabs/puppetlabs-apache/pull/2058) ([smortex](https://github.com/smortex))
-- Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
 
 ### Fixed
 
@@ -91,10 +117,10 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- Configure default shared lib path for mod\_wsgi on RHEL8 [\#2063](https://github.com/puppetlabs/puppetlabs-apache/pull/2063) ([nbarrientos](https://github.com/nbarrientos))
+- Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
 - \(IAC-746\) - Add ubuntu 20.04 support [\#2032](https://github.com/puppetlabs/puppetlabs-apache/pull/2032) ([david22swan](https://github.com/david22swan))
-- Replace legacy `bool2httpd\(\)` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
-- Tidy up `pw\_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
+- Replace legacy `bool2httpd()` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
+- Tidy up `pw_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
 - Replace validate\_apache\_loglevel\(\) with data type [\#2023](https://github.com/puppetlabs/puppetlabs-apache/pull/2023) ([alexjfisher](https://github.com/alexjfisher))
 - Add ProxyIOBufferSize option [\#2014](https://github.com/puppetlabs/puppetlabs-apache/pull/2014) ([jplindquist](https://github.com/jplindquist))
 - Add support for SetInputFilter directive [\#2007](https://github.com/puppetlabs/puppetlabs-apache/pull/2007) ([HoucemEddine](https://github.com/HoucemEddine))
@@ -153,7 +179,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - Add parameter version for mod security [\#1953](https://github.com/puppetlabs/puppetlabs-apache/pull/1953) ([tuxmea](https://github.com/tuxmea))
 - add possibility to define variables inside VirtualHost definition [\#1947](https://github.com/puppetlabs/puppetlabs-apache/pull/1947) ([trefzer](https://github.com/trefzer))
-- Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
 
 ### Fixed
 
@@ -174,6 +199,7 @@ All notable changes to this project will be documented in this file. The format 
 - \(FM-8214\) converted to use litmus [\#1938](https://github.com/puppetlabs/puppetlabs-apache/pull/1938) ([tphoney](https://github.com/tphoney))
 - \(MODULES-9668 \) Please make ProxyRequests setting in vhost.pp configurable [\#1935](https://github.com/puppetlabs/puppetlabs-apache/pull/1935) ([aukesj](https://github.com/aukesj))
 - Added unmanaged\_path and custom\_fragment options to userdir [\#1931](https://github.com/puppetlabs/puppetlabs-apache/pull/1931) ([GeorgeCox](https://github.com/GeorgeCox))
+- Add LDAP parameters to httpd.conf [\#1930](https://github.com/puppetlabs/puppetlabs-apache/pull/1930) ([daveseff](https://github.com/daveseff))
 - Add LDAPReferrals configuration parameter [\#1928](https://github.com/puppetlabs/puppetlabs-apache/pull/1928) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
 
 ### Fixed
@@ -215,7 +241,6 @@ All notable changes to this project will be documented in this file. The format 
 - Add support for mod\_http2 [\#1867](https://github.com/puppetlabs/puppetlabs-apache/pull/1867) ([smortex](https://github.com/smortex))
 - Added code to paramertize the libphp prefix [\#1852](https://github.com/puppetlabs/puppetlabs-apache/pull/1852) ([grahamuk2018](https://github.com/grahamuk2018))
 - Added WSGI Options WSGIApplicationGroup and WSGIPythonOptimize [\#1847](https://github.com/puppetlabs/puppetlabs-apache/pull/1847) ([emetriqLikedeeler](https://github.com/emetriqLikedeeler))
-- Add option to add comments to the header of a vhost file [\#1841](https://github.com/puppetlabs/puppetlabs-apache/pull/1841) ([jovandeginste](https://github.com/jovandeginste))
 
 ### Fixed
 
@@ -249,6 +274,7 @@ All notable changes to this project will be documented in this file. The format 
 - \(MODULES-5990\) Addition of 'IncludeOptional conf-enabled/\*.conf' to apache2.conf' on Debian Family OS [\#1851](https://github.com/puppetlabs/puppetlabs-apache/pull/1851) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8107\) - Support added for Ubuntu 18.04. [\#1850](https://github.com/puppetlabs/puppetlabs-apache/pull/1850) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8108\) - Support added for Debian 9 [\#1849](https://github.com/puppetlabs/puppetlabs-apache/pull/1849) ([david22swan](https://github.com/david22swan))
+- Add option to add comments to the header of a vhost file [\#1841](https://github.com/puppetlabs/puppetlabs-apache/pull/1841) ([jovandeginste](https://github.com/jovandeginste))
 
 ### Fixed
 

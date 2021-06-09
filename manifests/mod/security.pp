@@ -97,6 +97,8 @@ class apache::mod::security (
   $version                     = $apache::params::modsec_version,
   $crs_package                 = $apache::params::modsec_crs_package,
   $activated_rules             = $apache::params::modsec_default_rules,
+  $custom_rules                = $apache::params::modsec_custom_rules,
+  $custom_rules_set            = $apache::params::modsec_custom_rules_set,
   $modsec_dir                  = $apache::params::modsec_dir,
   $modsec_secruleengine        = $apache::params::modsec_secruleengine,
   $audit_log_relevant_status   = '^(?:5|4(?!04))',
@@ -214,6 +216,27 @@ class apache::mod::security (
     force   => true,
     recurse => true,
     notify  => Class['apache::service'],
+  }
+
+  if $custom_rules {
+    # Template to add custom rule and included in security configuration
+    file {"${modsec_dir}/custom_rules":
+      ensure  => directory,
+      owner   => $apache::params::user,
+      group   => $apache::params::group,
+      mode    => $apache::file_mode,
+      require => File[$modsec_dir],
+    }
+
+    file { "${modsec_dir}/custom_rules/custom_01_rules.conf":
+      ensure  => file,
+      owner   => $apache::params::user,
+      group   => $apache::params::group,
+      mode    => $apache::file_mode,
+      content => template('apache/mod/security_custom.conf.erb'),
+      require => File["${modsec_dir}/custom_rules"],
+      notify  => Class['apache::service'],
+    }
   }
 
   if $manage_security_crs {
