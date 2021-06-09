@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::event') do

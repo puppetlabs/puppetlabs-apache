@@ -1,18 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::remoteip', type: :class do
   context 'on a Debian OS' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      }
-    end
+    include_examples 'Debian 8'
     let :params do
       { apache_version: '2.4' }
     end
@@ -117,7 +109,7 @@ describe 'apache::mod::remoteip', type: :class do
         { apache_version: '2.2' }
       end
 
-      it { expect { catalogue }.to raise_error(Puppet::Error, %r{mod_remoteip is only available in Apache 2.4}) }
+      it { is_expected.to compile.and_raise_error(%r{mod_remoteip is only available in Apache 2.4}) }
     end
   end
 end

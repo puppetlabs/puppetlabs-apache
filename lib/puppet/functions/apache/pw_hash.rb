@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @summary
 #   Hashes a password in a format suitable for htpasswd files read by apache.
 #

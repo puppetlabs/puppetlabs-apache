@@ -1,18 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::cluster', type: :class do
   context 'on a RedHat OS Release 7 with mod version = 1.3.0' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '7',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 7'
 
     let(:params) do
       {
@@ -35,17 +27,7 @@ describe 'apache::mod::cluster', type: :class do
   end
 
   context 'on a RedHat OS Release 7 with mod version > 1.3.0' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '7',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 7'
 
     let(:params) do
       {
@@ -68,17 +50,7 @@ describe 'apache::mod::cluster', type: :class do
   end
 
   context 'on a RedHat OS Release 6 with mod version < 1.3.0' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     let(:params) do
       {

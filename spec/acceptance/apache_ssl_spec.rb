@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache ssl' do
@@ -21,14 +23,14 @@ describe 'apache ssl' do
 
     describe file("#{apache_hash['mod_ssl_dir']}/ssl.conf") do
       it { is_expected.to be_file }
-      if os[:family] =~ %r{redhat} && os[:release].to_i == 8
+      if os[:family].include?('redhat') && os[:release].to_i == 8
         it { is_expected.to contain 'SSLProtocol all' }
       else
         it { is_expected.to contain 'SSLProtocol all -SSLv2 -SSLv3' }
       end
     end
 
-    describe file("#{apache_hash['vhost_dir']}/15-default-ssl.conf") do
+    describe file("#{apache_hash['vhost_dir']}/15-default-ssl-443.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLCertificateFile      "/tmp/ssl_cert"' }
       it { is_expected.to contain 'SSLCertificateKeyFile   "/tmp/ssl_key"' }
@@ -63,7 +65,7 @@ describe 'apache ssl' do
           ssl_certs_dir        => '/tmp',
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
-          ssl_honorcipherorder => 'test',
+          ssl_honorcipherorder => true,
           ssl_verify_client    => 'require',
           ssl_verify_depth     => 'test',
           ssl_options          => ['test', 'test1'],
@@ -87,7 +89,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLProxyEngine On' }
       it { is_expected.to contain 'SSLProtocol             test' }
       it { is_expected.to contain 'SSLCipherSuite          test' }
-      it { is_expected.to contain 'SSLHonorCipherOrder     test' }
+      it { is_expected.to contain 'SSLHonorCipherOrder     On' }
       it { is_expected.to contain 'SSLVerifyClient         require' }
       it { is_expected.to contain 'SSLVerifyDepth          test' }
       it { is_expected.to contain 'SSLOptions test test1' }

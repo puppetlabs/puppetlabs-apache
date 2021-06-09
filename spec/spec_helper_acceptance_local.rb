@@ -34,7 +34,7 @@ RSpec.configure do |c|
   end
   c.before :suite do
     # Make sure selinux is disabled so the tests work.
-    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if os[:family] =~ %r{redhat|oracle}
+    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
     pp = <<-PUPPETCODE
@@ -89,7 +89,7 @@ def apache_settings_hash
     apache['conf_file']        = '/etc/httpd/conf/httpd.conf'
     apache['ports_file']       = '/etc/httpd/conf/ports.conf'
     apache['vhost_dir']        = '/etc/httpd/conf.d'
-    apache['vhost']            = '/etc/httpd/conf.d/15-default.conf'
+    apache['vhost']            = '/etc/httpd/conf.d/15-default-80.conf'
     apache['run_dir']          = '/var/run/httpd'
     apache['doc_root']         = '/var/www'
     apache['service_name']     = 'httpd'
@@ -119,7 +119,7 @@ def apache_settings_hash
     apache['mod_dir']          = '/etc/apache2/mods-available'
     apache['conf_file']        = '/etc/apache2/apache2.conf'
     apache['ports_file']       = '/etc/apache2/ports.conf'
-    apache['vhost']            = '/etc/apache2/sites-available/15-default.conf'
+    apache['vhost']            = '/etc/apache2/sites-available/15-default-80.conf'
     apache['vhost_dir']        = '/etc/apache2/sites-enabled'
     apache['run_dir']          = '/var/run/apache2'
     apache['doc_root']         = '/var/www'
@@ -141,7 +141,7 @@ def apache_settings_hash
     apache['mod_dir']          = '/usr/local/etc/apache24/Modules'
     apache['conf_file']        = '/usr/local/etc/apache24/httpd.conf'
     apache['ports_file']       = '/usr/local/etc/apache24/Includes/ports.conf'
-    apache['vhost']            = '/usr/local/etc/apache24/Vhosts/15-default.conf'
+    apache['vhost']            = '/usr/local/etc/apache24/Vhosts/15-default-80.conf'
     apache['vhost_dir']        = '/usr/local/etc/apache24/Vhosts'
     apache['run_dir']          = '/var/run/apache24'
     apache['doc_root']         = '/var/www'
@@ -155,7 +155,7 @@ def apache_settings_hash
     apache['mod_dir']          = '/etc/apache2/modules.d'
     apache['conf_file']        = '/etc/apache2/httpd.conf'
     apache['ports_file']       = '/etc/apache2/ports.conf'
-    apache['vhost']            = '/etc/apache2/vhosts.d/15-default.conf'
+    apache['vhost']            = '/etc/apache2/vhosts.d/15-default-80.conf'
     apache['vhost_dir']        = '/etc/apache2/vhosts.d'
     apache['run_dir']          = '/var/run/apache2'
     apache['doc_root']         = '/var/www'
@@ -169,7 +169,7 @@ def apache_settings_hash
     apache['mod_dir']          = '/etc/apache2/mods-available'
     apache['conf_file']        = '/etc/apache2/httpd.conf'
     apache['ports_file']       = '/etc/apache2/ports.conf'
-    apache['vhost']            = '/etc/apache2/sites-available/15-default.conf'
+    apache['vhost']            = '/etc/apache2/sites-available/15-default-80.conf'
     apache['vhost_dir']        = '/etc/apache2/sites-available'
     apache['run_dir']          = '/var/run/apache2'
     apache['doc_root']         = '/srv/www'

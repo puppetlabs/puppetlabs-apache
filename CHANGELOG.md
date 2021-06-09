@@ -2,13 +2,73 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-22)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.1.0...v6.2.0)
+
+### Added
+
+- \(MODULES-11068\) Allow apache::vhost ssl\_honorcipherorder to take boolean parameter [\#2152](https://github.com/puppetlabs/puppetlabs-apache/pull/2152) ([davidc](https://github.com/davidc))
+
+## [v6.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.1.0) (2021-05-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.0.1...v6.1.0)
+
+### Added
+
+- support for uri for severname with use\_servername\_for\_filenames [\#2150](https://github.com/puppetlabs/puppetlabs-apache/pull/2150) ([Zarne](https://github.com/Zarne))
+- \(MODULES-11061\) mod\_security custom rule functionality [\#2145](https://github.com/puppetlabs/puppetlabs-apache/pull/2145) ([k2patel](https://github.com/k2patel))
+
+## [v6.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.0.1) (2021-05-10)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.0.0...v6.0.1)
+
+### Fixed
+
+- Fix HEADER\* and README\* wildcards in IndexIgnore [\#2138](https://github.com/puppetlabs/puppetlabs-apache/pull/2138) ([keto](https://github.com/keto))
+- Fix dav\_svn for Debian 10 [\#2135](https://github.com/puppetlabs/puppetlabs-apache/pull/2135) ([martijndegouw](https://github.com/martijndegouw))
+
+## [v6.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.0.0) (2021-03-02)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.10.0...v6.0.0)
+
+### Changed
+
+- pdksync - \(MAINT\) Remove SLES 11 support [\#2132](https://github.com/puppetlabs/puppetlabs-apache/pull/2132) ([sanfrancrisko](https://github.com/sanfrancrisko))
+- pdksync - Remove Puppet 5 from testing and bump minimal version to 6.0.0 [\#2125](https://github.com/puppetlabs/puppetlabs-apache/pull/2125) ([carabasdaniel](https://github.com/carabasdaniel))
+
+## [v5.10.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.10.0) (2021-02-17)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.9.0...v5.10.0)
+
+### Added
+
+- \(IAC-1186\) Add $use\_port\_for\_filenames parameter [\#2122](https://github.com/puppetlabs/puppetlabs-apache/pull/2122) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(MODULES-10899\) Handle PHP8 MOD package naming convention changes [\#2121](https://github.com/puppetlabs/puppetlabs-apache/pull/2121) ([sanfrancrisko](https://github.com/sanfrancrisko))
+
+## [v5.9.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.9.0) (2021-01-25)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.8.0...v5.9.0)
+
+### Added
+
+- Add ssl\_user\_name vhost parameter [\#2093](https://github.com/puppetlabs/puppetlabs-apache/pull/2093) ([bodgit](https://github.com/bodgit))
+- Add support for mod\_md [\#2090](https://github.com/puppetlabs/puppetlabs-apache/pull/2090) ([smortex](https://github.com/smortex))
+
+### Fixed
+
+- \(FIX\) Correct PHP packages on Ubuntu 16.04 [\#2111](https://github.com/puppetlabs/puppetlabs-apache/pull/2111) ([ekohl](https://github.com/ekohl))
+
 ## [v5.8.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.8.0) (2020-12-07)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v5.7.0...v5.8.0)
 
 ### Added
 
-- \(MODULES-10887\) Set `use\_servername\_for\_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
+- \(MODULES-10887\) Set `use_servername_for_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
 - pdksync - \(feat\) Add support for Puppet 7 [\#2101](https://github.com/puppetlabs/puppetlabs-apache/pull/2101) ([daianamezdrea](https://github.com/daianamezdrea))
 - \(feat\) Add support for apreq2 MOD on Debian 9, 10 [\#2085](https://github.com/puppetlabs/puppetlabs-apache/pull/2085) ([TigerKriika](https://github.com/TigerKriika))
 
@@ -59,8 +119,8 @@ All notable changes to this project will be documented in this file. The format 
 
 - Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
 - \(IAC-746\) - Add ubuntu 20.04 support [\#2032](https://github.com/puppetlabs/puppetlabs-apache/pull/2032) ([david22swan](https://github.com/david22swan))
-- Replace legacy `bool2httpd\(\)` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
-- Tidy up `pw\_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
+- Replace legacy `bool2httpd()` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
+- Tidy up `pw_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
 - Replace validate\_apache\_loglevel\(\) with data type [\#2023](https://github.com/puppetlabs/puppetlabs-apache/pull/2023) ([alexjfisher](https://github.com/alexjfisher))
 - Add ProxyIOBufferSize option [\#2014](https://github.com/puppetlabs/puppetlabs-apache/pull/2014) ([jplindquist](https://github.com/jplindquist))
 - Add support for SetInputFilter directive [\#2007](https://github.com/puppetlabs/puppetlabs-apache/pull/2007) ([HoucemEddine](https://github.com/HoucemEddine))
@@ -1347,4 +1407,4 @@ worker/prefork
 [0.0.4]:https://github.com/puppetlabs/puppetlabs-apache/commits/0.0.4
 
 
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

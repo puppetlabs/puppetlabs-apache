@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # This function is called inside the OS specific contexts
@@ -9,18 +11,7 @@ describe 'apache::mod::mime_magic', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS with default params' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     general_mime_magic_specs
 
@@ -53,17 +44,7 @@ describe 'apache::mod::mime_magic', type: :class do
   end
 
   context 'on a RedHat OS with default params' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     general_mime_magic_specs
 
@@ -77,18 +58,7 @@ describe 'apache::mod::mime_magic', type: :class do
   end
 
   context 'with magic_file => /tmp/magic' do
-    let :facts do
-      {
-        osfamily: 'Debian',
-        operatingsystemrelease: '6',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     let :params do
       { magic_file: '/tmp/magic' }

@@ -5,7 +5,7 @@
 #
 class apache::mod::fastcgi {
   include apache
-  if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemrelease, '7.0') >= 0) {
+  if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemmajrelease, '7') >= 0) {
     fail('mod_fastcgi is no longer supported on el7 and above.')
   }
   if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '18.04') >= 0) {

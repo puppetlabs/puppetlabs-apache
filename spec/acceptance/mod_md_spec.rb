@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'apache::mod::md', if: mod_supported_on_platform?('apache::mod::md') do

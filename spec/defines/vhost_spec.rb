@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::vhost', type: :define do
@@ -1048,6 +1050,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
+              content: %r{^\s+SSLHonorCipherOrder\s+Off$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
               content: %r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$},
             )
           }
@@ -1512,6 +1519,102 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^MDomain example\.com example\.net auto$},
             )
+          }
+        end
+        context 'vhost with scheme and port in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'https://www.example.com:443',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName https:\/\/www\.example\.com:443$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with scheme in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'https://www.example.com',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName https:\/\/www\.example\.com$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with port in servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'www.example.com:443',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName www\.example\.com:443$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
+          }
+        end
+        context 'vhost with servername and use_servername_for_filenames' do
+          let :params do
+            {
+              'port'                          => '80',
+              'ip'                            => '127.0.0.1',
+              'ip_based'                      => true,
+              'servername'                    => 'www.example.com',
+              'docroot'                       => '/var/www/html',
+              'add_listen'                    => true,
+              'ensure'                        => 'present',
+              'use_servername_for_filenames'  => true
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
+              content: %r{^\s+ServerName www\.example\.com$},
+            )
+          }
+          it {
+            is_expected.to contain_concat('25-www.example.com.conf')
           }
         end
         context 'vhost with multiple ip addresses' do
@@ -1979,6 +2082,52 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-sslproxy') }
         end
+        context 'ssl_honorcipherorder' do
+          let :params do
+            {
+              'docroot'            => '/rspec/docroot',
+              'ssl'                => true,
+            }
+          end
+
+          context 'ssl_honorcipherorder default' do
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').without_content(%r{^\s*SSLHonorCipherOrder}i) }
+          end
+
+          context 'ssl_honorcipherorder on' do
+            let :params do
+              super().merge({ 'ssl_honorcipherorder' => 'on' })
+            end
+
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
+          end
+          context 'ssl_honorcipherorder true' do
+            let :params do
+              super().merge({ 'ssl_honorcipherorder' => true })
+            end
+
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
+          end
+          context 'ssl_honorcipherorder off' do
+            let :params do
+              super().merge({ 'ssl_honorcipherorder' => 'off' })
+            end
+
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
+          end
+          context 'ssl_honorcipherorder false' do
+            let :params do
+              super().merge({ 'ssl_honorcipherorder' => false })
+            end
+
+            it { is_expected.to compile }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
+          end
+        end
         describe 'access logs' do
           context 'single log file' do
             let(:params) do
@@ -2117,247 +2266,74 @@ describe 'apache::vhost', type: :define do
           end
         end # error logs format
         describe 'validation' do
-          context 'bad ensure' do
-            let :params do
-              {
-                'docroot' => '/rspec/docroot',
-                'ensure'  => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
+          let(:params) do
+            {
+              'docroot' => '/rspec/docroot',
+            }
           end
-          context 'bad suphp_engine' do
-            let :params do
-              {
-                'docroot'      => '/rspec/docroot',
-                'suphp_engine' => 'bogus',
-              }
-            end
 
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad ip_based' do
-            let :params do
-              {
-                'docroot'  => '/rspec/docroot',
-                'ip_based' => 'bogus',
-              }
-            end
+          [
+            'ensure', 'suphp_engine', 'ip_based', 'access_log', 'error_log',
+            'ssl', 'default_vhost', 'ssl_proxyengine', 'rewrites', 'suexec_user_group',
+            'wsgi_script_alias', 'wsgi_daemon_process_options',
+            'wsgi_import_script_alias', 'itk', 'logroot_ensure', 'log_level',
+            'fallbackresource'
+          ].each do |parameter|
+            context "bad #{parameter}" do
+              let(:params) { super().merge(parameter => 'bogus') }
 
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad access_log' do
-            let :params do
-              {
-                'docroot'    => '/rspec/docroot',
-                'access_log' => 'bogus',
-              }
+              it { is_expected.to raise_error(Puppet::Error) }
             end
-
-            it { is_expected.to raise_error(Puppet::Error) }
           end
-          context 'bad error_log' do
-            let :params do
-              {
-                'docroot'   => '/rspec/docroot',
-                'error_log' => 'bogus',
-              }
-            end
 
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad_ssl' do
-            let :params do
-              {
-                'docroot' => '/rspec/docroot',
-                'ssl'     => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad default_vhost' do
-            let :params do
-              {
-                'docroot'       => '/rspec/docroot',
-                'default_vhost' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad ssl_proxyengine' do
-            let :params do
-              {
-                'docroot'         => '/rspec/docroot',
-                'ssl_proxyengine' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad rewrites' do
-            let :params do
-              {
-                'docroot'  => '/rspec/docroot',
-                'rewrites' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
           context 'bad rewrites 2' do
-            let :params do
-              {
-                'docroot'  => '/rspec/docroot',
-                'rewrites' => ['bogus'],
-              }
-            end
+            let(:params) { super().merge('rewrites' => ['bogus']) }
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'empty rewrites' do
-            let :params do
-              {
-                'docroot'  => '/rspec/docroot',
-                'rewrites' => [],
-              }
-            end
+            let(:params) { super().merge('rewrites' => []) }
 
             it { is_expected.to compile }
           end
-          context 'bad suexec_user_group' do
-            let :params do
-              {
-                'docroot'           => '/rspec/docroot',
-                'suexec_user_group' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad wsgi_script_alias' do
-            let :params do
-              {
-                'docroot'           => '/rspec/docroot',
-                'wsgi_script_alias' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad wsgi_daemon_process_options' do
-            let :params do
-              {
-                'docroot'                     => '/rspec/docroot',
-                'wsgi_daemon_process_options' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad wsgi_import_script_alias' do
-            let :params do
-              {
-                'docroot'                  => '/rspec/docroot',
-                'wsgi_import_script_alias' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad itk' do
-            let :params do
-              {
-                'docroot' => '/rspec/docroot',
-                'itk'     => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad logroot_ensure' do
-            let :params do
-              {
-                'docroot'   => '/rspec/docroot',
-                'log_level' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad log_level' do
-            let :params do
-              {
-                'docroot'   => '/rspec/docroot',
-                'log_level' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
           context 'bad error_log_format flag' do
             let :params do
-              {
-                'docroot'   => '/rspec/docroot',
+              super().merge(
                 'error_log_format' => [
                   { 'some format' => 'bogus' },
                 ],
-              }
+              )
             end
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'access_log_file and access_log_pipe' do
             let :params do
-              {
-                'docroot'         => '/rspec/docroot',
+              super().merge(
                 'access_log_file' => 'bogus',
                 'access_log_pipe' => 'bogus',
-              }
+              )
             end
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'error_log_file and error_log_pipe' do
             let :params do
-              {
-                'docroot'        => '/rspec/docroot',
+              super().merge(
                 'error_log_file' => 'bogus',
                 'error_log_pipe' => 'bogus',
-              }
-            end
-
-            it { is_expected.to raise_error(Puppet::Error) }
-          end
-          context 'bad fallbackresource' do
-            let :params do
-              {
-                'docroot'          => '/rspec/docroot',
-                'fallbackresource' => 'bogus',
-              }
+              )
             end
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'bad custom_fragment' do
-            let :params do
-              {
-                'docroot'         => '/rspec/docroot',
-                'custom_fragment' => true,
-              }
-            end
+            let(:params) { super().merge('custom_fragment' => true) }
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'bad access_logs' do
-            let :params do
-              {
-                'docroot'     => '/rspec/docroot',
-                'access_logs' => '/var/log/somewhere',
-              }
-            end
+            let(:params) { super().merge('access_logs' => '/var/log/somewhere') }
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
@@ -2412,31 +2388,24 @@ describe 'apache::vhost', type: :define do
             }
           end
           describe 'redirectmatch_*' do
-            let :dparams do
-              {
-                docroot: '/rspec/docroot',
-                port: '84',
-              }
-            end
+            let(:params) { super().merge(port: '84') }
 
             context 'status' do
-              let(:params) { dparams.merge(redirectmatch_status: '404') }
+              let(:params) { super().merge(redirectmatch_status: '404') }
 
               it { is_expected.to contain_class('apache::mod::alias') }
             end
             context 'dest' do
-              let(:params) { dparams.merge(redirectmatch_dest: 'http://other.example.com$1.jpg') }
+              let(:params) { super().merge(redirectmatch_dest: 'http://other.example.com$1.jpg') }
 
               it { is_expected.to contain_class('apache::mod::alias') }
             end
             context 'regexp' do
-              let(:params) { dparams.merge(redirectmatch_regexp: "(.*)\.gif$") }
+              let(:params) { super().merge(redirectmatch_regexp: "(.*)\.gif$") }
 
               it { is_expected.to contain_class('apache::mod::alias') }
             end
             context 'none' do
-              let(:params) { dparams }
-
               it { is_expected.not_to contain_class('apache::mod::alias') }
             end
           end

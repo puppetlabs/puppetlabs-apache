@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # This function is called inside the OS specific contexts
@@ -35,18 +37,7 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'On a Debian OS with default params' do
-      let :facts do
-        {
-          id: 'root',
-          lsbdistcodename: 'jessie',
-          kernel: 'Linux',
-          osfamily: 'Debian',
-          operatingsystem: 'Debian',
-          operatingsystemrelease: '8',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'Debian 8'
 
       # Load the more generic tests for this context
       general_deflate_specs
@@ -62,17 +53,7 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'on a RedHat OS with default params' do
-      let :facts do
-        {
-          id: 'root',
-          kernel: 'Linux',
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemrelease: '6',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'RedHat 6'
 
       # Load the more generic tests for this context
       general_deflate_specs
@@ -81,17 +62,7 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'On a FreeBSD OS with default params' do
-      let :facts do
-        {
-          id: 'root',
-          kernel: 'FreeBSD',
-          osfamily: 'FreeBSD',
-          operatingsystem: 'FreeBSD',
-          operatingsystemrelease: '9',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          is_pe: false,
-        }
-      end
+      include_examples 'FreeBSD 9'
 
       # Load the more generic tests for this context
       general_deflate_specs
@@ -103,17 +74,7 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'On a Gentoo OS with default params' do
-      let :facts do
-        {
-          id: 'root',
-          kernel: 'Linux',
-          osfamily: 'Gentoo',
-          operatingsystem: 'Gentoo',
-          path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-          operatingsystemrelease: '3.16.1-gentoo',
-          is_pe: false,
-        }
-      end
+      include_examples 'Gentoo'
 
       # Load the more generic tests for this context
       general_deflate_specs

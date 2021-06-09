@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::dumpio', type: :class do
@@ -8,19 +10,8 @@ describe 'apache::mod::dumpio', type: :class do
          mod_dir    => "/tmp/junk",
        }'
     end
-    let :facts do
-      {
-        lsbdistcodename: 'jessie',
-        osfamily: 'Debian',
-        operatingsystemrelease: '8',
-        operatingsystemmajrelease: '8',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+
+    include_examples 'Debian 8'
 
     context 'default configuration fore parameters' do
       it { is_expected.to compile }

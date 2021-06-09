@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::proxy_html', type: :class do
@@ -15,24 +17,11 @@ describe 'apache::mod::proxy_html', type: :class do
       it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: loadfiles) }
       it { is_expected.to contain_package('libapache2-mod-proxy-html') }
     end
-    let :facts do
-      {
-        osfamily: 'Debian',
-        architecture: 'i386',
-        lsbdistcodename: 'jessie',
-        operatingsystem: 'Debian',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        hardwaremodel: 'i386',
-        is_pe: false,
-      }
-    end
+    include_examples 'Debian 8'
 
     context 'on jessie i386' do
       let(:facts) do
-        super().merge(operatingsystemrelease: '8',
-                      hardwaremodel: 'i686',
+        super().merge(hardwaremodel: 'i686',
                       architecture: 'i386')
       end
 
@@ -41,8 +30,7 @@ describe 'apache::mod::proxy_html', type: :class do
     end
     context 'on jessie x64' do
       let(:facts) do
-        super().merge(operatingsystemrelease: '8',
-                      hardwaremodel: 'x86_64',
+        super().merge(hardwaremodel: 'x86_64',
                       architecture: 'amd64')
       end
 
@@ -52,17 +40,7 @@ describe 'apache::mod::proxy_html', type: :class do
   end
 
   context 'on a RedHat OS', :compile do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        operatingsystemrelease: '6',
-        operatingsystem: 'RedHat',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: nil) }
@@ -70,17 +48,7 @@ describe 'apache::mod::proxy_html', type: :class do
     it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
   end
   context 'on a FreeBSD OS', :compile do
-    let :facts do
-      {
-        osfamily: 'FreeBSD',
-        operatingsystemrelease: '9',
-        operatingsystem: 'FreeBSD',
-        id: 'root',
-        kernel: 'FreeBSD',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'FreeBSD 9'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: nil) }
@@ -88,17 +56,7 @@ describe 'apache::mod::proxy_html', type: :class do
     it { is_expected.to contain_package('www/mod_proxy_html') }
   end
   context 'on a Gentoo OS', :compile do
-    let :facts do
-      {
-        osfamily: 'Gentoo',
-        operatingsystem: 'Gentoo',
-        operatingsystemrelease: '3.16.1-gentoo',
-        id: 'root',
-        kernel: 'Linux',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: nil) }

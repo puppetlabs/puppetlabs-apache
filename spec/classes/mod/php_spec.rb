@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::mod::php', type: :class do
@@ -48,6 +50,29 @@ describe 'apache::mod::php', type: :class do
               it {
                 is_expected.to contain_file('php7.0.load').with(
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n",
+                )
+              }
+            end
+          when '10'
+            context 'on buster' do
+              it { is_expected.to contain_apache__mod('php7.3') }
+              it { is_expected.to contain_package('libapache2-mod-php7.3') }
+              it {
+                is_expected.to contain_file('php7.3.load').with(
+                  content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.3.so\n",
+                )
+              }
+            end
+            context 'on buster with experimental php8.0' do
+              let :params do
+                { php_version: '8.0' }
+              end
+
+              it { is_expected.to contain_apache__mod('php') }
+              it { is_expected.to contain_package('libapache2-mod-php8.0') }
+              it {
+                is_expected.to contain_file('php.load').with(
+                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
                 )
               }
             end
@@ -205,6 +230,7 @@ describe 'apache::mod::php', type: :class do
 
       # all the following tests are for legacy php/apache versions. They don't work on modern ubuntu and redhat 8
       next if (facts[:os]['release']['major'].to_i > 15 && facts[:os]['name'] == 'Ubuntu') ||
+              (facts[:os]['release']['major'].to_i >= 15 && facts[:os]['name'] == 'SLES')  ||
               (facts[:os]['release']['major'].to_i >= 9 && facts[:os]['name'] == 'Debian') ||
               (facts[:os]['release']['major'].to_i >= 8 && (facts[:os]['name'] == 'RedHat' || facts[:os]['name'] == 'CentOS'))
 
@@ -290,7 +316,7 @@ describe 'apache::mod::php', type: :class do
           end
 
           it 'raises an error' do
-            expect { expect(subject).to contain_apache__mod('php5') }.to raise_error Puppet::Error, %r{mpm_module => 'prefork' or mpm_module => 'itk'}
+            is_expected.to compile.and_raise_error(%r{mpm_module => 'prefork' or mpm_module => 'itk'})
           end
         end
       end

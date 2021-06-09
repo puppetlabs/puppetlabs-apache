@@ -15,8 +15,8 @@
   <%- if @ssl_cipher -%>
   SSLCipherSuite          <%= @ssl_cipher %>
   <%- end -%>
-  <%- if @ssl_honorcipherorder -%>
-  SSLHonorCipherOrder     <%= @ssl_honorcipherorder %>
+  <%- if not @ssl_honorcipherorder.nil? -%>
+  SSLHonorCipherOrder     <%= scope.call_function('apache::bool2httpd', [@_ssl_honorcipherorder]) %>
   <%- end -%>
   <%- if @ssl_verify_client -%>
   SSLVerifyClient         <%= @ssl_verify_client %>

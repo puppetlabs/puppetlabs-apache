@@ -1729,6 +1729,13 @@
 #   When set to false (default), the existing behaviour of using the $name parameter
 #   will remain.
 #
+# @param $use_port_for_filenames
+#   When set to true and use_servername_for_filenames is also set to true, default log /
+#   config file names will be derived from the sanitized value of both the $servername and
+#   $port parameters.
+#   When set to false (default), the port is not included in the file names and may lead to
+#   duplicate declarations if two virtual hosts use the same domain.
+#
 # @param $mdomain
 #   All the names in the list are managed as one Managed Domain (MD). mod_md will request
 #   one single certificate that is valid for all these names.
@@ -1758,7 +1765,7 @@ define apache::vhost (
   $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
-  $ssl_honorcipherorder                                                             = undef,
+  Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder     = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client = undef,
   $ssl_verify_depth                                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify = undef,
@@ -1800,6 +1807,7 @@ define apache::vhost (
   $access_log_env_var                                                               = false,
   Optional[Array] $access_logs                                                      = undef,
   Optional[Boolean] $use_servername_for_filenames                                   = false,
+  Optional[Boolean] $use_port_for_filenames                                         = false,
   $aliases                                                                          = undef,
   Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                  = undef,
   Boolean $error_log                                                                = true,
@@ -2021,6 +2029,18 @@ define apache::vhost (
     include apache::mod::mime
   }
 
+  if $ssl_honorcipherorder =~ Boolean or $ssl_honorcipherorder == undef {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder
+  } else {
+    $_ssl_honorcipherorder = $ssl_honorcipherorder ? {
+      'on'    => true,
+      'On'    => true,
+      'off'   => false,
+      'Off'   => false,
+      default => true,
+    }
+  }
+
   if $auth_kerb and $ensure == 'present' {
     include apache::mod::auth_kerb
   }
@@ -2056,6 +2076,14 @@ define apache::vhost (
     $priority_real = '25-'
   }
 
+  # https://httpd.apache.org/docs/2.4/fr/mod/core.html#servername
+  # Syntax:	ServerName [scheme://]domain-name|ip-address[:port]
+  # Sometimes, the server runs behind a device that processes SSL, such as a reverse proxy, load balancer or SSL offload
+  # appliance.
+  # When this is the case, specify the https:// scheme and the port number to which the clients connect in the ServerName
+  # directive to make sure that the server generates the correct self-referential URLs.
+  $normalized_servername = regsubst($servername, '(https?:\/\/)?([a-z0-9\/%_+.,#?!@&=-]+)(:?\d+)?', '\2', 'G')
+
   # IAC-1186: A number of configuration and log file names are generated using the $name parameter. It is possible for
   # the $name parameter to contain spaces, which could then be transferred to the log / config filenames. Although
   # POSIX compliant, this can be cumbersome.
@@ -2064,16 +2092,22 @@ define apache::vhost (
   # also perform some sanitiation on the $servername parameter to strip spaces from it, as it defaults to the value of
   # $name, should $servername NOT be defined.
   #
+  # Because a single hostname may be use by multiple virtual hosts listening on different ports, the $port paramter can
+  # optionaly be used to avoid duplicate resources.
+  #
   # We will retain the default behaviour for filenames but allow the use of a sanitized version of $servername to be
-  # used, using the new $use_servername_for_filenames parameter.
+  # used, using the new $use_servername_for_filenames and $use_port_for_filenames parameters.
   #
-  # This will default to false until the next major release (v6.0.0), at which point, we will default this to true and
-  # warn about it's imminent deprecation in the subsequent major release (v7.0.0)
+  # This will default to false until the next major release (v7.0.0), at which point, we will default this to true and
+  # warn about it's imminent deprecation in the subsequent major release (v8.0.0)
   #
-  # In v7.0.0, we will deprecate the $use_servername_for_filenames parameter altogether and use the sanitized value of
-  # $servername for default log / config filenames.
+  # In v8.0.0, we will deprecate the $use_servername_for_filenames and $use_port_for_filenames parameters altogether
+  # and use the sanitized value of $servername for default log / config filenames.
   $filename = $use_servername_for_filenames ? {
-    true => regsubst($servername, ' ', '_', 'G'),
+    true => $use_port_for_filenames ? {
+      true  => regsubst("${normalized_servername}-${port}", ' ', '_', 'G'),
+      false => regsubst($normalized_servername, ' ', '_', 'G'),
+    },
     false => $name,
   }
 
@@ -2084,10 +2118,21 @@ define apache::vhost (
     When $use_servername_for_filenames = true, the $servername parameter, sanitized, is used to construct log and config
     file names.
 
-    From version v6.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v7.0.0 of the
+    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
     module, the $use_servername_for_filenames will be removed and log/config file names will be dervied from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_servername_for_filenames_warn_msg)
+  } elsif ! $use_port_for_filenames {
+    $use_port_for_filenames_warn_msg = '
+    It is possible for multiple virtual hosts to be configured using the same $servername but a different port. When
+    using $use_servername_for_filenames, this can lead to duplicate resource declarations.
+    When $use_port_for_filenames = true, the $servername and $port parameters, sanitized, are used to construct log and
+    config file names.
+
+    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
+    module, the $use_port_for_filenames will be removed and log/config file names will be dervied from the
+    sanitized $servername parameter when not explicitly defined.'
+    warning($use_port_for_filenames_warn_msg)
   }
 
   # This ensures that the docroot exists
@@ -2655,7 +2700,7 @@ define apache::vhost (
   # - $ssl_crl_check
   # - $ssl_protocol
   # - $ssl_cipher
-  # - $ssl_honorcipherorder
+  # - $_ssl_honorcipherorder
   # - $ssl_verify_client
   # - $ssl_verify_depth
   # - $ssl_options

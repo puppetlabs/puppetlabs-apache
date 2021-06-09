@@ -2,6 +2,9 @@
     # Default recommended configuration
     SecRuleEngine <%= @modsec_secruleengine %>
     SecRequestBodyAccess On
+  <%- if @custom_rules -%>
+    Include <%= @modsec_dir %>/custom_rules/*.conf
+  <%- end -%>
     SecRule REQUEST_HEADERS:Content-Type "text/xml" \
       "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
     SecRequestBodyLimit <%= @secrequestbodylimit %>

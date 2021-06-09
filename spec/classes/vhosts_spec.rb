@@ -1,18 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apache::vhosts', type: :class do
   context 'on all OSes' do
-    let :facts do
-      {
-        id: 'root',
-        kernel: 'Linux',
-        osfamily: 'RedHat',
-        operatingsystem: 'RedHat',
-        operatingsystemrelease: '6',
-        path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        is_pe: false,
-      }
-    end
+    include_examples 'RedHat 6'
 
     context 'with custom vhosts parameter' do
       let :params do
