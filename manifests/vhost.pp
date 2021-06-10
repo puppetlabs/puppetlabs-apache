@@ -1679,6 +1679,9 @@
 # @param ssl_user_name
 #   Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed.
+#
 # @param use_canonical_name
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
@@ -1762,6 +1765,7 @@ define apache::vhost (
   $ssl_crl                                                                          = $apache::default_ssl_crl,
   $ssl_crl_check                                                                    = $apache::default_ssl_crl_check,
   $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
+  Boolean $ssl_reload_on_change                                                     = $apache::default_ssl_reload_on_change,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder     = undef,
@@ -2706,11 +2710,29 @@ define apache::vhost (
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
   # - $apache_version
-  if $ssl {
+  if $ssl and $ensure == 'present' {
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
       content => template('apache/vhost/_ssl.erb'),
+    }
+
+    if $ssl_reload_on_change {
+      [$ssl_cert, $ssl_key, $ssl_ca, $ssl_chain, $ssl_crl].each |$ssl_file| {
+        if $ssl_file {
+          include apache::mod::ssl::reload
+          $_ssl_file_copy = regsubst($ssl_file, '/', '_', 'G')
+          file { "${filename}${_ssl_file_copy}":
+            path    => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_file_copy}",
+            source  => "file://${ssl_file}",
+            owner   => 'root',
+            group   => $apache::params::root_group,
+            mode    => '0640',
+            seltype => 'cert_t',
+            notify  => Class['apache::service'],
+          }
+        }
+      }
     }
   }
 
