@@ -19,14 +19,19 @@
 #
 # @note
 #   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+#   This class is deprecated, use mode_cache_disk instead
 #
-# @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation.
+# @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation on version 2.2.
+#
+# @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html for additional documentation on version 2.4.
 #
 class apache::mod::disk_cache (
   $cache_root           = undef,
   $cache_ignore_headers = undef,
   Boolean $default_cache_enable = true,
 ) {
+  deprecation('apache::mod::disk_cache','This module is deprecated; please use apache::mod::cache_disk')
+
   include apache
   if $cache_root {
     $_cache_root = $cache_root
