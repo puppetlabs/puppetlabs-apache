@@ -48,6 +48,17 @@ describe 'apache ssl' do
 
   describe 'vhost ssl parameters' do
     pp = <<-MANIFEST
+        file { [
+          '/tmp/ssl_cert',
+          '/tmp/ssl_key',
+          '/tmp/ssl_chain',
+          '/tmp/ssl_ca',
+          '/tmp/ssl_crl',
+          ]:
+            ensure             => file,
+            before             => Class['apache']
+        }
+
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -63,6 +74,7 @@ describe 'apache ssl' do
           ssl_crl              => '/tmp/ssl_crl',
           ssl_crl_check        => 'chain flag',
           ssl_certs_dir        => '/tmp',
+          ssl_reload_on_change => true,
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
           ssl_honorcipherorder => true,
@@ -98,6 +110,26 @@ describe 'apache ssl' do
       else
         it { is_expected.not_to contain 'SSLCARevocationCheck' }
       end
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_cert") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_key") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_chain") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_ca") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_crl") do
+      it { is_expected.to be_file }
     end
   end
 
