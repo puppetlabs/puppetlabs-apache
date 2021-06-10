@@ -103,6 +103,34 @@
 * [`apache::mpm::disable_mpm_prefork`](#apachempmdisable_mpm_prefork)
 * [`apache::mpm::disable_mpm_worker`](#apachempmdisable_mpm_worker)
 * [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
+* [`portage`](#portage)
+* [`portage::install`](#portageinstall)
+* [`portage::params`](#portageparams): = Class: portage::params  Contains default values for portage.  == Example  This class does not need to be directly included.
+* [`puppet_agent`](#puppet_agent): == Class: puppet_agent  Upgrades Puppet 4 and newer to the requested version.  === Parameters  [arch]   The package architecture. Defaults to
+* [`puppet_agent::configure`](#puppet_agentconfigure)
+* [`puppet_agent::install`](#puppet_agentinstall): == Class puppet_agent::install  This class is called from puppet_agent for install.  === Parameters  [version]   The puppet-agent version to 
+* [`puppet_agent::install::darwin`](#puppet_agentinstalldarwin): == Class puppet_agent::install::darwin  Private class called from puppet_agent class  Manage the install process for Darwin OSes specifically
+* [`puppet_agent::install::solaris`](#puppet_agentinstallsolaris): == Class puppet_agent::install::solaris  Private class called from puppet_agent class  Manage the install process for solaris specifically
+* [`puppet_agent::install::suse`](#puppet_agentinstallsuse): == Class puppet_agent::install::suse  Private class called from puppet_agent class  Manage the install process for SUSE OSes specifically
+* [`puppet_agent::install::windows`](#puppet_agentinstallwindows): == Class puppet_agent::install::windows  Private class called from puppet_agent class  Manage the install process for windows specifically
+* [`puppet_agent::osfamily::aix`](#puppet_agentosfamilyaix)
+* [`puppet_agent::osfamily::darwin`](#puppet_agentosfamilydarwin)
+* [`puppet_agent::osfamily::debian`](#puppet_agentosfamilydebian)
+* [`puppet_agent::osfamily::redhat`](#puppet_agentosfamilyredhat)
+* [`puppet_agent::osfamily::solaris`](#puppet_agentosfamilysolaris)
+* [`puppet_agent::osfamily::suse`](#puppet_agentosfamilysuse)
+* [`puppet_agent::osfamily::windows`](#puppet_agentosfamilywindows)
+* [`puppet_agent::params`](#puppet_agentparams): == Class puppet_agent::params  This class is meant to be called from puppet_agent It sets variables according to platform.
+* [`puppet_agent::prepare`](#puppet_agentprepare): == Class puppet_agent::prepare  This class is called from puppet_agent to prepare for the upgrade.  === Parameters  [version]   The puppet-ag
+* [`puppet_agent::prepare::package`](#puppet_agentpreparepackage): == Class puppet_agent::prepare::package  The only job this class has is to ensure that the correct puppet-agent package is downloaded locally
+* [`puppet_agent::prepare::puppet_config`](#puppet_agentpreparepuppet_config): == Class puppet_agent::prepare::puppet_config  Private class called from puppet_agent::prepare class
+* [`puppet_agent::service`](#puppet_agentservice): == Class puppet_agent::service  This class is meant to be called from puppet_agent. It ensures that managed services are running.
+* [`stdlib`](#stdlib): This module manages stdlib.
+* [`stdlib::stages`](#stdlibstages): This class manages a standard set of run stages for Puppet. It is managed by
+the stdlib class, and should not be declared independently.
+* [`test::base32`](#testbase32): Class to test the Stdlib::Base32 type alias
+* [`test::base64`](#testbase64): Class to test the Stdlib::Base64 type alias
+* [`test::ensure_resources`](#testensure_resources): A helper class to test the ensure_resources function
 
 #### Private Classes
 
@@ -136,6 +164,12 @@ Apache server's or a virtual host's listening address and port.
 * [`apache::vhost`](#apachevhost)
 * [`apache::vhost::custom`](#apachevhostcustom): A wrapper around the `apache::custom_config` defined type.
 * [`apache::vhost::fragment`](#apachevhostfragment): Define a fragment within a vhost
+* [`concat`](#concat): Manages a file, compiled from one or more text fragments.
+* [`concat::fragment`](#concatfragment): Manages a fragment of text to be compiled into a file.
+* [`portage::makeconf`](#portagemakeconf)
+* [`portage::package`](#portagepackage): = Define: portage::package  Configures and install portage backed packages  == Parameters  [*ensure*]  The ensure value of the package.  [*us
+* [`portage::postsync`](#portagepostsync): = Define: portage::postsync  Install custom postsync scripts  == Parameters  [*ensure*]  The ensure value for the scrypt  [*content*]  The co
+* [`test::deftype`](#testdeftype): Class to test deftype
 
 #### Private Defined types
 
@@ -145,26 +179,92 @@ Apache server's or a virtual host's listening address and port.
 * `apache::peruser::processor`: Enables the `Peruser` module for FreeBSD only.
 * `apache::security::rule_link`: Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.
 
-### Resource types
-
-* [`a2mod`](#a2mod): Manage Apache 2 modules
-
 ### Functions
 
-* [`apache::apache_pw_hash`](#apacheapache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
-* [`apache::pw_hash`](#apachepw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
-* [`apache_pw_hash`](#apache_pw_hash): DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`bool2httpd`](#bool2httpd): DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
+* [`stdlib::ensure`](#stdlibensure): function to cast ensure parameter to resource specific value
 
 ### Data types
 
 * [`Apache::LogLevel`](#apacheloglevel): A string that conforms to the Apache `LogLevel` syntax.
 * [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
+* [`Puppet_agent::Arch`](#puppet_agentarch)
+* [`Puppet_agent::Config`](#puppet_agentconfig)
+* [`Puppet_agent::Config_setting`](#puppet_agentconfig_setting): An enumerated list of settings which are permitted to be managed by this module.
+* [`Stdlib::Absolutepath`](#stdlibabsolutepath): A strict absolutepath type
+* [`Stdlib::Base32`](#stdlibbase32): Type to match base32 String
+* [`Stdlib::Base64`](#stdlibbase64): Type to match base64 String
+* [`Stdlib::Compat::Absolute_path`](#stdlibcompatabsolute_path): Emulate the is_absolute_path and validate_absolute_path functions  The first pattern is originally from is_absolute_path, which had it from 2
+* [`Stdlib::Compat::Array`](#stdlibcompatarray): Emulate the is_array and validate_array functions
+* [`Stdlib::Compat::Bool`](#stdlibcompatbool): Emulate the is_bool and validate_bool functions
+* [`Stdlib::Compat::Float`](#stdlibcompatfloat): Emulate the is_float function The regex is what's currently used in is_float To keep your development moving forward, you can also add a depr
+* [`Stdlib::Compat::Hash`](#stdlibcompathash): Emulate the is_hash and validate_hash functions
+* [`Stdlib::Compat::Integer`](#stdlibcompatinteger): Emulate the is_integer and validate_integer functions The regex is what's currently used in is_integer validate_numeric also allows range che
+* [`Stdlib::Compat::Ip_address`](#stdlibcompatip_address)
+* [`Stdlib::Compat::Ipv4`](#stdlibcompatipv4): Emulate the validate_ipv4_address and is_ipv4_address functions
+* [`Stdlib::Compat::Ipv6`](#stdlibcompatipv6)
+* [`Stdlib::Compat::Numeric`](#stdlibcompatnumeric): Emulate the is_numeric and validate_numeric functions The regex is what's currently used in is_numeric validate_numeric also allows range che
+* [`Stdlib::Compat::String`](#stdlibcompatstring): Emulate the is_string and validate_string functions
+* [`Stdlib::Datasize`](#stdlibdatasize)
+* [`Stdlib::Email`](#stdlibemail): https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+* [`Stdlib::Ensure::File`](#stdlibensurefile)
+* [`Stdlib::Ensure::File::Directory`](#stdlibensurefiledirectory)
+* [`Stdlib::Ensure::File::File`](#stdlibensurefilefile)
+* [`Stdlib::Ensure::File::Link`](#stdlibensurefilelink)
+* [`Stdlib::Ensure::Service`](#stdlibensureservice)
+* [`Stdlib::Filemode`](#stdlibfilemode): See `man chmod.1` for the regular expression for symbolic mode lint:ignore:140chars
+* [`Stdlib::Filesource`](#stdlibfilesource): Validate the source parameter on file types
+* [`Stdlib::Fqdn`](#stdlibfqdn)
+* [`Stdlib::HTTPSUrl`](#stdlibhttpsurl)
+* [`Stdlib::HTTPUrl`](#stdlibhttpurl)
+* [`Stdlib::Host`](#stdlibhost)
+* [`Stdlib::HttpStatus`](#stdlibhttpstatus)
+* [`Stdlib::IP::Address`](#stdlibipaddress)
+* [`Stdlib::IP::Address::Nosubnet`](#stdlibipaddressnosubnet)
+* [`Stdlib::IP::Address::V4`](#stdlibipaddressv4)
+* [`Stdlib::IP::Address::V4::CIDR`](#stdlibipaddressv4cidr): lint:ignore:140chars
+* [`Stdlib::IP::Address::V4::Nosubnet`](#stdlibipaddressv4nosubnet): lint:ignore:140chars
+* [`Stdlib::IP::Address::V6`](#stdlibipaddressv6)
+* [`Stdlib::IP::Address::V6::Alternative`](#stdlibipaddressv6alternative): lint:ignore:140chars
+* [`Stdlib::IP::Address::V6::CIDR`](#stdlibipaddressv6cidr): lint:ignore:140chars
+* [`Stdlib::IP::Address::V6::Compressed`](#stdlibipaddressv6compressed)
+* [`Stdlib::IP::Address::V6::Full`](#stdlibipaddressv6full)
+* [`Stdlib::IP::Address::V6::Nosubnet`](#stdlibipaddressv6nosubnet)
+* [`Stdlib::IP::Address::V6::Nosubnet::Alternative`](#stdlibipaddressv6nosubnetalternative): lint:ignore:140chars
+* [`Stdlib::IP::Address::V6::Nosubnet::Compressed`](#stdlibipaddressv6nosubnetcompressed)
+* [`Stdlib::IP::Address::V6::Nosubnet::Full`](#stdlibipaddressv6nosubnetfull)
+* [`Stdlib::MAC`](#stdlibmac): A type for a MAC address
+* [`Stdlib::ObjectStore`](#stdlibobjectstore)
+* [`Stdlib::ObjectStore::GSUri`](#stdlibobjectstoregsuri)
+* [`Stdlib::ObjectStore::S3Uri`](#stdlibobjectstores3uri)
+* [`Stdlib::Port`](#stdlibport)
+* [`Stdlib::Port::Dynamic`](#stdlibportdynamic)
+* [`Stdlib::Port::Ephemeral`](#stdlibportephemeral)
+* [`Stdlib::Port::Privileged`](#stdlibportprivileged)
+* [`Stdlib::Port::Registered`](#stdlibportregistered)
+* [`Stdlib::Port::Unprivileged`](#stdlibportunprivileged)
+* [`Stdlib::Port::User`](#stdlibportuser)
+* [`Stdlib::Syslogfacility`](#stdlibsyslogfacility)
+* [`Stdlib::Unixpath`](#stdlibunixpath): this regex rejects any path component that does not start with "/" or is NUL
+* [`Stdlib::Windowspath`](#stdlibwindowspath)
+* [`Stdlib::Yes_no`](#stdlibyes_no)
 
-### Tasks
+### Plans
 
-* [`init`](#init): Allows you to perform apache service functions
+* [`facts`](#facts): A plan that retrieves facts and stores in the inventory for the
+specified targets.
+* [`facts::external`](#factsexternal): A plan that generates external facts based on the provided modulepath and
+sets facts on specified targets.
+* [`facts::info`](#factsinfo): A plan that prints basic OS information for the specified targets. It first
+runs the facts task to retrieve facts from the targets, then compiles the
+desired OS information from the os fact value of each targets. This plan primarily
+provides readable formatting, and ignores targets that error.
+* [`provision::agents`](#provisionagents)
+* [`provision::provisioner`](#provisionprovisioner)
+* [`provision::server_setup`](#provisionserver_setup)
+* [`provision::teardown`](#provisionteardown)
+* [`provision::tester`](#provisiontester)
+* [`provision::tests_against_agents`](#provisiontests_against_agents)
+* [`puppet_agent::run`](#puppet_agentrun): Starts a Puppet agent run on the specified targets. Note: This plan may cause issues when run in Puppet Enterprise.
 
 ## Classes
 
@@ -206,6 +306,7 @@ The following parameters are available in the `apache` class:
 * [`default_ssl_crl_path`](#default_ssl_crl_path)
 * [`default_ssl_crl_check`](#default_ssl_crl_check)
 * [`default_ssl_key`](#default_ssl_key)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`default_ssl_vhost`](#default_ssl_vhost)
 * [`default_type`](#default_type)
 * [`default_vhost`](#default_vhost)
@@ -277,6 +378,7 @@ The following parameters are available in the `apache` class:
 * [`file_e_tag`](#file_e_tag)
 * [`use_optional_includes`](#use_optional_includes)
 * [`mime_types_additional`](#mime_types_additional)
+* [`default_ssl_reload_on_change`](#default_ssl_reload_on_change)
 
 ##### <a name="allow_encoded_slashes"></a>`allow_encoded_slashes`
 
@@ -432,6 +534,10 @@ this parameter with your SSL key's location before deploying this server in a pr
 environment.
 
 Default value: `$apache::params::default_ssl_key`
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Enable reloading of apache if the content of ssl files have changed.
 
 ##### <a name="default_ssl_vhost"></a>`default_ssl_vhost`
 
@@ -1151,6 +1257,14 @@ Data type: `Any`
 Specifies any idditional Internet media (mime) types that you wish to be configured.
 
 Default value: `$apache::params::mime_types_additional`
+
+##### <a name="default_ssl_reload_on_change"></a>`default_ssl_reload_on_change`
+
+Data type: `Any`
+
+
+
+Default value: ``false``
 
 ### <a name="apachedev"></a>`apache::dev`
 
@@ -2117,6 +2231,7 @@ The following parameters are available in the `apache::mod::disk_cache` class:
 
 * [`cache_root`](#cache_root)
 * [`cache_ignore_headers`](#cache_ignore_headers)
+* [`default_cache_enable`](#default_cache_enable)
 
 ##### <a name="cache_root"></a>`cache_root`
 
@@ -2138,6 +2253,16 @@ Data type: `Any`
 Specifies HTTP header(s) that should not be stored in the cache.
 
 Default value: ``undef``
+
+##### <a name="default_cache_enable"></a>`default_cache_enable`
+
+Data type: `Boolean`
+
+Default value is true, which enables "CacheEnable disk /" in disk_cache.conf for the webserver. This would cache
+every request to apache by default for every vhost. If set to false the default cache all behaviour is supressed.
+You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
+
+Default value: ``true``
 
 ### <a name="apachemoddumpio"></a>`apache::mod::dumpio`
 
@@ -6357,6 +6482,7 @@ The following parameters are available in the `apache::mod::ssl` class:
 * [`ssl_stapling`](#ssl_stapling)
 * [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
 * [`ssl_mutex`](#ssl_mutex)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`apache_version`](#apache_version)
 * [`package_name`](#package_name)
 * [`ssl_sessiontickets`](#ssl_sessiontickets)
@@ -6512,6 +6638,14 @@ Default based on the OS and/or Apache version:
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
 Default value: ``undef``
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+Enable reloading of apache if the content of ssl files have changed.
+
+Default value: ``false``
 
 ##### <a name="apache_version"></a>`apache_version`
 
@@ -7045,6 +7179,992 @@ A hash, where the key represents the name and the value represents a hash of
 
 Default value: `{}`
 
+### <a name="portage"></a>`portage`
+
+The portage class.
+
+#### Parameters
+
+The following parameters are available in the `portage` class:
+
+* [`make_conf`](#make_conf)
+* [`make_conf_remerge`](#make_conf_remerge)
+* [`portage_ensure`](#portage_ensure)
+* [`portage_keywords`](#portage_keywords)
+* [`portage_keywords_version`](#portage_keywords_version)
+* [`portage_use`](#portage_use)
+* [`eix_ensure`](#eix_ensure)
+* [`eix_keywords`](#eix_keywords)
+* [`eix_keywords_version`](#eix_keywords_version)
+* [`eix_use`](#eix_use)
+* [`layman_ensure`](#layman_ensure)
+* [`layman_keywords`](#layman_keywords)
+* [`layman_keywords_version`](#layman_keywords_version)
+* [`layman_use`](#layman_use)
+* [`layman_make_conf`](#layman_make_conf)
+* [`webapp_config_ensure`](#webapp_config_ensure)
+* [`webapp_config_keywords`](#webapp_config_keywords)
+* [`webapp_config_keywords_version`](#webapp_config_keywords_version)
+* [`webapp_config_use`](#webapp_config_use)
+* [`eselect_ensure`](#eselect_ensure)
+* [`eselect_keywords`](#eselect_keywords)
+* [`eselect_keywords_version`](#eselect_keywords_version)
+* [`eselect_use`](#eselect_use)
+* [`portage_utils_ensure`](#portage_utils_ensure)
+* [`portage_utils_keywords`](#portage_utils_keywords)
+* [`portage_utils_keywords_version`](#portage_utils_keywords_version)
+* [`portage_utils_use`](#portage_utils_use)
+* [`emerge_command`](#emerge_command)
+
+##### <a name="make_conf"></a>`make_conf`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::make_conf`
+
+##### <a name="make_conf_remerge"></a>`make_conf_remerge`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::make_conf_remerge`
+
+##### <a name="portage_ensure"></a>`portage_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_ensure`
+
+##### <a name="portage_keywords"></a>`portage_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_keywords`
+
+##### <a name="portage_keywords_version"></a>`portage_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_keywords_version`
+
+##### <a name="portage_use"></a>`portage_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_use`
+
+##### <a name="eix_ensure"></a>`eix_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eix_ensure`
+
+##### <a name="eix_keywords"></a>`eix_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eix_keywords`
+
+##### <a name="eix_keywords_version"></a>`eix_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eix_keywords_version`
+
+##### <a name="eix_use"></a>`eix_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eix_use`
+
+##### <a name="layman_ensure"></a>`layman_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::layman_ensure`
+
+##### <a name="layman_keywords"></a>`layman_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::layman_keywords`
+
+##### <a name="layman_keywords_version"></a>`layman_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::layman_keywords_version`
+
+##### <a name="layman_use"></a>`layman_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::layman_use`
+
+##### <a name="layman_make_conf"></a>`layman_make_conf`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::layman_make_conf`
+
+##### <a name="webapp_config_ensure"></a>`webapp_config_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::webapp_config_ensure`
+
+##### <a name="webapp_config_keywords"></a>`webapp_config_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::webapp_config_keywords`
+
+##### <a name="webapp_config_keywords_version"></a>`webapp_config_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::webapp_config_keywords_version`
+
+##### <a name="webapp_config_use"></a>`webapp_config_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::webapp_config_use`
+
+##### <a name="eselect_ensure"></a>`eselect_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eselect_ensure`
+
+##### <a name="eselect_keywords"></a>`eselect_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eselect_keywords`
+
+##### <a name="eselect_keywords_version"></a>`eselect_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eselect_keywords_version`
+
+##### <a name="eselect_use"></a>`eselect_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::eselect_use`
+
+##### <a name="portage_utils_ensure"></a>`portage_utils_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_utils_ensure`
+
+##### <a name="portage_utils_keywords"></a>`portage_utils_keywords`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_utils_keywords`
+
+##### <a name="portage_utils_keywords_version"></a>`portage_utils_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_utils_keywords_version`
+
+##### <a name="portage_utils_use"></a>`portage_utils_use`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::portage_utils_use`
+
+##### <a name="emerge_command"></a>`emerge_command`
+
+Data type: `Any`
+
+
+
+Default value: `$portage::params::emerge_command`
+
+### <a name="portageinstall"></a>`portage::install`
+
+The portage::install class.
+
+### <a name="portageparams"></a>`portage::params`
+
+= Class: portage::params
+
+Contains default values for portage.
+
+== Example
+
+This class does not need to be directly included.
+
+### <a name="puppet_agent"></a>`puppet_agent`
+
+== Class: puppet_agent
+
+Upgrades Puppet 4 and newer to the requested version.
+
+=== Parameters
+
+[arch]
+  The package architecture. Defaults to the architecture fact.
+[collection]
+  The Puppet Collection to track. Defaults to 'PC1'.
+[is_pe]
+  Install from Puppet Enterprise repos. Enabled if communicating with a PE master.
+[manage_pki_dir]
+  Whether or not to manage the /etc/pki directory.  Defaults to true.
+  Managing the /etc/pki directory inside the puppet_agent module can be problematic for
+  organizations that manage gpg keys and settings in other modules.
+[manage_repo]
+  Boolean to determine whether to configure repositories
+  This is intended to provide the ability to disable configuring a local repo
+  in support of systems that manage external repositories (i.e. spacewalk/satellite)
+  to enable users to add the proper packages to their internal repos
+  and to utilize default package providers for the install
+[package_name]
+  The package to upgrade to, i.e. `puppet-agent`.
+[package_version]
+  The package version to upgrade to. Explicitly specify the version to upgrade to,
+  or set to 'auto' to specify the version of the compiling master.
+[service_names]
+  An array of services to start, normally `puppet` and `mcollective`.
+  None will be started if the array is empty.
+[source]
+  **INCLUDED FOR COMPATIBILITY WITH MODULE VERSIONS 1.0/2.0. PREFER USE OF "absolute_source",
+  "apt_source", "deb_source" etc. OVER USE OF "source".**
+
+  The location to find packages. Replaces base URL for unix/MacOS agents, used as fully
+  qualified path in windows
+[absolute_source]
+  The exact location of the package to install. The entire path to the package must be
+  provided with this parameter.
+[yum_source]
+  Base URL of the location of mirrors of yum.puppet.com downloads sites. Directories under
+  the URL "yum_source" should match the structure of the yum.puppet.com
+[apt_source]
+  Base URL of the location of mirrors of apt.puppet.com downloads sites. Directories under
+  the URL "apt_source" should match the structure of the apt.puppet.com
+[mac_source]
+  Base URL of the location of mirrors of downloads.puppet.com downloads site that serves
+  MacOS packages. Directories under the URL "mac_source" should match the structure of the
+  downloads.puppet.com site
+[windows_source]
+  Base URL of the location of mirrors of downloads.puppet.com downloads site that serves
+  Windows packages. Directories under the URL "windows_source" should match the structure of
+  the downloads.puppet.com site
+[solaris_source]
+  Base URL of the location of a mirror for Solaris packages. Currently, solaris packages can
+  only be made available by using puppetlabs-pe_repo. This means the mirror must be of a
+  PE master package serve.
+[aix_source]
+  Base URL of the location of a mirror for AIX packages. Currently, AIX packages can
+  only be made available by using puppetlabs-pe_repo. This means the mirror must be of a
+  PE master package serve.
+[use_alternate_sources]
+  **ONLY APPLICABLE WHEN WORKING WITH PE INSTALLTIONS**
+  When set to true will force downloads to come from the values of $apt_source, $deb_source
+  $mac_source etc. rather than from the default PE master package serve. Note that this will
+  also force downloads to ignore alternate_pe_source
+[alternate_pe_source]
+  Base URL of the location where packages are located in the same structure that's served
+  by a PE master (the directory structure in PE for serving packages is created by the
+  puppetlabs-pe_repo module). The general structure served by PE is:
+  /packages/${pe_server_version}/${platform_tag}/${package_name}
+[install_dir]
+  The directory the puppet agent should be installed to. This is only applicable for
+  windows operating systems. This only applies when upgrading the agent to a new
+  version; it will not cause re-installation of the same version to a new location.
+[install_options]
+  An array of additional options to pass when installing puppet-agent. Each option in
+  the array can either be a string or a hash. Each option will automatically be quoted
+  when passed to the install command. With Windows packages, note that file paths in an
+  install option must use backslashes. (Since install options are passed directly to
+  the installation command, forward slashes won't be automatically converted like they
+  are in `file` resources.) Note also that backslashes in double-quoted strings _must_
+  be escaped and backslashes in single-quoted strings _can_ be escaped.
+[msi_move_locked_files]
+  This is only applicable for Windows operating systems. There may be instances where
+  file locks cause unncessary service restarts.  By setting to true, the module
+  will move files prior to installation that are known to cause file locks.
+[wait_for_pxp_agent_exit]
+  This parameter is only applicable for Windows operating systems and pertains to the
+  /files/install_agent.ps1 script. This parameterizes the module to define the wait time
+  for the PXP agent to end successfully. The default value is set 2 minutes.
+[wait_for_puppet_run]
+  This parameter is only applicable for Windows operating systems and pertains to the
+  /files/install_agent.ps1 script. This parameterizes the module to define the wait time
+  for the current puppet agent run to end successfully. The default value is set 2 minutes.
+[config]
+  An array of configuration data to enforce. Each configuration data item must be a
+  Puppet_agent::Config hash, which has keys for puppet.conf section, setting, and value.
+  This parameter is constrained to managing only a predetermined set of configuration
+  settings, e.g. runinterval.
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent` class:
+
+* [`arch`](#arch)
+* [`collection`](#collection)
+* [`is_pe`](#is_pe)
+* [`manage_pki_dir`](#manage_pki_dir)
+* [`manage_repo`](#manage_repo)
+* [`package_name`](#package_name)
+* [`package_version`](#package_version)
+* [`service_names`](#service_names)
+* [`source`](#source)
+* [`absolute_source`](#absolute_source)
+* [`yum_source`](#yum_source)
+* [`apt_source`](#apt_source)
+* [`mac_source`](#mac_source)
+* [`windows_source`](#windows_source)
+* [`solaris_source`](#solaris_source)
+* [`aix_source`](#aix_source)
+* [`use_alternate_sources`](#use_alternate_sources)
+* [`alternate_pe_source`](#alternate_pe_source)
+* [`install_dir`](#install_dir)
+* [`disable_proxy`](#disable_proxy)
+* [`install_options`](#install_options)
+* [`skip_if_unavailable`](#skip_if_unavailable)
+* [`msi_move_locked_files`](#msi_move_locked_files)
+* [`wait_for_pxp_agent_exit`](#wait_for_pxp_agent_exit)
+* [`wait_for_puppet_run`](#wait_for_puppet_run)
+* [`config`](#config)
+
+##### <a name="arch"></a>`arch`
+
+Data type: `Any`
+
+
+
+Default value: `$::architecture`
+
+##### <a name="collection"></a>`collection`
+
+Data type: `Any`
+
+
+
+Default value: `$::puppet_agent::params::collection`
+
+##### <a name="is_pe"></a>`is_pe`
+
+Data type: `Any`
+
+
+
+Default value: `$::puppet_agent::params::_is_pe`
+
+##### <a name="manage_pki_dir"></a>`manage_pki_dir`
+
+Data type: `Any`
+
+
+
+Default value: ``true``
+
+##### <a name="manage_repo"></a>`manage_repo`
+
+Data type: `Any`
+
+
+
+Default value: ``true``
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `Any`
+
+
+
+Default value: `'puppet-agent'`
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="service_names"></a>`service_names`
+
+Data type: `Any`
+
+
+
+Default value: `$::puppet_agent::params::service_names`
+
+##### <a name="source"></a>`source`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="absolute_source"></a>`absolute_source`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="yum_source"></a>`yum_source`
+
+Data type: `Any`
+
+
+
+Default value: `'http://yum.puppet.com'`
+
+##### <a name="apt_source"></a>`apt_source`
+
+Data type: `Any`
+
+
+
+Default value: `'https://apt.puppet.com'`
+
+##### <a name="mac_source"></a>`mac_source`
+
+Data type: `Any`
+
+
+
+Default value: `'https://downloads.puppet.com'`
+
+##### <a name="windows_source"></a>`windows_source`
+
+Data type: `Any`
+
+
+
+Default value: `'https://downloads.puppet.com'`
+
+##### <a name="solaris_source"></a>`solaris_source`
+
+Data type: `Any`
+
+
+
+Default value: `'puppet:///pe_packages'`
+
+##### <a name="aix_source"></a>`aix_source`
+
+Data type: `Any`
+
+
+
+Default value: `'puppet:///pe_packages'`
+
+##### <a name="use_alternate_sources"></a>`use_alternate_sources`
+
+Data type: `Any`
+
+
+
+Default value: ``false``
+
+##### <a name="alternate_pe_source"></a>`alternate_pe_source`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="install_dir"></a>`install_dir`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="disable_proxy"></a>`disable_proxy`
+
+Data type: `Any`
+
+
+
+Default value: ``false``
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+##### <a name="skip_if_unavailable"></a>`skip_if_unavailable`
+
+Data type: `Any`
+
+
+
+Default value: `'absent'`
+
+##### <a name="msi_move_locked_files"></a>`msi_move_locked_files`
+
+Data type: `Any`
+
+
+
+Default value: ``false``
+
+##### <a name="wait_for_pxp_agent_exit"></a>`wait_for_pxp_agent_exit`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="wait_for_puppet_run"></a>`wait_for_puppet_run`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="config"></a>`config`
+
+Data type: `Array[Puppet_agent::Config]`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentconfigure"></a>`puppet_agent::configure`
+
+The puppet_agent::configure class.
+
+### <a name="puppet_agentinstall"></a>`puppet_agent::install`
+
+== Class puppet_agent::install
+
+This class is called from puppet_agent for install.
+
+=== Parameters
+
+[version]
+  The puppet-agent version to install.
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::install` class:
+
+* [`package_version`](#package_version)
+* [`install_dir`](#install_dir)
+* [`install_options`](#install_options)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+Default value: `'present'`
+
+##### <a name="install_dir"></a>`install_dir`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentinstalldarwin"></a>`puppet_agent::install::darwin`
+
+== Class puppet_agent::install::darwin
+
+Private class called from puppet_agent class
+
+Manage the install process for Darwin OSes specifically
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::install::darwin` class:
+
+* [`package_version`](#package_version)
+* [`install_options`](#install_options)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentinstallsolaris"></a>`puppet_agent::install::solaris`
+
+== Class puppet_agent::install::solaris
+
+Private class called from puppet_agent class
+
+Manage the install process for solaris specifically
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::install::solaris` class:
+
+* [`package_version`](#package_version)
+* [`install_options`](#install_options)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentinstallsuse"></a>`puppet_agent::install::suse`
+
+== Class puppet_agent::install::suse
+
+Private class called from puppet_agent class
+
+Manage the install process for SUSE OSes specifically
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::install::suse` class:
+
+* [`package_version`](#package_version)
+* [`install_options`](#install_options)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentinstallwindows"></a>`puppet_agent::install::windows`
+
+== Class puppet_agent::install::windows
+
+Private class called from puppet_agent class
+
+Manage the install process for windows specifically
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::install::windows` class:
+
+* [`install_dir`](#install_dir)
+* [`install_options`](#install_options)
+
+##### <a name="install_dir"></a>`install_dir`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="install_options"></a>`install_options`
+
+Data type: `Any`
+
+
+
+Default value: `[]`
+
+### <a name="puppet_agentosfamilyaix"></a>`puppet_agent::osfamily::aix`
+
+The puppet_agent::osfamily::aix class.
+
+### <a name="puppet_agentosfamilydarwin"></a>`puppet_agent::osfamily::darwin`
+
+The puppet_agent::osfamily::darwin class.
+
+### <a name="puppet_agentosfamilydebian"></a>`puppet_agent::osfamily::debian`
+
+The puppet_agent::osfamily::debian class.
+
+### <a name="puppet_agentosfamilyredhat"></a>`puppet_agent::osfamily::redhat`
+
+The puppet_agent::osfamily::redhat class.
+
+### <a name="puppet_agentosfamilysolaris"></a>`puppet_agent::osfamily::solaris`
+
+The puppet_agent::osfamily::solaris class.
+
+### <a name="puppet_agentosfamilysuse"></a>`puppet_agent::osfamily::suse`
+
+The puppet_agent::osfamily::suse class.
+
+### <a name="puppet_agentosfamilywindows"></a>`puppet_agent::osfamily::windows`
+
+The puppet_agent::osfamily::windows class.
+
+### <a name="puppet_agentparams"></a>`puppet_agent::params`
+
+== Class puppet_agent::params
+
+This class is meant to be called from puppet_agent
+It sets variables according to platform.
+
+### <a name="puppet_agentprepare"></a>`puppet_agent::prepare`
+
+== Class puppet_agent::prepare
+
+This class is called from puppet_agent to prepare for the upgrade.
+
+=== Parameters
+
+[version]
+  The puppet-agent version to install.
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::prepare` class:
+
+* [`package_version`](#package_version)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+### <a name="puppet_agentpreparepackage"></a>`puppet_agent::prepare::package`
+
+== Class puppet_agent::prepare::package
+
+The only job this class has is to ensure that the correct puppet-agent
+package is downloaded locally for installation.  This is used on platforms
+without package managers capable of working with a remote https repository.
+
+[package_file_name]
+  The puppet-agent package file to retrieve from the master.
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::prepare::package` class:
+
+* [`source`](#source)
+
+##### <a name="source"></a>`source`
+
+Data type: `Any`
+
+
+
+### <a name="puppet_agentpreparepuppet_config"></a>`puppet_agent::prepare::puppet_config`
+
+== Class puppet_agent::prepare::puppet_config
+
+Private class called from puppet_agent::prepare class
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::prepare::puppet_config` class:
+
+* [`package_version`](#package_version)
+
+##### <a name="package_version"></a>`package_version`
+
+Data type: `Any`
+
+
+
+### <a name="puppet_agentservice"></a>`puppet_agent::service`
+
+== Class puppet_agent::service
+
+This class is meant to be called from puppet_agent.
+It ensures that managed services are running.
+
+### <a name="stdlib"></a>`stdlib`
+
+Most of stdlib's features are automatically loaded by Puppet, but this class should be
+declared in order to use the standardized run stages.
+
+Declares all other classes in the stdlib module. Currently, this consists
+of stdlib::stages.
+
+### <a name="stdlibstages"></a>`stdlib::stages`
+
+Declares various run-stages for deploying infrastructure,
+language runtimes, and application layers.
+
+The high level stages are (in order):
+ * setup
+ * main
+ * runtime
+ * setup_infra
+ * deploy_infra
+ * setup_app
+ * deploy_app
+ * deploy
+
+#### Examples
+
+##### 
+
+```puppet
+node default {
+  include ::stdlib
+  class { java: stage => 'runtime' }
+}
+```
+
+### <a name="testbase32"></a>`test::base32`
+
+Class to test the Stdlib::Base32 type alias
+
+#### Parameters
+
+The following parameters are available in the `test::base32` class:
+
+* [`value`](#value)
+
+##### <a name="value"></a>`value`
+
+Data type: `Stdlib::Base32`
+
+
+
+### <a name="testbase64"></a>`test::base64`
+
+Class to test the Stdlib::Base64 type alias
+
+#### Parameters
+
+The following parameters are available in the `test::base64` class:
+
+* [`value`](#value)
+
+##### <a name="value"></a>`value`
+
+Data type: `Stdlib::Base64`
+
+
+
+### <a name="testensure_resources"></a>`test::ensure_resources`
+
+A helper class to test the ensure_resources function
+
+#### Parameters
+
+The following parameters are available in the `test::ensure_resources` class:
+
+* [`resource_type`](#resource_type)
+* [`title_hash`](#title_hash)
+* [`attributes_hash`](#attributes_hash)
+
+##### <a name="resource_type"></a>`resource_type`
+
+Data type: `Any`
+
+
+
+##### <a name="title_hash"></a>`title_hash`
+
+Data type: `Any`
+
+
+
+##### <a name="attributes_hash"></a>`attributes_hash`
+
+Data type: `Any`
+
+
+
 ## Defined types
 
 ### <a name="apachebalancer"></a>`apache::balancer`
@@ -7523,6 +8643,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`ssl_crl`](#ssl_crl)
 * [`ssl_crl_check`](#ssl_crl_check)
 * [`ssl_certs_dir`](#ssl_certs_dir)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`ssl_protocol`](#ssl_protocol)
 * [`ssl_cipher`](#ssl_cipher)
 * [`ssl_honorcipherorder`](#ssl_honorcipherorder)
@@ -7917,6 +9038,14 @@ Data type: `Any`
 
 
 Default value: `$apache::params::ssl_certs_dir`
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+
+
+Default value: `$apache::default_ssl_reload_on_change`
 
 ##### <a name="ssl_protocol"></a>`ssl_protocol`
 
@@ -9835,170 +10964,694 @@ Data type: `Optional[Integer[0]]`
 
 Default value: ``undef``
 
-## Resource types
+### <a name="concat"></a>`concat`
 
-### <a name="a2mod"></a>`a2mod`
-
-Manage Apache 2 modules
-
-#### Properties
-
-The following properties are available in the `a2mod` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-#### Parameters
-
-The following parameters are available in the `a2mod` type.
-
-* [`identifier`](#identifier)
-* [`lib`](#lib)
-* [`name`](#name)
-* [`provider`](#provider)
-
-##### <a name="identifier"></a>`identifier`
-
-Module identifier string used by LoadModule. Default: module-name_module
-
-##### <a name="lib"></a>`lib`
-
-The name of the .so library to be loaded
-
-##### <a name="name"></a>`name`
-
-namevar
-
-The name of the module to be managed
-
-##### <a name="provider"></a>`provider`
-
-The specific backend to use for this `a2mod` resource. You will seldom need to specify this --- Puppet will usually
-discover the appropriate provider for your platform.
-
-## Functions
-
-### <a name="apacheapache_pw_hash"></a>`apache::apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache::apache_pw_hash(Any *$args)`
-
-The apache::apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
-### <a name="apachebool2httpd"></a>`apache::bool2httpd`
-
-Type: Ruby 4.x API
-
-Transform a supposed boolean to On or Off. Passes all other values through.
+Manages a file, compiled from one or more text fragments.
 
 #### Examples
 
 ##### 
 
 ```puppet
-$trace_enable     = false
-$server_signature = 'mail'
-
-apache::bool2httpd($trace_enable) # returns 'Off'
-apache::bool2httpd($server_signature) # returns 'mail'
-apache::bool2httpd(undef) # returns 'Off'
+concat { '/tmp/concat':
+  ensure => present,
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0644',
+}
 ```
 
-#### `apache::bool2httpd(Any $arg)`
+#### Parameters
 
-The apache::bool2httpd function.
+The following parameters are available in the `concat` defined type:
 
-Returns: `Any` Will return either `On` or `Off` if given a boolean value. Returns a string of any
-other given value.
+* [`backup`](#backup)
+* [`ensure`](#ensure)
+* [`ensure_newline`](#ensure_newline)
+* [`format`](#format)
+* [`force`](#force)
+* [`group`](#group)
+* [`mode`](#mode)
+* [`order`](#order)
+* [`owner`](#owner)
+* [`path`](#path)
+* [`replace`](#replace)
+* [`selinux_ignore_defaults`](#selinux_ignore_defaults)
+* [`selrange`](#selrange)
+* [`selrole`](#selrole)
+* [`seltype`](#seltype)
+* [`seluser`](#seluser)
+* [`show_diff`](#show_diff)
+* [`validate_cmd`](#validate_cmd)
+* [`warn`](#warn)
 
-##### Examples
+##### <a name="backup"></a>`backup`
 
-###### 
+Data type: `Variant[Boolean, String]`
 
-```puppet
-$trace_enable     = false
-$server_signature = 'mail'
+Specifies whether (and how) to back up the destination file before overwriting it. Your value gets passed on to Puppet's native file
+resource for execution. Valid options: true, false, or a string representing either a target filebucket or a filename extension
+beginning with ".".
 
-apache::bool2httpd($trace_enable) # returns 'Off'
-apache::bool2httpd($server_signature) # returns 'mail'
-apache::bool2httpd(undef) # returns 'Off'
-```
+Default value: `'puppet'`
 
-##### `arg`
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Enum['present', 'absent']`
+
+Specifies whether the destination file should exist. Setting to 'absent' tells Puppet to delete the destination file if it exists, and
+negates the effect of any other parameters.
+
+Default value: `'present'`
+
+##### <a name="ensure_newline"></a>`ensure_newline`
+
+Data type: `Boolean`
+
+Specifies whether to add a line break at the end of each fragment that doesn't already end in one.
+
+Default value: ``false``
+
+##### <a name="format"></a>`format`
+
+Data type: `Optional[String]`
+
+Specify what data type to merge the fragments as. Valid options: 'plain', 'yaml', 'json', 'json-array', 'json-pretty',
+'json-array-pretty'.
+
+Default value: `'plain'`
+
+##### <a name="force"></a>`force`
+
+Data type: `Optional[Boolean]`
+
+Specifies whether to merge data structures, keeping the values with higher order. Used when format is specified as a value other than
+'plain'.
+
+Default value: ``false``
+
+##### <a name="group"></a>`group`
+
+Data type: `Optional[Variant[String, Integer]]`
+
+Specifies a permissions group for the destination file. Valid options: a string containing a group name or integer containing a gid.
+
+Default value: ``undef``
+
+##### <a name="mode"></a>`mode`
+
+Data type: `String`
+
+Specifies the permissions mode of the destination file. Valid options: a string containing a permission mode value in octal notation.
+
+Default value: `'0644'`
+
+##### <a name="order"></a>`order`
+
+Data type: `Enum['alpha','numeric']`
+
+Specifies a method for sorting your fragments by name within the destination file. You can override this setting for individual
+fragments by adjusting the order parameter in their concat::fragment declarations.
+
+Default value: `'alpha'`
+
+##### <a name="owner"></a>`owner`
+
+Data type: `Optional[Variant[String, Integer]]`
+
+Specifies the owner of the destination file. Valid options: a string containing a username or integer containing a uid.
+
+Default value: ``undef``
+
+##### <a name="path"></a>`path`
+
+Data type: `Stdlib::Absolutepath`
+
+Specifies a destination file for the combined fragments.
+
+Default value: `$name`
+
+##### <a name="replace"></a>`replace`
+
+Data type: `Boolean`
+
+Specifies whether to overwrite the destination file if it already exists.
+
+Default value: ``true``
+
+##### <a name="selinux_ignore_defaults"></a>`selinux_ignore_defaults`
+
+Data type: `Optional[Boolean]`
+
+See the file type's selinux_ignore_defaults documentention:
+https://docs.puppetlabs.com/references/latest/type.html#file-attribute-selinux_ignore_defaults
+
+Default value: ``undef``
+
+##### <a name="selrange"></a>`selrange`
+
+Data type: `Optional[String]`
+
+See the file type's selrange documentention: https://docs.puppetlabs.com/references/latest/type.html#file-attribute-selrange
+
+Default value: ``undef``
+
+##### <a name="selrole"></a>`selrole`
+
+Data type: `Optional[String]`
+
+See the file type's selrole documentention: https://docs.puppetlabs.com/references/latest/type.html#file-attribute-selrole
+
+Default value: ``undef``
+
+##### <a name="seltype"></a>`seltype`
+
+Data type: `Optional[String]`
+
+See the file type's seltype documentention: https://docs.puppetlabs.com/references/latest/type.html#file-attribute-seltype
+
+Default value: ``undef``
+
+##### <a name="seluser"></a>`seluser`
+
+Data type: `Optional[String]`
+
+See the file type's seluser documentention: https://docs.puppetlabs.com/references/latest/type.html#file-attribute-seluser
+
+Default value: ``undef``
+
+##### <a name="show_diff"></a>`show_diff`
+
+Data type: `Boolean`
+
+Specifies whether to set the show_diff parameter for the file resource. Useful for hiding secrets stored in hiera from insecure
+reporting methods.
+
+Default value: ``true``
+
+##### <a name="validate_cmd"></a>`validate_cmd`
+
+Data type: `Optional[String]`
+
+Specifies a validation command to apply to the destination file.
+
+Default value: ``undef``
+
+##### <a name="warn"></a>`warn`
+
+Data type: `Variant[Boolean, String]`
+
+Specifies whether to add a header message at the top of the destination file. Valid options: the booleans true and false, or a string
+to serve as the header.
+If you set 'warn' to true, concat adds the following line with an order of 0:
+`# This file is managed by Puppet. DO NOT EDIT.`
+Before 2.0.0, this parameter would add a newline at the end of the warn message. To improve flexibilty, this was removed. Please add
+it explicitly if you need it.
+
+Default value: ``false``
+
+### <a name="concatfragment"></a>`concat::fragment`
+
+Manages a fragment of text to be compiled into a file.
+
+#### Parameters
+
+The following parameters are available in the `concat::fragment` defined type:
+
+* [`content`](#content)
+* [`order`](#order)
+* [`source`](#source)
+* [`target`](#target)
+
+##### <a name="content"></a>`content`
+
+Data type: `Optional[Any]`
+
+Supplies the content of the fragment. Note: You must supply either a content parameter or a source parameter.
+Allows a String or a Deferred function which returns a String.
+
+Default value: ``undef``
+
+##### <a name="order"></a>`order`
+
+Data type: `Variant[String, Integer]`
+
+Reorders your fragments within the destination file. Fragments that share the same order number are ordered by name. The string
+option is recommended.
+
+Default value: `'10'`
+
+##### <a name="source"></a>`source`
+
+Data type: `Optional[Variant[String, Array]]`
+
+Specifies a file to read into the content of the fragment. Note: You must supply either a content parameter or a source parameter.
+Valid options: a string or an array, containing one or more Puppet URLs.
+
+Default value: ``undef``
+
+##### <a name="target"></a>`target`
+
+Data type: `String`
+
+Specifies the destination file of the fragment. Valid options: a string containing the path or title of the parent concat resource.
+
+### <a name="portagemakeconf"></a>`portage::makeconf`
+
+The portage::makeconf class.
+
+#### Parameters
+
+The following parameters are available in the `portage::makeconf` defined type:
+
+* [`ensure`](#ensure)
+* [`content`](#content)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Any`
 
-The value to be converted into a string.
 
-### <a name="apachepw_hash"></a>`apache::pw_hash`
 
-Type: Ruby 4.x API
+Default value: `present`
 
-Currently uses SHA-hashes, because although this format is considered insecure, it's the
-most secure format supported by the most platforms.
-
-#### `apache::pw_hash(String[1] $password)`
-
-Currently uses SHA-hashes, because although this format is considered insecure, it's the
-most secure format supported by the most platforms.
-
-Returns: `String` Returns the hash of the input that was given.
-
-##### `password`
-
-Data type: `String[1]`
-
-The input that is to be hashed.
-
-### <a name="apache_pw_hash"></a>`apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache_pw_hash(Any *$args)`
-
-The apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
+##### <a name="content"></a>`content`
 
 Data type: `Any`
 
 
 
-### <a name="bool2httpd"></a>`bool2httpd`
+Default value: ``undef``
 
-Type: Ruby 4.x API
+### <a name="portagepackage"></a>`portage::package`
 
-DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
+= Define: portage::package
 
-#### `bool2httpd(Any *$args)`
+Configures and install portage backed packages
 
-The bool2httpd function.
+== Parameters
 
-Returns: `Any`
+[*ensure*]
 
-##### `*args`
+The ensure value of the package.
+
+[*use*]
+
+Use flags for the package.
+
+[*keywords*]
+
+Portage keywords for the package.
+
+[*accept_keywords*]
+
+Portage accept_keywords for the package.
+
+[*target*]
+
+A default value for package.* targets
+
+[*use_target*]
+
+An optional custom target for package use flags
+
+[*keywords_target*]
+
+An optional custom target for package keywords
+
+[*accept_keywords_target*]
+
+An optional custom target for package accept_keywords
+
+[*mask_target*]
+
+An optional custom target for package masks
+
+[*unmask_target*]
+
+An optional custom target for package unmasks
+
+[*use_version*]
+
+An optional version specification for package use
+
+[*use_slot*]
+
+An optional slot specification for package use
+
+[*keywords_version*]
+
+An optional version specification for package keywords
+
+[*keywords_slot*]
+
+An optional slot specification for package keywords
+
+[*accept_keywords_version*]
+
+An optional version specification for package accept_keywords
+
+[*accept_keywords_slot*]
+
+An optional slot specification for package accept_keywords
+
+[*mask_version*]
+
+An optional version specification for package mask
+
+[*mask_slot*]
+
+An optional slot specification for package mask
+
+[*unmask_version*]
+
+An optional version specification for package unmask
+
+[*unmask_slot*]
+
+An optional slot specification for package unmask
+
+== Example
+
+    portage::package { 'app-admin/puppet':
+      ensure       => '3.0.1',
+      use          => ['augeas', '-rrdtool'],
+      accept_keywords     => '~amd64',
+      target       => 'puppet',
+      mask_version => '<=2.7.18',
+    }
+
+== See Also
+
+ * `puppet describe package_use`
+ * `puppet describe package_keywords`
+ * `puppet describe package_accept_keywords`
+ * `puppet describe package_mask`
+ * `puppet describe package_unmask`
+
+#### Parameters
+
+The following parameters are available in the `portage::package` defined type:
+
+* [`ensure`](#ensure)
+* [`use`](#use)
+* [`use_version`](#use_version)
+* [`use_slot`](#use_slot)
+* [`keywords`](#keywords)
+* [`keywords_version`](#keywords_version)
+* [`keywords_slot`](#keywords_slot)
+* [`accept_keywords`](#accept_keywords)
+* [`accept_keywords_version`](#accept_keywords_version)
+* [`accept_keywords_slot`](#accept_keywords_slot)
+* [`mask_version`](#mask_version)
+* [`mask_slot`](#mask_slot)
+* [`unmask_version`](#unmask_version)
+* [`unmask_slot`](#unmask_slot)
+* [`target`](#target)
+* [`use_target`](#use_target)
+* [`keywords_target`](#keywords_target)
+* [`accept_keywords_target`](#accept_keywords_target)
+* [`mask_target`](#mask_target)
+* [`unmask_target`](#unmask_target)
+* [`emerge_command`](#emerge_command)
+
+##### <a name="ensure"></a>`ensure`
 
 Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="use"></a>`use`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="use_version"></a>`use_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="use_slot"></a>`use_slot`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="keywords"></a>`keywords`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="keywords_version"></a>`keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="keywords_slot"></a>`keywords_slot`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="accept_keywords"></a>`accept_keywords`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="accept_keywords_version"></a>`accept_keywords_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="accept_keywords_slot"></a>`accept_keywords_slot`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="mask_version"></a>`mask_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="mask_slot"></a>`mask_slot`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="unmask_version"></a>`unmask_version`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="unmask_slot"></a>`unmask_slot`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="target"></a>`target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="use_target"></a>`use_target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="keywords_target"></a>`keywords_target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="accept_keywords_target"></a>`accept_keywords_target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="mask_target"></a>`mask_target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="unmask_target"></a>`unmask_target`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="emerge_command"></a>`emerge_command`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+### <a name="portagepostsync"></a>`portage::postsync`
+
+= Define: portage::postsync
+
+Install custom postsync scripts
+
+== Parameters
+
+[*ensure*]
+
+The ensure value for the scrypt
+
+[*content*]
+
+The content of the script.
+
+[*source*]
+
+The source path to the script
+
+== Example
+
+    portage::postsync { 'system-bell':
+      ensure  => present,
+      content => "#!/bin/sh\necho -e \"\\a\""
+    }
+
+    portage::postsync { 'regen-layman-cache':
+      ensure => present,
+      source => 'puppet:///modules/site-files/regen-layman-cache.sh',
+    }
+
+== See Also
+
+* portage-utils: http://www.gentoo.org/doc/en/portage-utils.xml
+
+#### Parameters
+
+The following parameters are available in the `portage::postsync` defined type:
+
+* [`ensure`](#ensure)
+* [`content`](#content)
+* [`source`](#source)
+
+##### <a name="ensure"></a>`ensure`
+
+Data type: `Any`
+
+
+
+Default value: `'present'`
+
+##### <a name="content"></a>`content`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+##### <a name="source"></a>`source`
+
+Data type: `Any`
+
+
+
+Default value: ``undef``
+
+### <a name="testdeftype"></a>`test::deftype`
+
+Class to test deftype
+
+#### Parameters
+
+The following parameters are available in the `test::deftype` defined type:
+
+* [`param`](#param)
+
+##### <a name="param"></a>`param`
+
+Data type: `Any`
+
+
+
+Default value: `'foo'`
+
+## Functions
+
+### <a name="stdlibensure"></a>`stdlib::ensure`
+
+Type: Puppet Language
+
+function to cast ensure parameter to resource specific value
+
+#### `stdlib::ensure(Variant[Boolean, Enum['present', 'absent']] $ensure, Enum['directory', 'link', 'mounted', 'service', 'file'] $resource)`
+
+The stdlib::ensure function.
+
+Returns: `String`
+
+##### `ensure`
+
+Data type: `Variant[Boolean, Enum['present', 'absent']]`
+
+
+
+##### `resource`
+
+Data type: `Enum['directory', 'link', 'mounted', 'service', 'file']`
 
 
 
@@ -10156,25 +11809,790 @@ Struct[{
   }]
 ```
 
-## Tasks
+### <a name="puppet_agentarch"></a>`Puppet_agent::Arch`
 
-### <a name="init"></a>`init`
+The Puppet_agent::Arch data type.
 
-Allows you to perform apache service functions
+Alias of
 
-**Supports noop?** false
+```puppet
+Pattern[/^x86$/, /^x64$/, /^i386$/, /^i86pc$/, /^amd64$/, /^x86_64$/, /^power$/, /^sun4[uv]$/, /^ppc64le$/, /^aarch64$/, /PowerPC_POWER/]
+```
+
+### <a name="puppet_agentconfig"></a>`Puppet_agent::Config`
+
+The Puppet_agent::Config data type.
+
+Alias of
+
+```puppet
+Variant[Struct[{section          => Enum[main, server, agent, user, master],
+                                            setting          => Puppet_agent::Config_setting,
+                                            value            => String,
+                                            Optional[ensure] => Enum[present, absent]}], Struct[{section          => Enum[main, server, agent, user, master],
+                                            setting          => Puppet_agent::Config_setting,
+                                            Optional[ensure] => Enum[absent]}]]
+```
+
+### <a name="puppet_agentconfig_setting"></a>`Puppet_agent::Config_setting`
+
+An enumerated list of settings which are permitted to be managed by this
+module.
+
+Alias of
+
+```puppet
+Enum[environment, http_connect_timeout, http_read_timeout, log_level, runinterval, show_diff, splay, splaylimit, usecacheonfailure]
+```
+
+### <a name="stdlibabsolutepath"></a>`Stdlib::Absolutepath`
+
+A strict absolutepath type
+
+Alias of
+
+```puppet
+Variant[Stdlib::Windowspath, Stdlib::Unixpath]
+```
+
+### <a name="stdlibbase32"></a>`Stdlib::Base32`
+
+Type to match base32 String
+
+Alias of
+
+```puppet
+Pattern[/\A[a-z2-7]+={,6}\z/, /\A[A-Z2-7]+={,6}\z/]
+```
+
+### <a name="stdlibbase64"></a>`Stdlib::Base64`
+
+Type to match base64 String
+
+Alias of
+
+```puppet
+Pattern[/\A[a-zA-Z0-9\/\+]+={,2}\z/]
+```
+
+### <a name="stdlibcompatabsolute_path"></a>`Stdlib::Compat::Absolute_path`
+
+Emulate the is_absolute_path and validate_absolute_path functions
+
+The first pattern is originally from is_absolute_path, which had it from 2.7.x's lib/puppet/util.rb Puppet::Util.absolute_path?
+slash = '[\\\\/]'
+name = '[^\\\\/]+'
+%r!^(([A-Z]:#{slash})|(#{slash}#{slash}#{name}#{slash}#{name})|(#{slash}#{slash}\?#{slash}#{name}))!i,
+
+Alias of
+
+```puppet
+Variant[Pattern[/^(([a-zA-Z]:[\\\/])|([\\\/][\\\/][^\\\/]+[\\\/][^\\\/]+)|([\\\/][\\\/]\?[\\\/][^\\\/]+))/], Pattern[/^\//]]
+```
+
+### <a name="stdlibcompatarray"></a>`Stdlib::Compat::Array`
+
+Emulate the is_array and validate_array functions
+
+Alias of
+
+```puppet
+Array[Any]
+```
+
+### <a name="stdlibcompatbool"></a>`Stdlib::Compat::Bool`
+
+Emulate the is_bool and validate_bool functions
+
+Alias of
+
+```puppet
+Boolean
+```
+
+### <a name="stdlibcompatfloat"></a>`Stdlib::Compat::Float`
+
+Emulate the is_float function
+The regex is what's currently used in is_float
+To keep your development moving forward, you can also add a deprecation warning using the Integer type:
+
+```class example($value) { validate_float($value,) }```
+
+would turn into
+
+```
+class example(Stdlib::Compat::Float $value) {
+  validate_float($value, 10, 0)
+  assert_type(Integer[0, 10], $value) |$expected, $actual| {
+    warning("The 'value' parameter for the 'ntp' class has type ${actual}, but should be ${expected}.")
+  }
+}
+```
+
+This allows you to find all places where a consumers of your code call it with unexpected values.
+
+Alias of
+
+```puppet
+Variant[Float, Pattern[/^-?(?:(?:[1-9]\d*)|0)(?:\.\d+)(?:[eE]-?\d+)?$/]]
+```
+
+### <a name="stdlibcompathash"></a>`Stdlib::Compat::Hash`
+
+Emulate the is_hash and validate_hash functions
+
+Alias of
+
+```puppet
+Hash[Any, Any]
+```
+
+### <a name="stdlibcompatinteger"></a>`Stdlib::Compat::Integer`
+
+Emulate the is_integer and validate_integer functions
+The regex is what's currently used in is_integer
+validate_numeric also allows range checking, which cannot be mapped to the string parsing inside the function.
+For full backwards compatibility, you will need to keep the validate_numeric call around to catch everything.
+To keep your development moving forward, you can also add a deprecation warning using the Integer type:
+
+```class example($value) { validate_integer($value, 10, 0) }```
+
+would turn into
+
+```
+class example(Stdlib::Compat::Integer $value) {
+  validate_numeric($value, 10, 0)
+  assert_type(Integer[0, 10], $value) |$expected, $actual| {
+    warning("The 'value' parameter for the 'ntp' class has type ${actual}, but should be ${expected}.")
+  }
+}
+```
+
+> Note that you need to use Variant[Integer[0, 10], Float[0, 10]] if you want to match both integers and floating point numbers.
+
+This allows you to find all places where a consumers of your code call it with unexpected values.
+
+Alias of
+
+```puppet
+Variant[Integer, Pattern[/^-?(?:(?:[1-9]\d*)|0)$/], Array[Variant[Integer, Pattern[/^-?(?:(?:[1-9]\d*)|0)$/]]]]
+```
+
+### <a name="stdlibcompatip_address"></a>`Stdlib::Compat::Ip_address`
+
+The Stdlib::Compat::Ip_address data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::Compat::Ipv4, Stdlib::Compat::Ipv6]
+```
+
+### <a name="stdlibcompatipv4"></a>`Stdlib::Compat::Ipv4`
+
+Emulate the validate_ipv4_address and is_ipv4_address functions
+
+Alias of
+
+```puppet
+Pattern[/^((([0-9](?!\d)|[1-9][0-9](?!\d)|1[0-9]{2}(?!\d)|2[0-4][0-9](?!\d)|25[0-5](?!\d))[.]){3}([0-9](?!\d)|[1-9][0-9](?!\d)|1[0-9]{2}(?!\d)|2[0-4][0-9](?!\d)|25[0-5](?!\d)))(\/((([0-9](?!\d)|[1-9][0-9](?!\d)|1[0-9]{2}(?!\d)|2[0-4][0-9](?!\d)|25[0-5](?!\d))[.]){3}([0-9](?!\d)|[1-9][0-9](?!\d)|1[0-9]{2}(?!\d)|2[0-4][0-9](?!\d)|25[0-5](?!\d))|[0-9]+))?$/]
+```
+
+### <a name="stdlibcompatipv6"></a>`Stdlib::Compat::Ipv6`
+
+The Stdlib::Compat::Ipv6 data type.
+
+Alias of
+
+```puppet
+Pattern[/\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/]
+```
+
+### <a name="stdlibcompatnumeric"></a>`Stdlib::Compat::Numeric`
+
+Emulate the is_numeric and validate_numeric functions
+The regex is what's currently used in is_numeric
+validate_numeric also allows range checking, which cannot be mapped to the string parsing inside the function.
+For full backwards compatibility, you will need to keep the validate_numeric call around to catch everything.
+To keep your development moving forward, you can also add a deprecation warning using the Integer type:
+
+```class example($value) { validate_numeric($value, 10, 0) }```
+
+would turn into
+
+```
+class example(Stdlib::Compat::Numeric $value) {
+  validate_numeric($value, 10, 0)
+  assert_type(Integer[0, 10], $value) |$expected, $actual| {
+    warning("The 'value' parameter for the 'ntp' class has type ${actual}, but should be ${expected}.")
+  }
+}
+```
+
+> Note that you need to use Variant[Integer[0, 10], Float[0, 10]] if you want to match both integers and floating point numbers.
+
+This allows you to find all places where a consumers of your code call it with unexpected values.
+
+Alias of
+
+```puppet
+Variant[Numeric, Pattern[/^-?(?:(?:[1-9]\d*)|0)(?:\.\d+)?(?:[eE]-?\d+)?$/], Array[Variant[Numeric, Pattern[/^-?(?:(?:[1-9]\d*)|0)(?:\.\d+)?(?:[eE]-?\d+)?$/]]]]
+```
+
+### <a name="stdlibcompatstring"></a>`Stdlib::Compat::String`
+
+Emulate the is_string and validate_string functions
+
+Alias of
+
+```puppet
+Optional[String]
+```
+
+### <a name="stdlibdatasize"></a>`Stdlib::Datasize`
+
+The Stdlib::Datasize data type.
+
+Alias of
+
+```puppet
+Pattern[/^\d+(?i:[kmgt]b?|b)$/]
+```
+
+### <a name="stdlibemail"></a>`Stdlib::Email`
+
+https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+
+Alias of
+
+```puppet
+Pattern[/\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/]
+```
+
+### <a name="stdlibensurefile"></a>`Stdlib::Ensure::File`
+
+The Stdlib::Ensure::File data type.
+
+Alias of
+
+```puppet
+Enum['present', 'file', 'directory', 'link', 'absent']
+```
+
+### <a name="stdlibensurefiledirectory"></a>`Stdlib::Ensure::File::Directory`
+
+The Stdlib::Ensure::File::Directory data type.
+
+Alias of
+
+```puppet
+Enum['directory', 'absent']
+```
+
+### <a name="stdlibensurefilefile"></a>`Stdlib::Ensure::File::File`
+
+The Stdlib::Ensure::File::File data type.
+
+Alias of
+
+```puppet
+Enum['file', 'absent']
+```
+
+### <a name="stdlibensurefilelink"></a>`Stdlib::Ensure::File::Link`
+
+The Stdlib::Ensure::File::Link data type.
+
+Alias of
+
+```puppet
+Enum['link', 'absent']
+```
+
+### <a name="stdlibensureservice"></a>`Stdlib::Ensure::Service`
+
+The Stdlib::Ensure::Service data type.
+
+Alias of
+
+```puppet
+Enum['stopped', 'running']
+```
+
+### <a name="stdlibfilemode"></a>`Stdlib::Filemode`
+
+See `man chmod.1` for the regular expression for symbolic mode
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A(([0-7]{1,4})|(([ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+)(,([ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+))*))\z/]
+```
+
+### <a name="stdlibfilesource"></a>`Stdlib::Filesource`
+
+Validate the source parameter on file types
+
+Alias of
+
+```puppet
+Variant[Stdlib::Absolutepath, Stdlib::HTTPUrl, Pattern[
+    /\Afile:\/\/\/([^\n\/\0]+(\/)?)+\z/,
+    /\Apuppet:\/\/(([\w-]+\.?)+)?\/([^\n\/\0]+(\/)?)+\z/,
+  ]]
+```
+
+### <a name="stdlibfqdn"></a>`Stdlib::Fqdn`
+
+The Stdlib::Fqdn data type.
+
+Alias of
+
+```puppet
+Pattern[/\A(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])\z/]
+```
+
+### <a name="stdlibhttpsurl"></a>`Stdlib::HTTPSUrl`
+
+The Stdlib::HTTPSUrl data type.
+
+Alias of
+
+```puppet
+Pattern[/(?i:\Ahttps:\/\/.*\z)/]
+```
+
+### <a name="stdlibhttpurl"></a>`Stdlib::HTTPUrl`
+
+The Stdlib::HTTPUrl data type.
+
+Alias of
+
+```puppet
+Pattern[/(?i:\Ahttps?:\/\/.*\z)/]
+```
+
+### <a name="stdlibhost"></a>`Stdlib::Host`
+
+The Stdlib::Host data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::Fqdn, Stdlib::Compat::Ip_address]
+```
+
+### <a name="stdlibhttpstatus"></a>`Stdlib::HttpStatus`
+
+The Stdlib::HttpStatus data type.
+
+Alias of
+
+```puppet
+Integer[100, 599]
+```
+
+### <a name="stdlibipaddress"></a>`Stdlib::IP::Address`
+
+The Stdlib::IP::Address data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::IP::Address::V4, Stdlib::IP::Address::V6]
+```
+
+### <a name="stdlibipaddressnosubnet"></a>`Stdlib::IP::Address::Nosubnet`
+
+The Stdlib::IP::Address::Nosubnet data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::IP::Address::V4::Nosubnet, Stdlib::IP::Address::V6::Nosubnet]
+```
+
+### <a name="stdlibipaddressv4"></a>`Stdlib::IP::Address::V4`
+
+The Stdlib::IP::Address::V4 data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::IP::Address::V4::CIDR, Stdlib::IP::Address::V4::Nosubnet]
+```
+
+### <a name="stdlibipaddressv4cidr"></a>`Stdlib::IP::Address::V4::CIDR`
+
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\/([0-9]|[12][0-9]|3[0-2])\z/]
+```
+
+### <a name="stdlibipaddressv4nosubnet"></a>`Stdlib::IP::Address::V4::Nosubnet`
+
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/]
+```
+
+### <a name="stdlibipaddressv6"></a>`Stdlib::IP::Address::V6`
+
+The Stdlib::IP::Address::V6 data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::IP::Address::V6::Full, Stdlib::IP::Address::V6::Compressed, Stdlib::IP::Address::V6::Alternative, Stdlib::IP::Address::V6::Nosubnet]
+```
+
+### <a name="stdlibipaddressv6alternative"></a>`Stdlib::IP::Address::V6::Alternative`
+
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A([[:xdigit:]]{1,4}:){6}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){5}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){4}(:[[:xdigit:]]{1,4}){0,1}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){3}(:[[:xdigit:]]{1,4}){0,2}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){2}(:[[:xdigit:]]{1,4}){0,3}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){1}(:[[:xdigit:]]{1,4}){0,4}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A:(:[[:xdigit:]]{1,4}){0,5}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/]
+```
+
+### <a name="stdlibipaddressv6cidr"></a>`Stdlib::IP::Address::V6::CIDR`
+
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8])?\z/]
+```
+
+### <a name="stdlibipaddressv6compressed"></a>`Stdlib::IP::Address::V6::Compressed`
+
+The Stdlib::IP::Address::V6::Compressed data type.
+
+Alias of
+
+```puppet
+Pattern[/\A:(:|(:[[:xdigit:]]{1,4}){1,7})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){1}(:|(:[[:xdigit:]]{1,4}){1,6})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){2}(:|(:[[:xdigit:]]{1,4}){1,5})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){3}(:|(:[[:xdigit:]]{1,4}){1,4})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){4}(:|(:[[:xdigit:]]{1,4}){1,3})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){5}(:|(:[[:xdigit:]]{1,4}){1,2})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){6}(:|(:[[:xdigit:]]{1,4}){1,1})(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/, /\A([[:xdigit:]]{1,4}:){7}:(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/]
+```
+
+### <a name="stdlibipaddressv6full"></a>`Stdlib::IP::Address::V6::Full`
+
+The Stdlib::IP::Address::V6::Full data type.
+
+Alias of
+
+```puppet
+Pattern[/\A[[:xdigit:]]{1,4}(:[[:xdigit:]]{1,4}){7}(\/(1([01][0-9]|2[0-8])|[1-9][0-9]|[0-9]))?\z/]
+```
+
+### <a name="stdlibipaddressv6nosubnet"></a>`Stdlib::IP::Address::V6::Nosubnet`
+
+The Stdlib::IP::Address::V6::Nosubnet data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::IP::Address::V6::Nosubnet::Full, Stdlib::IP::Address::V6::Nosubnet::Compressed, Stdlib::IP::Address::V6::Nosubnet::Alternative]
+```
+
+### <a name="stdlibipaddressv6nosubnetalternative"></a>`Stdlib::IP::Address::V6::Nosubnet::Alternative`
+
+lint:ignore:140chars
+
+Alias of
+
+```puppet
+Pattern[/\A([[:xdigit:]]{1,4}:){6}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A([[:xdigit:]]{1,4}:){5}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A([[:xdigit:]]{1,4}:){4}(:[[:xdigit:]]{1,4}){0,1}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A([[:xdigit:]]{1,4}:){3}(:[[:xdigit:]]{1,4}){0,2}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A([[:xdigit:]]{1,4}:){2}(:[[:xdigit:]]{1,4}){0,3}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A([[:xdigit:]]{1,4}:){1}(:[[:xdigit:]]{1,4}){0,4}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/, /\A:(:[[:xdigit:]]{1,4}){0,5}:([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}\z/]
+```
+
+### <a name="stdlibipaddressv6nosubnetcompressed"></a>`Stdlib::IP::Address::V6::Nosubnet::Compressed`
+
+The Stdlib::IP::Address::V6::Nosubnet::Compressed data type.
+
+Alias of
+
+```puppet
+Pattern[/\A:(:|(:[[:xdigit:]]{1,4}){1,7})\z/, /\A([[:xdigit:]]{1,4}:){1}(:|(:[[:xdigit:]]{1,4}){1,6})\z/, /\A([[:xdigit:]]{1,4}:){2}(:|(:[[:xdigit:]]{1,4}){1,5})\z/, /\A([[:xdigit:]]{1,4}:){3}(:|(:[[:xdigit:]]{1,4}){1,4})\z/, /\A([[:xdigit:]]{1,4}:){4}(:|(:[[:xdigit:]]{1,4}){1,3})\z/, /\A([[:xdigit:]]{1,4}:){5}(:|(:[[:xdigit:]]{1,4}){1,2})\z/, /\A([[:xdigit:]]{1,4}:){6}(:|(:[[:xdigit:]]{1,4}){1,1})\z/, /\A([[:xdigit:]]{1,4}:){7}:\z/]
+```
+
+### <a name="stdlibipaddressv6nosubnetfull"></a>`Stdlib::IP::Address::V6::Nosubnet::Full`
+
+The Stdlib::IP::Address::V6::Nosubnet::Full data type.
+
+Alias of
+
+```puppet
+Pattern[/\A[[:xdigit:]]{1,4}(:[[:xdigit:]]{1,4}){7}\z/]
+```
+
+### <a name="stdlibmac"></a>`Stdlib::MAC`
+
+A type for a MAC address
+
+Alias of
+
+```puppet
+Pattern[/\A([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\z/, /\A([0-9A-Fa-f]{2}[:-]){19}([0-9A-Fa-f]{2})\z/]
+```
+
+### <a name="stdlibobjectstore"></a>`Stdlib::ObjectStore`
+
+The Stdlib::ObjectStore data type.
+
+Alias of
+
+```puppet
+Variant[Stdlib::ObjectStore::GSUri, Stdlib::ObjectStore::S3Uri]
+```
+
+### <a name="stdlibobjectstoregsuri"></a>`Stdlib::ObjectStore::GSUri`
+
+The Stdlib::ObjectStore::GSUri data type.
+
+Alias of
+
+```puppet
+Pattern[/\Ags:\/\/.*\z/]
+```
+
+### <a name="stdlibobjectstores3uri"></a>`Stdlib::ObjectStore::S3Uri`
+
+The Stdlib::ObjectStore::S3Uri data type.
+
+Alias of
+
+```puppet
+Pattern[/\As3:\/\/.*\z/]
+```
+
+### <a name="stdlibport"></a>`Stdlib::Port`
+
+The Stdlib::Port data type.
+
+Alias of
+
+```puppet
+Integer[0, 65535]
+```
+
+### <a name="stdlibportdynamic"></a>`Stdlib::Port::Dynamic`
+
+The Stdlib::Port::Dynamic data type.
+
+Alias of
+
+```puppet
+Integer[49152, 65535]
+```
+
+### <a name="stdlibportephemeral"></a>`Stdlib::Port::Ephemeral`
+
+The Stdlib::Port::Ephemeral data type.
+
+Alias of
+
+```puppet
+Stdlib::Port::Dynamic
+```
+
+### <a name="stdlibportprivileged"></a>`Stdlib::Port::Privileged`
+
+The Stdlib::Port::Privileged data type.
+
+Alias of
+
+```puppet
+Integer[1, 1023]
+```
+
+### <a name="stdlibportregistered"></a>`Stdlib::Port::Registered`
+
+The Stdlib::Port::Registered data type.
+
+Alias of
+
+```puppet
+Stdlib::Port::User
+```
+
+### <a name="stdlibportunprivileged"></a>`Stdlib::Port::Unprivileged`
+
+The Stdlib::Port::Unprivileged data type.
+
+Alias of
+
+```puppet
+Integer[1024, 65535]
+```
+
+### <a name="stdlibportuser"></a>`Stdlib::Port::User`
+
+The Stdlib::Port::User data type.
+
+Alias of
+
+```puppet
+Integer[1024, 49151]
+```
+
+### <a name="stdlibsyslogfacility"></a>`Stdlib::Syslogfacility`
+
+The Stdlib::Syslogfacility data type.
+
+Alias of
+
+```puppet
+Enum['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp', 'cron', 'authpriv', 'ftp', 'ntp', 'security', 'console', 'solaris-cron', 'local0', 'local1', 'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
+```
+
+### <a name="stdlibunixpath"></a>`Stdlib::Unixpath`
+
+this regex rejects any path component that does not start with "/" or is NUL
+
+Alias of
+
+```puppet
+Pattern[/\A\/([^\n\/\0]+\/*)*\z/]
+```
+
+### <a name="stdlibwindowspath"></a>`Stdlib::Windowspath`
+
+The Stdlib::Windowspath data type.
+
+Alias of
+
+```puppet
+Pattern[/\A(([a-zA-Z]:[\\\/])|([\\\/][\\\/][^\\\/]+[\\\/][^\\\/]+)|([\\\/][\\\/]\?[\\\/][^\\\/]+)).*\z/]
+```
+
+### <a name="stdlibyes_no"></a>`Stdlib::Yes_no`
+
+The Stdlib::Yes_no data type.
+
+Alias of
+
+```puppet
+Pattern[/\A(?i:(yes|no))\z/]
+```
+
+## Plans
+
+### <a name="facts"></a>`facts`
+
+A plan that retrieves facts and stores in the inventory for the
+specified targets.
 
 #### Parameters
 
-##### `action`
+The following parameters are available in the `facts` plan:
 
-Data type: `Enum[reload]`
+* [`targets`](#targets)
 
-Action to perform 
+##### <a name="targets"></a>`targets`
 
-##### `service_name`
+Data type: `TargetSpec`
 
-Data type: `Optional[String[1]]`
+List of targets to retrieve the facts for.
 
-The name of the apache service 
+### <a name="factsexternal"></a>`facts::external`
+
+A plan that generates external facts based on the provided modulepath and
+sets facts on specified targets.
+
+#### Examples
+
+##### Gather external facts from an installed module
+
+```puppet
+$moduledir = module_directory('mymod')
+$with_facts = run_plan(facts::external, $targets, path => file::join($moduledir, 'facts.d'))
+return $with_facts.map |$target| { $target.facts }
+```
+
+#### Parameters
+
+The following parameters are available in the `facts::external` plan:
+
+* [`path`](#path)
+* [`targets`](#targets)
+
+##### <a name="path"></a>`path`
+
+Data type: `String`
+
+The path to the directory on localhost containing external facts
+
+##### <a name="targets"></a>`targets`
+
+Data type: `TargetSpec`
+
+The targest the collect and set facts on
+
+### <a name="factsinfo"></a>`facts::info`
+
+A plan that prints basic OS information for the specified targets. It first
+runs the facts task to retrieve facts from the targets, then compiles the
+desired OS information from the os fact value of each targets. This plan primarily
+provides readable formatting, and ignores targets that error.
+
+#### Parameters
+
+The following parameters are available in the `facts::info` plan:
+
+* [`targets`](#targets)
+
+##### <a name="targets"></a>`targets`
+
+Data type: `TargetSpec`
+
+List of the targets for which to print the OS information.
+
+### <a name="provisionagents"></a>`provision::agents`
+
+The provision::agents class.
+
+### <a name="provisionprovisioner"></a>`provision::provisioner`
+
+The provision::provisioner class.
+
+### <a name="provisionserver_setup"></a>`provision::server_setup`
+
+The provision::server_setup class.
+
+### <a name="provisionteardown"></a>`provision::teardown`
+
+The provision::teardown class.
+
+### <a name="provisiontester"></a>`provision::tester`
+
+The provision::tester class.
+
+### <a name="provisiontests_against_agents"></a>`provision::tests_against_agents`
+
+The provision::tests_against_agents class.
+
+### <a name="puppet_agentrun"></a>`puppet_agent::run`
+
+Starts a Puppet agent run on the specified targets.
+Note: This plan may cause issues when run in Puppet Enterprise.
+
+#### Parameters
+
+The following parameters are available in the `puppet_agent::run` plan:
+
+* [`targets`](#targets)
+
+##### <a name="targets"></a>`targets`
+
+Data type: `TargetSpec`
+
+The targets to start a Puppet agent run on.
 

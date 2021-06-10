@@ -62,6 +62,9 @@
 #   - Debian/Ubuntu + Apache >= 2.4: 'default'.
 #   - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed.
+#
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.
 #
@@ -97,6 +100,7 @@ class apache::mod::ssl (
   Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
   $ssl_mutex                                                = undef,
+  Boolean $ssl_reload_on_change                             = false,
   $apache_version                                           = undef,
   $package_name                                             = undef,
 ) inherits ::apache::params {
@@ -172,6 +176,46 @@ class apache::mod::ssl (
 
   if versioncmp($_apache_version, '2.4') >= 0 {
     include apache::mod::socache_shmcb
+  }
+
+  file { $apache::params::puppet_ssl_dir:
+    ensure  => directory,
+    purge   => true,
+    recurse => true,
+  }
+  file { 'README.txt':
+    path    => "${apache::params::puppet_ssl_dir}/README.txt",
+    content => 'This directory contains puppet managed copies of ssl files, so it can track changes and reload apache on changes.',
+    seltype => 'etc_t',
+  }
+  if $ssl_reload_on_change {
+    if $ssl_cert {
+      $_ssl_cert_copy = regsubst($ssl_cert, '/', '_', 'G')
+      file { $_ssl_cert_copy:
+        path   => "${apache::params::puppet_ssl_dir}/${_ssl_cert_copy}",
+        source => "file://${ssl_cert}",
+        mode   => '0640',
+        notify => Class['apache::service'],
+      }
+    }
+    if $ssl_key {
+      $_ssl_key_copy = regsubst($ssl_key, '/', '_', 'G')
+      file { $_ssl_key_copy:
+        path   => "${apache::params::puppet_ssl_dir}/${_ssl_key_copy}",
+        source => "file://${ssl_key}",
+        mode   => '0640',
+        notify => Class['apache::service'],
+      }
+    }
+    if $ssl_ca {
+      $_ssl_ca_copy = regsubst($ssl_ca, '/', '_', 'G')
+      file { $_ssl_ca_copy:
+        path   => "${apache::params::puppet_ssl_dir}/${_ssl_ca_copy}",
+        source => "file://${ssl_ca}",
+        mode   => '0640',
+        notify => Class['apache::service'],
+      }
+    }
   }
 
   # Template uses
