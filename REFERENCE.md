@@ -145,26 +145,10 @@ Apache server's or a virtual host's listening address and port.
 * `apache::peruser::processor`: Enables the `Peruser` module for FreeBSD only.
 * `apache::security::rule_link`: Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.
 
-### Resource types
-
-* [`a2mod`](#a2mod): Manage Apache 2 modules
-
-### Functions
-
-* [`apache::apache_pw_hash`](#apacheapache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
-* [`apache::pw_hash`](#apachepw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
-* [`apache_pw_hash`](#apache_pw_hash): DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`bool2httpd`](#bool2httpd): DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
-
 ### Data types
 
 * [`Apache::LogLevel`](#apacheloglevel): A string that conforms to the Apache `LogLevel` syntax.
 * [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
-
-### Tasks
-
-* [`init`](#init): Allows you to perform apache service functions
 
 ## Classes
 
@@ -2117,6 +2101,7 @@ The following parameters are available in the `apache::mod::disk_cache` class:
 
 * [`cache_root`](#cache_root)
 * [`cache_ignore_headers`](#cache_ignore_headers)
+* [`default_cache_enable`](#default_cache_enable)
 
 ##### <a name="cache_root"></a>`cache_root`
 
@@ -2138,6 +2123,16 @@ Data type: `Any`
 Specifies HTTP header(s) that should not be stored in the cache.
 
 Default value: ``undef``
+
+##### <a name="default_cache_enable"></a>`default_cache_enable`
+
+Data type: `Boolean`
+
+Default value is true, which enables "CacheEnable disk /" in disk_cache.conf for the webserver. This would cache
+every request to apache by default for every vhost. If set to false the default cache all behaviour is supressed.
+You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
+
+Default value: ``true``
 
 ### <a name="apachemoddumpio"></a>`apache::mod::dumpio`
 
@@ -6357,6 +6352,7 @@ The following parameters are available in the `apache::mod::ssl` class:
 * [`ssl_stapling`](#ssl_stapling)
 * [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
 * [`ssl_mutex`](#ssl_mutex)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`apache_version`](#apache_version)
 * [`package_name`](#package_name)
 * [`ssl_sessiontickets`](#ssl_sessiontickets)
@@ -6512,6 +6508,14 @@ Default based on the OS and/or Apache version:
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
 Default value: ``undef``
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+Enable reloading of apache if the content of ssl files have changed.
+
+Default value: ``true``
 
 ##### <a name="apache_version"></a>`apache_version`
 
@@ -7545,6 +7549,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`ssl_stapling_timeout`](#ssl_stapling_timeout)
 * [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
 * [`ssl_user_name`](#ssl_user_name)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`priority`](#priority)
 * [`default_vhost`](#default_vhost)
 * [`servername`](#servername)
@@ -8093,6 +8098,14 @@ Data type: `Optional[String]`
 
 
 Default value: ``undef``
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+
+
+Default value: ``true``
 
 ##### <a name="priority"></a>`priority`
 
@@ -9835,173 +9848,6 @@ Data type: `Optional[Integer[0]]`
 
 Default value: ``undef``
 
-## Resource types
-
-### <a name="a2mod"></a>`a2mod`
-
-Manage Apache 2 modules
-
-#### Properties
-
-The following properties are available in the `a2mod` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-#### Parameters
-
-The following parameters are available in the `a2mod` type.
-
-* [`identifier`](#identifier)
-* [`lib`](#lib)
-* [`name`](#name)
-* [`provider`](#provider)
-
-##### <a name="identifier"></a>`identifier`
-
-Module identifier string used by LoadModule. Default: module-name_module
-
-##### <a name="lib"></a>`lib`
-
-The name of the .so library to be loaded
-
-##### <a name="name"></a>`name`
-
-namevar
-
-The name of the module to be managed
-
-##### <a name="provider"></a>`provider`
-
-The specific backend to use for this `a2mod` resource. You will seldom need to specify this --- Puppet will usually
-discover the appropriate provider for your platform.
-
-## Functions
-
-### <a name="apacheapache_pw_hash"></a>`apache::apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache::apache_pw_hash(Any *$args)`
-
-The apache::apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
-### <a name="apachebool2httpd"></a>`apache::bool2httpd`
-
-Type: Ruby 4.x API
-
-Transform a supposed boolean to On or Off. Passes all other values through.
-
-#### Examples
-
-##### 
-
-```puppet
-$trace_enable     = false
-$server_signature = 'mail'
-
-apache::bool2httpd($trace_enable) # returns 'Off'
-apache::bool2httpd($server_signature) # returns 'mail'
-apache::bool2httpd(undef) # returns 'Off'
-```
-
-#### `apache::bool2httpd(Any $arg)`
-
-The apache::bool2httpd function.
-
-Returns: `Any` Will return either `On` or `Off` if given a boolean value. Returns a string of any
-other given value.
-
-##### Examples
-
-###### 
-
-```puppet
-$trace_enable     = false
-$server_signature = 'mail'
-
-apache::bool2httpd($trace_enable) # returns 'Off'
-apache::bool2httpd($server_signature) # returns 'mail'
-apache::bool2httpd(undef) # returns 'Off'
-```
-
-##### `arg`
-
-Data type: `Any`
-
-The value to be converted into a string.
-
-### <a name="apachepw_hash"></a>`apache::pw_hash`
-
-Type: Ruby 4.x API
-
-Currently uses SHA-hashes, because although this format is considered insecure, it's the
-most secure format supported by the most platforms.
-
-#### `apache::pw_hash(String[1] $password)`
-
-Currently uses SHA-hashes, because although this format is considered insecure, it's the
-most secure format supported by the most platforms.
-
-Returns: `String` Returns the hash of the input that was given.
-
-##### `password`
-
-Data type: `String[1]`
-
-The input that is to be hashed.
-
-### <a name="apache_pw_hash"></a>`apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache_pw_hash(Any *$args)`
-
-The apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
-### <a name="bool2httpd"></a>`bool2httpd`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
-
-#### `bool2httpd(Any *$args)`
-
-The bool2httpd function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
 ## Data types
 
 ### <a name="apacheloglevel"></a>`Apache::LogLevel`
@@ -10155,26 +10001,4 @@ Struct[{
     Optional['RefreshAccessTokenBeforeExpiry']          => Pattern[/^[0-9]+(\slogout_on_error)?$/],
   }]
 ```
-
-## Tasks
-
-### <a name="init"></a>`init`
-
-Allows you to perform apache service functions
-
-**Supports noop?** false
-
-#### Parameters
-
-##### `action`
-
-Data type: `Enum[reload]`
-
-Action to perform 
-
-##### `service_name`
-
-Data type: `Optional[String[1]]`
-
-The name of the apache service 
 

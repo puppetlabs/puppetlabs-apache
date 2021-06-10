@@ -105,6 +105,7 @@ describe 'apache::mod::ssl', type: :class do
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCertificateFile}) }
+      it { is_expected.to contain_file('_etc_pki_some_path_localhost.crt') }
     end
 
     context 'setting ssl_key' do
@@ -115,6 +116,7 @@ describe 'apache::mod::ssl', type: :class do
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCertificateKeyFile}) }
+      it { is_expected.to contain_file('_etc_pki_some_path_localhost.key') }
     end
 
     context 'setting ssl_ca to a path' do
@@ -125,6 +127,7 @@ describe 'apache::mod::ssl', type: :class do
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCACertificateFile}) }
+      it { is_expected.to contain_file('_etc_pki_some_path_ca.crt') }
     end
 
     context 'with Apache version < 2.4 - ssl_compression with default value' do

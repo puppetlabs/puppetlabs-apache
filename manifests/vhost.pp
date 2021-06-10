@@ -1679,6 +1679,9 @@
 # @param ssl_user_name
 #   Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed.
+#
 # @param use_canonical_name
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
@@ -1785,6 +1788,7 @@ define apache::vhost (
   $ssl_stapling_timeout                                                             = undef,
   $ssl_stapling_return_errors                                                       = undef,
   Optional[String] $ssl_user_name                                                   = undef,
+  Boolean $ssl_reload_on_change                                                     = true,
   $priority                                                                         = undef,
   Boolean $default_vhost                                                            = false,
   $servername                                                                       = $name,
@@ -2708,6 +2712,53 @@ define apache::vhost (
   # - $ssl_stapling
   # - $apache_version
   if $ssl {
+    if $ssl_reload_on_change {
+      if $ssl_cert {
+        $_ssl_cert_copy = regsubst($ssl_cert, '/', '_', 'G')
+        file { "${filename}${_ssl_cert_copy}":
+          path   => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_cert_copy}",
+          source => "file://${ssl_cert}",
+          mode   => '0640',
+          notify => Class['apache::service'],
+        }
+      }
+      if $ssl_key {
+        $_ssl_key_copy = regsubst($ssl_key, '/', '_', 'G')
+        file { "${filename}${_ssl_key_copy}":
+          path   => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_key_copy}",
+          source => "file://${ssl_key}",
+          mode   => '0640',
+          notify => Class['apache::service'],
+        }
+      }
+      if $ssl_ca {
+        $_ssl_ca_copy = regsubst($ssl_ca, '/', '_', 'G')
+        file { "${filename}${_ssl_ca_copy}":
+          path   => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_ca_copy}",
+          source => "file://${ssl_ca}",
+          mode   => '0640',
+          notify => Class['apache::service'],
+        }
+      }
+      if $ssl_chain {
+        $_ssl_chain_copy = regsubst($ssl_chain, '/', '_', 'G')
+        file { "${filename}${_ssl_chain_copy}":
+          path   => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_chain_copy}",
+          source => "file://${ssl_chain}",
+          mode   => '0640',
+          notify => Class['apache::service'],
+        }
+      }
+      if $ssl_crl {
+        $_ssl_crl_copy = regsubst($ssl_crl, '/', '_', 'G')
+        file { "${filename}${_ssl_crl_copy}":
+          path   => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_crl_copy}",
+          source => "file://${ssl_crl}",
+          mode   => '0640',
+          notify => Class['apache::service'],
+        }
+      }
+    }
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,

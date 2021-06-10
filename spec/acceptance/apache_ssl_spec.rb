@@ -5,6 +5,17 @@ apache_hash = apache_settings_hash
 describe 'apache ssl' do
   describe 'ssl parameters' do
     pp = <<-MANIFEST
+        file { [
+          '/tmp/ssl_cert',
+          '/tmp/ssl_key',
+          '/tmp/ssl_chain',
+          '/tmp/ssl_ca',
+          '/tmp/ssl_crl',
+          ]:
+            ensure              => file,
+            before              => Class['apache']
+        }
+
         class { 'apache':
           service_ensure        => stopped,
           default_ssl_vhost     => true,
@@ -44,10 +55,41 @@ describe 'apache ssl' do
         it { is_expected.not_to contain 'SSLCARevocationCheck' }
       end
     end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/default-ssl-443_tmp_ssl_cert") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/default-ssl-443_tmp_ssl_key") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/default-ssl-443_tmp_ssl_chain") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/default-ssl-443_tmp_ssl_ca") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/default-ssl-443_tmp_ssl_crl") do
+      it { is_expected.to be_file }
+    end
   end
 
   describe 'vhost ssl parameters' do
     pp = <<-MANIFEST
+        file { [
+          '/tmp/ssl_cert',
+          '/tmp/ssl_key',
+          '/tmp/ssl_chain',
+          '/tmp/ssl_ca',
+          '/tmp/ssl_crl',
+          ]:
+            ensure             => file,
+            before             => Class['apache']
+        }
+
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -99,10 +141,39 @@ describe 'apache ssl' do
         it { is_expected.not_to contain 'SSLCARevocationCheck' }
       end
     end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_cert") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_key") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_chain") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_ca") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_tmp_ssl_crl") do
+      it { is_expected.to be_file }
+    end
   end
 
   describe 'vhost ssl ssl_ca only' do
     pp = <<-MANIFEST
+        file { [
+          '/tmp/ssl_cert',
+          '/tmp/ssl_key',
+          '/tmp/ssl_ca',
+          ]:
+            ensure             => file,
+            before             => Class['apache']
+        }
+
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -127,10 +198,30 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
       it { is_expected.not_to contain 'SSLCACertificatePath' }
     end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_ca_only_tmp_ssl_cert") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_ca_only_tmp_ssl_key") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_ca_only_tmp_ssl_ca") do
+      it { is_expected.to be_file }
+    end
   end
 
   describe 'vhost ssl ssl_certs_dir' do
     pp = <<-MANIFEST
+        file { [
+          '/tmp/ssl_cert',
+          '/tmp/ssl_key',
+          ]:
+            ensure             => file,
+            before             => Class['apache']
+        }
+
         class { 'apache':
           service_ensure       => stopped,
         }
@@ -155,6 +246,14 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLCACertificatePath    "/tmp"' }
       it { is_expected.to contain 'SSLVerifyClient         require' }
       it { is_expected.not_to contain 'SSLCACertificateFile' }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_certs_dir_only_tmp_ssl_cert") do
+      it { is_expected.to be_file }
+    end
+
+    describe file("#{apache_hash['httpd_dir']}/puppet_ssl/test_ssl_certs_dir_only_tmp_ssl_key") do
+      it { is_expected.to be_file }
     end
   end
 end
