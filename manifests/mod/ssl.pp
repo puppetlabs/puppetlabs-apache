@@ -100,7 +100,7 @@ class apache::mod::ssl (
   Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
   $ssl_mutex                                                = undef,
-  Boolean $ssl_reload_on_change                             = true,
+  Boolean $ssl_reload_on_change                             = false,
   $apache_version                                           = undef,
   $package_name                                             = undef,
 ) inherits ::apache::params {
@@ -178,16 +178,17 @@ class apache::mod::ssl (
     include apache::mod::socache_shmcb
   }
 
+  file { $apache::params::puppet_ssl_dir:
+    ensure  => directory,
+    purge   => true,
+    recurse => true,
+  }
+  file { 'README.txt':
+    path    => "${apache::params::puppet_ssl_dir}/README.txt",
+    content => 'This directory contains puppet managed copies of ssl files, so it can track changes and reload apache on changes.',
+    seltype => 'etc_t',
+  }
   if $ssl_reload_on_change {
-    file { $apache::params::puppet_ssl_dir:
-      ensure  => directory,
-      purge   => true,
-      recurse => true,
-    }
-    file { 'README.txt':
-      path    => "${apache::params::puppet_ssl_dir}/README.txt",
-      content => 'This directory contains puppet managed copies of ssl files, so it can track changes and reload apache on changes.',
-    }
     if $ssl_cert {
       $_ssl_cert_copy = regsubst($ssl_cert, '/', '_', 'G')
       file { $_ssl_cert_copy:

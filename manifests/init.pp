@@ -91,6 +91,9 @@
 #   this parameter with your SSL key's location before deploying this server in a production 
 #   environment.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed.
+#
 # @param default_ssl_vhost
 #   Configures a default SSL virtual host.
 #   If `true`, Puppet automatically configures the following virtual host using the 
@@ -472,6 +475,7 @@ class apache (
   $default_ssl_crl_path                                                 = undef,
   $default_ssl_crl                                                      = undef,
   $default_ssl_crl_check                                                = undef,
+  $default_ssl_reload_on_change                                         = false,
   $default_type                                                         = 'none',
   $dev_packages                                                         = $apache::params::dev_packages,
   $ip                                                                   = undef,

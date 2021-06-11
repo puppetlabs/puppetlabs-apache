@@ -1766,6 +1766,7 @@ define apache::vhost (
   $ssl_crl                                                                          = $apache::default_ssl_crl,
   $ssl_crl_check                                                                    = $apache::default_ssl_crl_check,
   $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
+  Boolean $ssl_reload_on_change                                                     = $apache::default_ssl_reload_on_change,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder     = undef,

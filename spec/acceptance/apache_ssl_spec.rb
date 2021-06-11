@@ -105,6 +105,7 @@ describe 'apache ssl' do
           ssl_crl              => '/tmp/ssl_crl',
           ssl_crl_check        => 'chain flag',
           ssl_certs_dir        => '/tmp',
+          ssl_reload_on_change => true,
           ssl_protocol         => 'test',
           ssl_cipher           => 'test',
           ssl_honorcipherorder => true,
