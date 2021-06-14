@@ -178,42 +178,38 @@ class apache::mod::ssl (
     include apache::mod::socache_shmcb
   }
 
-  file { $apache::params::puppet_ssl_dir:
-    ensure  => directory,
-    purge   => true,
-    recurse => true,
-  }
-  file { 'README.txt':
-    path    => "${apache::params::puppet_ssl_dir}/README.txt",
-    content => 'This directory contains puppet managed copies of ssl files, so it can track changes and reload apache on changes.',
-    seltype => 'etc_t',
-  }
   if $ssl_reload_on_change {
     if $ssl_cert {
+      include apache::mod::ssl::reload
       $_ssl_cert_copy = regsubst($ssl_cert, '/', '_', 'G')
       file { $_ssl_cert_copy:
-        path   => "${apache::params::puppet_ssl_dir}/${_ssl_cert_copy}",
-        source => "file://${ssl_cert}",
-        mode   => '0640',
-        notify => Class['apache::service'],
+        path    => "${apache::params::puppet_ssl_dir}/${_ssl_cert_copy}",
+        source  => "file://${ssl_cert}",
+        mode    => '0640',
+        seltype => 'cert_t',
+        notify  => Class['apache::service'],
       }
     }
     if $ssl_key {
+      include apache::mod::ssl::reload
       $_ssl_key_copy = regsubst($ssl_key, '/', '_', 'G')
       file { $_ssl_key_copy:
-        path   => "${apache::params::puppet_ssl_dir}/${_ssl_key_copy}",
-        source => "file://${ssl_key}",
-        mode   => '0640',
-        notify => Class['apache::service'],
+        path    => "${apache::params::puppet_ssl_dir}/${_ssl_key_copy}",
+        source  => "file://${ssl_key}",
+        mode    => '0640',
+        seltype => 'cert_t',
+        notify  => Class['apache::service'],
       }
     }
     if $ssl_ca {
+      include apache::mod::ssl::reload
       $_ssl_ca_copy = regsubst($ssl_ca, '/', '_', 'G')
       file { $_ssl_ca_copy:
-        path   => "${apache::params::puppet_ssl_dir}/${_ssl_ca_copy}",
-        source => "file://${ssl_ca}",
-        mode   => '0640',
-        notify => Class['apache::service'],
+        path    => "${apache::params::puppet_ssl_dir}/${_ssl_ca_copy}",
+        source  => "file://${ssl_ca}",
+        mode    => '0640',
+        seltype => 'cert_t',
+        notify  => Class['apache::service'],
       }
     }
   }

@@ -91,7 +91,7 @@
 #   this parameter with your SSL key's location before deploying this server in a production 
 #   environment.
 #
-# @param ssl_reload_on_change
+# @param default_ssl_reload_on_change
 #   Enable reloading of apache if the content of ssl files have changed.
 #
 # @param default_ssl_vhost
