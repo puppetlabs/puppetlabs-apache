@@ -7,6 +7,7 @@ class apache::mod::ssl::reload () inherits ::apache::params {
     ensure  => directory,
     purge   => true,
     recurse => true,
+    require => Package['httpd'],
   }
   file { 'README.txt':
     path    => "${apache::params::puppet_ssl_dir}/README.txt",

@@ -2711,7 +2711,7 @@ define apache::vhost (
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
   # - $apache_version
-  if $ssl {
+  if $ssl and $ensure == 'present' {
     if $ssl_reload_on_change {
       if $ssl_cert {
         include apache::mod::ssl::reload
