@@ -2387,9 +2387,9 @@ define apache::vhost (
       $check_http_url = $servername
     }
     if ($ssl) {
-        check_http { "https://${check_http_url}": }
+      check_http { "https://${check_http_url}": }
     } else {
-        check_http { "http://${check_http_url}": }
+      check_http { "http://${check_http_url}": }
     }
   }
 
