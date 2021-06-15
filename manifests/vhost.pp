@@ -2380,10 +2380,17 @@ define apache::vhost (
     }
   }
 
-  if ($ssl) {
-    check_http { "https://${servername}": }
-  } else {
-    check_http { "http://${servername}": }
+  if $servername != 'default' and $servername != 'default-ssl' {
+    if $port {
+      $check_http_url = "$servername:$port"
+    } else {
+      $check_http_url = $servername
+    }
+    if ($ssl) {
+        check_http { "https://${check_http_url}": }
+    } else {
+        check_http { "http://${check_http_url}": }
+    }
   }
 
   concat { "${priority_real}${filename}.conf":
