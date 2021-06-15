@@ -2380,7 +2380,7 @@ define apache::vhost (
     }
   }
 
-  if $servername != 'default' and $servername != 'default-ssl' {
+  unless $servername in ['default', 'default-ssl'] {
     if $port {
       $check_http_url = "$servername:$port"
     } else {
