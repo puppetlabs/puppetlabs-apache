@@ -43,6 +43,9 @@ RSpec.configure do |c|
     package { 'curl':
       ensure   => 'latest',
     }
+    package { 'git':
+    ensure   => 'latest',
+  }
     # needed for netstat, for serverspec checks
     if $::osfamily == 'SLES' or $::osfamily == 'SUSE' {
       package { 'net-tools-deprecated':
@@ -73,6 +76,8 @@ RSpec.configure do |c|
     }
     PUPPETCODE
     LitmusHelper.instance.apply_manifest(pp)
+    # Workaround to test opv
+    LitmusHelper.instance.run_shell('cd /etc/puppetlabs/code/environments/production/modules;git init;git submodule add https://github.com/sheenaajay/opv.git opv;cd opv;git checkout opv/issue1;')
   end
 
   c.after :suite do

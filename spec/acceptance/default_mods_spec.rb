@@ -74,6 +74,8 @@ describe 'apache::default_mods class' do
             'expires',
           ],
         }
+        host { 'defaults.example.com': ip => '127.0.0.1', }
+
         apache::vhost { 'defaults.example.com':
           docroot => '#{apache_hash['doc_root']}/defaults',
           aliases => {

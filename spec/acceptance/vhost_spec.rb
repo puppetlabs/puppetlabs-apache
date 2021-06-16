@@ -274,6 +274,7 @@ describe 'apache::vhost define' do
     let(:pp) do
       <<-MANIFEST
       class { 'apache': }
+      host { 'files.example.net': ip => '127.0.0.1', }
 
       if versioncmp('#{apache_hash['version']}', '2.4') >= 0 {
         $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
@@ -298,7 +299,6 @@ describe 'apache::vhost define' do
         ensure  => file,
         content => "Hello World\\n",
       }
-      host { 'files.example.net': ip => '127.0.0.1', }
     MANIFEST
     end
 
@@ -550,6 +550,7 @@ describe 'apache::vhost define' do
     it 'configures a local vhost and a proxy vhost' do
       apply_manifest(%(
         class { 'apache': default_vhost => false, }
+        host { 'proxy.example.com': ip => '127.0.0.1', }
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
           ip      => '127.0.0.1',
@@ -565,7 +566,6 @@ describe 'apache::vhost define' do
             'url'  => 'http://localhost:8888/subdir/',
           },
         }
-        host { 'proxy.example.com': ip => '127.0.0.1', }
         file { ['/var/www/local', '/var/www/local/subdir']: ensure => directory, }
         file { '/var/www/local/subdir/index.html':
           ensure  => file,
@@ -735,8 +735,8 @@ describe 'apache::vhost define' do
   describe 'default_vhost' do
     pp = <<-MANIFEST
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot    => '/tmp',
         default_vhost => true,
       }
@@ -756,37 +756,41 @@ describe 'apache::vhost define' do
 
   describe 'parameter tests', if: mod_supported_on_platform?('apache::mod::itk') do
     pp = <<-MANIFEST
+
+      host { 'test.itk.com':
+        ip           => '127.0.0.1',
+        host_aliases => [ 'test.customfragment.com', 'test.withoutpriorityprefix.com', 'test.sslprotocol.com', 'test.block.com', 'test.setenvsetenvif.com', 'test.rewrite.com', 'test.requestheaders.com', 'test.noproxyuris.com', 'test.redirect.com', 'test.proxy.com', 'test.scriptaliases.com', 'test.aliases.com', 'test.accesslogs.com', 'test.accesslogenvvar.com', 'test.accesslogformat.com', 'test.logroot.com', 'test.override.com', 'test.options.com' ],
+      }
+
       class { 'apache': }
-      host { 'test.itk': ip => '127.0.0.1' }
-      apache::vhost { 'test.itk':
+      apache::vhost { 'test.itk.com':
         docroot  => '/tmp',
         itk      => { user => 'nobody', group => 'nobody' }
       }
-      host { 'test.custom_fragment': ip => '127.0.0.1' }
-      apache::vhost { 'test.custom_fragment':
+      apache::vhost { 'test.customfragment.com':
         docroot  => '/tmp',
         custom_fragment => inline_template('#weird test string'),
       }
-      apache::vhost { 'test.without_priority_prefix':
+      apache::vhost { 'test.withoutpriorityprefix.com':
         priority => false,
         docroot => '/tmp'
       }
-      apache::vhost { 'test.ssl_protocol':
+      apache::vhost { 'test.sslprotocol.com':
         docroot       => '/tmp',
         ssl           => true,
         ssl_protocol  => ['All', '-SSLv2'],
         ssl_user_name => 'SSL_CLIENT_S_DN_CN',
       }
-      apache::vhost { 'test.block':
+      apache::vhost { 'test.block.com':
         docroot  => '/tmp',
         block    => 'scm',
       }
-      apache::vhost { 'test.setenv_setenvif':
+      apache::vhost { 'test.setenvsetenvif.com':
         docroot  => '/tmp',
         setenv   => ['TEST /test'],
         setenvif => ['Request_URI "\.gif$" object_is_image=gif']
       }
-      apache::vhost { 'test.rewrite':
+      apache::vhost { 'test.rewrite.com':
         docroot          => '/tmp',
         rewrites => [
           { comment => 'test',
@@ -796,37 +800,37 @@ describe 'apache::vhost define' do
           }
         ],
       }
-      apache::vhost { 'test.request_headers':
+      apache::vhost { 'test.requestheaders.com':
         docroot          => '/tmp',
         request_headers  => ['append MirrorID "mirror 12"'],
       }
-      apache::vhost { 'test.redirect':
+      apache::vhost { 'test.redirect.com':
         docroot          => '/tmp',
         redirect_source  => ['/images'],
         redirect_dest    => ['http://test.server/'],
         redirect_status  => ['permanent'],
       }
-      apache::vhost { 'test.no_proxy_uris':
+      apache::vhost { 'test.noproxyuris.com':
         docroot          => '/tmp',
         proxy_dest       => 'http://test2',
         no_proxy_uris    => [ 'http://test2/test' ],
       }
-      apache::vhost { 'test.proxy':
+      apache::vhost { 'test.proxy.com':
         docroot    => '/tmp',
         proxy_dest => 'http://testproxy',
       }
-      apache::vhost { 'test.scriptaliases':
+      apache::vhost { 'test.scriptaliases.com':
         docroot    => '/tmp',
         scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
       }
-      apache::vhost { 'test.aliases':
+      apache::vhost { 'test.aliases.com':
         docroot    => '/tmp',
         aliases => [
           { alias       => '/image'    , path => '/ftp/pub/image' }   ,
           { scriptalias => '/myscript' , path => '/usr/share/myscript' }
         ],
       }
-      apache::vhost { 'test.access_logs':
+      apache::vhost { 'test.accesslogs.com':
         docroot            => '/tmp',
         logroot            => '/tmp',
         access_logs => [
@@ -836,27 +840,27 @@ describe 'apache::vhost define' do
           {'syslog' => 'syslog' }
         ]
       }
-      apache::vhost { 'test.access_log_env_var':
+      apache::vhost { 'test.accesslogenvvar.com':
         docroot            => '/tmp',
         logroot            => '/tmp',
         access_log_syslog  => 'syslog',
         access_log_env_var => 'admin',
       }
-      apache::vhost { 'test.access_log_format':
+      apache::vhost { 'test.accesslogformat.com':
         docroot    => '/tmp',
         logroot    => '/tmp',
         access_log_syslog => 'syslog',
         access_log_format => '%h %l',
       }
-      apache::vhost { 'test.logroot':
+      apache::vhost { 'test.logroot.com':
         docroot    => '/tmp',
         logroot    => '/tmp',
       }
-      apache::vhost { 'test.override':
+      apache::vhost { 'test.override.com':
         docroot    => '/tmp',
         override   => ['All'],
       }
-      apache::vhost { 'test.options':
+      apache::vhost { 'test.options.com':
         docroot    => '/tmp',
         options    => ['Indexes','FollowSymLinks', 'ExecCGI'],
       }
@@ -865,88 +869,88 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.itk.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.itk.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AssignUserId nobody nobody' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.custom_fragment.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.customfragment.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#weird test string' }
     end
-    describe file("#{apache_hash['vhost_dir']}/test.without_priority_prefix.conf") do
+    describe file("#{apache_hash['vhost_dir']}/test.withoutpriorityprefix.com.conf") do
       it { is_expected.to be_file }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protocol.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.sslprotocol.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
       it { is_expected.to contain 'SSLUserName  *SSL_CLIENT_S_DN_CN' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.block.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.block.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.setenv_setenvif.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.setenvsetenvif.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SetEnv TEST /test' }
       it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.rewrite.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.rewrite.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#test' }
       it { is_expected.to contain 'RewriteCond %{HTTP_USER_AGENT} ^Lynx/ [OR]' }
       it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
       it { is_expected.to contain 'RewriteMap lc int:tolower' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.request_headers.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.requestheaders.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'append MirrorID "mirror 12"' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.redirect.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.redirect.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Redirect permanent /images http://test.server/' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.no_proxy_uris.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.noproxyuris.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        http://test2/test !' }
       it { is_expected.to contain 'ProxyPass        / http://test2/' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.proxy.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        / http://testproxy/' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.aliases.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.aliases.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.access_logs.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.accesslogs.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
       it { is_expected.to contain 'CustomLog "/tmp/log2" combined env=admin' }
       it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
       it { is_expected.to contain 'CustomLog "syslog" combined' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.access_log_env_var.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.accesslogenvvar.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" combined env=admin' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.access_log_format.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.accesslogformat.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" "%h %l"' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.logroot.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.logroot.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '  CustomLog "/tmp' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.override.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.override.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AllowOverride All' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.options.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.options.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
     end
@@ -965,7 +969,7 @@ describe 'apache::vhost define' do
           }
       MANIFEST
       it 'applies cleanly and DOES NOT print warning about $use_servername_for_filenames usage for test.server vhost' do
-        result = apply_manifest(pp, catch_failures: true)
+        result = apply_manifest(pp, expect_failures: true)
         expect(result.stderr).not_to contain %r{
           .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
           It\sis\spossible\sfor\sthe\s\$name\sparameter.*
@@ -1118,8 +1122,8 @@ describe 'apache::vhost define' do
 
   describe 'directory rewrite rules' do
     pp = <<-MANIFEST
-      class { 'apache': }
       host { 'test.server': ip => '127.0.0.1' }
+      class { 'apache': }
       if ! defined(Class['apache::mod::rewrite']) {
         include ::apache::mod::rewrite
       }

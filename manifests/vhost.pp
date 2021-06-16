@@ -2381,10 +2381,15 @@ define apache::vhost (
   }
 
   unless $servername in ['default', 'default-ssl'] {
-    if $port {
-      $check_http_url = "$servername:$port"
+    if $ip {
+      $check_http_server = $ip
     } else {
-      $check_http_url = $servername
+      $check_http_server = $servername
+    }
+    if $port {
+      $check_http_url = "$check_http_server:$port"
+    } else {
+      $check_http_url = $check_http_server
     }
     if ($ssl) {
       check_http { "https://${check_http_url}": }
