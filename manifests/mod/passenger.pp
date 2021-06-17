@@ -838,9 +838,9 @@ class apache::mod::passenger (
   if $::osfamily == 'RedHat' and $manage_repo {
     if $::operatingsystem == 'Amazon' {
       if $::operatingsystemmajrelease == '2' {
-        $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/7Server/$basearch'
+        $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/7/$basearch'
       } else {
-        $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6Server/$basearch'
+        $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6/$basearch'
       }
     } else {
       $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/$releasever/$basearch'
