@@ -2111,7 +2111,7 @@ define apache::vhost (
     false => $name,
   }
 
-  if ! $use_servername_for_filenames {
+  if ! $use_servername_for_filenames and $name != $normalized_servername {
     $use_servername_for_filenames_warn_msg = '
     It is possible for the $name parameter to be defined with spaces in it. Although supported on POSIX systems, this
     can lead to cumbersome file names. The $servername attribute has stricter conditions from Apache (i.e. no spaces)
@@ -2119,7 +2119,7 @@ define apache::vhost (
     file names.
 
     From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_servername_for_filenames will be removed and log/config file names will be dervied from the
+    module, the $use_servername_for_filenames will be removed and log/config file names will be derived from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_servername_for_filenames_warn_msg)
   } elsif ! $use_port_for_filenames {
@@ -2130,7 +2130,7 @@ define apache::vhost (
     config file names.
 
     From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_port_for_filenames will be removed and log/config file names will be dervied from the
+    module, the $use_port_for_filenames will be removed and log/config file names will be derived from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_port_for_filenames_warn_msg)
   }
