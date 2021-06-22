@@ -20,13 +20,7 @@ class apache::version (
       }
     }
     'Debian': {
-      if $::operatingsystem == 'Ubuntu' and versioncmp($facts['operatingsystemmajrelease'], '13.10') >= 0 {
-        $default = '2.4'
-      } elsif $::operatingsystem == 'Debian' and versioncmp($facts['operatingsystemmajrelease'], '8') >= 0 {
-        $default = '2.4'
-      } else {
-        $default = '2.2'
-      }
+      $default = '2.4'
     }
     'FreeBSD': {
       $default = '2.4'
