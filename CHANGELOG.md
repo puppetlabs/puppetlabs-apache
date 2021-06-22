@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-22)
+## [v6.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.3.0) (2021-06-21)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.2.0...v6.3.0)
+
+### Added
+
+- The default disk\_cache.conf.erb caches everything.  [\#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
+
+### Fixed
+
+- Update the default version of Apache for Amazon Linux 2 [\#2158](https://github.com/puppetlabs/puppetlabs-apache/pull/2158) ([turnopil](https://github.com/turnopil))
+- Only warn about servername logging if relevant [\#2154](https://github.com/puppetlabs/puppetlabs-apache/pull/2154) ([ekohl](https://github.com/ekohl))
+
+## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-24)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.1.0...v6.2.0)
 

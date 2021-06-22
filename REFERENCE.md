@@ -2117,6 +2117,7 @@ The following parameters are available in the `apache::mod::disk_cache` class:
 
 * [`cache_root`](#cache_root)
 * [`cache_ignore_headers`](#cache_ignore_headers)
+* [`default_cache_enable`](#default_cache_enable)
 
 ##### <a name="cache_root"></a>`cache_root`
 
@@ -2138,6 +2139,16 @@ Data type: `Any`
 Specifies HTTP header(s) that should not be stored in the cache.
 
 Default value: ``undef``
+
+##### <a name="default_cache_enable"></a>`default_cache_enable`
+
+Data type: `Boolean`
+
+Default value is true, which enables "CacheEnable disk /" in disk_cache.conf for the webserver. This would cache
+every request to apache by default for every vhost. If set to false the default cache all behaviour is supressed.
+You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
+
+Default value: ``true``
 
 ### <a name="apachemoddumpio"></a>`apache::mod::dumpio`
 
