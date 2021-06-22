@@ -2122,7 +2122,7 @@ define apache::vhost (
     module, the $use_servername_for_filenames will be removed and log/config file names will be derived from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_servername_for_filenames_warn_msg)
-  } elsif ! $use_port_for_filenames {
+  } elsif $use_servername_for_filenames and ! $use_port_for_filenames {
     $use_port_for_filenames_warn_msg = '
     It is possible for multiple virtual hosts to be configured using the same $servername but a different port. When
     using $use_servername_for_filenames, this can lead to duplicate resource declarations.
