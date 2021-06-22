@@ -2076,13 +2076,16 @@ define apache::vhost (
     $priority_real = '25-'
   }
 
-  # https://httpd.apache.org/docs/2.4/fr/mod/core.html#servername
+  # https://httpd.apache.org/docs/2.4/en/mod/core.html#servername
   # Syntax:	ServerName [scheme://]domain-name|ip-address[:port]
   # Sometimes, the server runs behind a device that processes SSL, such as a reverse proxy, load balancer or SSL offload
   # appliance.
   # When this is the case, specify the https:// scheme and the port number to which the clients connect in the ServerName
   # directive to make sure that the server generates the correct self-referential URLs.
   $normalized_servername = regsubst($servername, '(https?:\/\/)?([a-z0-9\/%_+.,#?!@&=-]+)(:?\d+)?', '\2', 'G')
+
+  # Logging with the port number only happens if it's non-default
+  $is_default_port = (!$ssl and Integer($port) == 80) or ($ssl and Integer($port) == 443)
 
   # IAC-1186: A number of configuration and log file names are generated using the $name parameter. It is possible for
   # the $name parameter to contain spaces, which could then be transferred to the log / config filenames. Although
@@ -2111,7 +2114,10 @@ define apache::vhost (
     false => $name,
   }
 
-  if ! $use_servername_for_filenames and $name != $normalized_servername {
+  $v8_filename_will_change_servername = ! $use_servername_for_filenames and regsubst($name, ' ', '_', 'G') != $normalized_servername
+  $v8_filename_will_change_port = ($use_port_for_filenames and $is_default_port) or (! $use_port_for_filenames and ! $is_default_port)
+
+  if $v8_filename_will_change_servername {
     $use_servername_for_filenames_warn_msg = '
     It is possible for the $name parameter to be defined with spaces in it. Although supported on POSIX systems, this
     can lead to cumbersome file names. The $servername attribute has stricter conditions from Apache (i.e. no spaces)
@@ -2122,7 +2128,7 @@ define apache::vhost (
     module, the $use_servername_for_filenames will be removed and log/config file names will be derived from the
     sanitized $servername parameter when not explicitly defined.'
     warning($use_servername_for_filenames_warn_msg)
-  } elsif ! $use_port_for_filenames {
+  } elsif $v8_filename_will_change_port {
     $use_port_for_filenames_warn_msg = '
     It is possible for multiple virtual hosts to be configured using the same $servername but a different port. When
     using $use_servername_for_filenames, this can lead to duplicate resource declarations.
