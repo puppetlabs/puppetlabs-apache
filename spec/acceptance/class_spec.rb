@@ -4,24 +4,16 @@ require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache class' do
   context 'default parameters' do
-    let(:pp) { "class { 'apache': }" }
-
-    it 'behaves idempotently' do
-      idempotent_apply(pp)
+    let(:pp) do
+      <<~MANIFEST
+      class { 'apache': }
+      notice("apache_version = >${apache_version}<")
+      MANIFEST
     end
 
-    describe 'apache_version fact' do
-      let(:result) do
-        apply_manifest('include apache', catch_failures: true)
-        version_check_pp = <<-MANIFEST
-        notice("apache_version = >${apache_version}<")
-        MANIFEST
-        apply_manifest(version_check_pp, catch_failures: true)
-      end
-
-      it {
-        expect(result.stdout).to match(%r{apache_version = >#{apache_hash['version']}.*<})
-      }
+    it 'behaves idempotently' do
+      result = idempotent_apply(pp)
+      expect(result.stdout).to match(%r{apache_version = >#{apache_hash['version']}.*<})
     end
 
     describe package(apache_hash['package_name']) do

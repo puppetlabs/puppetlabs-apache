@@ -2380,6 +2380,26 @@ define apache::vhost (
     }
   }
 
+  unless $servername in ['default', 'default-ssl'] {
+    if $ip {
+      $check_http_server = $ip
+    } else {
+      $check_http_server = $servername
+    }
+    if $port {
+      $check_http_url = "$check_http_server:$port"
+    } else {
+      $check_http_url = $check_http_server
+    }
+    if !($ip_based or $wsgi_application_group or $wsgi_daemon_process or $wsgi_import_script or $wsgi_import_script_options or $wsgi_process_group or $wsgi_script_aliases or $wsgi_pass_authorization) {
+      if ($ssl) {
+        check_http { "https://${check_http_url}": }
+      } else {
+        check_http { "http://${check_http_url}": }
+      }
+    }
+  }
+
   concat { "${priority_real}${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}${filename}.conf",

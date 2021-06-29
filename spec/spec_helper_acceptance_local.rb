@@ -35,13 +35,27 @@ RSpec.configure do |c|
   c.before :suite do
     # Make sure selinux is disabled so the tests work.
     LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
+    LitmusHelper.instance.run_shell('/opt/puppetlabs/puppet/bin/gem install retriable')
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
+    LitmusHelper.instance.run_shell('puppet module install puppetlabs/firewall')
+    LitmusHelper.instance.run_shell('puppet module install camptocamp/openssl')
+
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
       ensure   => 'latest',
     }
+    package { 'git':
+    ensure   => 'latest',
+  }
+
+  firewall { '100 allow http and https access':
+    dport  => [80, 443],
+    proto  => 'tcp',
+    action => 'accept',
+  }
+
     # needed for netstat, for serverspec checks
     if $::osfamily == 'SLES' or $::osfamily == 'SUSE' {
       package { 'net-tools-deprecated':
@@ -72,6 +86,8 @@ RSpec.configure do |c|
     }
     PUPPETCODE
     LitmusHelper.instance.apply_manifest(pp)
+    # Workaround to test opv
+    LitmusHelper.instance.run_shell('cd /etc/puppetlabs/code/environments/production/modules;git init;git submodule add https://github.com/sheenaajay/opv.git opv;cd opv;git checkout opv/issue1;')
   end
 
   c.after :suite do
