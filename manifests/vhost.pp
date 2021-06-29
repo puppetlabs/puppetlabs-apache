@@ -2391,10 +2391,12 @@ define apache::vhost (
     } else {
       $check_http_url = $check_http_server
     }
-    if ($ssl) {
-      check_http { "https://${check_http_url}": }
-    } else {
-      check_http { "http://${check_http_url}": }
+    if !($ip_based or $wsgi_application_group or $wsgi_daemon_process or $wsgi_import_script or $wsgi_import_script_options or $wsgi_process_group or $wsgi_script_aliases or $wsgi_pass_authorization) {
+      if ($ssl) {
+        check_http { "https://${check_http_url}": }
+      } else {
+        check_http { "http://${check_http_url}": }
+      }
     }
   }
 

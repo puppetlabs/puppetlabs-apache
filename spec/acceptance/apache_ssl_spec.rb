@@ -2,7 +2,7 @@
 
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
-describe 'apache ssl' do
+describe 'apache ssl', skip: 'ssl cert and key missing' do
   describe 'ssl parameters' do
     pp = <<-MANIFEST
         class { 'apache':
@@ -53,6 +53,7 @@ describe 'apache ssl' do
         }
 
         host { 'test.ssl.com': ip => '127.0.0.1', }
+        #apache::listen { '*:443': }
 
         apache::vhost { 'test.ssl.com':
           docroot              => '/tmp/test',
@@ -110,6 +111,7 @@ describe 'apache ssl' do
         }
 
         host { 'test.sslcaonly.com': ip => '127.0.0.1', }
+        apache::listen { '*:443': }
 
         apache::vhost { 'test.sslcaonly.com':
           docroot              => '/tmp/test',
@@ -140,6 +142,7 @@ describe 'apache ssl' do
         }
 
         host { 'test.sslcertsdironly.com': ip => '127.0.0.1', }
+        apache::listen { '443': }
 
         apache::vhost { 'test.sslcertsdironly.com':
           docroot              => '/tmp/test',

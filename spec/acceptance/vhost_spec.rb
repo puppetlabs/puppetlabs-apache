@@ -84,7 +84,6 @@ describe 'apache::vhost define' do
         ensure  => 'directory',
         recurse => true,
       }
-
       apache::vhost { 'first.example.com':
         port    => '80',
         docroot => '/var/www/first',
@@ -556,7 +555,6 @@ describe 'apache::vhost define' do
           ip      => '127.0.0.1',
           port    => '8888',
         }
-        apache::listen { '*:80': }
         apache::vhost { 'proxy.example.com':
           docroot    => '/var/www',
           port       => '80',
@@ -639,11 +637,11 @@ describe 'apache::vhost define' do
   describe 'ip_based' do
     pp = <<-MANIFEST
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot    => '/tmp',
         ip_based   => true,
-        servername => 'test.server',
+        servername => 'test.server.com',
       }
     MANIFEST
     it 'applies cleanly' do
@@ -654,7 +652,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerName test.server' }
     end
@@ -663,8 +661,8 @@ describe 'apache::vhost define' do
   describe 'ip_based and no servername' do
     pp = <<-MANIFEST
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot    => '/tmp',
         ip_based   => true,
         servername => '',
@@ -678,7 +676,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'ServerName' }
     end
@@ -712,8 +710,8 @@ describe 'apache::vhost define' do
       user { 'test_owner': ensure => present, }
       group { 'test_group': ensure => present, }
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot       => '/tmp/test',
         docroot_owner => 'test_owner',
         docroot_group => 'test_group',
@@ -960,10 +958,10 @@ describe 'apache::vhost define' do
     describe 'when the $use_servername_for_filenames parameter is set to true' do
       pp = <<-MANIFEST
           class { 'apache': }
-          host { 'test.server': ip => '127.0.0.1' }
-          apache::vhost { 'test.server':
+          host { 'test.server.com': ip => '127.0.0.1' }
+          apache::vhost { 'test.server.com':
             use_servername_for_filenames  => true,
-            servername                    => 'test.servername',
+            servername                    => 'test.servername.com',
             docroot                       => '/tmp',
             logroot                       => '/tmp',
           }
@@ -976,34 +974,35 @@ describe 'apache::vhost define' do
           sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
         }xm
       end
-      describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.servername.com.conf") do
         it { is_expected.to be_file }
-        it { is_expected.to contain '  ErrorLog "/tmp/test.servername_error.log' }
-        it { is_expected.to contain '  CustomLog "/tmp/test.servername_access.log' }
+        it { is_expected.to contain '  ErrorLog "/tmp/test.servername.com_error.log' }
+        it { is_expected.to contain '  CustomLog "/tmp/test.servername.com_access.log' }
       end
     end
     describe 'when the $use_servername_for_filenames parameter is NOT defined' do
       pp = <<-MANIFEST
           class { 'apache': }
-          host { 'test.server': ip => '127.0.0.1' }
-          apache::vhost { 'test.server':
-            servername                    => 'test.servername',
+          host { 'test.server.com': ip => '127.0.0.1' }
+          apache::listen { '*:80': }
+          apache::vhost { 'test.server.com':
+            servername                    => 'test.servername.com',
             docroot                       => '/tmp',
             logroot                       => '/tmp',
           }
       MANIFEST
-      it 'applies cleanly and prints warning about $use_servername_for_filenames usage for test.server vhost' do
+      it 'applies cleanly and prints warning about $use_servername_for_filenames usage for test.server.com vhost' do
         result = apply_manifest(pp, catch_failures: true)
         expect(result.stderr).to contain %r{
-          .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
+          .*Warning\:\sScope\(Apache::Vhost\[test\.server\.com\]\)\:.*
           It\sis\spossible\sfor\sthe\s\$name\sparameter.*
           sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
         }xm
       end
-      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
         it { is_expected.to be_file }
-        it { is_expected.to contain '  ErrorLog "/tmp/test.server_error.log' }
-        it { is_expected.to contain '  CustomLog "/tmp/test.server_access.log' }
+        it { is_expected.to contain '  ErrorLog "/tmp/test.server.com_error.log' }
+        it { is_expected.to contain '  CustomLog "/tmp/test.server.com_access.log' }
       end
     end
   end
@@ -1019,8 +1018,8 @@ describe 'apache::vhost define' do
     describe "#{logtype}_log" do
       pp = <<-MANIFEST
         class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
+        host { 'test.server.com': ip => '127.0.0.1' }
+        apache::vhost { 'test.server.com':
           docroot    => '/tmp',
           logroot    => '/tmp',
           #{logtype}_log => false,
@@ -1030,7 +1029,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
         it { is_expected.to be_file }
         it { is_expected.not_to contain "  #{logname} \"/tmp" }
       end
@@ -1039,8 +1038,8 @@ describe 'apache::vhost define' do
     describe "#{logtype}_log_pipe" do
       pp = <<-MANIFEST
         class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
+        host { 'test.server.com': ip => '127.0.0.1' }
+        apache::vhost { 'test.server.com':
           docroot    => '/tmp',
           logroot    => '/tmp',
           #{logtype}_log_pipe => '|/bin/sh',
@@ -1050,7 +1049,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain "  #{logname} \"|/bin/sh" }
       end
@@ -1059,8 +1058,8 @@ describe 'apache::vhost define' do
     describe "#{logtype}_log_syslog" do
       pp = <<-MANIFEST
         class { 'apache': }
-        host { 'test.server': ip => '127.0.0.1' }
-        apache::vhost { 'test.server':
+        host { 'test.server.com': ip => '127.0.0.1' }
+        apache::vhost { 'test.server.com':
           docroot    => '/tmp',
           logroot    => '/tmp',
           #{logtype}_log_syslog => 'syslog',
@@ -1070,7 +1069,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain "  #{logname} \"syslog\"" }
       end
@@ -1080,8 +1079,8 @@ describe 'apache::vhost define' do
   describe 'actions' do
     pp = <<-MANIFEST
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot => '/tmp',
         action  => 'php-fastcgi',
       }
@@ -1091,7 +1090,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Action php-fastcgi /cgi-bin virtual' }
     end
@@ -1100,8 +1099,8 @@ describe 'apache::vhost define' do
   describe 'suphp' do
     pp = <<-MANIFEST
       class { 'apache': service_ensure => stopped, }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot          => '/tmp',
         suphp_addhandler => '#{apache_hash['suphp_handler']}',
         suphp_engine     => 'on',
@@ -1112,7 +1111,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain "suPHP_AddHandler #{apache_hash['suphp_handler']}" }
       it { is_expected.to contain 'suPHP_Engine on' }
@@ -1122,12 +1121,12 @@ describe 'apache::vhost define' do
 
   describe 'directory rewrite rules' do
     pp = <<-MANIFEST
-      host { 'test.server': ip => '127.0.0.1' }
+      host { 'test.server.com': ip => '127.0.0.1' }
       class { 'apache': }
       if ! defined(Class['apache::mod::rewrite']) {
         include ::apache::mod::rewrite
       }
-      apache::vhost { 'test.server':
+      apache::vhost { 'test.server.com':
         docroot      => '/tmp',
         directories  => [
           {
@@ -1150,7 +1149,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#Permalink Rewrites' }
       it { is_expected.to contain 'RewriteEngine On' }
@@ -1167,8 +1166,8 @@ describe 'apache::vhost define' do
       pp = <<-MANIFEST
       class { 'apache': }
       class { 'apache::mod::wsgi': }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
+      host { 'test.server.com': ip => '127.0.0.1' }
+      apache::vhost { 'test.server.com':
         docroot                     => '/tmp',
         wsgi_application_group      => '%{GLOBAL}',
         wsgi_daemon_process         => { 'wsgi' => { 'python-home' => '/usr' }, 'foo' => {} },
@@ -1185,7 +1184,7 @@ describe 'apache::vhost define' do
       it 'import_script applies cleanly' do
         apply_manifest(pp, catch_failures: true)
       end
-      describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
         it { is_expected.to contain 'WSGIDaemonProcess foo' }
@@ -1221,10 +1220,10 @@ describe 'apache::vhost define' do
         }
       }
       class { 'apache': }
-      host { 'test.server': ip => '127.0.0.1' }
+      host { 'test.server.com': ip => '127.0.0.1' }
       file { '/apache_spec': ensure => directory, }
       file { '/apache_spec/include': ensure => present, content => '#additional_includes' }
-      apache::vhost { 'test.server':
+      apache::vhost { 'test.server.com':
         docroot             => '/apache_spec',
         additional_includes => '/apache_spec/include',
       }
@@ -1233,7 +1232,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: false)
     end
 
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Include "/apache_spec/include"' }
     end
@@ -1244,7 +1243,7 @@ describe 'apache::vhost define' do
     pp = <<-MANIFEST
       class { 'apache': }
       class { 'apache::mod::shib': }
-      apache::vhost { 'test.server':
+      apache::vhost { 'test.server.com':
         port    => '80',
         docroot => '/var/www/html',
         shib_compat_valid_user => 'On'
@@ -1253,7 +1252,7 @@ describe 'apache::vhost define' do
     it 'applies cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ShibCompatValidUser On' }
     end
@@ -1264,7 +1263,7 @@ describe 'apache::vhost define' do
   describe 'auth_oidc', if: mod_supported_on_platform?('apache::mod::authnz_ldap') do
     pp = <<-MANIFEST
         class { 'apache': }
-        apache::vhost { 'test.server':
+        apache::vhost { 'test.server.com':
           port    => '80',
           docroot => '/var/www/html',
           auth_oidc     => true,
@@ -1282,7 +1281,7 @@ describe 'apache::vhost define' do
     it 'applys cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.com.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'OIDCProviderMetadataURL https://login.example.com/.well-known/openid-configuration' }
       it { is_expected.to contain 'OIDCClientID test' }

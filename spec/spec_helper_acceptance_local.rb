@@ -38,6 +38,9 @@ RSpec.configure do |c|
     LitmusHelper.instance.run_shell('/opt/puppetlabs/puppet/bin/gem install retriable')
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
+    LitmusHelper.instance.run_shell('puppet module install puppetlabs/firewall')
+    LitmusHelper.instance.run_shell('puppet module install camptocamp/openssl')
+
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
@@ -46,6 +49,13 @@ RSpec.configure do |c|
     package { 'git':
     ensure   => 'latest',
   }
+
+  firewall { '100 allow http and https access':
+    dport  => [80, 443],
+    proto  => 'tcp',
+    action => 'accept',
+  }
+
     # needed for netstat, for serverspec checks
     if $::osfamily == 'SLES' or $::osfamily == 'SUSE' {
       package { 'net-tools-deprecated':
