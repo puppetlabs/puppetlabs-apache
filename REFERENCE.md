@@ -6669,6 +6669,7 @@ The following parameters are available in the `apache::mod::userdir` class:
 
 * [`home`](#home)
 * [`dir`](#dir)
+* [`userdir`](#userdir)
 * [`disable_root`](#disable_root)
 * [`apache_version`](#apache_version)
 * [`path`](#path)
@@ -6692,6 +6693,14 @@ Data type: `Any`
 *Deprecated* Path from user's home directory to public directory.
 
 Default value: ``undef``
+
+##### <a name="userdir"></a>`userdir`
+
+Data type: `Any`
+
+Directory out of which per-user content is loaded. It may be any valid `UserDir` directive values.
+
+Default value: The value of `$path`
 
 ##### <a name="disable_root"></a>`disable_root`
 
