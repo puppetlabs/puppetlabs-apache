@@ -70,8 +70,8 @@ class apache::mod::php (
     $_lib = "${libphp_prefix}${php_version}.so"
   }
   $_module_id = $_php_major ? {
-    '5'     => 'php5_module',
-    '7'     => 'php7_module',
+    /^5/     => 'php5_module',
+    /^7/     => 'php7_module',
     default => 'php_module',
   }
 
