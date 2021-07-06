@@ -6696,11 +6696,11 @@ Default value: ``undef``
 
 ##### <a name="userdir"></a>`userdir`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
-Directory out of which per-user content is loaded. It may be any valid `UserDir` directive values.
+Path or directory name to be used as the UserDir.
 
-Default value: The value of `$path`
+Default value: ``undef``
 
 ##### <a name="disable_root"></a>`disable_root`
 

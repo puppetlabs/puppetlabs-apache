@@ -36,7 +36,7 @@
 class apache::mod::userdir (
   $home = undef,
   $dir = undef,
-  $userdir = undef,
+  Optional[String[1]] $userdir = undef,
   $disable_root = true,
   $apache_version = undef,
   $path = '/home/*/public_html',
@@ -63,10 +63,7 @@ class apache::mod::userdir (
     $_path = $path
   }
 
-  $_userdir = $userdir ? {
-    undef   => $_path,
-    default => $userdir,
-  }
+  $_userdir = pick($userdir, $_path)
 
   ::apache::mod { 'userdir': }
 
