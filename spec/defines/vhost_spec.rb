@@ -71,7 +71,7 @@ describe 'apache::vhost', type: :define do
               'ssl_key'                     => '/ssl/key',
               'ssl_chain'                   => '/ssl/chain',
               'ssl_crl_path'                => '/ssl/crl',
-              'ssl_crl'                     => 'foo.crl',
+              'ssl_crl'                     => '/ssl/foo.crl',
               'ssl_certs_dir'               => '/ssl/certs',
               'ssl_protocol'                => 'SSLv2',
               'ssl_cipher'                  => 'HIGH',
@@ -88,6 +88,7 @@ describe 'apache::vhost', type: :define do
               'ssl_proxy_cipher_suite'      => 'HIGH',
               'ssl_proxy_protocol'          => 'TLSv1.2',
               'ssl_user_name'               => 'SSL_CLIENT_S_DN_CN',
+              'ssl_reload_on_change'        => true,
               'priority'                    => '30',
               'default_vhost'               => true,
               'servername'                  => 'example.com',
@@ -516,6 +517,10 @@ describe 'apache::vhost', type: :define do
               content: %r{^\s+SSLSessionCacheTimeout 300$},
             )
           }
+          it { is_expected.to contain_file('rspec.example.com_ssl_cert') }
+          it { is_expected.to contain_file('rspec.example.com_ssl_key') }
+          it { is_expected.to contain_file('rspec.example.com_ssl_chain') }
+          it { is_expected.to contain_file('rspec.example.com_ssl_foo.crl') }
           it { is_expected.to contain_class('apache::mod::mime') }
           it { is_expected.to contain_class('apache::mod::vhost_alias') }
           it { is_expected.to contain_class('apache::mod::wsgi') }
@@ -1859,6 +1864,10 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_class('apache::mod::proxy') }
           it { is_expected.not_to contain_class('apache::mod::proxy_http') }
           it { is_expected.not_to contain_class('apache::mod::headers') }
+          it { is_expected.not_to contain_file('rspec.example.com_ssl_cert') }
+          it { is_expected.not_to contain_file('rspec.example.com_ssl_key') }
+          it { is_expected.not_to contain_file('rspec.example.com_ssl_chain') }
+          it { is_expected.not_to contain_file('rspec.example.com_ssl_foo.crl') }
           it { is_expected.to contain_file('/var/www/foo') }
           it {
             is_expected.to contain_file('/tmp/logroot').with('ensure' => 'absent')
