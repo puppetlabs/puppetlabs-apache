@@ -72,7 +72,7 @@ describe 'apache::mod::php', type: :class do
               it { is_expected.to contain_package('libapache2-mod-php8.0') }
               it {
                 is_expected.to contain_file('php.load').with(
-                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
+                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
                 )
               }
             end
