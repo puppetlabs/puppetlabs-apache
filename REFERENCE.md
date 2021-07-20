@@ -6669,6 +6669,7 @@ The following parameters are available in the `apache::mod::userdir` class:
 
 * [`home`](#home)
 * [`dir`](#dir)
+* [`userdir`](#userdir)
 * [`disable_root`](#disable_root)
 * [`apache_version`](#apache_version)
 * [`path`](#path)
@@ -6690,6 +6691,14 @@ Default value: ``undef``
 Data type: `Any`
 
 *Deprecated* Path from user's home directory to public directory.
+
+Default value: ``undef``
+
+##### <a name="userdir"></a>`userdir`
+
+Data type: `Optional[String[1]]`
+
+Path or directory name to be used as the UserDir.
 
 Default value: ``undef``
 

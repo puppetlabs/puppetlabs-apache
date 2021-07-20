@@ -6,7 +6,10 @@
 #   
 # @param dir
 #   *Deprecated* Path from user's home directory to public directory.
-# 
+#
+# @param userdir
+#   Path or directory name to be used as the UserDir.
+#
 # @param disable_root
 #   Toggles whether to allow use of root directory.
 # 
@@ -33,6 +36,7 @@
 class apache::mod::userdir (
   $home = undef,
   $dir = undef,
+  Optional[String[1]] $userdir = undef,
   $disable_root = true,
   $apache_version = undef,
   $path = '/home/*/public_html',
@@ -58,6 +62,8 @@ class apache::mod::userdir (
   } else {
     $_path = $path
   }
+
+  $_userdir = pick($userdir, $_path)
 
   ::apache::mod { 'userdir': }
 
