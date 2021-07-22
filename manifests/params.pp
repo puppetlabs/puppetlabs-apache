@@ -175,9 +175,8 @@ class apache::params inherits ::apache::version {
       $mod_dir            = "${httpd_dir}/conf.modules.d"
     } else {
       $mod_dir              = $facts['operatingsystemmajrelease'] ? {
-        '7'     => "${httpd_dir}/conf.modules.d",
-        '8'     => "${httpd_dir}/conf.modules.d",
-        default => "${httpd_dir}/conf.d",
+        '6'     => "${httpd_dir}/conf.d",
+        default => "${httpd_dir}/conf.modules.d",
       }
     }
     $mod_enable_dir       = undef
@@ -214,9 +213,8 @@ class apache::params inherits ::apache::version {
       'auth_mellon'           => 'mod_auth_mellon',
       'auth_openidc'          => 'mod_auth_openidc',
       'authnz_ldap'           => $facts['operatingsystemmajrelease'] ? {
-        '7'     => 'mod_ldap',
-        '8'     => 'mod_ldap',
-        default => 'mod_authz_ldap',
+        '6'     => 'mod_authz_ldap',
+        default => 'mod_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
       'fastcgi'               => $facts['operatingsystemmajrelease'] ? {
@@ -255,8 +253,9 @@ class apache::params inherits ::apache::version {
       'shibboleth'            => 'shibboleth',
       'ssl'                   => 'mod_ssl',
       'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
-        '8'     => 'python3-mod_wsgi', # RedHat8
-        default => 'mod_wsgi',         # RedHat5, RedHat6, RedHat7
+        '6'     => 'mod_wsgi',         # RedHat6
+        '7'     => 'mod_wsgi',         # RedHat7
+        default => 'python3-mod_wsgi', # RedHat8+
       },
       'dav_svn'               => 'mod_dav_svn',
       'suphp'                 => 'mod_suphp',
@@ -267,8 +266,9 @@ class apache::params inherits ::apache::version {
     $mod_libs             = {
       'nss' => 'libmodnss.so',
       'wsgi'                  => $facts['operatingsystemmajrelease'] ? {
-        '8'     => 'mod_wsgi_python3.so',
-        default => 'mod_wsgi.so',
+        '6'     => 'mod_wsgi.so',
+        '7'     => 'mod_wsgi.so',
+        default => 'mod_wsgi_python3.so',
       },
     }
     $conf_template        = 'apache/httpd.conf.erb'
@@ -281,14 +281,12 @@ class apache::params inherits ::apache::version {
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
     $alias_icons_path     = $facts['operatingsystemmajrelease'] ? {
-      '7'     => '/usr/share/httpd/icons',
-      '8'     => '/usr/share/httpd/icons',
-      default => '/var/www/icons',
+      '6'     => '/var/www/icons',
+      default => '/usr/share/httpd/icons',
     }
     $error_documents_path = $facts['operatingsystemmajrelease'] ? {
-      '7'     => '/usr/share/httpd/error',
-      '8'     => '/usr/share/httpd/error',
-      default => '/var/www/error'
+      '6'     => '/var/www/error',
+      default => '/usr/share/httpd/error',
     }
     if $::osfamily == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
