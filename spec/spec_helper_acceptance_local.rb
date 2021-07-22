@@ -34,11 +34,12 @@ RSpec.configure do |c|
   end
   c.before :suite do
     # Make sure selinux is disabled so the tests work.
-    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
+    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat}.match?(os[:family])
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
 
-    LitmusHelper.instance.run_shell('yum-config-manager --disable rhui-rhel-7-server-rhui-debug-rpms') if os[:family] == 'redhat' && os[:release].to_i == 7
+    LitmusHelper.instance.run_shell('yum-config-manager --disable rhui-rhel-7-server-rhui-debug-rpms') if os[:name] == 'RedHat' && os[:release].to_i == 7
+
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
