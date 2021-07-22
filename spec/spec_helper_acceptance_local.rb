@@ -37,6 +37,8 @@ RSpec.configure do |c|
     LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
 
     LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
+
+    LitmusHelper.instance.run_shell('yum-config-manager --disable rhui-rhel-7-server-rhui-debug-rpms') if os[:family] == 'redhat' && os[:release].to_f == 7
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
