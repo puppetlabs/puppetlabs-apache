@@ -1739,7 +1739,6 @@
 # @param $mdomain
 #   All the names in the list are managed as one Managed Domain (MD). mod_md will request
 #   one single certificate that is valid for all these names.
-
 define apache::vhost (
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
