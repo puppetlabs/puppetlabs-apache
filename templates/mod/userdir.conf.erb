@@ -2,7 +2,7 @@
 <% if @disable_root -%>
   UserDir disabled root
 <% end -%>
-  UserDir <%= @_path %>
+  UserDir <%= @_userdir %>
 
 <%- if ! @unmanaged_path -%>
   <Directory "<%= @_path %>">
