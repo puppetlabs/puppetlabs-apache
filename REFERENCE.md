@@ -109,6 +109,7 @@
 * `apache::confd::no_accf`: Manages the `no-accf.conf` file.
 * `apache::default_confd_files`: Helper for setting up default conf.d files.
 * `apache::default_mods`: Installs and congfigures default mods for Apache
+* `apache::mod::ssl::reload`: Manages the puppet_ssl folder for ssl file copies, which is needed to track changes for reloading service on changes
 * `apache::package`: Installs an Apache MPM.
 * `apache::params`: This class manages Apache parameters
 * `apache::php`: This class installs PHP for Apache.
@@ -207,6 +208,7 @@ The following parameters are available in the `apache` class:
 * [`default_ssl_crl_path`](#default_ssl_crl_path)
 * [`default_ssl_crl_check`](#default_ssl_crl_check)
 * [`default_ssl_key`](#default_ssl_key)
+* [`default_ssl_reload_on_change`](#default_ssl_reload_on_change)
 * [`default_ssl_vhost`](#default_ssl_vhost)
 * [`default_type`](#default_type)
 * [`default_vhost`](#default_vhost)
@@ -433,6 +435,14 @@ this parameter with your SSL key's location before deploying this server in a pr
 environment.
 
 Default value: `$apache::params::default_ssl_key`
+
+##### <a name="default_ssl_reload_on_change"></a>`default_ssl_reload_on_change`
+
+Data type: `Boolean`
+
+Enable reloading of apache if the content of ssl files have changed.
+
+Default value: ``false``
 
 ##### <a name="default_ssl_vhost"></a>`default_ssl_vhost`
 
@@ -6369,6 +6379,7 @@ The following parameters are available in the `apache::mod::ssl` class:
 * [`ssl_stapling`](#ssl_stapling)
 * [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
 * [`ssl_mutex`](#ssl_mutex)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`apache_version`](#apache_version)
 * [`package_name`](#package_name)
 * [`ssl_sessiontickets`](#ssl_sessiontickets)
@@ -6524,6 +6535,14 @@ Default based on the OS and/or Apache version:
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
 Default value: ``undef``
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
+
+Default value: ``false``
 
 ##### <a name="apache_version"></a>`apache_version`
 
@@ -7789,6 +7808,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`ssl_stapling_timeout`](#ssl_stapling_timeout)
 * [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
 * [`ssl_user_name`](#ssl_user_name)
+* [`ssl_reload_on_change`](#ssl_reload_on_change)
 * [`use_canonical_name`](#use_canonical_name)
 * [`define`](#define)
 * [`auth_oidc`](#auth_oidc)
@@ -10637,6 +10657,14 @@ Data type: `Optional[String]`
 Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
 
 Default value: ``undef``
+
+##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+
+Data type: `Boolean`
+
+Enable reloading of apache if the content of ssl files have changed.
+
+Default value: `$apache::default_ssl_reload_on_change`
 
 ##### <a name="use_canonical_name"></a>`use_canonical_name`
 

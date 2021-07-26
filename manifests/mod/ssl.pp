@@ -62,6 +62,9 @@
 #   - Debian/Ubuntu + Apache >= 2.4: 'default'.
 #   - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
+#
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.
 #
@@ -97,6 +100,7 @@ class apache::mod::ssl (
   Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
   $ssl_mutex                                                = undef,
+  Boolean $ssl_reload_on_change                             = false,
   $apache_version                                           = undef,
   $package_name                                             = undef,
 ) inherits ::apache::params {
@@ -172,6 +176,24 @@ class apache::mod::ssl (
 
   if versioncmp($_apache_version, '2.4') >= 0 {
     include apache::mod::socache_shmcb
+  }
+
+  if $ssl_reload_on_change {
+    [$ssl_cert, $ssl_key, $ssl_ca].each |$ssl_file| {
+      if $ssl_file {
+        include apache::mod::ssl::reload
+        $_ssl_file_copy = regsubst($ssl_file, '/', '_', 'G')
+        file { $_ssl_file_copy:
+          path    => "${apache::params::puppet_ssl_dir}/${_ssl_file_copy}",
+          source  => "file://${ssl_file}",
+          owner   => 'root',
+          group   => $apache::params::root_group,
+          mode    => '0640',
+          seltype => 'cert_t',
+          notify  => Class['apache::service'],
+        }
+      }
+    }
   }
 
   # Template uses

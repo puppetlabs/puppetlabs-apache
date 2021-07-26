@@ -63,6 +63,7 @@ class apache::params inherits ::apache::version {
     $server_root          = "${httpd_root}/etc/httpd"
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
+    $puppet_ssl_dir       = "${httpd_dir}/puppet_ssl"
     $mod_dir              = $facts['operatingsystemmajrelease'] ? {
       '7'     => "${httpd_dir}/conf.modules.d",
       default => "${httpd_dir}/conf.d",
@@ -169,6 +170,7 @@ class apache::params inherits ::apache::version {
     $server_root          = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
+    $puppet_ssl_dir       = "${httpd_dir}/puppet_ssl"
     $conf_enabled         = undef
     if $::operatingsystem =~ /^[Aa]mazon$/ and $::operatingsystemmajrelease == '2' {
       # Amazon Linux 2 uses the /conf.modules.d/ dir
@@ -341,6 +343,7 @@ class apache::params inherits ::apache::version {
     $confd_dir           = "${httpd_dir}/conf.d"
     # Overwrite conf_enabled causes errors with Shibboleth when enabled on Ubuntu 18.04
     $conf_enabled        = undef #"${httpd_dir}/conf-enabled.d"
+    $puppet_ssl_dir      = "${httpd_dir}/puppet_ssl"
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
     $vhost_dir           = "${httpd_dir}/sites-available"
@@ -544,6 +547,7 @@ class apache::params inherits ::apache::version {
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/Includes"
     $conf_enabled     = undef
+    $puppet_ssl_dir   = "${httpd_dir}/puppet_ssl"
     $mod_dir          = "${httpd_dir}/Modules"
     $mod_enable_dir   = undef
     $vhost_dir        = "${httpd_dir}/Vhosts"
@@ -617,6 +621,7 @@ class apache::params inherits ::apache::version {
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
     $conf_enabled     = undef
+    $puppet_ssl_dir   = "${httpd_dir}/puppet_ssl"
     $mod_dir          = "${httpd_dir}/modules.d"
     $mod_enable_dir   = undef
     $vhost_dir        = "${httpd_dir}/vhosts.d"
@@ -687,6 +692,7 @@ class apache::params inherits ::apache::version {
     $conf_dir            = $httpd_dir
     $confd_dir           = "${httpd_dir}/conf.d"
     $conf_enabled        = undef
+    $puppet_ssl_dir      = "${httpd_dir}/puppet_ssl"
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
     $vhost_dir           = "${httpd_dir}/sites-available"
