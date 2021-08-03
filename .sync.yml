@@ -24,13 +24,14 @@ spec/spec_helper.rb:
 .github/workflows/auto_release.yml:
   unmanaged: false
 Rakefile:
+  changelog_max_issues: 500
   extras:
     "FastGettext.default_text_domain = 'default-text-domain'"
-  .github/workflows/spec.yml:
-    checks: 'syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop'
-    unmanaged: false
-  .github/workflows/release.yml:
-    unmanaged: false
-  .travis.yml:
-    delete: true
+.github/workflows/spec.yml:
+  checks: 'syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop'
+  unmanaged: false
+.github/workflows/release.yml:
+  unmanaged: false
+.travis.yml:
+  delete: true
 changelog_since_tag: "3.2.0"
