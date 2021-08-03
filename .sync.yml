@@ -10,8 +10,8 @@ Gemfile:
   optional:
     ":development":
       - gem: github_changelog_generator
-      git: 'https://github.com/sheenaajay/github-changelog-generator'
-      ref: 'rateapilimit'
+        git: 'https://github.com/sheenaajay/github-changelog-generator'
+        ref: 'rateapilimit'
 spec/spec_helper.rb:
   mock_with: ":rspec"
   coverage_report: true
