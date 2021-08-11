@@ -72,6 +72,9 @@ RSpec.configure do |c|
     }
     PUPPETCODE
     LitmusHelper.instance.apply_manifest(pp)
+
+    # Ensure ipv6 is enabled on our Debian 11 Docker boxes
+    LitmusHelper.instance.run_shell('sysctl -w net.ipv6.conf.all.disable_ipv6=0') if %r{debian}.match?(os[:family]) && os[:release].to_f == 11
   end
 
   c.after :suite do
