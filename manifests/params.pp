@@ -397,6 +397,7 @@ class apache::params inherits ::apache::version {
         '9'     => '7.0', # Debian Stretch
         '16.04' => '7.0', # Ubuntu Xenial
         '10'    => '7.3', # Debian Buster
+        '11'    => '7.4', # Debian Bullseye
         '20.04' => '7.4', # Ubuntu Foccal Fossal
         default => '7.2', # Ubuntu Bionic, Cosmic and Disco
       }
