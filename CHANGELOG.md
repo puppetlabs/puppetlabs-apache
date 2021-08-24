@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.5.0) (2021-08-24)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.4.0...v6.5.0)
+
+### Added
+
+- pdksync - \(IAC-1709\) - Add Support for Debian 11 [\#2180](https://github.com/puppetlabs/puppetlabs-apache/pull/2180) ([david22swan](https://github.com/david22swan))
+
 ## [v6.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.4.0) (2021-08-02)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.3.1...v6.4.0)
