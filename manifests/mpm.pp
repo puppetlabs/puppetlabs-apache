@@ -85,10 +85,8 @@ define apache::mpm (
       }
 
       if $mpm == 'itk' {
-        if ( ( $::operatingsystem == 'Ubuntu' ) or ( ($::operatingsystem == 'Debian') and ( versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) ) {
-          include apache::mpm::disable_mpm_event
-          include apache::mpm::disable_mpm_worker
-        }
+        include apache::mpm::disable_mpm_event
+        include apache::mpm::disable_mpm_worker
 
         package { 'libapache2-mpm-itk':
           ensure => present,
@@ -100,14 +98,14 @@ define apache::mpm (
       }
 
       if $mpm == 'prefork' {
-        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) {
+        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or $::operatingsystem == 'Debian' ) {
           include apache::mpm::disable_mpm_event
           include apache::mpm::disable_mpm_worker
         }
       }
 
       if $mpm == 'worker' {
-        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or ( $::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8.0.0') >= 0 ) ) {
+        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or $::operatingsystem == 'Debian' ) {
           include apache::mpm::disable_mpm_event
           include apache::mpm::disable_mpm_prefork
         }

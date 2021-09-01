@@ -133,13 +133,7 @@ def apache_settings_hash
     apache['error_log']        = 'error.log'
     apache['suphp_handler']    = 'x-httpd-php'
     apache['suphp_configpath'] = '/etc/php5/apache2'
-    apache['version'] = if osfamily == 'ubuntu' && operatingsystemrelease >= 13.10
-                          '2.4'
-                        elsif osfamily == 'debian' && operatingsystemrelease >= 8.0
-                          '2.4'
-                        else
-                          '2.2'
-                        end
+    apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'freebsd'
     apache['httpd_dir']        = '/usr/local/etc/apache24'

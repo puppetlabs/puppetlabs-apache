@@ -459,12 +459,11 @@ class apache::params inherits ::apache::version {
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
     }
+
     $error_log           = 'error.log'
     $scriptalias         = '/usr/lib/cgi-bin'
     $access_log_file     = 'access.log'
-    if $::osfamily == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0 {
-      $shib2_lib = 'mod_shib_22.so'
-    } elsif ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '19.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '10') < 0) {
+    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '19.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '10') < 0) {
       $shib2_lib = 'mod_shib2.so'
     } else {
       $shib2_lib = 'mod_shib.so'
@@ -480,11 +479,7 @@ class apache::params inherits ::apache::version {
     $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
-    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') >= 0) {
-      $docroot              = '/var/www/html'
-    } else {
-      $docroot              = '/var/www'
-    }
+    $docroot              = '/var/www/html'
     $cas_cookie_path      = '/var/cache/apache2/mod_auth_cas/'
     $mellon_lock_file     = undef
     $mellon_cache_size    = undef
@@ -544,11 +539,7 @@ class apache::params inherits ::apache::version {
     }
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
-    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '13.10') >= 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') >= 0) {
-      $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']
-    } else {
-      $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
-    }
+    $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']
 
     #
     # Passenger-specific settings
@@ -556,16 +547,9 @@ class apache::params inherits ::apache::version {
 
     $passenger_conf_file         = 'passenger.conf'
     $passenger_conf_package_file = undef
-
-    if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '14.04') < 0) or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '8') < 0) {
-      $passenger_root         = '/usr'
-      $passenger_ruby         = '/usr/bin/ruby'
-      $passenger_default_ruby = undef
-    } else {
-      $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-      $passenger_ruby         = undef
-      $passenger_default_ruby = '/usr/bin/ruby'
-    }
+    $passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+    $passenger_ruby         = undef
+    $passenger_default_ruby = '/usr/bin/ruby'
     $wsgi_socket_prefix = undef
   } elsif $::osfamily == 'FreeBSD' {
     $user             = 'www'
