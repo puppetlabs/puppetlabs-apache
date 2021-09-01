@@ -18,6 +18,17 @@ case $facts['os']['family'] {
       }
     }
 
+    if $facts['selinux'] {
+      $semanage_package = $facts['os']['release']['major'] ? {
+        '6'     => 'policycoreutils-python',
+        '7'     => 'policycoreutils-python',
+        default => 'policycoreutils-python-utils',
+      }
+      package { $semanage_package:
+        ensure => installed,
+      }
+    }
+
     if versioncmp($facts['os']['release']['major'], '8') >= 0 {
       package { 'iproute':
         ensure => installed,

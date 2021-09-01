@@ -41,30 +41,24 @@ describe 'apache class' do
   context 'custom site/mod dir parameters' do
     let(:pp) do
       <<-MANIFEST
-        if $::osfamily == 'RedHat' and "$::selinux" == "true" {
-          $semanage_package = $::operatingsystemmajrelease ? {
-            '6'     => 'policycoreutils-python',
-            '7'     => 'policycoreutils-python',
-            default => 'policycoreutils-python-utils',
-          }
-          package { $semanage_package: ensure => installed }
+        if $facts['osfamily'] == 'RedHat' and $facts['selinux'] {
           exec { 'set_apache_defaults':
-            command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',
-            path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
-            subscribe   => Package[$semanage_package],
-            refreshonly => true,
+            command => 'semanage fcontext --add -t httpd_config_t "/apache_spec/apache_custom(/.*)?"',
+            unless  => 'semanage fcontext --list | grep /apache_spec/apache_custom | grep httpd_config_t',
+            path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
           }
           exec { 'restorecon_apache':
             command     => 'restorecon -Rv /apache_spec',
             path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
             before      => Service['httpd'],
-            require     => Class['apache'],
+            require     => [File['/apache_spec/apache_custom'], Class['apache']],
             subscribe   => Exec['set_apache_defaults'],
             refreshonly => true,
           }
         }
-        file { '/apache_spec': ensure => directory, }
-        file { '/apache_spec/apache_custom': ensure => directory, }
+        file { ['/apache_spec', '/apache_spec/apache_custom']:
+          ensure => directory,
+        }
         class { 'apache':
           mod_dir   => '/apache_spec/apache_custom/mods',
           vhost_dir => '/apache_spec/apache_custom/vhosts',

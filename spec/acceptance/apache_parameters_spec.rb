@@ -428,34 +428,30 @@ describe 'apache parameters' do
   describe 'logging' do
     describe 'setup' do
       pp = <<-MANIFEST
-          if $::osfamily == 'RedHat' and "$::selinux" == "true" {
-            $semanage_package = $::operatingsystemmajrelease ? {
-              '6'     => 'policycoreutils-python',
-              '7'     => 'policycoreutils-python',
-              default => 'policycoreutils-python-utils',
-            }
-            package { $semanage_package: ensure => installed }
+          if $facts['osfamily'] == 'RedHat' and $facts['selinux'] {
             exec { 'set_apache_defaults':
-              command => 'semanage fcontext -a -t httpd_log_t "/apache_spec(/.*)?"',
+              command => 'semanage fcontext -a -t httpd_log_t "/apache_spec/logs(/.*)?"',
+              unless  => 'semanage fcontext --list | grep /apache_spec/logs | grep httpd_log_t',
               path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-              require => Package[$semanage_package],
             }
             exec { 'restorecon_apache':
-              command => 'restorecon -Rv /apache_spec',
-              path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-              before  => Service['httpd'],
-              require => Class['apache'],
+              command     => 'restorecon -Rv /apache_spec',
+              path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
+              before      => Service['httpd'],
+              require     => [File['/apache_spec'], Class['apache']],
+              subscribe   => Exec['set_apache_defaults'],
+              refreshonly => true,
             }
           }
-          file { '/apache_spec': ensure => directory, }
-          class { 'apache': logroot => '/apache_spec' }
+          file { ['/apache_spec', '/apache_spec/logs']: ensure => directory, }
+          class { 'apache': logroot => '/apache_spec/logs' }
       MANIFEST
       it 'applies cleanly' do
         apply_manifest(pp, catch_failures: true)
       end
     end
 
-    describe file("/apache_spec/#{apache_hash['error_log']}") do
+    describe file("/apache_spec/logs/#{apache_hash['error_log']}") do
       it { is_expected.to be_file }
     end
   end
