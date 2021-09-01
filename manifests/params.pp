@@ -392,7 +392,7 @@ class apache::params inherits ::apache::version {
         'wsgi'                  => 'libapache2-mod-wsgi',
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
-    } elsif ($::operatingsystem == 'Ubuntu') or ($::operatingsystem == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0) {
+    } elsif ($::operatingsystem == 'Ubuntu') or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '11') < 0) {
       $php_version = $facts['operatingsystemmajrelease'] ? {
         '9'     => '7.0', # Debian Stretch
         '16.04' => '7.0', # Ubuntu Xenial
