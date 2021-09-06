@@ -18,7 +18,7 @@ describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::
       end
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -39,7 +39,7 @@ describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::
       end
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end
@@ -61,7 +61,7 @@ describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::
       end
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
       it { is_expected.to be_enabled }
     end

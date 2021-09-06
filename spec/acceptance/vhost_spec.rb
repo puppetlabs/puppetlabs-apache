@@ -179,7 +179,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -247,7 +247,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -307,7 +307,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe service(apache_hash['service_name']), skip: 'FM-8483' do
+      describe service(apache_hash['service_name']) do
         it { is_expected.to be_enabled }
         it { is_expected.to be_running }
       end
@@ -369,7 +369,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_one, catch_failures: true)
       end
 
-      describe service(apache_hash['service_name']), skip: 'FM-8483' do
+      describe service(apache_hash['service_name']) do
         it { is_expected.to be_enabled }
         it { is_expected.to be_running }
       end
@@ -411,7 +411,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_two, catch_failures: true)
       end
 
-      describe service(apache_hash['service_name']), skip: 'FM-8483' do
+      describe service(apache_hash['service_name']) do
         it { is_expected.to be_enabled }
         it { is_expected.to be_running }
       end
@@ -487,7 +487,7 @@ describe 'apache::vhost define' do
         apply_manifest(pp_two, catch_failures: true)
       end
 
-      describe service(apache_hash['service_name']), skip: 'FM-8483' do
+      describe service(apache_hash['service_name']) do
         it { is_expected.to be_enabled }
         it { is_expected.to be_running }
 
@@ -528,7 +528,7 @@ describe 'apache::vhost define' do
       apply_manifest(pp, catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -574,7 +574,7 @@ describe 'apache::vhost define' do
                      ), catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
@@ -619,7 +619,7 @@ describe 'apache::vhost define' do
                     ), catch_failures: true)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
