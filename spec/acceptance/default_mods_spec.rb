@@ -17,7 +17,7 @@ describe 'apache::default_mods class' do
       idempotent_apply(pp)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
   end
@@ -56,7 +56,7 @@ describe 'apache::default_mods class' do
       end
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.not_to be_running }
     end
   end
@@ -89,7 +89,7 @@ describe 'apache::default_mods class' do
       idempotent_apply(pp)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
   end
@@ -108,7 +108,7 @@ describe 'apache::default_mods class' do
       idempotent_apply(pp)
     end
 
-    describe service(apache_hash['service_name']), skip: 'FM-8483' do
+    describe service(apache_hash['service_name']) do
       it { is_expected.to be_running }
     end
 
