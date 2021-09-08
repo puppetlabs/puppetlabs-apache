@@ -1,9 +1,5 @@
 <% if @auth_oidc -%>
 <% @oidc_settings.each do |key, value| %>
-<% if key == 'Scope' -%>
-  OIDC<%= key %> "<%= value -%>"
-<% else -%>
-  OIDC<%= key %> <%= value -%>
-<% end -%>
+  OIDC<%= key %> <% if key == 'Scope' -%>"<%= value -%>"<% else -%><%= value -%><% end%>
 <% end %>
 <% end -%>
