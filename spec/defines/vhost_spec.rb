@@ -496,6 +496,7 @@ describe 'apache::vhost', type: :define do
                                                  'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
                                                  'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               'mdomain'                     => 'example.com example.net auto',
+              'userdir'                     => 'disabled',
             }
           end
 
@@ -2471,6 +2472,20 @@ describe 'apache::vhost', type: :define do
               content: %r{^MDomain rspec.example.com$},
             )
           }
+        end
+
+        context 'userdir' do
+          let :params do
+            default_params.merge(
+              'userdir' => [
+                'disabled',
+                'enabled bob',
+              ],
+            )
+
+            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UserDir disabled$}) }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UUserDir enabled bob$}) }
+          end
         end
       end
     end
