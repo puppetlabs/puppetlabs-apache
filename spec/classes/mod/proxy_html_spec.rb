@@ -19,7 +19,7 @@ describe 'apache::mod::proxy_html', type: :class do
     end
     include_examples 'Debian 8'
 
-    context 'on jessie i386' do
+    context 'on i386' do
       let(:facts) do
         super().merge(hardwaremodel: 'i686',
                       architecture: 'i386')
@@ -28,7 +28,7 @@ describe 'apache::mod::proxy_html', type: :class do
       it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
       it_behaves_like 'debian', ['/usr/lib/i386-linux-gnu/libxml2.so.2']
     end
-    context 'on jessie x64' do
+    context 'on x64' do
       let(:facts) do
         super().merge(hardwaremodel: 'x86_64',
                       architecture: 'amd64')
