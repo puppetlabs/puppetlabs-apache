@@ -6,7 +6,7 @@ describe 'apache::mod::python', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('python') }

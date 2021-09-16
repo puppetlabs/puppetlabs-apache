@@ -34,11 +34,11 @@ shared_examples :compile, compile: true do
 end
 
 shared_context 'a mod class, without including apache' do
-  let(:facts) { on_supported_os['debian-8-x86_64'] }
+  let(:facts) { on_supported_os['debian-10-x86_64'] }
 end
 
-shared_context 'Debian 8' do
-  let(:facts) { on_supported_os['debian-8-x86_64'] }
+shared_context 'Debian 11' do
+  let(:facts) { on_supported_os['debian-11-x86_64'] }
 end
 
 shared_context 'Ubuntu 18.04' do

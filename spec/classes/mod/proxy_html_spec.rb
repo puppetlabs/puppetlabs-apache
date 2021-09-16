@@ -15,9 +15,8 @@ describe 'apache::mod::proxy_html', type: :class do
     shared_examples 'debian' do |loadfiles|
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: loadfiles) }
-      it { is_expected.to contain_package('libapache2-mod-proxy-html') }
     end
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     context 'on i386' do
       let(:facts) do

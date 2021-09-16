@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'apache::mod::negotiation', type: :class do
   it_behaves_like 'a mod class, without including apache'
   describe 'OS independent tests' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     context 'default params' do
       it { is_expected.to contain_class('apache') }

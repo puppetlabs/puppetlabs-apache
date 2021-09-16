@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'apache::mod::ext_filter', type: :class do
   it_behaves_like 'a mod class, without including apache'
   context 'on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     describe 'with no parameters' do
       it { is_expected.to contain_apache__mod('ext_filter') }

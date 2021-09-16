@@ -7,7 +7,7 @@ describe 'apache::mod::lookup_identity', type: :class do
 
   context 'default configuration with parameters' do
     context 'on a Debian OS' do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('libapache2-mod-lookup-identity') }

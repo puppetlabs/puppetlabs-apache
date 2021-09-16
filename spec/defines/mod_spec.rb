@@ -49,7 +49,7 @@ describe 'apache::mod', type: :define do
   end
 
   context 'on a Debian osfamily' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     describe 'for non-special modules' do
       it { is_expected.to contain_class('apache::params') }
