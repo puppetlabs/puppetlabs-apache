@@ -7,7 +7,7 @@ describe 'apache::balancer', type: :define do
     'myapp'
   end
 
-  include_examples 'Debian 8'
+  include_examples 'Debian 11'
 
   describe 'apache pre_condition with defaults' do
     let :pre_condition do

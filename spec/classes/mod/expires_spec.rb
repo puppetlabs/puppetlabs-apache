@@ -6,7 +6,7 @@ describe 'apache::mod::expires', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'with expires active', :compile do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     it { is_expected.to contain_apache__mod('expires') }
     it { is_expected.to contain_file('expires.conf').with(content: %r{ExpiresActive On\n}) }

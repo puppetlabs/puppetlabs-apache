@@ -11,7 +11,7 @@ describe 'apache::mod::dev', type: :class do
 
   it_behaves_like 'a mod class, without including apache'
 
-  ['RedHat 6', 'Debian 8', 'FreeBSD 9'].each do |os|
+  ['RedHat 6', 'Debian 11', 'FreeBSD 9'].each do |os|
     context "on a #{os} OS" do
       include_examples os
 

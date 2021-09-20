@@ -19,7 +19,7 @@ describe 'apache::vhost::custom', type: :define do
       it { is_expected.to compile }
     end
     context 'on Debian based systems' do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       it {
         is_expected.to contain_file('apache_rspec.example.com').with(

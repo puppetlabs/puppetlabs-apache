@@ -24,7 +24,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
 
   context 'default configuration with default parameters' do
     context 'on a Debian OS' do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       it { is_expected.to contain_apache__mod('proxy_balancer') }
 
@@ -42,7 +42,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
     end
   end
   context "default configuration with custom parameters $manager => true, $allow_from => ['10.10.10.10','11.11.11.11'], $status_path => '/custom-manager' on a Debian OS" do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
     let :params do
       {
         manager: true,

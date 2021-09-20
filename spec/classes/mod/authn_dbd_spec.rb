@@ -23,7 +23,7 @@ describe 'apache::mod::authn_dbd', type: :class do
     end
 
     context 'on a Debian OS', :compile do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('authn_dbd') }
