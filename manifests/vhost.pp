@@ -1746,6 +1746,7 @@ define apache::vhost (
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
   $virtual_docroot                                                                  = false,
+  $virtual_use_default_docroot                                                      = false,
   $port                                                                             = undef,
   $ip                                                                               = undef,
   Boolean $ip_based                                                                 = false,
@@ -2429,6 +2430,7 @@ define apache::vhost (
 
   # Template uses:
   # - $virtual_docroot
+  # - $virtual_use_default_docroot
   # - $docroot
   if $docroot {
     concat::fragment { "${name}-docroot":
