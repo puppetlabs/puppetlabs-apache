@@ -1761,6 +1761,8 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
             )
+          }
+          it {
             is_expected.not_to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+DocumentRoot "/var/www/html"$},
             )
@@ -1780,6 +1782,8 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
             )
+          }
+          it {
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+DocumentRoot "/var/www/html"$},
             )
