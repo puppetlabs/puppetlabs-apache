@@ -58,6 +58,7 @@ describe 'apache::vhost', type: :define do
               'docroot'                     => '/var/www/foo',
               'manage_docroot'              => false,
               'virtual_docroot'             => true,
+              'virtual_use_default_docroot' => false,
               'port'                        => '8080',
               'ip'                          => '127.0.0.1',
               'ip_based'                    => true,
@@ -1745,6 +1746,44 @@ describe 'apache::vhost', type: :define do
           }
           it { is_expected.to contain_concat__fragment('Listen *:80') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost *:80') }
+        end
+
+        context 'vhost with backwards compatible virtual_docroot' do
+          let :params do
+            {
+              'docroot'         => '/var/www/html',
+              'virtual_docroot' => '/var/www/sites/%0',
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
+              content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
+            )
+            is_expected.not_to contain_concat__fragment('rspec.example.com-docroot').with(
+              content: %r{^\s+DocumentRoot "/var/www/html"$},
+            )
+          }
+        end
+        context 'vhost with virtual_docroot and docroot' do
+          let :params do
+            {
+              'docroot'                     => '/var/www/html',
+              'virtual_use_default_docroot' => true,
+              'virtual_docroot'             => '/var/www/sites/%0',
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
+              content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
+            )
+            is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
+              content: %r{^\s+DocumentRoot "/var/www/html"$},
+            )
+          }
         end
 
         context 'modsec_audit_log' do
