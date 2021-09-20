@@ -1221,6 +1221,8 @@
 # @param virtual_docroot
 #   Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the 
 #   same name. For example, `http://example.com` would map to `/var/www/example.com`.
+#   Note that the `DocumentRoot` directive will not be present even though there is a value
+#   set for `docroot` in the manifest. See [`virtual_use_default_docroot`](#virtual_use_default_docroot) to change this behavior.
 #   ``` puppet
 #   apache::vhost { 'subdomain.loc':
 #     vhost_name      => '*',
@@ -1231,6 +1233,20 @@
 #   }
 #   ```
 # 
+# @param virtual_use_default_docroot
+#   By default, when using `virtual_docroot`, the value of `docroot` is ignored. Setting this
+#   to `true` will mean both directives will be added to the configuration.
+#   ``` puppet
+#   apache::vhost { 'subdomain.loc':
+#     vhost_name                  => '*',
+#     port                        => '80',
+#     virtual_docroot             => '/var/www/%-2+',
+#     docroot                     => '/var/www',
+#     virtual_use_default_docroot => true,
+#     serveraliases               => ['*.loc',],
+#   }
+#   ```
+#
 # @param wsgi_daemon_process
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process_options, wsgi_process_group, 
