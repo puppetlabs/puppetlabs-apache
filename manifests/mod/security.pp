@@ -53,9 +53,6 @@
 # @param secdefaultaction
 #   Defines the default list of actions, which will be inherited by the rules in the same configuration context.
 # 
-# @param anomaly_score_blocking
-#   Activates or deactivates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set.
-# 
 # @param inbound_anomaly_threshold
 #   Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 # 
@@ -112,7 +109,6 @@ class apache::mod::security (
   $restricted_extensions       = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
   $restricted_headers          = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
   $secdefaultaction            = 'deny',
-  $anomaly_score_blocking      = 'off',
   $inbound_anomaly_threshold   = '5',
   $outbound_anomaly_threshold  = '4',
   $critical_anomaly_score      = '5',
@@ -248,7 +244,6 @@ class apache::mod::security (
     # - $notice_anomaly_score
     # - $inbound_anomaly_threshold
     # - $outbound_anomaly_threshold
-    # - $anomaly_score_blocking
     # - $allowed_methods
     # - $content_types
     # - $restricted_extensions

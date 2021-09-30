@@ -6002,7 +6002,6 @@ The following parameters are available in the `apache::mod::security` class:
 * [`restricted_extensions`](#restricted_extensions)
 * [`restricted_headers`](#restricted_headers)
 * [`secdefaultaction`](#secdefaultaction)
-* [`anomaly_score_blocking`](#anomaly_score_blocking)
 * [`inbound_anomaly_threshold`](#inbound_anomaly_threshold)
 * [`outbound_anomaly_threshold`](#outbound_anomaly_threshold)
 * [`critical_anomaly_score`](#critical_anomaly_score)
@@ -6153,14 +6152,6 @@ Data type: `Any`
 Defines the default list of actions, which will be inherited by the rules in the same configuration context.
 
 Default value: `'deny'`
-
-##### <a name="anomaly_score_blocking"></a>`anomaly_score_blocking`
-
-Data type: `Any`
-
-Activates or deactivates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set.
-
-Default value: `'off'`
 
 ##### <a name="inbound_anomaly_threshold"></a>`inbound_anomaly_threshold`
 
