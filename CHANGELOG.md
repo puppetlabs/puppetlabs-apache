@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v7.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v7.0.0) (2021-10-04)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.5.1...v7.0.0)
+
+### Changed
+
+- Drop Debian \< 8 and Ubuntu \< 14.04 code [\#2189](https://github.com/puppetlabs/puppetlabs-apache/pull/2189) ([ekohl](https://github.com/ekohl))
+- Drop support and compatibility for Debian \< 9 and Ubuntu \< 16.04 [\#2123](https://github.com/puppetlabs/puppetlabs-apache/pull/2123) ([ekohl](https://github.com/ekohl))
+
+### Added
+
+- pdksync - \(IAC-1751\) - Add Support for Rocky 8 [\#2196](https://github.com/puppetlabs/puppetlabs-apache/pull/2196) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- Restore Ubuntu 14.04 support in suphp [\#2193](https://github.com/puppetlabs/puppetlabs-apache/pull/2193) ([ekohl](https://github.com/ekohl))
+- add double quote on scope parameter [\#2191](https://github.com/puppetlabs/puppetlabs-apache/pull/2191) ([aba-rechsteiner](https://github.com/aba-rechsteiner))
+- Debian 11: fix typo in `versioncmp()` / set default php to 7.4 [\#2186](https://github.com/puppetlabs/puppetlabs-apache/pull/2186) ([bastelfreak](https://github.com/bastelfreak))
+
+### UNCATEGORIZED PRS; LABEL THEM ON GITHUB
+
+- Allow `docroot` with `mod_vhost_alias` `virtual_docroot` [\#2195](https://github.com/puppetlabs/puppetlabs-apache/pull/2195) ([yakatz](https://github.com/yakatz))
+- Various spec cleanups [\#2188](https://github.com/puppetlabs/puppetlabs-apache/pull/2188) ([ekohl](https://github.com/ekohl))
+
 ## [v6.5.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.5.1) (2021-08-25)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.5.0...v6.5.1)
@@ -39,7 +63,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [v6.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.3.0) (2021-06-22)
 
-[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.2.0...v6.3.0)
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/kps_ssl_reload_and_cache_disk_combined_tag...v6.3.0)
 
 ### Added
 
@@ -49,6 +73,10 @@ All notable changes to this project will be documented in this file. The format 
 
 - Update the default version of Apache for Amazon Linux 2 [\#2158](https://github.com/puppetlabs/puppetlabs-apache/pull/2158) ([turnopil](https://github.com/turnopil))
 - Only warn about servername logging if relevant [\#2154](https://github.com/puppetlabs/puppetlabs-apache/pull/2154) ([ekohl](https://github.com/ekohl))
+
+## [kps_ssl_reload_and_cache_disk_combined_tag](https://github.com/puppetlabs/puppetlabs-apache/tree/kps_ssl_reload_and_cache_disk_combined_tag) (2021-06-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.2.0...kps_ssl_reload_and_cache_disk_combined_tag)
 
 ## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-24)
 
