@@ -235,7 +235,7 @@ describe 'apache::mod::php', type: :class do
               (facts[:os]['release']['major'].to_i >= 15 && facts[:os]['name'] == 'SLES')  ||
               (facts[:os]['release']['major'].to_i >= 9 && facts[:os]['name'] == 'Debian') ||
               (facts[:os]['release']['major'].to_i >= 8 && (facts[:os]['name'] == 'RedHat' || facts[:os]['name'] == 'CentOS' ||
-                                                            facts[:os]['name'] == 'Rocky'))
+                                                            facts[:os]['name'] == 'Rocky'  || facts[:os]['name'] == 'AlmaLinux'))
 
       describe 'OS independent tests' do
         context 'with content param' do
