@@ -2119,45 +2119,12 @@ define apache::vhost (
   #
   # Because a single hostname may be use by multiple virtual hosts listening on different ports, the $port paramter can
   # optionaly be used to avoid duplicate resources.
-  #
-  # We will retain the default behaviour for filenames but allow the use of a sanitized version of $servername to be
-  # used, using the new $use_servername_for_filenames and $use_port_for_filenames parameters.
-  #
-  # This will default to false until the next major release (v7.0.0), at which point, we will default this to true and
-  # warn about it's imminent deprecation in the subsequent major release (v8.0.0)
-  #
-  # In v8.0.0, we will deprecate the $use_servername_for_filenames and $use_port_for_filenames parameters altogether
-  # and use the sanitized value of $servername for default log / config filenames.
   $filename = $use_servername_for_filenames ? {
     true => $use_port_for_filenames ? {
       true  => regsubst("${normalized_servername}-${port}", ' ', '_', 'G'),
       false => regsubst($normalized_servername, ' ', '_', 'G'),
     },
     false => $name,
-  }
-
-  if ! $use_servername_for_filenames and $name != $normalized_servername {
-    $use_servername_for_filenames_warn_msg = '
-    It is possible for the $name parameter to be defined with spaces in it. Although supported on POSIX systems, this
-    can lead to cumbersome file names. The $servername attribute has stricter conditions from Apache (i.e. no spaces)
-    When $use_servername_for_filenames = true, the $servername parameter, sanitized, is used to construct log and config
-    file names.
-
-    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_servername_for_filenames will be removed and log/config file names will be derived from the
-    sanitized $servername parameter when not explicitly defined.'
-    warning($use_servername_for_filenames_warn_msg)
-  } elsif ! $use_port_for_filenames {
-    $use_port_for_filenames_warn_msg = '
-    It is possible for multiple virtual hosts to be configured using the same $servername but a different port. When
-    using $use_servername_for_filenames, this can lead to duplicate resource declarations.
-    When $use_port_for_filenames = true, the $servername and $port parameters, sanitized, are used to construct log and
-    config file names.
-
-    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_port_for_filenames will be removed and log/config file names will be derived from the
-    sanitized $servername parameter when not explicitly defined.'
-    warning($use_port_for_filenames_warn_msg)
   }
 
   # This ensures that the docroot exists

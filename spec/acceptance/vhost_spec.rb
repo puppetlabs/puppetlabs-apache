@@ -964,13 +964,8 @@ describe 'apache::vhost define' do
             logroot                       => '/tmp',
           }
       MANIFEST
-      it 'applies cleanly and DOES NOT print warning about $use_servername_for_filenames usage for test.server vhost' do
+      it 'applies cleanly' do
         result = apply_manifest(pp, catch_failures: true)
-        expect(result.stderr).not_to contain %r{
-          .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
-          It\sis\spossible\sfor\sthe\s\$name\sparameter.*
-          sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
-        }xm
       end
       describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
         it { is_expected.to be_file }
@@ -988,13 +983,8 @@ describe 'apache::vhost define' do
             logroot                       => '/tmp',
           }
       MANIFEST
-      it 'applies cleanly and prints warning about $use_servername_for_filenames usage for test.server vhost' do
+      it 'applies cleanly' do
         result = apply_manifest(pp, catch_failures: true)
-        expect(result.stderr).to contain %r{
-          .*Warning\:\sScope\(Apache::Vhost\[test\.server\]\)\:.*
-          It\sis\spossible\sfor\sthe\s\$name\sparameter.*
-          sanitized\s\$servername\sparameter\swhen\snot\sexplicitly\sdefined\.
-        }xm
       end
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
