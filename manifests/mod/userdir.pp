@@ -7,6 +7,9 @@
 # @param dir
 #   *Deprecated* Path from user's home directory to public directory.
 #
+# @param dir_custom_fragment
+#   Adds a custom fragment to the UserDir to include functionality.
+#
 # @param userdir
 #   Path or directory name to be used as the UserDir.
 #
@@ -36,6 +39,7 @@
 class apache::mod::userdir (
   $home = undef,
   $dir = undef,
+  $dir_custom_fragment = undef,
   Optional[String[1]] $userdir = undef,
   $disable_root = true,
   $apache_version = undef,

@@ -5,9 +5,15 @@
   UserDir <%= @_userdir %>
 
 <%- if ! @unmanaged_path -%>
+  <% (@_path.is_a?(Array) ? @_path : [ @_path ] ).each do | dir_path | %>
   <Directory "<%= @_path %>">
     AllowOverride <%= @overrides.join(' ') %>
     Options <%= @options.join(' ') %>
+    <%- if @dir_custom_fragment -%>
+    <%- (@dir_custom_fragment.is_a?(Array) ? @dir_custom_fragment : [ @dir_custom_fragment ] ).each do | dir_frag | -%>
+    <%= dir_frag %>
+    <%- end -%>
+    <%- end -%>
     <Limit GET POST OPTIONS>
       <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
       Require all granted
@@ -25,6 +31,7 @@
       <%- end -%>
     </LimitExcept>
   </Directory>
+<%- end -%>
 <%- end -%>
 <%- if @custom_fragment -%>
 <%= @custom_fragment %>
