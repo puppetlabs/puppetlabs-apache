@@ -3,6 +3,7 @@
   Optional[String[1]]        $credstore = undef,
   Optional[Enum['On','Off']] $sslonly   = undef,
   Optional[Enum['On','Off']] $localname = undef,
+  Optional[Enum['On','Off']] $basicauth = undef,
 |%>
 # mod_auth_gssapi configuration
 <% if $sslonly { -%>
@@ -10,6 +11,9 @@
 <% } -%>
 <% if $localname { -%>
     GssapiLocalName <%= $localname %>
+<% } -%>
+<% if $basicauth { -%>
+    GssapiLocalName <%= $basicauth %>
 <% } -%>
 <% if $credstore { -%>
     GssapiCredStore <%= $credstore %>
