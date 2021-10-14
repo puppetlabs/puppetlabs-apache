@@ -1507,6 +1507,8 @@
 #           credstore => 'keytab:/foo/bar.keytab',
 #           localname => 'Off',
 #           sslonly   => 'On',
+#           negotiateonce => 'Off',
+#           basicauth => 'On',
 #         }
 #       },
 #     ],

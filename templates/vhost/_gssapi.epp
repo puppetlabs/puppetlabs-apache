@@ -4,6 +4,8 @@
   Optional[Enum['On','Off']] $sslonly   = undef,
   Optional[Enum['On','Off']] $localname = undef,
   Optional[Enum['On','Off']] $basicauth = undef,
+  Optional[Enum['On','Off']] $negotiateonce = undef,
+
 |%>
 # mod_auth_gssapi configuration
 <% if $sslonly { -%>
@@ -11,6 +13,9 @@
 <% } -%>
 <% if $localname { -%>
     GssapiLocalName <%= $localname %>
+<% } -%>
+<% if $negotiateonce { -%>
+    GssapiNegotiateOnce <%= $basicauth %>
 <% } -%>
 <% if $basicauth { -%>
     GssapiLocalName <%= $basicauth %>
