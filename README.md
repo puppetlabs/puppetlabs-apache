@@ -23,60 +23,58 @@
 [Limitations]: #limitations
 
 [Development]: #development
-[Contributing]: #contributing
 
 [`AddDefaultCharset`]: https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
-[`add_listen`]: #add_listen
+[`add_listen`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#add_listen
 [`Alias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html#alias
 [`AliasMatch`]: https://httpd.apache.org/docs/current/mod/mod_alias.html#aliasmatch
 [aliased servers]: https://httpd.apache.org/docs/current/urlmapping.html
 [`AllowEncodedSlashes`]: https://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes
-[`apache`]: #class-apache
-[`apache_version`]: #apache_version
-[`apache::balancer`]: #defined-type-apachebalancer
-[`apache::balancermember`]: #defined-type-apachebalancermember
-[`apache::fastcgi::server`]: #defined-type-apachefastcgiserver
-[`apache::mod`]: #defined-type-apachemod
-[`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
-[`apache::mod::alias`]: #class-apachemodalias
-[`apache::mod::auth_cas`]: #class-apachemodauth_cas
-[`apache::mod::auth_mellon`]: #class-apachemodauth_mellon
-[`apache::mod::authn_dbd`]: #class-apachemodauthn_dbd
-[`apache::mod::authnz_ldap`]: #class-apachemodauthnz_ldap
-[`apache::mod::cluster`]: #class-apachemodcluster
-[`apache::mod::data]: #class-apachemoddata
-[`apache::mod::disk_cache`]: #class-apachemoddisk_cache
-[`apache::mod::dumpio`]: #class-apachemoddumpio
-[`apache::mod::event`]: #class-apachemodevent
-[`apache::mod::ext_filter`]: #class-apachemodext_filter
-[`apache::mod::geoip`]: #class-apachemodgeoip
-[`apache::mod::http2`]: #class-apachemodhttp2
-[`apache::mod::itk`]: #class-apachemoditk
-[`apache::mod::jk`]: #class-apachemodjk
-[`apache::mod::ldap`]: #class-apachemodldap
-[`apache::mod::passenger`]: #class-apachemodpassenger
-[`apache::mod::peruser`]: #class-apachemodperuser
-[`apache::mod::prefork`]: #class-apachemodprefork
-[`apache::mod::proxy`]: #class-apachemodproxy
-[`apache::mod::proxy_balancer`]: #class-apachemodproxybalancer
-[`apache::mod::proxy_fcgi`]: #class-apachemodproxy_fcgi
-[`apache::mod::proxy_html`]: #class-apachemodproxy_html
-[`apache::mod::python`]: #class-apachemodpython
-[`apache::mod::security`]: #class-apachemodsecurity
-[`apache::mod::shib`]: #class-apachemodshib
-[`apache::mod::ssl`]: #class-apachemodssl
-[`apache::mod::status`]: #class-apachemodstatus
-[`apache::mod::userdir`]: #class-apachemoduserdir
-[`apache::mod::worker`]: #class-apachemodworker
-[`apache::mod::wsgi`]: #class-apachemodwsgi
-[`apache::params`]: #class-apacheparams
-[`apache::version`]: #class-apacheversion
-[`apache::vhost`]: #defined-type-apachevhost
-[`apache::vhost::custom`]: #defined-type-apachevhostcustom
-[`apache::vhost::WSGIImportScript`]: #wsgiimportscript
+[`apache`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apache
+[`apache_version`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apache_version
+[`apache::balancer`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancer
+[`apache::balancermember`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancermember
+[`apache::fastcgi::server`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachefastcgiserver
+[`apache::mod`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemod
+[`apache::mod::<MODULE NAME>`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#public-classes
+[`apache::mod::alias`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodalias
+[`apache::mod::auth_cas`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauth_cas
+[`apache::mod::auth_mellon`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauth_mellon
+[`apache::mod::authn_dbd`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauthn_dbd
+[`apache::mod::authnz_ldap`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauthnz_ldap
+[`apache::mod::cluster`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodcluster
+[`apache::mod::data]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoddata
+[`apache::mod::disk_cache`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoddisk_cache
+[`apache::mod::dumpio`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoddumpio
+[`apache::mod::event`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodevent
+[`apache::mod::ext_filter`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodext_filter
+[`apache::mod::geoip`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodgeoip
+[`apache::mod::http2`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodhttp2
+[`apache::mod::itk`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoditk
+[`apache::mod::jk`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodjk
+[`apache::mod::ldap`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodldap
+[`apache::mod::passenger`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodpassenger
+[`apache::mod::peruser`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodperuser
+[`apache::mod::prefork`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodprefork
+[`apache::mod::proxy`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodproxy
+[`apache::mod::proxy_balancer`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodproxybalancer
+[`apache::mod::proxy_fcgi`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodproxy_fcgi
+[`apache::mod::proxy_html`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodproxy_html
+[`apache::mod::python`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodpython
+[`apache::mod::security`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodsecurity
+[`apache::mod::shib`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodshib
+[`apache::mod::ssl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodssl
+[`apache::mod::status`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodstatus
+[`apache::mod::userdir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoduserdir
+[`apache::mod::worker`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodworker
+[`apache::mod::wsgi`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodwsgi
+[`apache::params`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#private-classes
+[`apache::version`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#private-classes
+[`apache::vhost`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachevhost
+[`apache::vhost::custom`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachevhostcustom
 [Apache HTTP Server]: https://httpd.apache.org
 [Apache modules]: https://httpd.apache.org/docs/current/mod/
-[array]: https://docs.puppet.com/puppet/latest/reference/lang_data_array.html
+[array]: https://docs.puppet.com/puppet/latest/lang_data_array.html
 
 [audit log]: https://github.com/SpiderLabs/ModSecurity/wiki/ModSecurity-2-Data-Formats#audit-log
 
@@ -85,31 +83,28 @@
 [certificate revocation list]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationfile
 [certificate revocation list path]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationpath
 [common gateway interface]: https://httpd.apache.org/docs/current/howto/cgi.html
-[`confd_dir`]: #confd_dir
-[`content`]: #content
-[CONTRIBUTING.md]: CONTRIBUTING.md
+[`conf_dir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#conf_dir
 [custom error documents]: https://httpd.apache.org/docs/current/custom-error.html
-[`custom_fragment`]: #custom_fragment
+[`custom_fragment`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#custom_fragment
 
-[`default_mods`]: #default_mods
-[`default_ssl_crl`]: #default_ssl_crl
-[`default_ssl_crl_path`]: #default_ssl_crl_path
-[`default_ssl_vhost`]: #default_ssl_vhost
-[`dev_packages`]: #dev_packages
-[`directory`]: #directory
-[`directories`]: #parameter-directories-for-apachevhost
+[`default_mods`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#default_mods
+[`default_ssl_crl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#default_ssl_crl
+[`default_ssl_crl_path`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#default_ssl_crl_path
+[`default_ssl_vhost`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#default_ssl_vhost
+[`dev_packages`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#dev_packages
+[`directories`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#directories
 [`DirectoryIndex`]: https://httpd.apache.org/docs/current/mod/mod_dir.html#directoryindex
-[`docroot`]: #docroot
-[`docroot_owner`]: #docroot_owner
-[`docroot_group`]: #docroot_group
+[`docroot`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#docroot
+[`docroot_owner`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#docroot_owner
+[`docroot_group`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#docroot_group
 [`DocumentRoot`]: https://httpd.apache.org/docs/current/mod/core.html#documentroot
 
 [`EnableSendfile`]: https://httpd.apache.org/docs/current/mod/core.html#enablesendfile
 [enforcing mode]: http://selinuxproject.org/page/Guide/Mode
 [`ensure`]: https://docs.puppet.com/latest/type.html#package-attribute-ensure
-[`error_log_file`]: #error_log_file
-[`error_log_syslog`]: #error_log_syslog
-[`error_log_pipe`]: #error_log_pipe
+[`error_log_file`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#error_log_file
+[`error_log_syslog`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#error_log_syslog
+[`error_log_pipe`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#error_log_pipe
 [`ExpiresByType`]: https://httpd.apache.org/docs/current/mod/mod_expires.html#expiresbytype
 [exported resources]: http://docs.puppet.com/latest/reference/lang_exported.md
 [`ExtendedStatus`]: https://httpd.apache.org/docs/current/mod/core.html#extendedstatus
@@ -117,48 +112,44 @@
 [Facter]: http://docs.puppet.com/facter/
 [FastCGI]: http://www.fastcgi.com/
 [FallbackResource]: https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource
-[`fallbackresource`]: #fallbackresource
+[`fallbackresource`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#fallbackresource
 [`FileETag`]: https://httpd.apache.org/docs/current/mod/core.html#fileetag
 [filter rules]: https://httpd.apache.org/docs/current/filter.html
-[`filters`]: #filters
+[`filters`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#filters
 [`ForceType`]: https://httpd.apache.org/docs/current/mod/core.html#forcetype
 
 [GeoIPScanProxyHeaders]: http://dev.maxmind.com/geoip/legacy/mod_geoip2/#Proxy-Related_Directives
 [`gentoo/puppet-portage`]: https://github.com/gentoo/puppet-portage
 
-[Hash]: https://docs.puppet.com/puppet/latest/reference/lang_data_hash.html
+[Hash]: https://docs.puppet.com/puppet/latest/lang_data_hash.html
 [`HttpProtocolOptions`]: http://httpd.apache.org/docs/current/mod/core.html#httpprotocoloptions
 
 [IAC Team]: https://puppetlabs.github.io/iac/
 [`IncludeOptional`]: https://httpd.apache.org/docs/current/mod/core.html#includeoptional
 [`Include`]: https://httpd.apache.org/docs/current/mod/core.html#include
 [interval syntax]: https://httpd.apache.org/docs/current/mod/mod_expires.html#AltSyn
-[`ip`]: #ip
-[`ip_based`]: #ip_based
+[`ip`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ip
+[`ip_based`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ip_based
 [IP-based virtual hosts]: https://httpd.apache.org/docs/current/vhosts/ip-based.html
 
-[`KeepAlive`]: https://httpd.apache.org/docs/current/mod/core.html#keepalive
-[`KeepAliveTimeout`]: https://httpd.apache.org/docs/current/mod/core.html#keepalivetimeout
-[`keepalive` parameter]: #keepalive
-[`keepalive_timeout`]: #keepalive_timeout
 [`limitreqfieldsize`]: https://httpd.apache.org/docs/current/mod/core.html#limitrequestfieldsize
 [`limitreqfields`]: http://httpd.apache.org/docs/current/mod/core.html#limitrequestfields
 
-[`lib`]: #lib
-[`lib_path`]: #lib_path
+[`lib`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#lib
+[`lib_path`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#lib_path
 [`Listen`]: https://httpd.apache.org/docs/current/bind.html
 [`ListenBackLog`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#listenbacklog
 [`LoadFile`]: https://httpd.apache.org/docs/current/mod/mod_so.html#loadfile
 [`LogFormat`]: https://httpd.apache.org/docs/current/mod/mod_log_config.html#logformat
-[`logroot`]: #logroot
+[`logroot`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#logroot
 [Log security]: https://httpd.apache.org/docs/current/logs.html#security
 
-[`manage_docroot`]: #manage_docroot
-[`manage_user`]: #manage_user
-[`manage_group`]: #manage_group
-[`supplementary_groups`]: #supplementary_groups
+[`manage_docroot`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#manage_docroot
+[`manage_user`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#manage_user
+[`manage_group`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#manage_group
+[`supplementary_groups`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#supplementary_groups
 [`MaxConnectionsPerChild`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxconnectionsperchild
-[`max_keepalive_requests`]: #max_keepalive_requests
+[`max_keepalive_requests`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#max_keepalive_requests
 [`MaxRequestWorkers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxrequestworkers
 [`MaxSpareThreads`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#maxsparethreads
 [MIME `content-type`]: https://www.iana.org/assignments/media-types/media-types.xhtml
@@ -197,65 +188,64 @@
 [`mod_version`]: https://httpd.apache.org/docs/current/mod/mod_version.html
 [`mod_wsgi`]: https://modwsgi.readthedocs.org/en/latest/
 [module contribution guide]: https://docs.puppet.com/forge/contributing.html
-[`mpm_module`]: #mpm_module
+[`mpm_module`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#mpm_module
 [multi-processing module]: https://httpd.apache.org/docs/current/mpm.html
 
 [name-based virtual hosts]: https://httpd.apache.org/docs/current/vhosts/name-based.html
-[`no_proxy_uris`]: #no_proxy_uris
+[`no_proxy_uris`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#no_proxy_uris
 
 [open source Puppet]: https://docs.puppet.com/puppet/
 [`Options`]: https://httpd.apache.org/docs/current/mod/core.html#options
 
-[`path`]: #path
+[`path`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#path
 [`Peruser`]: https://www.freebsd.org/cgi/url.cgi?ports/www/apache22-peruser-mpm/pkg-descr
-[`port`]: #port
-[`priority`]: #defined-types-apachevhost
-[`proxy_dest`]: #proxy_dest
-[`proxy_dest_match`]: #proxy_dest_match
-[`proxy_pass`]: #proxy_pass
+[`port`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#port-3
+[`priority`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#priority
+[`proxy_dest`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#proxy_dest
+[`proxy_dest_match`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#proxy_dest_match
+[`proxy_pass`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#proxy_pass
 [`ProxyPass`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass
 [`ProxySet`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyset
 [Puppet Enterprise]: https://docs.puppet.com/pe/
 [Puppet Forge]: https://forge.puppet.com
 [Puppet]: https://puppet.com
-[Puppet module]: https://docs.puppet.com/puppet/latest/reference/modules_fundamentals.html
+[Puppet module]: https://docs.puppet.com/puppet/latest/modules_fundamentals.html
 [Puppet module's code]: https://github.com/puppetlabs/puppetlabs-apache/blob/main/manifests/default_mods.pp
-[`purge_configs`]: #purge_configs
-[`purge_vhost_dir`]: #purge_vhost_dir
+[`purge_configs`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#purge_configs
+[`purge_vhost_dir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#purge_vhost_dir
 [Python]: https://www.python.org/
 
 [Rack]: http://rack.github.io/
-[`rack_base_uris`]: #rack_base_uris
+[`rack_base_uris`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#rack_base_uris
 [RFC 2616]: https://www.ietf.org/rfc/rfc2616.txt
 [`RequestReadTimeout`]: https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html#requestreadtimeout
 [rspec-puppet]: http://rspec-puppet.com/
 
 [`ScriptAlias`]: https://httpd.apache.org/docs/current/mod/mod_alias.html#scriptalias
 [`ScriptAliasMatch`]: https://httpd.apache.org/docs/current/mod/mod_alias.html#scriptaliasmatch
-[`scriptalias`]: #scriptalias
+[`scriptalias`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#scriptalias
 [SELinux]: http://selinuxproject.org/
 [`ServerAdmin`]: https://httpd.apache.org/docs/current/mod/core.html#serveradmin
-[`serveraliases`]: #serveraliases
+[`serveraliases`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#serveraliases
 [`ServerLimit`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#serverlimit
 [`ServerName`]: https://httpd.apache.org/docs/current/mod/core.html#servername
 [`ServerRoot`]: https://httpd.apache.org/docs/current/mod/core.html#serverroot
 [`ServerTokens`]: https://httpd.apache.org/docs/current/mod/core.html#servertokens
 [`ServerSignature`]: https://httpd.apache.org/docs/current/mod/core.html#serversignature
 [Service attribute restart]: http://docs.puppet.com/latest/type.html#service-attribute-restart
-[`source`]: #source
 [`SSLCARevocationCheck`]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcarevocationcheck
 [SSL certificate key file]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatekeyfile
 [SSL chain]: https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslcertificatechainfile
 [SSL encryption]: https://httpd.apache.org/docs/current/ssl/index.html
-[`ssl`]: #ssl
-[`ssl_cert`]: #ssl_cert
-[`ssl_compression`]: #ssl_compression
-[`ssl_key`]: #ssl_key
+[`ssl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl
+[`ssl_cert`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_cert
+[`ssl_compression`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_compression
+[`ssl_key`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_key
 [`StartServers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#startservers
 [suPHP]: http://www.suphp.org/Home.html
-[`suphp_addhandler`]: #suphp_addhandler
-[`suphp_configpath`]: #suphp_configpath
-[`suphp_engine`]: #suphp_engine
+[`suphp_addhandler`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_addhandler
+[`suphp_configpath`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_configpath
+[`suphp_engine`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_engine
 [supported operating system]: https://forge.puppet.com/supported#puppet-supported-modules-compatibility-matrix
 
 [`ThreadLimit`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#threadlimit
@@ -266,10 +256,10 @@
 
 [`UseCanonicalName`]: https://httpd.apache.org/docs/current/mod/core.html#usecanonicalname
 
-[`verify_config`]: #verify_config
-[`vhost`]: #defined-type-apachevhost
-[`vhost_dir`]: #vhost_dir
-[`virtual_docroot`]: #virtual_docroot
+[`verify_config`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#verify_config
+[`vhost`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachevhost
+[`vhost_dir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#vhost_dir
+[`virtual_docroot`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#virtual_docroot
 
 [Web Server Gateway Interface]: https://www.python.org/dev/peps/pep-3333/#abstract
 [`WSGIRestrictEmbedded`]: http://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIRestrictEmbedded.html
@@ -291,7 +281,6 @@
 4. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [Development - Guide for contributing to the module][Development]
-    - [Contributing to the apache module][Contributing]
     
 <a id="module-description"></a>
 ## Module description
@@ -329,8 +318,8 @@ class { 'apache': }
 
 When you declare this class with the default options, the module:
 
-- Installs the appropriate Apache software package and [required Apache modules](#default_mods) for your operating system.
-- Places the required configuration files in a directory, with the [default location](#conf_dir) Depends on operating system.
+- Installs the appropriate Apache software package and [required Apache modules][`default_mods`] for your operating system.
+- Places the required configuration files in a directory, with the [default location][`conf_dir`] Depends on operating system.
 - Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
 - Creates a document root directory Depends on operating system, typically `/var/www`.
 - Starts the Apache service.
@@ -521,7 +510,7 @@ To set up a virtual host with [suPHP][], use the following parameters:
 * [`suphp_engine`][], to enable the suPHP engine.
 * [`suphp_addhandler`][], to define a MIME type.
 * [`suphp_configpath`][], to set which path suPHP passes to the PHP interpreter.
-* [`directory`][], to configure Directory, File, and Location directive blocks.
+* [`directories`][], to configure Directory, File, and Location directive blocks.
 
 For example:
 
