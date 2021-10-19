@@ -65,6 +65,7 @@
 [`apache::mod::shib`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodshib
 [`apache::mod::ssl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodssl
 [`apache::mod::status`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodstatus
+[`apache::mod::suphp`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodsuphp
 [`apache::mod::userdir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoduserdir
 [`apache::mod::worker`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodworker
 [`apache::mod::wsgi`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodwsgi
@@ -106,11 +107,11 @@
 [`error_log_syslog`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#error_log_syslog
 [`error_log_pipe`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#error_log_pipe
 [`ExpiresByType`]: https://httpd.apache.org/docs/current/mod/mod_expires.html#expiresbytype
-[exported resources]: http://docs.puppet.com/latest/reference/lang_exported.md
+[exported resources]: https://puppet.com/docs/puppet/latest/lang_exported.html
 [`ExtendedStatus`]: https://httpd.apache.org/docs/current/mod/core.html#extendedstatus
 
 [Facter]: http://docs.puppet.com/facter/
-[FastCGI]: http://www.fastcgi.com/
+[FastCGI]: https://fast-cgi.github.io/
 [FallbackResource]: https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource
 [`fallbackresource`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#fallbackresource
 [`FileETag`]: https://httpd.apache.org/docs/current/mod/core.html#fileetag
@@ -205,7 +206,7 @@
 [`proxy_dest_match`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#proxy_dest_match
 [`proxy_pass`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#proxy_pass
 [`ProxyPass`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass
-[`ProxySet`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyset
+[`proxy_set`]: https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyset
 [Puppet Enterprise]: https://docs.puppet.com/pe/
 [Puppet Forge]: https://forge.puppet.com
 [Puppet]: https://puppet.com
@@ -216,7 +217,7 @@
 [Python]: https://www.python.org/
 
 [Rack]: http://rack.github.io/
-[`rack_base_uris`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#rack_base_uris
+[`rack_base_uri`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#rack_base_uri
 [RFC 2616]: https://www.ietf.org/rfc/rfc2616.txt
 [`RequestReadTimeout`]: https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html#requestreadtimeout
 [rspec-puppet]: http://rspec-puppet.com/
@@ -577,13 +578,13 @@ apache::vhost { 'cgi.example.com':
 }
 ```
 
-To configure a virtual host for [Rack][], use the [`rack_base_uris`][] parameter:
+To configure a virtual host for [Rack][], use the [`rack_base_uri`][] parameter:
 
 ``` puppet
 apache::vhost { 'rack.example.com':
   port           => '80',
   docroot        => '/var/www/rack',
-  rack_base_uris => ['/rackapp1', '/rackapp2'],
+  rack_base_uri => ['/rackapp1', '/rackapp2'],
 }
 ```
 
@@ -845,7 +846,7 @@ The [`apache::mod::passenger`][] class is not installing, because the EL6 reposi
 
 #### RHEL/CentOS 7
 
-The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested because the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uris`][] parameter.
+The [`apache::mod::passenger`][] and [`apache::mod::proxy_html`][] classes are untested because the EL7 repository is missing compatible packages, which also blocks us from testing the [`apache::vhost`][] defined type's [`rack_base_uri`][] parameter.
 
 ### SELinux and custom paths
 
@@ -926,8 +927,7 @@ COVERAGE=yes bundle exec rake parallel_spec
 
 
 Acceptance tests for this module leverage [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
-To run the acceptance tests follow the instructions [here](https://github.com/puppetlabs/puppet_litmus/wiki/Tutorial:-use-Litmus-to-execute-acceptance-tests-with-a-sample-module-(MoTD)#install-the-necessary-gems-for-the-module).
-You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
+To run the acceptance tests follow the instructions [here](https://puppetlabs.github.io/litmus/Running-acceptance-tests.html). You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
 
 ### Development Support
 If you run into an issue with this module, or if you would like to request a feature, please [file a ticket](https://tickets.puppetlabs.com/browse/MODULES/).
