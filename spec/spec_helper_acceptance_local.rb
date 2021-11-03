@@ -75,6 +75,10 @@ RSpec.configure do |c|
 
     # Ensure ipv6 is enabled on our Debian 11 Docker boxes
     LitmusHelper.instance.run_shell('sysctl -w net.ipv6.conf.all.disable_ipv6=0') if %r{debian}.match?(os[:family]) && os[:release].to_f == 11
+
+    # Install iproute on AlmaLinux
+    # Package is used to check if ports are listening
+    LitmusHelper.instance.run_shell('sudo dnf install iproute -y') if %r{redhat}.match?(os[:family]) && os[:release].to_f >= 8
   end
 
   c.after :suite do
