@@ -6,6 +6,8 @@
 class apache::mod::authz_host {
   if versioncmp($apache_version, '2.4') >= 0 {
     include apache
-    ::apache::mod { 'authz_host': }
-  } 
+    apache::mod { 'authz_host': }
+  } else {
+      fail('This module requires apache version 2.4')
+    } 
 }
