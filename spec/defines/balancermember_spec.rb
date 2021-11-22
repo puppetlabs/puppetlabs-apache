@@ -7,7 +7,7 @@ describe 'apache::balancermember', type: :define do
     'include apache'
   end
 
-  include_examples 'Debian 8'
+  include_examples 'Debian 11'
 
   describe 'allows multiple balancermembers with the same url' do
     let :pre_condition do

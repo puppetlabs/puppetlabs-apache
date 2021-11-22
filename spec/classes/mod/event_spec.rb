@@ -22,7 +22,7 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.to contain_file('/etc/apache2/modules.d/event.conf').with_ensure('file') }
   end
   context 'on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('event') }

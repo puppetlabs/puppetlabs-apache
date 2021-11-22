@@ -11,7 +11,7 @@ describe 'apache::mod::userdir', type: :class do
        }'
     end
 
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     context 'default parameters' do
       it { is_expected.to compile }
@@ -39,12 +39,23 @@ describe 'apache::mod::userdir', type: :class do
     context 'with path set to something' do
       let :params do
         {
-          path: 'public_html /usr/web http://www.example.com/',
+          path: '/home/*/*/public_html',
         }
       end
 
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+public_html /usr/web http://www\.example\.com/$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"public_html /usr/web http://www\.example\.com/\"\>$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/\*/public_html$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/home/\*/\*/public_html\"\>$}) }
+    end
+    context 'with userdir set to something' do
+      let :params do
+        {
+          path: '/home/*/*/public_html',
+          userdir: 'public_html',
+        }
+      end
+
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+public_html$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/home/\*/\*/public_html\"\>$}) }
     end
     context 'with unmanaged_path set to true' do
       let :params do

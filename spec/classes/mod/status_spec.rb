@@ -68,8 +68,8 @@ describe 'apache::mod::status', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters' do
-    context 'on a Debian 8 OS' do
-      include_examples 'Debian 8'
+    context 'on a Debian 11 OS' do
+      include_examples 'Debian 11'
 
       context 'with default params' do
         it { is_expected.to contain_apache__mod('status') }
@@ -191,8 +191,8 @@ describe 'apache::mod::status', type: :class do
           }
         end
 
-        context 'on a Debian 8 OS' do
-          include_examples 'Debian 8'
+        context 'on a Debian 11 OS' do
+          include_examples 'Debian 11'
 
           it { is_expected.to contain_apache__mod('status') }
 

@@ -37,7 +37,7 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'On a Debian OS with default params' do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       # Load the more generic tests for this context
       general_deflate_specs

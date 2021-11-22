@@ -10,7 +10,7 @@ describe 'apache::custom_config', type: :define do
     'rspec'
   end
 
-  include_examples 'Debian 8'
+  include_examples 'Debian 11'
 
   context 'defaults with content' do
     let :params do

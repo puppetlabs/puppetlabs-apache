@@ -18,7 +18,7 @@ describe 'apache::mod::mime', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'On a Debian OS with default params', :compile do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     general_mime_specs
 

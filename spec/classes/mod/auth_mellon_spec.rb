@@ -6,7 +6,7 @@ describe 'apache::mod::auth_mellon', type: :class do
   it_behaves_like 'a mod class, without including apache'
 
   context 'default configuration with parameters on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     describe 'with no parameters' do
       it { is_expected.to contain_apache__mod('auth_mellon') }

@@ -72,6 +72,13 @@ RSpec.configure do |c|
     }
     PUPPETCODE
     LitmusHelper.instance.apply_manifest(pp)
+
+    # Ensure ipv6 is enabled on our Debian 11 Docker boxes
+    LitmusHelper.instance.run_shell('sysctl -w net.ipv6.conf.all.disable_ipv6=0') if %r{debian}.match?(os[:family]) && os[:release].to_f == 11
+
+    # Install iproute on AlmaLinux
+    # Package is used to check if ports are listening
+    LitmusHelper.instance.run_shell('sudo dnf install iproute -y') if %r{redhat}.match?(os[:family]) && os[:release].to_f >= 8
   end
 
   c.after :suite do
@@ -85,6 +92,7 @@ def apache_settings_hash
   apache = {}
   case osfamily
   when 'redhat', 'oracle'
+    apache['httpd_dir']        = '/etc/httpd'
     apache['confd_dir']        = '/etc/httpd/conf.d'
     apache['conf_file']        = '/etc/httpd/conf/httpd.conf'
     apache['ports_file']       = '/etc/httpd/conf/ports.conf'
@@ -115,6 +123,7 @@ def apache_settings_hash
       apache['mod_ssl_dir'] = apache['mod_dir']
     end
   when 'debian', 'ubuntu'
+    apache['httpd_dir']        = '/etc/apache2'
     apache['confd_dir']        = '/etc/apache2/conf.d'
     apache['mod_dir']          = '/etc/apache2/mods-available'
     apache['conf_file']        = '/etc/apache2/apache2.conf'
@@ -128,15 +137,10 @@ def apache_settings_hash
     apache['error_log']        = 'error.log'
     apache['suphp_handler']    = 'x-httpd-php'
     apache['suphp_configpath'] = '/etc/php5/apache2'
-    apache['version'] = if osfamily == 'ubuntu' && operatingsystemrelease >= 13.10
-                          '2.4'
-                        elsif osfamily == 'debian' && operatingsystemrelease >= 8.0
-                          '2.4'
-                        else
-                          '2.2'
-                        end
+    apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'freebsd'
+    apache['httpd_dir']        = '/usr/local/etc/apache24'
     apache['confd_dir']        = '/usr/local/etc/apache24/Includes'
     apache['mod_dir']          = '/usr/local/etc/apache24/Modules'
     apache['conf_file']        = '/usr/local/etc/apache24/httpd.conf'
@@ -151,6 +155,7 @@ def apache_settings_hash
     apache['version']          = '2.2'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'gentoo'
+    apache['httpd_dir']        = '/etc/apache2'
     apache['confd_dir']        = '/etc/apache2/conf.d'
     apache['mod_dir']          = '/etc/apache2/modules.d'
     apache['conf_file']        = '/etc/apache2/httpd.conf'
@@ -165,6 +170,7 @@ def apache_settings_hash
     apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'suse', 'sles'
+    apache['httpd_dir']        = '/etc/apache2'
     apache['confd_dir']        = '/etc/apache2/conf.d'
     apache['mod_dir']          = '/etc/apache2/mods-available'
     apache['conf_file']        = '/etc/apache2/httpd.conf'

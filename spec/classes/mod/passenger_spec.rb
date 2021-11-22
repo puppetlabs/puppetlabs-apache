@@ -390,18 +390,10 @@ describe 'apache::mod::passenger', type: :class do
           it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule mod_foo \/usr\/lib\/apache2\/modules\/mod_passenger\.so$}) }
         end
 
-        context 'with Ubuntu 16.04 defaults' do
+        context 'with defaults' do
           it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"}) }
           it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRuby}) }
           it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerDefaultRuby "/usr/bin/ruby"}) }
-        end
-
-        if facts[:os]['release']['major'].to_i == 8
-          context 'with Debian 8 defaults' do
-            it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"}) }
-            it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRuby}) }
-            it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerDefaultRuby "/usr/bin/ruby"}) }
-          end
         end
       when 'RedHat'
         context 'on a RedHat OS' do

@@ -8,7 +8,7 @@ describe 'apache::service', type: :class do
   end
 
   context 'on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     it {
       is_expected.to contain_service('httpd').with(

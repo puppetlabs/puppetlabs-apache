@@ -1221,6 +1221,8 @@
 # @param virtual_docroot
 #   Sets up a virtual host with a wildcard alias subdomain mapped to a directory with the 
 #   same name. For example, `http://example.com` would map to `/var/www/example.com`.
+#   Note that the `DocumentRoot` directive will not be present even though there is a value
+#   set for `docroot` in the manifest. See [`virtual_use_default_docroot`](#virtual_use_default_docroot) to change this behavior.
 #   ``` puppet
 #   apache::vhost { 'subdomain.loc':
 #     vhost_name      => '*',
@@ -1231,6 +1233,20 @@
 #   }
 #   ```
 # 
+# @param virtual_use_default_docroot
+#   By default, when using `virtual_docroot`, the value of `docroot` is ignored. Setting this
+#   to `true` will mean both directives will be added to the configuration.
+#   ``` puppet
+#   apache::vhost { 'subdomain.loc':
+#     vhost_name                  => '*',
+#     port                        => '80',
+#     virtual_docroot             => '/var/www/%-2+',
+#     docroot                     => '/var/www',
+#     virtual_use_default_docroot => true,
+#     serveraliases               => ['*.loc',],
+#   }
+#   ```
+#
 # @param wsgi_daemon_process
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process_options, wsgi_process_group, 
@@ -1679,6 +1695,9 @@
 # @param ssl_user_name
 #   Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
 #
+# @param ssl_reload_on_change
+#   Enable reloading of apache if the content of ssl files have changed.
+#
 # @param use_canonical_name
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
@@ -1739,11 +1758,11 @@
 # @param $mdomain
 #   All the names in the list are managed as one Managed Domain (MD). mod_md will request
 #   one single certificate that is valid for all these names.
-
 define apache::vhost (
   Variant[Boolean,String] $docroot,
   $manage_docroot                                                                   = true,
   $virtual_docroot                                                                  = false,
+  $virtual_use_default_docroot                                                      = false,
   $port                                                                             = undef,
   $ip                                                                               = undef,
   Boolean $ip_based                                                                 = false,
@@ -1763,6 +1782,7 @@ define apache::vhost (
   $ssl_crl                                                                          = $apache::default_ssl_crl,
   $ssl_crl_check                                                                    = $apache::default_ssl_crl_check,
   $ssl_certs_dir                                                                    = $apache::params::ssl_certs_dir,
+  Boolean $ssl_reload_on_change                                                     = $apache::default_ssl_reload_on_change,
   $ssl_protocol                                                                     = undef,
   $ssl_cipher                                                                       = undef,
   Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder     = undef,
@@ -2426,6 +2446,7 @@ define apache::vhost (
 
   # Template uses:
   # - $virtual_docroot
+  # - $virtual_use_default_docroot
   # - $docroot
   if $docroot {
     concat::fragment { "${name}-docroot":
@@ -2707,11 +2728,29 @@ define apache::vhost (
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
   # - $apache_version
-  if $ssl {
+  if $ssl and $ensure == 'present' {
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
       content => template('apache/vhost/_ssl.erb'),
+    }
+
+    if $ssl_reload_on_change {
+      [$ssl_cert, $ssl_key, $ssl_ca, $ssl_chain, $ssl_crl].each |$ssl_file| {
+        if $ssl_file {
+          include apache::mod::ssl::reload
+          $_ssl_file_copy = regsubst($ssl_file, '/', '_', 'G')
+          file { "${filename}${_ssl_file_copy}":
+            path    => "${apache::params::puppet_ssl_dir}/${filename}${_ssl_file_copy}",
+            source  => "file://${ssl_file}",
+            owner   => 'root',
+            group   => $apache::params::root_group,
+            mode    => '0640',
+            seltype => 'cert_t',
+            notify  => Class['apache::service'],
+          }
+        }
+      }
     }
   }
 

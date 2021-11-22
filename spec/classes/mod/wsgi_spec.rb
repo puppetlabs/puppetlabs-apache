@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'apache::mod::wsgi', type: :class do
   it_behaves_like 'a mod class, without including apache'
   context 'on a Debian OS' do
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::params') }
     it {
@@ -13,7 +13,7 @@ describe 'apache::mod::wsgi', type: :class do
         'wsgi_socket_prefix' => nil,
       )
     }
-    it { is_expected.to contain_package('libapache2-mod-wsgi') }
+    it { is_expected.to contain_package('libapache2-mod-wsgi-py3') }
   end
   context 'on a RedHat OS' do
     include_examples 'RedHat 6'

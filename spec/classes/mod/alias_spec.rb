@@ -7,7 +7,7 @@ describe 'apache::mod::alias', type: :class do
 
   context 'default configuration with parameters' do
     context 'on a Debian OS', :compile do
-      include_examples 'Debian 8'
+      include_examples 'Debian 11'
 
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/share\/apache2\/icons\/"}) }

@@ -63,8 +63,8 @@ describe 'apache::mod::jk', type: :class do
   default_port = 80
   altern8_port = 8008
 
-  context 'Debian 8' do
-    include_examples 'Debian 8'
+  context 'Debian 11' do
+    include_examples 'Debian 11'
 
     context 'with only required facts and default parameters' do
       let(:facts) { super().merge('ipaddress' => default_ip) }

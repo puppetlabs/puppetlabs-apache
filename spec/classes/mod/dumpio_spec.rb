@@ -11,7 +11,7 @@ describe 'apache::mod::dumpio', type: :class do
        }'
     end
 
-    include_examples 'Debian 8'
+    include_examples 'Debian 11'
 
     context 'default configuration fore parameters' do
       it { is_expected.to compile }
