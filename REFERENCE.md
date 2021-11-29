@@ -6689,6 +6689,7 @@ The following parameters are available in the `apache::mod::userdir` class:
 
 * [`home`](#home)
 * [`dir`](#dir)
+* [`dir_custom_fragment`](#dir_custom_fragment)
 * [`userdir`](#userdir)
 * [`disable_root`](#disable_root)
 * [`apache_version`](#apache_version)
@@ -6711,6 +6712,14 @@ Default value: ``undef``
 Data type: `Any`
 
 *Deprecated* Path from user's home directory to public directory.
+
+Default value: ``undef``
+
+##### <a name="dir_custom_fragment"></a>`dir_custom_fragment`
+
+Data type: `Any`
+
+Adds a custom fragment to the UserDir to include functionality.
 
 Default value: ``undef``
 
