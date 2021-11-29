@@ -17,7 +17,7 @@ describe 'apache::mod::fastcgi', type: :class do
           it { is_expected.to contain_apache__mod('fastcgi') }
           it { is_expected.to contain_package('libapache2-mod-fastcgi') }
           it { is_expected.to contain_file('fastcgi.conf') }
-        when 'RedHat', 'CentOS', 'OracleLinux', 'Scientific', 'Rocky'
+        when 'RedHat', 'CentOS', 'OracleLinux', 'Scientific', 'Rocky', 'AlmaLinux'
           if facts[:os]['release']['major'].to_i < 7
             it { is_expected.to compile.with_all_deps }
             it { is_expected.to contain_class('apache::params') }
