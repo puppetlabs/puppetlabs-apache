@@ -522,6 +522,7 @@ class apache (
   $max_keepalive_requests                                               = $apache::params::max_keepalive_requests,
   $limitreqfieldsize                                                    = '8190',
   $limitreqfields                                                       = '100',
+  Optional[Integer] $limitreqline                                       = undef,
   $logroot                                                              = $apache::params::logroot,
   $logroot_mode                                                         = $apache::params::logroot_mode,
   Apache::LogLevel $log_level                                           = $apache::params::log_level,
