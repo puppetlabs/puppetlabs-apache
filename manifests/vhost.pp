@@ -1356,10 +1356,9 @@
 #   apache::vhost { 'files.example.net':
 #     docroot     => '/var/www/files',
 #     directories => [
-#       { 'path'           => '/var/www/files',
-#         'provider'       => 'files',
-#         'deny'           => 'from all',
-#         'allow_override' => ['All'],
+#       { 'path'     => '/var/www/files',
+#         'provider' => 'files',
+#         'deny'     => 'from all',
 #       },
 #       { 'path'           => '/var/www/html',
 #         'provider'       => 'directory',
