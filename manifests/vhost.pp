@@ -1361,6 +1361,11 @@
 #         'deny'           => 'from all',
 #         'allow_override' => ['All'],
 #       },
+#       { 'path'           => '/var/www/html',
+#         'provider'       => 'directory',
+#         'options'        => ['-Indexes'],
+#         'allow_override' => ['All'],
+#       },
 #     ],
 #   }
 #   ```
