@@ -9481,6 +9481,7 @@ apache::vhost { 'site.name.fdqn':
       'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
     { 'path' => '/h', 'url' => 'http://backend-h/h',
       'no_proxy_uris' => ['/h/admin', '/h/server-status'] },
+    { 'path' => '/i', 'url' => 'http://backend-i/', 'preserve_host' => true },
   ],
 }
 ```
