@@ -202,6 +202,7 @@ describe 'apache::vhost', type: :define do
                     {
                       'url'             => 'http://backend-b/',
                       'keywords'        => ['noquery', 'interpolate'],
+                      'preserve_host'   => true,
                       'params' => {
                         'retry'   => '0',
                         'timeout' => '5',
@@ -691,6 +692,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+ProxyPass http://backend-b/ retry=0 timeout=5 noquery interpolate$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+ProxyPreserveHost On$},
             )
           }
           it {

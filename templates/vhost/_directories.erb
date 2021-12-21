@@ -493,6 +493,9 @@
     ProxyPassReverse <%= reverse_url %>
           <%- end -%>
         <%- end -%>
+        <%- if proxy['preserve_host'] -%>
+    ProxyPreserveHost On
+        <%- end -%>
         <%- if proxy['setenv'] -%>
           <%- Array(proxy['setenv']).each do |setenv_var| -%>
     SetEnv <%= setenv_var %>
