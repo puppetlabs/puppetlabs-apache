@@ -2,11 +2,11 @@
 <% if @disable_root -%>
   UserDir disabled root
 <% end -%>
-  UserDir <%= @_userdir %>
+  UserDir <%= (@_path.is_a?(String) ? @_path : @_path.join(' ') ) %>
 
 <%- if ! @unmanaged_path -%>
   <% (@_path.is_a?(Array) ? @_path : [ @_path ] ).each do | dir_path | %>
-  <Directory "<%= @_path %>">
+  <Directory "<%= dir_path %>" >
     AllowOverride <%= @overrides.join(' ') %>
     Options <%= @options.join(' ') %>
     <%- if @dir_custom_fragment -%>
