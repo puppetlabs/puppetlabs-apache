@@ -267,6 +267,7 @@ describe 'apache::vhost', type: :define do
                   'passenger_app_log_file'                              => '/tmp/app.log',
                   'passenger_debugger'                                  => false,
                   'gssapi'                                              => {
+                    'basicauth' => 'On',
                     'credstore' => 'keytab:/foo/bar.keytab',
                     'localname' => 'On',
                     'sslonly'   => 'Off',
@@ -967,6 +968,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerDebugger\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuth\sOn$},
             )
           }
           it {
