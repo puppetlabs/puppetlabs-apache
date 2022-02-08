@@ -5,7 +5,7 @@
   Optional[Enum['On','Off']] $sslonly   = undef,
   Optional[Enum['On','Off']] $localname = undef,
 |%>
-# mod_auth_gssapi configuration
+    # mod_auth_gssapi configuration
 <% if $basicauth { -%>
     GssapiBasicAuth <%= $basicauth %>
 <% } -%>
