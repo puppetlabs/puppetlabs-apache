@@ -1,16 +1,123 @@
-<%|
+<%- |
   # https://github.com/gssapi/mod_auth_gssapi
-  Optional[String[1]]        $credstore = undef,
-  Optional[Enum['On','Off']] $sslonly   = undef,
-  Optional[Enum['On','Off']] $localname = undef,
-|%>
-# mod_auth_gssapi configuration
-<% if $sslonly { -%>
-    GssapiSSLonly <%= $sslonly %>
-<% } -%>
-<% if $localname { -%>
-    GssapiLocalName <%= $localname %>
-<% } -%>
-<% if $credstore { -%>
-    GssapiCredStore <%= $credstore %>
-<% } -%>
+  Optional[Variant[String[1], Enum['{HOSTNAME}']]]        $acceptor_name = undef,
+  Optional[Array[Enum['krb5','iakerb','ntlmssp']]]        $allowed_mech = undef,
+  Optional[Boolean]                                       $basic_auth = undef,
+  Optional[Array[Enum['krb5','iakerb','ntlmssp']]]        $basic_auth_mech = undef,
+  Optional[[Integer[1]]]                                  $basic_ticket_timeout = undef,
+  Optional[Boolean]                                       $connection_bound = undef,
+  Optional[Struct[{
+    Optional['ccache']        => Array[Stdlib::Unixpath],
+    Optional['client_keytab'] => Array[Stdlib::Unixpath],
+    Optional['keytab']        => Array[Stdlib::Unixpath],
+  }]]                                                     $cred_store = undef,
+  Optional[Stdlib::Unixpath]                              $deleg_ccache_dir = undef,
+  Optional[[String[1]]]                                   $deleg_ccache_env_var = undef,
+  Optional[Struct[{
+    'mode' => Stdlib::Filemode,
+    'uid'  => Variant[Integer[1], String[1]],
+    'gid'  => Variant[Integer[1], String[1]],
+  }]]                                                     $deleg_ccache_perms = undef,
+  Optional[Boolean]                                       $deleg_ccache_unique = undef,
+  Optional[Boolean]                                       $impersonate = undef,
+  Optional[Boolean]                                       $local_name = undef,
+  Optional[Variant[String[1], Enum['json']]]              $name_attributes = undef,
+  Optional[Boolean]                                       $negotiate_once = undef,
+  Optional[Boolean]                                       $publish_errors = undef,
+  Optional[Boolean]                                       $publish_mech = undef,
+  Optional[[String[1]]]                                   $required_name_attributes = undef,
+  Optional[[String[1]]]                                   $session_key = undef,
+  Optional[Boolean]                                       $signal_persistent_auth = undef,
+  Optional[Boolean]                                       $ssl_only   = undef,
+  Optional[Boolean]                                       $use_s4u2_proxy = undef,
+  Optional[Boolean]                                       $use_sessions = undef,
+| -%>
+
+    # mod_auth_gssapi configuration
+<%- if $acceptor_name { -%>
+    GssapiAcceptorName <%= $acceptor_name %>
+<%- } -%>
+<%- if $allowed_mech { -%>
+  <%- $allowed_mech.each |$mech| { -%>
+    GssapiAllowedMech <%= $mech %>
+  <%- } -%>
+<%- } -%>
+<%- if $basic_auth { -%>
+    GssapiBasicAuth On
+<%- } -%>
+<%- if $basic_auth_mech { -%>
+<%- $basic_auth_mech.each |$mech| { -%>
+    GssapiBasicAuthMech <%= $mech %>
+<%- } -%>
+<%- } -%>
+<%- if $basic_ticket_timeout { -%>
+    GssapiBasicTicketTimeout <%= $basic_ticket_timeout %>
+<%- } -%>
+<%- if $connection_bound { -%>
+    GssapiConnectionBound On
+<%- } -%>
+<%- if $cred_store { -%>
+  <%- if $cred_store[ccache] { -%>
+    <%- $cred_store[ccache].each |$path| { -%>
+    GssapiCredStore ccache:FILE:<%= $path %>
+    <%- } -%>
+  <%- } -%>
+  <%- if $cred_store[client_keytab] { -%>
+    <%- $cred_store[client_keytab].each |$path| { -%>
+    GssapiCredStore client_keytab:<%= $path %>
+    <%- } -%>
+  <%- } -%>
+  <%- if $cred_store[keytab] { -%>
+    <%- $cred_store[keytab].each |$path| { -%>
+    GssapiCredStore keytab:<%= $path %>
+    <%- } -%>
+  <%- } -%>
+<%- } -%>
+<%- if $deleg_ccache_dir { -%>
+    GssapiDelegCcacheDir <%= $deleg_ccache_dir %>
+<%- } -%>
+<%- if $deleg_ccache_env_var { -%>
+    GssapiDelegCcacheEnvVar <%= $deleg_ccache_env_var %>
+<%- } -%>
+<%- if $deleg_ccache_perms { -%>
+    GssapiDelegCcachePerms mode:<%= $deleg_ccache_perms[mode] %> uid:<%= $deleg_ccache_perms[uid] %> gid:<%= $deleg_ccache_perms[gid] %>
+<%- } -%>
+<%- if $deleg_ccache_unique { -%>
+    GssapiDelegCcacheUnique On
+<%- } -%>
+<%- if $impersonate { -%>
+    GssapiImpersonate On
+<%- } -%>
+<%- if $local_name { -%>
+    GssapiLocalName On
+<%- } -%>
+<%- if $name_attributes { -%>
+    GssapiNameAttributes <%= $name_attributes %>
+<%- } -%>
+<%- if $negotiate_once { -%>
+    GssapiNegotiateOnce On
+<%- } -%>
+<%- if $publish_errors { -%>
+    GssapiPublishErrors On
+<%- } -%>
+<%- if $publish_mech { -%>
+    GssapiPublishMech On
+<%- } -%>
+<%- if $required_name_attributes { -%>
+    GssapiRequiredNameAttributes "<%= $required_name_attributes %>"
+<%- } -%>
+<%- if $session_key { -%>
+    GssapiSessionKey <%= $session_key %>
+<%- } -%>
+<%- if $signal_persistent_auth { -%>
+    GssapiSignalPersistentAuth On
+<%- } -%>
+<%- if $ssl_only { -%>
+    GssapiSSLonly On
+<%- } -%>
+<%- if $use_s4u2_proxy and $deleg_ccache_dir { -%>
+    GssapiUseS4U2Proxy On
+<%- } -%>
+<%- if $use_sessions { -%>
+    GssapiUseSessions On
+<%- } -%>

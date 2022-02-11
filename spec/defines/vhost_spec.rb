@@ -252,9 +252,37 @@ describe 'apache::vhost', type: :define do
                   'passenger_app_log_file'                              => '/tmp/app.log',
                   'passenger_debugger'                                  => false,
                   'gssapi'                                              => {
-                    'credstore' => 'keytab:/foo/bar.keytab',
-                    'localname' => 'On',
-                    'sslonly'   => 'Off',
+                    acceptor_name            => '{HOSTNAME}',
+                    allowed_mech             => ['krb5', 'iakerb', 'ntlmssp'],
+                    basic_auth               => true,
+                    basic_auth_mech          => ['krb5', 'iakerb', 'ntlmssp'],
+                    basic_ticket_timeout     => 300,
+                    connection_bound         => true,
+                    cred_store               => {
+                      ccache        => ['/path/to/directory'],
+                      client_keytab => ['/path/to/example.keytab'],
+                      keytab        => ['/path/to/example.keytab'],
+                    },
+                    deleg_ccache_dir         => '/path/to/directory',
+                    deleg_ccache_env_var     => 'KRB5CCNAME',
+                    deleg_ccache_perms       => {
+                      mode => '0600',
+                      uid  => 'example-user',
+                      gid  => 'example-group',
+                    },
+                    deleg_ccache_unique      => true,
+                    impersonate              => true,
+                    local_name               => true,
+                    name_attributes          => 'json',
+                    negotiate_once           => true,
+                    publish_errors           => true,
+                    publish_mech             => true,
+                    required_name_attributes =>	'auth-indicators=high',
+                    session_key              => 'file:/path/to/example.key',
+                    signal_persistent_auth   => true,
+                    ssl_only                 => true,
+                    use_s4u2_proxy           => true,
+                    use_sessions             => true,
                   },
                 },
                 {
@@ -945,17 +973,147 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiCredStore\skeytab:/foo/bar.keytab$},
+              content: %r{^\s+GssapiAcceptorName\s{HOSTNAME}$},
             )
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiSSLonly\sOff$},
+              content: %r{^\s+GssapiAllowedMech\skrb5$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiAllowedMech\siakerb$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiAllowedMech\sntlmssp$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuth\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuthMech\skrb5$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuthMech\siakerb$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuthMech\sntlmssp$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicTicketTimeout\s300$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiConnectionBound\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiCredStore\sccache:FILE:/path/to/directory$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiCredStore\sclient_keytab:/path/to/example\.keytab$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiCredStore\skeytab:/path/to/example\.keytab$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiDelegCcacheDir\s/path/to/directory$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiDelegCcacheEnvVar\sKRB5CCNAME$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiDelegCcachePerms\smode:0600\suid:example-user\sgid:example-group$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiDelegCcacheUnique\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiImpersonate\sOn$},
             )
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+GssapiLocalName\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiNameAttributes\sjson$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiNegotiateOnce\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiPublishErrors\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiPublishMech\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiRequiredNameAttributes\s"auth-indicators=high"$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiSessionKey\sfile:/path/to/example\.key$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiSignalPersistentAuth\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiSSLonly\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiUseS4U2Proxy\sOn$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiUseSessions\sOn$},
             )
           }
           it {
