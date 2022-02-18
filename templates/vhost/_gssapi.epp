@@ -5,6 +5,8 @@
   Optional[Boolean]                                       $basic_auth = undef,
   Optional[Array[Enum['krb5','iakerb','ntlmssp']]]        $basic_auth_mech = undef,
   Optional[[Integer[1]]]                                  $basic_ticket_timeout = undef,
+  Optional[String[1]]                                     $authname = undef,
+  Optional[String[1]]                                     $authtype = undef,
   Optional[Boolean]                                       $connection_bound = undef,
   Optional[Struct[{
     Optional['ccache']        => Array[Stdlib::Unixpath],
@@ -41,6 +43,12 @@
   <%- $allowed_mech.each |$mech| { -%>
     GssapiAllowedMech <%= $mech %>
   <%- } -%>
+<%- } -%>
+<%- if $authname { -%>
+    AuthName "<%= $authname %>"
+<%- } -%>
+<%- if $authtype { -%>
+    AuthType <%= $authtype %>
 <%- } -%>
 <%- if $basic_auth { -%>
     GssapiBasicAuth On

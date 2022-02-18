@@ -1477,6 +1477,8 @@
 #         gssapi => {
 #           acceptor_name            => '{HOSTNAME}',
 #           allowed_mech             => ['krb5', 'iakerb', 'ntlmssp'],
+#           authname                 => 'Kerberos 5',
+#           authtype                 => 'GSSAPI',
 #           basic_auth               => true,
 #           basic_auth_mech          => ['krb5', 'iakerb', 'ntlmssp'],
 #           basic_ticket_timeout     => 300,
