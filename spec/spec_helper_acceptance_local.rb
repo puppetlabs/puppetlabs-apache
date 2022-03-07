@@ -152,7 +152,7 @@ def apache_settings_hash
     apache['service_name']     = 'apache24'
     apache['package_name']     = 'apache24'
     apache['error_log']        = 'http-error.log'
-    apache['version']          = '2.2'
+    apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'gentoo'
     apache['httpd_dir']        = '/etc/apache2'
