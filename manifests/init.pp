@@ -738,19 +738,13 @@ class apache (
     if $::osfamily == 'gentoo' {
       $error_documents_path = '/usr/share/apache2/error'
       if $default_mods =~ Array {
-        if versioncmp($apache_version, '2.4') >= 0 {
-          if defined('apache::mod::ssl') {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, ['authz_core', 'socache_shmcb']),
-            }
-          } else {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, 'authz_core'),
-            }
+        if defined('apache::mod::ssl') {
+          ::portage::makeconf { 'apache2_modules':
+            content => concat($default_mods, ['authz_core', 'socache_shmcb']),
           }
         } else {
           ::portage::makeconf { 'apache2_modules':
-            content => $default_mods,
+            content => concat($default_mods, 'authz_core'),
           }
         }
       }
