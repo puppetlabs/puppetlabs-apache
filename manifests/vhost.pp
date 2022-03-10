@@ -1918,6 +1918,7 @@ define apache::vhost (
   $apache_version                                                                   = $apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                    = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                           = undef,
+  $enabled                                                                          = true,
 
   Optional[Boolean] $h2_copy_files                                                  = undef,
   Optional[Boolean] $h2_direct                                                      = undef,
@@ -2417,7 +2418,7 @@ define apache::vhost (
   }
   # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
   # needs to be converted into something generic.
-  if $apache::vhost_enable_dir {
+  if $apache::vhost_enable_dir and $enabled {
     $vhost_enable_dir = $apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
       'present' => link,
