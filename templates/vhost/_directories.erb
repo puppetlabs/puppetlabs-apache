@@ -500,6 +500,18 @@
         <%- end -%>
       <% end -%>
     <%- end -%>
+    <%# In a directory context, ProxyPassMatch is only valid for LocationMatch, and its first argument is the regex -%>
+    <%# argument to LocationMatch -%>
+    <%- if directory['proxy_pass_match'] and directory['provider'] and directory['provider'] == 'locationmatch' -%>
+      <%- directory['proxy_pass_match'].flatten.compact.each do |proxy| -%>
+    ProxyPassMatch <%= proxy['url'] -%>
+        <%- if proxy['params'] -%>
+          <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
+          <%- end -%>
+        <%- end -%>
+        <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
+        <%- end %>
+    <%- end -%>
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>
