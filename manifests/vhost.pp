@@ -1351,6 +1351,8 @@
 #    Values: `directory`, `files`, `proxy`, `location`, `directorymatch`, `filesmatch`, 
 #   `proxymatch` or `locationmatch`. If you set `provider` to `directorymatch`, it 
 #   uses the keyword `DirectoryMatch` in the Apache config file.<br />
+#   proxy_pass and proxy_pass_match are supported like their parameters to apache::vhost, and will
+#   be rendered without their path parameter as this will be inherited from the Location/LocationMatch container.
 #   An example use of `directories`:
 #   ``` puppet
 #   apache::vhost { 'files.example.net':
