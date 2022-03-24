@@ -709,6 +709,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$},
             )
           }
