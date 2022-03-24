@@ -467,15 +467,18 @@
         <%- end -%>
       <%- end -%>
     <%- end -%>
-    <%- if directory['proxy_pass'] and directory['provider'] and directory['provider'].match('location') -%>
-      <%- directory['proxy_pass'].flatten.compact.each do |proxy| -%>
-        <%# If the proxy hash has a match key that evaluates to true, use ProxyPassMatch -%>
-        <%# Otherwise default to ProxyPass -%>
-        <%- if not proxy.key?('match') or not proxy['match'] -%>
-    ProxyPass <%= proxy['url'] -%>
-        <%- else -%>
-    ProxyPassMatch <%= proxy['url'] -%>
-        <%- end -%>
+    <%- if (directory['proxy_pass'] or directory['proxy_pass_match'] and directory['provider'] and directory['provider'].match('location') -%>
+      <%# Detect whether we have a proxy_pass_match or proxy_pass dictionary. Only one of those in a Location is valid so no need -%>
+      <%# to handle both in one stanza -%>
+      <%- if directory['proxy_pass_match']
+            proxy_pass = 'ProxyPassMatch'
+            directory_proxy_pass = directory['proxy_pass_match']
+          else
+            proxy_pass = 'ProxyPass'
+            directory_proxy_pass = directory['proxy_pass']
+          end -%>
+      <%- directory_proxy_pass.flatten.compact.each do |proxy| -%>
+    <%= proxy_pass -%> <%= proxy['url'] -%>
         <%- if proxy['params'] -%>
           <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
           <%- end -%>
