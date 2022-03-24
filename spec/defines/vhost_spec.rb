@@ -210,6 +210,20 @@ describe 'apache::vhost', type: :define do
                   ],
                 },
                 {
+                  'path'       => '^/proxy',
+                  'provider'   => 'locationmatch',
+                  'proxy_pass' => [
+                    {
+                      'url'             => 'http://backend-b/',
+                      'keywords'        => ['noquery', 'interpolate'],
+                      'params' => {
+                        'retry'   => '0',
+                        'timeout' => '5',
+                      },
+                    },
+                  ],
+                },
+                {
                   'path'                                                => '/var/www/node-app/public',
                   'passenger_enabled'                                   => true,
                   'passenger_base_uri'                                  => '/app',
@@ -691,6 +705,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+ProxyPass http://backend-b/ retry=0 timeout=5 noquery interpolate$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$},
             )
           }
           it {
