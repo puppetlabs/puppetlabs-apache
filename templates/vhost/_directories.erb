@@ -472,11 +472,10 @@
         <%# If the proxy hash has a match key that evaluates to true, use ProxyPassMatch -%>
         <%# Otherwise default to ProxyPass -%>
         <%- if not proxy.key?('match') or not proxy['match'] -%>
-    ProxyPass 
+    ProxyPass <%= proxy['url'] -%>
         <%- else -%>
-    ProxyPassMatch 
+    ProxyPassMatch <%= proxy['url'] -%>
         <%- end -%>
-        <%= proxy['url'] -%>
         <%- if proxy['params'] -%>
           <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
           <%- end -%>
