@@ -47,7 +47,7 @@ describe ApacheModPlatformCompatibility do
         expect(ampc.extract_os_ver_pairs('Debian: 5, 6, 7; CentOS: 5,6,7')).to eq('debian' => [5, 6, 7], 'centos' => [5, 6, 7])
       end
       it 'handles Versions in \d+\.\d+ format' do
-        expect(ampc.extract_os_ver_pairs('Ubuntu: 14.04, 16.04')).to eq('ubuntu' => [14, 16])
+        expect(ampc.extract_os_ver_pairs('Ubuntu: 18.04, 20.04')).to eq('ubuntu' => [18, 20])
       end
       it 'handles Versions with "SP"' do
         expect(ampc.extract_os_ver_pairs('SLES: 11 SP1, 12')).to eq('sles' => [11, 12])
@@ -56,10 +56,10 @@ describe ApacheModPlatformCompatibility do
         expect(ampc.extract_os_ver_pairs('foobar')).to eq({})
       end
       it 'returns an empty Hash when given data with incorrect OS/Version group separator' do
-        expect(ampc.extract_os_ver_pairs('Ubuntu#14.04, 16.04')).to eq({})
+        expect(ampc.extract_os_ver_pairs('Ubuntu#18.04, 20.04')).to eq({})
       end
       it 'returns an empty Hash when given data with incorrect OS + Version separator' do
-        expect(ampc.extract_os_ver_pairs('CentOS:5,6#Debian:5,6')).to eq({})
+        expect(ampc.extract_os_ver_pairs('CentOS:7,8#Debian:10,11')).to eq({})
       end
       it 'returns an empty Hash when given data with incorrect Version separator' do
         expect(ampc.extract_os_ver_pairs('CentOS:5@6')).to eq({})

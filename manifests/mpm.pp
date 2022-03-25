@@ -98,17 +98,13 @@ define apache::mpm (
       }
 
       if $mpm == 'prefork' {
-        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or $::operatingsystem == 'Debian' ) {
-          include apache::mpm::disable_mpm_event
-          include apache::mpm::disable_mpm_worker
-        }
+        include apache::mpm::disable_mpm_event
+        include apache::mpm::disable_mpm_worker
       }
 
       if $mpm == 'worker' {
-        if ( ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease,'18.04') >= 0 ) or $::operatingsystem == 'Debian' ) {
-          include apache::mpm::disable_mpm_event
-          include apache::mpm::disable_mpm_prefork
-        }
+        include apache::mpm::disable_mpm_event
+        include apache::mpm::disable_mpm_prefork
       }
     }
 
