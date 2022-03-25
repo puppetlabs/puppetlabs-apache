@@ -8,7 +8,7 @@ class apache::mod::fastcgi {
   if ($::osfamily == 'Redhat' and versioncmp($::operatingsystemmajrelease, '7') >= 0) {
     fail('mod_fastcgi is no longer supported on el7 and above.')
   }
-  if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '18.04') >= 0) {
+  if ($facts['os']['name'] == 'Ubuntu') {
     fail('mod_fastcgi is no longer supported on Ubuntu 18.04 and above. Please use mod_proxy_fcgi')
   }
   # Debian specifies it's fastcgi lib path, but RedHat uses the default value
