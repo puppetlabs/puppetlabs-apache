@@ -78,19 +78,6 @@ describe 'apache::mod::php', type: :class do
                 }
               end
             end
-          when '16.04'
-            context 'on xenial' do
-              let :params do
-                { content: 'somecontent' }
-              end
-
-              it {
-                is_expected.to contain_file('php7.0.conf').with(
-                  content: 'somecontent',
-                )
-              }
-            end
-
           when '18.04'
             context 'on bionic' do
               let :params do
