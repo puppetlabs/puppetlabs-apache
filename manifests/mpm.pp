@@ -85,9 +85,6 @@ define apache::mpm (
       }
 
       if $mpm == 'itk' {
-        include apache::mpm::disable_mpm_event
-        include apache::mpm::disable_mpm_worker
-
         package { 'libapache2-mpm-itk':
           ensure => present,
           before => [
@@ -97,14 +94,16 @@ define apache::mpm (
         }
       }
 
-      if $mpm == 'prefork' {
-        include apache::mpm::disable_mpm_event
+      unless $mpm in ['itk', 'prefork'] {
+        include apache::mpm::disable_mpm_prefork
+      }
+
+      if $mpm != 'worker' {
         include apache::mpm::disable_mpm_worker
       }
 
-      if $mpm == 'worker' {
+      if $mpm != 'event' {
         include apache::mpm::disable_mpm_event
-        include apache::mpm::disable_mpm_prefork
       }
     }
 
