@@ -239,6 +239,7 @@ describe 'apache::vhost', type: :define do
                   'passenger_startup_file'                              => 'start.js',
                   'passenger_restart_dir'                               => 'temp',
                   'passenger_load_shell_envvars'                        => false,
+                  'passenger_preload_bundler'                           => false,
                   'passenger_rolling_restarts'                          => false,
                   'passenger_resist_deployment_errors'                  => false,
                   'passenger_user'                                      => 'nodeuser',
@@ -454,6 +455,7 @@ describe 'apache::vhost', type: :define do
               'passenger_restart_dir'                 => 'tmp',
               'passenger_spawn_method'                => 'direct',
               'passenger_load_shell_envvars'          => false,
+              'passenger_preload_bundler'             => false,
               'passenger_rolling_restarts'            => false,
               'passenger_resist_deployment_errors'    => true,
               'passenger_user'                        => 'sandbox',
@@ -840,6 +842,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
             )
           }
           it {
@@ -1362,6 +1369,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
               content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
             )
           }
           it {
