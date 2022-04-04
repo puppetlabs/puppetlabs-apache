@@ -120,6 +120,9 @@
 # @param passenger_load_shell_envvars
 #   Enables or disables the loading of shell environment variables before spawning the application.
 #
+# @param passenger_preload_bundler
+#   Enables or disables loading bundler before loading your Ruby app.
+#
 # @param passenger_log_file
 #   File path to log file. By default Passenger log messages are written to the Apache global error log.
 #
@@ -343,6 +346,7 @@ class apache::mod::passenger (
   $passenger_installed_version                                                               = undef,
   $passenger_instance_registry_dir                                                           = undef,
   $passenger_load_shell_envvars                                                              = undef,
+  Optional[Boolean] $passenger_preload_bundler                                               = undef,
   Optional[Stdlib::Absolutepath] $passenger_log_file                                         = undef,
   $passenger_log_level                                                                       = undef,
   $passenger_lve_min_uid                                                                     = undef,
@@ -544,6 +548,11 @@ class apache::mod::passenger (
     if $passenger_load_shell_envvars {
       if (versioncmp($passenger_installed_version, '4.0.20') < 0) {
         fail("Passenger config option :: passenger_load_shell_envvars is not introduced until version 4.0.20 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_preload_bundler {
+      if (versioncmp($passenger_installed_version, '6.0.13') < 0) {
+        fail("Passenger config option :: passenger_preload_bundler is not introduced until version 6.0.13 :: ${passenger_installed_version} is the version reported")
       }
     }
     if $passenger_log_file {
@@ -901,6 +910,7 @@ class apache::mod::passenger (
   # - $passenger_high_performance : since 2.0.0.
   # - $passenger_instance_registry_dir : since 5.0.0.
   # - $passenger_load_shell_envvars : since 4.0.20.
+  # - $passenger_preload_bundler : since 6.0.13
   # - $passenger_log_file : since 5.0.5.
   # - $passenger_log_level : since 3.0.0.
   # - $passenger_lve_min_uid : since 5.0.28.
