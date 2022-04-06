@@ -132,6 +132,9 @@
     <%- unless directory['passenger_load_shell_envvars'].nil? -%>
     PassengerLoadShellEnvvars <%= scope.call_function('apache::bool2httpd', [directory['passenger_load_shell_envvars']]) %>
     <%- end -%>
+    <%- unless directory['passenger_preload_bundler'].nil? -%>
+    PassengerPreloadBundler <%= scope.call_function('apache::bool2httpd', [directory['passenger_preload_bundler']]) %>
+    <%- end -%>
     <%- unless directory['passenger_rolling_restarts'].nil? -%>
     PassengerRollingRestarts <%= scope.call_function('apache::bool2httpd', [directory['passenger_rolling_restarts']]) %>
     <%- end -%>

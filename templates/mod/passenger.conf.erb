@@ -88,6 +88,9 @@
   <%- if @passenger_load_shell_envvars -%>
   PassengerLoadShellEnvvars <%= @passenger_load_shell_envvars %>
   <%- end -%>
+  <%- unless @passenger_preload_bundler.nil? -%>
+  PassengerPreloadBundler <%= scope.call_function('apache::bool2httpd', [@passenger_preload_bundler]) %>
+  <%- end -%>
   <%- if @passenger_log_file -%>
   PassengerLogFile "<%= @passenger_log_file %>"
   <%- end -%>
