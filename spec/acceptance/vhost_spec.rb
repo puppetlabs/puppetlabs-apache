@@ -965,7 +965,7 @@ describe 'apache::vhost define' do
           }
       MANIFEST
       it 'applies cleanly' do
-        result = apply_manifest(pp, catch_failures: true)
+        _result = apply_manifest(pp, catch_failures: true)
       end
       describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
         it { is_expected.to be_file }
@@ -984,7 +984,7 @@ describe 'apache::vhost define' do
           }
       MANIFEST
       it 'applies cleanly' do
-        result = apply_manifest(pp, catch_failures: true)
+        _result = apply_manifest(pp, catch_failures: true)
       end
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
