@@ -52,7 +52,7 @@ class apache::mod::ldap (
   $apache_version                                  = undef,
   $package_name                                    = undef,
   $ldap_trusted_global_cert_file                   = undef,
-  Optional[String] $ldap_trusted_global_cert_type  = 'CA_BASE64',
+  String $ldap_trusted_global_cert_type            = 'CA_BASE64',
   $ldap_shared_cache_size                          = undef,
   $ldap_cache_entries                              = undef,
   $ldap_cache_ttl                                  = undef,
