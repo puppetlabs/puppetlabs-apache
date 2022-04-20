@@ -220,7 +220,7 @@ class apache::mod::security (
 
   if $custom_rules {
     # Template to add custom rule and included in security configuration
-    file {"${modsec_dir}/custom_rules":
+    file { "${modsec_dir}/custom_rules":
       ensure  => directory,
       owner   => $apache::params::user,
       group   => $apache::params::group,
