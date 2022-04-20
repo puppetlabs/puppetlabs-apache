@@ -35,3 +35,15 @@ Rakefile:
 .travis.yml:
   delete: true
 changelog_since_tag: "3.2.0"
+Rakefile:
+  extra_disabled_lint_checks:
+    - parameter_types
+    - parameter_documentation
+    - top_scope_facts
+    - legacy_facts
+    - relative_classname_reference
+    - relative_classname_inclusion
+    - anchor_resource
+    - version_comparison
+    - manifest_whitespace_closing_bracket_after
+
