@@ -433,7 +433,7 @@
 #
 # @param purge_vdir
 #   Removes all other Apache configs and virtual hosts.<br />
-#   > **Note**: This parameter is deprecated in favor of the `purge_config` parameter.<br />
+#   > **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
 # 
 # @param conf_enabled
 #   Whether the additional config files in `/etc/apache2/conf-enabled` should be managed.
