@@ -1513,6 +1513,7 @@
 #     directories => [
 #       { path   => '/path/to/different/dir',
 #         gssapi => {
+#           basicauth => 'On',
 #           credstore => 'keytab:/foo/bar.keytab',
 #           localname => 'Off',
 #           sslonly   => 'On',

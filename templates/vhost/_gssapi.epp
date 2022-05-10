@@ -1,10 +1,14 @@
 <%|
   # https://github.com/gssapi/mod_auth_gssapi
+  Optional[Enum['On','Off']] $basicauth = undef,
   Optional[String[1]]        $credstore = undef,
   Optional[Enum['On','Off']] $sslonly   = undef,
   Optional[Enum['On','Off']] $localname = undef,
 |%>
-# mod_auth_gssapi configuration
+    # mod_auth_gssapi configuration
+<% if $basicauth { -%>
+    GssapiBasicAuth <%= $basicauth %>
+<% } -%>
 <% if $sslonly { -%>
     GssapiSSLonly <%= $sslonly %>
 <% } -%>
