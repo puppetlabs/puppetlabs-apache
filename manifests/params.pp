@@ -364,7 +364,6 @@ class apache::params inherits ::apache::version {
     if ($::operatingsystem == 'Ubuntu') or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '11') < 0) {
       $php_version = $facts['operatingsystemmajrelease'] ? {
         '9'     => '7.0', # Debian Stretch
-        '16.04' => '7.0', # Ubuntu Xenial
         '10'    => '7.3', # Debian Buster
         '20.04' => '7.4', # Ubuntu Foccal Fossal
         default => '7.2', # Ubuntu Bionic, Cosmic and Disco
@@ -460,52 +459,27 @@ class apache::params inherits ::apache::version {
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    if ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
-      $modsec_default_rules = [
-        'crawlers-user-agents.data',
-        'iis-errors.data',
-        'java-code-leakages.data',
-        'java-errors.data',
-        'lfi-os-files.data',
-        'php-config-directives.data',
-        'php-errors.data',
-        'php-function-names-933150.data',
-        'php-function-names-933151.data',
-        'php-variables.data',
-        'restricted-files.data',
-        'scanners-headers.data',
-        'scanners-urls.data',
-        'scanners-user-agents.data',
-        'scripting-user-agents.data',
-        'sql-errors.data',
-        'sql-function-names.data',
-        'unix-shell.data',
-        'windows-powershell-commands.data',
-      ]
-    } else {
-      $modsec_default_rules = [
-        'base_rules/modsecurity_35_bad_robots.data',
-        'base_rules/modsecurity_35_scanners.data',
-        'base_rules/modsecurity_40_generic_attacks.data',
-        'base_rules/modsecurity_50_outbound.data',
-        'base_rules/modsecurity_50_outbound_malware.data',
-        'base_rules/modsecurity_crs_20_protocol_violations.conf',
-        'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
-        'base_rules/modsecurity_crs_23_request_limits.conf',
-        'base_rules/modsecurity_crs_30_http_policy.conf',
-        'base_rules/modsecurity_crs_35_bad_robots.conf',
-        'base_rules/modsecurity_crs_40_generic_attacks.conf',
-        'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
-        'base_rules/modsecurity_crs_41_xss_attacks.conf',
-        'base_rules/modsecurity_crs_42_tight_security.conf',
-        'base_rules/modsecurity_crs_45_trojans.conf',
-        'base_rules/modsecurity_crs_47_common_exceptions.conf',
-        'base_rules/modsecurity_crs_49_inbound_blocking.conf',
-        'base_rules/modsecurity_crs_50_outbound.conf',
-        'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-        'base_rules/modsecurity_crs_60_correlation.conf',
-      ]
-    }
+    $modsec_default_rules = [
+      'crawlers-user-agents.data',
+      'iis-errors.data',
+      'java-code-leakages.data',
+      'java-errors.data',
+      'lfi-os-files.data',
+      'php-config-directives.data',
+      'php-errors.data',
+      'php-function-names-933150.data',
+      'php-function-names-933151.data',
+      'php-variables.data',
+      'restricted-files.data',
+      'scanners-headers.data',
+      'scanners-urls.data',
+      'scanners-user-agents.data',
+      'scripting-user-agents.data',
+      'sql-errors.data',
+      'sql-function-names.data',
+      'unix-shell.data',
+      'windows-powershell-commands.data',
+    ]
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
     $dev_packages        = ['libaprutil1-dev', 'libapr1-dev', 'apache2-dev']

@@ -46,6 +46,9 @@
 <% unless @passenger_load_shell_envvars.nil? -%>
   PassengerLoadShellEnvvars <%= scope.call_function('apache::bool2httpd', [@passenger_load_shell_envvars]) %>
 <% end -%>
+<% unless @passenger_preload_bundler.nil? -%>
+  PassengerPreloadBundler <%= scope.call_function('apache::bool2httpd', [@passenger_preload_bundler]) %>
+<% end -%>
 <% unless @passenger_rolling_restarts.nil? -%>
   PassengerRollingRestarts <%= scope.call_function('apache::bool2httpd', [@passenger_rolling_restarts]) %>
 <% end -%>

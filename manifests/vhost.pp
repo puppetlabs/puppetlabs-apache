@@ -684,6 +684,10 @@
 # @param passenger_load_shell_envvars
 #   Sets [PassengerLoadShellEnvvars](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerloadshellenvvars),
 #   to enable or disable the loading of shell environment variables before spawning the application.
+#
+# @param passenger_preload_bundler
+#   Sets [PassengerPreloadBundler](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpreloadbundler),
+#   to enable or disable the loading of bundler before loading the application.
 # 
 # @param passenger_rolling_restarts
 #   Sets [PassengerRollingRestarts](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrollingrestarts),
@@ -1511,6 +1515,7 @@
 #     directories => [
 #       { path   => '/path/to/different/dir',
 #         gssapi => {
+#           basicauth => 'On',
 #           credstore => 'keytab:/foo/bar.keytab',
 #           localname => 'Off',
 #           sslonly   => 'On',
@@ -1833,8 +1838,8 @@ define apache::vhost (
   $access_log_format                                                                = false,
   $access_log_env_var                                                               = false,
   Optional[Array] $access_logs                                                      = undef,
-  Optional[Boolean] $use_servername_for_filenames                                   = false,
-  Optional[Boolean] $use_port_for_filenames                                         = false,
+  Boolean $use_servername_for_filenames                                             = false,
+  Boolean $use_port_for_filenames                                                   = false,
   $aliases                                                                          = undef,
   Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                  = undef,
   Boolean $error_log                                                                = true,
@@ -1952,6 +1957,7 @@ define apache::vhost (
   Optional[String] $passenger_restart_dir                                           = undef,
   Optional[Enum['direct', 'smart']] $passenger_spawn_method                         = undef,
   Optional[Boolean] $passenger_load_shell_envvars                                   = undef,
+  Optional[Boolean] $passenger_preload_bundler                                      = undef,
   Optional[Boolean] $passenger_rolling_restarts                                     = undef,
   Optional[Boolean] $passenger_resist_deployment_errors                             = undef,
   Optional[String] $passenger_user                                                  = undef,
@@ -2088,7 +2094,7 @@ define apache::vhost (
     include apache::mod::suexec
   }
 
-  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     include apache::mod::passenger
   }
 
@@ -2121,45 +2127,12 @@ define apache::vhost (
   #
   # Because a single hostname may be use by multiple virtual hosts listening on different ports, the $port paramter can
   # optionaly be used to avoid duplicate resources.
-  #
-  # We will retain the default behaviour for filenames but allow the use of a sanitized version of $servername to be
-  # used, using the new $use_servername_for_filenames and $use_port_for_filenames parameters.
-  #
-  # This will default to false until the next major release (v7.0.0), at which point, we will default this to true and
-  # warn about it's imminent deprecation in the subsequent major release (v8.0.0)
-  #
-  # In v8.0.0, we will deprecate the $use_servername_for_filenames and $use_port_for_filenames parameters altogether
-  # and use the sanitized value of $servername for default log / config filenames.
   $filename = $use_servername_for_filenames ? {
     true => $use_port_for_filenames ? {
       true  => regsubst("${normalized_servername}-${port}", ' ', '_', 'G'),
       false => regsubst($normalized_servername, ' ', '_', 'G'),
     },
     false => $name,
-  }
-
-  if ! $use_servername_for_filenames and $name != $normalized_servername {
-    $use_servername_for_filenames_warn_msg = '
-    It is possible for the $name parameter to be defined with spaces in it. Although supported on POSIX systems, this
-    can lead to cumbersome file names. The $servername attribute has stricter conditions from Apache (i.e. no spaces)
-    When $use_servername_for_filenames = true, the $servername parameter, sanitized, is used to construct log and config
-    file names.
-
-    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_servername_for_filenames will be removed and log/config file names will be derived from the
-    sanitized $servername parameter when not explicitly defined.'
-    warning($use_servername_for_filenames_warn_msg)
-  } elsif ! $use_port_for_filenames {
-    $use_port_for_filenames_warn_msg = '
-    It is possible for multiple virtual hosts to be configured using the same $servername but a different port. When
-    using $use_servername_for_filenames, this can lead to duplicate resource declarations.
-    When $use_port_for_filenames = true, the $servername and $port parameters, sanitized, are used to construct log and
-    config file names.
-
-    From version v7.0.0 of the puppetlabs-apache module, this parameter will default to true. From version v8.0.0 of the
-    module, the $use_port_for_filenames will be removed and log/config file names will be derived from the
-    sanitized $servername parameter when not explicitly defined.'
-    warning($use_port_for_filenames_warn_msg)
   }
 
   # This ensures that the docroot exists
@@ -2895,6 +2868,7 @@ define apache::vhost (
   # - $passenger_restart_dir
   # - $passenger_spawn_method
   # - $passenger_load_shell_envvars
+  # - $passenger_preload_bundler
   # - $passenger_rolling_restarts
   # - $passenger_resist_deployment_errors
   # - $passenger_min_instances
@@ -2923,7 +2897,7 @@ define apache::vhost (
   # - $passenger_max_requests
   # - $passenger_max_request_time
   # - $passenger_memory_limit
-  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
+  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,

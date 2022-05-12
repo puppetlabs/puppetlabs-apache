@@ -220,7 +220,7 @@ class apache::mod::security (
 
   if $custom_rules {
     # Template to add custom rule and included in security configuration
-    file {"${modsec_dir}/custom_rules":
+    file { "${modsec_dir}/custom_rules":
       ensure  => directory,
       owner   => $apache::params::user,
       group   => $apache::params::group,
@@ -261,8 +261,7 @@ class apache::mod::security (
       notify  => Class['apache::service'],
     }
 
-    # Debian 9 has a different rule setup
-    unless $::operatingsystem == 'SLES' or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+    unless $::operatingsystem == 'SLES' or $::operatingsystem == 'Debian' or $::operatingsystem == 'Ubuntu' {
       apache::security::rule_link { $activated_rules: }
     }
   }

@@ -433,7 +433,7 @@
 #
 # @param purge_vdir
 #   Removes all other Apache configs and virtual hosts.<br />
-#   > **Note**: This parameter is deprecated in favor of the `purge_config` parameter.<br />
+#   > **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
 # 
 # @param conf_enabled
 #   Whether the additional config files in `/etc/apache2/conf-enabled` should be managed.
@@ -738,19 +738,13 @@ class apache (
     if $::osfamily == 'gentoo' {
       $error_documents_path = '/usr/share/apache2/error'
       if $default_mods =~ Array {
-        if versioncmp($apache_version, '2.4') >= 0 {
-          if defined('apache::mod::ssl') {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, ['authz_core', 'socache_shmcb']),
-            }
-          } else {
-            ::portage::makeconf { 'apache2_modules':
-              content => concat($default_mods, 'authz_core'),
-            }
+        if defined('apache::mod::ssl') {
+          ::portage::makeconf { 'apache2_modules':
+            content => concat($default_mods, ['authz_core', 'socache_shmcb']),
           }
         } else {
           ::portage::makeconf { 'apache2_modules':
-            content => $default_mods,
+            content => concat($default_mods, 'authz_core'),
           }
         }
       }

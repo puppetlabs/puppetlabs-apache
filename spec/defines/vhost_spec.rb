@@ -239,6 +239,7 @@ describe 'apache::vhost', type: :define do
                   'passenger_startup_file'                              => 'start.js',
                   'passenger_restart_dir'                               => 'temp',
                   'passenger_load_shell_envvars'                        => false,
+                  'passenger_preload_bundler'                           => false,
                   'passenger_rolling_restarts'                          => false,
                   'passenger_resist_deployment_errors'                  => false,
                   'passenger_user'                                      => 'nodeuser',
@@ -266,6 +267,7 @@ describe 'apache::vhost', type: :define do
                   'passenger_app_log_file'                              => '/tmp/app.log',
                   'passenger_debugger'                                  => false,
                   'gssapi'                                              => {
+                    'basicauth' => 'On',
                     'credstore' => 'keytab:/foo/bar.keytab',
                     'localname' => 'On',
                     'sslonly'   => 'Off',
@@ -454,6 +456,7 @@ describe 'apache::vhost', type: :define do
               'passenger_restart_dir'                 => 'tmp',
               'passenger_spawn_method'                => 'direct',
               'passenger_load_shell_envvars'          => false,
+              'passenger_preload_bundler'             => false,
               'passenger_rolling_restarts'            => false,
               'passenger_resist_deployment_errors'    => true,
               'passenger_user'                        => 'sandbox',
@@ -844,6 +847,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerRollingRestarts\sOff$},
             )
           }
@@ -960,6 +968,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerDebugger\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+GssapiBasicAuth\sOn$},
             )
           }
           it {
@@ -1362,6 +1375,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
               content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
             )
           }
           it {
