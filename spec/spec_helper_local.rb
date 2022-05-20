@@ -60,13 +60,26 @@ end
 shared_context 'Fedora 28' do
   let :facts do
     {
+      # Legacy
       id: 'root',
-      kernel: 'Linux',
       osfamily: 'RedHat',
       operatingsystem: 'Fedora',
       operatingsystemrelease: '28',
       operatingsystemmajrelease: '28',
+      # Modern
+      kernel: 'Linux',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'Fedora',
+        family: 'Redhat',
+        release: {
+          major: '28',
+          full: '28',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -74,12 +87,24 @@ end
 shared_context 'FreeBSD 9' do
   let :facts do
     {
+      # Legacy
       osfamily: 'FreeBSD',
       operatingsystemrelease: '9',
       operatingsystem: 'FreeBSD',
       id: 'root',
+      # Modern
       kernel: 'FreeBSD',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'FreeBSD',
+        family: 'FreeBSD',
+        release: {
+          full: '9',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -87,12 +112,24 @@ end
 shared_context 'FreeBSD 10' do
   let :facts do
     {
+      # Legacy
       id: 'root',
-      kernel: 'FreeBSD',
       osfamily: 'FreeBSD',
       operatingsystem: 'FreeBSD',
       operatingsystemrelease: '10',
+      # Modern
+      kernel: 'FreeBSD',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'FreeBSD',
+        family: 'FreeBSD',
+        release: {
+          full: '10',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -100,13 +137,26 @@ end
 shared_context 'Gentoo' do
   let :facts do
     {
+      # Legacy
       id: 'root',
-      kernel: 'Linux',
       osfamily: 'Gentoo',
       operatingsystem: 'Gentoo',
       operatingsystemrelease: '2.7',
       operatingsystemmajrelease: '2.7',
+      # Modern
+      kernel: 'Linux',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      os: {
+        name: 'Gentoo',
+        family: 'Gentoo',
+        release: {
+          major: '2.7',
+          full: '2.7',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -114,8 +164,16 @@ end
 shared_context 'Darwin' do
   let :facts do
     {
+      # Legacy
       osfamily: 'Darwin',
       operatingsystemrelease: '13.1.0',
+      # Modern
+      os: {
+        family: 'Darwin',
+        release: {
+          full: '13.1.0',
+        },
+      },
     }
   end
 end
@@ -123,12 +181,24 @@ end
 shared_context 'Unsupported OS' do
   let :facts do
     {
+      # Legacy
       osfamily: 'Magic',
       operatingsystemrelease: '0',
       operatingsystem: 'Magic',
       id: 'root',
+      # Modern
       kernel: 'Linux',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'Magic',
+        family: 'Magic',
+        release: {
+          full: '0',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end

@@ -30,7 +30,7 @@ class apache::mod::shib (
   $mod_lib          = undef,
 ) {
   include apache
-  if $::osfamily == 'RedHat' and ! $suppress_warning {
+  if $facts['os']['family'] == 'RedHat' and ! $suppress_warning {
     warning('RedHat distributions do not have Apache mod_shib in their default package repositories.')
   }
 

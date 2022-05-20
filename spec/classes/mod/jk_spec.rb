@@ -67,7 +67,7 @@ describe 'apache::mod::jk', type: :class do
     include_examples 'Debian 11'
 
     context 'with only required facts and default parameters' do
-      let(:facts) { super().merge('ipaddress' => default_ip) }
+      let(:facts) { super().merge(networking: { ip: default_ip }) }
       let(:pre_condition) do
         'include apache'
       end
@@ -102,7 +102,7 @@ describe 'apache::mod::jk', type: :class do
     end
 
     context 'with required facts' do
-      let(:facts) { super().merge('ipaddress' => default_ip) }
+      let(:facts) { super().merge(networking: { ip: default_ip }) }
 
       context 'and default parameters' do
         let(:mod_dir) { mod_dir }

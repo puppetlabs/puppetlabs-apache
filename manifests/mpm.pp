@@ -16,7 +16,7 @@ define apache::mpm (
   $_path = "${lib_path}/${_lib}"
   $_id   = "mpm_${mpm}_module"
 
-  if $::osfamily == 'Suse' {
+  if $facts['os']['family'] == 'Suse' {
     #mpms on Suse 12 don't use .so libraries so create a placeholder load file
     if versioncmp($apache_version, '2.4') >= 0 {
       file { "${mod_dir}/${mpm}.load":
@@ -47,7 +47,7 @@ define apache::mpm (
     }
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'debian': {
       file { "${apache::mod_enable_dir}/${mpm}.conf":
         ensure  => link,
@@ -149,7 +149,7 @@ define apache::mpm (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

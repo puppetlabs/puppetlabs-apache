@@ -308,7 +308,7 @@ class apache::mod::jk (
   # Binding to mod_jk
   if $add_listen {
     $_ip = $ip ? {
-      undef   => $facts['ipaddress'],
+      undef   => $facts['networking']['ip'],
       default => $ip,
     }
     ensure_resource('apache::listen', "${_ip}:${port}", {})

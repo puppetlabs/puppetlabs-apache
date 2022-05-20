@@ -32,7 +32,7 @@ class apache::mod::auth_mellon (
   $mellon_post_ttl = undef,
   $mellon_post_size = undef,
   $mellon_post_count = undef
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
   ::apache::mod { 'auth_mellon': }
 

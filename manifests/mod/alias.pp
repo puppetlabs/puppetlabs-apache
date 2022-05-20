@@ -26,7 +26,7 @@ class apache::mod::alias (
   # set icons_path to false to disable the alias
   $icons_path     = $apache::params::alias_icons_path,
   $icons_prefix   = $apache::params::icons_prefix
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
   apache::mod { 'alias': }

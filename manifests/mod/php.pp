@@ -25,11 +25,11 @@ class apache::mod::php (
   if $apache::version::scl_httpd_version == undef and $apache::version::scl_php_version != undef {
     fail('If you define apache::version::scl_php_version, you also need to specify apache::version::scl_httpd_version')
   }
-  if defined(Class['::apache::mod::prefork']) {
-    Class['::apache::mod::prefork']->File["${mod}.conf"]
+  if defined(Class['apache::mod::prefork']) {
+    Class['apache::mod::prefork'] ->File["${mod}.conf"]
   }
-  elsif defined(Class['::apache::mod::itk']) {
-    Class['::apache::mod::itk']->File["${mod}.conf"]
+  elsif defined(Class['apache::mod::itk']) {
+    Class['apache::mod::itk'] ->File["${mod}.conf"]
   }
   else {
     fail('apache::mod::php requires apache::mod::prefork or apache::mod::itk; please enable mpm_module => \'prefork\' or mpm_module => \'itk\' on Class[\'apache\']')
@@ -78,7 +78,7 @@ class apache::mod::php (
     default => 'php_module',
   }
 
-  if $::operatingsystem == 'SLES' {
+  if $facts['os']['name'] == 'SLES' {
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
@@ -98,7 +98,7 @@ class apache::mod::php (
 
   include apache::mod::mime
   include apache::mod::dir
-  Class['::apache::mod::mime'] -> Class['::apache::mod::dir'] -> Class['::apache::mod::php']
+  Class['apache::mod::mime'] -> Class['apache::mod::dir'] -> Class['apache::mod::php']
 
   # Template uses $extensions
   file { "${mod}.conf":

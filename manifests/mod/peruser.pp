@@ -14,12 +14,12 @@ class apache::mod::peruser (
   $keepalive = 'Off',
 ) {
   include apache
-  case $::osfamily {
+  case $facts['os']['family'] {
     'freebsd' : {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
     default: {
-      if $::osfamily == 'gentoo' {
+      if $facts['os']['family'] == 'gentoo' {
         ::portage::makeconf { 'apache2_mpms':
           content => 'peruser',
         }

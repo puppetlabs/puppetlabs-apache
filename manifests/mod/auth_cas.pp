@@ -106,8 +106,8 @@ class apache::mod::auth_cas (
   $cas_attribute_delimiter   = undef,
   $cas_scrub_request_headers = undef,
   $suppress_warning          = false,
-) inherits ::apache::params {
-  if $::osfamily == 'RedHat' and ! $suppress_warning {
+) inherits apache::params {
+  if $facts['os']['family'] == 'RedHat' and ! $suppress_warning {
     warning('RedHat distributions do not have Apache mod_auth_cas in their default package repositories.')
   }
 

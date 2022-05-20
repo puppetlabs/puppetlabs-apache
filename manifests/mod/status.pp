@@ -44,7 +44,7 @@ class apache::mod::status (
   Enum['On', 'Off', 'on', 'off'] $extended_status  = 'On',
   $apache_version                                  = undef,
   $status_path                                     = '/server-status',
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'status': }

@@ -120,7 +120,7 @@ class apache::mod::security (
   $secrequestbodynofileslimit  = '131072',
   $secrequestbodyinmemorylimit = '131072',
   $manage_security_crs         = true,
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
 
   $_secdefaultaction = $secdefaultaction ? {
@@ -128,11 +128,11 @@ class apache::mod::security (
     default => "${secdefaultaction},log",
   }
 
-  if $::osfamily == 'FreeBSD' {
+  if $facts['os']['family'] == 'FreeBSD' {
     fail('FreeBSD is not currently supported')
   }
 
-  if ($::osfamily == 'Suse' and versioncmp($::operatingsystemrelease, '11') < 0) {
+  if ($facts['os']['family'] == 'Suse' and versioncmp($facts['os']['release']['major'], '11') < 0) {
     fail('SLES 10 is not currently supported.')
   }
 
@@ -256,7 +256,7 @@ class apache::mod::security (
       notify  => Class['apache::service'],
     }
 
-    unless $::operatingsystem == 'SLES' or $::operatingsystem == 'Debian' or $::operatingsystem == 'Ubuntu' {
+    unless $facts['os']['name'] == 'SLES' or $facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu' {
       apache::security::rule_link { $activated_rules: }
     }
   }

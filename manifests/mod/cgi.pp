@@ -5,20 +5,20 @@
 #
 class apache::mod::cgi {
   include apache
-  case $::osfamily {
+  case $facts['os']['family'] {
     'FreeBSD': {}
     default: {
-      if defined(Class['::apache::mod::itk']) {
-        Class['::apache::mod::itk'] -> Class['::apache::mod::cgi']
-      } elsif defined(Class['::apache::mod::peruser']) {
-        Class['::apache::mod::peruser'] -> Class['::apache::mod::cgi']
+      if defined(Class['apache::mod::itk']) {
+        Class['apache::mod::itk'] -> Class['apache::mod::cgi']
+      } elsif defined(Class['apache::mod::peruser']) {
+        Class['apache::mod::peruser'] -> Class['apache::mod::cgi']
       } else {
-        Class['::apache::mod::prefork'] -> Class['::apache::mod::cgi']
+        Class['apache::mod::prefork'] -> Class['apache::mod::cgi']
       }
     }
   }
 
-  if $::osfamily == 'Suse' {
+  if $facts['os']['family'] == 'Suse' {
     ::apache::mod { 'cgi':
       lib_path => '/usr/lib64/apache2-prefork',
     }

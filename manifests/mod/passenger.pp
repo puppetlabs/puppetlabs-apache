@@ -402,7 +402,7 @@ class apache::mod::passenger (
   $rails_spawn_method                                                                        = undef,
   $rails_user_switching                                                                      = undef,
   $wsgi_auto_detect                                                                          = undef,
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
   if $passenger_installed_version {
     if $passenger_allow_encoded_slashes {
@@ -834,7 +834,7 @@ class apache::mod::passenger (
   $_package = $mod_package
   $_package_ensure = $mod_package_ensure
   $_lib = $mod_lib
-  if $::osfamily == 'FreeBSD' {
+  if $facts['os']['family'] == 'FreeBSD' {
     if $mod_lib_path {
       $_lib_path = $mod_lib_path
     } else {
@@ -844,9 +844,9 @@ class apache::mod::passenger (
     $_lib_path = $mod_lib_path
   }
 
-  if $::osfamily == 'RedHat' and $manage_repo {
-    if $::operatingsystem == 'Amazon' {
-      if $::operatingsystemmajrelease == '2' {
+  if $facts['os']['family'] == 'RedHat' and $manage_repo {
+    if $facts['os']['name'] == 'Amazon' {
+      if $facts['os']['release']['major'] == '2' {
         $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/7/$basearch'
       } else {
         $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6/$basearch'
@@ -869,7 +869,7 @@ class apache::mod::passenger (
     }
   }
 
-  unless ($::operatingsystem == 'SLES') {
+  unless ($facts['os']['name'] == 'SLES') {
     $_id = $mod_id
     $_path = $mod_path
     ::apache::mod { 'passenger':

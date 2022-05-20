@@ -93,7 +93,7 @@ class apache::mod::worker (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
         ::apache::mpm { 'worker':
@@ -130,7 +130,7 @@ class apache::mod::worker (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

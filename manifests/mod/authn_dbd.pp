@@ -36,7 +36,7 @@ class apache::mod::authn_dbd (
   $authn_dbd_keep        = '8',
   $authn_dbd_exptime     = '300',
   $authn_dbd_alias       = undef,
-) inherits ::apache::params {
+) inherits apache::params {
   include apache
   include apache::mod::dbd
   ::apache::mod { 'authn_dbd': }

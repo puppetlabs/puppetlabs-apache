@@ -27,8 +27,8 @@ class apache::mod::proxy_balancer (
     ::apache::mod { 'slotmem_shm': }
   }
 
-  Class['::apache::mod::proxy'] -> Class['::apache::mod::proxy_balancer']
-  Class['::apache::mod::proxy_http'] -> Class['::apache::mod::proxy_balancer']
+  Class['apache::mod::proxy'] -> Class['apache::mod::proxy_balancer']
+  Class['apache::mod::proxy_http'] -> Class['apache::mod::proxy_balancer']
   ::apache::mod { 'proxy_balancer': }
   if $manager {
     include apache::mod::status

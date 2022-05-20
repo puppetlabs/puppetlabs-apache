@@ -20,7 +20,7 @@ describe 'apache::mod::proxy_html', type: :class do
 
     context 'on i386' do
       let(:facts) do
-        super().merge(hardwaremodel: 'i686',
+        super().merge(os: { family: 'Debian', name: 'Debian', release: { full: '11', major: '11' }, hardware: 'i686', },
                       architecture: 'i386')
       end
 
@@ -29,7 +29,7 @@ describe 'apache::mod::proxy_html', type: :class do
     end
     context 'on x64' do
       let(:facts) do
-        super().merge(hardwaremodel: 'x86_64',
+        super().merge(os: { family: 'Debian', name: 'Debian', release: { full: '11', major: '11' }, hardware: 'x86_64', },
                       architecture: 'amd64')
       end
 
