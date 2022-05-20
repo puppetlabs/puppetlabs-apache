@@ -141,7 +141,7 @@ describe 'apache::mod::wsgi', type: :class do
   end
   context 'overriding mod_libs' do
     context 'on a RedHat OS', :compile do
-      include_examples 'Fedora 28'
+      include_examples 'RedHat 8'
       let :pre_condition do
         <<-MANIFEST
         include apache::params
