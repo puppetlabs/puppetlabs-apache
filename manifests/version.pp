@@ -13,7 +13,7 @@ class apache::version (
       }
       elsif ($::operatingsystem == 'Amazon' and $::operatingsystemmajrelease == '2') {
         $default = '2.4'
-      } elsif ($::operatingsystem == 'Fedora' and versioncmp($facts['operatingsystemmajrelease'], '18') >= 0) or ($::operatingsystem != 'Fedora' and versioncmp($facts['operatingsystemmajrelease'], '7') >= 0) {
+      } elsif $::operatingsystem == 'Fedora' or versioncmp($facts['operatingsystemmajrelease'], '7') >= 0 {
         $default = '2.4'
       } else {
         $default = '2.2'
