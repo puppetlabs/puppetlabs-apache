@@ -2023,6 +2023,7 @@ define apache::vhost (
   Boolean $auth_oidc                                                                = false,
   Optional[Apache::OIDCSettings] $oidc_settings                                     = undef,
   Optional[Variant[Boolean,String]] $mdomain                                        = undef,
+  Optional[Variant[String[1],Array[String[1]]]] $userdir                            = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -2848,6 +2849,18 @@ define apache::vhost (
 
   if $mdomain {
     include apache::mod::md
+  }
+
+  # Template uses:
+  # - $userdir
+  if $userdir {
+    include apache::mod::userdir
+
+    concat::fragment { "${name}-userdir":
+      target  => "${priority_real}${filename}.conf",
+      order   => 300,
+      content => template('apache/vhost/_userdir.erb'),
+    }
   }
 
   # Template uses:
