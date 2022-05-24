@@ -212,7 +212,7 @@ describe 'apache::vhost', type: :define do
                 {
                   'path'       => '^/proxy',
                   'provider'   => 'locationmatch',
-                  'proxy_pass' => [
+                  'proxy_pass_match' => [
                     {
                       'url'             => 'http://backend-b/',
                       'keywords'        => ['noquery', 'interpolate'],
