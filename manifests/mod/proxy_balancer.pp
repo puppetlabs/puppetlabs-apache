@@ -4,7 +4,7 @@
 # @param manager
 #   Toggle whether to enable balancer manager support.
 #
-# @param maanger_path
+# @param manager_path
 #   Server relative path to balancer manager.
 #
 # @param allow_from
@@ -19,7 +19,7 @@ class apache::mod::proxy_balancer (
   Boolean $manager                   = false,
   Stdlib::Absolutepath $manager_path = '/balancer-manager',
   Array $allow_from                  = ['127.0.0.1','::1'],
-  $apache_version                    = $apache::apache_version,
+  Optional[String] $apache_version   = $apache::apache_version,
 ) {
   include apache::mod::proxy
   include apache::mod::proxy_http

@@ -42,8 +42,8 @@ class apache::mod::status (
   Optional[Array] $allow_from                      = undef,
   Optional[Variant[String, Array, Hash]] $requires = undef,
   Enum['On', 'Off', 'on', 'off'] $extended_status  = 'On',
-  $apache_version                                  = undef,
-  $status_path                                     = '/server-status',
+  Optional[String] $apache_version                 = undef,
+  String $status_path                              = '/server-status',
 ) inherits apache::params {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

@@ -42,8 +42,6 @@ def changelog_future_release
 end
 
 PuppetLint.configuration.send('disable_relative')
-PuppetLint.configuration.send('disable_parameter_types')
-PuppetLint.configuration.send('disable_parameter_documentation')
 PuppetLint.configuration.send('disable_anchor_resource')
 
 

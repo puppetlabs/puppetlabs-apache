@@ -1,19 +1,41 @@
 # @summary
 #   Installs `mod_php`.
-# 
-# @todo
-#   Add docs
+#
+# @param package_name
+#   The package name
+#
+# @param package_ensure
+#   Whether the package is `present` or `absent`
+#
+# @param path
+#
+# @param extensions
+#
+# @param content
+#
+# @param template
+#
+# @param source
+#
+# @param root_group
+#   UNIX group of the root user
+#
+# @param php_version
+#   The php version
+#
+# @param libphp_prefix
+#
 class apache::mod::php (
-  $package_name     = undef,
-  $package_ensure   = 'present',
-  $path             = undef,
-  Array $extensions = ['.php'],
-  $content          = undef,
-  $template         = 'apache/mod/php.conf.erb',
-  $source           = undef,
-  $root_group       = $apache::params::root_group,
-  $php_version      = $apache::params::php_version,
-  $libphp_prefix    = 'libphp'
+  Optional[String] $package_name  = undef,
+  String $package_ensure          = 'present',
+  Optional[String] $path          = undef,
+  Array $extensions               = ['.php'],
+  Optional[String] $content       = undef,
+  String $template                = 'apache/mod/php.conf.erb',
+  Optional[String] $source        = undef,
+  Optional[String] $root_group    = $apache::params::root_group,
+  Optional[String] $php_version   = $apache::params::php_version,
+  String $libphp_prefix           = 'libphp'
 ) inherits apache::params {
   include apache
   if (versioncmp($php_version, '8') < 0) {

@@ -50,16 +50,16 @@
 #
 define apache::custom_config (
   Enum['absent', 'present'] $ensure = 'present',
-  $confdir                          = $apache::confd_dir,
-  $content                          = undef,
-  $priority                         = '25',
-  $source                           = undef,
-  $verify_command                   = $apache::params::verify_command,
+  String $confdir                   = $apache::confd_dir,
+  Optional[String] $content         = undef,
+  Variant[String,Boolean] $priority = '25',
+  Optional[String] $source          = undef,
+  String $verify_command            = $apache::params::verify_command,
   Boolean $verify_config            = true,
-  $filename                         = undef,
-  $owner                            = undef,
-  $group                            = undef,
-  $file_mode                        = undef,
+  Optional[String] $filename        = undef,
+  Optional[String] $owner           = undef,
+  Optional[String] $group           = undef,
+  Optional[String] $file_mode       = undef,
   Boolean $show_diff                = true,
 ) {
   if $content and $source {

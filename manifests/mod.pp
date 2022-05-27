@@ -33,14 +33,14 @@
 #   Specifies a path to the module. Do not manually set this parameter without a special reason.
 #
 define apache::mod (
-  $package        = undef,
-  $package_ensure = 'present',
-  $lib            = undef,
-  $lib_path       = $apache::lib_path,
-  $id             = undef,
-  $path           = undef,
-  $loadfile_name  = undef,
-  $loadfiles      = undef,
+  Optional[String] $package       = undef,
+  String $package_ensure          = 'present',
+  Optional[String] $lib           = undef,
+  String $lib_path                = $apache::lib_path,
+  Optional[String] $id            = undef,
+  Optional[String] $path          = undef,
+  Optional[String] $loadfile_name = undef,
+  Optional[Array] $loadfiles      = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')

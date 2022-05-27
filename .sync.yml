@@ -37,6 +37,4 @@ Rakefile:
 changelog_since_tag: "3.2.0"
 Rakefile:
   extra_disabled_lint_checks:
-    - parameter_types
-    - parameter_documentation
     - anchor_resource

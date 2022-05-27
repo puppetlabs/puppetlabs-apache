@@ -3,9 +3,9 @@
 #
 # @api private
 define apache::peruser::processor (
-  $user,
-  $group,
-  $file = undef,
+  String $user,
+  String $group,
+  Optional[String] $file = undef,
 ) {
   if ! $file {
     $filename = "${name}.conf"

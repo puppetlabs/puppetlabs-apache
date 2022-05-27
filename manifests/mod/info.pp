@@ -17,10 +17,10 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_info.html for additional documentation.
 #
 class apache::mod::info (
-  $allow_from      = ['127.0.0.1','::1'],
-  $apache_version  = undef,
-  $restrict_access = true,
-  $info_path       = '/server-info',
+  Array[String] $allow_from         = ['127.0.0.1','::1'],
+  Optional[String] $apache_version  = undef,
+  Boolean $restrict_access          = true,
+  String $info_path                 = '/server-info',
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

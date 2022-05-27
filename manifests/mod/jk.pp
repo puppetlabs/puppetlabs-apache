@@ -128,6 +128,34 @@
 #   If this directive is set to On in some virtual server, the session IDs ;jsessionid=... will be removed for URLs which are not 
 #   forwarded but instead are handled by the local server. 
 #
+# @param location_list
+#   Global locations for mod_jk are defined in array location_list.
+#   Each array item is a hash with quoted* property name as key and value as value itself.
+#   You can define a comment in a special 'comment' key
+#
+#   Example:
+#   <Location /jkstatus/>
+#     # Configures jkstatus
+#     JkMount status
+#     Order deny,allow
+#     Deny from all
+#     Allow from 127.0.0.1
+#   </Location>
+#
+#   Is defined as:
+#   location_list = [
+#     {
+#       'Location'   => '/jkstatus/',
+#       'Comment'    => 'Configures jkstatus',
+#       'JkMount'    => 'status',
+#       'Order'      => 'deny,allow',
+#       'Deny from'  => 'all',
+#       'Allow from' => '127.0.0.1',
+#     },
+#   ]
+#   * Keys must be quoted to allow arbitrary case and/or multi-word keys
+#   (BTW, note the case of 'Location' and 'Comment' keys)
+#
 # @param workers_file_content
 #   Each directive has the format worker.<Worker name>.<Property>=<Value>. This maps as a hash of hashes, where the outer hash specifies
 #   workers, and each inner hash specifies each worker properties and values. Plus, there are two global directives, 'worker.list' and
@@ -243,56 +271,56 @@
 #
 class apache::mod::jk (
   # Binding to mod_jk
-  Optional[String] $ip         = undef,
-  Integer          $port       = 80,
-  Boolean          $add_listen = true,
+  Optional[String] $ip                          = undef,
+  Integer          $port                        = 80,
+  Boolean          $add_listen                  = true,
   # Conf file content
-  $workers_file                = undef,
-  $worker_property             = {},
-  $logroot                     = undef,
-  $shm_file                    = 'jk-runtime-status',
-  $shm_size                    = undef,
-  $mount_file                  = undef,
-  $mount_file_reload           = undef,
-  $mount                       = {},
-  $un_mount                    = {},
-  $auto_alias                  = undef,
-  $mount_copy                  = undef,
-  $worker_indicator            = undef,
-  $watchdog_interval           = undef,
-  $log_file                    = 'mod_jk.log',
-  $log_level                   = undef,
-  $log_stamp_format            = undef,
-  $request_log_format          = undef,
-  $extract_ssl                 = undef,
-  $https_indicator             = undef,
-  $sslprotocol_indicator       = undef,
-  $certs_indicator             = undef,
-  $cipher_indicator            = undef,
-  $certchain_prefix            = undef,
-  $session_indicator           = undef,
-  $keysize_indicator           = undef,
-  $local_name_indicator        = undef,
-  $ignore_cl_indicator         = undef,
-  $local_addr_indicator        = undef,
-  $local_port_indicator        = undef,
-  $remote_host_indicator       = undef,
-  $remote_addr_indicator       = undef,
-  $remote_port_indicator       = undef,
-  $remote_user_indicator       = undef,
-  $auth_type_indicator         = undef,
-  $options                     = [],
-  $env_var                     = {},
-  $strip_session               = undef,
+  Optional[String] $workers_file                = undef,
+  Hash $worker_property                         = {},
+  Optional[String] $logroot                     = undef,
+  String $shm_file                              = 'jk-runtime-status',
+  Optional[String] $shm_size                    = undef,
+  Optional[String] $mount_file                  = undef,
+  Optional[String] $mount_file_reload           = undef,
+  Hash $mount                                   = {},
+  Hash $un_mount                                = {},
+  Optional[String] $auto_alias                  = undef,
+  Optional[String] $mount_copy                  = undef,
+  Optional[String] $worker_indicator            = undef,
+  Optional[Integer] $watchdog_interval          = undef,
+  String $log_file                              = 'mod_jk.log',
+  Optional[String] $log_level                   = undef,
+  Optional[String] $log_stamp_format            = undef,
+  Optional[String] $request_log_format          = undef,
+  Optional[String] $extract_ssl                 = undef,
+  Optional[String] $https_indicator             = undef,
+  Optional[String] $sslprotocol_indicator       = undef,
+  Optional[String] $certs_indicator             = undef,
+  Optional[String] $cipher_indicator            = undef,
+  Optional[String] $certchain_prefix            = undef,
+  Optional[String] $session_indicator           = undef,
+  Optional[String] $keysize_indicator           = undef,
+  Optional[String] $local_name_indicator        = undef,
+  Optional[String] $ignore_cl_indicator         = undef,
+  Optional[String] $local_addr_indicator        = undef,
+  Optional[String] $local_port_indicator        = undef,
+  Optional[String] $remote_host_indicator       = undef,
+  Optional[String] $remote_addr_indicator       = undef,
+  Optional[String] $remote_port_indicator       = undef,
+  Optional[String] $remote_user_indicator       = undef,
+  Optional[String] $auth_type_indicator         = undef,
+  Array $options                                = [],
+  Hash $env_var                                 = {},
+  Optional[String] $strip_session               = undef,
   # Location list
   # See comments in template mod/jk.conf.erb
-  $location_list               = [],
+  Array $location_list                          = [],
   # Workers file content
   # See comments in template mod/jk/workers.properties.erb
-  $workers_file_content        = {},
+  Hash $workers_file_content                    = {},
   # Mount file content
   # See comments in template mod/jk/uriworkermap.properties.erb
-  $mount_file_content          = {},
+  Hash $mount_file_content                      = {},
 ) {
   # Provides important variables
   include apache

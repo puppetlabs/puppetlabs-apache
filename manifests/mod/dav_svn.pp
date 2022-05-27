@@ -7,7 +7,7 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_dav_svn.html for additional documentation.
 #
 class apache::mod::dav_svn (
-  $authz_svn_enabled = false,
+  Boolean $authz_svn_enabled = false,
 ) {
   Class['apache::mod::dav'] -> Class['apache::mod::dav_svn']
   include apache

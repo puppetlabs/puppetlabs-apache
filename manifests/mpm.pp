@@ -2,8 +2,8 @@
 #
 # @api private
 define apache::mpm (
-  $lib_path       = $apache::lib_path,
-  $apache_version = $apache::apache_version,
+  String $lib_path                  = $apache::lib_path,
+  Optional[String] $apache_version  = $apache::apache_version,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')

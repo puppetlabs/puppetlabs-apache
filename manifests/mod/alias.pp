@@ -14,18 +14,19 @@
 #   - FreeBSD: /usr/local/www/apache24/icons
 #   - Gentoo: /var/www/icons
 #   - Red Hat: /var/www/icons, except on Apache 2.4, where it's /usr/share/httpd/icons
+#   Set to 'false' to disable the alias
 # 
-# @param icons_path
+# @param icons_prefix
 #   Change the alias for /icons/.
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_alias.html for additional documentation.
 #
 class apache::mod::alias (
-  $apache_version = undef,
-  $icons_options  = 'Indexes MultiViews',
+  Optional[String] $apache_version  = undef,
+  String $icons_options             = 'Indexes MultiViews',
   # set icons_path to false to disable the alias
-  $icons_path     = $apache::params::alias_icons_path,
-  $icons_prefix   = $apache::params::icons_prefix
+  String $icons_path                = $apache::params::alias_icons_path,
+  String $icons_prefix              = $apache::params::icons_prefix
 ) inherits apache::params {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
