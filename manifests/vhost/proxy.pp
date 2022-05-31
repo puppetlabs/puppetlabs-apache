@@ -104,7 +104,7 @@
 #     ],
 #   }
 #
-define apache::vhost::proxy(
+define apache::vhost::proxy (
   String[1] $vhost,
   $priority = undef,
   Integer[0] $order = 170,
