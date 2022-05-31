@@ -106,7 +106,7 @@
 #
 define apache::vhost::proxy (
   String[1] $vhost,
-  $priority = undef,
+  Optional[Variant[Integer,String,Boolean]] $priority = undef,
   Integer[0] $order = 170,
   Optional[Stdlib::Port] $port = undef,
   Optional[String[1]] $proxy_dest = undef,
