@@ -56,7 +56,7 @@
 define apache::vhost::fragment (
   String[1] $vhost,
   Optional[Integer[0]] $port = undef,
-  $priority = undef,
+  Optional[Variant[Integer,String,Boolean]] $priority = undef,
   Optional[String] $content = undef,
   Integer[0] $order = 900,
 ) {
