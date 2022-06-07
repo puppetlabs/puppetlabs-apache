@@ -43,16 +43,16 @@
 # @see https://httpd.apache.org/docs/current/mod/worker.html for additional documentation.
 #
 class apache::mod::worker (
-  $startservers        = '2',
-  $maxclients          = '150',
-  $minsparethreads     = '25',
-  $maxsparethreads     = '75',
-  $threadsperchild     = '25',
-  $maxrequestsperchild = '0',
-  $serverlimit         = '25',
-  $threadlimit         = '64',
-  $listenbacklog       = '511',
-  $apache_version      = undef,
+  Variant[Integer,String] $startservers        = '2',
+  Variant[Integer,String] $maxclients          = '150',
+  Variant[Integer,String] $minsparethreads     = '25',
+  Variant[Integer,String] $maxsparethreads     = '75',
+  Variant[Integer,String] $threadsperchild     = '25',
+  Variant[Integer,String] $maxrequestsperchild = '0',
+  Variant[Integer,String] $serverlimit         = '25',
+  Variant[Integer,String] $threadlimit         = '64',
+  Variant[Integer,String] $listenbacklog       = '511',
+  Optional[String] $apache_version             = undef,
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -93,7 +93,7 @@ class apache::mod::worker (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
         ::apache::mpm { 'worker':
@@ -130,7 +130,7 @@ class apache::mod::worker (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

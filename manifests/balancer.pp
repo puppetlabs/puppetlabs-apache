@@ -43,10 +43,10 @@
 #   apache::balancer { 'puppet00': }
 #
 define apache::balancer (
-  $proxy_set = {},
-  $collect_exported = true,
-  $target = undef,
-  $options = [],
+  Hash $proxy_set = {},
+  Boolean $collect_exported = true,
+  Optional[String] $target = undef,
+  Array $options = [],
 ) {
   include apache::mod::proxy_balancer
 

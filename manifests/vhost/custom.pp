@@ -16,10 +16,10 @@
 #   Specifies whether to validate the configuration file before notifying the Apache service.
 #
 define apache::vhost::custom (
-  $content,
-  $ensure = 'present',
+  String $content,
+  String $ensure                            = 'present',
   Variant[Integer,String,Boolean] $priority = '25',
-  $verify_config = true,
+  Boolean $verify_config                    = true,
 ) {
   include apache
 

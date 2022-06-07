@@ -19,7 +19,7 @@
 #   `apache::vhost` defined type's parameters.
 #
 class apache::vhosts (
-  $vhosts = {},
+  Hash $vhosts = {},
 ) {
   include apache
   create_resources('apache::vhost', $vhosts)

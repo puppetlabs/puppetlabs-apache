@@ -26,6 +26,9 @@
 # @param passenger_allow_encoded_slashes
 #   Toggle whether URLs with encoded slashes (%2f) can be used (by default Apache does not support this).
 #
+# @param passenger_anonymous_telemetry_proxy
+#   Set an intermediate proxy for the Passenger anonymous telemetry reporting.
+#
 # @param passenger_app_env
 #   This option sets, for the current application, the value of the following environment variables:
 #   - RAILS_ENV
@@ -79,6 +82,12 @@
 #
 # @param passenger_default_user
 #   Allows you to specify the user that applications must run as, if user switching fails or is disabled.
+#
+# @param passenger_disable_anonymous_telemetry
+#   Whether or not to disable the Passenger anonymous telemetry reporting.
+#
+# @param passenger_disable_log_prefix
+#   Whether to stop Passenger from prefixing logs when they are written to a log file.
 #
 # @param passenger_disable_security_update_check
 #   Allows disabling the Passenger security update check, a daily check with https://securitycheck.phusionpassenger.com for important
@@ -207,6 +216,9 @@
 # @param passenger_socket_backlog
 #   This option can be raised if Apache manages to overflow the backlog queue.
 #
+# @param passenger_spawn_dir
+#   The directory in which Passenger will record progress during startup
+#
 # @param passenger_spawn_method
 #   Controls whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 #
@@ -224,6 +236,9 @@
 #
 # @param passenger_sticky_sessions_cookie_name
 #   Sets the name of the sticky sessions cookie.
+#
+# @param passenger_sticky_sessions_cookie_attributes
+#   Sets the attributes of the sticky sessions cookie.
 #
 # @param passenger_thread_count
 #   Specifies the number of threads that Passenger should spawn per Ruby application process.
@@ -307,102 +322,102 @@
 # @see https://www.phusionpassenger.com/docs/references/config_reference/apache/ for additional documentation.
 #
 class apache::mod::passenger (
-  $manage_repo                                                                               = true,
-  $mod_id                                                                                    = undef,
-  $mod_lib                                                                                   = undef,
-  $mod_lib_path                                                                              = undef,
-  $mod_package                                                                               = undef,
-  $mod_package_ensure                                                                        = undef,
-  $mod_path                                                                                  = undef,
-  $passenger_allow_encoded_slashes                                                           = undef,
+  Boolean $manage_repo                                                                       = true,
+  Optional[String] $mod_id                                                                   = undef,
+  Optional[String] $mod_lib                                                                  = undef,
+  Optional[String] $mod_lib_path                                                             = undef,
+  Optional[String] $mod_package                                                              = undef,
+  Optional[String] $mod_package_ensure                                                       = undef,
+  Optional[String] $mod_path                                                                 = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_allow_encoded_slashes                  = undef,
   Optional[String] $passenger_anonymous_telemetry_proxy                                      = undef,
-  $passenger_app_env                                                                         = undef,
-  $passenger_app_group_name                                                                  = undef,
-  $passenger_app_root                                                                        = undef,
-  $passenger_app_type                                                                        = undef,
-  $passenger_base_uri                                                                        = undef,
-  $passenger_buffer_response                                                                 = undef,
-  $passenger_buffer_upload                                                                   = undef,
-  $passenger_concurrency_model                                                               = undef,
-  $passenger_conf_file                                                                       = $apache::params::passenger_conf_file,
-  $passenger_conf_package_file                                                               = $apache::params::passenger_conf_package_file,
-  $passenger_data_buffer_dir                                                                 = undef,
-  $passenger_debug_log_file                                                                  = undef,
-  $passenger_debugger                                                                        = undef,
-  $passenger_default_group                                                                   = undef,
-  $passenger_default_ruby                                                                    = $apache::params::passenger_default_ruby,
-  $passenger_default_user                                                                    = undef,
+  Optional[String] $passenger_app_env                                                        = undef,
+  Optional[String] $passenger_app_group_name                                                 = undef,
+  Optional[String] $passenger_app_root                                                       = undef,
+  Optional[String] $passenger_app_type                                                       = undef,
+  Optional[String] $passenger_base_uri                                                       = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_buffer_response                        = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_buffer_upload                          = undef,
+  Optional[String] $passenger_concurrency_model                                              = undef,
+  String $passenger_conf_file                                                                = $apache::params::passenger_conf_file,
+  Optional[String] $passenger_conf_package_file                                              = $apache::params::passenger_conf_package_file,
+  Optional[String] $passenger_data_buffer_dir                                                = undef,
+  Optional[String] $passenger_debug_log_file                                                 = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_debugger                               = undef,
+  Optional[String] $passenger_default_group                                                  = undef,
+  Optional[String] $passenger_default_ruby                                                   = $apache::params::passenger_default_ruby,
+  Optional[String] $passenger_default_user                                                   = undef,
   Optional[Boolean] $passenger_disable_anonymous_telemetry                                   = undef,
-  Optional[Boolean] $passenger_disable_log_prefix                                           = undef,
-  $passenger_disable_security_update_check                                                   = undef,
-  $passenger_enabled                                                                         = undef,
-  $passenger_error_override                                                                  = undef,
-  $passenger_file_descriptor_log_file                                                        = undef,
-  $passenger_fly_with                                                                        = undef,
-  $passenger_force_max_concurrent_requests_per_process                                       = undef,
-  $passenger_friendly_error_pages                                                            = undef,
-  $passenger_group                                                                           = undef,
-  $passenger_high_performance                                                                = undef,
-  $passenger_installed_version                                                               = undef,
-  $passenger_instance_registry_dir                                                           = undef,
-  $passenger_load_shell_envvars                                                              = undef,
+  Optional[Boolean] $passenger_disable_log_prefix                                            = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_disable_security_update_check          = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_enabled                                = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_error_override                         = undef,
+  Optional[String] $passenger_file_descriptor_log_file                                       = undef,
+  Optional[String] $passenger_fly_with                                                       = undef,
+  Optional[Variant[Integer,String]] $passenger_force_max_concurrent_requests_per_process     = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_friendly_error_pages                   = undef,
+  Optional[String] $passenger_group                                                          = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_high_performance                       = undef,
+  Optional[String] $passenger_installed_version                                              = undef,
+  Optional[String] $passenger_instance_registry_dir                                          = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_load_shell_envvars                     = undef,
   Optional[Boolean] $passenger_preload_bundler                                               = undef,
   Optional[Stdlib::Absolutepath] $passenger_log_file                                         = undef,
-  $passenger_log_level                                                                       = undef,
-  $passenger_lve_min_uid                                                                     = undef,
-  $passenger_max_instances                                                                   = undef,
-  $passenger_max_instances_per_app                                                           = undef,
-  $passenger_max_pool_size                                                                   = undef,
-  $passenger_max_preloader_idle_time                                                         = undef,
-  $passenger_max_request_queue_size                                                          = undef,
-  $passenger_max_request_time                                                                = undef,
-  $passenger_max_requests                                                                    = undef,
-  $passenger_memory_limit                                                                    = undef,
-  $passenger_meteor_app_settings                                                             = undef,
-  $passenger_min_instances                                                                   = undef,
-  $passenger_nodejs                                                                          = undef,
-  $passenger_pool_idle_time                                                                  = undef,
+  Optional[Variant[Integer,String]] $passenger_log_level                                     = undef,
+  Optional[Variant[Integer,String]] $passenger_lve_min_uid                                   = undef,
+  Optional[Variant[Integer,String]] $passenger_max_instances                                 = undef,
+  Optional[Variant[Integer,String]] $passenger_max_instances_per_app                         = undef,
+  Optional[Variant[Integer,String]] $passenger_max_pool_size                                 = undef,
+  Optional[Variant[Integer,String]] $passenger_max_preloader_idle_time                       = undef,
+  Optional[Variant[Integer,String]] $passenger_max_request_queue_size                        = undef,
+  Optional[Variant[Integer,String]] $passenger_max_request_time                              = undef,
+  Optional[Variant[Integer,String]] $passenger_max_requests                                  = undef,
+  Optional[Variant[Integer,String]] $passenger_memory_limit                                  = undef,
+  Optional[String] $passenger_meteor_app_settings                                            = undef,
+  Optional[Variant[Integer,String]] $passenger_min_instances                                 = undef,
+  Optional[String] $passenger_nodejs                                                         = undef,
+  Optional[Variant[Integer,String]] $passenger_pool_idle_time                                = undef,
   Optional[Variant[String,Array[String]]] $passenger_pre_start                               = undef,
-  $passenger_python                                                                          = undef,
-  $passenger_resist_deployment_errors                                                        = undef,
-  $passenger_resolve_symlinks_in_document_root                                               = undef,
-  $passenger_response_buffer_high_watermark                                                  = undef,
-  $passenger_restart_dir                                                                     = undef,
-  $passenger_rolling_restarts                                                                = undef,
-  $passenger_root                                                                            = $apache::params::passenger_root,
-  $passenger_ruby                                                                            = $apache::params::passenger_ruby,
-  $passenger_security_update_check_proxy                                                     = undef,
-  $passenger_show_version_in_header                                                          = undef,
-  $passenger_socket_backlog                                                                  = undef,
+  Optional[String] $passenger_python                                                         = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_resist_deployment_errors               = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_resolve_symlinks_in_document_root      = undef,
+  Optional[Variant[Integer,String]] $passenger_response_buffer_high_watermark                = undef,
+  Optional[String] $passenger_restart_dir                                                    = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_rolling_restarts                       = undef,
+  Optional[String] $passenger_root                                                           = $apache::params::passenger_root,
+  Optional[String] $passenger_ruby                                                           = $apache::params::passenger_ruby,
+  Optional[String] $passenger_security_update_check_proxy                                    = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_show_version_in_header                 = undef,
+  Optional[Variant[Integer,String]] $passenger_socket_backlog                                = undef,
   Optional[String] $passenger_spawn_dir                                                      = undef,
   Optional[Enum['smart', 'direct', 'smart-lv2', 'conservative']] $passenger_spawn_method     = undef,
-  $passenger_start_timeout                                                                   = undef,
-  $passenger_startup_file                                                                    = undef,
-  $passenger_stat_throttle_rate                                                              = undef,
-  $passenger_sticky_sessions                                                                 = undef,
-  $passenger_sticky_sessions_cookie_name                                                     = undef,
+  Optional[Variant[Integer,String]] $passenger_start_timeout                                 = undef,
+  Optional[String] $passenger_startup_file                                                   = undef,
+  Optional[Variant[Integer,String]] $passenger_stat_throttle_rate                            = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_sticky_sessions                        = undef,
+  Optional[String] $passenger_sticky_sessions_cookie_name                                    = undef,
   Optional[String] $passenger_sticky_sessions_cookie_attributes                              = undef,
-  $passenger_thread_count                                                                    = undef,
-  $passenger_use_global_queue                                                                = undef,
-  $passenger_user                                                                            = undef,
-  $passenger_user_switching                                                                  = undef,
-  $rack_auto_detect                                                                          = undef,
-  $rack_autodetect                                                                           = undef,
-  $rack_base_uri                                                                             = undef,
-  $rack_env                                                                                  = undef,
-  $rails_allow_mod_rewrite                                                                   = undef,
-  $rails_app_spawner_idle_time                                                               = undef,
-  $rails_auto_detect                                                                         = undef,
-  $rails_autodetect                                                                          = undef,
-  $rails_base_uri                                                                            = undef,
-  $rails_default_user                                                                        = undef,
-  $rails_env                                                                                 = undef,
-  $rails_framework_spawner_idle_time                                                         = undef,
-  $rails_ruby                                                                                = undef,
-  $rails_spawn_method                                                                        = undef,
-  $rails_user_switching                                                                      = undef,
-  $wsgi_auto_detect                                                                          = undef,
-) inherits ::apache::params {
+  Optional[Variant[Integer,String]] $passenger_thread_count                                  = undef,
+  Optional[String] $passenger_use_global_queue                                               = undef,
+  Optional[String] $passenger_user                                                           = undef,
+  Optional[Enum['on', 'off', 'On', 'Off']] $passenger_user_switching                         = undef,
+  Optional[String] $rack_auto_detect                                                         = undef,
+  Optional[String] $rack_autodetect                                                          = undef,
+  Optional[String] $rack_base_uri                                                            = undef,
+  Optional[String] $rack_env                                                                 = undef,
+  Optional[String] $rails_allow_mod_rewrite                                                  = undef,
+  Optional[String] $rails_app_spawner_idle_time                                              = undef,
+  Optional[String] $rails_auto_detect                                                        = undef,
+  Optional[String] $rails_autodetect                                                         = undef,
+  Optional[String] $rails_base_uri                                                           = undef,
+  Optional[String] $rails_default_user                                                       = undef,
+  Optional[String] $rails_env                                                                = undef,
+  Optional[String] $rails_framework_spawner_idle_time                                        = undef,
+  Optional[String] $rails_ruby                                                               = undef,
+  Optional[String] $rails_spawn_method                                                       = undef,
+  Optional[String] $rails_user_switching                                                     = undef,
+  Optional[String] $wsgi_auto_detect                                                         = undef,
+) inherits apache::params {
   include apache
   if $passenger_installed_version {
     if $passenger_allow_encoded_slashes {
@@ -834,7 +849,7 @@ class apache::mod::passenger (
   $_package = $mod_package
   $_package_ensure = $mod_package_ensure
   $_lib = $mod_lib
-  if $::osfamily == 'FreeBSD' {
+  if $facts['os']['family'] == 'FreeBSD' {
     if $mod_lib_path {
       $_lib_path = $mod_lib_path
     } else {
@@ -844,9 +859,9 @@ class apache::mod::passenger (
     $_lib_path = $mod_lib_path
   }
 
-  if $::osfamily == 'RedHat' and $manage_repo {
-    if $::operatingsystem == 'Amazon' {
-      if $::operatingsystemmajrelease == '2' {
+  if $facts['os']['family'] == 'RedHat' and $manage_repo {
+    if $facts['os']['name'] == 'Amazon' {
+      if $facts['os']['release']['major'] == '2' {
         $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/7/$basearch'
       } else {
         $baseurl = 'https://oss-binaries.phusionpassenger.com/yum/passenger/el/6/$basearch'
@@ -869,7 +884,7 @@ class apache::mod::passenger (
     }
   }
 
-  unless ($::operatingsystem == 'SLES') {
+  unless ($facts['os']['name'] == 'SLES') {
     $_id = $mod_id
     $_path = $mod_path
     ::apache::mod { 'passenger':

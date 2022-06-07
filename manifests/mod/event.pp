@@ -47,18 +47,18 @@
 # @see https://httpd.apache.org/docs/current/mod/event.html for additional documentation.
 # @note Unsupported platforms: SLES: all
 class apache::mod::event (
-  $startservers           = '2',
-  $maxclients             = '150',
-  $maxrequestworkers      = undef,
-  $minsparethreads        = '25',
-  $maxsparethreads        = '75',
-  $threadsperchild        = '25',
-  $maxrequestsperchild    = '0',
-  $maxconnectionsperchild = undef,
-  $serverlimit            = '25',
-  $apache_version         = undef,
-  $threadlimit            = '64',
-  $listenbacklog          = '511',
+  Variant[String,Integer,Boolean] $startservers                     = '2',
+  Variant[String,Integer,Boolean] $maxclients                       = '150',
+  Optional[Variant[String,Integer,Boolean]] $maxrequestworkers      = undef,
+  Variant[String,Integer,Boolean] $minsparethreads                  = '25',
+  Variant[String,Integer,Boolean] $maxsparethreads                  = '75',
+  Variant[String,Integer,Boolean] $threadsperchild                  = '25',
+  Variant[String,Integer,Boolean] $maxrequestsperchild              = '0',
+  Optional[Variant[String,Integer,Boolean]] $maxconnectionsperchild = undef,
+  Variant[String,Integer,Boolean] $serverlimit                      = '25',
+  Optional[String] $apache_version                                  = undef,
+  Variant[String,Integer,Boolean]  $threadlimit                     = '64',
+  Variant[String,Integer,Boolean]  $listenbacklog                   = '511',
 ) {
   include apache
 
@@ -99,7 +99,7 @@ class apache::mod::event (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
         apache::mpm { 'event':
@@ -118,7 +118,7 @@ class apache::mod::event (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

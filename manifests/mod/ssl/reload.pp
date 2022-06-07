@@ -2,7 +2,7 @@
 #   Manages the puppet_ssl folder for ssl file copies, which is needed to track changes for reloading service on changes
 #
 # @api private
-class apache::mod::ssl::reload () inherits ::apache::params {
+class apache::mod::ssl::reload () inherits apache::params {
   file { $apache::params::puppet_ssl_dir:
     ensure  => directory,
     purge   => true,

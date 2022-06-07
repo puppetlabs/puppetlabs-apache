@@ -16,10 +16,10 @@
 # @see https://github.com/gnif/mod_rpaf for additional documentation.
 #
 class apache::mod::rpaf (
-  $sethostname = true,
-  $proxy_ips   = ['127.0.0.1'],
-  $header      = 'X-Forwarded-For',
-  $template    = 'apache/mod/rpaf.conf.erb'
+  Variant[Boolean,String] $sethostname  = true,
+  Array[String] $proxy_ips              = ['127.0.0.1'],
+  String $header                        = 'X-Forwarded-For',
+  String $template                      = 'apache/mod/rpaf.conf.erb'
 ) {
   include apache
   ::apache::mod { 'rpaf': }

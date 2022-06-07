@@ -33,14 +33,14 @@
 #   Specifies a path to the module. Do not manually set this parameter without a special reason.
 #
 define apache::mod (
-  $package        = undef,
-  $package_ensure = 'present',
-  $lib            = undef,
-  $lib_path       = $apache::lib_path,
-  $id             = undef,
-  $path           = undef,
-  $loadfile_name  = undef,
-  $loadfiles      = undef,
+  Optional[String] $package       = undef,
+  String $package_ensure          = 'present',
+  Optional[String] $lib           = undef,
+  String $lib_path                = $apache::lib_path,
+  Optional[String] $id            = undef,
+  Optional[String] $path          = undef,
+  Optional[String] $loadfile_name = undef,
+  Optional[Array] $loadfiles      = undef,
 ) {
   if ! defined(Class['apache']) {
     fail('You must include the apache base class before using any apache defined resources')
@@ -84,7 +84,7 @@ define apache::mod (
   if $package {
     $_package = $package
   } elsif has_key($mod_packages, $mod) { # 2.6 compatibility hack
-    if ($apache::apache_version == '2.4' and $::operatingsystem =~ /^[Aa]mazon$/ and $::operatingsystemmajrelease != '2') {
+    if ($apache::apache_version == '2.4' and $facts['os']['name'] =~ /^[Aa]mazon$/ and $facts['os']['release']['major'] != '2') {
       # On amazon linux we need to prefix our package name with mod24 instead of mod to support apache 2.4
       $_package = regsubst($mod_packages[$mod],'^(mod_)?(.*)','mod24_\2')
     } else {
@@ -98,7 +98,7 @@ define apache::mod (
     # httpd.conf with 'LoadModule' directives; here, by proper resource
     # ordering, we ensure that our version of httpd.conf is reverted after
     # the module gets installed.
-    $package_before = $::osfamily ? {
+    $package_before = $facts['os']['family'] ? {
       'freebsd' => [
         File[$_loadfile_name],
         File["${apache::conf_dir}/${apache::params::conf_file}"]
@@ -134,7 +134,7 @@ define apache::mod (
     notify  => Class['apache::service'],
   }
 
-  if $::osfamily == 'Debian' {
+  if $facts['os']['family'] == 'Debian' {
     $enable_dir = $apache::mod_enable_dir
     file { "${_loadfile_name} symlink":
       ensure  => link,
@@ -169,7 +169,7 @@ define apache::mod (
         notify  => Class['apache::service'],
       }
     }
-  } elsif $::osfamily == 'Suse' {
+  } elsif $facts['os']['family'] == 'Suse' {
     $enable_dir = $apache::mod_enable_dir
     file { "${_loadfile_name} symlink":
       ensure  => link,

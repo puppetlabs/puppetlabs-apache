@@ -7,7 +7,7 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_mime_magic.html for additional documentation.
 #
 class apache::mod::mime_magic (
-  $magic_file = undef,
+  Optional[String] $magic_file = undef,
 ) {
   include apache
   $_magic_file = pick($magic_file, "${apache::conf_dir}/magic")

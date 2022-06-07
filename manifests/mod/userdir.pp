@@ -34,16 +34,16 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_userdir.html for additional documentation.
 #
 class apache::mod::userdir (
-  $home = undef,
-  $dir = undef,
-  Optional[String[1]] $userdir = undef,
-  $disable_root = true,
-  $apache_version = undef,
-  $path = '/home/*/public_html',
-  $overrides = ['FileInfo', 'AuthConfig', 'Limit', 'Indexes'],
-  $options = ['MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec'],
-  $unmanaged_path = false,
-  $custom_fragment = undef,
+  Optional[String] $home            = undef,
+  Optional[String] $dir             = undef,
+  Optional[String[1]] $userdir      = undef,
+  Boolean $disable_root             = true,
+  Optional[String] $apache_version  = undef,
+  String $path                      = '/home/*/public_html',
+  Array[String] $overrides          = ['FileInfo', 'AuthConfig', 'Limit', 'Indexes'],
+  Array[String] $options            = ['MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec'],
+  Boolean $unmanaged_path           = false,
+  Optional[String] $custom_fragment = undef,
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

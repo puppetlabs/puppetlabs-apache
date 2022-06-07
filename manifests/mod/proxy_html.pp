@@ -5,29 +5,29 @@
 #
 class apache::mod::proxy_html {
   include apache
-  Class['::apache::mod::proxy'] -> Class['::apache::mod::proxy_html']
-  Class['::apache::mod::proxy_http'] -> Class['::apache::mod::proxy_html']
+  Class['apache::mod::proxy'] -> Class['apache::mod::proxy_html']
+  Class['apache::mod::proxy_http'] -> Class['apache::mod::proxy_html']
 
   # Add libxml2
-  case $::osfamily {
+  case $facts['os']['family'] {
     /RedHat|FreeBSD|Gentoo|Suse/: {
       ::apache::mod { 'xml2enc': }
       $loadfiles = undef
     }
     'Debian': {
-      $gnu_path = $::hardwaremodel ? {
+      $gnu_path = $facts['os']['hardware'] ? {
         'i686'  => 'i386',
-        default => $::hardwaremodel,
+        default => $facts['os']['hardware'],
       }
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Ubuntu': {
-          $loadfiles = $facts['operatingsystemmajrelease'] ? {
+          $loadfiles = $facts['os']['release']['major'] ? {
             '10'    => ['/usr/lib/libxml2.so.2'],
             default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
           }
         }
         'Debian': {
-          $loadfiles = $facts['operatingsystemmajrelease'] ? {
+          $loadfiles = $facts['os']['release']['major'] ? {
             '6'     => ['/usr/lib/libxml2.so.2'],
             default => ["/usr/lib/${gnu_path}-linux-gnu/libxml2.so.2"],
           }

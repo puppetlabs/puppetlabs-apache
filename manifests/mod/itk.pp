@@ -30,14 +30,14 @@
 # @see http://mpm-itk.sesse.net for additional documentation.
 # @note Unsupported platforms: CentOS: 8; RedHat: 8; SLES: all
 class apache::mod::itk (
-  $startservers        = '8',
-  $minspareservers     = '5',
-  $maxspareservers     = '20',
-  $serverlimit         = '256',
-  $maxclients          = '256',
-  $maxrequestsperchild = '4000',
-  $enablecapabilities  = undef,
-  $apache_version      = undef,
+  Variant[String,Integer] $startservers                 = '8',
+  Variant[String,Integer] $minspareservers              = '5',
+  Variant[String,Integer] $maxspareservers              = '20',
+  Variant[String,Integer] $serverlimit                  = '256',
+  Variant[String,Integer] $maxclients                   = '256',
+  Variant[String,Integer] $maxrequestsperchild          = '4000',
+  Optional[Variant[Boolean,String]] $enablecapabilities = undef,
+  Optional[String] $apache_version                      = undef,
 ) {
   include apache
 
@@ -55,7 +55,7 @@ class apache::mod::itk (
     }
   } else {
     # prefork is a requirement for itk in 2.4; except on FreeBSD and Gentoo, which are special
-    if $::osfamily =~ /^(FreeBSD|Gentoo)/ {
+    if $facts['os']['family'] =~ /^(FreeBSD|Gentoo)/ {
       if defined(Class['apache::mod::prefork']) {
         fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
       }
@@ -90,7 +90,7 @@ class apache::mod::itk (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       package { 'httpd-itk':
         ensure => present,
@@ -122,7 +122,7 @@ class apache::mod::itk (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

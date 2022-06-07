@@ -25,8 +25,11 @@
 #   Whether to validate the presented certificate. This has been deprecated and
 #   removed from Version 1.1-RC1 onward.
 # 
-# @param cas_validatedepth
+# @param cas_validate_depth
 #   The maximum depth for chained certificate validation.
+#
+# @param cas_certificate_path
+#   The path leading to the certificate
 # 
 # @param cas_proxy_validate_url
 #   The URL to use when performing a proxy validation.
@@ -84,30 +87,30 @@
 class apache::mod::auth_cas (
   String $cas_login_url,
   String $cas_validate_url,
-  String $cas_cookie_path    = $apache::params::cas_cookie_path,
-  $cas_cookie_path_mode      = '0750',
-  $cas_version               = 2,
-  $cas_debug                 = 'Off',
-  $cas_validate_server       = undef,
-  $cas_validate_depth        = undef,
-  $cas_certificate_path      = undef,
-  $cas_proxy_validate_url    = undef,
-  $cas_root_proxied_as       = undef,
-  $cas_cookie_entropy        = undef,
-  $cas_timeout               = undef,
-  $cas_idle_timeout          = undef,
-  $cas_cache_clean_interval  = undef,
-  $cas_cookie_domain         = undef,
-  $cas_cookie_http_only      = undef,
-  $cas_authoritative         = undef,
-  $cas_validate_saml         = undef,
-  $cas_sso_enabled           = undef,
-  $cas_attribute_prefix      = undef,
-  $cas_attribute_delimiter   = undef,
-  $cas_scrub_request_headers = undef,
-  $suppress_warning          = false,
-) inherits ::apache::params {
-  if $::osfamily == 'RedHat' and ! $suppress_warning {
+  String $cas_cookie_path                     = $apache::params::cas_cookie_path,
+  String $cas_cookie_path_mode                = '0750',
+  Integer $cas_version                        = 2,
+  String $cas_debug                           = 'Off',
+  Optional[String] $cas_validate_server       = undef,
+  Optional[String] $cas_validate_depth        = undef,
+  Optional[String] $cas_certificate_path      = undef,
+  Optional[String] $cas_proxy_validate_url    = undef,
+  Optional[String] $cas_root_proxied_as       = undef,
+  Optional[String] $cas_cookie_entropy        = undef,
+  Optional[String] $cas_timeout               = undef,
+  Optional[String] $cas_idle_timeout          = undef,
+  Optional[String] $cas_cache_clean_interval  = undef,
+  Optional[String] $cas_cookie_domain         = undef,
+  Optional[String] $cas_cookie_http_only      = undef,
+  Optional[String] $cas_authoritative         = undef,
+  Optional[String] $cas_validate_saml         = undef,
+  Optional[String] $cas_sso_enabled           = undef,
+  Optional[String] $cas_attribute_prefix      = undef,
+  Optional[String] $cas_attribute_delimiter   = undef,
+  Optional[String] $cas_scrub_request_headers = undef,
+  Boolean $suppress_warning                   = false,
+) inherits apache::params {
+  if $facts['os']['family'] == 'RedHat' and ! $suppress_warning {
     warning('RedHat distributions do not have Apache mod_auth_cas in their default package repositories.')
   }
 

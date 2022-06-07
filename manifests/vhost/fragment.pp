@@ -14,6 +14,9 @@
 # @param order
 #   The order to insert the fragment at
 #
+# @param port
+#   The port to use
+#
 # @example With a vhost without priority
 #   include apache
 #   apache::vhost { 'myvhost':
@@ -55,10 +58,10 @@
 #
 define apache::vhost::fragment (
   String[1] $vhost,
-  Optional[Integer[0]] $port = undef,
+  Optional[Integer[0]] $port                          = undef,
   Optional[Variant[Integer,String,Boolean]] $priority = undef,
-  Optional[String] $content = undef,
-  Integer[0] $order = 900,
+  Optional[String] $content                           = undef,
+  Integer[0] $order                                   = 900,
 ) {
   # This copies the logic from apache::vhost
   if $priority {

@@ -60,13 +60,19 @@ end
 shared_context 'Fedora 28' do
   let :facts do
     {
-      id: 'root',
       kernel: 'Linux',
-      osfamily: 'RedHat',
-      operatingsystem: 'Fedora',
-      operatingsystemrelease: '28',
-      operatingsystemmajrelease: '28',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'Fedora',
+        family: 'Redhat',
+        release: {
+          major: '28',
+          full: '28',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -74,12 +80,18 @@ end
 shared_context 'FreeBSD 9' do
   let :facts do
     {
-      osfamily: 'FreeBSD',
-      operatingsystemrelease: '9',
-      operatingsystem: 'FreeBSD',
-      id: 'root',
       kernel: 'FreeBSD',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'FreeBSD',
+        family: 'FreeBSD',
+        release: {
+          full: '9',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -87,12 +99,18 @@ end
 shared_context 'FreeBSD 10' do
   let :facts do
     {
-      id: 'root',
       kernel: 'FreeBSD',
-      osfamily: 'FreeBSD',
-      operatingsystem: 'FreeBSD',
-      operatingsystemrelease: '10',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'FreeBSD',
+        family: 'FreeBSD',
+        release: {
+          full: '10',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -100,13 +118,19 @@ end
 shared_context 'Gentoo' do
   let :facts do
     {
-      id: 'root',
       kernel: 'Linux',
-      osfamily: 'Gentoo',
-      operatingsystem: 'Gentoo',
-      operatingsystemrelease: '2.7',
-      operatingsystemmajrelease: '2.7',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
+      os: {
+        name: 'Gentoo',
+        family: 'Gentoo',
+        release: {
+          major: '2.7',
+          full: '2.7',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
@@ -114,8 +138,12 @@ end
 shared_context 'Darwin' do
   let :facts do
     {
-      osfamily: 'Darwin',
-      operatingsystemrelease: '13.1.0',
+      os: {
+        family: 'Darwin',
+        release: {
+          full: '13.1.0',
+        },
+      },
     }
   end
 end
@@ -123,16 +151,58 @@ end
 shared_context 'Unsupported OS' do
   let :facts do
     {
-      osfamily: 'Magic',
-      operatingsystemrelease: '0',
-      operatingsystem: 'Magic',
-      id: 'root',
       kernel: 'Linux',
       path: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      os: {
+        name: 'Magic',
+        family: 'Magic',
+        release: {
+          full: '0',
+        },
+      },
+      identity: {
+        uid: 'root',
+      },
     }
   end
 end
 
 shared_context 'SLES 12' do
   let(:facts) { on_supported_os['sles-12-x86_64'] }
+end
+
+# Override facts
+# Taken from: https://github.com/voxpupuli/voxpupuli-test/blob/master/lib/voxpupuli/test/facts.rb
+#
+# This doesn't use deep_merge because that's highly unpredictable. It can merge
+# nested hashes in place, modifying the original. It's also unable to override
+# true to false.
+#
+# A deep copy is obtained by using Marshal so it can be modified in place. Then
+# it recursively overrides values. If the result is a hash, it's recursed into.
+#
+# A typical example:
+#
+# let(:facts) do
+#   override_facts(super(), os: {'selinux' => {'enabled' => false}})
+# end
+def override_facts(base_facts, **overrides)
+  facts = Marshal.load(Marshal.dump(base_facts))
+  apply_overrides!(facts, overrides, false)
+  facts
+end
+
+# A private helper to override_facts
+def apply_overrides!(facts, overrides, enforce_strings)
+  overrides.each do |key, value|
+    # Nested facts are strings
+    key = key.to_s if enforce_strings
+
+    if value.is_a?(Hash)
+      facts[key] = {} unless facts.key?(key)
+      apply_overrides!(facts[key], value, true)
+    else
+      facts[key] = value
+    end
+  end
 end

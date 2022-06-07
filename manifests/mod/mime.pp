@@ -13,10 +13,10 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_mime.html for additional documentation.
 #
 class apache::mod::mime (
-  $mime_support_package = $apache::params::mime_support_package,
-  $mime_types_config    = $apache::params::mime_types_config,
-  $mime_types_additional = undef,
-) inherits ::apache::params {
+  String $mime_support_package          = $apache::params::mime_support_package,
+  String $mime_types_config             = $apache::params::mime_types_config,
+  Optional[Hash] $mime_types_additional = undef,
+) inherits apache::params {
   include apache
   $_mime_types_additional = pick($mime_types_additional, $apache::mime_types_additional)
   apache::mod { 'mime': }

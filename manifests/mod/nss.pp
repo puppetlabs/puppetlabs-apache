@@ -4,7 +4,7 @@
 # @param transfer_log
 #   Path to `access.log`.
 #
-# @param error_Log
+# @param error_log
 #   Path to `error.log`
 #
 # @param passwd_file
@@ -16,10 +16,10 @@
 # @see https://pagure.io/mod_nss for additional documentation.
 #
 class apache::mod::nss (
-  $transfer_log = "${apache::params::logroot}/access.log",
-  $error_log    = "${apache::params::logroot}/error.log",
-  $passwd_file  = undef,
-  $port     = 8443,
+  String $transfer_log          = "${apache::params::logroot}/access.log",
+  String $error_log             = "${apache::params::logroot}/error.log",
+  Optional[String] $passwd_file = undef,
+  Integer $port                 = 8443,
 ) {
   include apache
   include apache::mod::mime
