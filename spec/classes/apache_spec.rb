@@ -629,21 +629,10 @@ describe 'apache', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups Double\n} }
     end
 
-    context 'on Fedora 21' do
-      include_examples 'Fedora 21'
+    context 'on Fedora 28' do
+      include_examples 'Fedora 28'
 
       it { is_expected.to contain_class('apache').with_apache_version('2.4') }
-    end
-    context 'on Fedora Rawhide' do
-      include_examples 'Fedora Rawhide'
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.4') }
-    end
-    # kinda obsolete
-    context 'on Fedora 17' do
-      include_examples 'Fedora 17'
-
-      it { is_expected.to contain_class('apache').with_apache_version('2.2') }
     end
   end
   context 'on a FreeBSD OS' do

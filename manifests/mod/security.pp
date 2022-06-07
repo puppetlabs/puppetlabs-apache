@@ -12,7 +12,11 @@
 # 
 # @param activated_rules
 #   An array of rules from the modsec_crs_path or absolute to activate via symlinks.
+#
+# @param custom_rules
 # 
+# @param custom_rules_set
+#
 # @param modsec_dir
 #   Defines the path where Puppet installs the modsec configuration and activated rules links.
 # 
@@ -53,9 +57,6 @@
 # @param secdefaultaction
 #   Defines the default list of actions, which will be inherited by the rules in the same configuration context.
 # 
-# @param anomaly_score_blocking
-#   Activates or deactivates the Collaborative Detection Blocking of the OWASP ModSecurity Core Rule Set.
-# 
 # @param inbound_anomaly_threshold
 #   Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 # 
@@ -93,38 +94,37 @@
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
 #
 class apache::mod::security (
-  $logroot                    = $apache::params::logroot,
-  $version                     = $apache::params::modsec_version,
-  $crs_package                 = $apache::params::modsec_crs_package,
-  $activated_rules             = $apache::params::modsec_default_rules,
-  $custom_rules                = $apache::params::modsec_custom_rules,
-  $custom_rules_set            = $apache::params::modsec_custom_rules_set,
-  $modsec_dir                  = $apache::params::modsec_dir,
-  $modsec_secruleengine        = $apache::params::modsec_secruleengine,
-  $audit_log_relevant_status   = '^(?:5|4(?!04))',
-  $audit_log_parts             = $apache::params::modsec_audit_log_parts,
-  $audit_log_type              = $apache::params::modsec_audit_log_type,
-  $audit_log_storage_dir       = undef,
-  $secpcrematchlimit           = $apache::params::secpcrematchlimit,
-  $secpcrematchlimitrecursion  = $apache::params::secpcrematchlimitrecursion,
-  $allowed_methods             = 'GET HEAD POST OPTIONS',
-  $content_types               = 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf',
-  $restricted_extensions       = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
-  $restricted_headers          = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
-  $secdefaultaction            = 'deny',
-  $anomaly_score_blocking      = 'off',
-  $inbound_anomaly_threshold   = '5',
-  $outbound_anomaly_threshold  = '4',
-  $critical_anomaly_score      = '5',
-  $error_anomaly_score         = '4',
-  $warning_anomaly_score       = '3',
-  $notice_anomaly_score        = '2',
-  $secrequestmaxnumargs        = '255',
-  $secrequestbodylimit         = '13107200',
-  $secrequestbodynofileslimit  = '131072',
-  $secrequestbodyinmemorylimit = '131072',
-  $manage_security_crs         = true,
-) inherits ::apache::params {
+  String $logroot                                       = $apache::params::logroot,
+  Integer $version                                      = $apache::params::modsec_version,
+  Optional[String] $crs_package                         = $apache::params::modsec_crs_package,
+  Array[String] $activated_rules                        = $apache::params::modsec_default_rules,
+  Boolean $custom_rules                                 = $apache::params::modsec_custom_rules,
+  Optional[Array[String]] $custom_rules_set             = $apache::params::modsec_custom_rules_set,
+  String $modsec_dir                                    = $apache::params::modsec_dir,
+  String $modsec_secruleengine                          = $apache::params::modsec_secruleengine,
+  String $audit_log_relevant_status                     = '^(?:5|4(?!04))',
+  String $audit_log_parts                               = $apache::params::modsec_audit_log_parts,
+  String $audit_log_type                                = $apache::params::modsec_audit_log_type,
+  Optional[String] $audit_log_storage_dir               = undef,
+  Integer $secpcrematchlimit                            = $apache::params::secpcrematchlimit,
+  Integer $secpcrematchlimitrecursion                   = $apache::params::secpcrematchlimitrecursion,
+  String $allowed_methods                               = 'GET HEAD POST OPTIONS',
+  String $content_types                                 = 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf',
+  String $restricted_extensions                         = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
+  String $restricted_headers                            = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
+  String $secdefaultaction                              = 'deny',
+  Variant[String,Integer] $inbound_anomaly_threshold    = '5',
+  Variant[String,Integer] $outbound_anomaly_threshold   = '4',
+  Variant[String,Integer] $critical_anomaly_score       = '5',
+  Variant[String,Integer] $error_anomaly_score          = '4',
+  Variant[String,Integer] $warning_anomaly_score        = '3',
+  Variant[String,Integer] $notice_anomaly_score         = '2',
+  Variant[String,Integer] $secrequestmaxnumargs         = '255',
+  Variant[String,Integer] $secrequestbodylimit          = '13107200',
+  Variant[String,Integer] $secrequestbodynofileslimit   = '131072',
+  Variant[String,Integer] $secrequestbodyinmemorylimit  = '131072',
+  Boolean $manage_security_crs                          = true,
+) inherits apache::params {
   include apache
 
   $_secdefaultaction = $secdefaultaction ? {
@@ -132,11 +132,11 @@ class apache::mod::security (
     default => "${secdefaultaction},log",
   }
 
-  if $::osfamily == 'FreeBSD' {
+  if $facts['os']['family'] == 'FreeBSD' {
     fail('FreeBSD is not currently supported')
   }
 
-  if ($::osfamily == 'Suse' and versioncmp($::operatingsystemrelease, '11') < 0) {
+  if ($facts['os']['family'] == 'Suse' and versioncmp($facts['os']['release']['major'], '11') < 0) {
     fail('SLES 10 is not currently supported.')
   }
 
@@ -220,7 +220,7 @@ class apache::mod::security (
 
   if $custom_rules {
     # Template to add custom rule and included in security configuration
-    file {"${modsec_dir}/custom_rules":
+    file { "${modsec_dir}/custom_rules":
       ensure  => directory,
       owner   => $apache::params::user,
       group   => $apache::params::group,
@@ -248,7 +248,6 @@ class apache::mod::security (
     # - $notice_anomaly_score
     # - $inbound_anomaly_threshold
     # - $outbound_anomaly_threshold
-    # - $anomaly_score_blocking
     # - $allowed_methods
     # - $content_types
     # - $restricted_extensions
@@ -261,8 +260,7 @@ class apache::mod::security (
       notify  => Class['apache::service'],
     }
 
-    # Debian 9 has a different rule setup
-    unless $::operatingsystem == 'SLES' or ($::operatingsystem == 'Debian' and versioncmp($::operatingsystemrelease, '9') >= 0) or ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '18.04') >= 0) {
+    unless $facts['os']['name'] == 'SLES' or $facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu' {
       apache::security::rule_link { $activated_rules: }
     }
   }

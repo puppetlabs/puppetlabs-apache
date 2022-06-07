@@ -34,16 +34,16 @@
 # @see https://httpd.apache.org/docs/current/mod/prefork.html for additional documentation.
 #
 class apache::mod::prefork (
-  $startservers           = '8',
-  $minspareservers        = '5',
-  $maxspareservers        = '20',
-  $serverlimit            = '256',
-  $maxclients             = '256',
-  $maxrequestworkers      = undef,
-  $maxrequestsperchild    = '4000',
-  $maxconnectionsperchild = undef,
-  $apache_version         = undef,
-  $listenbacklog          = '511'
+  Variant[Integer,String] $startservers                     = '8',
+  Variant[Integer,String] $minspareservers                  = '5',
+  Variant[Integer,String] $maxspareservers                  = '20',
+  Variant[Integer,String] $serverlimit                      = '256',
+  Variant[Integer,String] $maxclients                       = '256',
+  Optional[Variant[Integer,String]] $maxrequestworkers      = undef,
+  Variant[Integer,String] $maxrequestsperchild              = '4000',
+  Optional[Variant[Integer,String]] $maxconnectionsperchild = undef,
+  Optional[String] $apache_version                          = undef,
+  Variant[String,Integer] $listenbacklog                    = '511'
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
@@ -93,7 +93,7 @@ class apache::mod::prefork (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       if versioncmp($_apache_version, '2.4') >= 0 {
         ::apache::mpm { 'prefork':
@@ -128,7 +128,7 @@ class apache::mod::prefork (
       }
     }
     default: {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
   }
 }

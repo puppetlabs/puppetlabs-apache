@@ -210,6 +210,20 @@ describe 'apache::vhost', type: :define do
                   ],
                 },
                 {
+                  'path'       => '^/proxy',
+                  'provider'   => 'locationmatch',
+                  'proxy_pass_match' => [
+                    {
+                      'url'             => 'http://backend-b/',
+                      'keywords'        => ['noquery', 'interpolate'],
+                      'params' => {
+                        'retry'   => '0',
+                        'timeout' => '5',
+                      },
+                    },
+                  ],
+                },
+                {
                   'path'                                                => '/var/www/node-app/public',
                   'passenger_enabled'                                   => true,
                   'passenger_base_uri'                                  => '/app',
@@ -225,6 +239,7 @@ describe 'apache::vhost', type: :define do
                   'passenger_startup_file'                              => 'start.js',
                   'passenger_restart_dir'                               => 'temp',
                   'passenger_load_shell_envvars'                        => false,
+                  'passenger_preload_bundler'                           => false,
                   'passenger_rolling_restarts'                          => false,
                   'passenger_resist_deployment_errors'                  => false,
                   'passenger_user'                                      => 'nodeuser',
@@ -468,6 +483,7 @@ describe 'apache::vhost', type: :define do
               'passenger_restart_dir'                 => 'tmp',
               'passenger_spawn_method'                => 'direct',
               'passenger_load_shell_envvars'          => false,
+              'passenger_preload_bundler'             => false,
               'passenger_rolling_restarts'            => false,
               'passenger_resist_deployment_errors'    => true,
               'passenger_user'                        => 'sandbox',
@@ -525,6 +541,7 @@ describe 'apache::vhost', type: :define do
                                                  'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
                                                  'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               'mdomain'                     => 'example.com example.net auto',
+              'userdir'                     => 'disabled',
             }
           end
 
@@ -723,6 +740,11 @@ describe 'apache::vhost', type: :define do
           }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$},
             )
           }
@@ -849,6 +871,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
               content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
             )
           }
           it {
@@ -1501,6 +1528,11 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
               content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
+            )
+          }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
+              content: %r{^\s+PassengerPreloadBundler\sOff$},
             )
           }
           it {
@@ -2672,6 +2704,20 @@ describe 'apache::vhost', type: :define do
               content: %r{^MDomain rspec.example.com$},
             )
           }
+        end
+
+        context 'userdir' do
+          let :params do
+            default_params.merge(
+              'userdir' => [
+                'disabled',
+                'enabled bob',
+              ],
+            )
+
+            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UserDir disabled$}) }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UUserDir enabled bob$}) }
+          end
         end
       end
     end

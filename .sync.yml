@@ -35,3 +35,6 @@ Rakefile:
 .travis.yml:
   delete: true
 changelog_since_tag: "3.2.0"
+Rakefile:
+  extra_disabled_lint_checks:
+    - anchor_resource

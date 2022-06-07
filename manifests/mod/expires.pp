@@ -15,9 +15,9 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_expires.html for additional documentation.
 #
 class apache::mod::expires (
-  $expires_active  = true,
-  $expires_default = undef,
-  $expires_by_type = undef,
+  Boolean $expires_active                 = true,
+  Optional[String] $expires_default       = undef,
+  Optional[Array[Hash]] $expires_by_type  = undef,
 ) {
   include apache
   ::apache::mod { 'expires': }

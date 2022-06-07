@@ -10,14 +10,14 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_deflate.html for additional documentation.
 #
 class apache::mod::deflate (
-  $types = [
+  Array[String] $types = [
     'text/html text/plain text/xml',
     'text/css',
     'application/x-javascript application/javascript application/ecmascript',
     'application/rss+xml',
     'application/json',
   ],
-  $notes = {
+  Hash $notes = {
     'Input'  => 'instream',
     'Output' => 'outstream',
     'Ratio'  => 'ratio',

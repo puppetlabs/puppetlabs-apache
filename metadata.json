@@ -65,7 +65,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04",
         "18.04",
         "20.04"
       ]
@@ -90,7 +89,7 @@
     }
   ],
   "description": "Module for Apache configuration",
-  "pdk-version": "2.1.0",
+  "pdk-version": "2.4.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates.git#main",
-  "template-ref": "heads/main-0-g03daa92"
+  "template-ref": "2.5.0-0-g369d483"
 }

@@ -48,19 +48,13 @@ RSpec.configure do |c|
         ensure   => 'latest',
       }
     }
-    # needed for ss, for serverspec checks
-    if $::operatingsystem == 'Ubuntu' and $::operatingsystemmajrelease !~ /14.04|16.04/ {
-      package { 'iproute2':
-        ensure   => 'latest',
-      }
-    }
     if $::osfamily == 'RedHat' {
       if $::operatingsystemmajrelease == '5' or $::operatingsystemmajrelease == '6'{
         class { 'epel':
           epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
           epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
         }
-        } elsif $::operatingsystemmajrelease == '8' {
+      } elsif $::operatingsystemmajrelease == '8' {
           class { 'epel':
                 os_maj_release => "7",
                 epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel7-\\$basearch/RPMS.all",
@@ -152,7 +146,7 @@ def apache_settings_hash
     apache['service_name']     = 'apache24'
     apache['package_name']     = 'apache24'
     apache['error_log']        = 'http-error.log'
-    apache['version']          = '2.2'
+    apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'gentoo'
     apache['httpd_dir']        = '/etc/apache2'

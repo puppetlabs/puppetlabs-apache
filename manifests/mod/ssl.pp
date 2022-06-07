@@ -4,6 +4,9 @@
 # @param ssl_compression
 #   Enable compression on the SSL level.
 #
+# @param ssl_sessiontickets
+#   Enable or disable use of TLS session tickets
+#
 # @param ssl_cryptodevice
 #   Enable use of a cryptographic hardware accelerator.
 #
@@ -52,6 +55,10 @@
 # @param ssl_stapling
 #   Enable stapling of OCSP responses in the TLS handshake.
 #
+# @param stapling_cache
+#   Configures the cache used to store OCSP responses which get included in
+#   the TLS handshake if SSLUseStapling is enabled.
+#
 # @param ssl_stapling_return_errors
 #   Pass stapling related OCSP errors on to client.
 #
@@ -82,35 +89,35 @@
 class apache::mod::ssl (
   Boolean $ssl_compression                                  = false,
   Optional[Boolean] $ssl_sessiontickets                     = undef,
-  $ssl_cryptodevice                                         = 'builtin',
-  $ssl_options                                              = ['StdEnvVars'],
-  $ssl_openssl_conf_cmd                                     = undef,
+  String $ssl_cryptodevice                                  = 'builtin',
+  Array[String] $ssl_options                                = ['StdEnvVars'],
+  Optional[String] $ssl_openssl_conf_cmd                    = undef,
   Optional[String] $ssl_cert                                = undef,
   Optional[String] $ssl_key                                 = undef,
-  $ssl_ca                                                   = undef,
-  $ssl_cipher                                               = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
+  Optional[String] $ssl_ca                                  = undef,
+  String $ssl_cipher                                        = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES',
   Variant[Boolean, Enum['on', 'off']] $ssl_honorcipherorder = true,
-  $ssl_protocol                                             = $apache::params::ssl_protocol,
+  Array[String] $ssl_protocol                               = $apache::params::ssl_protocol,
   Array $ssl_proxy_protocol                                 = [],
-  $ssl_pass_phrase_dialog                                   = 'builtin',
-  $ssl_random_seed_bytes                                    = '512',
+  String $ssl_pass_phrase_dialog                            = 'builtin',
+  Variant[Integer,String] $ssl_random_seed_bytes            = '512',
   String $ssl_sessioncache                                  = $apache::params::ssl_sessioncache,
-  $ssl_sessioncachetimeout                                  = '300',
+  Variant[Integer,String] $ssl_sessioncachetimeout          = '300',
   Boolean $ssl_stapling                                     = false,
   Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
-  $ssl_mutex                                                = undef,
+  Optional[String] $ssl_mutex                               = undef,
   Boolean $ssl_reload_on_change                             = false,
-  $apache_version                                           = undef,
-  $package_name                                             = undef,
-) inherits ::apache::params {
+  Optional[String] $apache_version                          = undef,
+  Optional[String] $package_name                            = undef,
+) inherits apache::params {
   include apache
   include apache::mod::mime
   $_apache_version = pick($apache_version, $apache::apache_version)
   if $ssl_mutex {
     $_ssl_mutex = $ssl_mutex
   } else {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'debian': {
         if versioncmp($_apache_version, '2.4') >= 0 {
           $_ssl_mutex = 'default'
@@ -131,7 +138,7 @@ class apache::mod::ssl (
         $_ssl_mutex = 'default'
       }
       default: {
-        fail("Unsupported osfamily ${::osfamily}, please explicitly pass in \$ssl_mutex")
+        fail("Unsupported osfamily ${$facts['os']['family']}, please explicitly pass in \$ssl_mutex")
       }
     }
   }
@@ -147,7 +154,7 @@ class apache::mod::ssl (
   }
 
   if $stapling_cache =~ Undef {
-    $_stapling_cache = $::osfamily ? {
+    $_stapling_cache = $facts['os']['family'] ? {
       'debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
       'redhat'  => '/run/httpd/ssl_stapling(32768)',
       'freebsd' => '/var/run/ssl_stapling(32768)',
@@ -158,8 +165,8 @@ class apache::mod::ssl (
     $_stapling_cache = $stapling_cache
   }
 
-  if $::osfamily == 'Suse' {
-    if defined(Class['::apache::mod::worker']) {
+  if $facts['os']['family'] == 'Suse' {
+    if defined(Class['apache::mod::worker']) {
       $suse_path = '/usr/lib64/apache2-worker'
     } else {
       $suse_path = '/usr/lib64/apache2-prefork'

@@ -49,17 +49,17 @@
 # @see https://modcluster.io/ for additional documentation.
 #
 class apache::mod::cluster (
-  $allowed_network,
-  $balancer_name,
-  $ip,
-  $version,
-  $enable_mcpm_receive = true,
-  $port = '6666',
-  $keep_alive_timeout = 60,
-  $manager_allowed_network = '127.0.0.1',
-  $max_keep_alive_requests = 0,
-  $server_advertise = true,
-  $advertise_frequency = undef,
+  String $allowed_network,
+  String $balancer_name,
+  String $ip,
+  String $version,
+  Boolean $enable_mcpm_receive          = true,
+  String $port                          = '6666',
+  Integer $keep_alive_timeout           = 60,
+  String $manager_allowed_network       = '127.0.0.1',
+  Integer $max_keep_alive_requests      = 0,
+  Boolean $server_advertise             = true,
+  Optional[String] $advertise_frequency = undef,
 ) {
   include apache
 

@@ -31,7 +31,7 @@
 # @param h2_push_diary_size
 #   Sets maximum number of HTTP/2 server pushes that are remembered per HTTP/2 connection.
 # 
-# @param h2_priority
+# @param h2_push_priority
 #   Require HTTP/2 connections to be "modern TLS" only
 # 
 # @param h2_push_resource

@@ -28,15 +28,15 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_authn_dbd.html for additional documentation.
 #
 class apache::mod::authn_dbd (
-  $authn_dbd_params,
-  $authn_dbd_dbdriver    = 'mysql',
-  $authn_dbd_query       = undef,
-  $authn_dbd_min         = '4',
-  $authn_dbd_max         = '20',
-  $authn_dbd_keep        = '8',
-  $authn_dbd_exptime     = '300',
-  $authn_dbd_alias       = undef,
-) inherits ::apache::params {
+  Optional[String] $authn_dbd_params,
+  String $authn_dbd_dbdriver                  = 'mysql',
+  Optional[String] $authn_dbd_query           = undef,
+  Variant[String,Integer] $authn_dbd_min      = '4',
+  Variant[String,Integer]  $authn_dbd_max     = '20',
+  Variant[String,Integer]  $authn_dbd_keep    = '8',
+  Variant[String,Integer]  $authn_dbd_exptime = '300',
+  Optional[String] $authn_dbd_alias           = undef,
+) inherits apache::params {
   include apache
   include apache::mod::dbd
   ::apache::mod { 'authn_dbd': }

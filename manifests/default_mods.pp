@@ -3,26 +3,26 @@
 #
 # @api private
 class apache::default_mods (
-  $all            = true,
-  $mods           = undef,
-  $apache_version = $apache::apache_version,
-  $use_systemd    = $apache::use_systemd,
+  Boolean $all                                  = true,
+  Optional[Variant[Array[String],String]] $mods = undef,
+  String $apache_version                        = $apache::apache_version,
+  Boolean $use_systemd                          = $apache::use_systemd,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include
   # them to make sure it works.
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       ::apache::mod { 'log_config': }
       if versioncmp($apache_version, '2.4') >= 0 {
         # Lets fork it
         # Do not try to load mod_systemd on RHEL/CentOS 6 SCL.
-        if ( !($::osfamily == 'redhat' and versioncmp($::operatingsystemmajrelease, '7') == -1) and !($::operatingsystem == 'Amazon') ) {
+        if ( !($facts['os']['family'] == 'redhat' and versioncmp($facts['os']['release']['major'], '7') == -1) and !($facts['os']['name'] == 'Amazon') ) {
           if ($use_systemd) {
             ::apache::mod { 'systemd': }
           }
         }
-        if ($::operatingsystem == 'Amazon' and $::operatingsystemrelease == '2') {
+        if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['full'] == '2') {
           ::apache::mod { 'systemd': }
         }
         ::apache::mod { 'unixd': }
@@ -37,7 +37,7 @@ class apache::default_mods (
     }
     default: {}
   }
-  case $::osfamily {
+  case $facts['os']['family'] {
     'gentoo': {}
     default: {
       ::apache::mod { 'authz_host': }
@@ -45,7 +45,7 @@ class apache::default_mods (
   }
   # The rest of the modules only get loaded if we want all modules enabled
   if $all {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'debian': {
         include apache::mod::authn_core
         include apache::mod::reqtimeout

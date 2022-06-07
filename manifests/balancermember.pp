@@ -27,7 +27,7 @@
 # @param url
 #   The url used to contact the balancer member server.
 #
-# @param  options
+# @param options
 #   Specifies an array of [options](https://httpd.apache.org/docs/current/mod/mod_proxy.html#balancermember) 
 #   after the URL, and accepts any key-value pairs available to `ProxyPass`.
 #
@@ -39,9 +39,9 @@
 #   }
 #
 define apache::balancermember (
-  $balancer_cluster,
-  $url = "http://${::fqdn}/",
-  $options = [],
+  String $balancer_cluster,
+  String $url = "http://${$facts['networking']['fqdn']}/",
+  Array $options = [],
 ) {
   concat::fragment { "BalancerMember ${name}":
     target  => "apache_balancer_${balancer_cluster}",

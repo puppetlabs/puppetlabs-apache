@@ -24,8 +24,7 @@ describe 'apache::mod::php class', if: mod_supported_on_platform?('apache::mod::
       apply_manifest(pp, catch_failures: true)
     end
 
-    if (os[:family] == 'ubuntu' && os[:release] == '16.04') ||
-       (os[:family] == 'debian' && os[:release] =~ %r{^9\.})
+    if os[:family] == 'debian' && os[:release] =~ %r{^9\.}
       describe file("#{apache_hash['mod_dir']}/php7.0.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
@@ -45,7 +44,7 @@ describe 'apache::mod::php class', if: mod_supported_on_platform?('apache::mod::
       describe file("#{apache_hash['mod_dir']}/php7.4.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
-    elsif os[:family] == 'redhat' && os[:release] =~ %r{^8\.}
+    elsif os[:family] == 'redhat' && os[:release] =~ %r{^8\b}
       describe file("#{apache_hash['mod_dir']}/php7.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end

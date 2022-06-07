@@ -5,13 +5,13 @@
 #
 class apache::mod::dav_fs {
   include apache
-  $dav_lock = $::osfamily ? {
+  $dav_lock = $facts['os']['family'] ? {
     'debian'  => "\${APACHE_LOCK_DIR}/DAVLock",
     'freebsd' => '/usr/local/var/DavLock',
     default   => '/var/lib/dav/lockdb',
   }
 
-  Class['::apache::mod::dav'] -> Class['::apache::mod::dav_fs']
+  Class['apache::mod::dav'] -> Class['apache::mod::dav_fs']
   ::apache::mod { 'dav_fs': }
 
   # Template uses: $dav_lock

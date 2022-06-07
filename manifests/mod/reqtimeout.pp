@@ -7,7 +7,7 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html for additional documentation.
 #
 class apache::mod::reqtimeout (
-  $timeouts = ['header=20-40,minrate=500', 'body=10,minrate=500']
+  Variant[Array[String],String] $timeouts = ['header=20-40,minrate=500', 'body=10,minrate=500']
 ) {
   include apache
   ::apache::mod { 'reqtimeout': }

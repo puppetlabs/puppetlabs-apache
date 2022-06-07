@@ -1,25 +1,43 @@
 # @summary
 #   Installs `mod_peruser`.
 # 
-# @todo
-#   Add docs
+# @param minspareprocessors
+# 
+# @param minprocessors
+#   The minimum amount of processors
+# 
+# @param maxprocessors
+#   The maximum amount of processors
+# 
+# @param maxclients
+#   The maximum amount of clients
+# 
+# @param maxrequestsperchild
+#   The maximum amount of requests per child
+# 
+# @param idletimeout
+# 
+# @param expiretimeout
+# 
+# @param keepalive
+# 
 class apache::mod::peruser (
-  $minspareprocessors = '2',
-  $minprocessors = '2',
-  $maxprocessors = '10',
-  $maxclients = '150',
-  $maxrequestsperchild = '1000',
-  $idletimeout = '120',
-  $expiretimeout = '120',
-  $keepalive = 'Off',
+  Variant[Integer,String] $minspareprocessors   = '2',
+  Variant[Integer,String] $minprocessors        = '2',
+  Variant[Integer,String] $maxprocessors        = '10',
+  Variant[Integer,String] $maxclients           = '150',
+  Variant[Integer,String] $maxrequestsperchild  = '1000',
+  Variant[Integer,String] $idletimeout          = '120',
+  Variant[Integer,String] $expiretimeout        = '120',
+  String $keepalive                             = 'Off',
 ) {
   include apache
-  case $::osfamily {
+  case $facts['os']['family'] {
     'freebsd' : {
-      fail("Unsupported osfamily ${::osfamily}")
+      fail("Unsupported osfamily ${$facts['os']['family']}")
     }
     default: {
-      if $::osfamily == 'gentoo' {
+      if $facts['os']['family'] == 'gentoo' {
         ::portage::makeconf { 'apache2_mpms':
           content => 'peruser',
         }

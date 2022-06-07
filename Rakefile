@@ -42,6 +42,8 @@ def changelog_future_release
 end
 
 PuppetLint.configuration.send('disable_relative')
+PuppetLint.configuration.send('disable_anchor_resource')
+
 
 if Bundler.rubygems.find_name('github_changelog_generator').any?
   GitHubChangelogGenerator::RakeTask.new :changelog do |config|
@@ -49,7 +51,6 @@ if Bundler.rubygems.find_name('github_changelog_generator').any?
     config.user = "#{changelog_user}"
     config.project = "#{changelog_project}"
     config.since_tag = "3.2.0"
-    config.max_issues = 500
     config.future_release = "#{changelog_future_release}"
     config.exclude_labels = ['maintenance']
     config.header = "# Change log\n\nAll notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org)."
@@ -88,4 +89,3 @@ EOM
   end
 end
 
-FastGettext.default_text_domain = 'default-text-domain'

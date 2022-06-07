@@ -49,16 +49,16 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_ldap.html for additional documentation.
 # @note Unsupported platforms: CentOS: 8; RedHat: 8
 class apache::mod::ldap (
-  $apache_version                                  = undef,
-  $package_name                                    = undef,
-  $ldap_trusted_global_cert_file                   = undef,
-  Optional[String] $ldap_trusted_global_cert_type  = 'CA_BASE64',
-  $ldap_shared_cache_size                          = undef,
-  $ldap_cache_entries                              = undef,
-  $ldap_cache_ttl                                  = undef,
-  $ldap_opcache_entries                            = undef,
-  $ldap_opcache_ttl                                = undef,
-  $ldap_trusted_mode                               = undef,
+  Optional[String] $apache_version                 = undef,
+  Optional[String] $package_name                   = undef,
+  Optional[String] $ldap_trusted_global_cert_file  = undef,
+  String $ldap_trusted_global_cert_type            = 'CA_BASE64',
+  Optional[String] $ldap_shared_cache_size         = undef,
+  Optional[String] $ldap_cache_entries             = undef,
+  Optional[String] $ldap_cache_ttl                 = undef,
+  Optional[String] $ldap_opcache_entries           = undef,
+  Optional[String] $ldap_opcache_ttl               = undef,
+  Optional[String] $ldap_trusted_mode              = undef,
   String $ldap_path                                = '/ldap-status',
 ) {
   include apache

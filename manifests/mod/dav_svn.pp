@@ -7,12 +7,12 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_dav_svn.html for additional documentation.
 #
 class apache::mod::dav_svn (
-  $authz_svn_enabled = false,
+  Boolean $authz_svn_enabled = false,
 ) {
-  Class['::apache::mod::dav'] -> Class['::apache::mod::dav_svn']
+  Class['apache::mod::dav'] -> Class['apache::mod::dav_svn']
   include apache
   include apache::mod::dav
-  if($::operatingsystem == 'SLES' and versioncmp($::operatingsystemmajrelease, '12') < 0) {
+  if($facts['os']['name'] == 'SLES' and versioncmp($facts['os']['release']['major'], '12') < 0) {
     package { 'subversion-server':
       ensure   => 'installed',
       provider => 'zypper',
