@@ -47,18 +47,18 @@
 # @see https://httpd.apache.org/docs/current/mod/event.html for additional documentation.
 # @note Unsupported platforms: SLES: all
 class apache::mod::event (
-  Variant[String,Boolean] $startservers                       = '2',
-  Variant[String,Boolean] $maxclients                         = '150',
-  Optional[Variant[String,Boolean]] $maxrequestworkers        = undef,
-  Variant[String,Boolean] $minsparethreads                    = '25',
-  Variant[String,Boolean] $maxsparethreads                    = '75',
-  Variant[String,Boolean] $threadsperchild                    = '25',
-  Variant[String,Boolean] $maxrequestsperchild                = '0',
-  Optional[Variant[String,Boolean]] $maxconnectionsperchild   = undef,
-  Variant[String,Boolean] $serverlimit                        = '25',
-  Optional[String] $apache_version                            = undef,
-  Variant[String,Boolean]  $threadlimit                       = '64',
-  Variant[String,Boolean]  $listenbacklog                     = '511',
+  Variant[String,Integer,Boolean] $startservers                     = '2',
+  Variant[String,Integer,Boolean] $maxclients                       = '150',
+  Optional[Variant[String,Integer,Boolean]] $maxrequestworkers      = undef,
+  Variant[String,Integer,Boolean] $minsparethreads                  = '25',
+  Variant[String,Integer,Boolean] $maxsparethreads                  = '75',
+  Variant[String,Integer,Boolean] $threadsperchild                  = '25',
+  Variant[String,Integer,Boolean] $maxrequestsperchild              = '0',
+  Optional[Variant[String,Integer,Boolean]] $maxconnectionsperchild = undef,
+  Variant[String,Integer,Boolean] $serverlimit                      = '25',
+  Optional[String] $apache_version                                  = undef,
+  Variant[String,Integer,Boolean]  $threadlimit                     = '64',
+  Variant[String,Integer,Boolean]  $listenbacklog                   = '511',
 ) {
   include apache
 

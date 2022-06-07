@@ -30,12 +30,12 @@
 # @see http://mpm-itk.sesse.net for additional documentation.
 # @note Unsupported platforms: CentOS: 8; RedHat: 8; SLES: all
 class apache::mod::itk (
-  String $startservers                                  = '8',
-  String $minspareservers                               = '5',
-  String $maxspareservers                               = '20',
-  String $serverlimit                                   = '256',
-  String $maxclients                                    = '256',
-  String $maxrequestsperchild                           = '4000',
+  Variant[String,Integer] $startservers                 = '8',
+  Variant[String,Integer] $minspareservers              = '5',
+  Variant[String,Integer] $maxspareservers              = '20',
+  Variant[String,Integer] $serverlimit                  = '256',
+  Variant[String,Integer] $maxclients                   = '256',
+  Variant[String,Integer] $maxrequestsperchild          = '4000',
   Optional[Variant[Boolean,String]] $enablecapabilities = undef,
   Optional[String] $apache_version                      = undef,
 ) {

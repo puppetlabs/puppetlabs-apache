@@ -29,13 +29,13 @@
 #
 class apache::mod::authn_dbd (
   Optional[String] $authn_dbd_params,
-  String $authn_dbd_dbdriver        = 'mysql',
-  Optional[String] $authn_dbd_query = undef,
-  String $authn_dbd_min             = '4',
-  String $authn_dbd_max             = '20',
-  String $authn_dbd_keep            = '8',
-  String $authn_dbd_exptime         = '300',
-  Optional[String] $authn_dbd_alias = undef,
+  String $authn_dbd_dbdriver                  = 'mysql',
+  Optional[String] $authn_dbd_query           = undef,
+  Variant[String,Integer] $authn_dbd_min      = '4',
+  Variant[String,Integer]  $authn_dbd_max     = '20',
+  Variant[String,Integer]  $authn_dbd_keep    = '8',
+  Variant[String,Integer]  $authn_dbd_exptime = '300',
+  Optional[String] $authn_dbd_alias           = undef,
 ) inherits apache::params {
   include apache
   include apache::mod::dbd

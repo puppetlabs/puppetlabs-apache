@@ -43,7 +43,7 @@ class apache::mod::prefork (
   Variant[Integer,String] $maxrequestsperchild              = '4000',
   Optional[Variant[Integer,String]] $maxconnectionsperchild = undef,
   Optional[String] $apache_version                          = undef,
-  String $listenbacklog                                     = '511'
+  Variant[String,Integer] $listenbacklog                    = '511'
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

@@ -17,9 +17,9 @@
 #
 define apache::vhost::custom (
   String $content,
-  String $ensure                    = 'present',
-  Variant[Integer,String] $priority = '25',
-  Boolean $verify_config            = true,
+  String $ensure                            = 'present',
+  Variant[Integer,String,Boolean] $priority = '25',
+  Boolean $verify_config                    = true,
 ) {
   include apache
 
