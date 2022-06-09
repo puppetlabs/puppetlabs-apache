@@ -63,12 +63,6 @@ RSpec.configure do |c|
           epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
           epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
         }
-      } elsif $::operatingsystemmajrelease == '8' {
-          class { 'epel':
-                os_maj_release => "7",
-                epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel7-\\$basearch/RPMS.all",
-                epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel7-\\$basearch/RPMS.all",
-          }
       } else {
         class { 'epel': }
       }
