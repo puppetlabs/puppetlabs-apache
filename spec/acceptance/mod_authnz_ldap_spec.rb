@@ -6,12 +6,6 @@ apache_hash = apache_settings_hash
 # We need to restrict this test to RHEL 7.x, 8.x derived OSs as there are too many unique
 # dependency issues to solve on all supported platforms.
 describe 'apache::mod::authnz_ldap', if: mod_supported_on_platform?('apache::mod::authnz_ldap') do
-  before(:each) do
-    if os[:family] == 'redhat'
-      run_shell('yum clean all') # To clear some issues when configuring EPEL / Optional repos
-      run_shell('dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y') if os[:release].to_i == 8
-    end
-  end
   context 'Default mod_authnz_ldap module installation' do
     pp = if run_shell("grep 'Oracle Linux Server' /etc/os-release", expect_failures: true).exit_status == 0
            <<-MANIFEST
@@ -27,9 +21,6 @@ describe 'apache::mod::authnz_ldap', if: mod_supported_on_platform?('apache::mod
       MANIFEST
          else
            <<-MANIFEST
-        package { 'epel-release':
-          ensure => present,
-        }
         class { 'apache': }
         class { 'apache::mod::authnz_ldap': }
         MANIFEST

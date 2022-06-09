@@ -33,10 +33,18 @@ RSpec.configure do |c|
     c.filter_run_excluding ipv6: true
   end
   c.before :suite do
-    # Make sure selinux is disabled so the tests work.
-    LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true) if %r{redhat|oracle}.match?(os[:family])
+    if %r{redhat|oracle}.match?(os[:family])
+      # Make sure selinux is disabled so the tests work.
+      LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true)
 
-    LitmusHelper.instance.run_shell('puppet module install stahnma/epel')
+      # Version 4.0.0 drops EL6 support
+      if os[:release].to_i <= 6
+        LitmusHelper.instance.run_shell('puppet module install --version 3.1.0 puppet/epel')
+      else
+        LitmusHelper.instance.run_shell('puppet module install puppet/epel')
+      end
+    end
+
     pp = <<-PUPPETCODE
     # needed by tests
     package { 'curl':
@@ -49,6 +57,7 @@ RSpec.configure do |c|
       }
     }
     if $::osfamily == 'RedHat' {
+      # EPEL < 7 is EOL and removed from the official mirror network
       if $::operatingsystemmajrelease == '5' or $::operatingsystemmajrelease == '6'{
         class { 'epel':
           epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
