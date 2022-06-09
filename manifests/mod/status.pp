@@ -50,7 +50,7 @@ class apache::mod::status (
   ::apache::mod { 'status': }
 
   # Defaults for "Allow from" or "Require" directives
-  $allow_defaults = ['127.0.0.1','::1']
+  $allow_defaults = ['127.0.0.1', '::1']
   $requires_defaults = 'ip 127.0.0.1 ::1'
 
   # Template uses $allow_from, $extended_status, $_apache_version, $status_path

@@ -13,7 +13,7 @@ unless os[:family] == 'redhat' && os[:release].to_i == 9
           }
           class { 'apache::mod::php': }
           apache::vhost { 'php.example.com':
-            port    => '80',
+            port    => 80,
             docroot => '#{apache_hash['doc_root']}/php',
           }
           host { 'php.example.com': ip => '127.0.0.1', }
@@ -75,7 +75,7 @@ unless os[:family] == 'redhat' && os[:release].to_i == 9
         }
 
           apache::vhost { 'php.example.com':
-            port             => '80',
+            port             => 80,
             docroot          => '#{apache_hash['doc_root']}/php',
             php_values       => { 'include_path' => '.:/usr/share/pear:/usr/bin/php', },
             php_flags        => { 'display_errors' => 'on', },

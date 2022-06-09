@@ -10,14 +10,14 @@ class { 'apache':
 # Non-ssl vhost
 apache::vhost { 'first.example.com non-ssl':
   servername => 'first.example.com',
-  port       => '80',
+  port       => 80,
   docroot    => '/var/www/first',
 }
 
 # SSL vhost at the same domain
 apache::vhost { 'first.example.com ssl':
   servername => 'first.example.com',
-  port       => '443',
+  port       => 443,
   docroot    => '/var/www/first',
   ssl        => true,
 }

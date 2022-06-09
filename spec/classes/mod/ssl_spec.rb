@@ -253,7 +253,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_random_seed_bytes' do
       let :params do
         {
-          ssl_random_seed_bytes: '1024',
+          ssl_random_seed_bytes: 1024,
         }
       end
 

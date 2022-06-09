@@ -16,8 +16,8 @@
 # @see https://github.com/gnif/mod_rpaf for additional documentation.
 #
 class apache::mod::rpaf (
-  Variant[Boolean,String] $sethostname  = true,
-  Array[String] $proxy_ips              = ['127.0.0.1'],
+  Variant[Boolean, String] $sethostname = true,
+  Array[Stdlib::IP::Address] $proxy_ips = ['127.0.0.1'],
   String $header                        = 'X-Forwarded-For',
   String $template                      = 'apache/mod/rpaf.conf.erb'
 ) {

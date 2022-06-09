@@ -135,8 +135,19 @@ describe 'apache::mod::passenger', type: :class do
                   it { is_expected.to contain_file('passenger.conf').with_content(%r{^  #{config_hash[:pass_opt]} "#{valid_value}"$}) }
                 end
               end
-            when 'URI', 'String', 'Integer'
+            when 'URI', 'String'
               valid_config_values = ['some_value_for_you']
+              valid_config_values.each do |valid_value|
+                describe "with #{puppetized_config_option} => #{valid_value}" do
+                  let :params do
+                    { puppetized_config_option.to_sym => valid_value }
+                  end
+
+                  it { is_expected.to contain_file('passenger.conf').with_content(%r{^  #{config_hash[:pass_opt]} #{valid_value}$}) }
+                end
+              end
+            when 'Integer'
+              valid_config_values = [4711]
               valid_config_values.each do |valid_value|
                 describe "with #{puppetized_config_option} => #{valid_value}" do
                   let :params do

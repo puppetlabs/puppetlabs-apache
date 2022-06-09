@@ -67,8 +67,8 @@ describe 'apache::mod::prefork', type: :class do
       let :params do
         {
           apache_version: '2.4',
-          maxrequestworkers: '512',
-          maxconnectionsperchild: '4000',
+          maxrequestworkers: 512,
+          maxconnectionsperchild: 4000,
         }
       end
 

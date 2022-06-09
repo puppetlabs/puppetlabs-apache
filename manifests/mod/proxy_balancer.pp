@@ -16,10 +16,10 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html for additional documentation.
 #
 class apache::mod::proxy_balancer (
-  Boolean $manager                   = false,
-  Stdlib::Absolutepath $manager_path = '/balancer-manager',
-  Array $allow_from                  = ['127.0.0.1','::1'],
-  Optional[String] $apache_version   = $apache::apache_version,
+  Boolean $manager                       = false,
+  Stdlib::Unixpath $manager_path         = '/balancer-manager',
+  Array[Stdlib::IP::Address] $allow_from = ['127.0.0.1', '::1'],
+  Optional[String] $apache_version       = $apache::apache_version,
 ) {
   require apache::mod::proxy
   require apache::mod::proxy_http
