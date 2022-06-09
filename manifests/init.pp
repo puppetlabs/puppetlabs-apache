@@ -491,7 +491,7 @@ class apache (
   Optional[Enum['On', 'Off', 'on', 'off']] $ldap_verify_server_cert     = undef,
   Optional[String] $ldap_trusted_mode                                   = undef,
   Boolean $error_documents                                              = false,
-  String $timeout                                                       = '60',
+  Variant[Integer,String] $timeout                                      = '60',
   String $httpd_dir                                                     = $apache::params::httpd_dir,
   String $server_root                                                   = $apache::params::server_root,
   String $conf_dir                                                      = $apache::params::conf_dir,
