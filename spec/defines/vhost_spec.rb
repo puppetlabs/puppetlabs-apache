@@ -385,7 +385,7 @@ describe 'apache::vhost', type: :define do
               'redirectmatch_status'        => ['404'],
               'redirectmatch_regexp'        => ['\.git$'],
               'redirectmatch_dest'          => ['http://www.example.com'],
-              'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+              'headers'                     => ['Set X-Robots-Tag "noindex, noarchive, nosnippet"', 'Accept: text/html'],
               'request_headers'             => ['append MirrorID "mirror 12"'],
               'rewrites'                    => [
                 {

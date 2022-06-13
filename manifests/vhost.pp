@@ -1853,7 +1853,7 @@ define apache::vhost (
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_regexp                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
-  Optional[String] $headers                                                           = undef,
+  Array[String] $headers                                                              = [],
   Optional[Array[String]] $request_headers                                            = undef,
   Optional[Array[String]] $filters                                                    = undef,
   Optional[Array] $rewrites                                                           = undef,
