@@ -1409,7 +1409,7 @@
 #     docroot     => '/path/to/directory',
 #     directories => {
 #       path    => '/path/to/directory',
-#       headers => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+#       headers => ['Set X-Robots-Tag "noindex, noarchive, nosnippet"'],
 #     },
 #   }
 #   ```
