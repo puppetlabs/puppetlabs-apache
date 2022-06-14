@@ -1853,7 +1853,7 @@ define apache::vhost (
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_regexp                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
-  Array[String] $headers                                                              = [],
+  Optional[Array[String]] $headers                                                    = undef,
   Optional[Array[String]] $request_headers                                            = undef,
   Optional[Array[String]] $filters                                                    = undef,
   Optional[Array] $rewrites                                                           = undef,
@@ -2260,7 +2260,7 @@ define apache::vhost (
   }
 
   # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
+  if ($headers and ! empty($headers)) or ( $request_headers and ! empty($request_headers)){
     if ! defined(Class['apache::mod::headers']) {
       include apache::mod::headers
     }
