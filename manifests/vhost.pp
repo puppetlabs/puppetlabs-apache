@@ -1800,7 +1800,7 @@ define apache::vhost (
   Variant[Boolean,String] $access_log_syslog                                          = false,
   Variant[Boolean,String] $access_log_format                                          = false,
   Variant[Boolean,String] $access_log_env_var                                         = false,
-  Optional[Array] $access_logs                                                        = undef,
+  Optional[Array[Hash]] $access_logs                                                  = undef,
   Boolean $use_servername_for_filenames                                               = false,
   Boolean $use_port_for_filenames                                                     = false,
   Optional[Variant[Array[Hash],Hash,String]] $aliases                                 = undef,
@@ -2459,13 +2459,12 @@ define apache::vhost (
   }
 
   # Template uses:
-  # - $access_log
+  # - $_access_logs
   # - $_access_log_env_var
   # - $access_log_destination
   # - $_access_log_format
   # - $_access_log_env_var
-  # - $access_logs
-  if $access_log or $access_logs {
+  if !empty($_access_logs) {
     concat::fragment { "${name}-access_log":
       target  => "${priority_real}${filename}.conf",
       order   => 100,
