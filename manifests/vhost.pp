@@ -1853,8 +1853,8 @@ define apache::vhost (
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_regexp                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
-  Optional[String] $headers                                                           = undef,
-  Optional[Array[String]] $request_headers                                            = undef,
+  Array[String[1]] $headers                                                           = [],
+  Array[String[1]] $request_headers                                                   = [],
   Optional[Array[String]] $filters                                                    = undef,
   Optional[Array] $rewrites                                                           = undef,
   Optional[String] $rewrite_base                                                      = undef,
@@ -2259,13 +2259,6 @@ define apache::vhost (
     }
   }
 
-  # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
-    if ! defined(Class['apache::mod::headers']) {
-      include apache::mod::headers
-    }
-  }
-
   # Check if mod_filter is required to process $filters
   if $filters {
     if ! defined(Class['apache::mod::filter']) {
@@ -2534,7 +2527,9 @@ define apache::vhost (
 
   # Template uses:
   # - $headers
-  if $headers and ! empty($headers) {
+  if ! empty($headers) and $ensure == 'present' {
+    include apache::mod::headers
+
     concat::fragment { "${name}-header":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
@@ -2544,7 +2539,9 @@ define apache::vhost (
 
   # Template uses:
   # - $request_headers
-  if $request_headers and ! empty($request_headers) {
+  if ! empty($request_headers) and $ensure == 'present' {
+    include apache::mod::headers
+
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}${filename}.conf",
       order   => 150,
