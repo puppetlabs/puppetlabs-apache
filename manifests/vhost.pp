@@ -1855,7 +1855,7 @@ define apache::vhost (
   Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
   Array[String[1]] $headers                                                           = [],
   Array[String[1]] $request_headers                                                   = [],
-  Optional[Array[String]] $filters                                                    = undef,
+  Array[String[1]] $filters                                                           = [],
   Optional[Array] $rewrites                                                           = undef,
   Optional[String] $rewrite_base                                                      = undef,
   Optional[Variant[Array[String],String]] $rewrite_rule                               = undef,
@@ -2256,13 +2256,6 @@ define apache::vhost (
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
       include apache::mod::fastcgi
-    }
-  }
-
-  # Check if mod_filter is required to process $filters
-  if $filters {
-    if ! defined(Class['apache::mod::filter']) {
-      include apache::mod::filter
     }
   }
 
@@ -2906,7 +2899,9 @@ define apache::vhost (
 
   # Template uses:
   # - $filters
-  if $filters and ! empty($filters) {
+  if ! empty($filters) and $ensure == 'present' {
+    include apache::mod::filter
+
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
