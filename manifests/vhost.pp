@@ -2260,7 +2260,7 @@ define apache::vhost (
   }
 
   # Check if mod_headers is required to process $headers/$request_headers
-  if ($headers and ! empty($headers)) or ( $request_headers and ! empty($request_headers)){
+  if ($headers and ! empty ($headers)) or ($request_headers and ! empty($request_headers)) {
     if ! defined(Class['apache::mod::headers']) {
       include apache::mod::headers
     }
