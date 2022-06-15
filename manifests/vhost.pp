@@ -1958,7 +1958,7 @@ define apache::vhost (
   Optional[Variant[Hash, Array]] $modsec_disable_msgs                                 = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_tags                                 = undef,
   Optional[String] $modsec_body_limit                                                 = undef,
-  Optional[Array[Hash]] $jk_mounts                                                    = undef,
+  Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
   Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
   Enum['on', 'off'] $krb_method_k5passwd                                              = 'on',
@@ -2900,7 +2900,9 @@ define apache::vhost (
 
   # Template uses:
   # - $jk_mounts
-  if $jk_mounts and ! empty($jk_mounts) {
+  if !empty($jk_mounts) and $ensure == 'present' {
+    include apache::mod::jk
+
     concat::fragment { "${name}-jk_mounts":
       target  => "${priority_real}${filename}.conf",
       order   => 340,
