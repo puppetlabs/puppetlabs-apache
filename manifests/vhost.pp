@@ -1856,10 +1856,10 @@ define apache::vhost (
   Array[String[1]] $headers                                                           = [],
   Array[String[1]] $request_headers                                                   = [],
   Array[String[1]] $filters                                                           = [],
-  Optional[Array] $rewrites                                                           = undef,
-  Optional[String] $rewrite_base                                                      = undef,
-  Optional[Variant[Array[String],String]] $rewrite_rule                               = undef,
-  Optional[Variant[Array[String],String]] $rewrite_cond                               = undef,
+  Array[Hash] $rewrites                                                               = [],
+  Optional[String[1]] $rewrite_base                                                   = undef,
+  Optional[String[1]] $rewrite_rule                                                   = undef,
+  Array[String[1]] $rewrite_cond                                                      = [],
   Boolean $rewrite_inherit                                                            = false,
   Variant[Array[String],String] $setenv                                               = [],
   Variant[Array[String],String] $setenvif                                             = [],
@@ -1996,13 +1996,6 @@ define apache::vhost (
   }
 
   $apache_name = $apache::apache_name
-
-  if $rewrites {
-    unless empty($rewrites) {
-      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
-      assert_type(Array[Hash], $rewrites_flattened)
-    }
-  }
 
   # Input validation begins
 
@@ -2222,13 +2215,6 @@ define apache::vhost (
   if ! $ip_based {
     if $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
       ensure_resource('apache::namevirtualhost', $nvh_addr_port)
-    }
-  }
-
-  # Load mod_rewrite if needed and not yet loaded
-  if $rewrites or $rewrite_cond {
-    if ! defined(Class['apache::mod::rewrite']) {
-      include apache::mod::rewrite
     }
   }
 
@@ -2603,7 +2589,9 @@ define apache::vhost (
   # - $rewrite_rule
   # - $rewrite_cond
   # - $rewrite_map
-  if $rewrites or $rewrite_rule {
+  if (! empty($rewrites) or $rewrite_rule) and $ensure == 'present' {
+    include apache::mod::rewrite
+
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}${filename}.conf",
       order   => 190,
