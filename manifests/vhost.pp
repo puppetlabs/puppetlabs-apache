@@ -1954,7 +1954,7 @@ define apache::vhost (
   Optional[String] $add_default_charset                                               = undef,
   Boolean $modsec_disable_vhost                                                       = false,
   Optional[Variant[Hash, Array]] $modsec_disable_ids                                  = undef,
-  Optional[Array[String]] $modsec_disable_ips                                         = undef,
+  Array[String[1]] $modsec_disable_ips                                                = [],
   Optional[Variant[Hash, Array]] $modsec_disable_msgs                                 = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_tags                                 = undef,
   Optional[String] $modsec_body_limit                                                 = undef,
@@ -2878,7 +2878,7 @@ define apache::vhost (
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
