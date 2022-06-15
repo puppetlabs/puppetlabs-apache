@@ -729,7 +729,7 @@ apache::vhost { 'www':
 }
 ```
 
-Please note you have to adjust the second ProxyPassMatch parameter to you docroot value (here `/var/www/html/`).
+Please note you have to adjust the second ProxyPassMatch parameter to your docroot value (here `/var/www/html/`).
 
 #### Other OSes
 
