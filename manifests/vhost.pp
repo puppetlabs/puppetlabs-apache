@@ -2366,6 +2366,40 @@ define apache::vhost (
   # - $suphp_engine
   # - $shibboleth_enabled
   if $_directories and ! empty($_directories) and $ensure == 'present' {
+    $_directories.each |Hash $directory| {
+      if 'auth_basic_authoritative' in $directory or 'auth_basic_fake' in $directory or 'auth_basic_provider' in $directory {
+        include apache::mod::auth_basic
+      }
+
+      if 'auth_user_file' in $directory {
+        include apache::mod::authn_file
+      }
+
+      if 'auth_group_file' in $directory {
+        include apache::mod::authz_groupfile
+      }
+
+      if 'gssapi' in $directory {
+        include apache::mod::auth_gssapi
+      }
+
+      if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
+        include apache::mod::proxy_http
+      }
+
+      if 'request_headers' in $directory {
+        include apache::mod::headers
+      }
+
+      if 'rewrites' in $directory {
+        include apache::mod::rewrite
+      }
+
+      if 'setenv' in $directory {
+        include apache::mod::env
+      }
+    }
+
     concat::fragment { "${name}-directories":
       target  => "${priority_real}${filename}.conf",
       order   => 60,

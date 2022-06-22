@@ -194,6 +194,10 @@ describe 'apache::vhost', type: :define do
                   'path'                => '/',
                   'provider'            => 'location',
                   'auth_ldap_referrals' => 'off',
+                  'auth_basic_fake'     => 'demo demopass',
+                  'auth_user_file'      => '/path/to/authz_user_file',
+                  'auth_group_file'     => '/path/to/authz_group_file',
+                  'setenv'              => ['SPECIAL_PATH /foo/bin'],
                 },
                 {
                   'path'       => '/proxy',
@@ -568,6 +572,10 @@ describe 'apache::vhost', type: :define do
                                                               'mode' => '0600')
           }
           it { is_expected.to contain_class('apache::mod::alias') }
+          it { is_expected.to contain_class('apache::mod::auth_basic') }
+          it { is_expected.to contain_class('apache::mod::authn_file') }
+          it { is_expected.to contain_class('apache::mod::authz_groupfile') }
+          it { is_expected.to contain_class('apache::mod::auth_gssapi') }
           it { is_expected.to contain_class('apache::mod::env') }
           it { is_expected.to contain_class('apache::mod::filter') }
           it { is_expected.to contain_class('apache::mod::headers') }
@@ -1289,7 +1297,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-aliases') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-fallbackresource') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
+          it { is_expected.not_to contain_concat__fragment('rspec.example.com-directories') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-additional_includes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
