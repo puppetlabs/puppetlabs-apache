@@ -2220,13 +2220,6 @@ define apache::vhost (
     }
   }
 
-  # Load mod_fastcgi if needed and not yet loaded
-  if $fastcgi_server and $fastcgi_socket {
-    if ! defined(Class['apache::mod::fastcgi']) {
-      include apache::mod::fastcgi
-    }
-  }
-
   # Check if mod_env is required and not yet loaded.
   # create an expression to simplify the conditional check
   $use_env_mod = $setenv and ! empty($setenv)
@@ -2752,7 +2745,9 @@ define apache::vhost (
   # - $fastcgi_dir
   # - $fastcgi_idle_timeout
   # - $apache_version
-  if $fastcgi_server or $fastcgi_dir {
+  if ($fastcgi_server or $fastcgi_dir) and $ensure == 'present' {
+    include apache::mod::fastcgi
+
     concat::fragment { "${name}-fastcgi":
       target  => "${priority_real}${filename}.conf",
       order   => 280,
