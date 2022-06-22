@@ -2013,12 +2013,6 @@ define apache::vhost (
 
   # Input validation ends
 
-  if $ssl and $ensure == 'present' {
-    include apache::mod::ssl
-    # Required for the AddType lines.
-    include apache::mod::mime
-  }
-
   if $ssl_honorcipherorder =~ Boolean or $ssl_honorcipherorder == undef {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
   } else {
@@ -2614,6 +2608,8 @@ define apache::vhost (
   # - $ssl_stapling
   # - $apache_version
   if $ssl and $ensure == 'present' {
+    include apache::mod::ssl
+
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
