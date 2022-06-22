@@ -1800,7 +1800,7 @@ define apache::vhost (
   Variant[Boolean,String] $access_log_syslog                                          = false,
   Variant[Boolean,String] $access_log_format                                          = false,
   Variant[Boolean,String] $access_log_env_var                                         = false,
-  Optional[Array] $access_logs                                                        = undef,
+  Optional[Array[Hash]] $access_logs                                                  = undef,
   Boolean $use_servername_for_filenames                                               = false,
   Boolean $use_port_for_filenames                                                     = false,
   Optional[Variant[Array[Hash],Hash,String]] $aliases                                 = undef,
@@ -1853,13 +1853,13 @@ define apache::vhost (
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_regexp                       = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
-  Optional[String] $headers                                                           = undef,
-  Optional[Array[String]] $request_headers                                            = undef,
-  Optional[Array[String]] $filters                                                    = undef,
-  Optional[Array] $rewrites                                                           = undef,
-  Optional[String] $rewrite_base                                                      = undef,
-  Optional[Variant[Array[String],String]] $rewrite_rule                               = undef,
-  Optional[Variant[Array[String],String]] $rewrite_cond                               = undef,
+  Array[String[1]] $headers                                                           = [],
+  Array[String[1]] $request_headers                                                   = [],
+  Array[String[1]] $filters                                                           = [],
+  Array[Hash] $rewrites                                                               = [],
+  Optional[String[1]] $rewrite_base                                                   = undef,
+  Optional[String[1]] $rewrite_rule                                                   = undef,
+  Array[String[1]] $rewrite_cond                                                      = [],
   Boolean $rewrite_inherit                                                            = false,
   Variant[Array[String],String] $setenv                                               = [],
   Variant[Array[String],String] $setenvif                                             = [],
@@ -1954,11 +1954,11 @@ define apache::vhost (
   Optional[String] $add_default_charset                                               = undef,
   Boolean $modsec_disable_vhost                                                       = false,
   Optional[Variant[Hash, Array]] $modsec_disable_ids                                  = undef,
-  Optional[Array[String]] $modsec_disable_ips                                         = undef,
+  Array[String[1]] $modsec_disable_ips                                                = [],
   Optional[Variant[Hash, Array]] $modsec_disable_msgs                                 = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_tags                                 = undef,
   Optional[String] $modsec_body_limit                                                 = undef,
-  Optional[Array[Hash]] $jk_mounts                                                    = undef,
+  Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
   Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
   Enum['on', 'off'] $krb_method_k5passwd                                              = 'on',
@@ -1996,13 +1996,6 @@ define apache::vhost (
   }
 
   $apache_name = $apache::apache_name
-
-  if $rewrites {
-    unless empty($rewrites) {
-      $rewrites_flattened = delete_undef_values(flatten([$rewrites]))
-      assert_type(Array[Hash], $rewrites_flattened)
-    }
-  }
 
   # Input validation begins
 
@@ -2141,6 +2134,8 @@ define apache::vhost (
     }]
   } elsif $access_logs {
     $_access_logs = $access_logs
+  } else {
+    $_access_logs = []
   }
 
   if $error_log_file {
@@ -2225,13 +2220,6 @@ define apache::vhost (
     }
   }
 
-  # Load mod_rewrite if needed and not yet loaded
-  if $rewrites or $rewrite_cond {
-    if ! defined(Class['apache::mod::rewrite']) {
-      include apache::mod::rewrite
-    }
-  }
-
   # Load mod_alias if needed and not yet loaded
   if ($scriptalias or $scriptaliases != [])
   or ($aliases and $aliases != [])
@@ -2256,20 +2244,6 @@ define apache::vhost (
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
       include apache::mod::fastcgi
-    }
-  }
-
-  # Check if mod_headers is required to process $headers/$request_headers
-  if $headers or $request_headers {
-    if ! defined(Class['apache::mod::headers']) {
-      include apache::mod::headers
-    }
-  }
-
-  # Check if mod_filter is required to process $filters
-  if $filters {
-    if ! defined(Class['apache::mod::filter']) {
-      include apache::mod::filter
     }
   }
 
@@ -2487,13 +2461,12 @@ define apache::vhost (
   }
 
   # Template uses:
-  # - $access_log
+  # - $_access_logs
   # - $_access_log_env_var
   # - $access_log_destination
   # - $_access_log_format
   # - $_access_log_env_var
-  # - $access_logs
-  if $access_log or $access_logs {
+  if !empty($_access_logs) {
     concat::fragment { "${name}-access_log":
       target  => "${priority_real}${filename}.conf",
       order   => 100,
@@ -2534,7 +2507,9 @@ define apache::vhost (
 
   # Template uses:
   # - $headers
-  if $headers and ! empty($headers) {
+  if ! empty($headers) and $ensure == 'present' {
+    include apache::mod::headers
+
     concat::fragment { "${name}-header":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
@@ -2544,7 +2519,9 @@ define apache::vhost (
 
   # Template uses:
   # - $request_headers
-  if $request_headers and ! empty($request_headers) {
+  if ! empty($request_headers) and $ensure == 'present' {
+    include apache::mod::headers
+
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}${filename}.conf",
       order   => 150,
@@ -2613,7 +2590,9 @@ define apache::vhost (
   # - $rewrite_rule
   # - $rewrite_cond
   # - $rewrite_map
-  if $rewrites or $rewrite_rule {
+  if (! empty($rewrites) or $rewrite_rule) and $ensure == 'present' {
+    include apache::mod::rewrite
+
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}${filename}.conf",
       order   => 190,
@@ -2899,7 +2878,7 @@ define apache::vhost (
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
-  if $modsec_disable_vhost or $modsec_disable_ids or $modsec_disable_ips or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
@@ -2909,7 +2888,9 @@ define apache::vhost (
 
   # Template uses:
   # - $filters
-  if $filters and ! empty($filters) {
+  if ! empty($filters) and $ensure == 'present' {
+    include apache::mod::filter
+
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
@@ -2919,7 +2900,9 @@ define apache::vhost (
 
   # Template uses:
   # - $jk_mounts
-  if $jk_mounts and ! empty($jk_mounts) {
+  if !empty($jk_mounts) and $ensure == 'present' {
+    include apache::mod::jk
+
     concat::fragment { "${name}-jk_mounts":
       target  => "${priority_real}${filename}.conf",
       order   => 340,

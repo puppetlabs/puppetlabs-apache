@@ -385,7 +385,7 @@ describe 'apache::vhost', type: :define do
               'redirectmatch_status'        => ['404'],
               'redirectmatch_regexp'        => ['\.git$'],
               'redirectmatch_dest'          => ['http://www.example.com'],
-              'headers'                     => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+              'headers'                     => ['Set X-Robots-Tag "noindex, noarchive, nosnippet"'],
               'request_headers'             => ['append MirrorID "mirror 12"'],
               'rewrites'                    => [
                 {
@@ -403,7 +403,7 @@ describe 'apache::vhost', type: :define do
               ],
               'rewrite_base'                => '/',
               'rewrite_rule'                => '^index\.html$ welcome.html',
-              'rewrite_cond'                => '%{HTTP_USER_AGENT} ^MSIE',
+              'rewrite_cond'                => ['%{HTTP_USER_AGENT} ^MSIE'],
               'rewrite_inherit'             => true,
               'setenv'                      => ['FOO=/bin/true'],
               'setenvif'                    => 'Request_URI "\.gif$" object_is_image=gif',

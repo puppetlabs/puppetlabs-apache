@@ -8,7 +8,7 @@
   RewriteBase <%= @rewrite_base %>
   <%- end -%>
 
-  <%- [@rewrites].flatten.compact.each do |rewrite_details| -%>
+  <%- @rewrites.each do |rewrite_details| -%>
     <%- if rewrite_details['comment'] -%>
   #<%= rewrite_details['comment'] %>
     <%- end -%>
@@ -44,10 +44,8 @@
   <%- if @rewrite_base -%>
   RewriteBase <%= @rewrite_base %>
   <%- end -%>
-  <%- if @rewrite_cond -%>
-    <%- Array(@rewrite_cond).each do |cond| -%>
+    <%- @rewrite_cond.each do |cond| -%>
   RewriteCond <%= cond %>
-    <%- end -%>
   <%- end -%>
   RewriteRule <%= @rewrite_rule %>
 <%- end -%>
