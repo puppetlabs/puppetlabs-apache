@@ -2641,22 +2641,14 @@ describe 'apache::vhost', type: :define do
           describe 'redirectmatch_*' do
             let(:params) { super().merge(port: '84') }
 
-            context 'status' do
-              let(:params) { super().merge(redirectmatch_status: '404') }
+            context 'dest and regexp' do
+              let(:params) { super().merge(redirectmatch_dest: 'http://other.example.com$1.jpg', redirectmatch_regexp: "(.*)\.gif$") }
 
-              it { is_expected.to contain_class('apache::mod::alias') }
-            end
-            context 'dest' do
-              let(:params) { super().merge(redirectmatch_dest: 'http://other.example.com$1.jpg') }
-
-              it { is_expected.to contain_class('apache::mod::alias') }
-            end
-            context 'regexp' do
-              let(:params) { super().merge(redirectmatch_regexp: "(.*)\.gif$") }
-
+              it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
               it { is_expected.to contain_class('apache::mod::alias') }
             end
             context 'none' do
+              it { is_expected.not_to contain_concat__fragment('rspec.example.com-redirect') }
               it { is_expected.not_to contain_class('apache::mod::alias') }
             end
           end
