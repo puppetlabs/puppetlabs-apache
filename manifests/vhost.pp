@@ -2220,16 +2220,6 @@ define apache::vhost (
     }
   }
 
-  # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
-    if ! defined(Class['apache::mod::proxy']) {
-      include apache::mod::proxy
-    }
-    if ! defined(Class['apache::mod::proxy_http']) {
-      include apache::mod::proxy_http
-    }
-  }
-
   # Load mod_fastcgi if needed and not yet loaded
   if $fastcgi_server and $fastcgi_socket {
     if ! defined(Class['apache::mod::fastcgi']) {
@@ -2547,7 +2537,10 @@ define apache::vhost (
   # - $proxy_preserve_host
   # - $proxy_add_headers
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host) and $ensure == 'present' {
+    include apache::mod::proxy
+    include apache::mod::proxy_http
+
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 170,
