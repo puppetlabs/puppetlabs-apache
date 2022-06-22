@@ -2190,24 +2190,6 @@ define apache::vhost (
     }
   }
 
-  # Check if mod_env is required and not yet loaded.
-  # create an expression to simplify the conditional check
-  $use_env_mod = $setenv and ! empty($setenv)
-  if ($use_env_mod) {
-    if ! defined(Class['apache::mod::env']) {
-      include apache::mod::env
-    }
-  }
-  # Check if mod_setenvif is required and not yet loaded.
-  # create an expression to simplify the conditional check
-  $use_setenvif_mod = ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
-
-  if ($use_setenvif_mod) {
-    if ! defined(Class['apache::mod::setenvif']) {
-      include apache::mod::setenvif
-    }
-  }
-
   ## Create a default directory list if none defined
   if $directories {
     $_directories = $directories
@@ -2580,7 +2562,16 @@ define apache::vhost (
   # Template uses:
   # - $setenv
   # - $setenvif
-  if ($use_env_mod or $use_setenvif_mod) {
+  $use_env_mod = !empty($setenv)
+  $use_setenvif_mod = !empty($setenvif) or !empty($setenvifnocase)
+  if ($use_env_mod or $use_setenvif_mod) and $ensure == 'present' {
+    if $use_env_mod {
+      include apache::mod::env
+    }
+    if $use_setenvif_mod {
+      include apache::mod::setenvif
+    }
+
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
       order   => 220,
