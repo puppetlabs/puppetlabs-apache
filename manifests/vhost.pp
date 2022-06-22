@@ -2220,15 +2220,6 @@ define apache::vhost (
     }
   }
 
-  # Load mod_alias if needed and not yet loaded
-  if ($scriptalias or $scriptaliases != [])
-  or ($redirect_source and $redirect_dest)
-  or ($redirectmatch_regexp or $redirectmatch_status or $redirectmatch_dest) {
-    if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
-      include apache::mod::alias
-    }
-  }
-
   # Load mod_proxy if needed and not yet loaded
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
     if ! defined(Class['apache::mod::proxy']) {
@@ -2577,7 +2568,9 @@ define apache::vhost (
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
   # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest) {
+  if (($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest)) and $ensure == 'present' {
+    include apache::mod::alias
+
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}${filename}.conf",
       order   => 180,
@@ -2604,7 +2597,9 @@ define apache::vhost (
   # Template uses:
   # - $scriptaliases
   # - $scriptalias
-  if ( $scriptalias or $scriptaliases != []) {
+  if ($scriptalias or !empty($scriptaliases)) and $ensure == 'present' {
+    include apache::mod::alias
+
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
