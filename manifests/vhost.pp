@@ -428,12 +428,14 @@
 #     krb_method_negotiate   => 'on',
 #     krb_auth_realms        => ['EXAMPLE.ORG'],
 #     krb_local_user_mapping => 'on',
-#     directories            => {
-#       path         => '/var/www/html',
-#       auth_name    => 'Kerberos Login',
-#       auth_type    => 'Kerberos',
-#       auth_require => 'valid-user',
-#     },
+#     directories            => [
+#       {
+#         path         => '/var/www/html',
+#         auth_name    => 'Kerberos Login',
+#         auth_type    => 'Kerberos',
+#         auth_require => 'valid-user',
+#       },
+#     ],
 #   }
 #   ```
 # 
@@ -1163,9 +1165,12 @@
 #     suphp_addhandler => 'x-httpd-php',
 #     suphp_engine     => 'on',
 #     suphp_configpath => '/etc/php5/apache2',
-#     directories      => { path => '/home/appuser/myphpapp',
-#       'suphp'        => { user => 'myappuser', group => 'myappgroup' },
-#     }
+#     directories      => [
+#       {
+#         'path'  => '/home/appuser/myphpapp',
+#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
+#       },
+#     ],
 #   }
 #   ```
 #
@@ -1180,9 +1185,12 @@
 #     suphp_addhandler => 'x-httpd-php',
 #     suphp_engine     => 'on',
 #     suphp_configpath => '/etc/php5/apache2',
-#     directories      => { path => '/home/appuser/myphpapp',
-#       'suphp'        => { user => 'myappuser', group => 'myappgroup' },
-#     }
+#     directories      => [
+#       {
+#         'path'  => '/home/appuser/myphpapp',
+#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
+#       },
+#     ],
 #   }
 #   ```
 #
@@ -1197,9 +1205,12 @@
 #     suphp_addhandler => 'x-httpd-php',
 #     suphp_engine     => 'on',
 #     suphp_configpath => '/etc/php5/apache2',
-#     directories      => { path => '/home/appuser/myphpapp',
-#       'suphp'        => { user => 'myappuser', group => 'myappgroup' },
-#     }
+#     directories      => [
+#       {
+#         'path'  => '/home/appuser/myphpapp',
+#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
+#       },
+#     ],
 #   }
 #   ```
 #
@@ -1407,10 +1418,12 @@
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
 #     docroot     => '/path/to/directory',
-#     directories => {
-#       path    => '/path/to/directory',
-#       headers => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
-#     },
+#     directories => [
+#       {
+#         path    => '/path/to/directory',
+#         headers => 'Set X-Robots-Tag "noindex, noarchive, nosnippet"',
+#       },
+#     ],
 #   }
 #   ```
 # 
@@ -1457,7 +1470,6 @@
 # @param gssapi
 #  Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
 #  ```puppet
-#   include apache::mod::auth_gssapi
 #   apache::vhost { 'sample.example.net':
 #     docroot     => '/path/to/directory',
 #     directories => [
@@ -1804,7 +1816,7 @@ define apache::vhost (
   Boolean $use_servername_for_filenames                                               = false,
   Boolean $use_port_for_filenames                                                     = false,
   Array[Hash] $aliases                                                                = [],
-  Optional[Variant[Hash, Array[Variant[Array,Hash]]]] $directories                    = undef,
+  Optional[Array[Hash]] $directories                                                  = undef,
   Boolean $error_log                                                                  = true,
   Optional[String] $error_log_file                                                    = undef,
   Optional[String] $error_log_pipe                                                    = undef,
@@ -2353,7 +2365,41 @@ define apache::vhost (
   # - $apache_version
   # - $suphp_engine
   # - $shibboleth_enabled
-  if $_directories and ! empty($_directories) {
+  if $_directories and ! empty($_directories) and $ensure == 'present' {
+    $_directories.each |Hash $directory| {
+      if 'auth_basic_authoritative' in $directory or 'auth_basic_fake' in $directory or 'auth_basic_provider' in $directory {
+        include apache::mod::auth_basic
+      }
+
+      if 'auth_user_file' in $directory {
+        include apache::mod::authn_file
+      }
+
+      if 'auth_group_file' in $directory {
+        include apache::mod::authz_groupfile
+      }
+
+      if 'gssapi' in $directory {
+        include apache::mod::auth_gssapi
+      }
+
+      if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
+        include apache::mod::proxy_http
+      }
+
+      if 'request_headers' in $directory {
+        include apache::mod::headers
+      }
+
+      if 'rewrites' in $directory {
+        include apache::mod::rewrite
+      }
+
+      if 'setenv' in $directory {
+        include apache::mod::setenv
+      }
+    }
+
     concat::fragment { "${name}-directories":
       target  => "${priority_real}${filename}.conf",
       order   => 60,

@@ -327,7 +327,7 @@ describe 'apache::vhost define' do
         class { 'apache': }
 
         if versioncmp($apache_version, '2.4') >= 0 {
-          $_files_match_directory = { 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }
+          $_files_match_directory = [{ 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }]
         } else {
           $_files_match_directory = [
             { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' },
@@ -338,8 +338,7 @@ describe 'apache::vhost define' do
         $_directories = [
           { 'path' => '/var/www/files', },
           { 'path' => '/foo/', 'provider' => 'location', 'directoryindex' => 'notindex.html', },
-          $_files_match_directory,
-        ]
+        ] + $_files_match_directory
 
         apache::vhost { 'files.example.net':
           docroot     => '/var/www/files',
