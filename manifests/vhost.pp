@@ -2039,10 +2039,6 @@ define apache::vhost (
     include apache::mod::auth_openidc
   }
 
-  if $virtual_docroot {
-    include apache::mod::vhost_alias
-  }
-
   if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
     include apache::mod::wsgi
   }
@@ -2321,7 +2317,11 @@ define apache::vhost (
   # - $virtual_docroot
   # - $virtual_use_default_docroot
   # - $docroot
-  if $docroot {
+  if $docroot and $ensure == 'present' {
+    if $virtual_docroot {
+      include apache::mod::vhost_alias
+    }
+
     concat::fragment { "${name}-docroot":
       target  => "${priority_real}${filename}.conf",
       order   => 10,
