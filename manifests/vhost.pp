@@ -2031,10 +2031,6 @@ define apache::vhost (
     }
   }
 
-  if $auth_oidc and $ensure == 'present' {
-    include apache::mod::auth_openidc
-  }
-
   # Configure the defaultness of a vhost
   if $priority {
     $priority_real = "${priority}-"
@@ -2912,7 +2908,9 @@ define apache::vhost (
   # Template uses:
   # - $auth_oidc
   # - $oidc_settings
-  if $auth_oidc {
+  if $auth_oidc and $ensure == 'present' {
+    include apache::mod::auth_openidc
+
     concat::fragment { "${name}-auth_oidc":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
