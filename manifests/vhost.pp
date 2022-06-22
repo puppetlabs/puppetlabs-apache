@@ -2740,7 +2740,7 @@ define apache::vhost (
     }
   }
 
-  if $h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef {
+  if ($h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef) and $ensure == 'present' {
     include apache::mod::http2
 
     concat::fragment { "${name}-http2":
@@ -2750,13 +2750,13 @@ define apache::vhost (
     }
   }
 
-  if $mdomain {
+  if $mdomain and $ensure == 'present' {
     include apache::mod::md
   }
 
   # Template uses:
   # - $userdir
-  if $userdir {
+  if $userdir and $ensure == 'present' {
     include apache::mod::userdir
 
     concat::fragment { "${name}-userdir":
