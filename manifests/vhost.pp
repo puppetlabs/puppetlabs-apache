@@ -2281,6 +2281,7 @@ define apache::vhost (
   # - $protocols
   # - $protocols_honor_order
   # - $apache_version
+  # - $mdomain
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
     order   => 0,
@@ -2598,6 +2599,7 @@ define apache::vhost (
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
   # - $apache_version
+  # - $mdomain
   if $ssl and $ensure == 'present' {
     include apache::mod::ssl
 
