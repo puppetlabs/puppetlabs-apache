@@ -2488,7 +2488,6 @@ define apache::vhost (
   # - $proxy_add_headers
   # - $no_proxy_uris
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host) and $ensure == 'present' {
-    include apache::mod::proxy
     include apache::mod::proxy_http
 
     concat::fragment { "${name}-proxy":
