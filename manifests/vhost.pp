@@ -2039,10 +2039,6 @@ define apache::vhost (
     include apache::mod::auth_openidc
   }
 
-  if $suexec_user_group {
-    include apache::mod::suexec
-  }
-
   if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
     include apache::mod::passenger
   }
@@ -2746,7 +2742,9 @@ define apache::vhost (
 
   # Template uses:
   # - $suexec_user_group
-  if $suexec_user_group {
+  if $suexec_user_group and $ensure == 'present' {
+    include apache::mod::suexec
+
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
