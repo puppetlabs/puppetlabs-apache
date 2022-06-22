@@ -2118,7 +2118,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat('25-rspec.example.com.conf').with('ensure' => 'absent')
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
+          it { is_expected.not_to contain_concat__fragment('rspec.example.com-docroot') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-aliases') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-fallbackresource') }
