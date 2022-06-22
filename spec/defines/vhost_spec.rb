@@ -109,7 +109,12 @@ describe 'apache::vhost', type: :define do
               'access_log_syslog'           => true,
               'access_log_format'           => '%h %l %u %t \"%r\" %>s %b',
               'access_log_env_var'          => '',
-              'aliases'                     => '/image',
+              'aliases'                     => [
+                {
+                  'alias' => '/image',
+                  'path'  => '/rspec/image',
+                },
+              ],
               'directories'                 => [
                 {
                   'path'     => '/var/www/files',
@@ -619,7 +624,11 @@ describe 'apache::vhost', type: :define do
             )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-aliases') }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-aliases').with(
+              content: %r{^\s+Alias /image "/rspec/image"$},
+            )
+          }
           it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
