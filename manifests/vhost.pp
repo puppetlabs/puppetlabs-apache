@@ -2031,10 +2031,6 @@ define apache::vhost (
     }
   }
 
-  if $auth_kerb and $ensure == 'present' {
-    include apache::mod::auth_kerb
-  }
-
   if $auth_oidc and $ensure == 'present' {
     include apache::mod::auth_openidc
   }
@@ -2655,7 +2651,9 @@ define apache::vhost (
   # - $krb_auth_realms
   # - $krb_5keytab
   # - $krb_local_user_mapping
-  if $auth_kerb {
+  if $auth_kerb and $ensure == 'present' {
+    include apache::mod::auth_kerb
+
     concat::fragment { "${name}-auth_kerb":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
