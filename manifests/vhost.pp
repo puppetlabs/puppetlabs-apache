@@ -2039,10 +2039,6 @@ define apache::vhost (
     include apache::mod::auth_openidc
   }
 
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
-    include apache::mod::wsgi
-  }
-
   if $suexec_user_group {
     include apache::mod::suexec
   }
@@ -2712,7 +2708,9 @@ define apache::vhost (
   if $wsgi_daemon_process_options {
     deprecation('apache::vhost::wsgi_daemon_process_options', 'This parameter is deprecated. Please add values inside Hash `wsgi_daemon_process`.')
   }
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
+  if ($wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization) and $ensure == 'present' {
+    include apache::mod::wsgi
+
     concat::fragment { "${name}-wsgi":
       target  => "${priority_real}${filename}.conf",
       order   => 260,
