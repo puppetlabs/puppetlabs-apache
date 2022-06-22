@@ -2551,7 +2551,7 @@ define apache::vhost (
 
   # Template uses:
   # - $serveraliases
-  if $serveraliases and ! empty($serveraliases) {
+  if ! empty($serveraliases) and $ensure == 'present' {
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}${filename}.conf",
       order   => 210,
