@@ -1,17 +1,8 @@
-<%- if @scriptaliases.is_a?(Array) -%>
-<%-  aliases = @scriptaliases -%>
-<%- elsif @scriptaliases.is_a?(Hash) -%>
-<%-  aliases = [@scriptaliases] -%>
-<%- else -%>
-<%-  # Nothing to do with any other data type -%>
-<%-  aliases = [] -%>
-<%- end -%>
-<%- if @scriptalias or !aliases.empty? -%>
+<%- aliases = @scriptaliases -%>
   ## Script alias directives
-<%# Combine scriptalais and scriptaliases into a single data structure -%>
+<%# Combine scriptalias and scriptaliases into a single data structure -%>
 <%# for backward compatibility and ease of implementation -%>
 <%- aliases << { 'alias' => '/cgi-bin', 'path' => @scriptalias } if @scriptalias -%>
-<%- aliases.flatten.compact! -%>
 <%- aliases.each do |salias| -%>
   <%- if salias["path"] != '' -%>
     <%- if salias["alias"] and salias["alias"] != '' -%>
@@ -20,5 +11,4 @@
   ScriptAliasMatch <%= salias['aliasmatch'] %> "<%= salias['path'] %>"
     <%- end -%>
   <%- end -%>
-<%- end -%>
 <%- end -%>
