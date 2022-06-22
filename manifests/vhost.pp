@@ -1847,7 +1847,7 @@ define apache::vhost (
   Boolean $proxy_preserve_host                                                        = false,
   Optional[Variant[String,Boolean]] $proxy_add_headers                                = undef,
   Boolean $proxy_error_override                                                       = false,
-  Variant[String,Array[String]] $redirect_source                                       = '/',
+  Variant[String,Array[String]] $redirect_source                                      = '/',
   Optional[Variant[Array[String],String]] $redirect_dest                              = undef,
   Optional[Variant[Array[String],String]] $redirect_status                            = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
