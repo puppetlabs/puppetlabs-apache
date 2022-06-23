@@ -38,10 +38,12 @@ describe 'apache::default_mods class' do
           }
           apache::vhost { 'defaults.example.com':
             docroot     => '#{apache_hash['doc_root']}/defaults',
-            aliases     => {
-              alias => '/css',
-              path  => '#{apache_hash['doc_root']}/css',
-            },
+            aliases     => [
+              {
+                alias => '/css',
+                path  => '#{apache_hash['doc_root']}/css',
+              },
+            ],
             directories => [
             {
                 'path'            => "#{apache_hash['doc_root']}/admin",
@@ -76,10 +78,12 @@ describe 'apache::default_mods class' do
         }
         apache::vhost { 'defaults.example.com':
           docroot => '#{apache_hash['doc_root']}/defaults',
-          aliases => {
-            alias => '/css',
-            path  => '#{apache_hash['doc_root']}/css',
-          },
+          aliases => [
+            {
+              alias => '/css',
+              path  => '#{apache_hash['doc_root']}/css',
+            },
+          ],
           setenv  => 'TEST1 one',
         }
       MANIFEST
