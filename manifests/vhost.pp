@@ -1847,7 +1847,7 @@ define apache::vhost (
   Boolean $proxy_preserve_host                                                        = false,
   Optional[Variant[String,Boolean]] $proxy_add_headers                                = undef,
   Boolean $proxy_error_override                                                       = false,
-  Variant[String,Array[String]] $redirect_source                                       = '/',
+  Variant[String,Array[String]] $redirect_source                                      = '/',
   Optional[Variant[Array[String],String]] $redirect_dest                              = undef,
   Optional[Variant[Array[String],String]] $redirect_status                            = undef,
   Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
@@ -2013,12 +2013,6 @@ define apache::vhost (
 
   # Input validation ends
 
-  if $ssl and $ensure == 'present' {
-    include apache::mod::ssl
-    # Required for the AddType lines.
-    include apache::mod::mime
-  }
-
   if $ssl_honorcipherorder =~ Boolean or $ssl_honorcipherorder == undef {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
   } else {
@@ -2029,30 +2023,6 @@ define apache::vhost (
       'Off'   => false,
       default => true,
     }
-  }
-
-  if $auth_kerb and $ensure == 'present' {
-    include apache::mod::auth_kerb
-  }
-
-  if $auth_oidc and $ensure == 'present' {
-    include apache::mod::auth_openidc
-  }
-
-  if $virtual_docroot {
-    include apache::mod::vhost_alias
-  }
-
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
-    include apache::mod::wsgi
-  }
-
-  if $suexec_user_group {
-    include apache::mod::suexec
-  }
-
-  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
-    include apache::mod::passenger
   }
 
   # Configure the defaultness of a vhost
@@ -2220,50 +2190,6 @@ define apache::vhost (
     }
   }
 
-  # Load mod_alias if needed and not yet loaded
-  if ($scriptalias or $scriptaliases != [])
-  or ($redirect_source and $redirect_dest)
-  or ($redirectmatch_regexp or $redirectmatch_status or $redirectmatch_dest) {
-    if ! defined(Class['apache::mod::alias'])  and ($ensure == 'present') {
-      include apache::mod::alias
-    }
-  }
-
-  # Load mod_proxy if needed and not yet loaded
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match) {
-    if ! defined(Class['apache::mod::proxy']) {
-      include apache::mod::proxy
-    }
-    if ! defined(Class['apache::mod::proxy_http']) {
-      include apache::mod::proxy_http
-    }
-  }
-
-  # Load mod_fastcgi if needed and not yet loaded
-  if $fastcgi_server and $fastcgi_socket {
-    if ! defined(Class['apache::mod::fastcgi']) {
-      include apache::mod::fastcgi
-    }
-  }
-
-  # Check if mod_env is required and not yet loaded.
-  # create an expression to simplify the conditional check
-  $use_env_mod = $setenv and ! empty($setenv)
-  if ($use_env_mod) {
-    if ! defined(Class['apache::mod::env']) {
-      include apache::mod::env
-    }
-  }
-  # Check if mod_setenvif is required and not yet loaded.
-  # create an expression to simplify the conditional check
-  $use_setenvif_mod = ($setenvif and ! empty($setenvif)) or ($setenvifnocase and ! empty($setenvifnocase))
-
-  if ($use_setenvif_mod) {
-    if ! defined(Class['apache::mod::setenvif']) {
-      include apache::mod::setenvif
-    }
-  }
-
   ## Create a default directory list if none defined
   if $directories {
     $_directories = $directories
@@ -2355,6 +2281,7 @@ define apache::vhost (
   # - $protocols
   # - $protocols_honor_order
   # - $apache_version
+  # - $mdomain
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
     order   => 0,
@@ -2365,7 +2292,11 @@ define apache::vhost (
   # - $virtual_docroot
   # - $virtual_use_default_docroot
   # - $docroot
-  if $docroot {
+  if $docroot and $ensure == 'present' {
+    if $virtual_docroot {
+      include apache::mod::vhost_alias
+    }
+
     concat::fragment { "${name}-docroot":
       target  => "${priority_real}${filename}.conf",
       order   => 10,
@@ -2556,7 +2487,10 @@ define apache::vhost (
   # - $proxy_preserve_host
   # - $proxy_add_headers
   # - $no_proxy_uris
-  if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host) and $ensure == 'present' {
+    include apache::mod::proxy
+    include apache::mod::proxy_http
+
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 170,
@@ -2577,7 +2511,9 @@ define apache::vhost (
   # - $redirectmatch_status_a
   # - $redirectmatch_regexp_a
   # - $redirectmatch_dest
-  if ($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest) {
+  if (($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest)) and $ensure == 'present' {
+    include apache::mod::alias
+
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}${filename}.conf",
       order   => 180,
@@ -2604,7 +2540,9 @@ define apache::vhost (
   # Template uses:
   # - $scriptaliases
   # - $scriptalias
-  if ( $scriptalias or $scriptaliases != []) {
+  if ($scriptalias or !empty($scriptaliases)) and $ensure == 'present' {
+    include apache::mod::alias
+
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
@@ -2614,7 +2552,7 @@ define apache::vhost (
 
   # Template uses:
   # - $serveraliases
-  if $serveraliases and ! empty($serveraliases) {
+  if ! empty($serveraliases) and $ensure == 'present' {
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}${filename}.conf",
       order   => 210,
@@ -2625,7 +2563,16 @@ define apache::vhost (
   # Template uses:
   # - $setenv
   # - $setenvif
-  if ($use_env_mod or $use_setenvif_mod) {
+  $use_env_mod = !empty($setenv)
+  $use_setenvif_mod = !empty($setenvif) or !empty($setenvifnocase)
+  if ($use_env_mod or $use_setenvif_mod) and $ensure == 'present' {
+    if $use_env_mod {
+      include apache::mod::env
+    }
+    if $use_setenvif_mod {
+      include apache::mod::setenvif
+    }
+
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
       order   => 220,
@@ -2652,7 +2599,10 @@ define apache::vhost (
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
   # - $apache_version
+  # - $mdomain
   if $ssl and $ensure == 'present' {
+    include apache::mod::ssl
+
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
@@ -2686,7 +2636,9 @@ define apache::vhost (
   # - $krb_auth_realms
   # - $krb_5keytab
   # - $krb_local_user_mapping
-  if $auth_kerb {
+  if $auth_kerb and $ensure == 'present' {
+    include apache::mod::auth_kerb
+
     concat::fragment { "${name}-auth_kerb":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
@@ -2740,7 +2692,9 @@ define apache::vhost (
   if $wsgi_daemon_process_options {
     deprecation('apache::vhost::wsgi_daemon_process_options', 'This parameter is deprecated. Please add values inside Hash `wsgi_daemon_process`.')
   }
-  if $wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization {
+  if ($wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization) and $ensure == 'present' {
+    include apache::mod::wsgi
+
     concat::fragment { "${name}-wsgi":
       target  => "${priority_real}${filename}.conf",
       order   => 260,
@@ -2764,7 +2718,9 @@ define apache::vhost (
   # - $fastcgi_dir
   # - $fastcgi_idle_timeout
   # - $apache_version
-  if $fastcgi_server or $fastcgi_dir {
+  if ($fastcgi_server or $fastcgi_dir) and $ensure == 'present' {
+    include apache::mod::fastcgi
+
     concat::fragment { "${name}-fastcgi":
       target  => "${priority_real}${filename}.conf",
       order   => 280,
@@ -2774,7 +2730,9 @@ define apache::vhost (
 
   # Template uses:
   # - $suexec_user_group
-  if $suexec_user_group {
+  if $suexec_user_group and $ensure == 'present' {
+    include apache::mod::suexec
+
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
@@ -2782,7 +2740,7 @@ define apache::vhost (
     }
   }
 
-  if $h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef {
+  if ($h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef) and $ensure == 'present' {
     include apache::mod::http2
 
     concat::fragment { "${name}-http2":
@@ -2792,13 +2750,13 @@ define apache::vhost (
     }
   }
 
-  if $mdomain {
+  if $mdomain and $ensure == 'present' {
     include apache::mod::md
   }
 
   # Template uses:
   # - $userdir
-  if $userdir {
+  if $userdir and $ensure == 'present' {
     include apache::mod::userdir
 
     concat::fragment { "${name}-userdir":
@@ -2853,7 +2811,9 @@ define apache::vhost (
   # - $passenger_max_requests
   # - $passenger_max_request_time
   # - $passenger_memory_limit
-  if $passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef {
+  if ($passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef) and $ensure == 'present' {
+    include apache::mod::passenger
+
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
@@ -2946,7 +2906,9 @@ define apache::vhost (
   # Template uses:
   # - $auth_oidc
   # - $oidc_settings
-  if $auth_oidc {
+  if $auth_oidc and $ensure == 'present' {
+    include apache::mod::auth_openidc
+
     concat::fragment { "${name}-auth_oidc":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
