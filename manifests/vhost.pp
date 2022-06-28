@@ -32,20 +32,20 @@
 #
 # @param access_log
 #   Determines whether to configure `*_access.log` directives (`*_file`,`*_pipe`, or `*_syslog`).
-# 
+#
 # @param access_log_env_var
 #   Specifies that only requests with particular environment variables be logged.
-# 
+#
 # @param access_log_file
 #   Sets the filename of the `*_access.log` placed in `logroot`. Given a virtual host ---for 
 #   instance, example.com--- it defaults to 'example.com_ssl.log' for 
 #   [SSL-encrypted](https://httpd.apache.org/docs/current/ssl/index.html) virtual hosts and 
 #   `example.com_access.log` for unencrypted virtual hosts.
-# 
+#
 # @param access_log_format
 #   Specifies the use of either a `LogFormat` nickname or a custom-formatted string for the 
 #   access log.
-# 
+#
 # @param access_log_pipe
 #   Specifies a pipe where Apache sends access log messages.
 #
@@ -55,21 +55,21 @@
 # @param access_logs
 #   Allows you to give a hash that specifies the state of each of the `access_log_*` 
 #   directives shown above, i.e. `access_log_pipe` and `access_log_syslog`.
-# 
+#
 # @param add_default_charset
 #   Sets a default media charset value for the `AddDefaultCharset` directive, which is 
 #   added to `text/plain` and `text/html` responses.
-# 
+#
 # @param add_listen
 #   Determines whether the virtual host creates a `Listen` statement.<br />
 #   Setting `add_listen` to `false` prevents the virtual host from creating a `Listen` 
 #   statement. This is important when combining virtual hosts that aren't passed an `ip` 
 #   parameter with those that are.
-# 
+#
 # @param use_optional_includes
 #   Specifies whether Apache uses the `IncludeOptional` directive instead of `Include` for 
 #   `additional_includes` in Apache 2.4 or newer.
-# 
+#
 # @param aliases
 #   Passes a list of [hashes][hash] to the virtual host to create `Alias`, `AliasMatch`, 
 #   `ScriptAlias` or `ScriptAliasMatch` directives as per the `mod_alias` documentation.<br />
@@ -107,44 +107,44 @@
 #   If `apache::mod::passenger` is loaded and `PassengerHighPerformance` is `true`, the `Alias` 
 #   directive might not be able to honor the `PassengerEnabled => off` statement. See 
 #   [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
-# 
+#
 # @param allow_encoded_slashes
 #   Sets the `AllowEncodedSlashes` declaration for the virtual host, overriding the server 
 #   default. This modifies the virtual host responses to URLs with `\` and `/` characters. The 
 #   default setting omits the declaration from the server configuration and selects the 
 #   Apache default setting of `Off`.
-# 
+#
 # @param block
 #   Specifies the list of things to which Apache blocks access. Valid options are: `scm` (which 
 #   blocks web access to `.svn`), `.git`, and `.bzr` directories.
-# 
+#
 # @param cas_attribute_prefix
 #   Adds a header with the value of this header being the attribute values when SAML 
 #   validation is enabled.
-# 
+#
 # @param cas_attribute_delimiter
 #   Sets the delimiter between attribute values in the header created by `cas_attribute_prefix`.
-# 
+#
 # @param cas_login_url
 #   Sets the URL to which the module redirects users when they attempt to access a 
 #   CAS-protected resource and don't have an active session.
-# 
+#
 # @param cas_root_proxied_as
 #   Sets the URL end users see when access to this Apache server is proxied per vhost. 
 #   This URL should not include a trailing slash.
-# 
+#
 # @param cas_scrub_request_headers
 #   Remove inbound request headers that may have special meaning within mod_auth_cas.
-# 
+#
 # @param cas_sso_enabled
 #   Enables experimental support for single sign out (may mangle POST data).
-# 
+#
 # @param cas_validate_saml
 #   Parse response from CAS server for SAML.
-# 
+#
 # @param cas_validate_url
 #   Sets the URL to use when validating a client-presented ticket in an HTTP query string.
-# 
+#
 # @param cas_cookie_path
 #   Sets the location where information on the current session should be stored. This should
 #   be writable by the web server only.
@@ -162,49 +162,49 @@
 #     "Frontend domain: x.example.org",
 #   ]
 #   ```
-# 
+#
 # @param default_vhost
 #   Sets a given `apache::vhost` defined type as the default to serve requests that do not 
 #   match any other `apache::vhost` defined types.
-# 
+#
 # @param directoryindex
 #   Sets the list of resources to look for when a client requests an index of the directory 
 #   by specifying a '/' at the end of the directory name. See the `DirectoryIndex` directive 
 #   documentation for details.
-# 
+#
 # @param docroot
 #   **Required**.<br />
 #   Sets the `DocumentRoot` location, from which Apache serves files.<br />
 #   If `docroot` and `manage_docroot` are both set to `false`, no `DocumentRoot` will be set 
 #   and the accompanying `<Directory /path/to/directory>` block will not be created.
-# 
+#
 # @param docroot_group
 #   Sets group access to the `docroot` directory.
-# 
+#
 # @param docroot_owner
 #   Sets individual user access to the `docroot` directory.
-# 
+#
 # @param docroot_mode
 #   Sets access permissions for the `docroot` directory, in numeric notation.
-# 
+#
 # @param manage_docroot
 #   Determines whether Puppet manages the `docroot` directory.
-# 
+#
 # @param error_log
 #   Specifies whether `*_error.log` directives should be configured.
-# 
+#
 # @param error_log_file
 #   Points the virtual host's error logs to a `*_error.log` file. If this parameter is 
 #   undefined, Puppet checks for values in `error_log_pipe`, then `error_log_syslog`.<br />
 #   If none of these parameters is set, given a virtual host `example.com`, Puppet defaults 
 #   to `$logroot/example.com_error_ssl.log` for SSL virtual hosts and 
 #   `$logroot/example.com_error.log` for non-SSL virtual hosts.
-# 
+#
 # @param error_log_pipe
 #   Specifies a pipe to send error log messages to.<br />
 #   This parameter has no effect if the `error_log_file` parameter has a value. If neither 
 #   this parameter nor `error_log_file` has a value, Puppet then checks `error_log_syslog`.
-# 
+#
 # @param error_log_syslog
 #   Determines whether to send all error log messages to syslog.
 #   This parameter has no effect if either of the `error_log_file` or `error_log_pipe` 
@@ -228,7 +228,7 @@
 #     ],
 #   }
 #   ```
-# 
+#
 # @param error_documents
 #   A list of hashes which can be used to override the 
 #   [ErrorDocument](https://httpd.apache.org/docs/current/mod/core.html#errordocument) 
@@ -242,28 +242,28 @@
 #     ],
 #   }
 #   ```
-# 
+#
 # @param ensure
 #   Specifies if the virtual host is present or absent.<br />
-# 
+#
 # @param fallbackresource
 #   Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) 
 #   directive, which specifies an action to take for any URL that doesn't map to anything in 
 #   your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin 
 #   with a `/` or be `disabled`.
-# 
+#
 # @param fastcgi_server
 #   Specify an external FastCGI server to manage a connection to.
-# 
+#
 # @param fastcgi_socket
 #   Specify the socket that will be used to communicate with an external FastCGI server.
-# 
+#
 # @param fastcgi_idle_timeout
 #   If using fastcgi, this option sets the timeout for the server to respond.
-# 
+#
 # @param fastcgi_dir
 #   Specify an internal FastCGI directory that is to be managed.
-# 
+#
 # @param filters
 #   [Filters](https://httpd.apache.org/docs/current/mod/mod_filter.html) enable smart, 
 #   context-sensitive configuration of output content filters.
@@ -277,86 +277,86 @@
 #     ],
 #   }
 #   ```
-# 
+#
 # @param h2_copy_files
 #   Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles)
 #   directive which influences how the requestion process pass files to the main connection.
-# 
+#
 # @param h2_direct
 #   Sets the [H2Direct](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2direct)
 #   directive which toggles the usage of the HTTP/2 Direct Mode.
-# 
+#
 # @param h2_early_hints
 #   Sets the [H2EarlyHints](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2earlyhints)
 #   directive which controls if HTTP status 103 interim responses are forwarded to
 #   the client or not.
-# 
+#
 # @param h2_max_session_streams
 #   Sets the [H2MaxSessionStreams](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2maxsessionstreams)
 #   directive which sets the maximum number of active streams per HTTP/2 session
 #   that the server allows.
-# 
+#
 # @param h2_modern_tls_only
 #   Sets the [H2ModernTLSOnly](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2moderntlsonly)
 #   directive which toggles the security checks on HTTP/2 connections in TLS mode.
-# 
+#
 # @param h2_push
 #   Sets the [H2Push](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2push)
 #   directive which toggles the usage of the HTTP/2 server push protocol feature.
-# 
+#
 # @param h2_push_diary_size
 #   Sets the [H2PushDiarySize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushdiarysize)
 #   directive which toggles the maximum number of HTTP/2 server pushes that are
 #   remembered per HTTP/2 connection.
-# 
+#
 # @param h2_push_priority
 #   Sets the [H2PushPriority](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushpriority)
 #   directive which defines the priority handling of pushed responses based on the
 #   content-type of the response.
-# 
+#
 # @param h2_push_resource
 #   Sets the [H2PushResource](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2pushresource)
 #   directive which declares resources for early pushing to the client.
-# 
+#
 # @param h2_serialize_headers
 #   Sets the [H2SerializeHeaders](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2serializeheaders)
 #   directive which toggles if HTTP/2 requests are serialized in HTTP/1.1
 #   format for processing by httpd core.
-# 
+#
 # @param h2_stream_max_mem_size
 #   Sets the [H2StreamMaxMemSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2streammaxmemsize)
 #   directive which sets the maximum number of outgoing data bytes buffered in
 #   memory for an active stream.
-# 
+#
 # @param h2_tls_cool_down_secs
 #   Sets the [H2TLSCoolDownSecs](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlscooldownsecs)
 #   directive which sets the number of seconds of idle time on a TLS connection
 #   before the TLS write size falls back to a small (~1300 bytes) length.
-# 
+#
 # @param h2_tls_warm_up_size
 #   Sets the [H2TLSWarmUpSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2tlswarmupsize)
 #   directive which sets the number of bytes to be sent in small TLS records (~1300
 #   bytes) until doing maximum sized writes (16k) on https: HTTP/2 connections.
-# 
+#
 # @param h2_upgrade
 #   Sets the [H2Upgrade](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2upgrade)
 #   directive which toggles the usage of the HTTP/1.1 Upgrade method for switching
 #   to HTTP/2.
-# 
+#
 # @param h2_window_size
 #   Sets the [H2WindowSize](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2windowsize)
 #   directive which sets the size of the window that is used for flow control from
 #   client to server and limits the amount of data the server has to buffer.
-# 
+#
 # @param ip
 #   Sets the IP address the virtual host listens on. By default, uses Apache's default behavior 
 #   of listening on all IPs.
-# 
+#
 # @param ip_based
 #   Enables an [IP-based](https://httpd.apache.org/docs/current/vhosts/ip-based.html) virtual 
 #   host. This parameter inhibits the creation of a NameVirtualHost directive, since those are 
 #   used to funnel requests to name-based virtual hosts.
-# 
+#
 # @param itk
 #   Configures [ITK](http://mpm-itk.sesse.net/) in a hash.<br />
 #   Usage typically looks something like:
@@ -377,11 +377,11 @@
 #   * `nice`
 #   * `limituidrange` (Linux 3.5.0 or newer)
 #   * `limitgidrange` (Linux 3.5.0 or newer)
-# 
+#
 # @param action
 #   Specifies whether you wish to configure mod_actions action directive which will
 #   activate cgi-script when triggered by a request.
-# 
+#
 # @param jk_mounts
 #   Sets up a virtual host with `JkMount` and `JkUnMount` directives to handle the paths 
 #   for URL mapping between Tomcat and Apache.<br />
@@ -396,29 +396,29 @@
 #     ],
 #   }
 #   ```
-# 
+#
 # @param http_protocol_options
 #   Specifies the strictness of HTTP protocol checks.
-# 
+#
 # @param keepalive
 #   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive 
 #   for the virtual host. By default, the global, server-wide `KeepAlive` setting is in effect.<br />
 #   Use the `keepalive_timeout` and `max_keepalive_requests` parameters to set relevant options 
 #   for the virtual host.
-# 
+#
 # @param keepalive_timeout
 #   Sets the `KeepAliveTimeout` directive for the virtual host, which determines the amount 
 #   of time to wait for subsequent requests on a persistent HTTP connection. By default, the 
 #   global, server-wide `KeepAlive` setting is in effect.<br />
 #   This parameter is only relevant if either the global, server-wide `keepalive` parameter or 
 #   the per-vhost `keepalive` parameter is enabled.
-# 
+#
 # @param max_keepalive_requests
 #   Limits the number of requests allowed per connection to the virtual host. By default,  
 #   the global, server-wide `KeepAlive` setting is in effect.<br />
 #   This parameter is only relevant if either the global, server-wide `keepalive` parameter or 
 #   the per-vhost `keepalive` parameter is enabled.
-# 
+#
 # @param auth_kerb
 #   Enable `mod_auth_kerb` parameters for a virtual host.<br />
 #   Usage typically looks like:
@@ -436,62 +436,62 @@
 #     },
 #   }
 #   ```
-# 
+#
 # @param krb_method_negotiate
 #   Determines whether to use the Negotiate method.
-# 
+#
 # @param krb_method_k5passwd
 #   Determines whether to use password-based authentication for Kerberos v5.
-# 
+#
 # @param krb_authoritative
 #   If set to `off`, authentication controls can be passed on to another module.
-# 
+#
 # @param krb_auth_realms
 #   Specifies an array of Kerberos realms to use for authentication.
-# 
+#
 # @param krb_5keytab
 #   Specifies the Kerberos v5 keytab file's location.
-# 
+#
 # @param krb_local_user_mapping
 #   Strips @REALM from usernames for further use.
-# 
+#
 # @param krb_verify_kdc
 #   This option can be used to disable the verification tickets against local keytab to prevent 
 #   KDC spoofing attacks.
-# 
+#
 # @param krb_servicename
 #   Specifies the service name that will be used by Apache for authentication. Corresponding 
 #   key of this name must be stored in the keytab.
-# 
+#
 # @param krb_save_credentials
 #   This option enables credential saving functionality.
-# 
+#
 # @param logroot
 #   Specifies the location of the virtual host's logfiles.
-# 
+#
 # @param logroot_ensure
 #   Determines whether or not to remove the logroot directory for a virtual host.
-# 
+#
 # @param logroot_mode
 #   Overrides the mode the logroot directory is set to. Do *not* grant write access to the 
 #   directory the logs are stored in without being aware of the consequences; for more 
 #   information, see [Apache's log security documentation](https://httpd.apache.org/docs/2.4/logs.html#security).
-# 
+#
 # @param logroot_owner
 #   Sets individual user access to the logroot directory.
-# 
+#
 # @param logroot_group
 #   Sets group access to the `logroot` directory.
-# 
+#
 # @param log_level
 #   Specifies the verbosity of the error log.
-# 
+#
 # @param modsec_body_limit
 #   Configures the maximum request body size (in bytes) ModSecurity accepts for buffering.
-# 
+#
 # @param modsec_disable_vhost
 #   Disables `mod_security` on a virtual host. Only valid if `apache::mod::security` is included.
-# 
+#
 # @param modsec_disable_ids
 #   Removes `mod_security` IDs from the virtual host.<br />
 #   Also takes a hash allowing removal of an ID from a specific location.
@@ -500,16 +500,16 @@
 #     modsec_disable_ids => [ 90015, 90016 ],
 #   }
 #   ```
-# 
+#
 #   ``` puppet
 #   apache::vhost { 'sample.example.net':
 #     modsec_disable_ids => { '/location1' => [ 90015, 90016 ] },
 #   }
 #   ```
-# 
+#
 # @param modsec_disable_ips
 #   Specifies an array of IP addresses to exclude from `mod_security` rule matching.
-# 
+#
 # @param modsec_disable_msgs
 #   Array of mod_security Msgs to remove from the virtual host. Also takes a hash allowing 
 #   removal of an Msg from a specific location.
@@ -523,7 +523,7 @@
 #     modsec_disable_msgs => { '/location1' => ['Blind SQL Injection Attack', 'Session Fixation Attack'] },
 #   }
 #   ```
-# 
+#
 # @param modsec_disable_tags
 #   Array of mod_security Tags to remove from the virtual host. Also takes a hash allowing 
 #   removal of an Tag from a specific location.
@@ -537,14 +537,14 @@
 #     modsec_disable_tags => { '/location1' => ['WEB_ATTACK/SQL_INJECTION', 'WEB_ATTACK/XSS'] },
 #   }
 #   ```
-# 
+#
 # @param modsec_audit_log_file
 #   If set, it is relative to `logroot`.<br />
 #   One of the parameters that determines how to send `mod_security` audit 
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 #   If none of those parameters are set, the global audit log is used 
 #   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
-# 
+#
 # @param modsec_audit_log_pipe
 #   If `modsec_audit_log_pipe` is set, it should start with a pipe. Example 
 #   `|/path/to/mlogc /path/to/mlogc.conf`.<br />
@@ -552,7 +552,7 @@
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).
 #   If none of those parameters are set, the global audit log is used 
 #   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
-# 
+#
 # @param modsec_audit_log
 #   If `modsec_audit_log` is `true`, given a virtual host ---for instance, example.com--- it 
 #   defaults to `example.com\_security\_ssl.log` for SSL-encrypted virtual hosts 
@@ -561,28 +561,28 @@
 #   log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecAuditLog)).<br />
 #   If none of those parameters are set, the global audit log is used 
 #   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
-# 
+#
 # @param no_proxy_uris
 #   Specifies URLs you do not want to proxy. This parameter is meant to be used in combination 
 #   with [`proxy_dest`](#proxy_dest).
-# 
+#
 # @param no_proxy_uris_match
 #   This directive is equivalent to `no_proxy_uris`, but takes regular expressions.
-# 
+#
 # @param proxy_preserve_host
 #   Sets the [ProxyPreserveHost Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost).<br />
 #   Setting this parameter to `true` enables the `Host:` line from an incoming request to be 
 #   proxied to the host instead of hostname. Setting it to `false` sets this directive to 'Off'.
-# 
+#
 # @param proxy_add_headers
 #   Sets the [ProxyAddHeaders Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyaddheaders).<br />
 #   This parameter controlls whether proxy-related HTTP headers (X-Forwarded-For, 
 #   X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
-# 
+#
 # @param proxy_error_override
 #   Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride). 
 #   This directive controls whether Apache should override error pages for proxied content.
-# 
+#
 # @param options
 #   Sets the [`Options`](https://httpd.apache.org/docs/current/mod/core.html#options) for the specified virtual host. For example:
 #   ``` puppet
@@ -593,7 +593,7 @@
 #   ```
 #   > **Note**: If you use the `directories` parameter of `apache::vhost`, 'Options', 
 #   'Override', and 'DirectoryIndex' are ignored because they are parameters within `directories`.
-# 
+#
 # @param override
 #   Sets the overrides for the specified virtual host. Accepts an array of 
 #   [AllowOverride](https://httpd.apache.org/docs/current/mod/core.html#allowoverride) arguments.
@@ -613,41 +613,41 @@
 #   ```
 #   > **Note:** There is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) 
 #   using the PassengerEnabled directive with the PassengerHighPerformance directive.
-# 
+#
 # @param passenger_base_uri
 #   Sets [PassengerBaseURI](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbase_rui),
 #    to specify that the given URI is a distinct application served by Passenger.
-# 
+#
 # @param passenger_ruby
 #   Sets [PassengerRuby](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerruby),
 #   specifying the Ruby interpreter to use when serving the relevant web applications.
-# 
+#
 # @param passenger_python
 #   Sets [PassengerPython](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpython),
 #   specifying the Python interpreter to use when serving the relevant web applications.
-# 
+#
 # @param passenger_nodejs
 #   Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengernodejs),
 #   specifying Node.js command to use when serving the relevant web applications.
-# 
+#
 # @param passenger_meteor_app_settings
 #   Sets [PassengerMeteorAppSettings](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermeteorappsettings),
 #   specifying a JSON file with settings for the application when using a Meteor 
 #   application in non-bundled mode.
-# 
+#
 # @param passenger_app_env
 #   Sets [PassengerAppEnv](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappenv),
 #   the environment for the Passenger application. If not specified, defaults to the global 
 #   setting or 'production'.
-# 
+#
 # @param passenger_app_root
 #   Sets [PassengerRoot](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapproot),
 #   the location of the Passenger application root if different from the DocumentRoot.
-# 
+#
 # @param passenger_app_group_name
 #   Sets [PassengerAppGroupName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappgroupname),
 #    the name of the application group that the current application should belong to.
-# 
+#
 # @param passenger_app_start_command
 #   Sets [PassengerAppStartCommand](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappstartcommand),
 #    how Passenger should start your app on a specific port.
@@ -655,19 +655,19 @@
 # @param passenger_app_type
 #   Sets [PassengerAppType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapptype),
 #    to force Passenger to recognize the application as a specific type.
-# 
+#
 # @param passenger_startup_file
 #   Sets the [PassengerStartupFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstartupfile),
 #   path. This path is relative to the application root.
-# 
+#
 # @param passenger_restart_dir
 #   Sets the [PassengerRestartDir](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrestartdir),
 #    to customize the directory in which `restart.txt` is searched for.
-# 
+#
 # @param passenger_spawn_method
 #   Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerspawnmethod),
 #   whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
-# 
+#
 # @param passenger_load_shell_envvars
 #   Sets [PassengerLoadShellEnvvars](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerloadshellenvvars),
 #   to enable or disable the loading of shell environment variables before spawning the application.
@@ -675,118 +675,118 @@
 # @param passenger_preload_bundler
 #   Sets [PassengerPreloadBundler](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpreloadbundler),
 #   to enable or disable the loading of bundler before loading the application.
-# 
+#
 # @param passenger_rolling_restarts
 #   Sets [PassengerRollingRestarts](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrollingrestarts),
 #   to enable or disable support for zero-downtime application restarts through `restart.txt`.
-# 
+#
 # @param passenger_resist_deployment_errors
 #   Sets [PassengerResistDeploymentErrors](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerresistdeploymenterrors),
 #   to enable or disable resistance against deployment errors.
-# 
+#
 # @param passenger_user
 #   Sets [PassengerUser](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeruser),
 #   the running user for sandboxing applications.
-# 
+#
 # @param passenger_group
 #   Sets [PassengerGroup](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengergroup),
 #   the running group for sandboxing applications.
-# 
+#
 # @param passenger_friendly_error_pages
 #   Sets [PassengerFriendlyErrorPages](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerfriendlyerrorpages),
 #   which can display friendly error pages whenever an application fails to start. This 
 #   friendly error page presents the startup error message, some suggestions for solving 
 #   the problem, a backtrace and a dump of the environment variables.
-# 
+#
 # @param passenger_min_instances
 #   Sets [PassengerMinInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermininstances),
 #   the minimum number of application processes to run.
-# 
+#
 # @param passenger_max_instances
 #   Sets [PassengerMaxInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxinstances),
 #   the maximum number of application processes to run.
-# 
+#
 # @param passenger_max_preloader_idle_time
 #   Sets [PassengerMaxPreloaderIdleTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxpreloaderidletime),
 #   the maximum amount of time the preloader waits before shutting down an idle process.
-# 
+#
 # @param passenger_force_max_concurrent_requests_per_process
 #   Sets [PassengerForceMaxConcurrentRequestsPerProcess](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerforcemaxconcurrentrequestsperprocess),
 #   the maximum amount of concurrent requests the application can handle per process.
-# 
+#
 # @param passenger_start_timeout
 #   Sets [PassengerStartTimeout](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstarttimeout),
 #   the timeout for the application startup.
-# 
+#
 # @param passenger_concurrency_model
 #   Sets [PassengerConcurrencyModel](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerconcurrencyodel),
 #   to specify the I/O concurrency model that should be used for Ruby application processes. 
 #   Passenger supports two concurrency models:<br />
 #   * `process` - single-threaded, multi-processed I/O concurrency.
 #   * `thread` - multi-threaded, multi-processed I/O concurrency.
-# 
+#
 # @param passenger_thread_count
 #   Sets [PassengerThreadCount](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerthreadcount),
 #   the number of threads that Passenger should spawn per Ruby application process.<br />
 #   This option only has effect if PassengerConcurrencyModel is `thread`.
-# 
+#
 # @param passenger_max_requests
 #   Sets [PassengerMaxRequests](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequests),
 #   the maximum number of requests an application process will process.
-# 
+#
 # @param passenger_max_request_time
 #   Sets [PassengerMaxRequestTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequesttime),
 #   the maximum amount of time, in seconds, that an application process may take to 
 #   process a request.
-# 
+#
 # @param passenger_memory_limit
 #   Sets [PassengerMemoryLimit](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermemorylimit),
 #   the maximum amount of memory that an application process may use, in megabytes.
-# 
+#
 # @param passenger_stat_throttle_rate
 #   Sets [PassengerStatThrottleRate](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstatthrottlerate),
 #   to set a limit, in seconds, on how often Passenger will perform it's filesystem checks.
-# 
+#
 # @param passenger_pre_start
 #   Sets [PassengerPreStart](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerprestart),
 #   the URL of the application if pre-starting is required.
-# 
+#
 # @param passenger_high_performance
 #   Sets [PassengerHighPerformance](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerhighperformance),
 #   to enhance performance in return for reduced compatibility.
-# 
+#
 # @param passenger_buffer_upload
 #   Sets [PassengerBufferUpload](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferupload),
 #   to buffer HTTP client request bodies before they are sent to the application.
-# 
+#
 # @param passenger_buffer_response
 #   Sets [PassengerBufferResponse](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferresponse),
 #   to buffer Happlication-generated responses.
-# 
+#
 # @param passenger_error_override
 #   Sets [PassengerErrorOverride](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengererroroverride),
 #   to specify whether Apache will intercept and handle response with HTTP status codes of
 #   400 and higher.
-# 
+#
 # @param passenger_max_request_queue_size
 #   Sets [PassengerMaxRequestQueueSize](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequestqueuesize),
 #   to specify the maximum amount of requests that are allowed to queue whenever the maximum
 #   concurrent request limit is reached. If the queue is already at this specified limit, then 
 #   Passenger immediately sends a "503 Service Unavailable" error to any incoming requests.<br />
 #   A value of 0 means that the queue size is unbounded.
-# 
+#
 # @param passenger_max_request_queue_time
 #   Sets [PassengerMaxRequestQueueTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequestqueuetime),
 #   to specify the maximum amount of time that requests are allowed to stay in the queue 
 #   whenever the maximum concurrent request limit is reached. If a request reaches this specified 
 #   limit, then Passenger immeaditly sends a "504 Gateway Timeout" error for that request.<br />
 #   A value of 0 means that the queue time is unbounded.
-# 
+#
 # @param passenger_sticky_sessions
 #   Sets [PassengerStickySessions](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessions),
 #   to specify that, whenever possible, all requests sent by a client will be routed to the same 
 #   originating application process.
-# 
+#
 # @param passenger_sticky_sessions_cookie_name
 #   Sets [PassengerStickySessionsCookieName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookiename),
 #   to specify the name of the sticky sessions cookie.
@@ -794,12 +794,12 @@
 # @param passenger_sticky_sessions_cookie_attributes
 #   Sets [PassengerStickySessionsCookieAttributes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookieattributes),
 #   the attributes of the sticky sessions cookie.
-# 
+#
 # @param passenger_allow_encoded_slashes
 #   Sets [PassengerAllowEncodedSlashes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerallowencodedslashes),
 #   to allow URLs with encoded slashes. Please note that this feature will not work properly
 #   unless Apache's `AllowEncodedSlashes` is also enabled.
-# 
+#
 # @param passenger_app_log_file
 #   Sets [PassengerAppLogFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapplogfile),
 #   app specific messages logged to a different file in addition to Passenger log file.
@@ -807,12 +807,12 @@
 # @param passenger_debugger
 #   Sets [PassengerDebugger](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerdebugger),
 #   to turn support for Ruby application debugging on or off. 
-# 
+#
 # @param passenger_lve_min_uid
 #   Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
 #   to only allow the spawning of application processes with UIDs equal to, or higher than, this 
 #   specified value on LVE-enabled kernels.
-# 
+#
 # @param php_values
 #   Allows per-virtual host setting [`php_value`s](http://php.net/manual/en/configuration.changes.php). 
 #   These flags or values can be overwritten by a user or an application.
@@ -1056,11 +1056,11 @@
 #   The parameter [`rewrite_base`](https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase)
 #   specifies the URL prefix to be used for per-directory (htaccess) RewriteRule directives
 #   that substitue a relative path.
-# 
+#
 # @param rewrite_rule
 #   The parameter [`rewrite_rile`](https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule)
 #   allows the user to define the rules that will be used by the rewrite engine.
-# 
+#
 # @param rewrite_cond
 #   The parameter [`rewrite_cond`](https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritecond)
 #   defines a rule condition, that when satisfied will implement that rule within the 
@@ -1151,7 +1151,7 @@
 # @param suexec_user_group
 #   Allows the spcification of user and group execution privileges for CGI programs through
 #   inclusion of the `mod_suexec` module.
-# 
+#
 # @param suphp_addhandler
 #   Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG)
 #   working together with suphp_configpath and suphp_engine.<br />
@@ -1223,7 +1223,7 @@
 #     serveraliases   => ['*.loc',],
 #   }
 #   ```
-# 
+#
 # @param virtual_use_default_docroot
 #   By default, when using `virtual_docroot`, the value of `docroot` is ignored. Setting this
 #   to `true` will mean both directives will be added to the configuration.
@@ -1321,7 +1321,7 @@
 #   This directive is similar to `wsgi_script_aliases`, but makes use of regular expressions
 #   in place of simple prefix matching.<br />
 #   For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
-# 
+#
 # @param wsgi_pass_authorization
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group and
@@ -1413,7 +1413,7 @@
 #     },
 #   }
 #   ```
-# 
+#
 # @param shib_compat_valid_user
 #   Default is Off, matching the behavior prior to this command's existence. Addresses a conflict 
 #   when using Shibboleth in conjunction with other auth/auth modules by restoring `standard` 
@@ -1453,7 +1453,7 @@
 #     ],
 #   }
 #   ```
-# 
+#
 # @param gssapi
 #   Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
 #   ```puppet
@@ -1669,7 +1669,7 @@
 # @param use_canonical_name
 #   Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 #   which allows you to configure how the server determines it's own name and port.
-# 
+#
 # @param define
 #   this lets you define configuration variables inside a vhost using [`Define`](https://httpd.apache.org/docs/2.4/mod/core.html#define),
 #   these can then be used to replace configuration values. All Defines are Undefined at the end of the VirtualHost.
