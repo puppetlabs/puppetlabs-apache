@@ -572,24 +572,24 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_file('rspec.example.com_ssl_key') }
           it { is_expected.to contain_file('rspec.example.com_ssl_chain') }
           it { is_expected.to contain_file('rspec.example.com_ssl_foo.crl') }
-          it { is_expected.to contain_class('apache::mod::mime') }
-          it { is_expected.to contain_class('apache::mod::vhost_alias') }
-          it { is_expected.to contain_class('apache::mod::wsgi') }
-          it { is_expected.to contain_class('apache::mod::suexec') }
-          it { is_expected.to contain_class('apache::mod::passenger') }
           it {
             is_expected.to contain_file('/var/www/logs').with('ensure' => 'directory',
                                                               'mode' => '0600')
           }
-          it { is_expected.to contain_class('apache::mod::rewrite') }
           it { is_expected.to contain_class('apache::mod::alias') }
+          it { is_expected.to contain_class('apache::mod::env') }
+          it { is_expected.to contain_class('apache::mod::fastcgi') }
+          it { is_expected.to contain_class('apache::mod::filter') }
+          it { is_expected.to contain_class('apache::mod::headers') }
+          it { is_expected.to contain_class('apache::mod::mime') }
+          it { is_expected.to contain_class('apache::mod::passenger') }
           it { is_expected.to contain_class('apache::mod::proxy') }
           it { is_expected.to contain_class('apache::mod::proxy_http') }
-          it { is_expected.to contain_class('apache::mod::fastcgi') }
-          it { is_expected.to contain_class('apache::mod::headers') }
-          it { is_expected.to contain_class('apache::mod::filter') }
-          it { is_expected.to contain_class('apache::mod::env') }
+          it { is_expected.to contain_class('apache::mod::rewrite') }
           it { is_expected.to contain_class('apache::mod::setenvif') }
+          it { is_expected.to contain_class('apache::mod::suexec') }
+          it { is_expected.to contain_class('apache::mod::vhost_alias') }
+          it { is_expected.to contain_class('apache::mod::wsgi') }
           it {
             is_expected.to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
                                                                             'mode'    => '0644',
