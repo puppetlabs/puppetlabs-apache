@@ -1455,8 +1455,8 @@
 #   ```
 # 
 # @param gssapi
-#  Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
-#  ```puppet
+#   Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
+#   ```puppet
 #   include apache::mod::auth_gssapi
 #   apache::vhost { 'sample.example.net':
 #     docroot     => '/path/to/directory',
