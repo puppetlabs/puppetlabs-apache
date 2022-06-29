@@ -602,26 +602,12 @@ describe 'apache::vhost', type: :define do
                                                                                     'path' => "/etc/#{apache_name}/sites-enabled/30-rspec.example.com.conf")
             }
           end
-          it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+LimitRequestFieldSize 8190$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+LimitRequestFields 100$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+LimitRequestLine 8190$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+LimitRequestBody 0$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header')
+              .with_content(%r{^\s+LimitRequestFieldSize 8190$})
+              .with_content(%r{^\s+LimitRequestFields 100$})
+              .with_content(%r{^\s+LimitRequestLine 8190$})
+              .with_content(%r{^\s+LimitRequestBody 0$})
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
           it {
@@ -631,539 +617,116 @@ describe 'apache::vhost', type: :define do
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<Proxy "\*">$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Include\s'\/custom\/path\/includes'$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Include\s'\/custom\/path\/another_includes'$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+H2CopyFiles\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+H2PushResource\s/foo.css$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+H2PushResource\s/foo.js$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require valid-user$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require all denied$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require all granted$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<RequireAll>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<\/RequireAll>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require all-valid1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require all-valid2$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<RequireNone>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<\/RequireNone>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require none-valid1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require none-valid2$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<RequireAny>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<\/RequireAny>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require any-valid1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Require any-valid2$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+LDAPReferrals off$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+ProxyPass http://backend-b/ retry=0 timeout=5 noquery interpolate$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+IndexOptions\sFancyIndexing$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+IndexStyleSheet\s'\/styles\/style\.css'$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+DirectoryIndex\sdisabled$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+SetOutputFilter\soutput_filter$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+SetInputFilter\sinput_filter$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<Limit GET HEAD>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>}m,
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+<LimitExcept GET HEAD>$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/LimitExcept>}m,
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+Dav\sfilesystem$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+DavDepthInfinity\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+DavMinTimeout\s600$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerEnabled\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerBaseURI\s/app$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerRuby\s/path/to/ruby$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerPython\s/path/to/python$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerNodejs\s/path/to/nodejs$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMeteorAppSettings\s/path/to/file\.json$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerAppEnv\sdemo$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerAppRoot\s/var/www/node-app$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerAppGroupName\sfoo_bar$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerAppType\snode$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerStartupFile\sstart\.js$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerRestartDir\stemp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerPreloadBundler\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerRollingRestarts\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerResistDeploymentErrors\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerUser\snodeuser$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerGroup\snodegroup$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerFriendlyErrorPages\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMinInstances\s7$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMaxInstances\s9$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s12$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerStartTimeout\s10$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerConcurrencyModel\sthread$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerThreadCount\s20$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMaxRequests\s2000$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMaxRequestTime\s1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMemoryLimit\s32$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerHighPerformance\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerBufferUpload\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerBufferResponse\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerErrorOverride\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMaxRequestQueueSize\s120$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerMaxRequestQueueTime\s5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerStickySessions\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerStickySessionsCookieName\s_delicious_cookie$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerAllowEncodedSlashes\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+PassengerDebugger\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiAcceptorName\s{HOSTNAME}$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiAllowedMech\skrb5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiAllowedMech\siakerb$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiAllowedMech\sntlmssp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiBasicAuth\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiBasicAuthMech\skrb5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiBasicAuthMech\siakerb$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiBasicAuthMech\sntlmssp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiBasicTicketTimeout\s300$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiConnectionBound\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiCredStore\sccache:FILE:/path/to/directory$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiCredStore\sclient_keytab:/path/to/example\.keytab$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiCredStore\skeytab:/path/to/example\.keytab$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiDelegCcacheDir\s/path/to/directory$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiDelegCcacheEnvVar\sKRB5CCNAME$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiDelegCcachePerms\smode:0600\suid:example-user\sgid:example-group$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiDelegCcacheUnique\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiImpersonate\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiLocalName\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiNameAttributes\sjson$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiNegotiateOnce\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiPublishErrors\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiPublishMech\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiRequiredNameAttributes\s"auth-indicators=high"$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiSessionKey\sfile:/path/to/example\.key$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiSignalPersistentAuth\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiSSLonly\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiUseS4U2Proxy\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+GssapiUseSessions\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+SSLVerifyClient\soptional$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-              content: %r{^\s+SSLVerifyDepth\s10$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-directories')
+              .with_content(%r{^\s+<Proxy "\*">$})
+              .with_content(%r{^\s+Include\s'\/custom\/path\/includes'$})
+              .with_content(%r{^\s+Include\s'\/custom\/path\/another_includes'$})
+              .with_content(%r{^\s+H2CopyFiles\sOn$})
+              .with_content(%r{^\s+H2PushResource\s/foo.css$})
+              .with_content(%r{^\s+H2PushResource\s/foo.js$})
+              .with_content(%r{^\s+Require valid-user$})
+              .with_content(%r{^\s+Require all denied$})
+              .with_content(%r{^\s+Require all granted$})
+              .with_content(%r{^\s+<RequireAll>$})
+              .with_content(%r{^\s+<\/RequireAll>$})
+              .with_content(%r{^\s+Require all-valid1$})
+              .with_content(%r{^\s+Require all-valid2$})
+              .with_content(%r{^\s+<RequireNone>$})
+              .with_content(%r{^\s+<\/RequireNone>$})
+              .with_content(%r{^\s+Require none-valid1$})
+              .with_content(%r{^\s+Require none-valid2$})
+              .with_content(%r{^\s+<RequireAny>$})
+              .with_content(%r{^\s+<\/RequireAny>$})
+              .with_content(%r{^\s+Require any-valid1$})
+              .with_content(%r{^\s+Require any-valid2$})
+              .with_content(%r{^\s+LDAPReferrals off$})
+              .with_content(%r{^\s+ProxyPass http://backend-b/ retry=0 timeout=5 noquery interpolate$})
+              .with_content(%r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$})
+              .with_content(%r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$})
+              .with_content(%r{^\s+IndexOptions\sFancyIndexing$})
+              .with_content(%r{^\s+IndexStyleSheet\s'\/styles\/style\.css'$})
+              .with_content(%r{^\s+DirectoryIndex\sdisabled$})
+              .with_content(%r{^\s+SetOutputFilter\soutput_filter$})
+              .with_content(%r{^\s+SetInputFilter\sinput_filter$})
+              .with_content(%r{^\s+<Limit GET HEAD>$})
+              .with_content(%r{\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>}m)
+              .with_content(%r{^\s+<LimitExcept GET HEAD>$})
+              .with_content(%r{\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/LimitExcept>}m)
+              .with_content(%r{^\s+Dav\sfilesystem$})
+              .with_content(%r{^\s+DavDepthInfinity\sOn$})
+              .with_content(%r{^\s+DavMinTimeout\s600$})
+              .with_content(%r{^\s+PassengerEnabled\sOn$})
+              .with_content(%r{^\s+PassengerBaseURI\s/app$})
+              .with_content(%r{^\s+PassengerRuby\s/path/to/ruby$})
+              .with_content(%r{^\s+PassengerPython\s/path/to/python$})
+              .with_content(%r{^\s+PassengerNodejs\s/path/to/nodejs$})
+              .with_content(%r{^\s+PassengerMeteorAppSettings\s/path/to/file\.json$})
+              .with_content(%r{^\s+PassengerAppEnv\sdemo$})
+              .with_content(%r{^\s+PassengerAppRoot\s/var/www/node-app$})
+              .with_content(%r{^\s+PassengerAppGroupName\sfoo_bar$})
+              .with_content(%r{^\s+PassengerAppType\snode$})
+              .with_content(%r{^\s+PassengerStartupFile\sstart\.js$})
+              .with_content(%r{^\s+PassengerRestartDir\stemp$})
+              .with_content(%r{^\s+PassengerLoadShellEnvvars\sOff$})
+              .with_content(%r{^\s+PassengerPreloadBundler\sOff$})
+              .with_content(%r{^\s+PassengerRollingRestarts\sOff$})
+              .with_content(%r{^\s+PassengerResistDeploymentErrors\sOff$})
+              .with_content(%r{^\s+PassengerUser\snodeuser$})
+              .with_content(%r{^\s+PassengerGroup\snodegroup$})
+              .with_content(%r{^\s+PassengerFriendlyErrorPages\sOn$})
+              .with_content(%r{^\s+PassengerMinInstances\s7$})
+              .with_content(%r{^\s+PassengerMaxInstances\s9$})
+              .with_content(%r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s12$})
+              .with_content(%r{^\s+PassengerStartTimeout\s10$})
+              .with_content(%r{^\s+PassengerConcurrencyModel\sthread$})
+              .with_content(%r{^\s+PassengerThreadCount\s20$})
+              .with_content(%r{^\s+PassengerMaxRequests\s2000$})
+              .with_content(%r{^\s+PassengerMaxRequestTime\s1$})
+              .with_content(%r{^\s+PassengerMemoryLimit\s32$})
+              .with_content(%r{^\s+PassengerHighPerformance\sOff$})
+              .with_content(%r{^\s+PassengerBufferUpload\sOff$})
+              .with_content(%r{^\s+PassengerBufferResponse\sOff$})
+              .with_content(%r{^\s+PassengerErrorOverride\sOff$})
+              .with_content(%r{^\s+PassengerMaxRequestQueueSize\s120$})
+              .with_content(%r{^\s+PassengerMaxRequestQueueTime\s5$})
+              .with_content(%r{^\s+PassengerStickySessions\sOn$})
+              .with_content(%r{^\s+PassengerStickySessionsCookieName\s_delicious_cookie$})
+              .with_content(%r{^\s+PassengerAllowEncodedSlashes\sOff$})
+              .with_content(%r{^\s+PassengerDebugger\sOff$})
+              .with_content(%r{^\s+GssapiAcceptorName\s{HOSTNAME}$})
+              .with_content(%r{^\s+GssapiAllowedMech\skrb5$})
+              .with_content(%r{^\s+GssapiAllowedMech\siakerb$})
+              .with_content(%r{^\s+GssapiAllowedMech\sntlmssp$})
+              .with_content(%r{^\s+GssapiBasicAuth\sOn$})
+              .with_content(%r{^\s+GssapiBasicAuthMech\skrb5$})
+              .with_content(%r{^\s+GssapiBasicAuthMech\siakerb$})
+              .with_content(%r{^\s+GssapiBasicAuthMech\sntlmssp$})
+              .with_content(%r{^\s+GssapiBasicTicketTimeout\s300$})
+              .with_content(%r{^\s+GssapiConnectionBound\sOn$})
+              .with_content(%r{^\s+GssapiCredStore\sccache:FILE:/path/to/directory$})
+              .with_content(%r{^\s+GssapiCredStore\sclient_keytab:/path/to/example\.keytab$})
+              .with_content(%r{^\s+GssapiCredStore\skeytab:/path/to/example\.keytab$})
+              .with_content(%r{^\s+GssapiDelegCcacheDir\s/path/to/directory$})
+              .with_content(%r{^\s+GssapiDelegCcacheEnvVar\sKRB5CCNAME$})
+              .with_content(%r{^\s+GssapiDelegCcachePerms\smode:0600\suid:example-user\sgid:example-group$})
+              .with_content(%r{^\s+GssapiDelegCcacheUnique\sOn$})
+              .with_content(%r{^\s+GssapiImpersonate\sOn$})
+              .with_content(%r{^\s+GssapiLocalName\sOn$})
+              .with_content(%r{^\s+GssapiNameAttributes\sjson$})
+              .with_content(%r{^\s+GssapiNegotiateOnce\sOn$})
+              .with_content(%r{^\s+GssapiPublishErrors\sOn$})
+              .with_content(%r{^\s+GssapiPublishMech\sOn$})
+              .with_content(%r{^\s+GssapiRequiredNameAttributes\s"auth-indicators=high"$})
+              .with_content(%r{^\s+GssapiSessionKey\sfile:/path/to/example\.key$})
+              .with_content(%r{^\s+GssapiSignalPersistentAuth\sOn$})
+              .with_content(%r{^\s+GssapiSSLonly\sOn$})
+              .with_content(%r{^\s+GssapiUseS4U2Proxy\sOn$})
+              .with_content(%r{^\s+GssapiUseSessions\sOn$})
+              .with_content(%r{^\s+SSLVerifyClient\soptional$})
+              .with_content(%r{^\s+SSLVerifyDepth\s10$})
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-logging')
               .with_content(%r{^\s+ErrorLogFormat "\[%t\] \[%l\] %7F: %E: \[client\\ %a\] %M% ,\\ referer\\ %\{Referer\}i"$})
@@ -1174,52 +737,18 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-block') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-error_document') }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{retry=0},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{timeout=5},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{SetEnv force-proxy-request-1.0 1},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{SetEnv proxy-nokeepalive 1},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{noquery interpolate},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{ProxyPreserveHost On},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{ProxyAddHeaders On},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{ProxyPassReverseCookiePath\s+\/a\s+http:\/\/},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-proxy')
+              .with_content(%r{retry=0})
+              .with_content(%r{timeout=5})
+              .with_content(%r{SetEnv force-proxy-request-1.0 1})
+              .with_content(%r{SetEnv proxy-nokeepalive 1})
+              .with_content(%r{noquery interpolate})
+              .with_content(%r{ProxyPreserveHost On})
+              .with_content(%r{ProxyAddHeaders On})
+              .with_content(%r{ProxyPassReverseCookiePath\s+\/a\s+http:\/\/})
+              .with_content(%r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo})
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-rewrite') }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
               content: %r{^\s+RewriteOptions Inherit$},
@@ -1228,66 +757,25 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
-              %r{SetEnv FOO=/bin/true},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-setenv')
+              .with_content(%r{SetEnv FOO=/bin/true})
+              .with_content(%r{SetEnvIf Request_URI "\\.gif\$" object_is_image=gif})
+              .with_content(%r{SetEnvIfNoCase REMOTE_ADDR \^127.0.0.1 localhost=true})
           }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
-              %r{SetEnvIf Request_URI "\\.gif\$" object_is_image=gif},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-ssl')
+              .with_content(%r{^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$})
+              .with_content(%r{^\s+SSLHonorCipherOrder\s+Off$})
+              .with_content(%r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$})
           }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-setenv').with_content(
-              %r{SetEnvIfNoCase REMOTE_ADDR \^127.0.0.1 localhost=true},
-            )
-          }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
-              content: %r{^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
-              content: %r{^\s+SSLHonorCipherOrder\s+Off$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-ssl').with(
-              content: %r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$},
-            )
-          }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy') }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyEngine On$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyCheckPeerCN\s+on$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyCheckPeerName\s+on$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyCheckPeerExpire\s+on$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyCipherSuite\s+HIGH$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy').with(
-              content: %r{^\s+SSLProxyProtocol\s+TLSv1.2$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-sslproxy')
+              .with_content(%r{^\s+SSLProxyEngine On$})
+              .with_content(%r{^\s+SSLProxyCheckPeerCN\s+on$})
+              .with_content(%r{^\s+SSLProxyCheckPeerName\s+on$})
+              .with_content(%r{^\s+SSLProxyCheckPeerExpire\s+on$})
+              .with_content(%r{^\s+SSLProxyCipherSuite\s+HIGH$})
+              .with_content(%r{^\s+SSLProxyProtocol\s+TLSv1.2$})
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
@@ -1306,419 +794,126 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-charsets') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-security') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts').with(
-              content: %r{^\s+JkMount\s+\/\*\s+tcnode1$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-file_footer')
+              .with_content(%r{^PassengerPreStart\shttp://localhost/myapp$})
           }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts').with(
-              content: %r{^\s+JkUnMount\s+\/\*\.jpg\s+tcnode1$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts')
+              .with_content(%r{^\s+JkMount\s+\/\*\s+tcnode1$})
+              .with_content(%r{^\s+JkUnMount\s+\/\*\.jpg\s+tcnode1$})
           }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbMethodNegotiate\soff$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb')
+              .with_content(%r{^\s+KrbMethodNegotiate\soff$})
+              .with_content(%r{^\s+KrbAuthoritative\soff$})
+              .with_content(%r{^\s+KrbAuthRealms\sEXAMPLE.ORG\sEXAMPLE.NET$})
+              .with_content(%r{^\s+Krb5Keytab\s\/tmp\/keytab5$})
+              .with_content(%r{^\s+KrbLocalUserMapping\soff$})
+              .with_content(%r{^\s+KrbServiceName\sHTTP$})
+              .with_content(%r{^\s+KrbSaveCredentials\soff$})
+              .with_content(%r{^\s+KrbVerifyKDC\son$})
           }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbAuthoritative\soff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbAuthRealms\sEXAMPLE.ORG\sEXAMPLE.NET$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+Krb5Keytab\s\/tmp\/keytab5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbLocalUserMapping\soff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbServiceName\sHTTP$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbSaveCredentials\soff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_kerb').with(
-              content: %r{^\s+KrbVerifyKDC\son$},
-            )
-          }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-http_protocol_options').with(
               content: %r{^\s*HttpProtocolOptions\s+Strict\s+LenientMethods\s+Allow0\.9$},
             )
           }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
-              content: %r{^\s+KeepAlive\son$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
-              content: %r{^\s+KeepAliveTimeout\s100$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options').with(
-              content: %r{^\s+MaxKeepAliveRequests\s1000$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+Protocols\sh2 http/1.1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+ProtocolsHonorOrder\sOn$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-keepalive_options')
+              .with_content(%r{^\s+KeepAlive\son$})
+              .with_content(%r{^\s+KeepAliveTimeout\s100$})
+              .with_content(%r{^\s+MaxKeepAliveRequests\s1000$})
           }
 
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2CopyFiles\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2Direct\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2EarlyHints\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2MaxSessionStreams\s100$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2ModernTLSOnly\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2Push\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2PushDiarySize\s256$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2PushPriority\sapplication/json 32$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2PushResource\s/css/main.css$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2PushResource\s/js/main.js$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2SerializeHeaders\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2StreamMaxMemSize\s65536$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2TLSCoolDownSecs\s1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2TLSWarmUpSize\s1048576$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2Upgrade\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-http2').with(
-              content: %r{^\s+H2WindowSize\s65535$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-apache-header')
+              .with_content(%r{^\s+Protocols\sh2 http/1.1$})
+              .with_content(%r{^\s+ProtocolsHonorOrder\sOn$})
           }
 
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerEnabled\sOff$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-http2')
+              .with_content(%r{^\s+H2CopyFiles\sOff$})
+              .with_content(%r{^\s+H2Direct\sOn$})
+              .with_content(%r{^\s+H2EarlyHints\sOff$})
+              .with_content(%r{^\s+H2MaxSessionStreams\s100$})
+              .with_content(%r{^\s+H2ModernTLSOnly\sOn$})
+              .with_content(%r{^\s+H2Push\sOn$})
+              .with_content(%r{^\s+H2PushDiarySize\s256$})
+              .with_content(%r{^\s+H2PushPriority\sapplication/json 32$})
+              .with_content(%r{^\s+H2PushResource\s/css/main.css$})
+              .with_content(%r{^\s+H2PushResource\s/js/main.js$})
+              .with_content(%r{^\s+H2SerializeHeaders\sOff$})
+              .with_content(%r{^\s+H2StreamMaxMemSize\s65536$})
+              .with_content(%r{^\s+H2TLSCoolDownSecs\s1$})
+              .with_content(%r{^\s+H2TLSWarmUpSize\s1048576$})
+              .with_content(%r{^\s+H2Upgrade\sOn$})
+              .with_content(%r{^\s+H2WindowSize\s65535$})
           }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerBaseURI\s/app$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-passenger')
+              .with_content(%r{^\s+PassengerEnabled\sOff$})
+              .with_content(%r{^\s+PassengerBaseURI\s/app$})
+              .with_content(%r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$})
+              .with_content(%r{^\s+PassengerPython\s/usr/local/bin/python$})
+              .with_content(%r{^\s+PassengerNodejs\s/usr/bin/node$})
+              .with_content(%r{^\s+PassengerMeteorAppSettings\s/path/to/some/file.json$})
+              .with_content(%r{^\s+PassengerAppEnv\stest$})
+              .with_content(%r{^\s+PassengerAppRoot\s/usr/share/myapp$})
+              .with_content(%r{^\s+PassengerAppGroupName\sapp_customer$})
+              .with_content(%r{^\s+PassengerAppType\srack$})
+              .with_content(%r{^\s+PassengerStartupFile\sbin/www$})
+              .with_content(%r{^\s+PassengerRestartDir\stmp$})
+              .with_content(%r{^\s+PassengerSpawnMethod\sdirect$})
+              .with_content(%r{^\s+PassengerLoadShellEnvvars\sOff$})
+              .with_content(%r{^\s+PassengerPreloadBundler\sOff$})
+              .with_content(%r{^\s+PassengerRollingRestarts\sOff$})
+              .with_content(%r{^\s+PassengerResistDeploymentErrors\sOn$})
+              .with_content(%r{^\s+PassengerUser\ssandbox$})
+              .with_content(%r{^\s+PassengerGroup\ssandbox$})
+              .with_content(%r{^\s+PassengerFriendlyErrorPages\sOff$})
+              .with_content(%r{^\s+PassengerMinInstances\s1$})
+              .with_content(%r{^\s+PassengerMaxInstances\s30$})
+              .with_content(%r{^\s+PassengerMaxPreloaderIdleTime\s600$})
+              .with_content(%r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s10$})
+              .with_content(%r{^\s+PassengerStartTimeout\s600$})
+              .with_content(%r{^\s+PassengerConcurrencyModel\sthread$})
+              .with_content(%r{^\s+PassengerThreadCount\s5$})
+              .with_content(%r{^\s+PassengerMaxRequests\s1000$})
+              .with_content(%r{^\s+PassengerMaxRequestTime\s2$})
+              .with_content(%r{^\s+PassengerMemoryLimit\s64$})
+              .with_content(%r{^\s+PassengerStatThrottleRate\s5$})
+              .with_content(%r{^\s+PassengerHighPerformance\sOn$})
+              .with_content(%r{^\s+PassengerBufferUpload\sOff$})
+              .with_content(%r{^\s+PassengerBufferResponse\sOff$})
+              .with_content(%r{^\s+PassengerErrorOverride\sOn$})
+              .with_content(%r{^\s+PassengerMaxRequestQueueSize\s10$})
+              .with_content(%r{^\s+PassengerMaxRequestQueueTime\s2$})
+              .with_content(%r{^\s+PassengerStickySessions\sOn$})
+              .with_content(%r{^\s+PassengerStickySessionsCookieName\s_nom_nom_nom$})
+              .with_content(%r{^\s+PassengerAllowEncodedSlashes\sOn$})
+              .with_content(%r{^\s+PassengerDebugger\sOn$})
+              .with_content(%r{^\s+PassengerLveMinUid\s500$})
           }
+
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerRuby\s/usr/bin/ruby1\.9\.1$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc')
+              .with_content(%r{^\s+OIDCProviderMetadataURL\shttps:\/\/login.example.com\/\.well-known\/openid-configuration$})
+              .with_content(%r{^\s+OIDCClientID\stest$})
+              .with_content(%r{^\s+OIDCRedirectURI\shttps:\/\/login\.example.com\/redirect_uri$})
+              .with_content(%r{^\s+OIDCProviderTokenEndpointAuth\sclient_secret_basic$})
+              .with_content(%r{^\s+OIDCRemoteUserClaim\ssub$})
+              .with_content(%r{^\s+OIDCClientSecret\saae053a9-4abf-4824-8956-e94b2af335c8$})
+              .with_content(%r{^\s+OIDCCryptoPassphrase\s4ad1bb46-9979-450e-ae58-c696967df3cd$})
           }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerPython\s/usr/local/bin/python$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerNodejs\s/usr/bin/node$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMeteorAppSettings\s/path/to/some/file.json$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerAppEnv\stest$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerAppRoot\s/usr/share/myapp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerAppGroupName\sapp_customer$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerAppType\srack$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerStartupFile\sbin/www$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerRestartDir\stmp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerSpawnMethod\sdirect$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerLoadShellEnvvars\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerPreloadBundler\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerRollingRestarts\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerResistDeploymentErrors\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerUser\ssandbox$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerGroup\ssandbox$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerFriendlyErrorPages\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMinInstances\s1$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxInstances\s30$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxPreloaderIdleTime\s600$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerForceMaxConcurrentRequestsPerProcess\s10$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerStartTimeout\s600$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerConcurrencyModel\sthread$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerThreadCount\s5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxRequests\s1000$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxRequestTime\s2$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMemoryLimit\s64$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerStatThrottleRate\s5$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-file_footer').with(
-              content: %r{^PassengerPreStart\shttp://localhost/myapp$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerHighPerformance\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerBufferUpload\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerBufferResponse\sOff$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerErrorOverride\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxRequestQueueSize\s10$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerMaxRequestQueueTime\s2$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerStickySessions\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerStickySessionsCookieName\s_nom_nom_nom$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerAllowEncodedSlashes\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerDebugger\sOn$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-passenger').with(
-              content: %r{^\s+PassengerLveMinUid\s500$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCProviderMetadataURL\shttps:\/\/login.example.com\/\.well-known\/openid-configuration$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCClientID\stest$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCRedirectURI\shttps:\/\/login\.example.com\/redirect_uri$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCProviderTokenEndpointAuth\sclient_secret_basic$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCRemoteUserClaim\ssub$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCClientSecret\saae053a9-4abf-4824-8956-e94b2af335c8$},
-            )
-          }
-          it {
-            is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
-              content: %r{^\s+OIDCCryptoPassphrase\s4ad1bb46-9979-450e-ae58-c696967df3cd$},
-            )
-          }
+
           it { is_expected.to contain_class('apache::mod::md') }
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
@@ -2129,44 +1324,15 @@ describe 'apache::vhost', type: :define do
              (facts[:os]['name'] == 'Amazon') ||
              (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
             it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Allow from 127\.0\.0\.1$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Allow from 127\.0\.0\.2$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Allow from 127\.0\.0\.5$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Deny from 127\.0\.0\.3$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Deny from 127\.0\.0\.4$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Deny from all$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Satisfy any$},
-              )
-            }
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
-                content: %r{^\s+Order deny,allow$},
-              )
+              is_expected.to contain_concat__fragment('rspec.example.com-directories')
+                .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
+                .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
+                .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
+                .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
+                .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
+                .with_content(%r{^\s+Deny from all$})
+                .with_content(%r{^\s+Satisfy any$})
+                .with_content(%r{^\s+Order deny,allow$})
             }
           end
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-additional_includes') }
@@ -2486,33 +1652,12 @@ describe 'apache::vhost', type: :define do
             end
 
             it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
-                content: %r{^\s+ErrorLogFormat "\[%\{uc\}t\] \[%-m:%-l\] \[R:%L\] \[C:%\{C\}L\] %7F: %E: %M"$},
-              )
-            }
-
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
-                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Request %k on C:%\{c\}L pid:%P tid:%T"$},
-              )
-            }
-
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
-                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] UA:'%\+\{User-Agent\}i'"$},
-              )
-            }
-
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
-                content: %r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Referer:'%\+\{Referer\}i'"$},
-              )
-            }
-
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging').with(
-                content: %r{^\s+ErrorLogFormat connection "\[%\{uc\}t\] \[C:%\{c\}L\] local\\ %a remote\\ %A"$},
-              )
+              is_expected.to contain_concat__fragment('rspec.example.com-logging')
+                .with_content(%r{^\s+ErrorLogFormat "\[%\{uc\}t\] \[%-m:%-l\] \[R:%L\] \[C:%\{C\}L\] %7F: %E: %M"$})
+                .with_content(%r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Request %k on C:%\{c\}L pid:%P tid:%T"$})
+                .with_content(%r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] UA:'%\+\{User-Agent\}i'"$})
+                .with_content(%r{^\s+ErrorLogFormat request "\[%\{uc\}t\] \[R:%L\] Referer:'%\+\{Referer\}i'"$})
+                .with_content(%r{^\s+ErrorLogFormat connection "\[%\{uc\}t\] \[C:%\{c\}L\] local\\ %a remote\\ %A"$})
             }
           end
         end # error logs format
@@ -2604,7 +1749,6 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
-            it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
             # this works only with apache 2.4 and newer
             if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i > 6) ||
                (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i > 11)
@@ -2613,6 +1757,8 @@ describe 'apache::vhost', type: :define do
                   content: %r{^\s+Require all granted$},
                 )
               }
+            else
+              it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
             end
           end
           context 'require unmanaged' do
@@ -2631,7 +1777,6 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
-            it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
             it {
               is_expected.not_to contain_concat__fragment('rspec.example.com-directories').with(
                 content: %r{^\s+Require all granted$},
@@ -2716,8 +1861,11 @@ describe 'apache::vhost', type: :define do
               ],
             )
 
-            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UserDir disabled$}) }
-            it { is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir').with(content: %r{^\s+UUserDir enabled bob$}) }
+            it {
+              is_expected.to contain_concat__fragment('rspec.example.com-apache-userdir')
+                .with(content: %r{^\s+UserDir disabled$})
+                .with(content: %r{^\s+UUserDir enabled bob$})
+            }
           end
         end
       end
