@@ -5,11 +5,6 @@ require 'spec_helper'
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
     on_supported_os.each do |os, facts|
-      # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Ubuntu 18.04
-      next if facts[:os]['release']['major'] == '18.04' || facts[:os]['release']['major'] == '20.04'
-      next if (facts[:os]['release']['major'] == '7' || facts[:os]['release']['major'] == '8') && facts[:os]['family']['RedHat']
-      # next if facts[:os]['name'] == 'SLES'
-
       apache_name = case facts[:os]['family']
                     when 'RedHat'
                       'httpd'
@@ -46,7 +41,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
           # namebased virualhost is only created on apache 2.2 and older
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 8) ||
+          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
              (facts[:os]['name'] == 'Amazon') ||
              (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
             it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
@@ -441,10 +436,6 @@ describe 'apache::vhost', type: :define do
               },
               'wsgi_chunked_request'        => 'On',
               'action'                      => 'foo',
-              'fastcgi_server'              => 'localhost',
-              'fastcgi_socket'              => '/tmp/fastcgi.socket',
-              'fastcgi_dir'                 => '/tmp',
-              'fastcgi_idle_timeout'        => '120',
               'additional_includes'         => '/custom/path/includes',
               'apache_version'              => '2.4',
               'use_optional_includes'       => true,
@@ -578,7 +569,6 @@ describe 'apache::vhost', type: :define do
           }
           it { is_expected.to contain_class('apache::mod::alias') }
           it { is_expected.to contain_class('apache::mod::env') }
-          it { is_expected.to contain_class('apache::mod::fastcgi') }
           it { is_expected.to contain_class('apache::mod::filter') }
           it { is_expected.to contain_class('apache::mod::headers') }
           it { is_expected.to contain_class('apache::mod::mime') }
@@ -788,7 +778,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-allow_encoded_slashes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
@@ -1769,6 +1758,25 @@ describe 'apache::vhost', type: :define do
                   .with_content(%r{^\s+Satisfy any$})
                   .with_content(%r{^\s+Order deny,allow$})
               }
+            end
+          end
+
+          # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
+          unless facts[:os]['family'] || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
+            describe 'fastcgi options' do
+              let :params do
+                {
+                  'docroot'              => '/var/www/foo',
+                  'fastcgi_server'       => 'localhost',
+                  'fastcgi_socket'       => '/tmp/fastcgi.socket',
+                  'fastcgi_dir'          => '/tmp',
+                  'fastcgi_idle_timeout' => '120',
+                }
+              end
+
+              it { is_expected.to compile }
+              it { is_expected.to contain_class('apache::mod::fastcgi') }
+              it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
             end
           end
 
