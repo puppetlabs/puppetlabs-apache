@@ -1269,23 +1269,6 @@ describe 'apache::vhost', type: :define do
               'manage_docroot'  => true,
               'logroot'         => '/tmp/logroot',
               'logroot_ensure'  => 'absent',
-              'directories'     => [
-                {
-                  'path'     => '/var/www/files',
-                  'provider' => 'files',
-                  'allow'    => ['from 127.0.0.1', 'from 127.0.0.2'],
-                  'deny'     => ['from 127.0.0.3', 'from 127.0.0.4'],
-                  'satisfy'  => 'any',
-                },
-                {
-                  'path'     => '/var/www/foo',
-                  'provider' => 'files',
-                  'allow'    => 'from 127.0.0.5',
-                  'deny'     => 'from all',
-                  'order'    => 'deny,allow',
-                },
-              ],
-
             }
           end
 
@@ -1318,23 +1301,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-fallbackresource') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
-          # the following style is only present on Apache 2.2
-          # That is used in SLES 11, RHEL6, Amazon Linux
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories')
-                .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
-                .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
-                .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
-                .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
-                .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
-                .with_content(%r{^\s+Deny from all$})
-                .with_content(%r{^\s+Satisfy any$})
-                .with_content(%r{^\s+Order deny,allow$})
-            }
-          end
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-additional_includes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -1761,6 +1727,51 @@ describe 'apache::vhost', type: :define do
               it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
             end
           end
+
+          # the following style is only present on Apache 2.2
+          # That is used in SLES 11, RHEL6, Amazon Linux
+          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
+             (facts[:os]['name'] == 'Amazon') ||
+             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+            context 'apache 2.2 access controls on directories' do
+              let :params do
+                {
+                  'docroot'         => '/var/www/foo',
+                  'directories'     => [
+                    {
+                      'path'     => '/var/www/foo',
+                      'provider' => 'files',
+                      'allow'    => 'from 127.0.0.5',
+                      'deny'     => 'from all',
+                      'order'    => 'deny,allow',
+                    },
+                    {
+                      'path'     => '/var/www/protected-files',
+                      'provider' => 'files',
+                      'allow'    => ['from 127.0.0.1', 'from 127.0.0.2'],
+                      'deny'     => ['from 127.0.0.3', 'from 127.0.0.4'],
+                      'satisfy'  => 'any',
+                    },
+                  ],
+                }
+              end
+
+              it { is_expected.to compile }
+              it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+              it {
+                is_expected.to contain_concat__fragment('rspec.example.com-directories')
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
+                  .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
+                  .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
+                  .with_content(%r{^\s+Deny from all$})
+                  .with_content(%r{^\s+Satisfy any$})
+                  .with_content(%r{^\s+Order deny,allow$})
+              }
+            end
+          end
+
           context 'require unmanaged' do
             let :params do
               {
