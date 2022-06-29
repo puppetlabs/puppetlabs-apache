@@ -5,11 +5,6 @@ require 'spec_helper'
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
     on_supported_os.each do |os, facts|
-      # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Ubuntu 18.04
-      next if facts[:os]['release']['major'] == '18.04' || facts[:os]['release']['major'] == '20.04'
-      next if (facts[:os]['release']['major'] == '7' || facts[:os]['release']['major'] == '8') && facts[:os]['family']['RedHat']
-      # next if facts[:os]['name'] == 'SLES'
-
       apache_name = case facts[:os]['family']
                     when 'RedHat'
                       'httpd'
@@ -46,7 +41,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
           # namebased virualhost is only created on apache 2.2 and older
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 8) ||
+          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
              (facts[:os]['name'] == 'Amazon') ||
              (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
             it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
@@ -441,10 +436,6 @@ describe 'apache::vhost', type: :define do
               },
               'wsgi_chunked_request'        => 'On',
               'action'                      => 'foo',
-              'fastcgi_server'              => 'localhost',
-              'fastcgi_socket'              => '/tmp/fastcgi.socket',
-              'fastcgi_dir'                 => '/tmp',
-              'fastcgi_idle_timeout'        => '120',
               'additional_includes'         => '/custom/path/includes',
               'apache_version'              => '2.4',
               'use_optional_includes'       => true,
@@ -572,24 +563,23 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_file('rspec.example.com_ssl_key') }
           it { is_expected.to contain_file('rspec.example.com_ssl_chain') }
           it { is_expected.to contain_file('rspec.example.com_ssl_foo.crl') }
-          it { is_expected.to contain_class('apache::mod::mime') }
-          it { is_expected.to contain_class('apache::mod::vhost_alias') }
-          it { is_expected.to contain_class('apache::mod::wsgi') }
-          it { is_expected.to contain_class('apache::mod::suexec') }
-          it { is_expected.to contain_class('apache::mod::passenger') }
           it {
             is_expected.to contain_file('/var/www/logs').with('ensure' => 'directory',
                                                               'mode' => '0600')
           }
-          it { is_expected.to contain_class('apache::mod::rewrite') }
           it { is_expected.to contain_class('apache::mod::alias') }
+          it { is_expected.to contain_class('apache::mod::env') }
+          it { is_expected.to contain_class('apache::mod::filter') }
+          it { is_expected.to contain_class('apache::mod::headers') }
+          it { is_expected.to contain_class('apache::mod::mime') }
+          it { is_expected.to contain_class('apache::mod::passenger') }
           it { is_expected.to contain_class('apache::mod::proxy') }
           it { is_expected.to contain_class('apache::mod::proxy_http') }
-          it { is_expected.to contain_class('apache::mod::fastcgi') }
-          it { is_expected.to contain_class('apache::mod::headers') }
-          it { is_expected.to contain_class('apache::mod::filter') }
-          it { is_expected.to contain_class('apache::mod::env') }
+          it { is_expected.to contain_class('apache::mod::rewrite') }
           it { is_expected.to contain_class('apache::mod::setenvif') }
+          it { is_expected.to contain_class('apache::mod::suexec') }
+          it { is_expected.to contain_class('apache::mod::vhost_alias') }
+          it { is_expected.to contain_class('apache::mod::wsgi') }
           it {
             is_expected.to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
                                                                             'mode'    => '0644',
@@ -788,7 +778,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-suexec') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-allow_encoded_slashes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-passenger') }
@@ -1269,23 +1258,6 @@ describe 'apache::vhost', type: :define do
               'manage_docroot'  => true,
               'logroot'         => '/tmp/logroot',
               'logroot_ensure'  => 'absent',
-              'directories'     => [
-                {
-                  'path'     => '/var/www/files',
-                  'provider' => 'files',
-                  'allow'    => ['from 127.0.0.1', 'from 127.0.0.2'],
-                  'deny'     => ['from 127.0.0.3', 'from 127.0.0.4'],
-                  'satisfy'  => 'any',
-                },
-                {
-                  'path'     => '/var/www/foo',
-                  'provider' => 'files',
-                  'allow'    => 'from 127.0.0.5',
-                  'deny'     => 'from all',
-                  'order'    => 'deny,allow',
-                },
-              ],
-
             }
           end
 
@@ -1318,23 +1290,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-fallbackresource') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
-          # the following style is only present on Apache 2.2
-          # That is used in SLES 11, RHEL6, Amazon Linux
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-directories')
-                .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
-                .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
-                .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
-                .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
-                .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
-                .with_content(%r{^\s+Deny from all$})
-                .with_content(%r{^\s+Satisfy any$})
-                .with_content(%r{^\s+Order deny,allow$})
-            }
-          end
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-additional_includes') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-logging') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
@@ -1761,6 +1716,70 @@ describe 'apache::vhost', type: :define do
               it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
             end
           end
+
+          # the following style is only present on Apache 2.2
+          # That is used in SLES 11, RHEL6, Amazon Linux
+          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
+             (facts[:os]['name'] == 'Amazon') ||
+             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+            context 'apache 2.2 access controls on directories' do
+              let :params do
+                {
+                  'docroot'         => '/var/www/foo',
+                  'directories'     => [
+                    {
+                      'path'     => '/var/www/foo',
+                      'provider' => 'files',
+                      'allow'    => 'from 127.0.0.5',
+                      'deny'     => 'from all',
+                      'order'    => 'deny,allow',
+                    },
+                    {
+                      'path'     => '/var/www/protected-files',
+                      'provider' => 'files',
+                      'allow'    => ['from 127.0.0.1', 'from 127.0.0.2'],
+                      'deny'     => ['from 127.0.0.3', 'from 127.0.0.4'],
+                      'satisfy'  => 'any',
+                    },
+                  ],
+                }
+              end
+
+              it { is_expected.to compile }
+              it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+              it {
+                is_expected.to contain_concat__fragment('rspec.example.com-directories')
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
+                  .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
+                  .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
+                  .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
+                  .with_content(%r{^\s+Deny from all$})
+                  .with_content(%r{^\s+Satisfy any$})
+                  .with_content(%r{^\s+Order deny,allow$})
+              }
+            end
+          end
+
+          # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
+          unless facts[:os]['family'] || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
+            describe 'fastcgi options' do
+              let :params do
+                {
+                  'docroot'              => '/var/www/foo',
+                  'fastcgi_server'       => 'localhost',
+                  'fastcgi_socket'       => '/tmp/fastcgi.socket',
+                  'fastcgi_dir'          => '/tmp',
+                  'fastcgi_idle_timeout' => '120',
+                }
+              end
+
+              it { is_expected.to compile }
+              it { is_expected.to contain_class('apache::mod::fastcgi') }
+              it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
+            end
+          end
+
           context 'require unmanaged' do
             let :params do
               {
