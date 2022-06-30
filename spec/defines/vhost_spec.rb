@@ -1762,7 +1762,7 @@ describe 'apache::vhost', type: :define do
           end
 
           # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
-          unless facts[:os]['family'] || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
+          unless facts[:os]['family'] == 'Debian' || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
             describe 'fastcgi options' do
               let :params do
                 {
