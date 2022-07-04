@@ -4,7 +4,6 @@ require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache::default_mods class' do
   describe 'no default mods' do
-    # Using puppet_apply as a helper
     let(:pp) do
       <<-MANIFEST
         class { 'apache':
@@ -23,7 +22,6 @@ describe 'apache::default_mods class' do
   end
 
   describe 'alternative default mods' do
-    # Using puppet_apply as a helper
     let(:pp) do
       <<-MANIFEST
         class { 'apache':

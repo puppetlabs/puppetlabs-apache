@@ -47,7 +47,6 @@ describe 'prefork_worker_spec.rb', if: mod_supported_on_platform?('apache::mod::
 
   describe 'apache::mod::prefork class' do
     describe 'running puppet code' do
-      # Using puppet_apply as a helper
       let(:pp) do
         <<-MANIFEEST
           class { 'apache':

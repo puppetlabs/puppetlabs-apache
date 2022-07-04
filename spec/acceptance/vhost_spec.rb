@@ -51,7 +51,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  context 'default vhost with ssl', unless: (os[:family].include?('redhat') && os[:release].to_i == 8) do
+  context 'default vhost with ssl', unless: (os[:family].include?('redhat') && os[:release].to_i >= 8) do
     pp = <<-MANIFEST
       file { '#{apache_hash['run_dir']}':
         ensure  => 'directory',
@@ -1188,9 +1188,9 @@ describe 'apache::vhost define' do
     pp = <<-MANIFEST
       if $::osfamily == 'RedHat' and "$::selinux" == "true" {
         $semanage_package = $::operatingsystemmajrelease ? {
-          '5'     => 'policycoreutils',
-          '8'     => 'policycoreutils-python-utils',
-          default => 'policycoreutils-python',
+          '6'     => 'policycoreutils-python',
+          '7'     => 'policycoreutils-python',
+          default => 'policycoreutils-python-utils',
         }
         package { $semanage_package: ensure => installed }
         exec { 'set_apache_defaults':

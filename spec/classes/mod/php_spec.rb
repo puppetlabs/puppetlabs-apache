@@ -100,10 +100,17 @@ describe 'apache::mod::php', type: :class do
             end
 
             it { is_expected.to contain_class('apache::params') }
-            it { is_expected.to contain_apache__mod('php5') } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_package('php') } if facts[:os]['release']['major'].to_i > 5
-            it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") } if facts[:os]['release']['major'].to_i >= 8
+            it { is_expected.to contain_package('php') }
+            if facts[:os]['release']['major'].to_i < 8
+              it { is_expected.to contain_apache__mod('php5') }
+              it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }
+            elsif facts[:os]['release']['major'].to_i == 8
+              it { is_expected.to contain_apache__mod('php7') }
+              it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") }
+            elsif facts[:os]['release']['major'].to_i >= 9
+              it { is_expected.to contain_apache__mod('php') }
+              it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
+            end
           end
           context 'with alternative package name' do
             let :pre_condition do
@@ -123,8 +130,17 @@ describe 'apache::mod::php', type: :class do
               { path: 'alternative-path' }
             end
 
-            it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module alternative-path\n") } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module alternative-path\n") } if facts[:os]['release']['major'].to_i >= 8
+            it { is_expected.to contain_package('php') }
+            if facts[:os]['release']['major'].to_i < 8
+              it { is_expected.to contain_apache__mod('php5') }
+              it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module alternative-path\n") }
+            elsif facts[:os]['release']['major'].to_i == 8
+              it { is_expected.to contain_apache__mod('php7') }
+              it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module alternative-path\n") }
+            elsif facts[:os]['release']['major'].to_i >= 9
+              it { is_expected.to contain_apache__mod('php') }
+              it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module alternative-path\n") }
+            end
           end
           context 'with alternative extensions' do
             let :pre_condition do
@@ -157,10 +173,17 @@ describe 'apache::mod::php', type: :class do
           context 'with mpm_module => prefork' do
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_class('apache::mod::prefork') }
-            it { is_expected.to contain_apache__mod('php5') } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_package('php') } if facts[:os]['release']['major'].to_i > 5
-            it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") } if facts[:os]['release']['major'].to_i >= 8
+            it { is_expected.to contain_package('php') }
+            if facts[:os]['release']['major'].to_i < 8
+              it { is_expected.to contain_apache__mod('php5') }
+              it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }
+            elsif facts[:os]['release']['major'].to_i == 8
+              it { is_expected.to contain_apache__mod('php7') }
+              it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") }
+            elsif facts[:os]['release']['major'].to_i >= 9
+              it { is_expected.to contain_apache__mod('php') }
+              it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
+            end
           end
           context 'with mpm_module => itk' do
             let :pre_condition do
@@ -169,10 +192,17 @@ describe 'apache::mod::php', type: :class do
 
             it { is_expected.to contain_class('apache::params') }
             it { is_expected.to contain_class('apache::mod::itk') }
-            it { is_expected.to contain_apache__mod('php5') } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_package('php') } if facts[:os]['release']['major'].to_i > 5
-            it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") } if facts[:os]['release']['major'].to_i < 8
-            it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") } if facts[:os]['release']['major'].to_i >= 8
+            it { is_expected.to contain_package('php') }
+            if facts[:os]['release']['major'].to_i < 8
+              it { is_expected.to contain_apache__mod('php5') }
+              it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }
+            elsif facts[:os]['release']['major'].to_i == 8
+              it { is_expected.to contain_apache__mod('php7') }
+              it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") }
+            elsif facts[:os]['release']['major'].to_i >= 9
+              it { is_expected.to contain_apache__mod('php') }
+              it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
+            end
           end
         end
       when 'FreeBSD'
