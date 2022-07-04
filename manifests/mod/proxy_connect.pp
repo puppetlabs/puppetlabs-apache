@@ -4,6 +4,6 @@
 #
 class apache::mod::proxy_connect {
   include apache
-  Class['apache::mod::proxy'] -> Class['apache::mod::proxy_connect']
+  require apache::mod::proxy
   apache::mod { 'proxy_connect': }
 }

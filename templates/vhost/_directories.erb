@@ -1,8 +1,7 @@
-<% if @_directories and ! @_directories.empty? -%>
 
   <%- scope.setvar('_template_scope', {}) -%>
   ## Directories, there should at least be a declaration for <%= @docroot %>
-  <%- [@_directories].flatten.compact.each do |directory| -%>
+  <%- @_directories.each do |directory| -%>
     <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
       <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
         <%- scope.function_warning(["Apache::Vhost: Using allow is deprecated in your Apache version"]) -%>
@@ -520,4 +519,3 @@
   </<%= provider %>>
     <%- end -%>
   <%- end -%>
-<%- end -%>

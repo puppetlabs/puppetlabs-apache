@@ -5,8 +5,8 @@
 #
 class apache::mod::proxy_html {
   include apache
-  Class['apache::mod::proxy'] -> Class['apache::mod::proxy_html']
-  Class['apache::mod::proxy_http'] -> Class['apache::mod::proxy_html']
+  require apache::mod::proxy
+  require apache::mod::proxy_http
 
   # Add libxml2
   case $facts['os']['family'] {
