@@ -43,11 +43,10 @@ describe 'apache class' do
       <<-MANIFEST
         if $::osfamily == 'RedHat' and "$::selinux" == "true" {
           $semanage_package = $::operatingsystemmajrelease ? {
-            '5'     => 'policycoreutils',
-            '8'     => 'policycoreutils-python-utils',
-            default => 'policycoreutils-python',
+            '6'     => 'policycoreutils-python',
+            '7'     => 'policycoreutils-python',
+            default => 'policycoreutils-python-utils',
           }
-
           package { $semanage_package: ensure => installed }
           exec { 'set_apache_defaults':
             command     => 'semanage fcontext -a -t httpd_sys_content_t "/apache_spec(/.*)?"',

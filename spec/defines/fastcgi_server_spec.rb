@@ -11,8 +11,8 @@ describe 'apache::fastcgi::server', type: :define do
   end
 
   on_supported_os.each do |os, facts|
-    next if facts[:os]['release']['major'] == '18.04' || facts[:os]['release']['major'] == '20.04'
-    next if (facts[:os]['release']['major'] == '7' || facts[:os]['release']['major'] == '8') && facts[:os]['family']['RedHat']
+    next if facts[:os]['name'] == 'Ubuntu'
+    next if facts[:os]['release']['major'] != '6' && facts[:os]['family']['RedHat']
     context "on #{os} " do
       let :facts do
         facts

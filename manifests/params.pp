@@ -204,6 +204,7 @@ class apache::params inherits apache::version {
     $suphp_engine         = 'off'
     $suphp_configpath     = undef
     $php_version = $facts['os']['release']['major'] ? {
+      '9'     => '8', # RedHat9
       '8'     => '7', # RedHat8
       default => '5', # RedHat5, RedHat6, RedHat7
     }
