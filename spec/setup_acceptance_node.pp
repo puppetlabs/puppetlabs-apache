@@ -11,13 +11,6 @@ case $facts['os']['family'] {
     }
   }
   'RedHat': {
-    # Make sure selinux is disabled so the tests work.
-    if $facts['os']['selinux']['enabled'] {
-      exec { 'setenforce 0':
-        path => $facts['path'],
-      }
-    }
-
     if $facts['selinux'] {
       $semanage_package = $facts['os']['release']['major'] ? {
         '6'     => 'policycoreutils-python',
