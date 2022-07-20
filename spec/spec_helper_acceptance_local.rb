@@ -100,8 +100,6 @@ def apache_settings_hash
     apache['service_name']     = 'httpd'
     apache['package_name']     = 'httpd'
     apache['error_log']        = 'error_log'
-    apache['suphp_handler']    = 'php5-script'
-    apache['suphp_configpath'] = 'undef'
     if operatingsystemrelease >= 8 && osfamily == 'redhat'
       apache['version']     = '2.4'
       apache['mod_dir']     = '/etc/httpd/conf.modules.d'
@@ -132,8 +130,6 @@ def apache_settings_hash
     apache['service_name']     = 'apache2'
     apache['package_name']     = 'apache2'
     apache['error_log']        = 'error.log'
-    apache['suphp_handler']    = 'x-httpd-php'
-    apache['suphp_configpath'] = '/etc/php5/apache2'
     apache['version']          = '2.4'
     apache['mod_ssl_dir']      = apache['mod_dir']
   when 'freebsd'

@@ -1082,29 +1082,6 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'suphp' do
-    pp = <<-MANIFEST
-      class { 'apache': service_ensure => stopped, }
-      host { 'test.server': ip => '127.0.0.1' }
-      apache::vhost { 'test.server':
-        docroot          => '/tmp',
-        suphp_addhandler => '#{apache_hash['suphp_handler']}',
-        suphp_engine     => 'on',
-        suphp_configpath => '#{apache_hash['suphp_configpath']}',
-      }
-    MANIFEST
-    it 'applies cleanly' do
-      apply_manifest(pp, catch_failures: true)
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain "suPHP_AddHandler #{apache_hash['suphp_handler']}" }
-      it { is_expected.to contain 'suPHP_Engine on' }
-      it { is_expected.to contain "suPHP_ConfigPath \"#{apache_hash['suphp_configpath']}\"" }
-    end
-  end
-
   describe 'directory rewrite rules' do
     pp = <<-MANIFEST
       class { 'apache': }

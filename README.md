@@ -65,7 +65,6 @@
 [`apache::mod::shib`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodshib
 [`apache::mod::ssl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodssl
 [`apache::mod::status`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodstatus
-[`apache::mod::suphp`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodsuphp
 [`apache::mod::userdir`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoduserdir
 [`apache::mod::worker`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodworker
 [`apache::mod::wsgi`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodwsgi
@@ -243,10 +242,6 @@
 [`ssl_compression`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_compression
 [`ssl_key`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_key
 [`StartServers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#startservers
-[suPHP]: http://www.suphp.org/Home.html
-[`suphp_addhandler`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_addhandler
-[`suphp_configpath`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_configpath
-[`suphp_engine`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#suphp_engine
 [supported operating system]: https://forge.puppet.com/supported#puppet-supported-modules-compatibility-matrix
 
 [`ThreadLimit`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#threadlimit
@@ -505,33 +500,6 @@ apache::vhost { 'subdomain.loc':
 ```
 
 #### Configuring virtual hosts for apps and processors
-
-To set up a virtual host with [suPHP][], use the following parameters:
-
-* [`suphp_engine`][], to enable the suPHP engine.
-* [`suphp_addhandler`][], to define a MIME type.
-* [`suphp_configpath`][], to set which path suPHP passes to the PHP interpreter.
-* [`directories`][], to configure Directory, File, and Location directive blocks.
-
-For example:
-
-``` puppet
-apache::vhost { 'suphp.example.com':
-  port             => '80',
-  docroot          => '/home/appuser/myphpapp',
-  suphp_addhandler => 'x-httpd-php',
-  suphp_engine     => 'on',
-  suphp_configpath => '/etc/php5/apache2',
-  directories      => [
-    { 'path'  => '/home/appuser/myphpapp',
-      'suphp' => {
-        user  => 'myappuser',
-        group => 'myappgroup',
-      },
-    },
-  ],
-}
-```
 
 To configure a virtual host to use the [Web Server Gateway Interface][] (WSGI) for [Python][] applications, use the `wsgi` set of parameters:
 

@@ -88,9 +88,6 @@ class apache::params inherits apache::version {
     $passenger_root       = undef
     $passenger_ruby       = undef
     $passenger_default_ruby = undef
-    $suphp_addhandler     = 'php5-script'
-    $suphp_engine         = 'off'
-    $suphp_configpath     = undef
     $php_version          = $apache::version::scl_php_version
     $mod_packages         = {
       'authnz_ldap' => "${_scl_httpd_name}-mod_ldap",
@@ -200,9 +197,6 @@ class apache::params inherits apache::version {
     $passenger_root       = undef
     $passenger_ruby       = undef
     $passenger_default_ruby = undef
-    $suphp_addhandler     = 'php5-script'
-    $suphp_engine         = 'off'
-    $suphp_configpath     = undef
     $php_version = $facts['os']['release']['major'] ? {
       '9'     => '8', # RedHat9
       '8'     => '7', # RedHat8
@@ -261,7 +255,6 @@ class apache::params inherits apache::version {
         default => 'python3-mod_wsgi', # RedHat8+
       },
       'dav_svn'               => 'mod_dav_svn',
-      'suphp'                 => 'mod_suphp',
       'xsendfile'             => 'mod_xsendfile',
       'nss'                   => 'mod_nss',
       'shib2'                 => 'shibboleth',
@@ -359,9 +352,6 @@ class apache::params inherits apache::version {
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
-    $suphp_addhandler    = 'x-httpd-php'
-    $suphp_engine        = 'off'
-    $suphp_configpath    = '/etc/php5/apache2'
     if ($facts['os']['name'] == 'Ubuntu') or ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0) {
       $php_version = $facts['os']['release']['major'] ? {
         '9'     => '7.0', # Debian Stretch
@@ -527,9 +517,6 @@ class apache::params inherits apache::version {
     $passenger_root   = '/usr/local/lib/ruby/gems/2.0/gems/passenger-4.0.58'
     $passenger_ruby   = '/usr/local/bin/ruby'
     $passenger_default_ruby = undef
-    $suphp_addhandler = 'php5-script'
-    $suphp_engine     = 'off'
-    $suphp_configpath = undef
     $php_version      = '5'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www/apache24
@@ -600,9 +587,6 @@ class apache::params inherits apache::version {
     $passenger_conf_file = 'passenger.conf'
     $passenger_conf_package_file = undef
     $passenger_default_ruby = undef
-    $suphp_addhandler = 'x-httpd-php'
-    $suphp_engine     = 'off'
-    $suphp_configpath = '/etc/php5/apache2'
     $php_version      = '5'
     $mod_packages     = {
       # NOTE: I list here only modules that are not included in www-servers/apache
@@ -672,10 +656,7 @@ class apache::params inherits apache::version {
       $default_ssl_key     = '/etc/apache2/ssl.key/default-server.key'
       $php_version         = '7'
     }
-    $suphp_configpath    = "/etc/php${php_version}/apache2"
     $ssl_sessioncache    = '/var/lib/apache2/ssl_scache(512000)'
-    $suphp_addhandler    = 'x-httpd-php'
-    $suphp_engine        = 'off'
     if versioncmp($facts['os']['release']['major'], '11') < 0 or versioncmp($facts['os']['release']['major'], '12') >= 0 {
       $mod_packages = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',

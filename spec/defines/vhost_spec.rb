@@ -375,9 +375,6 @@ describe 'apache::vhost', type: :define do
                 },
               ],
               'proxy_requests'              => false,
-              'suphp_addhandler'            => 'foo',
-              'suphp_engine'                => 'on',
-              'suphp_configpath'            => '/var/www/html',
               'php_admin_flags'             => ['foo', 'bar'],
               'php_admin_values'            => ['true', 'false'],
               'no_proxy_uris'               => '/foo',
@@ -777,7 +774,6 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+SSLProxyCipherSuite\s+HIGH$})
               .with_content(%r{^\s+SSLProxyProtocol\s+TLSv1.2$})
           }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-suphp') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-header') }
           it {
@@ -1315,7 +1311,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-setenv') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-ssl') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-sslproxy') }
-          it { is_expected.not_to contain_concat__fragment('rspec.example.com-suphp') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-php_admin') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-header') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-requestheader') }
@@ -1634,7 +1629,7 @@ describe 'apache::vhost', type: :define do
           end
 
           [
-            'ensure', 'suphp_engine', 'ip_based', 'access_log', 'error_log',
+            'ensure', 'ip_based', 'access_log', 'error_log',
             'ssl', 'default_vhost', 'ssl_proxyengine', 'rewrites', 'suexec_user_group',
             'wsgi_script_alias', 'wsgi_daemon_process_options',
             'wsgi_import_script_alias', 'itk', 'logroot_ensure', 'log_level',
