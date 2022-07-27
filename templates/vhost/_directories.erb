@@ -347,9 +347,6 @@
     SSLVerifyDepth <%= directory['ssl_verify_depth'] %>
     <%- end -%>
     <%- end -%>
-    <%- if directory['suphp'] and @suphp_engine == 'on' -%>
-    suPHP_UserGroup <%= directory['suphp']['user'] %> <%= directory['suphp']['group'] %>
-    <%- end -%>
     <%- if directory['fcgiwrapper'] -%>
     FcgidWrapper <%= directory['fcgiwrapper']['command'] %> <%= directory['fcgiwrapper']['suffix'] %> <%= directory['fcgiwrapper']['virtual'] %>
     <%- end -%>

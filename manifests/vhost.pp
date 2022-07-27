@@ -1154,66 +1154,6 @@
 #   Allows the spcification of user and group execution privileges for CGI programs through
 #   inclusion of the `mod_suexec` module.
 #
-# @param suphp_addhandler
-#   Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG)
-#   working together with suphp_configpath and suphp_engine.<br />
-#   An example virtual host configuration with suPHP:
-#   ``` puppet
-#   apache::vhost { 'suphp.example.com':
-#     port             => '80',
-#     docroot          => '/home/appuser/myphpapp',
-#     suphp_addhandler => 'x-httpd-php',
-#     suphp_engine     => 'on',
-#     suphp_configpath => '/etc/php5/apache2',
-#     directories      => [
-#       {
-#         'path'  => '/home/appuser/myphpapp',
-#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
-#       },
-#     ],
-#   }
-#   ```
-#
-# @param suphp_configpath
-#   Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG)
-#   working together with suphp_addhandler and suphp_engine.<br />
-#   An example virtual host configuration with suPHP:
-#   ``` puppet
-#   apache::vhost { 'suphp.example.com':
-#     port             => '80',
-#     docroot          => '/home/appuser/myphpapp',
-#     suphp_addhandler => 'x-httpd-php',
-#     suphp_engine     => 'on',
-#     suphp_configpath => '/etc/php5/apache2',
-#     directories      => [
-#       {
-#         'path'  => '/home/appuser/myphpapp',
-#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
-#       },
-#     ],
-#   }
-#   ```
-#
-# @param suphp_engine
-#   Sets up a virtual host with [suPHP](http://suphp.org/DocumentationView.html?file=apache/CONFIG)
-#   working together with suphp_configpath and suphp_addhandler.<br />
-#   An example virtual host configuration with suPHP:
-#   ``` puppet
-#   apache::vhost { 'suphp.example.com':
-#     port             => '80',
-#     docroot          => '/home/appuser/myphpapp',
-#     suphp_addhandler => 'x-httpd-php',
-#     suphp_engine     => 'on',
-#     suphp_configpath => '/etc/php5/apache2',
-#     directories      => [
-#       {
-#         'path'  => '/home/appuser/myphpapp',
-#         'suphp' => { user => 'myappuser', group => 'myappgroup' },
-#       },
-#     ],
-#   }
-#   ```
-#
 # @param vhost_name
 #   Enables name-based virtual hosting. If no IP is passed to the virtual host, but the 
 #   virtual host is assigned a port, then the virtual host name is `vhost_name:port`. 
@@ -1849,9 +1789,6 @@ define apache::vhost (
   Optional[Variant[Array[Hash],Hash]] $proxy_pass                                     = undef,
   Optional[Variant[Array[Hash],Hash]] $proxy_pass_match                               = undef,
   Boolean $proxy_requests                                                             = false,
-  String $suphp_addhandler                                                            = $apache::params::suphp_addhandler,
-  Enum['on', 'off'] $suphp_engine                                                     = $apache::params::suphp_engine,
-  Optional[String] $suphp_configpath                                                  = $apache::params::suphp_configpath,
   Hash $php_flags                                                                     = {},
   Hash $php_values                                                                    = {},
   Variant[Array[String],Hash] $php_admin_flags                                        = {},
@@ -2365,7 +2302,6 @@ define apache::vhost (
   # - $_directories
   # - $docroot
   # - $apache_version
-  # - $suphp_engine
   # - $shibboleth_enabled
   if $_directories and ! empty($_directories) and $ensure == 'present' {
     $_directories.each |Hash $directory| {
@@ -2690,18 +2626,6 @@ define apache::vhost (
       target  => "${priority_real}${filename}.conf",
       order   => 230,
       content => template('apache/vhost/_auth_kerb.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $suphp_engine
-  # - $suphp_addhandler
-  # - $suphp_configpath
-  if $suphp_engine == 'on' {
-    concat::fragment { "${name}-suphp":
-      target  => "${priority_real}${filename}.conf",
-      order   => 240,
-      content => template('apache/vhost/_suphp.erb'),
     }
   }
 
