@@ -252,18 +252,6 @@
 #   your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin 
 #   with a `/` or be `disabled`.
 #
-# @param fastcgi_server
-#   Specify an external FastCGI server to manage a connection to.
-#
-# @param fastcgi_socket
-#   Specify the socket that will be used to communicate with an external FastCGI server.
-#
-# @param fastcgi_idle_timeout
-#   If using fastcgi, this option sets the timeout for the server to respond.
-#
-# @param fastcgi_dir
-#   Specify an internal FastCGI directory that is to be managed.
-#
 # @param filters
 #   [Filters](https://httpd.apache.org/docs/current/mod/mod_filter.html) enable smart, 
 #   context-sensitive configuration of output content filters.
@@ -1838,10 +1826,6 @@ define apache::vhost (
   Optional[String] $custom_fragment                                                   = undef,
   Optional[Hash] $itk                                                                 = undef,
   Optional[String] $action                                                            = undef,
-  Optional[String] $fastcgi_server                                                    = undef,
-  Optional[String] $fastcgi_socket                                                    = undef,
-  Optional[String] $fastcgi_dir                                                       = undef,
-  Optional[Integer] $fastcgi_idle_timeout                                             = undef,
   Variant[Array[String], String] $additional_includes                                 = [],
   Boolean $use_optional_includes                                                      = $apache::use_optional_includes,
   Optional[String] $apache_version                                                    = $apache::apache_version,
@@ -2688,22 +2672,6 @@ define apache::vhost (
       target  => "${priority_real}${filename}.conf",
       order   => 270,
       content => template('apache/vhost/_custom_fragment.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $fastcgi_server
-  # - $fastcgi_socket
-  # - $fastcgi_dir
-  # - $fastcgi_idle_timeout
-  # - $apache_version
-  if ($fastcgi_server or $fastcgi_dir) and $ensure == 'present' {
-    include apache::mod::fastcgi
-
-    concat::fragment { "${name}-fastcgi":
-      target  => "${priority_real}${filename}.conf",
-      order   => 280,
-      content => template('apache/vhost/_fastcgi.erb'),
     }
   }
 

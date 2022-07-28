@@ -1309,7 +1309,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-requestheader') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-wsgi') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-custom_fragment') }
-          it { is_expected.not_to contain_concat__fragment('rspec.example.com-fastcgi') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-suexec') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-charsets') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-limits') }
@@ -1756,25 +1755,6 @@ describe 'apache::vhost', type: :define do
                   .with_content(%r{^\s+Satisfy any$})
                   .with_content(%r{^\s+Order deny,allow$})
               }
-            end
-          end
-
-          # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
-          unless os_facts[:os]['family'] == 'Debian' || (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i >= 7)
-            describe 'fastcgi options' do
-              let :params do
-                {
-                  'docroot'              => '/var/www/foo',
-                  'fastcgi_server'       => 'localhost',
-                  'fastcgi_socket'       => '/tmp/fastcgi.socket',
-                  'fastcgi_dir'          => '/tmp',
-                  'fastcgi_idle_timeout' => 120,
-                }
-              end
-
-              it { is_expected.to compile }
-              it { is_expected.to contain_class('apache::mod::fastcgi') }
-              it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
             end
           end
 
