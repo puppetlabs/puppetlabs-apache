@@ -5,14 +5,7 @@ require 'spec_helper'
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
     on_supported_os.each do |os, facts|
-      apache_name = case facts[:os]['family']
-                    when 'RedHat'
-                      'httpd'
-                    when 'Debian'
-                      'apache2'
-                    else
-                      'apache2'
-                    end
+      let(:apache_name) { facts[:os]['family'] == 'RedHat' ? 'httpd' : 'apache2' }
 
       let :pre_condition do
         "class {'apache': default_vhost => false, default_mods => false, vhost_enable_dir => '/etc/#{apache_name}/sites-enabled'}"
