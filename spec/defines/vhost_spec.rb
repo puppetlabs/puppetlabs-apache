@@ -4,15 +4,8 @@ require 'spec_helper'
 
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
-    on_supported_os.each do |os, facts|
-      apache_name = case facts[:os]['family']
-                    when 'RedHat'
-                      'httpd'
-                    when 'Debian'
-                      'apache2'
-                    else
-                      'apache2'
-                    end
+    on_supported_os.each do |os, os_facts|
+      let(:apache_name) { facts[:os]['family'] == 'RedHat' ? 'httpd' : 'apache2' }
 
       let :pre_condition do
         "class {'apache': default_vhost => false, default_mods => false, vhost_enable_dir => '/etc/#{apache_name}/sites-enabled'}"
@@ -31,7 +24,7 @@ describe 'apache::vhost', type: :define do
 
       context "on #{os} " do
         let :facts do
-          facts
+          os_facts
         end
 
         describe 'basic assumptions' do
@@ -41,9 +34,9 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
           # namebased virualhost is only created on apache 2.2 and older
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
+             (os_facts[:os]['name'] == 'Amazon') ||
+             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
             it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
           end
         end
@@ -593,7 +586,7 @@ describe 'apache::vhost', type: :define do
                                                                             'require' => 'Package[httpd]',
                                                                             'notify'  => 'Class[Apache::Service]')
           }
-          if facts[:os]['release']['major'].to_i >= 18 && facts[:os]['name'] == 'Ubuntu'
+          if os_facts[:os]['release']['major'].to_i >= 18 && os_facts[:os]['name'] == 'Ubuntu'
             it {
               is_expected.to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
                                                                                     'path' => "/etc/#{apache_name}/sites-enabled/30-rspec.example.com.conf")
@@ -1710,8 +1703,8 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
             # this works only with apache 2.4 and newer
-            if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i > 6) ||
-               (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i > 11)
+            if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i > 6) ||
+               (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i > 11)
               it {
                 is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
                   content: %r{^\s+Require all granted$},
@@ -1724,9 +1717,9 @@ describe 'apache::vhost', type: :define do
 
           # the following style is only present on Apache 2.2
           # That is used in SLES 11, RHEL6, Amazon Linux
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
+             (os_facts[:os]['name'] == 'Amazon') ||
+             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
             context 'apache 2.2 access controls on directories' do
               let :params do
                 {
@@ -1767,7 +1760,7 @@ describe 'apache::vhost', type: :define do
           end
 
           # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
-          unless facts[:os]['family'] == 'Debian' || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
+          unless os_facts[:os]['family'] == 'Debian' || (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i >= 7)
             describe 'fastcgi options' do
               let :params do
                 {
