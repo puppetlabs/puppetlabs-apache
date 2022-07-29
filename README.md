@@ -14,7 +14,6 @@
 [Installing Apache modules]: #installing-apache-modules
 [Installing arbitrary modules]: #installing-arbitrary-modules
 [Installing specific modules]: #installing-specific-modules
-[Configuring FastCGI servers]: #configuring-fastcgi-servers-to-handle-php-files
 [Load balancing examples]: #load-balancing-examples
 [apache affects]: #what-the-apache-module-affects
 
@@ -34,7 +33,6 @@
 [`apache_version`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apache_version
 [`apache::balancer`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancer
 [`apache::balancermember`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancermember
-[`apache::fastcgi::server`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachefastcgiserver
 [`apache::mod`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemod
 [`apache::mod::<MODULE NAME>`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#public-classes
 [`apache::mod::alias`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodalias
@@ -110,7 +108,6 @@
 [`ExtendedStatus`]: https://httpd.apache.org/docs/current/mod/core.html#extendedstatus
 
 [Facter]: http://docs.puppet.com/facter/
-[FastCGI]: https://fast-cgi.github.io/
 [FallbackResource]: https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource
 [`fallbackresource`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#fallbackresource
 [`FileETag`]: https://httpd.apache.org/docs/current/mod/core.html#fileetag
@@ -272,7 +269,6 @@
     - [Beginning with Apache - Installation][Beginning with Apache]
 3. [Usage - The classes and defined types available for configuration][Usage]
     - [Configuring virtual hosts - Examples to help get started][Configuring virtual hosts]
-    - [Configuring FastCGI servers to handle PHP files][Configuring FastCGI servers]
     - [Load balancing with exported and non-exported resources][Load balancing examples]
 4. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
 5. [Limitations - OS compatibility, etc.][Limitations]
@@ -675,54 +671,6 @@ apache::mod { 'mod_authnz_external': }
 ```
 
 There are several optional parameters you can specify when defining Apache modules this way. See the [defined type's reference][`apache::mod`] for details.
-
-<a id="configuring-fastcgi-servers-to-handle-php-files"></a>
-### Configuring FastCGI servers to handle PHP files
-
-#### FastCGI on Ubuntu 18.04
-
-On Ubuntu 18.04, `mod_fastcgi` is no longer supported. So considering:
-
-* an Apache Vhost with docroot set to `/var/www/html`
-* a FastCGI server listening on `127.0.0.1:9000`
-
-you can then use the [`custom_fragment`][] parameter to configure the virtual host to have the FastCGI server handle the specified file type:
-
-``` puppet
-apache::vhost { 'www':
-  ...
-  docroot         => '/var/www/html/',
-  custom_fragment => 'ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/var/www/html/$1',
-  ...
-}
-```
-
-Please note you have to adjust the second ProxyPassMatch parameter to your docroot value (here `/var/www/html/`).
-
-#### Other OSes
-
-Add the [`apache::fastcgi::server`][] defined type to allow [FastCGI][] servers to handle requests for specific files. For example, the following defines a FastCGI server at 127.0.0.1 (localhost) on port 9000 to handle PHP requests:
-
-``` puppet
-apache::fastcgi::server { 'php':
-  host       => '127.0.0.1:9000',
-  timeout    => 15,
-  flush      => false,
-  faux_path  => '/var/www/php.fcgi',
-  fcgi_alias => '/php.fcgi',
-  file_type  => 'application/x-httpd-php'
-}
-```
-
-You can then use the [`custom_fragment`][] parameter to configure the virtual host to have the FastCGI server handle the specified file type:
-
-``` puppet
-apache::vhost { 'www':
-  ...
-  custom_fragment => 'AddType application/x-httpd-php .php'
-  ...
-}
-```
 
 <a id="load-balancing-examples"></a> 
 ### Load balancing examples
