@@ -75,6 +75,13 @@
 # @param notice_anomaly_score
 #   Sets the Anomaly Score for rules assigned with a notice severity.
 # 
+# @param paranoia_level
+#   Sets the paranoia level in the OWASP ModSecurity Core Rule Set.
+# 
+# @param executing_paranoia_level
+#   Sets the executing paranoia level in the OWASP ModSecurity Core Rule Set.
+#   The default is equal to, and cannot be lower than, $paranoia_level.
+# 
 # @param secrequestmaxnumargs
 #   Sets the maximum number of arguments in the request.
 # 
@@ -123,6 +130,8 @@ class apache::mod::security (
   Integer $secrequestbodylimit                          = 13107200,
   Integer $secrequestbodynofileslimit                   = 131072,
   Integer $secrequestbodyinmemorylimit                  = 131072,
+  Integer[1,4] $paranoia_level                          = 1,
+  Integer[1,4] $executing_paranoia_level                = $paranoia_level,
   Boolean $manage_security_crs                          = true,
 ) inherits apache::params {
   include apache
@@ -138,6 +147,10 @@ class apache::mod::security (
 
   if ($facts['os']['family'] == 'Suse' and versioncmp($facts['os']['release']['major'], '11') < 0) {
     fail('SLES 10 is not currently supported.')
+  }
+
+  if ($executing_paranoia_level < $paranoia_level) {
+    fail('Executing paranoia level cannot be lower than paranoia level')
   }
 
   case $version {
@@ -248,6 +261,8 @@ class apache::mod::security (
     # - $notice_anomaly_score
     # - $inbound_anomaly_threshold
     # - $outbound_anomaly_threshold
+    # - $paranoia_level
+    # - $executing_paranoia_level
     # - $allowed_methods
     # - $content_types
     # - $restricted_extensions
