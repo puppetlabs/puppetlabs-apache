@@ -562,6 +562,9 @@
 #   for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
 #   Set.
 #
+# @param modsec_allowed_methods
+#   Override global allowed methods. A space-separated list of allowed HTTP methods.
+#
 # @param no_proxy_uris
 #   Specifies URLs you do not want to proxy. This parameter is meant to be used in combination 
 #   with [`proxy_dest`](#proxy_dest).
@@ -1913,6 +1916,7 @@ define apache::vhost (
   Optional[String] $modsec_body_limit                                                 = undef,
   Optional[Integer[1, default]] $modsec_inbound_anomaly_threshold                     = undef,
   Optional[Integer[1, default]] $modsec_outbound_anomaly_threshold                    = undef,
+  Optional[String] $modsec_allowed_methods                                            = undef,
   Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
   Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
@@ -2800,7 +2804,8 @@ define apache::vhost (
   # - $modsec_audit_log_destination
   # - $modsec_inbound_anomaly_threshold
   # - $modsec_outbound_anomaly_threshold
-  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) {
+  # - $modsec_allowed_methods
+  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
