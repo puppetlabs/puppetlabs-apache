@@ -552,6 +552,16 @@
 #   If none of those parameters are set, the global audit log is used 
 #   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 #
+# @param modsec_inbound_anomaly_threshold
+#   Override the global scoring threshold level of the inbound blocking rules
+#   for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
+#   Set.
+#
+# @param modsec_outbound_anomaly_threshold
+#   Override the global scoring threshold level of the outbound blocking rules
+#   for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
+#   Set.
+#
 # @param no_proxy_uris
 #   Specifies URLs you do not want to proxy. This parameter is meant to be used in combination 
 #   with [`proxy_dest`](#proxy_dest).
@@ -1901,6 +1911,8 @@ define apache::vhost (
   Optional[Variant[Hash, Array]] $modsec_disable_msgs                                 = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_tags                                 = undef,
   Optional[String] $modsec_body_limit                                                 = undef,
+  Optional[Integer[1, default]] $modsec_inbound_anomaly_threshold                     = undef,
+  Optional[Integer[1, default]] $modsec_outbound_anomaly_threshold                    = undef,
   Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
   Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
@@ -2786,7 +2798,9 @@ define apache::vhost (
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
-  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+  # - $modsec_inbound_anomaly_threshold
+  # - $modsec_outbound_anomaly_threshold
+  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
