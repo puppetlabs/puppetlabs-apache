@@ -316,7 +316,7 @@ When you declare this class with the default options, the module:
 
 - Installs the appropriate Apache software package and [required Apache modules][`default_mods`] for your operating system.
 - Places the required configuration files in a directory, with the [default location][`conf_dir`] Depends on operating system.
-- Configures the server with a default virtual host and standard port ('80') and address ('\*') bindings.
+- Configures the server with a default virtual host and standard port (80) and address ('\*') bindings.
 - Creates a document root directory Depends on operating system, typically `/var/www`.
 - Starts the Apache service.
 
@@ -345,7 +345,7 @@ To configure basic [name-based virtual hosts][], specify the [`port`][] and [`do
 
 ``` puppet
 apache::vhost { 'vhost.example.com':
-  port    => '80',
+  port    => 80,
   docroot => '/var/www/vhost',
 }
 ```
@@ -358,7 +358,7 @@ To configure user and group ownership for `docroot`, use the [`docroot_owner`][]
 
 ``` puppet
 apache::vhost { 'user.example.com':
-  port          => '80',
+  port          => 80,
   docroot       => '/var/www/user',
   docroot_owner => 'www-data',
   docroot_group => 'www-data',
@@ -367,11 +367,11 @@ apache::vhost { 'user.example.com':
 
 #### Configuring virtual hosts with SSL
 
-To configure a virtual host to use [SSL encryption][] and default SSL certificates, set the [`ssl`][] parameter. You must also specify the [`port`][] parameter, typically with a value of '443', to accommodate HTTPS requests:
+To configure a virtual host to use [SSL encryption][] and default SSL certificates, set the [`ssl`][] parameter. You must also specify the [`port`][] parameter, typically with a value of 443, to accommodate HTTPS requests:
 
 ``` puppet
 apache::vhost { 'ssl.example.com':
-  port    => '443',
+  port    => 443,
   docroot => '/var/www/ssl',
   ssl     => true,
 }
@@ -381,7 +381,7 @@ To configure a virtual host to use SSL and specific SSL certificates, use the pa
 
 ``` puppet
 apache::vhost { 'cert.example.com':
-  port     => '443',
+  port     => 443,
   docroot  => '/var/www/cert',
   ssl      => true,
   ssl_cert => '/etc/ssl/fourth.example.com.cert',
@@ -395,14 +395,14 @@ To configure a mix of SSL and unencrypted virtual hosts at the same domain, decl
 # The non-ssl virtual host
 apache::vhost { 'mix.example.com non-ssl':
   servername => 'mix.example.com',
-  port       => '80',
+  port       => 80,
   docroot    => '/var/www/mix',
 }
 
 # The SSL virtual host at the same domain
 apache::vhost { 'mix.example.com ssl':
   servername => 'mix.example.com',
-  port       => '443',
+  port       => 443,
   docroot    => '/var/www/mix',
   ssl        => true,
 }
@@ -413,7 +413,7 @@ To configure a virtual host to redirect unencrypted connections to SSL, declare 
 ``` puppet
 apache::vhost { 'redirect.example.com non-ssl':
   servername      => 'redirect.example.com',
-  port            => '80',
+  port            => 80,
   docroot         => '/var/www/redirect',
   redirect_status => 'permanent',
   redirect_dest   => 'https://redirect.example.com/'
@@ -421,7 +421,7 @@ apache::vhost { 'redirect.example.com non-ssl':
 
 apache::vhost { 'redirect.example.com ssl':
   servername => 'redirect.example.com',
-  port       => '443',
+  port       => 443,
   docroot    => '/var/www/redirect',
   ssl        => true,
 }
@@ -434,7 +434,7 @@ Virtual hosts listen on all IP addresses ('\*') by default. To configure the vir
 ``` puppet
 apache::vhost { 'ip.example.com':
   ip      => '127.0.0.1',
-  port    => '80',
+  port    => 80,
   docroot => '/var/www/ip',
 }
 ```
@@ -444,7 +444,7 @@ You can also configure more than one IP address per virtual host by using an arr
 ``` puppet
 apache::vhost { 'ip.example.com':
   ip      => ['127.0.0.1','169.254.1.1'],
-  port    => '80',
+  port    => 80,
   docroot => '/var/www/ip',
 }
 ```
@@ -454,7 +454,7 @@ You can configure multiple ports per virtual host by using an array of ports for
 ``` puppet
 apache::vhost { 'ip.example.com':
   ip      => ['127.0.0.1'],
-  port    => ['80','8080']
+  port    => [80, 8080]
   docroot => '/var/www/ip',
 }
 ```
@@ -467,7 +467,7 @@ apache::vhost { 'aliases.example.com':
     'aliases.example.org',
     'aliases.example.net',
   ],
-  port          => '80',
+  port          => 80,
   docroot       => '/var/www/aliases',
 }
 ```
@@ -477,7 +477,7 @@ To set up a virtual host with a wildcard alias for the subdomain mapped to a dir
 ``` puppet
 apache::vhost { 'subdomain.loc':
   vhost_name      => '*',
-  port            => '80',
+  port            => 80,
   virtual_docroot => '/var/www/%-2+',
   docroot         => '/var/www',
   serveraliases   => ['*.loc',],
@@ -488,7 +488,7 @@ To configure a virtual host with [filter rules][], pass the filter directives as
 
 ``` puppet
 apache::vhost { 'subdomain.loc':
-  port    => '80',
+  port    => 80,
   filters => [
     'FilterDeclare  COMPRESS',
     'FilterProvider COMPRESS DEFLATE resp=Content-Type $text/html',
@@ -505,13 +505,13 @@ To configure a virtual host to use the [Web Server Gateway Interface][] (WSGI) f
 
 ``` puppet
 apache::vhost { 'wsgi.example.com':
-  port                        => '80',
+  port                        => 80,
   docroot                     => '/var/www/pythonapp',
   wsgi_application_group      => '%{GLOBAL}',
   wsgi_daemon_process         => 'wsgi',
   wsgi_daemon_process_options => {
-    processes    => '2',
-    threads      => '15',
+    processes    => 2,
+    threads      => 15,
     display-name => '%{GROUP}',
   },
   wsgi_import_script          => '/var/www/demo.wsgi',
@@ -528,7 +528,7 @@ As of Apache 2.2.16, Apache supports [FallbackResource][], a simple replacement 
 
 ``` puppet
 apache::vhost { 'wordpress.example.com':
-  port             => '80',
+  port             => 80,
   docroot          => '/var/www/wordpress',
   fallbackresource => '/index.php',
 }
@@ -540,7 +540,7 @@ To configure a virtual host with a designated directory for [Common Gateway Inte
 
 ``` puppet
 apache::vhost { 'cgi.example.com':
-  port        => '80',
+  port        => 80,
   docroot     => '/var/www/cgi',
   scriptalias => '/usr/lib/cgi-bin',
 }
@@ -550,7 +550,7 @@ To configure a virtual host for [Rack][], use the [`rack_base_uri`][] parameter:
 
 ``` puppet
 apache::vhost { 'rack.example.com':
-  port           => '80',
+  port           => 80,
   docroot        => '/var/www/rack',
   rack_base_uri => ['/rackapp1', '/rackapp2'],
 }
@@ -590,7 +590,7 @@ In this example, we add two IP-based virtual hosts on an IP address (in this exa
 apache::vhost { 'The first IP-based virtual host, non-ssl':
   servername => 'first.example.com',
   ip         => '10.0.0.10',
-  port       => '80',
+  port       => 80,
   ip_based   => true,
   docroot    => '/var/www/first',
 }
@@ -598,7 +598,7 @@ apache::vhost { 'The first IP-based virtual host, non-ssl':
 apache::vhost { 'The first IP-based vhost, ssl':
   servername => 'first.example.com',
   ip         => '10.0.0.10',
-  port       => '443',
+  port       => 443,
   ip_based   => true,
   docroot    => '/var/www/first-ssl',
   ssl        => true,
@@ -610,13 +610,13 @@ Next, we add two name-based virtual hosts listening on a second IP address (10.0
 ``` puppet
 apache::vhost { 'second.example.com':
   ip      => '10.0.0.20',
-  port    => '80',
+  port    => 80,
   docroot => '/var/www/second',
 }
 
 apache::vhost { 'third.example.com':
   ip      => '10.0.0.20',
-  port    => '80',
+  port    => 80,
   docroot => '/var/www/third',
 }
 ```
@@ -625,13 +625,13 @@ To add name-based virtual hosts that answer on either 10.0.0.10 or 10.0.0.20, yo
 
 ``` puppet
 apache::vhost { 'fourth.example.com':
-  port       => '80',
+  port       => 80,
   docroot    => '/var/www/fourth',
   add_listen => false,
 }
 
 apache::vhost { 'fifth.example.com':
-  port       => '80',
+  port       => 80,
   docroot    => '/var/www/fifth',
   add_listen => false,
 }

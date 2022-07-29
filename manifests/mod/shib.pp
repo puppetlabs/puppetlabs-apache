@@ -24,10 +24,10 @@
 # @see https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPApacheConfig for additional documentation.
 # @note Unsupported platforms: RedHat: all; CentOS: all; Scientific: all; SLES: all; Debian: 7, 8; Ubuntu: all; OracleLinux: all
 class apache::mod::shib (
-  Boolean $suppress_warning       = false,
-  Optional[String] $mod_full_path = undef,
-  Optional[String] $package_name  = undef,
-  Optional[String] $mod_lib       = undef,
+  Boolean $suppress_warning                     = false,
+  Optional[Stdlib::Absolutepath] $mod_full_path = undef,
+  Optional[String] $package_name                = undef,
+  Optional[String] $mod_lib                     = undef,
 ) {
   include apache
   if $facts['os']['family'] == 'RedHat' and ! $suppress_warning {

@@ -23,9 +23,9 @@
 # @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation.
 #
 class apache::mod::disk_cache (
-  Optional[String] $cache_root            = undef,
-  Optional[String] $cache_ignore_headers  = undef,
-  Boolean $default_cache_enable           = true,
+  Optional[Stdlib::Absolutepath] $cache_root = undef,
+  Optional[String] $cache_ignore_headers     = undef,
+  Boolean $default_cache_enable              = true,
 ) {
   include apache
   if $cache_root {

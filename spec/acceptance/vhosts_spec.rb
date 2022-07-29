@@ -9,11 +9,11 @@ describe 'apache::vhosts class' do
           vhosts => {
             'custom_vhost_1' => {
                 'docroot' => '/var/www/custom_vhost_1',
-                'port' => '81',
+                'port' => 81,
             },
             'custom_vhost_2' => {
                 'docroot' => '/var/www/custom_vhost_2',
-                'port' => '82',
+                'port' => 82,
             },
           },
         }

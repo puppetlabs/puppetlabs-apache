@@ -5,9 +5,9 @@
 #
 # @api private
 define apache::peruser::multiplexer (
-  String $user            = $apache::user,
-  String $group           = $apache::group,
-  Optional[String] $file  = undef,
+  String $user           = $apache::user,
+  String $group          = $apache::group,
+  Optional[String] $file = undef,
 ) {
   if ! $file {
     $filename = "${name}.conf"

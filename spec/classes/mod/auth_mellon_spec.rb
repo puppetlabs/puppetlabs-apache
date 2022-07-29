@@ -16,13 +16,13 @@ describe 'apache::mod::auth_mellon', type: :class do
     end
     describe 'with parameters' do
       let :params do
-        { mellon_cache_size: '200',
-          mellon_cache_entry_size: '2010',
+        { mellon_cache_size: 200,
+          mellon_cache_entry_size: 2010,
           mellon_lock_file: '/tmp/junk',
           mellon_post_directory: '/tmp/post',
-          mellon_post_ttl: '5',
-          mellon_post_size: '8',
-          mellon_post_count: '10' }
+          mellon_post_ttl: 5,
+          mellon_post_size: 8,
+          mellon_post_count: 10 }
       end
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }
@@ -45,13 +45,13 @@ describe 'apache::mod::auth_mellon', type: :class do
     end
     describe 'with parameters' do
       let :params do
-        { mellon_cache_size: '200',
-          mellon_cache_entry_size: '2010',
+        { mellon_cache_size: 200,
+          mellon_cache_entry_size: 2010,
           mellon_lock_file: '/tmp/junk',
           mellon_post_directory: '/tmp/post',
-          mellon_post_ttl: '5',
-          mellon_post_size: '8',
-          mellon_post_count: '10' }
+          mellon_post_ttl: 5,
+          mellon_post_size: 8,
+          mellon_post_count: 10 }
       end
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }

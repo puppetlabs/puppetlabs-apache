@@ -940,7 +940,7 @@ Data type: `Any`
 Sets Apache's `TimeOut` directive, which defines the number of seconds Apache waits for
 certain events before failing a request.
 
-Default value: `'60'`
+Default value: `60`
 
 ##### <a name="trace_enable"></a>`trace_enable`
 
@@ -1075,7 +1075,7 @@ abnormal client request behavior, which may be useful for avoiding some forms of
 denial-of-service attacks. The value should be increased if normal clients see an error
 response from the server that indicates too many fields were sent in the request.
 
-Default value: `'100'`
+Default value: `100`
 
 ##### <a name="limitreqfieldsize"></a>`limitreqfieldsize`
 
@@ -1084,7 +1084,7 @@ Data type: `Any`
 The `limitreqfieldsize` parameter sets the maximum ammount of _bytes_ that will
 be allowed within a request header.
 
-Default value: `'8190'`
+Default value: `8190`
 
 ##### <a name="ip"></a>`ip`
 
@@ -1669,7 +1669,7 @@ Data type: `Any`
 
 Set the minimum number of connections per process.
 
-Default value: `'4'`
+Default value: `4`
 
 ##### <a name="authn_dbd_max"></a>`authn_dbd_max`
 
@@ -1677,7 +1677,7 @@ Data type: `Any`
 
 Set the maximum number of connections per process.
 
-Default value: `'20'`
+Default value: `20`
 
 ##### <a name="authn_dbd_keep"></a>`authn_dbd_keep`
 
@@ -1685,7 +1685,7 @@ Data type: `Any`
 
 Set the maximum number of connections per process to be sustained.
 
-Default value: `'8'`
+Default value: `8`
 
 ##### <a name="authn_dbd_exptime"></a>`authn_dbd_exptime`
 
@@ -1694,7 +1694,7 @@ Data type: `Any`
 Set the time to keep idle connections alive when the number of
 connections specified in DBDKeep has been exceeded.
 
-Default value: `'300'`
+Default value: `300`
 
 ##### <a name="authn_dbd_alias"></a>`authn_dbd_alias`
 
@@ -1906,7 +1906,7 @@ Data type: `Any`
 
 mod_cluster listen port.
 
-Default value: `'6666'`
+Default value: `6666`
 
 ##### <a name="keep_alive_timeout"></a>`keep_alive_timeout`
 
@@ -2250,7 +2250,7 @@ Data type: `Any`
 Sets the number of child server processes created at startup, via the module's `StartServers` directive. Setting this to `false`
 removes the parameter.
 
-Default value: `'2'`
+Default value: `2`
 
 ##### <a name="maxclients"></a>`maxclients`
 
@@ -2258,7 +2258,7 @@ Data type: `Any`
 
 Apache 2.3.12 or older alias for the `MaxRequestWorkers` directive.
 
-Default value: `'150'`
+Default value: `150`
 
 ##### <a name="maxrequestworkers"></a>`maxrequestworkers`
 
@@ -2275,7 +2275,7 @@ Data type: `Any`
 
 Sets the minimum number of idle threads, via the `MinSpareThreads` directive. Setting this to `false` removes the parameters.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="maxsparethreads"></a>`maxsparethreads`
 
@@ -2283,7 +2283,7 @@ Data type: `Any`
 
 Sets the maximum number of idle threads, via the `MaxSpareThreads` directive. Setting this to `false` removes the parameters.
 
-Default value: `'75'`
+Default value: `75`
 
 ##### <a name="threadsperchild"></a>`threadsperchild`
 
@@ -2291,7 +2291,7 @@ Data type: `Any`
 
 Number of threads created by each child process.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
 
@@ -2299,7 +2299,7 @@ Data type: `Any`
 
 Apache 2.3.8 or older alias for the `MaxConnectionsPerChild` directive.
 
-Default value: `'0'`
+Default value: `0`
 
 ##### <a name="maxconnectionsperchild"></a>`maxconnectionsperchild`
 
@@ -2315,7 +2315,7 @@ Data type: `Any`
 
 Limits the configurable number of processes via the `ServerLimit` directive. Setting this to `false` removes the parameter.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="apache_version"></a>`apache_version`
 
@@ -2331,7 +2331,7 @@ Data type: `Any`
 
 Limits the number of event threads via the module's `ThreadLimit` directive. Setting this to `false` removes the parameter.
 
-Default value: `'64'`
+Default value: `64`
 
 ##### <a name="listenbacklog"></a>`listenbacklog`
 
@@ -2340,7 +2340,7 @@ Data type: `Any`
 Sets the maximum length of the pending connections queue via the module's `ListenBackLog` directive. Setting this to `false` removes
 the parameter.
 
-Default value: `'511'`
+Default value: `511`
 
 ### <a name="apachemodexpires"></a>`apache::mod::expires`
 
@@ -2900,7 +2900,7 @@ Data type: `Any`
 
 Number of child server processes created on startup.
 
-Default value: `'8'`
+Default value: `8`
 
 ##### <a name="minspareservers"></a>`minspareservers`
 
@@ -2908,7 +2908,7 @@ Data type: `Any`
 
 Minimum number of idle child server processes.
 
-Default value: `'5'`
+Default value: `5`
 
 ##### <a name="maxspareservers"></a>`maxspareservers`
 
@@ -2916,7 +2916,7 @@ Data type: `Any`
 
 Maximum number of idle child server processes.
 
-Default value: `'20'`
+Default value: `20`
 
 ##### <a name="serverlimit"></a>`serverlimit`
 
@@ -2924,7 +2924,7 @@ Data type: `Any`
 
 Maximum configured value for `MaxRequestWorkers` for the lifetime of the Apache httpd process.
 
-Default value: `'256'`
+Default value: `256`
 
 ##### <a name="maxclients"></a>`maxclients`
 
@@ -2932,7 +2932,7 @@ Data type: `Any`
 
 Limit on the number of simultaneous requests that will be served.
 
-Default value: `'256'`
+Default value: `256`
 
 ##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
 
@@ -2940,7 +2940,7 @@ Data type: `Any`
 
 Limit on the number of connections that an individual child server process will handle.
 
-Default value: `'4000'`
+Default value: `4000`
 
 ##### <a name="enablecapabilities"></a>`enablecapabilities`
 
@@ -3408,7 +3408,7 @@ Puppet file:
 ```
 $workers_file_content = {
   worker_lists    => ['status', 'some_name,other_name'],
-  worker_maintain => '60',
+  worker_maintain => 60,
   some_name       => {
     comment          => 'Optional comment',
     type             => 'ajp13',
@@ -3488,11 +3488,11 @@ class { 'apache::mod::ldap':
   ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
   ldap_trusted_global_cert_type => 'CA_DER',
   ldap_trusted_mode             => 'TLS',
-  ldap_shared_cache_size        => '500000',
-  ldap_cache_entries            => '1024',
-  ldap_cache_ttl                => '600',
-  ldap_opcache_entries          => '1024',
-  ldap_opcache_ttl              => '600',
+  ldap_shared_cache_size        => 500000,
+  ldap_cache_entries            => 1024,
+  ldap_cache_ttl                => 600,
+  ldap_opcache_entries          => 1024,
+  ldap_opcache_ttl              => 600,
 }
 ```
 
@@ -5290,7 +5290,7 @@ Data type: `Any`
 
 
 
-Default value: `'2'`
+Default value: `2`
 
 ##### <a name="minprocessors"></a>`minprocessors`
 
@@ -5298,7 +5298,7 @@ Data type: `Any`
 
 
 
-Default value: `'2'`
+Default value: `2`
 
 ##### <a name="maxprocessors"></a>`maxprocessors`
 
@@ -5306,7 +5306,7 @@ Data type: `Any`
 
 
 
-Default value: `'10'`
+Default value: `10`
 
 ##### <a name="maxclients"></a>`maxclients`
 
@@ -5314,7 +5314,7 @@ Data type: `Any`
 
 
 
-Default value: `'150'`
+Default value: `150`
 
 ##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
 
@@ -5322,7 +5322,7 @@ Data type: `Any`
 
 
 
-Default value: `'1000'`
+Default value: `1000`
 
 ##### <a name="idletimeout"></a>`idletimeout`
 
@@ -5330,7 +5330,7 @@ Data type: `Any`
 
 
 
-Default value: `'120'`
+Default value: `120`
 
 ##### <a name="expiretimeout"></a>`expiretimeout`
 
@@ -5338,7 +5338,7 @@ Data type: `Any`
 
 
 
-Default value: `'120'`
+Default value: `120`
 
 ##### <a name="keepalive"></a>`keepalive`
 
@@ -5478,7 +5478,7 @@ Data type: `Any`
 
 Number of child server processes created at startup.
 
-Default value: `'8'`
+Default value: `8`
 
 ##### <a name="minspareservers"></a>`minspareservers`
 
@@ -5486,7 +5486,7 @@ Data type: `Any`
 
 Minimum number of idle child server processes.
 
-Default value: `'5'`
+Default value: `5`
 
 ##### <a name="maxspareservers"></a>`maxspareservers`
 
@@ -5494,7 +5494,7 @@ Data type: `Any`
 
 Maximum number of idle child server processes.
 
-Default value: `'20'`
+Default value: `20`
 
 ##### <a name="serverlimit"></a>`serverlimit`
 
@@ -5502,7 +5502,7 @@ Data type: `Any`
 
 Upper limit on configurable number of processes.
 
-Default value: `'256'`
+Default value: `256`
 
 ##### <a name="maxclients"></a>`maxclients`
 
@@ -5510,7 +5510,7 @@ Data type: `Any`
 
 Old alias for MaxRequestWorkers.
 
-Default value: `'256'`
+Default value: `256`
 
 ##### <a name="maxrequestworkers"></a>`maxrequestworkers`
 
@@ -5526,7 +5526,7 @@ Data type: `Any`
 
 Old alias for MaxConnectionsPerChild.
 
-Default value: `'4000'`
+Default value: `4000`
 
 ##### <a name="maxconnectionsperchild"></a>`maxconnectionsperchild`
 
@@ -5550,7 +5550,7 @@ Data type: `Any`
 
 Maximum length of the queue of pending connections.
 
-Default value: `'511'`
+Default value: `511`
 
 ### <a name="apachemodproxy"></a>`apache::mod::proxy`
 
@@ -6159,7 +6159,7 @@ Data type: `Any`
 
 Sets the scoring threshold level of the inbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 
-Default value: `'5'`
+Default value: `5`
 
 ##### <a name="outbound_anomaly_threshold"></a>`outbound_anomaly_threshold`
 
@@ -6167,7 +6167,7 @@ Data type: `Any`
 
 Sets the scoring threshold level of the outbound blocking rules for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule Set.
 
-Default value: `'4'`
+Default value: `4`
 
 ##### <a name="critical_anomaly_score"></a>`critical_anomaly_score`
 
@@ -6175,7 +6175,7 @@ Data type: `Any`
 
 Sets the Anomaly Score for rules assigned with a critical severity.
 
-Default value: `'5'`
+Default value: `5`
 
 ##### <a name="error_anomaly_score"></a>`error_anomaly_score`
 
@@ -6183,7 +6183,7 @@ Data type: `Any`
 
 Sets the Anomaly Score for rules assigned with a error severity.
 
-Default value: `'4'`
+Default value: `4`
 
 ##### <a name="warning_anomaly_score"></a>`warning_anomaly_score`
 
@@ -6191,7 +6191,7 @@ Data type: `Any`
 
 Sets the Anomaly Score for rules assigned with a warning severity.
 
-Default value: `'3'`
+Default value: `3`
 
 ##### <a name="notice_anomaly_score"></a>`notice_anomaly_score`
 
@@ -6199,7 +6199,7 @@ Data type: `Any`
 
 Sets the Anomaly Score for rules assigned with a notice severity.
 
-Default value: `'2'`
+Default value: `2`
 
 ##### <a name="secrequestmaxnumargs"></a>`secrequestmaxnumargs`
 
@@ -6207,7 +6207,7 @@ Data type: `Any`
 
 Sets the maximum number of arguments in the request.
 
-Default value: `'255'`
+Default value: `255`
 
 ##### <a name="secrequestbodylimit"></a>`secrequestbodylimit`
 
@@ -6215,7 +6215,7 @@ Data type: `Any`
 
 Sets the maximum request body size ModSecurity will accept for buffering.
 
-Default value: `'13107200'`
+Default value: `13107200`
 
 ##### <a name="secrequestbodynofileslimit"></a>`secrequestbodynofileslimit`
 
@@ -6224,7 +6224,7 @@ Data type: `Any`
 Configures the maximum request body size ModSecurity will accept for buffering, excluding the size of any files being transported
 in the request.
 
-Default value: `'131072'`
+Default value: `131072`
 
 ##### <a name="secrequestbodyinmemorylimit"></a>`secrequestbodyinmemorylimit`
 
@@ -6232,7 +6232,7 @@ Data type: `Any`
 
 Configures the maximum request body size that ModSecurity will store in memory.
 
-Default value: `'131072'`
+Default value: `131072`
 
 ##### <a name="manage_security_crs"></a>`manage_security_crs`
 
@@ -6481,7 +6481,7 @@ Data type: `Any`
 
 Pseudo Random Number Generator (PRNG) seeding source.
 
-Default value: `'512'`
+Default value: `512`
 
 ##### <a name="ssl_sessioncache"></a>`ssl_sessioncache`
 
@@ -6497,7 +6497,7 @@ Data type: `Any`
 
 Number of seconds before an SSL session expires in the Session Cache.
 
-Default value: `'300'`
+Default value: `300`
 
 ##### <a name="ssl_stapling"></a>`ssl_stapling`
 
@@ -6850,7 +6850,7 @@ Data type: `Any`
 
 The number of child server processes created on startup
 
-Default value: `'2'`
+Default value: `2`
 
 ##### <a name="maxclients"></a>`maxclients`
 
@@ -6860,7 +6860,7 @@ The max number of simultaneous requests that will be served.
 This is the old name and is still supported. The new name is
 MaxRequestWorkers as of 2.3.13.
 
-Default value: `'150'`
+Default value: `150`
 
 ##### <a name="minsparethreads"></a>`minsparethreads`
 
@@ -6868,7 +6868,7 @@ Data type: `Any`
 
 Minimum number of idle threads to handle request spikes.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="maxsparethreads"></a>`maxsparethreads`
 
@@ -6876,7 +6876,7 @@ Data type: `Any`
 
 Maximum number of idle threads.
 
-Default value: `'75'`
+Default value: `75`
 
 ##### <a name="threadsperchild"></a>`threadsperchild`
 
@@ -6884,7 +6884,7 @@ Data type: `Any`
 
 The number of threads created by each child process.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
 
@@ -6894,7 +6894,7 @@ Limit on the number of connectiojns an individual child server
 process will handle. This is the old name and is still supported. The new
 name is MaxConnectionsPerChild as of 2.3.9+.
 
-Default value: `'0'`
+Default value: `0`
 
 ##### <a name="serverlimit"></a>`serverlimit`
 
@@ -6906,7 +6906,7 @@ and ThreadsPerChild settings require more than 16 server processes
 number of server processes required by what you may want for
 MaxRequestWorkers and ThreadsPerChild.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="threadlimit"></a>`threadlimit`
 
@@ -6915,7 +6915,7 @@ Data type: `Any`
 This directive sets the maximum configured value for
 ThreadsPerChild for the lifetime of the Apache httpd process.
 
-Default value: `'64'`
+Default value: `64`
 
 ##### <a name="listenbacklog"></a>`listenbacklog`
 
@@ -6923,7 +6923,7 @@ Data type: `Any`
 
 Maximum length of the queue of pending connections.
 
-Default value: `'511'`
+Default value: `511`
 
 ##### <a name="apache_version"></a>`apache_version`
 
@@ -7055,7 +7055,7 @@ class { 'apache::vhosts':
   vhosts => {
     'custom_vhost_1' => {
       'docroot' => '/var/www/custom_vhost_1',
-      'port'    => '81',
+      'port'    => 81,
     },
   },
 }
@@ -7284,7 +7284,7 @@ Sets the configuration file's priority by prefixing its filename with this param
 numeric value, as Apache processes configuration files in alphanumeric order.<br />
 To omit the priority prefix in the configuration file's name, set this parameter to `false`.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="source"></a>`source`
 
@@ -9416,7 +9416,7 @@ If nothing matches the priority, the first name-based virtual host is used. Like
 passing a higher priority causes the alphabetically first name-based virtual host to be
 used if no other names match.<br />
 > **Note:** You should not need to use this parameter. However, if you do use it, be
-aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'.<br />
+aware that the `default_vhost` parameter for `apache::vhost` passes a priority of 15.<br />
 To omit the priority prefix in file names, pass a priority of `false`.
 
 Default value: ``undef``
@@ -9463,7 +9463,7 @@ apache::vhost { 'site.name.fdqn':
     { 'path' => '/l', 'url' => 'http://backend-xy',
       'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
     { 'path' => '/d', 'url' => 'http://backend-a/d',
-      'params' => { 'retry' => '0', 'timeout' => '5' }, },
+      'params' => { 'retry' => 0, 'timeout' => 5 }, },
     { 'path' => '/e', 'url' => 'http://backend-a/e',
       'keywords' => ['nocanon', 'interpolate'] },
     { 'path' => '/f', 'url' => 'http://backend-f/',
@@ -9561,7 +9561,7 @@ and redirectmatch_dest.
 ``` puppet
 apache::vhost { 'site.name.fdqn':
   ...
-  redirectmatch_status => ['404','404'],
+  redirectmatch_status => ['404', '404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
   redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
@@ -9579,7 +9579,7 @@ and redirectmatch_dest.
 ``` puppet
 apache::vhost { 'site.name.fdqn':
   ...
-  redirectmatch_status => ['404','404'],
+  redirectmatch_status => ['404', '404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
   redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
@@ -9597,7 +9597,7 @@ and redirectmatch_regexp.
 ``` puppet
 apache::vhost { 'site.name.fdqn':
   ...
-  redirectmatch_status => ['404','404'],
+  redirectmatch_status => ['404', '404'],
   redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
   redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
 }
@@ -9875,7 +9875,7 @@ working together with suphp_configpath and suphp_engine.<br />
 An example virtual host configuration with suPHP:
 ``` puppet
 apache::vhost { 'suphp.example.com':
-  port             => '80',
+  port             => 80,
   docroot          => '/home/appuser/myphpapp',
   suphp_addhandler => 'x-httpd-php',
   suphp_engine     => 'on',
@@ -9897,7 +9897,7 @@ working together with suphp_addhandler and suphp_engine.<br />
 An example virtual host configuration with suPHP:
 ``` puppet
 apache::vhost { 'suphp.example.com':
-  port             => '80',
+  port             => 80,
   docroot          => '/home/appuser/myphpapp',
   suphp_addhandler => 'x-httpd-php',
   suphp_engine     => 'on',
@@ -9919,7 +9919,7 @@ working together with suphp_configpath and suphp_addhandler.<br />
 An example virtual host configuration with suPHP:
 ``` puppet
 apache::vhost { 'suphp.example.com':
-  port             => '80',
+  port             => 80,
   docroot          => '/home/appuser/myphpapp',
   suphp_addhandler => 'x-httpd-php',
   suphp_engine     => 'on',
@@ -9954,7 +9954,7 @@ set for `docroot` in the manifest. See [`virtual_use_default_docroot`](#virtual_
 ``` puppet
 apache::vhost { 'subdomain.loc':
   vhost_name      => '*',
-  port            => '80',
+  port            => 80,
   virtual_docroot => '/var/www/%-2+',
   docroot         => '/var/www',
   serveraliases   => ['*.loc',],
@@ -9972,7 +9972,7 @@ to `true` will mean both directives will be added to the configuration.
 ``` puppet
 apache::vhost { 'subdomain.loc':
   vhost_name                  => '*',
-  port                        => '80',
+  port                        => 80,
   virtual_docroot             => '/var/www/%-2+',
   docroot                     => '/var/www',
   virtual_use_default_docroot => true,
@@ -9994,12 +9994,12 @@ A hash that sets the name of the WSGI daemon, accepting
 An example virtual host configuration with WSGI:
 ``` puppet
 apache::vhost { 'wsgi.example.com':
-  port                        => '80',
+  port                        => 80,
   docroot                     => '/var/www/pythonapp',
   wsgi_daemon_process         => 'wsgi',
   wsgi_daemon_process_options =>
-    { processes    => '2',
-      threads      => '15',
+    { processes    => 2,
+      threads      => 15,
       display-name => '%{GROUP}',
     },
   wsgi_process_group          => 'wsgi',
@@ -10853,7 +10853,7 @@ Data type: `Any`
 
 Sets the relative load order for Apache HTTPD VirtualHost configuration files.
 
-Default value: `'25'`
+Default value: `25`
 
 ##### <a name="verify_config"></a>`verify_config`
 
@@ -10886,11 +10886,11 @@ apache::vhost::fragment { 'myfragment':
 ```puppet
 include apache
 apache::vhost { 'myvhost':
-  priority => '42',
+  priority => 42,
 }
 apache::vhost::fragment { 'myfragment':
   vhost    => 'myvhost',
-  priority => '42',
+  priority => 42,
   content  => '# Foo',
 }
 ```
@@ -10904,7 +10904,7 @@ apache::vhost { 'myvhost':
 }
 apache::vhost::fragment { 'myfragment':
   vhost    => 'myvhost',
-  priority => '10', # default_vhost implies priority 10
+  priority => 10, # default_vhost implies priority 10
   content  => '# Foo',
 }
 ```
@@ -10915,7 +10915,7 @@ apache::vhost::fragment { 'myfragment':
 include apache
 apache::vhost::fragment { 'myfragment':
   vhost    => 'default',
-  priority => '15',
+  priority => 15,
   content  => '# Foo',
 }
 ```
@@ -11278,8 +11278,8 @@ Struct[{
     Optional['StateTimeout']                            => Integer,
     Optional['ScrubRequestHeaders']                     => Enum['On','Off'],
     Optional['OutgoingProxy']                           => String,
-    Optional['UnAuthAction']                            => Enum['auth','pass','401','410'],
-    Optional['UnAuthzAction']                           => Enum['401','403','auth'],
+    Optional['UnAuthAction']                            => Enum['auth','pass','401', '410'],
+    Optional['UnAuthzAction']                           => Enum['401', '403', 'auth'],
     Optional['PreservePost']                            => Enum['On','Off'],
     Optional['PassRefreshToken']                        => Enum['On','Off'],
     Optional['RequestObject']                           => String,

@@ -34,16 +34,16 @@
 # @see https://httpd.apache.org/docs/current/mod/prefork.html for additional documentation.
 #
 class apache::mod::prefork (
-  Variant[Integer,String] $startservers                     = '8',
-  Variant[Integer,String] $minspareservers                  = '5',
-  Variant[Integer,String] $maxspareservers                  = '20',
-  Variant[Integer,String] $serverlimit                      = '256',
-  Variant[Integer,String] $maxclients                       = '256',
-  Optional[Variant[Integer,String]] $maxrequestworkers      = undef,
-  Variant[Integer,String] $maxrequestsperchild              = '4000',
-  Optional[Variant[Integer,String]] $maxconnectionsperchild = undef,
-  Optional[String] $apache_version                          = undef,
-  Variant[String,Integer] $listenbacklog                    = '511'
+  Integer $startservers                     = 8,
+  Integer $minspareservers                  = 5,
+  Integer $maxspareservers                  = 20,
+  Integer $serverlimit                      = 256,
+  Integer $maxclients                       = 256,
+  Optional[Integer] $maxrequestworkers      = undef,
+  Integer $maxrequestsperchild              = 4000,
+  Optional[Integer] $maxconnectionsperchild = undef,
+  Optional[String] $apache_version          = undef,
+  Integer $listenbacklog                    = 511
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

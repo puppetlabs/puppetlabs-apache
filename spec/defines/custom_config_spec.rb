@@ -41,7 +41,7 @@ describe 'apache::custom_config', type: :define do
     let :params do
       {
         'confdir'        => '/dne',
-        'priority'       => '30',
+        'priority'       => 30,
         'source'         => 'puppet:///modules/apache/test',
         'verify_command' => '/bin/true',
       }

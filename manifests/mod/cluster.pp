@@ -51,15 +51,15 @@
 class apache::mod::cluster (
   String $allowed_network,
   String $balancer_name,
-  String $ip,
+  Stdlib::IP::Address $ip,
   String $version,
-  Boolean $enable_mcpm_receive          = true,
-  String $port                          = '6666',
-  Integer $keep_alive_timeout           = 60,
-  String $manager_allowed_network       = '127.0.0.1',
-  Integer $max_keep_alive_requests      = 0,
-  Boolean $server_advertise             = true,
-  Optional[String] $advertise_frequency = undef,
+  Boolean $enable_mcpm_receive                 = true,
+  Stdlib::Port $port                           = 6666,
+  Integer $keep_alive_timeout                  = 60,
+  Stdlib::IP::Address $manager_allowed_network = '127.0.0.1',
+  Integer $max_keep_alive_requests             = 0,
+  Boolean $server_advertise                    = true,
+  Optional[String] $advertise_frequency        = undef,
 ) {
   include apache
 
