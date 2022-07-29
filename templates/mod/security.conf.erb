@@ -1,7 +1,7 @@
 <IfModule mod_security2.c>
     # Default recommended configuration
     SecRuleEngine <%= @modsec_secruleengine %>
-    SecRequestBodyAccess On
+    SecRequestBodyAccess <%= @secrequestbodyaccess %>
   <%- if @custom_rules -%>
     Include <%= @modsec_dir %>/custom_rules/*.conf
   <%- end -%>
