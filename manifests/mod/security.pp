@@ -98,6 +98,9 @@
 # @param secrequestbodyaccess
 #   Toggle SecRequestBodyAccess On or Off
 # 
+# @param secresponsebodyaccess
+#   Toggle SecResponseBodyAccess On or Off
+# 
 # @param manage_security_crs
 #   Toggles whether to manage ModSecurity Core Rule Set 
 #
@@ -136,6 +139,7 @@ class apache::mod::security (
   Integer[1,4] $paranoia_level                          = 1,
   Integer[1,4] $executing_paranoia_level                = $paranoia_level,
   Enum['On', 'Off'] $secrequestbodyaccess               = 'On',
+  Enum['On', 'Off'] $secresponsebodyaccess              = 'Off',
   Boolean $manage_security_crs                          = true,
 ) inherits apache::params {
   include apache
@@ -202,6 +206,7 @@ class apache::mod::security (
   # - secrequestbodynofileslimit
   # - secrequestbodyinmemorylimit
   # - secrequestbodyaccess
+  # - secresponsebodyaccess
   file { 'security.conf':
     ensure  => file,
     content => template('apache/mod/security.conf.erb'),

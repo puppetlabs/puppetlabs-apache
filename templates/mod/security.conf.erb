@@ -40,7 +40,7 @@
     SecRule TX:/^MSC_/ "!@streq 0" \
       "id:'200004',phase:2,t:none,deny,msg:'ModSecurity internal error flagged: %{MATCHED_VAR_NAME}'"
 
-    SecResponseBodyAccess Off
+    SecResponseBodyAccess <%= @secresponsebodyaccess %>
     SecResponseBodyMimeType text/plain text/html text/xml
     SecResponseBodyLimit 524288
     SecResponseBodyLimitAction ProcessPartial
