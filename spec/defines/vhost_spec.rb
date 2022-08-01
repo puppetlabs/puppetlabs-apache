@@ -1229,6 +1229,29 @@ describe 'apache::vhost', type: :define do
           }
         end
 
+        context 'modsec_allowed_methods' do
+          let :params do
+            {
+              'docroot'                => '/rspec/docroot',
+              'modsec_allowed_methods' => 'GET HEAD POST OPTIONS',
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-security').with(
+              content: %r{
+              ^\s+SecAction\ \\\n
+              \s+\"id:900200,\\\n
+              \s+phase:1,\\\n
+              \s+nolog,\\\n\s+pass,\\\n
+              \s+t:none,\\\n
+              \s+setvar:'tx.allowed_methods=GET\ HEAD\ POST\ OPTIONS'"$
+              }x,
+            )
+          }
+        end
+
         context 'set only aliases' do
           let :params do
             {
