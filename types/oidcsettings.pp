@@ -82,7 +82,7 @@ type Apache::OIDCSettings = Struct[
     Optional['RedisCachePassword']                      => String,
     Optional['DiscoverURL']                             => Variant[Stdlib::HTTPSUrl, Stdlib::HttpUrl],
     Optional['HTMLErrorTemplate']                       => String,
-    Optional['DefaultURL']                              => Variant[Stdlib::HTTPSUrl,Stdlib::HttpUrl],
+    Optional['DefaultURL']                              => Variant[Stdlib::HTTPSUrl, Stdlib::HttpUrl],
     Optional['PathScope']                               => Pattern[/^\"?[A-Za-z0-9\-\._\s]+\"?$/],
     Optional['PathAuthRequestParams']                   => Pattern[/^[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+(&[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+)*$/],
     Optional['IDTokenIatSlack']                         => Integer,
