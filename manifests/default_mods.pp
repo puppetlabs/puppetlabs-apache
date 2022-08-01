@@ -3,10 +3,10 @@
 #
 # @api private
 class apache::default_mods (
-  Boolean $all                                  = true,
-  Optional[Variant[Array[String],String]] $mods = undef,
-  String $apache_version                        = $apache::apache_version,
-  Boolean $use_systemd                          = $apache::use_systemd,
+  Boolean $all                                   = true,
+  Optional[Variant[Array[String], String]] $mods = undef,
+  String $apache_version                         = $apache::apache_version,
+  Boolean $use_systemd                           = $apache::use_systemd,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include

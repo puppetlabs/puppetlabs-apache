@@ -25,7 +25,7 @@ class apache::mod::alias (
   Optional[String] $apache_version  = undef,
   String $icons_options             = 'Indexes MultiViews',
   # set icons_path to false to disable the alias
-  String $icons_path                = $apache::params::alias_icons_path,
+  Stdlib::Absolutepath $icons_path  = $apache::params::alias_icons_path,
   String $icons_prefix              = $apache::params::icons_prefix
 ) inherits apache::params {
   include apache

@@ -10,8 +10,8 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html for additional documentation.
 # @note Unsupported platforms: RedHat: 6, 8, 9; CentOS: 6, 8; OracleLinux: 6, 8; Ubuntu: all; Debian: all; SLES: all
 class apache::mod::authnz_ldap (
-  Boolean $verify_server_cert     = true,
-  Optional[String] $package_name  = undef,
+  Boolean $verify_server_cert    = true,
+  Optional[String] $package_name = undef,
 ) {
   include apache
   include 'apache::mod::ldap'

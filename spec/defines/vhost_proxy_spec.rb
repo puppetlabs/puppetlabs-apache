@@ -15,7 +15,7 @@ describe 'apache::vhost::proxy' do
           {
             vhost: 'default',
             port: 80,
-            priority: '15',
+            priority: 15,
           }
         end
 

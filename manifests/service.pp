@@ -3,11 +3,11 @@
 #
 # @api private
 class apache::service (
-  String $service_name                    = $apache::params::service_name,
-  Boolean $service_enable                 = true,
-  Variant[Boolean,String] $service_ensure = 'running',
-  Boolean $service_manage                 = true,
-  Optional[String] $service_restart       = undef
+  String $service_name                     = $apache::params::service_name,
+  Boolean $service_enable                  = true,
+  Variant[Boolean, String] $service_ensure = 'running',
+  Boolean $service_manage                  = true,
+  Optional[String] $service_restart        = undef
 ) {
   # The base class must be included first because parameter defaults depend on it
   if ! defined(Class['apache::params']) {

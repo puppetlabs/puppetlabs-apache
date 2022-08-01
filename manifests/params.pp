@@ -103,7 +103,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = "${httpd_root}/var/www/html"
@@ -214,11 +213,6 @@ class apache::params inherits apache::version {
         default => 'mod_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
-      'fastcgi'               => $facts['os']['release']['major'] ? {
-        '5'     => 'mod_fastcgi',
-        '6'     => 'mod_fastcgi',
-        default => undef,
-      },
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
@@ -272,7 +266,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
@@ -368,7 +361,6 @@ class apache::params inherits apache::version {
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
         'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
@@ -399,7 +391,6 @@ class apache::params inherits apache::version {
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
         'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
@@ -435,7 +426,6 @@ class apache::params inherits apache::version {
     $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
@@ -546,7 +536,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
@@ -613,7 +602,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'app-misc/mime-types'
     $mime_types_config    = '/etc/mime.types'
     $wsgi_socket_prefix   = undef
@@ -689,7 +677,6 @@ class apache::params inherits apache::version {
     $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'aaa_base'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/srv/www'

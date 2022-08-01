@@ -88,7 +88,7 @@ class apache::mod::auth_cas (
   String $cas_login_url,
   String $cas_validate_url,
   String $cas_cookie_path                     = $apache::params::cas_cookie_path,
-  String $cas_cookie_path_mode                = '0750',
+  Stdlib::Filemode $cas_cookie_path_mode      = '0750',
   Integer $cas_version                        = 2,
   String $cas_debug                           = 'Off',
   Optional[String] $cas_validate_server       = undef,

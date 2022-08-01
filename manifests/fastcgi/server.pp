@@ -32,13 +32,13 @@
 #   Sets a header for the server
 #
 define apache::fastcgi::server (
-  String $host                  = '127.0.0.1:9000',
-  Integer $timeout              = 15,
-  Boolean $flush                = false,
-  String $faux_path             = "/var/www/${name}.fcgi",
-  String $fcgi_alias            = "/${name}.fcgi",
-  String $file_type             = 'application/x-httpd-php',
-  Optional[String] $pass_header = undef,
+  String $host                    = '127.0.0.1:9000',
+  Integer $timeout                = 15,
+  Boolean $flush                  = false,
+  Stdlib::Absolutepath $faux_path = "/var/www/${name}.fcgi",
+  Stdlib::Unixpath $fcgi_alias    = "/${name}.fcgi",
+  String $file_type               = 'application/x-httpd-php',
+  Optional[String] $pass_header   = undef,
 ) {
   include apache::mod::fastcgi
 

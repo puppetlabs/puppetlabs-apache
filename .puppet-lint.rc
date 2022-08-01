@@ -1,2 +1,3 @@
 --relative
 --no-anchor_resource-check
+--no-140chars-check

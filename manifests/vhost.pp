@@ -31,8 +31,8 @@
 #   Apache's version number as a string, such as '2.2' or '2.4'.
 #
 # @param access_log
-#   Determines whether to configure `*_access.log` directives (`*_file`,`*_pipe`, or `*_syslog`).
-#
+#   Determines whether to configure `*_access.log` directives (`*_file`, `*_pipe`, or `*_syslog`).
+# 
 # @param access_log_env_var
 #   Specifies that only requests with particular environment variables be logged.
 #
@@ -251,18 +251,6 @@
 #   directive, which specifies an action to take for any URL that doesn't map to anything in 
 #   your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin 
 #   with a `/` or be `disabled`.
-#
-# @param fastcgi_server
-#   Specify an external FastCGI server to manage a connection to.
-#
-# @param fastcgi_socket
-#   Specify the socket that will be used to communicate with an external FastCGI server.
-#
-# @param fastcgi_idle_timeout
-#   If using fastcgi, this option sets the timeout for the server to respond.
-#
-# @param fastcgi_dir
-#   Specify an internal FastCGI directory that is to be managed.
 #
 # @param filters
 #   [Filters](https://httpd.apache.org/docs/current/mod/mod_filter.html) enable smart, 
@@ -590,7 +578,7 @@
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
 #     ...
-#     options => ['Indexes','FollowSymLinks','MultiViews'],
+#     options => ['Indexes', 'FollowSymLinks', 'MultiViews'],
 #   }
 #   ```
 #   > **Note**: If you use the `directories` parameter of `apache::vhost`, 'Options', 
@@ -846,7 +834,7 @@
 #   passing a higher priority causes the alphabetically first name-based virtual host to be 
 #   used if no other names match.<br />
 #   > **Note:** You should not need to use this parameter. However, if you do use it, be 
-#   aware that the `default_vhost` parameter for `apache::vhost` passes a priority of '15'.<br />
+#   aware that the `default_vhost` parameter for `apache::vhost` passes a priority of 15.<br />
 #   To omit the priority prefix in file names, pass a priority of `false`.
 #
 # @param protocols
@@ -873,11 +861,11 @@
 #       { 'path' => '/l', 'url' => 'http://backend-xy',
 #         'reverse_urls' => ['http://backend-x', 'http://backend-y'] },
 #       { 'path' => '/d', 'url' => 'http://backend-a/d',
-#         'params' => { 'retry' => '0', 'timeout' => '5' }, },
+#         'params' => { 'retry' => 0, 'timeout' => 5 }, },
 #       { 'path' => '/e', 'url' => 'http://backend-a/e',
 #         'keywords' => ['nocanon', 'interpolate'] },
 #       { 'path' => '/f', 'url' => 'http://backend-f/',
-#         'setenv' => ['proxy-nokeepalive 1','force-proxy-request-1.0 1']},
+#         'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1']},
 #       { 'path' => '/g', 'url' => 'http://backend-g/',
 #         'reverse_cookies' => [{'path' => '/g', 'url' => 'http://backend-g/',}, {'domain' => 'http://backend-g', 'url' => 'http:://backend-g',},], },
 #       { 'path' => '/h', 'url' => 'http://backend-h/h',
@@ -915,8 +903,8 @@
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
 #     ...
-#     redirect_source => ['/images','/downloads'],
-#     redirect_dest   => ['http://img.example.com/','http://downloads.example.com/'],
+#     redirect_source => ['/images', '/downloads'],
+#     redirect_dest   => ['http://img.example.com/', 'http://downloads.example.com/'],
 #   }
 #   ```
 #
@@ -925,7 +913,7 @@
 #   ``` puppet
 #     apache::vhost { 'site.name.fdqn':
 #     ...
-#     redirect_status => ['temp','permanent'],
+#     redirect_status => ['temp', 'permanent'],
 #   }
 #   ```
 #
@@ -936,9 +924,9 @@
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
 #     ...
-#     redirectmatch_status => ['404','404'],
-#     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-#     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
+#     redirectmatch_status => ['404', '404'],
+#     redirectmatch_regexp => ['\.git(/.*|$)/', '\.svn(/.*|$)'],
+#     redirectmatch_dest => ['http://www.example.com/$1', 'http://www.example.com/$2'],
 #   }
 #   ```
 #
@@ -949,9 +937,9 @@
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
 #     ...
-#     redirectmatch_status => ['404','404'],
-#     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-#     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
+#     redirectmatch_status => ['404', '404'],
+#     redirectmatch_regexp => ['\.git(/.*|$)/', '\.svn(/.*|$)'],
+#     redirectmatch_dest => ['http://www.example.com/$1', 'http://www.example.com/$2'],
 #   }
 #   ```
 #
@@ -962,9 +950,9 @@
 #   ``` puppet
 #   apache::vhost { 'site.name.fdqn':
 #     ...
-#     redirectmatch_status => ['404','404'],
-#     redirectmatch_regexp => ['\.git(/.*|$)/','\.svn(/.*|$)'],
-#     redirectmatch_dest => ['http://www.example.com/$1','http://www.example.com/$2'],
+#     redirectmatch_status => ['404', '404'],
+#     redirectmatch_regexp => ['\.git(/.*|$)/', '\.svn(/.*|$)'],
+#     redirectmatch_dest => ['http://www.example.com/$1', 'http://www.example.com/$2'],
 #   }
 #   ```
 #
@@ -1168,7 +1156,7 @@
 #   ``` puppet
 #   apache::vhost { 'subdomain.loc':
 #     vhost_name      => '*',
-#     port            => '80',
+#     port            => 80,
 #     virtual_docroot => '/var/www/%-2+',
 #     docroot         => '/var/www',
 #     serveraliases   => ['*.loc',],
@@ -1181,7 +1169,7 @@
 #   ``` puppet
 #   apache::vhost { 'subdomain.loc':
 #     vhost_name                  => '*',
-#     port                        => '80',
+#     port                        => 80,
 #     virtual_docroot             => '/var/www/%-2+',
 #     docroot                     => '/var/www',
 #     virtual_use_default_docroot => true,
@@ -1198,12 +1186,12 @@
 #   An example virtual host configuration with WSGI:
 #   ``` puppet
 #   apache::vhost { 'wsgi.example.com':
-#     port                        => '80',
+#     port                        => 80,
 #     docroot                     => '/var/www/pythonapp',
 #     wsgi_daemon_process         => 'wsgi',
 #     wsgi_daemon_process_options =>
-#       { processes    => '2',
-#         threads      => '15',
+#       { processes    => 2,
+#         threads      => 15,
 #         display-name => '%{GROUP}',
 #       },
 #     wsgi_process_group          => 'wsgi',
@@ -1407,7 +1395,10 @@
 #   }
 #   ```
 #
+# TODO: check, if this Documentation is obsolete
+# lint:ignore:parameter_documentation
 # @param gssapi
+# lint:endignore
 #   Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
 #   ```puppet
 #   apache::vhost { 'sample.example.net':
@@ -1688,72 +1679,77 @@
 #   Instances of apache::mod::userdir
 #
 define apache::vhost (
-  Variant[Boolean,String] $docroot,
+  Variant[Stdlib::Absolutepath, Boolean] $docroot,
   Boolean $manage_docroot                                                             = true,
-  Variant[Boolean,String] $virtual_docroot                                            = false,
+  Variant[Stdlib::Absolutepath, Boolean] $virtual_docroot                             = false,
   Boolean $virtual_use_default_docroot                                                = false,
-  Optional[Variant[Array[Integer],Array[String],Integer,String]] $port                = undef,
-  Optional[Variant[Array[String],String]] $ip                                         = undef,
+  Optional[Variant[Array[Stdlib::Port], Stdlib::Port]] $port                          = undef,
+  Optional[
+    Variant[
+      Array[Variant[Stdlib::IP::Address, Enum['*']]],
+      Variant[Stdlib::IP::Address, Enum['*']]
+    ]
+  ] $ip                                                                               = undef,
   Boolean $ip_based                                                                   = false,
   Boolean $add_listen                                                                 = true,
   String $docroot_owner                                                               = 'root',
   String $docroot_group                                                               = $apache::params::root_group,
-  Optional[Variant[Integer,String]] $docroot_mode                                     = undef,
+  Optional[Stdlib::Filemode] $docroot_mode                                            = undef,
   Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                                     = [],
   Optional[Boolean] $protocols_honor_order                                            = undef,
   Optional[String] $serveradmin                                                       = undef,
   Boolean $ssl                                                                        = false,
-  Optional[String] $ssl_cert                                                          = $apache::default_ssl_cert,
-  Optional[String] $ssl_key                                                           = $apache::default_ssl_key,
-  Optional[String] $ssl_chain                                                         = $apache::default_ssl_chain,
-  Optional[String] $ssl_ca                                                            = $apache::default_ssl_ca,
-  Optional[String] $ssl_crl_path                                                      = $apache::default_ssl_crl_path,
-  Optional[String] $ssl_crl                                                           = $apache::default_ssl_crl,
+  Optional[Stdlib::Absolutepath] $ssl_cert                                            = $apache::default_ssl_cert,
+  Optional[Stdlib::Absolutepath] $ssl_key                                             = $apache::default_ssl_key,
+  Optional[Stdlib::Absolutepath] $ssl_chain                                           = $apache::default_ssl_chain,
+  Optional[Stdlib::Absolutepath] $ssl_ca                                              = $apache::default_ssl_ca,
+  Optional[Stdlib::Absolutepath] $ssl_crl_path                                        = $apache::default_ssl_crl_path,
+  Optional[Stdlib::Absolutepath] $ssl_crl                                             = $apache::default_ssl_crl,
   Optional[String] $ssl_crl_check                                                     = $apache::default_ssl_crl_check,
-  Optional[String] $ssl_certs_dir                                                     = $apache::params::ssl_certs_dir,
+  Optional[Stdlib::Absolutepath] $ssl_certs_dir                                       = $apache::params::ssl_certs_dir,
   Boolean $ssl_reload_on_change                                                       = $apache::default_ssl_reload_on_change,
-  Optional[Variant[Array[String],String]] $ssl_protocol                               = undef,
-  Optional[Variant[Array[String],String]] $ssl_cipher                                 = undef,
+  Optional[Variant[Array[String], String]] $ssl_protocol                              = undef,
+  Optional[Variant[Array[String], String]] $ssl_cipher                                = undef,
   Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder       = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client  = undef,
-  Optional[Variant[Integer,String]] $ssl_verify_depth                                 = undef,
+  Optional[Integer] $ssl_verify_depth                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify   = undef,
   Optional[Integer[0]] $ssl_proxy_verify_depth                                        = undef,
-  Optional[String] $ssl_proxy_ca_cert                                                 = undef,
+  Optional[Stdlib::Absolutepath] $ssl_proxy_ca_cert                                   = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_cn                                = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                              = undef,
   Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                            = undef,
-  Optional[String] $ssl_proxy_machine_cert                                            = undef,
-  Optional[String] $ssl_proxy_machine_cert_chain                                      = undef,
+  Optional[Stdlib::Absolutepath] $ssl_proxy_machine_cert                              = undef,
+  Optional[Stdlib::Absolutepath] $ssl_proxy_machine_cert_chain                        = undef,
   Optional[String] $ssl_proxy_cipher_suite                                            = undef,
   Optional[String] $ssl_proxy_protocol                                                = undef,
-  Optional[Variant[Array[String],String]] $ssl_options                                = undef,
+  Optional[Variant[Array[String], String]] $ssl_options                               = undef,
   Optional[String] $ssl_openssl_conf_cmd                                              = undef,
   Boolean $ssl_proxyengine                                                            = false,
   Optional[Boolean] $ssl_stapling                                                     = undef,
-  Optional[Variant[Integer,String]] $ssl_stapling_timeout                             = undef,
+  Optional[Integer] $ssl_stapling_timeout                                             = undef,
   Optional[Enum['on', 'off']] $ssl_stapling_return_errors                             = undef,
   Optional[String] $ssl_user_name                                                     = undef,
-  Optional[Variant[Integer,String,Boolean]] $priority                                 = undef,
+  Optional[Variant[Integer, Boolean]] $priority                                       = undef,
   Boolean $default_vhost                                                              = false,
   Optional[String] $servername                                                        = $name,
-  Variant[Array[String],String] $serveraliases                                        = [],
-  Array[String] $options                                                              = ['Indexes','FollowSymLinks','MultiViews'],
+  Variant[Array[String], String] $serveraliases                                       = [],
+  Array[String] $options                                                              = ['Indexes', 'FollowSymLinks', 'MultiViews'],
   Array[String] $override                                                             = ['None'],
   Optional[String] $directoryindex                                                    = undef,
   String $vhost_name                                                                  = '*',
-  String $logroot                                                                     = $apache::logroot,
+  Stdlib::Absolutepath $logroot                                                       = $apache::logroot,
   Enum['directory', 'absent'] $logroot_ensure                                         = 'directory',
-  Optional[String] $logroot_mode                                                      = undef,
+  Optional[Stdlib::Filemode] $logroot_mode                                            = undef,
   Optional[String] $logroot_owner                                                     = undef,
   Optional[String] $logroot_group                                                     = undef,
   Optional[Apache::LogLevel] $log_level                                               = undef,
   Boolean $access_log                                                                 = true,
-  Variant[Boolean,String] $access_log_file                                            = false,
-  Variant[Boolean,String] $access_log_pipe                                            = false,
-  Variant[Boolean,String] $access_log_syslog                                          = false,
-  Variant[Boolean,String] $access_log_format                                          = false,
-  Variant[Boolean,String] $access_log_env_var                                         = false,
+  Optional[String[1]] $access_log_file                                                = undef,
+  Optional[String[1]] $access_log_pipe                                                = undef,
+  Optional[Variant[String, Boolean]] $access_log_syslog                               = undef,
+  Optional[String[1]] $access_log_format                                              = undef,
+  Optional[Variant[Boolean, String]] $access_log_env_var                              = undef,
   Optional[Array[Hash]] $access_logs                                                  = undef,
   Boolean $use_servername_for_filenames                                               = false,
   Boolean $use_port_for_filenames                                                     = false,
@@ -1762,7 +1758,7 @@ define apache::vhost (
   Boolean $error_log                                                                  = true,
   Optional[String] $error_log_file                                                    = undef,
   Optional[String] $error_log_pipe                                                    = undef,
-  Optional[Variant[String,Boolean]] $error_log_syslog                                 = undef,
+  Optional[Variant[String, Boolean]] $error_log_syslog                                = undef,
   Optional[
     Array[
       Variant[
@@ -1770,12 +1766,12 @@ define apache::vhost (
         Hash[String, Enum['connection', 'request']]
       ]
     ]
-  ]       $error_log_format                                                           = undef,
+  ] $error_log_format                                                                 = undef,
   Optional[Pattern[/^((Strict|Unsafe)?\s*(\b(Registered|Lenient)Methods)?\s*(\b(Allow0\.9|Require1\.0))?)$/]] $http_protocol_options = undef,
-  Optional[Variant[String,Boolean]] $modsec_audit_log                                 = undef,
+  Optional[Variant[String, Boolean]] $modsec_audit_log                                = undef,
   Optional[String] $modsec_audit_log_file                                             = undef,
   Optional[String] $modsec_audit_log_pipe                                             = undef,
-  Variant[Array[Hash],String] $error_documents                                        = [],
+  Variant[Array[Hash], String] $error_documents                                       = [],
   Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]] $fallbackresource         = undef,
   Optional[String] $scriptalias                                                       = undef,
   Array[Hash] $scriptaliases                                                          = [],
@@ -1786,39 +1782,39 @@ define apache::vhost (
   Optional[String] $proxy_dest                                                        = undef,
   Optional[String] $proxy_dest_match                                                  = undef,
   Optional[String] $proxy_dest_reverse_match                                          = undef,
-  Optional[Variant[Array[Hash],Hash]] $proxy_pass                                     = undef,
-  Optional[Variant[Array[Hash],Hash]] $proxy_pass_match                               = undef,
+  Optional[Variant[Array[Hash], Hash]] $proxy_pass                                    = undef,
+  Optional[Variant[Array[Hash], Hash]] $proxy_pass_match                              = undef,
   Boolean $proxy_requests                                                             = false,
   Hash $php_flags                                                                     = {},
   Hash $php_values                                                                    = {},
-  Variant[Array[String],Hash] $php_admin_flags                                        = {},
-  Variant[Array[String],Hash] $php_admin_values                                       = {},
-  Variant[Array[String],String] $no_proxy_uris                                        = [],
-  Variant[Array[String],String] $no_proxy_uris_match                                  = [],
+  Variant[Array[String], Hash] $php_admin_flags                                       = {},
+  Variant[Array[String], Hash] $php_admin_values                                      = {},
+  Variant[Array[String], String] $no_proxy_uris                                       = [],
+  Variant[Array[String], String] $no_proxy_uris_match                                 = [],
   Boolean $proxy_preserve_host                                                        = false,
-  Optional[Variant[String,Boolean]] $proxy_add_headers                                = undef,
+  Optional[Variant[String, Boolean]] $proxy_add_headers                               = undef,
   Boolean $proxy_error_override                                                       = false,
-  Variant[String,Array[String]] $redirect_source                                      = '/',
-  Optional[Variant[Array[String],String]] $redirect_dest                              = undef,
-  Optional[Variant[Array[String],String]] $redirect_status                            = undef,
-  Optional[Variant[Array[String],String]] $redirectmatch_status                       = undef,
-  Optional[Variant[Array[String],String]] $redirectmatch_regexp                       = undef,
-  Optional[Variant[Array[String],String]] $redirectmatch_dest                         = undef,
+  Variant[String, Array[String]] $redirect_source                                     = '/',
+  Optional[Variant[Array[String], String]] $redirect_dest                             = undef,
+  Optional[Variant[Array[String], String]] $redirect_status                           = undef,
+  Optional[Variant[Array[String], String]] $redirectmatch_status                      = undef,
+  Optional[Variant[Array[String], String]] $redirectmatch_regexp                      = undef,
+  Optional[Variant[Array[String], String]] $redirectmatch_dest                        = undef,
   Array[String[1]] $headers                                                           = [],
   Array[String[1]] $request_headers                                                   = [],
   Array[String[1]] $filters                                                           = [],
   Array[Hash] $rewrites                                                               = [],
   Optional[String[1]] $rewrite_base                                                   = undef,
-  Optional[String[1]] $rewrite_rule                                                   = undef,
+  Optional[Variant[Array[String[1]], String[1]]] $rewrite_rule                        = undef,
   Array[String[1]] $rewrite_cond                                                      = [],
   Boolean $rewrite_inherit                                                            = false,
-  Variant[Array[String],String] $setenv                                               = [],
-  Variant[Array[String],String] $setenvif                                             = [],
-  Variant[Array[String],String] $setenvifnocase                                       = [],
-  Variant[Array[String],String] $block                                                = [],
+  Variant[Array[String], String] $setenv                                              = [],
+  Variant[Array[String], String] $setenvif                                            = [],
+  Variant[Array[String], String] $setenvifnocase                                      = [],
+  Variant[Array[String], String] $block                                               = [],
   Enum['absent', 'present'] $ensure                                                   = 'present',
   Optional[String] $wsgi_application_group                                            = undef,
-  Optional[Variant[String,Hash]] $wsgi_daemon_process                                 = undef,
+  Optional[Variant[String, Hash]] $wsgi_daemon_process                                = undef,
   Optional[Hash] $wsgi_daemon_process_options                                         = undef,
   Optional[String] $wsgi_import_script                                                = undef,
   Optional[Hash] $wsgi_import_script_options                                          = undef,
@@ -1830,11 +1826,7 @@ define apache::vhost (
   Optional[String] $custom_fragment                                                   = undef,
   Optional[Hash] $itk                                                                 = undef,
   Optional[String] $action                                                            = undef,
-  Optional[String] $fastcgi_server                                                    = undef,
-  Optional[String] $fastcgi_socket                                                    = undef,
-  Optional[String] $fastcgi_dir                                                       = undef,
-  Optional[Variant[Integer,String]] $fastcgi_idle_timeout                             = undef,
-  Variant[Array[String],String] $additional_includes                                  = [],
+  Variant[Array[String], String] $additional_includes                                 = [],
   Boolean $use_optional_includes                                                      = $apache::use_optional_includes,
   Optional[String] $apache_version                                                    = $apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                      = undef,
@@ -1888,7 +1880,7 @@ define apache::vhost (
   Optional[Integer] $passenger_max_request_time                                       = undef,
   Optional[Integer] $passenger_memory_limit                                           = undef,
   Optional[Integer] $passenger_stat_throttle_rate                                     = undef,
-  Optional[Variant[String,Array[String]]] $passenger_pre_start                        = undef,
+  Optional[Variant[String, Array[String]]] $passenger_pre_start                       = undef,
   Optional[Boolean] $passenger_high_performance                                       = undef,
   Optional[Boolean] $passenger_buffer_upload                                          = undef,
   Optional[Boolean] $passenger_buffer_response                                        = undef,
@@ -1921,8 +1913,8 @@ define apache::vhost (
   String $krb_servicename                                                             = 'HTTP',
   Enum['on', 'off'] $krb_save_credentials                                             = 'off',
   Optional[Enum['on', 'off']] $keepalive                                              = undef,
-  Optional[Variant[Integer,String]] $keepalive_timeout                                = undef,
-  Optional[Variant[Integer,String]] $max_keepalive_requests                           = undef,
+  Optional[Variant[Integer, String]] $keepalive_timeout                               = undef,
+  Optional[Variant[Integer, String]] $max_keepalive_requests                          = undef,
   Optional[String] $cas_attribute_prefix                                              = undef,
   Optional[String] $cas_attribute_delimiter                                           = undef,
   Optional[String] $cas_root_proxied_as                                               = undef,
@@ -1934,12 +1926,12 @@ define apache::vhost (
   Optional[String] $cas_cookie_path                                                   = undef,
   Optional[String] $shib_compat_valid_user                                            = undef,
   Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name          = undef,
-  Optional[Variant[String,Array[String]]] $comment                                    = undef,
+  Optional[Variant[String, Array[String]]] $comment                                   = undef,
   Hash $define                                                                        = {},
   Boolean $auth_oidc                                                                  = false,
   Optional[Apache::OIDCSettings] $oidc_settings                                       = undef,
-  Optional[Variant[Boolean,String]] $mdomain                                          = undef,
-  Optional[Variant[String[1],Array[String[1]]]] $userdir                              = undef,
+  Optional[Variant[Boolean, String]] $mdomain                                         = undef,
+  Optional[Variant[String[1], Array[String[1]]]] $userdir                             = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -2117,7 +2109,7 @@ define apache::vhost (
   } else {
     if $port {
       $listen_addr_port = $port
-      $nvh_addr_port = prefix(any2array($port),"${vhost_name}:")
+      $nvh_addr_port = prefix(any2array($port), "${vhost_name}:")
     } else {
       $listen_addr_port = undef
       $nvh_addr_port = $name
@@ -2680,22 +2672,6 @@ define apache::vhost (
       target  => "${priority_real}${filename}.conf",
       order   => 270,
       content => template('apache/vhost/_custom_fragment.erb'),
-    }
-  }
-
-  # Template uses:
-  # - $fastcgi_server
-  # - $fastcgi_socket
-  # - $fastcgi_dir
-  # - $fastcgi_idle_timeout
-  # - $apache_version
-  if ($fastcgi_server or $fastcgi_dir) and $ensure == 'present' {
-    include apache::mod::fastcgi
-
-    concat::fragment { "${name}-fastcgi":
-      target  => "${priority_real}${filename}.conf",
-      order   => 280,
-      content => template('apache/vhost/_fastcgi.erb'),
     }
   }
 

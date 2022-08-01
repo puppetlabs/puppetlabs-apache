@@ -32,17 +32,17 @@ describe 'apache::mod::event', type: :class do
     context 'Test mpm_event new params' do
       let :params do
         {
-          serverlimit: '0',
-          startservers: '1',
-          maxclients: '2',
-          minsparethreads: '3',
-          maxsparethreads: '4',
-          threadsperchild: '5',
-          maxrequestsperchild: '6',
-          threadlimit: '7',
-          listenbacklog: '8',
-          maxrequestworkers: '9',
-          maxconnectionsperchild: '10',
+          serverlimit: 0,
+          startservers: 1,
+          maxclients: 2,
+          minsparethreads: 3,
+          maxsparethreads: 4,
+          threadsperchild: 5,
+          maxrequestsperchild: 6,
+          threadlimit: 7,
+          listenbacklog: 8,
+          maxrequestworkers: 9,
+          maxconnectionsperchild: 10,
         }
       end
 
@@ -62,15 +62,15 @@ describe 'apache::mod::event', type: :class do
     context 'Test mpm_event old style params' do
       let :params do
         {
-          serverlimit: '0',
-          startservers: '1',
-          maxclients: '2',
-          minsparethreads: '3',
-          maxsparethreads: '4',
-          threadsperchild: '5',
-          maxrequestsperchild: '6',
-          threadlimit: '7',
-          listenbacklog: '8',
+          serverlimit: 0,
+          startservers: 1,
+          maxclients: 2,
+          minsparethreads: 3,
+          maxsparethreads: 4,
+          threadsperchild: 5,
+          maxrequestsperchild: 6,
+          threadlimit: 7,
+          listenbacklog: 8,
           maxrequestworkers: :undef,
           maxconnectionsperchild: :undef,
         }
