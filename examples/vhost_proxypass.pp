@@ -28,8 +28,8 @@ apache::vhost { 'second.example.com':
       'path'   => '/second',
       'url'    => 'http://localhost:8080/second',
       'params' => {
-        'retry'   => '0',
-        'timeout' => '5',
+        'retry'   => 0,
+        'timeout' => 5,
       }
     },
   ],
@@ -57,8 +57,8 @@ apache::vhost { 'fourth.example.com':
       'path'     => '/fourth',
       'url'      => 'http://localhost:8080/fourth',
       'params'   => {
-        'retry'   => '0',
-        'timeout' => '5',
+        'retry'   => 0,
+        'timeout' => 5,
       },
       'keywords' => ['noquery', 'interpolate']
     },

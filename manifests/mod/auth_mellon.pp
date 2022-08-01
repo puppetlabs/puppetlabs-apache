@@ -25,13 +25,13 @@
 # @see https://github.com/Uninett/mod_auth_mellon for additional documentation.
 #
 class apache::mod::auth_mellon (
-  Optional[Variant[String,Integer]] $mellon_cache_size  = $apache::params::mellon_cache_size,
-  Optional[String] $mellon_lock_file                    = $apache::params::mellon_lock_file,
-  Optional[String] $mellon_post_directory     = $apache::params::mellon_post_directory,
-  Optional[String] $mellon_cache_entry_size   = undef,
-  Optional[String] $mellon_post_ttl           = undef,
-  Optional[String] $mellon_post_size          = undef,
-  Optional[String] $mellon_post_count         = undef
+  Optional[Integer] $mellon_cache_size                  = $apache::params::mellon_cache_size,
+  Optional[Stdlib::Absolutepath] $mellon_lock_file      = $apache::params::mellon_lock_file,
+  Optional[Stdlib::Absolutepath] $mellon_post_directory = $apache::params::mellon_post_directory,
+  Optional[Integer] $mellon_cache_entry_size            = undef,
+  Optional[Integer] $mellon_post_ttl                    = undef,
+  Optional[Integer] $mellon_post_size                   = undef,
+  Optional[Integer] $mellon_post_count                  = undef
 ) inherits apache::params {
   include apache
   ::apache::mod { 'auth_mellon': }

@@ -29,11 +29,11 @@
 # @example With a vhost with priority
 #   include apache
 #   apache::vhost { 'myvhost':
-#     priority => '42',
+#     priority => 42,
 #   }
 #   apache::vhost::fragment { 'myfragment':
 #     vhost    => 'myvhost',
-#     priority => '42',
+#     priority => 42,
 #     content  => '# Foo',
 #   }
 #
@@ -44,7 +44,7 @@
 #   }
 #   apache::vhost::fragment { 'myfragment':
 #     vhost    => 'myvhost',
-#     priority => '10', # default_vhost implies priority 10
+#     priority => 10, # default_vhost implies priority 10
 #     content  => '# Foo',
 #   }
 #
@@ -52,16 +52,16 @@
 #   include apache
 #   apache::vhost::fragment { 'myfragment':
 #     vhost    => 'default',
-#     priority => '15',
+#     priority => 15,
 #     content  => '# Foo',
 #   }
 #
 define apache::vhost::fragment (
   String[1] $vhost,
-  Optional[Integer[0]] $port                          = undef,
-  Optional[Variant[Integer,String,Boolean]] $priority = undef,
-  Optional[String] $content                           = undef,
-  Integer[0] $order                                   = 900,
+  Optional[Stdlib::Port] $port                  = undef,
+  Optional[Variant[Integer, Boolean]] $priority = undef,
+  Optional[String] $content                     = undef,
+  Integer[0] $order                             = 900,
 ) {
   # This copies the logic from apache::vhost
   if $priority {

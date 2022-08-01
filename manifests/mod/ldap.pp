@@ -39,27 +39,27 @@
 #     ldap_trusted_global_cert_file => '/etc/pki/tls/certs/ldap-trust.crt',
 #     ldap_trusted_global_cert_type => 'CA_DER',
 #     ldap_trusted_mode             => 'TLS',
-#     ldap_shared_cache_size        => '500000',
-#     ldap_cache_entries            => '1024',
-#     ldap_cache_ttl                => '600',
-#     ldap_opcache_entries          => '1024',
-#     ldap_opcache_ttl              => '600',
+#     ldap_shared_cache_size        => 500000,
+#     ldap_cache_entries            => 1024,
+#     ldap_cache_ttl                => 600,
+#     ldap_opcache_entries          => 1024,
+#     ldap_opcache_ttl              => 600,
 #   }
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_ldap.html for additional documentation.
 # @note Unsupported platforms: CentOS: 8; RedHat: 8, 9
 class apache::mod::ldap (
-  Optional[String] $apache_version                 = undef,
-  Optional[String] $package_name                   = undef,
-  Optional[String] $ldap_trusted_global_cert_file  = undef,
-  String $ldap_trusted_global_cert_type            = 'CA_BASE64',
-  Optional[String] $ldap_shared_cache_size         = undef,
-  Optional[String] $ldap_cache_entries             = undef,
-  Optional[String] $ldap_cache_ttl                 = undef,
-  Optional[String] $ldap_opcache_entries           = undef,
-  Optional[String] $ldap_opcache_ttl               = undef,
-  Optional[String] $ldap_trusted_mode              = undef,
-  String $ldap_path                                = '/ldap-status',
+  Optional[String] $apache_version                = undef,
+  Optional[String] $package_name                  = undef,
+  Optional[String] $ldap_trusted_global_cert_file = undef,
+  String $ldap_trusted_global_cert_type           = 'CA_BASE64',
+  Optional[Integer] $ldap_shared_cache_size       = undef,
+  Optional[Integer] $ldap_cache_entries           = undef,
+  Optional[Integer] $ldap_cache_ttl               = undef,
+  Optional[Integer] $ldap_opcache_entries         = undef,
+  Optional[Integer] $ldap_opcache_ttl             = undef,
+  Optional[String] $ldap_trusted_mode             = undef,
+  String $ldap_path                               = '/ldap-status',
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

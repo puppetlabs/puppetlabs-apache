@@ -79,7 +79,7 @@ describe 'apache ssl' do
           ssl_cipher           => 'test',
           ssl_honorcipherorder => true,
           ssl_verify_client    => 'require',
-          ssl_verify_depth     => 'test',
+          ssl_verify_depth     => 1,
           ssl_options          => ['test', 'test1'],
           ssl_proxyengine      => true,
           ssl_proxy_protocol   => 'TLSv1.2',
@@ -103,7 +103,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLCipherSuite          test' }
       it { is_expected.to contain 'SSLHonorCipherOrder     On' }
       it { is_expected.to contain 'SSLVerifyClient         require' }
-      it { is_expected.to contain 'SSLVerifyDepth          test' }
+      it { is_expected.to contain 'SSLVerifyDepth          1' }
       it { is_expected.to contain 'SSLOptions test test1' }
       if apache_hash['version'] == '2.4'
         it { is_expected.to contain 'SSLCARevocationCheck    chain flag' }

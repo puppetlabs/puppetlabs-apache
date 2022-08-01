@@ -1,3 +1,4 @@
+# @summary disable Apache-Module event
 class apache::mpm::disable_mpm_event {
   exec { '/usr/sbin/a2dismod event':
     onlyif  => "/usr/bin/test -e ${apache::mod_enable_dir}/event.load",

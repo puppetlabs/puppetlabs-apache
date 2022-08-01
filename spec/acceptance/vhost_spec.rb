@@ -86,7 +86,7 @@ describe 'apache::vhost define' do
       }
 
       apache::vhost { 'first.example.com':
-        port    => '80',
+        port    => 80,
         docroot => '/var/www/first',
         require => File['/var/www'],
       }
@@ -105,7 +105,7 @@ describe 'apache::vhost define' do
     pp = <<-MANIFEST
       class { 'apache': }
       apache::vhost { 'proxy.example.com':
-        port    => '80',
+        port    => 80,
         docroot => '/var/www/proxy',
         proxy_pass => [
           { 'path' => '/foo', 'url' => 'http://backend-foo/'},
@@ -133,7 +133,7 @@ describe 'apache::vhost define' do
     pp = <<-MANIFEST
       class { 'apache': }
       apache::vhost { 'proxy.example.com':
-        port    => '80',
+        port    => 80,
         docroot => '#{apache_hash['doc_root']}/proxy',
         proxy_pass_match => [
           { 'path' => '/foo', 'url' => 'http://backend-foo/'},
@@ -163,7 +163,7 @@ describe 'apache::vhost define' do
         default_vhost => false,
       }
       apache::vhost { 'example.com':
-        port     => ['80', '8080'],
+        port     => [80, 8080],
         ip       => ['127.0.0.1','127.0.0.2'],
         ip_based => true,
         docroot  => '/var/www/html',
@@ -232,7 +232,7 @@ describe 'apache::vhost define' do
         default_vhost  => false,
       }
       apache::vhost { 'example.com':
-        port           => '80',
+        port           => 80,
         ip             => '::1',
         ip_based       => true,
         docroot        => '/var/www/html',
@@ -512,7 +512,7 @@ describe 'apache::vhost define' do
       apache::vhost { 'virt.example.com':
         vhost_name      => '*',
         serveraliases   => '*virt.example.com',
-        port            => '80',
+        port            => 80,
         docroot         => '/var/www/virt',
         virtual_docroot => '/var/www/virt/%1',
       }
@@ -552,12 +552,12 @@ describe 'apache::vhost define' do
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
           ip      => '127.0.0.1',
-          port    => '8888',
+          port    => 8888,
         }
         apache::listen { '*:80': }
         apache::vhost { 'proxy.example.com':
           docroot    => '/var/www',
-          port       => '80',
+          port       => 80,
           add_listen => false,
           proxy_pass => {
             'path' => '/',
@@ -597,12 +597,12 @@ describe 'apache::vhost define' do
         apache::vhost { 'localhost':
           docroot => '/var/www/local',
           ip      => '127.0.0.1',
-          port    => '8888',
+          port    => 8888,
         }
         apache::listen { '*:80': }
         apache::vhost { 'proxy.example.com':
           docroot    => '/var/www',
-          port       => '80',
+          port       => 80,
           add_listen => false,
           proxy_pass_match => {
             'path' => '/',
@@ -690,7 +690,7 @@ describe 'apache::vhost define' do
       apache::listen { '81': }
       apache::vhost { 'testlisten.server':
         docroot    => '/tmp',
-        port       => '80',
+        port       => 80,
         add_listen => false,
         servername => 'testlisten.server',
       }
@@ -1134,7 +1134,7 @@ describe 'apache::vhost define' do
         docroot                     => '/tmp',
         wsgi_application_group      => '%{GLOBAL}',
         wsgi_daemon_process         => { 'wsgi' => { 'python-home' => '/usr' }, 'foo' => {} },
-        wsgi_daemon_process_options => {processes => '2'},
+        wsgi_daemon_process_options => {processes => 2},
         wsgi_import_script          => '/test1',
         wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
         wsgi_process_group          => 'nobody',
@@ -1207,7 +1207,7 @@ describe 'apache::vhost define' do
       class { 'apache': }
       class { 'apache::mod::shib': }
       apache::vhost { 'test.server':
-        port    => '80',
+        port    => 80,
         docroot => '/var/www/html',
         shib_compat_valid_user => 'On'
       }
@@ -1227,7 +1227,7 @@ describe 'apache::vhost define' do
     pp = <<-MANIFEST
         class { 'apache': }
         apache::vhost { 'test.server':
-          port    => '80',
+          port    => 80,
           docroot => '/var/www/html',
           auth_oidc     => true,
           oidc_settings => {

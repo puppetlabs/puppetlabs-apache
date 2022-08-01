@@ -28,14 +28,14 @@
 # @see https://dev.maxmind.com/geoip/legacy/mod_geoip2 for additional documentation.
 #
 class apache::mod::geoip (
-  Boolean $enable                               = false,
-  String $db_file                               = '/usr/share/GeoIP/GeoIP.dat',
-  String $flag                                  = 'Standard',
-  String $output                                = 'All',
-  Optional[String] $enable_utf8                 = undef,
-  Optional[String] $scan_proxy_headers          = undef,
-  Optional[String] $scan_proxy_header_field     = undef,
-  Optional[String] $use_last_xforwarededfor_ip  = undef,
+  Boolean $enable                              = false,
+  Stdlib::Absolutepath $db_file                = '/usr/share/GeoIP/GeoIP.dat',
+  String $flag                                 = 'Standard',
+  String $output                               = 'All',
+  Optional[String] $enable_utf8                = undef,
+  Optional[String] $scan_proxy_headers         = undef,
+  Optional[String] $scan_proxy_header_field    = undef,
+  Optional[String] $use_last_xforwarededfor_ip = undef,
 ) {
   include apache
   ::apache::mod { 'geoip': }

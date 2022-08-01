@@ -17,7 +17,7 @@ class apache::mod::deflate (
     'application/rss+xml',
     'application/json',
   ],
-  Hash $notes = {
+  Hash $notes          = {
     'Input'  => 'instream',
     'Output' => 'outstream',
     'Ratio'  => 'ratio',

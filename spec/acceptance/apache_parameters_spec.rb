@@ -222,7 +222,7 @@ describe 'apache parameters' do
   describe 'timeout' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': timeout => '1234' }"
+        pp = "class { 'apache': timeout => 1234 }"
         apply_manifest(pp, catch_failures: true)
       end
     end
@@ -384,7 +384,7 @@ describe 'apache parameters' do
   describe 'keepalive' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': keepalive => 'Off', keepalive_timeout => '30', max_keepalive_requests => '200' }"
+        pp = "class { 'apache': keepalive => 'Off', keepalive_timeout => 30, max_keepalive_requests => 200 }"
         apply_manifest(pp, catch_failures: true)
       end
     end
@@ -400,7 +400,7 @@ describe 'apache parameters' do
   describe 'limitrequestfieldsize' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': limitreqfieldsize => '16830' }"
+        pp = "class { 'apache': limitreqfieldsize => 16830 }"
         apply_manifest(pp, catch_failures: true)
       end
     end
@@ -414,7 +414,7 @@ describe 'apache parameters' do
   describe 'limitrequestfields' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': limitreqfields => '120' }"
+        pp = "class { 'apache': limitreqfields => 120 }"
         apply_manifest(pp, catch_failures: true)
       end
     end

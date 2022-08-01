@@ -26,16 +26,16 @@
 # @param libphp_prefix
 #
 class apache::mod::php (
-  Optional[String] $package_name  = undef,
-  String $package_ensure          = 'present',
-  Optional[String] $path          = undef,
-  Array $extensions               = ['.php'],
-  Optional[String] $content       = undef,
-  String $template                = 'apache/mod/php.conf.erb',
-  Optional[String] $source        = undef,
-  Optional[String] $root_group    = $apache::params::root_group,
-  Optional[String] $php_version   = $apache::params::php_version,
-  String $libphp_prefix           = 'libphp'
+  Optional[String] $package_name = undef,
+  String $package_ensure         = 'present',
+  Optional[String] $path         = undef,
+  Array $extensions              = ['.php'],
+  Optional[String] $content      = undef,
+  String $template               = 'apache/mod/php.conf.erb',
+  Optional[String] $source       = undef,
+  Optional[String] $root_group   = $apache::params::root_group,
+  Optional[String] $php_version  = $apache::params::php_version,
+  String $libphp_prefix          = 'libphp'
 ) inherits apache::params {
   include apache
   if (versioncmp($php_version, '8') < 0) {

@@ -4,15 +4,8 @@ require 'spec_helper'
 
 describe 'apache::vhost', type: :define do
   describe 'os-independent items' do
-    on_supported_os.each do |os, facts|
-      apache_name = case facts[:os]['family']
-                    when 'RedHat'
-                      'httpd'
-                    when 'Debian'
-                      'apache2'
-                    else
-                      'apache2'
-                    end
+    on_supported_os.each do |os, os_facts|
+      let(:apache_name) { facts[:os]['family'] == 'RedHat' ? 'httpd' : 'apache2' }
 
       let :pre_condition do
         "class {'apache': default_vhost => false, default_mods => false, vhost_enable_dir => '/etc/#{apache_name}/sites-enabled'}"
@@ -25,13 +18,13 @@ describe 'apache::vhost', type: :define do
       let :default_params do
         {
           docroot: '/rspec/docroot',
-          port: '84',
+          port: 84,
         }
       end
 
       context "on #{os} " do
         let :facts do
-          facts
+          os_facts
         end
 
         describe 'basic assumptions' do
@@ -41,9 +34,9 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
           # namebased virualhost is only created on apache 2.2 and older
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
+             (os_facts[:os]['name'] == 'Amazon') ||
+             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
             it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
           end
         end
@@ -54,7 +47,7 @@ describe 'apache::vhost', type: :define do
               'manage_docroot'              => false,
               'virtual_docroot'             => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => '8080',
+              'port'                        => 8080,
               'ip'                          => '127.0.0.1',
               'ip_based'                    => true,
               'add_listen'                  => false,
@@ -73,7 +66,7 @@ describe 'apache::vhost', type: :define do
               'ssl_cipher'                  => 'HIGH',
               'ssl_honorcipherorder'        => 'Off',
               'ssl_verify_client'           => 'optional',
-              'ssl_verify_depth'            => '3',
+              'ssl_verify_depth'            => 3,
               'ssl_options'                 => '+ExportCertData',
               'ssl_openssl_conf_cmd'        => 'DHParameters "foo.pem"',
               'ssl_proxy_verify'            => 'require',
@@ -85,7 +78,7 @@ describe 'apache::vhost', type: :define do
               'ssl_proxy_protocol'          => 'TLSv1.2',
               'ssl_user_name'               => 'SSL_CLIENT_S_DN_CN',
               'ssl_reload_on_change'        => true,
-              'priority'                    => '30',
+              'priority'                    => 30,
               'default_vhost'               => true,
               'servername'                  => 'example.com',
               'serveraliases'               => ['test-example.com'],
@@ -181,7 +174,7 @@ describe 'apache::vhost', type: :define do
                 { 'path'               => '/var/www/dav',
                   'dav'                => 'filesystem',
                   'dav_depth_infinity' => true,
-                  'dav_min_timeout'    => '600' },
+                  'dav_min_timeout'    => 600 },
                 {
                   'path'             => '/var/www/http2',
                   'h2_copy_files'    => true,
@@ -207,8 +200,8 @@ describe 'apache::vhost', type: :define do
                       'url'             => 'http://backend-b/',
                       'keywords'        => ['noquery', 'interpolate'],
                       'params' => {
-                        'retry'   => '0',
-                        'timeout' => '5',
+                        'retry'   => 0,
+                        'timeout' => 5,
                       },
                     },
                   ],
@@ -221,8 +214,8 @@ describe 'apache::vhost', type: :define do
                       'url'             => 'http://backend-b/',
                       'keywords'        => ['noquery', 'interpolate'],
                       'params' => {
-                        'retry'   => '0',
-                        'timeout' => '5',
+                        'retry'   => 0,
+                        'timeout' => 5,
                       },
                     },
                   ],
@@ -311,7 +304,7 @@ describe 'apache::vhost', type: :define do
                   'provider'          => 'location',
                   'ssl_options'       => ['+ExportCertData', '+StdEnvVars'],
                   'ssl_verify_client' => 'optional',
-                  'ssl_verify_depth'  => '10',
+                  'ssl_verify_depth'  => 10,
                 },
               ],
               'error_log'                   => false,
@@ -354,8 +347,8 @@ describe 'apache::vhost', type: :define do
                     },
                   ],
                   'params' => {
-                    'retry'   => '0',
-                    'timeout' => '5',
+                    'retry'   => 0,
+                    'timeout' => 5,
                   },
                   'setenv'   => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
                 },
@@ -368,8 +361,8 @@ describe 'apache::vhost', type: :define do
                   'no_proxy_uris'       => ['/a/foo', '/a/bar'],
                   'no_proxy_uris_match' => ['/a/foomatch'],
                   'params' => {
-                    'retry'   => '0',
-                    'timeout' => '5',
+                    'retry'   => 0,
+                    'timeout' => 5,
                   },
                   'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
                 },
@@ -415,8 +408,8 @@ describe 'apache::vhost', type: :define do
               'wsgi_application_group'      => '%{GLOBAL}',
               'wsgi_daemon_process'         => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
               'wsgi_daemon_process_options' => {
-                'processes'    => '2',
-                'threads'      => '15',
+                'processes'    => 2,
+                'threads'      => 15,
                 'display-name' => '%{GROUP}',
               },
               'wsgi_import_script'          => '/var/www/demo.wsgi',
@@ -527,8 +520,8 @@ describe 'apache::vhost', type: :define do
               'krb_local_user_mapping'      => 'off',
               'http_protocol_options' => 'Strict LenientMethods Allow0.9',
               'keepalive'                   => 'on',
-              'keepalive_timeout'           => '100',
-              'max_keepalive_requests'      => '1000',
+              'keepalive_timeout'           => 100,
+              'max_keepalive_requests'      => 1000,
               'protocols'                   => ['h2', 'http/1.1'],
               'protocols_honor_order'       => true,
               'auth_oidc'                   => true,
@@ -593,7 +586,7 @@ describe 'apache::vhost', type: :define do
                                                                             'require' => 'Package[httpd]',
                                                                             'notify'  => 'Class[Apache::Service]')
           }
-          if facts[:os]['release']['major'].to_i >= 18 && facts[:os]['name'] == 'Ubuntu'
+          if os_facts[:os]['release']['major'].to_i >= 18 && os_facts[:os]['name'] == 'Ubuntu'
             it {
               is_expected.to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
                                                                                     'path' => "/etc/#{apache_name}/sites-enabled/30-rspec.example.com.conf")
@@ -919,7 +912,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with scheme and port in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => '80',
+              'port'                          => 80,
               'ip'                            => '127.0.0.1',
               'ip_based'                      => true,
               'servername'                    => 'https://www.example.com:443',
@@ -943,7 +936,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with scheme in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => '80',
+              'port'                          => 80,
               'ip'                            => '127.0.0.1',
               'ip_based'                      => true,
               'servername'                    => 'https://www.example.com',
@@ -967,7 +960,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with port in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => '80',
+              'port'                          => 80,
               'ip'                            => '127.0.0.1',
               'ip_based'                      => true,
               'servername'                    => 'www.example.com:443',
@@ -991,7 +984,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => '80',
+              'port'                          => 80,
               'ip'                            => '127.0.0.1',
               'ip_based'                      => true,
               'servername'                    => 'www.example.com',
@@ -1015,7 +1008,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ip addresses' do
           let :params do
             {
-              'port'                        => '80',
+              'port'                        => 80,
               'ip'                          => ['127.0.0.1', '::1'],
               'ip_based'                    => true,
               'servername'                  => 'example.com',
@@ -1040,7 +1033,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ports' do
           let :params do
             {
-              'port'                        => ['80', '8080'],
+              'port'                        => [80, 8080],
               'ip'                          => '127.0.0.1',
               'ip_based'                    => true,
               'servername'                  => 'example.com',
@@ -1065,7 +1058,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ip addresses, multiple ports' do
           let :params do
             {
-              'port'                        => ['80', '8080'],
+              'port'                        => [80, 8080],
               'ip'                          => ['127.0.0.1', '::1'],
               'ip_based'                    => true,
               'servername'                  => 'example.com',
@@ -1094,7 +1087,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with ipv6 address' do
           let :params do
             {
-              'port'                        => '80',
+              'port'                        => 80,
               'ip'                          => '::1',
               'ip_based'                    => true,
               'servername'                  => 'example.com',
@@ -1117,7 +1110,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with wildcard ip address' do
           let :params do
             {
-              'port'                        => '80',
+              'port'                        => 80,
               'ip'                          => '*',
               'ip_based'                    => true,
               'servername'                  => 'example.com',
@@ -1316,7 +1309,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-requestheader') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-wsgi') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-custom_fragment') }
-          it { is_expected.not_to contain_concat__fragment('rspec.example.com-fastcgi') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-suexec') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-charsets') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-limits') }
@@ -1710,8 +1702,8 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
             # this works only with apache 2.4 and newer
-            if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i > 6) ||
-               (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i > 11)
+            if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i > 6) ||
+               (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i > 11)
               it {
                 is_expected.to contain_concat__fragment('rspec.example.com-directories').with(
                   content: %r{^\s+Require all granted$},
@@ -1724,9 +1716,9 @@ describe 'apache::vhost', type: :define do
 
           # the following style is only present on Apache 2.2
           # That is used in SLES 11, RHEL6, Amazon Linux
-          if (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i < 7) ||
-             (facts[:os]['name'] == 'Amazon') ||
-             (facts[:os]['name'] == 'SLES' && facts[:os]['release']['major'].to_i < 12)
+          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
+             (os_facts[:os]['name'] == 'Amazon') ||
+             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
             context 'apache 2.2 access controls on directories' do
               let :params do
                 {
@@ -1766,25 +1758,6 @@ describe 'apache::vhost', type: :define do
             end
           end
 
-          # this setup uses fastcgi wich isn't available on RHEL 7 / RHEL 8 / Debian / Ubuntu
-          unless facts[:os]['family'] == 'Debian' || (facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'].to_i >= 7)
-            describe 'fastcgi options' do
-              let :params do
-                {
-                  'docroot'              => '/var/www/foo',
-                  'fastcgi_server'       => 'localhost',
-                  'fastcgi_socket'       => '/tmp/fastcgi.socket',
-                  'fastcgi_dir'          => '/tmp',
-                  'fastcgi_idle_timeout' => '120',
-                }
-              end
-
-              it { is_expected.to compile }
-              it { is_expected.to contain_class('apache::mod::fastcgi') }
-              it { is_expected.to contain_concat__fragment('rspec.example.com-fastcgi') }
-            end
-          end
-
           context 'require unmanaged' do
             let :params do
               {
@@ -1808,7 +1781,7 @@ describe 'apache::vhost', type: :define do
             }
           end
           describe 'redirectmatch_*' do
-            let(:params) { super().merge(port: '84') }
+            let(:params) { super().merge(port: 84) }
 
             context 'dest and regexp' do
               let(:params) { super().merge(redirectmatch_dest: 'http://other.example.com$1.jpg', redirectmatch_regexp: "(.*)\.gif$") }
