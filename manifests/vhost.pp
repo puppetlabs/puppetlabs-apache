@@ -1730,7 +1730,7 @@ define apache::vhost (
   Optional[Integer] $ssl_stapling_timeout                                             = undef,
   Optional[Enum['on', 'off']] $ssl_stapling_return_errors                             = undef,
   Optional[String] $ssl_user_name                                                     = undef,
-  Optional[Variant[Integer, Boolean]] $priority                                       = undef,
+  Optional[Apache::Vhost::Priority] $priority                                         = undef,
   Boolean $default_vhost                                                              = false,
   Optional[String] $servername                                                        = $name,
   Variant[Array[String], String] $serveraliases                                       = [],
