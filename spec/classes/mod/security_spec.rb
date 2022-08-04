@@ -79,6 +79,8 @@ describe 'apache::mod::security', type: :class do
                 audit_log_type: 'Concurrent',
                 audit_log_storage_dir: '/var/log/httpd/audit',
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
+                secrequestbodyaccess: 'Off',
+                secresponsebodyaccess: 'On',
               }
             end
 
@@ -86,6 +88,8 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogType Concurrent$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
             it {
               is_expected.to contain_file('bar.conf').with(
@@ -227,6 +231,8 @@ describe 'apache::mod::security', type: :class do
                 audit_log_type: 'Concurrent',
                 audit_log_storage_dir: '/var/log/httpd/audit',
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
+                secrequestbodyaccess: 'Off',
+                secresponsebodyaccess: 'On',
               }
             end
 
@@ -235,6 +241,8 @@ describe 'apache::mod::security', type: :class do
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
               it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
               it {
                 is_expected.to contain_file('bar.conf').with(
