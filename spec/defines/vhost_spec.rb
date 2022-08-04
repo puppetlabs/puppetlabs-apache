@@ -1202,6 +1202,33 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+
+        context 'modsec_anomaly_threshold' do
+          let :params do
+            {
+              'docroot'                           => '/rspec/docroot',
+              'modsec_inbound_anomaly_threshold'  => 10_000,
+              'modsec_outbound_anomaly_threshold' => 10_000,
+            }
+          end
+
+          it { is_expected.to compile }
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-security').with(
+              content: %r{
+                ^\s+SecAction\ \\\n
+                \s+\"id:900110,\\\n
+                \s+phase:1,\\\n
+                \s+nolog,\\\n
+                \s+pass,\\\n
+                \s+t:none,\\\n
+                \s+setvar:tx.inbound_anomaly_score_threshold=10000,\ \\\n
+                \s+setvar:tx.outbound_anomaly_score_threshold=10000"$
+              }x,
+            )
+          }
+        end
+
         context 'set only aliases' do
           let :params do
             {
