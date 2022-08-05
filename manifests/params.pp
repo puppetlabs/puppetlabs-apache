@@ -385,7 +385,6 @@ class apache::params inherits apache::version {
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
         'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
@@ -396,7 +395,6 @@ class apache::params inherits apache::version {
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
         'jk'                    => 'libapache2-mod-jk',
         'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
         'pagespeed'             => 'mod-pagespeed-stable',
         'passenger'             => 'libapache2-mod-passenger',
         'perl'                  => 'libapache2-mod-perl2',
