@@ -38,10 +38,11 @@ class apache::mod::php (
   String $libphp_prefix          = 'libphp'
 ) inherits apache::params {
   include apache
-  if (versioncmp($php_version, '8') < 0) {
-    $mod = "php${php_version}"
-  } else {
+  # RedHat + PHP 8 drop the major version in apache module name.
+  if ($facts['os']['family'] == 'RedHat') and (versioncmp($php_version, '8') >= 0) {
     $mod = 'php'
+  } else {
+    $mod = "php${php_version}"
   }
 
   if $apache::version::scl_httpd_version == undef and $apache::version::scl_php_version != undef {
@@ -87,12 +88,11 @@ class apache::mod::php (
   $_php_version_no_dot = regsubst($php_version, '\.', '')
   if $apache::version::scl_httpd_version {
     $_lib = "librh-php${_php_version_no_dot}-php${_php_major}.so"
+  } elsif ($facts['os']['family'] == 'RedHat') and ($_php_major == 8) {
+    # RedHat + PHP 8 drop the major version in apache module name.
+    $_lib = "${libphp_prefix}.so"
   } else {
-    # Controls php version and libphp prefix
-    $_lib = $_php_major ? {
-      '8'     => "${libphp_prefix}.so",
-      default => "${libphp_prefix}${php_version}.so",
-    }
+    $_lib = "${libphp_prefix}${php_version}.so"
   }
   $_module_id = $_php_major ? {
     '5'     => 'php5_module',
