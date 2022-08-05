@@ -140,6 +140,10 @@ describe 'apache::mod::security', type: :class do
               {
                 paranoia_level: 1,
                 executing_paranoia_level: 2,
+                enable_dos_protection: true,
+                dos_burst_time_slice: 30,
+                dos_counter_threshold: 120,
+                dos_block_timeout: 300,
               }
             end
 
@@ -148,6 +152,18 @@ describe 'apache::mod::security', type: :class do
                 %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
               is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=2"$}
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900700,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:'tx.dos_burst_time_slice=30',\\\n
+                  \s+setvar:'tx.dos_counter_threshold=120',\\\n
+                  \s+setvar:'tx.dos_block_timeout=300'"$
+              }x
             }
           end
 
@@ -302,6 +318,10 @@ describe 'apache::mod::security', type: :class do
               {
                 paranoia_level: 1,
                 executing_paranoia_level: 1,
+                enable_dos_protection: true,
+                dos_burst_time_slice: 30,
+                dos_counter_threshold: 120,
+                dos_block_timeout: 300,
               }
             end
 
@@ -310,6 +330,18 @@ describe 'apache::mod::security', type: :class do
                 %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
               is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=1"$}
+              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900700,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:'tx.dos_burst_time_slice=30',\\\n
+                  \s+setvar:'tx.dos_counter_threshold=120',\\\n
+                  \s+setvar:'tx.dos_block_timeout=300'"$
+              }x
             }
           end
 

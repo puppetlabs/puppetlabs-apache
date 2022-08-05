@@ -104,7 +104,24 @@
 # @param manage_security_crs
 #   Toggles whether to manage ModSecurity Core Rule Set 
 #
+# @param enable_dos_protection
+#   Toggles the optional OWASP ModSecurity Core Rule Set DOS protection rule
+#   (rule id 900700)
+#
+# @param dos_burst_time_slice
+#   Configures time in which a burst is measured for the OWASP ModSecurity Core Rule Set DOS protection rule
+#   (rule id 900700)
+#
+# @param dos_counter_threshold
+#   Configures the amount of requests that can be made within dos_burst_time_slice before it is considered a burst in
+#   the OWASP ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+#
+# @param dos_block_timeout
+#   Configures how long the client should be blocked when the dos_counter_threshold is exceeded in the OWASP
+#   ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+#
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
+# @see https://coreruleset.org/docs/ for addional documentation
 #
 class apache::mod::security (
   Stdlib::Absolutepath $logroot                         = $apache::params::logroot,
@@ -141,6 +158,10 @@ class apache::mod::security (
   Enum['On', 'Off'] $secrequestbodyaccess               = 'On',
   Enum['On', 'Off'] $secresponsebodyaccess              = 'Off',
   Boolean $manage_security_crs                          = true,
+  Boolean $enable_dos_protection                        = true,
+  Integer[1, default] $dos_burst_time_slice             = 60,
+  Integer[1, default] $dos_counter_threshold            = 100,
+  Integer[1, default] $dos_block_timeout                = 600,
 ) inherits apache::params {
   include apache
 
@@ -278,6 +299,10 @@ class apache::mod::security (
     # - $restricted_extensions
     # - $restricted_headers
     # - $secrequestmaxnumargs
+    # - $enable_dos_protection
+    # - $dos_burst_time_slice
+    # - $dos_counter_threshold
+    # - $dos_block_timeout
     file { "${modsec_dir}/security_crs.conf":
       ensure  => file,
       content => template('apache/mod/security_crs.conf.erb'),
