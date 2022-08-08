@@ -197,7 +197,7 @@ class apache::params inherits apache::version {
     $passenger_ruby       = undef
     $passenger_default_ruby = undef
     $php_version = $facts['os']['release']['major'] ? {
-      '9'     => '8', # RedHat9
+      '9'     => undef, # RedHat 9 doesn't ship mod_php
       '8'     => '7', # RedHat8
       default => '5', # RedHat5, RedHat6, RedHat7
     }
