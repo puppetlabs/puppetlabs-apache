@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.0.0) (2022-08-08)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v7.0.0...v8.0.0)
+
+### Changed
+
+- Drop mod\_fastcgi support [\#2267](https://github.com/puppetlabs/puppetlabs-apache/pull/2267) ([ekohl](https://github.com/ekohl))
+- Drop suphp support [\#2263](https://github.com/puppetlabs/puppetlabs-apache/pull/2263) ([ekohl](https://github.com/ekohl))
+- Use a stricter data type on apache::vhost::aliases [\#2253](https://github.com/puppetlabs/puppetlabs-apache/pull/2253) ([ekohl](https://github.com/ekohl))
+- Narrow down Datatypes [\#2245](https://github.com/puppetlabs/puppetlabs-apache/pull/2245) ([cocker-cc](https://github.com/cocker-cc))
+- \(GH-cat-9\) Update module to match current syntax standard [\#2235](https://github.com/puppetlabs/puppetlabs-apache/pull/2235) ([david22swan](https://github.com/david22swan))
+- Drop Apache 2.0 compatibility code [\#2226](https://github.com/puppetlabs/puppetlabs-apache/pull/2226) ([ekohl](https://github.com/ekohl))
+- \(GH-iac-334\) Remove code specific to unsupported OSs [\#2223](https://github.com/puppetlabs/puppetlabs-apache/pull/2223) ([david22swan](https://github.com/david22swan))
+- Remove warnings and plans to change vhost default naming [\#2202](https://github.com/puppetlabs/puppetlabs-apache/pull/2202) ([ekohl](https://github.com/ekohl))
+- Update modsec crs config and template [\#2197](https://github.com/puppetlabs/puppetlabs-apache/pull/2197) ([henkworks](https://github.com/henkworks))
+
+### Added
+
+- Allow overriding CRS allowed HTTP methods per vhost [\#2274](https://github.com/puppetlabs/puppetlabs-apache/pull/2274) ([Vincevrp](https://github.com/Vincevrp))
+- Allow overriding CRS anomaly threshold per vhost [\#2273](https://github.com/puppetlabs/puppetlabs-apache/pull/2273) ([Vincevrp](https://github.com/Vincevrp))
+-  Allow configuring SecRequestBodyAccess and SecResponseBodyAccess [\#2272](https://github.com/puppetlabs/puppetlabs-apache/pull/2272) ([Vincevrp](https://github.com/Vincevrp))
+- Allow configuring CRS paranoia level [\#2270](https://github.com/puppetlabs/puppetlabs-apache/pull/2270) ([Vincevrp](https://github.com/Vincevrp))
+- Automatically include modules used in vhost directories [\#2255](https://github.com/puppetlabs/puppetlabs-apache/pull/2255) ([ekohl](https://github.com/ekohl))
+- Clean up includes and templates in vhost.pp [\#2254](https://github.com/puppetlabs/puppetlabs-apache/pull/2254) ([ekohl](https://github.com/ekohl))
+- pdksync - \(GH-cat-12\) Add Support for Redhat 9 [\#2239](https://github.com/puppetlabs/puppetlabs-apache/pull/2239) ([david22swan](https://github.com/david22swan))
+- Add support for PassengerPreloadBundler [\#2233](https://github.com/puppetlabs/puppetlabs-apache/pull/2233) ([smortex](https://github.com/smortex))
+- apache::vhost ProxyPassMatch in Location containers [\#2222](https://github.com/puppetlabs/puppetlabs-apache/pull/2222) ([skylar2-uw](https://github.com/skylar2-uw))
+- Allow additional settings for GSSAPI in Vhost [\#2215](https://github.com/puppetlabs/puppetlabs-apache/pull/2215) ([tuxmea](https://github.com/tuxmea))
+- mod\_auth\_gssapi: Add support for every configuration directive [\#2214](https://github.com/puppetlabs/puppetlabs-apache/pull/2214) ([canth1](https://github.com/canth1))
+- mod\_auth\_gssapi: Add support for `GssapiBasicAuth`. [\#2212](https://github.com/puppetlabs/puppetlabs-apache/pull/2212) ([olifre](https://github.com/olifre))
+- pdksync - \(IAC-1753\) - Add Support for AlmaLinux 8 [\#2200](https://github.com/puppetlabs/puppetlabs-apache/pull/2200) ([david22swan](https://github.com/david22swan))
+- Add support for setting UserDir in Virual Hosts [\#2192](https://github.com/puppetlabs/puppetlabs-apache/pull/2192) ([smortex](https://github.com/smortex))
+- Add an apache::vhost::proxy define [\#2169](https://github.com/puppetlabs/puppetlabs-apache/pull/2169) ([wbclark](https://github.com/wbclark))
+
+### Fixed
+
+- Disable mod\_php on EL9 [\#2277](https://github.com/puppetlabs/puppetlabs-apache/pull/2277) ([ekohl](https://github.com/ekohl))
+- Allow vhosts to have a string priority again [\#2275](https://github.com/puppetlabs/puppetlabs-apache/pull/2275) ([ekohl](https://github.com/ekohl))
+- Remove duplicate SecDefaultAction in CRS template [\#2271](https://github.com/puppetlabs/puppetlabs-apache/pull/2271) ([Vincevrp](https://github.com/Vincevrp))
+- Better data types on apache::vhost parameters [\#2252](https://github.com/puppetlabs/puppetlabs-apache/pull/2252) ([ekohl](https://github.com/ekohl))
+- Update $timeout to `Variant[Integer,String]` [\#2242](https://github.com/puppetlabs/puppetlabs-apache/pull/2242) ([david22swan](https://github.com/david22swan))
+- Let limitreqfieldsize and limitreqfields be integers [\#2240](https://github.com/puppetlabs/puppetlabs-apache/pull/2240) ([traylenator](https://github.com/traylenator))
+- Drop support for Fedora \< 18 [\#2238](https://github.com/puppetlabs/puppetlabs-apache/pull/2238) ([ekohl](https://github.com/ekohl))
+- Restructure MPM disabling [\#2227](https://github.com/puppetlabs/puppetlabs-apache/pull/2227) ([ekohl](https://github.com/ekohl))
+- pdksync - \(GH-iac-334\) Remove Support for Ubuntu 16.04 [\#2220](https://github.com/puppetlabs/puppetlabs-apache/pull/2220) ([david22swan](https://github.com/david22swan))
+- Drop Apache 2.2 support with Gentoo [\#2216](https://github.com/puppetlabs/puppetlabs-apache/pull/2216) ([ekohl](https://github.com/ekohl))
+- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#2213](https://github.com/puppetlabs/puppetlabs-apache/pull/2213) ([david22swan](https://github.com/david22swan))
+
 ## [v7.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v7.0.0) (2021-10-11)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.5.1...v7.0.0)
