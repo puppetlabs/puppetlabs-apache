@@ -1945,7 +1945,7 @@ define apache::vhost (
   Optional[Variant[String, Array[String]]] $comment                                   = undef,
   Hash $define                                                                        = {},
   Boolean $auth_oidc                                                                  = false,
-  Optional[Apache::OIDCSettings] $oidc_settings                                       = undef,
+  Apache::OIDCSettings $oidc_settings                                                 = {},
   Optional[Variant[Boolean, String]] $mdomain                                         = undef,
   Optional[Variant[String[1], Array[String[1]]]] $userdir                             = undef,
 ) {
