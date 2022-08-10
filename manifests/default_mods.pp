@@ -124,9 +124,6 @@ class apache::default_mods (
     include apache::mod::setenvif
     include apache::mod::auth_basic
 
-    # filter is needed by mod_deflate
-    include apache::mod::filter
-
     # authz_core is needed for 'Require' directive
     ::apache::mod { 'authz_core':
       id => 'authz_core_module',
@@ -145,16 +142,10 @@ class apache::default_mods (
     ::apache::mod { 'authz_core':
       id => 'authz_core_module',
     }
-
-    # filter is needed by mod_deflate
-    include apache::mod::filter
   } else {
     # authz_core is needed for 'Require' directive
     ::apache::mod { 'authz_core':
       id => 'authz_core_module',
     }
-
-    # filter is needed by mod_deflate
-    include apache::mod::filter
   }
 }
