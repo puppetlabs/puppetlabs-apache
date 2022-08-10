@@ -48,6 +48,7 @@ class apache::default_mods (
         include apache::mod::authn_core
         include apache::mod::cache
         include apache::mod::ext_filter
+        include apache::mod::include
         include apache::mod::mime
         include apache::mod::mime_magic
         include apache::mod::rewrite
@@ -60,7 +61,6 @@ class apache::default_mods (
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
         ::apache::mod { 'expires': }
-        ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
@@ -71,6 +71,7 @@ class apache::default_mods (
         include apache::mod::cache
         include apache::mod::disk_cache
         include apache::mod::headers
+        include apache::mod::include
         include apache::mod::info
         include apache::mod::mime_magic
         include apache::mod::reqtimeout
@@ -93,7 +94,6 @@ class apache::default_mods (
         ::apache::mod { 'expires': }
         ::apache::mod { 'file_cache': }
         ::apache::mod { 'imagemap': }
-        ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'request': }
         ::apache::mod { 'session': }
