@@ -114,6 +114,7 @@ class apache::default_mods (
     }
     include apache::mod::alias
     include apache::mod::authn_file
+    include apache::mod::authz_core
     include apache::mod::autoindex
     include apache::mod::dav
     include apache::mod::dav_fs
@@ -124,11 +125,6 @@ class apache::default_mods (
     include apache::mod::setenvif
     include apache::mod::auth_basic
 
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
-
     # lots of stuff seems to break without access_compat
     ::apache::mod { 'access_compat': }
 
@@ -138,14 +134,8 @@ class apache::default_mods (
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
 
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
+    include apache::mod::authz_core
   } else {
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
+    include apache::mod::authz_core
   }
 }
