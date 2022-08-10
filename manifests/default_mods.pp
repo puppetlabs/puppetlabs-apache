@@ -139,7 +139,7 @@ class apache::default_mods (
     include apache::mod::mime
     include apache::mod::negotiation
     include apache::mod::setenvif
-    ::apache::mod { 'auth_basic': }
+    include apache::mod::auth_basic
 
     if versioncmp($apache_version, '2.4') >= 0 {
       # filter is needed by mod_deflate
