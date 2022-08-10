@@ -10,6 +10,8 @@ describe 'apache::mod::auth_openidc', type: :class do
       include_examples 'Debian 11'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
+      it { is_expected.to contain_class('apache::mod::authz_user') }
       it { is_expected.to contain_apache__mod('auth_openidc') }
       it { is_expected.to contain_package('libapache2-mod-auth-openidc') }
     end
@@ -17,6 +19,8 @@ describe 'apache::mod::auth_openidc', type: :class do
       include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
+      it { is_expected.to contain_class('apache::mod::authz_user') }
       it { is_expected.to contain_apache__mod('auth_openidc') }
       it { is_expected.to contain_package('mod_auth_openidc') }
     end
@@ -24,6 +28,8 @@ describe 'apache::mod::auth_openidc', type: :class do
       include_examples 'FreeBSD 9'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
+      it { is_expected.to contain_class('apache::mod::authz_user') }
       it { is_expected.to contain_apache__mod('auth_openidc') }
       it { is_expected.to contain_package('www/mod_auth_openidc') }
     end
@@ -42,6 +48,9 @@ describe 'apache::mod::auth_openidc', type: :class do
         MANIFEST
       end
 
+      it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
+      it { is_expected.to contain_class('apache::mod::authz_user') }
       it { is_expected.to contain_apache__mod('auth_openidc') }
       it { is_expected.to contain_package('httpd24-mod_auth_openidc') }
       it { is_expected.not_to contain_package('mod_auth_openidc') }

@@ -5,6 +5,7 @@
 #
 class apache::mod::auth_openidc inherits apache::params {
   include apache
+  include apache::mod::authn_core
   include apache::mod::authz_user
   apache::mod { 'auth_openidc': }
 }
