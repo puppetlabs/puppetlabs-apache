@@ -40,7 +40,17 @@
 #
 define apache::balancermember (
   String $balancer_cluster,
-  Stdlib::HTTPUrl $url = "http://${$facts['networking']['fqdn']}/",
+  Pattern[
+    /(?i:\Aajp:\/\/.*\z)/,
+    /(?i:\Afcgi:\/\/.*\z)/,
+    /(?i:\Aftp:\/\/.*\z)/,
+    /(?i:\Ah2c?:\/\/.*\z)/,
+    /(?i:\Ahttps?:\/\/.*\z)/,
+    /(?i:\Ascgi:\/\/.*\z)/,
+    /(?i:\Aunix:\/([^\n\/\0]+\/*)*\z)/
+    /(?i:\Auwsgi:\/\/.*\z)/,
+    /(?i:\Awss?:\/\/.*\z)/,
+  ] $url = "http://${$facts['networking']['fqdn']}/",
   Array $options       = [],
 ) {
   concat::fragment { "BalancerMember ${name}":
