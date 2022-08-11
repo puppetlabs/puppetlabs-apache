@@ -34,6 +34,7 @@ class apache::mod::auth_mellon (
   Optional[Integer] $mellon_post_count                  = undef
 ) inherits apache::params {
   include apache
+  include apache::mod::authn_core
   ::apache::mod { 'auth_mellon': }
 
   # Template uses

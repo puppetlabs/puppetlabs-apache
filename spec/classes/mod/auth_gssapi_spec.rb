@@ -10,6 +10,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       include_examples 'Debian 11'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('libapache2-mod-auth-gssapi') }
     end
@@ -17,6 +18,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('mod_auth_gssapi') }
     end
@@ -24,6 +26,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       include_examples 'FreeBSD 9'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('www/mod_auth_gssapi') }
     end
@@ -31,6 +34,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       include_examples 'Gentoo'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('www-apache/mod_auth_gssapi') }
     end
