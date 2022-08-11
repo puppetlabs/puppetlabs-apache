@@ -30,7 +30,7 @@ class apache::mod::proxy (
   Optional[String] $apache_version     = undef,
   Optional[String] $package_name       = undef,
   String $proxy_via                    = 'On',
-  Optional[String] $proxy_timeout      = undef,
+  Optional[Integer[0]] $proxy_timeout      = undef,
   Optional[String] $proxy_iobuffersize = undef,
 ) {
   include apache
