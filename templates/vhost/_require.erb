@@ -1,6 +1,6 @@
 <%- _item = scope.lookupvar('_template_scope')[:item] -%>
 <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-  <%- if _item['require'] && _item['require'] != '' && _item['require'] !~ /unmanaged/i -%>
+  <%- if _item['require'] && !(_item['require'].is_a?(String) && (_item['require'] == '' || _item['require'] =~ /unmanaged/i)) -%>
     <%- if _item['require'].is_a?(Hash) -%>
       <%- case _item['require']['enforce'].downcase
           when 'all','none','any' then -%>
