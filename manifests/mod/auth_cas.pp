@@ -115,6 +115,7 @@ class apache::mod::auth_cas (
   }
 
   include apache
+  include apache::mod::authn_core
   ::apache::mod { 'auth_cas': }
 
   file { $cas_cookie_path:

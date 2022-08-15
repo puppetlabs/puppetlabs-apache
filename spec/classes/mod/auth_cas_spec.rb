@@ -27,6 +27,7 @@ describe 'apache::mod::auth_cas', type: :class do
       include_examples 'Debian 11'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_cas') }
       it { is_expected.to contain_package('libapache2-mod-auth-cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/apache2/mods-available/auth_cas.conf') }
@@ -36,6 +37,7 @@ describe 'apache::mod::auth_cas', type: :class do
       include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_cas') }
       it { is_expected.to contain_package('mod_auth_cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/httpd/conf.d/auth_cas.conf') }
@@ -50,6 +52,7 @@ describe 'apache::mod::auth_cas', type: :class do
       include_examples 'RedHat 6'
 
       it { is_expected.to contain_class('apache::params') }
+      it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_cas') }
       it { is_expected.to contain_package('mod_auth_cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/httpd/conf.d/auth_cas.conf') }

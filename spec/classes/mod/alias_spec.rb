@@ -60,6 +60,21 @@ describe 'apache::mod::alias', type: :class do
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/apache-icons\/ "\/usr\/share\/httpd\/icons\/"}) }
     end
+    context 'with icons path as false', :compile do
+      let :pre_condition do
+        'class { apache: default_mods => false }'
+      end
+      let :params do
+        {
+          'icons_path' => false,
+        }
+      end
+
+      include_examples 'RedHat 7'
+
+      it { is_expected.to contain_apache__mod('alias') }
+      it { is_expected.not_to contain_file('alias.conf') }
+    end
     context 'on a FreeBSD OS', :compile do
       include_examples 'FreeBSD 10'
 
