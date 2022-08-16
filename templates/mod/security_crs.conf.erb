@@ -175,13 +175,13 @@ SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
 #
 # Uncomment this rule to change the default:
 #
-#SecAction \
-#  "id:900000,\
-#   phase:1,\
-#   nolog,\
-#   pass,\
-#   t:none,\
-#   setvar:tx.paranoia_level=1"
+SecAction \
+  "id:900000,\
+   phase:1,\
+   nolog,\
+   pass,\
+   t:none,\
+   setvar:tx.paranoia_level=<%= @paranoia_level -%>"
 
 
 # It is possible to execute rules from a higher paranoia level but not include
@@ -201,13 +201,13 @@ SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
 # level results in a performance impact that is equally high as setting
 # tx.paranoia_level to said level.
 #
-#SecAction \
-#  "id:900001,\
-#   phase:1,\
-#   nolog,\
-#   pass,\
-#   t:none,\
-#   setvar:tx.executing_paranoia_level=1"
+SecAction \
+  "id:900001,\
+   phase:1,\
+   nolog,\
+   pass,\
+   t:none,\
+   setvar:tx.executing_paranoia_level=<%= @executing_paranoia_level -%>"
 
 
 #

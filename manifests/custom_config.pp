@@ -52,7 +52,7 @@ define apache::custom_config (
   Enum['absent', 'present'] $ensure     = 'present',
   Stdlib::Absolutepath $confdir         = $apache::confd_dir,
   Optional[String] $content             = undef,
-  Variant[Integer, Boolean] $priority   = 25,
+  Apache::Vhost::Priority $priority     = 25,
   Optional[String] $source              = undef,
   String $verify_command                = $apache::params::verify_command,
   Boolean $verify_config                = true,

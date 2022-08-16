@@ -37,6 +37,10 @@ shared_context 'a mod class, without including apache' do
   let(:facts) { on_supported_os['debian-10-x86_64'] }
 end
 
+shared_context 'Debian 10' do
+  let(:facts) { on_supported_os['debian-10-x86_64'] }
+end
+
 shared_context 'Debian 11' do
   let(:facts) { on_supported_os['debian-11-x86_64'] }
 end

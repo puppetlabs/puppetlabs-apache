@@ -197,7 +197,7 @@ class apache::params inherits apache::version {
     $passenger_ruby       = undef
     $passenger_default_ruby = undef
     $php_version = $facts['os']['release']['major'] ? {
-      '9'     => '8', # RedHat9
+      '9'     => undef, # RedHat 9 doesn't ship mod_php
       '8'     => '7', # RedHat8
       default => '5', # RedHat5, RedHat6, RedHat7
     }
@@ -385,7 +385,6 @@ class apache::params inherits apache::version {
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
         'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
@@ -396,7 +395,6 @@ class apache::params inherits apache::version {
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
         'jk'                    => 'libapache2-mod-jk',
         'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
         'pagespeed'             => 'mod-pagespeed-stable',
         'passenger'             => 'libapache2-mod-passenger',
         'perl'                  => 'libapache2-mod-perl2',

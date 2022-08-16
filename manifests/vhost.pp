@@ -552,6 +552,19 @@
 #   If none of those parameters are set, the global audit log is used 
 #   (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 #
+# @param modsec_inbound_anomaly_threshold
+#   Override the global scoring threshold level of the inbound blocking rules
+#   for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
+#   Set.
+#
+# @param modsec_outbound_anomaly_threshold
+#   Override the global scoring threshold level of the outbound blocking rules
+#   for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
+#   Set.
+#
+# @param modsec_allowed_methods
+#   Override global allowed methods. A space-separated list of allowed HTTP methods.
+#
 # @param no_proxy_uris
 #   Specifies URLs you do not want to proxy. This parameter is meant to be used in combination 
 #   with [`proxy_dest`](#proxy_dest).
@@ -1730,7 +1743,7 @@ define apache::vhost (
   Optional[Integer] $ssl_stapling_timeout                                             = undef,
   Optional[Enum['on', 'off']] $ssl_stapling_return_errors                             = undef,
   Optional[String] $ssl_user_name                                                     = undef,
-  Optional[Variant[Integer, Boolean]] $priority                                       = undef,
+  Optional[Apache::Vhost::Priority] $priority                                         = undef,
   Boolean $default_vhost                                                              = false,
   Optional[String] $servername                                                        = $name,
   Variant[Array[String], String] $serveraliases                                       = [],
@@ -1901,6 +1914,9 @@ define apache::vhost (
   Optional[Variant[Hash, Array]] $modsec_disable_msgs                                 = undef,
   Optional[Variant[Hash, Array]] $modsec_disable_tags                                 = undef,
   Optional[String] $modsec_body_limit                                                 = undef,
+  Optional[Integer[1, default]] $modsec_inbound_anomaly_threshold                     = undef,
+  Optional[Integer[1, default]] $modsec_outbound_anomaly_threshold                    = undef,
+  Optional[String] $modsec_allowed_methods                                            = undef,
   Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
   Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
@@ -1929,7 +1945,7 @@ define apache::vhost (
   Optional[Variant[String, Array[String]]] $comment                                   = undef,
   Hash $define                                                                        = {},
   Boolean $auth_oidc                                                                  = false,
-  Optional[Apache::OIDCSettings] $oidc_settings                                       = undef,
+  Apache::OIDCSettings $oidc_settings                                                 = {},
   Optional[Variant[Boolean, String]] $mdomain                                         = undef,
   Optional[Variant[String[1], Array[String[1]]]] $userdir                             = undef,
 ) {
@@ -2786,7 +2802,10 @@ define apache::vhost (
   # - $modsec_disable_tags
   # - $modsec_body_limit
   # - $modsec_audit_log_destination
-  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination {
+  # - $modsec_inbound_anomaly_threshold
+  # - $modsec_outbound_anomaly_threshold
+  # - $modsec_allowed_methods
+  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,

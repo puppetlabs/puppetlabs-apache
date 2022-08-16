@@ -59,7 +59,7 @@
 define apache::vhost::fragment (
   String[1] $vhost,
   Optional[Stdlib::Port] $port                  = undef,
-  Optional[Variant[Integer, Boolean]] $priority = undef,
+  Optional[Apache::Vhost::Priority] $priority   = undef,
   Optional[String] $content                     = undef,
   Integer[0] $order                             = 900,
 ) {

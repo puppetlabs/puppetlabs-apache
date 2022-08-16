@@ -39,4 +39,23 @@
 <% if @modsec_body_limit -%>
   SecRequestBodyLimit <%= @modsec_body_limit %>
 <% end -%>
+<% if @modsec_inbound_anomaly_threshold and @modsec_outbound_anomaly_threshold -%>
+  SecAction \
+   "id:900110,\
+    phase:1,\
+    nolog,\
+    pass,\
+    t:none,\
+    setvar:tx.inbound_anomaly_score_threshold=<%= @modsec_inbound_anomaly_threshold -%>, \
+    setvar:tx.outbound_anomaly_score_threshold=<%= @modsec_outbound_anomaly_threshold -%>"
+<% end -%>
+<% if @modsec_allowed_methods -%>
+  SecAction \
+   "id:900200,\
+    phase:1,\
+    nolog,\
+    pass,\
+    t:none,\
+    setvar:'tx.allowed_methods=<%= @modsec_allowed_methods -%>'"
+<% end -%>
 </IfModule>

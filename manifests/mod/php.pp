@@ -21,10 +21,11 @@
 #   UNIX group of the root user
 #
 # @param php_version
-#   The php version
+#   The php version. This is a required parameter, but optional allows showing a clear error message
 #
 # @param libphp_prefix
 #
+# @note Unsupported platforms: RedHat: 9
 class apache::mod::php (
   Optional[String] $package_name = undef,
   String $package_ensure         = 'present',
@@ -37,6 +38,10 @@ class apache::mod::php (
   Optional[String] $php_version  = $apache::params::php_version,
   String $libphp_prefix          = 'libphp'
 ) inherits apache::params {
+  unless $php_version {
+    fail("${facts['os']['name']} ${facts['os']['release']['major']} does not support mod_php")
+  }
+
   include apache
   if (versioncmp($php_version, '8') < 0) {
     $mod = "php${php_version}"
