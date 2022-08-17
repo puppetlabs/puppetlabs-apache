@@ -345,13 +345,16 @@ class apache::params inherits apache::version {
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
-    if ($facts['os']['name'] == 'Ubuntu') or ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0) {
-      $php_version = $facts['os']['release']['major'] ? {
-        '9'     => '7.0', # Debian Stretch
-        '10'    => '7.3', # Debian Buster
-        '20.04' => '7.4', # Ubuntu Foccal Fossal
-        default => '7.2', # Ubuntu Bionic, Cosmic and Disco
-      }
+    $php_version = $facts['os']['release']['major'] ? {
+      '9'     => '7.0', # Debian Stretch
+      '10'    => '7.3', # Debian Buster
+      '11'    => '7.4', # Debian Bullseye
+      '20.04' => '7.4', # Ubuntu Foccal Fossal
+      '22.04' => '8.1', # Ubuntu Jammy
+      default => '7.2', # Ubuntu Bionic, Cosmic and Disco
+    }
+    if (($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '22.04') < 0) or
+    ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0)) {
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
@@ -379,9 +382,6 @@ class apache::params inherits apache::version {
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
     } else {
-      $php_version = $facts['os']['release']['major'] ? {
-        default => '7.4', # Debian Bullseye
-      }
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',

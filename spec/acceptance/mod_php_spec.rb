@@ -44,6 +44,10 @@ describe 'apache::mod::php class', if: mod_supported_on_platform?('apache::mod::
       describe file("#{apache_hash['mod_dir']}/php7.4.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
+    elsif os[:family] == 'ubuntu' && os[:release] == '22.04'
+      describe file("#{apache_hash['mod_dir']}/php8.1.conf") do
+        it { is_expected.to contain 'DirectoryIndex index.php' }
+      end
     elsif os[:family] == 'redhat' && os[:release] =~ %r{^(8)\b}
       describe file("#{apache_hash['mod_dir']}/php7.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }

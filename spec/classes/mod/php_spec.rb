@@ -40,16 +40,16 @@ describe 'apache::mod::php', type: :class do
                 )
               }
 
-              context 'with experimental php8.0' do
+              context 'with php8.0' do
                 let :params do
                   { php_version: '8.0' }
                 end
 
-                it { is_expected.to contain_apache__mod('php') }
+                it { is_expected.to contain_apache__mod('php8.0') }
                 it { is_expected.to contain_package('libapache2-mod-php8.0') }
                 it {
-                  is_expected.to contain_file('php.load').with(
-                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
+                  is_expected.to contain_file('php8.0.load').with(
+                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
                   )
                 }
               end
@@ -64,16 +64,16 @@ describe 'apache::mod::php', type: :class do
                 )
               }
 
-              context 'with experimental php8.0' do
+              context 'with php8.0' do
                 let :params do
                   { php_version: '8.0' }
                 end
 
-                it { is_expected.to contain_apache__mod('php') }
+                it { is_expected.to contain_apache__mod('php8.0') }
                 it { is_expected.to contain_package('libapache2-mod-php8.0') }
                 it {
-                  is_expected.to contain_file('php.load').with(
-                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp.so\n",
+                  is_expected.to contain_file('php8.0.load').with(
+                    content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
                   )
                 }
               end
