@@ -1224,7 +1224,7 @@ Default value: `'Indexes MultiViews'`
 
 ##### <a name="icons_path"></a>`icons_path`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Variant[Boolean, Stdlib::Absolutepath]`
 
 Sets the local path for an /icons/ Alias. Default depends on operating system:
 - Debian: /usr/share/apache2/icons
@@ -1399,7 +1399,7 @@ Default value: ``undef``
 
 ##### <a name="cas_timeout"></a>`cas_timeout`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[Integer[0],String]]`
 
 The hard limit, in seconds, for a mod_auth_cas session.
 
@@ -1407,7 +1407,7 @@ Default value: ``undef``
 
 ##### <a name="cas_idle_timeout"></a>`cas_idle_timeout`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[Integer[0],String]]`
 
 The limit, in seconds, of how long a mod_auth_cas session can be idle.
 
@@ -1591,9 +1591,43 @@ Default value: ``undef``
 
 Installs and configures `mod_auth_openidc`.
 
+* **Note** Unsupported platforms: OracleLinux: 6; RedHat: 6; Scientific: 6; SLES: all
+
 * **See also**
   * https://github.com/zmartzone/mod_auth_openidc
     * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::auth_openidc` class:
+
+* [`manage_dnf_module`](#manage_dnf_module)
+* [`dnf_module_ensure`](#dnf_module_ensure)
+* [`dnf_module_name`](#dnf_module_name)
+
+##### <a name="manage_dnf_module"></a>`manage_dnf_module`
+
+Data type: `Boolean`
+
+Whether to manage the DNF module
+
+Default value: `and`
+
+##### <a name="dnf_module_ensure"></a>`dnf_module_ensure`
+
+Data type: `String[1]`
+
+The DNF module name to ensure. Only relevant if manage_dnf_module is set to true.
+
+Default value: `'present'`
+
+##### <a name="dnf_module_name"></a>`dnf_module_name`
+
+Data type: `String[1]`
+
+The DNF module name to manage. Only relevant if manage_dnf_module is set to true.
+
+Default value: `'mod_auth_openidc'`
 
 ### <a name="apachemodauthn_core"></a>`apache::mod::authn_core`
 
@@ -5651,7 +5685,7 @@ Default value: `'On'`
 
 ##### <a name="proxy_timeout"></a>`proxy_timeout`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[Integer[0],String]]`
 
 Network timeout for proxied requests.
 
@@ -7326,7 +7360,7 @@ Default value: ``undef``
 
 ##### <a name="priority"></a>`priority`
 
-Data type: `Variant[Integer, Boolean]`
+Data type: `Apache::Vhost::Priority`
 
 Sets the configuration file's priority by prefixing its filename with this parameter's
 numeric value, as Apache processes configuration files in alphanumeric order.<br />
@@ -10636,11 +10670,11 @@ Default value: ``false``
 
 ##### <a name="oidc_settings"></a>`oidc_settings`
 
-Data type: `Optional[Apache::OIDCSettings]`
+Data type: `Apache::OIDCSettings`
 
 An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf].
 
-Default value: ``undef``
+Default value: `{}`
 
 ##### <a name="limitreqfields"></a>`limitreqfields`
 
