@@ -20,6 +20,8 @@ describe 'apache::mod::auth_cas', type: :class do
       {
         cas_login_url: 'https://cas.example.com/login',
         cas_validate_url: 'https://cas.example.com/validate',
+        cas_timeout: 1234,
+        cas_idle_timeout: 4321,
       }
     end
 
@@ -32,6 +34,8 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_package('libapache2-mod-auth-cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/apache2/mods-available/auth_cas.conf') }
       it { is_expected.to contain_file('/var/cache/apache2/mod_auth_cas/').with_owner('www-data') }
+      it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASTimeout 1234}) }
+      it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASIdleTimeout 4321}) }
     end
     context 'on a RedHat OS', :compile do
       include_examples 'RedHat 6'
@@ -42,6 +46,8 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_package('mod_auth_cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/httpd/conf.d/auth_cas.conf') }
       it { is_expected.to contain_file('/var/cache/mod_auth_cas/').with_owner('apache') }
+      it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASTimeout 1234}) }
+      it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASIdleTimeout 4321}) }
     end
 
     context 'vhost setup', :compile do
