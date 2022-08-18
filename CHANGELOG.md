@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v8.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.0.0) (2022-08-08)
+## [v8.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.1.0) (2022-08-18)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.0.0...v8.1.0)
+
+### Added
+
+- Manage DNF module for mod\_auth\_openidc [\#2283](https://github.com/puppetlabs/puppetlabs-apache/pull/2283) ([ekohl](https://github.com/ekohl))
+- pdksync - \(GH-cat-11\) Certify Support for Ubuntu 22.04 [\#2276](https://github.com/puppetlabs/puppetlabs-apache/pull/2276) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- Allow integers for timeouts [\#2294](https://github.com/puppetlabs/puppetlabs-apache/pull/2294) ([traylenator](https://github.com/traylenator))
+- Allow setting icons\_path to false so no alias will be set for it [\#2292](https://github.com/puppetlabs/puppetlabs-apache/pull/2292) ([Zarne](https://github.com/Zarne))
+- fix duplicate definition of auth\_basic-mod [\#2287](https://github.com/puppetlabs/puppetlabs-apache/pull/2287) ([sircubbi](https://github.com/sircubbi))
+- Allow custom\_config to have a string priority again [\#2284](https://github.com/puppetlabs/puppetlabs-apache/pull/2284) ([martin-koerner](https://github.com/martin-koerner))
+- Remove auth\_kerb and nss from Debian Bullseye [\#2281](https://github.com/puppetlabs/puppetlabs-apache/pull/2281) ([ekohl](https://github.com/ekohl))
+
+## [v8.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.0.0) (2022-08-09)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v7.0.0...v8.0.0)
 
