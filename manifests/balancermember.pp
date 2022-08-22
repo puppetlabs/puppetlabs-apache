@@ -40,7 +40,7 @@
 #
 define apache::balancermember (
   String $balancer_cluster,
-  Stdlib::HTTPUrl $url = "http://${$facts['networking']['fqdn']}/",
+  Apache::ModProxyProtocol $url = "http://${$facts['networking']['fqdn']}/",
   Array $options       = [],
 ) {
   concat::fragment { "BalancerMember ${name}":
