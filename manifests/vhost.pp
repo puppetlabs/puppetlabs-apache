@@ -1794,7 +1794,7 @@ define apache::vhost (
   Optional[Integer] $limitreqbody                                                     = undef,
   Optional[String] $proxy_dest                                                        = undef,
   Optional[String] $proxy_dest_match                                                  = undef,
-  Optional[String] $proxy_dest_reverse_match                                          = undef,
+  Optional[Variant[Array[Hash], Hash]] $proxy_dest_reverse_match                      = undef,
   Optional[Variant[Array[Hash], Hash]] $proxy_pass                                    = undef,
   Optional[Variant[Array[Hash], Hash]] $proxy_pass_match                              = undef,
   Boolean $proxy_requests                                                             = false,

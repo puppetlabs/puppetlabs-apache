@@ -1287,6 +1287,27 @@ describe 'apache::vhost', type: :define do
             ).with_content(%r{## Proxy rules})
           }
         end
+
+        context 'proxy_dest_reverse_match' do
+          let :params do
+            {
+              'docroot' => '/rspec/docroot',
+              'proxy_pass_match' => [
+                {
+                  'path'     => '/',
+                  'url'      => 'http://localhost:8081/',
+                },
+              ],
+            }
+          end
+
+          it {
+            is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
+              %r{^\s*ProxyPassReverse / http://localhost:8081/$},
+            ).with_content(%r{## Proxy rules})
+          }
+        end
+
         context 'proxy_dest_match' do
           let :params do
             {
