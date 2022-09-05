@@ -714,16 +714,17 @@ SecAction \
 #
 # Uncomment this rule to use this feature:
 #
+<% if @enable_dos_protection -%>
 SecAction \
  "id:900700,\
   phase:1,\
   nolog,\
   pass,\
   t:none,\
-  setvar:'tx.dos_burst_time_slice=60',\
-  setvar:'tx.dos_counter_threshold=100',\
-  setvar:'tx.dos_block_timeout=600'"
-
+  setvar:'tx.dos_burst_time_slice=<%= @dos_burst_time_slice %>',\
+  setvar:'tx.dos_counter_threshold=<%= @dos_counter_threshold %>',\
+  setvar:'tx.dos_block_timeout=<%= @dos_block_timeout %>'"
+<% end -%>
 
 #
 # -- [[ Check UTF-8 encoding ]] ------------------------------------------------
