@@ -1292,7 +1292,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'proxy_pass_match' => [
+              'proxy_dest_reverse_match' => [
                 {
                   'path'     => '/',
                   'url'      => 'http://localhost:8081/',
