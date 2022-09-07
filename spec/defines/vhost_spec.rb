@@ -1690,26 +1690,26 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to raise_error(Puppet::Error) }
           end
           context 'empty rewrites' do
-            let(:params) {
+            let(:params) do
               super().merge(
                 'rewrite_inherit' => false,
-                'rewrites' => []
+                'rewrites' => [],
               )
-            }
+            end
 
-            it { 
+            it {
               is_expected.to compile
               is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
-            }            
+            }
           end
           context 'empty rewrites_with_rewrite_inherit' do
-            let(:params) {
+            let(:params) do
               super().merge(
                 'rewrite_inherit' => true,
-                'rewrites' => []
+                'rewrites' => [],
               )
-            }
-  
+            end
+
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
                 content: %r{^\s+RewriteOptions Inherit$},
