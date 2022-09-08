@@ -499,7 +499,7 @@ class apache (
   Enum['Off', 'On', 'Double', 'off', 'on', 'double'] $hostname_lookups       = $apache::params::hostname_lookups,
   Optional[Stdlib::Absolutepath] $conf_enabled                               = $apache::params::conf_enabled,
   Stdlib::Absolutepath $vhost_dir                                            = $apache::params::vhost_dir,
-  Optional[Variant[Stdlib::Absolutepath, Boolean[False]]] $vhost_enable_dir  = $apache::params::vhost_enable_dir,
+  Optional[Variant[Stdlib::Absolutepath, Boolean]] $vhost_enable_dir         = $apache::params::vhost_enable_dir,
   Hash $mod_libs                                                             = $apache::params::mod_libs,
   Hash $mod_packages                                                         = $apache::params::mod_packages,
   String $vhost_include_pattern                                              = $apache::params::vhost_include_pattern,
