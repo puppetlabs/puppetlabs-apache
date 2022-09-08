@@ -12,21 +12,21 @@
 #   class { 'apache': }
 #
 # @param allow_encoded_slashes
-#   Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the 
-#   responses to URLs containing '\' and '/' characters. If not specified, this parameter omits 
+#   Sets the server default for the `AllowEncodedSlashes` declaration, which modifies the
+#   responses to URLs containing '\' and '/' characters. If not specified, this parameter omits
 #   the declaration from the server's configuration and uses Apache's default setting of 'off'.
 #
 # @param apache_version
-#   Configures module template behavior, package names, and default Apache modules by defining 
-#   the version of Apache to use. We do not recommend manually configuring this parameter 
+#   Configures module template behavior, package names, and default Apache modules by defining
+#   the version of Apache to use. We do not recommend manually configuring this parameter
 #   without reason.
 #
 # @param conf_dir
 #   Sets the directory where the Apache server's main configuration file is located.
 #
 # @param conf_template
-#   Defines the template used for the main Apache configuration file. Modifying this 
-#   parameter is potentially risky, as the apache module is designed to use a minimal 
+#   Defines the template used for the main Apache configuration file. Modifying this
+#   parameter is potentially risky, as the apache module is designed to use a minimal
 #   configuration file customized by `conf.d` entries.
 #
 # @param confd_dir
@@ -36,59 +36,59 @@
 #   Used as the `AddDefaultCharset` directive in the main configuration file.
 #
 # @param default_confd_files
-#   Determines whether Puppet generates a default set of includable Apache configuration files 
-#   in the directory defined by the `confd_dir` parameter. These configuration files 
-#   correspond to what is typically installed with the Apache package on the server's 
+#   Determines whether Puppet generates a default set of includable Apache configuration files
+#   in the directory defined by the `confd_dir` parameter. These configuration files
+#   correspond to what is typically installed with the Apache package on the server's
 #   operating system.
 #
 # @param default_mods
-#   Determines whether to configure and enable a set of default Apache modules depending on 
+#   Determines whether to configure and enable a set of default Apache modules depending on
 #   your operating system.<br />
-#   If `false`, Puppet includes only the Apache modules required to make the HTTP daemon work 
-#   on your operating system, and you can declare any other modules separately using the 
+#   If `false`, Puppet includes only the Apache modules required to make the HTTP daemon work
+#   on your operating system, and you can declare any other modules separately using the
 #   `apache::mod::<MODULE NAME>` class or `apache::mod` defined type.<br />
-#   If `true`, Puppet installs additional modules, depending on the operating system and 
-#   the values of `apache_version` and `mpm_module` parameters. Because these lists of 
+#   If `true`, Puppet installs additional modules, depending on the operating system and
+#   the values of `apache_version` and `mpm_module` parameters. Because these lists of
 #   modules can change frequently, consult the Puppet module's code for up-to-date lists.<br />
 #   If this parameter contains an array, Puppet instead enables all passed Apache modules.
 #
 # @param default_ssl_ca
 #   Sets the default certificate authority for the Apache server.<br />
-#   Although the default value results in a functioning Apache server, you **must** update 
-#   this parameter with your certificate authority information before deploying this server in 
+#   Although the default value results in a functioning Apache server, you **must** update
+#   this parameter with your certificate authority information before deploying this server in
 #   a production environment.
 #
 # @param default_ssl_cert
 #   Sets the SSL encryption certificate location.<br />
-#   Although the default value results in a functioning Apache server, you **must** update this 
+#   Although the default value results in a functioning Apache server, you **must** update this
 #   parameter with your certificate location before deploying this server in a production environment.
 #
 # @param default_ssl_chain
 #   Sets the default SSL chain location.<br />
-#   Although this default value results in a functioning Apache server, you **must** update 
+#   Although this default value results in a functioning Apache server, you **must** update
 #   this parameter with your SSL chain before deploying this server in a production environment.
 #
 # @param default_ssl_crl
 #   Sets the path of the default certificate revocation list (CRL) file to use.<br />
-#   Although this default value results in a functioning Apache server, you **must** update 
-#   this parameter with the CRL file path before deploying this server in a production 
+#   Although this default value results in a functioning Apache server, you **must** update
+#   this parameter with the CRL file path before deploying this server in a production
 #   environment. You can use this parameter with or in place of the `default_ssl_crl_path`.
 #
 # @param default_ssl_crl_path
 #   Sets the server's certificate revocation list path, which contains your CRLs.<br />
-#   Although this default value results in a functioning Apache server, you **must** update 
+#   Although this default value results in a functioning Apache server, you **must** update
 #   this parameter with the CRL file path before deploying this server in a production environment.
 #
 # @param default_ssl_crl_check
-#   Sets the default certificate revocation check level via the `SSLCARevocationCheck` directive. 
+#   Sets the default certificate revocation check level via the `SSLCARevocationCheck` directive.
 #   This parameter applies only to Apache 2.4 or higher and is ignored on older versions.<br />
-#   Although this default value results in a functioning Apache server, you **must** specify 
+#   Although this default value results in a functioning Apache server, you **must** specify
 #   this parameter when using certificate revocation lists in a production environment.
 #
 # @param default_ssl_key
 #   Sets the SSL certificate key file location.
-#   Although the default values result in a functioning Apache server, you **must** update 
-#   this parameter with your SSL key's location before deploying this server in a production 
+#   Although the default values result in a functioning Apache server, you **must** update
+#   this parameter with your SSL key's location before deploying this server in a production
 #   environment.
 #
 # @param default_ssl_reload_on_change
@@ -96,7 +96,7 @@
 #
 # @param default_ssl_vhost
 #   Configures a default SSL virtual host.
-#   If `true`, Puppet automatically configures the following virtual host using the 
+#   If `true`, Puppet automatically configures the following virtual host using the
 #   `apache::vhost` defined type:
 #   ```puppet
 #   apache::vhost { 'default-ssl':
@@ -111,15 +111,15 @@
 #   **Note**: SSL virtual hosts only respond to HTTPS queries.
 #
 # @param default_type
-#   _Apache 2.2 only_. Sets the MIME `content-type` sent if the server cannot otherwise 
-#   determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and 
+#   _Apache 2.2 only_. Sets the MIME `content-type` sent if the server cannot otherwise
+#   determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and
 #   newer, and is only for backwards compatibility in configuration files.
 #
 # @param default_vhost
 #   Configures a default virtual host when the class is declared.<br />
-#   To configure customized virtual hosts, set this parameter's 
+#   To configure customized virtual hosts, set this parameter's
 #   value to `false`.<br />
-#   > **Note**: Apache will not start without at least one virtual host. If you set this 
+#   > **Note**: Apache will not start without at least one virtual host. If you set this
 #   to `false` you must configure a virtual host elsewhere.
 #
 # @param dev_packages
@@ -141,39 +141,39 @@
 #
 # @param group
 #   Sets the group ID that owns any Apache processes spawned to answer requests.<br />
-#   By default, Puppet attempts to manage this group as a resource under the `apache` 
-#   class, determining the group based on the operating system as detected by the 
-#   `apache::params` class. To prevent the group resource from being created and use a group 
+#   By default, Puppet attempts to manage this group as a resource under the `apache`
+#   class, determining the group based on the operating system as detected by the
+#   `apache::params` class. To prevent the group resource from being created and use a group
 #   created by another Puppet module, set the `manage_group` parameter's value to `false`.<br />
-#   > **Note**: Modifying this parameter only changes the group ID that Apache uses to spawn 
-#   child processes to access resources. It does not change the user that owns the parent server 
+#   > **Note**: Modifying this parameter only changes the group ID that Apache uses to spawn
+#   child processes to access resources. It does not change the user that owns the parent server
 #   process.
 #
 # @param httpd_dir
-#   Sets the Apache server's base configuration directory. This is useful for specially 
-#   repackaged Apache server builds but might have unintended consequences when combined 
+#   Sets the Apache server's base configuration directory. This is useful for specially
+#   repackaged Apache server builds but might have unintended consequences when combined
 #   with the default distribution packages.
 #
 # @param http_protocol_options
 #   Specifies the strictness of HTTP protocol checks.<br />
-#   Valid options: any sequence of the following alternative values: `Strict` or `Unsafe`, 
+#   Valid options: any sequence of the following alternative values: `Strict` or `Unsafe`,
 #   `RegisteredMethods` or `LenientMethods`, and `Allow0.9` or `Require1.0`.
 #
 # @param keepalive
-#   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive. 
-#   If you set this to `On`, use the `keepalive_timeout` and `max_keepalive_requests` parameters 
+#   Determines whether to enable persistent HTTP connections with the `KeepAlive` directive.
+#   If you set this to `On`, use the `keepalive_timeout` and `max_keepalive_requests` parameters
 #   to set relevant options.<br />
 #
 # @param keepalive_timeout
-#   Sets the `KeepAliveTimeout` directive, which determines the amount of time the Apache 
-#   server waits for subsequent requests on a persistent HTTP connection. This parameter is 
+#   Sets the `KeepAliveTimeout` directive, which determines the amount of time the Apache
+#   server waits for subsequent requests on a persistent HTTP connection. This parameter is
 #   only relevant if the `keepalive` parameter is enabled.
 #
 # @param max_keepalive_requests
 #   Limits the number of requests allowed per connection when the `keepalive` parameter is enabled.
 #
 # @param hostname_lookups
-#   This directive enables DNS lookups so that host names can be logged and passed to 
+#   This directive enables DNS lookups so that host names can be logged and passed to
 #   CGIs/SSIs in REMOTE_HOST.<br />
 #   > **Note**: If enabled, it impacts performance significantly.
 #
@@ -221,14 +221,14 @@
 #
 # @param logroot_mode
 #   Overrides the default `logroot` directory's mode.<br />
-#   > **Note**: Do _not_ grant write access to the directory where the logs are stored 
+#   > **Note**: Do _not_ grant write access to the directory where the logs are stored
 #   without being aware of the consequences. See the [Apache documentation](https://httpd.apache.org/docs/current/logs.html#security)
 #   for details.
 #
 # @param manage_group
 #   When `false`, stops Puppet from creating the group resource.<br />
-#   If you have a group created from another Puppet module that you want to use to run Apache, 
-#   set this to `false`. Without this parameter, attempting to use a previously established 
+#   If you have a group created from another Puppet module that you want to use to run Apache,
+#   set this to `false`. Without this parameter, attempting to use a previously established
 #   group results in a duplicate resource error.
 #
 # @param supplementary_groups
@@ -237,8 +237,8 @@
 #
 # @param manage_user
 #   When `false`, stops Puppet from creating the user resource.<br />
-#   This is for instances when you have a user, created from another Puppet module, you want 
-#   to use to run Apache. Without this parameter, attempting to use a previously established 
+#   This is for instances when you have a user, created from another Puppet module, you want
+#   to use to run Apache. Without this parameter, attempting to use a previously established
 #   user would result in a duplicate resource error.
 #
 # @param mod_dir
@@ -267,7 +267,7 @@
 #   ```
 #
 # @param mpm_module
-#   Determines which [multi-processing module](https://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the 
+#   Determines which [multi-processing module](https://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the
 #   HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
 #   You must set this to `false` to explicitly declare the following classes with custom parameters:
 #   - `apache::mod::event`
@@ -287,7 +287,7 @@
 #   Sets the path to the file containing Apache ports configuration.
 #
 # @param protocols
-#   Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols) 
+#   Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols)
 #   directive, which lists available protocols for the server.
 #
 # @param protocols_honor_order
@@ -296,24 +296,24 @@
 #
 # @param purge_configs
 #   Removes all other Apache configs and virtual hosts.<br />
-#   Setting this to `false` is a stopgap measure to allow the apache module to coexist with 
-#   existing or unmanaged configurations. We recommend moving your configuration to resources 
+#   Setting this to `false` is a stopgap measure to allow the apache module to coexist with
+#   existing or unmanaged configurations. We recommend moving your configuration to resources
 #   within this module. For virtual host configurations, see `purge_vhost_dir`.
 #
 # @param purge_vhost_dir
-#   If the `vhost_dir` parameter's value differs from the `confd_dir` parameter's, this parameter 
-#   determines whether Puppet removes any configurations inside `vhost_dir` that are _not_ managed 
+#   If the `vhost_dir` parameter's value differs from the `confd_dir` parameter's, this parameter
+#   determines whether Puppet removes any configurations inside `vhost_dir` that are _not_ managed
 #   by Puppet.<br />
-#   Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to 
+#   Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to
 #   coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 #
 # @param rewrite_lock
-#   Allows setting a custom location for a rewrite lock - considered best practice if using 
-#   a RewriteMap of type prg in the `rewrites` parameter of your virtual host. This parameter 
+#   Allows setting a custom location for a rewrite lock - considered best practice if using
+#   a RewriteMap of type prg in the `rewrites` parameter of your virtual host. This parameter
 #   only applies to Apache version 2.2 or lower and is ignored on newer versions.
 #
 # @param sendfile
-#   Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the 
+#   Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the
 #   `EnableSendfile` directive.
 #
 # @param serveradmin
@@ -327,27 +327,27 @@
 #   Sets the Apache server's root directory via Apache's `ServerRoot` directive.
 #
 # @param server_signature
-#   Configures a trailing footer line to display at the bottom of server-generated documents, 
+#   Configures a trailing footer line to display at the bottom of server-generated documents,
 #   such as error documents and output of certain Apache modules, via Apache's `ServerSignature`
 #   directive. Valid values are: `On` or `Off`.
-# 
+#
 # @param server_tokens
-#   Controls how much information Apache sends to the browser about itself and the operating 
+#   Controls how much information Apache sends to the browser about itself and the operating
 #   system, via Apache's `ServerTokens` directive.
-# 
+#
 # @param service_enable
 #   Determines whether Puppet enables the Apache HTTPD service when the system is booted.
-# 
+#
 # @param service_ensure
-#   Determines whether Puppet should make sure the service is running. 
+#   Determines whether Puppet should make sure the service is running.
 #   Valid values are: `true` (or `running`) or `false` (or `stopped`).<br />
-#   The `false` or `stopped` values set the 'httpd' service resource's `ensure` parameter 
-#   to `false`, which is useful when you want to let the service be managed by another 
+#   The `false` or `stopped` values set the 'httpd' service resource's `ensure` parameter
+#   to `false`, which is useful when you want to let the service be managed by another
 #   application, such as Pacemaker.<br />
-# 
+#
 # @param service_name
 #   Sets the name of the Apache service.
-# 
+#
 # @param service_manage
 #   Determines whether Puppet manages the HTTPD service's state.
 #
@@ -356,19 +356,19 @@
 #   Values: a command to restart the Apache service.
 #
 # @param timeout
-#   Sets Apache's `TimeOut` directive, which defines the number of seconds Apache waits for 
+#   Sets Apache's `TimeOut` directive, which defines the number of seconds Apache waits for
 #   certain events before failing a request.
 #
 # @param trace_enable
 #   Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable` directive.
 #
 # @param use_canonical_name
-#   Controls Apache's `UseCanonicalName` directive which controls how Apache handles 
-#   self-referential URLs. If not specified, this parameter omits the declaration from the 
+#   Controls Apache's `UseCanonicalName` directive which controls how Apache handles
+#   self-referential URLs. If not specified, this parameter omits the declaration from the
 #   server's configuration and uses Apache's default setting of 'off'.
 #
 # @param use_systemd
-#   Controls whether the systemd module should be installed on Centos 7 servers, this is 
+#   Controls whether the systemd module should be installed on Centos 7 servers, this is
 #   especially useful if using custom-built RPMs.
 #
 # @param file_mode
@@ -379,10 +379,10 @@
 #   Array of the desired options for the `/` directory in httpd.conf.
 #
 # @param root_directory_secured
-#   Sets the default access policy for the `/` directory in httpd.conf. A value of `false` 
-#   allows access to all resources that are missing a more specific access policy. A value of 
-#   `true` denies access to all resources by default. If `true`, more specific rules must be 
-#   used to allow access to these resources (for example, in a directory block using the 
+#   Sets the default access policy for the `/` directory in httpd.conf. A value of `false`
+#   allows access to all resources that are missing a more specific access policy. A value of
+#   `true` denies access to all resources by default. If `true`, more specific rules must be
+#   used to allow access to these resources (for example, in a directory block using the
 #   `directories` parameter).
 #
 # @param vhost_dir
@@ -390,25 +390,25 @@
 #
 # @param vhost_include_pattern
 #   Defines the pattern for files included from the `vhost_dir`.
-#   If set to a value like `[^.#]\*.conf[^~]` to make sure that files accidentally created in 
-#   this directory (such as files created by version control systems or editor backups) are 
+#   If set to a value like `[^.#]\*.conf[^~]` to make sure that files accidentally created in
+#   this directory (such as files created by version control systems or editor backups) are
 #   *not* included in your server configuration.<br />
-#   Some operating systems use a value of `*.conf`. By default, this module creates configuration 
+#   Some operating systems use a value of `*.conf`. By default, this module creates configuration
 #   files ending in `.conf`.
 #
 # @param user
-#   Changes the user that Apache uses to answer requests. Apache's parent process continues 
-#   to run as root, but child processes access resources as the user defined by this parameter. 
+#   Changes the user that Apache uses to answer requests. Apache's parent process continues
+#   to run as root, but child processes access resources as the user defined by this parameter.
 #   To prevent Puppet from managing the user, set the `manage_user` parameter to `false`.
 #
 # @param apache_name
-#   The name of the Apache package to install. If you are using a non-standard Apache package 
+#   The name of the Apache package to install. If you are using a non-standard Apache package
 #   you might need to override the default setting.<br />
 #   For CentOS/RHEL Software Collections (SCL), you can also use `apache::version::scl_httpd_version`.
 #
 # @param error_log
-#   The name of the error log file for the main server instance. If the string starts with 
-#   `/`, `|`, or `syslog`: the full path is set. Otherwise, the filename  is prefixed with 
+#   The name of the error log file for the main server instance. If the string starts with
+#   `/`, `|`, or `syslog`: the full path is set. Otherwise, the filename  is prefixed with
 #   `$logroot`.
 #
 # @param scriptalias
@@ -418,10 +418,10 @@
 #   The name of the access log file for the main server instance.
 #
 # @param limitreqfields
-#   The `limitreqfields` parameter sets the maximum number of request header fields in 
-#   an HTTP request. This directive gives the server administrator greater control over 
-#   abnormal client request behavior, which may be useful for avoiding some forms of 
-#   denial-of-service attacks. The value should be increased if normal clients see an error 
+#   The `limitreqfields` parameter sets the maximum number of request header fields in
+#   an HTTP request. This directive gives the server administrator greater control over
+#   abnormal client request behavior, which may be useful for avoiding some forms of
+#   denial-of-service attacks. The value should be increased if normal clients see an error
 #   response from the server that indicates too many fields were sent in the request.
 #
 # @param limitreqfieldsize
@@ -434,10 +434,10 @@
 # @param purge_vdir
 #   Removes all other Apache configs and virtual hosts.<br />
 #   > **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
-# 
+#
 # @param conf_enabled
 #   Whether the additional config files in `/etc/apache2/conf-enabled` should be managed.
-# 
+#
 # @param vhost_enable_dir
 #   Set's whether the vhost definitions will be stored in sites-availible and if
 #   they will be symlinked to and from sites-enabled.
@@ -448,18 +448,18 @@
 # @param ssl_file
 #   This parameter allows you to set an ssl.conf file to be managed in order to implement
 #   an SSL Certificate.
-# 
+#
 # @param file_e_tag
-#   Sets the server default for the `FileETag` declaration, which modifies the response header 
+#   Sets the server default for the `FileETag` declaration, which modifies the response header
 #   field for static files.
-# 
+#
 # @param use_optional_includes
-#   Specifies whether Apache uses the `IncludeOptional` directive instead of `Include` for 
+#   Specifies whether Apache uses the `IncludeOptional` directive instead of `Include` for
 #   `additional_includes` in Apache 2.4 or newer.
-# 
+#
 # @param mime_types_additional
 #   Specifies any idditional Internet media (mime) types that you wish to be configured.
-# 
+#
 class apache (
   String $apache_name                                                        = $apache::params::apache_name,
   String $service_name                                                       = $apache::params::service_name,
@@ -499,7 +499,7 @@ class apache (
   Enum['Off', 'On', 'Double', 'off', 'on', 'double'] $hostname_lookups       = $apache::params::hostname_lookups,
   Optional[Stdlib::Absolutepath] $conf_enabled                               = $apache::params::conf_enabled,
   Stdlib::Absolutepath $vhost_dir                                            = $apache::params::vhost_dir,
-  Optional[Variant[Stdlib::Absolutepath, Boolean[False]]] $vhost_enable_dir  = $apache::params::vhost_enable_dir,
+  Optional[Variant[Stdlib::Absolutepath, Boolean]] $vhost_enable_dir         = $apache::params::vhost_enable_dir,
   Hash $mod_libs                                                             = $apache::params::mod_libs,
   Hash $mod_packages                                                         = $apache::params::mod_packages,
   String $vhost_include_pattern                                              = $apache::params::vhost_include_pattern,
