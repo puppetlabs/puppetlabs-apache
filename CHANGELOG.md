@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.0) (2022-09-12)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.1.0...v8.2.0)
+
+### Added
+
+- Allow multiple scopes for Scope in Apache::OIDCSettings [\#2265](https://github.com/puppetlabs/puppetlabs-apache/pull/2265) ([jjackzhn](https://github.com/jjackzhn))
+
+### Fixed
+
+- \(maint\) Add variable manage\_vhost\_enable\_dir [\#2309](https://github.com/puppetlabs/puppetlabs-apache/pull/2309) ([david22swan](https://github.com/david22swan))
+
+### UNCATEGORIZED PRS; LABEL THEM ON GITHUB
+
+- Simplify the logic in \_require.erb [\#2303](https://github.com/puppetlabs/puppetlabs-apache/pull/2303) ([ekohl](https://github.com/ekohl))
+- Allow RewriteInherit with empty rewrites [\#2301](https://github.com/puppetlabs/puppetlabs-apache/pull/2301) ([martin-koerner](https://github.com/martin-koerner))
+- Fix deprecation warning about performing a regex comparison on a hash [\#2293](https://github.com/puppetlabs/puppetlabs-apache/pull/2293) ([smokris](https://github.com/smokris))
+- Add support for all proxy schemes, not just https:// [\#2289](https://github.com/puppetlabs/puppetlabs-apache/pull/2289) ([canth1](https://github.com/canth1))
+- Parameterize CRS DOS protection [\#2280](https://github.com/puppetlabs/puppetlabs-apache/pull/2280) ([Vincevrp](https://github.com/Vincevrp))
+
 ## [v8.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.1.0) (2022-08-18)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.0.0...v8.1.0)

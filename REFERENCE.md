@@ -167,6 +167,7 @@ outside of the defaults.
 ### Data types
 
 * [`Apache::LogLevel`](#apacheloglevel): A string that conforms to the Apache `LogLevel` syntax.
+* [`Apache::ModProxyProtocol`](#apachemodproxyprotocol): Supported protocols / schemes by mod_proxy
 * [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
 * [`Apache::ServerTokens`](#apacheservertokens): A string that conforms to the Apache `ServerTokens` syntax.
 * [`Apache::Vhost::Priority`](#apachevhostpriority): The priority on vhost
@@ -283,6 +284,7 @@ The following parameters are available in the `apache` class:
 * [`purge_vdir`](#purge_vdir)
 * [`conf_enabled`](#conf_enabled)
 * [`vhost_enable_dir`](#vhost_enable_dir)
+* [`manage_vhost_enable_dir`](#manage_vhost_enable_dir)
 * [`mod_enable_dir`](#mod_enable_dir)
 * [`ssl_file`](#ssl_file)
 * [`file_e_tag`](#file_e_tag)
@@ -1123,10 +1125,18 @@ Default value: `$apache::params::conf_enabled`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-Set's whether the vhost definitions will be stored in sites-availible and if
+Set's the vhost definitions which will be stored in sites-availible and if
 they will be symlinked to and from sites-enabled.
 
 Default value: `$apache::params::vhost_enable_dir`
+
+##### <a name="manage_vhost_enable_dir"></a>`manage_vhost_enable_dir`
+
+Data type: `Boolean`
+
+Overides the vhost_enable_dir inherited parameters and allows it to be disabled
+
+Default value: ``true``
 
 ##### <a name="mod_enable_dir"></a>`mod_enable_dir`
 
@@ -6032,6 +6042,8 @@ Installs and configures `mod_security`.
 * **See also**
   * https://github.com/SpiderLabs/ModSecurity/wiki
     * for additional documentation.
+  * https://coreruleset.org/docs/
+    * for addional documentation
 
 #### Parameters
 
@@ -6071,6 +6083,10 @@ The following parameters are available in the `apache::mod::security` class:
 * [`secrequestbodyaccess`](#secrequestbodyaccess)
 * [`secresponsebodyaccess`](#secresponsebodyaccess)
 * [`manage_security_crs`](#manage_security_crs)
+* [`enable_dos_protection`](#enable_dos_protection)
+* [`dos_burst_time_slice`](#dos_burst_time_slice)
+* [`dos_counter_threshold`](#dos_counter_threshold)
+* [`dos_block_timeout`](#dos_block_timeout)
 
 ##### <a name="version"></a>`version`
 
@@ -6346,6 +6362,42 @@ Data type: `Boolean`
 Toggles whether to manage ModSecurity Core Rule Set
 
 Default value: ``true``
+
+##### <a name="enable_dos_protection"></a>`enable_dos_protection`
+
+Data type: `Boolean`
+
+Toggles the optional OWASP ModSecurity Core Rule Set DOS protection rule
+(rule id 900700)
+
+Default value: ``true``
+
+##### <a name="dos_burst_time_slice"></a>`dos_burst_time_slice`
+
+Data type: `Integer[1, default]`
+
+Configures time in which a burst is measured for the OWASP ModSecurity Core Rule Set DOS protection rule
+(rule id 900700)
+
+Default value: `60`
+
+##### <a name="dos_counter_threshold"></a>`dos_counter_threshold`
+
+Data type: `Integer[1, default]`
+
+Configures the amount of requests that can be made within dos_burst_time_slice before it is considered a burst in
+the OWASP ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+
+Default value: `100`
+
+##### <a name="dos_block_timeout"></a>`dos_block_timeout`
+
+Data type: `Integer[1, default]`
+
+Configures how long the client should be blocked when the dos_counter_threshold is exceeded in the OWASP
+ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+
+Default value: `600`
 
 ### <a name="apachemodsetenvif"></a>`apache::mod::setenvif`
 
@@ -7288,7 +7340,7 @@ resource). This must match up with a declared apache::balancer resource.
 
 ##### <a name="url"></a>`url`
 
-Data type: `Stdlib::HTTPUrl`
+Data type: `Apache::ModProxyProtocol`
 
 The url used to contact the balancer member server.
 
@@ -11336,6 +11388,19 @@ Alias of
 Pattern[/(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])/]
 ```
 
+### <a name="apachemodproxyprotocol"></a>`Apache::ModProxyProtocol`
+
+Supported protocols / schemes by mod_proxy
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_proxy.html
+
+Alias of
+
+```puppet
+Pattern[/(\A(ajp|fcgi|ftp|h2c?|https?|scgi|uwsgi|wss?):\/\/.+\z)/, /(\Aunix:\/([^\n\/\0]+\/*)*\z)/]
+```
+
 ### <a name="apacheoidcsettings"></a>`Apache::OIDCSettings`
 
 https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
@@ -11360,7 +11425,7 @@ Struct[{
     Optional['ProviderRevocationEndpoint']              => Stdlib::HTTPSUrl,
     Optional['ProviderBackChannelLogoutSupported']      => Enum['On', 'Off'],
     Optional['ProviderRegistrationEndpointJson']        => String,
-    Optional['Scope']                                   => Pattern[/^[A-Za-z0-9\-\._\s]+$/],
+    Optional['Scope']                                   => Pattern[/^\"?[A-Za-z0-9\-\._\s]+\"?$/],
     Optional['AuthRequestParams']                       => Pattern[/^[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+(&[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+)*$/],
     Optional['SSLValidateServer']                       => Enum['On', 'Off'],
     Optional['UserInfoRefreshInterval']                 => Integer,
@@ -11426,7 +11491,7 @@ Struct[{
     Optional['DiscoverURL']                             => Variant[Stdlib::HTTPSUrl, Stdlib::HttpUrl],
     Optional['HTMLErrorTemplate']                       => String,
     Optional['DefaultURL']                              => Variant[Stdlib::HTTPSUrl, Stdlib::HttpUrl],
-    Optional['PathScope']                               => Pattern[/^[A-Za-z0-9\-\._\s]+$/],
+    Optional['PathScope']                               => Pattern[/^\"?[A-Za-z0-9\-\._\s]+\"?$/],
     Optional['PathAuthRequestParams']                   => Pattern[/^[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+(&[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+)*$/],
     Optional['IDTokenIatSlack']                         => Integer,
     Optional['ClaimPrefix']                             => String,
