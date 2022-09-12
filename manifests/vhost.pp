@@ -2514,11 +2514,12 @@ define apache::vhost (
 
   # Template uses:
   # - $rewrites
+  # - $rewrite_inherit
   # - $rewrite_base
   # - $rewrite_rule
   # - $rewrite_cond
   # - $rewrite_map
-  if (! empty($rewrites) or $rewrite_rule) and $ensure == 'present' {
+  if (! empty($rewrites) or $rewrite_rule or $rewrite_inherit) and $ensure == 'present' {
     include apache::mod::rewrite
 
     concat::fragment { "${name}-rewrite":
