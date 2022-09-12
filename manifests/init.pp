@@ -439,8 +439,11 @@
 #   Whether the additional config files in `/etc/apache2/conf-enabled` should be managed.
 # 
 # @param vhost_enable_dir
-#   Set's whether the vhost definitions will be stored in sites-availible and if
+#   Set's the vhost definitions which will be stored in sites-availible and if
 #   they will be symlinked to and from sites-enabled.
+# 
+# @param manage_vhost_enable_dir
+#   Overides the vhost_enable_dir inherited parameters and allows it to be disabled
 #
 # @param mod_enable_dir
 #   Set's whether the mods-enabled directory should be managed.
@@ -500,6 +503,7 @@ class apache (
   Optional[Stdlib::Absolutepath] $conf_enabled                               = $apache::params::conf_enabled,
   Stdlib::Absolutepath $vhost_dir                                            = $apache::params::vhost_dir,
   Optional[Stdlib::Absolutepath] $vhost_enable_dir                           = $apache::params::vhost_enable_dir,
+  Boolean $manage_vhost_enable_dir                                           = true,
   Hash $mod_libs                                                             = $apache::params::mod_libs,
   Hash $mod_packages                                                         = $apache::params::mod_packages,
   String $vhost_include_pattern                                              = $apache::params::vhost_include_pattern,
@@ -703,7 +707,7 @@ class apache (
     }
   }
 
-  if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) {
+  if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) and $manage_vhost_enable_dir {
     $vhost_load_dir = $vhost_enable_dir
     exec { "mkdir ${vhost_load_dir}":
       creates => $vhost_load_dir,
