@@ -859,6 +859,10 @@ describe 'apache::vhost define' do
         docroot    => '/tmp',
         options    => ['Indexes','FollowSymLinks', 'ExecCGI'],
       }
+      apache::vhost { 'test.empty_options':
+        docroot    => '/tmp',
+        options    => [],
+      }
     MANIFEST
     it 'applies cleanly' do
       apply_manifest(pp, catch_failures: true)
@@ -948,6 +952,10 @@ describe 'apache::vhost define' do
     describe file("#{apache_hash['vhost_dir']}/25-test.options.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
+    end
+    describe file("#{apache_hash['vhost_dir']}/25-test.empty_options.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.not_to contain 'Options' }
     end
   end
 
