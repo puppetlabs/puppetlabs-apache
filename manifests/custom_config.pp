@@ -115,9 +115,10 @@ define apache::custom_config (
       require     => Anchor['::apache::modules_set_up'],
     }
 
+    $remove_command = ['/bin/rm', shell_escape(join([$confdir, $_filename], '/'))]
     exec { "remove ${name} if invalid":
-      command     => "/bin/rm ${confdir}/${_filename}",
-      unless      => $verify_command,
+      command     => $remove_command,
+      unless      => [$verify_command],
       subscribe   => File["apache_${name}"],
       refreshonly => true,
     }
