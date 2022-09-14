@@ -90,11 +90,12 @@ define apache::custom_config (
     $notifies = undef
   }
 
+  $_file_path = "${confdir}/${_filename}"
   $_file_mode = pick($file_mode, $apache::file_mode)
 
   file { "apache_${name}":
     ensure    => $ensure,
-    path      => "${confdir}/${_filename}",
+    path      => $_file_path,
     owner     => $owner,
     group     => $group,
     mode      => $_file_mode,
@@ -115,7 +116,7 @@ define apache::custom_config (
       require     => Anchor['::apache::modules_set_up'],
     }
 
-    $remove_command = ['/bin/rm', shell_escape(join([$confdir, $_filename], '/'))]
+    $remove_command = ['/bin/rm', $_file_path]
     exec { "remove ${name} if invalid":
       command     => $remove_command,
       unless      => [$verify_command],
