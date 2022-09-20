@@ -713,13 +713,13 @@ class apache::params inherits apache::version {
   }
 
   if $facts['os']['name'] == 'SLES' {
-    $verify_command = '/usr/sbin/apache2ctl -t'
+    $verify_command = ['/usr/sbin/apache2ctl', '-t']
   } elsif $facts['os']['name'] == 'FreeBSD' {
-    $verify_command = '/usr/local/sbin/apachectl -t'
+    $verify_command = ['/usr/local/sbin/apachectl', '-t']
   } elsif ($apache::version::scl_httpd_version) {
-    $verify_command = "/opt/rh/${_scl_httpd_name}/root/usr/sbin/apachectl -t"
+    $verify_command = ["/opt/rh/${_scl_httpd_name}/root/usr/sbin/apachectl", '-t']
   } else {
-    $verify_command = '/usr/sbin/apachectl -t'
+    $verify_command = ['/usr/sbin/apachectl', '-t']
   }
 
   if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') >= 0 {

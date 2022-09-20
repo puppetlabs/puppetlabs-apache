@@ -32,6 +32,9 @@
 #   This parameter is used only if the `verify_config` parameter's value is `true`. If the 
 #   `verify_command` fails, the Puppet run deletes the configuration file and raises an error, 
 #   but does not notify the Apache service.
+#   Command can be passed through as either a String, i.e. `'/usr/sbin/apache2ctl -t'`
+#   An array, i.e. `['/usr/sbin/apache2ctl', '-t']`
+#   Or an array of arrays with each one having to pass succesfully, i.e. `[['/usr/sbin/apache2ctl', '-t'], '/usr/sbin/apache2ctl -t']`
 #
 # @param verify_config
 #   Specifies whether to validate the configuration file before notifying the Apache service.
@@ -49,18 +52,18 @@
 #   show_diff property for configuration file resource
 #
 define apache::custom_config (
-  Enum['absent', 'present'] $ensure     = 'present',
-  Stdlib::Absolutepath $confdir         = $apache::confd_dir,
-  Optional[String] $content             = undef,
-  Apache::Vhost::Priority $priority     = 25,
-  Optional[String] $source              = undef,
-  String $verify_command                = $apache::params::verify_command,
-  Boolean $verify_config                = true,
-  Optional[String] $filename            = undef,
-  Optional[String] $owner               = undef,
-  Optional[String] $group               = undef,
-  Optional[Stdlib::Filemode] $file_mode = undef,
-  Boolean $show_diff                    = true,
+  Enum['absent', 'present'] $ensure                                    = 'present',
+  Stdlib::Absolutepath $confdir                                        = $apache::confd_dir,
+  Optional[String] $content                                            = undef,
+  Apache::Vhost::Priority $priority                                    = 25,
+  Optional[String] $source                                             = undef,
+  Variant[String, Array[String], Array[Array[String]]] $verify_command = $apache::params::verify_command,
+  Boolean $verify_config                                               = true,
+  Optional[String] $filename                                           = undef,
+  Optional[String] $owner                                              = undef,
+  Optional[String] $group                                              = undef,
+  Optional[Stdlib::Filemode] $file_mode                                = undef,
+  Boolean $show_diff                                                   = true,
 ) {
   if $content and $source {
     fail('Only one of $content and $source can be specified.')

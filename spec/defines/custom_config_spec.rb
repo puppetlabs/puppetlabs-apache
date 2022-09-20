@@ -21,14 +21,14 @@ describe 'apache::custom_config', type: :define do
 
     it {
       is_expected.to contain_exec('syntax verification for rspec')
-        .with('refreshonly' => 'true', 'command' => ['/usr/sbin/apachectl -t'])
+        .with('refreshonly' => 'true', 'command' => ['/usr/sbin/apachectl', '-t'])
         .that_subscribes_to('File[apache_rspec]')
         .that_notifies('Class[Apache::Service]')
         .that_comes_before('Exec[remove rspec if invalid]')
     }
     it {
       is_expected.to contain_exec('remove rspec if invalid')
-        .with('unless' => ['/usr/sbin/apachectl -t'], 'refreshonly' => 'true')
+        .with('unless' => [['/usr/sbin/apachectl', '-t']], 'refreshonly' => 'true')
         .that_subscribes_to('File[apache_rspec]')
     }
     it {
@@ -43,16 +43,16 @@ describe 'apache::custom_config', type: :define do
         'confdir'        => '/dne',
         'priority'       => 30,
         'source'         => 'puppet:///modules/apache/test',
-        'verify_command' => '/bin/true',
+        'verify_command' => ['/bin/true'],
       }
     end
 
     it {
-      is_expected.to contain_exec('syntax verification for rspec').with('command' => '/bin/true')
+      is_expected.to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
     }
     it {
       is_expected.to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
-                                                                  'unless' => ['/bin/true'])
+                                                                  'unless' => [['/bin/true']])
     }
     it {
       is_expected.to contain_file('apache_rspec')
