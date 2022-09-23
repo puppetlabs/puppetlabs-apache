@@ -635,7 +635,9 @@ class apache (
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }
 
+  $confd_command = ['mkdir', $confd_dir]
   exec { "mkdir ${confd_dir}":
+    command => $confd_command,
     creates => $confd_dir,
     require => Package['httpd'],
   }
@@ -660,7 +662,9 @@ class apache (
   }
 
   if ! defined(File[$mod_dir]) {
+    $mod_command = ['mkdir', $mod_dir]
     exec { "mkdir ${mod_dir}":
+      command => $mod_command,
       creates => $mod_dir,
       require => Package['httpd'],
     }
@@ -678,7 +682,9 @@ class apache (
 
   if $mod_enable_dir and ! defined(File[$mod_enable_dir]) {
     $mod_load_dir = $mod_enable_dir
+    $mod_enable_command = ['mkdir', $mod_enable_dir]
     exec { "mkdir ${mod_enable_dir}":
+      command => $mod_enable_command,
       creates => $mod_enable_dir,
       require => Package['httpd'],
     }
@@ -694,7 +700,9 @@ class apache (
   }
 
   if ! defined(File[$vhost_dir]) {
+    $vhost_command = ['mkdir', $vhost_dir]
     exec { "mkdir ${vhost_dir}":
+      command => $vhost_command,
       creates => $vhost_dir,
       require => Package['httpd'],
     }
@@ -709,7 +717,9 @@ class apache (
 
   if $vhost_enable_dir and ! defined(File[$vhost_enable_dir]) and $manage_vhost_enable_dir {
     $vhost_load_dir = $vhost_enable_dir
+    $vhost_load_command = ['mkdir', $vhost_load_dir]
     exec { "mkdir ${vhost_load_dir}":
+      command => $vhost_load_command,
       creates => $vhost_load_dir,
       require => Package['httpd'],
     }
