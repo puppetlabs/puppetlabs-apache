@@ -7431,13 +7431,16 @@ Default value: ``undef``
 
 ##### <a name="verify_command"></a>`verify_command`
 
-Data type: `String`
+Data type: `Variant[String, Array[String], Array[Array[String]]]`
 
 Specifies the command Puppet uses to verify the configuration file. Use a fully qualified
 command.<br />
 This parameter is used only if the `verify_config` parameter's value is `true`. If the
 `verify_command` fails, the Puppet run deletes the configuration file and raises an error,
 but does not notify the Apache service.
+Command can be passed through as either a String, i.e. `'/usr/sbin/apache2ctl -t'`
+An array, i.e. `['/usr/sbin/apache2ctl', '-t']`
+Or an array of arrays with each one having to pass succesfully, i.e. `[['/usr/sbin/apache2ctl', '-t'], '/usr/sbin/apache2ctl -t']`
 
 Default value: `$apache::params::verify_command`
 
