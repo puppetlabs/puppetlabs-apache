@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- \(MAINT\) Removing support for CentOS 8 [\#2314](https://github.com/puppetlabs/puppetlabs-apache/pull/2314) ([jordanbreen28](https://github.com/jordanbreen28))
 - \(maint\) Codebase Hardening [\#2313](https://github.com/puppetlabs/puppetlabs-apache/pull/2313) ([david22swan](https://github.com/david22swan))
 
 ## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.0) (2022-09-13)
