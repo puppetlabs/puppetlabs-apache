@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.2.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.1) (2022-09-26)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.2.0...v8.2.1)
+
+### Fixed
+
+- \(maint\) Codebase Hardening [\#2313](https://github.com/puppetlabs/puppetlabs-apache/pull/2313) ([david22swan](https://github.com/david22swan))
+
 ## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.0) (2022-09-13)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.1.0...v8.2.0)
