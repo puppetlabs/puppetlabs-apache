@@ -90,7 +90,7 @@
     }
   ],
   "description": "Module for Apache configuration",
-  "pdk-version": "2.4.0",
+  "pdk-version": "2.5.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates.git#main",
-  "template-ref": "2.5.0-0-g369d483"
+  "template-ref": "tags/2.6.0-0-gd0490b9"
 }
