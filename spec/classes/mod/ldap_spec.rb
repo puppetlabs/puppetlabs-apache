@@ -55,7 +55,7 @@ describe 'apache::mod::ldap', type: :class do
   end # Debian
 
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_class('apache::mod::ldap') }

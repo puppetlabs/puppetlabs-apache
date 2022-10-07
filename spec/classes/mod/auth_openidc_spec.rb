@@ -50,7 +50,7 @@ describe 'apache::mod::auth_openidc', type: :class do
   end
   context 'overriding mod_packages' do
     context 'on a RedHat OS', :compile do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
       let :pre_condition do
         <<-MANIFEST
         include apache::params

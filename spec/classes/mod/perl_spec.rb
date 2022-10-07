@@ -12,7 +12,7 @@ describe 'apache::mod::perl', type: :class do
     it { is_expected.to contain_package('libapache2-mod-perl2') }
   end
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('perl') }

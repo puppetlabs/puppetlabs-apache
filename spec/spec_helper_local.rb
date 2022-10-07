@@ -49,10 +49,6 @@ shared_context 'Ubuntu 18.04' do
   let(:facts) { on_supported_os['ubuntu-18.04-x86_64'] }
 end
 
-shared_context 'RedHat 6' do
-  let(:facts) { on_supported_os['redhat-6-x86_64'] }
-end
-
 shared_context 'RedHat 7' do
   let(:facts) { on_supported_os['redhat-7-x86_64'] }
 end

@@ -32,12 +32,12 @@ describe 'apache::mod::authn_dbd', type: :class do
     end
 
     context 'on a RedHat OS', :compile do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('authn_dbd') }
       it { is_expected.to contain_apache__mod('dbd') }
-      it { is_expected.to contain_file('authn_dbd.conf').with_path('/etc/httpd/conf.d/authn_dbd.conf') }
+      it { is_expected.to contain_file('authn_dbd.conf').with_path('/etc/httpd/conf.modules.d/authn_dbd.conf') }
     end
   end
 end

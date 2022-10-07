@@ -15,7 +15,7 @@ describe 'apache::mod::lookup_identity', type: :class do
     end # Debian
 
     context 'on a RedHat OS' do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_lookup_identity') }

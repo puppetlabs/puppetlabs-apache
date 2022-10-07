@@ -12,12 +12,12 @@ describe 'apache::mod', type: :define do
   end
 
   context 'on a RedHat osfamily' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     describe 'for non-special modules' do
       it { is_expected.to contain_class('apache::params') }
       it 'manages the module load file' do
-        is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.d/spec_m.load',
+        is_expected.to contain_file('spec_m.load').with(path: '/etc/httpd/conf.modules.d/spec_m.load',
                                                         content: "LoadModule spec_m_module modules/mod_spec_m.so\n",
                                                         owner: 'root',
                                                         group: 'root',
