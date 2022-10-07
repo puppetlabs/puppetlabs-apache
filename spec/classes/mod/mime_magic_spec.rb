@@ -44,7 +44,7 @@ describe 'apache::mod::mime_magic', type: :class do
   end
 
   context 'on a RedHat OS with default params' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     general_mime_magic_specs
 
@@ -54,6 +54,6 @@ describe 'apache::mod::mime_magic', type: :class do
       )
     end
 
-    it { is_expected.to contain_file('mime_magic.conf').with_path('/etc/httpd/conf.d/mime_magic.conf') }
+    it { is_expected.to contain_file('mime_magic.conf').with_path('/etc/httpd/conf.modules.d/mime_magic.conf') }
   end
 end

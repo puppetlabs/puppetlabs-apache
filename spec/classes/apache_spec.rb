@@ -725,7 +725,7 @@ describe 'apache', type: :class do
     }
   end
   context 'on all OSes' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     context 'with a custom apache_name parameter' do
       let :params do

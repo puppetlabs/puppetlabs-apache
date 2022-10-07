@@ -12,12 +12,6 @@ describe 'apache::mod::alias', type: :class do
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/share\/apache2\/icons\/"}) }
     end
-    context 'on a RedHat 6-based OS', :compile do
-      include_examples 'RedHat 6'
-
-      it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/var\/www\/icons\/"}) }
-    end
     context 'on a RedHat 7-based OS', :compile do
       include_examples 'RedHat 7'
 

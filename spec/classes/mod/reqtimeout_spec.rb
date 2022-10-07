@@ -32,7 +32,7 @@ describe 'apache::mod::reqtimeout', type: :class do
     end
   end
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     context 'passing no parameters' do
       it { is_expected.to contain_class('apache::params') }

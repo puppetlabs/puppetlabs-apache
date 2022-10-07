@@ -26,10 +26,10 @@ describe 'apache::mod::mime', type: :class do
   end
 
   context 'on a RedHat OS with default params', :compile do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     general_mime_specs
 
-    it { is_expected.to contain_file('mime.conf').with_path('/etc/httpd/conf.d/mime.conf') }
+    it { is_expected.to contain_file('mime.conf').with_path('/etc/httpd/conf.modules.d/mime.conf') }
   end
 end

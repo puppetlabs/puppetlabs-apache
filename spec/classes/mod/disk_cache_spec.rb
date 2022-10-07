@@ -102,8 +102,8 @@ describe 'apache::mod::disk_cache', type: :class do
     end
   end
 
-  context 'on a RedHat 6-based OS' do
-    include_examples 'RedHat 6'
+  context 'on a RedHat 8-based OS' do
+    include_examples 'RedHat 8'
 
     let(:params) do
       {

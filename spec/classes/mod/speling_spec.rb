@@ -11,7 +11,7 @@ describe 'apache::mod::speling', type: :class do
   end
 
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_apache__mod('speling') }
   end

@@ -15,7 +15,7 @@ describe 'apache::mod::auth_kerb', type: :class do
       it { is_expected.to contain_package('libapache2-mod-auth-kerb') }
     end
     context 'on a RedHat OS', :compile do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_class('apache::mod::authn_core') }
@@ -41,7 +41,7 @@ describe 'apache::mod::auth_kerb', type: :class do
   end
   context 'overriding mod_packages' do
     context 'on a RedHat OS', :compile do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
       let :pre_condition do
         <<-MANIFEST
         include apache::params

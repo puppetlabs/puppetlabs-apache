@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'apache::vhosts', type: :class do
   context 'on all OSes' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     context 'with custom vhosts parameter' do
       let :params do

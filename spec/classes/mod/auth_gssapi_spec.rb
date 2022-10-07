@@ -15,7 +15,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       it { is_expected.to contain_package('libapache2-mod-auth-gssapi') }
     end
     context 'on a RedHat OS', :compile do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_class('apache::mod::authn_core') }

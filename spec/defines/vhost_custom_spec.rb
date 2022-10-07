@@ -14,7 +14,7 @@ describe 'apache::vhost::custom', type: :define do
 
   describe 'os-dependent items' do
     context 'on RedHat based systems' do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to compile }
     end

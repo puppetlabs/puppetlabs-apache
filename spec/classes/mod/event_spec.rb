@@ -147,7 +147,7 @@ describe 'apache::mod::event', type: :class do
     end
   end
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     context 'with Apache version >= 2.4' do
       let :params do
@@ -160,10 +160,10 @@ describe 'apache::mod::event', type: :class do
       it { is_expected.not_to contain_apache__mod('worker') }
       it { is_expected.not_to contain_apache__mod('prefork') }
 
-      it { is_expected.to contain_file('/etc/httpd/conf.d/event.conf').with_ensure('file') }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/event.conf').with_ensure('file') }
 
       it {
-        is_expected.to contain_file('/etc/httpd/conf.d/event.load').with('ensure' => 'file',
+        is_expected.to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
                                                                          'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
       }
     end

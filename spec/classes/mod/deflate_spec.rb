@@ -53,12 +53,12 @@ describe 'apache::mod::deflate', type: :class do
     end
 
     context 'on a RedHat OS with default params' do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       # Load the more generic tests for this context
       general_deflate_specs
 
-      it { is_expected.to contain_file('deflate.conf').with_path('/etc/httpd/conf.d/deflate.conf') }
+      it { is_expected.to contain_file('deflate.conf').with_path('/etc/httpd/conf.modules.d/deflate.conf') }
     end
 
     context 'On a FreeBSD OS with default params' do

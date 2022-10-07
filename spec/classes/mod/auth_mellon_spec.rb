@@ -36,13 +36,13 @@ describe 'apache::mod::auth_mellon', type: :class do
     end
   end
   context 'default configuration with parameters on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     describe 'with no parameters' do
       it { is_expected.to contain_class('apache::mod::authn_core') }
       it { is_expected.to contain_apache__mod('auth_mellon') }
       it { is_expected.to contain_package('mod_auth_mellon') }
-      it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/httpd/conf.d/auth_mellon.conf') }
+      it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/httpd/conf.modules.d/auth_mellon.conf') }
       it { is_expected.to contain_file('auth_mellon.conf').with_content("MellonCacheSize 100\nMellonLockFile \"/run/mod_auth_mellon/lock\"\n") }
     end
     describe 'with parameters' do
