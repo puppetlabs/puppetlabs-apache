@@ -14,7 +14,7 @@ apache::vhost { 'first.example.com':
   proxy_pass => [
     {
       'path' => '/first',
-      'url'  => 'http://localhost:8080/first'
+      'url'  => 'https://localhost:8080/first'
     },
   ],
 }
@@ -26,7 +26,7 @@ apache::vhost { 'second.example.com':
   proxy_pass => [
     {
       'path'   => '/second',
-      'url'    => 'http://localhost:8080/second',
+      'url'    => 'https://localhost:8080/second',
       'params' => {
         'retry'   => '0',
         'timeout' => '5',
@@ -42,7 +42,7 @@ apache::vhost { 'third.example.com':
   proxy_pass => [
     {
       'path'     => '/third',
-      'url'      => 'http://localhost:8080/third',
+      'url'      => 'https://localhost:8080/third',
       'keywords' => ['noquery', 'interpolate']
     },
   ],
@@ -55,7 +55,7 @@ apache::vhost { 'fourth.example.com':
   proxy_pass => [
     {
       'path'     => '/fourth',
-      'url'      => 'http://localhost:8080/fourth',
+      'url'      => 'https://localhost:8080/fourth',
       'params'   => {
         'retry'   => '0',
         'timeout' => '5',
