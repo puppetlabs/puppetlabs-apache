@@ -7,9 +7,6 @@
 # @param allow_from
 #   List of IPs allowed to access proxy.
 #
-# @param apache_version
-#   Used to verify that the Apache version you have requested is compatible with the module.
-#
 # @param package_name
 #   Name of the proxy package to install.
 #
@@ -26,8 +23,7 @@
 #
 class apache::mod::proxy (
   String $proxy_requests                              = 'Off',
-  Optional[String] $allow_from                        = undef,
-  Optional[String] $apache_version                    = undef,
+  Optional[Stdlib::IP::Address] $allow_from           = undef,
   Optional[String] $package_name                      = undef,
   String $proxy_via                                   = 'On',
   Optional[Variant[Integer[0],String]] $proxy_timeout = undef,
@@ -35,11 +31,10 @@ class apache::mod::proxy (
 ) {
   include apache
   $_proxy_timeout = $apache::timeout
-  $_apache_version = pick($apache_version, $apache::apache_version)
   ::apache::mod { 'proxy':
     package => $package_name,
   }
-  # Template uses $proxy_requests, $_apache_version
+  # Template uses $proxy_requests
   file { 'proxy.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/proxy.conf",

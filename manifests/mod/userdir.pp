@@ -13,9 +13,6 @@
 # @param disable_root
 #   Toggles whether to allow use of root directory.
 # 
-# @param apache_version
-#   Used to verify that the Apache version you have requested is compatible with the module.
-# 
 # @param path
 #   Path to directory or pattern from which to find user-specific directories.
 # 
@@ -38,7 +35,6 @@ class apache::mod::userdir (
   Optional[String] $dir             = undef,
   Optional[String[1]] $userdir      = undef,
   Boolean $disable_root             = true,
-  Optional[String] $apache_version  = undef,
   String $path                      = '/home/*/public_html',
   Array[String] $overrides          = ['FileInfo', 'AuthConfig', 'Limit', 'Indexes'],
   Array[String] $options            = ['MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec'],
@@ -46,7 +42,6 @@ class apache::mod::userdir (
   Optional[String] $custom_fragment = undef,
 ) {
   include apache
-  $_apache_version = pick($apache_version, $apache::apache_version)
 
   if $home or $dir {
     $_home = $home ? {
@@ -67,7 +62,7 @@ class apache::mod::userdir (
 
   ::apache::mod { 'userdir': }
 
-  # Template uses $home, $dir, $disable_root, $_apache_version
+  # Template uses $home, $dir, $disable_root
   file { 'userdir.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/userdir.conf",

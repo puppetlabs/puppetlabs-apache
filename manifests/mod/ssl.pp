@@ -75,9 +75,6 @@
 # @param ssl_reload_on_change
 #   Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
 #
-# @param apache_version
-#   Used to verify that the Apache version you have requested is compatible with the module.
-#
 # @param package_name
 #   Name of ssl package to install.
 #
@@ -110,42 +107,12 @@ class apache::mod::ssl (
   Boolean $ssl_stapling                                     = false,
   Optional[String] $stapling_cache                          = undef,
   Optional[Boolean] $ssl_stapling_return_errors             = undef,
-  Optional[String] $ssl_mutex                               = undef,
+  String $ssl_mutex                                         = 'default',
   Boolean $ssl_reload_on_change                             = false,
-  Optional[String] $apache_version                          = undef,
   Optional[String] $package_name                            = undef,
 ) inherits apache::params {
   include apache
   include apache::mod::mime
-  $_apache_version = pick($apache_version, $apache::apache_version)
-  if $ssl_mutex {
-    $_ssl_mutex = $ssl_mutex
-  } else {
-    case $facts['os']['family'] {
-      'debian': {
-        if versioncmp($_apache_version, '2.4') >= 0 {
-          $_ssl_mutex = 'default'
-        } else {
-          $_ssl_mutex = "file:\${APACHE_RUN_DIR}/ssl_mutex"
-        }
-      }
-      'redhat': {
-        $_ssl_mutex = 'default'
-      }
-      'freebsd': {
-        $_ssl_mutex = 'default'
-      }
-      'gentoo': {
-        $_ssl_mutex = 'default'
-      }
-      'Suse': {
-        $_ssl_mutex = 'default'
-      }
-      default: {
-        fail("Unsupported osfamily ${$facts['os']['family']}, please explicitly pass in \$ssl_mutex")
-      }
-    }
-  }
 
   if $ssl_honorcipherorder =~ Boolean {
     $_ssl_honorcipherorder = $ssl_honorcipherorder
@@ -185,9 +152,7 @@ class apache::mod::ssl (
     }
   }
 
-  if versioncmp($_apache_version, '2.4') >= 0 {
-    include apache::mod::socache_shmcb
-  }
+  include apache::mod::socache_shmcb
 
   if $ssl_reload_on_change {
     [$ssl_cert, $ssl_key, $ssl_ca].each |$ssl_file| {
@@ -222,7 +187,6 @@ class apache::mod::ssl (
   # $ssl_mutex
   # $ssl_random_seed_bytes
   # $ssl_sessioncachetimeout
-  # $_apache_version
   file { 'ssl.conf':
     ensure  => file,
     path    => $apache::_ssl_file,

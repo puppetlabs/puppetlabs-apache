@@ -6,8 +6,7 @@
 #   Default depends on the Apache version and operating system:
 #   - Debian: /var/cache/apache2/mod_cache_disk
 #   - FreeBSD: /var/cache/mod_cache_disk
-#   - Red Hat, Apache 2.4: /var/cache/httpd/proxy
-#   - Red Hat, Apache 2.2: /var/cache/mod_proxy
+#   - Red Hat: /var/cache/httpd/proxy
 #
 # @param cache_ignore_headers
 #   Specifies HTTP header(s) that should not be stored in the cache.
@@ -18,9 +17,9 @@
 #   You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
 #
 # @note
-#   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+#   On Apache 2.4, mod_cache_disk installed.
 #
-# @see https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html for additional documentation.
+# @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html for additional documentation.
 #
 class apache::mod::disk_cache (
   Optional[Stdlib::Absolutepath] $cache_root = undef,
@@ -30,28 +29,15 @@ class apache::mod::disk_cache (
   include apache
   if $cache_root {
     $_cache_root = $cache_root
-  }
-  elsif versioncmp($apache::apache_version, '2.4') >= 0 {
+  } else {
     $_cache_root = $facts['os']['family'] ? {
       'debian'  => '/var/cache/apache2/mod_cache_disk',
       'redhat'  => '/var/cache/httpd/proxy',
       'freebsd' => '/var/cache/mod_cache_disk',
     }
   }
-  else {
-    $_cache_root = $facts['os']['family'] ? {
-      'debian'  => '/var/cache/apache2/mod_disk_cache',
-      'redhat'  => '/var/cache/mod_proxy',
-      'freebsd' => '/var/cache/mod_disk_cache',
-    }
-  }
 
-  if versioncmp($apache::apache_version, '2.4') >= 0 {
-    apache::mod { 'cache_disk': }
-  }
-  else {
-    apache::mod { 'disk_cache': }
-  }
+  apache::mod { 'cache_disk': }
 
   Class['apache::mod::cache'] -> Class['apache::mod::disk_cache']
 

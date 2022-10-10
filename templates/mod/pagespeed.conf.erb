@@ -61,35 +61,20 @@ ModPagespeedStatistics <%= @collect_statistics %>
     # statistics.  This might be appropriate in an experimental setup or
     # if the Apache server is protected by a reverse proxy that will
     # filter URLs in some fashion.
-    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_view_stats).join(" ") %>
-    <%- else -%>
-    Order allow,deny
-    Allow from 127.0.0.1 ::1 <%= Array(@allow_view_stats).join(" ") %>
-    <%- end -%>
     SetHandler mod_pagespeed_statistics
 </Location>
 
 ModPagespeedStatisticsLogging <%= @statistics_logging %>
 <Location /pagespeed_console>
-    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_pagespeed_console).join(" ") %>
-    <%- else -%>
-    Order allow,deny
-    Allow from 127.0.0.1 ::1 <%= Array(@allow_pagespeed_console).join(" ") %>
-    <%- end -%>
     SetHandler pagespeed_console
 </Location>
 
 ModPagespeedMessageBufferSize <%= @message_buffer_size %>
 
 <Location /mod_pagespeed_message>
-    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1 <%= Array(@allow_pagespeed_message).join(" ") %>
-    <%- else -%>
-    Order allow,deny
-    Allow from 127.0.0.1 ::1 <%= Array(@allow_pagespeed_message).join(" ") %>
-    <%- end -%>
     SetHandler mod_pagespeed_message
 </Location>
 

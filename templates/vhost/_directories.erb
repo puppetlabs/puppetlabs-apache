@@ -2,20 +2,6 @@
   <%- scope.setvar('_template_scope', {}) -%>
   ## Directories, there should at least be a declaration for <%= @docroot %>
   <%- @_directories.each do |directory| -%>
-    <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
-      <%- if directory['allow'] and ! [ false, 'false', '' ].include?(directory['allow']) -%>
-        <%- scope.function_warning(["Apache::Vhost: Using allow is deprecated in your Apache version"]) -%>
-      <%- end -%>
-      <%- if directory['deny'] and ! [ false, 'false', '' ].include?(directory['deny']) -%>
-        <%- scope.function_warning(["Apache::Vhost: Using deny is deprecated in your Apache version"]) -%>
-      <%- end -%>
-      <%- if directory['order'] and ! [ false, 'false', '' ].include?(directory['order']) -%>
-        <%- scope.function_warning(["Apache::Vhost: Using order is deprecated in your Apache version"]) -%>
-      <%- end -%>
-      <%- if directory['satisfy'] and ! [ false, 'false', '' ].include?(directory['satisfy']) -%>
-        <%- scope.function_warning(["Apache::Vhost: Using satisfy is deprecated in your Apache version"]) -%>
-      <%- end -%>
-    <%- end -%>
     <%- if directory['path'] and directory['path'] != '' -%>
       <%- if directory['provider'] and directory['provider'].match('(directory|location|files|proxy)') -%>
         <%- if /^(.*)match$/ =~ directory['provider'] -%>

@@ -5,9 +5,6 @@
 #   Sets the number of child server processes created at startup, via the module's `StartServers` directive. Setting this to `false` 
 #   removes the parameter.
 #
-# @param maxclients
-#   Apache 2.3.12 or older alias for the `MaxRequestWorkers` directive.
-#
 # @param maxrequestworkers
 #   Sets the maximum number of connections Apache can simultaneously process, via the module's `MaxRequestWorkers` directive. Setting 
 #   these to `false` removes the parameters.
@@ -21,17 +18,11 @@
 # @param threadsperchild
 #   Number of threads created by each child process.
 #
-# @param maxrequestsperchild
-#   Apache 2.3.8 or older alias for the `MaxConnectionsPerChild` directive.
-#
 # @param maxconnectionsperchild
 #   Limit on the number of connections that an individual child server will handle during its life.
 #
 # @param serverlimit
 #   Limits the configurable number of processes via the `ServerLimit` directive. Setting this to `false` removes the parameter.
-#
-# @param apache_version
-#   Version of Apache to install module on.
 #
 # @param threadlimit
 #    Limits the number of event threads via the module's `ThreadLimit` directive. Setting this to `false` removes the parameter.
@@ -48,21 +39,16 @@
 # @note Unsupported platforms: SLES: all
 class apache::mod::event (
   Variant[Integer, Boolean] $startservers                     = 2,
-  Variant[Integer, Boolean] $maxclients                       = 150,
   Optional[Variant[Integer, Boolean]] $maxrequestworkers      = undef,
   Variant[Integer, Boolean] $minsparethreads                  = 25,
   Variant[Integer, Boolean] $maxsparethreads                  = 75,
   Variant[Integer, Boolean] $threadsperchild                  = 25,
-  Variant[Integer, Boolean] $maxrequestsperchild              = 0,
   Optional[Variant[Integer, Boolean]] $maxconnectionsperchild = undef,
   Variant[Integer, Boolean] $serverlimit                      = 25,
-  Optional[String] $apache_version                            = undef,
   Variant[Integer, Boolean]  $threadlimit                     = 64,
   Variant[Integer, Boolean]  $listenbacklog                   = 511,
 ) {
   include apache
-
-  $_apache_version = pick($apache_version, $apache::apache_version)
 
   if defined(Class['apache::mod::itk']) {
     fail('May not include both apache::mod::event and apache::mod::itk on the same node')
@@ -84,11 +70,9 @@ class apache::mod::event (
 
   # Template uses:
   # - $startservers
-  # - $maxclients
   # - $minsparethreads
   # - $maxsparethreads
   # - $threadsperchild
-  # - $maxrequestsperchild
   # - $serverlimit
   file { "${apache::mod_dir}/event.conf":
     ensure  => file,
@@ -100,16 +84,8 @@ class apache::mod::event (
   }
 
   case $facts['os']['family'] {
-    'redhat': {
-      if versioncmp($_apache_version, '2.4') >= 0 {
-        apache::mpm { 'event':
-          apache_version => $_apache_version,
-        }
-      }
-    }
-    'debian', 'freebsd' : {
+    'redhat', 'debian', 'freebsd' : {
       apache::mpm { 'event':
-        apache_version => $_apache_version,
       }
     }
     'gentoo': {

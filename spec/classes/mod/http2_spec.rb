@@ -49,8 +49,6 @@ EOT
           h2_tls_warm_up_size: 0,
           h2_upgrade: false,
           h2_window_size: 128_000,
-
-          apache_version: '2.4',
         }
       end
 

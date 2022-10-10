@@ -106,8 +106,6 @@
 # @param additional_configuration
 #   Any additional configuration no included as it's own option
 #
-# @param apache_version
-#
 # @param package_ensure
 #
 # @example
@@ -190,22 +188,15 @@ class apache::mod::pagespeed (
   Array $allow_pagespeed_message                 = [],
   Integer $message_buffer_size                   = 100000,
   Variant[Array, Hash] $additional_configuration = {},
-  Optional[String] $apache_version               = undef,
   Optional[String] $package_ensure               = undef,
 ) {
   include apache
-  $_apache_version = pick($apache_version, $apache::apache_version)
-  $_lib = $_apache_version ? {
-    '2.4'   => 'mod_pagespeed_ap24.so',
-    default => undef
-  }
 
   apache::mod { 'pagespeed':
-    lib            => $_lib,
+    lib            => 'mod_pagespeed_ap24.so',
     package_ensure => $package_ensure,
   }
 
-  # Template uses $_apache_version
   file { 'pagespeed.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/pagespeed.conf",

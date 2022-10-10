@@ -140,6 +140,7 @@ shared_context 'Darwin' do
     {
       os: {
         family: 'Darwin',
+        name: 'Darwin',
         release: {
           full: '13.1.0',
         },

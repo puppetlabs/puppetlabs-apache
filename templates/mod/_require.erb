@@ -1,12 +1,4 @@
-<% if @requires != nil -%>
-  <%- _requires = @requires -%>
-<% elsif @allow_from != nil and ! @allow_from.empty? -%>
-  <%- scope.function_warning(["Class #{@title}: Using Allow is deprecated in Apache #{@_apache_version}"]) -%>
-  <%- _requires = 'ip ' + Array(@allow_from).join(" ") -%>
-<% else -%>
-  <%- _requires = @requires_defaults -%>
-<% end -%>
-<%-# -%>
+<% _requires = @requires != nil ? @requires : @requires_defaults -%>
 <% if _requires.is_a?(String) -%>
   <%- if ! ['', 'unmanaged'].include?_requires.downcase -%>
     Require <%= _requires %>

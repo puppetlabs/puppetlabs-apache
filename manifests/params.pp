@@ -64,10 +64,7 @@ class apache::params inherits apache::version {
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
     $puppet_ssl_dir       = "${httpd_dir}/puppet_ssl"
-    $mod_dir              = $facts['os']['release']['major'] ? {
-      '7'     => "${httpd_dir}/conf.modules.d",
-      default => "${httpd_dir}/conf.d",
-    }
+    $mod_dir              = "${httpd_dir}/conf.modules.d"
     $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef
@@ -106,14 +103,8 @@ class apache::params inherits apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = "${httpd_root}/var/www/html"
-    $alias_icons_path     = $facts['os']['release']['major'] ? {
-      '7'     => "${httpd_root}/usr/share/httpd/icons",
-      default => '/var/www/icons',
-    }
-    $error_documents_path = $facts['os']['release']['major'] ? {
-      '7'     => "${httpd_root}/usr/share/httpd/error",
-      default => '/var/www/error'
-    }
+    $alias_icons_path     = "${httpd_root}/usr/share/httpd/icons"
+    $error_documents_path = "${httpd_root}/usr/share/httpd/error"
     if $facts['os']['family'] == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {
@@ -168,15 +159,7 @@ class apache::params inherits apache::version {
     $confd_dir            = "${httpd_dir}/conf.d"
     $puppet_ssl_dir       = "${httpd_dir}/puppet_ssl"
     $conf_enabled         = undef
-    if $facts['os']['name'] =~ /^[Aa]mazon$/ and $facts['os']['release']['major'] == '2' {
-      # Amazon Linux 2 uses the /conf.modules.d/ dir
-      $mod_dir            = "${httpd_dir}/conf.modules.d"
-    } else {
-      $mod_dir              = $facts['os']['release']['major'] ? {
-        '6'     => "${httpd_dir}/conf.d",
-        default => "${httpd_dir}/conf.modules.d",
-      }
-    }
+    $mod_dir              = "${httpd_dir}/conf.modules.d"
     $mod_enable_dir       = undef
     $vhost_dir            = "${httpd_dir}/conf.d"
     $vhost_enable_dir     = undef
@@ -208,19 +191,12 @@ class apache::params inherits apache::version {
       'auth_gssapi'           => 'mod_auth_gssapi',
       'auth_mellon'           => 'mod_auth_mellon',
       'auth_openidc'          => 'mod_auth_openidc',
-      'authnz_ldap'           => $facts['os']['release']['major'] ? {
-        '6'     => 'mod_authz_ldap',
-        default => 'mod_ldap',
-      },
+      'authnz_ldap'           => 'mod_ldap',
       'authnz_pam'            => 'mod_authnz_pam',
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
-      'ldap'                  => $facts['os']['release']['major'] ? {
-        '5'     => undef,
-        '6'     => undef,
-        default => 'mod_ldap',
-      },
+      'ldap'                  => 'mod_ldap',
       'lookup_identity'       => 'mod_lookup_identity',
       'md'                    => 'mod_md',
       'pagespeed'             => 'mod-pagespeed-stable',
@@ -230,10 +206,6 @@ class apache::params inherits apache::version {
       # https://www.phusionpassenger.com/library/install/apache/install/oss/el7/
       'passenger'             => 'mod_passenger',
       'perl'                  => 'mod_perl',
-      'php5'                  => $facts['os']['release']['major'] ? {
-        '5'     => 'php53',
-        default => 'php',
-      },
       'phpXXX'                => 'php',
       'proxy_html'            => 'mod_proxy_html',
       'python'                => 'mod_python',
@@ -244,7 +216,6 @@ class apache::params inherits apache::version {
       'shibboleth'            => 'shibboleth',
       'ssl'                   => 'mod_ssl',
       'wsgi'                  => $facts['os']['release']['major'] ? {
-        '6'     => 'mod_wsgi',         # RedHat6
         '7'     => 'mod_wsgi',         # RedHat7
         default => 'python3-mod_wsgi', # RedHat8+
       },
@@ -256,7 +227,6 @@ class apache::params inherits apache::version {
     $mod_libs             = {
       'nss' => 'libmodnss.so',
       'wsgi'                  => $facts['os']['release']['major'] ? {
-        '6'     => 'mod_wsgi.so',
         '7'     => 'mod_wsgi.so',
         default => 'mod_wsgi_python3.so',
       },
@@ -269,14 +239,8 @@ class apache::params inherits apache::version {
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
-    $alias_icons_path     = $facts['os']['release']['major'] ? {
-      '6'     => '/var/www/icons',
-      default => '/usr/share/httpd/icons',
-    }
-    $error_documents_path = $facts['os']['release']['major'] ? {
-      '6'     => '/var/www/error',
-      default => '/usr/share/httpd/error',
-    }
+    $alias_icons_path     = '/usr/share/httpd/icons'
+    $error_documents_path = '/usr/share/httpd/error'
     if $facts['os']['family'] == 'RedHat' {
       $wsgi_socket_prefix = '/var/run/wsgi'
     } else {

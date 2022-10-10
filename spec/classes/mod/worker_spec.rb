@@ -13,68 +13,21 @@ describe 'apache::mod::worker', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('worker') }
     it { is_expected.to contain_file('/etc/apache2/mods-available/worker.conf').with_ensure('file') }
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/worker.conf').with_ensure('link') }
-
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it { is_expected.not_to contain_file('/etc/apache2/mods-available/worker.load') }
-      it { is_expected.not_to contain_file('/etc/apache2/mods-enabled/worker.load') }
-
-      it { is_expected.to contain_package('apache2-mpm-worker') }
-    end
-
-    context 'with Apache version >= 2.4' do
-      let :params do
-        {
-          apache_version: '2.4',
-        }
-      end
-
-      it {
-        is_expected.to contain_file('/etc/apache2/mods-available/worker.load').with('ensure' => 'file',
-                                                                                    'content' => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n")
-      }
-      it { is_expected.to contain_file('/etc/apache2/mods-enabled/worker.load').with_ensure('link') }
-    end
+    it {
+      is_expected.to contain_file('/etc/apache2/mods-available/worker.load').with('ensure' => 'file',
+                                                                                  'content' => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n")
+    }
   end
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('worker') }
-    it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with_ensure('file') }
-
-    context 'with Apache version < 2.4' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
-      it {
-        is_expected.to contain_file_line('/etc/sysconfig/httpd worker enable').with('require' => 'Package[httpd]')
-      }
-    end
-
-    context 'with Apache version >= 2.4' do
-      let :params do
-        {
-          apache_version: '2.4',
-        }
-      end
-
-      it { is_expected.not_to contain_apache__mod('event') }
-
-      it {
-        is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.load').with('ensure' => 'file',
-                                                                          'content' => "LoadModule mpm_worker_module modules/mod_mpm_worker.so\n")
-      }
-    end
+    it { is_expected.not_to contain_apache__mod('event') }
+    it {
+      is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.load').with('ensure' => 'file',
+                                                                        'content' => "LoadModule mpm_worker_module modules/mod_mpm_worker.so\n")
+    }
   end
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
@@ -99,7 +52,7 @@ describe 'apache::mod::worker', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^<IfModule mpm_worker_module>$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+ServerLimit\s+25$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+StartServers\s+2$}) }
-      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxClients\s+150$}) }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxRequestWorkers\s+150$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MinSpareThreads\s+25$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxSpareThreads\s+75$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+ThreadsPerChild\s+25$}) }
@@ -126,7 +79,6 @@ describe 'apache::mod::worker', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^<IfModule mpm_worker_module>$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+ServerLimit\s+10$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+StartServers\s+11$}) }
-      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').without(content: %r{^\s+MaxClients}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxRequestWorkers\s+12$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MinSpareThreads\s+13$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxSpareThreads\s+14$}) }

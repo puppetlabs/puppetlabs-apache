@@ -55,12 +55,7 @@ describe 'apache::balancer', type: :define do
     }
   end
 
-  describe 'with lbmethod and with apache::mod::proxy_balancer::apache_version set' do
-    let :pre_condition do
-      'class{"apache::mod::proxy_balancer":
-          apache_version => "2.4"
-       }'
-    end
+  describe 'with lbmethod set' do
     let :params do
       {
         proxy_set: {

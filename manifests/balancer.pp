@@ -50,15 +50,13 @@ define apache::balancer (
 ) {
   include apache::mod::proxy_balancer
 
-  if versioncmp($apache::mod::proxy_balancer::apache_version, '2.4') >= 0 {
-    $lbmethod = $proxy_set['lbmethod'] ? {
-      undef   => 'byrequests',
-      default => $proxy_set['lbmethod'],
-    }
-    ensure_resource('apache::mod', "lbmethod_${lbmethod}", {
-        'loadfile_name' => "proxy_balancer_lbmethod_${lbmethod}.load"
-    })
+  $lbmethod = $proxy_set['lbmethod'] ? {
+    undef   => 'byrequests',
+    default => $proxy_set['lbmethod'],
   }
+  ensure_resource('apache::mod', "lbmethod_${lbmethod}", {
+      'loadfile_name' => "proxy_balancer_lbmethod_${lbmethod}.load"
+  })
 
   if $target {
     $_target = $target

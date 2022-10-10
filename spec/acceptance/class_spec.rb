@@ -10,20 +10,6 @@ describe 'apache class' do
       idempotent_apply(pp)
     end
 
-    describe 'apache_version fact' do
-      let(:result) do
-        apply_manifest('include apache', catch_failures: true)
-        version_check_pp = <<-MANIFEST
-        notice("apache_version = >${apache_version}<")
-        MANIFEST
-        apply_manifest(version_check_pp, catch_failures: true)
-      end
-
-      it {
-        expect(result.stdout).to match(%r{apache_version = >#{apache_hash['version']}.*<})
-      }
-    end
-
     describe package(apache_hash['package_name']) do
       it { is_expected.to be_installed }
     end

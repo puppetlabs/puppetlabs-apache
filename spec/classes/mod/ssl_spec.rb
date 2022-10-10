@@ -143,49 +143,13 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_file('_etc_pki_some_path_localhost.crt') }
     end
 
-    context 'with Apache version < 2.4 - ssl_compression with default value' do
-      let :params do
-        {
-          apache_version: '2.2',
-        }
-      end
-
+    context 'with default values' do
       it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression Off$}) }
+      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets (Off|On)$}) }
     end
-    context 'with Apache version < 2.4 - setting ssl_compression to true' do
+    context 'with ssl_compression set to true' do
       let :params do
         {
-          apache_version: '2.2',
-          ssl_compression: true,
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression On$}) }
-    end
-    context 'with Apache version < 2.4 - setting ssl_stapling to true' do
-      let :params do
-        {
-          apache_version: '2.2',
-          ssl_stapling: true,
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLUseStapling}) }
-    end
-
-    context 'with Apache version >= 2.4 - ssl_compression with default value' do
-      let :params do
-        {
-          apache_version: '2.4',
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression Off$}) }
-    end
-    context 'with Apache version >= 2.4' do
-      let :params do
-        {
-          apache_version: '2.4',
           ssl_compression: true,
         }
       end
@@ -193,19 +157,9 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLCompression On$}) }
     end
 
-    context 'with Apache version >= 2.4 - ssl_sessiontickets with default value' do
+    context 'with ssl_sessiontickets set to false' do
       let :params do
         {
-          apache_version: '2.4',
-        }
-      end
-
-      it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets (Off|On)$}) }
-    end
-    context 'with Apache version >= 2.4 - setting ssl_sessiontickets to false' do
-      let :params do
-        {
-          apache_version: '2.4',
           ssl_sessiontickets: false,
         }
       end
@@ -213,30 +167,27 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets Off$}) }
     end
 
-    context 'with Apache version >= 2.4 - setting ssl_stapling to true' do
+    context 'with ssl_stapling set to true' do
       let :params do
         {
-          apache_version: '2.4',
           ssl_stapling: true,
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLUseStapling On$}) }
     end
-    context 'with Apache version >= 2.4 - setting ssl_stapling_return_errors to true' do
+    context 'with ssl_stapling_return_errors set to true' do
       let :params do
         {
-          apache_version: '2.4',
           ssl_stapling_return_errors: true,
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLStaplingReturnResponderErrors On$}) }
     end
-    context 'with Apache version >= 2.4 - setting stapling_cache' do
+    context 'with stapling_cache' do
       let :params do
         {
-          apache_version: '2.4',
           stapling_cache: '/tmp/customstaplingcache(51200)',
         }
       end

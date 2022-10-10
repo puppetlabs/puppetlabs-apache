@@ -7,9 +7,5 @@
   ThreadsPerChild     <%= @threadsperchild %>
   MaxRequestsPerChild <%= @maxrequestsperchild %>
   ListenBacklog       <%= @listenbacklog %>
-  <%- if @maxrequestworkers -%>
-  MaxRequestWorkers      <%= @maxrequestworkers %>
-  <%- elsif @maxclients -%>
-  MaxClients             <%= @maxclients %>
-  <%- end -%>
+  MaxRequestWorkers   <%= @maxrequestworkers %>
 </IfModule>

@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# Apache >= 2.4
 def require_directives(requires)
   if requires == :undef
     "    Require ip 127.0.0.1 ::1\n"
@@ -66,10 +65,9 @@ describe 'apache::mod::status', type: :class do
         }
       end
 
-      context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
+      context "with custom parameters $extended_status => 'Off', $status_path => '/custom-status'" do
         let :params do
           {
-            allow_from: ['10.10.10.10', '11.11.11.11'],
             extended_status: 'Off',
             status_path: '/custom-status',
           }
@@ -77,27 +75,7 @@ describe 'apache::mod::status', type: :class do
 
         it { is_expected.to compile }
 
-        include_examples 'status_conf_spec_require', 'ip 10.10.10.10 11.11.11.11', 'Off', '/custom-status'
-      end
-
-      context "with valid parameter type $allow_from => ['10.10.10.10']" do
-        let :params do
-          { allow_from: ['10.10.10.10'] }
-        end
-
-        it 'expects to succeed array validation' do
-          is_expected.to compile
-        end
-      end
-
-      context "with invalid parameter type $allow_from => '10.10.10.10'" do
-        let :params do
-          { allow_from: '10.10.10.10' }
-        end
-
-        it 'expects to fail array validation' do
-          is_expected.to compile.and_raise_error(%r{allow_from})
-        end
+        include_examples 'status_conf_spec_require', 'ip 127.0.0.1 ::1', 'Off', '/custom-status'
       end
 
       # Only On or Off are valid options
