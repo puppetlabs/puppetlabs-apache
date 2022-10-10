@@ -28,14 +28,14 @@
 # @see https://github.com/GrahamDumpleton/mod_wsgi for additional documentation.
 # @note Unsupported platforms: SLES: all; RedHat: all; CentOS: all; OracleLinux: all; Scientific: all
 class apache::mod::wsgi (
-  Optional[String] $wsgi_restrict_embedded                = undef,
-  Optional[String] $wsgi_socket_prefix                    = $apache::params::wsgi_socket_prefix,
-  Optional[String] $wsgi_python_path                      = undef,
-  Optional[String] $wsgi_python_home                      = undef,
-  Optional[Variant[Integer,String]] $wsgi_python_optimize = undef,
-  Optional[String] $wsgi_application_group                = undef,
-  Optional[String] $package_name                          = undef,
-  Optional[String] $mod_path                              = undef,
+  Optional[String] $wsgi_restrict_embedded         = undef,
+  Optional[String] $wsgi_socket_prefix             = $apache::params::wsgi_socket_prefix,
+  Optional[Stdlib::Absolutepath] $wsgi_python_path = undef,
+  Optional[Stdlib::Absolutepath] $wsgi_python_home = undef,
+  Optional[Integer] $wsgi_python_optimize          = undef,
+  Optional[String] $wsgi_application_group         = undef,
+  Optional[String] $package_name                   = undef,
+  Optional[String] $mod_path                       = undef,
 ) inherits apache::params {
   include apache
   if ($package_name != undef and $mod_path == undef) or ($package_name == undef and $mod_path != undef) {

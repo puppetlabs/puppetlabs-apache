@@ -40,8 +40,8 @@
 #
 define apache::balancermember (
   String $balancer_cluster,
-  String $url = "http://${$facts['networking']['fqdn']}/",
-  Array $options = [],
+  Apache::ModProxyProtocol $url = "http://${$facts['networking']['fqdn']}/",
+  Array $options       = [],
 ) {
   concat::fragment { "BalancerMember ${name}":
     target  => "apache_balancer_${balancer_cluster}",

@@ -28,11 +28,11 @@ describe 'apache::mod::ldap', type: :class do
           ldap_trusted_global_cert_file: 'ca.pem',
           ldap_trusted_global_cert_type: 'CA_DER',
           ldap_trusted_mode: 'TLS',
-          ldap_shared_cache_size: '500000',
-          ldap_cache_entries: '1024',
-          ldap_cache_ttl: '600',
-          ldap_opcache_entries: '1024',
-          ldap_opcache_ttl: '600',
+          ldap_shared_cache_size: 500_000,
+          ldap_cache_entries: 1024,
+          ldap_cache_ttl: 600,
+          ldap_opcache_entries: 1024,
+          ldap_opcache_ttl: 600,
           ldap_path: '/custom-ldap-status',
         }
       end
@@ -55,7 +55,7 @@ describe 'apache::mod::ldap', type: :class do
   end # Debian
 
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_class('apache::mod::ldap') }

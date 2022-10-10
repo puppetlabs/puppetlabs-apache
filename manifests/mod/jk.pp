@@ -180,8 +180,8 @@
 #   Puppet file:
 #   ```
 #   $workers_file_content = {
-#     worker_lists    => ['status', 'some_name,other_name'],
-#     worker_maintain => '60',
+#     worker_lists    => ['status', 'some_name, other_name'],
+#     worker_maintain => 60,
 #     some_name       => {
 #       comment          => 'Optional comment',
 #       type             => 'ajp13',
@@ -271,13 +271,13 @@
 #
 class apache::mod::jk (
   # Binding to mod_jk
-  Optional[String] $ip                          = undef,
-  Integer          $port                        = 80,
+  Optional[Stdlib::IP::Address] $ip             = undef,
+  Stdlib::Port     $port                        = 80,
   Boolean          $add_listen                  = true,
   # Conf file content
   Optional[String] $workers_file                = undef,
   Hash $worker_property                         = {},
-  Optional[String] $logroot                     = undef,
+  Optional[Stdlib::Absolutepath] $logroot       = undef,
   String $shm_file                              = 'jk-runtime-status',
   Optional[String] $shm_size                    = undef,
   Optional[String] $mount_file                  = undef,

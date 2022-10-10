@@ -28,7 +28,7 @@ describe 'apache::mod::dav_svn', type: :class do
       end
     end
     context 'on a RedHat OS' do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('dav_svn') }

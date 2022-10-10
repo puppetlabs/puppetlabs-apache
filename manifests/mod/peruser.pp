@@ -22,14 +22,14 @@
 # @param keepalive
 # 
 class apache::mod::peruser (
-  Variant[Integer,String] $minspareprocessors   = '2',
-  Variant[Integer,String] $minprocessors        = '2',
-  Variant[Integer,String] $maxprocessors        = '10',
-  Variant[Integer,String] $maxclients           = '150',
-  Variant[Integer,String] $maxrequestsperchild  = '1000',
-  Variant[Integer,String] $idletimeout          = '120',
-  Variant[Integer,String] $expiretimeout        = '120',
-  String $keepalive                             = 'Off',
+  Integer $minspareprocessors  = 2,
+  Integer $minprocessors       = 2,
+  Integer $maxprocessors       = 10,
+  Integer $maxclients          = 150,
+  Integer $maxrequestsperchild = 1000,
+  Integer $idletimeout         = 120,
+  Integer $expiretimeout       = 120,
+  Enum['On', 'Off'] $keepalive = 'Off',
 ) {
   include apache
   case $facts['os']['family'] {

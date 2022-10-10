@@ -75,6 +75,13 @@
 # @param notice_anomaly_score
 #   Sets the Anomaly Score for rules assigned with a notice severity.
 # 
+# @param paranoia_level
+#   Sets the paranoia level in the OWASP ModSecurity Core Rule Set.
+# 
+# @param executing_paranoia_level
+#   Sets the executing paranoia level in the OWASP ModSecurity Core Rule Set.
+#   The default is equal to, and cannot be lower than, $paranoia_level.
+# 
 # @param secrequestmaxnumargs
 #   Sets the maximum number of arguments in the request.
 # 
@@ -88,24 +95,47 @@
 # @param secrequestbodyinmemorylimit
 #   Configures the maximum request body size that ModSecurity will store in memory.
 # 
+# @param secrequestbodyaccess
+#   Toggle SecRequestBodyAccess On or Off
+# 
+# @param secresponsebodyaccess
+#   Toggle SecResponseBodyAccess On or Off
+# 
 # @param manage_security_crs
 #   Toggles whether to manage ModSecurity Core Rule Set 
 #
+# @param enable_dos_protection
+#   Toggles the optional OWASP ModSecurity Core Rule Set DOS protection rule
+#   (rule id 900700)
+#
+# @param dos_burst_time_slice
+#   Configures time in which a burst is measured for the OWASP ModSecurity Core Rule Set DOS protection rule
+#   (rule id 900700)
+#
+# @param dos_counter_threshold
+#   Configures the amount of requests that can be made within dos_burst_time_slice before it is considered a burst in
+#   the OWASP ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+#
+# @param dos_block_timeout
+#   Configures how long the client should be blocked when the dos_counter_threshold is exceeded in the OWASP
+#   ModSecurity Core Rule Set DOS protection rule (rule id 900700)
+#
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
+# @see https://coreruleset.org/docs/ for addional documentation
 #
 class apache::mod::security (
-  String $logroot                                       = $apache::params::logroot,
+  Stdlib::Absolutepath $logroot                         = $apache::params::logroot,
   Integer $version                                      = $apache::params::modsec_version,
   Optional[String] $crs_package                         = $apache::params::modsec_crs_package,
   Array[String] $activated_rules                        = $apache::params::modsec_default_rules,
   Boolean $custom_rules                                 = $apache::params::modsec_custom_rules,
   Optional[Array[String]] $custom_rules_set             = $apache::params::modsec_custom_rules_set,
-  String $modsec_dir                                    = $apache::params::modsec_dir,
+  Stdlib::Absolutepath $modsec_dir                      = $apache::params::modsec_dir,
   String $modsec_secruleengine                          = $apache::params::modsec_secruleengine,
   String $audit_log_relevant_status                     = '^(?:5|4(?!04))',
   String $audit_log_parts                               = $apache::params::modsec_audit_log_parts,
   String $audit_log_type                                = $apache::params::modsec_audit_log_type,
-  Optional[String] $audit_log_storage_dir               = undef,
+  Optional[Stdlib::Absolutepath] $audit_log_storage_dir = undef,
   Integer $secpcrematchlimit                            = $apache::params::secpcrematchlimit,
   Integer $secpcrematchlimitrecursion                   = $apache::params::secpcrematchlimitrecursion,
   String $allowed_methods                               = 'GET HEAD POST OPTIONS',
@@ -113,17 +143,25 @@ class apache::mod::security (
   String $restricted_extensions                         = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
   String $restricted_headers                            = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
   String $secdefaultaction                              = 'deny',
-  Variant[String,Integer] $inbound_anomaly_threshold    = '5',
-  Variant[String,Integer] $outbound_anomaly_threshold   = '4',
-  Variant[String,Integer] $critical_anomaly_score       = '5',
-  Variant[String,Integer] $error_anomaly_score          = '4',
-  Variant[String,Integer] $warning_anomaly_score        = '3',
-  Variant[String,Integer] $notice_anomaly_score         = '2',
-  Variant[String,Integer] $secrequestmaxnumargs         = '255',
-  Variant[String,Integer] $secrequestbodylimit          = '13107200',
-  Variant[String,Integer] $secrequestbodynofileslimit   = '131072',
-  Variant[String,Integer] $secrequestbodyinmemorylimit  = '131072',
+  Integer $inbound_anomaly_threshold                    = 5,
+  Integer $outbound_anomaly_threshold                   = 4,
+  Integer $critical_anomaly_score                       = 5,
+  Integer $error_anomaly_score                          = 4,
+  Integer $warning_anomaly_score                        = 3,
+  Integer $notice_anomaly_score                         = 2,
+  Integer $secrequestmaxnumargs                         = 255,
+  Integer $secrequestbodylimit                          = 13107200,
+  Integer $secrequestbodynofileslimit                   = 131072,
+  Integer $secrequestbodyinmemorylimit                  = 131072,
+  Integer[1,4] $paranoia_level                          = 1,
+  Integer[1,4] $executing_paranoia_level                = $paranoia_level,
+  Enum['On', 'Off'] $secrequestbodyaccess               = 'On',
+  Enum['On', 'Off'] $secresponsebodyaccess              = 'Off',
   Boolean $manage_security_crs                          = true,
+  Boolean $enable_dos_protection                        = true,
+  Integer[1, default] $dos_burst_time_slice             = 60,
+  Integer[1, default] $dos_counter_threshold            = 100,
+  Integer[1, default] $dos_block_timeout                = 600,
 ) inherits apache::params {
   include apache
 
@@ -138,6 +176,10 @@ class apache::mod::security (
 
   if ($facts['os']['family'] == 'Suse' and versioncmp($facts['os']['release']['major'], '11') < 0) {
     fail('SLES 10 is not currently supported.')
+  }
+
+  if ($executing_paranoia_level < $paranoia_level) {
+    fail('Executing paranoia level cannot be lower than paranoia level')
   }
 
   case $version {
@@ -184,6 +226,8 @@ class apache::mod::security (
   # - secrequestbodylimit
   # - secrequestbodynofileslimit
   # - secrequestbodyinmemorylimit
+  # - secrequestbodyaccess
+  # - secresponsebodyaccess
   file { 'security.conf':
     ensure  => file,
     content => template('apache/mod/security.conf.erb'),
@@ -248,11 +292,17 @@ class apache::mod::security (
     # - $notice_anomaly_score
     # - $inbound_anomaly_threshold
     # - $outbound_anomaly_threshold
+    # - $paranoia_level
+    # - $executing_paranoia_level
     # - $allowed_methods
     # - $content_types
     # - $restricted_extensions
     # - $restricted_headers
     # - $secrequestmaxnumargs
+    # - $enable_dos_protection
+    # - $dos_burst_time_slice
+    # - $dos_counter_threshold
+    # - $dos_block_timeout
     file { "${modsec_dir}/security_crs.conf":
       ensure  => file,
       content => template('apache/mod/security_crs.conf.erb'),

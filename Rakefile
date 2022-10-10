@@ -43,6 +43,7 @@ end
 
 PuppetLint.configuration.send('disable_relative')
 PuppetLint.configuration.send('disable_anchor_resource')
+PuppetLint.configuration.send('disable_140chars')
 
 
 if Bundler.rubygems.find_name('github_changelog_generator').any?

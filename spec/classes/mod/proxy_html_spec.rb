@@ -33,7 +33,7 @@ describe 'apache::mod::proxy_html', type: :class do
   end
 
   context 'on a RedHat OS', :compile do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: nil) }

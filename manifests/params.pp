@@ -103,7 +103,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = "${httpd_root}/var/www/html"
@@ -198,7 +197,7 @@ class apache::params inherits apache::version {
     $passenger_ruby       = undef
     $passenger_default_ruby = undef
     $php_version = $facts['os']['release']['major'] ? {
-      '9'     => '8', # RedHat9
+      '9'     => undef, # RedHat 9 doesn't ship mod_php
       '8'     => '7', # RedHat8
       default => '5', # RedHat5, RedHat6, RedHat7
     }
@@ -214,11 +213,6 @@ class apache::params inherits apache::version {
         default => 'mod_ldap',
       },
       'authnz_pam'            => 'mod_authnz_pam',
-      'fastcgi'               => $facts['os']['release']['major'] ? {
-        '5'     => 'mod_fastcgi',
-        '6'     => 'mod_fastcgi',
-        default => undef,
-      },
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
       'intercept_form_submit' => 'mod_intercept_form_submit',
@@ -272,7 +266,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef
     $mime_support_package = 'mailcap'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
@@ -352,13 +345,16 @@ class apache::params inherits apache::version {
     $default_ssl_cert    = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
-    if ($facts['os']['name'] == 'Ubuntu') or ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0) {
-      $php_version = $facts['os']['release']['major'] ? {
-        '9'     => '7.0', # Debian Stretch
-        '10'    => '7.3', # Debian Buster
-        '20.04' => '7.4', # Ubuntu Foccal Fossal
-        default => '7.2', # Ubuntu Bionic, Cosmic and Disco
-      }
+    $php_version = $facts['os']['release']['major'] ? {
+      '9'     => '7.0', # Debian Stretch
+      '10'    => '7.3', # Debian Buster
+      '11'    => '7.4', # Debian Bullseye
+      '20.04' => '7.4', # Ubuntu Foccal Fossal
+      '22.04' => '8.1', # Ubuntu Jammy
+      default => '7.2', # Ubuntu Bionic, Cosmic and Disco
+    }
+    if (($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '22.04') < 0) or
+    ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0)) {
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
@@ -368,7 +364,6 @@ class apache::params inherits apache::version {
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
         'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
@@ -387,25 +382,19 @@ class apache::params inherits apache::version {
         'xsendfile'             => 'libapache2-mod-xsendfile',
       }
     } else {
-      $php_version = $facts['os']['release']['major'] ? {
-        default => '7.4', # Debian Bullseye
-      }
       $mod_packages = {
         'apreq2'                => 'libapache2-mod-apreq2',
         'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
         'auth_openidc'          => 'libapache2-mod-auth-openidc',
         'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
         'auth_mellon'           => 'libapache2-mod-auth-mellon',
         'authnz_pam'            => 'libapache2-mod-authnz-pam',
         'dav_svn'               => 'libapache2-mod-svn',
-        'fastcgi'               => 'libapache2-mod-fastcgi',
         'fcgid'                 => 'libapache2-mod-fcgid',
         'geoip'                 => 'libapache2-mod-geoip',
         'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
         'jk'                    => 'libapache2-mod-jk',
         'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
         'pagespeed'             => 'mod-pagespeed-stable',
         'passenger'             => 'libapache2-mod-passenger',
         'perl'                  => 'libapache2-mod-perl2',
@@ -435,7 +424,6 @@ class apache::params inherits apache::version {
     $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'mime-support'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/var/www/html'
@@ -546,7 +534,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'misc/mime-support'
     $mime_types_config    = '/usr/local/etc/mime.types'
     $wsgi_socket_prefix   = undef
@@ -613,7 +600,6 @@ class apache::params inherits apache::version {
     $keepalive            = 'On'
     $keepalive_timeout    = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path     = undef # TODO: revisit
     $mime_support_package = 'app-misc/mime-types'
     $mime_types_config    = '/etc/mime.types'
     $wsgi_socket_prefix   = undef
@@ -689,7 +675,6 @@ class apache::params inherits apache::version {
     $keepalive              = 'On'
     $keepalive_timeout      = 15
     $max_keepalive_requests = 100
-    $fastcgi_lib_path       = '/var/lib/apache2/fastcgi'
     $mime_support_package = 'aaa_base'
     $mime_types_config    = '/etc/mime.types'
     $docroot              = '/srv/www'
@@ -728,13 +713,13 @@ class apache::params inherits apache::version {
   }
 
   if $facts['os']['name'] == 'SLES' {
-    $verify_command = '/usr/sbin/apache2ctl -t'
+    $verify_command = ['/usr/sbin/apache2ctl', '-t']
   } elsif $facts['os']['name'] == 'FreeBSD' {
-    $verify_command = '/usr/local/sbin/apachectl -t'
+    $verify_command = ['/usr/local/sbin/apachectl', '-t']
   } elsif ($apache::version::scl_httpd_version) {
-    $verify_command = "/opt/rh/${_scl_httpd_name}/root/usr/sbin/apachectl -t"
+    $verify_command = ["/opt/rh/${_scl_httpd_name}/root/usr/sbin/apachectl", '-t']
   } else {
-    $verify_command = '/usr/sbin/apachectl -t'
+    $verify_command = ['/usr/sbin/apachectl', '-t']
   }
 
   if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') >= 0 {

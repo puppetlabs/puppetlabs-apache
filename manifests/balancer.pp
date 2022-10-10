@@ -46,7 +46,7 @@ define apache::balancer (
   Hash $proxy_set = {},
   Boolean $collect_exported = true,
   Optional[String] $target = undef,
-  Array $options = [],
+  Array[Pattern[/=/]] $options = [],
 ) {
   include apache::mod::proxy_balancer
 
@@ -73,8 +73,8 @@ define apache::balancer (
   }
 
   concat { "apache_balancer_${name}":
-    owner  => '0',
-    group  => '0',
+    owner  => 0,
+    group  => 0,
     path   => $_target,
     mode   => $apache::file_mode,
     notify => Class['Apache::Service'],

@@ -16,10 +16,10 @@
 # @see https://pagure.io/mod_nss for additional documentation.
 #
 class apache::mod::nss (
-  String $transfer_log          = "${apache::params::logroot}/access.log",
-  String $error_log             = "${apache::params::logroot}/error.log",
-  Optional[String] $passwd_file = undef,
-  Integer $port                 = 8443,
+  Stdlib::Absolutepath $transfer_log = "${apache::params::logroot}/access.log",
+  Stdlib::Absolutepath $error_log    = "${apache::params::logroot}/error.log",
+  Optional[String] $passwd_file      = undef,
+  Stdlib::Port $port                 = 8443,
 ) {
   include apache
   include apache::mod::mime

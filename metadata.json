@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apache",
-  "version": "7.0.0",
+  "version": "8.2.1",
   "author": "puppetlabs",
   "summary": "Installs, configures, and manages Apache virtual hosts, web services, and modules.",
   "license": "Apache-2.0",
@@ -21,7 +21,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8",
         "9"
@@ -37,21 +36,18 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     },
     {
       "operatingsystem": "Scientific",
       "operatingsystemrelease": [
-        "6",
         "7"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "9",
         "10",
         "11"
       ]
@@ -67,7 +63,8 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "18.04",
-        "20.04"
+        "20.04",
+        "22.04"
       ]
     },
     {
@@ -90,7 +87,7 @@
     }
   ],
   "description": "Module for Apache configuration",
-  "pdk-version": "2.4.0",
+  "pdk-version": "2.5.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates.git#main",
-  "template-ref": "2.5.0-0-g369d483"
+  "template-ref": "tags/2.6.0-0-gd0490b9"
 }

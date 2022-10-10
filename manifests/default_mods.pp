@@ -3,10 +3,10 @@
 #
 # @api private
 class apache::default_mods (
-  Boolean $all                                  = true,
-  Optional[Variant[Array[String],String]] $mods = undef,
-  String $apache_version                        = $apache::apache_version,
-  Boolean $use_systemd                          = $apache::use_systemd,
+  Boolean $all                                   = true,
+  Optional[Variant[Array[String], String]] $mods = undef,
+  String $apache_version                         = $apache::apache_version,
+  Boolean $use_systemd                           = $apache::use_systemd,
 ) {
   # These are modules required to run the default configuration.
   # They are not configurable at this time, so we just include
@@ -139,7 +139,7 @@ class apache::default_mods (
     include apache::mod::mime
     include apache::mod::negotiation
     include apache::mod::setenvif
-    ::apache::mod { 'auth_basic': }
+    include apache::mod::auth_basic
 
     if versioncmp($apache_version, '2.4') >= 0 {
       # filter is needed by mod_deflate

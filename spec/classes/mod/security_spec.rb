@@ -79,6 +79,8 @@ describe 'apache::mod::security', type: :class do
                 audit_log_type: 'Concurrent',
                 audit_log_storage_dir: '/var/log/httpd/audit',
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
+                secrequestbodyaccess: 'Off',
+                secresponsebodyaccess: 'On',
               }
             end
 
@@ -86,6 +88,8 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogType Concurrent$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
             it {
               is_expected.to contain_file('bar.conf').with(
@@ -129,6 +133,51 @@ describe 'apache::mod::security', type: :class do
               )
             }
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
+          end
+
+          describe 'with CRS parameters' do
+            let :params do
+              {
+                paranoia_level: 1,
+                executing_paranoia_level: 2,
+                enable_dos_protection: true,
+                dos_burst_time_slice: 30,
+                dos_counter_threshold: 120,
+                dos_block_timeout: 300,
+              }
+            end
+
+            it {
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=2"$}
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900700,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:'tx.dos_burst_time_slice=30',\\\n
+                  \s+setvar:'tx.dos_counter_threshold=120',\\\n
+                  \s+setvar:'tx.dos_block_timeout=300'"$
+              }x
+            }
+          end
+
+          describe 'with invalid CRS parameters' do
+            let :params do
+              {
+                paranoia_level: 2,
+                executing_paranoia_level: 1,
+              }
+            end
+
+            it {
+              is_expected.to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
+            }
           end
         end
       when 'Debian'
@@ -198,6 +247,8 @@ describe 'apache::mod::security', type: :class do
                 audit_log_type: 'Concurrent',
                 audit_log_storage_dir: '/var/log/httpd/audit',
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
+                secrequestbodyaccess: 'Off',
+                secresponsebodyaccess: 'On',
               }
             end
 
@@ -206,6 +257,8 @@ describe 'apache::mod::security', type: :class do
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
               it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
               it {
                 is_expected.to contain_file('bar.conf').with(
@@ -257,6 +310,51 @@ describe 'apache::mod::security', type: :class do
               is_expected.to contain_file('security.conf').with(
                 path: '/etc/apache2/mods-available/security2.conf',
               )
+            }
+          end
+
+          describe 'with CRS parameters' do
+            let :params do
+              {
+                paranoia_level: 1,
+                executing_paranoia_level: 1,
+                enable_dos_protection: true,
+                dos_burst_time_slice: 30,
+                dos_counter_threshold: 120,
+                dos_block_timeout: 300,
+              }
+            end
+
+            it {
+              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+                %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
+              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+                %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=1"$}
+              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900700,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:'tx.dos_burst_time_slice=30',\\\n
+                  \s+setvar:'tx.dos_counter_threshold=120',\\\n
+                  \s+setvar:'tx.dos_block_timeout=300'"$
+              }x
+            }
+          end
+
+          describe 'with invalid CRS parameters' do
+            let :params do
+              {
+                paranoia_level: 2,
+                executing_paranoia_level: 1,
+              }
+            end
+
+            it {
+              is_expected.to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
             }
           end
         end

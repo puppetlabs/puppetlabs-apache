@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'apache::mod::dir', type: :class do
-  ['Debian 11', 'RedHat 6', 'FreeBSD 9', 'Gentoo'].each do |os|
+  ['Debian 11', 'RedHat 8', 'FreeBSD 9', 'Gentoo'].each do |os|
     context "default configuration with parameters on #{os}" do
       include_examples os
 

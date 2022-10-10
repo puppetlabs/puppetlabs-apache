@@ -15,7 +15,7 @@ describe 'apache::mod::intercept_form_submit', type: :class do
     end # Debian
 
     context 'on a RedHat OS' do
-      include_examples 'RedHat 6'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_intercept_form_submit') }

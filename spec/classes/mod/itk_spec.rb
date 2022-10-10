@@ -70,11 +70,11 @@ describe 'apache::mod::itk', type: :class do
   end
 
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }
-    it { is_expected.to contain_file('/etc/httpd/conf.d/itk.conf').with_ensure('file') }
+    it { is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.conf').with_ensure('file') }
     it { is_expected.to contain_package('httpd-itk') }
 
     context 'with Apache version < 2.4' do
@@ -111,7 +111,7 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        is_expected.to contain_file('/etc/httpd/conf.d/itk.load').with('ensure' => 'file',
+        is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
                                                                        'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
       }
     end
@@ -127,7 +127,7 @@ describe 'apache::mod::itk', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/httpd/conf.d/itk.conf').with_content(%r{EnableCapabilities  Off}) }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.conf').with_content(%r{EnableCapabilities  Off}) }
     end
   end
   context 'on a FreeBSD OS' do

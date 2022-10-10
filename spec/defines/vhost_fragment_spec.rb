@@ -15,7 +15,7 @@ describe 'apache::vhost::fragment' do
           {
             vhost: 'default',
             port: 80,
-            priority: '15',
+            priority: 15,
           }
         end
 
@@ -74,13 +74,13 @@ describe 'apache::vhost::fragment' do
         end
 
         context 'with priority => 42' do
-          let(:params) { super().merge(priority: '42') }
+          let(:params) { super().merge(priority: 42) }
           let(:pre_condition) do
             <<-PUPPET
             include apache
             apache::vhost { 'custom':
               docroot  => '/path/to/docroot',
-              priority => '42',
+              priority => 42,
             }
             PUPPET
           end

@@ -93,8 +93,8 @@
 # - In Apache, you can use ErrorDocument to show a friendly error page or
 #   perform a redirect: https://httpd.apache.org/docs/2.4/custom-error.html
 #
-SecDefaultAction "phase:1,log,auditlog,pass"
-SecDefaultAction "phase:2,log,auditlog,pass"
+# SecDefaultAction "phase:1,log,auditlog,pass"
+# SecDefaultAction "phase:2,log,auditlog,pass"
 
 # Example: Anomaly Scoring mode, log only to ModSecurity audit log
 # - By default, offending requests are blocked with an error 403 response.
@@ -175,13 +175,13 @@ SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
 #
 # Uncomment this rule to change the default:
 #
-#SecAction \
-#  "id:900000,\
-#   phase:1,\
-#   nolog,\
-#   pass,\
-#   t:none,\
-#   setvar:tx.paranoia_level=1"
+SecAction \
+  "id:900000,\
+   phase:1,\
+   nolog,\
+   pass,\
+   t:none,\
+   setvar:tx.paranoia_level=<%= @paranoia_level -%>"
 
 
 # It is possible to execute rules from a higher paranoia level but not include
@@ -201,13 +201,13 @@ SecDefaultAction "phase:2,<%= @_secdefaultaction -%>"
 # level results in a performance impact that is equally high as setting
 # tx.paranoia_level to said level.
 #
-#SecAction \
-#  "id:900001,\
-#   phase:1,\
-#   nolog,\
-#   pass,\
-#   t:none,\
-#   setvar:tx.executing_paranoia_level=1"
+SecAction \
+  "id:900001,\
+   phase:1,\
+   nolog,\
+   pass,\
+   t:none,\
+   setvar:tx.executing_paranoia_level=<%= @executing_paranoia_level -%>"
 
 
 #
@@ -714,16 +714,17 @@ SecAction \
 #
 # Uncomment this rule to use this feature:
 #
+<% if @enable_dos_protection -%>
 SecAction \
  "id:900700,\
   phase:1,\
   nolog,\
   pass,\
   t:none,\
-  setvar:'tx.dos_burst_time_slice=60',\
-  setvar:'tx.dos_counter_threshold=100',\
-  setvar:'tx.dos_block_timeout=600'"
-
+  setvar:'tx.dos_burst_time_slice=<%= @dos_burst_time_slice %>',\
+  setvar:'tx.dos_counter_threshold=<%= @dos_counter_threshold %>',\
+  setvar:'tx.dos_block_timeout=<%= @dos_block_timeout %>'"
+<% end -%>
 
 #
 # -- [[ Check UTF-8 encoding ]] ------------------------------------------------

@@ -90,8 +90,8 @@ describe 'apache::mod::jk', type: :class do
     end
   end
 
-  context 'RHEL 6' do
-    include_examples 'RedHat 6'
+  context 'RHEL 8' do
+    include_examples 'RedHat 8'
     let(:pre_condition) do
       'include apache'
     end
@@ -107,7 +107,7 @@ describe 'apache::mod::jk', type: :class do
       context 'and default parameters' do
         let(:mod_dir) { mod_dir }
 
-        mod_dir = '/etc/httpd/conf.d'
+        mod_dir = '/etc/httpd/conf.modules.d'
 
         it_behaves_like 'minimal resources', mod_dir
         it_behaves_like 'specific workers_file', mod_dir

@@ -43,16 +43,16 @@
 # @see https://httpd.apache.org/docs/current/mod/worker.html for additional documentation.
 #
 class apache::mod::worker (
-  Variant[Integer,String] $startservers        = '2',
-  Variant[Integer,String] $maxclients          = '150',
-  Variant[Integer,String] $minsparethreads     = '25',
-  Variant[Integer,String] $maxsparethreads     = '75',
-  Variant[Integer,String] $threadsperchild     = '25',
-  Variant[Integer,String] $maxrequestsperchild = '0',
-  Variant[Integer,String] $serverlimit         = '25',
-  Variant[Integer,String] $threadlimit         = '64',
-  Variant[Integer,String] $listenbacklog       = '511',
-  Optional[String] $apache_version             = undef,
+  Integer $startservers            = 2,
+  Integer $maxclients              = 150,
+  Integer $minsparethreads         = 25,
+  Integer $maxsparethreads         = 75,
+  Integer $threadsperchild         = 25,
+  Integer $maxrequestsperchild     = 0,
+  Integer $serverlimit             = 25,
+  Integer $threadlimit             = 64,
+  Integer $listenbacklog           = 511,
+  Optional[String] $apache_version = undef,
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)

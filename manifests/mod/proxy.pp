@@ -25,13 +25,13 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_proxy.html for additional documentation.
 #
 class apache::mod::proxy (
-  String $proxy_requests               = 'Off',
-  Optional[String] $allow_from         = undef,
-  Optional[String] $apache_version     = undef,
-  Optional[String] $package_name       = undef,
-  String $proxy_via                    = 'On',
-  Optional[String] $proxy_timeout      = undef,
-  Optional[String] $proxy_iobuffersize = undef,
+  String $proxy_requests                              = 'Off',
+  Optional[String] $allow_from                        = undef,
+  Optional[String] $apache_version                    = undef,
+  Optional[String] $package_name                      = undef,
+  String $proxy_via                                   = 'On',
+  Optional[Variant[Integer[0],String]] $proxy_timeout = undef,
+  Optional[String] $proxy_iobuffersize                = undef,
 ) {
   include apache
   $_proxy_timeout = $apache::timeout

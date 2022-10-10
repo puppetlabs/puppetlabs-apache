@@ -16,19 +16,9 @@ describe 'apache::mod::wsgi', type: :class do
     it { is_expected.to contain_package('libapache2-mod-wsgi-py3') }
   end
   context 'on a RedHat OS' do
-    include_examples 'RedHat 6'
-
-    it { is_expected.to contain_class('apache::params') }
-    it {
-      is_expected.to contain_class('apache::mod::wsgi').with(
-        'wsgi_socket_prefix' => '/var/run/wsgi',
-      )
-    }
-    it { is_expected.to contain_package('mod_wsgi') }
+    include_examples 'RedHat 8'
 
     context 'on RHEL8' do
-      include_examples 'RedHat 8'
-
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module modules/mod_wsgi_python3.so}) }
       it { is_expected.to contain_package('python3-mod_wsgi') }
