@@ -37,7 +37,7 @@
     <%- if ! directory['geoip_enable'].nil? -%>
     GeoIPEnable <%= scope.call_function('apache::bool2httpd', [directory['geoip_enable']]) %>
     <%- end -%>
-    <%- if directory['options'] -%>
+    <%- if directory['options'] && Array(directory['options']).any? -%>
     Options <%= Array(directory['options']).join(' ') %>
     <%- end -%>
     <%- if provider == 'Directory' -%>
