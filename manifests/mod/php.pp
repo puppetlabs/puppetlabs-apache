@@ -93,7 +93,7 @@ class apache::mod::php (
   $_php_version_no_dot = regsubst($php_version, '\.', '')
   if $apache::version::scl_httpd_version {
     $_lib = "librh-php${_php_version_no_dot}-php${_php_major}.so"
-  } elsif ($facts['os']['family'] == 'RedHat') and ($_php_major == 8) {
+  } elsif ($facts['os']['family'] == 'RedHat') and (versioncmp($php_version, '8') >= 0) {
     # RedHat + PHP 8 drop the major version in apache module name.
     $_lib = "${libphp_prefix}.so"
   } else {
