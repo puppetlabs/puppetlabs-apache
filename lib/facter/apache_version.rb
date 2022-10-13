@@ -5,17 +5,17 @@ Facter.add(:apache_version) do
   setcode do
     apache_version = nil
 
-    if Facter::Util::Resolution.which('httpd')
-      apache_version = Facter::Util::Resolution.exec('httpd -V 2>&1')
+    if Facter::Core::Execution.which('httpd')
+      apache_version = Facter::Core::Execution.execute('httpd -V 2>&1')
       Facter.debug "Matching httpd '#{apache_version}'"
-    elsif Facter::Util::Resolution.which('apache2')
-      apache_version = Facter::Util::Resolution.exec('apache2 -V 2>&1')
+    elsif Facter::Core::Execution.which('apache2')
+      apache_version = Facter::Core::Execution.execute('apache2 -V 2>&1')
       Facter.debug "Matching apache2 '#{apache_version}'"
-    elsif Facter::Util::Resolution.which('apachectl')
-      apache_version = Facter::Util::Resolution.exec('apachectl -v 2>&1')
+    elsif Facter::Core::Execution.which('apachectl')
+      apache_version = Facter::Core::Execution.execute('apachectl -v 2>&1')
       Facter.debug "Matching apachectl '#{apache_version}'"
-    elsif Facter::Util::Resolution.which('apache2ctl')
-      apache_version = Facter::Util::Resolution.exec('apache2ctl -v 2>&1')
+    elsif Facter::Core::Execution.which('apache2ctl')
+      apache_version = Facter::Core::Execution.execute('apache2ctl -v 2>&1')
       Facter.debug "Matching apache2ctl '#{apache_version}'"
     end
 
