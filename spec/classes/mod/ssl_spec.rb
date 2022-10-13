@@ -20,18 +20,19 @@ describe 'apache::mod::ssl', type: :class do
       it {
         is_expected.to contain_file('ssl.conf')
           .with_path('/etc/httpd/conf.modules.d/ssl.conf')
-          .with_content(%r{SSLProtocol all})
-          .without_content(%r{SSLProxyCipherSuite})
+          .without_content(%r{SSLProtocol})
+          .with_content(%r{^  SSLCipherSuite PROFILE=SYSTEM$})
+          .with_content(%r{^  SSLProxyCipherSuite PROFILE=SYSTEM$})
       }
 
       context 'with ssl_proxy_cipher_suite' do
         let(:params) do
           {
-            ssl_proxy_cipher_suite: 'PROFILE=system',
+            ssl_proxy_cipher_suite: 'HIGH',
           }
         end
 
-        it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite PROFILE=system}) }
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite HIGH}) }
       end
 
       context 'with empty ssl_protocol' do
