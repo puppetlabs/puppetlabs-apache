@@ -727,6 +727,10 @@ class apache::params inherits apache::version {
     $ssl_protocol = []
     $ssl_cipher = 'PROFILE=SYSTEM'
     $ssl_proxy_cipher_suite = 'PROFILE=SYSTEM'
+  } elsif $facts['os']['family'] == 'Debian' {
+    $ssl_protocol = ['all', '-SSLv3']
+    $ssl_cipher = 'HIGH:!aNULL'
+    $ssl_proxy_cipher_suite = undef
   } else {
     $ssl_protocol = ['all', '-SSLv2', '-SSLv3']
     $ssl_cipher = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'

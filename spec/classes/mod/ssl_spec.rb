@@ -69,7 +69,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.not_to contain_package('libapache2-mod-ssl') }
-    it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv3}) }
   end
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
