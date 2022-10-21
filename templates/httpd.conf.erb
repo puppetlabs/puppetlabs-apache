@@ -5,6 +5,9 @@ TraceEnable <%= scope.call_function('apache::bool2httpd', [@trace_enable]) %>
 
 ServerName "<%= @servername %>"
 ServerRoot "<%= @server_root %>"
+<%- if @serveradmin -%>
+ServerAdmin <%= @serveradmin %>
+<%- end -%>
 PidFile <%= @pidfile %>
 Timeout <%= @timeout %>
 KeepAlive <%= @keepalive %>

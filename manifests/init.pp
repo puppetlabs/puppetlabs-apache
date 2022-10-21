@@ -489,7 +489,7 @@ class apache (
   Boolean $purge_configs                                                     = true,
   Optional[Boolean] $purge_vhost_dir                                         = undef,
   Boolean $purge_vdir                                                        = false,
-  String $serveradmin                                                        = 'root@localhost',
+  Optional[String[1]] $serveradmin                                           = undef,
   Enum['On', 'Off', 'on', 'off'] $sendfile                                   = 'On',
   Optional[Enum['On', 'Off', 'on', 'off']] $ldap_verify_server_cert          = undef,
   Optional[String] $ldap_trusted_mode                                        = undef,
