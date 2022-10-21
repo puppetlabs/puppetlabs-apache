@@ -44,6 +44,9 @@
 <% if not @ssl_proxy_protocol.empty? -%>
   SSLProxyProtocol <%= @ssl_proxy_protocol.compact.join(' ') %>
 <% end -%>
+<% if @ssl_proxy_cipher_suite -%>
+  SSLProxyCipherSuite <%= @ssl_proxy_cipher_suite %>
+<% end -%>
 <% if @ssl_options -%>
   SSLOptions <%= @ssl_options.compact.join(' ') %>
 <% end -%>

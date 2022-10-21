@@ -40,6 +40,9 @@
 # @param ssl_proxy_protocol
 #   Configure usable SSL protocol flavors for proxy usage.
 #
+# @param ssl_proxy_cipher_suite
+#   Configure usable SSL ciphers for proxy usage. Equivalent to ssl_cipher but for proxy connections.
+#
 # @param ssl_pass_phrase_dialog
 #   Type of pass phrase dialog for encrypted private keys.
 #
@@ -99,6 +102,7 @@ class apache::mod::ssl (
   Variant[Boolean, Enum['on', 'off']] $ssl_honorcipherorder = true,
   Array[String] $ssl_protocol                               = $apache::params::ssl_protocol,
   Array $ssl_proxy_protocol                                 = [],
+  Optional[String[1]] $ssl_proxy_cipher_suite               = undef,
   String $ssl_pass_phrase_dialog                            = 'builtin',
   Integer $ssl_random_seed_bytes                            = 512,
   String $ssl_sessioncache                                  = $apache::params::ssl_sessioncache,

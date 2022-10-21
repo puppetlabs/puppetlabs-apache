@@ -17,8 +17,22 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('mod_ssl') }
-      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.modules.d/ssl.conf') }
-      it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all}) }
+      it {
+        is_expected.to contain_file('ssl.conf')
+          .with_path('/etc/httpd/conf.modules.d/ssl.conf')
+          .with_content(%r{SSLProtocol all})
+          .without_content(%r{SSLProxyCipherSuite})
+      }
+
+      context 'with ssl_proxy_cipher_suite' do
+        let(:params) do
+          {
+            ssl_proxy_cipher_suite: 'PROFILE=system',
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite PROFILE=system}) }
+      end
     end
 
     context '7 OS with custom directories for PR#1635' do
