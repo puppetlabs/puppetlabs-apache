@@ -827,6 +827,10 @@ class apache (
       include "::apache::mod::${mpm_module}"
     }
 
+    if 'h2' in $protocols or 'h2c' in $protocols {
+      include apache::mod::http2
+    }
+
     $default_vhost_ensure = $default_vhost ? {
       true  => 'present',
       false => 'absent'
