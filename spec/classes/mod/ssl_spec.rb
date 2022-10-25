@@ -33,6 +33,16 @@ describe 'apache::mod::ssl', type: :class do
 
         it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite PROFILE=system}) }
       end
+
+      context 'with empty ssl_protocol' do
+        let(:params) do
+          {
+            ssl_protocol: [],
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').without_content(%r{SSLProtocol}) }
+      end
     end
 
     context '7 OS with custom directories for PR#1635' do
