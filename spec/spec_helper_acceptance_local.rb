@@ -34,48 +34,10 @@ RSpec.configure do |c|
   end
   c.before :suite do
     if %r{redhat|oracle}.match?(os[:family])
-      # Make sure selinux is disabled so the tests work.
-      LitmusHelper.instance.run_shell('setenforce 0', expect_failures: true)
-
-      # Version 4.0.0 drops EL6 support
-      if os[:release].to_i <= 6
-        LitmusHelper.instance.run_shell('puppet module install --version 3.1.0 puppet/epel')
-      else
-        LitmusHelper.instance.run_shell('puppet module install puppet/epel')
-      end
+      LitmusHelper.instance.run_shell('puppet module install puppet/epel')
     end
 
-    pp = <<-PUPPETCODE
-    # needed by tests
-    package { 'curl':
-      ensure   => 'latest',
-    }
-    # needed for netstat, for serverspec checks
-    if $::osfamily == 'SLES' or $::osfamily == 'SUSE' {
-      package { 'net-tools-deprecated':
-        ensure   => 'latest',
-      }
-    }
-    if $::osfamily == 'RedHat' {
-      # EPEL < 7 is EOL and removed from the official mirror network
-      if $::operatingsystemmajrelease == '5' or $::operatingsystemmajrelease == '6'{
-        class { 'epel':
-          epel_baseurl => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-          epel_mirrorlist => "http://osmirror.delivery.puppetlabs.net/epel${::operatingsystemmajrelease}-\\$basearch/RPMS.all",
-        }
-      } else {
-        class { 'epel': }
-      }
-    }
-    PUPPETCODE
-    LitmusHelper.instance.apply_manifest(pp)
-
-    # Ensure ipv6 is enabled on our Debian 11 Docker boxes
-    LitmusHelper.instance.run_shell('sysctl -w net.ipv6.conf.all.disable_ipv6=0') if %r{debian}.match?(os[:family]) && os[:release].to_f == 11
-
-    # Install iproute on AlmaLinux
-    # Package is used to check if ports are listening
-    LitmusHelper.instance.run_shell('sudo dnf install iproute -y') if %r{redhat}.match?(os[:family]) && os[:release].to_f >= 8
+    LitmusHelper.instance.apply_manifest(File.read(File.join(__dir__, 'setup_acceptance_node.pp')))
   end
 
   c.after :suite do
