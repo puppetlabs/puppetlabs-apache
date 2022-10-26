@@ -111,6 +111,15 @@ describe 'apache::mod::php', type: :class do
               elsif facts[:os]['release']['major'].to_i == 8
                 it { is_expected.to contain_apache__mod('php7') }
                 it { is_expected.to contain_file('php7.load').with(content: "LoadModule php7_module modules/libphp7.so\n") }
+
+                context 'with php8.0' do
+                  let :params do
+                    { php_version: '8.0' }
+                  end
+
+                it { is_expected.to contain_apache__mod('php') }
+                it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
+              end
               elsif facts[:os]['release']['major'].to_i >= 9
                 it { is_expected.to contain_apache__mod('php') }
                 it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
