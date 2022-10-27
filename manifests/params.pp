@@ -723,8 +723,17 @@ class apache::params inherits apache::version {
   }
 
   if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') >= 0 {
-    $ssl_protocol = ['all'] # Implementations of the SSLv2 and SSLv3 protocol versions have been removed from OpenSSL (and hence mod_ssl) because these are no longer considered secure. For additional documentation https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deploying_different_types_of_servers/setting-apache-web-server_deploying-different-types-of-servers
+    # Use OpenSSL system profile. See update-crypto-policies(8) for more details
+    $ssl_protocol = []
+    $ssl_cipher = 'PROFILE=SYSTEM'
+    $ssl_proxy_cipher_suite = 'PROFILE=SYSTEM'
+  } elsif $facts['os']['family'] == 'Debian' {
+    $ssl_protocol = ['all', '-SSLv3']
+    $ssl_cipher = 'HIGH:!aNULL'
+    $ssl_proxy_cipher_suite = undef
   } else {
     $ssl_protocol = ['all', '-SSLv2', '-SSLv3']
+    $ssl_cipher = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'
+    $ssl_proxy_cipher_suite = undef
   }
 }

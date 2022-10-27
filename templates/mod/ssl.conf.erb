@@ -40,7 +40,9 @@
   SSLStaplingCache "shmcb:<%= @_stapling_cache %>"
 <% end -%>
   SSLCipherSuite <%= @ssl_cipher %>
+<% if not @ssl_protocol.empty? -%>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
+<% end -%>
 <% if not @ssl_proxy_protocol.empty? -%>
   SSLProxyProtocol <%= @ssl_proxy_protocol.compact.join(' ') %>
 <% end -%>

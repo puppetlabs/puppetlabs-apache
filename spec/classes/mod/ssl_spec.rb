@@ -20,18 +20,29 @@ describe 'apache::mod::ssl', type: :class do
       it {
         is_expected.to contain_file('ssl.conf')
           .with_path('/etc/httpd/conf.modules.d/ssl.conf')
-          .with_content(%r{SSLProtocol all})
-          .without_content(%r{SSLProxyCipherSuite})
+          .without_content(%r{SSLProtocol})
+          .with_content(%r{^  SSLCipherSuite PROFILE=SYSTEM$})
+          .with_content(%r{^  SSLProxyCipherSuite PROFILE=SYSTEM$})
       }
 
       context 'with ssl_proxy_cipher_suite' do
         let(:params) do
           {
-            ssl_proxy_cipher_suite: 'PROFILE=system',
+            ssl_proxy_cipher_suite: 'HIGH',
           }
         end
 
-        it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite PROFILE=system}) }
+        it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProxyCipherSuite HIGH}) }
+      end
+
+      context 'with empty ssl_protocol' do
+        let(:params) do
+          {
+            ssl_protocol: [],
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').without_content(%r{SSLProtocol}) }
       end
     end
 
@@ -58,7 +69,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.not_to contain_package('libapache2-mod-ssl') }
-    it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv2 -SSLv3}) }
+    it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv3}) }
   end
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
