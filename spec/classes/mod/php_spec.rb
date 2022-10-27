@@ -119,7 +119,7 @@ describe 'apache::mod::php', type: :class do
 
                 it { is_expected.to contain_apache__mod('php') }
                 it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
-              end
+                end
               elsif facts[:os]['release']['major'].to_i >= 9
                 it { is_expected.to contain_apache__mod('php') }
                 it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
