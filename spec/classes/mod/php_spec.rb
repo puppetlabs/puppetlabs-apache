@@ -117,8 +117,8 @@ describe 'apache::mod::php', type: :class do
                     { php_version: '8.0' }
                   end
 
-                it { is_expected.to contain_apache__mod('php') }
-                it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
+                  it { is_expected.to contain_apache__mod('php') }
+                  it { is_expected.to contain_file('php.load').with(content: "LoadModule php_module modules/libphp.so\n") }
                 end
               elsif facts[:os]['release']['major'].to_i >= 9
                 it { is_expected.to contain_apache__mod('php') }
