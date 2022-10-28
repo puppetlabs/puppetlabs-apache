@@ -856,11 +856,11 @@ Default value: `'On'`
 
 ##### <a name="serveradmin"></a>`serveradmin`
 
-Data type: `String`
+Data type: `Optional[String[1]]`
 
 Sets the Apache server administrator's contact information via Apache's `ServerAdmin` directive.
 
-Default value: `'root@localhost'`
+Default value: ``undef``
 
 ##### <a name="servername"></a>`servername`
 
@@ -6505,6 +6505,7 @@ The following parameters are available in the `apache::mod::ssl` class:
 * [`ssl_honorcipherorder`](#ssl_honorcipherorder)
 * [`ssl_protocol`](#ssl_protocol)
 * [`ssl_proxy_protocol`](#ssl_proxy_protocol)
+* [`ssl_proxy_cipher_suite`](#ssl_proxy_cipher_suite)
 * [`ssl_pass_phrase_dialog`](#ssl_pass_phrase_dialog)
 * [`ssl_random_seed_bytes`](#ssl_random_seed_bytes)
 * [`ssl_sessioncache`](#ssl_sessioncache)
@@ -6587,7 +6588,7 @@ Data type: `String`
 
 Cipher Suite available for negotiation in SSL handshake.
 
-Default value: `'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'`
+Default value: `$apache::params::ssl_cipher`
 
 ##### <a name="ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
@@ -6615,6 +6616,14 @@ Data type: `Array`
 Configure usable SSL protocol flavors for proxy usage.
 
 Default value: `[]`
+
+##### <a name="ssl_proxy_cipher_suite"></a>`ssl_proxy_cipher_suite`
+
+Data type: `Optional[String[1]]`
+
+Configure usable SSL ciphers for proxy usage. Equivalent to ssl_cipher but for proxy connections.
+
+Default value: `$apache::params::ssl_proxy_cipher_suite`
 
 ##### <a name="ssl_pass_phrase_dialog"></a>`ssl_pass_phrase_dialog`
 
