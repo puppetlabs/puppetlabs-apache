@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v8.2.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.1) (2022-09-26)
+## [v8.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.3.0) (2022-10-28)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.2.1...v8.3.0)
+
+### Added
+
+- Automatically enable mod\_http2 if needed [\#2337](https://github.com/puppetlabs/puppetlabs-apache/pull/2337) ([ekohl](https://github.com/ekohl))
+- Update EL8+ and Debian SSL defaults [\#2336](https://github.com/puppetlabs/puppetlabs-apache/pull/2336) ([ekohl](https://github.com/ekohl))
+- Support setting SSLProxyCipherSuite on mod\_ssl [\#2335](https://github.com/puppetlabs/puppetlabs-apache/pull/2335) ([ekohl](https://github.com/ekohl))
+
+### Fixed
+
+- Make serveradmin an optional parameter and use it [\#2338](https://github.com/puppetlabs/puppetlabs-apache/pull/2338) ([ekohl](https://github.com/ekohl))
+- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#2326](https://github.com/puppetlabs/puppetlabs-apache/pull/2326) ([david22swan](https://github.com/david22swan))
+- pdksync - \(CONT-130\) Dropping Support for Debian 9 [\#2322](https://github.com/puppetlabs/puppetlabs-apache/pull/2322) ([jordanbreen28](https://github.com/jordanbreen28))
+- fix directory empty options if an empty array is being used [\#2312](https://github.com/puppetlabs/puppetlabs-apache/pull/2312) ([bovy89](https://github.com/bovy89))
+
+## [v8.2.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.1) (2022-09-27)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.2.0...v8.2.1)
 
