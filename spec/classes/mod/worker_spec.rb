@@ -113,7 +113,7 @@ describe 'apache::mod::worker', type: :class do
         {
           serverlimit: 10,
           startservers: 11,
-          maxclients: 12,
+          maxrequestworkers: 12,
           minsparethreads: 13,
           maxsparethreads: 14,
           threadsperchild: 15,
@@ -126,7 +126,8 @@ describe 'apache::mod::worker', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^<IfModule mpm_worker_module>$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+ServerLimit\s+10$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+StartServers\s+11$}) }
-      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxClients\s+12$}) }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').without(content: %r{^\s+MaxClients}) }
+      it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxRequestWorkers\s+12$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MinSpareThreads\s+13$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+MaxSpareThreads\s+14$}) }
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/worker.conf').with(content: %r{^\s+ThreadsPerChild\s+15$}) }
