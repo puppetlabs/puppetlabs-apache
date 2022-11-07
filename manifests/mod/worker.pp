@@ -8,7 +8,7 @@
 #   The max number of simultaneous requests that will be served.
 #   This is the old name and is still supported. The new name is
 #   MaxRequestWorkers as of 2.3.13.
-#   If maxreuestworkers is set, this value is ignored.
+#   If maxrequestworkers is set, this value is ignored.
 #
 # @param minsparethreads
 #   Minimum number of idle threads to handle request spikes.
