@@ -2,10 +2,14 @@
   ServerLimit         <%= @serverlimit %>
   StartServers        <%= @startservers %>
   ThreadLimit         <%= @threadlimit %>
-  MaxClients          <%= @maxclients %>
   MinSpareThreads     <%= @minsparethreads %>
   MaxSpareThreads     <%= @maxsparethreads %>
   ThreadsPerChild     <%= @threadsperchild %>
   MaxRequestsPerChild <%= @maxrequestsperchild %>
   ListenBacklog       <%= @listenbacklog %>
+  <%- if @maxrequestworkers -%>
+  MaxRequestWorkers      <%= @maxrequestworkers %>
+  <%- elsif @maxclients -%>
+  MaxClients             <%= @maxclients %>
+  <%- end -%>
 </IfModule>

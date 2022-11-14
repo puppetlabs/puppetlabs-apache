@@ -8,6 +8,7 @@
 #   The max number of simultaneous requests that will be served.
 #   This is the old name and is still supported. The new name is
 #   MaxRequestWorkers as of 2.3.13.
+#   If maxrequestworkers is set, this value is ignored.
 #
 # @param minsparethreads
 #   Minimum number of idle threads to handle request spikes.
@@ -40,6 +41,10 @@
 # @param apache_version
 #   Used to verify that the Apache version you have requested is compatible with the module.
 #
+# @param maxrequestworkers
+#   Maximum number of connections that will be processed simultaneously
+#   if set, maxclients is ignored
+#
 # @see https://httpd.apache.org/docs/current/mod/worker.html for additional documentation.
 #
 class apache::mod::worker (
@@ -53,6 +58,7 @@ class apache::mod::worker (
   Integer $threadlimit             = 64,
   Integer $listenbacklog           = 511,
   Optional[String] $apache_version = undef,
+  Optional[Integer] $maxrequestworkers = undef,
 ) {
   include apache
   $_apache_version = pick($apache_version, $apache::apache_version)
