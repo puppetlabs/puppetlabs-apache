@@ -83,7 +83,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.0.0 < 8.0.0"
+      "version_requirement": ">= 6.24.0 < 8.0.0"
     }
   ],
   "description": "Module for Apache configuration",
