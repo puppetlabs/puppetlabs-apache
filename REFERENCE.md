@@ -56,6 +56,10 @@
 * [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): Installs `mod_intercept_form_submit`.
 * [`apache::mod::itk`](#apachemoditk): Installs MPM `mod_itk`.
 * [`apache::mod::jk`](#apachemodjk): Installs `mod_jk`.
+* [`apache::mod::lbmethod_bybusyness`](#apachemodlbmethod_bybusyness): Installs `lbmethod_bybusyness`.
+* [`apache::mod::lbmethod_byrequests`](#apachemodlbmethod_byrequests): Installs `lbmethod_byrequests`.
+* [`apache::mod::lbmethod_bytraffic`](#apachemodlbmethod_bytraffic): Installs `lbmethod_bytraffic`.
+* [`apache::mod::lbmethod_heartbeat`](#apachemodlbmethod_heartbeat): Installs `lbmethod_heartbeat`.
 * [`apache::mod::ldap`](#apachemodldap): Installs and configures `mod_ldap`.
 * [`apache::mod::lookup_identity`](#apachemodlookup_identity): Installs `mod_lookup_identity`
 * [`apache::mod::macro`](#apachemodmacro): Installs `mod_macro`.
@@ -3497,6 +3501,94 @@ $mount_file_content = {
 ```
 
 Default value: `{}`
+
+### <a name="apachemodlbmethod_bybusyness"></a>`apache::mod::lbmethod_bybusyness`
+
+Installs `lbmethod_bybusyness`.
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_lbmethod_bybusyness.html
+    * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::lbmethod_bybusyness` class:
+
+* [`apache_version`](#apache_version)
+
+##### <a name="apache_version"></a>`apache_version`
+
+Data type: `Optional[String]`
+
+Version of Apache to install module on.
+
+Default value: `$apache::apache_version`
+
+### <a name="apachemodlbmethod_byrequests"></a>`apache::mod::lbmethod_byrequests`
+
+Installs `lbmethod_byrequests`.
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_lbmethod_byrequests.html
+    * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::lbmethod_byrequests` class:
+
+* [`apache_version`](#apache_version)
+
+##### <a name="apache_version"></a>`apache_version`
+
+Data type: `Optional[String]`
+
+Version of Apache to install module on.
+
+Default value: `$apache::apache_version`
+
+### <a name="apachemodlbmethod_bytraffic"></a>`apache::mod::lbmethod_bytraffic`
+
+Installs `lbmethod_bytraffic`.
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_lbmethod_bytraffic.html
+    * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::lbmethod_bytraffic` class:
+
+* [`apache_version`](#apache_version)
+
+##### <a name="apache_version"></a>`apache_version`
+
+Data type: `Optional[String]`
+
+Version of Apache to install module on.
+
+Default value: `$apache::apache_version`
+
+### <a name="apachemodlbmethod_heartbeat"></a>`apache::mod::lbmethod_heartbeat`
+
+Installs `lbmethod_heartbeat`.
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_lbmethod_heartbeat.html
+    * for additional documentation.
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::lbmethod_heartbeat` class:
+
+* [`apache_version`](#apache_version)
+
+##### <a name="apache_version"></a>`apache_version`
+
+Data type: `Optional[String]`
+
+Version of Apache to install module on.
+
+Default value: `$apache::apache_version`
 
 ### <a name="apachemodldap"></a>`apache::mod::ldap`
 
@@ -6986,6 +7078,7 @@ The following parameters are available in the `apache::mod::worker` class:
 * [`threadlimit`](#threadlimit)
 * [`listenbacklog`](#listenbacklog)
 * [`apache_version`](#apache_version)
+* [`maxrequestworkers`](#maxrequestworkers)
 
 ##### <a name="startservers"></a>`startservers`
 
@@ -7002,6 +7095,7 @@ Data type: `Integer`
 The max number of simultaneous requests that will be served.
 This is the old name and is still supported. The new name is
 MaxRequestWorkers as of 2.3.13.
+If maxrequestworkers is set, this value is ignored.
 
 Default value: `150`
 
@@ -7073,6 +7167,15 @@ Default value: `511`
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
+
+Default value: ``undef``
+
+##### <a name="maxrequestworkers"></a>`maxrequestworkers`
+
+Data type: `Optional[Integer]`
+
+Maximum number of connections that will be processed simultaneously
+if set, maxclients is ignored
 
 Default value: ``undef``
 
