@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.4.0) (2022-11-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.3.0...v8.4.0)
+
+### Added
+
+- add maxrequestworkers parameter for mpm\_worker module [\#2331](https://github.com/puppetlabs/puppetlabs-apache/pull/2331) ([trefzer](https://github.com/trefzer))
+- support lbmethod modules [\#2268](https://github.com/puppetlabs/puppetlabs-apache/pull/2268) ([xorpaul](https://github.com/xorpaul))
+
+### Fixed
+
+- Declare minimum Puppet version to be 6.24.0 [\#2342](https://github.com/puppetlabs/puppetlabs-apache/pull/2342) ([ekohl](https://github.com/ekohl))
+- Fix RedHat + PHP 8 libphp file [\#2333](https://github.com/puppetlabs/puppetlabs-apache/pull/2333) ([polatsinan](https://github.com/polatsinan))
+
 ## [v8.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.3.0) (2022-10-28)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.2.1...v8.3.0)
