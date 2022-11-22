@@ -19,7 +19,7 @@ describe 'apache::mod::security', type: :class do
             )
           }
           it {
-            is_expected.to contain_apache__mod('unique_id_module').with(
+            is_expected.to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
               lib: 'mod_unique_id.so',
             )
@@ -189,7 +189,7 @@ describe 'apache::mod::security', type: :class do
             )
           }
           it {
-            is_expected.to contain_apache__mod('unique_id_module').with(
+            is_expected.to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
               lib: 'mod_unique_id.so',
             )
