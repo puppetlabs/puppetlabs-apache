@@ -1,5 +1,1 @@
-<% if @verify_server_cert == true -%>
-LDAPVerifyServerCert On
-<% else -%>
-LDAPVerifyServerCert Off
-<% end -%>
+LDAPVerifyServerCert <%= scope.call_function('apache::bool2httpd', [@verify_server_cert]) %>

@@ -3,11 +3,7 @@ RPAFenable On
 # RPAFsethostname will, when enabled, take the incoming X-Host header and
 # update the virtual host settings accordingly. This allows to have the same
 # hostnames as in the "real" configuration for the forwarding proxy.
-<% if @sethostname -%>
-RPAFsethostname On
-<% else -%>
-RPAFsethostname Off
-<% end -%>
+RPAFsethostname <%= scope.call_function('apache::bool2httpd', [@sethostname]) %>
 # Which IPs are forwarding requests to us
 RPAFproxy_ips <%= Array(@proxy_ips).join(" ") %>
 # Setting RPAFheader allows you to change the header name to parse from the

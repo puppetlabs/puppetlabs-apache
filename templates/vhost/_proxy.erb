@@ -1,23 +1,11 @@
 <% if @proxy_dest or @proxy_pass or @proxy_pass_match or @proxy_dest_match -%>
 
   ## Proxy rules
-<% if @proxy_requests -%>
-  ProxyRequests On
-<% else -%>
-  ProxyRequests Off
+  ProxyRequests <%= scope.call_function('apache::bool2httpd', @proxy_requests) %>
 <%- end -%>
-<%- end -%>
-<% if @proxy_preserve_host -%>
-  ProxyPreserveHost On
-<% else -%>
-  ProxyPreserveHost Off
-<%- end -%>
+  ProxyPreserveHost <%= scope.call_function('apache::bool2httpd', @proxy_preserve_host) %>
 <%- if defined?(@proxy_add_headers) -%>
-  <%- if @proxy_add_headers -%>
-  ProxyAddHeaders On
-  <%- else -%>
-  ProxyAddHeaders Off
-  <%- end -%>
+  ProxyAddHeaders <%= scope.call_function('apache::bool2httpd', @proxy_add_headers) %>
 <%- end -%>
 <% if @proxy_error_override -%>
   ProxyErrorOverride On
