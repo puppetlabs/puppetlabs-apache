@@ -19,7 +19,7 @@
   <%- end -%>
   ProxyPass <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
+    <%- proxy['params'].sort.each do |key, value| -%> <%= key %>=<%= value -%>
     <%- end -%>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
@@ -56,7 +56,7 @@
   <%- end -%>
   ProxyPassMatch <%= proxy['path'] %> <%= proxy['url'] -%>
   <%- if proxy['params'] -%>
-    <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
+    <%- proxy['params'].sort.each do |key, value| -%> <%= key %>=<%= value -%>
     <%- end -%>
   <%- end -%>
   <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>

@@ -25,19 +25,19 @@
   WSGIProcessGroup <%= @wsgi_process_group %>
 <% end -%>
 <% if @wsgi_script_aliases_match and ! @wsgi_script_aliases_match.empty? -%>
-  <%- @wsgi_script_aliases_match.keys.sort.reverse.each do |key| -%>
-    <%- if key != '' and @wsgi_script_aliases_match[key] != ''-%>
-  WSGIScriptAliasMatch <%= key %> "<%= @wsgi_script_aliases_match[key] %>"
+  <%- @wsgi_script_aliases_match.sort.reverse.each do |key, value| -%>
+    <%- if key != '' and value != ''-%>
+  WSGIScriptAliasMatch <%= key %> "<%= value %>"
     <%- end -%>
   <%- end -%>
 <% end -%>
 <% if @wsgi_script_aliases and ! @wsgi_script_aliases.empty? -%>
-  <%- @wsgi_script_aliases.keys.sort.reverse.each do |key| -%>
-    <%- if key != '' and @wsgi_script_aliases[key] != ''-%>
-      <%- if @wsgi_script_aliases[key].is_a? Array -%>
-  WSGIScriptAlias <%= key %> <%= @wsgi_script_aliases[key].join(' ') %>
+  <%- @wsgi_script_aliases.sort.reverse.each do |key, value| -%>
+    <%- if key != '' and value != ''-%>
+      <%- if value.is_a? Array -%>
+  WSGIScriptAlias <%= key %> <%= value.join(' ') %>
       <%- else -%>
-  WSGIScriptAlias <%= key %> "<%= @wsgi_script_aliases[key] %>"
+  WSGIScriptAlias <%= key %> "<%= value %>"
       <%- end -%>
     <%- end -%>
   <%- end -%>
