@@ -569,7 +569,7 @@ describe 'apache parameters' do
   describe 'limitreqline' do
     pp = <<-MANIFEST
         class { 'apache':
-          limitreqline => '8190',
+          limitreqline => 8190,
         }
     MANIFEST
     it 'applys cleanly' do
