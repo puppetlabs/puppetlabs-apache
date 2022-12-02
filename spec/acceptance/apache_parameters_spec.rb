@@ -566,6 +566,22 @@ describe 'apache parameters' do
     end
   end
 
+  describe 'limitreqline' do
+    pp = <<-MANIFEST
+        class { 'apache':
+          limitreqline => '8190',
+        }
+    MANIFEST
+    it 'applys cleanly' do
+      apply_manifest(pp, catch_failures: true)
+    end
+
+    describe file(apache_hash['conf_file']) do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'LimitRequestLine 8190' }
+    end
+  end
+
   describe 'file_e_tag' do
     pp = <<-MANIFEST
         class { 'apache':
