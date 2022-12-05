@@ -9,108 +9,108 @@
 #### Public Classes
 
 * [`apache`](#apache): Guides the basic setup and installation of Apache on your system.
-* [`apache::dev`](#apachedev): Installs Apache development libraries.
-* [`apache::mod::actions`](#apachemodactions): Installs Apache mod_actions
-* [`apache::mod::alias`](#apachemodalias): Installs and configures `mod_alias`.
-* [`apache::mod::apreq2`](#apachemodapreq2): Installs `mod_apreq2`.
-* [`apache::mod::auth_basic`](#apachemodauth_basic): Installs `mod_auth_basic`
-* [`apache::mod::auth_cas`](#apachemodauth_cas): Installs and configures `mod_auth_cas`.
-* [`apache::mod::auth_gssapi`](#apachemodauth_gssapi): Installs `mod_auth_gsappi`.
-* [`apache::mod::auth_kerb`](#apachemodauth_kerb): Installs `mod_auth_kerb`
-* [`apache::mod::auth_mellon`](#apachemodauth_mellon): Installs and configures `mod_auth_mellon`.
-* [`apache::mod::auth_openidc`](#apachemodauth_openidc): Installs and configures `mod_auth_openidc`.
-* [`apache::mod::authn_core`](#apachemodauthn_core): Installs `mod_authn_core`.
-* [`apache::mod::authn_dbd`](#apachemodauthn_dbd): Installs `mod_authn_dbd`.
-* [`apache::mod::authn_file`](#apachemodauthn_file): Installs `mod_authn_file`.
-* [`apache::mod::authnz_ldap`](#apachemodauthnz_ldap): Installs `mod_authnz_ldap`.
-* [`apache::mod::authnz_pam`](#apachemodauthnz_pam): Installs `mod_authnz_pam`.
-* [`apache::mod::authz_default`](#apachemodauthz_default): Installs and configures `mod_authz_default`.
-* [`apache::mod::authz_groupfile`](#apachemodauthz_groupfile): Installs `mod_authz_groupfile`
-* [`apache::mod::authz_user`](#apachemodauthz_user): Installs `mod_authz_user`
-* [`apache::mod::autoindex`](#apachemodautoindex): Installs `mod_autoindex`
-* [`apache::mod::cache`](#apachemodcache): Installs `mod_cache`
-* [`apache::mod::cgi`](#apachemodcgi): Installs `mod_cgi`.
-* [`apache::mod::cgid`](#apachemodcgid): Installs `mod_cgid`.
-* [`apache::mod::cluster`](#apachemodcluster): Installs `mod_cluster`.
-* [`apache::mod::data`](#apachemoddata): Installs and configures `mod_data`.
-* [`apache::mod::dav`](#apachemoddav): Installs `mod_dav`.
-* [`apache::mod::dav_fs`](#apachemoddav_fs): Installs `mod_dav_fs`.
-* [`apache::mod::dav_svn`](#apachemoddav_svn): Installs and configures `mod_dav_svn`.
-* [`apache::mod::dbd`](#apachemoddbd): Installs `mod_dbd`.
-* [`apache::mod::deflate`](#apachemoddeflate): Installs and configures `mod_deflate`.
-* [`apache::mod::dev`](#apachemoddev): Installs `mod_dev`.
-* [`apache::mod::dir`](#apachemoddir): Installs and configures `mod_dir`.
-* [`apache::mod::disk_cache`](#apachemoddisk_cache): Installs and configures `mod_disk_cache`.
-* [`apache::mod::dumpio`](#apachemoddumpio): Installs and configures `mod_dumpio`.
-* [`apache::mod::env`](#apachemodenv): Installs `mod_env`.
-* [`apache::mod::event`](#apachemodevent): Installs and configures `mod_event`.
-* [`apache::mod::expires`](#apachemodexpires): Installs and configures `mod_expires`.
-* [`apache::mod::ext_filter`](#apachemodext_filter): Installs and configures `mod_ext_filter`.
-* [`apache::mod::fcgid`](#apachemodfcgid): Installs and configures `mod_fcgid`.
-* [`apache::mod::filter`](#apachemodfilter): Installs `mod_filter`.
-* [`apache::mod::geoip`](#apachemodgeoip): Installs and configures `mod_geoip`.
-* [`apache::mod::headers`](#apachemodheaders): Installs and configures `mod_headers`.
-* [`apache::mod::http2`](#apachemodhttp2): Installs and configures `mod_http2`.
-* [`apache::mod::include`](#apachemodinclude): Installs `mod_include`.
-* [`apache::mod::info`](#apachemodinfo): Installs and configures `mod_info`.
-* [`apache::mod::intercept_form_submit`](#apachemodintercept_form_submit): Installs `mod_intercept_form_submit`.
-* [`apache::mod::itk`](#apachemoditk): Installs MPM `mod_itk`.
-* [`apache::mod::jk`](#apachemodjk): Installs `mod_jk`.
-* [`apache::mod::lbmethod_bybusyness`](#apachemodlbmethod_bybusyness): Installs `lbmethod_bybusyness`.
-* [`apache::mod::lbmethod_byrequests`](#apachemodlbmethod_byrequests): Installs `lbmethod_byrequests`.
-* [`apache::mod::lbmethod_bytraffic`](#apachemodlbmethod_bytraffic): Installs `lbmethod_bytraffic`.
-* [`apache::mod::lbmethod_heartbeat`](#apachemodlbmethod_heartbeat): Installs `lbmethod_heartbeat`.
-* [`apache::mod::ldap`](#apachemodldap): Installs and configures `mod_ldap`.
-* [`apache::mod::lookup_identity`](#apachemodlookup_identity): Installs `mod_lookup_identity`
-* [`apache::mod::macro`](#apachemodmacro): Installs `mod_macro`.
-* [`apache::mod::md`](#apachemodmd): Installs and configures `mod_md`.
-* [`apache::mod::mime`](#apachemodmime): Installs and configures `mod_mime`.
-* [`apache::mod::mime_magic`](#apachemodmime_magic): Installs and configures `mod_mime_magic`.
-* [`apache::mod::negotiation`](#apachemodnegotiation): Installs and configures `mod_negotiation`.
-* [`apache::mod::nss`](#apachemodnss): Installs and configures `mod_nss`.
-* [`apache::mod::pagespeed`](#apachemodpagespeed): Installs and manages mod_pagespeed, which is a Google module that rewrites web pages to reduce latency and bandwidth.
+* [`apache::dev`](#apache--dev): Installs Apache development libraries.
+* [`apache::mod::actions`](#apache--mod--actions): Installs Apache mod_actions
+* [`apache::mod::alias`](#apache--mod--alias): Installs and configures `mod_alias`.
+* [`apache::mod::apreq2`](#apache--mod--apreq2): Installs `mod_apreq2`.
+* [`apache::mod::auth_basic`](#apache--mod--auth_basic): Installs `mod_auth_basic`
+* [`apache::mod::auth_cas`](#apache--mod--auth_cas): Installs and configures `mod_auth_cas`.
+* [`apache::mod::auth_gssapi`](#apache--mod--auth_gssapi): Installs `mod_auth_gsappi`.
+* [`apache::mod::auth_kerb`](#apache--mod--auth_kerb): Installs `mod_auth_kerb`
+* [`apache::mod::auth_mellon`](#apache--mod--auth_mellon): Installs and configures `mod_auth_mellon`.
+* [`apache::mod::auth_openidc`](#apache--mod--auth_openidc): Installs and configures `mod_auth_openidc`.
+* [`apache::mod::authn_core`](#apache--mod--authn_core): Installs `mod_authn_core`.
+* [`apache::mod::authn_dbd`](#apache--mod--authn_dbd): Installs `mod_authn_dbd`.
+* [`apache::mod::authn_file`](#apache--mod--authn_file): Installs `mod_authn_file`.
+* [`apache::mod::authnz_ldap`](#apache--mod--authnz_ldap): Installs `mod_authnz_ldap`.
+* [`apache::mod::authnz_pam`](#apache--mod--authnz_pam): Installs `mod_authnz_pam`.
+* [`apache::mod::authz_default`](#apache--mod--authz_default): Installs and configures `mod_authz_default`.
+* [`apache::mod::authz_groupfile`](#apache--mod--authz_groupfile): Installs `mod_authz_groupfile`
+* [`apache::mod::authz_user`](#apache--mod--authz_user): Installs `mod_authz_user`
+* [`apache::mod::autoindex`](#apache--mod--autoindex): Installs `mod_autoindex`
+* [`apache::mod::cache`](#apache--mod--cache): Installs `mod_cache`
+* [`apache::mod::cgi`](#apache--mod--cgi): Installs `mod_cgi`.
+* [`apache::mod::cgid`](#apache--mod--cgid): Installs `mod_cgid`.
+* [`apache::mod::cluster`](#apache--mod--cluster): Installs `mod_cluster`.
+* [`apache::mod::data`](#apache--mod--data): Installs and configures `mod_data`.
+* [`apache::mod::dav`](#apache--mod--dav): Installs `mod_dav`.
+* [`apache::mod::dav_fs`](#apache--mod--dav_fs): Installs `mod_dav_fs`.
+* [`apache::mod::dav_svn`](#apache--mod--dav_svn): Installs and configures `mod_dav_svn`.
+* [`apache::mod::dbd`](#apache--mod--dbd): Installs `mod_dbd`.
+* [`apache::mod::deflate`](#apache--mod--deflate): Installs and configures `mod_deflate`.
+* [`apache::mod::dev`](#apache--mod--dev): Installs `mod_dev`.
+* [`apache::mod::dir`](#apache--mod--dir): Installs and configures `mod_dir`.
+* [`apache::mod::disk_cache`](#apache--mod--disk_cache): Installs and configures `mod_disk_cache`.
+* [`apache::mod::dumpio`](#apache--mod--dumpio): Installs and configures `mod_dumpio`.
+* [`apache::mod::env`](#apache--mod--env): Installs `mod_env`.
+* [`apache::mod::event`](#apache--mod--event): Installs and configures `mod_event`.
+* [`apache::mod::expires`](#apache--mod--expires): Installs and configures `mod_expires`.
+* [`apache::mod::ext_filter`](#apache--mod--ext_filter): Installs and configures `mod_ext_filter`.
+* [`apache::mod::fcgid`](#apache--mod--fcgid): Installs and configures `mod_fcgid`.
+* [`apache::mod::filter`](#apache--mod--filter): Installs `mod_filter`.
+* [`apache::mod::geoip`](#apache--mod--geoip): Installs and configures `mod_geoip`.
+* [`apache::mod::headers`](#apache--mod--headers): Installs and configures `mod_headers`.
+* [`apache::mod::http2`](#apache--mod--http2): Installs and configures `mod_http2`.
+* [`apache::mod::include`](#apache--mod--include): Installs `mod_include`.
+* [`apache::mod::info`](#apache--mod--info): Installs and configures `mod_info`.
+* [`apache::mod::intercept_form_submit`](#apache--mod--intercept_form_submit): Installs `mod_intercept_form_submit`.
+* [`apache::mod::itk`](#apache--mod--itk): Installs MPM `mod_itk`.
+* [`apache::mod::jk`](#apache--mod--jk): Installs `mod_jk`.
+* [`apache::mod::lbmethod_bybusyness`](#apache--mod--lbmethod_bybusyness): Installs `lbmethod_bybusyness`.
+* [`apache::mod::lbmethod_byrequests`](#apache--mod--lbmethod_byrequests): Installs `lbmethod_byrequests`.
+* [`apache::mod::lbmethod_bytraffic`](#apache--mod--lbmethod_bytraffic): Installs `lbmethod_bytraffic`.
+* [`apache::mod::lbmethod_heartbeat`](#apache--mod--lbmethod_heartbeat): Installs `lbmethod_heartbeat`.
+* [`apache::mod::ldap`](#apache--mod--ldap): Installs and configures `mod_ldap`.
+* [`apache::mod::lookup_identity`](#apache--mod--lookup_identity): Installs `mod_lookup_identity`
+* [`apache::mod::macro`](#apache--mod--macro): Installs `mod_macro`.
+* [`apache::mod::md`](#apache--mod--md): Installs and configures `mod_md`.
+* [`apache::mod::mime`](#apache--mod--mime): Installs and configures `mod_mime`.
+* [`apache::mod::mime_magic`](#apache--mod--mime_magic): Installs and configures `mod_mime_magic`.
+* [`apache::mod::negotiation`](#apache--mod--negotiation): Installs and configures `mod_negotiation`.
+* [`apache::mod::nss`](#apache--mod--nss): Installs and configures `mod_nss`.
+* [`apache::mod::pagespeed`](#apache--mod--pagespeed): Installs and manages mod_pagespeed, which is a Google module that rewrites web pages to reduce latency and bandwidth.
 
 This module does *not* manage the software repositories needed to automatically install the
 mod-pagespeed-stable package. The module does however require that the package be installed,
 or be installable using the system's default package provider.  You should ensure that this
 pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet run to fail.
-* [`apache::mod::passenger`](#apachemodpassenger): Installs `mod_pasenger`.
-* [`apache::mod::perl`](#apachemodperl): Installs `mod_perl`.
-* [`apache::mod::peruser`](#apachemodperuser): Installs `mod_peruser`.
-* [`apache::mod::php`](#apachemodphp): Installs `mod_php`.
-* [`apache::mod::prefork`](#apachemodprefork): Installs and configures MPM `prefork`.
-* [`apache::mod::proxy`](#apachemodproxy): Installs and configures `mod_proxy`.
-* [`apache::mod::proxy_ajp`](#apachemodproxy_ajp): Installs `mod_proxy_ajp`.
-* [`apache::mod::proxy_balancer`](#apachemodproxy_balancer): Installs and configures `mod_proxy_balancer`.
-* [`apache::mod::proxy_connect`](#apachemodproxy_connect): Installs `mod_proxy_connect`.
-* [`apache::mod::proxy_fcgi`](#apachemodproxy_fcgi): Installs `mod_proxy_fcgi`.
-* [`apache::mod::proxy_html`](#apachemodproxy_html): Installs `mod_proxy_html`.
-* [`apache::mod::proxy_http`](#apachemodproxy_http): Installs `mod_proxy_http`.
-* [`apache::mod::proxy_wstunnel`](#apachemodproxy_wstunnel): Installs `mod_proxy_wstunnel`.
-* [`apache::mod::python`](#apachemodpython): Installs and configures `mod_python`.
-* [`apache::mod::remoteip`](#apachemodremoteip): Installs and configures `mod_remoteip`.
-* [`apache::mod::reqtimeout`](#apachemodreqtimeout): Installs and configures `mod_reqtimeout`.
-* [`apache::mod::rewrite`](#apachemodrewrite): Installs `mod_rewrite`.
-* [`apache::mod::rpaf`](#apachemodrpaf): Installs and configures `mod_rpaf`.
-* [`apache::mod::security`](#apachemodsecurity): Installs and configures `mod_security`.
-* [`apache::mod::setenvif`](#apachemodsetenvif): Installs `mod_setenvif`.
-* [`apache::mod::shib`](#apachemodshib): Installs and configures `mod_shib`.
-* [`apache::mod::socache_shmcb`](#apachemodsocache_shmcb): Installs `mod_socache_shmcb`.
-* [`apache::mod::speling`](#apachemodspeling): Installs `mod_spelling`.
-* [`apache::mod::ssl`](#apachemodssl): Installs `mod_ssl`.
-* [`apache::mod::status`](#apachemodstatus): Installs and configures `mod_status`.
-* [`apache::mod::suexec`](#apachemodsuexec): Installs `mod_suexec`.
-* [`apache::mod::userdir`](#apachemoduserdir): Installs and configures `mod_userdir`.
-* [`apache::mod::version`](#apachemodversion): Installs `mod_version`.
-* [`apache::mod::vhost_alias`](#apachemodvhost_alias): Installs Apache `mod_vhost_alias`.
-* [`apache::mod::watchdog`](#apachemodwatchdog): Installs and configures `mod_watchdog`.
-* [`apache::mod::worker`](#apachemodworker): Installs and manages the MPM `worker`.
-* [`apache::mod::wsgi`](#apachemodwsgi): Installs and configures `mod_wsgi`.
-* [`apache::mod::xsendfile`](#apachemodxsendfile): Installs `mod_xsendfile`.
-* [`apache::mpm::disable_mpm_event`](#apachempmdisable_mpm_event): disable Apache-Module event
-* [`apache::mpm::disable_mpm_prefork`](#apachempmdisable_mpm_prefork): disable Apache-Module prefork
-* [`apache::mpm::disable_mpm_worker`](#apachempmdisable_mpm_worker): disable Apache-Module worker
-* [`apache::vhosts`](#apachevhosts): Creates `apache::vhost` defined types.
+* [`apache::mod::passenger`](#apache--mod--passenger): Installs `mod_pasenger`.
+* [`apache::mod::perl`](#apache--mod--perl): Installs `mod_perl`.
+* [`apache::mod::peruser`](#apache--mod--peruser): Installs `mod_peruser`.
+* [`apache::mod::php`](#apache--mod--php): Installs `mod_php`.
+* [`apache::mod::prefork`](#apache--mod--prefork): Installs and configures MPM `prefork`.
+* [`apache::mod::proxy`](#apache--mod--proxy): Installs and configures `mod_proxy`.
+* [`apache::mod::proxy_ajp`](#apache--mod--proxy_ajp): Installs `mod_proxy_ajp`.
+* [`apache::mod::proxy_balancer`](#apache--mod--proxy_balancer): Installs and configures `mod_proxy_balancer`.
+* [`apache::mod::proxy_connect`](#apache--mod--proxy_connect): Installs `mod_proxy_connect`.
+* [`apache::mod::proxy_fcgi`](#apache--mod--proxy_fcgi): Installs `mod_proxy_fcgi`.
+* [`apache::mod::proxy_html`](#apache--mod--proxy_html): Installs `mod_proxy_html`.
+* [`apache::mod::proxy_http`](#apache--mod--proxy_http): Installs `mod_proxy_http`.
+* [`apache::mod::proxy_wstunnel`](#apache--mod--proxy_wstunnel): Installs `mod_proxy_wstunnel`.
+* [`apache::mod::python`](#apache--mod--python): Installs and configures `mod_python`.
+* [`apache::mod::remoteip`](#apache--mod--remoteip): Installs and configures `mod_remoteip`.
+* [`apache::mod::reqtimeout`](#apache--mod--reqtimeout): Installs and configures `mod_reqtimeout`.
+* [`apache::mod::rewrite`](#apache--mod--rewrite): Installs `mod_rewrite`.
+* [`apache::mod::rpaf`](#apache--mod--rpaf): Installs and configures `mod_rpaf`.
+* [`apache::mod::security`](#apache--mod--security): Installs and configures `mod_security`.
+* [`apache::mod::setenvif`](#apache--mod--setenvif): Installs `mod_setenvif`.
+* [`apache::mod::shib`](#apache--mod--shib): Installs and configures `mod_shib`.
+* [`apache::mod::socache_shmcb`](#apache--mod--socache_shmcb): Installs `mod_socache_shmcb`.
+* [`apache::mod::speling`](#apache--mod--speling): Installs `mod_spelling`.
+* [`apache::mod::ssl`](#apache--mod--ssl): Installs `mod_ssl`.
+* [`apache::mod::status`](#apache--mod--status): Installs and configures `mod_status`.
+* [`apache::mod::suexec`](#apache--mod--suexec): Installs `mod_suexec`.
+* [`apache::mod::userdir`](#apache--mod--userdir): Installs and configures `mod_userdir`.
+* [`apache::mod::version`](#apache--mod--version): Installs `mod_version`.
+* [`apache::mod::vhost_alias`](#apache--mod--vhost_alias): Installs Apache `mod_vhost_alias`.
+* [`apache::mod::watchdog`](#apache--mod--watchdog): Installs and configures `mod_watchdog`.
+* [`apache::mod::worker`](#apache--mod--worker): Installs and manages the MPM `worker`.
+* [`apache::mod::wsgi`](#apache--mod--wsgi): Installs and configures `mod_wsgi`.
+* [`apache::mod::xsendfile`](#apache--mod--xsendfile): Installs `mod_xsendfile`.
+* [`apache::mpm::disable_mpm_event`](#apache--mpm--disable_mpm_event): disable Apache-Module event
+* [`apache::mpm::disable_mpm_prefork`](#apache--mpm--disable_mpm_prefork): disable Apache-Module prefork
+* [`apache::mpm::disable_mpm_worker`](#apache--mpm--disable_mpm_worker): disable Apache-Module worker
+* [`apache::vhosts`](#apache--vhosts): Creates `apache::vhost` defined types.
 
 #### Private Classes
 
@@ -131,22 +131,22 @@ pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet
 
 #### Public Defined types
 
-* [`apache::balancer`](#apachebalancer): This type will create an apache balancer cluster file inside the conf.d
+* [`apache::balancer`](#apache--balancer): This type will create an apache balancer cluster file inside the conf.d
 directory.
-* [`apache::balancermember`](#apachebalancermember): Defines members of `mod_proxy_balancer`
-* [`apache::custom_config`](#apachecustom_config): Adds a custom configuration file to the Apache server's `conf.d` directory.
-* [`apache::fastcgi::server`](#apachefastcgiserver): Defines one or more external FastCGI servers to handle specific file types. Use this
+* [`apache::balancermember`](#apache--balancermember): Defines members of `mod_proxy_balancer`
+* [`apache::custom_config`](#apache--custom_config): Adds a custom configuration file to the Apache server's `conf.d` directory.
+* [`apache::fastcgi::server`](#apache--fastcgi--server): Defines one or more external FastCGI servers to handle specific file types. Use this
 defined type with `mod_fastcgi`.
-* [`apache::listen`](#apachelisten): Adds `Listen` directives to `ports.conf` that define the
+* [`apache::listen`](#apache--listen): Adds `Listen` directives to `ports.conf` that define the
 Apache server's or a virtual host's listening address and port.
-* [`apache::mod`](#apachemod): Installs packages for an Apache module that doesn't have a corresponding
+* [`apache::mod`](#apache--mod): Installs packages for an Apache module that doesn't have a corresponding
 `apache::mod::<MODULE NAME>` class.
-* [`apache::namevirtualhost`](#apachenamevirtualhost): Enables name-based virtual hosts
-* [`apache::vhost`](#apachevhost): Allows specialised configurations for virtual hosts that possess requirements
+* [`apache::namevirtualhost`](#apache--namevirtualhost): Enables name-based virtual hosts
+* [`apache::vhost`](#apache--vhost): Allows specialised configurations for virtual hosts that possess requirements
 outside of the defaults.
-* [`apache::vhost::custom`](#apachevhostcustom): A wrapper around the `apache::custom_config` defined type.
-* [`apache::vhost::fragment`](#apachevhostfragment): Define a fragment within a vhost
-* [`apache::vhost::proxy`](#apachevhostproxy): Configure a reverse proxy for a vhost
+* [`apache::vhost::custom`](#apache--vhost--custom): A wrapper around the `apache::custom_config` defined type.
+* [`apache::vhost::fragment`](#apache--vhost--fragment): Define a fragment within a vhost
+* [`apache::vhost::proxy`](#apache--vhost--proxy): Configure a reverse proxy for a vhost
 
 #### Private Defined types
 
@@ -162,20 +162,20 @@ outside of the defaults.
 
 ### Functions
 
-* [`apache::apache_pw_hash`](#apacheapache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`apache::bool2httpd`](#apachebool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
-* [`apache::pw_hash`](#apachepw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
+* [`apache::apache_pw_hash`](#apache--apache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
+* [`apache::bool2httpd`](#apache--bool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
+* [`apache::pw_hash`](#apache--pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
 * [`apache_pw_hash`](#apache_pw_hash): DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
 * [`bool2httpd`](#bool2httpd): DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
 
 ### Data types
 
-* [`Apache::LogLevel`](#apacheloglevel): A string that conforms to the Apache `LogLevel` syntax.
-* [`Apache::ModProxyProtocol`](#apachemodproxyprotocol): Supported protocols / schemes by mod_proxy
-* [`Apache::OIDCSettings`](#apacheoidcsettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
-* [`Apache::ServerTokens`](#apacheservertokens): A string that conforms to the Apache `ServerTokens` syntax.
-* [`Apache::Vhost::Priority`](#apachevhostpriority): The priority on vhost
-* [`Apache::Vhost::ProxyPass`](#apachevhostproxypass): Struct representing reverse proxy configuration for an Apache vhost, used by the Apache::Vhost::Proxy defined resource type.
+* [`Apache::LogLevel`](#Apache--LogLevel): A string that conforms to the Apache `LogLevel` syntax.
+* [`Apache::ModProxyProtocol`](#Apache--ModProxyProtocol): Supported protocols / schemes by mod_proxy
+* [`Apache::OIDCSettings`](#Apache--OIDCSettings): https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
+* [`Apache::ServerTokens`](#Apache--ServerTokens): A string that conforms to the Apache `ServerTokens` syntax.
+* [`Apache::Vhost::Priority`](#Apache--Vhost--Priority): The priority on vhost
+* [`Apache::Vhost::ProxyPass`](#Apache--Vhost--ProxyPass): Struct representing reverse proxy configuration for an Apache vhost, used by the Apache::Vhost::Proxy defined resource type.
 
 ### Tasks
 
@@ -206,96 +206,97 @@ class { 'apache': }
 
 The following parameters are available in the `apache` class:
 
-* [`allow_encoded_slashes`](#allow_encoded_slashes)
-* [`apache_version`](#apache_version)
-* [`conf_dir`](#conf_dir)
-* [`conf_template`](#conf_template)
-* [`confd_dir`](#confd_dir)
-* [`default_charset`](#default_charset)
-* [`default_confd_files`](#default_confd_files)
-* [`default_mods`](#default_mods)
-* [`default_ssl_ca`](#default_ssl_ca)
-* [`default_ssl_cert`](#default_ssl_cert)
-* [`default_ssl_chain`](#default_ssl_chain)
-* [`default_ssl_crl`](#default_ssl_crl)
-* [`default_ssl_crl_path`](#default_ssl_crl_path)
-* [`default_ssl_crl_check`](#default_ssl_crl_check)
-* [`default_ssl_key`](#default_ssl_key)
-* [`default_ssl_reload_on_change`](#default_ssl_reload_on_change)
-* [`default_ssl_vhost`](#default_ssl_vhost)
-* [`default_type`](#default_type)
-* [`default_vhost`](#default_vhost)
-* [`dev_packages`](#dev_packages)
-* [`docroot`](#docroot)
-* [`error_documents`](#error_documents)
-* [`group`](#group)
-* [`httpd_dir`](#httpd_dir)
-* [`http_protocol_options`](#http_protocol_options)
-* [`keepalive`](#keepalive)
-* [`keepalive_timeout`](#keepalive_timeout)
-* [`max_keepalive_requests`](#max_keepalive_requests)
-* [`hostname_lookups`](#hostname_lookups)
-* [`ldap_trusted_mode`](#ldap_trusted_mode)
-* [`ldap_verify_server_cert`](#ldap_verify_server_cert)
-* [`lib_path`](#lib_path)
-* [`log_level`](#log_level)
-* [`log_formats`](#log_formats)
-* [`logroot`](#logroot)
-* [`logroot_mode`](#logroot_mode)
-* [`manage_group`](#manage_group)
-* [`supplementary_groups`](#supplementary_groups)
-* [`manage_user`](#manage_user)
-* [`mod_dir`](#mod_dir)
-* [`mod_libs`](#mod_libs)
-* [`mod_packages`](#mod_packages)
-* [`mpm_module`](#mpm_module)
-* [`package_ensure`](#package_ensure)
-* [`pidfile`](#pidfile)
-* [`ports_file`](#ports_file)
-* [`protocols`](#protocols)
-* [`protocols_honor_order`](#protocols_honor_order)
-* [`purge_configs`](#purge_configs)
-* [`purge_vhost_dir`](#purge_vhost_dir)
-* [`rewrite_lock`](#rewrite_lock)
-* [`sendfile`](#sendfile)
-* [`serveradmin`](#serveradmin)
-* [`servername`](#servername)
-* [`server_root`](#server_root)
-* [`server_signature`](#server_signature)
-* [`server_tokens`](#server_tokens)
-* [`service_enable`](#service_enable)
-* [`service_ensure`](#service_ensure)
-* [`service_name`](#service_name)
-* [`service_manage`](#service_manage)
-* [`service_restart`](#service_restart)
-* [`timeout`](#timeout)
-* [`trace_enable`](#trace_enable)
-* [`use_canonical_name`](#use_canonical_name)
-* [`use_systemd`](#use_systemd)
-* [`file_mode`](#file_mode)
-* [`root_directory_options`](#root_directory_options)
-* [`root_directory_secured`](#root_directory_secured)
-* [`vhost_dir`](#vhost_dir)
-* [`vhost_include_pattern`](#vhost_include_pattern)
-* [`user`](#user)
-* [`apache_name`](#apache_name)
-* [`error_log`](#error_log)
-* [`scriptalias`](#scriptalias)
-* [`access_log_file`](#access_log_file)
-* [`limitreqfields`](#limitreqfields)
-* [`limitreqfieldsize`](#limitreqfieldsize)
-* [`ip`](#ip)
-* [`purge_vdir`](#purge_vdir)
-* [`conf_enabled`](#conf_enabled)
-* [`vhost_enable_dir`](#vhost_enable_dir)
-* [`manage_vhost_enable_dir`](#manage_vhost_enable_dir)
-* [`mod_enable_dir`](#mod_enable_dir)
-* [`ssl_file`](#ssl_file)
-* [`file_e_tag`](#file_e_tag)
-* [`use_optional_includes`](#use_optional_includes)
-* [`mime_types_additional`](#mime_types_additional)
+* [`allow_encoded_slashes`](#-apache--allow_encoded_slashes)
+* [`apache_version`](#-apache--apache_version)
+* [`conf_dir`](#-apache--conf_dir)
+* [`conf_template`](#-apache--conf_template)
+* [`confd_dir`](#-apache--confd_dir)
+* [`default_charset`](#-apache--default_charset)
+* [`default_confd_files`](#-apache--default_confd_files)
+* [`default_mods`](#-apache--default_mods)
+* [`default_ssl_ca`](#-apache--default_ssl_ca)
+* [`default_ssl_cert`](#-apache--default_ssl_cert)
+* [`default_ssl_chain`](#-apache--default_ssl_chain)
+* [`default_ssl_crl`](#-apache--default_ssl_crl)
+* [`default_ssl_crl_path`](#-apache--default_ssl_crl_path)
+* [`default_ssl_crl_check`](#-apache--default_ssl_crl_check)
+* [`default_ssl_key`](#-apache--default_ssl_key)
+* [`default_ssl_reload_on_change`](#-apache--default_ssl_reload_on_change)
+* [`default_ssl_vhost`](#-apache--default_ssl_vhost)
+* [`default_type`](#-apache--default_type)
+* [`default_vhost`](#-apache--default_vhost)
+* [`dev_packages`](#-apache--dev_packages)
+* [`docroot`](#-apache--docroot)
+* [`error_documents`](#-apache--error_documents)
+* [`group`](#-apache--group)
+* [`httpd_dir`](#-apache--httpd_dir)
+* [`http_protocol_options`](#-apache--http_protocol_options)
+* [`keepalive`](#-apache--keepalive)
+* [`keepalive_timeout`](#-apache--keepalive_timeout)
+* [`max_keepalive_requests`](#-apache--max_keepalive_requests)
+* [`hostname_lookups`](#-apache--hostname_lookups)
+* [`ldap_trusted_mode`](#-apache--ldap_trusted_mode)
+* [`ldap_verify_server_cert`](#-apache--ldap_verify_server_cert)
+* [`lib_path`](#-apache--lib_path)
+* [`log_level`](#-apache--log_level)
+* [`log_formats`](#-apache--log_formats)
+* [`logroot`](#-apache--logroot)
+* [`logroot_mode`](#-apache--logroot_mode)
+* [`manage_group`](#-apache--manage_group)
+* [`supplementary_groups`](#-apache--supplementary_groups)
+* [`manage_user`](#-apache--manage_user)
+* [`mod_dir`](#-apache--mod_dir)
+* [`mod_libs`](#-apache--mod_libs)
+* [`mod_packages`](#-apache--mod_packages)
+* [`mpm_module`](#-apache--mpm_module)
+* [`package_ensure`](#-apache--package_ensure)
+* [`pidfile`](#-apache--pidfile)
+* [`ports_file`](#-apache--ports_file)
+* [`protocols`](#-apache--protocols)
+* [`protocols_honor_order`](#-apache--protocols_honor_order)
+* [`purge_configs`](#-apache--purge_configs)
+* [`purge_vhost_dir`](#-apache--purge_vhost_dir)
+* [`rewrite_lock`](#-apache--rewrite_lock)
+* [`sendfile`](#-apache--sendfile)
+* [`serveradmin`](#-apache--serveradmin)
+* [`servername`](#-apache--servername)
+* [`server_root`](#-apache--server_root)
+* [`server_signature`](#-apache--server_signature)
+* [`server_tokens`](#-apache--server_tokens)
+* [`service_enable`](#-apache--service_enable)
+* [`service_ensure`](#-apache--service_ensure)
+* [`service_name`](#-apache--service_name)
+* [`service_manage`](#-apache--service_manage)
+* [`service_restart`](#-apache--service_restart)
+* [`timeout`](#-apache--timeout)
+* [`trace_enable`](#-apache--trace_enable)
+* [`use_canonical_name`](#-apache--use_canonical_name)
+* [`use_systemd`](#-apache--use_systemd)
+* [`file_mode`](#-apache--file_mode)
+* [`root_directory_options`](#-apache--root_directory_options)
+* [`root_directory_secured`](#-apache--root_directory_secured)
+* [`vhost_dir`](#-apache--vhost_dir)
+* [`vhost_include_pattern`](#-apache--vhost_include_pattern)
+* [`user`](#-apache--user)
+* [`apache_name`](#-apache--apache_name)
+* [`error_log`](#-apache--error_log)
+* [`scriptalias`](#-apache--scriptalias)
+* [`access_log_file`](#-apache--access_log_file)
+* [`limitreqfields`](#-apache--limitreqfields)
+* [`limitreqfieldsize`](#-apache--limitreqfieldsize)
+* [`limitreqline`](#-apache--limitreqline)
+* [`ip`](#-apache--ip)
+* [`purge_vdir`](#-apache--purge_vdir)
+* [`conf_enabled`](#-apache--conf_enabled)
+* [`vhost_enable_dir`](#-apache--vhost_enable_dir)
+* [`manage_vhost_enable_dir`](#-apache--manage_vhost_enable_dir)
+* [`mod_enable_dir`](#-apache--mod_enable_dir)
+* [`ssl_file`](#-apache--ssl_file)
+* [`file_e_tag`](#-apache--file_e_tag)
+* [`use_optional_includes`](#-apache--use_optional_includes)
+* [`mime_types_additional`](#-apache--mime_types_additional)
 
-##### <a name="allow_encoded_slashes"></a>`allow_encoded_slashes`
+##### <a name="-apache--allow_encoded_slashes"></a>`allow_encoded_slashes`
 
 Data type: `Optional[Enum['on', 'off', 'nodecode']]`
 
@@ -303,9 +304,9 @@ Sets the server default for the `AllowEncodedSlashes` declaration, which modifie
 responses to URLs containing '\' and '/' characters. If not specified, this parameter omits
 the declaration from the server's configuration and uses Apache's default setting of 'off'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--apache_version"></a>`apache_version`
 
 Data type: `String`
 
@@ -315,7 +316,7 @@ without reason.
 
 Default value: `$apache::version::default`
 
-##### <a name="conf_dir"></a>`conf_dir`
+##### <a name="-apache--conf_dir"></a>`conf_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -323,7 +324,7 @@ Sets the directory where the Apache server's main configuration file is located.
 
 Default value: `$apache::params::conf_dir`
 
-##### <a name="conf_template"></a>`conf_template`
+##### <a name="-apache--conf_template"></a>`conf_template`
 
 Data type: `String`
 
@@ -333,7 +334,7 @@ configuration file customized by `conf.d` entries.
 
 Default value: `$apache::params::conf_template`
 
-##### <a name="confd_dir"></a>`confd_dir`
+##### <a name="-apache--confd_dir"></a>`confd_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -341,15 +342,15 @@ Sets the location of the Apache server's custom configuration directory.
 
 Default value: `$apache::params::confd_dir`
 
-##### <a name="default_charset"></a>`default_charset`
+##### <a name="-apache--default_charset"></a>`default_charset`
 
 Data type: `Optional[String]`
 
 Used as the `AddDefaultCharset` directive in the main configuration file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_confd_files"></a>`default_confd_files`
+##### <a name="-apache--default_confd_files"></a>`default_confd_files`
 
 Data type: `Boolean`
 
@@ -358,9 +359,9 @@ in the directory defined by the `confd_dir` parameter. These configuration files
 correspond to what is typically installed with the Apache package on the server's
 operating system.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="default_mods"></a>`default_mods`
+##### <a name="-apache--default_mods"></a>`default_mods`
 
 Data type: `Variant[Array, Boolean]`
 
@@ -374,9 +375,9 @@ the values of `apache_version` and `mpm_module` parameters. Because these lists 
 modules can change frequently, consult the Puppet module's code for up-to-date lists.<br />
 If this parameter contains an array, Puppet instead enables all passed Apache modules.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="default_ssl_ca"></a>`default_ssl_ca`
+##### <a name="-apache--default_ssl_ca"></a>`default_ssl_ca`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -385,9 +386,9 @@ Although the default value results in a functioning Apache server, you **must** 
 this parameter with your certificate authority information before deploying this server in
 a production environment.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_ssl_cert"></a>`default_ssl_cert`
+##### <a name="-apache--default_ssl_cert"></a>`default_ssl_cert`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -397,7 +398,7 @@ parameter with your certificate location before deploying this server in a produ
 
 Default value: `$apache::params::default_ssl_cert`
 
-##### <a name="default_ssl_chain"></a>`default_ssl_chain`
+##### <a name="-apache--default_ssl_chain"></a>`default_ssl_chain`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -405,9 +406,9 @@ Sets the default SSL chain location.<br />
 Although this default value results in a functioning Apache server, you **must** update
 this parameter with your SSL chain before deploying this server in a production environment.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_ssl_crl"></a>`default_ssl_crl`
+##### <a name="-apache--default_ssl_crl"></a>`default_ssl_crl`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -416,9 +417,9 @@ Although this default value results in a functioning Apache server, you **must**
 this parameter with the CRL file path before deploying this server in a production
 environment. You can use this parameter with or in place of the `default_ssl_crl_path`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_ssl_crl_path"></a>`default_ssl_crl_path`
+##### <a name="-apache--default_ssl_crl_path"></a>`default_ssl_crl_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -426,9 +427,9 @@ Sets the server's certificate revocation list path, which contains your CRLs.<br
 Although this default value results in a functioning Apache server, you **must** update
 this parameter with the CRL file path before deploying this server in a production environment.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_ssl_crl_check"></a>`default_ssl_crl_check`
+##### <a name="-apache--default_ssl_crl_check"></a>`default_ssl_crl_check`
 
 Data type: `Optional[String]`
 
@@ -437,9 +438,9 @@ This parameter applies only to Apache 2.4 or higher and is ignored on older vers
 Although this default value results in a functioning Apache server, you **must** specify
 this parameter when using certificate revocation lists in a production environment.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_ssl_key"></a>`default_ssl_key`
+##### <a name="-apache--default_ssl_key"></a>`default_ssl_key`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -450,15 +451,15 @@ environment.
 
 Default value: `$apache::params::default_ssl_key`
 
-##### <a name="default_ssl_reload_on_change"></a>`default_ssl_reload_on_change`
+##### <a name="-apache--default_ssl_reload_on_change"></a>`default_ssl_reload_on_change`
 
 Data type: `Boolean`
 
 Enable reloading of apache if the content of ssl files have changed.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="default_ssl_vhost"></a>`default_ssl_vhost`
+##### <a name="-apache--default_ssl_vhost"></a>`default_ssl_vhost`
 
 Data type: `Boolean`
 
@@ -477,9 +478,9 @@ apache::vhost { 'default-ssl':
 ```
 **Note**: SSL virtual hosts only respond to HTTPS queries.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="default_type"></a>`default_type`
+##### <a name="-apache--default_type"></a>`default_type`
 
 Data type: `String`
 
@@ -489,7 +490,7 @@ newer, and is only for backwards compatibility in configuration files.
 
 Default value: `'none'`
 
-##### <a name="default_vhost"></a>`default_vhost`
+##### <a name="-apache--default_vhost"></a>`default_vhost`
 
 Data type: `Boolean`
 
@@ -499,9 +500,9 @@ value to `false`.<br />
 > **Note**: Apache will not start without at least one virtual host. If you set this
 to `false` you must configure a virtual host elsewhere.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="dev_packages"></a>`dev_packages`
+##### <a name="-apache--dev_packages"></a>`dev_packages`
 
 Data type: `Optional[Variant[Array, String]]`
 
@@ -517,7 +518,7 @@ class { 'apache':
 
 Default value: `$apache::params::dev_packages`
 
-##### <a name="docroot"></a>`docroot`
+##### <a name="-apache--docroot"></a>`docroot`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -525,15 +526,15 @@ Sets the default `DocumentRoot` location.
 
 Default value: `$apache::params::docroot`
 
-##### <a name="error_documents"></a>`error_documents`
+##### <a name="-apache--error_documents"></a>`error_documents`
 
 Data type: `Boolean`
 
 Determines whether to enable [custom error documents](https://httpd.apache.org/docs/current/custom-error.html) on the Apache server.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="group"></a>`group`
+##### <a name="-apache--group"></a>`group`
 
 Data type: `String`
 
@@ -548,7 +549,7 @@ process.
 
 Default value: `$apache::params::group`
 
-##### <a name="httpd_dir"></a>`httpd_dir`
+##### <a name="-apache--httpd_dir"></a>`httpd_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -558,7 +559,7 @@ with the default distribution packages.
 
 Default value: `$apache::params::httpd_dir`
 
-##### <a name="http_protocol_options"></a>`http_protocol_options`
+##### <a name="-apache--http_protocol_options"></a>`http_protocol_options`
 
 Data type: `Optional[String]`
 
@@ -568,7 +569,7 @@ Valid options: any sequence of the following alternative values: `Strict` or `Un
 
 Default value: `$apache::params::http_protocol_options`
 
-##### <a name="keepalive"></a>`keepalive`
+##### <a name="-apache--keepalive"></a>`keepalive`
 
 Data type: `Enum['On', 'Off']`
 
@@ -578,7 +579,7 @@ to set relevant options.<br />
 
 Default value: `$apache::params::keepalive`
 
-##### <a name="keepalive_timeout"></a>`keepalive_timeout`
+##### <a name="-apache--keepalive_timeout"></a>`keepalive_timeout`
 
 Data type: `Integer`
 
@@ -588,7 +589,7 @@ only relevant if the `keepalive` parameter is enabled.
 
 Default value: `$apache::params::keepalive_timeout`
 
-##### <a name="max_keepalive_requests"></a>`max_keepalive_requests`
+##### <a name="-apache--max_keepalive_requests"></a>`max_keepalive_requests`
 
 Data type: `Integer`
 
@@ -596,7 +597,7 @@ Limits the number of requests allowed per connection when the `keepalive` parame
 
 Default value: `$apache::params::max_keepalive_requests`
 
-##### <a name="hostname_lookups"></a>`hostname_lookups`
+##### <a name="-apache--hostname_lookups"></a>`hostname_lookups`
 
 Data type: `Enum['Off', 'On', 'Double', 'off', 'on', 'double']`
 
@@ -606,7 +607,7 @@ CGIs/SSIs in REMOTE_HOST.<br />
 
 Default value: `$apache::params::hostname_lookups`
 
-##### <a name="ldap_trusted_mode"></a>`ldap_trusted_mode`
+##### <a name="-apache--ldap_trusted_mode"></a>`ldap_trusted_mode`
 
 Data type: `Optional[String]`
 
@@ -618,9 +619,9 @@ The following modes are supported:
 Not all LDAP toolkits support all the above modes. An error message will be logged at
 runtime if a mode is not supported, and the connection to the LDAP server will fail.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_verify_server_cert"></a>`ldap_verify_server_cert`
+##### <a name="-apache--ldap_verify_server_cert"></a>`ldap_verify_server_cert`
 
 Data type: `Optional[Enum['On', 'Off', 'on', 'off']]`
 
@@ -628,9 +629,9 @@ Specifies whether to force the verification of a server certificate when establi
 connection to the LDAP server.
 On|Off
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="lib_path"></a>`lib_path`
+##### <a name="-apache--lib_path"></a>`lib_path`
 
 Data type: `String`
 
@@ -639,7 +640,7 @@ Specifies the location whereApache module files are stored.<br />
 
 Default value: `$apache::params::lib_path`
 
-##### <a name="log_level"></a>`log_level`
+##### <a name="-apache--log_level"></a>`log_level`
 
 Data type: `Apache::LogLevel`
 
@@ -648,7 +649,7 @@ which adjusts the verbosity of the messages recorded in the error logs.
 
 Default value: `$apache::params::log_level`
 
-##### <a name="log_formats"></a>`log_formats`
+##### <a name="-apache--log_formats"></a>`log_formats`
 
 Data type: `Hash`
 
@@ -668,7 +669,7 @@ If your `log_formats` parameter contains one of those, it will be overwritten wi
 
 Default value: `{}`
 
-##### <a name="logroot"></a>`logroot`
+##### <a name="-apache--logroot"></a>`logroot`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -676,7 +677,7 @@ Changes the directory of Apache log files for the virtual host.
 
 Default value: `$apache::params::logroot`
 
-##### <a name="logroot_mode"></a>`logroot_mode`
+##### <a name="-apache--logroot_mode"></a>`logroot_mode`
 
 Data type: `Optional[Stdlib::Filemode]`
 
@@ -687,7 +688,7 @@ for details.
 
 Default value: `$apache::params::logroot_mode`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-apache--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -696,9 +697,9 @@ If you have a group created from another Puppet module that you want to use to r
 set this to `false`. Without this parameter, attempting to use a previously established
 group results in a duplicate resource error.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="supplementary_groups"></a>`supplementary_groups`
+##### <a name="-apache--supplementary_groups"></a>`supplementary_groups`
 
 Data type: `Array`
 
@@ -707,7 +708,7 @@ Notice: This option only has an effect when `manage_user` is set to true.
 
 Default value: `[]`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-apache--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -716,9 +717,9 @@ This is for instances when you have a user, created from another Puppet module, 
 to use to run Apache. Without this parameter, attempting to use a previously established
 user would result in a duplicate resource error.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="mod_dir"></a>`mod_dir`
+##### <a name="-apache--mod_dir"></a>`mod_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -726,7 +727,7 @@ Sets where Puppet places configuration files for your Apache modules.
 
 Default value: `$apache::params::mod_dir`
 
-##### <a name="mod_libs"></a>`mod_libs`
+##### <a name="-apache--mod_libs"></a>`mod_libs`
 
 Data type: `Hash`
 
@@ -742,7 +743,7 @@ class { 'apache':
 
 Default value: `$apache::params::mod_libs`
 
-##### <a name="mod_packages"></a>`mod_packages`
+##### <a name="-apache--mod_packages"></a>`mod_packages`
 
 Data type: `Hash`
 
@@ -758,7 +759,7 @@ class { 'apache':
 
 Default value: `$apache::params::mod_packages`
 
-##### <a name="mpm_module"></a>`mpm_module`
+##### <a name="-apache--mpm_module"></a>`mpm_module`
 
 Data type: `Variant[Boolean, String]`
 
@@ -773,7 +774,7 @@ You must set this to `false` to explicitly declare the following classes with cu
 
 Default value: `$apache::params::mpm_module`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-apache--package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -782,7 +783,7 @@ Controls the `package` resource's `ensure` attribute. Valid values are: `absent`
 
 Default value: `'installed'`
 
-##### <a name="pidfile"></a>`pidfile`
+##### <a name="-apache--pidfile"></a>`pidfile`
 
 Data type: `String`
 
@@ -790,7 +791,7 @@ Allows settting a custom location for the pid file. Useful if using a custom-bui
 
 Default value: `$apache::params::pidfile`
 
-##### <a name="ports_file"></a>`ports_file`
+##### <a name="-apache--ports_file"></a>`ports_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -798,7 +799,7 @@ Sets the path to the file containing Apache ports configuration.
 
 Default value: `$apache::params::ports_file`
 
-##### <a name="protocols"></a>`protocols`
+##### <a name="-apache--protocols"></a>`protocols`
 
 Data type: `Array[Enum['h2', 'h2c', 'http/1.1']]`
 
@@ -807,16 +808,16 @@ directive, which lists available protocols for the server.
 
 Default value: `[]`
 
-##### <a name="protocols_honor_order"></a>`protocols_honor_order`
+##### <a name="-apache--protocols_honor_order"></a>`protocols_honor_order`
 
 Data type: `Optional[Boolean]`
 
 Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder)
 directive which determines whether the order of Protocols sets precedence during negotiation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="purge_configs"></a>`purge_configs`
+##### <a name="-apache--purge_configs"></a>`purge_configs`
 
 Data type: `Boolean`
 
@@ -825,9 +826,9 @@ Setting this to `false` is a stopgap measure to allow the apache module to coexi
 existing or unmanaged configurations. We recommend moving your configuration to resources
 within this module. For virtual host configurations, see `purge_vhost_dir`.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="purge_vhost_dir"></a>`purge_vhost_dir`
+##### <a name="-apache--purge_vhost_dir"></a>`purge_vhost_dir`
 
 Data type: `Optional[Boolean]`
 
@@ -837,9 +838,9 @@ by Puppet.<br />
 Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to
 coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rewrite_lock"></a>`rewrite_lock`
+##### <a name="-apache--rewrite_lock"></a>`rewrite_lock`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -847,9 +848,9 @@ Allows setting a custom location for a rewrite lock - considered best practice i
 a RewriteMap of type prg in the `rewrites` parameter of your virtual host. This parameter
 only applies to Apache version 2.2 or lower and is ignored on newer versions.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sendfile"></a>`sendfile`
+##### <a name="-apache--sendfile"></a>`sendfile`
 
 Data type: `Enum['On', 'Off', 'on', 'off']`
 
@@ -858,15 +859,15 @@ Forces Apache to use the Linux kernel's `sendfile` support to serve static files
 
 Default value: `'On'`
 
-##### <a name="serveradmin"></a>`serveradmin`
+##### <a name="-apache--serveradmin"></a>`serveradmin`
 
 Data type: `Optional[String[1]]`
 
 Sets the Apache server administrator's contact information via Apache's `ServerAdmin` directive.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="servername"></a>`servername`
+##### <a name="-apache--servername"></a>`servername`
 
 Data type: `Optional[String]`
 
@@ -875,7 +876,7 @@ Setting to `false` will not set ServerName at all.
 
 Default value: `$apache::params::servername`
 
-##### <a name="server_root"></a>`server_root`
+##### <a name="-apache--server_root"></a>`server_root`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -883,7 +884,7 @@ Sets the Apache server's root directory via Apache's `ServerRoot` directive.
 
 Default value: `$apache::params::server_root`
 
-##### <a name="server_signature"></a>`server_signature`
+##### <a name="-apache--server_signature"></a>`server_signature`
 
 Data type: `Variant[Enum['On', 'Off'], String]`
 
@@ -893,7 +894,7 @@ directive. Valid values are: `On` or `Off`.
 
 Default value: `'On'`
 
-##### <a name="server_tokens"></a>`server_tokens`
+##### <a name="-apache--server_tokens"></a>`server_tokens`
 
 Data type: `Apache::ServerTokens`
 
@@ -902,15 +903,15 @@ system, via Apache's `ServerTokens` directive.
 
 Default value: `'Prod'`
 
-##### <a name="service_enable"></a>`service_enable`
+##### <a name="-apache--service_enable"></a>`service_enable`
 
 Data type: `Boolean`
 
 Determines whether Puppet enables the Apache HTTPD service when the system is booted.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-apache--service_ensure"></a>`service_ensure`
 
 Data type: `Variant[Stdlib::Ensure::Service, Boolean]`
 
@@ -922,7 +923,7 @@ application, such as Pacemaker.<br />
 
 Default value: `'running'`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-apache--service_name"></a>`service_name`
 
 Data type: `String`
 
@@ -930,24 +931,24 @@ Sets the name of the Apache service.
 
 Default value: `$apache::params::service_name`
 
-##### <a name="service_manage"></a>`service_manage`
+##### <a name="-apache--service_manage"></a>`service_manage`
 
 Data type: `Boolean`
 
 Determines whether Puppet manages the HTTPD service's state.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="service_restart"></a>`service_restart`
+##### <a name="-apache--service_restart"></a>`service_restart`
 
 Data type: `Optional[String]`
 
 Determines whether Puppet should use a specific command to restart the HTTPD service.
 Values: a command to restart the Apache service.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-apache--timeout"></a>`timeout`
 
 Data type: `Integer[0]`
 
@@ -956,7 +957,7 @@ certain events before failing a request.
 
 Default value: `60`
 
-##### <a name="trace_enable"></a>`trace_enable`
+##### <a name="-apache--trace_enable"></a>`trace_enable`
 
 Data type: `Enum['On', 'Off', 'extended']`
 
@@ -964,7 +965,7 @@ Controls how Apache handles `TRACE` requests (per RFC 2616) via the `TraceEnable
 
 Default value: `'On'`
 
-##### <a name="use_canonical_name"></a>`use_canonical_name`
+##### <a name="-apache--use_canonical_name"></a>`use_canonical_name`
 
 Data type: `Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]`
 
@@ -972,9 +973,9 @@ Controls Apache's `UseCanonicalName` directive which controls how Apache handles
 self-referential URLs. If not specified, this parameter omits the declaration from the
 server's configuration and uses Apache's default setting of 'off'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_systemd"></a>`use_systemd`
+##### <a name="-apache--use_systemd"></a>`use_systemd`
 
 Data type: `Boolean`
 
@@ -983,7 +984,7 @@ especially useful if using custom-built RPMs.
 
 Default value: `$apache::params::use_systemd`
 
-##### <a name="file_mode"></a>`file_mode`
+##### <a name="-apache--file_mode"></a>`file_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -992,7 +993,7 @@ Valid values are: a string, with permissions mode in symbolic or numeric notatio
 
 Default value: `$apache::params::file_mode`
 
-##### <a name="root_directory_options"></a>`root_directory_options`
+##### <a name="-apache--root_directory_options"></a>`root_directory_options`
 
 Data type: `Array`
 
@@ -1000,7 +1001,7 @@ Array of the desired options for the `/` directory in httpd.conf.
 
 Default value: `$apache::params::root_directory_options`
 
-##### <a name="root_directory_secured"></a>`root_directory_secured`
+##### <a name="-apache--root_directory_secured"></a>`root_directory_secured`
 
 Data type: `Boolean`
 
@@ -1010,9 +1011,9 @@ allows access to all resources that are missing a more specific access policy. A
 used to allow access to these resources (for example, in a directory block using the
 `directories` parameter).
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="vhost_dir"></a>`vhost_dir`
+##### <a name="-apache--vhost_dir"></a>`vhost_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1020,7 +1021,7 @@ Changes your virtual host configuration files' location.
 
 Default value: `$apache::params::vhost_dir`
 
-##### <a name="vhost_include_pattern"></a>`vhost_include_pattern`
+##### <a name="-apache--vhost_include_pattern"></a>`vhost_include_pattern`
 
 Data type: `String`
 
@@ -1033,7 +1034,7 @@ files ending in `.conf`.
 
 Default value: `$apache::params::vhost_include_pattern`
 
-##### <a name="user"></a>`user`
+##### <a name="-apache--user"></a>`user`
 
 Data type: `String`
 
@@ -1043,7 +1044,7 @@ To prevent Puppet from managing the user, set the `manage_user` parameter to `fa
 
 Default value: `$apache::params::user`
 
-##### <a name="apache_name"></a>`apache_name`
+##### <a name="-apache--apache_name"></a>`apache_name`
 
 Data type: `String`
 
@@ -1053,7 +1054,7 @@ For CentOS/RHEL Software Collections (SCL), you can also use `apache::version::s
 
 Default value: `$apache::params::apache_name`
 
-##### <a name="error_log"></a>`error_log`
+##### <a name="-apache--error_log"></a>`error_log`
 
 Data type: `String`
 
@@ -1063,7 +1064,7 @@ The name of the error log file for the main server instance. If the string start
 
 Default value: `$apache::params::error_log`
 
-##### <a name="scriptalias"></a>`scriptalias`
+##### <a name="-apache--scriptalias"></a>`scriptalias`
 
 Data type: `String`
 
@@ -1071,7 +1072,7 @@ Directory to use for global script alias
 
 Default value: `$apache::params::scriptalias`
 
-##### <a name="access_log_file"></a>`access_log_file`
+##### <a name="-apache--access_log_file"></a>`access_log_file`
 
 Data type: `String`
 
@@ -1079,7 +1080,7 @@ The name of the access log file for the main server instance.
 
 Default value: `$apache::params::access_log_file`
 
-##### <a name="limitreqfields"></a>`limitreqfields`
+##### <a name="-apache--limitreqfields"></a>`limitreqfields`
 
 Data type: `Integer`
 
@@ -1091,7 +1092,7 @@ response from the server that indicates too many fields were sent in the request
 
 Default value: `100`
 
-##### <a name="limitreqfieldsize"></a>`limitreqfieldsize`
+##### <a name="-apache--limitreqfieldsize"></a>`limitreqfieldsize`
 
 Data type: `Integer`
 
@@ -1100,24 +1101,32 @@ be allowed within a request header.
 
 Default value: `8190`
 
-##### <a name="ip"></a>`ip`
+##### <a name="-apache--limitreqline"></a>`limitreqline`
+
+Data type: `Optional[Integer]`
+
+The 'limitreqline' parameter sets the limit on the allowed size of a client's HTTP request-line
+
+Default value: `undef`
+
+##### <a name="-apache--ip"></a>`ip`
 
 Data type: `Optional[String]`
 
 Specifies the ip address
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="purge_vdir"></a>`purge_vdir`
+##### <a name="-apache--purge_vdir"></a>`purge_vdir`
 
 Data type: `Boolean`
 
 Removes all other Apache configs and virtual hosts.<br />
 > **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="conf_enabled"></a>`conf_enabled`
+##### <a name="-apache--conf_enabled"></a>`conf_enabled`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1125,7 +1134,7 @@ Whether the additional config files in `/etc/apache2/conf-enabled` should be man
 
 Default value: `$apache::params::conf_enabled`
 
-##### <a name="vhost_enable_dir"></a>`vhost_enable_dir`
+##### <a name="-apache--vhost_enable_dir"></a>`vhost_enable_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1134,15 +1143,15 @@ they will be symlinked to and from sites-enabled.
 
 Default value: `$apache::params::vhost_enable_dir`
 
-##### <a name="manage_vhost_enable_dir"></a>`manage_vhost_enable_dir`
+##### <a name="-apache--manage_vhost_enable_dir"></a>`manage_vhost_enable_dir`
 
 Data type: `Boolean`
 
 Overides the vhost_enable_dir inherited parameters and allows it to be disabled
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="mod_enable_dir"></a>`mod_enable_dir`
+##### <a name="-apache--mod_enable_dir"></a>`mod_enable_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1150,25 +1159,25 @@ Set's whether the mods-enabled directory should be managed.
 
 Default value: `$apache::params::mod_enable_dir`
 
-##### <a name="ssl_file"></a>`ssl_file`
+##### <a name="-apache--ssl_file"></a>`ssl_file`
 
 Data type: `Optional[String]`
 
 This parameter allows you to set an ssl.conf file to be managed in order to implement
 an SSL Certificate.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="file_e_tag"></a>`file_e_tag`
+##### <a name="-apache--file_e_tag"></a>`file_e_tag`
 
 Data type: `Optional[String]`
 
 Sets the server default for the `FileETag` declaration, which modifies the response header
 field for static files.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_optional_includes"></a>`use_optional_includes`
+##### <a name="-apache--use_optional_includes"></a>`use_optional_includes`
 
 Data type: `Boolean`
 
@@ -1177,7 +1186,7 @@ Specifies whether Apache uses the `IncludeOptional` directive instead of `Includ
 
 Default value: `$apache::params::use_optional_includes`
 
-##### <a name="mime_types_additional"></a>`mime_types_additional`
+##### <a name="-apache--mime_types_additional"></a>`mime_types_additional`
 
 Data type: `Hash`
 
@@ -1185,7 +1194,7 @@ Specifies any idditional Internet media (mime) types that you wish to be configu
 
 Default value: `$apache::params::mime_types_additional`
 
-### <a name="apachedev"></a>`apache::dev`
+### <a name="apache--dev"></a>`apache::dev`
 
 The libraries installed depends on the `dev_packages` parameter of the `apache::params`
 class, based on your operating system:
@@ -1194,7 +1203,7 @@ class, based on your operating system:
 - **Gentoo**: `undef`.
 - **Red Hat**: `httpd-devel`.
 
-### <a name="apachemodactions"></a>`apache::mod::actions`
+### <a name="apache--mod--actions"></a>`apache::mod::actions`
 
 Installs Apache mod_actions
 
@@ -1202,7 +1211,7 @@ Installs Apache mod_actions
   * https://httpd.apache.org/docs/current/mod/mod_actions.html
     * for additional documentation.
 
-### <a name="apachemodalias"></a>`apache::mod::alias`
+### <a name="apache--mod--alias"></a>`apache::mod::alias`
 
 Installs and configures `mod_alias`.
 
@@ -1214,20 +1223,20 @@ Installs and configures `mod_alias`.
 
 The following parameters are available in the `apache::mod::alias` class:
 
-* [`apache_version`](#apache_version)
-* [`icons_options`](#icons_options)
-* [`icons_path`](#icons_path)
-* [`icons_prefix`](#icons_prefix)
+* [`apache_version`](#-apache--mod--alias--apache_version)
+* [`icons_options`](#-apache--mod--alias--icons_options)
+* [`icons_path`](#-apache--mod--alias--icons_path)
+* [`icons_prefix`](#-apache--mod--alias--icons_prefix)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--alias--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 The version of Apache, if not set will be retrieved from the init class.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="icons_options"></a>`icons_options`
+##### <a name="-apache--mod--alias--icons_options"></a>`icons_options`
 
 Data type: `String`
 
@@ -1236,7 +1245,7 @@ directive.
 
 Default value: `'Indexes MultiViews'`
 
-##### <a name="icons_path"></a>`icons_path`
+##### <a name="-apache--mod--alias--icons_path"></a>`icons_path`
 
 Data type: `Variant[Boolean, Stdlib::Absolutepath]`
 
@@ -1249,7 +1258,7 @@ Set to 'false' to disable the alias
 
 Default value: `$apache::params::alias_icons_path`
 
-##### <a name="icons_prefix"></a>`icons_prefix`
+##### <a name="-apache--mod--alias--icons_prefix"></a>`icons_prefix`
 
 Data type: `String`
 
@@ -1257,7 +1266,7 @@ Change the alias for /icons/.
 
 Default value: `$apache::params::icons_prefix`
 
-### <a name="apachemodapreq2"></a>`apache::mod::apreq2`
+### <a name="apache--mod--apreq2"></a>`apache::mod::apreq2`
 
 Installs `mod_apreq2`.
 
@@ -1267,7 +1276,7 @@ Installs `mod_apreq2`.
   * http://httpd.apache.org/apreq/docs/libapreq2/group__mod__apreq2.html
     * for additional documentation.
 
-### <a name="apachemodauth_basic"></a>`apache::mod::auth_basic`
+### <a name="apache--mod--auth_basic"></a>`apache::mod::auth_basic`
 
 Installs `mod_auth_basic`
 
@@ -1275,7 +1284,7 @@ Installs `mod_auth_basic`
   * https://httpd.apache.org/docs/current/mod/mod_auth_basic.html
     * for additional documentation.
 
-### <a name="apachemodauth_cas"></a>`apache::mod::auth_cas`
+### <a name="apache--mod--auth_cas"></a>`apache::mod::auth_cas`
 
 Installs and configures `mod_auth_cas`.
 
@@ -1289,45 +1298,45 @@ Installs and configures `mod_auth_cas`.
 
 The following parameters are available in the `apache::mod::auth_cas` class:
 
-* [`cas_login_url`](#cas_login_url)
-* [`cas_validate_url`](#cas_validate_url)
-* [`cas_cookie_path`](#cas_cookie_path)
-* [`cas_cookie_path_mode`](#cas_cookie_path_mode)
-* [`cas_version`](#cas_version)
-* [`cas_debug`](#cas_debug)
-* [`cas_validate_server`](#cas_validate_server)
-* [`cas_validate_depth`](#cas_validate_depth)
-* [`cas_certificate_path`](#cas_certificate_path)
-* [`cas_proxy_validate_url`](#cas_proxy_validate_url)
-* [`cas_root_proxied_as`](#cas_root_proxied_as)
-* [`cas_cookie_entropy`](#cas_cookie_entropy)
-* [`cas_timeout`](#cas_timeout)
-* [`cas_idle_timeout`](#cas_idle_timeout)
-* [`cas_cache_clean_interval`](#cas_cache_clean_interval)
-* [`cas_cookie_domain`](#cas_cookie_domain)
-* [`cas_cookie_http_only`](#cas_cookie_http_only)
-* [`cas_authoritative`](#cas_authoritative)
-* [`cas_validate_saml`](#cas_validate_saml)
-* [`cas_sso_enabled`](#cas_sso_enabled)
-* [`cas_attribute_prefix`](#cas_attribute_prefix)
-* [`cas_attribute_delimiter`](#cas_attribute_delimiter)
-* [`cas_scrub_request_headers`](#cas_scrub_request_headers)
-* [`suppress_warning`](#suppress_warning)
+* [`cas_login_url`](#-apache--mod--auth_cas--cas_login_url)
+* [`cas_validate_url`](#-apache--mod--auth_cas--cas_validate_url)
+* [`cas_cookie_path`](#-apache--mod--auth_cas--cas_cookie_path)
+* [`cas_cookie_path_mode`](#-apache--mod--auth_cas--cas_cookie_path_mode)
+* [`cas_version`](#-apache--mod--auth_cas--cas_version)
+* [`cas_debug`](#-apache--mod--auth_cas--cas_debug)
+* [`cas_validate_server`](#-apache--mod--auth_cas--cas_validate_server)
+* [`cas_validate_depth`](#-apache--mod--auth_cas--cas_validate_depth)
+* [`cas_certificate_path`](#-apache--mod--auth_cas--cas_certificate_path)
+* [`cas_proxy_validate_url`](#-apache--mod--auth_cas--cas_proxy_validate_url)
+* [`cas_root_proxied_as`](#-apache--mod--auth_cas--cas_root_proxied_as)
+* [`cas_cookie_entropy`](#-apache--mod--auth_cas--cas_cookie_entropy)
+* [`cas_timeout`](#-apache--mod--auth_cas--cas_timeout)
+* [`cas_idle_timeout`](#-apache--mod--auth_cas--cas_idle_timeout)
+* [`cas_cache_clean_interval`](#-apache--mod--auth_cas--cas_cache_clean_interval)
+* [`cas_cookie_domain`](#-apache--mod--auth_cas--cas_cookie_domain)
+* [`cas_cookie_http_only`](#-apache--mod--auth_cas--cas_cookie_http_only)
+* [`cas_authoritative`](#-apache--mod--auth_cas--cas_authoritative)
+* [`cas_validate_saml`](#-apache--mod--auth_cas--cas_validate_saml)
+* [`cas_sso_enabled`](#-apache--mod--auth_cas--cas_sso_enabled)
+* [`cas_attribute_prefix`](#-apache--mod--auth_cas--cas_attribute_prefix)
+* [`cas_attribute_delimiter`](#-apache--mod--auth_cas--cas_attribute_delimiter)
+* [`cas_scrub_request_headers`](#-apache--mod--auth_cas--cas_scrub_request_headers)
+* [`suppress_warning`](#-apache--mod--auth_cas--suppress_warning)
 
-##### <a name="cas_login_url"></a>`cas_login_url`
+##### <a name="-apache--mod--auth_cas--cas_login_url"></a>`cas_login_url`
 
 Data type: `String`
 
 Sets the URL to which the module redirects users when they attempt to access a
 CAS-protected resource and don't have an active session.
 
-##### <a name="cas_validate_url"></a>`cas_validate_url`
+##### <a name="-apache--mod--auth_cas--cas_validate_url"></a>`cas_validate_url`
 
 Data type: `String`
 
 Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 
-##### <a name="cas_cookie_path"></a>`cas_cookie_path`
+##### <a name="-apache--mod--auth_cas--cas_cookie_path"></a>`cas_cookie_path`
 
 Data type: `String`
 
@@ -1336,7 +1345,7 @@ be writable by the web server only.
 
 Default value: `$apache::params::cas_cookie_path`
 
-##### <a name="cas_cookie_path_mode"></a>`cas_cookie_path_mode`
+##### <a name="-apache--mod--auth_cas--cas_cookie_path_mode"></a>`cas_cookie_path_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -1344,7 +1353,7 @@ The mode of cas_cookie_path.
 
 Default value: `'0750'`
 
-##### <a name="cas_version"></a>`cas_version`
+##### <a name="-apache--mod--auth_cas--cas_version"></a>`cas_version`
 
 Data type: `Integer`
 
@@ -1352,7 +1361,7 @@ The version of the CAS protocol to adhere to.
 
 Default value: `2`
 
-##### <a name="cas_debug"></a>`cas_debug`
+##### <a name="-apache--mod--auth_cas--cas_debug"></a>`cas_debug`
 
 Data type: `String`
 
@@ -1360,156 +1369,156 @@ Whether to enable or disable debug mode.
 
 Default value: `'Off'`
 
-##### <a name="cas_validate_server"></a>`cas_validate_server`
+##### <a name="-apache--mod--auth_cas--cas_validate_server"></a>`cas_validate_server`
 
 Data type: `Optional[String]`
 
 Whether to validate the presented certificate. This has been deprecated and
 removed from Version 1.1-RC1 onward.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_validate_depth"></a>`cas_validate_depth`
+##### <a name="-apache--mod--auth_cas--cas_validate_depth"></a>`cas_validate_depth`
 
 Data type: `Optional[String]`
 
 The maximum depth for chained certificate validation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_certificate_path"></a>`cas_certificate_path`
+##### <a name="-apache--mod--auth_cas--cas_certificate_path"></a>`cas_certificate_path`
 
 Data type: `Optional[String]`
 
 The path leading to the certificate
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_proxy_validate_url"></a>`cas_proxy_validate_url`
+##### <a name="-apache--mod--auth_cas--cas_proxy_validate_url"></a>`cas_proxy_validate_url`
 
 Data type: `Optional[String]`
 
 The URL to use when performing a proxy validation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_root_proxied_as"></a>`cas_root_proxied_as`
+##### <a name="-apache--mod--auth_cas--cas_root_proxied_as"></a>`cas_root_proxied_as`
 
 Data type: `Optional[String]`
 
 Sets the URL end users see when access to this Apache server is proxied per vhost.
 This URL should not include a trailing slash.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_cookie_entropy"></a>`cas_cookie_entropy`
+##### <a name="-apache--mod--auth_cas--cas_cookie_entropy"></a>`cas_cookie_entropy`
 
 Data type: `Optional[String]`
 
 When creating a local session, this many random bytes are used to create a unique
 session identifier.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_timeout"></a>`cas_timeout`
+##### <a name="-apache--mod--auth_cas--cas_timeout"></a>`cas_timeout`
 
 Data type: `Optional[Variant[Integer[0],String]]`
 
 The hard limit, in seconds, for a mod_auth_cas session.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_idle_timeout"></a>`cas_idle_timeout`
+##### <a name="-apache--mod--auth_cas--cas_idle_timeout"></a>`cas_idle_timeout`
 
 Data type: `Optional[Variant[Integer[0],String]]`
 
 The limit, in seconds, of how long a mod_auth_cas session can be idle.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_cache_clean_interval"></a>`cas_cache_clean_interval`
+##### <a name="-apache--mod--auth_cas--cas_cache_clean_interval"></a>`cas_cache_clean_interval`
 
 Data type: `Optional[String]`
 
 The minimum amount of time that must pass inbetween cache cleanings.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_cookie_domain"></a>`cas_cookie_domain`
+##### <a name="-apache--mod--auth_cas--cas_cookie_domain"></a>`cas_cookie_domain`
 
 Data type: `Optional[String]`
 
 The value for the 'Domain=' parameter in the Set-Cookie header.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_cookie_http_only"></a>`cas_cookie_http_only`
+##### <a name="-apache--mod--auth_cas--cas_cookie_http_only"></a>`cas_cookie_http_only`
 
 Data type: `Optional[String]`
 
 Setting this flag prevents the mod_auth_cas cookies from being accessed by
 client side Javascript.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_authoritative"></a>`cas_authoritative`
+##### <a name="-apache--mod--auth_cas--cas_authoritative"></a>`cas_authoritative`
 
 Data type: `Optional[String]`
 
 Determines whether an optional authorization directive is authoritative and thus binding.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_validate_saml"></a>`cas_validate_saml`
+##### <a name="-apache--mod--auth_cas--cas_validate_saml"></a>`cas_validate_saml`
 
 Data type: `Optional[String]`
 
 Parse response from CAS server for SAML.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_sso_enabled"></a>`cas_sso_enabled`
+##### <a name="-apache--mod--auth_cas--cas_sso_enabled"></a>`cas_sso_enabled`
 
 Data type: `Optional[String]`
 
 Enables experimental support for single sign out (may mangle POST data).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_attribute_prefix"></a>`cas_attribute_prefix`
+##### <a name="-apache--mod--auth_cas--cas_attribute_prefix"></a>`cas_attribute_prefix`
 
 Data type: `Optional[String]`
 
 Adds a header with the value of this header being the attribute values when SAML
 validation is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_attribute_delimiter"></a>`cas_attribute_delimiter`
+##### <a name="-apache--mod--auth_cas--cas_attribute_delimiter"></a>`cas_attribute_delimiter`
 
 Data type: `Optional[String]`
 
 Sets the delimiter between attribute values in the header created by `cas_attribute_prefix`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_scrub_request_headers"></a>`cas_scrub_request_headers`
+##### <a name="-apache--mod--auth_cas--cas_scrub_request_headers"></a>`cas_scrub_request_headers`
 
 Data type: `Optional[String]`
 
 Remove inbound request headers that may have special meaning within mod_auth_cas.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="suppress_warning"></a>`suppress_warning`
+##### <a name="-apache--mod--auth_cas--suppress_warning"></a>`suppress_warning`
 
 Data type: `Boolean`
 
 Suppress warning about being on RedHat (mod_auth_cas package is now available in epel-testing repo).
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="apachemodauth_gssapi"></a>`apache::mod::auth_gssapi`
+### <a name="apache--mod--auth_gssapi"></a>`apache::mod::auth_gssapi`
 
 Installs `mod_auth_gsappi`.
 
@@ -1517,7 +1526,7 @@ Installs `mod_auth_gsappi`.
   * https://github.com/modauthgssapi/mod_auth_gssapi
     * for additional documentation.
 
-### <a name="apachemodauth_kerb"></a>`apache::mod::auth_kerb`
+### <a name="apache--mod--auth_kerb"></a>`apache::mod::auth_kerb`
 
 Installs `mod_auth_kerb`
 
@@ -1525,7 +1534,7 @@ Installs `mod_auth_kerb`
   * http://modauthkerb.sourceforge.net
     * for additional documentation.
 
-### <a name="apachemodauth_mellon"></a>`apache::mod::auth_mellon`
+### <a name="apache--mod--auth_mellon"></a>`apache::mod::auth_mellon`
 
 Installs and configures `mod_auth_mellon`.
 
@@ -1537,15 +1546,15 @@ Installs and configures `mod_auth_mellon`.
 
 The following parameters are available in the `apache::mod::auth_mellon` class:
 
-* [`mellon_cache_size`](#mellon_cache_size)
-* [`mellon_lock_file`](#mellon_lock_file)
-* [`mellon_post_directory`](#mellon_post_directory)
-* [`mellon_cache_entry_size`](#mellon_cache_entry_size)
-* [`mellon_post_ttl`](#mellon_post_ttl)
-* [`mellon_post_size`](#mellon_post_size)
-* [`mellon_post_count`](#mellon_post_count)
+* [`mellon_cache_size`](#-apache--mod--auth_mellon--mellon_cache_size)
+* [`mellon_lock_file`](#-apache--mod--auth_mellon--mellon_lock_file)
+* [`mellon_post_directory`](#-apache--mod--auth_mellon--mellon_post_directory)
+* [`mellon_cache_entry_size`](#-apache--mod--auth_mellon--mellon_cache_entry_size)
+* [`mellon_post_ttl`](#-apache--mod--auth_mellon--mellon_post_ttl)
+* [`mellon_post_size`](#-apache--mod--auth_mellon--mellon_post_size)
+* [`mellon_post_count`](#-apache--mod--auth_mellon--mellon_post_count)
 
-##### <a name="mellon_cache_size"></a>`mellon_cache_size`
+##### <a name="-apache--mod--auth_mellon--mellon_cache_size"></a>`mellon_cache_size`
 
 Data type: `Optional[Integer]`
 
@@ -1553,7 +1562,7 @@ Maximum number of sessions which can be active at once.
 
 Default value: `$apache::params::mellon_cache_size`
 
-##### <a name="mellon_lock_file"></a>`mellon_lock_file`
+##### <a name="-apache--mod--auth_mellon--mellon_lock_file"></a>`mellon_lock_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1561,7 +1570,7 @@ Full path to a file used for synchronizing access to the session data.
 
 Default value: `$apache::params::mellon_lock_file`
 
-##### <a name="mellon_post_directory"></a>`mellon_post_directory`
+##### <a name="-apache--mod--auth_mellon--mellon_post_directory"></a>`mellon_post_directory`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1569,39 +1578,39 @@ Full path of a directory where POST requests are saved during authentication.
 
 Default value: `$apache::params::mellon_post_directory`
 
-##### <a name="mellon_cache_entry_size"></a>`mellon_cache_entry_size`
+##### <a name="-apache--mod--auth_mellon--mellon_cache_entry_size"></a>`mellon_cache_entry_size`
 
 Data type: `Optional[Integer]`
 
 Maximum size for a single session entry in bytes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mellon_post_ttl"></a>`mellon_post_ttl`
+##### <a name="-apache--mod--auth_mellon--mellon_post_ttl"></a>`mellon_post_ttl`
 
 Data type: `Optional[Integer]`
 
 Delay in seconds before a saved POST request can be flushed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mellon_post_size"></a>`mellon_post_size`
+##### <a name="-apache--mod--auth_mellon--mellon_post_size"></a>`mellon_post_size`
 
 Data type: `Optional[Integer]`
 
 Maximum size for saved POST requests.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mellon_post_count"></a>`mellon_post_count`
+##### <a name="-apache--mod--auth_mellon--mellon_post_count"></a>`mellon_post_count`
 
 Data type: `Optional[Integer]`
 
 Maximum amount of saved POST requests.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodauth_openidc"></a>`apache::mod::auth_openidc`
+### <a name="apache--mod--auth_openidc"></a>`apache::mod::auth_openidc`
 
 Installs and configures `mod_auth_openidc`.
 
@@ -1615,19 +1624,19 @@ Installs and configures `mod_auth_openidc`.
 
 The following parameters are available in the `apache::mod::auth_openidc` class:
 
-* [`manage_dnf_module`](#manage_dnf_module)
-* [`dnf_module_ensure`](#dnf_module_ensure)
-* [`dnf_module_name`](#dnf_module_name)
+* [`manage_dnf_module`](#-apache--mod--auth_openidc--manage_dnf_module)
+* [`dnf_module_ensure`](#-apache--mod--auth_openidc--dnf_module_ensure)
+* [`dnf_module_name`](#-apache--mod--auth_openidc--dnf_module_name)
 
-##### <a name="manage_dnf_module"></a>`manage_dnf_module`
+##### <a name="-apache--mod--auth_openidc--manage_dnf_module"></a>`manage_dnf_module`
 
 Data type: `Boolean`
 
 Whether to manage the DNF module
 
-Default value: `and`
+Default value: `$facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '8'`
 
-##### <a name="dnf_module_ensure"></a>`dnf_module_ensure`
+##### <a name="-apache--mod--auth_openidc--dnf_module_ensure"></a>`dnf_module_ensure`
 
 Data type: `String[1]`
 
@@ -1635,7 +1644,7 @@ The DNF module name to ensure. Only relevant if manage_dnf_module is set to true
 
 Default value: `'present'`
 
-##### <a name="dnf_module_name"></a>`dnf_module_name`
+##### <a name="-apache--mod--auth_openidc--dnf_module_name"></a>`dnf_module_name`
 
 Data type: `String[1]`
 
@@ -1643,7 +1652,7 @@ The DNF module name to manage. Only relevant if manage_dnf_module is set to true
 
 Default value: `'mod_auth_openidc'`
 
-### <a name="apachemodauthn_core"></a>`apache::mod::authn_core`
+### <a name="apache--mod--authn_core"></a>`apache::mod::authn_core`
 
 Installs `mod_authn_core`.
 
@@ -1655,9 +1664,9 @@ Installs `mod_authn_core`.
 
 The following parameters are available in the `apache::mod::authn_core` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--authn_core--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--authn_core--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -1665,7 +1674,7 @@ The version of apache being run.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodauthn_dbd"></a>`apache::mod::authn_dbd`
+### <a name="apache--mod--authn_dbd"></a>`apache::mod::authn_dbd`
 
 Installs `mod_authn_dbd`.
 
@@ -1677,22 +1686,22 @@ Installs `mod_authn_dbd`.
 
 The following parameters are available in the `apache::mod::authn_dbd` class:
 
-* [`authn_dbd_params`](#authn_dbd_params)
-* [`authn_dbd_dbdriver`](#authn_dbd_dbdriver)
-* [`authn_dbd_query`](#authn_dbd_query)
-* [`authn_dbd_min`](#authn_dbd_min)
-* [`authn_dbd_max`](#authn_dbd_max)
-* [`authn_dbd_keep`](#authn_dbd_keep)
-* [`authn_dbd_exptime`](#authn_dbd_exptime)
-* [`authn_dbd_alias`](#authn_dbd_alias)
+* [`authn_dbd_params`](#-apache--mod--authn_dbd--authn_dbd_params)
+* [`authn_dbd_dbdriver`](#-apache--mod--authn_dbd--authn_dbd_dbdriver)
+* [`authn_dbd_query`](#-apache--mod--authn_dbd--authn_dbd_query)
+* [`authn_dbd_min`](#-apache--mod--authn_dbd--authn_dbd_min)
+* [`authn_dbd_max`](#-apache--mod--authn_dbd--authn_dbd_max)
+* [`authn_dbd_keep`](#-apache--mod--authn_dbd--authn_dbd_keep)
+* [`authn_dbd_exptime`](#-apache--mod--authn_dbd--authn_dbd_exptime)
+* [`authn_dbd_alias`](#-apache--mod--authn_dbd--authn_dbd_alias)
 
-##### <a name="authn_dbd_params"></a>`authn_dbd_params`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_params"></a>`authn_dbd_params`
 
 Data type: `Optional[String]`
 
 The params needed for the mod to function.
 
-##### <a name="authn_dbd_dbdriver"></a>`authn_dbd_dbdriver`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_dbdriver"></a>`authn_dbd_dbdriver`
 
 Data type: `String`
 
@@ -1700,15 +1709,15 @@ Selects an apr_dbd driver by name.
 
 Default value: `'mysql'`
 
-##### <a name="authn_dbd_query"></a>`authn_dbd_query`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_query"></a>`authn_dbd_query`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="authn_dbd_min"></a>`authn_dbd_min`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_min"></a>`authn_dbd_min`
 
 Data type: `Integer`
 
@@ -1716,7 +1725,7 @@ Set the minimum number of connections per process.
 
 Default value: `4`
 
-##### <a name="authn_dbd_max"></a>`authn_dbd_max`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_max"></a>`authn_dbd_max`
 
 Data type: `Integer`
 
@@ -1724,7 +1733,7 @@ Set the maximum number of connections per process.
 
 Default value: `20`
 
-##### <a name="authn_dbd_keep"></a>`authn_dbd_keep`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_keep"></a>`authn_dbd_keep`
 
 Data type: `Integer`
 
@@ -1732,7 +1741,7 @@ Set the maximum number of connections per process to be sustained.
 
 Default value: `8`
 
-##### <a name="authn_dbd_exptime"></a>`authn_dbd_exptime`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_exptime"></a>`authn_dbd_exptime`
 
 Data type: `Integer`
 
@@ -1741,15 +1750,15 @@ connections specified in DBDKeep has been exceeded.
 
 Default value: `300`
 
-##### <a name="authn_dbd_alias"></a>`authn_dbd_alias`
+##### <a name="-apache--mod--authn_dbd--authn_dbd_alias"></a>`authn_dbd_alias`
 
 Data type: `Optional[String]`
 
 Sets an alias for `AuthnProvider.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodauthn_file"></a>`apache::mod::authn_file`
+### <a name="apache--mod--authn_file"></a>`apache::mod::authn_file`
 
 Installs `mod_authn_file`.
 
@@ -1757,7 +1766,7 @@ Installs `mod_authn_file`.
   * https://httpd.apache.org/docs/2.4/mod/mod_authn_file.html
     * for additional documentation.
 
-### <a name="apachemodauthnz_ldap"></a>`apache::mod::authnz_ldap`
+### <a name="apache--mod--authnz_ldap"></a>`apache::mod::authnz_ldap`
 
 Installs `mod_authnz_ldap`.
 
@@ -1771,26 +1780,26 @@ Installs `mod_authnz_ldap`.
 
 The following parameters are available in the `apache::mod::authnz_ldap` class:
 
-* [`verify_server_cert`](#verify_server_cert)
-* [`package_name`](#package_name)
+* [`verify_server_cert`](#-apache--mod--authnz_ldap--verify_server_cert)
+* [`package_name`](#-apache--mod--authnz_ldap--package_name)
 
-##### <a name="verify_server_cert"></a>`verify_server_cert`
+##### <a name="-apache--mod--authnz_ldap--verify_server_cert"></a>`verify_server_cert`
 
 Data type: `Boolean`
 
 Whether to force te verification of a server cert or not.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--authnz_ldap--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 The name of the ldap package.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodauthnz_pam"></a>`apache::mod::authnz_pam`
+### <a name="apache--mod--authnz_pam"></a>`apache::mod::authnz_pam`
 
 Installs `mod_authnz_pam`.
 
@@ -1798,7 +1807,7 @@ Installs `mod_authnz_pam`.
   * https://www.adelton.com/apache/mod_authnz_pam
     * for additional documentation.
 
-### <a name="apachemodauthz_default"></a>`apache::mod::authz_default`
+### <a name="apache--mod--authz_default"></a>`apache::mod::authz_default`
 
 Installs and configures `mod_authz_default`.
 
@@ -1810,9 +1819,9 @@ Installs and configures `mod_authz_default`.
 
 The following parameters are available in the `apache::mod::authz_default` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--authz_default--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--authz_default--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -1820,7 +1829,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodauthz_groupfile"></a>`apache::mod::authz_groupfile`
+### <a name="apache--mod--authz_groupfile"></a>`apache::mod::authz_groupfile`
 
 Installs `mod_authz_groupfile`
 
@@ -1828,7 +1837,7 @@ Installs `mod_authz_groupfile`
   * https://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html
     * for additional documentation.
 
-### <a name="apachemodauthz_user"></a>`apache::mod::authz_user`
+### <a name="apache--mod--authz_user"></a>`apache::mod::authz_user`
 
 Installs `mod_authz_user`
 
@@ -1836,7 +1845,7 @@ Installs `mod_authz_user`
   * https://httpd.apache.org/docs/current/mod/mod_authz_user.html
     * for additional documentation.
 
-### <a name="apachemodautoindex"></a>`apache::mod::autoindex`
+### <a name="apache--mod--autoindex"></a>`apache::mod::autoindex`
 
 Installs `mod_autoindex`
 
@@ -1848,9 +1857,9 @@ Installs `mod_autoindex`
 
 The following parameters are available in the `apache::mod::autoindex` class:
 
-* [`icons_prefix`](#icons_prefix)
+* [`icons_prefix`](#-apache--mod--autoindex--icons_prefix)
 
-##### <a name="icons_prefix"></a>`icons_prefix`
+##### <a name="-apache--mod--autoindex--icons_prefix"></a>`icons_prefix`
 
 Data type: `String`
 
@@ -1858,7 +1867,7 @@ Change the alias for /icons/.
 
 Default value: `$apache::params::icons_prefix`
 
-### <a name="apachemodcache"></a>`apache::mod::cache`
+### <a name="apache--mod--cache"></a>`apache::mod::cache`
 
 Installs `mod_cache`
 
@@ -1866,7 +1875,7 @@ Installs `mod_cache`
   * https://httpd.apache.org/docs/current/mod/mod_cache.html
     * for additional documentation.
 
-### <a name="apachemodcgi"></a>`apache::mod::cgi`
+### <a name="apache--mod--cgi"></a>`apache::mod::cgi`
 
 Installs `mod_cgi`.
 
@@ -1874,14 +1883,14 @@ Installs `mod_cgi`.
   * https://httpd.apache.org/docs/current/mod/mod_cgi.html
     * for additional documentation.
 
-### <a name="apachemodcgid"></a>`apache::mod::cgid`
+### <a name="apache--mod--cgid"></a>`apache::mod::cgid`
 
 Installs `mod_cgid`.
 
 * **See also**
   * https://httpd.apache.org/docs/current/mod/mod_cgid.html
 
-### <a name="apachemodcluster"></a>`apache::mod::cluster`
+### <a name="apache--mod--cluster"></a>`apache::mod::cluster`
 
 Installs `mod_cluster`.
 
@@ -1909,51 +1918,51 @@ class { '::apache::mod::cluster':
 
 The following parameters are available in the `apache::mod::cluster` class:
 
-* [`allowed_network`](#allowed_network)
-* [`balancer_name`](#balancer_name)
-* [`ip`](#ip)
-* [`version`](#version)
-* [`enable_mcpm_receive`](#enable_mcpm_receive)
-* [`port`](#port)
-* [`keep_alive_timeout`](#keep_alive_timeout)
-* [`manager_allowed_network`](#manager_allowed_network)
-* [`max_keep_alive_requests`](#max_keep_alive_requests)
-* [`server_advertise`](#server_advertise)
-* [`advertise_frequency`](#advertise_frequency)
+* [`allowed_network`](#-apache--mod--cluster--allowed_network)
+* [`balancer_name`](#-apache--mod--cluster--balancer_name)
+* [`ip`](#-apache--mod--cluster--ip)
+* [`version`](#-apache--mod--cluster--version)
+* [`enable_mcpm_receive`](#-apache--mod--cluster--enable_mcpm_receive)
+* [`port`](#-apache--mod--cluster--port)
+* [`keep_alive_timeout`](#-apache--mod--cluster--keep_alive_timeout)
+* [`manager_allowed_network`](#-apache--mod--cluster--manager_allowed_network)
+* [`max_keep_alive_requests`](#-apache--mod--cluster--max_keep_alive_requests)
+* [`server_advertise`](#-apache--mod--cluster--server_advertise)
+* [`advertise_frequency`](#-apache--mod--cluster--advertise_frequency)
 
-##### <a name="allowed_network"></a>`allowed_network`
+##### <a name="-apache--mod--cluster--allowed_network"></a>`allowed_network`
 
 Data type: `String`
 
 Balanced members network.
 
-##### <a name="balancer_name"></a>`balancer_name`
+##### <a name="-apache--mod--cluster--balancer_name"></a>`balancer_name`
 
 Data type: `String`
 
 Name of balancer.
 
-##### <a name="ip"></a>`ip`
+##### <a name="-apache--mod--cluster--ip"></a>`ip`
 
 Data type: `Stdlib::IP::Address`
 
 Specifies the IP address to listen to.
 
-##### <a name="version"></a>`version`
+##### <a name="-apache--mod--cluster--version"></a>`version`
 
 Data type: `String`
 
 Specifies the mod_cluster version. Version 1.3.0 or greater is required for httpd 2.4.
 
-##### <a name="enable_mcpm_receive"></a>`enable_mcpm_receive`
+##### <a name="-apache--mod--cluster--enable_mcpm_receive"></a>`enable_mcpm_receive`
 
 Data type: `Boolean`
 
 Whether MCPM should be enabled.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--mod--cluster--port"></a>`port`
 
 Data type: `Stdlib::Port`
 
@@ -1961,7 +1970,7 @@ mod_cluster listen port.
 
 Default value: `6666`
 
-##### <a name="keep_alive_timeout"></a>`keep_alive_timeout`
+##### <a name="-apache--mod--cluster--keep_alive_timeout"></a>`keep_alive_timeout`
 
 Data type: `Integer`
 
@@ -1969,7 +1978,7 @@ Specifies how long Apache should wait for a request, in seconds.
 
 Default value: `60`
 
-##### <a name="manager_allowed_network"></a>`manager_allowed_network`
+##### <a name="-apache--mod--cluster--manager_allowed_network"></a>`manager_allowed_network`
 
 Data type: `Stdlib::IP::Address`
 
@@ -1977,7 +1986,7 @@ Whether to allow the network to access the mod_cluster_manager.
 
 Default value: `'127.0.0.1'`
 
-##### <a name="max_keep_alive_requests"></a>`max_keep_alive_requests`
+##### <a name="-apache--mod--cluster--max_keep_alive_requests"></a>`max_keep_alive_requests`
 
 Data type: `Integer`
 
@@ -1985,23 +1994,23 @@ Maximum number of requests kept alive.
 
 Default value: `0`
 
-##### <a name="server_advertise"></a>`server_advertise`
+##### <a name="-apache--mod--cluster--server_advertise"></a>`server_advertise`
 
 Data type: `Boolean`
 
 Whether the server should advertise.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="advertise_frequency"></a>`advertise_frequency`
+##### <a name="-apache--mod--cluster--advertise_frequency"></a>`advertise_frequency`
 
 Data type: `Optional[String]`
 
 Sets the interval between advertise messages in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemoddata"></a>`apache::mod::data`
+### <a name="apache--mod--data"></a>`apache::mod::data`
 
 Installs and configures `mod_data`.
 
@@ -2013,17 +2022,17 @@ Installs and configures `mod_data`.
 
 The following parameters are available in the `apache::mod::data` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--data--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--data--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Version of Apache to install module on.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemoddav"></a>`apache::mod::dav`
+### <a name="apache--mod--dav"></a>`apache::mod::dav`
 
 Installs `mod_dav`.
 
@@ -2031,7 +2040,7 @@ Installs `mod_dav`.
   * https://httpd.apache.org/docs/current/mod/mod_dav.html
     * for additional documentation.
 
-### <a name="apachemoddav_fs"></a>`apache::mod::dav_fs`
+### <a name="apache--mod--dav_fs"></a>`apache::mod::dav_fs`
 
 Installs `mod_dav_fs`.
 
@@ -2039,7 +2048,7 @@ Installs `mod_dav_fs`.
   * https://httpd.apache.org/docs/current/mod/mod_dav_fs.html
     * for additional documentation.
 
-### <a name="apachemoddav_svn"></a>`apache::mod::dav_svn`
+### <a name="apache--mod--dav_svn"></a>`apache::mod::dav_svn`
 
 Installs and configures `mod_dav_svn`.
 
@@ -2051,17 +2060,17 @@ Installs and configures `mod_dav_svn`.
 
 The following parameters are available in the `apache::mod::dav_svn` class:
 
-* [`authz_svn_enabled`](#authz_svn_enabled)
+* [`authz_svn_enabled`](#-apache--mod--dav_svn--authz_svn_enabled)
 
-##### <a name="authz_svn_enabled"></a>`authz_svn_enabled`
+##### <a name="-apache--mod--dav_svn--authz_svn_enabled"></a>`authz_svn_enabled`
 
 Data type: `Boolean`
 
 Specifies whether to install Apache mod_authz_svn
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="apachemoddbd"></a>`apache::mod::dbd`
+### <a name="apache--mod--dbd"></a>`apache::mod::dbd`
 
 Installs `mod_dbd`.
 
@@ -2069,7 +2078,7 @@ Installs `mod_dbd`.
   * https://httpd.apache.org/docs/current/mod/mod_dbd.html
     * for additional documentation.
 
-### <a name="apachemoddeflate"></a>`apache::mod::deflate`
+### <a name="apache--mod--deflate"></a>`apache::mod::deflate`
 
 Installs and configures `mod_deflate`.
 
@@ -2081,42 +2090,50 @@ Installs and configures `mod_deflate`.
 
 The following parameters are available in the `apache::mod::deflate` class:
 
-* [`types`](#types)
-* [`notes`](#notes)
+* [`types`](#-apache--mod--deflate--types)
+* [`notes`](#-apache--mod--deflate--notes)
 
-##### <a name="types"></a>`types`
+##### <a name="-apache--mod--deflate--types"></a>`types`
 
 Data type: `Array[String]`
 
 An array of MIME types to be deflated. See https://www.iana.org/assignments/media-types/media-types.xhtml.
 
-Default value: `[
+Default value:
+
+```puppet
+[
     'text/html text/plain text/xml',
     'text/css',
     'application/x-javascript application/javascript application/ecmascript',
     'application/rss+xml',
     'application/json',
-  ]`
+  ]
+```
 
-##### <a name="notes"></a>`notes`
+##### <a name="-apache--mod--deflate--notes"></a>`notes`
 
 Data type: `Hash`
 
 A Hash where the key represents the type and the value represents the note name.
 
-Default value: `{
+Default value:
+
+```puppet
+{
     'Input'  => 'instream',
     'Output' => 'outstream',
     'Ratio'  => 'ratio',
-  }`
+  }
+```
 
-### <a name="apachemoddev"></a>`apache::mod::dev`
+### <a name="apache--mod--dev"></a>`apache::mod::dev`
 
 Installs `mod_dev`.
 
 * **Note** This module is deprecated. Please use `apache::dev`.
 
-### <a name="apachemoddir"></a>`apache::mod::dir`
+### <a name="apache--mod--dir"></a>`apache::mod::dir`
 
 Installs and configures `mod_dir`.
 
@@ -2131,10 +2148,10 @@ DirectoryIndex statements in a vhost configuration
 
 The following parameters are available in the `apache::mod::dir` class:
 
-* [`dir`](#dir)
-* [`indexes`](#indexes)
+* [`dir`](#-apache--mod--dir--dir)
+* [`indexes`](#-apache--mod--dir--indexes)
 
-##### <a name="dir"></a>`dir`
+##### <a name="-apache--mod--dir--dir"></a>`dir`
 
 Data type: `String`
 
@@ -2142,22 +2159,26 @@ Data type: `String`
 
 Default value: `'public_html'`
 
-##### <a name="indexes"></a>`indexes`
+##### <a name="-apache--mod--dir--indexes"></a>`indexes`
 
 Data type: `Array[String]`
 
 Provides a string for the DirectoryIndex directive
 
-Default value: `[
+Default value:
+
+```puppet
+[
     'index.html',
     'index.html.var',
     'index.cgi',
     'index.pl',
     'index.php',
     'index.xhtml',
-  ]`
+  ]
+```
 
-### <a name="apachemoddisk_cache"></a>`apache::mod::disk_cache`
+### <a name="apache--mod--disk_cache"></a>`apache::mod::disk_cache`
 
 Installs and configures `mod_disk_cache`.
 
@@ -2171,11 +2192,11 @@ Installs and configures `mod_disk_cache`.
 
 The following parameters are available in the `apache::mod::disk_cache` class:
 
-* [`cache_root`](#cache_root)
-* [`cache_ignore_headers`](#cache_ignore_headers)
-* [`default_cache_enable`](#default_cache_enable)
+* [`cache_root`](#-apache--mod--disk_cache--cache_root)
+* [`cache_ignore_headers`](#-apache--mod--disk_cache--cache_ignore_headers)
+* [`default_cache_enable`](#-apache--mod--disk_cache--default_cache_enable)
 
-##### <a name="cache_root"></a>`cache_root`
+##### <a name="-apache--mod--disk_cache--cache_root"></a>`cache_root`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -2186,17 +2207,17 @@ Default depends on the Apache version and operating system:
 - Red Hat, Apache 2.4: /var/cache/httpd/proxy
 - Red Hat, Apache 2.2: /var/cache/mod_proxy
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cache_ignore_headers"></a>`cache_ignore_headers`
+##### <a name="-apache--mod--disk_cache--cache_ignore_headers"></a>`cache_ignore_headers`
 
 Data type: `Optional[String]`
 
 Specifies HTTP header(s) that should not be stored in the cache.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_cache_enable"></a>`default_cache_enable`
+##### <a name="-apache--mod--disk_cache--default_cache_enable"></a>`default_cache_enable`
 
 Data type: `Boolean`
 
@@ -2204,9 +2225,9 @@ Default value is true, which enables "CacheEnable disk /" in disk_cache.conf for
 every request to apache by default for every vhost. If set to false the default cache all behaviour is supressed.
 You can then control this behaviour in individual vhosts by explicitly defining CacheEnable.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="apachemoddumpio"></a>`apache::mod::dumpio`
+### <a name="apache--mod--dumpio"></a>`apache::mod::dumpio`
 
 Installs and configures `mod_dumpio`.
 
@@ -2233,10 +2254,10 @@ class{'apache::mod::dumpio':
 
 The following parameters are available in the `apache::mod::dumpio` class:
 
-* [`dump_io_input`](#dump_io_input)
-* [`dump_io_output`](#dump_io_output)
+* [`dump_io_input`](#-apache--mod--dumpio--dump_io_input)
+* [`dump_io_output`](#-apache--mod--dumpio--dump_io_output)
 
-##### <a name="dump_io_input"></a>`dump_io_input`
+##### <a name="-apache--mod--dumpio--dump_io_input"></a>`dump_io_input`
 
 Data type: `Enum['Off', 'On', 'off', 'on']`
 
@@ -2244,7 +2265,7 @@ Dump all input data to the error log
 
 Default value: `'Off'`
 
-##### <a name="dump_io_output"></a>`dump_io_output`
+##### <a name="-apache--mod--dumpio--dump_io_output"></a>`dump_io_output`
 
 Data type: `Enum['Off', 'On', 'off', 'on']`
 
@@ -2252,7 +2273,7 @@ Dump all output data to the error log
 
 Default value: `'Off'`
 
-### <a name="apachemodenv"></a>`apache::mod::env`
+### <a name="apache--mod--env"></a>`apache::mod::env`
 
 Installs `mod_env`.
 
@@ -2260,7 +2281,7 @@ Installs `mod_env`.
   * https://httpd.apache.org/docs/current/mod/mod_env.html
     * for additional documentation.
 
-### <a name="apachemodevent"></a>`apache::mod::event`
+### <a name="apache--mod--event"></a>`apache::mod::event`
 
 Installs and configures `mod_event`.
 
@@ -2275,20 +2296,20 @@ apache::mod::worker on the same server.
 
 The following parameters are available in the `apache::mod::event` class:
 
-* [`startservers`](#startservers)
-* [`maxclients`](#maxclients)
-* [`maxrequestworkers`](#maxrequestworkers)
-* [`minsparethreads`](#minsparethreads)
-* [`maxsparethreads`](#maxsparethreads)
-* [`threadsperchild`](#threadsperchild)
-* [`maxrequestsperchild`](#maxrequestsperchild)
-* [`maxconnectionsperchild`](#maxconnectionsperchild)
-* [`serverlimit`](#serverlimit)
-* [`apache_version`](#apache_version)
-* [`threadlimit`](#threadlimit)
-* [`listenbacklog`](#listenbacklog)
+* [`startservers`](#-apache--mod--event--startservers)
+* [`maxclients`](#-apache--mod--event--maxclients)
+* [`maxrequestworkers`](#-apache--mod--event--maxrequestworkers)
+* [`minsparethreads`](#-apache--mod--event--minsparethreads)
+* [`maxsparethreads`](#-apache--mod--event--maxsparethreads)
+* [`threadsperchild`](#-apache--mod--event--threadsperchild)
+* [`maxrequestsperchild`](#-apache--mod--event--maxrequestsperchild)
+* [`maxconnectionsperchild`](#-apache--mod--event--maxconnectionsperchild)
+* [`serverlimit`](#-apache--mod--event--serverlimit)
+* [`apache_version`](#-apache--mod--event--apache_version)
+* [`threadlimit`](#-apache--mod--event--threadlimit)
+* [`listenbacklog`](#-apache--mod--event--listenbacklog)
 
-##### <a name="startservers"></a>`startservers`
+##### <a name="-apache--mod--event--startservers"></a>`startservers`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2297,7 +2318,7 @@ removes the parameter.
 
 Default value: `2`
 
-##### <a name="maxclients"></a>`maxclients`
+##### <a name="-apache--mod--event--maxclients"></a>`maxclients`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2305,16 +2326,16 @@ Apache 2.3.12 or older alias for the `MaxRequestWorkers` directive.
 
 Default value: `150`
 
-##### <a name="maxrequestworkers"></a>`maxrequestworkers`
+##### <a name="-apache--mod--event--maxrequestworkers"></a>`maxrequestworkers`
 
 Data type: `Optional[Variant[Integer, Boolean]]`
 
 Sets the maximum number of connections Apache can simultaneously process, via the module's `MaxRequestWorkers` directive. Setting
 these to `false` removes the parameters.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="minsparethreads"></a>`minsparethreads`
+##### <a name="-apache--mod--event--minsparethreads"></a>`minsparethreads`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2322,7 +2343,7 @@ Sets the minimum number of idle threads, via the `MinSpareThreads` directive. Se
 
 Default value: `25`
 
-##### <a name="maxsparethreads"></a>`maxsparethreads`
+##### <a name="-apache--mod--event--maxsparethreads"></a>`maxsparethreads`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2330,7 +2351,7 @@ Sets the maximum number of idle threads, via the `MaxSpareThreads` directive. Se
 
 Default value: `75`
 
-##### <a name="threadsperchild"></a>`threadsperchild`
+##### <a name="-apache--mod--event--threadsperchild"></a>`threadsperchild`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2338,7 +2359,7 @@ Number of threads created by each child process.
 
 Default value: `25`
 
-##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
+##### <a name="-apache--mod--event--maxrequestsperchild"></a>`maxrequestsperchild`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2346,15 +2367,15 @@ Apache 2.3.8 or older alias for the `MaxConnectionsPerChild` directive.
 
 Default value: `0`
 
-##### <a name="maxconnectionsperchild"></a>`maxconnectionsperchild`
+##### <a name="-apache--mod--event--maxconnectionsperchild"></a>`maxconnectionsperchild`
 
 Data type: `Optional[Variant[Integer, Boolean]]`
 
 Limit on the number of connections that an individual child server will handle during its life.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="serverlimit"></a>`serverlimit`
+##### <a name="-apache--mod--event--serverlimit"></a>`serverlimit`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2362,15 +2383,15 @@ Limits the configurable number of processes via the `ServerLimit` directive. Set
 
 Default value: `25`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--event--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Version of Apache to install module on.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="threadlimit"></a>`threadlimit`
+##### <a name="-apache--mod--event--threadlimit"></a>`threadlimit`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2378,7 +2399,7 @@ Limits the number of event threads via the module's `ThreadLimit` directive. Set
 
 Default value: `64`
 
-##### <a name="listenbacklog"></a>`listenbacklog`
+##### <a name="-apache--mod--event--listenbacklog"></a>`listenbacklog`
 
 Data type: `Variant[Integer, Boolean]`
 
@@ -2387,7 +2408,7 @@ the parameter.
 
 Default value: `511`
 
-### <a name="apachemodexpires"></a>`apache::mod::expires`
+### <a name="apache--mod--expires"></a>`apache::mod::expires`
 
 Installs and configures `mod_expires`.
 
@@ -2399,27 +2420,27 @@ Installs and configures `mod_expires`.
 
 The following parameters are available in the `apache::mod::expires` class:
 
-* [`expires_active`](#expires_active)
-* [`expires_default`](#expires_default)
-* [`expires_by_type`](#expires_by_type)
+* [`expires_active`](#-apache--mod--expires--expires_active)
+* [`expires_default`](#-apache--mod--expires--expires_default)
+* [`expires_by_type`](#-apache--mod--expires--expires_by_type)
 
-##### <a name="expires_active"></a>`expires_active`
+##### <a name="-apache--mod--expires--expires_active"></a>`expires_active`
 
 Data type: `Boolean`
 
 Enables generation of Expires headers.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="expires_default"></a>`expires_default`
+##### <a name="-apache--mod--expires--expires_default"></a>`expires_default`
 
 Data type: `Optional[String]`
 
 Specifies the default algorithm for calculating expiration time using ExpiresByType syntax or interval syntax.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="expires_by_type"></a>`expires_by_type`
+##### <a name="-apache--mod--expires--expires_by_type"></a>`expires_by_type`
 
 Data type: `Optional[Array[Hash]]`
 
@@ -2427,9 +2448,9 @@ Describes a set of [MIME content-types](https://www.iana.org/assignments/media-t
 times. This should be used as an array of Hashes, with each Hash's key a valid MIME content-type (i.e. 'text/json') and its
 value following valid interval syntax.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodext_filter"></a>`apache::mod::ext_filter`
+### <a name="apache--mod--ext_filter"></a>`apache::mod::ext_filter`
 
 Installs and configures `mod_ext_filter`.
 
@@ -2454,17 +2475,17 @@ class { 'apache::mod::ext_filter':
 
 The following parameters are available in the `apache::mod::ext_filter` class:
 
-* [`ext_filter_define`](#ext_filter_define)
+* [`ext_filter_define`](#-apache--mod--ext_filter--ext_filter_define)
 
-##### <a name="ext_filter_define"></a>`ext_filter_define`
+##### <a name="-apache--mod--ext_filter--ext_filter_define"></a>`ext_filter_define`
 
 Data type: `Optional[Hash]`
 
 Hash of filter names and their parameters.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodfcgid"></a>`apache::mod::fcgid`
+### <a name="apache--mod--fcgid"></a>`apache::mod::fcgid`
 
 loaded first; Puppet will not automatically enable it if you set the fcgiwrapper parameter in apache::vhost.
   include apache::mod::fcgid
@@ -2507,9 +2528,9 @@ class { 'apache::mod::fcgid':
 
 The following parameters are available in the `apache::mod::fcgid` class:
 
-* [`options`](#options)
+* [`options`](#-apache--mod--fcgid--options)
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--mod--fcgid--options"></a>`options`
 
 Data type: `Hash`
 
@@ -2523,7 +2544,7 @@ expires_by_type
 
 Default value: `{}`
 
-### <a name="apachemodfilter"></a>`apache::mod::filter`
+### <a name="apache--mod--filter"></a>`apache::mod::filter`
 
 Installs `mod_filter`.
 
@@ -2531,7 +2552,7 @@ Installs `mod_filter`.
   * https://httpd.apache.org/docs/current/mod/mod_filter.html
     * for additional documentation.
 
-### <a name="apachemodgeoip"></a>`apache::mod::geoip`
+### <a name="apache--mod--geoip"></a>`apache::mod::geoip`
 
 Installs and configures `mod_geoip`.
 
@@ -2543,24 +2564,24 @@ Installs and configures `mod_geoip`.
 
 The following parameters are available in the `apache::mod::geoip` class:
 
-* [`enable`](#enable)
-* [`db_file`](#db_file)
-* [`flag`](#flag)
-* [`output`](#output)
-* [`enable_utf8`](#enable_utf8)
-* [`scan_proxy_headers`](#scan_proxy_headers)
-* [`scan_proxy_header_field`](#scan_proxy_header_field)
-* [`use_last_xforwarededfor_ip`](#use_last_xforwarededfor_ip)
+* [`enable`](#-apache--mod--geoip--enable)
+* [`db_file`](#-apache--mod--geoip--db_file)
+* [`flag`](#-apache--mod--geoip--flag)
+* [`output`](#-apache--mod--geoip--output)
+* [`enable_utf8`](#-apache--mod--geoip--enable_utf8)
+* [`scan_proxy_headers`](#-apache--mod--geoip--scan_proxy_headers)
+* [`scan_proxy_header_field`](#-apache--mod--geoip--scan_proxy_header_field)
+* [`use_last_xforwarededfor_ip`](#-apache--mod--geoip--use_last_xforwarededfor_ip)
 
-##### <a name="enable"></a>`enable`
+##### <a name="-apache--mod--geoip--enable"></a>`enable`
 
 Data type: `Boolean`
 
 Toggles whether to enable geoip.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="db_file"></a>`db_file`
+##### <a name="-apache--mod--geoip--db_file"></a>`db_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2568,7 +2589,7 @@ Path to database for GeoIP to use.
 
 Default value: `'/usr/share/GeoIP/GeoIP.dat'`
 
-##### <a name="flag"></a>`flag`
+##### <a name="-apache--mod--geoip--flag"></a>`flag`
 
 Data type: `String`
 
@@ -2576,7 +2597,7 @@ Caching directive to use. Values: 'CheckCache', 'IndexCache', 'MemoryCache', 'St
 
 Default value: `'Standard'`
 
-##### <a name="output"></a>`output`
+##### <a name="-apache--mod--geoip--output"></a>`output`
 
 Data type: `String`
 
@@ -2584,39 +2605,39 @@ Output variable locations. Values: 'All', 'Env', 'Request', 'Notes'.
 
 Default value: `'All'`
 
-##### <a name="enable_utf8"></a>`enable_utf8`
+##### <a name="-apache--mod--geoip--enable_utf8"></a>`enable_utf8`
 
 Data type: `Optional[String]`
 
 Changes the output from ISO88591 (Latin1) to UTF8.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="scan_proxy_headers"></a>`scan_proxy_headers`
+##### <a name="-apache--mod--geoip--scan_proxy_headers"></a>`scan_proxy_headers`
 
 Data type: `Optional[String]`
 
 Enables the GeoIPScanProxyHeaders option.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="scan_proxy_header_field"></a>`scan_proxy_header_field`
+##### <a name="-apache--mod--geoip--scan_proxy_header_field"></a>`scan_proxy_header_field`
 
 Data type: `Optional[String]`
 
 Specifies the header mod_geoip uses to determine the client's IP address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_last_xforwarededfor_ip"></a>`use_last_xforwarededfor_ip`
+##### <a name="-apache--mod--geoip--use_last_xforwarededfor_ip"></a>`use_last_xforwarededfor_ip`
 
 Data type: `Optional[String]`
 
 Determines whether to use the first or last IP address for the client's IP in a comma-separated list of IP addresses is found.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodheaders"></a>`apache::mod::headers`
+### <a name="apache--mod--headers"></a>`apache::mod::headers`
 
 Installs and configures `mod_headers`.
 
@@ -2624,7 +2645,7 @@ Installs and configures `mod_headers`.
   * https://httpd.apache.org/docs/current/mod/mod_headers.html
     * for additional documentation.
 
-### <a name="apachemodhttp2"></a>`apache::mod::http2`
+### <a name="apache--mod--http2"></a>`apache::mod::http2`
 
 Installs and configures `mod_http2`.
 
@@ -2636,107 +2657,107 @@ Installs and configures `mod_http2`.
 
 The following parameters are available in the `apache::mod::http2` class:
 
-* [`h2_copy_files`](#h2_copy_files)
-* [`h2_direct`](#h2_direct)
-* [`h2_early_hints`](#h2_early_hints)
-* [`h2_max_session_streams`](#h2_max_session_streams)
-* [`h2_max_worker_idle_seconds`](#h2_max_worker_idle_seconds)
-* [`h2_max_workers`](#h2_max_workers)
-* [`h2_min_workers`](#h2_min_workers)
-* [`h2_modern_tls_only`](#h2_modern_tls_only)
-* [`h2_push`](#h2_push)
-* [`h2_push_diary_size`](#h2_push_diary_size)
-* [`h2_push_priority`](#h2_push_priority)
-* [`h2_push_resource`](#h2_push_resource)
-* [`h2_serialize_headers`](#h2_serialize_headers)
-* [`h2_stream_max_mem_size`](#h2_stream_max_mem_size)
-* [`h2_tls_cool_down_secs`](#h2_tls_cool_down_secs)
-* [`h2_tls_warm_up_size`](#h2_tls_warm_up_size)
-* [`h2_upgrade`](#h2_upgrade)
-* [`h2_window_size`](#h2_window_size)
-* [`apache_version`](#apache_version)
+* [`h2_copy_files`](#-apache--mod--http2--h2_copy_files)
+* [`h2_direct`](#-apache--mod--http2--h2_direct)
+* [`h2_early_hints`](#-apache--mod--http2--h2_early_hints)
+* [`h2_max_session_streams`](#-apache--mod--http2--h2_max_session_streams)
+* [`h2_max_worker_idle_seconds`](#-apache--mod--http2--h2_max_worker_idle_seconds)
+* [`h2_max_workers`](#-apache--mod--http2--h2_max_workers)
+* [`h2_min_workers`](#-apache--mod--http2--h2_min_workers)
+* [`h2_modern_tls_only`](#-apache--mod--http2--h2_modern_tls_only)
+* [`h2_push`](#-apache--mod--http2--h2_push)
+* [`h2_push_diary_size`](#-apache--mod--http2--h2_push_diary_size)
+* [`h2_push_priority`](#-apache--mod--http2--h2_push_priority)
+* [`h2_push_resource`](#-apache--mod--http2--h2_push_resource)
+* [`h2_serialize_headers`](#-apache--mod--http2--h2_serialize_headers)
+* [`h2_stream_max_mem_size`](#-apache--mod--http2--h2_stream_max_mem_size)
+* [`h2_tls_cool_down_secs`](#-apache--mod--http2--h2_tls_cool_down_secs)
+* [`h2_tls_warm_up_size`](#-apache--mod--http2--h2_tls_warm_up_size)
+* [`h2_upgrade`](#-apache--mod--http2--h2_upgrade)
+* [`h2_window_size`](#-apache--mod--http2--h2_window_size)
+* [`apache_version`](#-apache--mod--http2--apache_version)
 
-##### <a name="h2_copy_files"></a>`h2_copy_files`
+##### <a name="-apache--mod--http2--h2_copy_files"></a>`h2_copy_files`
 
 Data type: `Optional[Boolean]`
 
 Determine file handling in responses.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_direct"></a>`h2_direct`
+##### <a name="-apache--mod--http2--h2_direct"></a>`h2_direct`
 
 Data type: `Optional[Boolean]`
 
 H2 Direct Protocol Switch.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_early_hints"></a>`h2_early_hints`
+##### <a name="-apache--mod--http2--h2_early_hints"></a>`h2_early_hints`
 
 Data type: `Optional[Boolean]`
 
 Determine sending of 103 status codes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_max_session_streams"></a>`h2_max_session_streams`
+##### <a name="-apache--mod--http2--h2_max_session_streams"></a>`h2_max_session_streams`
 
 Data type: `Optional[Integer]`
 
 Sets maximum number of active streams per HTTP/2 session.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_max_worker_idle_seconds"></a>`h2_max_worker_idle_seconds`
+##### <a name="-apache--mod--http2--h2_max_worker_idle_seconds"></a>`h2_max_worker_idle_seconds`
 
 Data type: `Optional[Integer]`
 
 Sets maximum number of seconds h2 workers remain idle until shut down.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_max_workers"></a>`h2_max_workers`
+##### <a name="-apache--mod--http2--h2_max_workers"></a>`h2_max_workers`
 
 Data type: `Optional[Integer]`
 
 Sets maximum number of worker threads to use per child process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_min_workers"></a>`h2_min_workers`
+##### <a name="-apache--mod--http2--h2_min_workers"></a>`h2_min_workers`
 
 Data type: `Optional[Integer]`
 
 Sets minimal number of worker threads to use per child process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_modern_tls_only"></a>`h2_modern_tls_only`
+##### <a name="-apache--mod--http2--h2_modern_tls_only"></a>`h2_modern_tls_only`
 
 Data type: `Optional[Boolean]`
 
 Toggles the security checks on HTTP/2 connections in TLS mode
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push"></a>`h2_push`
+##### <a name="-apache--mod--http2--h2_push"></a>`h2_push`
 
 Data type: `Optional[Boolean]`
 
 Toggles the usage of the HTTP/2 server push protocol feature.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push_diary_size"></a>`h2_push_diary_size`
+##### <a name="-apache--mod--http2--h2_push_diary_size"></a>`h2_push_diary_size`
 
 Data type: `Optional[Integer]`
 
 Sets maximum number of HTTP/2 server pushes that are remembered per HTTP/2 connection.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push_priority"></a>`h2_push_priority`
+##### <a name="-apache--mod--http2--h2_push_priority"></a>`h2_push_priority`
 
 Data type: `Array[String]`
 
@@ -2744,7 +2765,7 @@ Require HTTP/2 connections to be "modern TLS" only
 
 Default value: `[]`
 
-##### <a name="h2_push_resource"></a>`h2_push_resource`
+##### <a name="-apache--mod--http2--h2_push_resource"></a>`h2_push_resource`
 
 Data type: `Array[String]`
 
@@ -2753,67 +2774,67 @@ via this directive
 
 Default value: `[]`
 
-##### <a name="h2_serialize_headers"></a>`h2_serialize_headers`
+##### <a name="-apache--mod--http2--h2_serialize_headers"></a>`h2_serialize_headers`
 
 Data type: `Optional[Boolean]`
 
 Toggles if HTTP/2 requests shall be serialized in HTTP/1.1 format for processing by httpd
 core or if received binary data shall be passed into the request_recs directly.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_stream_max_mem_size"></a>`h2_stream_max_mem_size`
+##### <a name="-apache--mod--http2--h2_stream_max_mem_size"></a>`h2_stream_max_mem_size`
 
 Data type: `Optional[Integer]`
 
 Sets the maximum number of outgoing data bytes buffered in memory for an active streams.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_tls_cool_down_secs"></a>`h2_tls_cool_down_secs`
+##### <a name="-apache--mod--http2--h2_tls_cool_down_secs"></a>`h2_tls_cool_down_secs`
 
 Data type: `Optional[Integer]`
 
 Sets the number of seconds of idle time on a TLS connection before the TLS write size falls
 back to small (~1300 bytes) length.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_tls_warm_up_size"></a>`h2_tls_warm_up_size`
+##### <a name="-apache--mod--http2--h2_tls_warm_up_size"></a>`h2_tls_warm_up_size`
 
 Data type: `Optional[Integer]`
 
 Sets the number of bytes to be sent in small TLS records (~1300 bytes) until doing maximum
 sized writes (16k) on https: HTTP/2 connections.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_upgrade"></a>`h2_upgrade`
+##### <a name="-apache--mod--http2--h2_upgrade"></a>`h2_upgrade`
 
 Data type: `Optional[Boolean]`
 
 Toggles the usage of the HTTP/1.1 Upgrade method for switching to HTTP/2.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_window_size"></a>`h2_window_size`
+##### <a name="-apache--mod--http2--h2_window_size"></a>`h2_window_size`
 
 Data type: `Optional[Integer]`
 
 Sets the size of the window that is used for flow control from client to server and limits
 the amount of data the server has to buffer.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--http2--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Version of Apache to install module on.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodinclude"></a>`apache::mod::include`
+### <a name="apache--mod--include"></a>`apache::mod::include`
 
 Installs `mod_include`.
 
@@ -2821,7 +2842,7 @@ Installs `mod_include`.
   * https://httpd.apache.org/docs/current/mod/mod_include.html
     * for additional documentation.
 
-### <a name="apachemodinfo"></a>`apache::mod::info`
+### <a name="apache--mod--info"></a>`apache::mod::info`
 
 Installs and configures `mod_info`.
 
@@ -2833,12 +2854,12 @@ Installs and configures `mod_info`.
 
 The following parameters are available in the `apache::mod::info` class:
 
-* [`allow_from`](#allow_from)
-* [`apache_version`](#apache_version)
-* [`restrict_access`](#restrict_access)
-* [`info_path`](#info_path)
+* [`allow_from`](#-apache--mod--info--allow_from)
+* [`apache_version`](#-apache--mod--info--apache_version)
+* [`restrict_access`](#-apache--mod--info--restrict_access)
+* [`info_path`](#-apache--mod--info--info_path)
 
-##### <a name="allow_from"></a>`allow_from`
+##### <a name="-apache--mod--info--allow_from"></a>`allow_from`
 
 Data type: `Array[Stdlib::IP::Address]`
 
@@ -2846,24 +2867,24 @@ Allowlist of IPv4 or IPv6 addresses or ranges that can access the info path.
 
 Default value: `['127.0.0.1', '::1']`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--info--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Version of Apache to install module on.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="restrict_access"></a>`restrict_access`
+##### <a name="-apache--mod--info--restrict_access"></a>`restrict_access`
 
 Data type: `Boolean`
 
 Toggles whether to restrict access to info path. If `false`, the `allow_from` allowlist is ignored and any IP address can
 access the info path.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="info_path"></a>`info_path`
+##### <a name="-apache--mod--info--info_path"></a>`info_path`
 
 Data type: `Stdlib::Unixpath`
 
@@ -2871,7 +2892,7 @@ Path on server to file containing server configuration information.
 
 Default value: `'/server-info'`
 
-### <a name="apachemodintercept_form_submit"></a>`apache::mod::intercept_form_submit`
+### <a name="apache--mod--intercept_form_submit"></a>`apache::mod::intercept_form_submit`
 
 Installs `mod_intercept_form_submit`.
 
@@ -2879,7 +2900,7 @@ Installs `mod_intercept_form_submit`.
   * https://www.adelton.com/apache/mod_intercept_form_submit
     * for additional documentation.
 
-### <a name="apachemoditk"></a>`apache::mod::itk`
+### <a name="apache--mod--itk"></a>`apache::mod::itk`
 
 Installs MPM `mod_itk`.
 
@@ -2893,16 +2914,16 @@ Installs MPM `mod_itk`.
 
 The following parameters are available in the `apache::mod::itk` class:
 
-* [`startservers`](#startservers)
-* [`minspareservers`](#minspareservers)
-* [`maxspareservers`](#maxspareservers)
-* [`serverlimit`](#serverlimit)
-* [`maxclients`](#maxclients)
-* [`maxrequestsperchild`](#maxrequestsperchild)
-* [`enablecapabilities`](#enablecapabilities)
-* [`apache_version`](#apache_version)
+* [`startservers`](#-apache--mod--itk--startservers)
+* [`minspareservers`](#-apache--mod--itk--minspareservers)
+* [`maxspareservers`](#-apache--mod--itk--maxspareservers)
+* [`serverlimit`](#-apache--mod--itk--serverlimit)
+* [`maxclients`](#-apache--mod--itk--maxclients)
+* [`maxrequestsperchild`](#-apache--mod--itk--maxrequestsperchild)
+* [`enablecapabilities`](#-apache--mod--itk--enablecapabilities)
+* [`apache_version`](#-apache--mod--itk--apache_version)
 
-##### <a name="startservers"></a>`startservers`
+##### <a name="-apache--mod--itk--startservers"></a>`startservers`
 
 Data type: `Integer`
 
@@ -2910,7 +2931,7 @@ Number of child server processes created on startup.
 
 Default value: `8`
 
-##### <a name="minspareservers"></a>`minspareservers`
+##### <a name="-apache--mod--itk--minspareservers"></a>`minspareservers`
 
 Data type: `Integer`
 
@@ -2918,7 +2939,7 @@ Minimum number of idle child server processes.
 
 Default value: `5`
 
-##### <a name="maxspareservers"></a>`maxspareservers`
+##### <a name="-apache--mod--itk--maxspareservers"></a>`maxspareservers`
 
 Data type: `Integer`
 
@@ -2926,7 +2947,7 @@ Maximum number of idle child server processes.
 
 Default value: `20`
 
-##### <a name="serverlimit"></a>`serverlimit`
+##### <a name="-apache--mod--itk--serverlimit"></a>`serverlimit`
 
 Data type: `Integer`
 
@@ -2934,7 +2955,7 @@ Maximum configured value for `MaxRequestWorkers` for the lifetime of the Apache 
 
 Default value: `256`
 
-##### <a name="maxclients"></a>`maxclients`
+##### <a name="-apache--mod--itk--maxclients"></a>`maxclients`
 
 Data type: `Integer`
 
@@ -2942,7 +2963,7 @@ Limit on the number of simultaneous requests that will be served.
 
 Default value: `256`
 
-##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
+##### <a name="-apache--mod--itk--maxrequestsperchild"></a>`maxrequestsperchild`
 
 Data type: `Integer`
 
@@ -2950,7 +2971,7 @@ Limit on the number of connections that an individual child server process will 
 
 Default value: `4000`
 
-##### <a name="enablecapabilities"></a>`enablecapabilities`
+##### <a name="-apache--mod--itk--enablecapabilities"></a>`enablecapabilities`
 
 Data type: `Optional[Variant[Boolean, String]]`
 
@@ -2958,17 +2979,17 @@ Drop most root capabilities in the parent process, and instead run as the user g
 capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor
 capabilities, such as NFS.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--itk--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodjk"></a>`apache::mod::jk`
+### <a name="apache--mod--jk"></a>`apache::mod::jk`
 
 Installs `mod_jk`.
 
@@ -3017,59 +3038,59 @@ class { '::apache::mod::jk':
 
 The following parameters are available in the `apache::mod::jk` class:
 
-* [`ip`](#ip)
-* [`port`](#port)
-* [`add_listen`](#add_listen)
-* [`workers_file`](#workers_file)
-* [`worker_property`](#worker_property)
-* [`logroot`](#logroot)
-* [`shm_file`](#shm_file)
-* [`shm_size`](#shm_size)
-* [`mount_file`](#mount_file)
-* [`mount_file_reload`](#mount_file_reload)
-* [`mount`](#mount)
-* [`un_mount`](#un_mount)
-* [`auto_alias`](#auto_alias)
-* [`mount_copy`](#mount_copy)
-* [`worker_indicator`](#worker_indicator)
-* [`watchdog_interval`](#watchdog_interval)
-* [`log_file`](#log_file)
-* [`log_level`](#log_level)
-* [`log_stamp_format`](#log_stamp_format)
-* [`request_log_format`](#request_log_format)
-* [`extract_ssl`](#extract_ssl)
-* [`https_indicator`](#https_indicator)
-* [`sslprotocol_indicator`](#sslprotocol_indicator)
-* [`certs_indicator`](#certs_indicator)
-* [`cipher_indicator`](#cipher_indicator)
-* [`certchain_prefix`](#certchain_prefix)
-* [`session_indicator`](#session_indicator)
-* [`keysize_indicator`](#keysize_indicator)
-* [`local_name_indicator`](#local_name_indicator)
-* [`ignore_cl_indicator`](#ignore_cl_indicator)
-* [`local_addr_indicator`](#local_addr_indicator)
-* [`local_port_indicator`](#local_port_indicator)
-* [`remote_host_indicator`](#remote_host_indicator)
-* [`remote_addr_indicator`](#remote_addr_indicator)
-* [`remote_port_indicator`](#remote_port_indicator)
-* [`remote_user_indicator`](#remote_user_indicator)
-* [`auth_type_indicator`](#auth_type_indicator)
-* [`options`](#options)
-* [`env_var`](#env_var)
-* [`strip_session`](#strip_session)
-* [`location_list`](#location_list)
-* [`workers_file_content`](#workers_file_content)
-* [`mount_file_content`](#mount_file_content)
+* [`ip`](#-apache--mod--jk--ip)
+* [`port`](#-apache--mod--jk--port)
+* [`add_listen`](#-apache--mod--jk--add_listen)
+* [`workers_file`](#-apache--mod--jk--workers_file)
+* [`worker_property`](#-apache--mod--jk--worker_property)
+* [`logroot`](#-apache--mod--jk--logroot)
+* [`shm_file`](#-apache--mod--jk--shm_file)
+* [`shm_size`](#-apache--mod--jk--shm_size)
+* [`mount_file`](#-apache--mod--jk--mount_file)
+* [`mount_file_reload`](#-apache--mod--jk--mount_file_reload)
+* [`mount`](#-apache--mod--jk--mount)
+* [`un_mount`](#-apache--mod--jk--un_mount)
+* [`auto_alias`](#-apache--mod--jk--auto_alias)
+* [`mount_copy`](#-apache--mod--jk--mount_copy)
+* [`worker_indicator`](#-apache--mod--jk--worker_indicator)
+* [`watchdog_interval`](#-apache--mod--jk--watchdog_interval)
+* [`log_file`](#-apache--mod--jk--log_file)
+* [`log_level`](#-apache--mod--jk--log_level)
+* [`log_stamp_format`](#-apache--mod--jk--log_stamp_format)
+* [`request_log_format`](#-apache--mod--jk--request_log_format)
+* [`extract_ssl`](#-apache--mod--jk--extract_ssl)
+* [`https_indicator`](#-apache--mod--jk--https_indicator)
+* [`sslprotocol_indicator`](#-apache--mod--jk--sslprotocol_indicator)
+* [`certs_indicator`](#-apache--mod--jk--certs_indicator)
+* [`cipher_indicator`](#-apache--mod--jk--cipher_indicator)
+* [`certchain_prefix`](#-apache--mod--jk--certchain_prefix)
+* [`session_indicator`](#-apache--mod--jk--session_indicator)
+* [`keysize_indicator`](#-apache--mod--jk--keysize_indicator)
+* [`local_name_indicator`](#-apache--mod--jk--local_name_indicator)
+* [`ignore_cl_indicator`](#-apache--mod--jk--ignore_cl_indicator)
+* [`local_addr_indicator`](#-apache--mod--jk--local_addr_indicator)
+* [`local_port_indicator`](#-apache--mod--jk--local_port_indicator)
+* [`remote_host_indicator`](#-apache--mod--jk--remote_host_indicator)
+* [`remote_addr_indicator`](#-apache--mod--jk--remote_addr_indicator)
+* [`remote_port_indicator`](#-apache--mod--jk--remote_port_indicator)
+* [`remote_user_indicator`](#-apache--mod--jk--remote_user_indicator)
+* [`auth_type_indicator`](#-apache--mod--jk--auth_type_indicator)
+* [`options`](#-apache--mod--jk--options)
+* [`env_var`](#-apache--mod--jk--env_var)
+* [`strip_session`](#-apache--mod--jk--strip_session)
+* [`location_list`](#-apache--mod--jk--location_list)
+* [`workers_file_content`](#-apache--mod--jk--workers_file_content)
+* [`mount_file_content`](#-apache--mod--jk--mount_file_content)
 
-##### <a name="ip"></a>`ip`
+##### <a name="-apache--mod--jk--ip"></a>`ip`
 
 Data type: `Optional[Stdlib::IP::Address]`
 
 IP for binding to mod_jk. Useful when the binding address is not the primary network interface IP.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--mod--jk--port"></a>`port`
 
 Data type: `Stdlib::Port`
 
@@ -3078,7 +3099,7 @@ needs to forward them to Apache at a different port.
 
 Default value: `80`
 
-##### <a name="add_listen"></a>`add_listen`
+##### <a name="-apache--mod--jk--add_listen"></a>`add_listen`
 
 Data type: `Boolean`
 
@@ -3086,17 +3107,17 @@ Defines if a Listen directive according to parameters ip and port (see below), s
 and redirect to mod_jk. Useful when another Listen directive, like Listen *:<Port> or Listen <Port>, can conflict with the one
 necessary for mod_jk binding.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="workers_file"></a>`workers_file`
+##### <a name="-apache--mod--jk--workers_file"></a>`workers_file`
 
 Data type: `Optional[String]`
 
 The name of a worker file for the Tomcat servlet containers.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="worker_property"></a>`worker_property`
+##### <a name="-apache--mod--jk--worker_property"></a>`worker_property`
 
 Data type: `Hash`
 
@@ -3104,16 +3125,16 @@ Enables setting worker properties inside Apache configuration file.
 
 Default value: `{}`
 
-##### <a name="logroot"></a>`logroot`
+##### <a name="-apache--mod--jk--logroot"></a>`logroot`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The base directory for shm_file and log_file is determined by the logroot parameter. If unspecified, defaults to
 apache::params::logroot. The default logroot is sane enough therefore it is not recommended to override it.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="shm_file"></a>`shm_file`
+##### <a name="-apache--mod--jk--shm_file"></a>`shm_file`
 
 Data type: `String`
 
@@ -3121,31 +3142,31 @@ Shared memory file name.
 
 Default value: `'jk-runtime-status'`
 
-##### <a name="shm_size"></a>`shm_size`
+##### <a name="-apache--mod--jk--shm_size"></a>`shm_size`
 
 Data type: `Optional[String]`
 
 Size of the shared memory file name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mount_file"></a>`mount_file`
+##### <a name="-apache--mod--jk--mount_file"></a>`mount_file`
 
 Data type: `Optional[String]`
 
 File containing multiple mappings from a context to a Tomcat worker.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mount_file_reload"></a>`mount_file_reload`
+##### <a name="-apache--mod--jk--mount_file_reload"></a>`mount_file_reload`
 
 Data type: `Optional[String]`
 
 This directive configures the reload check interval in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mount"></a>`mount`
+##### <a name="-apache--mod--jk--mount"></a>`mount`
 
 Data type: `Hash`
 
@@ -3153,7 +3174,7 @@ A mount point from a context to a Tomcat worker.
 
 Default value: `{}`
 
-##### <a name="un_mount"></a>`un_mount`
+##### <a name="-apache--mod--jk--un_mount"></a>`un_mount`
 
 Data type: `Hash`
 
@@ -3161,41 +3182,41 @@ An exclusion mount point from a context to a Tomcat worker.
 
 Default value: `{}`
 
-##### <a name="auto_alias"></a>`auto_alias`
+##### <a name="-apache--mod--jk--auto_alias"></a>`auto_alias`
 
 Data type: `Optional[String]`
 
 Automatically Alias webapp context directories into the Apache document space
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mount_copy"></a>`mount_copy`
+##### <a name="-apache--mod--jk--mount_copy"></a>`mount_copy`
 
 Data type: `Optional[String]`
 
 If this directive is set to "On" in some virtual server, the mounts from the global server will be copied
 to this virtual server, more precisely all mounts defined by JkMount or JkUnMount.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="worker_indicator"></a>`worker_indicator`
+##### <a name="-apache--mod--jk--worker_indicator"></a>`worker_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that can be used to set worker names in combination with SetHandler
 jakarta-servlet.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="watchdog_interval"></a>`watchdog_interval`
+##### <a name="-apache--mod--jk--watchdog_interval"></a>`watchdog_interval`
 
 Data type: `Optional[Integer]`
 
 This directive configures the watchdog thread interval in seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="log_file"></a>`log_file`
+##### <a name="-apache--mod--jk--log_file"></a>`log_file`
 
 Data type: `String`
 
@@ -3203,167 +3224,167 @@ Full or server relative path to the mod_jk log file.
 
 Default value: `'mod_jk.log'`
 
-##### <a name="log_level"></a>`log_level`
+##### <a name="-apache--mod--jk--log_level"></a>`log_level`
 
 Data type: `Optional[String]`
 
 The mod_jk log level, can be debug, info, warn error or trace.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="log_stamp_format"></a>`log_stamp_format`
+##### <a name="-apache--mod--jk--log_stamp_format"></a>`log_stamp_format`
 
 Data type: `Optional[String]`
 
 The mod_jk date log format, using an extended strftime syntax.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="request_log_format"></a>`request_log_format`
+##### <a name="-apache--mod--jk--request_log_format"></a>`request_log_format`
 
 Data type: `Optional[String]`
 
 Request log format string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="extract_ssl"></a>`extract_ssl`
+##### <a name="-apache--mod--jk--extract_ssl"></a>`extract_ssl`
 
 Data type: `Optional[String]`
 
 Turns on SSL processing and information gathering by mod_jk.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="https_indicator"></a>`https_indicator`
+##### <a name="-apache--mod--jk--https_indicator"></a>`https_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains SSL indication.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sslprotocol_indicator"></a>`sslprotocol_indicator`
+##### <a name="-apache--mod--jk--sslprotocol_indicator"></a>`sslprotocol_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains the SSL protocol name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="certs_indicator"></a>`certs_indicator`
+##### <a name="-apache--mod--jk--certs_indicator"></a>`certs_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains SSL client certificates.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cipher_indicator"></a>`cipher_indicator`
+##### <a name="-apache--mod--jk--cipher_indicator"></a>`cipher_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains SSL client cipher.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="certchain_prefix"></a>`certchain_prefix`
+##### <a name="-apache--mod--jk--certchain_prefix"></a>`certchain_prefix`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment (prefix) that contains SSL client chain certificates.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="session_indicator"></a>`session_indicator`
+##### <a name="-apache--mod--jk--session_indicator"></a>`session_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains SSL session.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keysize_indicator"></a>`keysize_indicator`
+##### <a name="-apache--mod--jk--keysize_indicator"></a>`keysize_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable that contains SSL key size in use.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_name_indicator"></a>`local_name_indicator`
+##### <a name="-apache--mod--jk--local_name_indicator"></a>`local_name_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded local name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ignore_cl_indicator"></a>`ignore_cl_indicator`
+##### <a name="-apache--mod--jk--ignore_cl_indicator"></a>`ignore_cl_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which forces to ignore an existing Content-Length request header.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_addr_indicator"></a>`local_addr_indicator`
+##### <a name="-apache--mod--jk--local_addr_indicator"></a>`local_addr_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded local IP address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_port_indicator"></a>`local_port_indicator`
+##### <a name="-apache--mod--jk--local_port_indicator"></a>`local_port_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded local port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="remote_host_indicator"></a>`remote_host_indicator`
+##### <a name="-apache--mod--jk--remote_host_indicator"></a>`remote_host_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) host name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="remote_addr_indicator"></a>`remote_addr_indicator`
-
-Data type: `Optional[String]`
-
-Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) IP address.
-
-Default value: ``undef``
-
-##### <a name="remote_port_indicator"></a>`remote_port_indicator`
+##### <a name="-apache--mod--jk--remote_addr_indicator"></a>`remote_addr_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) IP address.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="remote_user_indicator"></a>`remote_user_indicator`
+##### <a name="-apache--mod--jk--remote_port_indicator"></a>`remote_port_indicator`
+
+Data type: `Optional[String]`
+
+Name of the Apache environment variable which can be used to overwrite the forwarded remote (client) IP address.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--jk--remote_user_indicator"></a>`remote_user_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded user name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="auth_type_indicator"></a>`auth_type_indicator`
+##### <a name="-apache--mod--jk--auth_type_indicator"></a>`auth_type_indicator`
 
 Data type: `Optional[String]`
 
 Name of the Apache environment variable which can be used to overwrite the forwarded authentication type.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--mod--jk--options"></a>`options`
 
 Data type: `Array`
 
@@ -3371,7 +3392,7 @@ Set one of more options to configure the mod_jk module.
 
 Default value: `[]`
 
-##### <a name="env_var"></a>`env_var`
+##### <a name="-apache--mod--jk--env_var"></a>`env_var`
 
 Data type: `Hash`
 
@@ -3379,16 +3400,16 @@ Adds a name and an optional default value of environment variable that should be
 
 Default value: `{}`
 
-##### <a name="strip_session"></a>`strip_session`
+##### <a name="-apache--mod--jk--strip_session"></a>`strip_session`
 
 Data type: `Optional[String]`
 
 If this directive is set to On in some virtual server, the session IDs ;jsessionid=... will be removed for URLs which are not
 forwarded but instead are handled by the local server.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="location_list"></a>`location_list`
+##### <a name="-apache--mod--jk--location_list"></a>`location_list`
 
 Data type: `Array`
 
@@ -3421,7 +3442,7 @@ location_list = [
 
 Default value: `[]`
 
-##### <a name="workers_file_content"></a>`workers_file_content`
+##### <a name="-apache--mod--jk--workers_file_content"></a>`workers_file_content`
 
 Data type: `Hash`
 
@@ -3465,7 +3486,7 @@ $workers_file_content = {
 
 Default value: `{}`
 
-##### <a name="mount_file_content"></a>`mount_file_content`
+##### <a name="-apache--mod--jk--mount_file_content"></a>`mount_file_content`
 
 Data type: `Hash`
 
@@ -3502,7 +3523,7 @@ $mount_file_content = {
 
 Default value: `{}`
 
-### <a name="apachemodlbmethod_bybusyness"></a>`apache::mod::lbmethod_bybusyness`
+### <a name="apache--mod--lbmethod_bybusyness"></a>`apache::mod::lbmethod_bybusyness`
 
 Installs `lbmethod_bybusyness`.
 
@@ -3514,9 +3535,9 @@ Installs `lbmethod_bybusyness`.
 
 The following parameters are available in the `apache::mod::lbmethod_bybusyness` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--lbmethod_bybusyness--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--lbmethod_bybusyness--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -3524,7 +3545,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodlbmethod_byrequests"></a>`apache::mod::lbmethod_byrequests`
+### <a name="apache--mod--lbmethod_byrequests"></a>`apache::mod::lbmethod_byrequests`
 
 Installs `lbmethod_byrequests`.
 
@@ -3536,9 +3557,9 @@ Installs `lbmethod_byrequests`.
 
 The following parameters are available in the `apache::mod::lbmethod_byrequests` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--lbmethod_byrequests--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--lbmethod_byrequests--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -3546,7 +3567,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodlbmethod_bytraffic"></a>`apache::mod::lbmethod_bytraffic`
+### <a name="apache--mod--lbmethod_bytraffic"></a>`apache::mod::lbmethod_bytraffic`
 
 Installs `lbmethod_bytraffic`.
 
@@ -3558,9 +3579,9 @@ Installs `lbmethod_bytraffic`.
 
 The following parameters are available in the `apache::mod::lbmethod_bytraffic` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--lbmethod_bytraffic--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--lbmethod_bytraffic--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -3568,7 +3589,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodlbmethod_heartbeat"></a>`apache::mod::lbmethod_heartbeat`
+### <a name="apache--mod--lbmethod_heartbeat"></a>`apache::mod::lbmethod_heartbeat`
 
 Installs `lbmethod_heartbeat`.
 
@@ -3580,9 +3601,9 @@ Installs `lbmethod_heartbeat`.
 
 The following parameters are available in the `apache::mod::lbmethod_heartbeat` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--lbmethod_heartbeat--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--lbmethod_heartbeat--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -3590,7 +3611,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodldap"></a>`apache::mod::ldap`
+### <a name="apache--mod--ldap"></a>`apache::mod::ldap`
 
 Installs and configures `mod_ldap`.
 
@@ -3621,43 +3642,43 @@ class { 'apache::mod::ldap':
 
 The following parameters are available in the `apache::mod::ldap` class:
 
-* [`apache_version`](#apache_version)
-* [`package_name`](#package_name)
-* [`ldap_trusted_global_cert_file`](#ldap_trusted_global_cert_file)
-* [`ldap_trusted_global_cert_type`](#ldap_trusted_global_cert_type)
-* [`ldap_shared_cache_size`](#ldap_shared_cache_size)
-* [`ldap_cache_entries`](#ldap_cache_entries)
-* [`ldap_cache_ttl`](#ldap_cache_ttl)
-* [`ldap_opcache_entries`](#ldap_opcache_entries)
-* [`ldap_opcache_ttl`](#ldap_opcache_ttl)
-* [`ldap_trusted_mode`](#ldap_trusted_mode)
-* [`ldap_path`](#ldap_path)
+* [`apache_version`](#-apache--mod--ldap--apache_version)
+* [`package_name`](#-apache--mod--ldap--package_name)
+* [`ldap_trusted_global_cert_file`](#-apache--mod--ldap--ldap_trusted_global_cert_file)
+* [`ldap_trusted_global_cert_type`](#-apache--mod--ldap--ldap_trusted_global_cert_type)
+* [`ldap_shared_cache_size`](#-apache--mod--ldap--ldap_shared_cache_size)
+* [`ldap_cache_entries`](#-apache--mod--ldap--ldap_cache_entries)
+* [`ldap_cache_ttl`](#-apache--mod--ldap--ldap_cache_ttl)
+* [`ldap_opcache_entries`](#-apache--mod--ldap--ldap_opcache_entries)
+* [`ldap_opcache_ttl`](#-apache--mod--ldap--ldap_opcache_ttl)
+* [`ldap_trusted_mode`](#-apache--mod--ldap--ldap_trusted_mode)
+* [`ldap_path`](#-apache--mod--ldap--ldap_path)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--ldap--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--ldap--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 Specifies the custom package name.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_trusted_global_cert_file"></a>`ldap_trusted_global_cert_file`
+##### <a name="-apache--mod--ldap--ldap_trusted_global_cert_file"></a>`ldap_trusted_global_cert_file`
 
 Data type: `Optional[String]`
 
 Sets the file or database containing global trusted Certificate Authority or global client certificates.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_trusted_global_cert_type"></a>`ldap_trusted_global_cert_type`
+##### <a name="-apache--mod--ldap--ldap_trusted_global_cert_type"></a>`ldap_trusted_global_cert_type`
 
 Data type: `String`
 
@@ -3665,55 +3686,55 @@ Sets the certificate parameter of the global trusted Certificate Authority or gl
 
 Default value: `'CA_BASE64'`
 
-##### <a name="ldap_shared_cache_size"></a>`ldap_shared_cache_size`
+##### <a name="-apache--mod--ldap--ldap_shared_cache_size"></a>`ldap_shared_cache_size`
 
 Data type: `Optional[Integer]`
 
 Size in bytes of the shared-memory cache
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_cache_entries"></a>`ldap_cache_entries`
+##### <a name="-apache--mod--ldap--ldap_cache_entries"></a>`ldap_cache_entries`
 
 Data type: `Optional[Integer]`
 
 Maximum number of entries in the primary LDAP cache
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_cache_ttl"></a>`ldap_cache_ttl`
+##### <a name="-apache--mod--ldap--ldap_cache_ttl"></a>`ldap_cache_ttl`
 
 Data type: `Optional[Integer]`
 
 Time that cached items remain valid (in seconds).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_opcache_entries"></a>`ldap_opcache_entries`
+##### <a name="-apache--mod--ldap--ldap_opcache_entries"></a>`ldap_opcache_entries`
 
 Data type: `Optional[Integer]`
 
 Number of entries used to cache LDAP compare operations
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_opcache_ttl"></a>`ldap_opcache_ttl`
+##### <a name="-apache--mod--ldap--ldap_opcache_ttl"></a>`ldap_opcache_ttl`
 
 Data type: `Optional[Integer]`
 
 Time that entries in the operation cache remain valid (in seconds).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_trusted_mode"></a>`ldap_trusted_mode`
+##### <a name="-apache--mod--ldap--ldap_trusted_mode"></a>`ldap_trusted_mode`
 
 Data type: `Optional[String]`
 
 Specifies the SSL/TLS mode to be used when connecting to an LDAP server.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ldap_path"></a>`ldap_path`
+##### <a name="-apache--mod--ldap--ldap_path"></a>`ldap_path`
 
 Data type: `String`
 
@@ -3721,7 +3742,7 @@ The server location of the ldap status page.
 
 Default value: `'/ldap-status'`
 
-### <a name="apachemodlookup_identity"></a>`apache::mod::lookup_identity`
+### <a name="apache--mod--lookup_identity"></a>`apache::mod::lookup_identity`
 
 Installs `mod_lookup_identity`
 
@@ -3729,7 +3750,7 @@ Installs `mod_lookup_identity`
   * https://www.adelton.com/apache/mod_lookup_identity
     * for additional documentation.
 
-### <a name="apachemodmacro"></a>`apache::mod::macro`
+### <a name="apache--mod--macro"></a>`apache::mod::macro`
 
 Installs `mod_macro`.
 
@@ -3737,7 +3758,7 @@ Installs `mod_macro`.
   * https://httpd.apache.org/docs/current/mod/mod_macro.html
     * for additional documentation.
 
-### <a name="apachemodmd"></a>`apache::mod::md`
+### <a name="apache--mod--md"></a>`apache::mod::md`
 
 Installs and configures `mod_md`.
 
@@ -3751,264 +3772,264 @@ Installs and configures `mod_md`.
 
 The following parameters are available in the `apache::mod::md` class:
 
-* [`md_activation_delay`](#md_activation_delay)
-* [`md_base_server`](#md_base_server)
-* [`md_ca_challenges`](#md_ca_challenges)
-* [`md_certificate_agreement`](#md_certificate_agreement)
-* [`md_certificate_authority`](#md_certificate_authority)
-* [`md_certificate_check`](#md_certificate_check)
-* [`md_certificate_monitor`](#md_certificate_monitor)
-* [`md_certificate_protocol`](#md_certificate_protocol)
-* [`md_certificate_status`](#md_certificate_status)
-* [`md_challenge_dns01`](#md_challenge_dns01)
-* [`md_contact_email`](#md_contact_email)
-* [`md_http_proxy`](#md_http_proxy)
-* [`md_members`](#md_members)
-* [`md_message_cmd`](#md_message_cmd)
-* [`md_must_staple`](#md_must_staple)
-* [`md_notify_cmd`](#md_notify_cmd)
-* [`md_port_map`](#md_port_map)
-* [`md_private_keys`](#md_private_keys)
-* [`md_renew_mode`](#md_renew_mode)
-* [`md_renew_window`](#md_renew_window)
-* [`md_require_https`](#md_require_https)
-* [`md_server_status`](#md_server_status)
-* [`md_staple_others`](#md_staple_others)
-* [`md_stapling`](#md_stapling)
-* [`md_stapling_keep_response`](#md_stapling_keep_response)
-* [`md_stapling_renew_window`](#md_stapling_renew_window)
-* [`md_store_dir`](#md_store_dir)
-* [`md_warn_window`](#md_warn_window)
+* [`md_activation_delay`](#-apache--mod--md--md_activation_delay)
+* [`md_base_server`](#-apache--mod--md--md_base_server)
+* [`md_ca_challenges`](#-apache--mod--md--md_ca_challenges)
+* [`md_certificate_agreement`](#-apache--mod--md--md_certificate_agreement)
+* [`md_certificate_authority`](#-apache--mod--md--md_certificate_authority)
+* [`md_certificate_check`](#-apache--mod--md--md_certificate_check)
+* [`md_certificate_monitor`](#-apache--mod--md--md_certificate_monitor)
+* [`md_certificate_protocol`](#-apache--mod--md--md_certificate_protocol)
+* [`md_certificate_status`](#-apache--mod--md--md_certificate_status)
+* [`md_challenge_dns01`](#-apache--mod--md--md_challenge_dns01)
+* [`md_contact_email`](#-apache--mod--md--md_contact_email)
+* [`md_http_proxy`](#-apache--mod--md--md_http_proxy)
+* [`md_members`](#-apache--mod--md--md_members)
+* [`md_message_cmd`](#-apache--mod--md--md_message_cmd)
+* [`md_must_staple`](#-apache--mod--md--md_must_staple)
+* [`md_notify_cmd`](#-apache--mod--md--md_notify_cmd)
+* [`md_port_map`](#-apache--mod--md--md_port_map)
+* [`md_private_keys`](#-apache--mod--md--md_private_keys)
+* [`md_renew_mode`](#-apache--mod--md--md_renew_mode)
+* [`md_renew_window`](#-apache--mod--md--md_renew_window)
+* [`md_require_https`](#-apache--mod--md--md_require_https)
+* [`md_server_status`](#-apache--mod--md--md_server_status)
+* [`md_staple_others`](#-apache--mod--md--md_staple_others)
+* [`md_stapling`](#-apache--mod--md--md_stapling)
+* [`md_stapling_keep_response`](#-apache--mod--md--md_stapling_keep_response)
+* [`md_stapling_renew_window`](#-apache--mod--md--md_stapling_renew_window)
+* [`md_store_dir`](#-apache--mod--md--md_store_dir)
+* [`md_warn_window`](#-apache--mod--md--md_warn_window)
 
-##### <a name="md_activation_delay"></a>`md_activation_delay`
+##### <a name="-apache--mod--md--md_activation_delay"></a>`md_activation_delay`
 
 Data type: `Optional[String]`
 
 -
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_base_server"></a>`md_base_server`
+##### <a name="-apache--mod--md--md_base_server"></a>`md_base_server`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Control if base server may be managed or only virtual hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_ca_challenges"></a>`md_ca_challenges`
+##### <a name="-apache--mod--md--md_ca_challenges"></a>`md_ca_challenges`
 
 Data type: `Optional[Array[Enum['dns-01', 'http-01', 'tls-alpn-01']]]`
 
 Type of ACME challenge used to prove domain ownership.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_agreement"></a>`md_certificate_agreement`
+##### <a name="-apache--mod--md--md_certificate_agreement"></a>`md_certificate_agreement`
 
 Data type: `Optional[Enum['accepted']]`
 
 You confirm that you accepted the Terms of Service of the Certificate
 Authority.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_authority"></a>`md_certificate_authority`
+##### <a name="-apache--mod--md--md_certificate_authority"></a>`md_certificate_authority`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
 The URL of the ACME Certificate Authority service.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_check"></a>`md_certificate_check`
+##### <a name="-apache--mod--md--md_certificate_check"></a>`md_certificate_check`
 
 Data type: `Optional[String]`
 
 -
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_monitor"></a>`md_certificate_monitor`
+##### <a name="-apache--mod--md--md_certificate_monitor"></a>`md_certificate_monitor`
 
 Data type: `Optional[String]`
 
 The URL of a certificate log monitor.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_protocol"></a>`md_certificate_protocol`
+##### <a name="-apache--mod--md--md_certificate_protocol"></a>`md_certificate_protocol`
 
 Data type: `Optional[Enum['ACME']]`
 
 The protocol to use with the Certificate Authority.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_certificate_status"></a>`md_certificate_status`
+##### <a name="-apache--mod--md--md_certificate_status"></a>`md_certificate_status`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Exposes public certificate information in JSON.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_challenge_dns01"></a>`md_challenge_dns01`
+##### <a name="-apache--mod--md--md_challenge_dns01"></a>`md_challenge_dns01`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Define a program to be called when the `dns-01` challenge needs to be
 setup/torn down.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_contact_email"></a>`md_contact_email`
+##### <a name="-apache--mod--md--md_contact_email"></a>`md_contact_email`
 
 Data type: `Optional[String]`
 
 The ACME protocol requires you to give a contact url when you sign up.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_http_proxy"></a>`md_http_proxy`
+##### <a name="-apache--mod--md--md_http_proxy"></a>`md_http_proxy`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
 Define a proxy for outgoing connections.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_members"></a>`md_members`
+##### <a name="-apache--mod--md--md_members"></a>`md_members`
 
 Data type: `Optional[Enum['auto', 'manual']]`
 
 Control if the alias domain names are automatically added.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_message_cmd"></a>`md_message_cmd`
+##### <a name="-apache--mod--md--md_message_cmd"></a>`md_message_cmd`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Handle events for Manage Domains.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_must_staple"></a>`md_must_staple`
+##### <a name="-apache--mod--md--md_must_staple"></a>`md_must_staple`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Control if new certificates carry the OCSP Must Staple flag.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_notify_cmd"></a>`md_notify_cmd`
+##### <a name="-apache--mod--md--md_notify_cmd"></a>`md_notify_cmd`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Run a program when a Managed Domain is ready.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_port_map"></a>`md_port_map`
+##### <a name="-apache--mod--md--md_port_map"></a>`md_port_map`
 
 Data type: `Optional[String]`
 
 Map external to internal ports for domain ownership verification.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_private_keys"></a>`md_private_keys`
+##### <a name="-apache--mod--md--md_private_keys"></a>`md_private_keys`
 
 Data type: `Optional[String]`
 
 Set type and size of the private keys generated.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_renew_mode"></a>`md_renew_mode`
+##### <a name="-apache--mod--md--md_renew_mode"></a>`md_renew_mode`
 
 Data type: `Optional[Enum['always', 'auto', 'manual']]`
 
 Controls if certificates shall be renewed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_renew_window"></a>`md_renew_window`
+##### <a name="-apache--mod--md--md_renew_window"></a>`md_renew_window`
 
 Data type: `Optional[String]`
 
 Control when a certificate will be renewed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_require_https"></a>`md_require_https`
+##### <a name="-apache--mod--md--md_require_https"></a>`md_require_https`
 
 Data type: `Optional[Enum['off', 'permanent', 'temporary']]`
 
 Redirects http: traffic to https: for Managed Domains.
 An http: Virtual Host must nevertheless be setup for that domain.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_server_status"></a>`md_server_status`
+##### <a name="-apache--mod--md--md_server_status"></a>`md_server_status`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Control if Managed Domain information is added to server-status.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_staple_others"></a>`md_staple_others`
+##### <a name="-apache--mod--md--md_staple_others"></a>`md_staple_others`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Enable stapling for certificates not managed by mod_md.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_stapling"></a>`md_stapling`
+##### <a name="-apache--mod--md--md_stapling"></a>`md_stapling`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Enable stapling for all or a particular MDomain.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_stapling_keep_response"></a>`md_stapling_keep_response`
+##### <a name="-apache--mod--md--md_stapling_keep_response"></a>`md_stapling_keep_response`
 
 Data type: `Optional[String]`
 
 Controls when old responses should be removed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_stapling_renew_window"></a>`md_stapling_renew_window`
+##### <a name="-apache--mod--md--md_stapling_renew_window"></a>`md_stapling_renew_window`
 
 Data type: `Optional[String]`
 
 Control when the stapling responses will be renewed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_store_dir"></a>`md_store_dir`
+##### <a name="-apache--mod--md--md_store_dir"></a>`md_store_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path on the local file system to store the Managed Domains data.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="md_warn_window"></a>`md_warn_window`
+##### <a name="-apache--mod--md--md_warn_window"></a>`md_warn_window`
 
 Data type: `Optional[String]`
 
 Define the time window when you want to be warned about an expiring
 certificate.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodmime"></a>`apache::mod::mime`
+### <a name="apache--mod--mime"></a>`apache::mod::mime`
 
 Installs and configures `mod_mime`.
 
@@ -4020,11 +4041,11 @@ Installs and configures `mod_mime`.
 
 The following parameters are available in the `apache::mod::mime` class:
 
-* [`mime_support_package`](#mime_support_package)
-* [`mime_types_config`](#mime_types_config)
-* [`mime_types_additional`](#mime_types_additional)
+* [`mime_support_package`](#-apache--mod--mime--mime_support_package)
+* [`mime_types_config`](#-apache--mod--mime--mime_types_config)
+* [`mime_types_additional`](#-apache--mod--mime--mime_types_additional)
 
-##### <a name="mime_support_package"></a>`mime_support_package`
+##### <a name="-apache--mod--mime--mime_support_package"></a>`mime_support_package`
 
 Data type: `String`
 
@@ -4032,7 +4053,7 @@ Name of the MIME package to be installed.
 
 Default value: `$apache::params::mime_support_package`
 
-##### <a name="mime_types_config"></a>`mime_types_config`
+##### <a name="-apache--mod--mime--mime_types_config"></a>`mime_types_config`
 
 Data type: `String`
 
@@ -4040,15 +4061,15 @@ The location of the mime.types file.
 
 Default value: `$apache::params::mime_types_config`
 
-##### <a name="mime_types_additional"></a>`mime_types_additional`
+##### <a name="-apache--mod--mime--mime_types_additional"></a>`mime_types_additional`
 
 Data type: `Optional[Hash]`
 
 List of additional MIME types to include.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodmime_magic"></a>`apache::mod::mime_magic`
+### <a name="apache--mod--mime_magic"></a>`apache::mod::mime_magic`
 
 Installs and configures `mod_mime_magic`.
 
@@ -4060,17 +4081,17 @@ Installs and configures `mod_mime_magic`.
 
 The following parameters are available in the `apache::mod::mime_magic` class:
 
-* [`magic_file`](#magic_file)
+* [`magic_file`](#-apache--mod--mime_magic--magic_file)
 
-##### <a name="magic_file"></a>`magic_file`
+##### <a name="-apache--mod--mime_magic--magic_file"></a>`magic_file`
 
 Data type: `Optional[String]`
 
 Enable MIME-type determination based on file contents using the specified magic file.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodnegotiation"></a>`apache::mod::negotiation`
+### <a name="apache--mod--negotiation"></a>`apache::mod::negotiation`
 
 Installs and configures `mod_negotiation`.
 
@@ -4082,10 +4103,10 @@ Installs and configures `mod_negotiation`.
 
 The following parameters are available in the `apache::mod::negotiation` class:
 
-* [`force_language_priority`](#force_language_priority)
-* [`language_priority`](#language_priority)
+* [`force_language_priority`](#-apache--mod--negotiation--force_language_priority)
+* [`language_priority`](#-apache--mod--negotiation--language_priority)
 
-##### <a name="force_language_priority"></a>`force_language_priority`
+##### <a name="-apache--mod--negotiation--force_language_priority"></a>`force_language_priority`
 
 Data type: `Variant[Array[String], String]`
 
@@ -4093,18 +4114,22 @@ Action to take if a single acceptable document is not found.
 
 Default value: `'Prefer Fallback'`
 
-##### <a name="language_priority"></a>`language_priority`
+##### <a name="-apache--mod--negotiation--language_priority"></a>`language_priority`
 
 Data type: `Variant[Array[String], String]`
 
 The precedence of language variants for cases where the client does not express a preference.
 
-Default value: `['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
+Default value:
+
+```puppet
+['en', 'ca', 'cs', 'da', 'de', 'el', 'eo', 'es', 'et',
     'fr', 'he', 'hr', 'it', 'ja', 'ko', 'ltz', 'nl', 'nn',
     'no', 'pl', 'pt', 'pt-BR', 'ru', 'sv', 'zh-CN',
-  'zh-TW']`
+  'zh-TW']
+```
 
-### <a name="apachemodnss"></a>`apache::mod::nss`
+### <a name="apache--mod--nss"></a>`apache::mod::nss`
 
 Installs and configures `mod_nss`.
 
@@ -4116,12 +4141,12 @@ Installs and configures `mod_nss`.
 
 The following parameters are available in the `apache::mod::nss` class:
 
-* [`transfer_log`](#transfer_log)
-* [`error_log`](#error_log)
-* [`passwd_file`](#passwd_file)
-* [`port`](#port)
+* [`transfer_log`](#-apache--mod--nss--transfer_log)
+* [`error_log`](#-apache--mod--nss--error_log)
+* [`passwd_file`](#-apache--mod--nss--passwd_file)
+* [`port`](#-apache--mod--nss--port)
 
-##### <a name="transfer_log"></a>`transfer_log`
+##### <a name="-apache--mod--nss--transfer_log"></a>`transfer_log`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -4129,7 +4154,7 @@ Path to `access.log`.
 
 Default value: `"${apache::params::logroot}/access.log"`
 
-##### <a name="error_log"></a>`error_log`
+##### <a name="-apache--mod--nss--error_log"></a>`error_log`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -4137,15 +4162,15 @@ Path to `error.log`
 
 Default value: `"${apache::params::logroot}/error.log"`
 
-##### <a name="passwd_file"></a>`passwd_file`
+##### <a name="-apache--mod--nss--passwd_file"></a>`passwd_file`
 
 Data type: `Optional[String]`
 
 Path to file containing token passwords used for NSSPassPhraseDialog.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--mod--nss--port"></a>`port`
 
 Data type: `Stdlib::Port`
 
@@ -4153,7 +4178,7 @@ Sets the SSL port that should be used by mod_nss.
 
 Default value: `8443`
 
-### <a name="apachemodpagespeed"></a>`apache::mod::pagespeed`
+### <a name="apache--mod--pagespeed"></a>`apache::mod::pagespeed`
 
 Installs and manages mod_pagespeed, which is a Google module that rewrites web pages to reduce latency and bandwidth.
 
@@ -4218,43 +4243,43 @@ class { 'apache::mod::pagespeed':
 
 The following parameters are available in the `apache::mod::pagespeed` class:
 
-* [`inherit_vhost_config`](#inherit_vhost_config)
-* [`filter_xhtml`](#filter_xhtml)
-* [`cache_path`](#cache_path)
-* [`log_dir`](#log_dir)
-* [`memcache_servers`](#memcache_servers)
-* [`rewrite_level`](#rewrite_level)
-* [`disable_filters`](#disable_filters)
-* [`enable_filters`](#enable_filters)
-* [`forbid_filters`](#forbid_filters)
-* [`rewrite_deadline_per_flush_ms`](#rewrite_deadline_per_flush_ms)
-* [`additional_domains`](#additional_domains)
-* [`file_cache_size_kb`](#file_cache_size_kb)
-* [`file_cache_clean_interval_ms`](#file_cache_clean_interval_ms)
-* [`lru_cache_per_process`](#lru_cache_per_process)
-* [`lru_cache_byte_limit`](#lru_cache_byte_limit)
-* [`css_flatten_max_bytes`](#css_flatten_max_bytes)
-* [`css_inline_max_bytes`](#css_inline_max_bytes)
-* [`css_image_inline_max_bytes`](#css_image_inline_max_bytes)
-* [`image_inline_max_bytes`](#image_inline_max_bytes)
-* [`js_inline_max_bytes`](#js_inline_max_bytes)
-* [`css_outline_min_bytes`](#css_outline_min_bytes)
-* [`js_outline_min_bytes`](#js_outline_min_bytes)
-* [`inode_limit`](#inode_limit)
-* [`image_max_rewrites_at_once`](#image_max_rewrites_at_once)
-* [`num_rewrite_threads`](#num_rewrite_threads)
-* [`num_expensive_rewrite_threads`](#num_expensive_rewrite_threads)
-* [`collect_statistics`](#collect_statistics)
-* [`statistics_logging`](#statistics_logging)
-* [`allow_view_stats`](#allow_view_stats)
-* [`allow_pagespeed_console`](#allow_pagespeed_console)
-* [`allow_pagespeed_message`](#allow_pagespeed_message)
-* [`message_buffer_size`](#message_buffer_size)
-* [`additional_configuration`](#additional_configuration)
-* [`apache_version`](#apache_version)
-* [`package_ensure`](#package_ensure)
+* [`inherit_vhost_config`](#-apache--mod--pagespeed--inherit_vhost_config)
+* [`filter_xhtml`](#-apache--mod--pagespeed--filter_xhtml)
+* [`cache_path`](#-apache--mod--pagespeed--cache_path)
+* [`log_dir`](#-apache--mod--pagespeed--log_dir)
+* [`memcache_servers`](#-apache--mod--pagespeed--memcache_servers)
+* [`rewrite_level`](#-apache--mod--pagespeed--rewrite_level)
+* [`disable_filters`](#-apache--mod--pagespeed--disable_filters)
+* [`enable_filters`](#-apache--mod--pagespeed--enable_filters)
+* [`forbid_filters`](#-apache--mod--pagespeed--forbid_filters)
+* [`rewrite_deadline_per_flush_ms`](#-apache--mod--pagespeed--rewrite_deadline_per_flush_ms)
+* [`additional_domains`](#-apache--mod--pagespeed--additional_domains)
+* [`file_cache_size_kb`](#-apache--mod--pagespeed--file_cache_size_kb)
+* [`file_cache_clean_interval_ms`](#-apache--mod--pagespeed--file_cache_clean_interval_ms)
+* [`lru_cache_per_process`](#-apache--mod--pagespeed--lru_cache_per_process)
+* [`lru_cache_byte_limit`](#-apache--mod--pagespeed--lru_cache_byte_limit)
+* [`css_flatten_max_bytes`](#-apache--mod--pagespeed--css_flatten_max_bytes)
+* [`css_inline_max_bytes`](#-apache--mod--pagespeed--css_inline_max_bytes)
+* [`css_image_inline_max_bytes`](#-apache--mod--pagespeed--css_image_inline_max_bytes)
+* [`image_inline_max_bytes`](#-apache--mod--pagespeed--image_inline_max_bytes)
+* [`js_inline_max_bytes`](#-apache--mod--pagespeed--js_inline_max_bytes)
+* [`css_outline_min_bytes`](#-apache--mod--pagespeed--css_outline_min_bytes)
+* [`js_outline_min_bytes`](#-apache--mod--pagespeed--js_outline_min_bytes)
+* [`inode_limit`](#-apache--mod--pagespeed--inode_limit)
+* [`image_max_rewrites_at_once`](#-apache--mod--pagespeed--image_max_rewrites_at_once)
+* [`num_rewrite_threads`](#-apache--mod--pagespeed--num_rewrite_threads)
+* [`num_expensive_rewrite_threads`](#-apache--mod--pagespeed--num_expensive_rewrite_threads)
+* [`collect_statistics`](#-apache--mod--pagespeed--collect_statistics)
+* [`statistics_logging`](#-apache--mod--pagespeed--statistics_logging)
+* [`allow_view_stats`](#-apache--mod--pagespeed--allow_view_stats)
+* [`allow_pagespeed_console`](#-apache--mod--pagespeed--allow_pagespeed_console)
+* [`allow_pagespeed_message`](#-apache--mod--pagespeed--allow_pagespeed_message)
+* [`message_buffer_size`](#-apache--mod--pagespeed--message_buffer_size)
+* [`additional_configuration`](#-apache--mod--pagespeed--additional_configuration)
+* [`apache_version`](#-apache--mod--pagespeed--apache_version)
+* [`package_ensure`](#-apache--mod--pagespeed--package_ensure)
 
-##### <a name="inherit_vhost_config"></a>`inherit_vhost_config`
+##### <a name="-apache--mod--pagespeed--inherit_vhost_config"></a>`inherit_vhost_config`
 
 Data type: `String`
 
@@ -4262,15 +4287,15 @@ Whether or not to inherit the vhost config
 
 Default value: `'on'`
 
-##### <a name="filter_xhtml"></a>`filter_xhtml`
+##### <a name="-apache--mod--pagespeed--filter_xhtml"></a>`filter_xhtml`
 
 Data type: `Boolean`
 
 Whether to filter by xhtml
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cache_path"></a>`cache_path`
+##### <a name="-apache--mod--pagespeed--cache_path"></a>`cache_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -4278,7 +4303,7 @@ Where to cache any files
 
 Default value: `'/var/cache/mod_pagespeed/'`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-apache--mod--pagespeed--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -4286,7 +4311,7 @@ The log directory
 
 Default value: `'/var/log/pagespeed'`
 
-##### <a name="memcache_servers"></a>`memcache_servers`
+##### <a name="-apache--mod--pagespeed--memcache_servers"></a>`memcache_servers`
 
 Data type: `Array`
 
@@ -4294,7 +4319,7 @@ Data type: `Array`
 
 Default value: `[]`
 
-##### <a name="rewrite_level"></a>`rewrite_level`
+##### <a name="-apache--mod--pagespeed--rewrite_level"></a>`rewrite_level`
 
 Data type: `String`
 
@@ -4303,7 +4328,7 @@ Can be `PassThrough`, `CoreFilters` or `OptimizeForBandwidth`.
 
 Default value: `'CoreFilters'`
 
-##### <a name="disable_filters"></a>`disable_filters`
+##### <a name="-apache--mod--pagespeed--disable_filters"></a>`disable_filters`
 
 Data type: `Array`
 
@@ -4311,7 +4336,7 @@ An array of filters that you wish to disable
 
 Default value: `[]`
 
-##### <a name="enable_filters"></a>`enable_filters`
+##### <a name="-apache--mod--pagespeed--enable_filters"></a>`enable_filters`
 
 Data type: `Array`
 
@@ -4319,7 +4344,7 @@ An array of filters that you wish to enable
 
 Default value: `[]`
 
-##### <a name="forbid_filters"></a>`forbid_filters`
+##### <a name="-apache--mod--pagespeed--forbid_filters"></a>`forbid_filters`
 
 Data type: `Array`
 
@@ -4327,7 +4352,7 @@ An array of filters that you wish to forbid
 
 Default value: `[]`
 
-##### <a name="rewrite_deadline_per_flush_ms"></a>`rewrite_deadline_per_flush_ms`
+##### <a name="-apache--mod--pagespeed--rewrite_deadline_per_flush_ms"></a>`rewrite_deadline_per_flush_ms`
 
 Data type: `Integer`
 
@@ -4335,15 +4360,15 @@ How long to wait after attempting to rewrite an uncache/expired resource.
 
 Default value: `10`
 
-##### <a name="additional_domains"></a>`additional_domains`
+##### <a name="-apache--mod--pagespeed--additional_domains"></a>`additional_domains`
 
 Data type: `Optional[String]`
 
 Any additional domains that PageSpeed should optimize resources from.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="file_cache_size_kb"></a>`file_cache_size_kb`
+##### <a name="-apache--mod--pagespeed--file_cache_size_kb"></a>`file_cache_size_kb`
 
 Data type: `Integer`
 
@@ -4351,7 +4376,7 @@ The maximum size of the cache
 
 Default value: `102400`
 
-##### <a name="file_cache_clean_interval_ms"></a>`file_cache_clean_interval_ms`
+##### <a name="-apache--mod--pagespeed--file_cache_clean_interval_ms"></a>`file_cache_clean_interval_ms`
 
 Data type: `Integer`
 
@@ -4359,7 +4384,7 @@ The interval between which the cache is cleaned
 
 Default value: `3600000`
 
-##### <a name="lru_cache_per_process"></a>`lru_cache_per_process`
+##### <a name="-apache--mod--pagespeed--lru_cache_per_process"></a>`lru_cache_per_process`
 
 Data type: `Integer`
 
@@ -4367,7 +4392,7 @@ The amount of memory dedcated to each process
 
 Default value: `1024`
 
-##### <a name="lru_cache_byte_limit"></a>`lru_cache_byte_limit`
+##### <a name="-apache--mod--pagespeed--lru_cache_byte_limit"></a>`lru_cache_byte_limit`
 
 Data type: `Integer`
 
@@ -4375,7 +4400,7 @@ How large a cache entry the cache will accept
 
 Default value: `16384`
 
-##### <a name="css_flatten_max_bytes"></a>`css_flatten_max_bytes`
+##### <a name="-apache--mod--pagespeed--css_flatten_max_bytes"></a>`css_flatten_max_bytes`
 
 Data type: `Integer`
 
@@ -4383,7 +4408,7 @@ The maximum size in bytes of the flattened CSS
 
 Default value: `2048`
 
-##### <a name="css_inline_max_bytes"></a>`css_inline_max_bytes`
+##### <a name="-apache--mod--pagespeed--css_inline_max_bytes"></a>`css_inline_max_bytes`
 
 Data type: `Integer`
 
@@ -4391,7 +4416,7 @@ The maximum size in bytes of any image that will be inlined into CSS
 
 Default value: `2048`
 
-##### <a name="css_image_inline_max_bytes"></a>`css_image_inline_max_bytes`
+##### <a name="-apache--mod--pagespeed--css_image_inline_max_bytes"></a>`css_image_inline_max_bytes`
 
 Data type: `Integer`
 
@@ -4399,7 +4424,7 @@ The maximum size in bytes of any image that will be inlined into an HTML file
 
 Default value: `2048`
 
-##### <a name="image_inline_max_bytes"></a>`image_inline_max_bytes`
+##### <a name="-apache--mod--pagespeed--image_inline_max_bytes"></a>`image_inline_max_bytes`
 
 Data type: `Integer`
 
@@ -4407,7 +4432,7 @@ The maximum size in bytes of any inlined CSS file
 
 Default value: `2048`
 
-##### <a name="js_inline_max_bytes"></a>`js_inline_max_bytes`
+##### <a name="-apache--mod--pagespeed--js_inline_max_bytes"></a>`js_inline_max_bytes`
 
 Data type: `Integer`
 
@@ -4415,7 +4440,7 @@ The maximum size in bytes of any inlined JavaScript file
 
 Default value: `2048`
 
-##### <a name="css_outline_min_bytes"></a>`css_outline_min_bytes`
+##### <a name="-apache--mod--pagespeed--css_outline_min_bytes"></a>`css_outline_min_bytes`
 
 Data type: `Integer`
 
@@ -4423,7 +4448,7 @@ The minimum size in bytes for a CSS file to qualify as an outline
 
 Default value: `3000`
 
-##### <a name="js_outline_min_bytes"></a>`js_outline_min_bytes`
+##### <a name="-apache--mod--pagespeed--js_outline_min_bytes"></a>`js_outline_min_bytes`
 
 Data type: `Integer`
 
@@ -4431,7 +4456,7 @@ The minimum size in bytes for a JavaScript file to qualify as an outline
 
 Default value: `3000`
 
-##### <a name="inode_limit"></a>`inode_limit`
+##### <a name="-apache--mod--pagespeed--inode_limit"></a>`inode_limit`
 
 Data type: `Integer`
 
@@ -4439,7 +4464,7 @@ The file cache inode limit
 
 Default value: `500000`
 
-##### <a name="image_max_rewrites_at_once"></a>`image_max_rewrites_at_once`
+##### <a name="-apache--mod--pagespeed--image_max_rewrites_at_once"></a>`image_max_rewrites_at_once`
 
 Data type: `Integer`
 
@@ -4447,7 +4472,7 @@ The maximum number of images to optimize concurrently
 
 Default value: `8`
 
-##### <a name="num_rewrite_threads"></a>`num_rewrite_threads`
+##### <a name="-apache--mod--pagespeed--num_rewrite_threads"></a>`num_rewrite_threads`
 
 Data type: `Integer`
 
@@ -4456,7 +4481,7 @@ These threads are used for short, latency-sensitive work.
 
 Default value: `4`
 
-##### <a name="num_expensive_rewrite_threads"></a>`num_expensive_rewrite_threads`
+##### <a name="-apache--mod--pagespeed--num_expensive_rewrite_threads"></a>`num_expensive_rewrite_threads`
 
 Data type: `Integer`
 
@@ -4465,7 +4490,7 @@ These threads are used for full optimization.
 
 Default value: `4`
 
-##### <a name="collect_statistics"></a>`collect_statistics`
+##### <a name="-apache--mod--pagespeed--collect_statistics"></a>`collect_statistics`
 
 Data type: `String`
 
@@ -4473,7 +4498,7 @@ Whether to collect cross-process statistics
 
 Default value: `'on'`
 
-##### <a name="statistics_logging"></a>`statistics_logging`
+##### <a name="-apache--mod--pagespeed--statistics_logging"></a>`statistics_logging`
 
 Data type: `String`
 
@@ -4481,7 +4506,7 @@ Whether graphs should be drawn from collected statistics
 
 Default value: `'on'`
 
-##### <a name="allow_view_stats"></a>`allow_view_stats`
+##### <a name="-apache--mod--pagespeed--allow_view_stats"></a>`allow_view_stats`
 
 Data type: `Array`
 
@@ -4489,7 +4514,7 @@ What sources should be allowed to view the resultant graph
 
 Default value: `[]`
 
-##### <a name="allow_pagespeed_console"></a>`allow_pagespeed_console`
+##### <a name="-apache--mod--pagespeed--allow_pagespeed_console"></a>`allow_pagespeed_console`
 
 Data type: `Array`
 
@@ -4497,7 +4522,7 @@ What sources to draw the graphs from
 
 Default value: `[]`
 
-##### <a name="allow_pagespeed_message"></a>`allow_pagespeed_message`
+##### <a name="-apache--mod--pagespeed--allow_pagespeed_message"></a>`allow_pagespeed_message`
 
 Data type: `Array`
 
@@ -4505,7 +4530,7 @@ Data type: `Array`
 
 Default value: `[]`
 
-##### <a name="message_buffer_size"></a>`message_buffer_size`
+##### <a name="-apache--mod--pagespeed--message_buffer_size"></a>`message_buffer_size`
 
 Data type: `Integer`
 
@@ -4513,7 +4538,7 @@ The amount of bytes to allocate as a buffer to hold recent log messages
 
 Default value: `100000`
 
-##### <a name="additional_configuration"></a>`additional_configuration`
+##### <a name="-apache--mod--pagespeed--additional_configuration"></a>`additional_configuration`
 
 Data type: `Variant[Array, Hash]`
 
@@ -4521,23 +4546,23 @@ Any additional configuration no included as it's own option
 
 Default value: `{}`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--pagespeed--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-apache--mod--pagespeed--package_ensure"></a>`package_ensure`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodpassenger"></a>`apache::mod::passenger`
+### <a name="apache--mod--passenger"></a>`apache::mod::passenger`
 
 The current set of server configurations settings were taken directly from the Passenger Reference. To enable deprecation warnings
 and removal failure messages, set the passenger_installed_version to the version number installed on the server.
@@ -4560,176 +4585,176 @@ There are also several undocumented settings.
 
 The following parameters are available in the `apache::mod::passenger` class:
 
-* [`manage_repo`](#manage_repo)
-* [`mod_id`](#mod_id)
-* [`mod_lib`](#mod_lib)
-* [`mod_lib_path`](#mod_lib_path)
-* [`mod_package`](#mod_package)
-* [`mod_package_ensure`](#mod_package_ensure)
-* [`mod_path`](#mod_path)
-* [`passenger_allow_encoded_slashes`](#passenger_allow_encoded_slashes)
-* [`passenger_anonymous_telemetry_proxy`](#passenger_anonymous_telemetry_proxy)
-* [`passenger_app_env`](#passenger_app_env)
-* [`passenger_app_group_name`](#passenger_app_group_name)
-* [`passenger_app_root`](#passenger_app_root)
-* [`passenger_app_type`](#passenger_app_type)
-* [`passenger_base_uri`](#passenger_base_uri)
-* [`passenger_buffer_response`](#passenger_buffer_response)
-* [`passenger_buffer_upload`](#passenger_buffer_upload)
-* [`passenger_concurrency_model`](#passenger_concurrency_model)
-* [`passenger_conf_file`](#passenger_conf_file)
-* [`passenger_conf_package_file`](#passenger_conf_package_file)
-* [`passenger_data_buffer_dir`](#passenger_data_buffer_dir)
-* [`passenger_debug_log_file`](#passenger_debug_log_file)
-* [`passenger_debugger`](#passenger_debugger)
-* [`passenger_default_group`](#passenger_default_group)
-* [`passenger_default_ruby`](#passenger_default_ruby)
-* [`passenger_default_user`](#passenger_default_user)
-* [`passenger_disable_anonymous_telemetry`](#passenger_disable_anonymous_telemetry)
-* [`passenger_disable_log_prefix`](#passenger_disable_log_prefix)
-* [`passenger_disable_security_update_check`](#passenger_disable_security_update_check)
-* [`passenger_enabled`](#passenger_enabled)
-* [`passenger_error_override`](#passenger_error_override)
-* [`passenger_file_descriptor_log_file`](#passenger_file_descriptor_log_file)
-* [`passenger_fly_with`](#passenger_fly_with)
-* [`passenger_force_max_concurrent_requests_per_process`](#passenger_force_max_concurrent_requests_per_process)
-* [`passenger_friendly_error_pages`](#passenger_friendly_error_pages)
-* [`passenger_group`](#passenger_group)
-* [`passenger_high_performance`](#passenger_high_performance)
-* [`passenger_installed_version`](#passenger_installed_version)
-* [`passenger_instance_registry_dir`](#passenger_instance_registry_dir)
-* [`passenger_load_shell_envvars`](#passenger_load_shell_envvars)
-* [`passenger_preload_bundler`](#passenger_preload_bundler)
-* [`passenger_log_file`](#passenger_log_file)
-* [`passenger_log_level`](#passenger_log_level)
-* [`passenger_lve_min_uid`](#passenger_lve_min_uid)
-* [`passenger_max_instances`](#passenger_max_instances)
-* [`passenger_max_instances_per_app`](#passenger_max_instances_per_app)
-* [`passenger_max_pool_size`](#passenger_max_pool_size)
-* [`passenger_max_preloader_idle_time`](#passenger_max_preloader_idle_time)
-* [`passenger_max_request_queue_size`](#passenger_max_request_queue_size)
-* [`passenger_max_request_time`](#passenger_max_request_time)
-* [`passenger_max_requests`](#passenger_max_requests)
-* [`passenger_memory_limit`](#passenger_memory_limit)
-* [`passenger_meteor_app_settings`](#passenger_meteor_app_settings)
-* [`passenger_min_instances`](#passenger_min_instances)
-* [`passenger_nodejs`](#passenger_nodejs)
-* [`passenger_pool_idle_time`](#passenger_pool_idle_time)
-* [`passenger_pre_start`](#passenger_pre_start)
-* [`passenger_python`](#passenger_python)
-* [`passenger_resist_deployment_errors`](#passenger_resist_deployment_errors)
-* [`passenger_resolve_symlinks_in_document_root`](#passenger_resolve_symlinks_in_document_root)
-* [`passenger_response_buffer_high_watermark`](#passenger_response_buffer_high_watermark)
-* [`passenger_restart_dir`](#passenger_restart_dir)
-* [`passenger_rolling_restarts`](#passenger_rolling_restarts)
-* [`passenger_root`](#passenger_root)
-* [`passenger_ruby`](#passenger_ruby)
-* [`passenger_security_update_check_proxy`](#passenger_security_update_check_proxy)
-* [`passenger_show_version_in_header`](#passenger_show_version_in_header)
-* [`passenger_socket_backlog`](#passenger_socket_backlog)
-* [`passenger_spawn_dir`](#passenger_spawn_dir)
-* [`passenger_spawn_method`](#passenger_spawn_method)
-* [`passenger_start_timeout`](#passenger_start_timeout)
-* [`passenger_startup_file`](#passenger_startup_file)
-* [`passenger_stat_throttle_rate`](#passenger_stat_throttle_rate)
-* [`passenger_sticky_sessions`](#passenger_sticky_sessions)
-* [`passenger_sticky_sessions_cookie_name`](#passenger_sticky_sessions_cookie_name)
-* [`passenger_sticky_sessions_cookie_attributes`](#passenger_sticky_sessions_cookie_attributes)
-* [`passenger_thread_count`](#passenger_thread_count)
-* [`passenger_use_global_queue`](#passenger_use_global_queue)
-* [`passenger_user`](#passenger_user)
-* [`passenger_user_switching`](#passenger_user_switching)
-* [`rack_auto_detect`](#rack_auto_detect)
-* [`rack_autodetect`](#rack_autodetect)
-* [`rack_base_uri`](#rack_base_uri)
-* [`rack_env`](#rack_env)
-* [`rails_allow_mod_rewrite`](#rails_allow_mod_rewrite)
-* [`rails_app_spawner_idle_time`](#rails_app_spawner_idle_time)
-* [`rails_auto_detect`](#rails_auto_detect)
-* [`rails_autodetect`](#rails_autodetect)
-* [`rails_base_uri`](#rails_base_uri)
-* [`rails_default_user`](#rails_default_user)
-* [`rails_env`](#rails_env)
-* [`rails_framework_spawner_idle_time`](#rails_framework_spawner_idle_time)
-* [`rails_ruby`](#rails_ruby)
-* [`rails_spawn_method`](#rails_spawn_method)
-* [`rails_user_switching`](#rails_user_switching)
-* [`wsgi_auto_detect`](#wsgi_auto_detect)
+* [`manage_repo`](#-apache--mod--passenger--manage_repo)
+* [`mod_id`](#-apache--mod--passenger--mod_id)
+* [`mod_lib`](#-apache--mod--passenger--mod_lib)
+* [`mod_lib_path`](#-apache--mod--passenger--mod_lib_path)
+* [`mod_package`](#-apache--mod--passenger--mod_package)
+* [`mod_package_ensure`](#-apache--mod--passenger--mod_package_ensure)
+* [`mod_path`](#-apache--mod--passenger--mod_path)
+* [`passenger_allow_encoded_slashes`](#-apache--mod--passenger--passenger_allow_encoded_slashes)
+* [`passenger_anonymous_telemetry_proxy`](#-apache--mod--passenger--passenger_anonymous_telemetry_proxy)
+* [`passenger_app_env`](#-apache--mod--passenger--passenger_app_env)
+* [`passenger_app_group_name`](#-apache--mod--passenger--passenger_app_group_name)
+* [`passenger_app_root`](#-apache--mod--passenger--passenger_app_root)
+* [`passenger_app_type`](#-apache--mod--passenger--passenger_app_type)
+* [`passenger_base_uri`](#-apache--mod--passenger--passenger_base_uri)
+* [`passenger_buffer_response`](#-apache--mod--passenger--passenger_buffer_response)
+* [`passenger_buffer_upload`](#-apache--mod--passenger--passenger_buffer_upload)
+* [`passenger_concurrency_model`](#-apache--mod--passenger--passenger_concurrency_model)
+* [`passenger_conf_file`](#-apache--mod--passenger--passenger_conf_file)
+* [`passenger_conf_package_file`](#-apache--mod--passenger--passenger_conf_package_file)
+* [`passenger_data_buffer_dir`](#-apache--mod--passenger--passenger_data_buffer_dir)
+* [`passenger_debug_log_file`](#-apache--mod--passenger--passenger_debug_log_file)
+* [`passenger_debugger`](#-apache--mod--passenger--passenger_debugger)
+* [`passenger_default_group`](#-apache--mod--passenger--passenger_default_group)
+* [`passenger_default_ruby`](#-apache--mod--passenger--passenger_default_ruby)
+* [`passenger_default_user`](#-apache--mod--passenger--passenger_default_user)
+* [`passenger_disable_anonymous_telemetry`](#-apache--mod--passenger--passenger_disable_anonymous_telemetry)
+* [`passenger_disable_log_prefix`](#-apache--mod--passenger--passenger_disable_log_prefix)
+* [`passenger_disable_security_update_check`](#-apache--mod--passenger--passenger_disable_security_update_check)
+* [`passenger_enabled`](#-apache--mod--passenger--passenger_enabled)
+* [`passenger_error_override`](#-apache--mod--passenger--passenger_error_override)
+* [`passenger_file_descriptor_log_file`](#-apache--mod--passenger--passenger_file_descriptor_log_file)
+* [`passenger_fly_with`](#-apache--mod--passenger--passenger_fly_with)
+* [`passenger_force_max_concurrent_requests_per_process`](#-apache--mod--passenger--passenger_force_max_concurrent_requests_per_process)
+* [`passenger_friendly_error_pages`](#-apache--mod--passenger--passenger_friendly_error_pages)
+* [`passenger_group`](#-apache--mod--passenger--passenger_group)
+* [`passenger_high_performance`](#-apache--mod--passenger--passenger_high_performance)
+* [`passenger_installed_version`](#-apache--mod--passenger--passenger_installed_version)
+* [`passenger_instance_registry_dir`](#-apache--mod--passenger--passenger_instance_registry_dir)
+* [`passenger_load_shell_envvars`](#-apache--mod--passenger--passenger_load_shell_envvars)
+* [`passenger_preload_bundler`](#-apache--mod--passenger--passenger_preload_bundler)
+* [`passenger_log_file`](#-apache--mod--passenger--passenger_log_file)
+* [`passenger_log_level`](#-apache--mod--passenger--passenger_log_level)
+* [`passenger_lve_min_uid`](#-apache--mod--passenger--passenger_lve_min_uid)
+* [`passenger_max_instances`](#-apache--mod--passenger--passenger_max_instances)
+* [`passenger_max_instances_per_app`](#-apache--mod--passenger--passenger_max_instances_per_app)
+* [`passenger_max_pool_size`](#-apache--mod--passenger--passenger_max_pool_size)
+* [`passenger_max_preloader_idle_time`](#-apache--mod--passenger--passenger_max_preloader_idle_time)
+* [`passenger_max_request_queue_size`](#-apache--mod--passenger--passenger_max_request_queue_size)
+* [`passenger_max_request_time`](#-apache--mod--passenger--passenger_max_request_time)
+* [`passenger_max_requests`](#-apache--mod--passenger--passenger_max_requests)
+* [`passenger_memory_limit`](#-apache--mod--passenger--passenger_memory_limit)
+* [`passenger_meteor_app_settings`](#-apache--mod--passenger--passenger_meteor_app_settings)
+* [`passenger_min_instances`](#-apache--mod--passenger--passenger_min_instances)
+* [`passenger_nodejs`](#-apache--mod--passenger--passenger_nodejs)
+* [`passenger_pool_idle_time`](#-apache--mod--passenger--passenger_pool_idle_time)
+* [`passenger_pre_start`](#-apache--mod--passenger--passenger_pre_start)
+* [`passenger_python`](#-apache--mod--passenger--passenger_python)
+* [`passenger_resist_deployment_errors`](#-apache--mod--passenger--passenger_resist_deployment_errors)
+* [`passenger_resolve_symlinks_in_document_root`](#-apache--mod--passenger--passenger_resolve_symlinks_in_document_root)
+* [`passenger_response_buffer_high_watermark`](#-apache--mod--passenger--passenger_response_buffer_high_watermark)
+* [`passenger_restart_dir`](#-apache--mod--passenger--passenger_restart_dir)
+* [`passenger_rolling_restarts`](#-apache--mod--passenger--passenger_rolling_restarts)
+* [`passenger_root`](#-apache--mod--passenger--passenger_root)
+* [`passenger_ruby`](#-apache--mod--passenger--passenger_ruby)
+* [`passenger_security_update_check_proxy`](#-apache--mod--passenger--passenger_security_update_check_proxy)
+* [`passenger_show_version_in_header`](#-apache--mod--passenger--passenger_show_version_in_header)
+* [`passenger_socket_backlog`](#-apache--mod--passenger--passenger_socket_backlog)
+* [`passenger_spawn_dir`](#-apache--mod--passenger--passenger_spawn_dir)
+* [`passenger_spawn_method`](#-apache--mod--passenger--passenger_spawn_method)
+* [`passenger_start_timeout`](#-apache--mod--passenger--passenger_start_timeout)
+* [`passenger_startup_file`](#-apache--mod--passenger--passenger_startup_file)
+* [`passenger_stat_throttle_rate`](#-apache--mod--passenger--passenger_stat_throttle_rate)
+* [`passenger_sticky_sessions`](#-apache--mod--passenger--passenger_sticky_sessions)
+* [`passenger_sticky_sessions_cookie_name`](#-apache--mod--passenger--passenger_sticky_sessions_cookie_name)
+* [`passenger_sticky_sessions_cookie_attributes`](#-apache--mod--passenger--passenger_sticky_sessions_cookie_attributes)
+* [`passenger_thread_count`](#-apache--mod--passenger--passenger_thread_count)
+* [`passenger_use_global_queue`](#-apache--mod--passenger--passenger_use_global_queue)
+* [`passenger_user`](#-apache--mod--passenger--passenger_user)
+* [`passenger_user_switching`](#-apache--mod--passenger--passenger_user_switching)
+* [`rack_auto_detect`](#-apache--mod--passenger--rack_auto_detect)
+* [`rack_autodetect`](#-apache--mod--passenger--rack_autodetect)
+* [`rack_base_uri`](#-apache--mod--passenger--rack_base_uri)
+* [`rack_env`](#-apache--mod--passenger--rack_env)
+* [`rails_allow_mod_rewrite`](#-apache--mod--passenger--rails_allow_mod_rewrite)
+* [`rails_app_spawner_idle_time`](#-apache--mod--passenger--rails_app_spawner_idle_time)
+* [`rails_auto_detect`](#-apache--mod--passenger--rails_auto_detect)
+* [`rails_autodetect`](#-apache--mod--passenger--rails_autodetect)
+* [`rails_base_uri`](#-apache--mod--passenger--rails_base_uri)
+* [`rails_default_user`](#-apache--mod--passenger--rails_default_user)
+* [`rails_env`](#-apache--mod--passenger--rails_env)
+* [`rails_framework_spawner_idle_time`](#-apache--mod--passenger--rails_framework_spawner_idle_time)
+* [`rails_ruby`](#-apache--mod--passenger--rails_ruby)
+* [`rails_spawn_method`](#-apache--mod--passenger--rails_spawn_method)
+* [`rails_user_switching`](#-apache--mod--passenger--rails_user_switching)
+* [`wsgi_auto_detect`](#-apache--mod--passenger--wsgi_auto_detect)
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-apache--mod--passenger--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
 Toggle whether to manage yum repo if on a RedHat node.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="mod_id"></a>`mod_id`
+##### <a name="-apache--mod--passenger--mod_id"></a>`mod_id`
 
 Data type: `Optional[String]`
 
 Specifies the package id.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_lib"></a>`mod_lib`
+##### <a name="-apache--mod--passenger--mod_lib"></a>`mod_lib`
 
 Data type: `Optional[String]`
 
 Defines the module's shared object name. Do not configure manually without special reason.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_lib_path"></a>`mod_lib_path`
+##### <a name="-apache--mod--passenger--mod_lib_path"></a>`mod_lib_path`
 
 Data type: `Optional[String]`
 
 Specifies a path to the module's libraries. Do not manually set this parameter without special reason. The `path` parameter overrides
 this value.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_package"></a>`mod_package`
+##### <a name="-apache--mod--passenger--mod_package"></a>`mod_package`
 
 Data type: `Optional[String]`
 
 Name of the module package to install.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_package_ensure"></a>`mod_package_ensure`
+##### <a name="-apache--mod--passenger--mod_package_ensure"></a>`mod_package_ensure`
 
 Data type: `Optional[String]`
 
 Determines whether Puppet ensures the module should be installed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_path"></a>`mod_path`
+##### <a name="-apache--mod--passenger--mod_path"></a>`mod_path`
 
 Data type: `Optional[String]`
 
 Specifies a path to the module. Do not manually set this parameter without a special reason.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_allow_encoded_slashes"></a>`passenger_allow_encoded_slashes`
+##### <a name="-apache--mod--passenger--passenger_allow_encoded_slashes"></a>`passenger_allow_encoded_slashes`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggle whether URLs with encoded slashes (%2f) can be used (by default Apache does not support this).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_anonymous_telemetry_proxy"></a>`passenger_anonymous_telemetry_proxy`
+##### <a name="-apache--mod--passenger--passenger_anonymous_telemetry_proxy"></a>`passenger_anonymous_telemetry_proxy`
 
 Data type: `Optional[String]`
 
 Set an intermediate proxy for the Passenger anonymous telemetry reporting.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_env"></a>`passenger_app_env`
+##### <a name="-apache--mod--passenger--passenger_app_env"></a>`passenger_app_env`
 
 Data type: `Optional[String]`
 
@@ -4740,66 +4765,66 @@ This option sets, for the current application, the value of the following enviro
 - NODE_ENV
 - PASSENGER_APP_ENV
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_group_name"></a>`passenger_app_group_name`
+##### <a name="-apache--mod--passenger--passenger_app_group_name"></a>`passenger_app_group_name`
 
 Data type: `Optional[String]`
 
 Sets the name of the application group that the current application should belong to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_root"></a>`passenger_app_root`
+##### <a name="-apache--mod--passenger--passenger_app_root"></a>`passenger_app_root`
 
 Data type: `Optional[String]`
 
 Path to the application root which allows access independent from the DocumentRoot.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_type"></a>`passenger_app_type`
+##### <a name="-apache--mod--passenger--passenger_app_type"></a>`passenger_app_type`
 
 Data type: `Optional[String]`
 
 Specifies the type of the application. If you set this option, then you must also set PassengerAppRoot, otherwise Passenger will
 not properly recognize your application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_base_uri"></a>`passenger_base_uri`
+##### <a name="-apache--mod--passenger--passenger_base_uri"></a>`passenger_base_uri`
 
 Data type: `Optional[String]`
 
 Used to specify that the given URI is an distinct application that should be served by Passenger.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_buffer_response"></a>`passenger_buffer_response`
+##### <a name="-apache--mod--passenger--passenger_buffer_response"></a>`passenger_buffer_response`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggle whether application-generated responses are buffered by Apache. Buffering will happen in memory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_buffer_upload"></a>`passenger_buffer_upload`
+##### <a name="-apache--mod--passenger--passenger_buffer_upload"></a>`passenger_buffer_upload`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggle whether HTTP client request bodies are buffered before they are sent to the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_concurrency_model"></a>`passenger_concurrency_model`
+##### <a name="-apache--mod--passenger--passenger_concurrency_model"></a>`passenger_concurrency_model`
 
 Data type: `Optional[String]`
 
 Specifies the I/O concurrency model that should be used for Ruby application processes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_conf_file"></a>`passenger_conf_file`
+##### <a name="-apache--mod--passenger--passenger_conf_file"></a>`passenger_conf_file`
 
 Data type: `String`
 
@@ -4807,7 +4832,7 @@ Data type: `String`
 
 Default value: `$apache::params::passenger_conf_file`
 
-##### <a name="passenger_conf_package_file"></a>`passenger_conf_package_file`
+##### <a name="-apache--mod--passenger--passenger_conf_package_file"></a>`passenger_conf_package_file`
 
 Data type: `Optional[String]`
 
@@ -4815,39 +4840,39 @@ Data type: `Optional[String]`
 
 Default value: `$apache::params::passenger_conf_package_file`
 
-##### <a name="passenger_data_buffer_dir"></a>`passenger_data_buffer_dir`
+##### <a name="-apache--mod--passenger--passenger_data_buffer_dir"></a>`passenger_data_buffer_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies the directory in which to store data buffers.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_debug_log_file"></a>`passenger_debug_log_file`
+##### <a name="-apache--mod--passenger--passenger_debug_log_file"></a>`passenger_debug_log_file`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_debugger"></a>`passenger_debugger`
+##### <a name="-apache--mod--passenger--passenger_debugger"></a>`passenger_debugger`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Turns support for Ruby application debugging on or off.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_default_group"></a>`passenger_default_group`
+##### <a name="-apache--mod--passenger--passenger_default_group"></a>`passenger_default_group`
 
 Data type: `Optional[String]`
 
 Allows you to specify the group that applications must run as, if user switching fails or is disabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_default_ruby"></a>`passenger_default_ruby`
+##### <a name="-apache--mod--passenger--passenger_default_ruby"></a>`passenger_default_ruby`
 
 Data type: `Optional[String]`
 
@@ -4855,318 +4880,318 @@ File path to desired ruby interpreter to use by default.
 
 Default value: `$apache::params::passenger_default_ruby`
 
-##### <a name="passenger_default_user"></a>`passenger_default_user`
+##### <a name="-apache--mod--passenger--passenger_default_user"></a>`passenger_default_user`
 
 Data type: `Optional[String]`
 
 Allows you to specify the user that applications must run as, if user switching fails or is disabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_disable_anonymous_telemetry"></a>`passenger_disable_anonymous_telemetry`
+##### <a name="-apache--mod--passenger--passenger_disable_anonymous_telemetry"></a>`passenger_disable_anonymous_telemetry`
 
 Data type: `Optional[Boolean]`
 
 Whether or not to disable the Passenger anonymous telemetry reporting.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_disable_log_prefix"></a>`passenger_disable_log_prefix`
+##### <a name="-apache--mod--passenger--passenger_disable_log_prefix"></a>`passenger_disable_log_prefix`
 
 Data type: `Optional[Boolean]`
 
 Whether to stop Passenger from prefixing logs when they are written to a log file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_disable_security_update_check"></a>`passenger_disable_security_update_check`
+##### <a name="-apache--mod--passenger--passenger_disable_security_update_check"></a>`passenger_disable_security_update_check`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Allows disabling the Passenger security update check, a daily check with https://securitycheck.phusionpassenger.com for important
 security updates that might be available.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_enabled"></a>`passenger_enabled`
+##### <a name="-apache--mod--passenger--passenger_enabled"></a>`passenger_enabled`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether Passenger should be enabled for that particular context.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_error_override"></a>`passenger_error_override`
+##### <a name="-apache--mod--passenger--passenger_error_override"></a>`passenger_error_override`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether Apache will intercept and handle responses with HTTP status codes of 400 and higher.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_file_descriptor_log_file"></a>`passenger_file_descriptor_log_file`
+##### <a name="-apache--mod--passenger--passenger_file_descriptor_log_file"></a>`passenger_file_descriptor_log_file`
 
 Data type: `Optional[String]`
 
 Log file descriptor debug tracing messages to the given file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_fly_with"></a>`passenger_fly_with`
+##### <a name="-apache--mod--passenger--passenger_fly_with"></a>`passenger_fly_with`
 
 Data type: `Optional[String]`
 
 Enables the Flying Passenger mode, and configures Apache to connect to the Flying Passenger daemon that's listening on the
 given socket filename.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_force_max_concurrent_requests_per_process"></a>`passenger_force_max_concurrent_requests_per_process`
+##### <a name="-apache--mod--passenger--passenger_force_max_concurrent_requests_per_process"></a>`passenger_force_max_concurrent_requests_per_process`
 
 Data type: `Optional[Variant[Integer, String]]`
 
 Use this option to tell Passenger how many concurrent requests the application can handle per process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_friendly_error_pages"></a>`passenger_friendly_error_pages`
+##### <a name="-apache--mod--passenger--passenger_friendly_error_pages"></a>`passenger_friendly_error_pages`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether Passenger should display friendly error pages whenever an application fails to start.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_group"></a>`passenger_group`
+##### <a name="-apache--mod--passenger--passenger_group"></a>`passenger_group`
 
 Data type: `Optional[String]`
 
 Allows you to override that behavior and explicitly set a group to run the web application as, regardless of the ownership of the
 startup file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_high_performance"></a>`passenger_high_performance`
+##### <a name="-apache--mod--passenger--passenger_high_performance"></a>`passenger_high_performance`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether to enable PassengerHighPerformance which will make Passenger will be a little faster, in return for reduced
 compatibility with other Apache modules.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_installed_version"></a>`passenger_installed_version`
+##### <a name="-apache--mod--passenger--passenger_installed_version"></a>`passenger_installed_version`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_instance_registry_dir"></a>`passenger_instance_registry_dir`
+##### <a name="-apache--mod--passenger--passenger_instance_registry_dir"></a>`passenger_instance_registry_dir`
 
 Data type: `Optional[String]`
 
 Specifies the directory that Passenger should use for registering its current instance.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_load_shell_envvars"></a>`passenger_load_shell_envvars`
+##### <a name="-apache--mod--passenger--passenger_load_shell_envvars"></a>`passenger_load_shell_envvars`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Enables or disables the loading of shell environment variables before spawning the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_preload_bundler"></a>`passenger_preload_bundler`
+##### <a name="-apache--mod--passenger--passenger_preload_bundler"></a>`passenger_preload_bundler`
 
 Data type: `Optional[Boolean]`
 
 Enables or disables loading bundler before loading your Ruby app.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_log_file"></a>`passenger_log_file`
+##### <a name="-apache--mod--passenger--passenger_log_file"></a>`passenger_log_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 File path to log file. By default Passenger log messages are written to the Apache global error log.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_log_level"></a>`passenger_log_level`
+##### <a name="-apache--mod--passenger--passenger_log_level"></a>`passenger_log_level`
 
 Data type: `Optional[Integer]`
 
 Specifies how much information Passenger should log to its log file. A higher log level value means that more
 information will be logged.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_lve_min_uid"></a>`passenger_lve_min_uid`
+##### <a name="-apache--mod--passenger--passenger_lve_min_uid"></a>`passenger_lve_min_uid`
 
 Data type: `Optional[Integer]`
 
 When using Passenger on a LVE-enabled kernel, a security check (enter) is run for spawning application processes. This options
 tells the check to only allow processes with UIDs equal to, or higher than, the specified value.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_instances"></a>`passenger_max_instances`
+##### <a name="-apache--mod--passenger--passenger_max_instances"></a>`passenger_max_instances`
 
 Data type: `Optional[Integer]`
 
 The maximum number of application processes that may simultaneously exist for an application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_instances_per_app"></a>`passenger_max_instances_per_app`
+##### <a name="-apache--mod--passenger--passenger_max_instances_per_app"></a>`passenger_max_instances_per_app`
 
 Data type: `Optional[Integer]`
 
 The maximum number of application processes that may simultaneously exist for a single application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_pool_size"></a>`passenger_max_pool_size`
+##### <a name="-apache--mod--passenger--passenger_max_pool_size"></a>`passenger_max_pool_size`
 
 Data type: `Optional[Integer]`
 
 The maximum number of application processes that may simultaneously exist.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_preloader_idle_time"></a>`passenger_max_preloader_idle_time`
+##### <a name="-apache--mod--passenger--passenger_max_preloader_idle_time"></a>`passenger_max_preloader_idle_time`
 
 Data type: `Optional[Integer]`
 
 Set the preloader's idle timeout, in seconds. A value of 0 means that it should never idle timeout.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_request_queue_size"></a>`passenger_max_request_queue_size`
+##### <a name="-apache--mod--passenger--passenger_max_request_queue_size"></a>`passenger_max_request_queue_size`
 
 Data type: `Optional[Integer]`
 
 Specifies the maximum size for the queue of all incoming requests.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_request_time"></a>`passenger_max_request_time`
+##### <a name="-apache--mod--passenger--passenger_max_request_time"></a>`passenger_max_request_time`
 
 Data type: `Optional[Integer]`
 
 The maximum amount of time, in seconds, that an application process may take to process a request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_requests"></a>`passenger_max_requests`
+##### <a name="-apache--mod--passenger--passenger_max_requests"></a>`passenger_max_requests`
 
 Data type: `Optional[Integer]`
 
 The maximum number of requests an application process will process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_memory_limit"></a>`passenger_memory_limit`
+##### <a name="-apache--mod--passenger--passenger_memory_limit"></a>`passenger_memory_limit`
 
 Data type: `Optional[Integer]`
 
 The maximum amount of memory that an application process may use, in megabytes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_meteor_app_settings"></a>`passenger_meteor_app_settings`
+##### <a name="-apache--mod--passenger--passenger_meteor_app_settings"></a>`passenger_meteor_app_settings`
 
 Data type: `Optional[String]`
 
 When using a Meteor application in non-bundled mode, use this option to specify a JSON file with settings for the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_min_instances"></a>`passenger_min_instances`
+##### <a name="-apache--mod--passenger--passenger_min_instances"></a>`passenger_min_instances`
 
 Data type: `Optional[Integer]`
 
 Specifies the minimum number of application processes that should exist for a given application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_nodejs"></a>`passenger_nodejs`
+##### <a name="-apache--mod--passenger--passenger_nodejs"></a>`passenger_nodejs`
 
 Data type: `Optional[String]`
 
 Specifies the Node.js command to use for serving Node.js web applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_pool_idle_time"></a>`passenger_pool_idle_time`
+##### <a name="-apache--mod--passenger--passenger_pool_idle_time"></a>`passenger_pool_idle_time`
 
 Data type: `Optional[Integer]`
 
 The maximum number of seconds that an application process may be idle.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_pre_start"></a>`passenger_pre_start`
+##### <a name="-apache--mod--passenger--passenger_pre_start"></a>`passenger_pre_start`
 
 Data type: `Optional[Variant[String, Array[String]]]`
 
 URL of the web application you want to pre-start.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_python"></a>`passenger_python`
+##### <a name="-apache--mod--passenger--passenger_python"></a>`passenger_python`
 
 Data type: `Optional[String]`
 
 Specifies the Python interpreter to use for serving Python web applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_resist_deployment_errors"></a>`passenger_resist_deployment_errors`
+##### <a name="-apache--mod--passenger--passenger_resist_deployment_errors"></a>`passenger_resist_deployment_errors`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Enables or disables resistance against deployment errors.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_resolve_symlinks_in_document_root"></a>`passenger_resolve_symlinks_in_document_root`
+##### <a name="-apache--mod--passenger--passenger_resolve_symlinks_in_document_root"></a>`passenger_resolve_symlinks_in_document_root`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 This option is no longer available in version 5.2.0. Switch to PassengerAppRoot if you are setting the application root via a
 document root containing symlinks.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_response_buffer_high_watermark"></a>`passenger_response_buffer_high_watermark`
+##### <a name="-apache--mod--passenger--passenger_response_buffer_high_watermark"></a>`passenger_response_buffer_high_watermark`
 
 Data type: `Optional[Variant[Integer, String]]`
 
 Configures the maximum size of the real-time disk-backed response buffering system.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_restart_dir"></a>`passenger_restart_dir`
+##### <a name="-apache--mod--passenger--passenger_restart_dir"></a>`passenger_restart_dir`
 
 Data type: `Optional[String]`
 
 Path to directory containing restart.txt file. Can be either absolute or relative.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_rolling_restarts"></a>`passenger_rolling_restarts`
+##### <a name="-apache--mod--passenger--passenger_rolling_restarts"></a>`passenger_rolling_restarts`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Enables or disables support for zero-downtime application restarts through restart.txt.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_root"></a>`passenger_root`
+##### <a name="-apache--mod--passenger--passenger_root"></a>`passenger_root`
 
 Data type: `Optional[String]`
 
@@ -5174,7 +5199,7 @@ Refers to the location to the Passenger root directory, or to a location configu
 
 Default value: `$apache::params::passenger_root`
 
-##### <a name="passenger_ruby"></a>`passenger_ruby`
+##### <a name="-apache--mod--passenger--passenger_ruby"></a>`passenger_ruby`
 
 Data type: `Optional[String]`
 
@@ -5182,257 +5207,257 @@ Specifies the Ruby interpreter to use for serving Ruby web applications.
 
 Default value: `$apache::params::passenger_ruby`
 
-##### <a name="passenger_security_update_check_proxy"></a>`passenger_security_update_check_proxy`
+##### <a name="-apache--mod--passenger--passenger_security_update_check_proxy"></a>`passenger_security_update_check_proxy`
 
 Data type: `Optional[String]`
 
 Allows use of an intermediate proxy for the Passenger security update check.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_show_version_in_header"></a>`passenger_show_version_in_header`
+##### <a name="-apache--mod--passenger--passenger_show_version_in_header"></a>`passenger_show_version_in_header`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggle whether Passenger will output its version number in the X-Powered-By header in all Passenger-served requests:
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_socket_backlog"></a>`passenger_socket_backlog`
+##### <a name="-apache--mod--passenger--passenger_socket_backlog"></a>`passenger_socket_backlog`
 
 Data type: `Optional[Variant[Integer, String]]`
 
 This option can be raised if Apache manages to overflow the backlog queue.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_spawn_dir"></a>`passenger_spawn_dir`
+##### <a name="-apache--mod--passenger--passenger_spawn_dir"></a>`passenger_spawn_dir`
 
 Data type: `Optional[String]`
 
 The directory in which Passenger will record progress during startup
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_spawn_method"></a>`passenger_spawn_method`
+##### <a name="-apache--mod--passenger--passenger_spawn_method"></a>`passenger_spawn_method`
 
 Data type: `Optional[Enum['smart', 'direct', 'smart-lv2', 'conservative']]`
 
 Controls whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_start_timeout"></a>`passenger_start_timeout`
+##### <a name="-apache--mod--passenger--passenger_start_timeout"></a>`passenger_start_timeout`
 
 Data type: `Optional[Integer]`
 
 Specifies a timeout for the startup of application processes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_startup_file"></a>`passenger_startup_file`
+##### <a name="-apache--mod--passenger--passenger_startup_file"></a>`passenger_startup_file`
 
 Data type: `Optional[String]`
 
 Specifies the startup file that Passenger should use when loading the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_stat_throttle_rate"></a>`passenger_stat_throttle_rate`
+##### <a name="-apache--mod--passenger--passenger_stat_throttle_rate"></a>`passenger_stat_throttle_rate`
 
 Data type: `Optional[Integer]`
 
 Setting this option to a value of x means that certain filesystem checks will be performed at most once every x seconds.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions"></a>`passenger_sticky_sessions`
+##### <a name="-apache--mod--passenger--passenger_sticky_sessions"></a>`passenger_sticky_sessions`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether all requests that a client sends will be routed to the same originating application process, whenever possible.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions_cookie_name"></a>`passenger_sticky_sessions_cookie_name`
+##### <a name="-apache--mod--passenger--passenger_sticky_sessions_cookie_name"></a>`passenger_sticky_sessions_cookie_name`
 
 Data type: `Optional[String]`
 
 Sets the name of the sticky sessions cookie.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions_cookie_attributes"></a>`passenger_sticky_sessions_cookie_attributes`
+##### <a name="-apache--mod--passenger--passenger_sticky_sessions_cookie_attributes"></a>`passenger_sticky_sessions_cookie_attributes`
 
 Data type: `Optional[String]`
 
 Sets the attributes of the sticky sessions cookie.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_thread_count"></a>`passenger_thread_count`
+##### <a name="-apache--mod--passenger--passenger_thread_count"></a>`passenger_thread_count`
 
 Data type: `Optional[Integer]`
 
 Specifies the number of threads that Passenger should spawn per Ruby application process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_use_global_queue"></a>`passenger_use_global_queue`
+##### <a name="-apache--mod--passenger--passenger_use_global_queue"></a>`passenger_use_global_queue`
 
 Data type: `Optional[String]`
 
 N/A.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_user"></a>`passenger_user`
+##### <a name="-apache--mod--passenger--passenger_user"></a>`passenger_user`
 
 Data type: `Optional[String]`
 
 Allows you to override that behavior and explicitly set a user to run the web application as, regardless of the ownership of the
 startup file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_user_switching"></a>`passenger_user_switching`
+##### <a name="-apache--mod--passenger--passenger_user_switching"></a>`passenger_user_switching`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
 Toggles whether to attempt to enable user account sandboxing, also known as user switching.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rack_auto_detect"></a>`rack_auto_detect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: ``undef``
-
-##### <a name="rack_autodetect"></a>`rack_autodetect`
+##### <a name="-apache--mod--passenger--rack_auto_detect"></a>`rack_auto_detect`
 
 Data type: `Optional[String]`
 
 This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rack_base_uri"></a>`rack_base_uri`
+##### <a name="-apache--mod--passenger--rack_autodetect"></a>`rack_autodetect`
+
+Data type: `Optional[String]`
+
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--rack_base_uri"></a>`rack_base_uri`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerBaseURI.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rack_env"></a>`rack_env`
+##### <a name="-apache--mod--passenger--rack_env"></a>`rack_env`
 
 Data type: `Optional[String]`
 
 Alias for PassengerAppEnv.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_allow_mod_rewrite"></a>`rails_allow_mod_rewrite`
+##### <a name="-apache--mod--passenger--rails_allow_mod_rewrite"></a>`rails_allow_mod_rewrite`
 
 Data type: `Optional[String]`
 
 This option doesn't do anything anymore since version 4.0.0.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_app_spawner_idle_time"></a>`rails_app_spawner_idle_time`
+##### <a name="-apache--mod--passenger--rails_app_spawner_idle_time"></a>`rails_app_spawner_idle_time`
 
 Data type: `Optional[String]`
 
 This option has been removed in version 4.0.0, and replaced with PassengerMaxPreloaderIdleTime.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_auto_detect"></a>`rails_auto_detect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: ``undef``
-
-##### <a name="rails_autodetect"></a>`rails_autodetect`
+##### <a name="-apache--mod--passenger--rails_auto_detect"></a>`rails_auto_detect`
 
 Data type: `Optional[String]`
 
 This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_base_uri"></a>`rails_base_uri`
+##### <a name="-apache--mod--passenger--rails_autodetect"></a>`rails_autodetect`
+
+Data type: `Optional[String]`
+
+This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--rails_base_uri"></a>`rails_base_uri`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerBaseURI.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_default_user"></a>`rails_default_user`
+##### <a name="-apache--mod--passenger--rails_default_user"></a>`rails_default_user`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerDefaultUser
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_env"></a>`rails_env`
+##### <a name="-apache--mod--passenger--rails_env"></a>`rails_env`
 
 Data type: `Optional[String]`
 
 Alias for PassengerAppEnv.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_framework_spawner_idle_time"></a>`rails_framework_spawner_idle_time`
+##### <a name="-apache--mod--passenger--rails_framework_spawner_idle_time"></a>`rails_framework_spawner_idle_time`
 
 Data type: `Optional[String]`
 
 This option is no longer available in version 4.0.0. There is no alternative because framework spawning has been removed
 altogether. You should use smart spawning instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_ruby"></a>`rails_ruby`
+##### <a name="-apache--mod--passenger--rails_ruby"></a>`rails_ruby`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerRuby.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_spawn_method"></a>`rails_spawn_method`
+##### <a name="-apache--mod--passenger--rails_spawn_method"></a>`rails_spawn_method`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerSpawnMethod.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rails_user_switching"></a>`rails_user_switching`
+##### <a name="-apache--mod--passenger--rails_user_switching"></a>`rails_user_switching`
 
 Data type: `Optional[String]`
 
 Deprecated in 3.0.0 in favor of PassengerUserSwitching.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_auto_detect"></a>`wsgi_auto_detect`
+##### <a name="-apache--mod--passenger--wsgi_auto_detect"></a>`wsgi_auto_detect`
 
 Data type: `Optional[String]`
 
 This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodperl"></a>`apache::mod::perl`
+### <a name="apache--mod--perl"></a>`apache::mod::perl`
 
 Installs `mod_perl`.
 
@@ -5440,7 +5465,7 @@ Installs `mod_perl`.
   * https://perl.apache.org
     * for additional documentation.
 
-### <a name="apachemodperuser"></a>`apache::mod::peruser`
+### <a name="apache--mod--peruser"></a>`apache::mod::peruser`
 
 Installs `mod_peruser`.
 
@@ -5448,16 +5473,16 @@ Installs `mod_peruser`.
 
 The following parameters are available in the `apache::mod::peruser` class:
 
-* [`minspareprocessors`](#minspareprocessors)
-* [`minprocessors`](#minprocessors)
-* [`maxprocessors`](#maxprocessors)
-* [`maxclients`](#maxclients)
-* [`maxrequestsperchild`](#maxrequestsperchild)
-* [`idletimeout`](#idletimeout)
-* [`expiretimeout`](#expiretimeout)
-* [`keepalive`](#keepalive)
+* [`minspareprocessors`](#-apache--mod--peruser--minspareprocessors)
+* [`minprocessors`](#-apache--mod--peruser--minprocessors)
+* [`maxprocessors`](#-apache--mod--peruser--maxprocessors)
+* [`maxclients`](#-apache--mod--peruser--maxclients)
+* [`maxrequestsperchild`](#-apache--mod--peruser--maxrequestsperchild)
+* [`idletimeout`](#-apache--mod--peruser--idletimeout)
+* [`expiretimeout`](#-apache--mod--peruser--expiretimeout)
+* [`keepalive`](#-apache--mod--peruser--keepalive)
 
-##### <a name="minspareprocessors"></a>`minspareprocessors`
+##### <a name="-apache--mod--peruser--minspareprocessors"></a>`minspareprocessors`
 
 Data type: `Integer`
 
@@ -5465,7 +5490,7 @@ Data type: `Integer`
 
 Default value: `2`
 
-##### <a name="minprocessors"></a>`minprocessors`
+##### <a name="-apache--mod--peruser--minprocessors"></a>`minprocessors`
 
 Data type: `Integer`
 
@@ -5473,7 +5498,7 @@ The minimum amount of processors
 
 Default value: `2`
 
-##### <a name="maxprocessors"></a>`maxprocessors`
+##### <a name="-apache--mod--peruser--maxprocessors"></a>`maxprocessors`
 
 Data type: `Integer`
 
@@ -5481,7 +5506,7 @@ The maximum amount of processors
 
 Default value: `10`
 
-##### <a name="maxclients"></a>`maxclients`
+##### <a name="-apache--mod--peruser--maxclients"></a>`maxclients`
 
 Data type: `Integer`
 
@@ -5489,7 +5514,7 @@ The maximum amount of clients
 
 Default value: `150`
 
-##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
+##### <a name="-apache--mod--peruser--maxrequestsperchild"></a>`maxrequestsperchild`
 
 Data type: `Integer`
 
@@ -5497,7 +5522,7 @@ The maximum amount of requests per child
 
 Default value: `1000`
 
-##### <a name="idletimeout"></a>`idletimeout`
+##### <a name="-apache--mod--peruser--idletimeout"></a>`idletimeout`
 
 Data type: `Integer`
 
@@ -5505,7 +5530,7 @@ Data type: `Integer`
 
 Default value: `120`
 
-##### <a name="expiretimeout"></a>`expiretimeout`
+##### <a name="-apache--mod--peruser--expiretimeout"></a>`expiretimeout`
 
 Data type: `Integer`
 
@@ -5513,7 +5538,7 @@ Data type: `Integer`
 
 Default value: `120`
 
-##### <a name="keepalive"></a>`keepalive`
+##### <a name="-apache--mod--peruser--keepalive"></a>`keepalive`
 
 Data type: `Enum['On', 'Off']`
 
@@ -5521,7 +5546,7 @@ Data type: `Enum['On', 'Off']`
 
 Default value: `'Off'`
 
-### <a name="apachemodphp"></a>`apache::mod::php`
+### <a name="apache--mod--php"></a>`apache::mod::php`
 
 Installs `mod_php`.
 
@@ -5531,26 +5556,26 @@ Installs `mod_php`.
 
 The following parameters are available in the `apache::mod::php` class:
 
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`path`](#path)
-* [`extensions`](#extensions)
-* [`content`](#content)
-* [`template`](#template)
-* [`source`](#source)
-* [`root_group`](#root_group)
-* [`php_version`](#php_version)
-* [`libphp_prefix`](#libphp_prefix)
+* [`package_name`](#-apache--mod--php--package_name)
+* [`package_ensure`](#-apache--mod--php--package_ensure)
+* [`path`](#-apache--mod--php--path)
+* [`extensions`](#-apache--mod--php--extensions)
+* [`content`](#-apache--mod--php--content)
+* [`template`](#-apache--mod--php--template)
+* [`source`](#-apache--mod--php--source)
+* [`root_group`](#-apache--mod--php--root_group)
+* [`php_version`](#-apache--mod--php--php_version)
+* [`libphp_prefix`](#-apache--mod--php--libphp_prefix)
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--php--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 The package name
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-apache--mod--php--package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -5558,15 +5583,15 @@ Whether the package is `present` or `absent`
 
 Default value: `'present'`
 
-##### <a name="path"></a>`path`
+##### <a name="-apache--mod--php--path"></a>`path`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="extensions"></a>`extensions`
+##### <a name="-apache--mod--php--extensions"></a>`extensions`
 
 Data type: `Array`
 
@@ -5574,15 +5599,15 @@ Data type: `Array`
 
 Default value: `['.php']`
 
-##### <a name="content"></a>`content`
+##### <a name="-apache--mod--php--content"></a>`content`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-apache--mod--php--template"></a>`template`
 
 Data type: `String`
 
@@ -5590,15 +5615,15 @@ Data type: `String`
 
 Default value: `'apache/mod/php.conf.erb'`
 
-##### <a name="source"></a>`source`
+##### <a name="-apache--mod--php--source"></a>`source`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="root_group"></a>`root_group`
+##### <a name="-apache--mod--php--root_group"></a>`root_group`
 
 Data type: `Optional[String]`
 
@@ -5606,7 +5631,7 @@ UNIX group of the root user
 
 Default value: `$apache::params::root_group`
 
-##### <a name="php_version"></a>`php_version`
+##### <a name="-apache--mod--php--php_version"></a>`php_version`
 
 Data type: `Optional[String]`
 
@@ -5614,7 +5639,7 @@ The php version. This is a required parameter, but optional allows showing a cle
 
 Default value: `$apache::params::php_version`
 
-##### <a name="libphp_prefix"></a>`libphp_prefix`
+##### <a name="-apache--mod--php--libphp_prefix"></a>`libphp_prefix`
 
 Data type: `String`
 
@@ -5622,7 +5647,7 @@ Data type: `String`
 
 Default value: `'libphp'`
 
-### <a name="apachemodprefork"></a>`apache::mod::prefork`
+### <a name="apache--mod--prefork"></a>`apache::mod::prefork`
 
 Installs and configures MPM `prefork`.
 
@@ -5634,18 +5659,18 @@ Installs and configures MPM `prefork`.
 
 The following parameters are available in the `apache::mod::prefork` class:
 
-* [`startservers`](#startservers)
-* [`minspareservers`](#minspareservers)
-* [`maxspareservers`](#maxspareservers)
-* [`serverlimit`](#serverlimit)
-* [`maxclients`](#maxclients)
-* [`maxrequestworkers`](#maxrequestworkers)
-* [`maxrequestsperchild`](#maxrequestsperchild)
-* [`maxconnectionsperchild`](#maxconnectionsperchild)
-* [`apache_version`](#apache_version)
-* [`listenbacklog`](#listenbacklog)
+* [`startservers`](#-apache--mod--prefork--startservers)
+* [`minspareservers`](#-apache--mod--prefork--minspareservers)
+* [`maxspareservers`](#-apache--mod--prefork--maxspareservers)
+* [`serverlimit`](#-apache--mod--prefork--serverlimit)
+* [`maxclients`](#-apache--mod--prefork--maxclients)
+* [`maxrequestworkers`](#-apache--mod--prefork--maxrequestworkers)
+* [`maxrequestsperchild`](#-apache--mod--prefork--maxrequestsperchild)
+* [`maxconnectionsperchild`](#-apache--mod--prefork--maxconnectionsperchild)
+* [`apache_version`](#-apache--mod--prefork--apache_version)
+* [`listenbacklog`](#-apache--mod--prefork--listenbacklog)
 
-##### <a name="startservers"></a>`startservers`
+##### <a name="-apache--mod--prefork--startservers"></a>`startservers`
 
 Data type: `Integer`
 
@@ -5653,7 +5678,7 @@ Number of child server processes created at startup.
 
 Default value: `8`
 
-##### <a name="minspareservers"></a>`minspareservers`
+##### <a name="-apache--mod--prefork--minspareservers"></a>`minspareservers`
 
 Data type: `Integer`
 
@@ -5661,7 +5686,7 @@ Minimum number of idle child server processes.
 
 Default value: `5`
 
-##### <a name="maxspareservers"></a>`maxspareservers`
+##### <a name="-apache--mod--prefork--maxspareservers"></a>`maxspareservers`
 
 Data type: `Integer`
 
@@ -5669,7 +5694,7 @@ Maximum number of idle child server processes.
 
 Default value: `20`
 
-##### <a name="serverlimit"></a>`serverlimit`
+##### <a name="-apache--mod--prefork--serverlimit"></a>`serverlimit`
 
 Data type: `Integer`
 
@@ -5677,7 +5702,7 @@ Upper limit on configurable number of processes.
 
 Default value: `256`
 
-##### <a name="maxclients"></a>`maxclients`
+##### <a name="-apache--mod--prefork--maxclients"></a>`maxclients`
 
 Data type: `Integer`
 
@@ -5685,15 +5710,15 @@ Old alias for MaxRequestWorkers.
 
 Default value: `256`
 
-##### <a name="maxrequestworkers"></a>`maxrequestworkers`
+##### <a name="-apache--mod--prefork--maxrequestworkers"></a>`maxrequestworkers`
 
 Data type: `Optional[Integer]`
 
 Maximum number of connections that will be processed simultaneously.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
+##### <a name="-apache--mod--prefork--maxrequestsperchild"></a>`maxrequestsperchild`
 
 Data type: `Integer`
 
@@ -5701,23 +5726,23 @@ Old alias for MaxConnectionsPerChild.
 
 Default value: `4000`
 
-##### <a name="maxconnectionsperchild"></a>`maxconnectionsperchild`
+##### <a name="-apache--mod--prefork--maxconnectionsperchild"></a>`maxconnectionsperchild`
 
 Data type: `Optional[Integer]`
 
 Limit on the number of connections that an individual child server will handle during its life.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--prefork--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="listenbacklog"></a>`listenbacklog`
+##### <a name="-apache--mod--prefork--listenbacklog"></a>`listenbacklog`
 
 Data type: `Integer`
 
@@ -5725,7 +5750,7 @@ Maximum length of the queue of pending connections.
 
 Default value: `511`
 
-### <a name="apachemodproxy"></a>`apache::mod::proxy`
+### <a name="apache--mod--proxy"></a>`apache::mod::proxy`
 
 Installs and configures `mod_proxy`.
 
@@ -5737,15 +5762,15 @@ Installs and configures `mod_proxy`.
 
 The following parameters are available in the `apache::mod::proxy` class:
 
-* [`proxy_requests`](#proxy_requests)
-* [`allow_from`](#allow_from)
-* [`apache_version`](#apache_version)
-* [`package_name`](#package_name)
-* [`proxy_via`](#proxy_via)
-* [`proxy_timeout`](#proxy_timeout)
-* [`proxy_iobuffersize`](#proxy_iobuffersize)
+* [`proxy_requests`](#-apache--mod--proxy--proxy_requests)
+* [`allow_from`](#-apache--mod--proxy--allow_from)
+* [`apache_version`](#-apache--mod--proxy--apache_version)
+* [`package_name`](#-apache--mod--proxy--package_name)
+* [`proxy_via`](#-apache--mod--proxy--proxy_via)
+* [`proxy_timeout`](#-apache--mod--proxy--proxy_timeout)
+* [`proxy_iobuffersize`](#-apache--mod--proxy--proxy_iobuffersize)
 
-##### <a name="proxy_requests"></a>`proxy_requests`
+##### <a name="-apache--mod--proxy--proxy_requests"></a>`proxy_requests`
 
 Data type: `String`
 
@@ -5753,31 +5778,31 @@ Enables forward (standard) proxy requests.
 
 Default value: `'Off'`
 
-##### <a name="allow_from"></a>`allow_from`
+##### <a name="-apache--mod--proxy--allow_from"></a>`allow_from`
 
 Data type: `Optional[String]`
 
 List of IPs allowed to access proxy.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--proxy--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--proxy--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 Name of the proxy package to install.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_via"></a>`proxy_via`
+##### <a name="-apache--mod--proxy--proxy_via"></a>`proxy_via`
 
 Data type: `String`
 
@@ -5785,23 +5810,23 @@ Set local IP address for outgoing proxy connections.
 
 Default value: `'On'`
 
-##### <a name="proxy_timeout"></a>`proxy_timeout`
+##### <a name="-apache--mod--proxy--proxy_timeout"></a>`proxy_timeout`
 
 Data type: `Optional[Variant[Integer[0],String]]`
 
 Network timeout for proxied requests.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_iobuffersize"></a>`proxy_iobuffersize`
+##### <a name="-apache--mod--proxy--proxy_iobuffersize"></a>`proxy_iobuffersize`
 
 Data type: `Optional[String]`
 
 Set the size of internal data throughput buffer
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodproxy_ajp"></a>`apache::mod::proxy_ajp`
+### <a name="apache--mod--proxy_ajp"></a>`apache::mod::proxy_ajp`
 
 Installs `mod_proxy_ajp`.
 
@@ -5809,7 +5834,7 @@ Installs `mod_proxy_ajp`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_ajp.html
     * for additional documentation.
 
-### <a name="apachemodproxy_balancer"></a>`apache::mod::proxy_balancer`
+### <a name="apache--mod--proxy_balancer"></a>`apache::mod::proxy_balancer`
 
 Installs and configures `mod_proxy_balancer`.
 
@@ -5821,20 +5846,20 @@ Installs and configures `mod_proxy_balancer`.
 
 The following parameters are available in the `apache::mod::proxy_balancer` class:
 
-* [`manager`](#manager)
-* [`manager_path`](#manager_path)
-* [`allow_from`](#allow_from)
-* [`apache_version`](#apache_version)
+* [`manager`](#-apache--mod--proxy_balancer--manager)
+* [`manager_path`](#-apache--mod--proxy_balancer--manager_path)
+* [`allow_from`](#-apache--mod--proxy_balancer--allow_from)
+* [`apache_version`](#-apache--mod--proxy_balancer--apache_version)
 
-##### <a name="manager"></a>`manager`
+##### <a name="-apache--mod--proxy_balancer--manager"></a>`manager`
 
 Data type: `Boolean`
 
 Toggle whether to enable balancer manager support.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="manager_path"></a>`manager_path`
+##### <a name="-apache--mod--proxy_balancer--manager_path"></a>`manager_path`
 
 Data type: `Stdlib::Unixpath`
 
@@ -5842,7 +5867,7 @@ Server relative path to balancer manager.
 
 Default value: `'/balancer-manager'`
 
-##### <a name="allow_from"></a>`allow_from`
+##### <a name="-apache--mod--proxy_balancer--allow_from"></a>`allow_from`
 
 Data type: `Array[Stdlib::IP::Address]`
 
@@ -5850,7 +5875,7 @@ List of IPs from which the balancer manager can be accessed.
 
 Default value: `['127.0.0.1', '::1']`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--proxy_balancer--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -5858,7 +5883,7 @@ Version of Apache to install module on.
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodproxy_connect"></a>`apache::mod::proxy_connect`
+### <a name="apache--mod--proxy_connect"></a>`apache::mod::proxy_connect`
 
 Installs `mod_proxy_connect`.
 
@@ -5866,7 +5891,7 @@ Installs `mod_proxy_connect`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_connect.html
     * for additional documentation.
 
-### <a name="apachemodproxy_fcgi"></a>`apache::mod::proxy_fcgi`
+### <a name="apache--mod--proxy_fcgi"></a>`apache::mod::proxy_fcgi`
 
 Installs `mod_proxy_fcgi`.
 
@@ -5874,7 +5899,7 @@ Installs `mod_proxy_fcgi`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_fcgi.html
     * for additional documentation.
 
-### <a name="apachemodproxy_html"></a>`apache::mod::proxy_html`
+### <a name="apache--mod--proxy_html"></a>`apache::mod::proxy_html`
 
 Installs `mod_proxy_html`.
 
@@ -5882,7 +5907,7 @@ Installs `mod_proxy_html`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_html.html
     * for additional documentation.
 
-### <a name="apachemodproxy_http"></a>`apache::mod::proxy_http`
+### <a name="apache--mod--proxy_http"></a>`apache::mod::proxy_http`
 
 Installs `mod_proxy_http`.
 
@@ -5890,7 +5915,7 @@ Installs `mod_proxy_http`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_http.html
     * for additional documentation.
 
-### <a name="apachemodproxy_wstunnel"></a>`apache::mod::proxy_wstunnel`
+### <a name="apache--mod--proxy_wstunnel"></a>`apache::mod::proxy_wstunnel`
 
 Installs `mod_proxy_wstunnel`.
 
@@ -5898,7 +5923,7 @@ Installs `mod_proxy_wstunnel`.
   * https://httpd.apache.org/docs/current/mod/mod_proxy_wstunnel.html
     * for additional documentation.
 
-### <a name="apachemodpython"></a>`apache::mod::python`
+### <a name="apache--mod--python"></a>`apache::mod::python`
 
 Installs and configures `mod_python`.
 
@@ -5910,17 +5935,17 @@ Installs and configures `mod_python`.
 
 The following parameters are available in the `apache::mod::python` class:
 
-* [`loadfile_name`](#loadfile_name)
+* [`loadfile_name`](#-apache--mod--python--loadfile_name)
 
-##### <a name="loadfile_name"></a>`loadfile_name`
+##### <a name="-apache--mod--python--loadfile_name"></a>`loadfile_name`
 
 Data type: `Optional[String]`
 
 Sets the name of the configuration file that is used to load the python module.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodremoteip"></a>`apache::mod::remoteip`
+### <a name="apache--mod--remoteip"></a>`apache::mod::remoteip`
 
 Installs and configures `mod_remoteip`.
 
@@ -5933,19 +5958,19 @@ Installs and configures `mod_remoteip`.
 
 The following parameters are available in the `apache::mod::remoteip` class:
 
-* [`header`](#header)
-* [`internal_proxy`](#internal_proxy)
-* [`proxy_ips`](#proxy_ips)
-* [`internal_proxy_list`](#internal_proxy_list)
-* [`proxies_header`](#proxies_header)
-* [`proxy_protocol`](#proxy_protocol)
-* [`proxy_protocol_exceptions`](#proxy_protocol_exceptions)
-* [`trusted_proxy`](#trusted_proxy)
-* [`trusted_proxy_ips`](#trusted_proxy_ips)
-* [`trusted_proxy_list`](#trusted_proxy_list)
-* [`apache_version`](#apache_version)
+* [`header`](#-apache--mod--remoteip--header)
+* [`internal_proxy`](#-apache--mod--remoteip--internal_proxy)
+* [`proxy_ips`](#-apache--mod--remoteip--proxy_ips)
+* [`internal_proxy_list`](#-apache--mod--remoteip--internal_proxy_list)
+* [`proxies_header`](#-apache--mod--remoteip--proxies_header)
+* [`proxy_protocol`](#-apache--mod--remoteip--proxy_protocol)
+* [`proxy_protocol_exceptions`](#-apache--mod--remoteip--proxy_protocol_exceptions)
+* [`trusted_proxy`](#-apache--mod--remoteip--trusted_proxy)
+* [`trusted_proxy_ips`](#-apache--mod--remoteip--trusted_proxy_ips)
+* [`trusted_proxy_list`](#-apache--mod--remoteip--trusted_proxy_list)
+* [`apache_version`](#-apache--mod--remoteip--apache_version)
 
-##### <a name="header"></a>`header`
+##### <a name="-apache--mod--remoteip--header"></a>`header`
 
 Data type: `String`
 
@@ -5953,7 +5978,7 @@ The header field in which `mod_remoteip` will look for the useragent IP.
 
 Default value: `'X-Forwarded-For'`
 
-##### <a name="internal_proxy"></a>`internal_proxy`
+##### <a name="-apache--mod--remoteip--internal_proxy"></a>`internal_proxy`
 
 Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
 
@@ -5962,17 +5987,17 @@ valid value inside specified header. Unlike the `$trusted_proxy_ips`
 parameter, any IP address (including private addresses) presented by these
 proxies will trusted by `mod_remoteip`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_ips"></a>`proxy_ips`
+##### <a name="-apache--mod--remoteip--proxy_ips"></a>`proxy_ips`
 
 Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
 
 *Deprecated*: use `$internal_proxy` instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="internal_proxy_list"></a>`internal_proxy_list`
+##### <a name="-apache--mod--remoteip--internal_proxy_list"></a>`internal_proxy_list`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -5980,9 +6005,9 @@ The path to a file containing a list of IP addresses, IP blocks or hostname
 that are trusted to set a valid value inside the specified header. See
 `$internal_proxy` for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxies_header"></a>`proxies_header`
+##### <a name="-apache--mod--remoteip--proxies_header"></a>`proxies_header`
 
 Data type: `Optional[String]`
 
@@ -5990,27 +6015,27 @@ A header into which `mod_remoteip` will collect a list of all of the
 intermediate client IP addresses trusted to resolve the useragent IP of the
 request (e.g. `X-Forwarded-By`).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_protocol"></a>`proxy_protocol`
+##### <a name="-apache--mod--remoteip--proxy_protocol"></a>`proxy_protocol`
 
 Data type: `Boolean`
 
 Wether or not to enable the PROXY protocol header handling. If enabled
 upstream clients must set the header every time they open a connection.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="proxy_protocol_exceptions"></a>`proxy_protocol_exceptions`
+##### <a name="-apache--mod--remoteip--proxy_protocol_exceptions"></a>`proxy_protocol_exceptions`
 
 Data type: `Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]]`
 
 A list of IP address or IP blocks that are not required to use the PROXY
 protocol.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="trusted_proxy"></a>`trusted_proxy`
+##### <a name="-apache--mod--remoteip--trusted_proxy"></a>`trusted_proxy`
 
 Data type: `Optional[Array[Stdlib::Host]]`
 
@@ -6019,17 +6044,17 @@ valid value inside the specified header. Unlike the `$proxy_ips` parameter,
 any private IP presented by these proxies will be disgarded by
 `mod_remoteip`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="trusted_proxy_ips"></a>`trusted_proxy_ips`
+##### <a name="-apache--mod--remoteip--trusted_proxy_ips"></a>`trusted_proxy_ips`
 
 Data type: `Optional[Array[Stdlib::Host]]`
 
 *Deprecated*: use `$trusted_proxy` instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="trusted_proxy_list"></a>`trusted_proxy_list`
+##### <a name="-apache--mod--remoteip--trusted_proxy_list"></a>`trusted_proxy_list`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -6037,18 +6062,18 @@ The path to a file containing a list of IP addresses, IP blocks or hostname
 that are trusted to set a valid value inside the specified header. See
 `$trusted_proxy` for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--remoteip--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 A version string used to validate that your apache version supports
 `mod_remoteip`. If not specified, `$::apache::apache_version` is used.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodreqtimeout"></a>`apache::mod::reqtimeout`
+### <a name="apache--mod--reqtimeout"></a>`apache::mod::reqtimeout`
 
 Installs and configures `mod_reqtimeout`.
 
@@ -6060,9 +6085,9 @@ Installs and configures `mod_reqtimeout`.
 
 The following parameters are available in the `apache::mod::reqtimeout` class:
 
-* [`timeouts`](#timeouts)
+* [`timeouts`](#-apache--mod--reqtimeout--timeouts)
 
-##### <a name="timeouts"></a>`timeouts`
+##### <a name="-apache--mod--reqtimeout--timeouts"></a>`timeouts`
 
 Data type: `Variant[Array[String], String]`
 
@@ -6070,7 +6095,7 @@ List of timeouts and data rates for receiving requests.
 
 Default value: `['header=20-40,minrate=500', 'body=10,minrate=500']`
 
-### <a name="apachemodrewrite"></a>`apache::mod::rewrite`
+### <a name="apache--mod--rewrite"></a>`apache::mod::rewrite`
 
 Installs `mod_rewrite`.
 
@@ -6078,7 +6103,7 @@ Installs `mod_rewrite`.
   * https://httpd.apache.org/docs/current/mod/mod_rewrite.html
     * for additional documentation.
 
-### <a name="apachemodrpaf"></a>`apache::mod::rpaf`
+### <a name="apache--mod--rpaf"></a>`apache::mod::rpaf`
 
 Installs and configures `mod_rpaf`.
 
@@ -6090,20 +6115,20 @@ Installs and configures `mod_rpaf`.
 
 The following parameters are available in the `apache::mod::rpaf` class:
 
-* [`sethostname`](#sethostname)
-* [`proxy_ips`](#proxy_ips)
-* [`header`](#header)
-* [`template`](#template)
+* [`sethostname`](#-apache--mod--rpaf--sethostname)
+* [`proxy_ips`](#-apache--mod--rpaf--proxy_ips)
+* [`header`](#-apache--mod--rpaf--header)
+* [`template`](#-apache--mod--rpaf--template)
 
-##### <a name="sethostname"></a>`sethostname`
+##### <a name="-apache--mod--rpaf--sethostname"></a>`sethostname`
 
 Data type: `Variant[Boolean, String]`
 
 Toggles whether to update vhost name so ServerName and ServerAlias work.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="proxy_ips"></a>`proxy_ips`
+##### <a name="-apache--mod--rpaf--proxy_ips"></a>`proxy_ips`
 
 Data type: `Array[Stdlib::IP::Address]`
 
@@ -6111,7 +6136,7 @@ List of IPs & bitmasked subnets to adjust requests for
 
 Default value: `['127.0.0.1']`
 
-##### <a name="header"></a>`header`
+##### <a name="-apache--mod--rpaf--header"></a>`header`
 
 Data type: `String`
 
@@ -6119,7 +6144,7 @@ Header to use for the real IP address.
 
 Default value: `'X-Forwarded-For'`
 
-##### <a name="template"></a>`template`
+##### <a name="-apache--mod--rpaf--template"></a>`template`
 
 Data type: `String`
 
@@ -6127,7 +6152,7 @@ Path to template to use for configuring mod_rpaf.
 
 Default value: `'apache/mod/rpaf.conf.erb'`
 
-### <a name="apachemodsecurity"></a>`apache::mod::security`
+### <a name="apache--mod--security"></a>`apache::mod::security`
 
 Installs and configures `mod_security`.
 
@@ -6141,46 +6166,46 @@ Installs and configures `mod_security`.
 
 The following parameters are available in the `apache::mod::security` class:
 
-* [`version`](#version)
-* [`logroot`](#logroot)
-* [`crs_package`](#crs_package)
-* [`activated_rules`](#activated_rules)
-* [`custom_rules`](#custom_rules)
-* [`custom_rules_set`](#custom_rules_set)
-* [`modsec_dir`](#modsec_dir)
-* [`modsec_secruleengine`](#modsec_secruleengine)
-* [`audit_log_relevant_status`](#audit_log_relevant_status)
-* [`audit_log_parts`](#audit_log_parts)
-* [`audit_log_type`](#audit_log_type)
-* [`audit_log_storage_dir`](#audit_log_storage_dir)
-* [`secpcrematchlimit`](#secpcrematchlimit)
-* [`secpcrematchlimitrecursion`](#secpcrematchlimitrecursion)
-* [`allowed_methods`](#allowed_methods)
-* [`content_types`](#content_types)
-* [`restricted_extensions`](#restricted_extensions)
-* [`restricted_headers`](#restricted_headers)
-* [`secdefaultaction`](#secdefaultaction)
-* [`inbound_anomaly_threshold`](#inbound_anomaly_threshold)
-* [`outbound_anomaly_threshold`](#outbound_anomaly_threshold)
-* [`critical_anomaly_score`](#critical_anomaly_score)
-* [`error_anomaly_score`](#error_anomaly_score)
-* [`warning_anomaly_score`](#warning_anomaly_score)
-* [`notice_anomaly_score`](#notice_anomaly_score)
-* [`paranoia_level`](#paranoia_level)
-* [`executing_paranoia_level`](#executing_paranoia_level)
-* [`secrequestmaxnumargs`](#secrequestmaxnumargs)
-* [`secrequestbodylimit`](#secrequestbodylimit)
-* [`secrequestbodynofileslimit`](#secrequestbodynofileslimit)
-* [`secrequestbodyinmemorylimit`](#secrequestbodyinmemorylimit)
-* [`secrequestbodyaccess`](#secrequestbodyaccess)
-* [`secresponsebodyaccess`](#secresponsebodyaccess)
-* [`manage_security_crs`](#manage_security_crs)
-* [`enable_dos_protection`](#enable_dos_protection)
-* [`dos_burst_time_slice`](#dos_burst_time_slice)
-* [`dos_counter_threshold`](#dos_counter_threshold)
-* [`dos_block_timeout`](#dos_block_timeout)
+* [`version`](#-apache--mod--security--version)
+* [`logroot`](#-apache--mod--security--logroot)
+* [`crs_package`](#-apache--mod--security--crs_package)
+* [`activated_rules`](#-apache--mod--security--activated_rules)
+* [`custom_rules`](#-apache--mod--security--custom_rules)
+* [`custom_rules_set`](#-apache--mod--security--custom_rules_set)
+* [`modsec_dir`](#-apache--mod--security--modsec_dir)
+* [`modsec_secruleengine`](#-apache--mod--security--modsec_secruleengine)
+* [`audit_log_relevant_status`](#-apache--mod--security--audit_log_relevant_status)
+* [`audit_log_parts`](#-apache--mod--security--audit_log_parts)
+* [`audit_log_type`](#-apache--mod--security--audit_log_type)
+* [`audit_log_storage_dir`](#-apache--mod--security--audit_log_storage_dir)
+* [`secpcrematchlimit`](#-apache--mod--security--secpcrematchlimit)
+* [`secpcrematchlimitrecursion`](#-apache--mod--security--secpcrematchlimitrecursion)
+* [`allowed_methods`](#-apache--mod--security--allowed_methods)
+* [`content_types`](#-apache--mod--security--content_types)
+* [`restricted_extensions`](#-apache--mod--security--restricted_extensions)
+* [`restricted_headers`](#-apache--mod--security--restricted_headers)
+* [`secdefaultaction`](#-apache--mod--security--secdefaultaction)
+* [`inbound_anomaly_threshold`](#-apache--mod--security--inbound_anomaly_threshold)
+* [`outbound_anomaly_threshold`](#-apache--mod--security--outbound_anomaly_threshold)
+* [`critical_anomaly_score`](#-apache--mod--security--critical_anomaly_score)
+* [`error_anomaly_score`](#-apache--mod--security--error_anomaly_score)
+* [`warning_anomaly_score`](#-apache--mod--security--warning_anomaly_score)
+* [`notice_anomaly_score`](#-apache--mod--security--notice_anomaly_score)
+* [`paranoia_level`](#-apache--mod--security--paranoia_level)
+* [`executing_paranoia_level`](#-apache--mod--security--executing_paranoia_level)
+* [`secrequestmaxnumargs`](#-apache--mod--security--secrequestmaxnumargs)
+* [`secrequestbodylimit`](#-apache--mod--security--secrequestbodylimit)
+* [`secrequestbodynofileslimit`](#-apache--mod--security--secrequestbodynofileslimit)
+* [`secrequestbodyinmemorylimit`](#-apache--mod--security--secrequestbodyinmemorylimit)
+* [`secrequestbodyaccess`](#-apache--mod--security--secrequestbodyaccess)
+* [`secresponsebodyaccess`](#-apache--mod--security--secresponsebodyaccess)
+* [`manage_security_crs`](#-apache--mod--security--manage_security_crs)
+* [`enable_dos_protection`](#-apache--mod--security--enable_dos_protection)
+* [`dos_burst_time_slice`](#-apache--mod--security--dos_burst_time_slice)
+* [`dos_counter_threshold`](#-apache--mod--security--dos_counter_threshold)
+* [`dos_block_timeout`](#-apache--mod--security--dos_block_timeout)
 
-##### <a name="version"></a>`version`
+##### <a name="-apache--mod--security--version"></a>`version`
 
 Data type: `Integer`
 
@@ -6188,7 +6213,7 @@ Manage mod_security or mod_security2
 
 Default value: `$apache::params::modsec_version`
 
-##### <a name="logroot"></a>`logroot`
+##### <a name="-apache--mod--security--logroot"></a>`logroot`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -6196,7 +6221,7 @@ Configures the location of audit and debug logs.
 
 Default value: `$apache::params::logroot`
 
-##### <a name="crs_package"></a>`crs_package`
+##### <a name="-apache--mod--security--crs_package"></a>`crs_package`
 
 Data type: `Optional[String]`
 
@@ -6204,7 +6229,7 @@ Name of package that installs CRS rules.
 
 Default value: `$apache::params::modsec_crs_package`
 
-##### <a name="activated_rules"></a>`activated_rules`
+##### <a name="-apache--mod--security--activated_rules"></a>`activated_rules`
 
 Data type: `Array[String]`
 
@@ -6212,7 +6237,7 @@ An array of rules from the modsec_crs_path or absolute to activate via symlinks.
 
 Default value: `$apache::params::modsec_default_rules`
 
-##### <a name="custom_rules"></a>`custom_rules`
+##### <a name="-apache--mod--security--custom_rules"></a>`custom_rules`
 
 Data type: `Boolean`
 
@@ -6220,7 +6245,7 @@ Data type: `Boolean`
 
 Default value: `$apache::params::modsec_custom_rules`
 
-##### <a name="custom_rules_set"></a>`custom_rules_set`
+##### <a name="-apache--mod--security--custom_rules_set"></a>`custom_rules_set`
 
 Data type: `Optional[Array[String]]`
 
@@ -6228,7 +6253,7 @@ Data type: `Optional[Array[String]]`
 
 Default value: `$apache::params::modsec_custom_rules_set`
 
-##### <a name="modsec_dir"></a>`modsec_dir`
+##### <a name="-apache--mod--security--modsec_dir"></a>`modsec_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -6236,7 +6261,7 @@ Defines the path where Puppet installs the modsec configuration and activated ru
 
 Default value: `$apache::params::modsec_dir`
 
-##### <a name="modsec_secruleengine"></a>`modsec_secruleengine`
+##### <a name="-apache--mod--security--modsec_secruleengine"></a>`modsec_secruleengine`
 
 Data type: `String`
 
@@ -6244,7 +6269,7 @@ Configures the rules engine.
 
 Default value: `$apache::params::modsec_secruleengine`
 
-##### <a name="audit_log_relevant_status"></a>`audit_log_relevant_status`
+##### <a name="-apache--mod--security--audit_log_relevant_status"></a>`audit_log_relevant_status`
 
 Data type: `String`
 
@@ -6252,7 +6277,7 @@ Configures which response status code is to be considered relevant for the purpo
 
 Default value: `'^(?:5|4(?!04))'`
 
-##### <a name="audit_log_parts"></a>`audit_log_parts`
+##### <a name="-apache--mod--security--audit_log_parts"></a>`audit_log_parts`
 
 Data type: `String`
 
@@ -6261,7 +6286,7 @@ letter appears in the list then the equivalent part will be recorded.
 
 Default value: `$apache::params::modsec_audit_log_parts`
 
-##### <a name="audit_log_type"></a>`audit_log_type`
+##### <a name="-apache--mod--security--audit_log_type"></a>`audit_log_type`
 
 Data type: `String`
 
@@ -6269,15 +6294,15 @@ Defines the type of audit logging mechanism to be used.
 
 Default value: `$apache::params::modsec_audit_log_type`
 
-##### <a name="audit_log_storage_dir"></a>`audit_log_storage_dir`
+##### <a name="-apache--mod--security--audit_log_storage_dir"></a>`audit_log_storage_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Defines the directory where concurrent audit log entries are to be stored. This directive is only needed when concurrent audit logging is used.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="secpcrematchlimit"></a>`secpcrematchlimit`
+##### <a name="-apache--mod--security--secpcrematchlimit"></a>`secpcrematchlimit`
 
 Data type: `Integer`
 
@@ -6285,7 +6310,7 @@ Sets the match limit in the PCRE library.
 
 Default value: `$apache::params::secpcrematchlimit`
 
-##### <a name="secpcrematchlimitrecursion"></a>`secpcrematchlimitrecursion`
+##### <a name="-apache--mod--security--secpcrematchlimitrecursion"></a>`secpcrematchlimitrecursion`
 
 Data type: `Integer`
 
@@ -6293,7 +6318,7 @@ Sets the match limit recursion in the PCRE library.
 
 Default value: `$apache::params::secpcrematchlimitrecursion`
 
-##### <a name="allowed_methods"></a>`allowed_methods`
+##### <a name="-apache--mod--security--allowed_methods"></a>`allowed_methods`
 
 Data type: `String`
 
@@ -6301,7 +6326,7 @@ A space-separated list of allowed HTTP methods.
 
 Default value: `'GET HEAD POST OPTIONS'`
 
-##### <a name="content_types"></a>`content_types`
+##### <a name="-apache--mod--security--content_types"></a>`content_types`
 
 Data type: `String`
 
@@ -6309,7 +6334,7 @@ A list of one or more allowed MIME types.
 
 Default value: `'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf'`
 
-##### <a name="restricted_extensions"></a>`restricted_extensions`
+##### <a name="-apache--mod--security--restricted_extensions"></a>`restricted_extensions`
 
 Data type: `String`
 
@@ -6317,7 +6342,7 @@ A space-sparated list of prohibited file extensions.
 
 Default value: `'.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/'`
 
-##### <a name="restricted_headers"></a>`restricted_headers`
+##### <a name="-apache--mod--security--restricted_headers"></a>`restricted_headers`
 
 Data type: `String`
 
@@ -6325,7 +6350,7 @@ A list of restricted headers separated by slashes and spaces.
 
 Default value: `'/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/'`
 
-##### <a name="secdefaultaction"></a>`secdefaultaction`
+##### <a name="-apache--mod--security--secdefaultaction"></a>`secdefaultaction`
 
 Data type: `String`
 
@@ -6333,7 +6358,7 @@ Defines the default list of actions, which will be inherited by the rules in the
 
 Default value: `'deny'`
 
-##### <a name="inbound_anomaly_threshold"></a>`inbound_anomaly_threshold`
+##### <a name="-apache--mod--security--inbound_anomaly_threshold"></a>`inbound_anomaly_threshold`
 
 Data type: `Integer`
 
@@ -6341,7 +6366,7 @@ Sets the scoring threshold level of the inbound blocking rules for the Collabora
 
 Default value: `5`
 
-##### <a name="outbound_anomaly_threshold"></a>`outbound_anomaly_threshold`
+##### <a name="-apache--mod--security--outbound_anomaly_threshold"></a>`outbound_anomaly_threshold`
 
 Data type: `Integer`
 
@@ -6349,7 +6374,7 @@ Sets the scoring threshold level of the outbound blocking rules for the Collabor
 
 Default value: `4`
 
-##### <a name="critical_anomaly_score"></a>`critical_anomaly_score`
+##### <a name="-apache--mod--security--critical_anomaly_score"></a>`critical_anomaly_score`
 
 Data type: `Integer`
 
@@ -6357,7 +6382,7 @@ Sets the Anomaly Score for rules assigned with a critical severity.
 
 Default value: `5`
 
-##### <a name="error_anomaly_score"></a>`error_anomaly_score`
+##### <a name="-apache--mod--security--error_anomaly_score"></a>`error_anomaly_score`
 
 Data type: `Integer`
 
@@ -6365,7 +6390,7 @@ Sets the Anomaly Score for rules assigned with a error severity.
 
 Default value: `4`
 
-##### <a name="warning_anomaly_score"></a>`warning_anomaly_score`
+##### <a name="-apache--mod--security--warning_anomaly_score"></a>`warning_anomaly_score`
 
 Data type: `Integer`
 
@@ -6373,7 +6398,7 @@ Sets the Anomaly Score for rules assigned with a warning severity.
 
 Default value: `3`
 
-##### <a name="notice_anomaly_score"></a>`notice_anomaly_score`
+##### <a name="-apache--mod--security--notice_anomaly_score"></a>`notice_anomaly_score`
 
 Data type: `Integer`
 
@@ -6381,7 +6406,7 @@ Sets the Anomaly Score for rules assigned with a notice severity.
 
 Default value: `2`
 
-##### <a name="paranoia_level"></a>`paranoia_level`
+##### <a name="-apache--mod--security--paranoia_level"></a>`paranoia_level`
 
 Data type: `Integer[1,4]`
 
@@ -6389,7 +6414,7 @@ Sets the paranoia level in the OWASP ModSecurity Core Rule Set.
 
 Default value: `1`
 
-##### <a name="executing_paranoia_level"></a>`executing_paranoia_level`
+##### <a name="-apache--mod--security--executing_paranoia_level"></a>`executing_paranoia_level`
 
 Data type: `Integer[1,4]`
 
@@ -6398,7 +6423,7 @@ The default is equal to, and cannot be lower than, $paranoia_level.
 
 Default value: `$paranoia_level`
 
-##### <a name="secrequestmaxnumargs"></a>`secrequestmaxnumargs`
+##### <a name="-apache--mod--security--secrequestmaxnumargs"></a>`secrequestmaxnumargs`
 
 Data type: `Integer`
 
@@ -6406,7 +6431,7 @@ Sets the maximum number of arguments in the request.
 
 Default value: `255`
 
-##### <a name="secrequestbodylimit"></a>`secrequestbodylimit`
+##### <a name="-apache--mod--security--secrequestbodylimit"></a>`secrequestbodylimit`
 
 Data type: `Integer`
 
@@ -6414,7 +6439,7 @@ Sets the maximum request body size ModSecurity will accept for buffering.
 
 Default value: `13107200`
 
-##### <a name="secrequestbodynofileslimit"></a>`secrequestbodynofileslimit`
+##### <a name="-apache--mod--security--secrequestbodynofileslimit"></a>`secrequestbodynofileslimit`
 
 Data type: `Integer`
 
@@ -6423,7 +6448,7 @@ in the request.
 
 Default value: `131072`
 
-##### <a name="secrequestbodyinmemorylimit"></a>`secrequestbodyinmemorylimit`
+##### <a name="-apache--mod--security--secrequestbodyinmemorylimit"></a>`secrequestbodyinmemorylimit`
 
 Data type: `Integer`
 
@@ -6431,7 +6456,7 @@ Configures the maximum request body size that ModSecurity will store in memory.
 
 Default value: `131072`
 
-##### <a name="secrequestbodyaccess"></a>`secrequestbodyaccess`
+##### <a name="-apache--mod--security--secrequestbodyaccess"></a>`secrequestbodyaccess`
 
 Data type: `Enum['On', 'Off']`
 
@@ -6439,7 +6464,7 @@ Toggle SecRequestBodyAccess On or Off
 
 Default value: `'On'`
 
-##### <a name="secresponsebodyaccess"></a>`secresponsebodyaccess`
+##### <a name="-apache--mod--security--secresponsebodyaccess"></a>`secresponsebodyaccess`
 
 Data type: `Enum['On', 'Off']`
 
@@ -6447,24 +6472,24 @@ Toggle SecResponseBodyAccess On or Off
 
 Default value: `'Off'`
 
-##### <a name="manage_security_crs"></a>`manage_security_crs`
+##### <a name="-apache--mod--security--manage_security_crs"></a>`manage_security_crs`
 
 Data type: `Boolean`
 
 Toggles whether to manage ModSecurity Core Rule Set
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="enable_dos_protection"></a>`enable_dos_protection`
+##### <a name="-apache--mod--security--enable_dos_protection"></a>`enable_dos_protection`
 
 Data type: `Boolean`
 
 Toggles the optional OWASP ModSecurity Core Rule Set DOS protection rule
 (rule id 900700)
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="dos_burst_time_slice"></a>`dos_burst_time_slice`
+##### <a name="-apache--mod--security--dos_burst_time_slice"></a>`dos_burst_time_slice`
 
 Data type: `Integer[1, default]`
 
@@ -6473,7 +6498,7 @@ Configures time in which a burst is measured for the OWASP ModSecurity Core Rule
 
 Default value: `60`
 
-##### <a name="dos_counter_threshold"></a>`dos_counter_threshold`
+##### <a name="-apache--mod--security--dos_counter_threshold"></a>`dos_counter_threshold`
 
 Data type: `Integer[1, default]`
 
@@ -6482,7 +6507,7 @@ the OWASP ModSecurity Core Rule Set DOS protection rule (rule id 900700)
 
 Default value: `100`
 
-##### <a name="dos_block_timeout"></a>`dos_block_timeout`
+##### <a name="-apache--mod--security--dos_block_timeout"></a>`dos_block_timeout`
 
 Data type: `Integer[1, default]`
 
@@ -6491,7 +6516,7 @@ ModSecurity Core Rule Set DOS protection rule (rule id 900700)
 
 Default value: `600`
 
-### <a name="apachemodsetenvif"></a>`apache::mod::setenvif`
+### <a name="apache--mod--setenvif"></a>`apache::mod::setenvif`
 
 Installs `mod_setenvif`.
 
@@ -6499,7 +6524,7 @@ Installs `mod_setenvif`.
   * https://httpd.apache.org/docs/current/mod/mod_setenvif.html
     * for additional documentation.
 
-### <a name="apachemodshib"></a>`apache::mod::shib`
+### <a name="apache--mod--shib"></a>`apache::mod::shib`
 
 This class installs and configures only the Apache components of a web application that consumes Shibboleth SSO identities. You
 can manage the Shibboleth configuration manually, with Puppet, or using a [Shibboleth Puppet Module](https://github.com/aethylred/puppet-shibboleth).
@@ -6515,45 +6540,45 @@ See the [Shibboleth Service Provider Installation Guide](http://wiki.aaf.edu.au/
 
 The following parameters are available in the `apache::mod::shib` class:
 
-* [`suppress_warning`](#suppress_warning)
-* [`mod_full_path`](#mod_full_path)
-* [`package_name`](#package_name)
-* [`mod_lib`](#mod_lib)
+* [`suppress_warning`](#-apache--mod--shib--suppress_warning)
+* [`mod_full_path`](#-apache--mod--shib--mod_full_path)
+* [`package_name`](#-apache--mod--shib--package_name)
+* [`mod_lib`](#-apache--mod--shib--mod_lib)
 
-##### <a name="suppress_warning"></a>`suppress_warning`
+##### <a name="-apache--mod--shib--suppress_warning"></a>`suppress_warning`
 
 Data type: `Boolean`
 
 Toggles whether to trigger warning on RedHat nodes.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="mod_full_path"></a>`mod_full_path`
+##### <a name="-apache--mod--shib--mod_full_path"></a>`mod_full_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Specifies a path to the module. Do not manually set this parameter without a special reason.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--shib--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 Name of the Shibboleth package to be installed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_lib"></a>`mod_lib`
+##### <a name="-apache--mod--shib--mod_lib"></a>`mod_lib`
 
 Data type: `Optional[String]`
 
 Specifies a path to the module's libraries. Do not manually set this parameter without special reason. The `path` parameter
 overrides this value.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodsocache_shmcb"></a>`apache::mod::socache_shmcb`
+### <a name="apache--mod--socache_shmcb"></a>`apache::mod::socache_shmcb`
 
 Installs `mod_socache_shmcb`.
 
@@ -6561,7 +6586,7 @@ Installs `mod_socache_shmcb`.
   * https://httpd.apache.org/docs/current/mod/mod_socache_shmcb.html
     * for additional documentation.
 
-### <a name="apachemodspeling"></a>`apache::mod::speling`
+### <a name="apache--mod--speling"></a>`apache::mod::speling`
 
 Installs `mod_spelling`.
 
@@ -6569,7 +6594,7 @@ Installs `mod_spelling`.
   * https://httpd.apache.org/docs/current/mod/mod_speling.html
     * for additional documentation.
 
-### <a name="apachemodssl"></a>`apache::mod::ssl`
+### <a name="apache--mod--ssl"></a>`apache::mod::ssl`
 
 On most operating systems, the ssl.conf is placed in the module configuration directory. On Red Hat based operating systems, this
 file is placed in /etc/httpd/conf.d, the same location in which the RPM stores the configuration.
@@ -6585,48 +6610,48 @@ apache::vhost to true.
 
 The following parameters are available in the `apache::mod::ssl` class:
 
-* [`ssl_compression`](#ssl_compression)
-* [`ssl_sessiontickets`](#ssl_sessiontickets)
-* [`ssl_cryptodevice`](#ssl_cryptodevice)
-* [`ssl_options`](#ssl_options)
-* [`ssl_openssl_conf_cmd`](#ssl_openssl_conf_cmd)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_key`](#ssl_key)
-* [`ssl_ca`](#ssl_ca)
-* [`ssl_cipher`](#ssl_cipher)
-* [`ssl_honorcipherorder`](#ssl_honorcipherorder)
-* [`ssl_protocol`](#ssl_protocol)
-* [`ssl_proxy_protocol`](#ssl_proxy_protocol)
-* [`ssl_proxy_cipher_suite`](#ssl_proxy_cipher_suite)
-* [`ssl_pass_phrase_dialog`](#ssl_pass_phrase_dialog)
-* [`ssl_random_seed_bytes`](#ssl_random_seed_bytes)
-* [`ssl_sessioncache`](#ssl_sessioncache)
-* [`ssl_sessioncachetimeout`](#ssl_sessioncachetimeout)
-* [`ssl_stapling`](#ssl_stapling)
-* [`stapling_cache`](#stapling_cache)
-* [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
-* [`ssl_mutex`](#ssl_mutex)
-* [`ssl_reload_on_change`](#ssl_reload_on_change)
-* [`apache_version`](#apache_version)
-* [`package_name`](#package_name)
+* [`ssl_compression`](#-apache--mod--ssl--ssl_compression)
+* [`ssl_sessiontickets`](#-apache--mod--ssl--ssl_sessiontickets)
+* [`ssl_cryptodevice`](#-apache--mod--ssl--ssl_cryptodevice)
+* [`ssl_options`](#-apache--mod--ssl--ssl_options)
+* [`ssl_openssl_conf_cmd`](#-apache--mod--ssl--ssl_openssl_conf_cmd)
+* [`ssl_cert`](#-apache--mod--ssl--ssl_cert)
+* [`ssl_key`](#-apache--mod--ssl--ssl_key)
+* [`ssl_ca`](#-apache--mod--ssl--ssl_ca)
+* [`ssl_cipher`](#-apache--mod--ssl--ssl_cipher)
+* [`ssl_honorcipherorder`](#-apache--mod--ssl--ssl_honorcipherorder)
+* [`ssl_protocol`](#-apache--mod--ssl--ssl_protocol)
+* [`ssl_proxy_protocol`](#-apache--mod--ssl--ssl_proxy_protocol)
+* [`ssl_proxy_cipher_suite`](#-apache--mod--ssl--ssl_proxy_cipher_suite)
+* [`ssl_pass_phrase_dialog`](#-apache--mod--ssl--ssl_pass_phrase_dialog)
+* [`ssl_random_seed_bytes`](#-apache--mod--ssl--ssl_random_seed_bytes)
+* [`ssl_sessioncache`](#-apache--mod--ssl--ssl_sessioncache)
+* [`ssl_sessioncachetimeout`](#-apache--mod--ssl--ssl_sessioncachetimeout)
+* [`ssl_stapling`](#-apache--mod--ssl--ssl_stapling)
+* [`stapling_cache`](#-apache--mod--ssl--stapling_cache)
+* [`ssl_stapling_return_errors`](#-apache--mod--ssl--ssl_stapling_return_errors)
+* [`ssl_mutex`](#-apache--mod--ssl--ssl_mutex)
+* [`ssl_reload_on_change`](#-apache--mod--ssl--ssl_reload_on_change)
+* [`apache_version`](#-apache--mod--ssl--apache_version)
+* [`package_name`](#-apache--mod--ssl--package_name)
 
-##### <a name="ssl_compression"></a>`ssl_compression`
+##### <a name="-apache--mod--ssl--ssl_compression"></a>`ssl_compression`
 
 Data type: `Boolean`
 
 Enable compression on the SSL level.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_sessiontickets"></a>`ssl_sessiontickets`
+##### <a name="-apache--mod--ssl--ssl_sessiontickets"></a>`ssl_sessiontickets`
 
 Data type: `Optional[Boolean]`
 
 Enable or disable use of TLS session tickets
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cryptodevice"></a>`ssl_cryptodevice`
+##### <a name="-apache--mod--ssl--ssl_cryptodevice"></a>`ssl_cryptodevice`
 
 Data type: `String`
 
@@ -6634,7 +6659,7 @@ Enable use of a cryptographic hardware accelerator.
 
 Default value: `'builtin'`
 
-##### <a name="ssl_options"></a>`ssl_options`
+##### <a name="-apache--mod--ssl--ssl_options"></a>`ssl_options`
 
 Data type: `Array[String]`
 
@@ -6642,39 +6667,39 @@ Configure various SSL engine run-time options.
 
 Default value: `['StdEnvVars']`
 
-##### <a name="ssl_openssl_conf_cmd"></a>`ssl_openssl_conf_cmd`
+##### <a name="-apache--mod--ssl--ssl_openssl_conf_cmd"></a>`ssl_openssl_conf_cmd`
 
 Data type: `Optional[String]`
 
 Configure OpenSSL parameters through its SSL_CONF API.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-apache--mod--ssl--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to server PEM-encoded X.509 certificate data file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-apache--mod--ssl--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to server PEM-encoded private key file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_ca"></a>`ssl_ca`
+##### <a name="-apache--mod--ssl--ssl_ca"></a>`ssl_ca`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 File of concatenated PEM-encoded CA Certificates for Client Auth.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cipher"></a>`ssl_cipher`
+##### <a name="-apache--mod--ssl--ssl_cipher"></a>`ssl_cipher`
 
 Data type: `String`
 
@@ -6682,15 +6707,15 @@ Cipher Suite available for negotiation in SSL handshake.
 
 Default value: `$apache::params::ssl_cipher`
 
-##### <a name="ssl_honorcipherorder"></a>`ssl_honorcipherorder`
+##### <a name="-apache--mod--ssl--ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
 Data type: `Variant[Boolean, Enum['on', 'off']]`
 
 Option to prefer the server's cipher preference order.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="ssl_protocol"></a>`ssl_protocol`
+##### <a name="-apache--mod--ssl--ssl_protocol"></a>`ssl_protocol`
 
 Data type: `Array[String]`
 
@@ -6701,7 +6726,7 @@ Default based on the OS:
 
 Default value: `$apache::params::ssl_protocol`
 
-##### <a name="ssl_proxy_protocol"></a>`ssl_proxy_protocol`
+##### <a name="-apache--mod--ssl--ssl_proxy_protocol"></a>`ssl_proxy_protocol`
 
 Data type: `Array`
 
@@ -6709,7 +6734,7 @@ Configure usable SSL protocol flavors for proxy usage.
 
 Default value: `[]`
 
-##### <a name="ssl_proxy_cipher_suite"></a>`ssl_proxy_cipher_suite`
+##### <a name="-apache--mod--ssl--ssl_proxy_cipher_suite"></a>`ssl_proxy_cipher_suite`
 
 Data type: `Optional[String[1]]`
 
@@ -6717,7 +6742,7 @@ Configure usable SSL ciphers for proxy usage. Equivalent to ssl_cipher but for p
 
 Default value: `$apache::params::ssl_proxy_cipher_suite`
 
-##### <a name="ssl_pass_phrase_dialog"></a>`ssl_pass_phrase_dialog`
+##### <a name="-apache--mod--ssl--ssl_pass_phrase_dialog"></a>`ssl_pass_phrase_dialog`
 
 Data type: `String`
 
@@ -6725,7 +6750,7 @@ Type of pass phrase dialog for encrypted private keys.
 
 Default value: `'builtin'`
 
-##### <a name="ssl_random_seed_bytes"></a>`ssl_random_seed_bytes`
+##### <a name="-apache--mod--ssl--ssl_random_seed_bytes"></a>`ssl_random_seed_bytes`
 
 Data type: `Integer`
 
@@ -6733,7 +6758,7 @@ Pseudo Random Number Generator (PRNG) seeding source.
 
 Default value: `512`
 
-##### <a name="ssl_sessioncache"></a>`ssl_sessioncache`
+##### <a name="-apache--mod--ssl--ssl_sessioncache"></a>`ssl_sessioncache`
 
 Data type: `String`
 
@@ -6741,7 +6766,7 @@ Configures the storage type of the global/inter-process SSL Session Cache
 
 Default value: `$apache::params::ssl_sessioncache`
 
-##### <a name="ssl_sessioncachetimeout"></a>`ssl_sessioncachetimeout`
+##### <a name="-apache--mod--ssl--ssl_sessioncachetimeout"></a>`ssl_sessioncachetimeout`
 
 Data type: `Integer`
 
@@ -6749,32 +6774,32 @@ Number of seconds before an SSL session expires in the Session Cache.
 
 Default value: `300`
 
-##### <a name="ssl_stapling"></a>`ssl_stapling`
+##### <a name="-apache--mod--ssl--ssl_stapling"></a>`ssl_stapling`
 
 Data type: `Boolean`
 
 Enable stapling of OCSP responses in the TLS handshake.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="stapling_cache"></a>`stapling_cache`
+##### <a name="-apache--mod--ssl--stapling_cache"></a>`stapling_cache`
 
 Data type: `Optional[String]`
 
 Configures the cache used to store OCSP responses which get included in
 the TLS handshake if SSLUseStapling is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_stapling_return_errors"></a>`ssl_stapling_return_errors`
+##### <a name="-apache--mod--ssl--ssl_stapling_return_errors"></a>`ssl_stapling_return_errors`
 
 Data type: `Optional[Boolean]`
 
 Pass stapling related OCSP errors on to client.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_mutex"></a>`ssl_mutex`
+##### <a name="-apache--mod--ssl--ssl_mutex"></a>`ssl_mutex`
 
 Data type: `Optional[String]`
 
@@ -6784,33 +6809,33 @@ Default based on the OS and/or Apache version:
 - Debian/Ubuntu + Apache >= 2.4: 'default'.
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+##### <a name="-apache--mod--ssl--ssl_reload_on_change"></a>`ssl_reload_on_change`
 
 Data type: `Boolean`
 
 Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--ssl--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--ssl--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 Name of ssl package to install.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodstatus"></a>`apache::mod::status`
+### <a name="apache--mod--status"></a>`apache::mod::status`
 
 Installs and configures `mod_status`.
 
@@ -6833,13 +6858,13 @@ class { 'apache::mod::status':
 
 The following parameters are available in the `apache::mod::status` class:
 
-* [`allow_from`](#allow_from)
-* [`requires`](#requires)
-* [`extended_status`](#extended_status)
-* [`status_path`](#status_path)
-* [`apache_version`](#apache_version)
+* [`allow_from`](#-apache--mod--status--allow_from)
+* [`requires`](#-apache--mod--status--requires)
+* [`extended_status`](#-apache--mod--status--extended_status)
+* [`status_path`](#-apache--mod--status--status_path)
+* [`apache_version`](#-apache--mod--status--apache_version)
 
-##### <a name="allow_from"></a>`allow_from`
+##### <a name="-apache--mod--status--allow_from"></a>`allow_from`
 
 Data type: `Optional[Array]`
 
@@ -6847,9 +6872,9 @@ Array of hosts, ip addresses, partial network numbers or networks, in CIDR notat
 /server-status URL.  Defaults to ['127.0.0.1', '::1'].
 > Creates Apache < 2.4 directive "Allow from".
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="requires"></a>`requires`
+##### <a name="-apache--mod--status--requires"></a>`requires`
 
 Data type: `Optional[Variant[String, Array, Hash]]`
 
@@ -6867,9 +6892,9 @@ A Variant type that can be:
     Optional - If unspecified, "Require" directives follow current flow
 > Creates Apache >= 2.4 directives "Require"
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="extended_status"></a>`extended_status`
+##### <a name="-apache--mod--status--extended_status"></a>`extended_status`
 
 Data type: `Enum['On', 'Off', 'on', 'off']`
 
@@ -6877,7 +6902,7 @@ Determines whether to track extended status information for each request, via th
 
 Default value: `'On'`
 
-##### <a name="status_path"></a>`status_path`
+##### <a name="-apache--mod--status--status_path"></a>`status_path`
 
 Data type: `String`
 
@@ -6885,15 +6910,15 @@ Path assigned to the Location directive which defines the URL to access the serv
 
 Default value: `'/server-status'`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--status--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodsuexec"></a>`apache::mod::suexec`
+### <a name="apache--mod--suexec"></a>`apache::mod::suexec`
 
 Installs `mod_suexec`.
 
@@ -6901,7 +6926,7 @@ Installs `mod_suexec`.
   * https://httpd.apache.org/docs/current/mod/mod_suexec.html
     * for additional documentation.
 
-### <a name="apachemoduserdir"></a>`apache::mod::userdir`
+### <a name="apache--mod--userdir"></a>`apache::mod::userdir`
 
 Installs and configures `mod_userdir`.
 
@@ -6913,58 +6938,58 @@ Installs and configures `mod_userdir`.
 
 The following parameters are available in the `apache::mod::userdir` class:
 
-* [`home`](#home)
-* [`dir`](#dir)
-* [`userdir`](#userdir)
-* [`disable_root`](#disable_root)
-* [`apache_version`](#apache_version)
-* [`path`](#path)
-* [`overrides`](#overrides)
-* [`options`](#options)
-* [`unmanaged_path`](#unmanaged_path)
-* [`custom_fragment`](#custom_fragment)
+* [`home`](#-apache--mod--userdir--home)
+* [`dir`](#-apache--mod--userdir--dir)
+* [`userdir`](#-apache--mod--userdir--userdir)
+* [`disable_root`](#-apache--mod--userdir--disable_root)
+* [`apache_version`](#-apache--mod--userdir--apache_version)
+* [`path`](#-apache--mod--userdir--path)
+* [`overrides`](#-apache--mod--userdir--overrides)
+* [`options`](#-apache--mod--userdir--options)
+* [`unmanaged_path`](#-apache--mod--userdir--unmanaged_path)
+* [`custom_fragment`](#-apache--mod--userdir--custom_fragment)
 
-##### <a name="home"></a>`home`
+##### <a name="-apache--mod--userdir--home"></a>`home`
 
 Data type: `Optional[String]`
 
 *Deprecated* Path to system home directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="dir"></a>`dir`
+##### <a name="-apache--mod--userdir--dir"></a>`dir`
 
 Data type: `Optional[String]`
 
 *Deprecated* Path from user's home directory to public directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="userdir"></a>`userdir`
+##### <a name="-apache--mod--userdir--userdir"></a>`userdir`
 
 Data type: `Optional[String[1]]`
 
 Path or directory name to be used as the UserDir.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="disable_root"></a>`disable_root`
+##### <a name="-apache--mod--userdir--disable_root"></a>`disable_root`
 
 Data type: `Boolean`
 
 Toggles whether to allow use of root directory.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--userdir--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="path"></a>`path`
+##### <a name="-apache--mod--userdir--path"></a>`path`
 
 Data type: `String`
 
@@ -6972,7 +6997,7 @@ Path to directory or pattern from which to find user-specific directories.
 
 Default value: `'/home/*/public_html'`
 
-##### <a name="overrides"></a>`overrides`
+##### <a name="-apache--mod--userdir--overrides"></a>`overrides`
 
 Data type: `Array[String]`
 
@@ -6980,7 +7005,7 @@ Array of directives that are allowed in .htaccess files.
 
 Default value: `['FileInfo', 'AuthConfig', 'Limit', 'Indexes']`
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--mod--userdir--options"></a>`options`
 
 Data type: `Array[String]`
 
@@ -6988,23 +7013,23 @@ Configures what features are available in a particular directory.
 
 Default value: `['MultiViews', 'Indexes', 'SymLinksIfOwnerMatch', 'IncludesNoExec']`
 
-##### <a name="unmanaged_path"></a>`unmanaged_path`
+##### <a name="-apache--mod--userdir--unmanaged_path"></a>`unmanaged_path`
 
 Data type: `Boolean`
 
 Toggles whether to manage path in userdir.conf
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="custom_fragment"></a>`custom_fragment`
+##### <a name="-apache--mod--userdir--custom_fragment"></a>`custom_fragment`
 
 Data type: `Optional[String]`
 
 Custom configuration to be added to userdir.conf
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodversion"></a>`apache::mod::version`
+### <a name="apache--mod--version"></a>`apache::mod::version`
 
 Installs `mod_version`.
 
@@ -7016,9 +7041,9 @@ Installs `mod_version`.
 
 The following parameters are available in the `apache::mod::version` class:
 
-* [`apache_version`](#apache_version)
+* [`apache_version`](#-apache--mod--version--apache_version)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--version--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -7026,7 +7051,7 @@ Used to verify that the Apache version you have requested is compatible with the
 
 Default value: `$apache::apache_version`
 
-### <a name="apachemodvhost_alias"></a>`apache::mod::vhost_alias`
+### <a name="apache--mod--vhost_alias"></a>`apache::mod::vhost_alias`
 
 Installs Apache `mod_vhost_alias`.
 
@@ -7034,7 +7059,7 @@ Installs Apache `mod_vhost_alias`.
   * https://httpd.apache.org/docs/current/mod/mod_vhost_alias.html
     * for additional documentation.
 
-### <a name="apachemodwatchdog"></a>`apache::mod::watchdog`
+### <a name="apache--mod--watchdog"></a>`apache::mod::watchdog`
 
 Installs and configures `mod_watchdog`.
 
@@ -7046,17 +7071,17 @@ Installs and configures `mod_watchdog`.
 
 The following parameters are available in the `apache::mod::watchdog` class:
 
-* [`watchdog_interval`](#watchdog_interval)
+* [`watchdog_interval`](#-apache--mod--watchdog--watchdog_interval)
 
-##### <a name="watchdog_interval"></a>`watchdog_interval`
+##### <a name="-apache--mod--watchdog--watchdog_interval"></a>`watchdog_interval`
 
 Data type: `Optional[Integer]`
 
 Sets the interval at which the watchdog_step hook runs.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodworker"></a>`apache::mod::worker`
+### <a name="apache--mod--worker"></a>`apache::mod::worker`
 
 Installs and manages the MPM `worker`.
 
@@ -7068,19 +7093,19 @@ Installs and manages the MPM `worker`.
 
 The following parameters are available in the `apache::mod::worker` class:
 
-* [`startservers`](#startservers)
-* [`maxclients`](#maxclients)
-* [`minsparethreads`](#minsparethreads)
-* [`maxsparethreads`](#maxsparethreads)
-* [`threadsperchild`](#threadsperchild)
-* [`maxrequestsperchild`](#maxrequestsperchild)
-* [`serverlimit`](#serverlimit)
-* [`threadlimit`](#threadlimit)
-* [`listenbacklog`](#listenbacklog)
-* [`apache_version`](#apache_version)
-* [`maxrequestworkers`](#maxrequestworkers)
+* [`startservers`](#-apache--mod--worker--startservers)
+* [`maxclients`](#-apache--mod--worker--maxclients)
+* [`minsparethreads`](#-apache--mod--worker--minsparethreads)
+* [`maxsparethreads`](#-apache--mod--worker--maxsparethreads)
+* [`threadsperchild`](#-apache--mod--worker--threadsperchild)
+* [`maxrequestsperchild`](#-apache--mod--worker--maxrequestsperchild)
+* [`serverlimit`](#-apache--mod--worker--serverlimit)
+* [`threadlimit`](#-apache--mod--worker--threadlimit)
+* [`listenbacklog`](#-apache--mod--worker--listenbacklog)
+* [`apache_version`](#-apache--mod--worker--apache_version)
+* [`maxrequestworkers`](#-apache--mod--worker--maxrequestworkers)
 
-##### <a name="startservers"></a>`startservers`
+##### <a name="-apache--mod--worker--startservers"></a>`startservers`
 
 Data type: `Integer`
 
@@ -7088,7 +7113,7 @@ The number of child server processes created on startup
 
 Default value: `2`
 
-##### <a name="maxclients"></a>`maxclients`
+##### <a name="-apache--mod--worker--maxclients"></a>`maxclients`
 
 Data type: `Integer`
 
@@ -7099,7 +7124,7 @@ If maxrequestworkers is set, this value is ignored.
 
 Default value: `150`
 
-##### <a name="minsparethreads"></a>`minsparethreads`
+##### <a name="-apache--mod--worker--minsparethreads"></a>`minsparethreads`
 
 Data type: `Integer`
 
@@ -7107,7 +7132,7 @@ Minimum number of idle threads to handle request spikes.
 
 Default value: `25`
 
-##### <a name="maxsparethreads"></a>`maxsparethreads`
+##### <a name="-apache--mod--worker--maxsparethreads"></a>`maxsparethreads`
 
 Data type: `Integer`
 
@@ -7115,7 +7140,7 @@ Maximum number of idle threads.
 
 Default value: `75`
 
-##### <a name="threadsperchild"></a>`threadsperchild`
+##### <a name="-apache--mod--worker--threadsperchild"></a>`threadsperchild`
 
 Data type: `Integer`
 
@@ -7123,7 +7148,7 @@ The number of threads created by each child process.
 
 Default value: `25`
 
-##### <a name="maxrequestsperchild"></a>`maxrequestsperchild`
+##### <a name="-apache--mod--worker--maxrequestsperchild"></a>`maxrequestsperchild`
 
 Data type: `Integer`
 
@@ -7133,7 +7158,7 @@ name is MaxConnectionsPerChild as of 2.3.9+.
 
 Default value: `0`
 
-##### <a name="serverlimit"></a>`serverlimit`
+##### <a name="-apache--mod--worker--serverlimit"></a>`serverlimit`
 
 Data type: `Integer`
 
@@ -7145,7 +7170,7 @@ MaxRequestWorkers and ThreadsPerChild.
 
 Default value: `25`
 
-##### <a name="threadlimit"></a>`threadlimit`
+##### <a name="-apache--mod--worker--threadlimit"></a>`threadlimit`
 
 Data type: `Integer`
 
@@ -7154,7 +7179,7 @@ ThreadsPerChild for the lifetime of the Apache httpd process.
 
 Default value: `64`
 
-##### <a name="listenbacklog"></a>`listenbacklog`
+##### <a name="-apache--mod--worker--listenbacklog"></a>`listenbacklog`
 
 Data type: `Integer`
 
@@ -7162,24 +7187,24 @@ Maximum length of the queue of pending connections.
 
 Default value: `511`
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--mod--worker--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
 Used to verify that the Apache version you have requested is compatible with the module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="maxrequestworkers"></a>`maxrequestworkers`
+##### <a name="-apache--mod--worker--maxrequestworkers"></a>`maxrequestworkers`
 
 Data type: `Optional[Integer]`
 
 Maximum number of connections that will be processed simultaneously
 if set, maxclients is ignored
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodwsgi"></a>`apache::mod::wsgi`
+### <a name="apache--mod--wsgi"></a>`apache::mod::wsgi`
 
 Installs and configures `mod_wsgi`.
 
@@ -7193,24 +7218,24 @@ Installs and configures `mod_wsgi`.
 
 The following parameters are available in the `apache::mod::wsgi` class:
 
-* [`wsgi_restrict_embedded`](#wsgi_restrict_embedded)
-* [`wsgi_socket_prefix`](#wsgi_socket_prefix)
-* [`wsgi_python_path`](#wsgi_python_path)
-* [`wsgi_python_home`](#wsgi_python_home)
-* [`wsgi_python_optimize`](#wsgi_python_optimize)
-* [`wsgi_application_group`](#wsgi_application_group)
-* [`package_name`](#package_name)
-* [`mod_path`](#mod_path)
+* [`wsgi_restrict_embedded`](#-apache--mod--wsgi--wsgi_restrict_embedded)
+* [`wsgi_socket_prefix`](#-apache--mod--wsgi--wsgi_socket_prefix)
+* [`wsgi_python_path`](#-apache--mod--wsgi--wsgi_python_path)
+* [`wsgi_python_home`](#-apache--mod--wsgi--wsgi_python_home)
+* [`wsgi_python_optimize`](#-apache--mod--wsgi--wsgi_python_optimize)
+* [`wsgi_application_group`](#-apache--mod--wsgi--wsgi_application_group)
+* [`package_name`](#-apache--mod--wsgi--package_name)
+* [`mod_path`](#-apache--mod--wsgi--mod_path)
 
-##### <a name="wsgi_restrict_embedded"></a>`wsgi_restrict_embedded`
+##### <a name="-apache--mod--wsgi--wsgi_restrict_embedded"></a>`wsgi_restrict_embedded`
 
 Data type: `Optional[String]`
 
 Enable restrictions on use of embedded mode.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_socket_prefix"></a>`wsgi_socket_prefix`
+##### <a name="-apache--mod--wsgi--wsgi_socket_prefix"></a>`wsgi_socket_prefix`
 
 Data type: `Optional[String]`
 
@@ -7218,55 +7243,55 @@ Configure directory to use for daemon sockets.
 
 Default value: `$apache::params::wsgi_socket_prefix`
 
-##### <a name="wsgi_python_path"></a>`wsgi_python_path`
+##### <a name="-apache--mod--wsgi--wsgi_python_path"></a>`wsgi_python_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Additional directories to search for Python modules.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_python_home"></a>`wsgi_python_home`
+##### <a name="-apache--mod--wsgi--wsgi_python_home"></a>`wsgi_python_home`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Absolute path to Python prefix/exec_prefix directories.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_python_optimize"></a>`wsgi_python_optimize`
+##### <a name="-apache--mod--wsgi--wsgi_python_optimize"></a>`wsgi_python_optimize`
 
 Data type: `Optional[Integer]`
 
 Enables basic Python optimisation features.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_application_group"></a>`wsgi_application_group`
+##### <a name="-apache--mod--wsgi--wsgi_application_group"></a>`wsgi_application_group`
 
 Data type: `Optional[String]`
 
 Sets which application group WSGI application belongs to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apache--mod--wsgi--package_name"></a>`package_name`
 
 Data type: `Optional[String]`
 
 Names of package that installs mod_wsgi.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mod_path"></a>`mod_path`
+##### <a name="-apache--mod--wsgi--mod_path"></a>`mod_path`
 
 Data type: `Optional[String]`
 
 Defines the path to the mod_wsgi shared object (.so) file.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachemodxsendfile"></a>`apache::mod::xsendfile`
+### <a name="apache--mod--xsendfile"></a>`apache::mod::xsendfile`
 
 Installs `mod_xsendfile`.
 
@@ -7274,19 +7299,19 @@ Installs `mod_xsendfile`.
   * https://tn123.org/mod_xsendfile/
     * for additional documentation.
 
-### <a name="apachempmdisable_mpm_event"></a>`apache::mpm::disable_mpm_event`
+### <a name="apache--mpm--disable_mpm_event"></a>`apache::mpm::disable_mpm_event`
 
 disable Apache-Module event
 
-### <a name="apachempmdisable_mpm_prefork"></a>`apache::mpm::disable_mpm_prefork`
+### <a name="apache--mpm--disable_mpm_prefork"></a>`apache::mpm::disable_mpm_prefork`
 
 disable Apache-Module prefork
 
-### <a name="apachempmdisable_mpm_worker"></a>`apache::mpm::disable_mpm_worker`
+### <a name="apache--mpm--disable_mpm_worker"></a>`apache::mpm::disable_mpm_worker`
 
 disable Apache-Module worker
 
-### <a name="apachevhosts"></a>`apache::vhosts`
+### <a name="apache--vhosts"></a>`apache::vhosts`
 
 host parameters or Configuring virtual hosts in the README section.
 
@@ -7311,9 +7336,9 @@ class { 'apache::vhosts':
 
 The following parameters are available in the `apache::vhosts` class:
 
-* [`vhosts`](#vhosts)
+* [`vhosts`](#-apache--vhosts--vhosts)
 
-##### <a name="vhosts"></a>`vhosts`
+##### <a name="-apache--vhosts--vhosts"></a>`vhosts`
 
 Data type: `Hash`
 
@@ -7324,7 +7349,7 @@ Default value: `{}`
 
 ## Defined types
 
-### <a name="apachebalancer"></a>`apache::balancer`
+### <a name="apache--balancer"></a>`apache::balancer`
 
 Each balancer cluster needs one or more balancer members (that can
 be declared with the apache::balancermember defined resource type). Using
@@ -7348,18 +7373,18 @@ apache::balancer { 'puppet00': }
 
 The following parameters are available in the `apache::balancer` defined type:
 
-* [`name`](#name)
-* [`proxy_set`](#proxy_set)
-* [`target`](#target)
-* [`collect_exported`](#collect_exported)
-* [`options`](#options)
+* [`name`](#-apache--balancer--name)
+* [`proxy_set`](#-apache--balancer--proxy_set)
+* [`target`](#-apache--balancer--target)
+* [`collect_exported`](#-apache--balancer--collect_exported)
+* [`options`](#-apache--balancer--options)
 
-##### <a name="name"></a>`name`
+##### <a name="-apache--balancer--name"></a>`name`
 
 The namevar of the defined resource type is the balancer clusters name.<br />
 This name is also used in the name of the conf.d file
 
-##### <a name="proxy_set"></a>`proxy_set`
+##### <a name="-apache--balancer--proxy_set"></a>`proxy_set`
 
 Data type: `Hash`
 
@@ -7367,15 +7392,15 @@ Configures key-value pairs to be used as a ProxySet lines in the configuration.
 
 Default value: `{}`
 
-##### <a name="target"></a>`target`
+##### <a name="-apache--balancer--target"></a>`target`
 
 Data type: `Optional[String]`
 
 The path to the file the balancer definition will be written in.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="collect_exported"></a>`collect_exported`
+##### <a name="-apache--balancer--collect_exported"></a>`collect_exported`
 
 Data type: `Boolean`
 
@@ -7390,9 +7415,9 @@ If you don't use exported resources, a single Puppet run configures all balancer
 you use exported resources, Puppet has to run on the balanced nodes first, then run on the
 balancer.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--balancer--options"></a>`options`
 
 Data type: `Array[Pattern[/=/]]`
 
@@ -7401,7 +7426,7 @@ after the balancer URL, and accepts any key-value pairs available to `ProxyPass`
 
 Default value: `[]`
 
-### <a name="apachebalancermember"></a>`apache::balancermember`
+### <a name="apache--balancermember"></a>`apache::balancermember`
 
 Sets up a balancer member inside a listening service configuration block in
 the load balancer's `apache.cfg`.
@@ -7433,24 +7458,24 @@ from all balancer members.
 
 The following parameters are available in the `apache::balancermember` defined type:
 
-* [`name`](#name)
-* [`balancer_cluster`](#balancer_cluster)
-* [`url`](#url)
-* [`options`](#options)
+* [`name`](#-apache--balancermember--name)
+* [`balancer_cluster`](#-apache--balancermember--balancer_cluster)
+* [`url`](#-apache--balancermember--url)
+* [`options`](#-apache--balancermember--options)
 
-##### <a name="name"></a>`name`
+##### <a name="-apache--balancermember--name"></a>`name`
 
 The title of the resource is arbitrary and only utilized in the concat
 fragment name.
 
-##### <a name="balancer_cluster"></a>`balancer_cluster`
+##### <a name="-apache--balancermember--balancer_cluster"></a>`balancer_cluster`
 
 Data type: `String`
 
 The apache service's instance name (or, the title of the apache::balancer
 resource). This must match up with a declared apache::balancer resource.
 
-##### <a name="url"></a>`url`
+##### <a name="-apache--balancermember--url"></a>`url`
 
 Data type: `Apache::ModProxyProtocol`
 
@@ -7458,7 +7483,7 @@ The url used to contact the balancer member server.
 
 Default value: `"http://${$facts['networking']['fqdn']}/"`
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--balancermember--options"></a>`options`
 
 Data type: `Array`
 
@@ -7467,7 +7492,7 @@ after the URL, and accepts any key-value pairs available to `ProxyPass`.
 
 Default value: `[]`
 
-### <a name="apachecustom_config"></a>`apache::custom_config`
+### <a name="apache--custom_config"></a>`apache::custom_config`
 
 If the file is invalid and this defined type's `verify_config` parameter's value is
 `true`, Puppet throws an error during a Puppet run.
@@ -7476,20 +7501,20 @@ If the file is invalid and this defined type's `verify_config` parameter's value
 
 The following parameters are available in the `apache::custom_config` defined type:
 
-* [`ensure`](#ensure)
-* [`confdir`](#confdir)
-* [`content`](#content)
-* [`filename`](#filename)
-* [`priority`](#priority)
-* [`source`](#source)
-* [`verify_command`](#verify_command)
-* [`verify_config`](#verify_config)
-* [`owner`](#owner)
-* [`group`](#group)
-* [`file_mode`](#file_mode)
-* [`show_diff`](#show_diff)
+* [`ensure`](#-apache--custom_config--ensure)
+* [`confdir`](#-apache--custom_config--confdir)
+* [`content`](#-apache--custom_config--content)
+* [`filename`](#-apache--custom_config--filename)
+* [`priority`](#-apache--custom_config--priority)
+* [`source`](#-apache--custom_config--source)
+* [`verify_command`](#-apache--custom_config--verify_command)
+* [`verify_config`](#-apache--custom_config--verify_config)
+* [`owner`](#-apache--custom_config--owner)
+* [`group`](#-apache--custom_config--group)
+* [`file_mode`](#-apache--custom_config--file_mode)
+* [`show_diff`](#-apache--custom_config--show_diff)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-apache--custom_config--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -7497,7 +7522,7 @@ Specifies whether the configuration file should be present.
 
 Default value: `'present'`
 
-##### <a name="confdir"></a>`confdir`
+##### <a name="-apache--custom_config--confdir"></a>`confdir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -7505,24 +7530,24 @@ Sets the directory in which Puppet places configuration files.
 
 Default value: `$apache::confd_dir`
 
-##### <a name="content"></a>`content`
+##### <a name="-apache--custom_config--content"></a>`content`
 
 Data type: `Optional[String]`
 
 Sets the configuration file's content. The `content` and `source` parameters are exclusive
 of each other.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="filename"></a>`filename`
+##### <a name="-apache--custom_config--filename"></a>`filename`
 
 Data type: `Optional[String]`
 
 Sets the name of the file under `confdir` in which Puppet stores the configuration.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="priority"></a>`priority`
+##### <a name="-apache--custom_config--priority"></a>`priority`
 
 Data type: `Apache::Vhost::Priority`
 
@@ -7532,16 +7557,16 @@ To omit the priority prefix in the configuration file's name, set this parameter
 
 Default value: `25`
 
-##### <a name="source"></a>`source`
+##### <a name="-apache--custom_config--source"></a>`source`
 
 Data type: `Optional[String]`
 
 Points to the configuration file's source. The `content` and `source` parameters are
 exclusive of each other.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="verify_command"></a>`verify_command`
+##### <a name="-apache--custom_config--verify_command"></a>`verify_command`
 
 Data type: `Variant[String, Array[String], Array[Array[String]]]`
 
@@ -7556,47 +7581,47 @@ Or an array of arrays with each one having to pass succesfully, i.e. `[['/usr/sb
 
 Default value: `$apache::params::verify_command`
 
-##### <a name="verify_config"></a>`verify_config`
+##### <a name="-apache--custom_config--verify_config"></a>`verify_config`
 
 Data type: `Boolean`
 
 Specifies whether to validate the configuration file before notifying the Apache service.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="owner"></a>`owner`
+##### <a name="-apache--custom_config--owner"></a>`owner`
 
 Data type: `Optional[String]`
 
 File owner of configuration file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="group"></a>`group`
+##### <a name="-apache--custom_config--group"></a>`group`
 
 Data type: `Optional[String]`
 
 File group of configuration file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="file_mode"></a>`file_mode`
+##### <a name="-apache--custom_config--file_mode"></a>`file_mode`
 
 Data type: `Optional[Stdlib::Filemode]`
 
 File mode of configuration file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="show_diff"></a>`show_diff`
+##### <a name="-apache--custom_config--show_diff"></a>`show_diff`
 
 Data type: `Boolean`
 
 show_diff property for configuration file resource
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="apachefastcgiserver"></a>`apache::fastcgi::server`
+### <a name="apache--fastcgi--server"></a>`apache::fastcgi::server`
 
 Defines one or more external FastCGI servers to handle specific file types. Use this
 defined type with `mod_fastcgi`.
@@ -7605,15 +7630,15 @@ defined type with `mod_fastcgi`.
 
 The following parameters are available in the `apache::fastcgi::server` defined type:
 
-* [`host`](#host)
-* [`timeout`](#timeout)
-* [`flush`](#flush)
-* [`faux_path`](#faux_path)
-* [`fcgi_alias`](#fcgi_alias)
-* [`file_type`](#file_type)
-* [`pass_header`](#pass_header)
+* [`host`](#-apache--fastcgi--server--host)
+* [`timeout`](#-apache--fastcgi--server--timeout)
+* [`flush`](#-apache--fastcgi--server--flush)
+* [`faux_path`](#-apache--fastcgi--server--faux_path)
+* [`fcgi_alias`](#-apache--fastcgi--server--fcgi_alias)
+* [`file_type`](#-apache--fastcgi--server--file_type)
+* [`pass_header`](#-apache--fastcgi--server--pass_header)
 
-##### <a name="host"></a>`host`
+##### <a name="-apache--fastcgi--server--host"></a>`host`
 
 Data type: `String`
 
@@ -7621,7 +7646,7 @@ Determines the FastCGI's hostname or IP address and TCP port number (1-65535).
 
 Default value: `'127.0.0.1:9000'`
 
-##### <a name="timeout"></a>`timeout`
+##### <a name="-apache--fastcgi--server--timeout"></a>`timeout`
 
 Data type: `Integer`
 
@@ -7634,7 +7659,7 @@ the client (the response is buffered), the timeout does not apply.
 
 Default value: `15`
 
-##### <a name="flush"></a>`flush`
+##### <a name="-apache--fastcgi--server--flush"></a>`flush`
 
 Data type: `Boolean`
 
@@ -7642,9 +7667,9 @@ Forces `mod_fastcgi` to write to the client as data is received from the
 application. By default, `mod_fastcgi` buffers data in order to free the application
 as quickly as possible.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="faux_path"></a>`faux_path`
+##### <a name="-apache--fastcgi--server--faux_path"></a>`faux_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -7653,7 +7678,7 @@ parameter does not have to exist in the local filesystem.
 
 Default value: `"/var/www/${name}.fcgi"`
 
-##### <a name="fcgi_alias"></a>`fcgi_alias`
+##### <a name="-apache--fastcgi--server--fcgi_alias"></a>`fcgi_alias`
 
 Data type: `Stdlib::Unixpath`
 
@@ -7661,7 +7686,7 @@ Internally links actions with the FastCGI server. This alias must be unique.
 
 Default value: `"/${name}.fcgi"`
 
-##### <a name="file_type"></a>`file_type`
+##### <a name="-apache--fastcgi--server--file_type"></a>`file_type`
 
 Data type: `String`
 
@@ -7669,20 +7694,20 @@ Sets the MIME `content-type` of the file to be processed by the FastCGI server.
 
 Default value: `'application/x-httpd-php'`
 
-##### <a name="pass_header"></a>`pass_header`
+##### <a name="-apache--fastcgi--server--pass_header"></a>`pass_header`
 
 Data type: `Optional[String]`
 
 Sets a header for the server
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachelisten"></a>`apache::listen`
+### <a name="apache--listen"></a>`apache::listen`
 
 The `apache::vhost` class uses this defined type, and titles take the form
 `<PORT>`, `<IPV4>:<PORT>`, or `<IPV6>:<PORT>`.
 
-### <a name="apachemod"></a>`apache::mod`
+### <a name="apache--mod"></a>`apache::mod`
 
 Checks for or places the module's default configuration files in the Apache server's
 `module` and `enable` directories. The default locations depend on your operating system.
@@ -7691,25 +7716,25 @@ Checks for or places the module's default configuration files in the Apache serv
 
 The following parameters are available in the `apache::mod` defined type:
 
-* [`package`](#package)
-* [`package_ensure`](#package_ensure)
-* [`lib`](#lib)
-* [`lib_path`](#lib_path)
-* [`loadfile_name`](#loadfile_name)
-* [`id`](#id)
-* [`loadfiles`](#loadfiles)
-* [`path`](#path)
+* [`package`](#-apache--mod--package)
+* [`package_ensure`](#-apache--mod--package_ensure)
+* [`lib`](#-apache--mod--lib)
+* [`lib_path`](#-apache--mod--lib_path)
+* [`loadfile_name`](#-apache--mod--loadfile_name)
+* [`id`](#-apache--mod--id)
+* [`loadfiles`](#-apache--mod--loadfiles)
+* [`path`](#-apache--mod--path)
 
-##### <a name="package"></a>`package`
+##### <a name="-apache--mod--package"></a>`package`
 
 Data type: `Optional[String]`
 
 **Required**.<br />
 Names the package Puppet uses to install the Apache module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-apache--mod--package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -7717,15 +7742,15 @@ Determines whether Puppet ensures the Apache module should be installed.
 
 Default value: `'present'`
 
-##### <a name="lib"></a>`lib`
+##### <a name="-apache--mod--lib"></a>`lib`
 
 Data type: `Optional[String]`
 
 Defines the module's shared object name. Do not configure manually without special reason.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="lib_path"></a>`lib_path`
+##### <a name="-apache--mod--lib_path"></a>`lib_path`
 
 Data type: `String`
 
@@ -7734,46 +7759,46 @@ without special reason. The `path` parameter overrides this value.
 
 Default value: `$apache::lib_path`
 
-##### <a name="loadfile_name"></a>`loadfile_name`
+##### <a name="-apache--mod--loadfile_name"></a>`loadfile_name`
 
 Data type: `Optional[String]`
 
 Sets the filename for the module's `LoadFile` directive, which can also set
 the module load order as Apache processes them in alphanumeric order.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="id"></a>`id`
+##### <a name="-apache--mod--id"></a>`id`
 
 Data type: `Optional[String]`
 
 Specifies the package id
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="loadfiles"></a>`loadfiles`
+##### <a name="-apache--mod--loadfiles"></a>`loadfiles`
 
 Data type: `Optional[Array]`
 
 Specifies an array of `LoadFile` directives.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="path"></a>`path`
+##### <a name="-apache--mod--path"></a>`path`
 
 Data type: `Optional[String]`
 
 Specifies a path to the module. Do not manually set this parameter without a special reason.
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachenamevirtualhost"></a>`apache::namevirtualhost`
+### <a name="apache--namevirtualhost"></a>`apache::namevirtualhost`
 
 Adds all related directives to the `ports.conf` file in the Apache HTTPD configuration
 directory. Titles can take the forms `\*`, `\*:\<PORT\>`, `\_default\_:\<PORT\>`,
 `\<IP\>`, or `\<IP\>:\<PORT\>`.
 
-### <a name="apachevhost"></a>`apache::vhost`
+### <a name="apache--vhost"></a>`apache::vhost`
 
 The apache module allows a lot of flexibility in the setup and configuration of virtual hosts.
 This flexibility is due, in part, to `vhost` being a defined resource type, which allows Apache
@@ -7858,251 +7883,251 @@ class { 'apache':
 
 The following parameters are available in the `apache::vhost` defined type:
 
-* [`apache_version`](#apache_version)
-* [`access_log`](#access_log)
-* [`access_log_env_var`](#access_log_env_var)
-* [`access_log_file`](#access_log_file)
-* [`access_log_format`](#access_log_format)
-* [`access_log_pipe`](#access_log_pipe)
-* [`access_log_syslog`](#access_log_syslog)
-* [`access_logs`](#access_logs)
-* [`add_default_charset`](#add_default_charset)
-* [`add_listen`](#add_listen)
-* [`use_optional_includes`](#use_optional_includes)
-* [`aliases`](#aliases)
-* [`allow_encoded_slashes`](#allow_encoded_slashes)
-* [`block`](#block)
-* [`cas_attribute_prefix`](#cas_attribute_prefix)
-* [`cas_attribute_delimiter`](#cas_attribute_delimiter)
-* [`cas_login_url`](#cas_login_url)
-* [`cas_root_proxied_as`](#cas_root_proxied_as)
-* [`cas_scrub_request_headers`](#cas_scrub_request_headers)
-* [`cas_sso_enabled`](#cas_sso_enabled)
-* [`cas_validate_saml`](#cas_validate_saml)
-* [`cas_validate_url`](#cas_validate_url)
-* [`cas_cookie_path`](#cas_cookie_path)
-* [`comment`](#comment)
-* [`default_vhost`](#default_vhost)
-* [`directoryindex`](#directoryindex)
-* [`docroot`](#docroot)
-* [`docroot_group`](#docroot_group)
-* [`docroot_owner`](#docroot_owner)
-* [`docroot_mode`](#docroot_mode)
-* [`manage_docroot`](#manage_docroot)
-* [`error_log`](#error_log)
-* [`error_log_file`](#error_log_file)
-* [`error_log_pipe`](#error_log_pipe)
-* [`error_log_syslog`](#error_log_syslog)
-* [`error_log_format`](#error_log_format)
-* [`error_documents`](#error_documents)
-* [`ensure`](#ensure)
-* [`fallbackresource`](#fallbackresource)
-* [`filters`](#filters)
-* [`h2_copy_files`](#h2_copy_files)
-* [`h2_direct`](#h2_direct)
-* [`h2_early_hints`](#h2_early_hints)
-* [`h2_max_session_streams`](#h2_max_session_streams)
-* [`h2_modern_tls_only`](#h2_modern_tls_only)
-* [`h2_push`](#h2_push)
-* [`h2_push_diary_size`](#h2_push_diary_size)
-* [`h2_push_priority`](#h2_push_priority)
-* [`h2_push_resource`](#h2_push_resource)
-* [`h2_serialize_headers`](#h2_serialize_headers)
-* [`h2_stream_max_mem_size`](#h2_stream_max_mem_size)
-* [`h2_tls_cool_down_secs`](#h2_tls_cool_down_secs)
-* [`h2_tls_warm_up_size`](#h2_tls_warm_up_size)
-* [`h2_upgrade`](#h2_upgrade)
-* [`h2_window_size`](#h2_window_size)
-* [`ip`](#ip)
-* [`ip_based`](#ip_based)
-* [`itk`](#itk)
-* [`action`](#action)
-* [`jk_mounts`](#jk_mounts)
-* [`http_protocol_options`](#http_protocol_options)
-* [`keepalive`](#keepalive)
-* [`keepalive_timeout`](#keepalive_timeout)
-* [`max_keepalive_requests`](#max_keepalive_requests)
-* [`auth_kerb`](#auth_kerb)
-* [`krb_method_negotiate`](#krb_method_negotiate)
-* [`krb_method_k5passwd`](#krb_method_k5passwd)
-* [`krb_authoritative`](#krb_authoritative)
-* [`krb_auth_realms`](#krb_auth_realms)
-* [`krb_5keytab`](#krb_5keytab)
-* [`krb_local_user_mapping`](#krb_local_user_mapping)
-* [`krb_verify_kdc`](#krb_verify_kdc)
-* [`krb_servicename`](#krb_servicename)
-* [`krb_save_credentials`](#krb_save_credentials)
-* [`logroot`](#logroot)
-* [`logroot_ensure`](#logroot_ensure)
-* [`logroot_mode`](#logroot_mode)
-* [`logroot_owner`](#logroot_owner)
-* [`logroot_group`](#logroot_group)
-* [`log_level`](#log_level)
-* [`modsec_body_limit`](#modsec_body_limit)
-* [`modsec_disable_vhost`](#modsec_disable_vhost)
-* [`modsec_disable_ids`](#modsec_disable_ids)
-* [`modsec_disable_ips`](#modsec_disable_ips)
-* [`modsec_disable_msgs`](#modsec_disable_msgs)
-* [`modsec_disable_tags`](#modsec_disable_tags)
-* [`modsec_audit_log_file`](#modsec_audit_log_file)
-* [`modsec_audit_log_pipe`](#modsec_audit_log_pipe)
-* [`modsec_audit_log`](#modsec_audit_log)
-* [`modsec_inbound_anomaly_threshold`](#modsec_inbound_anomaly_threshold)
-* [`modsec_outbound_anomaly_threshold`](#modsec_outbound_anomaly_threshold)
-* [`modsec_allowed_methods`](#modsec_allowed_methods)
-* [`no_proxy_uris`](#no_proxy_uris)
-* [`no_proxy_uris_match`](#no_proxy_uris_match)
-* [`proxy_preserve_host`](#proxy_preserve_host)
-* [`proxy_add_headers`](#proxy_add_headers)
-* [`proxy_error_override`](#proxy_error_override)
-* [`options`](#options)
-* [`override`](#override)
-* [`passenger_enabled`](#passenger_enabled)
-* [`passenger_base_uri`](#passenger_base_uri)
-* [`passenger_ruby`](#passenger_ruby)
-* [`passenger_python`](#passenger_python)
-* [`passenger_nodejs`](#passenger_nodejs)
-* [`passenger_meteor_app_settings`](#passenger_meteor_app_settings)
-* [`passenger_app_env`](#passenger_app_env)
-* [`passenger_app_root`](#passenger_app_root)
-* [`passenger_app_group_name`](#passenger_app_group_name)
-* [`passenger_app_start_command`](#passenger_app_start_command)
-* [`passenger_app_type`](#passenger_app_type)
-* [`passenger_startup_file`](#passenger_startup_file)
-* [`passenger_restart_dir`](#passenger_restart_dir)
-* [`passenger_spawn_method`](#passenger_spawn_method)
-* [`passenger_load_shell_envvars`](#passenger_load_shell_envvars)
-* [`passenger_preload_bundler`](#passenger_preload_bundler)
-* [`passenger_rolling_restarts`](#passenger_rolling_restarts)
-* [`passenger_resist_deployment_errors`](#passenger_resist_deployment_errors)
-* [`passenger_user`](#passenger_user)
-* [`passenger_group`](#passenger_group)
-* [`passenger_friendly_error_pages`](#passenger_friendly_error_pages)
-* [`passenger_min_instances`](#passenger_min_instances)
-* [`passenger_max_instances`](#passenger_max_instances)
-* [`passenger_max_preloader_idle_time`](#passenger_max_preloader_idle_time)
-* [`passenger_force_max_concurrent_requests_per_process`](#passenger_force_max_concurrent_requests_per_process)
-* [`passenger_start_timeout`](#passenger_start_timeout)
-* [`passenger_concurrency_model`](#passenger_concurrency_model)
-* [`passenger_thread_count`](#passenger_thread_count)
-* [`passenger_max_requests`](#passenger_max_requests)
-* [`passenger_max_request_time`](#passenger_max_request_time)
-* [`passenger_memory_limit`](#passenger_memory_limit)
-* [`passenger_stat_throttle_rate`](#passenger_stat_throttle_rate)
-* [`passenger_pre_start`](#passenger_pre_start)
-* [`passenger_high_performance`](#passenger_high_performance)
-* [`passenger_buffer_upload`](#passenger_buffer_upload)
-* [`passenger_buffer_response`](#passenger_buffer_response)
-* [`passenger_error_override`](#passenger_error_override)
-* [`passenger_max_request_queue_size`](#passenger_max_request_queue_size)
-* [`passenger_max_request_queue_time`](#passenger_max_request_queue_time)
-* [`passenger_sticky_sessions`](#passenger_sticky_sessions)
-* [`passenger_sticky_sessions_cookie_name`](#passenger_sticky_sessions_cookie_name)
-* [`passenger_sticky_sessions_cookie_attributes`](#passenger_sticky_sessions_cookie_attributes)
-* [`passenger_allow_encoded_slashes`](#passenger_allow_encoded_slashes)
-* [`passenger_app_log_file`](#passenger_app_log_file)
-* [`passenger_debugger`](#passenger_debugger)
-* [`passenger_lve_min_uid`](#passenger_lve_min_uid)
-* [`php_values`](#php_values)
-* [`php_flags`](#php_flags)
-* [`php_admin_values`](#php_admin_values)
-* [`php_admin_flags`](#php_admin_flags)
-* [`port`](#port)
-* [`priority`](#priority)
-* [`protocols`](#protocols)
-* [`protocols_honor_order`](#protocols_honor_order)
-* [`proxy_dest`](#proxy_dest)
-* [`proxy_pass`](#proxy_pass)
-* [`proxy_dest_match`](#proxy_dest_match)
-* [`proxy_dest_reverse_match`](#proxy_dest_reverse_match)
-* [`proxy_pass_match`](#proxy_pass_match)
-* [`redirect_dest`](#redirect_dest)
-* [`redirect_source`](#redirect_source)
-* [`redirect_status`](#redirect_status)
-* [`redirectmatch_regexp`](#redirectmatch_regexp)
-* [`redirectmatch_status`](#redirectmatch_status)
-* [`redirectmatch_dest`](#redirectmatch_dest)
-* [`request_headers`](#request_headers)
-* [`rewrites`](#rewrites)
-* [`rewrite_base`](#rewrite_base)
-* [`rewrite_rule`](#rewrite_rule)
-* [`rewrite_cond`](#rewrite_cond)
-* [`rewrite_inherit`](#rewrite_inherit)
-* [`scriptalias`](#scriptalias)
-* [`scriptaliases`](#scriptaliases)
-* [`serveradmin`](#serveradmin)
-* [`serveraliases`](#serveraliases)
-* [`servername`](#servername)
-* [`setenv`](#setenv)
-* [`setenvif`](#setenvif)
-* [`setenvifnocase`](#setenvifnocase)
-* [`suexec_user_group`](#suexec_user_group)
-* [`vhost_name`](#vhost_name)
-* [`virtual_docroot`](#virtual_docroot)
-* [`virtual_use_default_docroot`](#virtual_use_default_docroot)
-* [`wsgi_daemon_process`](#wsgi_daemon_process)
-* [`wsgi_daemon_process_options`](#wsgi_daemon_process_options)
-* [`wsgi_application_group`](#wsgi_application_group)
-* [`wsgi_import_script`](#wsgi_import_script)
-* [`wsgi_import_script_options`](#wsgi_import_script_options)
-* [`wsgi_chunked_request`](#wsgi_chunked_request)
-* [`wsgi_process_group`](#wsgi_process_group)
-* [`wsgi_script_aliases`](#wsgi_script_aliases)
-* [`wsgi_script_aliases_match`](#wsgi_script_aliases_match)
-* [`wsgi_pass_authorization`](#wsgi_pass_authorization)
-* [`directories`](#directories)
-* [`custom_fragment`](#custom_fragment)
-* [`headers`](#headers)
-* [`shib_compat_valid_user`](#shib_compat_valid_user)
-* [`ssl_options`](#ssl_options)
-* [`additional_includes`](#additional_includes)
-* [`gssapi`](#gssapi)
-* [`ssl`](#ssl)
-* [`ssl_ca`](#ssl_ca)
-* [`ssl_cert`](#ssl_cert)
-* [`ssl_protocol`](#ssl_protocol)
-* [`ssl_cipher`](#ssl_cipher)
-* [`ssl_honorcipherorder`](#ssl_honorcipherorder)
-* [`ssl_certs_dir`](#ssl_certs_dir)
-* [`ssl_chain`](#ssl_chain)
-* [`ssl_crl`](#ssl_crl)
-* [`ssl_crl_path`](#ssl_crl_path)
-* [`ssl_crl_check`](#ssl_crl_check)
-* [`ssl_key`](#ssl_key)
-* [`ssl_verify_client`](#ssl_verify_client)
-* [`ssl_verify_depth`](#ssl_verify_depth)
-* [`ssl_proxy_protocol`](#ssl_proxy_protocol)
-* [`ssl_proxy_verify`](#ssl_proxy_verify)
-* [`ssl_proxy_verify_depth`](#ssl_proxy_verify_depth)
-* [`ssl_proxy_cipher_suite`](#ssl_proxy_cipher_suite)
-* [`ssl_proxy_ca_cert`](#ssl_proxy_ca_cert)
-* [`ssl_proxy_machine_cert`](#ssl_proxy_machine_cert)
-* [`ssl_proxy_machine_cert_chain`](#ssl_proxy_machine_cert_chain)
-* [`ssl_proxy_check_peer_cn`](#ssl_proxy_check_peer_cn)
-* [`ssl_proxy_check_peer_name`](#ssl_proxy_check_peer_name)
-* [`ssl_proxy_check_peer_expire`](#ssl_proxy_check_peer_expire)
-* [`ssl_openssl_conf_cmd`](#ssl_openssl_conf_cmd)
-* [`ssl_proxyengine`](#ssl_proxyengine)
-* [`ssl_stapling`](#ssl_stapling)
-* [`ssl_stapling_timeout`](#ssl_stapling_timeout)
-* [`ssl_stapling_return_errors`](#ssl_stapling_return_errors)
-* [`ssl_user_name`](#ssl_user_name)
-* [`ssl_reload_on_change`](#ssl_reload_on_change)
-* [`use_canonical_name`](#use_canonical_name)
-* [`define`](#define)
-* [`auth_oidc`](#auth_oidc)
-* [`oidc_settings`](#oidc_settings)
-* [`limitreqfields`](#limitreqfields)
-* [`limitreqfieldsize`](#limitreqfieldsize)
-* [`limitreqline`](#limitreqline)
-* [`limitreqbody`](#limitreqbody)
-* [`use_servername_for_filenames`](#use_servername_for_filenames)
-* [`use_port_for_filenames`](#use_port_for_filenames)
-* [`mdomain`](#mdomain)
-* [`proxy_requests`](#proxy_requests)
-* [`userdir`](#userdir)
+* [`apache_version`](#-apache--vhost--apache_version)
+* [`access_log`](#-apache--vhost--access_log)
+* [`access_log_env_var`](#-apache--vhost--access_log_env_var)
+* [`access_log_file`](#-apache--vhost--access_log_file)
+* [`access_log_format`](#-apache--vhost--access_log_format)
+* [`access_log_pipe`](#-apache--vhost--access_log_pipe)
+* [`access_log_syslog`](#-apache--vhost--access_log_syslog)
+* [`access_logs`](#-apache--vhost--access_logs)
+* [`add_default_charset`](#-apache--vhost--add_default_charset)
+* [`add_listen`](#-apache--vhost--add_listen)
+* [`use_optional_includes`](#-apache--vhost--use_optional_includes)
+* [`aliases`](#-apache--vhost--aliases)
+* [`allow_encoded_slashes`](#-apache--vhost--allow_encoded_slashes)
+* [`block`](#-apache--vhost--block)
+* [`cas_attribute_prefix`](#-apache--vhost--cas_attribute_prefix)
+* [`cas_attribute_delimiter`](#-apache--vhost--cas_attribute_delimiter)
+* [`cas_login_url`](#-apache--vhost--cas_login_url)
+* [`cas_root_proxied_as`](#-apache--vhost--cas_root_proxied_as)
+* [`cas_scrub_request_headers`](#-apache--vhost--cas_scrub_request_headers)
+* [`cas_sso_enabled`](#-apache--vhost--cas_sso_enabled)
+* [`cas_validate_saml`](#-apache--vhost--cas_validate_saml)
+* [`cas_validate_url`](#-apache--vhost--cas_validate_url)
+* [`cas_cookie_path`](#-apache--vhost--cas_cookie_path)
+* [`comment`](#-apache--vhost--comment)
+* [`default_vhost`](#-apache--vhost--default_vhost)
+* [`directoryindex`](#-apache--vhost--directoryindex)
+* [`docroot`](#-apache--vhost--docroot)
+* [`docroot_group`](#-apache--vhost--docroot_group)
+* [`docroot_owner`](#-apache--vhost--docroot_owner)
+* [`docroot_mode`](#-apache--vhost--docroot_mode)
+* [`manage_docroot`](#-apache--vhost--manage_docroot)
+* [`error_log`](#-apache--vhost--error_log)
+* [`error_log_file`](#-apache--vhost--error_log_file)
+* [`error_log_pipe`](#-apache--vhost--error_log_pipe)
+* [`error_log_syslog`](#-apache--vhost--error_log_syslog)
+* [`error_log_format`](#-apache--vhost--error_log_format)
+* [`error_documents`](#-apache--vhost--error_documents)
+* [`ensure`](#-apache--vhost--ensure)
+* [`fallbackresource`](#-apache--vhost--fallbackresource)
+* [`filters`](#-apache--vhost--filters)
+* [`h2_copy_files`](#-apache--vhost--h2_copy_files)
+* [`h2_direct`](#-apache--vhost--h2_direct)
+* [`h2_early_hints`](#-apache--vhost--h2_early_hints)
+* [`h2_max_session_streams`](#-apache--vhost--h2_max_session_streams)
+* [`h2_modern_tls_only`](#-apache--vhost--h2_modern_tls_only)
+* [`h2_push`](#-apache--vhost--h2_push)
+* [`h2_push_diary_size`](#-apache--vhost--h2_push_diary_size)
+* [`h2_push_priority`](#-apache--vhost--h2_push_priority)
+* [`h2_push_resource`](#-apache--vhost--h2_push_resource)
+* [`h2_serialize_headers`](#-apache--vhost--h2_serialize_headers)
+* [`h2_stream_max_mem_size`](#-apache--vhost--h2_stream_max_mem_size)
+* [`h2_tls_cool_down_secs`](#-apache--vhost--h2_tls_cool_down_secs)
+* [`h2_tls_warm_up_size`](#-apache--vhost--h2_tls_warm_up_size)
+* [`h2_upgrade`](#-apache--vhost--h2_upgrade)
+* [`h2_window_size`](#-apache--vhost--h2_window_size)
+* [`ip`](#-apache--vhost--ip)
+* [`ip_based`](#-apache--vhost--ip_based)
+* [`itk`](#-apache--vhost--itk)
+* [`action`](#-apache--vhost--action)
+* [`jk_mounts`](#-apache--vhost--jk_mounts)
+* [`http_protocol_options`](#-apache--vhost--http_protocol_options)
+* [`keepalive`](#-apache--vhost--keepalive)
+* [`keepalive_timeout`](#-apache--vhost--keepalive_timeout)
+* [`max_keepalive_requests`](#-apache--vhost--max_keepalive_requests)
+* [`auth_kerb`](#-apache--vhost--auth_kerb)
+* [`krb_method_negotiate`](#-apache--vhost--krb_method_negotiate)
+* [`krb_method_k5passwd`](#-apache--vhost--krb_method_k5passwd)
+* [`krb_authoritative`](#-apache--vhost--krb_authoritative)
+* [`krb_auth_realms`](#-apache--vhost--krb_auth_realms)
+* [`krb_5keytab`](#-apache--vhost--krb_5keytab)
+* [`krb_local_user_mapping`](#-apache--vhost--krb_local_user_mapping)
+* [`krb_verify_kdc`](#-apache--vhost--krb_verify_kdc)
+* [`krb_servicename`](#-apache--vhost--krb_servicename)
+* [`krb_save_credentials`](#-apache--vhost--krb_save_credentials)
+* [`logroot`](#-apache--vhost--logroot)
+* [`logroot_ensure`](#-apache--vhost--logroot_ensure)
+* [`logroot_mode`](#-apache--vhost--logroot_mode)
+* [`logroot_owner`](#-apache--vhost--logroot_owner)
+* [`logroot_group`](#-apache--vhost--logroot_group)
+* [`log_level`](#-apache--vhost--log_level)
+* [`modsec_body_limit`](#-apache--vhost--modsec_body_limit)
+* [`modsec_disable_vhost`](#-apache--vhost--modsec_disable_vhost)
+* [`modsec_disable_ids`](#-apache--vhost--modsec_disable_ids)
+* [`modsec_disable_ips`](#-apache--vhost--modsec_disable_ips)
+* [`modsec_disable_msgs`](#-apache--vhost--modsec_disable_msgs)
+* [`modsec_disable_tags`](#-apache--vhost--modsec_disable_tags)
+* [`modsec_audit_log_file`](#-apache--vhost--modsec_audit_log_file)
+* [`modsec_audit_log_pipe`](#-apache--vhost--modsec_audit_log_pipe)
+* [`modsec_audit_log`](#-apache--vhost--modsec_audit_log)
+* [`modsec_inbound_anomaly_threshold`](#-apache--vhost--modsec_inbound_anomaly_threshold)
+* [`modsec_outbound_anomaly_threshold`](#-apache--vhost--modsec_outbound_anomaly_threshold)
+* [`modsec_allowed_methods`](#-apache--vhost--modsec_allowed_methods)
+* [`no_proxy_uris`](#-apache--vhost--no_proxy_uris)
+* [`no_proxy_uris_match`](#-apache--vhost--no_proxy_uris_match)
+* [`proxy_preserve_host`](#-apache--vhost--proxy_preserve_host)
+* [`proxy_add_headers`](#-apache--vhost--proxy_add_headers)
+* [`proxy_error_override`](#-apache--vhost--proxy_error_override)
+* [`options`](#-apache--vhost--options)
+* [`override`](#-apache--vhost--override)
+* [`passenger_enabled`](#-apache--vhost--passenger_enabled)
+* [`passenger_base_uri`](#-apache--vhost--passenger_base_uri)
+* [`passenger_ruby`](#-apache--vhost--passenger_ruby)
+* [`passenger_python`](#-apache--vhost--passenger_python)
+* [`passenger_nodejs`](#-apache--vhost--passenger_nodejs)
+* [`passenger_meteor_app_settings`](#-apache--vhost--passenger_meteor_app_settings)
+* [`passenger_app_env`](#-apache--vhost--passenger_app_env)
+* [`passenger_app_root`](#-apache--vhost--passenger_app_root)
+* [`passenger_app_group_name`](#-apache--vhost--passenger_app_group_name)
+* [`passenger_app_start_command`](#-apache--vhost--passenger_app_start_command)
+* [`passenger_app_type`](#-apache--vhost--passenger_app_type)
+* [`passenger_startup_file`](#-apache--vhost--passenger_startup_file)
+* [`passenger_restart_dir`](#-apache--vhost--passenger_restart_dir)
+* [`passenger_spawn_method`](#-apache--vhost--passenger_spawn_method)
+* [`passenger_load_shell_envvars`](#-apache--vhost--passenger_load_shell_envvars)
+* [`passenger_preload_bundler`](#-apache--vhost--passenger_preload_bundler)
+* [`passenger_rolling_restarts`](#-apache--vhost--passenger_rolling_restarts)
+* [`passenger_resist_deployment_errors`](#-apache--vhost--passenger_resist_deployment_errors)
+* [`passenger_user`](#-apache--vhost--passenger_user)
+* [`passenger_group`](#-apache--vhost--passenger_group)
+* [`passenger_friendly_error_pages`](#-apache--vhost--passenger_friendly_error_pages)
+* [`passenger_min_instances`](#-apache--vhost--passenger_min_instances)
+* [`passenger_max_instances`](#-apache--vhost--passenger_max_instances)
+* [`passenger_max_preloader_idle_time`](#-apache--vhost--passenger_max_preloader_idle_time)
+* [`passenger_force_max_concurrent_requests_per_process`](#-apache--vhost--passenger_force_max_concurrent_requests_per_process)
+* [`passenger_start_timeout`](#-apache--vhost--passenger_start_timeout)
+* [`passenger_concurrency_model`](#-apache--vhost--passenger_concurrency_model)
+* [`passenger_thread_count`](#-apache--vhost--passenger_thread_count)
+* [`passenger_max_requests`](#-apache--vhost--passenger_max_requests)
+* [`passenger_max_request_time`](#-apache--vhost--passenger_max_request_time)
+* [`passenger_memory_limit`](#-apache--vhost--passenger_memory_limit)
+* [`passenger_stat_throttle_rate`](#-apache--vhost--passenger_stat_throttle_rate)
+* [`passenger_pre_start`](#-apache--vhost--passenger_pre_start)
+* [`passenger_high_performance`](#-apache--vhost--passenger_high_performance)
+* [`passenger_buffer_upload`](#-apache--vhost--passenger_buffer_upload)
+* [`passenger_buffer_response`](#-apache--vhost--passenger_buffer_response)
+* [`passenger_error_override`](#-apache--vhost--passenger_error_override)
+* [`passenger_max_request_queue_size`](#-apache--vhost--passenger_max_request_queue_size)
+* [`passenger_max_request_queue_time`](#-apache--vhost--passenger_max_request_queue_time)
+* [`passenger_sticky_sessions`](#-apache--vhost--passenger_sticky_sessions)
+* [`passenger_sticky_sessions_cookie_name`](#-apache--vhost--passenger_sticky_sessions_cookie_name)
+* [`passenger_sticky_sessions_cookie_attributes`](#-apache--vhost--passenger_sticky_sessions_cookie_attributes)
+* [`passenger_allow_encoded_slashes`](#-apache--vhost--passenger_allow_encoded_slashes)
+* [`passenger_app_log_file`](#-apache--vhost--passenger_app_log_file)
+* [`passenger_debugger`](#-apache--vhost--passenger_debugger)
+* [`passenger_lve_min_uid`](#-apache--vhost--passenger_lve_min_uid)
+* [`php_values`](#-apache--vhost--php_values)
+* [`php_flags`](#-apache--vhost--php_flags)
+* [`php_admin_values`](#-apache--vhost--php_admin_values)
+* [`php_admin_flags`](#-apache--vhost--php_admin_flags)
+* [`port`](#-apache--vhost--port)
+* [`priority`](#-apache--vhost--priority)
+* [`protocols`](#-apache--vhost--protocols)
+* [`protocols_honor_order`](#-apache--vhost--protocols_honor_order)
+* [`proxy_dest`](#-apache--vhost--proxy_dest)
+* [`proxy_pass`](#-apache--vhost--proxy_pass)
+* [`proxy_dest_match`](#-apache--vhost--proxy_dest_match)
+* [`proxy_dest_reverse_match`](#-apache--vhost--proxy_dest_reverse_match)
+* [`proxy_pass_match`](#-apache--vhost--proxy_pass_match)
+* [`redirect_dest`](#-apache--vhost--redirect_dest)
+* [`redirect_source`](#-apache--vhost--redirect_source)
+* [`redirect_status`](#-apache--vhost--redirect_status)
+* [`redirectmatch_regexp`](#-apache--vhost--redirectmatch_regexp)
+* [`redirectmatch_status`](#-apache--vhost--redirectmatch_status)
+* [`redirectmatch_dest`](#-apache--vhost--redirectmatch_dest)
+* [`request_headers`](#-apache--vhost--request_headers)
+* [`rewrites`](#-apache--vhost--rewrites)
+* [`rewrite_base`](#-apache--vhost--rewrite_base)
+* [`rewrite_rule`](#-apache--vhost--rewrite_rule)
+* [`rewrite_cond`](#-apache--vhost--rewrite_cond)
+* [`rewrite_inherit`](#-apache--vhost--rewrite_inherit)
+* [`scriptalias`](#-apache--vhost--scriptalias)
+* [`scriptaliases`](#-apache--vhost--scriptaliases)
+* [`serveradmin`](#-apache--vhost--serveradmin)
+* [`serveraliases`](#-apache--vhost--serveraliases)
+* [`servername`](#-apache--vhost--servername)
+* [`setenv`](#-apache--vhost--setenv)
+* [`setenvif`](#-apache--vhost--setenvif)
+* [`setenvifnocase`](#-apache--vhost--setenvifnocase)
+* [`suexec_user_group`](#-apache--vhost--suexec_user_group)
+* [`vhost_name`](#-apache--vhost--vhost_name)
+* [`virtual_docroot`](#-apache--vhost--virtual_docroot)
+* [`virtual_use_default_docroot`](#-apache--vhost--virtual_use_default_docroot)
+* [`wsgi_daemon_process`](#-apache--vhost--wsgi_daemon_process)
+* [`wsgi_daemon_process_options`](#-apache--vhost--wsgi_daemon_process_options)
+* [`wsgi_application_group`](#-apache--vhost--wsgi_application_group)
+* [`wsgi_import_script`](#-apache--vhost--wsgi_import_script)
+* [`wsgi_import_script_options`](#-apache--vhost--wsgi_import_script_options)
+* [`wsgi_chunked_request`](#-apache--vhost--wsgi_chunked_request)
+* [`wsgi_process_group`](#-apache--vhost--wsgi_process_group)
+* [`wsgi_script_aliases`](#-apache--vhost--wsgi_script_aliases)
+* [`wsgi_script_aliases_match`](#-apache--vhost--wsgi_script_aliases_match)
+* [`wsgi_pass_authorization`](#-apache--vhost--wsgi_pass_authorization)
+* [`directories`](#-apache--vhost--directories)
+* [`custom_fragment`](#-apache--vhost--custom_fragment)
+* [`headers`](#-apache--vhost--headers)
+* [`shib_compat_valid_user`](#-apache--vhost--shib_compat_valid_user)
+* [`ssl_options`](#-apache--vhost--ssl_options)
+* [`additional_includes`](#-apache--vhost--additional_includes)
+* [`gssapi`](#-apache--vhost--gssapi)
+* [`ssl`](#-apache--vhost--ssl)
+* [`ssl_ca`](#-apache--vhost--ssl_ca)
+* [`ssl_cert`](#-apache--vhost--ssl_cert)
+* [`ssl_protocol`](#-apache--vhost--ssl_protocol)
+* [`ssl_cipher`](#-apache--vhost--ssl_cipher)
+* [`ssl_honorcipherorder`](#-apache--vhost--ssl_honorcipherorder)
+* [`ssl_certs_dir`](#-apache--vhost--ssl_certs_dir)
+* [`ssl_chain`](#-apache--vhost--ssl_chain)
+* [`ssl_crl`](#-apache--vhost--ssl_crl)
+* [`ssl_crl_path`](#-apache--vhost--ssl_crl_path)
+* [`ssl_crl_check`](#-apache--vhost--ssl_crl_check)
+* [`ssl_key`](#-apache--vhost--ssl_key)
+* [`ssl_verify_client`](#-apache--vhost--ssl_verify_client)
+* [`ssl_verify_depth`](#-apache--vhost--ssl_verify_depth)
+* [`ssl_proxy_protocol`](#-apache--vhost--ssl_proxy_protocol)
+* [`ssl_proxy_verify`](#-apache--vhost--ssl_proxy_verify)
+* [`ssl_proxy_verify_depth`](#-apache--vhost--ssl_proxy_verify_depth)
+* [`ssl_proxy_cipher_suite`](#-apache--vhost--ssl_proxy_cipher_suite)
+* [`ssl_proxy_ca_cert`](#-apache--vhost--ssl_proxy_ca_cert)
+* [`ssl_proxy_machine_cert`](#-apache--vhost--ssl_proxy_machine_cert)
+* [`ssl_proxy_machine_cert_chain`](#-apache--vhost--ssl_proxy_machine_cert_chain)
+* [`ssl_proxy_check_peer_cn`](#-apache--vhost--ssl_proxy_check_peer_cn)
+* [`ssl_proxy_check_peer_name`](#-apache--vhost--ssl_proxy_check_peer_name)
+* [`ssl_proxy_check_peer_expire`](#-apache--vhost--ssl_proxy_check_peer_expire)
+* [`ssl_openssl_conf_cmd`](#-apache--vhost--ssl_openssl_conf_cmd)
+* [`ssl_proxyengine`](#-apache--vhost--ssl_proxyengine)
+* [`ssl_stapling`](#-apache--vhost--ssl_stapling)
+* [`ssl_stapling_timeout`](#-apache--vhost--ssl_stapling_timeout)
+* [`ssl_stapling_return_errors`](#-apache--vhost--ssl_stapling_return_errors)
+* [`ssl_user_name`](#-apache--vhost--ssl_user_name)
+* [`ssl_reload_on_change`](#-apache--vhost--ssl_reload_on_change)
+* [`use_canonical_name`](#-apache--vhost--use_canonical_name)
+* [`define`](#-apache--vhost--define)
+* [`auth_oidc`](#-apache--vhost--auth_oidc)
+* [`oidc_settings`](#-apache--vhost--oidc_settings)
+* [`limitreqfields`](#-apache--vhost--limitreqfields)
+* [`limitreqfieldsize`](#-apache--vhost--limitreqfieldsize)
+* [`limitreqline`](#-apache--vhost--limitreqline)
+* [`limitreqbody`](#-apache--vhost--limitreqbody)
+* [`use_servername_for_filenames`](#-apache--vhost--use_servername_for_filenames)
+* [`use_port_for_filenames`](#-apache--vhost--use_port_for_filenames)
+* [`mdomain`](#-apache--vhost--mdomain)
+* [`proxy_requests`](#-apache--vhost--proxy_requests)
+* [`userdir`](#-apache--vhost--userdir)
 
-##### <a name="apache_version"></a>`apache_version`
+##### <a name="-apache--vhost--apache_version"></a>`apache_version`
 
 Data type: `Optional[String]`
 
@@ -8110,23 +8135,23 @@ Apache's version number as a string, such as '2.2' or '2.4'.
 
 Default value: `$apache::apache_version`
 
-##### <a name="access_log"></a>`access_log`
+##### <a name="-apache--vhost--access_log"></a>`access_log`
 
 Data type: `Boolean`
 
 Determines whether to configure `*_access.log` directives (`*_file`, `*_pipe`, or `*_syslog`).
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="access_log_env_var"></a>`access_log_env_var`
+##### <a name="-apache--vhost--access_log_env_var"></a>`access_log_env_var`
 
 Data type: `Optional[Variant[Boolean, String]]`
 
 Specifies that only requests with particular environment variables be logged.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_log_file"></a>`access_log_file`
+##### <a name="-apache--vhost--access_log_file"></a>`access_log_file`
 
 Data type: `Optional[String[1]]`
 
@@ -8135,52 +8160,52 @@ instance, example.com--- it defaults to 'example.com_ssl.log' for
 [SSL-encrypted](https://httpd.apache.org/docs/current/ssl/index.html) virtual hosts and
 `example.com_access.log` for unencrypted virtual hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_log_format"></a>`access_log_format`
+##### <a name="-apache--vhost--access_log_format"></a>`access_log_format`
 
 Data type: `Optional[String[1]]`
 
 Specifies the use of either a `LogFormat` nickname or a custom-formatted string for the
 access log.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_log_pipe"></a>`access_log_pipe`
+##### <a name="-apache--vhost--access_log_pipe"></a>`access_log_pipe`
 
 Data type: `Optional[String[1]]`
 
 Specifies a pipe where Apache sends access log messages.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_log_syslog"></a>`access_log_syslog`
+##### <a name="-apache--vhost--access_log_syslog"></a>`access_log_syslog`
 
 Data type: `Optional[Variant[String, Boolean]]`
 
 Sends all access log messages to syslog.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="access_logs"></a>`access_logs`
+##### <a name="-apache--vhost--access_logs"></a>`access_logs`
 
 Data type: `Optional[Array[Hash]]`
 
 Allows you to give a hash that specifies the state of each of the `access_log_*`
 directives shown above, i.e. `access_log_pipe` and `access_log_syslog`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="add_default_charset"></a>`add_default_charset`
+##### <a name="-apache--vhost--add_default_charset"></a>`add_default_charset`
 
 Data type: `Optional[String]`
 
 Sets a default media charset value for the `AddDefaultCharset` directive, which is
 added to `text/plain` and `text/html` responses.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="add_listen"></a>`add_listen`
+##### <a name="-apache--vhost--add_listen"></a>`add_listen`
 
 Data type: `Boolean`
 
@@ -8189,9 +8214,9 @@ Setting `add_listen` to `false` prevents the virtual host from creating a `Liste
 statement. This is important when combining virtual hosts that aren't passed an `ip`
 parameter with those that are.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="use_optional_includes"></a>`use_optional_includes`
+##### <a name="-apache--vhost--use_optional_includes"></a>`use_optional_includes`
 
 Data type: `Boolean`
 
@@ -8200,7 +8225,7 @@ Specifies whether Apache uses the `IncludeOptional` directive instead of `Includ
 
 Default value: `$apache::use_optional_includes`
 
-##### <a name="aliases"></a>`aliases`
+##### <a name="-apache--vhost--aliases"></a>`aliases`
 
 Data type: `Array[Hash[String[1], String[1]]]`
 
@@ -8243,7 +8268,7 @@ directive might not be able to honor the `PassengerEnabled => off` statement. Se
 
 Default value: `[]`
 
-##### <a name="allow_encoded_slashes"></a>`allow_encoded_slashes`
+##### <a name="-apache--vhost--allow_encoded_slashes"></a>`allow_encoded_slashes`
 
 Data type: `Optional[Enum['on', 'off', 'nodecode']]`
 
@@ -8252,9 +8277,9 @@ default. This modifies the virtual host responses to URLs with `\` and `/` chara
 default setting omits the declaration from the server configuration and selects the
 Apache default setting of `Off`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="block"></a>`block`
+##### <a name="-apache--vhost--block"></a>`block`
 
 Data type: `Variant[Array[String], String]`
 
@@ -8263,83 +8288,83 @@ blocks web access to `.svn`), `.git`, and `.bzr` directories.
 
 Default value: `[]`
 
-##### <a name="cas_attribute_prefix"></a>`cas_attribute_prefix`
+##### <a name="-apache--vhost--cas_attribute_prefix"></a>`cas_attribute_prefix`
 
 Data type: `Optional[String]`
 
 Adds a header with the value of this header being the attribute values when SAML
 validation is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_attribute_delimiter"></a>`cas_attribute_delimiter`
+##### <a name="-apache--vhost--cas_attribute_delimiter"></a>`cas_attribute_delimiter`
 
 Data type: `Optional[String]`
 
 Sets the delimiter between attribute values in the header created by `cas_attribute_prefix`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_login_url"></a>`cas_login_url`
+##### <a name="-apache--vhost--cas_login_url"></a>`cas_login_url`
 
 Data type: `Optional[String]`
 
 Sets the URL to which the module redirects users when they attempt to access a
 CAS-protected resource and don't have an active session.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_root_proxied_as"></a>`cas_root_proxied_as`
+##### <a name="-apache--vhost--cas_root_proxied_as"></a>`cas_root_proxied_as`
 
 Data type: `Optional[String]`
 
 Sets the URL end users see when access to this Apache server is proxied per vhost.
 This URL should not include a trailing slash.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_scrub_request_headers"></a>`cas_scrub_request_headers`
+##### <a name="-apache--vhost--cas_scrub_request_headers"></a>`cas_scrub_request_headers`
 
 Data type: `Boolean`
 
 Remove inbound request headers that may have special meaning within mod_auth_cas.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cas_sso_enabled"></a>`cas_sso_enabled`
+##### <a name="-apache--vhost--cas_sso_enabled"></a>`cas_sso_enabled`
 
 Data type: `Boolean`
 
 Enables experimental support for single sign out (may mangle POST data).
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cas_validate_saml"></a>`cas_validate_saml`
+##### <a name="-apache--vhost--cas_validate_saml"></a>`cas_validate_saml`
 
 Data type: `Boolean`
 
 Parse response from CAS server for SAML.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cas_validate_url"></a>`cas_validate_url`
+##### <a name="-apache--vhost--cas_validate_url"></a>`cas_validate_url`
 
 Data type: `Optional[String]`
 
 Sets the URL to use when validating a client-presented ticket in an HTTP query string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cas_cookie_path"></a>`cas_cookie_path`
+##### <a name="-apache--vhost--cas_cookie_path"></a>`cas_cookie_path`
 
 Data type: `Optional[String]`
 
 Sets the location where information on the current session should be stored. This should
 be writable by the web server only.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="comment"></a>`comment`
+##### <a name="-apache--vhost--comment"></a>`comment`
 
 Data type: `Optional[Variant[String, Array[String]]]`
 
@@ -8356,18 +8381,18 @@ comment => [
 ]
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_vhost"></a>`default_vhost`
+##### <a name="-apache--vhost--default_vhost"></a>`default_vhost`
 
 Data type: `Boolean`
 
 Sets a given `apache::vhost` defined type as the default to serve requests that do not
 match any other `apache::vhost` defined types.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="directoryindex"></a>`directoryindex`
+##### <a name="-apache--vhost--directoryindex"></a>`directoryindex`
 
 Data type: `Optional[String]`
 
@@ -8375,9 +8400,9 @@ Sets the list of resources to look for when a client requests an index of the di
 by specifying a '/' at the end of the directory name. See the `DirectoryIndex` directive
 documentation for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="docroot"></a>`docroot`
+##### <a name="-apache--vhost--docroot"></a>`docroot`
 
 Data type: `Variant[Stdlib::Absolutepath, Boolean]`
 
@@ -8386,7 +8411,7 @@ Sets the `DocumentRoot` location, from which Apache serves files.<br />
 If `docroot` and `manage_docroot` are both set to `false`, no `DocumentRoot` will be set
 and the accompanying `<Directory /path/to/directory>` block will not be created.
 
-##### <a name="docroot_group"></a>`docroot_group`
+##### <a name="-apache--vhost--docroot_group"></a>`docroot_group`
 
 Data type: `String`
 
@@ -8394,7 +8419,7 @@ Sets group access to the `docroot` directory.
 
 Default value: `$apache::params::root_group`
 
-##### <a name="docroot_owner"></a>`docroot_owner`
+##### <a name="-apache--vhost--docroot_owner"></a>`docroot_owner`
 
 Data type: `String`
 
@@ -8402,31 +8427,31 @@ Sets individual user access to the `docroot` directory.
 
 Default value: `'root'`
 
-##### <a name="docroot_mode"></a>`docroot_mode`
+##### <a name="-apache--vhost--docroot_mode"></a>`docroot_mode`
 
 Data type: `Optional[Stdlib::Filemode]`
 
 Sets access permissions for the `docroot` directory, in numeric notation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="manage_docroot"></a>`manage_docroot`
+##### <a name="-apache--vhost--manage_docroot"></a>`manage_docroot`
 
 Data type: `Boolean`
 
 Determines whether Puppet manages the `docroot` directory.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="error_log"></a>`error_log`
+##### <a name="-apache--vhost--error_log"></a>`error_log`
 
 Data type: `Boolean`
 
 Specifies whether `*_error.log` directives should be configured.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="error_log_file"></a>`error_log_file`
+##### <a name="-apache--vhost--error_log_file"></a>`error_log_file`
 
 Data type: `Optional[String]`
 
@@ -8436,9 +8461,9 @@ If none of these parameters is set, given a virtual host `example.com`, Puppet d
 to `$logroot/example.com_error_ssl.log` for SSL virtual hosts and
 `$logroot/example.com_error.log` for non-SSL virtual hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="error_log_pipe"></a>`error_log_pipe`
+##### <a name="-apache--vhost--error_log_pipe"></a>`error_log_pipe`
 
 Data type: `Optional[String]`
 
@@ -8446,9 +8471,9 @@ Specifies a pipe to send error log messages to.<br />
 This parameter has no effect if the `error_log_file` parameter has a value. If neither
 this parameter nor `error_log_file` has a value, Puppet then checks `error_log_syslog`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="error_log_syslog"></a>`error_log_syslog`
+##### <a name="-apache--vhost--error_log_syslog"></a>`error_log_syslog`
 
 Data type: `Optional[Variant[String, Boolean]]`
 
@@ -8458,18 +8483,22 @@ parameters has a value. If none of these parameters has a value, given a virtual
 `example.com`, Puppet defaults to `$logroot/example.com_error_ssl.log` for SSL virtual
 hosts and `$logroot/example.com_error.log` for non-SSL virtual hosts.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="error_log_format"></a>`error_log_format`
+##### <a name="-apache--vhost--error_log_format"></a>`error_log_format`
 
-Data type: `Optional[
+Data type:
+
+```puppet
+Optional[
     Array[
       Variant[
         String,
         Hash[String, Enum['connection', 'request']]
       ]
     ]
-  ]`
+  ]
+```
 
 Sets the [ErrorLogFormat](https://httpd.apache.org/docs/current/mod/core.html#errorlogformat)
 format specification for error log entries inside virtual host
@@ -8487,9 +8516,9 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="error_documents"></a>`error_documents`
+##### <a name="-apache--vhost--error_documents"></a>`error_documents`
 
 Data type: `Variant[Array[Hash], String]`
 
@@ -8508,7 +8537,7 @@ apache::vhost { 'sample.example.net':
 
 Default value: `[]`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-apache--vhost--ensure"></a>`ensure`
 
 Data type: `Enum['absent', 'present']`
 
@@ -8516,7 +8545,7 @@ Specifies if the virtual host is present or absent.<br />
 
 Default value: `'present'`
 
-##### <a name="fallbackresource"></a>`fallbackresource`
+##### <a name="-apache--vhost--fallbackresource"></a>`fallbackresource`
 
 Data type: `Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]]`
 
@@ -8525,9 +8554,9 @@ directive, which specifies an action to take for any URL that doesn't map to any
 your filesystem and would otherwise return 'HTTP 404 (Not Found)'. Values must either begin
 with a `/` or be `disabled`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="filters"></a>`filters`
+##### <a name="-apache--vhost--filters"></a>`filters`
 
 Data type: `Array[String[1]]`
 
@@ -8546,25 +8575,25 @@ apache::vhost { "$::fqdn":
 
 Default value: `[]`
 
-##### <a name="h2_copy_files"></a>`h2_copy_files`
+##### <a name="-apache--vhost--h2_copy_files"></a>`h2_copy_files`
 
 Data type: `Optional[Boolean]`
 
 Sets the [H2CopyFiles](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2copyfiles)
 directive which influences how the requestion process pass files to the main connection.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_direct"></a>`h2_direct`
+##### <a name="-apache--vhost--h2_direct"></a>`h2_direct`
 
 Data type: `Optional[Boolean]`
 
 Sets the [H2Direct](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2direct)
 directive which toggles the usage of the HTTP/2 Direct Mode.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_early_hints"></a>`h2_early_hints`
+##### <a name="-apache--vhost--h2_early_hints"></a>`h2_early_hints`
 
 Data type: `Optional[Boolean]`
 
@@ -8572,9 +8601,9 @@ Sets the [H2EarlyHints](https://httpd.apache.org/docs/current/mod/mod_http2.html
 directive which controls if HTTP status 103 interim responses are forwarded to
 the client or not.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_max_session_streams"></a>`h2_max_session_streams`
+##### <a name="-apache--vhost--h2_max_session_streams"></a>`h2_max_session_streams`
 
 Data type: `Optional[Integer]`
 
@@ -8582,27 +8611,27 @@ Sets the [H2MaxSessionStreams](https://httpd.apache.org/docs/current/mod/mod_htt
 directive which sets the maximum number of active streams per HTTP/2 session
 that the server allows.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_modern_tls_only"></a>`h2_modern_tls_only`
+##### <a name="-apache--vhost--h2_modern_tls_only"></a>`h2_modern_tls_only`
 
 Data type: `Optional[Boolean]`
 
 Sets the [H2ModernTLSOnly](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2moderntlsonly)
 directive which toggles the security checks on HTTP/2 connections in TLS mode.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push"></a>`h2_push`
+##### <a name="-apache--vhost--h2_push"></a>`h2_push`
 
 Data type: `Optional[Boolean]`
 
 Sets the [H2Push](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2push)
 directive which toggles the usage of the HTTP/2 server push protocol feature.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push_diary_size"></a>`h2_push_diary_size`
+##### <a name="-apache--vhost--h2_push_diary_size"></a>`h2_push_diary_size`
 
 Data type: `Optional[Integer]`
 
@@ -8610,9 +8639,9 @@ Sets the [H2PushDiarySize](https://httpd.apache.org/docs/current/mod/mod_http2.h
 directive which toggles the maximum number of HTTP/2 server pushes that are
 remembered per HTTP/2 connection.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_push_priority"></a>`h2_push_priority`
+##### <a name="-apache--vhost--h2_push_priority"></a>`h2_push_priority`
 
 Data type: `Array[String]`
 
@@ -8622,7 +8651,7 @@ content-type of the response.
 
 Default value: `[]`
 
-##### <a name="h2_push_resource"></a>`h2_push_resource`
+##### <a name="-apache--vhost--h2_push_resource"></a>`h2_push_resource`
 
 Data type: `Array[String]`
 
@@ -8631,7 +8660,7 @@ directive which declares resources for early pushing to the client.
 
 Default value: `[]`
 
-##### <a name="h2_serialize_headers"></a>`h2_serialize_headers`
+##### <a name="-apache--vhost--h2_serialize_headers"></a>`h2_serialize_headers`
 
 Data type: `Optional[Boolean]`
 
@@ -8639,9 +8668,9 @@ Sets the [H2SerializeHeaders](https://httpd.apache.org/docs/current/mod/mod_http
 directive which toggles if HTTP/2 requests are serialized in HTTP/1.1
 format for processing by httpd core.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_stream_max_mem_size"></a>`h2_stream_max_mem_size`
+##### <a name="-apache--vhost--h2_stream_max_mem_size"></a>`h2_stream_max_mem_size`
 
 Data type: `Optional[Integer]`
 
@@ -8649,9 +8678,9 @@ Sets the [H2StreamMaxMemSize](https://httpd.apache.org/docs/current/mod/mod_http
 directive which sets the maximum number of outgoing data bytes buffered in
 memory for an active stream.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_tls_cool_down_secs"></a>`h2_tls_cool_down_secs`
+##### <a name="-apache--vhost--h2_tls_cool_down_secs"></a>`h2_tls_cool_down_secs`
 
 Data type: `Optional[Integer]`
 
@@ -8659,9 +8688,9 @@ Sets the [H2TLSCoolDownSecs](https://httpd.apache.org/docs/current/mod/mod_http2
 directive which sets the number of seconds of idle time on a TLS connection
 before the TLS write size falls back to a small (~1300 bytes) length.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_tls_warm_up_size"></a>`h2_tls_warm_up_size`
+##### <a name="-apache--vhost--h2_tls_warm_up_size"></a>`h2_tls_warm_up_size`
 
 Data type: `Optional[Integer]`
 
@@ -8669,9 +8698,9 @@ Sets the [H2TLSWarmUpSize](https://httpd.apache.org/docs/current/mod/mod_http2.h
 directive which sets the number of bytes to be sent in small TLS records (~1300
 bytes) until doing maximum sized writes (16k) on https: HTTP/2 connections.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_upgrade"></a>`h2_upgrade`
+##### <a name="-apache--vhost--h2_upgrade"></a>`h2_upgrade`
 
 Data type: `Optional[Boolean]`
 
@@ -8679,9 +8708,9 @@ Sets the [H2Upgrade](https://httpd.apache.org/docs/current/mod/mod_http2.html#h2
 directive which toggles the usage of the HTTP/1.1 Upgrade method for switching
 to HTTP/2.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="h2_window_size"></a>`h2_window_size`
+##### <a name="-apache--vhost--h2_window_size"></a>`h2_window_size`
 
 Data type: `Optional[Integer]`
 
@@ -8689,23 +8718,27 @@ Sets the [H2WindowSize](https://httpd.apache.org/docs/current/mod/mod_http2.html
 directive which sets the size of the window that is used for flow control from
 client to server and limits the amount of data the server has to buffer.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ip"></a>`ip`
+##### <a name="-apache--vhost--ip"></a>`ip`
 
-Data type: `Optional[
+Data type:
+
+```puppet
+Optional[
     Variant[
       Array[Variant[Stdlib::IP::Address, Enum['*']]],
       Variant[Stdlib::IP::Address, Enum['*']]
     ]
-  ]`
+  ]
+```
 
 Sets the IP address the virtual host listens on. By default, uses Apache's default behavior
 of listening on all IPs.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ip_based"></a>`ip_based`
+##### <a name="-apache--vhost--ip_based"></a>`ip_based`
 
 Data type: `Boolean`
 
@@ -8713,9 +8746,9 @@ Enables an [IP-based](https://httpd.apache.org/docs/current/vhosts/ip-based.html
 host. This parameter inhibits the creation of a NameVirtualHost directive, since those are
 used to funnel requests to name-based virtual hosts.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="itk"></a>`itk`
+##### <a name="-apache--vhost--itk"></a>`itk`
 
 Data type: `Optional[Hash]`
 
@@ -8739,18 +8772,18 @@ Valid values are: a hash, which can include the keys:
 * `limituidrange` (Linux 3.5.0 or newer)
 * `limitgidrange` (Linux 3.5.0 or newer)
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="action"></a>`action`
+##### <a name="-apache--vhost--action"></a>`action`
 
 Data type: `Optional[String]`
 
 Specifies whether you wish to configure mod_actions action directive which will
 activate cgi-script when triggered by a request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="jk_mounts"></a>`jk_mounts`
+##### <a name="-apache--vhost--jk_mounts"></a>`jk_mounts`
 
 Data type: `Array[Hash]`
 
@@ -8770,15 +8803,15 @@ apache::vhost { 'sample.example.net':
 
 Default value: `[]`
 
-##### <a name="http_protocol_options"></a>`http_protocol_options`
+##### <a name="-apache--vhost--http_protocol_options"></a>`http_protocol_options`
 
 Data type: `Optional[Pattern[/^((Strict|Unsafe)?\s*(\b(Registered|Lenient)Methods)?\s*(\b(Allow0\.9|Require1\.0))?)$/]]`
 
 Specifies the strictness of HTTP protocol checks.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keepalive"></a>`keepalive`
+##### <a name="-apache--vhost--keepalive"></a>`keepalive`
 
 Data type: `Optional[Enum['on', 'off']]`
 
@@ -8787,9 +8820,9 @@ for the virtual host. By default, the global, server-wide `KeepAlive` setting is
 Use the `keepalive_timeout` and `max_keepalive_requests` parameters to set relevant options
 for the virtual host.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keepalive_timeout"></a>`keepalive_timeout`
+##### <a name="-apache--vhost--keepalive_timeout"></a>`keepalive_timeout`
 
 Data type: `Optional[Variant[Integer, String]]`
 
@@ -8799,9 +8832,9 @@ global, server-wide `KeepAlive` setting is in effect.<br />
 This parameter is only relevant if either the global, server-wide `keepalive` parameter or
 the per-vhost `keepalive` parameter is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_keepalive_requests"></a>`max_keepalive_requests`
+##### <a name="-apache--vhost--max_keepalive_requests"></a>`max_keepalive_requests`
 
 Data type: `Optional[Variant[Integer, String]]`
 
@@ -8810,9 +8843,9 @@ the global, server-wide `KeepAlive` setting is in effect.<br />
 This parameter is only relevant if either the global, server-wide `keepalive` parameter or
 the per-vhost `keepalive` parameter is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="auth_kerb"></a>`auth_kerb`
+##### <a name="-apache--vhost--auth_kerb"></a>`auth_kerb`
 
 Data type: `Boolean`
 
@@ -8835,9 +8868,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="krb_method_negotiate"></a>`krb_method_negotiate`
+##### <a name="-apache--vhost--krb_method_negotiate"></a>`krb_method_negotiate`
 
 Data type: `Enum['on', 'off']`
 
@@ -8845,7 +8878,7 @@ Determines whether to use the Negotiate method.
 
 Default value: `'on'`
 
-##### <a name="krb_method_k5passwd"></a>`krb_method_k5passwd`
+##### <a name="-apache--vhost--krb_method_k5passwd"></a>`krb_method_k5passwd`
 
 Data type: `Enum['on', 'off']`
 
@@ -8853,7 +8886,7 @@ Determines whether to use password-based authentication for Kerberos v5.
 
 Default value: `'on'`
 
-##### <a name="krb_authoritative"></a>`krb_authoritative`
+##### <a name="-apache--vhost--krb_authoritative"></a>`krb_authoritative`
 
 Data type: `Enum['on', 'off']`
 
@@ -8861,7 +8894,7 @@ If set to `off`, authentication controls can be passed on to another module.
 
 Default value: `'on'`
 
-##### <a name="krb_auth_realms"></a>`krb_auth_realms`
+##### <a name="-apache--vhost--krb_auth_realms"></a>`krb_auth_realms`
 
 Data type: `Array[String]`
 
@@ -8869,23 +8902,23 @@ Specifies an array of Kerberos realms to use for authentication.
 
 Default value: `[]`
 
-##### <a name="krb_5keytab"></a>`krb_5keytab`
+##### <a name="-apache--vhost--krb_5keytab"></a>`krb_5keytab`
 
 Data type: `Optional[String]`
 
 Specifies the Kerberos v5 keytab file's location.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="krb_local_user_mapping"></a>`krb_local_user_mapping`
+##### <a name="-apache--vhost--krb_local_user_mapping"></a>`krb_local_user_mapping`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Strips @REALM from usernames for further use.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="krb_verify_kdc"></a>`krb_verify_kdc`
+##### <a name="-apache--vhost--krb_verify_kdc"></a>`krb_verify_kdc`
 
 Data type: `Enum['on', 'off']`
 
@@ -8894,7 +8927,7 @@ KDC spoofing attacks.
 
 Default value: `'on'`
 
-##### <a name="krb_servicename"></a>`krb_servicename`
+##### <a name="-apache--vhost--krb_servicename"></a>`krb_servicename`
 
 Data type: `String`
 
@@ -8903,7 +8936,7 @@ key of this name must be stored in the keytab.
 
 Default value: `'HTTP'`
 
-##### <a name="krb_save_credentials"></a>`krb_save_credentials`
+##### <a name="-apache--vhost--krb_save_credentials"></a>`krb_save_credentials`
 
 Data type: `Enum['on', 'off']`
 
@@ -8911,7 +8944,7 @@ This option enables credential saving functionality.
 
 Default value: `'off'`
 
-##### <a name="logroot"></a>`logroot`
+##### <a name="-apache--vhost--logroot"></a>`logroot`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -8919,7 +8952,7 @@ Specifies the location of the virtual host's logfiles.
 
 Default value: `$apache::logroot`
 
-##### <a name="logroot_ensure"></a>`logroot_ensure`
+##### <a name="-apache--vhost--logroot_ensure"></a>`logroot_ensure`
 
 Data type: `Enum['directory', 'absent']`
 
@@ -8927,7 +8960,7 @@ Determines whether or not to remove the logroot directory for a virtual host.
 
 Default value: `'directory'`
 
-##### <a name="logroot_mode"></a>`logroot_mode`
+##### <a name="-apache--vhost--logroot_mode"></a>`logroot_mode`
 
 Data type: `Optional[Stdlib::Filemode]`
 
@@ -8935,49 +8968,49 @@ Overrides the mode the logroot directory is set to. Do *not* grant write access 
 directory the logs are stored in without being aware of the consequences; for more
 information, see [Apache's log security documentation](https://httpd.apache.org/docs/2.4/logs.html#security).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="logroot_owner"></a>`logroot_owner`
+##### <a name="-apache--vhost--logroot_owner"></a>`logroot_owner`
 
 Data type: `Optional[String]`
 
 Sets individual user access to the logroot directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="logroot_group"></a>`logroot_group`
+##### <a name="-apache--vhost--logroot_group"></a>`logroot_group`
 
 Data type: `Optional[String]`
 
 Sets group access to the `logroot` directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="log_level"></a>`log_level`
+##### <a name="-apache--vhost--log_level"></a>`log_level`
 
 Data type: `Optional[Apache::LogLevel]`
 
 Specifies the verbosity of the error log.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_body_limit"></a>`modsec_body_limit`
+##### <a name="-apache--vhost--modsec_body_limit"></a>`modsec_body_limit`
 
 Data type: `Optional[String]`
 
 Configures the maximum request body size (in bytes) ModSecurity accepts for buffering.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_disable_vhost"></a>`modsec_disable_vhost`
+##### <a name="-apache--vhost--modsec_disable_vhost"></a>`modsec_disable_vhost`
 
 Data type: `Boolean`
 
 Disables `mod_security` on a virtual host. Only valid if `apache::mod::security` is included.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="modsec_disable_ids"></a>`modsec_disable_ids`
+##### <a name="-apache--vhost--modsec_disable_ids"></a>`modsec_disable_ids`
 
 Data type: `Optional[Variant[Hash, Array]]`
 
@@ -8995,9 +9028,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_disable_ips"></a>`modsec_disable_ips`
+##### <a name="-apache--vhost--modsec_disable_ips"></a>`modsec_disable_ips`
 
 Data type: `Array[String[1]]`
 
@@ -9005,7 +9038,7 @@ Specifies an array of IP addresses to exclude from `mod_security` rule matching.
 
 Default value: `[]`
 
-##### <a name="modsec_disable_msgs"></a>`modsec_disable_msgs`
+##### <a name="-apache--vhost--modsec_disable_msgs"></a>`modsec_disable_msgs`
 
 Data type: `Optional[Variant[Hash, Array]]`
 
@@ -9022,9 +9055,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_disable_tags"></a>`modsec_disable_tags`
+##### <a name="-apache--vhost--modsec_disable_tags"></a>`modsec_disable_tags`
 
 Data type: `Optional[Variant[Hash, Array]]`
 
@@ -9041,9 +9074,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_audit_log_file"></a>`modsec_audit_log_file`
+##### <a name="-apache--vhost--modsec_audit_log_file"></a>`modsec_audit_log_file`
 
 Data type: `Optional[String]`
 
@@ -9053,9 +9086,9 @@ log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manu
 If none of those parameters are set, the global audit log is used
 (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_audit_log_pipe"></a>`modsec_audit_log_pipe`
+##### <a name="-apache--vhost--modsec_audit_log_pipe"></a>`modsec_audit_log_pipe`
 
 Data type: `Optional[String]`
 
@@ -9066,9 +9099,9 @@ log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manu
 If none of those parameters are set, the global audit log is used
 (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_audit_log"></a>`modsec_audit_log`
+##### <a name="-apache--vhost--modsec_audit_log"></a>`modsec_audit_log`
 
 Data type: `Optional[Variant[String, Boolean]]`
 
@@ -9080,9 +9113,9 @@ log ([SecAuditLog](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manu
 If none of those parameters are set, the global audit log is used
 (`/var/log/httpd/modsec\_audit.log`; Debian and derivatives: `/var/log/apache2/modsec\_audit.log`; others: ).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_inbound_anomaly_threshold"></a>`modsec_inbound_anomaly_threshold`
+##### <a name="-apache--vhost--modsec_inbound_anomaly_threshold"></a>`modsec_inbound_anomaly_threshold`
 
 Data type: `Optional[Integer[1, default]]`
 
@@ -9090,9 +9123,9 @@ Override the global scoring threshold level of the inbound blocking rules
 for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
 Set.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_outbound_anomaly_threshold"></a>`modsec_outbound_anomaly_threshold`
+##### <a name="-apache--vhost--modsec_outbound_anomaly_threshold"></a>`modsec_outbound_anomaly_threshold`
 
 Data type: `Optional[Integer[1, default]]`
 
@@ -9100,17 +9133,17 @@ Override the global scoring threshold level of the outbound blocking rules
 for the Collaborative Detection Mode in the OWASP ModSecurity Core Rule
 Set.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="modsec_allowed_methods"></a>`modsec_allowed_methods`
+##### <a name="-apache--vhost--modsec_allowed_methods"></a>`modsec_allowed_methods`
 
 Data type: `Optional[String]`
 
 Override global allowed methods. A space-separated list of allowed HTTP methods.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_proxy_uris"></a>`no_proxy_uris`
+##### <a name="-apache--vhost--no_proxy_uris"></a>`no_proxy_uris`
 
 Data type: `Variant[Array[String], String]`
 
@@ -9119,7 +9152,7 @@ with [`proxy_dest`](#proxy_dest).
 
 Default value: `[]`
 
-##### <a name="no_proxy_uris_match"></a>`no_proxy_uris_match`
+##### <a name="-apache--vhost--no_proxy_uris_match"></a>`no_proxy_uris_match`
 
 Data type: `Variant[Array[String], String]`
 
@@ -9127,7 +9160,7 @@ This directive is equivalent to `no_proxy_uris`, but takes regular expressions.
 
 Default value: `[]`
 
-##### <a name="proxy_preserve_host"></a>`proxy_preserve_host`
+##### <a name="-apache--vhost--proxy_preserve_host"></a>`proxy_preserve_host`
 
 Data type: `Boolean`
 
@@ -9135,9 +9168,9 @@ Sets the [ProxyPreserveHost Directive](https://httpd.apache.org/docs/current/mod
 Setting this parameter to `true` enables the `Host:` line from an incoming request to be
 proxied to the host instead of hostname. Setting it to `false` sets this directive to 'Off'.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="proxy_add_headers"></a>`proxy_add_headers`
+##### <a name="-apache--vhost--proxy_add_headers"></a>`proxy_add_headers`
 
 Data type: `Optional[Variant[String, Boolean]]`
 
@@ -9145,18 +9178,18 @@ Sets the [ProxyAddHeaders Directive](https://httpd.apache.org/docs/current/mod/m
 This parameter controlls whether proxy-related HTTP headers (X-Forwarded-For,
 X-Forwarded-Host and X-Forwarded-Server) get sent to the backend server.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_error_override"></a>`proxy_error_override`
+##### <a name="-apache--vhost--proxy_error_override"></a>`proxy_error_override`
 
 Data type: `Boolean`
 
 Sets the [ProxyErrorOverride Directive](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride).
 This directive controls whether Apache should override error pages for proxied content.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="options"></a>`options`
+##### <a name="-apache--vhost--options"></a>`options`
 
 Data type: `Array[String]`
 
@@ -9172,7 +9205,7 @@ apache::vhost { 'site.name.fdqn':
 
 Default value: `['Indexes', 'FollowSymLinks', 'MultiViews']`
 
-##### <a name="override"></a>`override`
+##### <a name="-apache--vhost--override"></a>`override`
 
 Data type: `Array[String]`
 
@@ -9181,7 +9214,7 @@ Sets the overrides for the specified virtual host. Accepts an array of
 
 Default value: `['None']`
 
-##### <a name="passenger_enabled"></a>`passenger_enabled`
+##### <a name="-apache--vhost--passenger_enabled"></a>`passenger_enabled`
 
 Data type: `Optional[Boolean]`
 
@@ -9200,45 +9233,45 @@ apache::vhost { 'sample.example.net':
 > **Note:** There is an [issue](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html)
 using the PassengerEnabled directive with the PassengerHighPerformance directive.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_base_uri"></a>`passenger_base_uri`
+##### <a name="-apache--vhost--passenger_base_uri"></a>`passenger_base_uri`
 
 Data type: `Optional[String]`
 
 Sets [PassengerBaseURI](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbase_rui),
  to specify that the given URI is a distinct application served by Passenger.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_ruby"></a>`passenger_ruby`
+##### <a name="-apache--vhost--passenger_ruby"></a>`passenger_ruby`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Sets [PassengerRuby](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerruby),
 specifying the Ruby interpreter to use when serving the relevant web applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_python"></a>`passenger_python`
+##### <a name="-apache--vhost--passenger_python"></a>`passenger_python`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Sets [PassengerPython](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpython),
 specifying the Python interpreter to use when serving the relevant web applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_nodejs"></a>`passenger_nodejs`
+##### <a name="-apache--vhost--passenger_nodejs"></a>`passenger_nodejs`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Sets the [`PassengerNodejs`](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengernodejs),
 specifying Node.js command to use when serving the relevant web applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_meteor_app_settings"></a>`passenger_meteor_app_settings`
+##### <a name="-apache--vhost--passenger_meteor_app_settings"></a>`passenger_meteor_app_settings`
 
 Data type: `Optional[String]`
 
@@ -9246,9 +9279,9 @@ Sets [PassengerMeteorAppSettings](https://www.phusionpassenger.com/docs/referenc
 specifying a JSON file with settings for the application when using a Meteor
 application in non-bundled mode.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_env"></a>`passenger_app_env`
+##### <a name="-apache--vhost--passenger_app_env"></a>`passenger_app_env`
 
 Data type: `Optional[String]`
 
@@ -9256,126 +9289,126 @@ Sets [PassengerAppEnv](https://www.phusionpassenger.com/docs/references/config_r
 the environment for the Passenger application. If not specified, defaults to the global
 setting or 'production'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_root"></a>`passenger_app_root`
+##### <a name="-apache--vhost--passenger_app_root"></a>`passenger_app_root`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Sets [PassengerRoot](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapproot),
 the location of the Passenger application root if different from the DocumentRoot.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_group_name"></a>`passenger_app_group_name`
+##### <a name="-apache--vhost--passenger_app_group_name"></a>`passenger_app_group_name`
 
 Data type: `Optional[String]`
 
 Sets [PassengerAppGroupName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappgroupname),
  the name of the application group that the current application should belong to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_start_command"></a>`passenger_app_start_command`
+##### <a name="-apache--vhost--passenger_app_start_command"></a>`passenger_app_start_command`
 
 Data type: `Optional[String]`
 
 Sets [PassengerAppStartCommand](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerappstartcommand),
  how Passenger should start your app on a specific port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_type"></a>`passenger_app_type`
+##### <a name="-apache--vhost--passenger_app_type"></a>`passenger_app_type`
 
 Data type: `Optional[Enum['meteor', 'node', 'rack', 'wsgi']]`
 
 Sets [PassengerAppType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapptype),
  to force Passenger to recognize the application as a specific type.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_startup_file"></a>`passenger_startup_file`
+##### <a name="-apache--vhost--passenger_startup_file"></a>`passenger_startup_file`
 
 Data type: `Optional[String]`
 
 Sets the [PassengerStartupFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstartupfile),
 path. This path is relative to the application root.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_restart_dir"></a>`passenger_restart_dir`
+##### <a name="-apache--vhost--passenger_restart_dir"></a>`passenger_restart_dir`
 
 Data type: `Optional[String]`
 
 Sets the [PassengerRestartDir](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrestartdir),
  to customize the directory in which `restart.txt` is searched for.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_spawn_method"></a>`passenger_spawn_method`
+##### <a name="-apache--vhost--passenger_spawn_method"></a>`passenger_spawn_method`
 
 Data type: `Optional[Enum['direct', 'smart']]`
 
 Sets [PassengerSpawnMethod](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerspawnmethod),
 whether Passenger spawns applications directly, or using a prefork copy-on-write mechanism.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_load_shell_envvars"></a>`passenger_load_shell_envvars`
+##### <a name="-apache--vhost--passenger_load_shell_envvars"></a>`passenger_load_shell_envvars`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerLoadShellEnvvars](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerloadshellenvvars),
 to enable or disable the loading of shell environment variables before spawning the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_preload_bundler"></a>`passenger_preload_bundler`
+##### <a name="-apache--vhost--passenger_preload_bundler"></a>`passenger_preload_bundler`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerPreloadBundler](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerpreloadbundler),
 to enable or disable the loading of bundler before loading the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_rolling_restarts"></a>`passenger_rolling_restarts`
+##### <a name="-apache--vhost--passenger_rolling_restarts"></a>`passenger_rolling_restarts`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerRollingRestarts](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerrollingrestarts),
 to enable or disable support for zero-downtime application restarts through `restart.txt`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_resist_deployment_errors"></a>`passenger_resist_deployment_errors`
+##### <a name="-apache--vhost--passenger_resist_deployment_errors"></a>`passenger_resist_deployment_errors`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerResistDeploymentErrors](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerresistdeploymenterrors),
 to enable or disable resistance against deployment errors.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_user"></a>`passenger_user`
+##### <a name="-apache--vhost--passenger_user"></a>`passenger_user`
 
 Data type: `Optional[String]`
 
 Sets [PassengerUser](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeruser),
 the running user for sandboxing applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_group"></a>`passenger_group`
+##### <a name="-apache--vhost--passenger_group"></a>`passenger_group`
 
 Data type: `Optional[String]`
 
 Sets [PassengerGroup](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengergroup),
 the running group for sandboxing applications.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_friendly_error_pages"></a>`passenger_friendly_error_pages`
+##### <a name="-apache--vhost--passenger_friendly_error_pages"></a>`passenger_friendly_error_pages`
 
 Data type: `Optional[Boolean]`
 
@@ -9384,54 +9417,54 @@ which can display friendly error pages whenever an application fails to start. T
 friendly error page presents the startup error message, some suggestions for solving
 the problem, a backtrace and a dump of the environment variables.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_min_instances"></a>`passenger_min_instances`
+##### <a name="-apache--vhost--passenger_min_instances"></a>`passenger_min_instances`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerMinInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermininstances),
 the minimum number of application processes to run.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_instances"></a>`passenger_max_instances`
+##### <a name="-apache--vhost--passenger_max_instances"></a>`passenger_max_instances`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxInstances](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxinstances),
 the maximum number of application processes to run.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_preloader_idle_time"></a>`passenger_max_preloader_idle_time`
+##### <a name="-apache--vhost--passenger_max_preloader_idle_time"></a>`passenger_max_preloader_idle_time`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxPreloaderIdleTime](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxpreloaderidletime),
 the maximum amount of time the preloader waits before shutting down an idle process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_force_max_concurrent_requests_per_process"></a>`passenger_force_max_concurrent_requests_per_process`
+##### <a name="-apache--vhost--passenger_force_max_concurrent_requests_per_process"></a>`passenger_force_max_concurrent_requests_per_process`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerForceMaxConcurrentRequestsPerProcess](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerforcemaxconcurrentrequestsperprocess),
 the maximum amount of concurrent requests the application can handle per process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_start_timeout"></a>`passenger_start_timeout`
+##### <a name="-apache--vhost--passenger_start_timeout"></a>`passenger_start_timeout`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerStartTimeout](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstarttimeout),
 the timeout for the application startup.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_concurrency_model"></a>`passenger_concurrency_model`
+##### <a name="-apache--vhost--passenger_concurrency_model"></a>`passenger_concurrency_model`
 
 Data type: `Optional[Enum['process', 'thread']]`
 
@@ -9441,9 +9474,9 @@ Passenger supports two concurrency models:<br />
 * `process` - single-threaded, multi-processed I/O concurrency.
 * `thread` - multi-threaded, multi-processed I/O concurrency.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_thread_count"></a>`passenger_thread_count`
+##### <a name="-apache--vhost--passenger_thread_count"></a>`passenger_thread_count`
 
 Data type: `Optional[Integer]`
 
@@ -9451,18 +9484,18 @@ Sets [PassengerThreadCount](https://www.phusionpassenger.com/docs/references/con
 the number of threads that Passenger should spawn per Ruby application process.<br />
 This option only has effect if PassengerConcurrencyModel is `thread`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_requests"></a>`passenger_max_requests`
+##### <a name="-apache--vhost--passenger_max_requests"></a>`passenger_max_requests`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerMaxRequests](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermaxrequests),
 the maximum number of requests an application process will process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_request_time"></a>`passenger_max_request_time`
+##### <a name="-apache--vhost--passenger_max_request_time"></a>`passenger_max_request_time`
 
 Data type: `Optional[Integer]`
 
@@ -9470,63 +9503,63 @@ Sets [PassengerMaxRequestTime](https://www.phusionpassenger.com/docs/references/
 the maximum amount of time, in seconds, that an application process may take to
 process a request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_memory_limit"></a>`passenger_memory_limit`
+##### <a name="-apache--vhost--passenger_memory_limit"></a>`passenger_memory_limit`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerMemoryLimit](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengermemorylimit),
 the maximum amount of memory that an application process may use, in megabytes.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_stat_throttle_rate"></a>`passenger_stat_throttle_rate`
+##### <a name="-apache--vhost--passenger_stat_throttle_rate"></a>`passenger_stat_throttle_rate`
 
 Data type: `Optional[Integer]`
 
 Sets [PassengerStatThrottleRate](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstatthrottlerate),
 to set a limit, in seconds, on how often Passenger will perform it's filesystem checks.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_pre_start"></a>`passenger_pre_start`
+##### <a name="-apache--vhost--passenger_pre_start"></a>`passenger_pre_start`
 
 Data type: `Optional[Variant[String, Array[String]]]`
 
 Sets [PassengerPreStart](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerprestart),
 the URL of the application if pre-starting is required.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_high_performance"></a>`passenger_high_performance`
+##### <a name="-apache--vhost--passenger_high_performance"></a>`passenger_high_performance`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerHighPerformance](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerhighperformance),
 to enhance performance in return for reduced compatibility.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_buffer_upload"></a>`passenger_buffer_upload`
+##### <a name="-apache--vhost--passenger_buffer_upload"></a>`passenger_buffer_upload`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerBufferUpload](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferupload),
 to buffer HTTP client request bodies before they are sent to the application.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_buffer_response"></a>`passenger_buffer_response`
+##### <a name="-apache--vhost--passenger_buffer_response"></a>`passenger_buffer_response`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerBufferResponse](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerbufferresponse),
 to buffer Happlication-generated responses.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_error_override"></a>`passenger_error_override`
+##### <a name="-apache--vhost--passenger_error_override"></a>`passenger_error_override`
 
 Data type: `Optional[Boolean]`
 
@@ -9534,9 +9567,9 @@ Sets [PassengerErrorOverride](https://www.phusionpassenger.com/docs/references/c
 to specify whether Apache will intercept and handle response with HTTP status codes of
 400 and higher.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_request_queue_size"></a>`passenger_max_request_queue_size`
+##### <a name="-apache--vhost--passenger_max_request_queue_size"></a>`passenger_max_request_queue_size`
 
 Data type: `Optional[Integer]`
 
@@ -9546,9 +9579,9 @@ concurrent request limit is reached. If the queue is already at this specified l
 Passenger immediately sends a "503 Service Unavailable" error to any incoming requests.<br />
 A value of 0 means that the queue size is unbounded.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_max_request_queue_time"></a>`passenger_max_request_queue_time`
+##### <a name="-apache--vhost--passenger_max_request_queue_time"></a>`passenger_max_request_queue_time`
 
 Data type: `Optional[Integer]`
 
@@ -9558,9 +9591,9 @@ whenever the maximum concurrent request limit is reached. If a request reaches t
 limit, then Passenger immeaditly sends a "504 Gateway Timeout" error for that request.<br />
 A value of 0 means that the queue time is unbounded.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions"></a>`passenger_sticky_sessions`
+##### <a name="-apache--vhost--passenger_sticky_sessions"></a>`passenger_sticky_sessions`
 
 Data type: `Optional[Boolean]`
 
@@ -9568,27 +9601,27 @@ Sets [PassengerStickySessions](https://www.phusionpassenger.com/docs/references/
 to specify that, whenever possible, all requests sent by a client will be routed to the same
 originating application process.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions_cookie_name"></a>`passenger_sticky_sessions_cookie_name`
+##### <a name="-apache--vhost--passenger_sticky_sessions_cookie_name"></a>`passenger_sticky_sessions_cookie_name`
 
 Data type: `Optional[String]`
 
 Sets [PassengerStickySessionsCookieName](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookiename),
 to specify the name of the sticky sessions cookie.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_sticky_sessions_cookie_attributes"></a>`passenger_sticky_sessions_cookie_attributes`
+##### <a name="-apache--vhost--passenger_sticky_sessions_cookie_attributes"></a>`passenger_sticky_sessions_cookie_attributes`
 
 Data type: `Optional[String]`
 
 Sets [PassengerStickySessionsCookieAttributes](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerstickysessionscookieattributes),
 the attributes of the sticky sessions cookie.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_allow_encoded_slashes"></a>`passenger_allow_encoded_slashes`
+##### <a name="-apache--vhost--passenger_allow_encoded_slashes"></a>`passenger_allow_encoded_slashes`
 
 Data type: `Optional[Boolean]`
 
@@ -9596,27 +9629,27 @@ Sets [PassengerAllowEncodedSlashes](https://www.phusionpassenger.com/docs/refere
 to allow URLs with encoded slashes. Please note that this feature will not work properly
 unless Apache's `AllowEncodedSlashes` is also enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_app_log_file"></a>`passenger_app_log_file`
+##### <a name="-apache--vhost--passenger_app_log_file"></a>`passenger_app_log_file`
 
 Data type: `Optional[String]`
 
 Sets [PassengerAppLogFile](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerapplogfile),
 app specific messages logged to a different file in addition to Passenger log file.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_debugger"></a>`passenger_debugger`
+##### <a name="-apache--vhost--passenger_debugger"></a>`passenger_debugger`
 
 Data type: `Optional[Boolean]`
 
 Sets [PassengerDebugger](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerdebugger),
 to turn support for Ruby application debugging on or off.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passenger_lve_min_uid"></a>`passenger_lve_min_uid`
+##### <a name="-apache--vhost--passenger_lve_min_uid"></a>`passenger_lve_min_uid`
 
 Data type: `Optional[Integer]`
 
@@ -9624,9 +9657,9 @@ Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/confi
 to only allow the spawning of application processes with UIDs equal to, or higher than, this
 specified value on LVE-enabled kernels.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="php_values"></a>`php_values`
+##### <a name="-apache--vhost--php_values"></a>`php_values`
 
 Data type: `Hash`
 
@@ -9639,7 +9672,7 @@ Within a vhost declaration:
 
 Default value: `{}`
 
-##### <a name="php_flags"></a>`php_flags`
+##### <a name="-apache--vhost--php_flags"></a>`php_flags`
 
 Data type: `Hash`
 
@@ -9648,7 +9681,7 @@ These flags or values can be overwritten by a user or an application.
 
 Default value: `{}`
 
-##### <a name="php_admin_values"></a>`php_admin_values`
+##### <a name="-apache--vhost--php_admin_values"></a>`php_admin_values`
 
 Data type: `Variant[Array[String], Hash]`
 
@@ -9657,7 +9690,7 @@ These flags or values cannot be overwritten by a user or an application.
 
 Default value: `{}`
 
-##### <a name="php_admin_flags"></a>`php_admin_flags`
+##### <a name="-apache--vhost--php_admin_flags"></a>`php_admin_flags`
 
 Data type: `Variant[Array[String], Hash]`
 
@@ -9666,7 +9699,7 @@ These flags or values cannot be overwritten by a user or an application.
 
 Default value: `{}`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--vhost--port"></a>`port`
 
 Data type: `Optional[Variant[Array[Stdlib::Port], Stdlib::Port]]`
 
@@ -9674,9 +9707,9 @@ Sets the port the host is configured on. The module's defaults ensure the host l
 on port 80 for non-SSL virtual hosts and port 443 for SSL virtual hosts. The host only
 listens on the port set in this parameter.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="priority"></a>`priority`
+##### <a name="-apache--vhost--priority"></a>`priority`
 
 Data type: `Optional[Apache::Vhost::Priority]`
 
@@ -9688,9 +9721,9 @@ used if no other names match.<br />
 aware that the `default_vhost` parameter for `apache::vhost` passes a priority of 15.<br />
 To omit the priority prefix in file names, pass a priority of `false`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="protocols"></a>`protocols`
+##### <a name="-apache--vhost--protocols"></a>`protocols`
 
 Data type: `Array[Enum['h2', 'h2c', 'http/1.1']]`
 
@@ -9699,24 +9732,24 @@ directive, which lists available protocols for the virutal host.
 
 Default value: `[]`
 
-##### <a name="protocols_honor_order"></a>`protocols_honor_order`
+##### <a name="-apache--vhost--protocols_honor_order"></a>`protocols_honor_order`
 
 Data type: `Optional[Boolean]`
 
 Sets the [ProtocolsHonorOrder](https://httpd.apache.org/docs/current/en/mod/core.html#protocolshonororder)
 directive which determines wether the order of Protocols sets precedence during negotiation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest"></a>`proxy_dest`
+##### <a name="-apache--vhost--proxy_dest"></a>`proxy_dest`
 
 Data type: `Optional[String]`
 
 Specifies the destination address of a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_pass"></a>`proxy_pass`
+##### <a name="-apache--vhost--proxy_pass"></a>`proxy_pass`
 
 Data type: `Optional[Variant[Array[Hash], Hash]]`
 
@@ -9749,9 +9782,9 @@ apache::vhost { 'site.name.fdqn':
 * `params`. *Optional.* Allows for ProxyPass key-value parameters, such as connection settings.
 * `setenv`. *Optional.* Sets [environment variables](https://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings) for the proxy directive. Values: array.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest_match"></a>`proxy_dest_match`
+##### <a name="-apache--vhost--proxy_dest_match"></a>`proxy_dest_match`
 
 Data type: `Optional[String]`
 
@@ -9759,9 +9792,9 @@ This directive is equivalent to `proxy_dest`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest_reverse_match"></a>`proxy_dest_reverse_match`
+##### <a name="-apache--vhost--proxy_dest_reverse_match"></a>`proxy_dest_reverse_match`
 
 Data type: `Optional[String]`
 
@@ -9769,9 +9802,9 @@ Allows you to pass a ProxyPassReverse if `proxy_dest_match` is specified. See
 [ProxyPassReverse](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_pass_match"></a>`proxy_pass_match`
+##### <a name="-apache--vhost--proxy_pass_match"></a>`proxy_pass_match`
 
 Data type: `Optional[Variant[Array[Hash], Hash]]`
 
@@ -9779,17 +9812,17 @@ This directive is equivalent to `proxy_pass`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="redirect_dest"></a>`redirect_dest`
+##### <a name="-apache--vhost--redirect_dest"></a>`redirect_dest`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
 Specifies the address to redirect to.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="redirect_source"></a>`redirect_source`
+##### <a name="-apache--vhost--redirect_source"></a>`redirect_source`
 
 Data type: `Variant[String, Array[String]]`
 
@@ -9806,7 +9839,7 @@ apache::vhost { 'site.name.fdqn':
 
 Default value: `'/'`
 
-##### <a name="redirect_status"></a>`redirect_status`
+##### <a name="-apache--vhost--redirect_status"></a>`redirect_status`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
@@ -9818,9 +9851,9 @@ Specifies the status to append to the redirect.
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="redirectmatch_regexp"></a>`redirectmatch_regexp`
+##### <a name="-apache--vhost--redirectmatch_regexp"></a>`redirectmatch_regexp`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
@@ -9836,9 +9869,9 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="redirectmatch_status"></a>`redirectmatch_status`
+##### <a name="-apache--vhost--redirectmatch_status"></a>`redirectmatch_status`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
@@ -9854,9 +9887,9 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="redirectmatch_dest"></a>`redirectmatch_dest`
+##### <a name="-apache--vhost--redirectmatch_dest"></a>`redirectmatch_dest`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
@@ -9872,9 +9905,9 @@ apache::vhost { 'site.name.fdqn':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="request_headers"></a>`request_headers`
+##### <a name="-apache--vhost--request_headers"></a>`request_headers`
 
 Data type: `Array[String[1]]`
 
@@ -9893,7 +9926,7 @@ apache::vhost { 'site.name.fdqn':
 
 Default value: `[]`
 
-##### <a name="rewrites"></a>`rewrites`
+##### <a name="-apache--vhost--rewrites"></a>`rewrites`
 
 Data type: `Array[Hash]`
 
@@ -9970,7 +10003,7 @@ than setting the rewrites in the virtual host's directories.
 
 Default value: `[]`
 
-##### <a name="rewrite_base"></a>`rewrite_base`
+##### <a name="-apache--vhost--rewrite_base"></a>`rewrite_base`
 
 Data type: `Optional[String[1]]`
 
@@ -9978,18 +10011,18 @@ The parameter [`rewrite_base`](https://httpd.apache.org/docs/current/mod/mod_rew
 specifies the URL prefix to be used for per-directory (htaccess) RewriteRule directives
 that substitue a relative path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rewrite_rule"></a>`rewrite_rule`
+##### <a name="-apache--vhost--rewrite_rule"></a>`rewrite_rule`
 
 Data type: `Optional[Variant[Array[String[1]], String[1]]]`
 
 The parameter [`rewrite_rile`](https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule)
 allows the user to define the rules that will be used by the rewrite engine.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="rewrite_cond"></a>`rewrite_cond`
+##### <a name="-apache--vhost--rewrite_cond"></a>`rewrite_cond`
 
 Data type: `Array[String[1]]`
 
@@ -9999,7 +10032,7 @@ rewrite engine.
 
 Default value: `[]`
 
-##### <a name="rewrite_inherit"></a>`rewrite_inherit`
+##### <a name="-apache--vhost--rewrite_inherit"></a>`rewrite_inherit`
 
 Data type: `Boolean`
 
@@ -10027,18 +10060,18 @@ RewriteOptions Inherit
 Refer to the official [`mod_rewrite`](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html)
 documentation, section "Rewriting in Virtual Hosts".
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="scriptalias"></a>`scriptalias`
+##### <a name="-apache--vhost--scriptalias"></a>`scriptalias`
 
 Data type: `Optional[String]`
 
 Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as
 '/usr/scripts'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="scriptaliases"></a>`scriptaliases`
+##### <a name="-apache--vhost--scriptaliases"></a>`scriptaliases`
 
 Data type: `Array[Hash]`
 
@@ -10071,15 +10104,15 @@ before more general ones to avoid shadowing.
 
 Default value: `[]`
 
-##### <a name="serveradmin"></a>`serveradmin`
+##### <a name="-apache--vhost--serveradmin"></a>`serveradmin`
 
 Data type: `Optional[String]`
 
 Specifies the email address Apache displays when it renders one of its error pages.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="serveraliases"></a>`serveraliases`
+##### <a name="-apache--vhost--serveraliases"></a>`serveraliases`
 
 Data type: `Variant[Array[String], String]`
 
@@ -10088,7 +10121,7 @@ of the site.
 
 Default value: `[]`
 
-##### <a name="servername"></a>`servername`
+##### <a name="-apache--vhost--servername"></a>`servername`
 
 Data type: `Optional[String]`
 
@@ -10096,7 +10129,7 @@ Sets the servername corresponding to the hostname you connect to the virtual hos
 
 Default value: `$name`
 
-##### <a name="setenv"></a>`setenv`
+##### <a name="-apache--vhost--setenv"></a>`setenv`
 
 Data type: `Variant[Array[String], String]`
 
@@ -10110,7 +10143,7 @@ apache::vhost { 'setenv.example.com':
 
 Default value: `[]`
 
-##### <a name="setenvif"></a>`setenvif`
+##### <a name="-apache--vhost--setenvif"></a>`setenvif`
 
 Data type: `Variant[Array[String], String]`
 
@@ -10118,7 +10151,7 @@ Used by HTTPD to conditionally set environment variables for virtual hosts.
 
 Default value: `[]`
 
-##### <a name="setenvifnocase"></a>`setenvifnocase`
+##### <a name="-apache--vhost--setenvifnocase"></a>`setenvifnocase`
 
 Data type: `Variant[Array[String], String]`
 
@@ -10126,16 +10159,16 @@ Used by HTTPD to conditionally set environment variables for virtual hosts (case
 
 Default value: `[]`
 
-##### <a name="suexec_user_group"></a>`suexec_user_group`
+##### <a name="-apache--vhost--suexec_user_group"></a>`suexec_user_group`
 
 Data type: `Optional[Pattern[/^[\w-]+ [\w-]+$/]]`
 
 Allows the spcification of user and group execution privileges for CGI programs through
 inclusion of the `mod_suexec` module.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vhost_name"></a>`vhost_name`
+##### <a name="-apache--vhost--vhost_name"></a>`vhost_name`
 
 Data type: `String`
 
@@ -10146,7 +10179,7 @@ title of the resource.
 
 Default value: `'*'`
 
-##### <a name="virtual_docroot"></a>`virtual_docroot`
+##### <a name="-apache--vhost--virtual_docroot"></a>`virtual_docroot`
 
 Data type: `Variant[Stdlib::Absolutepath, Boolean]`
 
@@ -10164,9 +10197,9 @@ apache::vhost { 'subdomain.loc':
 }
 ```
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="virtual_use_default_docroot"></a>`virtual_use_default_docroot`
+##### <a name="-apache--vhost--virtual_use_default_docroot"></a>`virtual_use_default_docroot`
 
 Data type: `Boolean`
 
@@ -10183,9 +10216,9 @@ apache::vhost { 'subdomain.loc':
 }
 ```
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="wsgi_daemon_process"></a>`wsgi_daemon_process`
+##### <a name="-apache--vhost--wsgi_daemon_process"></a>`wsgi_daemon_process`
 
 Data type: `Optional[Variant[String, Hash]]`
 
@@ -10211,9 +10244,9 @@ apache::vhost { 'wsgi.example.com':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_daemon_process_options"></a>`wsgi_daemon_process_options`
+##### <a name="-apache--vhost--wsgi_daemon_process_options"></a>`wsgi_daemon_process_options`
 
 Data type: `Optional[Hash]`
 
@@ -10222,9 +10255,9 @@ wsgi_daemon_process, wsgi_process_group,
 wsgi_script_aliases and wsgi_pass_authorization.<br />
 Sets the group ID that the virtual host runs under.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_application_group"></a>`wsgi_application_group`
+##### <a name="-apache--vhost--wsgi_application_group"></a>`wsgi_application_group`
 
 Data type: `Optional[String]`
 
@@ -10236,9 +10269,9 @@ thus allowing you to specify which application group the WSGI application belong
 with all WSGI applications within the same group executing within the context of the
 same Python sub interpreter.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_import_script"></a>`wsgi_import_script`
+##### <a name="-apache--vhost--wsgi_import_script"></a>`wsgi_import_script`
 
 Data type: `Optional[String]`
 
@@ -10248,9 +10281,9 @@ and wsgi_pass_authorization.<br />
 This parameter defines the [`WSGIImportScript directive`](https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIImportScript.html),
 which can be used in order to specify a script file to be loaded upon a process starting.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_import_script_options"></a>`wsgi_import_script_options`
+##### <a name="-apache--vhost--wsgi_import_script_options"></a>`wsgi_import_script_options`
 
 Data type: `Optional[Hash]`
 
@@ -10261,9 +10294,9 @@ This parameter defines the [`WSGIImportScript directive`](https://modwsgi.readth
 which can be used in order to specify a script file to be loaded upon a process starting.<br />
 Specifies the process and aplication groups of the script.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_chunked_request"></a>`wsgi_chunked_request`
+##### <a name="-apache--vhost--wsgi_chunked_request"></a>`wsgi_chunked_request`
 
 Data type: `Optional[Enum['On', 'Off']]`
 
@@ -10275,9 +10308,9 @@ allowing you to enable support for chunked request content.<br />
 WSGI is technically incapable of supporting chunked request content without all chunked
 request content having first been read in and buffered.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_process_group"></a>`wsgi_process_group`
+##### <a name="-apache--vhost--wsgi_process_group"></a>`wsgi_process_group`
 
 Data type: `Optional[String]`
 
@@ -10286,9 +10319,9 @@ wsgi_daemon_process, wsgi_daemon_process_options,
 wsgi_script_aliases and wsgi_pass_authorization.<br />
 Requires a hash of web paths to filesystem `.wsgi paths/`.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_script_aliases"></a>`wsgi_script_aliases`
+##### <a name="-apache--vhost--wsgi_script_aliases"></a>`wsgi_script_aliases`
 
 Data type: `Optional[Hash]`
 
@@ -10298,9 +10331,9 @@ and wsgi_pass_authorization.<br />
 Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
 For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_script_aliases_match"></a>`wsgi_script_aliases_match`
+##### <a name="-apache--vhost--wsgi_script_aliases_match"></a>`wsgi_script_aliases_match`
 
 Data type: `Optional[Hash]`
 
@@ -10312,9 +10345,9 @@ This directive is similar to `wsgi_script_aliases`, but makes use of regular exp
 in place of simple prefix matching.<br />
 For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wsgi_pass_authorization"></a>`wsgi_pass_authorization`
+##### <a name="-apache--vhost--wsgi_pass_authorization"></a>`wsgi_pass_authorization`
 
 Data type: `Optional[Enum['on', 'off', 'On', 'Off']]`
 
@@ -10323,9 +10356,9 @@ wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group and
 wsgi_script_aliases.<br />
 Enables support for chunked requests.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="directories"></a>`directories`
+##### <a name="-apache--vhost--directories"></a>`directories`
 
 Data type: `Optional[Array[Hash]]`
 
@@ -10376,9 +10409,9 @@ apache::vhost { 'sample.example.net':
 Any handlers you do not set in these hashes are considered `undefined` within Puppet and
 are not added to the virtual host, resulting in the module using their default values.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="custom_fragment"></a>`custom_fragment`
+##### <a name="-apache--vhost--custom_fragment"></a>`custom_fragment`
 
 Data type: `Optional[String]`
 
@@ -10407,9 +10440,9 @@ ProxyStatus On',
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="headers"></a>`headers`
+##### <a name="-apache--vhost--headers"></a>`headers`
 
 Data type: `Array[String[1]]`
 
@@ -10428,7 +10461,7 @@ apache::vhost { 'sample.example.net':
 
 Default value: `[]`
 
-##### <a name="shib_compat_valid_user"></a>`shib_compat_valid_user`
+##### <a name="-apache--vhost--shib_compat_valid_user"></a>`shib_compat_valid_user`
 
 Data type: `Optional[String]`
 
@@ -10439,9 +10472,9 @@ Apache behavior when processing the `valid-user` and `user` Require rules. See t
 and [NativeSPhtaccess](https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPhtaccess)
 topic for more details. This key is disabled if `apache::mod::shib` is not defined.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_options"></a>`ssl_options`
+##### <a name="-apache--vhost--ssl_options"></a>`ssl_options`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
@@ -10462,9 +10495,9 @@ apache::vhost { 'secure.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="additional_includes"></a>`additional_includes`
+##### <a name="-apache--vhost--additional_includes"></a>`additional_includes`
 
 Data type: `Variant[Array[String], String]`
 
@@ -10483,19 +10516,19 @@ apache::vhost { 'sample.example.net':
 
 Default value: `[]`
 
-##### <a name="gssapi"></a>`gssapi`
+##### <a name="-apache--vhost--gssapi"></a>`gssapi`
 
 
 
-##### <a name="ssl"></a>`ssl`
+##### <a name="-apache--vhost--ssl"></a>`ssl`
 
 Data type: `Boolean`
 
 Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS queries.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_ca"></a>`ssl_ca`
+##### <a name="-apache--vhost--ssl_ca"></a>`ssl_ca`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10504,7 +10537,7 @@ for authentication.
 
 Default value: `$apache::default_ssl_ca`
 
-##### <a name="ssl_cert"></a>`ssl_cert`
+##### <a name="-apache--vhost--ssl_cert"></a>`ssl_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10512,24 +10545,24 @@ Specifies the SSL certification.
 
 Default value: `$apache::default_ssl_cert`
 
-##### <a name="ssl_protocol"></a>`ssl_protocol`
+##### <a name="-apache--vhost--ssl_protocol"></a>`ssl_protocol`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
 Specifies [SSLProtocol](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslprotocol).
 Expects an array or space separated string of accepted protocols.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_cipher"></a>`ssl_cipher`
+##### <a name="-apache--vhost--ssl_cipher"></a>`ssl_cipher`
 
 Data type: `Optional[Variant[Array[String], String]]`
 
 Specifies [SSLCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslciphersuite).
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_honorcipherorder"></a>`ssl_honorcipherorder`
+##### <a name="-apache--vhost--ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
 Data type: `Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef]`
 
@@ -10537,9 +10570,9 @@ Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.htm
 to cause Apache to use the server's preferred order of ciphers rather than the client's
 preferred order.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_certs_dir"></a>`ssl_certs_dir`
+##### <a name="-apache--vhost--ssl_certs_dir"></a>`ssl_certs_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10547,7 +10580,7 @@ Specifies the location of the SSL certification directory to verify client certs
 
 Default value: `$apache::params::ssl_certs_dir`
 
-##### <a name="ssl_chain"></a>`ssl_chain`
+##### <a name="-apache--vhost--ssl_chain"></a>`ssl_chain`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10557,7 +10590,7 @@ production.
 
 Default value: `$apache::default_ssl_chain`
 
-##### <a name="ssl_crl"></a>`ssl_crl`
+##### <a name="-apache--vhost--ssl_crl"></a>`ssl_crl`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10567,7 +10600,7 @@ before being used in production.)
 
 Default value: `$apache::default_ssl_crl`
 
-##### <a name="ssl_crl_path"></a>`ssl_crl_path`
+##### <a name="-apache--vhost--ssl_crl_path"></a>`ssl_crl_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10578,7 +10611,7 @@ production.)
 
 Default value: `$apache::default_ssl_crl_path`
 
-##### <a name="ssl_crl_check"></a>`ssl_crl_check`
+##### <a name="-apache--vhost--ssl_crl_check"></a>`ssl_crl_check`
 
 Data type: `Optional[String]`
 
@@ -10589,7 +10622,7 @@ older versions.
 
 Default value: `$apache::default_ssl_crl_check`
 
-##### <a name="ssl_key"></a>`ssl_key`
+##### <a name="-apache--vhost--ssl_key"></a>`ssl_key`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10600,7 +10633,7 @@ being used in production.
 
 Default value: `$apache::default_ssl_key`
 
-##### <a name="ssl_verify_client"></a>`ssl_verify_client`
+##### <a name="-apache--vhost--ssl_verify_client"></a>`ssl_verify_client`
 
 Data type: `Optional[Enum['none', 'optional', 'require', 'optional_no_ca']]`
 
@@ -10613,9 +10646,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_verify_depth"></a>`ssl_verify_depth`
+##### <a name="-apache--vhost--ssl_verify_depth"></a>`ssl_verify_depth`
 
 Data type: `Optional[Integer]`
 
@@ -10630,9 +10663,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_protocol"></a>`ssl_proxy_protocol`
+##### <a name="-apache--vhost--ssl_proxy_protocol"></a>`ssl_proxy_protocol`
 
 Data type: `Optional[String]`
 
@@ -10641,9 +10674,9 @@ directive, which controls which SSL protocol flavors `mod_ssl` should use when e
 its server environment for proxy. It connects to servers using only one of the provided
 protocols.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_verify"></a>`ssl_proxy_verify`
+##### <a name="-apache--vhost--ssl_proxy_verify"></a>`ssl_proxy_verify`
 
 Data type: `Optional[Enum['none', 'optional', 'require', 'optional_no_ca']]`
 
@@ -10651,9 +10684,9 @@ Sets the [SSLProxyVerify](https://httpd.apache.org/docs/current/mod/mod_ssl.html
 directive, which configures certificate verification of the remote server when a proxy is
 configured to forward requests to a remote SSL server.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_verify_depth"></a>`ssl_proxy_verify_depth`
+##### <a name="-apache--vhost--ssl_proxy_verify_depth"></a>`ssl_proxy_verify_depth`
 
 Data type: `Optional[Integer[0]]`
 
@@ -10664,18 +10697,18 @@ A depth of 0 means that only self-signed remote server certificates are accepted
 the default depth of 1 means the remote server certificate can be self-signed or
 signed by a CA that is directly known to the server.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_cipher_suite"></a>`ssl_proxy_cipher_suite`
+##### <a name="-apache--vhost--ssl_proxy_cipher_suite"></a>`ssl_proxy_cipher_suite`
 
 Data type: `Optional[String]`
 
 Sets the [SSLProxyCipherSuite](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyciphersuite)
 directive, which controls cipher suites supported for ssl proxy traffic.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_ca_cert"></a>`ssl_proxy_ca_cert`
+##### <a name="-apache--vhost--ssl_proxy_ca_cert"></a>`ssl_proxy_ca_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10685,9 +10718,9 @@ of Certification Authorities (CA) whose remote servers you deal with. These are 
 for Remote Server Authentication. This file should be a concatenation of the PEM-encoded
 certificate files in order of preference.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_machine_cert"></a>`ssl_proxy_machine_cert`
+##### <a name="-apache--vhost--ssl_proxy_machine_cert"></a>`ssl_proxy_machine_cert`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10702,9 +10735,9 @@ apache::vhost { 'sample.example.net':
 }
 ```
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_machine_cert_chain"></a>`ssl_proxy_machine_cert_chain`
+##### <a name="-apache--vhost--ssl_proxy_machine_cert_chain"></a>`ssl_proxy_machine_cert_chain`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -10716,9 +10749,9 @@ client certificates. This referenced file is simply the concatenation of the var
 PEM-encoded certificate files. Upon startup, each client certificate configured will be
 examined and a chain of trust will be constructed.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_check_peer_cn"></a>`ssl_proxy_check_peer_cn`
+##### <a name="-apache--vhost--ssl_proxy_check_peer_cn"></a>`ssl_proxy_check_peer_cn`
 
 Data type: `Optional[Enum['on', 'off']]`
 
@@ -10726,9 +10759,9 @@ Sets the [SSLProxyCheckPeerCN](https://httpd.apache.org/docs/current/mod/mod_ssl
 directive, which specifies whether the remote server certificate's CN field is compared
 against the hostname of the request URL.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_check_peer_name"></a>`ssl_proxy_check_peer_name`
+##### <a name="-apache--vhost--ssl_proxy_check_peer_name"></a>`ssl_proxy_check_peer_name`
 
 Data type: `Optional[Enum['on', 'off']]`
 
@@ -10736,9 +10769,9 @@ Sets the [SSLProxyCheckPeerName](https://httpd.apache.org/docs/current/mod/mod_s
 directive, which specifies whether the remote server certificate's CN field is compared
 against the hostname of the request URL.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxy_check_peer_expire"></a>`ssl_proxy_check_peer_expire`
+##### <a name="-apache--vhost--ssl_proxy_check_peer_expire"></a>`ssl_proxy_check_peer_expire`
 
 Data type: `Optional[Enum['on', 'off']]`
 
@@ -10746,26 +10779,26 @@ Sets the [SSLProxyCheckPeerExpire](https://httpd.apache.org/docs/current/mod/mod
 directive, which specifies whether the remote server certificate is checked for expiration
 or not.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_openssl_conf_cmd"></a>`ssl_openssl_conf_cmd`
+##### <a name="-apache--vhost--ssl_openssl_conf_cmd"></a>`ssl_openssl_conf_cmd`
 
 Data type: `Optional[String]`
 
 Sets the [SSLOpenSSLConfCmd](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslopensslconfcmd)
 directive, which provides direct configuration of OpenSSL parameters.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_proxyengine"></a>`ssl_proxyengine`
+##### <a name="-apache--vhost--ssl_proxyengine"></a>`ssl_proxyengine`
 
 Data type: `Boolean`
 
 Specifies whether or not to use [SSLProxyEngine](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslproxyengine).
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_stapling"></a>`ssl_stapling`
+##### <a name="-apache--vhost--ssl_stapling"></a>`ssl_stapling`
 
 Data type: `Optional[Boolean]`
 
@@ -10773,35 +10806,35 @@ Specifies whether or not to use [SSLUseStapling](http://httpd.apache.org/docs/cu
 By default, uses what is set globally.<br />
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_stapling_timeout"></a>`ssl_stapling_timeout`
+##### <a name="-apache--vhost--ssl_stapling_timeout"></a>`ssl_stapling_timeout`
 
 Data type: `Optional[Integer]`
 
 Can be used to set the [SSLStaplingResponderTimeout](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingrespondertimeout) directive.<br />
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_stapling_return_errors"></a>`ssl_stapling_return_errors`
+##### <a name="-apache--vhost--ssl_stapling_return_errors"></a>`ssl_stapling_return_errors`
 
 Data type: `Optional[Enum['on', 'off']]`
 
 Can be used to set the [SSLStaplingReturnResponderErrors](http://httpd.apache.org/docs/current/mod/mod_ssl.html#sslstaplingreturnrespondererrors) directive.<br />
 This parameter only applies to Apache 2.4 or higher and is ignored on older versions.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_user_name"></a>`ssl_user_name`
+##### <a name="-apache--vhost--ssl_user_name"></a>`ssl_user_name`
 
 Data type: `Optional[String]`
 
 Sets the [SSLUserName](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslusername) directive.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_reload_on_change"></a>`ssl_reload_on_change`
+##### <a name="-apache--vhost--ssl_reload_on_change"></a>`ssl_reload_on_change`
 
 Data type: `Boolean`
 
@@ -10809,16 +10842,16 @@ Enable reloading of apache if the content of ssl files have changed.
 
 Default value: `$apache::default_ssl_reload_on_change`
 
-##### <a name="use_canonical_name"></a>`use_canonical_name`
+##### <a name="-apache--vhost--use_canonical_name"></a>`use_canonical_name`
 
 Data type: `Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']]`
 
 Specifies whether to use the [`UseCanonicalName directive`](https://httpd.apache.org/docs/2.4/mod/core.html#usecanonicalname),
 which allows you to configure how the server determines it's own name and port.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="define"></a>`define`
+##### <a name="-apache--vhost--define"></a>`define`
 
 Data type: `Hash`
 
@@ -10827,15 +10860,15 @@ these can then be used to replace configuration values. All Defines are Undefine
 
 Default value: `{}`
 
-##### <a name="auth_oidc"></a>`auth_oidc`
+##### <a name="-apache--vhost--auth_oidc"></a>`auth_oidc`
 
 Data type: `Boolean`
 
 Enable `mod_auth_openidc` parameters for OpenID Connect authentication.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="oidc_settings"></a>`oidc_settings`
+##### <a name="-apache--vhost--oidc_settings"></a>`oidc_settings`
 
 Data type: `Apache::OIDCSettings`
 
@@ -10843,7 +10876,7 @@ An Apache::OIDCSettings Struct containing (mod_auth_openidc settings)[https://gi
 
 Default value: `{}`
 
-##### <a name="limitreqfields"></a>`limitreqfields`
+##### <a name="-apache--vhost--limitreqfields"></a>`limitreqfields`
 
 Data type: `Optional[Integer]`
 
@@ -10853,18 +10886,18 @@ abnormal client request behavior, which may be useful for avoiding some forms of
 denial-of-service attacks. The value should be increased if normal clients see an error
 response from the server that indicates too many fields were sent in the request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="limitreqfieldsize"></a>`limitreqfieldsize`
+##### <a name="-apache--vhost--limitreqfieldsize"></a>`limitreqfieldsize`
 
 Data type: `Optional[Integer]`
 
 The `limitreqfieldsize` parameter sets the maximum ammount of _bytes_ that will
 be allowed within a request header.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="limitreqline"></a>`limitreqline`
+##### <a name="-apache--vhost--limitreqline"></a>`limitreqline`
 
 Data type: `Optional[Integer]`
 
@@ -10878,9 +10911,9 @@ allowed for a request on the server. A server needs this value to be large
 enough to hold any of its resource names, including any information that might
 be passed in the query part of a GET request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="limitreqbody"></a>`limitreqbody`
+##### <a name="-apache--vhost--limitreqbody"></a>`limitreqbody`
 
 Data type: `Optional[Integer]`
 
@@ -10891,9 +10924,9 @@ directive is given (server, per-directory, per-file or per-location). If the
 client request exceeds that limit, the server will return an error response
 instead of servicing the request.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_servername_for_filenames"></a>`use_servername_for_filenames`
+##### <a name="-apache--vhost--use_servername_for_filenames"></a>`use_servername_for_filenames`
 
 Data type: `Boolean`
 
@@ -10902,9 +10935,9 @@ value of the $servername parameter.
 When set to false (default), the existing behaviour of using the $name parameter
 will remain.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="use_port_for_filenames"></a>`use_port_for_filenames`
+##### <a name="-apache--vhost--use_port_for_filenames"></a>`use_port_for_filenames`
 
 Data type: `Boolean`
 
@@ -10914,34 +10947,34 @@ $port parameters.
 When set to false (default), the port is not included in the file names and may lead to
 duplicate declarations if two virtual hosts use the same domain.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="mdomain"></a>`mdomain`
+##### <a name="-apache--vhost--mdomain"></a>`mdomain`
 
 Data type: `Optional[Variant[Boolean, String]]`
 
 All the names in the list are managed as one Managed Domain (MD). mod_md will request
 one single certificate that is valid for all these names.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_requests"></a>`proxy_requests`
+##### <a name="-apache--vhost--proxy_requests"></a>`proxy_requests`
 
 Data type: `Boolean`
 
 Whether to accept proxy requests
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="userdir"></a>`userdir`
+##### <a name="-apache--vhost--userdir"></a>`userdir`
 
 Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 
 Instances of apache::mod::userdir
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachevhostcustom"></a>`apache::vhost::custom`
+### <a name="apache--vhost--custom"></a>`apache::vhost::custom`
 
 The `apache::vhost::custom` defined type is a thin wrapper around the `apache::custom_config` defined type, and simply overrides some of its default settings specific to the virtual host directory in Apache.
 
@@ -10949,18 +10982,18 @@ The `apache::vhost::custom` defined type is a thin wrapper around the `apache::c
 
 The following parameters are available in the `apache::vhost::custom` defined type:
 
-* [`content`](#content)
-* [`ensure`](#ensure)
-* [`priority`](#priority)
-* [`verify_config`](#verify_config)
+* [`content`](#-apache--vhost--custom--content)
+* [`ensure`](#-apache--vhost--custom--ensure)
+* [`priority`](#-apache--vhost--custom--priority)
+* [`verify_config`](#-apache--vhost--custom--verify_config)
 
-##### <a name="content"></a>`content`
+##### <a name="-apache--vhost--custom--content"></a>`content`
 
 Data type: `String`
 
 Sets the configuration file's content.
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-apache--vhost--custom--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -10968,7 +11001,7 @@ Specifies if the virtual host file is present or absent.
 
 Default value: `'present'`
 
-##### <a name="priority"></a>`priority`
+##### <a name="-apache--vhost--custom--priority"></a>`priority`
 
 Data type: `Apache::Vhost::Priority`
 
@@ -10976,15 +11009,15 @@ Sets the relative load order for Apache HTTPD VirtualHost configuration files.
 
 Default value: `25`
 
-##### <a name="verify_config"></a>`verify_config`
+##### <a name="-apache--vhost--custom--verify_config"></a>`verify_config`
 
 Data type: `Boolean`
 
 Specifies whether to validate the configuration file before notifying the Apache service.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="apachevhostfragment"></a>`apache::vhost::fragment`
+### <a name="apache--vhost--fragment"></a>`apache::vhost::fragment`
 
 Define a fragment within a vhost
 
@@ -11045,37 +11078,37 @@ apache::vhost::fragment { 'myfragment':
 
 The following parameters are available in the `apache::vhost::fragment` defined type:
 
-* [`vhost`](#vhost)
-* [`priority`](#priority)
-* [`content`](#content)
-* [`order`](#order)
-* [`port`](#port)
+* [`vhost`](#-apache--vhost--fragment--vhost)
+* [`priority`](#-apache--vhost--fragment--priority)
+* [`content`](#-apache--vhost--fragment--content)
+* [`order`](#-apache--vhost--fragment--order)
+* [`port`](#-apache--vhost--fragment--port)
 
-##### <a name="vhost"></a>`vhost`
+##### <a name="-apache--vhost--fragment--vhost"></a>`vhost`
 
 Data type: `String[1]`
 
 The title of the vhost resource to append to
 
-##### <a name="priority"></a>`priority`
+##### <a name="-apache--vhost--fragment--priority"></a>`priority`
 
 Data type: `Optional[Apache::Vhost::Priority]`
 
 Set the priority to match the one `apache::vhost` sets. This must match the
 one `apache::vhost` sets or else the concat fragment won't be found.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="content"></a>`content`
+##### <a name="-apache--vhost--fragment--content"></a>`content`
 
 Data type: `Optional[String]`
 
 The content to put in the fragment. Only when it's non-empty the actual
 fragment will be created.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-apache--vhost--fragment--order"></a>`order`
 
 Data type: `Integer[0]`
 
@@ -11083,15 +11116,15 @@ The order to insert the fragment at
 
 Default value: `900`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--vhost--fragment--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port]`
 
 The port to use
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="apachevhostproxy"></a>`apache::vhost::proxy`
+### <a name="apache--vhost--proxy"></a>`apache::vhost::proxy`
 
 Configure a reverse proxy for a vhost
 
@@ -11142,39 +11175,39 @@ apache::vhost::proxy { 'myvhost-proxy':
 
 The following parameters are available in the `apache::vhost::proxy` defined type:
 
-* [`vhost`](#vhost)
-* [`priority`](#priority)
-* [`order`](#order)
-* [`port`](#port)
-* [`proxy_dest`](#proxy_dest)
-* [`proxy_dest_match`](#proxy_dest_match)
-* [`proxy_dest_reverse_match`](#proxy_dest_reverse_match)
-* [`no_proxy_uris`](#no_proxy_uris)
-* [`no_proxy_uris_match`](#no_proxy_uris_match)
-* [`proxy_pass`](#proxy_pass)
-* [`proxy_pass_match`](#proxy_pass_match)
-* [`proxy_requests`](#proxy_requests)
-* [`proxy_preserve_host`](#proxy_preserve_host)
-* [`proxy_add_headers`](#proxy_add_headers)
-* [`proxy_error_override`](#proxy_error_override)
+* [`vhost`](#-apache--vhost--proxy--vhost)
+* [`priority`](#-apache--vhost--proxy--priority)
+* [`order`](#-apache--vhost--proxy--order)
+* [`port`](#-apache--vhost--proxy--port)
+* [`proxy_dest`](#-apache--vhost--proxy--proxy_dest)
+* [`proxy_dest_match`](#-apache--vhost--proxy--proxy_dest_match)
+* [`proxy_dest_reverse_match`](#-apache--vhost--proxy--proxy_dest_reverse_match)
+* [`no_proxy_uris`](#-apache--vhost--proxy--no_proxy_uris)
+* [`no_proxy_uris_match`](#-apache--vhost--proxy--no_proxy_uris_match)
+* [`proxy_pass`](#-apache--vhost--proxy--proxy_pass)
+* [`proxy_pass_match`](#-apache--vhost--proxy--proxy_pass_match)
+* [`proxy_requests`](#-apache--vhost--proxy--proxy_requests)
+* [`proxy_preserve_host`](#-apache--vhost--proxy--proxy_preserve_host)
+* [`proxy_add_headers`](#-apache--vhost--proxy--proxy_add_headers)
+* [`proxy_error_override`](#-apache--vhost--proxy--proxy_error_override)
 
-##### <a name="vhost"></a>`vhost`
+##### <a name="-apache--vhost--proxy--vhost"></a>`vhost`
 
 Data type: `String[1]`
 
 The title of the vhost resource to which reverse proxy configuration will
 be appended.
 
-##### <a name="priority"></a>`priority`
+##### <a name="-apache--vhost--proxy--priority"></a>`priority`
 
 Data type: `Optional[Apache::Vhost::Priority]`
 
 Set the priority to match the one `apache::vhost` sets. This must match the
 one `apache::vhost` sets or else the vhost's `concat` resource won't be found.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="order"></a>`order`
+##### <a name="-apache--vhost--proxy--order"></a>`order`
 
 Data type: `Integer[0]`
 
@@ -11184,24 +11217,24 @@ vhost's configuration.
 
 Default value: `170`
 
-##### <a name="port"></a>`port`
+##### <a name="-apache--vhost--proxy--port"></a>`port`
 
 Data type: `Optional[Stdlib::Port]`
 
 Set the port to match the one `apache::vhost` sets. This must match the one
 `apache::vhost` sets or else the vhost's `concat` resource won't be found.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest"></a>`proxy_dest`
+##### <a name="-apache--vhost--proxy--proxy_dest"></a>`proxy_dest`
 
 Data type: `Optional[String[1]]`
 
 Specifies the destination address of a [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) configuration for the `/` path.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest_match"></a>`proxy_dest_match`
+##### <a name="-apache--vhost--proxy--proxy_dest_match"></a>`proxy_dest_match`
 
 Data type: `Optional[String[1]]`
 
@@ -11209,9 +11242,9 @@ This directive is equivalent to `proxy_dest`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_dest_reverse_match"></a>`proxy_dest_reverse_match`
+##### <a name="-apache--vhost--proxy--proxy_dest_reverse_match"></a>`proxy_dest_reverse_match`
 
 Data type: `Optional[String[1]]`
 
@@ -11219,9 +11252,9 @@ Allows you to pass a ProxyPassReverse if `proxy_dest_match` is specified. See
 [ProxyPassReverse](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreverse)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_proxy_uris"></a>`no_proxy_uris`
+##### <a name="-apache--vhost--proxy--no_proxy_uris"></a>`no_proxy_uris`
 
 Data type: `Variant[Array[String[1]], String[1]]`
 
@@ -11234,7 +11267,7 @@ data type. This configuration uses the [ProxyPass](https://httpd.apache.org/docs
 
 Default value: `[]`
 
-##### <a name="no_proxy_uris_match"></a>`no_proxy_uris_match`
+##### <a name="-apache--vhost--proxy--no_proxy_uris_match"></a>`no_proxy_uris_match`
 
 Data type: `Variant[Array[String[1]], String[1]]`
 
@@ -11243,7 +11276,7 @@ as it instead uses [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mo
 
 Default value: `[]`
 
-##### <a name="proxy_pass"></a>`proxy_pass`
+##### <a name="-apache--vhost--proxy--proxy_pass"></a>`proxy_pass`
 
 Data type: `Optional[Array[Apache::Vhost::ProxyPass]]`
 
@@ -11252,9 +11285,9 @@ configuration.
 See the documentation for the Apache::Vhost::ProxyPass data type for a detailed
 description of the structure including optional parameters.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_pass_match"></a>`proxy_pass_match`
+##### <a name="-apache--vhost--proxy--proxy_pass_match"></a>`proxy_pass_match`
 
 Data type: `Optional[Array[Apache::Vhost::ProxyPass]]`
 
@@ -11262,35 +11295,35 @@ This directive is equivalent to `proxy_pass`, but takes regular expressions, see
 [ProxyPassMatch](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassmatch)
 for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_requests"></a>`proxy_requests`
+##### <a name="-apache--vhost--proxy--proxy_requests"></a>`proxy_requests`
 
 Data type: `Boolean`
 
 Enables forward (standard) proxy requests. See [ProxyRequests](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyrequests) for details.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="proxy_preserve_host"></a>`proxy_preserve_host`
+##### <a name="-apache--vhost--proxy--proxy_preserve_host"></a>`proxy_preserve_host`
 
 Data type: `Boolean`
 
 When enabled, pass the `Host:` line from the incoming request to the proxied host.
 See [ProxyPreserveHost](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost) for details.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="proxy_add_headers"></a>`proxy_add_headers`
+##### <a name="-apache--vhost--proxy--proxy_add_headers"></a>`proxy_add_headers`
 
 Data type: `Optional[Boolean]`
 
 Add X-Forwarded-For, X-Forwarded-Host, and X-Forwarded-Server HTTP headers.
 See [ProxyAddHeaders](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyaddheaders) for details.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="proxy_error_override"></a>`proxy_error_override`
+##### <a name="-apache--vhost--proxy--proxy_error_override"></a>`proxy_error_override`
 
 Data type: `Boolean`
 
@@ -11298,7 +11331,7 @@ Override error pages from the proxied host. The current Puppet implementation
 supports enabling or disabling the directive, but not specifying a custom list
 of status codes. See [ProxyErrorOverride](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride) for details.
 
-Default value: ``false``
+Default value: `false`
 
 ## Resource types
 
@@ -11322,33 +11355,33 @@ Default value: `present`
 
 The following parameters are available in the `a2mod` type.
 
-* [`identifier`](#identifier)
-* [`lib`](#lib)
-* [`name`](#name)
-* [`provider`](#provider)
+* [`identifier`](#-a2mod--identifier)
+* [`lib`](#-a2mod--lib)
+* [`name`](#-a2mod--name)
+* [`provider`](#-a2mod--provider)
 
-##### <a name="identifier"></a>`identifier`
+##### <a name="-a2mod--identifier"></a>`identifier`
 
 Module identifier string used by LoadModule. Default: module-name_module
 
-##### <a name="lib"></a>`lib`
+##### <a name="-a2mod--lib"></a>`lib`
 
 The name of the .so library to be loaded
 
-##### <a name="name"></a>`name`
+##### <a name="-a2mod--name"></a>`name`
 
 namevar
 
 The name of the module to be managed
 
-##### <a name="provider"></a>`provider`
+##### <a name="-a2mod--provider"></a>`provider`
 
 The specific backend to use for this `a2mod` resource. You will seldom need to specify this --- Puppet will usually
 discover the appropriate provider for your platform.
 
 ## Functions
 
-### <a name="apacheapache_pw_hash"></a>`apache::apache_pw_hash`
+### <a name="apache--apache_pw_hash"></a>`apache::apache_pw_hash`
 
 Type: Ruby 4.x API
 
@@ -11366,7 +11399,7 @@ Data type: `Any`
 
 
 
-### <a name="apachebool2httpd"></a>`apache::bool2httpd`
+### <a name="apache--bool2httpd"></a>`apache::bool2httpd`
 
 Type: Ruby 4.x API
 
@@ -11411,7 +11444,7 @@ Data type: `Any`
 
 The value to be converted into a string.
 
-### <a name="apachepw_hash"></a>`apache::pw_hash`
+### <a name="apache--pw_hash"></a>`apache::pw_hash`
 
 Type: Ruby 4.x API
 
@@ -11469,7 +11502,7 @@ Data type: `Any`
 
 ## Data types
 
-### <a name="apacheloglevel"></a>`Apache::LogLevel`
+### <a name="Apache--LogLevel"></a>`Apache::LogLevel`
 
 A string that conforms to the Apache `LogLevel` syntax.
 Different levels can be specified for individual apache modules.
@@ -11497,26 +11530,18 @@ The levels are (in order of decreasing significance):
 * **See also**
   * https://httpd.apache.org/docs/current/mod/core.html#loglevel
 
-Alias of
+Alias of `Pattern[/(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])/]`
 
-```puppet
-Pattern[/(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])/]
-```
-
-### <a name="apachemodproxyprotocol"></a>`Apache::ModProxyProtocol`
+### <a name="Apache--ModProxyProtocol"></a>`Apache::ModProxyProtocol`
 
 Supported protocols / schemes by mod_proxy
 
 * **See also**
   * https://httpd.apache.org/docs/2.4/mod/mod_proxy.html
 
-Alias of
+Alias of `Pattern[/(\A(ajp|fcgi|ftp|h2c?|https?|scgi|uwsgi|wss?):\/\/.+\z)/, /(\Aunix:\/([^\n\/\0]+\/*)*\z)/]`
 
-```puppet
-Pattern[/(\A(ajp|fcgi|ftp|h2c?|https?|scgi|uwsgi|wss?):\/\/.+\z)/, /(\Aunix:\/([^\n\/\0]+\/*)*\z)/]
-```
-
-### <a name="apacheoidcsettings"></a>`Apache::OIDCSettings`
+### <a name="Apache--OIDCSettings"></a>`Apache::OIDCSettings`
 
 https://github.com/zmartzone/mod_auth_openidc/blob/master/auth_openidc.conf
 
@@ -11634,30 +11659,22 @@ Struct[{
   }]
 ```
 
-### <a name="apacheservertokens"></a>`Apache::ServerTokens`
+### <a name="Apache--ServerTokens"></a>`Apache::ServerTokens`
 
 A string that conforms to the Apache `ServerTokens` syntax.
 
 * **See also**
   * https://httpd.apache.org/docs/2.4/mod/core.html#servertokens
 
-Alias of
+Alias of `Enum['Major', 'Minor', 'Min', 'Minimal', 'Prod', 'ProductOnly', 'OS', 'Full']`
 
-```puppet
-Enum['Major', 'Minor', 'Min', 'Minimal', 'Prod', 'ProductOnly', 'OS', 'Full']
-```
-
-### <a name="apachevhostpriority"></a>`Apache::Vhost::Priority`
+### <a name="Apache--Vhost--Priority"></a>`Apache::Vhost::Priority`
 
 The priority on vhost
 
-Alias of
+Alias of `Variant[Pattern[/^\d+$/], Integer, Boolean]`
 
-```puppet
-Variant[Pattern[/^\d+$/], Integer, Boolean]
-```
-
-### <a name="apachevhostproxypass"></a>`Apache::Vhost::ProxyPass`
+### <a name="Apache--Vhost--ProxyPass"></a>`Apache::Vhost::ProxyPass`
 
 host context. Because the implementation uses SetEnv, you must `include apache::mod::env`;
 for the same reason, this cannot set the newer `no-proxy` environment variable, which
@@ -11745,35 +11762,35 @@ Struct[{
 
 The following parameters are available in the `Apache::Vhost::ProxyPass` data type:
 
-* [`path`](#path)
-* [`url`](#url)
-* [`params`](#params)
-* [`reverse_urls`](#reverse_urls)
-* [`reverse_cookies`](#reverse_cookies)
-* [`keywords`](#keywords)
-* [`setenv`](#setenv)
-* [`no_proxy_uris`](#no_proxy_uris)
-* [`no_proxy_uris_match`](#no_proxy_uris_match)
+* [`path`](#-Apache--Vhost--ProxyPass--path)
+* [`url`](#-Apache--Vhost--ProxyPass--url)
+* [`params`](#-Apache--Vhost--ProxyPass--params)
+* [`reverse_urls`](#-Apache--Vhost--ProxyPass--reverse_urls)
+* [`reverse_cookies`](#-Apache--Vhost--ProxyPass--reverse_cookies)
+* [`keywords`](#-Apache--Vhost--ProxyPass--keywords)
+* [`setenv`](#-Apache--Vhost--ProxyPass--setenv)
+* [`no_proxy_uris`](#-Apache--Vhost--ProxyPass--no_proxy_uris)
+* [`no_proxy_uris_match`](#-Apache--Vhost--ProxyPass--no_proxy_uris_match)
 
-##### <a name="path"></a>`path`
+##### <a name="-Apache--Vhost--ProxyPass--path"></a>`path`
 
 Data type: `String[1]`
 
 The virtual path on the local server to map.
 
-##### <a name="url"></a>`url`
+##### <a name="-Apache--Vhost--ProxyPass--url"></a>`url`
 
 Data type: `String[1]`
 
 The URL to which the path and its children will be mapped.
 
-##### <a name="params"></a>`params`
+##### <a name="-Apache--Vhost--ProxyPass--params"></a>`params`
 
 Data type: `Optional[Hash]`
 
 Optional [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) key-value parameters, such as connection settings.
 
-##### <a name="reverse_urls"></a>`reverse_urls`
+##### <a name="-Apache--Vhost--ProxyPass--reverse_urls"></a>`reverse_urls`
 
 Data type: `Array[String[1]]`
 
@@ -11781,7 +11798,7 @@ Optional (but usually recommended) URLs for [ProxyPassReverse](https://httpd.apa
 Allows Apache to adjust certain headers on HTTP redirect responses, to prevent
 redirects on the back-end from bypassing the reverse proxy.
 
-##### <a name="reverse_cookies"></a>`reverse_cookies`
+##### <a name="-Apache--Vhost--ProxyPass--reverse_cookies"></a>`reverse_cookies`
 
 Data type: `Optional[Array[Hash]]`
 
@@ -11797,7 +11814,7 @@ Options:
 * **:path** `Optional[String[1]]`: Internal path for [ProxyPassReverseCookiePath](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreversecookiepath) configuration.
 * **:domain** `Optional[String[1]]`: Internal domain for [ProxyPassReverseCookieDomain](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypassreversecookiedomain) configuration.
 
-##### <a name="keywords"></a>`keywords`
+##### <a name="-Apache--Vhost--ProxyPass--keywords"></a>`keywords`
 
 Data type: `Optional[Array[String[1]]]`
 
@@ -11805,20 +11822,20 @@ Array of optional keywords such as `nocanon`, `interpolate`, or `noquery` suppor
 by [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass) (refer
 to subsection under heading "Additional ProxyPass Keywords").
 
-##### <a name="setenv"></a>`setenv`
+##### <a name="-Apache--Vhost--ProxyPass--setenv"></a>`setenv`
 
 Data type: `Optional[Array[String[1]]]`
 
 Optional Array of Strings of the form "${env_var_name} ${value}".
 Uses [SetEnv](https://httpd.apache.org/docs/current/mod/mod_env.html#setenv) to make [Protocol Adjustments](https://httpd.apache.org/docs/current/mod/mod_proxy.html#envsettings) to mod_proxy in the virtual
 
-##### <a name="no_proxy_uris"></a>`no_proxy_uris`
+##### <a name="-Apache--Vhost--ProxyPass--no_proxy_uris"></a>`no_proxy_uris`
 
 Data type: `Optional[Array[String[1]]]`
 
 Optional Array of paths to exclude from proxying, using the `!` directive to [ProxyPass](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypass).
 
-##### <a name="no_proxy_uris_match"></a>`no_proxy_uris_match`
+##### <a name="-Apache--Vhost--ProxyPass--no_proxy_uris_match"></a>`no_proxy_uris_match`
 
 Data type: `Optional[Array[String[1]]]`
 
