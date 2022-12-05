@@ -200,7 +200,7 @@ class apache::mod::security (
     lib => 'mod_security2.so',
   }
 
-  ::apache::mod { 'unique_id_module':
+  ::apache::mod { 'unique_id':
     id  => 'unique_id_module',
     lib => 'mod_unique_id.so',
   }
