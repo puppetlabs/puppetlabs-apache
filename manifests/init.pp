@@ -428,6 +428,9 @@
 #   The `limitreqfieldsize` parameter sets the maximum ammount of _bytes_ that will
 #   be allowed within a request header.
 #
+# @param limitreqline
+#   The 'limitreqline' parameter sets the limit on the allowed size of a client's HTTP request-line
+#
 # @param ip
 #   Specifies the ip address
 #
@@ -526,6 +529,7 @@ class apache (
   Integer $max_keepalive_requests                                            = $apache::params::max_keepalive_requests,
   Integer $limitreqfieldsize                                                 = 8190,
   Integer $limitreqfields                                                    = 100,
+  Optional[Integer] $limitreqline                                            = undef,
   Stdlib::Absolutepath $logroot                                              = $apache::params::logroot,
   Optional[Stdlib::Filemode] $logroot_mode                                   = $apache::params::logroot_mode,
   Apache::LogLevel $log_level                                                = $apache::params::log_level,
