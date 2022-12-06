@@ -248,7 +248,7 @@ describe 'apache', type: :class do
         { mpm_module: 'worker' }
       end
 
-      it { is_expected.to contain_exec('/usr/sbin/a2dismod event') }
+      it { is_expected.to contain_exec('/usr/sbin/a2dismod mpm_event') }
       it { is_expected.to contain_exec('/usr/sbin/a2dismod prefork') }
     end
 
