@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v8.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.4.0) (2022-11-14)
+## [v8.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.5.0) (2022-12-06)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.4.0...v8.5.0)
+
+### Added
+
+- add LimitRequestLine parameter [\#2345](https://github.com/puppetlabs/puppetlabs-apache/pull/2345) ([stefan-ahrefs](https://github.com/stefan-ahrefs))
+
+### Fixed
+
+- disable::mpm\_event: Fix module deactivation [\#2349](https://github.com/puppetlabs/puppetlabs-apache/pull/2349) ([bastelfreak](https://github.com/bastelfreak))
+- remove \_module from apache::mod::unique\_id name. [\#2339](https://github.com/puppetlabs/puppetlabs-apache/pull/2339) ([mdklapwijk](https://github.com/mdklapwijk))
+
+## [v8.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.4.0) (2022-11-15)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.3.0...v8.4.0)
 
