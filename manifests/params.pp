@@ -519,7 +519,6 @@ class apache::params inherits apache::version {
       'passenger'   => 'www/rubygem-passenger',
       'perl'        => 'www/mod_perl2',
       'phpXXX'      => 'www/mod_phpXXX',
-      'proxy_html'  => 'www/mod_proxy_html',
       'python'      => 'www/mod_python3',
       'wsgi'        => 'www/mod_wsgi',
       'dav_svn'     => 'devel/subversion',
