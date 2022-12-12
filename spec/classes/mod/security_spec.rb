@@ -81,6 +81,8 @@ describe 'apache::mod::security', type: :class do
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
                 secrequestbodyaccess: 'Off',
                 secresponsebodyaccess: 'On',
+                secrequestbodylimitaction: 'ProcessPartial',
+                secresponsebodylimitaction: 'Reject',
               }
             end
 
@@ -90,6 +92,8 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
             it {
               is_expected.to contain_file('bar.conf').with(
@@ -249,6 +253,8 @@ describe 'apache::mod::security', type: :class do
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
                 secrequestbodyaccess: 'Off',
                 secresponsebodyaccess: 'On',
+                secrequestbodylimitaction: 'ProcessPartial',
+                secresponsebodylimitaction: 'Reject',
               }
             end
 
@@ -259,6 +265,8 @@ describe 'apache::mod::security', type: :class do
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
+              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
               it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
               it {
                 is_expected.to contain_file('bar.conf').with(
