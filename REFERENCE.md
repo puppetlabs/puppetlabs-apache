@@ -6198,7 +6198,9 @@ The following parameters are available in the `apache::mod::security` class:
 * [`secrequestbodynofileslimit`](#-apache--mod--security--secrequestbodynofileslimit)
 * [`secrequestbodyinmemorylimit`](#-apache--mod--security--secrequestbodyinmemorylimit)
 * [`secrequestbodyaccess`](#-apache--mod--security--secrequestbodyaccess)
+* [`secrequestbodylimitaction`](#-apache--mod--security--secrequestbodylimitaction)
 * [`secresponsebodyaccess`](#-apache--mod--security--secresponsebodyaccess)
+* [`secresponsebodylimitaction`](#-apache--mod--security--secresponsebodylimitaction)
 * [`manage_security_crs`](#-apache--mod--security--manage_security_crs)
 * [`enable_dos_protection`](#-apache--mod--security--enable_dos_protection)
 * [`dos_burst_time_slice`](#-apache--mod--security--dos_burst_time_slice)
@@ -6464,6 +6466,15 @@ Toggle SecRequestBodyAccess On or Off
 
 Default value: `'On'`
 
+##### <a name="-apache--mod--security--secrequestbodylimitaction"></a>`secrequestbodylimitaction`
+
+Data type: `Enum['Reject', 'ProcessPartial']`
+
+Controls what happens once a request body limit, configured with
+SecRequestBodyLimit, is encountered
+
+Default value: `'Reject'`
+
 ##### <a name="-apache--mod--security--secresponsebodyaccess"></a>`secresponsebodyaccess`
 
 Data type: `Enum['On', 'Off']`
@@ -6471,6 +6482,15 @@ Data type: `Enum['On', 'Off']`
 Toggle SecResponseBodyAccess On or Off
 
 Default value: `'Off'`
+
+##### <a name="-apache--mod--security--secresponsebodylimitaction"></a>`secresponsebodylimitaction`
+
+Data type: `Enum['Reject', 'ProcessPartial']`
+
+Controls what happens once a response body limit, configured with
+SecResponseBodyLimitAction, is encountered.
+
+Default value: `'ProcessPartial'`
 
 ##### <a name="-apache--mod--security--manage_security_crs"></a>`manage_security_crs`
 
