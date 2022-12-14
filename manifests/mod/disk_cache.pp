@@ -31,7 +31,7 @@ class apache::mod::disk_cache (
   if $cache_root {
     $_cache_root = $cache_root
   } else {
-    $_cache_root = $::osfamily ? {
+    $_cache_root = $facts['os']['family'] ? {
       'debian'  => '/var/cache/apache2/mod_cache_disk',
       'redhat'  => '/var/cache/httpd/proxy',
       'freebsd' => '/var/cache/mod_cache_disk',

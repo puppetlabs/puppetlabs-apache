@@ -46,7 +46,7 @@ describe 'apache::mod::auth_kerb', type: :class do
         <<-MANIFEST
         include apache::params
         class { 'apache':
-          mod_packages => merge($::apache::params::mod_packages, {
+          mod_packages => merge($apache::params::mod_packages, {
             'auth_kerb' => 'httpd24-mod_auth_kerb',
           })
         }

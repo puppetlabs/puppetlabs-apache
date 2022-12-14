@@ -122,7 +122,7 @@ class apache::mod::ssl (
   if $ssl_mutex {
     $_ssl_mutex = $ssl_mutex
   } else {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'debian','redhat','freebsd','gentoo','Suse': {
         $_ssl_mutex = 'default'
       }

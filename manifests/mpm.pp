@@ -56,7 +56,7 @@ define apache::mpm (
         ensure  => link,
         target  => "${::apache::mod_dir}/${mpm}.load",
         require => Exec["mkdir ${::apache::mod_enable_dir}"],
-        before  => File[$::apache::mod_enable_dir],
+        before  => File[$apache::mod_enable_dir],
         notify  => Class['apache::service'],
       }
 
@@ -110,11 +110,11 @@ define apache::mpm (
         notify  => Class['apache::service'],
       }
 
-      file { "${::apache::mod_enable_dir}/${mpm}.load":
+      file { "${apache::mod_enable_dir}/${mpm}.load":
         ensure  => link,
-        target  => "${::apache::mod_dir}/${mpm}.load",
+        target  => "${apache::mod_dir}/${mpm}.load",
         require => Exec["mkdir ${::apache::mod_enable_dir}"],
-        before  => File[$::apache::mod_enable_dir],
+        before  => File[$apache::mod_enable_dir],
         notify  => Class['apache::service'],
       }
 

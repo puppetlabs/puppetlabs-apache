@@ -136,10 +136,10 @@ describe 'apache::mod::wsgi', type: :class do
         <<-MANIFEST
         include apache::params
         class { 'apache':
-          mod_packages => merge($::apache::params::mod_packages, {
+          mod_packages => merge($apache::params::mod_packages, {
             'wsgi' => 'python3-mod_wsgi',
           }),
-          mod_libs => merge($::apache::params::mod_libs, {
+          mod_libs => merge($apache::params::mod_libs, {
             'wsgi' => 'mod_wsgi_python3.so',
           })
         }

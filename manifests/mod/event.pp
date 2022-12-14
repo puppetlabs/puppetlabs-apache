@@ -99,7 +99,7 @@ class apache::mod::event (
     notify  => Class['apache::service'],
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'debian','freebsd','redhat' : {
       apache::mpm{ 'event':
         apache_version => $_apache_version,

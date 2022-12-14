@@ -10,7 +10,7 @@ class apache::mod::version (
   Optional[String] $apache_version = $apache::apache_version
 ) {
 
-  if ($::osfamily == 'debian') {
+  if ($facts['os']['family'] == 'debian') {
     warning("${module_name}: module version_module is built-in and can't be loaded")
   } else {
     ::apache::mod { 'version': }
