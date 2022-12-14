@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v8.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.6.0) (2022-12-14)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.5.0...v8.6.0)
+
+### Added
+
+- Parameterize SecRequestBodyLimitAction and SecResponseBodyLimitAction [\#2353](https://github.com/puppetlabs/puppetlabs-apache/pull/2353) ([Vincevrp](https://github.com/Vincevrp))
+
+### Fixed
+
+- fix mod\_proxy\_html on FreeBSD [\#2355](https://github.com/puppetlabs/puppetlabs-apache/pull/2355) ([fraenki](https://github.com/fraenki))
+
 ## [v8.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.5.0) (2022-12-06)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.4.0...v8.5.0)
