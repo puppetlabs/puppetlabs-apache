@@ -33,12 +33,6 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache') }
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
-          # namebased virualhost is only created on apache 2.2 and older
-          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
-             (os_facts[:os]['name'] == 'Amazon') ||
-             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
-            it { is_expected.to contain_apache__namevirtualhost("*:#{params[:port]}") }
-          end
         end
         context 'set everything!' do
           let :params do
@@ -433,7 +427,6 @@ describe 'apache::vhost', type: :define do
               'wsgi_chunked_request'        => 'On',
               'action'                      => 'foo',
               'additional_includes'         => '/custom/path/includes',
-              'apache_version'              => '2.4',
               'use_optional_includes'       => true,
               'suexec_user_group'           => 'root root',
               'allow_encoded_slashes'       => 'nodecode',
@@ -1625,26 +1618,10 @@ describe 'apache::vhost', type: :define do
           end
         end # access logs
         describe 'error logs format' do
-          context 'on Apache 2.2' do
-            let(:params) do
-              {
-                'docroot'         => '/rspec/docroot',
-                'apache_version'  => '2.2',
-                'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
-              }
-            end
-
-            it {
-              is_expected.to contain_concat__fragment('rspec.example.com-logging')
-                .without_content(%r{ErrorLogFormat})
-            }
-          end
-
           context 'single log format directive as a string' do
             let(:params) do
               {
                 'docroot'          => '/rspec/docroot',
-                'apache_version'   => '2.4',
                 'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
               }
             end
@@ -1660,7 +1637,6 @@ describe 'apache::vhost', type: :define do
             let(:params) do
               {
                 'docroot'          => '/rspec/docroot',
-                'apache_version'   => '2.4',
                 'error_log_format' => [
                   '[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M',
                   { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' },
@@ -1792,7 +1768,6 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
-            # this works only with apache 2.4 and newer
             if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i > 6) ||
                (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i > 11)
               it {
@@ -1802,50 +1777,6 @@ describe 'apache::vhost', type: :define do
               }
             else
               it { is_expected.to contain_concat__fragment('rspec.example.com-directories') }
-            end
-          end
-
-          # the following style is only present on Apache 2.2
-          # That is used in SLES 11, RHEL6, Amazon Linux
-          if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i < 7) ||
-             (os_facts[:os]['name'] == 'Amazon') ||
-             (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i < 12)
-            context 'apache 2.2 access controls on directories' do
-              let :params do
-                {
-                  'docroot'         => '/var/www/foo',
-                  'directories'     => [
-                    {
-                      'path'     => '/var/www/foo',
-                      'provider' => 'files',
-                      'allow'    => 'from 127.0.0.5',
-                      'deny'     => 'from all',
-                      'order'    => 'deny,allow',
-                    },
-                    {
-                      'path'     => '/var/www/protected-files',
-                      'provider' => 'files',
-                      'allow'    => ['from 127.0.0.1', 'from 127.0.0.2'],
-                      'deny'     => ['from 127.0.0.3', 'from 127.0.0.4'],
-                      'satisfy'  => 'any',
-                    },
-                  ],
-                }
-              end
-
-              it { is_expected.to compile }
-              it { is_expected.to contain_concat('25-rspec.example.com.conf') }
-              it {
-                is_expected.to contain_concat__fragment('rspec.example.com-directories')
-                  .with_content(%r{^\s+Allow from 127\.0\.0\.1$})
-                  .with_content(%r{^\s+Allow from 127\.0\.0\.2$})
-                  .with_content(%r{^\s+Allow from 127\.0\.0\.5$})
-                  .with_content(%r{^\s+Deny from 127\.0\.0\.3$})
-                  .with_content(%r{^\s+Deny from 127\.0\.0\.4$})
-                  .with_content(%r{^\s+Deny from all$})
-                  .with_content(%r{^\s+Satisfy any$})
-                  .with_content(%r{^\s+Order deny,allow$})
-              }
             end
           end
 

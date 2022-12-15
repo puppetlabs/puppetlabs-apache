@@ -326,14 +326,7 @@ describe 'apache::vhost define' do
       pp_one = <<-MANIFEST
         class { 'apache': }
 
-        if versioncmp($apache_version, '2.4') >= 0 {
-          $_files_match_directory = [{ 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }]
-        } else {
-          $_files_match_directory = [
-            { 'path' => 'private.html$', 'provider' => 'filesmatch', 'deny' => 'from all' },
-            { 'path' => '/bar/bar.html', 'provider' => 'location', allow => [ 'from 127.0.0.1', ] },
-          ]
-        }
+        $_files_match_directory = [{ 'path' => 'private.html$', 'provider' => 'filesmatch', 'require' => 'all denied' }]
 
         $_directories = [
           { 'path' => '/var/www/files', },

@@ -24,9 +24,6 @@
 #   capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor 
 #   capabilities, such as NFS.
 #
-# @param apache_version
-#   Used to verify that the Apache version you have requested is compatible with the module.
-# 
 # @see http://mpm-itk.sesse.net for additional documentation.
 # @note Unsupported platforms: CentOS: 8; RedHat: 8, 9; SLES: all
 class apache::mod::itk (
@@ -37,11 +34,8 @@ class apache::mod::itk (
   Integer $maxclients                                    = 256,
   Integer $maxrequestsperchild                           = 4000,
   Optional[Variant[Boolean, String]] $enablecapabilities = undef,
-  Optional[String] $apache_version                       = undef,
 ) {
   include apache
-
-  $_apache_version = pick($apache_version, $apache::apache_version)
 
   if defined(Class['apache::mod::event']) {
     fail('May not include both apache::mod::itk and apache::mod::event on the same node')
@@ -49,20 +43,14 @@ class apache::mod::itk (
   if defined(Class['apache::mod::peruser']) {
     fail('May not include both apache::mod::itk and apache::mod::peruser on the same node')
   }
-  if versioncmp($_apache_version, '2.4') < 0 {
+  # prefork is a requirement for itk in 2.4; except on FreeBSD and Gentoo, which are special
+  if $facts['os']['family'] =~ /^(FreeBSD|Gentoo)/ {
     if defined(Class['apache::mod::prefork']) {
       fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
     }
   } else {
-    # prefork is a requirement for itk in 2.4; except on FreeBSD and Gentoo, which are special
-    if $facts['os']['family'] =~ /^(FreeBSD|Gentoo)/ {
-      if defined(Class['apache::mod::prefork']) {
-        fail('May not include both apache::mod::itk and apache::mod::prefork on the same node')
-      }
-    } else {
-      if ! defined(Class['apache::mod::prefork']) {
-        include apache::mod::prefork
-      }
+    if ! defined(Class['apache::mod::prefork']) {
+      include apache::mod::prefork
     }
   }
   if defined(Class['apache::mod::worker']) {
@@ -95,25 +83,11 @@ class apache::mod::itk (
       package { 'httpd-itk':
         ensure => present,
       }
-      if versioncmp($_apache_version, '2.4') >= 0 {
-        ::apache::mpm { 'itk':
-          apache_version => $_apache_version,
-        }
-      }
-      else {
-        file_line { '/etc/sysconfig/httpd itk enable':
-          ensure  => present,
-          path    => '/etc/sysconfig/httpd',
-          line    => 'HTTPD=/usr/sbin/httpd.itk',
-          match   => '#?HTTPD=/usr/sbin/httpd.itk',
-          require => Package['httpd'],
-          notify  => Class['apache::service'],
-        }
+      ::apache::mpm { 'itk':
       }
     }
     'debian', 'freebsd': {
       apache::mpm { 'itk':
-        apache_version => $_apache_version,
       }
     }
     'gentoo': {

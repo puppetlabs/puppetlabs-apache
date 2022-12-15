@@ -1,13 +1,6 @@
 <Location <%= @ldap_path %>>
     SetHandler ldap-status
-    <%- if scope.function_versioncmp([@_apache_version, '2.4']) >= 0 -%>
     Require ip 127.0.0.1 ::1
-    <%- else -%>
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1 ::1
-    Satisfy all
-    <%- end -%>
 </Location>
 <% if @ldap_trusted_global_cert_file -%>
 LDAPTrustedGlobalCert <%= @ldap_trusted_global_cert_type %> <%= @ldap_trusted_global_cert_file %>

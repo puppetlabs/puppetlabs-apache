@@ -27,9 +27,6 @@
 #     default_ssl_vhost => false,
 #   }
 #
-# @param apache_version
-#   Apache's version number as a string, such as '2.2' or '2.4'.
-#
 # @param access_log
 #   Determines whether to configure `*_access.log` directives (`*_file`, `*_pipe`, or `*_syslog`).
 # 
@@ -1841,7 +1838,6 @@ define apache::vhost (
   Optional[String] $action                                                            = undef,
   Variant[Array[String], String] $additional_includes                                 = [],
   Boolean $use_optional_includes                                                      = $apache::use_optional_includes,
-  Optional[String] $apache_version                                                    = $apache::apache_version,
   Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                      = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                             = undef,
 
@@ -2086,13 +2082,6 @@ define apache::vhost (
     }
   }
 
-  if versioncmp($apache_version, '2.4') >= 0 {
-    $error_log_format24 = $error_log_format
-  }
-  else {
-    $error_log_format24 = undef
-  }
-
   if $modsec_audit_log == false {
     $modsec_audit_log_destination = undef
   } elsif $modsec_audit_log_file {
@@ -2143,36 +2132,19 @@ define apache::vhost (
       ensure_resource('apache::listen', $listen_addr_port)
     }
   }
-  if ! $ip_based {
-    if $ensure == 'present' and (versioncmp($apache_version, '2.4') < 0) {
-      ensure_resource('apache::namevirtualhost', $nvh_addr_port)
-    }
-  }
 
   ## Create a default directory list if none defined
   if $directories {
     $_directories = $directories
   } elsif $docroot {
-    $_directory = {
+    $_directories = [{
       provider       => 'directory',
       path           => $docroot,
       options        => $options,
       allow_override => $override,
       directoryindex => $directoryindex,
-    }
-
-    if versioncmp($apache_version, '2.4') >= 0 {
-      $_directory_version = {
-        require => 'all granted',
-      }
-    } else {
-      $_directory_version = {
-        order => 'allow,deny',
-        allow => 'from all',
-      }
-    }
-
-    $_directories = [merge($_directory, $_directory_version)]
+      require        => 'all granted',
+    }]
   } else {
     $_directories = undef
   }
@@ -2239,7 +2211,6 @@ define apache::vhost (
   # - $serveradmin
   # - $protocols
   # - $protocols_honor_order
-  # - $apache_version
   # - $mdomain
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
@@ -2309,7 +2280,6 @@ define apache::vhost (
   # Template uses:
   # - $_directories
   # - $docroot
-  # - $apache_version
   # - $shibboleth_enabled
   if $_directories and ! empty($_directories) and $ensure == 'present' {
     $_directories.each |Hash $directory| {
@@ -2365,7 +2335,7 @@ define apache::vhost (
 
   # Template uses:
   # - $error_log
-  # - $error_log_format24
+  # - $error_log_format
   # - $log_level
   # - $error_log_destination
   # - $log_level
@@ -2410,7 +2380,6 @@ define apache::vhost (
 
   # Template uses:
   # - $block
-  # - $apache_version
   if $block and ! empty($block) {
     concat::fragment { "${name}-block":
       target  => "${priority_real}${filename}.conf",
@@ -2590,7 +2559,6 @@ define apache::vhost (
   # - $ssl_options
   # - $ssl_openssl_conf_cmd
   # - $ssl_stapling
-  # - $apache_version
   # - $mdomain
   if $ssl and $ensure == 'present' {
     include apache::mod::ssl

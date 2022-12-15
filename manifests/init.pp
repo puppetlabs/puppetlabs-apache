@@ -16,11 +16,6 @@
 #   responses to URLs containing '\' and '/' characters. If not specified, this parameter omits 
 #   the declaration from the server's configuration and uses Apache's default setting of 'off'.
 #
-# @param apache_version
-#   Configures module template behavior, package names, and default Apache modules by defining 
-#   the version of Apache to use. We do not recommend manually configuring this parameter 
-#   without reason.
-#
 # @param conf_dir
 #   Sets the directory where the Apache server's main configuration file is located.
 #
@@ -48,7 +43,7 @@
 #   on your operating system, and you can declare any other modules separately using the 
 #   `apache::mod::<MODULE NAME>` class or `apache::mod` defined type.<br />
 #   If `true`, Puppet installs additional modules, depending on the operating system and 
-#   the values of `apache_version` and `mpm_module` parameters. Because these lists of 
+#   the value of the `mpm_module` parameter. Because these lists of 
 #   modules can change frequently, consult the Puppet module's code for up-to-date lists.<br />
 #   If this parameter contains an array, Puppet instead enables all passed Apache modules.
 #
@@ -307,11 +302,6 @@
 #   Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to 
 #   coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
 #
-# @param rewrite_lock
-#   Allows setting a custom location for a rewrite lock - considered best practice if using 
-#   a RewriteMap of type prg in the `rewrites` parameter of your virtual host. This parameter 
-#   only applies to Apache version 2.2 or lower and is ignored on newer versions.
-#
 # @param sendfile
 #   Forces Apache to use the Linux kernel's `sendfile` support to serve static files, via the 
 #   `EnableSendfile` directive.
@@ -512,12 +502,11 @@ class apache (
   String $vhost_include_pattern                                              = $apache::params::vhost_include_pattern,
   Stdlib::Absolutepath $mod_dir                                              = $apache::params::mod_dir,
   Optional[Stdlib::Absolutepath] $mod_enable_dir                             = $apache::params::mod_enable_dir,
-  Variant[Boolean, String] $mpm_module                                       = $apache::params::mpm_module,
+  Variant[Boolean, Enum['event', 'itk', 'peruser', 'prefork', 'worker']] $mpm_module = $apache::params::mpm_module,
   String $lib_path                                                           = $apache::params::lib_path,
   String $conf_template                                                      = $apache::params::conf_template,
   Optional[String] $servername                                               = $apache::params::servername,
   String $pidfile                                                            = $apache::params::pidfile,
-  Optional[Stdlib::Absolutepath] $rewrite_lock                               = undef,
   Boolean $manage_user                                                       = true,
   Boolean $manage_group                                                      = true,
   String $user                                                               = $apache::params::user,
@@ -537,7 +526,6 @@ class apache (
   Optional[String] $ssl_file                                                 = undef,
   Stdlib::Absolutepath $ports_file                                           = $apache::params::ports_file,
   Stdlib::Absolutepath $docroot                                              = $apache::params::docroot,
-  String $apache_version                                                     = $apache::version::default,
   Apache::ServerTokens $server_tokens                                        = 'Prod',
   Variant[Enum['On', 'Off'], String] $server_signature                       = 'On',
   Enum['On', 'Off', 'extended'] $trace_enable                                = 'On',
@@ -557,11 +545,6 @@ class apache (
   Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                            = [],
   Optional[Boolean] $protocols_honor_order                                   = undef,
 ) inherits apache::params {
-  $valid_mpms_re = $apache_version ? {
-    '2.4'   => '(event|itk|peruser|prefork|worker)',
-    default => '(event|itk|prefork|worker)'
-  }
-
   if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
     # On redhat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
     # when all other module configs live in /etc/httpd/conf.modules.d (the
@@ -576,10 +559,6 @@ class apache (
       undef   => "${apache::mod_dir}/ssl.conf",
       default => $ssl_file
     }
-  }
-
-  if $mpm_module and $mpm_module != 'false' { # lint:ignore:quoted_booleans
-    assert_type(Pattern[$valid_mpms_re], $mpm_module)
   }
 
   # NOTE: on FreeBSD it's mpm module's responsibility to install httpd package.
@@ -802,7 +781,6 @@ class apache (
     # - $server_tokens
     # - $server_signature
     # - $trace_enable
-    # - $rewrite_lock
     # - $root_directory_secured
     file { "${apache::conf_dir}/${apache::params::conf_file}":
       ensure  => file,

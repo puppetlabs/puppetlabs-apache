@@ -4,9 +4,6 @@
 # @param allow_from
 #   Allowlist of IPv4 or IPv6 addresses or ranges that can access the info path.
 # 
-# @param apache_version
-#   Version of Apache to install module on.
-# 
 # @param restrict_access
 #   Toggles whether to restrict access to info path. If `false`, the `allow_from` allowlist is ignored and any IP address can
 #   access the info path.
@@ -18,12 +15,10 @@
 #
 class apache::mod::info (
   Array[Stdlib::IP::Address] $allow_from = ['127.0.0.1', '::1'],
-  Optional[String] $apache_version       = undef,
   Boolean $restrict_access               = true,
   Stdlib::Unixpath $info_path            = '/server-info',
 ) {
   include apache
-  $_apache_version = pick($apache_version, $apache::apache_version)
 
   if $facts['os']['family'] == 'Suse' {
     if defined(Class['apache::mod::worker']) {
@@ -38,7 +33,7 @@ class apache::mod::info (
     ::apache::mod { 'info': }
   }
 
-  # Template uses $allow_from, $_apache_version
+  # Template uses $allow_from
   file { 'info.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/info.conf",

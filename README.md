@@ -30,7 +30,6 @@
 [aliased servers]: https://httpd.apache.org/docs/current/urlmapping.html
 [`AllowEncodedSlashes`]: https://httpd.apache.org/docs/current/mod/core.html#allowencodedslashes
 [`apache`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apache
-[`apache_version`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apache_version
 [`apache::balancer`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancer
 [`apache::balancermember`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachebalancermember
 [`apache::mod`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemod

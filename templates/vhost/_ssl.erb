@@ -36,7 +36,7 @@
   <%- if @ssl_crl -%>
   SSLCARevocationFile     "<%= @ssl_crl %>"
   <%- end -%>
-  <%- if @ssl_crl_check && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- if @ssl_crl_check -%>
   SSLCARevocationCheck    <%= @ssl_crl_check %>
   <%- end -%>
   <%- if @ssl_options -%>
@@ -45,13 +45,13 @@
   <%- if @ssl_openssl_conf_cmd -%>
   SSLOpenSSLConfCmd       <%= @ssl_openssl_conf_cmd %>
   <%- end -%>
-  <%- if (not @ssl_stapling.nil?) && (scope.function_versioncmp([@apache_version, '2.4']) >= 0) -%>
+  <%- unless @ssl_stapling.nil? -%>
   SSLUseStapling <%= scope.call_function('apache::bool2httpd', [@ssl_stapling]) %>
   <%- end -%>
-  <%- if @ssl_stapling_timeout && scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- if @ssl_stapling_timeout -%>
   SSLStaplingResponderTimeout <%= @ssl_stapling_timeout %>
   <%- end -%>
-  <%- if (not @ssl_stapling_return_errors.nil?) && (scope.function_versioncmp([@apache_version, '2.4']) >= 0) -%>
+  <%- unless @ssl_stapling_return_errors.nil? -%>
   SSLStaplingReturnResponderErrors <%= scope.call_function('apache::bool2httpd', [@ssl_stapling_return_errors]) %>
   <%- end -%>
   <%- if @ssl_user_name -%>

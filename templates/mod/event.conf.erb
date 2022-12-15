@@ -7,8 +7,6 @@
   <%- end -%>
   <%- if @maxrequestworkers -%>
   MaxRequestWorkers      <%= @maxrequestworkers %>
-  <%- elsif @maxclients -%>
-  MaxClients             <%= @maxclients %>
   <%- end -%>
   <%- if @minsparethreads -%>
   MinSpareThreads        <%= @minsparethreads %>
@@ -21,8 +19,6 @@
   <%- end -%>
   <%- if @maxconnectionsperchild -%>
   MaxConnectionsPerChild <%= @maxconnectionsperchild %>
-  <%- elsif @maxrequestsperchild -%>
-  MaxRequestsPerChild    <%= @maxrequestsperchild %>
   <%- end -%>
   <%- if @threadlimit -%>
   ThreadLimit            <%= @threadlimit %>

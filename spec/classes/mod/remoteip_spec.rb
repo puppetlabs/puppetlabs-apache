@@ -5,9 +5,6 @@ require 'spec_helper'
 describe 'apache::mod::remoteip', type: :class do
   context 'on a Debian OS' do
     include_examples 'Debian 11'
-    let :params do
-      { apache_version: '2.4' }
-    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('remoteip') }
@@ -103,13 +100,6 @@ describe 'apache::mod::remoteip', type: :class do
       end
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPProxyProtocolExceptions fd00:fd00:fd00:2000::/64$}) }
-    end
-    describe 'with Apache version < 2.4' do
-      let :params do
-        { apache_version: '2.2' }
-      end
-
-      it { is_expected.to compile.and_raise_error(%r{mod_remoteip is only available in Apache 2.4}) }
     end
   end
 end
