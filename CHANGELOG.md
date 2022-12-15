@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.0.0) (2022-12-15)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.6.0...v9.0.0)
+
+### Changed
+
+- \(GH-2291\) Further refine types [\#2359](https://github.com/puppetlabs/puppetlabs-apache/pull/2359) ([david22swan](https://github.com/david22swan))
+- Drop deprecated a2mod type/providers [\#2350](https://github.com/puppetlabs/puppetlabs-apache/pull/2350) ([bastelfreak](https://github.com/bastelfreak))
+- Drop Apache 2.2 support [\#2329](https://github.com/puppetlabs/puppetlabs-apache/pull/2329) ([ekohl](https://github.com/ekohl))
+
 ## [v8.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.6.0) (2022-12-14)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.5.0...v8.6.0)

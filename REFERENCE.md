@@ -24,7 +24,6 @@
 * [`apache::mod::authn_file`](#apache--mod--authn_file): Installs `mod_authn_file`.
 * [`apache::mod::authnz_ldap`](#apache--mod--authnz_ldap): Installs `mod_authnz_ldap`.
 * [`apache::mod::authnz_pam`](#apache--mod--authnz_pam): Installs `mod_authnz_pam`.
-* [`apache::mod::authz_default`](#apache--mod--authz_default): Installs and configures `mod_authz_default`.
 * [`apache::mod::authz_groupfile`](#apache--mod--authz_groupfile): Installs `mod_authz_groupfile`
 * [`apache::mod::authz_user`](#apache--mod--authz_user): Installs `mod_authz_user`
 * [`apache::mod::autoindex`](#apache--mod--autoindex): Installs `mod_autoindex`
@@ -101,7 +100,6 @@ pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet
 * [`apache::mod::status`](#apache--mod--status): Installs and configures `mod_status`.
 * [`apache::mod::suexec`](#apache--mod--suexec): Installs `mod_suexec`.
 * [`apache::mod::userdir`](#apache--mod--userdir): Installs and configures `mod_userdir`.
-* [`apache::mod::version`](#apache--mod--version): Installs `mod_version`.
 * [`apache::mod::vhost_alias`](#apache--mod--vhost_alias): Installs Apache `mod_vhost_alias`.
 * [`apache::mod::watchdog`](#apache--mod--watchdog): Installs and configures `mod_watchdog`.
 * [`apache::mod::worker`](#apache--mod--worker): Installs and manages the MPM `worker`.
@@ -156,10 +154,6 @@ outside of the defaults.
 * `apache::peruser::processor`: Enables the `Peruser` module for FreeBSD only.
 * `apache::security::rule_link`: Links the activated_rules from `apache::mod::security` to the respective CRS rules on disk.
 
-### Resource types
-
-* [`a2mod`](#a2mod): Manage Apache 2 modules
-
 ### Functions
 
 * [`apache::apache_pw_hash`](#apache--apache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
@@ -207,7 +201,6 @@ class { 'apache': }
 The following parameters are available in the `apache` class:
 
 * [`allow_encoded_slashes`](#-apache--allow_encoded_slashes)
-* [`apache_version`](#-apache--apache_version)
 * [`conf_dir`](#-apache--conf_dir)
 * [`conf_template`](#-apache--conf_template)
 * [`confd_dir`](#-apache--confd_dir)
@@ -256,7 +249,6 @@ The following parameters are available in the `apache` class:
 * [`protocols_honor_order`](#-apache--protocols_honor_order)
 * [`purge_configs`](#-apache--purge_configs)
 * [`purge_vhost_dir`](#-apache--purge_vhost_dir)
-* [`rewrite_lock`](#-apache--rewrite_lock)
 * [`sendfile`](#-apache--sendfile)
 * [`serveradmin`](#-apache--serveradmin)
 * [`servername`](#-apache--servername)
@@ -305,16 +297,6 @@ responses to URLs containing '\' and '/' characters. If not specified, this para
 the declaration from the server's configuration and uses Apache's default setting of 'off'.
 
 Default value: `undef`
-
-##### <a name="-apache--apache_version"></a>`apache_version`
-
-Data type: `String`
-
-Configures module template behavior, package names, and default Apache modules by defining
-the version of Apache to use. We do not recommend manually configuring this parameter
-without reason.
-
-Default value: `$apache::version::default`
 
 ##### <a name="-apache--conf_dir"></a>`conf_dir`
 
@@ -371,7 +353,7 @@ If `false`, Puppet includes only the Apache modules required to make the HTTP da
 on your operating system, and you can declare any other modules separately using the
 `apache::mod::<MODULE NAME>` class or `apache::mod` defined type.<br />
 If `true`, Puppet installs additional modules, depending on the operating system and
-the values of `apache_version` and `mpm_module` parameters. Because these lists of
+the value of the `mpm_module` parameter. Because these lists of
 modules can change frequently, consult the Puppet module's code for up-to-date lists.<br />
 If this parameter contains an array, Puppet instead enables all passed Apache modules.
 
@@ -761,7 +743,7 @@ Default value: `$apache::params::mod_packages`
 
 ##### <a name="-apache--mpm_module"></a>`mpm_module`
 
-Data type: `Variant[Boolean, String]`
+Data type: `Variant[Boolean, Enum['event', 'itk', 'peruser', 'prefork', 'worker']]`
 
 Determines which [multi-processing module](https://httpd.apache.org/docs/current/mpm.html) (MPM) is loaded and configured for the
 HTTPD process. Valid values are: `event`, `itk`, `peruser`, `prefork`, `worker` or `false`.<br />
@@ -837,16 +819,6 @@ determines whether Puppet removes any configurations inside `vhost_dir` that are
 by Puppet.<br />
 Setting `purge_vhost_dir` to `false` is a stopgap measure to allow the apache module to
 coexist with existing or otherwise unmanaged configurations within `vhost_dir`.
-
-Default value: `undef`
-
-##### <a name="-apache--rewrite_lock"></a>`rewrite_lock`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-Allows setting a custom location for a rewrite lock - considered best practice if using
-a RewriteMap of type prg in the `rewrites` parameter of your virtual host. This parameter
-only applies to Apache version 2.2 or lower and is ignored on newer versions.
 
 Default value: `undef`
 
@@ -1223,18 +1195,9 @@ Installs and configures `mod_alias`.
 
 The following parameters are available in the `apache::mod::alias` class:
 
-* [`apache_version`](#-apache--mod--alias--apache_version)
 * [`icons_options`](#-apache--mod--alias--icons_options)
 * [`icons_path`](#-apache--mod--alias--icons_path)
 * [`icons_prefix`](#-apache--mod--alias--icons_prefix)
-
-##### <a name="-apache--mod--alias--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-The version of Apache, if not set will be retrieved from the init class.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--alias--icons_options"></a>`icons_options`
 
@@ -1422,7 +1385,7 @@ Default value: `undef`
 
 ##### <a name="-apache--mod--auth_cas--cas_timeout"></a>`cas_timeout`
 
-Data type: `Optional[Variant[Integer[0],String]]`
+Data type: `Optional[Integer[0]]`
 
 The hard limit, in seconds, for a mod_auth_cas session.
 
@@ -1430,7 +1393,7 @@ Default value: `undef`
 
 ##### <a name="-apache--mod--auth_cas--cas_idle_timeout"></a>`cas_idle_timeout`
 
-Data type: `Optional[Variant[Integer[0],String]]`
+Data type: `Optional[Integer[0]]`
 
 The limit, in seconds, of how long a mod_auth_cas session can be idle.
 
@@ -1660,20 +1623,6 @@ Installs `mod_authn_core`.
   * https://httpd.apache.org/docs/current/mod/mod_authn_core.html
     * for additional documentation.
 
-#### Parameters
-
-The following parameters are available in the `apache::mod::authn_core` class:
-
-* [`apache_version`](#-apache--mod--authn_core--apache_version)
-
-##### <a name="-apache--mod--authn_core--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-The version of apache being run.
-
-Default value: `$apache::apache_version`
-
 ### <a name="apache--mod--authn_dbd"></a>`apache::mod::authn_dbd`
 
 Installs `mod_authn_dbd`.
@@ -1806,28 +1755,6 @@ Installs `mod_authnz_pam`.
 * **See also**
   * https://www.adelton.com/apache/mod_authnz_pam
     * for additional documentation.
-
-### <a name="apache--mod--authz_default"></a>`apache::mod::authz_default`
-
-Installs and configures `mod_authz_default`.
-
-* **See also**
-  * https://httpd.apache.org/docs/current/mod/mod_authz_default.html
-    * for additional documentation.
-
-#### Parameters
-
-The following parameters are available in the `apache::mod::authz_default` class:
-
-* [`apache_version`](#-apache--mod--authz_default--apache_version)
-
-##### <a name="-apache--mod--authz_default--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `$apache::apache_version`
 
 ### <a name="apache--mod--authz_groupfile"></a>`apache::mod::authz_groupfile`
 
@@ -2018,20 +1945,6 @@ Installs and configures `mod_data`.
   * https://httpd.apache.org/docs/current/mod/mod_data.html
     * for additional documentation.
 
-#### Parameters
-
-The following parameters are available in the `apache::mod::data` class:
-
-* [`apache_version`](#-apache--mod--data--apache_version)
-
-##### <a name="-apache--mod--data--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `undef`
-
 ### <a name="apache--mod--dav"></a>`apache::mod::dav`
 
 Installs `mod_dav`.
@@ -2182,10 +2095,10 @@ Default value:
 
 Installs and configures `mod_disk_cache`.
 
-* **Note** Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+* **Note** On Apache 2.4, mod_cache_disk installed.
 
 * **See also**
-  * https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
+  * https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html
     * for additional documentation.
 
 #### Parameters
@@ -2204,8 +2117,7 @@ Defines the name of the directory on the disk to contain cache files.
 Default depends on the Apache version and operating system:
 - Debian: /var/cache/apache2/mod_cache_disk
 - FreeBSD: /var/cache/mod_cache_disk
-- Red Hat, Apache 2.4: /var/cache/httpd/proxy
-- Red Hat, Apache 2.2: /var/cache/mod_proxy
+- Red Hat: /var/cache/httpd/proxy
 
 Default value: `undef`
 
@@ -2297,15 +2209,12 @@ apache::mod::worker on the same server.
 The following parameters are available in the `apache::mod::event` class:
 
 * [`startservers`](#-apache--mod--event--startservers)
-* [`maxclients`](#-apache--mod--event--maxclients)
 * [`maxrequestworkers`](#-apache--mod--event--maxrequestworkers)
 * [`minsparethreads`](#-apache--mod--event--minsparethreads)
 * [`maxsparethreads`](#-apache--mod--event--maxsparethreads)
 * [`threadsperchild`](#-apache--mod--event--threadsperchild)
-* [`maxrequestsperchild`](#-apache--mod--event--maxrequestsperchild)
 * [`maxconnectionsperchild`](#-apache--mod--event--maxconnectionsperchild)
 * [`serverlimit`](#-apache--mod--event--serverlimit)
-* [`apache_version`](#-apache--mod--event--apache_version)
 * [`threadlimit`](#-apache--mod--event--threadlimit)
 * [`listenbacklog`](#-apache--mod--event--listenbacklog)
 
@@ -2317,14 +2226,6 @@ Sets the number of child server processes created at startup, via the module's `
 removes the parameter.
 
 Default value: `2`
-
-##### <a name="-apache--mod--event--maxclients"></a>`maxclients`
-
-Data type: `Variant[Integer, Boolean]`
-
-Apache 2.3.12 or older alias for the `MaxRequestWorkers` directive.
-
-Default value: `150`
 
 ##### <a name="-apache--mod--event--maxrequestworkers"></a>`maxrequestworkers`
 
@@ -2359,14 +2260,6 @@ Number of threads created by each child process.
 
 Default value: `25`
 
-##### <a name="-apache--mod--event--maxrequestsperchild"></a>`maxrequestsperchild`
-
-Data type: `Variant[Integer, Boolean]`
-
-Apache 2.3.8 or older alias for the `MaxConnectionsPerChild` directive.
-
-Default value: `0`
-
 ##### <a name="-apache--mod--event--maxconnectionsperchild"></a>`maxconnectionsperchild`
 
 Data type: `Optional[Variant[Integer, Boolean]]`
@@ -2382,14 +2275,6 @@ Data type: `Variant[Integer, Boolean]`
 Limits the configurable number of processes via the `ServerLimit` directive. Setting this to `false` removes the parameter.
 
 Default value: `25`
-
-##### <a name="-apache--mod--event--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--event--threadlimit"></a>`threadlimit`
 
@@ -2675,7 +2560,6 @@ The following parameters are available in the `apache::mod::http2` class:
 * [`h2_tls_warm_up_size`](#-apache--mod--http2--h2_tls_warm_up_size)
 * [`h2_upgrade`](#-apache--mod--http2--h2_upgrade)
 * [`h2_window_size`](#-apache--mod--http2--h2_window_size)
-* [`apache_version`](#-apache--mod--http2--apache_version)
 
 ##### <a name="-apache--mod--http2--h2_copy_files"></a>`h2_copy_files`
 
@@ -2826,14 +2710,6 @@ the amount of data the server has to buffer.
 
 Default value: `undef`
 
-##### <a name="-apache--mod--http2--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `undef`
-
 ### <a name="apache--mod--include"></a>`apache::mod::include`
 
 Installs `mod_include`.
@@ -2855,7 +2731,6 @@ Installs and configures `mod_info`.
 The following parameters are available in the `apache::mod::info` class:
 
 * [`allow_from`](#-apache--mod--info--allow_from)
-* [`apache_version`](#-apache--mod--info--apache_version)
 * [`restrict_access`](#-apache--mod--info--restrict_access)
 * [`info_path`](#-apache--mod--info--info_path)
 
@@ -2866,14 +2741,6 @@ Data type: `Array[Stdlib::IP::Address]`
 Allowlist of IPv4 or IPv6 addresses or ranges that can access the info path.
 
 Default value: `['127.0.0.1', '::1']`
-
-##### <a name="-apache--mod--info--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--info--restrict_access"></a>`restrict_access`
 
@@ -2921,7 +2788,6 @@ The following parameters are available in the `apache::mod::itk` class:
 * [`maxclients`](#-apache--mod--itk--maxclients)
 * [`maxrequestsperchild`](#-apache--mod--itk--maxrequestsperchild)
 * [`enablecapabilities`](#-apache--mod--itk--enablecapabilities)
-* [`apache_version`](#-apache--mod--itk--apache_version)
 
 ##### <a name="-apache--mod--itk--startservers"></a>`startservers`
 
@@ -2978,14 +2844,6 @@ Data type: `Optional[Variant[Boolean, String]]`
 Drop most root capabilities in the parent process, and instead run as the user given by the User/Group directives with some extra
 capabilities (in particular setuid). Somewhat more secure, but can cause problems when serving from filesystems that do not honor
 capabilities, such as NFS.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--itk--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -3642,7 +3500,6 @@ class { 'apache::mod::ldap':
 
 The following parameters are available in the `apache::mod::ldap` class:
 
-* [`apache_version`](#-apache--mod--ldap--apache_version)
 * [`package_name`](#-apache--mod--ldap--package_name)
 * [`ldap_trusted_global_cert_file`](#-apache--mod--ldap--ldap_trusted_global_cert_file)
 * [`ldap_trusted_global_cert_type`](#-apache--mod--ldap--ldap_trusted_global_cert_type)
@@ -3653,14 +3510,6 @@ The following parameters are available in the `apache::mod::ldap` class:
 * [`ldap_opcache_ttl`](#-apache--mod--ldap--ldap_opcache_ttl)
 * [`ldap_trusted_mode`](#-apache--mod--ldap--ldap_trusted_mode)
 * [`ldap_path`](#-apache--mod--ldap--ldap_path)
-
-##### <a name="-apache--mod--ldap--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--ldap--package_name"></a>`package_name`
 
@@ -4276,7 +4125,6 @@ The following parameters are available in the `apache::mod::pagespeed` class:
 * [`allow_pagespeed_message`](#-apache--mod--pagespeed--allow_pagespeed_message)
 * [`message_buffer_size`](#-apache--mod--pagespeed--message_buffer_size)
 * [`additional_configuration`](#-apache--mod--pagespeed--additional_configuration)
-* [`apache_version`](#-apache--mod--pagespeed--apache_version)
 * [`package_ensure`](#-apache--mod--pagespeed--package_ensure)
 
 ##### <a name="-apache--mod--pagespeed--inherit_vhost_config"></a>`inherit_vhost_config`
@@ -4545,14 +4393,6 @@ Data type: `Variant[Array, Hash]`
 Any additional configuration no included as it's own option
 
 Default value: `{}`
-
-##### <a name="-apache--mod--pagespeed--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--pagespeed--package_ensure"></a>`package_ensure`
 
@@ -5667,7 +5507,6 @@ The following parameters are available in the `apache::mod::prefork` class:
 * [`maxrequestworkers`](#-apache--mod--prefork--maxrequestworkers)
 * [`maxrequestsperchild`](#-apache--mod--prefork--maxrequestsperchild)
 * [`maxconnectionsperchild`](#-apache--mod--prefork--maxconnectionsperchild)
-* [`apache_version`](#-apache--mod--prefork--apache_version)
 * [`listenbacklog`](#-apache--mod--prefork--listenbacklog)
 
 ##### <a name="-apache--mod--prefork--startservers"></a>`startservers`
@@ -5734,14 +5573,6 @@ Limit on the number of connections that an individual child server will handle d
 
 Default value: `undef`
 
-##### <a name="-apache--mod--prefork--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
-
 ##### <a name="-apache--mod--prefork--listenbacklog"></a>`listenbacklog`
 
 Data type: `Integer`
@@ -5764,7 +5595,6 @@ The following parameters are available in the `apache::mod::proxy` class:
 
 * [`proxy_requests`](#-apache--mod--proxy--proxy_requests)
 * [`allow_from`](#-apache--mod--proxy--allow_from)
-* [`apache_version`](#-apache--mod--proxy--apache_version)
 * [`package_name`](#-apache--mod--proxy--package_name)
 * [`proxy_via`](#-apache--mod--proxy--proxy_via)
 * [`proxy_timeout`](#-apache--mod--proxy--proxy_timeout)
@@ -5780,17 +5610,9 @@ Default value: `'Off'`
 
 ##### <a name="-apache--mod--proxy--allow_from"></a>`allow_from`
 
-Data type: `Optional[String]`
+Data type: `Optional[Stdlib::IP::Address]`
 
 List of IPs allowed to access proxy.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--proxy--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
 
 Default value: `undef`
 
@@ -5812,7 +5634,7 @@ Default value: `'On'`
 
 ##### <a name="-apache--mod--proxy--proxy_timeout"></a>`proxy_timeout`
 
-Data type: `Optional[Variant[Integer[0],String]]`
+Data type: `Optional[Integer[0]]`
 
 Network timeout for proxied requests.
 
@@ -5849,7 +5671,6 @@ The following parameters are available in the `apache::mod::proxy_balancer` clas
 * [`manager`](#-apache--mod--proxy_balancer--manager)
 * [`manager_path`](#-apache--mod--proxy_balancer--manager_path)
 * [`allow_from`](#-apache--mod--proxy_balancer--allow_from)
-* [`apache_version`](#-apache--mod--proxy_balancer--apache_version)
 
 ##### <a name="-apache--mod--proxy_balancer--manager"></a>`manager`
 
@@ -5874,14 +5695,6 @@ Data type: `Array[Stdlib::IP::Address]`
 List of IPs from which the balancer manager can be accessed.
 
 Default value: `['127.0.0.1', '::1']`
-
-##### <a name="-apache--mod--proxy_balancer--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Version of Apache to install module on.
-
-Default value: `$apache::apache_version`
 
 ### <a name="apache--mod--proxy_connect"></a>`apache::mod::proxy_connect`
 
@@ -5968,7 +5781,6 @@ The following parameters are available in the `apache::mod::remoteip` class:
 * [`trusted_proxy`](#-apache--mod--remoteip--trusted_proxy)
 * [`trusted_proxy_ips`](#-apache--mod--remoteip--trusted_proxy_ips)
 * [`trusted_proxy_list`](#-apache--mod--remoteip--trusted_proxy_list)
-* [`apache_version`](#-apache--mod--remoteip--apache_version)
 
 ##### <a name="-apache--mod--remoteip--header"></a>`header`
 
@@ -6061,15 +5873,6 @@ Data type: `Optional[Stdlib::Absolutepath]`
 The path to a file containing a list of IP addresses, IP blocks or hostname
 that are trusted to set a valid value inside the specified header. See
 `$trusted_proxy` for details.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--remoteip--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-A version string used to validate that your apache version supports
-`mod_remoteip`. If not specified, `$::apache::apache_version` is used.
 
 Default value: `undef`
 
@@ -6652,7 +6455,6 @@ The following parameters are available in the `apache::mod::ssl` class:
 * [`ssl_stapling_return_errors`](#-apache--mod--ssl--ssl_stapling_return_errors)
 * [`ssl_mutex`](#-apache--mod--ssl--ssl_mutex)
 * [`ssl_reload_on_change`](#-apache--mod--ssl--ssl_reload_on_change)
-* [`apache_version`](#-apache--mod--ssl--apache_version)
 * [`package_name`](#-apache--mod--ssl--package_name)
 
 ##### <a name="-apache--mod--ssl--ssl_compression"></a>`ssl_compression`
@@ -6821,7 +6623,7 @@ Default value: `undef`
 
 ##### <a name="-apache--mod--ssl--ssl_mutex"></a>`ssl_mutex`
 
-Data type: `Optional[String]`
+Data type: `String`
 
 Configures mutex mechanism and lock file directory for all or specified mutexes.
 Default based on the OS and/or Apache version:
@@ -6829,7 +6631,7 @@ Default based on the OS and/or Apache version:
 - Debian/Ubuntu + Apache >= 2.4: 'default'.
 - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
-Default value: `undef`
+Default value: `'default'`
 
 ##### <a name="-apache--mod--ssl--ssl_reload_on_change"></a>`ssl_reload_on_change`
 
@@ -6838,14 +6640,6 @@ Data type: `Boolean`
 Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
 
 Default value: `false`
-
-##### <a name="-apache--mod--ssl--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--ssl--package_name"></a>`package_name`
 
@@ -6870,7 +6664,7 @@ Installs and configures `mod_status`.
 ```puppet
 # Simple usage allowing access from localhost and a private subnet
 class { 'apache::mod::status':
-  $allow_from => ['127.0.0.1', '10.10.10.10/24'],
+  $requires => 'ip 127.0.0.1 ::1 10.10.10.10/24',
 }
 ```
 
@@ -6878,21 +6672,9 @@ class { 'apache::mod::status':
 
 The following parameters are available in the `apache::mod::status` class:
 
-* [`allow_from`](#-apache--mod--status--allow_from)
 * [`requires`](#-apache--mod--status--requires)
 * [`extended_status`](#-apache--mod--status--extended_status)
 * [`status_path`](#-apache--mod--status--status_path)
-* [`apache_version`](#-apache--mod--status--apache_version)
-
-##### <a name="-apache--mod--status--allow_from"></a>`allow_from`
-
-Data type: `Optional[Array]`
-
-Array of hosts, ip addresses, partial network numbers or networks, in CIDR notation specifying what hosts can view the special
-/server-status URL.  Defaults to ['127.0.0.1', '::1'].
-> Creates Apache < 2.4 directive "Allow from".
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--status--requires"></a>`requires`
 
@@ -6910,7 +6692,6 @@ A Variant type that can be:
   - 'enforce' - Value => String 'Any', 'All' or 'None'
     This encloses "Require" directives in "<Require(Any|All|None)>" block
     Optional - If unspecified, "Require" directives follow current flow
-> Creates Apache >= 2.4 directives "Require"
 
 Default value: `undef`
 
@@ -6929,14 +6710,6 @@ Data type: `String`
 Path assigned to the Location directive which defines the URL to access the server status.
 
 Default value: `'/server-status'`
-
-##### <a name="-apache--mod--status--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
 
 ### <a name="apache--mod--suexec"></a>`apache::mod::suexec`
 
@@ -6962,7 +6735,6 @@ The following parameters are available in the `apache::mod::userdir` class:
 * [`dir`](#-apache--mod--userdir--dir)
 * [`userdir`](#-apache--mod--userdir--userdir)
 * [`disable_root`](#-apache--mod--userdir--disable_root)
-* [`apache_version`](#-apache--mod--userdir--apache_version)
 * [`path`](#-apache--mod--userdir--path)
 * [`overrides`](#-apache--mod--userdir--overrides)
 * [`options`](#-apache--mod--userdir--options)
@@ -7000,14 +6772,6 @@ Data type: `Boolean`
 Toggles whether to allow use of root directory.
 
 Default value: `true`
-
-##### <a name="-apache--mod--userdir--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--userdir--path"></a>`path`
 
@@ -7048,28 +6812,6 @@ Data type: `Optional[String]`
 Custom configuration to be added to userdir.conf
 
 Default value: `undef`
-
-### <a name="apache--mod--version"></a>`apache::mod::version`
-
-Installs `mod_version`.
-
-* **See also**
-  * https://httpd.apache.org/docs/current/mod/mod_version.html
-    * for additional documentation.
-
-#### Parameters
-
-The following parameters are available in the `apache::mod::version` class:
-
-* [`apache_version`](#-apache--mod--version--apache_version)
-
-##### <a name="-apache--mod--version--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `$apache::apache_version`
 
 ### <a name="apache--mod--vhost_alias"></a>`apache::mod::vhost_alias`
 
@@ -7114,7 +6856,6 @@ Installs and manages the MPM `worker`.
 The following parameters are available in the `apache::mod::worker` class:
 
 * [`startservers`](#-apache--mod--worker--startservers)
-* [`maxclients`](#-apache--mod--worker--maxclients)
 * [`minsparethreads`](#-apache--mod--worker--minsparethreads)
 * [`maxsparethreads`](#-apache--mod--worker--maxsparethreads)
 * [`threadsperchild`](#-apache--mod--worker--threadsperchild)
@@ -7122,7 +6863,6 @@ The following parameters are available in the `apache::mod::worker` class:
 * [`serverlimit`](#-apache--mod--worker--serverlimit)
 * [`threadlimit`](#-apache--mod--worker--threadlimit)
 * [`listenbacklog`](#-apache--mod--worker--listenbacklog)
-* [`apache_version`](#-apache--mod--worker--apache_version)
 * [`maxrequestworkers`](#-apache--mod--worker--maxrequestworkers)
 
 ##### <a name="-apache--mod--worker--startservers"></a>`startservers`
@@ -7132,17 +6872,6 @@ Data type: `Integer`
 The number of child server processes created on startup
 
 Default value: `2`
-
-##### <a name="-apache--mod--worker--maxclients"></a>`maxclients`
-
-Data type: `Integer`
-
-The max number of simultaneous requests that will be served.
-This is the old name and is still supported. The new name is
-MaxRequestWorkers as of 2.3.13.
-If maxrequestworkers is set, this value is ignored.
-
-Default value: `150`
 
 ##### <a name="-apache--mod--worker--minsparethreads"></a>`minsparethreads`
 
@@ -7207,22 +6936,13 @@ Maximum length of the queue of pending connections.
 
 Default value: `511`
 
-##### <a name="-apache--mod--worker--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Used to verify that the Apache version you have requested is compatible with the module.
-
-Default value: `undef`
-
 ##### <a name="-apache--mod--worker--maxrequestworkers"></a>`maxrequestworkers`
 
-Data type: `Optional[Integer]`
+Data type: `Integer`
 
 Maximum number of connections that will be processed simultaneously
-if set, maxclients is ignored
 
-Default value: `undef`
+Default value: `150`
 
 ### <a name="apache--mod--wsgi"></a>`apache::mod::wsgi`
 
@@ -7903,7 +7623,6 @@ class { 'apache':
 
 The following parameters are available in the `apache::vhost` defined type:
 
-* [`apache_version`](#-apache--vhost--apache_version)
 * [`access_log`](#-apache--vhost--access_log)
 * [`access_log_env_var`](#-apache--vhost--access_log_env_var)
 * [`access_log_file`](#-apache--vhost--access_log_file)
@@ -8146,14 +7865,6 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`mdomain`](#-apache--vhost--mdomain)
 * [`proxy_requests`](#-apache--vhost--proxy_requests)
 * [`userdir`](#-apache--vhost--userdir)
-
-##### <a name="-apache--vhost--apache_version"></a>`apache_version`
-
-Data type: `Optional[String]`
-
-Apache's version number as a string, such as '2.2' or '2.4'.
-
-Default value: `$apache::apache_version`
 
 ##### <a name="-apache--vhost--access_log"></a>`access_log`
 
@@ -11352,52 +11063,6 @@ supports enabling or disabling the directive, but not specifying a custom list
 of status codes. See [ProxyErrorOverride](https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxyerroroverride) for details.
 
 Default value: `false`
-
-## Resource types
-
-### <a name="a2mod"></a>`a2mod`
-
-Manage Apache 2 modules
-
-#### Properties
-
-The following properties are available in the `a2mod` type.
-
-##### `ensure`
-
-Valid values: `present`, `absent`
-
-The basic property that the resource should be in.
-
-Default value: `present`
-
-#### Parameters
-
-The following parameters are available in the `a2mod` type.
-
-* [`identifier`](#-a2mod--identifier)
-* [`lib`](#-a2mod--lib)
-* [`name`](#-a2mod--name)
-* [`provider`](#-a2mod--provider)
-
-##### <a name="-a2mod--identifier"></a>`identifier`
-
-Module identifier string used by LoadModule. Default: module-name_module
-
-##### <a name="-a2mod--lib"></a>`lib`
-
-The name of the .so library to be loaded
-
-##### <a name="-a2mod--name"></a>`name`
-
-namevar
-
-The name of the module to be managed
-
-##### <a name="-a2mod--provider"></a>`provider`
-
-The specific backend to use for this `a2mod` resource. You will seldom need to specify this --- Puppet will usually
-discover the appropriate provider for your platform.
 
 ## Functions
 
