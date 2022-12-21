@@ -54,13 +54,13 @@
     <%- end -%>
     SecArgumentSeparator &
     SecCookieFormat 0
-<%- if scope.lookupvar('::osfamily') == 'Debian' -%>
+<%- if scope['os::family'] == 'Debian' -%>
     SecDebugLog <%= @logroot %>/modsec_debug.log
     SecAuditLog <%= @logroot %>/modsec_audit.log
     SecTmpDir /var/cache/modsecurity
     SecDataDir /var/cache/modsecurity
     SecUploadDir /var/cache/modsecurity
-<%- elsif scope.lookupvar('::osfamily') == 'Suse' -%>
+<%- elsif scope['os::family'] == 'Suse' -%>
     SecDebugLog /var/log/apache2/modsec_debug.log
     SecAuditLog /var/log/apache2/modsec_audit.log
     SecTmpDir /var/lib/mod_security
