@@ -2137,14 +2137,16 @@ define apache::vhost (
   if $directories {
     $_directories = $directories
   } elsif $docroot {
-    $_directories = [{
-      provider       => 'directory',
-      path           => $docroot,
-      options        => $options,
-      allow_override => $override,
-      directoryindex => $directoryindex,
-      require        => 'all granted',
-    }]
+    $_directories = [
+      {
+        provider       => 'directory',
+        path           => $docroot,
+        options        => $options,
+        allow_override => $override,
+        directoryindex => $directoryindex,
+        require        => 'all granted',
+      }
+    ]
   } else {
     $_directories = undef
   }
