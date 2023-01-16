@@ -902,6 +902,113 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+        context 'vhost with proxy_add_headers true' do
+          let :params do
+            {
+              'docroot'                     => '/var/www/foo',
+              'manage_docroot'              => false,
+              'virtual_docroot'             => true,
+              'virtual_use_default_docroot' => false,
+              'port'                        => 8080,
+              'ip'                          => '127.0.0.1',
+              'ip_based'                    => true,
+              'add_listen'                  => false,
+              'serveradmin'                 => 'foo@localhost',
+              'priority'                    => 30,
+              'default_vhost'               => true,
+              'servername'                  => 'example.com',
+              'serveraliases'               => ['test-example.com'],
+              'options'                     => ['MultiView'],
+              'override'                    => ['All'],
+              'directoryindex'              => 'index.html',
+              'vhost_name'                  => 'test',
+              'proxy_add_headers'           => true,
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders On}) }
+        end
+        context 'vhost with proxy_add_headers false' do
+          let :params do
+            {
+              'docroot'                     => '/var/www/foo',
+              'manage_docroot'              => false,
+              'virtual_docroot'             => true,
+              'virtual_use_default_docroot' => false,
+              'port'                        => 8080,
+              'ip'                          => '127.0.0.1',
+              'ip_based'                    => true,
+              'add_listen'                  => false,
+              'serveradmin'                 => 'foo@localhost',
+              'priority'                    => 30,
+              'default_vhost'               => true,
+              'servername'                  => 'example.com',
+              'serveraliases'               => ['test-example.com'],
+              'options'                     => ['MultiView'],
+              'override'                    => ['All'],
+              'directoryindex'              => 'index.html',
+              'vhost_name'                  => 'test',
+              'proxy_add_headers'           => false,
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders Off}) }
+        end
+        context 'vhost without proxy' do
+          let :params do
+            {
+              'docroot'                     => '/var/www/foo',
+              'manage_docroot'              => false,
+              'virtual_docroot'             => true,
+              'virtual_use_default_docroot' => false,
+              'port'                        => 8080,
+              'ip'                          => '127.0.0.1',
+              'ip_based'                    => true,
+              'add_listen'                  => false,
+              'serveradmin'                 => 'foo@localhost',
+              'priority'                    => 30,
+              'default_vhost'               => true,
+              'servername'                  => 'example.com',
+              'serveraliases'               => ['test-example.com'],
+              'options'                     => ['MultiView'],
+              'override'                    => ['All'],
+              'directoryindex'              => 'index.html',
+              'vhost_name'                  => 'test',
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy') }
+        end
+        context 'vhost without proxy_add_headers' do
+          let :params do
+            {
+              'docroot'                     => '/var/www/foo',
+              'manage_docroot'              => false,
+              'virtual_docroot'             => true,
+              'virtual_use_default_docroot' => false,
+              'port'                        => 8080,
+              'ip'                          => '127.0.0.1',
+              'ip_based'                    => true,
+              'add_listen'                  => false,
+              'serveradmin'                 => 'foo@localhost',
+              'priority'                    => 30,
+              'default_vhost'               => true,
+              'servername'                  => 'example.com',
+              'serveraliases'               => ['test-example.com'],
+              'options'                     => ['MultiView'],
+              'override'                    => ['All'],
+              'directoryindex'              => 'index.html',
+              'vhost_name'                  => 'test',
+              'proxy_preserve_host'         => true,
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders}) }
+        end
         context 'vhost with scheme and port in servername and use_servername_for_filenames' do
           let :params do
             {

@@ -2137,14 +2137,16 @@ define apache::vhost (
   if $directories {
     $_directories = $directories
   } elsif $docroot {
-    $_directories = [{
-      provider       => 'directory',
-      path           => $docroot,
-      options        => $options,
-      allow_override => $override,
-      directoryindex => $directoryindex,
-      require        => 'all granted',
-    }]
+    $_directories = [
+      {
+        provider       => 'directory',
+        path           => $docroot,
+        options        => $options,
+        allow_override => $override,
+        directoryindex => $directoryindex,
+        require        => 'all granted',
+      }
+    ]
   } else {
     $_directories = undef
   }
@@ -2448,7 +2450,7 @@ define apache::vhost (
   # - $proxy_preserve_host
   # - $proxy_add_headers
   # - $no_proxy_uris
-  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host) and $ensure == 'present' {
+  if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host or ($proxy_add_headers =~ NotUndef)) and $ensure == 'present' {
     include apache::mod::proxy_http
 
     concat::fragment { "${name}-proxy":

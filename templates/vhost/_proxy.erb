@@ -1,4 +1,4 @@
-<% if @proxy_dest or @proxy_pass or @proxy_pass_match or @proxy_dest_match -%>
+<% if @proxy_dest or @proxy_pass or @proxy_pass_match or @proxy_dest_match or defined?(@proxy_add_headers) -%>
 
   ## Proxy rules
   ProxyRequests <%= scope.call_function('apache::bool2httpd', @proxy_requests) %>
