@@ -120,7 +120,7 @@
 [Hash]: https://docs.puppet.com/puppet/latest/lang_data_hash.html
 [`HttpProtocolOptions`]: http://httpd.apache.org/docs/current/mod/core.html#httpprotocoloptions
 
-[IAC Team]: https://puppetlabs.github.io/iac/
+[CAT Team]: https://puppetlabs.github.io/content-and-tooling-team/
 [`IncludeOptional`]: https://httpd.apache.org/docs/current/mod/core.html#includeoptional
 [`Include`]: https://httpd.apache.org/docs/current/mod/core.html#include
 [interval syntax]: https://httpd.apache.org/docs/current/mod/mod_expires.html#AltSyn
@@ -904,6 +904,6 @@ When set, all exclusions will be ignored.
 #### Test Support Lifecycle
 The puppetlabs-apache module supports a large number of compatible platforms and [Apache Modules][Apache modules].
 As a result, Apache Module tests can fail because a package or package dependency has been removed from a Linux distribution repository.
-The [IAC Team][IAC Team] will try to resolve these issues and keep instructions updated, but due to limited resources this won’t always be possible.
+The [CAT Team][CAT Team] will try to resolve these issues and keep instructions updated, but due to limited resources this won’t always be possible.
 In these cases, we will exclude test(s) from certain platforms.
-As always, we welcome help from our community members, and the IAC team is here to assist and answer questions.
+As always, we welcome help from our community members, and the CAT(Content & Tooling) team is here to assist and answer questions.
