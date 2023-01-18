@@ -10,6 +10,7 @@ Gemfile:
   optional:
     ":development":
     - gem: github_changelog_generator
+      version: '= 1.15.2'
 spec/spec_helper.rb:
   mock_with: ":rspec"
   coverage_report: true
