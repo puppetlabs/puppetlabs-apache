@@ -464,7 +464,7 @@
       <%- directory_proxy_pass.flatten.compact.each do |proxy| -%>
     <%= proxy_pass -%> <%= proxy['url'] -%>
         <%- if proxy['params'] -%>
-          <%- proxy['params'].keys.sort.each do |key| -%> <%= key %>=<%= proxy['params'][key] -%>
+          <%- proxy['params'].sort.each do |key, value| -%> <%= key %>=<%= value -%>
           <%- end -%>
         <%- end -%>
         <%- if proxy['keywords'] %> <%= proxy['keywords'].join(' ') -%>
