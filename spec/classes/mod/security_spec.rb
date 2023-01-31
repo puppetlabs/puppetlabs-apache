@@ -10,6 +10,13 @@ describe 'apache::mod::security', type: :class do
       end
 
       case facts[:os]['family']
+      when 'Suse'
+        context 'on Suse based systems' do
+          it {
+            is_expected.to contain_file('security.conf')
+              .with_content(%r{^\s+SecTmpDir /var/lib/mod_security$})
+          }
+        end
       when 'RedHat'
         context 'on RedHat based systems' do
           it {
@@ -42,6 +49,7 @@ describe 'apache::mod::security', type: :class do
               .with_content(%r{^\s+SecAuditLogType Serial$})
               .with_content(%r{^\s+SecDebugLog /var/log/httpd/modsec_debug.log$})
               .with_content(%r{^\s+SecAuditLog /var/log/httpd/modsec_audit.log$})
+              .with_content(%r{^\s+SecTmpDir /var/lib/mod_security$})
           }
           it {
             is_expected.to contain_file('/etc/httpd/modsecurity.d').with(
@@ -211,6 +219,7 @@ describe 'apache::mod::security', type: :class do
               .with_content(%r{^\s+SecAuditLogType Serial$})
               .with_content(%r{^\s+SecDebugLog /var/log/apache2/modsec_debug.log$})
               .with_content(%r{^\s+SecAuditLog /var/log/apache2/modsec_audit.log$})
+              .with_content(%r{^\s+SecTmpDir /var/cache/modsecurity$})
           }
           it {
             is_expected.to contain_file('/etc/modsecurity').with(
