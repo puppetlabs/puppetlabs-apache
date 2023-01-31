@@ -651,7 +651,7 @@ class apache::params inherits apache::version {
     $modsec_version       = 1
     $modsec_crs_package   = undef
     $modsec_crs_path      = undef
-    $modsec_default_rules = undef
+    $modsec_default_rules = []
     $modsec_dir           = '/etc/apache2/modsecurity'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
