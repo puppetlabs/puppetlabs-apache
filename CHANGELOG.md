@@ -2,7 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v9.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.0.1) (2022-12-21)
+## [v9.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.0) (2023-01-31)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.0.1...v9.1.0)
+
+### Added
+
+- vhost: Make ProxyAddHeaders configureable [\#2365](https://github.com/puppetlabs/puppetlabs-apache/pull/2365) ([bastelfreak](https://github.com/bastelfreak))
+
+### Fixed
+
+- \(\#2374\) Suse: Switch modsec\_default\_rules to array  [\#2375](https://github.com/puppetlabs/puppetlabs-apache/pull/2375) ([bastelfreak](https://github.com/bastelfreak))
+-  security{,\_crs}.conf: switch to structured facts [\#2373](https://github.com/puppetlabs/puppetlabs-apache/pull/2373) ([bastelfreak](https://github.com/bastelfreak))
+- Simplify templates by reusing bool2httpd [\#2366](https://github.com/puppetlabs/puppetlabs-apache/pull/2366) ([ekohl](https://github.com/ekohl))
+- disable::mpm\_event: Fix module deactivation [\#2349](https://github.com/puppetlabs/puppetlabs-apache/pull/2349) ([bastelfreak](https://github.com/bastelfreak))
+- Simplify templates by reusing methods [\#2344](https://github.com/puppetlabs/puppetlabs-apache/pull/2344) ([ekohl](https://github.com/ekohl))
+
+## [v9.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.0.1) (2022-12-22)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.0.0...v9.0.1)
 
@@ -42,7 +58,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- disable::mpm\_event: Fix module deactivation [\#2349](https://github.com/puppetlabs/puppetlabs-apache/pull/2349) ([bastelfreak](https://github.com/bastelfreak))
 - remove \_module from apache::mod::unique\_id name. [\#2339](https://github.com/puppetlabs/puppetlabs-apache/pull/2339) ([mdklapwijk](https://github.com/mdklapwijk))
 
 ## [v8.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.4.0) (2022-11-15)
@@ -72,7 +87,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 
 - Make serveradmin an optional parameter and use it [\#2338](https://github.com/puppetlabs/puppetlabs-apache/pull/2338) ([ekohl](https://github.com/ekohl))
-- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#2326](https://github.com/puppetlabs/puppetlabs-apache/pull/2326) ([david22swan](https://github.com/david22swan))
 - pdksync - \(CONT-130\) Dropping Support for Debian 9 [\#2322](https://github.com/puppetlabs/puppetlabs-apache/pull/2322) ([jordanbreen28](https://github.com/jordanbreen28))
 - fix directory empty options if an empty array is being used [\#2312](https://github.com/puppetlabs/puppetlabs-apache/pull/2312) ([bovy89](https://github.com/bovy89))
 
@@ -82,6 +96,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
+- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#2326](https://github.com/puppetlabs/puppetlabs-apache/pull/2326) ([david22swan](https://github.com/david22swan))
 - \(maint\) Codebase Hardening [\#2313](https://github.com/puppetlabs/puppetlabs-apache/pull/2313) ([david22swan](https://github.com/david22swan))
 
 ## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.0) (2022-09-13)
@@ -158,7 +173,7 @@ All notable changes to this project will be documented in this file. The format 
 - Allow vhosts to have a string priority again [\#2275](https://github.com/puppetlabs/puppetlabs-apache/pull/2275) ([ekohl](https://github.com/ekohl))
 - Remove duplicate SecDefaultAction in CRS template [\#2271](https://github.com/puppetlabs/puppetlabs-apache/pull/2271) ([Vincevrp](https://github.com/Vincevrp))
 - Better data types on apache::vhost parameters [\#2252](https://github.com/puppetlabs/puppetlabs-apache/pull/2252) ([ekohl](https://github.com/ekohl))
-- Update $timeout to `Variant[Integer,String]` [\#2242](https://github.com/puppetlabs/puppetlabs-apache/pull/2242) ([david22swan](https://github.com/david22swan))
+- Update $timeout to `Variant\[Integer,String\]` [\#2242](https://github.com/puppetlabs/puppetlabs-apache/pull/2242) ([david22swan](https://github.com/david22swan))
 - Let limitreqfieldsize and limitreqfields be integers [\#2240](https://github.com/puppetlabs/puppetlabs-apache/pull/2240) ([traylenator](https://github.com/traylenator))
 - Drop support for Fedora \< 18 [\#2238](https://github.com/puppetlabs/puppetlabs-apache/pull/2238) ([ekohl](https://github.com/ekohl))
 - Restructure MPM disabling [\#2227](https://github.com/puppetlabs/puppetlabs-apache/pull/2227) ([ekohl](https://github.com/ekohl))
@@ -178,13 +193,13 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - pdksync - \(IAC-1751\) - Add Support for Rocky 8 [\#2196](https://github.com/puppetlabs/puppetlabs-apache/pull/2196) ([david22swan](https://github.com/david22swan))
-- Allow `docroot` with `mod_vhost_alias` `virtual_docroot` [\#2195](https://github.com/puppetlabs/puppetlabs-apache/pull/2195) ([yakatz](https://github.com/yakatz))
+- Allow `docroot` with `mod\_vhost\_alias` `virtual\_docroot` [\#2195](https://github.com/puppetlabs/puppetlabs-apache/pull/2195) ([yakatz](https://github.com/yakatz))
 
 ### Fixed
 
 - Restore Ubuntu 14.04 support in suphp [\#2193](https://github.com/puppetlabs/puppetlabs-apache/pull/2193) ([ekohl](https://github.com/ekohl))
 - add double quote on scope parameter [\#2191](https://github.com/puppetlabs/puppetlabs-apache/pull/2191) ([aba-rechsteiner](https://github.com/aba-rechsteiner))
-- Debian 11: fix typo in `versioncmp()` / set default php to 7.4 [\#2186](https://github.com/puppetlabs/puppetlabs-apache/pull/2186) ([bastelfreak](https://github.com/bastelfreak))
+- Debian 11: fix typo in `versioncmp\(\)` / set default php to 7.4 [\#2186](https://github.com/puppetlabs/puppetlabs-apache/pull/2186) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v6.5.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.5.1) (2021-08-25)
 
@@ -225,10 +240,6 @@ All notable changes to this project will be documented in this file. The format 
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/kps_ssl_reload_and_cache_disk_combined_tag...v6.3.0)
 
-### Added
-
-- The default disk\_cache.conf.erb caches everything.  [\#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
-
 ### Fixed
 
 - Update the default version of Apache for Amazon Linux 2 [\#2158](https://github.com/puppetlabs/puppetlabs-apache/pull/2158) ([turnopil](https://github.com/turnopil))
@@ -237,6 +248,10 @@ All notable changes to this project will be documented in this file. The format 
 ## [kps_ssl_reload_and_cache_disk_combined_tag](https://github.com/puppetlabs/puppetlabs-apache/tree/kps_ssl_reload_and_cache_disk_combined_tag) (2021-06-14)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v6.2.0...kps_ssl_reload_and_cache_disk_combined_tag)
+
+### Added
+
+- The default disk\_cache.conf.erb caches everything.  [\#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
 
 ## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) (2021-05-24)
 
@@ -304,7 +319,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
-- \(MODULES-10887\) Set `use_servername_for_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
+- \(MODULES-10887\) Set `use\_servername\_for\_filenames` for defaults [\#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
 - pdksync - \(feat\) Add support for Puppet 7 [\#2101](https://github.com/puppetlabs/puppetlabs-apache/pull/2101) ([daianamezdrea](https://github.com/daianamezdrea))
 - \(feat\) Add support for apreq2 MOD on Debian 9, 10 [\#2085](https://github.com/puppetlabs/puppetlabs-apache/pull/2085) ([TigerKriika](https://github.com/TigerKriika))
 
@@ -355,8 +370,8 @@ All notable changes to this project will be documented in this file. The format 
 
 - Allow IPv6 CIDRs for proxy\_protocol\_exceptions in mod remoteip [\#2033](https://github.com/puppetlabs/puppetlabs-apache/pull/2033) ([thechristschn](https://github.com/thechristschn))
 - \(IAC-746\) - Add ubuntu 20.04 support [\#2032](https://github.com/puppetlabs/puppetlabs-apache/pull/2032) ([david22swan](https://github.com/david22swan))
-- Replace legacy `bool2httpd()` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
-- Tidy up `pw_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
+- Replace legacy `bool2httpd\(\)` function with shim [\#2025](https://github.com/puppetlabs/puppetlabs-apache/pull/2025) ([alexjfisher](https://github.com/alexjfisher))
+- Tidy up `pw\_hash` function [\#2024](https://github.com/puppetlabs/puppetlabs-apache/pull/2024) ([alexjfisher](https://github.com/alexjfisher))
 - Replace validate\_apache\_loglevel\(\) with data type [\#2023](https://github.com/puppetlabs/puppetlabs-apache/pull/2023) ([alexjfisher](https://github.com/alexjfisher))
 - Add ProxyIOBufferSize option [\#2014](https://github.com/puppetlabs/puppetlabs-apache/pull/2014) ([jplindquist](https://github.com/jplindquist))
 - Add support for SetInputFilter directive [\#2007](https://github.com/puppetlabs/puppetlabs-apache/pull/2007) ([HoucemEddine](https://github.com/HoucemEddine))
