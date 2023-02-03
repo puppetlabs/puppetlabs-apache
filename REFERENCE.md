@@ -100,6 +100,7 @@ pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet
 * [`apache::mod::status`](#apache--mod--status): Installs and configures `mod_status`.
 * [`apache::mod::suexec`](#apache--mod--suexec): Installs `mod_suexec`.
 * [`apache::mod::userdir`](#apache--mod--userdir): Installs and configures `mod_userdir`.
+* [`apache::mod::version`](#apache--mod--version): Installs `mod_version`.
 * [`apache::mod::vhost_alias`](#apache--mod--vhost_alias): Installs Apache `mod_vhost_alias`.
 * [`apache::mod::watchdog`](#apache--mod--watchdog): Installs and configures `mod_watchdog`.
 * [`apache::mod::worker`](#apache--mod--worker): Installs and manages the MPM `worker`.
@@ -6812,6 +6813,14 @@ Data type: `Optional[String]`
 Custom configuration to be added to userdir.conf
 
 Default value: `undef`
+
+### <a name="apache--mod--version"></a>`apache::mod::version`
+
+Installs `mod_version`.
+
+* **See also**
+  * https://httpd.apache.org/docs/current/mod/mod_version.html
+    * for additional documentation.
 
 ### <a name="apache--mod--vhost_alias"></a>`apache::mod::vhost_alias`
 

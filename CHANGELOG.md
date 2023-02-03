@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.1.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.1) (2023-02-03)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.0...v9.1.1)
+
+### Fixed
+
+- \(BugFix\) Update OS Family comparison to correctly match [\#2381](https://github.com/puppetlabs/puppetlabs-apache/pull/2381) ([david22swan](https://github.com/david22swan))
+- Adding mod\_version module to be activated by default [\#2380](https://github.com/puppetlabs/puppetlabs-apache/pull/2380) ([Q-Storm](https://github.com/Q-Storm))
+
 ## [v9.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.0) (2023-01-31)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.0.1...v9.1.0)
@@ -15,7 +24,6 @@ All notable changes to this project will be documented in this file. The format 
 - \(\#2374\) Suse: Switch modsec\_default\_rules to array  [\#2375](https://github.com/puppetlabs/puppetlabs-apache/pull/2375) ([bastelfreak](https://github.com/bastelfreak))
 -  security{,\_crs}.conf: switch to structured facts [\#2373](https://github.com/puppetlabs/puppetlabs-apache/pull/2373) ([bastelfreak](https://github.com/bastelfreak))
 - Simplify templates by reusing bool2httpd [\#2366](https://github.com/puppetlabs/puppetlabs-apache/pull/2366) ([ekohl](https://github.com/ekohl))
-- disable::mpm\_event: Fix module deactivation [\#2349](https://github.com/puppetlabs/puppetlabs-apache/pull/2349) ([bastelfreak](https://github.com/bastelfreak))
 - Simplify templates by reusing methods [\#2344](https://github.com/puppetlabs/puppetlabs-apache/pull/2344) ([ekohl](https://github.com/ekohl))
 
 ## [v9.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.0.1) (2022-12-22)
@@ -58,6 +66,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
+- disable::mpm\_event: Fix module deactivation [\#2349](https://github.com/puppetlabs/puppetlabs-apache/pull/2349) ([bastelfreak](https://github.com/bastelfreak))
 - remove \_module from apache::mod::unique\_id name. [\#2339](https://github.com/puppetlabs/puppetlabs-apache/pull/2339) ([mdklapwijk](https://github.com/mdklapwijk))
 
 ## [v8.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.4.0) (2022-11-15)
@@ -87,6 +96,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 
 - Make serveradmin an optional parameter and use it [\#2338](https://github.com/puppetlabs/puppetlabs-apache/pull/2338) ([ekohl](https://github.com/ekohl))
+- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#2326](https://github.com/puppetlabs/puppetlabs-apache/pull/2326) ([david22swan](https://github.com/david22swan))
 - pdksync - \(CONT-130\) Dropping Support for Debian 9 [\#2322](https://github.com/puppetlabs/puppetlabs-apache/pull/2322) ([jordanbreen28](https://github.com/jordanbreen28))
 - fix directory empty options if an empty array is being used [\#2312](https://github.com/puppetlabs/puppetlabs-apache/pull/2312) ([bovy89](https://github.com/bovy89))
 
@@ -96,7 +106,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- pdksync - \(CONT-189\) Remove support for RedHat6 / OracleLinux6 / Scientific6 [\#2326](https://github.com/puppetlabs/puppetlabs-apache/pull/2326) ([david22swan](https://github.com/david22swan))
 - \(maint\) Codebase Hardening [\#2313](https://github.com/puppetlabs/puppetlabs-apache/pull/2313) ([david22swan](https://github.com/david22swan))
 
 ## [v8.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.2.0) (2022-09-13)
@@ -179,7 +188,6 @@ All notable changes to this project will be documented in this file. The format 
 - Restructure MPM disabling [\#2227](https://github.com/puppetlabs/puppetlabs-apache/pull/2227) ([ekohl](https://github.com/ekohl))
 - pdksync - \(GH-iac-334\) Remove Support for Ubuntu 16.04 [\#2220](https://github.com/puppetlabs/puppetlabs-apache/pull/2220) ([david22swan](https://github.com/david22swan))
 - Drop Apache 2.2 support with Gentoo [\#2216](https://github.com/puppetlabs/puppetlabs-apache/pull/2216) ([ekohl](https://github.com/ekohl))
-- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#2213](https://github.com/puppetlabs/puppetlabs-apache/pull/2213) ([david22swan](https://github.com/david22swan))
 
 ## [v7.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v7.0.0) (2021-10-11)
 
@@ -197,6 +205,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
+- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#2213](https://github.com/puppetlabs/puppetlabs-apache/pull/2213) ([david22swan](https://github.com/david22swan))
 - Restore Ubuntu 14.04 support in suphp [\#2193](https://github.com/puppetlabs/puppetlabs-apache/pull/2193) ([ekohl](https://github.com/ekohl))
 - add double quote on scope parameter [\#2191](https://github.com/puppetlabs/puppetlabs-apache/pull/2191) ([aba-rechsteiner](https://github.com/aba-rechsteiner))
 - Debian 11: fix typo in `versioncmp\(\)` / set default php to 7.4 [\#2186](https://github.com/puppetlabs/puppetlabs-apache/pull/2186) ([bastelfreak](https://github.com/bastelfreak))
