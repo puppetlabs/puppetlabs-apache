@@ -292,6 +292,8 @@
 - Listened-to ports
 - `/etc/make.conf` on FreeBSD and Gentoo
 
+Paula adding test
+
 On Gentoo, this module depends on the [`gentoo/puppet-portage`][] Puppet module. Note that while several options apply or enable certain features and settings for Gentoo, it is not a [supported operating system][] for this module.
 
 > **Warning**: This module modifies Apache configuration files and directories and purges any configuration not managed by Puppet. Apache configuration should be managed by Puppet, as unmanaged configuration files can cause unexpected failures.
