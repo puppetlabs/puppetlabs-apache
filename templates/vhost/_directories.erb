@@ -1,6 +1,10 @@
 
   <%- scope.setvar('_template_scope', {}) -%>
+  <%- if @docroot -%>
   ## Directories, there should at least be a declaration for <%= @docroot %>
+  <%- else -%>
+  ## Directories
+  <%- end -%>
   <%- @_directories.each do |directory| -%>
     <%- if directory['path'] and directory['path'] != '' -%>
       <%- if directory['provider'] and directory['provider'].match('(directory|location|files|proxy)') -%>
