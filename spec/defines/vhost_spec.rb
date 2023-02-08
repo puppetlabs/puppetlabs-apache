@@ -1814,7 +1814,7 @@ describe 'apache::vhost', type: :define do
             end
 
             it {
-              is_expected.to contain_concat__fragment('rspec.example.com-rewrite')
+              is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
                 .with_content(%r{^\s+RewriteOptions Inherit$})
                 .with_content(%r{^\s+RewriteEngine On$})
                 .with_content(%r{^\s+RewriteRule ^index\.html$ welcome.html$})
@@ -1829,7 +1829,7 @@ describe 'apache::vhost', type: :define do
             end
 
             it {
-              is_expected.to contain_concat__fragment('rspec.example.com-rewrite')
+              is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
                 .with_content(%r{^\s+RewriteEngine On$})
                 .with_content(%r{^\s+RewriteRule ^index\.html$ welcome.html$})
                 .without(content: %r{^\s+RewriteOptions Inherit$})
