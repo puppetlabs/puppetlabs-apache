@@ -738,7 +738,6 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+RewriteOptions Inherit$})
               .with_content(%r{^\s+RewriteBase /})
               .with_content(%r{^\s+RewriteRule ^index\.html$ welcome.html$})
-            )
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
