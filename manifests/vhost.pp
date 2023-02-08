@@ -818,7 +818,7 @@
 #   These flags or values can be overwritten by a user or an application.
 #   Within a vhost declaration:
 #   ``` puppet
-#     php_values    => [ 'include_path ".:/usr/local/example-app/include"' ],
+#     php_values    => { 'include_path' => '.:/usr/local/example-app/include' },
 #   ```
 #
 # @param php_flags
