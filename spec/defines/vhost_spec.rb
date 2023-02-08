@@ -1832,7 +1832,7 @@ describe 'apache::vhost', type: :define do
               is_expected.to contain_concat__fragment('rspec.example.com-rewrite')
                 .with_content(%r{^\s+RewriteEngine On$})
                 .with_content(%r{^\s+RewriteRule ^index\.html$ welcome.html$})
-                .without( content: %r{^\s+RewriteOptions Inherit$})
+                .without(content: %r{^\s+RewriteOptions Inherit$})
             }
           end
 
