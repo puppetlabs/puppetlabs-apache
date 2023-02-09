@@ -43,7 +43,7 @@ define apache::mpm (
   }
 
   case $facts['os']['family'] {
-    'debian': {
+    'Debian': {
       file { "${apache::mod_enable_dir}/${mpm}.conf":
         ensure  => link,
         target  => "${apache::mod_dir}/${mpm}.conf",
@@ -92,15 +92,15 @@ define apache::mpm (
       }
     }
 
-    'freebsd': {
+    'FreeBSD': {
       class { 'apache::package':
         mpm_module => $mpm,
       }
     }
-    'gentoo': {
+    'Gentoo': {
       # so we don't fail
     }
-    'redhat': {
+    'RedHat': {
       # so we don't fail
     }
     'Suse': {

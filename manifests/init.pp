@@ -546,7 +546,7 @@ class apache (
   Optional[Boolean] $protocols_honor_order                                   = undef,
 ) inherits apache::params {
   if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
-    # On redhat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
+    # On RedHat 7 the ssl.conf lives in /etc/httpd/conf.d (the confd_dir)
     # when all other module configs live in /etc/httpd/conf.modules.d (the
     # mod_dir). On all other platforms and versions, ssl.conf lives in the
     # mod_dir. This should maintain the expected location of ssl.conf
@@ -731,7 +731,7 @@ class apache (
   }
 
   if $apache::conf_dir and $apache::params::conf_file {
-    if $facts['os']['family'] == 'gentoo' {
+    if $facts['os']['family'] == 'Gentoo' {
       $error_documents_path = '/usr/share/apache2/error'
       if $default_mods =~ Array {
         if defined('apache::mod::ssl') {
@@ -755,7 +755,7 @@ class apache (
     }
 
     $apxs_workaround = $facts['os']['family'] ? {
-      'freebsd' => true,
+      'FreeBSD' => true,
       default   => false
     }
 
@@ -837,7 +837,7 @@ class apache (
       use_port_for_filenames       => true,
     }
     $ssl_access_log_file = $facts['os']['family'] ? {
-      'freebsd' => $access_log_file,
+      'FreeBSD' => $access_log_file,
       default   => "ssl_${access_log_file}",
     }
     ::apache::vhost { 'default-ssl':

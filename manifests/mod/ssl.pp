@@ -126,10 +126,10 @@ class apache::mod::ssl (
 
   if $stapling_cache =~ Undef {
     $_stapling_cache = $facts['os']['family'] ? {
-      'debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
-      'redhat'  => '/run/httpd/ssl_stapling(32768)',
-      'freebsd' => '/var/run/ssl_stapling(32768)',
-      'gentoo'  => '/var/run/ssl_stapling(32768)',
+      'Debian'  => "\${APACHE_RUN_DIR}/ocsp(32768)",
+      'edHat'  => '/run/httpd/ssl_stapling(32768)',
+      'FreeBSD' => '/var/run/ssl_stapling(32768)',
+      'Gentoo'  => '/var/run/ssl_stapling(32768)',
       'Suse'    => '/var/lib/apache2/ssl_stapling(32768)',
     }
   } else {

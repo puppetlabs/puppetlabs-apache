@@ -94,7 +94,7 @@ define apache::mod (
     # ordering, we ensure that our version of httpd.conf is reverted after
     # the module gets installed.
     $package_before = $facts['os']['family'] ? {
-      'freebsd' => [
+      'FreeBSD' => [
         File[$_loadfile_name],
         File["${apache::conf_dir}/${apache::params::conf_file}"]
       ],

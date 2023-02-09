@@ -33,11 +33,11 @@ class apache::mod::peruser (
 ) {
   include apache
   case $facts['os']['family'] {
-    'freebsd' : {
+    'FreeBSD' : {
       fail("Unsupported osfamily ${$facts['os']['family']}")
     }
     default: {
-      if $facts['os']['family'] == 'gentoo' {
+      if $facts['os']['family'] == 'Gentoo' {
         ::portage::makeconf { 'apache2_mpms':
           content => 'peruser',
         }

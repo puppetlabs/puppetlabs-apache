@@ -8,7 +8,7 @@ class apache::default_confd_files (
   # The rest of the conf.d/* files only get loaded if we want them
   if $all {
     case $facts['os']['family'] {
-      'freebsd': {
+      'FreeBSD': {
         include apache::confd::no_accf
       }
       default: {

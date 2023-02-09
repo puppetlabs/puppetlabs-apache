@@ -11,7 +11,7 @@ class apache::default_mods (
   # They are not configurable at this time, so we just include
   # them to make sure it works.
   case $facts['os']['family'] {
-    'redhat': {
+    'RedHat': {
       ::apache::mod { 'log_config': }
       if $facts['os']['name'] != 'Amazon' and $use_systemd {
         ::apache::mod { 'systemd': }
@@ -21,7 +21,7 @@ class apache::default_mods (
       }
       ::apache::mod { 'unixd': }
     }
-    'freebsd': {
+    'FreeBSD': {
       ::apache::mod { 'log_config': }
       ::apache::mod { 'unixd': }
     }
@@ -31,7 +31,7 @@ class apache::default_mods (
     default: {}
   }
   case $facts['os']['family'] {
-    'gentoo': {}
+    'Gentoo': {}
     default: {
       ::apache::mod { 'authz_host': }
     }
@@ -39,11 +39,11 @@ class apache::default_mods (
   # The rest of the modules only get loaded if we want all modules enabled
   if $all {
     case $facts['os']['family'] {
-      'debian': {
+      'Debian': {
         include apache::mod::authn_core
         include apache::mod::reqtimeout
       }
-      'redhat': {
+      'RedHat': {
         include apache::mod::actions
         include apache::mod::authn_core
         include apache::mod::cache
@@ -66,7 +66,7 @@ class apache::default_mods (
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
       }
-      'freebsd': {
+      'FreeBSD': {
         include apache::mod::actions
         include apache::mod::authn_core
         include apache::mod::cache
