@@ -19,8 +19,8 @@ class apache::mod::cgid {
   # Debian specifies it's cgid sock path, but RedHat uses the default value
   # with no config file
   $cgisock_path = $facts['os']['family'] ? {
-    'debian'  => "\${APACHE_RUN_DIR}/cgisock",
-    'freebsd' => 'cgisock',
+    'Debian'  => "\${APACHE_RUN_DIR}/cgisock",
+    'FreeBSD' => 'cgisock',
     default   => undef,
   }
 

@@ -87,7 +87,7 @@ class apache::mod::worker (
   }
 
   case $facts['os']['family'] {
-    'redhat', 'debian', 'freebsd': {
+    'RedHat', 'Debian', 'FreeBSD': {
       ::apache::mpm { 'worker':
       }
     }
@@ -97,7 +97,7 @@ class apache::mod::worker (
       }
     }
 
-    'gentoo': {
+    'Gentoo': {
       ::portage::makeconf { 'apache2_mpms':
         content => 'worker',
       }

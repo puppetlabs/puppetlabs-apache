@@ -79,18 +79,18 @@ class apache::mod::itk (
   }
 
   case $facts['os']['family'] {
-    'redhat': {
+    'RedHat': {
       package { 'httpd-itk':
         ensure => present,
       }
       ::apache::mpm { 'itk':
       }
     }
-    'debian', 'freebsd': {
+    'Debian', 'FreeBSD': {
       apache::mpm { 'itk':
       }
     }
-    'gentoo': {
+    'Gentoo': {
       ::portage::makeconf { 'apache2_mpms':
         content => 'itk',
       }
