@@ -379,7 +379,7 @@ describe 'apache::vhost', type: :define do
               'request_headers'             => ['append MirrorID "mirror 12"'],
               'rewrites'                    => [
                 {
-                  'rewrite_rule' => ['^index\.html$ welcome.html'],
+                  'rewrite_rule' => ['^index.html$ rewrites.html'],
                 },
               ],
               'filters' => [
@@ -392,7 +392,7 @@ describe 'apache::vhost', type: :define do
                 'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
               ],
               'rewrite_base'                => '/',
-              'rewrite_rule'                => '^index\.html$ welcome.html',
+              'rewrite_rule'                => '^index.html$ welcome.html',
               'rewrite_cond'                => ['%{HTTP_USER_AGENT} ^MSIE'],
               'rewrite_inherit'             => true,
               'setenv'                      => ['FOO=/bin/true'],
@@ -733,9 +733,11 @@ describe 'apache::vhost', type: :define do
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
           it {
-            is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
-              content: %r{^\s+RewriteOptions Inherit$},
-            )
+            is_expected.to contain_concat__fragment('rspec.example.com-rewrite')
+              .with_content(%r{^\s+RewriteEngine On$})
+              .with_content(%r{^\s+RewriteOptions Inherit$})
+              .with_content(%r{^\s+RewriteBase /})
+              .with_content(%r{^\s+RewriteRule \^index\.html\$ rewrites.html$})
           }
           it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
@@ -1812,9 +1814,25 @@ describe 'apache::vhost', type: :define do
             end
 
             it {
-              is_expected.to contain_concat__fragment('rspec.example.com-rewrite').with(
-                content: %r{^\s+RewriteOptions Inherit$},
+              is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
+                .with_content(%r{^\s+RewriteOptions Inherit$})
+                .with_content(%r{^\s+RewriteEngine On$})
+                .with_content(%r{^\s+RewriteRule \^index\.html\$ welcome.html$})
+            }
+          end
+          context 'empty rewrites_without_rewrite_inherit' do
+            let(:params) do
+              super().merge(
+                'rewrite_inherit' => false,
+                'rewrites' => [],
               )
+            end
+
+            it {
+              is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
+                .with_content(%r{^\s+RewriteEngine On$})
+                .with_content(%r{^\s+RewriteRule \^index\.html\$ welcome.html$})
+                .without(content: %r{^\s+RewriteOptions Inherit$})
             }
           end
 

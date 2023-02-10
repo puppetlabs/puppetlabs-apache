@@ -1,4 +1,4 @@
-<%- if @rewrites -%>
+<%- if @rewrite_inherit or !@rewrites.empty? -%>
   ## Rewrite rules
   RewriteEngine On
   <%- if @rewrite_inherit -%>
@@ -38,7 +38,7 @@
   <%- end -%>
 <%- end -%>
 <%# reverse compatibility -%>
-<% if @rewrite_rule and !@rewrites -%>
+<% if @rewrite_rule and @rewrites.empty? -%>
   ## Rewrite rules
   RewriteEngine On
   <%- if @rewrite_base -%>
