@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.1.2](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.2) (2023-02-10)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.1...v9.1.2)
+
+### Fixed
+
+- \(BUGFIX\) Update to ensure correct facter comparisons [\#2387](https://github.com/puppetlabs/puppetlabs-apache/pull/2387) ([david22swan](https://github.com/david22swan))
+- Fixes mod::proxy allow\_from parameter inconsistency \#2352 [\#2385](https://github.com/puppetlabs/puppetlabs-apache/pull/2385) ([pebtron](https://github.com/pebtron))
+- Fix example code for apache::vhost::php\_values [\#2384](https://github.com/puppetlabs/puppetlabs-apache/pull/2384) ([gcoxmoz](https://github.com/gcoxmoz))
+- Suppress bad Directory comment when DocumentRoot is not set [\#2368](https://github.com/puppetlabs/puppetlabs-apache/pull/2368) ([gcoxmoz](https://github.com/gcoxmoz))
+- fix rewrite rules being ignored [\#2330](https://github.com/puppetlabs/puppetlabs-apache/pull/2330) ([trefzer](https://github.com/trefzer))
+
 ## [v9.1.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.1) (2023-02-03)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.0...v9.1.1)
@@ -188,6 +200,7 @@ All notable changes to this project will be documented in this file. The format 
 - Restructure MPM disabling [\#2227](https://github.com/puppetlabs/puppetlabs-apache/pull/2227) ([ekohl](https://github.com/ekohl))
 - pdksync - \(GH-iac-334\) Remove Support for Ubuntu 16.04 [\#2220](https://github.com/puppetlabs/puppetlabs-apache/pull/2220) ([david22swan](https://github.com/david22swan))
 - Drop Apache 2.2 support with Gentoo [\#2216](https://github.com/puppetlabs/puppetlabs-apache/pull/2216) ([ekohl](https://github.com/ekohl))
+- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#2213](https://github.com/puppetlabs/puppetlabs-apache/pull/2213) ([david22swan](https://github.com/david22swan))
 
 ## [v7.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v7.0.0) (2021-10-11)
 
@@ -205,7 +218,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- pdksync - \(IAC-1787\) Remove Support for CentOS 6 [\#2213](https://github.com/puppetlabs/puppetlabs-apache/pull/2213) ([david22swan](https://github.com/david22swan))
 - Restore Ubuntu 14.04 support in suphp [\#2193](https://github.com/puppetlabs/puppetlabs-apache/pull/2193) ([ekohl](https://github.com/ekohl))
 - add double quote on scope parameter [\#2191](https://github.com/puppetlabs/puppetlabs-apache/pull/2191) ([aba-rechsteiner](https://github.com/aba-rechsteiner))
 - Debian 11: fix typo in `versioncmp\(\)` / set default php to 7.4 [\#2186](https://github.com/puppetlabs/puppetlabs-apache/pull/2186) ([bastelfreak](https://github.com/bastelfreak))
@@ -336,7 +348,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - \(fix\) Convert unnecessary multi line warnings to single lines [\#2104](https://github.com/puppetlabs/puppetlabs-apache/pull/2104) ([rj667](https://github.com/rj667))
 - Fix bool2httpd function call for older ruby versions [\#2102](https://github.com/puppetlabs/puppetlabs-apache/pull/2102) ([carabasdaniel](https://github.com/carabasdaniel))
-- Use Ruby 2.7 compatible string matching [\#2060](https://github.com/puppetlabs/puppetlabs-apache/pull/2060) ([ekohl](https://github.com/ekohl))
 
 ## [v5.7.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.7.0) (2020-11-24)
 
@@ -369,6 +380,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - make apache::mod::fcgid redhat 8 compatible [\#2071](https://github.com/puppetlabs/puppetlabs-apache/pull/2071) ([creativefre](https://github.com/creativefre))
 - pdksync - \(feat\) - Removal of inappropriate terminology [\#2062](https://github.com/puppetlabs/puppetlabs-apache/pull/2062) ([pmcmaw](https://github.com/pmcmaw))
+- Use Ruby 2.7 compatible string matching [\#2060](https://github.com/puppetlabs/puppetlabs-apache/pull/2060) ([ekohl](https://github.com/ekohl))
 - Use python3-mod\_wsgi instead of mod\_wsgi on CentOS8 [\#2052](https://github.com/puppetlabs/puppetlabs-apache/pull/2052) ([kajinamit](https://github.com/kajinamit))
 
 ## [v5.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.5.0) (2020-07-03)
@@ -524,6 +536,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - \(MODULES-5990\) - conf-enabled defaulted to undef [\#1869](https://github.com/puppetlabs/puppetlabs-apache/pull/1869) ([david22swan](https://github.com/david22swan))
 - pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#1866](https://github.com/puppetlabs/puppetlabs-apache/pull/1866) ([tphoney](https://github.com/tphoney))
+- \(FM-7605\) - Disabling conf\_enabled on Ubuntu 18.04  by default as it conflicts with Shibboleth causing errors with apache2. [\#1856](https://github.com/puppetlabs/puppetlabs-apache/pull/1856) ([david22swan](https://github.com/david22swan))
 
 ## [3.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.5.0) (2018-12-17)
 
@@ -538,7 +551,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- \(FM-7605\) - Disabling conf\_enabled on Ubuntu 18.04  by default as it conflicts with Shibboleth causing errors with apache2. [\#1856](https://github.com/puppetlabs/puppetlabs-apache/pull/1856) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8429\) Update GPG key for phusion passenger [\#1848](https://github.com/puppetlabs/puppetlabs-apache/pull/1848) ([abottchen](https://github.com/abottchen))
 - Fix default vhost priority in readme [\#1843](https://github.com/puppetlabs/puppetlabs-apache/pull/1843) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
 - fix apache::mod::jk example typo and add link for more info [\#1812](https://github.com/puppetlabs/puppetlabs-apache/pull/1812) ([xorpaul](https://github.com/xorpaul))
