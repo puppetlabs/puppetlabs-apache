@@ -5611,9 +5611,9 @@ Default value: `'Off'`
 
 ##### <a name="-apache--mod--proxy--allow_from"></a>`allow_from`
 
-Data type: `Optional[Stdlib::IP::Address]`
+Data type: `Optional[Variant[Stdlib::IP::Address, Array[Stdlib::IP::Address]]]`
 
-List of IPs allowed to access proxy.
+IP address or list of IPs allowed to access proxy.
 
 Default value: `undef`
 

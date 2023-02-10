@@ -10,7 +10,11 @@
 
   <% if @proxy_requests != 'Off' or ( @allow_from and ! @allow_from.empty? ) -%>
   <Proxy *>
+    <%- if @allow_from.is_a? Array -%>
     Require ip <%= @allow_from.join(" ") %>
+    <%- else -%>
+    Require ip <%= @allow_from %>
+    <%- end -%>
   </Proxy>
   <% end -%>
 

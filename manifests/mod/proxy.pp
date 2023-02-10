@@ -5,7 +5,7 @@
 #   Enables forward (standard) proxy requests.
 #
 # @param allow_from
-#   List of IPs allowed to access proxy.
+#   IP address or list of IPs allowed to access proxy.
 #
 # @param package_name
 #   Name of the proxy package to install.
@@ -23,7 +23,7 @@
 #
 class apache::mod::proxy (
   String $proxy_requests                    = 'Off',
-  Optional[Stdlib::IP::Address] $allow_from = undef,
+  Optional[Variant[Stdlib::IP::Address, Array[Stdlib::IP::Address]]] $allow_from = undef,
   Optional[String] $package_name            = undef,
   String $proxy_via                         = 'On',
   Optional[Integer[0]] $proxy_timeout       = undef,
