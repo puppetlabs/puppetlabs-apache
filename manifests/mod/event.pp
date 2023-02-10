@@ -84,11 +84,11 @@ class apache::mod::event (
   }
 
   case $facts['os']['family'] {
-    'redhat', 'debian', 'freebsd' : {
+    'RedHat', 'Debian', 'FreeBSD' : {
       apache::mpm { 'event':
       }
     }
-    'gentoo': {
+    'Gentoo': {
       ::portage::makeconf { 'apache2_mpms':
         content => 'event',
       }

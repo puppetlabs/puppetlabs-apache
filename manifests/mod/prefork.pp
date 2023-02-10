@@ -76,7 +76,7 @@ class apache::mod::prefork (
   }
 
   case $facts['os']['family'] {
-    'redhat', 'debian', 'freebsd': {
+    'RedHat', 'Debian', 'FreeBSD': {
       ::apache::mpm { 'prefork':
       }
     }
@@ -85,7 +85,7 @@ class apache::mod::prefork (
         lib_path       => '/usr/lib64/apache2-prefork',
       }
     }
-    'gentoo': {
+    'Gentoo': {
       ::portage::makeconf { 'apache2_mpms':
         content => 'prefork',
       }
