@@ -9407,7 +9407,7 @@ Allows per-virtual host setting [`php_value`s](http://php.net/manual/en/configur
 These flags or values can be overwritten by a user or an application.
 Within a vhost declaration:
 ``` puppet
-  php_values    => [ 'include_path ".:/usr/local/example-app/include"' ],
+  php_values    => { 'include_path' => '.:/usr/local/example-app/include' },
 ```
 
 Default value: `{}`
