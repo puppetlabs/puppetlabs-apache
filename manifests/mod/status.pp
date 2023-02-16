@@ -24,7 +24,7 @@
 # @example
 #   # Simple usage allowing access from localhost and a private subnet
 #   class { 'apache::mod::status':
-#     $requires => 'ip 127.0.0.1 ::1 10.10.10.10/24',
+#     requires => 'ip 127.0.0.1 ::1 10.10.10.10/24',
 #   }
 #
 # @see http://httpd.apache.org/docs/current/mod/mod_status.html for additional documentation.
