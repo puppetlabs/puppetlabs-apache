@@ -23,7 +23,7 @@ describe 'apache::vhost::proxy' do
           it { is_expected.to compile.and_raise_error(%r{At least one of}) }
         end
 
-        context 'with proxy_dest' do
+        context 'with proxy_pass' do
           let(:params) do
             super().merge(
               proxy_pass: [
