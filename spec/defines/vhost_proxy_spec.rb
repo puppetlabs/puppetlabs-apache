@@ -37,6 +37,8 @@ describe 'apache::vhost::proxy' do
 
           it 'creates a concat fragment' do
             expect(subject).to compile.with_all_deps
+            expect(subject).to contain_class('apache::mod::proxy')
+            expect(subject).to contain_class('apache::mod::proxy_http')
             expect(subject).to contain_concat('15-default-80.conf')
             expect(subject).to create_concat__fragment('default-myproxy-proxy')
               .with_target('15-default-80.conf')
