@@ -53,6 +53,56 @@ describe 'apache::vhost::proxy' do
                 CONTENT
               )
           end
+
+          context 'with HTTP/2 proxy_dest URL' do
+            let(:params) do
+              super().merge(proxy_dest: 'h2://localhost:8080/')
+            end
+
+            it { is_expected.to compile.with_all_deps }
+            it { is_expected.to contain_class('apache::mod::proxy_http2') }
+          end
+
+          context 'with HTTP/2 proxy_dest_match URL' do
+            let(:params) do
+              super().merge(proxy_dest_match: 'h2://localhost:8080/')
+            end
+
+            it { is_expected.to compile.with_all_deps }
+            it { is_expected.to contain_class('apache::mod::proxy_http2') }
+          end
+
+          context 'with HTTP/2 proxy_pass URL' do
+            let(:params) do
+              super().merge(
+                proxy_pass: [
+                  {
+                    path: '/',
+                    url: 'h2://localhost:8080/'
+                  },
+                ],
+              )
+            end
+
+            it { is_expected.to compile.with_all_deps }
+            it { is_expected.to contain_class('apache::mod::proxy_http2') }
+          end
+
+          context 'with HTTP/2 proxy_pass_match URL' do
+            let(:params) do
+              super().merge(
+                proxy_pass_match: [
+                  {
+                    path: '/',
+                    url: 'h2://localhost:8080/'
+                  },
+                ],
+              )
+            end
+
+            it { is_expected.to compile.with_all_deps }
+            it { is_expected.to contain_class('apache::mod::proxy_http2') }
+          end
         end
       end
     end
