@@ -116,33 +116,40 @@ class apache::params inherits apache::version {
     $mellon_post_directory = undef
     $modsec_version       = 1
     $modsec_crs_package   = 'mod_security_crs'
-    $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    $modsec_default_rules = [
-      'base_rules/modsecurity_35_bad_robots.data',
-      'base_rules/modsecurity_35_scanners.data',
-      'base_rules/modsecurity_40_generic_attacks.data',
-      'base_rules/modsecurity_50_outbound.data',
-      'base_rules/modsecurity_50_outbound_malware.data',
-      'base_rules/modsecurity_crs_20_protocol_violations.conf',
-      'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
-      'base_rules/modsecurity_crs_23_request_limits.conf',
-      'base_rules/modsecurity_crs_30_http_policy.conf',
-      'base_rules/modsecurity_crs_35_bad_robots.conf',
-      'base_rules/modsecurity_crs_40_generic_attacks.conf',
-      'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
-      'base_rules/modsecurity_crs_41_xss_attacks.conf',
-      'base_rules/modsecurity_crs_42_tight_security.conf',
-      'base_rules/modsecurity_crs_45_trojans.conf',
-      'base_rules/modsecurity_crs_47_common_exceptions.conf',
-      'base_rules/modsecurity_crs_49_inbound_blocking.conf',
-      'base_rules/modsecurity_crs_50_outbound.conf',
-      'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf',
-    ]
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+      $modsec_crs_path      = '/usr/lib/modsecurity.d'
+      $modsec_default_rules = [
+        'base_rules/modsecurity_35_bad_robots.data',
+        'base_rules/modsecurity_35_scanners.data',
+        'base_rules/modsecurity_40_generic_attacks.data',
+        'base_rules/modsecurity_50_outbound.data',
+        'base_rules/modsecurity_50_outbound_malware.data',
+        'base_rules/modsecurity_crs_20_protocol_violations.conf',
+        'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
+        'base_rules/modsecurity_crs_23_request_limits.conf',
+        'base_rules/modsecurity_crs_30_http_policy.conf',
+        'base_rules/modsecurity_crs_35_bad_robots.conf',
+        'base_rules/modsecurity_crs_40_generic_attacks.conf',
+        'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
+        'base_rules/modsecurity_crs_41_xss_attacks.conf',
+        'base_rules/modsecurity_crs_42_tight_security.conf',
+        'base_rules/modsecurity_crs_45_trojans.conf',
+        'base_rules/modsecurity_crs_47_common_exceptions.conf',
+        'base_rules/modsecurity_crs_49_inbound_blocking.conf',
+        'base_rules/modsecurity_crs_50_outbound.conf',
+        'base_rules/modsecurity_crs_59_outbound_blocking.conf',
+        'base_rules/modsecurity_crs_60_correlation.conf',
+      ]
+    } else {
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = [
+        'rules/crawlers-user-agents.data',
+      ]
+    }
     $error_log           = 'error_log'
     $scriptalias         = "${httpd_root}/var/www/cgi-bin"
     $access_log_file     = 'access_log'
@@ -252,33 +259,40 @@ class apache::params inherits apache::version {
     $mellon_post_directory = undef
     $modsec_version       = 1
     $modsec_crs_package   = 'mod_security_crs'
-    $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    $modsec_default_rules = [
-      'base_rules/modsecurity_35_bad_robots.data',
-      'base_rules/modsecurity_35_scanners.data',
-      'base_rules/modsecurity_40_generic_attacks.data',
-      'base_rules/modsecurity_50_outbound.data',
-      'base_rules/modsecurity_50_outbound_malware.data',
-      'base_rules/modsecurity_crs_20_protocol_violations.conf',
-      'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
-      'base_rules/modsecurity_crs_23_request_limits.conf',
-      'base_rules/modsecurity_crs_30_http_policy.conf',
-      'base_rules/modsecurity_crs_35_bad_robots.conf',
-      'base_rules/modsecurity_crs_40_generic_attacks.conf',
-      'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
-      'base_rules/modsecurity_crs_41_xss_attacks.conf',
-      'base_rules/modsecurity_crs_42_tight_security.conf',
-      'base_rules/modsecurity_crs_45_trojans.conf',
-      'base_rules/modsecurity_crs_47_common_exceptions.conf',
-      'base_rules/modsecurity_crs_49_inbound_blocking.conf',
-      'base_rules/modsecurity_crs_50_outbound.conf',
-      'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf',
-    ]
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+      $modsec_crs_path      = '/usr/lib/modsecurity.d'
+      $modsec_default_rules = [
+        'base_rules/modsecurity_35_bad_robots.data',
+        'base_rules/modsecurity_35_scanners.data',
+        'base_rules/modsecurity_40_generic_attacks.data',
+        'base_rules/modsecurity_50_outbound.data',
+        'base_rules/modsecurity_50_outbound_malware.data',
+        'base_rules/modsecurity_crs_20_protocol_violations.conf',
+        'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
+        'base_rules/modsecurity_crs_23_request_limits.conf',
+        'base_rules/modsecurity_crs_30_http_policy.conf',
+        'base_rules/modsecurity_crs_35_bad_robots.conf',
+        'base_rules/modsecurity_crs_40_generic_attacks.conf',
+        'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
+        'base_rules/modsecurity_crs_41_xss_attacks.conf',
+        'base_rules/modsecurity_crs_42_tight_security.conf',
+        'base_rules/modsecurity_crs_45_trojans.conf',
+        'base_rules/modsecurity_crs_47_common_exceptions.conf',
+        'base_rules/modsecurity_crs_49_inbound_blocking.conf',
+        'base_rules/modsecurity_crs_50_outbound.conf',
+        'base_rules/modsecurity_crs_59_outbound_blocking.conf',
+        'base_rules/modsecurity_crs_60_correlation.conf',
+      ]
+    } else {
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = [
+        'rules/crawlers-user-agents.data',
+      ]
+    }
     $error_log           = 'error_log'
     $scriptalias         = '/var/www/cgi-bin'
     $access_log_file     = 'access_log'

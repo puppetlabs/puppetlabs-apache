@@ -68,13 +68,23 @@ describe 'apache::mod::security', type: :class do
               path: '/etc/httpd/modsecurity.d/security_crs.conf',
             )
           }
-          it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
-          it {
-            is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
-              path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
-              target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
-            )
-          }
+          if (facts[:os]['release']['major'].to_i <= 7)
+            it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
+            it {
+              is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+                path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
+                target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
+              )
+            }
+          else
+            it { is_expected.to contain_apache__security__rule_link('rules/crawlers-user-agents.data') }
+            it {
+              is_expected.to contain_file('crawlers-user-agents.data').with(
+                path: '/etc/httpd/modsecurity.d/activated_rules/crawlers-user-agents.data',
+                target: '/usr/share/mod_modsecurity_crs/rules/crawlers-user-agents.data',
+              )
+            }
+          end
 
           describe 'with parameters' do
             let :params do
