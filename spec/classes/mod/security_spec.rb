@@ -68,7 +68,7 @@ describe 'apache::mod::security', type: :class do
               path: '/etc/httpd/modsecurity.d/security_crs.conf',
             )
           }
-          if (facts[:os]['release']['major'].to_i <= 7)
+          if facts[:os]['release']['major'].to_i <= 7
             it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
             it {
               is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
