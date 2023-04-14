@@ -305,6 +305,66 @@
     <%- if directory['auth_ldap_group_attribute_is_dn'] == 'on' -%>
     AuthLDAPGroupAttributeIsDN On
     <%- end -%>
+    <%- if directory['auth_ldap_initial_bind_pattern'] -%>
+    AuthLDAPInitialBindPattern <%= directory['auth_ldap_initial_bind_pattern'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_as_user'] == 'off' -%>
+    AuthLDAPInitialBindAsUser Off
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_as_user'] == 'on' -%>
+    AuthLDAPInitialBindAsUser On
+    <%- end -%>
+    <%- if directory['auth_ldap_compare_as_user'] == 'off' -%>
+    AuthLDAPCompareAsUser Off
+    <%- end -%>
+    <%- if directory['auth_ldap_compare_as_user'] == 'on' -%>
+    AuthLDAPCompareAsUser On
+    <%- end -%>
+    <%- if directory['auth_ldap_search_as_user'] == 'off' -%>
+    AuthLDAPSearchAsUser Off
+    <%- end -%>
+    <%- if directory['auth_ldap_search_as_user'] == 'on' -%>
+    AuthLDAPSearchAsUser On
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_authoritative'] == 'off' -%>
+    AuthLDAPBindAuthoritative Off
+    <%- end -%>
+    <%- if directory['auth_ldap_bind_authoritative'] == 'on' -%>
+    AuthLDAPBindAuthoritative On
+    <%- end -%>
+    <%- if directory['auth_ldap_authorize_prefix'] -%>
+    AuthLDAPAuthorizePrefix <%= directory['auth_ldap_authorize_prefix'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_charset_config'] -%>
+    AuthLDAPCharsetConfig <%= directory['auth_ldap_charset_config'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_compare_dn_on_server'] == 'off' -%>
+    AuthLDAPCompareDNOnServer Off
+    <%- end -%>
+    <%- if directory['auth_ldap_compare_dn_on_server'] == 'on' -%>
+    AuthLDAPCompareDNOnServer On
+    <%- end -%>
+    <%- if directory['auth_ldap_dereference_aliases'] -%>
+    AuthLDAPDereferenceAliases <%= directory['auth_ldap_dereference_aliases'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_max_sub_group_depth'] -%>
+    AuthLDAPMaxSubGroupDepth <%= directory['auth_ldap_max_sub_group_depth'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_remote_user_attribute'] -%>
+    AuthLDAPRemoteUserAttribute <%= directory['auth_ldap_remote_user_attribute'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_remote_user_is_dn'] == 'off' -%>
+    AuthLDAPRemoteUserIsDN Off
+    <%- end -%>
+    <%- if directory['auth_ldap_remote_user_is_dn'] == 'on' -%>
+    AuthLDAPRemoteUserIsDN On
+    <%- end -%>
+    <%- if directory['auth_ldap_sub_group_attribute'] -%>
+    AuthLDAPSubGroupAttribute <%= directory['auth_ldap_sub_group_attribute'] %>
+    <%- end -%>
+    <%- if directory['auth_ldap_sub_group_class'] -%>
+    AuthLDAPSubGroupClass <%= directory['auth_ldap_sub_group_class'] %>
+    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
