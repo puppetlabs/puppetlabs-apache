@@ -2145,7 +2145,7 @@ define apache::vhost (
         allow_override => $override,
         directoryindex => $directoryindex,
         require        => 'all granted',
-      }
+      },
     ]
   } else {
     $_directories = undef
