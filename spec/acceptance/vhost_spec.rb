@@ -1135,7 +1135,6 @@ describe 'apache::vhost define' do
         docroot                     => '/tmp',
         wsgi_application_group      => '%{GLOBAL}',
         wsgi_daemon_process         => { 'wsgi' => { 'python-home' => '/usr' }, 'foo' => {} },
-        wsgi_daemon_process_options => {processes => 2},
         wsgi_import_script          => '/test1',
         wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
         wsgi_process_group          => 'nobody',
