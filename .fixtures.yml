@@ -6,7 +6,7 @@ fixtures:
     provision: 'https://github.com/puppetlabs/provision.git'
     puppet_agent:
       repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
-      ref: v4.12.1
+      ref: v4.13.0
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     yumrepo_core: 
       repo: "https://github.com/puppetlabs/puppetlabs-yumrepo_core.git"
