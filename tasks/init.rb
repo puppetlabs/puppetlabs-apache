@@ -19,6 +19,7 @@ def service(action, service_name)
   end
   _stdout, stderr, status = Open3.capture3('service', service_name, action)
   raise Puppet::Error, stderr if status != 0
+
   { status: "#{action} successful" }
 end
 

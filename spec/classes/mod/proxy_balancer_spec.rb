@@ -4,9 +4,9 @@ require 'spec_helper'
 
 # Helper function for testing the contents of `proxy_balancer.conf`
 def balancer_manager_conf_spec(allow_from, manager_path)
-  expected = "<Location #{manager_path}>\n"\
-             "    SetHandler balancer-manager\n"\
-             "    Require ip #{Array(allow_from).join(' ')}\n"\
+  expected = "<Location #{manager_path}>\n    " \
+             "SetHandler balancer-manager\n    " \
+             "Require ip #{Array(allow_from).join(' ')}\n" \
              "</Location>\n"
   it do
     is_expected.to contain_file('proxy_balancer.conf').with_content(expected)

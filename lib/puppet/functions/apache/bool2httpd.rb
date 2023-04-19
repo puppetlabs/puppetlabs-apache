@@ -21,6 +21,7 @@ Puppet::Functions.create_function(:'apache::bool2httpd') do
   def bool2httpd(arg)
     return 'Off' if arg.nil? || arg == false || matches_string?(arg, %r{false}i) || arg == :undef
     return 'On' if arg == true || matches_string?(arg, %r{true}i)
+
     arg.to_s
   end
 

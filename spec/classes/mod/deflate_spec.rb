@@ -6,13 +6,13 @@ require 'spec_helper'
 def general_deflate_specs
   it { is_expected.to contain_apache__mod('deflate') }
 
-  expected = "AddOutputFilterByType DEFLATE application/rss+xml\n"\
-  "AddOutputFilterByType DEFLATE application/x-javascript\n"\
-      "AddOutputFilterByType DEFLATE text/css\n"\
-             "AddOutputFilterByType DEFLATE text/html\n"\
-             "\n"\
-             "DeflateFilterNote Input instream\n"\
-             "DeflateFilterNote Output outstream\n"\
+  expected = "AddOutputFilterByType DEFLATE application/rss+xml\n" \
+  "AddOutputFilterByType DEFLATE application/x-javascript\n" \
+      "AddOutputFilterByType DEFLATE text/css\n" \
+             "AddOutputFilterByType DEFLATE text/html\n" \
+             "\n" \
+             "DeflateFilterNote Input instream\n" \
+             "DeflateFilterNote Output outstream\n" \
              "DeflateFilterNote Ratio ratio\n"
 
   it do

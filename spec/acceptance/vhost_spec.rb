@@ -299,7 +299,7 @@ describe 'apache::vhost define' do
         content => "Hello World\\n",
       }
       host { 'files.example.net': ip => '127.0.0.1', }
-    MANIFEST
+      MANIFEST
     end
 
     describe 'readme example, adapted' do

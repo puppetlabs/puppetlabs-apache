@@ -6,9 +6,9 @@ def general_info_specs_apache24
   it { is_expected.to contain_apache__mod('info') }
 
   context 'passing no parameters' do
-    expected = "<Location /server-info>\n"\
-               "    SetHandler server-info\n"\
-               "    Require ip 127.0.0.1 ::1\n"\
+    expected = "<Location /server-info>\n    " \
+               "SetHandler server-info\n    " \
+               "Require ip 127.0.0.1 ::1\n" \
                "</Location>\n"
     it { is_expected.to contain_file('info.conf').with_content(expected) }
   end
@@ -21,8 +21,8 @@ def general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with_content(
-        "<Location /server-info>\n"\
-        "    SetHandler server-info\n"\
+        "<Location /server-info>\n    " \
+        "SetHandler server-info\n" \
         "</Location>\n",
       )
     }
@@ -32,9 +32,9 @@ def general_info_specs_apache24
       { allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1'] }
     end
 
-    expected = "<Location /server-info>\n"\
-        "    SetHandler server-info\n"\
-        "    Require ip 10.10.1.2 192.168.1.2 127.0.0.1\n"\
+    expected = "<Location /server-info>\n    " \
+        "SetHandler server-info\n    " \
+        "Require ip 10.10.1.2 192.168.1.2 127.0.0.1\n" \
         "</Location>\n"
     it {
       is_expected.to contain_file('info.conf').with_content(expected)
@@ -50,8 +50,8 @@ def general_info_specs_apache24
 
     it {
       is_expected.to contain_file('info.conf').with_content(
-        "<Location /server-info>\n"\
-        "    SetHandler server-info\n"\
+        "<Location /server-info>\n    " \
+        "SetHandler server-info\n" \
         "</Location>\n",
       )
     }

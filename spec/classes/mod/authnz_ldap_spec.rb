@@ -34,6 +34,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
   context 'default configuration with parameters on a RedHat OS' do
     on_supported_os.each do |os, os_facts|
       next unless os.start_with?('redhat')
+
       context "On #{os}" do
         let :facts do
           os_facts

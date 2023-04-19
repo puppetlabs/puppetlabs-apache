@@ -15,7 +15,7 @@ def require_directives(requires)
     requires.map { |req| "    Require #{req}\n" }.join('')
   elsif requires.is_a?(Hash)
     if requires.key?(:enforce)
-      \
+ \
       "    <Require#{requires[:enforce].capitalize}>\n" + \
         requires[:requires].map { |req| "        Require #{req}\n" }.join('') + \
         "    </Require#{requires[:enforce].capitalize}>\n"
@@ -27,15 +27,15 @@ end
 
 shared_examples 'status_conf_spec_require' do |requires, extended_status, status_path|
   expected =
-    "<Location #{status_path}>\n"\
-    "    SetHandler server-status\n"\
-    "#{require_directives(requires)}"\
-    "</Location>\n"\
-    "ExtendedStatus #{extended_status}\n"\
-    "\n"\
-    "<IfModule mod_proxy.c>\n"\
-    "    # Show Proxy LoadBalancer status in mod_status\n"\
-    "    ProxyStatus On\n"\
+    "<Location #{status_path}>\n    " \
+    "SetHandler server-status\n" \
+    "#{require_directives(requires)}" \
+    "</Location>\n" \
+    "ExtendedStatus #{extended_status}\n" \
+    "\n" \
+    "<IfModule mod_proxy.c>\n    " \
+    "# Show Proxy LoadBalancer status in mod_status\n    " \
+    "ProxyStatus On\n" \
     "</IfModule>\n"
   it('status conf require') do
     is_expected.to contain_file('status.conf').with_content(expected)

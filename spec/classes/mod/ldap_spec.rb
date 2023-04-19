@@ -46,9 +46,9 @@ describe 'apache::mod::ldap', type: :class do
       it { is_expected.to contain_file('ldap.conf').with_content(%r{^LDAPOpCacheTTL 600$}) }
 
       expected_ldap_path_re =
-        "<Location /custom-ldap-status>\n"\
-        "\s*SetHandler ldap-status\n"\
-        ".*\n"\
+        "<Location /custom-ldap-status>\n" \
+        "\s*SetHandler ldap-status\n" \
+        ".*\n" \
         "</Location>\n"
       it { is_expected.to contain_file('ldap.conf').with_content(%r{#{expected_ldap_path_re}}m) }
     end

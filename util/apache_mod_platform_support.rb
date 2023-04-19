@@ -59,6 +59,7 @@ class ApacheModPlatformCompatibility
 
   def print_parsing_errors
     return if @manifest_errors.empty?
+
     $stderr.puts "The following errors were encountered when trying to parse the 'Unsupported platforms' tag(s) in 'manifests/mod':\n"
     @manifest_errors.each do |manifest_error|
       $stderr.puts " * #{manifest_error.manifest} (line #{manifest_error.line_num}): #{ERROR_MSG[manifest_error.error_type]} #{manifest_error.error_detail}"
@@ -107,6 +108,7 @@ class ApacheModPlatformCompatibility
   def process_line(line)
     data = {}
     return data unless %r{@note\sUnsupported\splatforms?:\s?|class\sapache::mod}i.match?(line)
+
     if (match = %r{@note\sUnsupported\splatforms?:\s?(?<os_vers>.*)$}i.match(line))
       data[:type] = :unsupported_platform_declaration
       data[:value] = match[:os_vers]
@@ -125,6 +127,7 @@ class ApacheModPlatformCompatibility
         line_num += 1
         data = process_line(line)
         next if data.empty?
+
         if data[:type] == :unsupported_platform_declaration
           platforms_versions = extract_os_ver_pairs(data[:value])
           register_error(manifest, line_num, :tag_parse, line) if platforms_versions.empty?
@@ -144,6 +147,7 @@ class ApacheModPlatformCompatibility
     return true unless @mod_platform_compatibility_mapping.key? mod
     return true unless @mod_platform_compatibility_mapping[mod].key? @os[:family]
     return false if @mod_platform_compatibility_mapping[mod][@os[:family]] == [0]
+
     !@mod_platform_compatibility_mapping[mod][@os[:family]].include? @os[:release]
   end
 end

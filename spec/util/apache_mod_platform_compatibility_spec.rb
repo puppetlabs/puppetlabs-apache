@@ -162,9 +162,9 @@ describe ApacheModPlatformCompatibility do
 
       tag_format_help_msg_txt = ['succint', 'warning']
 
-      expected_stderr_msg = "The following errors were encountered when trying to parse the 'Unsupported platforms' tag(s) in 'manifests/mod':\n" \
-                            " * #{abc_pp} (line #{abc_pp_error_line}): #{abc_pp_error_type_msg} #{abc_pp_error_detail}\n" \
-                            " * #{def_pp} (line #{def_pp_error_line}): #{def_pp_error_type_msg} #{def_pp_error_detail}\n" \
+      expected_stderr_msg = "The following errors were encountered when trying to parse the 'Unsupported platforms' tag(s) in 'manifests/mod':\n " \
+                            "* #{abc_pp} (line #{abc_pp_error_line}): #{abc_pp_error_type_msg} #{abc_pp_error_detail}\n " \
+                            "* #{def_pp} (line #{def_pp_error_line}): #{def_pp_error_type_msg} #{def_pp_error_detail}\n" \
                             "#{tag_format_help_msg_txt[0]}\n" \
                             "#{tag_format_help_msg_txt[1]}\n"
 

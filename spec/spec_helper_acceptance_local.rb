@@ -151,5 +151,6 @@ end
 
 def mod_supported_on_platform?(mod)
   return false if ENV['DISABLE_MOD_TEST_EXCLUSION']
+
   ApacheModTestFilterHelper.instance.mod_supported_on_platform?(mod)
 end
