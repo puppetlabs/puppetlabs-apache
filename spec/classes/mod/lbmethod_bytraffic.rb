@@ -15,7 +15,7 @@ describe 'apache::mod::lbmethod_byrequests', type: :class do
 
       it {
         is_expected.to contain_file('/etc/apache2/mods-enabled/lbmethod_byrequests.load').with('ensure' => 'file',
-                                                                                   'content' => "LoadModule lbmethod_byrequests_module /usr/lib/apache2/modules/mod_lbmethod_byrequests.so\n")
+                                                                                               'content' => "LoadModule lbmethod_byrequests_module /usr/lib/apache2/modules/mod_lbmethod_byrequests.so\n")
       }
     end
   end
@@ -31,7 +31,7 @@ describe 'apache::mod::lbmethod_byrequests', type: :class do
 
       it {
         is_expected.to contain_file('/etc/httpd/conf.modules.d/lbmethod_byrequests.load').with('ensure' => 'file',
-                                                                         'content' => "LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so\n")
+                                                                                               'content' => "LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so\n")
       }
     end
   end

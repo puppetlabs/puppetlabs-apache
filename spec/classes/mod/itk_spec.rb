@@ -50,7 +50,7 @@ describe 'apache::mod::itk', type: :class do
 
       it {
         is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
-                                                                       'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
+                                                                               'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
       }
     end
     context 'with enablecapabilities set' do

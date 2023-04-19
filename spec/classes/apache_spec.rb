@@ -50,13 +50,13 @@ describe 'apache', type: :class do
     ['auth_basic', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
-          'path'   => "/etc/apache2/mods-available/#{modname}.load",
+          'path' => "/etc/apache2/mods-available/#{modname}.load",
           'ensure' => 'file',
         )
       }
       it {
         is_expected.to contain_file("#{modname}.load symlink").with(
-          'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
+          'path' => "/etc/apache2/mods-enabled/#{modname}.load",
           'ensure' => 'link',
           'target' => "/etc/apache2/mods-available/#{modname}.load",
         )
@@ -121,26 +121,26 @@ describe 'apache', type: :class do
     ['alias', 'autoindex', 'dav_fs', 'deflate', 'dir', 'mime', 'negotiation', 'setenvif'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
-          'path'   => "/etc/apache2/mods-available/#{modname}.load",
+          'path' => "/etc/apache2/mods-available/#{modname}.load",
           'ensure' => 'file',
         )
       }
       it {
         is_expected.to contain_file("#{modname}.load symlink").with(
-          'path'   => "/etc/apache2/mods-enabled/#{modname}.load",
+          'path' => "/etc/apache2/mods-enabled/#{modname}.load",
           'ensure' => 'link',
           'target' => "/etc/apache2/mods-available/#{modname}.load",
         )
       }
       it {
         is_expected.to contain_file("#{modname}.conf").with(
-          'path'   => "/etc/apache2/mods-available/#{modname}.conf",
+          'path' => "/etc/apache2/mods-available/#{modname}.conf",
           'ensure' => 'file',
         )
       }
       it {
         is_expected.to contain_file("#{modname}.conf symlink").with(
-          'path'   => "/etc/apache2/mods-enabled/#{modname}.conf",
+          'path' => "/etc/apache2/mods-enabled/#{modname}.conf",
           'ensure' => 'link',
           'target' => "/etc/apache2/mods-available/#{modname}.conf",
         )
@@ -167,7 +167,7 @@ describe 'apache', type: :class do
     describe 'Add extra LogFormats When parameter log_formats is a hash' do
       let :params do
         { log_formats: {
-          'vhost_common'   => '%v %h %l %u %t "%r" %>s %b',
+          'vhost_common' => '%v %h %l %u %t "%r" %>s %b',
           'vhost_combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"',
         } }
       end
@@ -179,7 +179,7 @@ describe 'apache', type: :class do
     describe 'Override existing LogFormats When parameter log_formats is a hash' do
       let :params do
         { log_formats: {
-          'common'   => '%v %h %l %u %t "%r" %>s %b',
+          'common' => '%v %h %l %u %t "%r" %>s %b',
           'combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"',
         } }
       end
@@ -548,7 +548,7 @@ describe 'apache', type: :class do
     ['auth_basic', 'authn_core', 'authn_file', 'authz_groupfile', 'authz_host', 'authz_user', 'dav', 'env'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
-          'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
+          'path' => "/usr/local/etc/apache24/Modules/#{modname}.load",
           'ensure' => 'file',
         )
       }
@@ -559,13 +559,13 @@ describe 'apache', type: :class do
     ['alias', 'autoindex', 'dav_fs', 'deflate', 'dir', 'mime', 'negotiation', 'setenvif'].each do |modname|
       it {
         is_expected.to contain_file("#{modname}.load").with(
-          'path'   => "/usr/local/etc/apache24/Modules/#{modname}.load",
+          'path' => "/usr/local/etc/apache24/Modules/#{modname}.load",
           'ensure' => 'file',
         )
       }
       it {
         is_expected.to contain_file("#{modname}.conf").with(
-          'path'   => "/usr/local/etc/apache24/Modules/#{modname}.conf",
+          'path' => "/usr/local/etc/apache24/Modules/#{modname}.conf",
           'ensure' => 'file',
         )
       }
@@ -615,7 +615,7 @@ describe 'apache', type: :class do
       it {
         is_expected.to contain_package('httpd').with(
           'ensure' => 'installed',
-          'name'   => 'httpd24-httpd',
+          'name' => 'httpd24-httpd',
         ).that_notifies('Class[Apache::Service]')
       }
     end

@@ -124,7 +124,7 @@ describe 'apache::mod::event', type: :class do
 
     it {
       is_expected.to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
-                                                                       'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
+                                                                               'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
     }
   end
 end

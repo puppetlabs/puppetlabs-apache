@@ -12,9 +12,9 @@ describe 'apache::service', type: :class do
 
     it {
       is_expected.to contain_service('httpd').with(
-        'name'      => 'apache2',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+        'name' => 'apache2',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
 
@@ -33,9 +33,9 @@ describe 'apache::service', type: :class do
 
       it {
         is_expected.to contain_service('httpd').with(
-          'name'      => 'apache2',
-          'ensure'    => 'running',
-          'enable'    => 'true',
+          'name' => 'apache2',
+          'ensure' => 'running',
+          'enable' => 'true',
         )
       }
     end
@@ -45,9 +45,9 @@ describe 'apache::service', type: :class do
 
       it {
         is_expected.to contain_service('httpd').with(
-          'name'      => 'apache2',
-          'ensure'    => 'running',
-          'enable'    => 'false',
+          'name' => 'apache2',
+          'ensure' => 'running',
+          'enable' => 'false',
         )
       }
     end
@@ -57,8 +57,8 @@ describe 'apache::service', type: :class do
 
       it {
         is_expected.to contain_service('httpd').with(
-          'ensure'    => 'running',
-          'enable'    => 'true',
+          'ensure' => 'running',
+          'enable' => 'true',
         )
       }
     end
@@ -68,8 +68,8 @@ describe 'apache::service', type: :class do
 
       it {
         is_expected.to contain_service('httpd').with(
-          'ensure'    => 'stopped',
-          'enable'    => 'true',
+          'ensure' => 'stopped',
+          'enable' => 'true',
         )
       }
     end
@@ -100,7 +100,7 @@ describe 'apache::service', type: :class do
     let(:params) do
       {
         'service_ensure' => 'running',
-        'service_name'   => 'httpd',
+        'service_name' => 'httpd',
         'service_manage' => false,
       }
     end
@@ -113,9 +113,9 @@ describe 'apache::service', type: :class do
 
     it {
       is_expected.to contain_service('httpd').with(
-        'name'      => 'apache24',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+        'name' => 'apache24',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
   end
@@ -125,9 +125,9 @@ describe 'apache::service', type: :class do
 
     it {
       is_expected.to contain_service('httpd').with(
-        'name'      => 'apache2',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+        'name' => 'apache2',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
   end

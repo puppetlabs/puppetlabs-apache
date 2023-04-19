@@ -37,298 +37,298 @@ describe 'apache::vhost', type: :define do
         context 'set everything!' do
           let :params do
             {
-              'docroot'                     => '/var/www/foo',
-              'manage_docroot'              => false,
-              'virtual_docroot'             => true,
+              'docroot' => '/var/www/foo',
+              'manage_docroot' => false,
+              'virtual_docroot' => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => 8080,
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'add_listen'                  => false,
-              'docroot_owner'               => 'user',
-              'docroot_group'               => 'wheel',
-              'docroot_mode'                => '0664',
-              'serveradmin'                 => 'foo@localhost',
-              'ssl'                         => true,
-              'ssl_cert'                    => '/ssl/cert',
-              'ssl_key'                     => '/ssl/key',
-              'ssl_chain'                   => '/ssl/chain',
-              'ssl_crl_path'                => '/ssl/crl',
-              'ssl_crl'                     => '/ssl/foo.crl',
-              'ssl_certs_dir'               => '/ssl/certs',
-              'ssl_protocol'                => 'SSLv2',
-              'ssl_cipher'                  => 'HIGH',
-              'ssl_honorcipherorder'        => 'Off',
-              'ssl_verify_client'           => 'optional',
-              'ssl_verify_depth'            => 3,
-              'ssl_options'                 => '+ExportCertData',
-              'ssl_openssl_conf_cmd'        => 'DHParameters "foo.pem"',
-              'ssl_proxy_verify'            => 'require',
-              'ssl_proxy_check_peer_cn'     => 'on',
-              'ssl_proxy_check_peer_name'   => 'on',
+              'port' => 8080,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'add_listen' => false,
+              'docroot_owner' => 'user',
+              'docroot_group' => 'wheel',
+              'docroot_mode' => '0664',
+              'serveradmin' => 'foo@localhost',
+              'ssl' => true,
+              'ssl_cert' => '/ssl/cert',
+              'ssl_key' => '/ssl/key',
+              'ssl_chain' => '/ssl/chain',
+              'ssl_crl_path' => '/ssl/crl',
+              'ssl_crl' => '/ssl/foo.crl',
+              'ssl_certs_dir' => '/ssl/certs',
+              'ssl_protocol' => 'SSLv2',
+              'ssl_cipher' => 'HIGH',
+              'ssl_honorcipherorder' => 'Off',
+              'ssl_verify_client' => 'optional',
+              'ssl_verify_depth' => 3,
+              'ssl_options' => '+ExportCertData',
+              'ssl_openssl_conf_cmd' => 'DHParameters "foo.pem"',
+              'ssl_proxy_verify' => 'require',
+              'ssl_proxy_check_peer_cn' => 'on',
+              'ssl_proxy_check_peer_name' => 'on',
               'ssl_proxy_check_peer_expire' => 'on',
-              'ssl_proxyengine'             => true,
-              'ssl_proxy_cipher_suite'      => 'HIGH',
-              'ssl_proxy_protocol'          => 'TLSv1.2',
-              'ssl_user_name'               => 'SSL_CLIENT_S_DN_CN',
-              'ssl_reload_on_change'        => true,
-              'priority'                    => 30,
-              'default_vhost'               => true,
-              'servername'                  => 'example.com',
-              'serveraliases'               => ['test-example.com'],
-              'options'                     => ['MultiView'],
-              'override'                    => ['All'],
-              'directoryindex'              => 'index.html',
-              'vhost_name'                  => 'test',
-              'logroot'                     => '/var/www/logs',
-              'logroot_ensure'              => 'directory',
-              'logroot_mode'                => '0600',
-              'logroot_owner'               => 'root',
-              'logroot_group'               => 'root',
-              'log_level'                   => 'crit',
-              'aliases'                     => [
+              'ssl_proxyengine' => true,
+              'ssl_proxy_cipher_suite' => 'HIGH',
+              'ssl_proxy_protocol' => 'TLSv1.2',
+              'ssl_user_name' => 'SSL_CLIENT_S_DN_CN',
+              'ssl_reload_on_change' => true,
+              'priority' => 30,
+              'default_vhost' => true,
+              'servername' => 'example.com',
+              'serveraliases' => ['test-example.com'],
+              'options' => ['MultiView'],
+              'override' => ['All'],
+              'directoryindex' => 'index.html',
+              'vhost_name' => 'test',
+              'logroot' => '/var/www/logs',
+              'logroot_ensure' => 'directory',
+              'logroot_mode' => '0600',
+              'logroot_owner' => 'root',
+              'logroot_group' => 'root',
+              'log_level' => 'crit',
+              'aliases' => [
                 {
                   'alias' => '/image',
-                  'path'  => '/rspec/image',
+                  'path' => '/rspec/image',
                 },
               ],
-              'access_log'                  => false,
-              'access_log_file'             => 'httpd_access_log',
-              'access_log_syslog'           => true,
-              'access_log_format'           => '%h %l %u %t \"%r\" %>s %b',
-              'access_log_env_var'          => '',
-              'directories'                 => [
+              'access_log' => false,
+              'access_log_file' => 'httpd_access_log',
+              'access_log_syslog' => true,
+              'access_log_format' => '%h %l %u %t \"%r\" %>s %b',
+              'access_log_env_var' => '',
+              'directories' => [
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require'  => ['valid-user', 'all denied'],
+                  'require' => ['valid-user', 'all denied'],
                 },
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
                   'additional_includes' => ['/custom/path/includes', '/custom/path/another_includes'],
                 },
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require'  => 'all granted',
+                  'require' => 'all granted',
                 },
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require'  =>
+                  'require' =>
                   {
-                    'enforce'  => 'all',
+                    'enforce' => 'all',
                     'requires' => ['all-valid1', 'all-valid2'],
                   },
                 },
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require'  =>
+                  'require' =>
                   {
-                    'enforce'  => 'none',
+                    'enforce' => 'none',
                     'requires' => ['none-valid1', 'none-valid2'],
                   },
                 },
                 {
-                  'path'     => '/var/www/files',
+                  'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require'  =>
+                  'require' =>
                   {
-                    'enforce'  => 'any',
+                    'enforce' => 'any',
                     'requires' => ['any-valid1', 'any-valid2'],
                   },
                 },
                 {
-                  'path'     => '*',
+                  'path' => '*',
                   'provider' => 'proxy',
                 },
-                { 'path'              => '/var/www/files/indexed_directory',
-                  'directoryindex'    => 'disabled',
-                  'options'           => ['Indexes', 'FollowSymLinks', 'MultiViews'],
-                  'index_options'     => ['FancyIndexing'],
+                { 'path' => '/var/www/files/indexed_directory',
+                  'directoryindex' => 'disabled',
+                  'options' => ['Indexes', 'FollowSymLinks', 'MultiViews'],
+                  'index_options' => ['FancyIndexing'],
                   'index_style_sheet' => '/styles/style.css' },
-                { 'path'              => '/var/www/files/output_filtered',
+                { 'path' => '/var/www/files/output_filtered',
                   'set_output_filter' => 'output_filter' },
-                { 'path'              => '/var/www/files/input_filtered',
+                { 'path' => '/var/www/files/input_filtered',
                   'set_input_filter' => 'input_filter' },
-                { 'path'     => '/var/www/files',
+                { 'path' => '/var/www/files',
                   'provider' => 'location',
-                  'limit'    => [
+                  'limit' => [
                     { 'methods' => 'GET HEAD',
                       'require' => ['valid-user'] },
                   ] },
-                { 'path'         => '/var/www/files',
-                  'provider'     => 'location',
+                { 'path' => '/var/www/files',
+                  'provider' => 'location',
                   'limit_except' => [
                     { 'methods' => 'GET HEAD',
                       'require' => ['valid-user'] },
                   ] },
-                { 'path'               => '/var/www/dav',
-                  'dav'                => 'filesystem',
+                { 'path' => '/var/www/dav',
+                  'dav' => 'filesystem',
                   'dav_depth_infinity' => true,
-                  'dav_min_timeout'    => 600 },
+                  'dav_min_timeout' => 600 },
                 {
-                  'path'             => '/var/www/http2',
-                  'h2_copy_files'    => true,
+                  'path' => '/var/www/http2',
+                  'h2_copy_files' => true,
                   'h2_push_resource' => [
                     '/foo.css',
                     '/foo.js',
                   ],
                 },
                 {
-                  'path'                => '/',
-                  'provider'            => 'location',
+                  'path' => '/',
+                  'provider' => 'location',
                   'auth_ldap_referrals' => 'off',
-                  'auth_basic_fake'     => 'demo demopass',
-                  'auth_user_file'      => '/path/to/authz_user_file',
-                  'auth_group_file'     => '/path/to/authz_group_file',
-                  'setenv'              => ['SPECIAL_PATH /foo/bin'],
+                  'auth_basic_fake' => 'demo demopass',
+                  'auth_user_file' => '/path/to/authz_user_file',
+                  'auth_group_file' => '/path/to/authz_group_file',
+                  'setenv' => ['SPECIAL_PATH /foo/bin'],
                 },
                 {
-                  'path'       => '/proxy',
-                  'provider'   => 'location',
+                  'path' => '/proxy',
+                  'provider' => 'location',
                   'proxy_pass' => [
                     {
-                      'url'             => 'http://backend-b/',
-                      'keywords'        => ['noquery', 'interpolate'],
+                      'url' => 'http://backend-b/',
+                      'keywords' => ['noquery', 'interpolate'],
                       'params' => {
-                        'retry'   => 0,
+                        'retry' => 0,
                         'timeout' => 5,
                       },
                     },
                   ],
                 },
                 {
-                  'path'       => '^/proxy',
-                  'provider'   => 'locationmatch',
+                  'path' => '^/proxy',
+                  'provider' => 'locationmatch',
                   'proxy_pass_match' => [
                     {
-                      'url'             => 'http://backend-b/',
-                      'keywords'        => ['noquery', 'interpolate'],
+                      'url' => 'http://backend-b/',
+                      'keywords' => ['noquery', 'interpolate'],
                       'params' => {
-                        'retry'   => 0,
+                        'retry' => 0,
                         'timeout' => 5,
                       },
                     },
                   ],
                 },
                 {
-                  'path'                                                => '/var/www/node-app/public',
-                  'passenger_enabled'                                   => true,
-                  'passenger_base_uri'                                  => '/app',
-                  'passenger_ruby'                                      => '/path/to/ruby',
-                  'passenger_python'                                    => '/path/to/python',
-                  'passenger_nodejs'                                    => '/path/to/nodejs',
-                  'passenger_meteor_app_settings'                       => '/path/to/file.json',
-                  'passenger_app_env'                                   => 'demo',
-                  'passenger_app_root'                                  => '/var/www/node-app',
-                  'passenger_app_group_name'                            => 'foo_bar',
-                  'passenger_app_start_command'                         => 'start-command',
-                  'passenger_app_type'                                  => 'node',
-                  'passenger_startup_file'                              => 'start.js',
-                  'passenger_restart_dir'                               => 'temp',
-                  'passenger_load_shell_envvars'                        => false,
-                  'passenger_preload_bundler'                           => false,
-                  'passenger_rolling_restarts'                          => false,
-                  'passenger_resist_deployment_errors'                  => false,
-                  'passenger_user'                                      => 'nodeuser',
-                  'passenger_group'                                     => 'nodegroup',
-                  'passenger_friendly_error_pages'                      => true,
-                  'passenger_min_instances'                             => 7,
-                  'passenger_max_instances'                             => 9,
+                  'path' => '/var/www/node-app/public',
+                  'passenger_enabled' => true,
+                  'passenger_base_uri' => '/app',
+                  'passenger_ruby' => '/path/to/ruby',
+                  'passenger_python' => '/path/to/python',
+                  'passenger_nodejs' => '/path/to/nodejs',
+                  'passenger_meteor_app_settings' => '/path/to/file.json',
+                  'passenger_app_env' => 'demo',
+                  'passenger_app_root' => '/var/www/node-app',
+                  'passenger_app_group_name' => 'foo_bar',
+                  'passenger_app_start_command' => 'start-command',
+                  'passenger_app_type' => 'node',
+                  'passenger_startup_file' => 'start.js',
+                  'passenger_restart_dir' => 'temp',
+                  'passenger_load_shell_envvars' => false,
+                  'passenger_preload_bundler' => false,
+                  'passenger_rolling_restarts' => false,
+                  'passenger_resist_deployment_errors' => false,
+                  'passenger_user' => 'nodeuser',
+                  'passenger_group' => 'nodegroup',
+                  'passenger_friendly_error_pages' => true,
+                  'passenger_min_instances' => 7,
+                  'passenger_max_instances' => 9,
                   'passenger_force_max_concurrent_requests_per_process' => 12,
-                  'passenger_start_timeout'                             => 10,
-                  'passenger_concurrency_model'                         => 'thread',
-                  'passenger_thread_count'                              => 20,
-                  'passenger_max_requests'                              => 2000,
-                  'passenger_max_request_time'                          => 1,
-                  'passenger_memory_limit'                              => 32,
-                  'passenger_high_performance'                          => false,
-                  'passenger_buffer_upload'                             => false,
-                  'passenger_buffer_response'                           => false,
-                  'passenger_error_override'                            => false,
-                  'passenger_max_request_queue_size'                    => 120,
-                  'passenger_max_request_queue_time'                    => 5,
-                  'passenger_sticky_sessions'                           => true,
-                  'passenger_sticky_sessions_cookie_name'               => '_delicious_cookie',
-                  'passenger_sticky_sessions_cookie_attributes'         => 'SameSite=Lax; Secure;',
-                  'passenger_allow_encoded_slashes'                     => false,
-                  'passenger_app_log_file'                              => '/tmp/app.log',
-                  'passenger_debugger'                                  => false,
-                  'gssapi'                                              => {
-                    'acceptor_name'            => '{HOSTNAME}',
-                    'allowed_mech'             => ['krb5', 'iakerb', 'ntlmssp'],
-                    'authname'                 => 'Kerberos 5',
-                    'authtype'                 => 'GSSAPI',
-                    'basic_auth'               => true,
-                    'basic_auth_mech'          => ['krb5', 'iakerb', 'ntlmssp'],
-                    'basic_ticket_timeout'     => 300,
-                    'connection_bound'         => true,
-                    'cred_store'               => {
-                      'ccache'        => ['/path/to/directory'],
+                  'passenger_start_timeout' => 10,
+                  'passenger_concurrency_model' => 'thread',
+                  'passenger_thread_count' => 20,
+                  'passenger_max_requests' => 2000,
+                  'passenger_max_request_time' => 1,
+                  'passenger_memory_limit' => 32,
+                  'passenger_high_performance' => false,
+                  'passenger_buffer_upload' => false,
+                  'passenger_buffer_response' => false,
+                  'passenger_error_override' => false,
+                  'passenger_max_request_queue_size' => 120,
+                  'passenger_max_request_queue_time' => 5,
+                  'passenger_sticky_sessions' => true,
+                  'passenger_sticky_sessions_cookie_name' => '_delicious_cookie',
+                  'passenger_sticky_sessions_cookie_attributes' => 'SameSite=Lax; Secure;',
+                  'passenger_allow_encoded_slashes' => false,
+                  'passenger_app_log_file' => '/tmp/app.log',
+                  'passenger_debugger' => false,
+                  'gssapi' => {
+                    'acceptor_name' => '{HOSTNAME}',
+                    'allowed_mech' => ['krb5', 'iakerb', 'ntlmssp'],
+                    'authname' => 'Kerberos 5',
+                    'authtype' => 'GSSAPI',
+                    'basic_auth' => true,
+                    'basic_auth_mech' => ['krb5', 'iakerb', 'ntlmssp'],
+                    'basic_ticket_timeout' => 300,
+                    'connection_bound' => true,
+                    'cred_store' => {
+                      'ccache' => ['/path/to/directory'],
                       'client_keytab' => ['/path/to/example.keytab'],
-                      'keytab'        => ['/path/to/example.keytab'],
+                      'keytab' => ['/path/to/example.keytab'],
                     },
-                    'deleg_ccache_dir'         => '/path/to/directory',
-                    'deleg_ccache_env_var'     => 'KRB5CCNAME',
-                    'deleg_ccache_perms'       => {
+                    'deleg_ccache_dir' => '/path/to/directory',
+                    'deleg_ccache_env_var' => 'KRB5CCNAME',
+                    'deleg_ccache_perms' => {
                       'mode' => '0600',
-                      'uid'  => 'example-user',
-                      'gid'  => 'example-group',
+                      'uid' => 'example-user',
+                      'gid' => 'example-group',
                     },
-                    'deleg_ccache_unique'      => true,
-                    'impersonate'              => true,
-                    'local_name'               => true,
-                    'name_attributes'          => 'json',
-                    'negotiate_once'           => true,
-                    'publish_errors'           => true,
-                    'publish_mech'             => true,
+                    'deleg_ccache_unique' => true,
+                    'impersonate' => true,
+                    'local_name' => true,
+                    'name_attributes' => 'json',
+                    'negotiate_once' => true,
+                    'publish_errors' => true,
+                    'publish_mech' => true,
                     'required_name_attributes' =>	'auth-indicators=high',
-                    'session_key'              => 'file:/path/to/example.key',
-                    'signal_persistent_auth'   => true,
-                    'ssl_only'                 => true,
-                    'use_s4u2_proxy'           => true,
-                    'use_sessions'             => true,
+                    'session_key' => 'file:/path/to/example.key',
+                    'signal_persistent_auth' => true,
+                    'ssl_only' => true,
+                    'use_s4u2_proxy' => true,
+                    'use_sessions' => true,
                   },
                 },
                 {
-                  'path'              => '/private_1',
-                  'provider'          => 'location',
-                  'ssl_options'       => ['+ExportCertData', '+StdEnvVars'],
+                  'path' => '/private_1',
+                  'provider' => 'location',
+                  'ssl_options' => ['+ExportCertData', '+StdEnvVars'],
                   'ssl_verify_client' => 'optional',
-                  'ssl_verify_depth'  => 10,
+                  'ssl_verify_depth' => 10,
                 },
               ],
-              'error_log'                   => false,
-              'error_log_file'              => 'httpd_error_log',
-              'error_log_syslog'            => true,
-              'error_log_format'            => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
-              'error_documents'             => 'true',
-              'fallbackresource'            => '/index.php',
-              'scriptalias'                 => '/usr/lib/cgi-bin',
-              'scriptaliases'               => [
+              'error_log' => false,
+              'error_log_file' => 'httpd_error_log',
+              'error_log_syslog' => true,
+              'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
+              'error_documents' => 'true',
+              'fallbackresource' => '/index.php',
+              'scriptalias' => '/usr/lib/cgi-bin',
+              'scriptaliases' => [
                 {
                   'alias' => '/myscript',
-                  'path'  => '/usr/share/myscript',
+                  'path' => '/usr/share/myscript',
                 },
                 {
                   'aliasmatch' => '^/foo(.*)',
-                  'path'       => '/usr/share/fooscripts$1',
+                  'path' => '/usr/share/fooscripts$1',
                 },
               ],
-              'limitreqfieldsize'           => 8190,
-              'limitreqfields'              => 100,
-              'limitreqline'                => 8190,
-              'limitreqbody'                => 0,
-              'proxy_dest'                  => '/',
-              'proxy_pass'                  => [
+              'limitreqfieldsize' => 8190,
+              'limitreqfields' => 100,
+              'limitreqline' => 8190,
+              'limitreqbody' => 0,
+              'proxy_dest' => '/',
+              'proxy_pass' => [
                 {
-                  'path'            => '/a',
-                  'url'             => 'http://backend-a/',
-                  'keywords'        => ['noquery', 'interpolate'],
-                  'no_proxy_uris'       => ['/a/foo', '/a/bar'],
+                  'path' => '/a',
+                  'url' => 'http://backend-a/',
+                  'keywords' => ['noquery', 'interpolate'],
+                  'no_proxy_uris' => ['/a/foo', '/a/bar'],
                   'no_proxy_uris_match' => ['/a/foomatch'],
                   'reverse_cookies' => [
                     {
@@ -337,47 +337,47 @@ describe 'apache::vhost', type: :define do
                     },
                     {
                       'domain' => 'foo',
-                      'url'    => 'http://foo',
+                      'url' => 'http://foo',
                     },
                   ],
                   'params' => {
-                    'retry'   => 0,
-                    'timeout' => 5,
-                  },
-                  'setenv'   => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
-                },
-              ],
-              'proxy_pass_match' => [
-                {
-                  'path'     => '/a',
-                  'url'      => 'http://backend-a/',
-                  'keywords' => ['noquery', 'interpolate'],
-                  'no_proxy_uris'       => ['/a/foo', '/a/bar'],
-                  'no_proxy_uris_match' => ['/a/foomatch'],
-                  'params' => {
-                    'retry'   => 0,
+                    'retry' => 0,
                     'timeout' => 5,
                   },
                   'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
                 },
               ],
-              'proxy_requests'              => false,
-              'php_admin_flags'             => ['foo', 'bar'],
-              'php_admin_values'            => ['true', 'false'],
-              'no_proxy_uris'               => '/foo',
-              'no_proxy_uris_match'         => '/foomatch',
-              'proxy_preserve_host'         => true,
-              'proxy_add_headers'           => true,
-              'proxy_error_override'        => true,
-              'redirect_source'             => '/bar',
-              'redirect_dest'               => '/',
-              'redirect_status'             => 'temp',
-              'redirectmatch_status'        => ['404'],
-              'redirectmatch_regexp'        => ['\.git$'],
-              'redirectmatch_dest'          => ['http://www.example.com'],
-              'headers'                     => ['Set X-Robots-Tag "noindex, noarchive, nosnippet"'],
-              'request_headers'             => ['append MirrorID "mirror 12"'],
-              'rewrites'                    => [
+              'proxy_pass_match' => [
+                {
+                  'path' => '/a',
+                  'url' => 'http://backend-a/',
+                  'keywords' => ['noquery', 'interpolate'],
+                  'no_proxy_uris' => ['/a/foo', '/a/bar'],
+                  'no_proxy_uris_match' => ['/a/foomatch'],
+                  'params' => {
+                    'retry' => 0,
+                    'timeout' => 5,
+                  },
+                  'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
+                },
+              ],
+              'proxy_requests' => false,
+              'php_admin_flags' => ['foo', 'bar'],
+              'php_admin_values' => ['true', 'false'],
+              'no_proxy_uris' => '/foo',
+              'no_proxy_uris_match' => '/foomatch',
+              'proxy_preserve_host' => true,
+              'proxy_add_headers' => true,
+              'proxy_error_override' => true,
+              'redirect_source' => '/bar',
+              'redirect_dest' => '/',
+              'redirect_status' => 'temp',
+              'redirectmatch_status' => ['404'],
+              'redirectmatch_regexp' => ['\.git$'],
+              'redirectmatch_dest' => ['http://www.example.com'],
+              'headers' => ['Set X-Robots-Tag "noindex, noarchive, nosnippet"'],
+              'request_headers' => ['append MirrorID "mirror 12"'],
+              'rewrites' => [
                 {
                   'rewrite_rule' => ['^index.html$ rewrites.html'],
                 },
@@ -391,142 +391,142 @@ describe 'apache::vhost', type: :define do
                 'FilterChain COMPRESS',
                 'FilterProtocol COMPRESS  DEFLATE change=yes;byteranges=no',
               ],
-              'rewrite_base'                => '/',
-              'rewrite_rule'                => '^index.html$ welcome.html',
-              'rewrite_cond'                => ['%{HTTP_USER_AGENT} ^MSIE'],
-              'rewrite_inherit'             => true,
-              'setenv'                      => ['FOO=/bin/true'],
-              'setenvif'                    => 'Request_URI "\.gif$" object_is_image=gif',
-              'setenvifnocase'              => 'REMOTE_ADDR ^127.0.0.1 localhost=true',
-              'block'                       => 'scm',
-              'wsgi_application_group'      => '%{GLOBAL}',
-              'wsgi_daemon_process'         => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
+              'rewrite_base' => '/',
+              'rewrite_rule' => '^index.html$ welcome.html',
+              'rewrite_cond' => ['%{HTTP_USER_AGENT} ^MSIE'],
+              'rewrite_inherit' => true,
+              'setenv' => ['FOO=/bin/true'],
+              'setenvif' => 'Request_URI "\.gif$" object_is_image=gif',
+              'setenvifnocase' => 'REMOTE_ADDR ^127.0.0.1 localhost=true',
+              'block' => 'scm',
+              'wsgi_application_group' => '%{GLOBAL}',
+              'wsgi_daemon_process' => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
               'wsgi_daemon_process_options' => {
-                'processes'    => 2,
-                'threads'      => 15,
+                'processes' => 2,
+                'threads' => 15,
                 'display-name' => '%{GROUP}',
               },
-              'wsgi_import_script'          => '/var/www/demo.wsgi',
-              'wsgi_import_script_options'  => {
-                'process-group'     => 'wsgi',
+              'wsgi_import_script' => '/var/www/demo.wsgi',
+              'wsgi_import_script_options' => {
+                'process-group' => 'wsgi',
                 'application-group' => '%{GLOBAL}',
               },
-              'wsgi_process_group'          => 'wsgi',
-              'wsgi_script_aliases'         => {
+              'wsgi_process_group' => 'wsgi',
+              'wsgi_script_aliases' => {
                 '/' => '/var/www/demo.wsgi',
               },
               'wsgi_script_aliases_match' => {
                 '^/test/(^[/*)' => '/var/www/demo.wsgi',
               },
-              'wsgi_pass_authorization'     => 'On',
-              'custom_fragment'             => '#custom string',
-              'itk'                         => {
-                'user'  => 'someuser',
+              'wsgi_pass_authorization' => 'On',
+              'custom_fragment' => '#custom string',
+              'itk' => {
+                'user' => 'someuser',
                 'group' => 'somegroup',
               },
-              'wsgi_chunked_request'        => 'On',
-              'action'                      => 'foo',
-              'additional_includes'         => '/custom/path/includes',
-              'use_optional_includes'       => true,
-              'suexec_user_group'           => 'root root',
-              'allow_encoded_slashes'       => 'nodecode',
-              'use_canonical_name'          => 'dns',
+              'wsgi_chunked_request' => 'On',
+              'action' => 'foo',
+              'additional_includes' => '/custom/path/includes',
+              'use_optional_includes' => true,
+              'suexec_user_group' => 'root root',
+              'allow_encoded_slashes' => 'nodecode',
+              'use_canonical_name' => 'dns',
 
-              'h2_copy_files'               => false,
-              'h2_direct'                   => true,
-              'h2_early_hints'              => false,
-              'h2_max_session_streams'      => 100,
-              'h2_modern_tls_only'          => true,
-              'h2_push'                     => true,
-              'h2_push_diary_size'          => 256,
-              'h2_push_priority'            => [
+              'h2_copy_files' => false,
+              'h2_direct' => true,
+              'h2_early_hints' => false,
+              'h2_max_session_streams' => 100,
+              'h2_modern_tls_only' => true,
+              'h2_push' => true,
+              'h2_push_diary_size' => 256,
+              'h2_push_priority' => [
                 'application/json 32',
               ],
               'h2_push_resource' => [
                 '/css/main.css',
                 '/js/main.js',
               ],
-              'h2_serialize_headers'        => false,
-              'h2_stream_max_mem_size'      => 65_536,
-              'h2_tls_cool_down_secs'       => 1,
-              'h2_tls_warm_up_size'         => 1_048_576,
-              'h2_upgrade'                  => true,
-              'h2_window_size'              => 65_535,
+              'h2_serialize_headers' => false,
+              'h2_stream_max_mem_size' => 65_536,
+              'h2_tls_cool_down_secs' => 1,
+              'h2_tls_warm_up_size' => 1_048_576,
+              'h2_upgrade' => true,
+              'h2_window_size' => 65_535,
 
-              'passenger_enabled'                     => false,
-              'passenger_base_uri'                    => '/app',
-              'passenger_ruby'                        => '/usr/bin/ruby1.9.1',
-              'passenger_python'                      => '/usr/local/bin/python',
-              'passenger_nodejs'                      => '/usr/bin/node',
-              'passenger_meteor_app_settings'         => '/path/to/some/file.json',
-              'passenger_app_env'                     => 'test',
-              'passenger_app_root'                    => '/usr/share/myapp',
-              'passenger_app_group_name'              => 'app_customer',
-              'passenger_app_start_command'           => 'start-my-app',
-              'passenger_app_type'                    => 'rack',
-              'passenger_startup_file'                => 'bin/www',
-              'passenger_restart_dir'                 => 'tmp',
-              'passenger_spawn_method'                => 'direct',
-              'passenger_load_shell_envvars'          => false,
-              'passenger_preload_bundler'             => false,
-              'passenger_rolling_restarts'            => false,
-              'passenger_resist_deployment_errors'    => true,
-              'passenger_user'                        => 'sandbox',
-              'passenger_group'                       => 'sandbox',
-              'passenger_friendly_error_pages'        => false,
-              'passenger_min_instances'               => 1,
-              'passenger_max_instances'               => 30,
-              'passenger_max_preloader_idle_time'     => 600,
+              'passenger_enabled' => false,
+              'passenger_base_uri' => '/app',
+              'passenger_ruby' => '/usr/bin/ruby1.9.1',
+              'passenger_python' => '/usr/local/bin/python',
+              'passenger_nodejs' => '/usr/bin/node',
+              'passenger_meteor_app_settings' => '/path/to/some/file.json',
+              'passenger_app_env' => 'test',
+              'passenger_app_root' => '/usr/share/myapp',
+              'passenger_app_group_name' => 'app_customer',
+              'passenger_app_start_command' => 'start-my-app',
+              'passenger_app_type' => 'rack',
+              'passenger_startup_file' => 'bin/www',
+              'passenger_restart_dir' => 'tmp',
+              'passenger_spawn_method' => 'direct',
+              'passenger_load_shell_envvars' => false,
+              'passenger_preload_bundler' => false,
+              'passenger_rolling_restarts' => false,
+              'passenger_resist_deployment_errors' => true,
+              'passenger_user' => 'sandbox',
+              'passenger_group' => 'sandbox',
+              'passenger_friendly_error_pages' => false,
+              'passenger_min_instances' => 1,
+              'passenger_max_instances' => 30,
+              'passenger_max_preloader_idle_time' => 600,
               'passenger_force_max_concurrent_requests_per_process' => 10,
-              'passenger_start_timeout'               => 600,
-              'passenger_concurrency_model'           => 'thread',
-              'passenger_thread_count'                => 5,
-              'passenger_max_requests'                => 1000,
-              'passenger_max_request_time'            => 2,
-              'passenger_memory_limit'                => 64,
-              'passenger_stat_throttle_rate'          => 5,
-              'passenger_pre_start'                   => 'http://localhost/myapp',
-              'passenger_high_performance'            => true,
-              'passenger_buffer_upload'               => false,
-              'passenger_buffer_response'             => false,
-              'passenger_error_override'              => true,
-              'passenger_max_request_queue_size'      => 10,
-              'passenger_max_request_queue_time'      => 2,
-              'passenger_sticky_sessions'             => true,
+              'passenger_start_timeout' => 600,
+              'passenger_concurrency_model' => 'thread',
+              'passenger_thread_count' => 5,
+              'passenger_max_requests' => 1000,
+              'passenger_max_request_time' => 2,
+              'passenger_memory_limit' => 64,
+              'passenger_stat_throttle_rate' => 5,
+              'passenger_pre_start' => 'http://localhost/myapp',
+              'passenger_high_performance' => true,
+              'passenger_buffer_upload' => false,
+              'passenger_buffer_response' => false,
+              'passenger_error_override' => true,
+              'passenger_max_request_queue_size' => 10,
+              'passenger_max_request_queue_time' => 2,
+              'passenger_sticky_sessions' => true,
               'passenger_sticky_sessions_cookie_name' => '_nom_nom_nom',
               'passenger_sticky_sessions_cookie_attributes' => 'Nom=nom; Secure;',
-              'passenger_allow_encoded_slashes'       => true,
-              'passenger_app_log_file'                => '/app/log/file',
-              'passenger_debugger'                    => true,
-              'passenger_lve_min_uid'                 => 500,
-              'add_default_charset'         => 'UTF-8',
-              'jk_mounts'                   => [
+              'passenger_allow_encoded_slashes' => true,
+              'passenger_app_log_file' => '/app/log/file',
+              'passenger_debugger' => true,
+              'passenger_lve_min_uid' => 500,
+              'add_default_charset' => 'UTF-8',
+              'jk_mounts' => [
                 { 'mount'   => '/*',     'worker' => 'tcnode1' },
                 { 'unmount' => '/*.jpg', 'worker' => 'tcnode1' },
               ],
-              'auth_kerb'                   => true,
-              'krb_method_negotiate'        => 'off',
-              'krb_method_k5passwd'         => 'off',
-              'krb_authoritative'           => 'off',
-              'krb_auth_realms'             => ['EXAMPLE.ORG', 'EXAMPLE.NET'],
-              'krb_5keytab'                 => '/tmp/keytab5',
-              'krb_local_user_mapping'      => 'off',
+              'auth_kerb' => true,
+              'krb_method_negotiate' => 'off',
+              'krb_method_k5passwd' => 'off',
+              'krb_authoritative' => 'off',
+              'krb_auth_realms' => ['EXAMPLE.ORG', 'EXAMPLE.NET'],
+              'krb_5keytab' => '/tmp/keytab5',
+              'krb_local_user_mapping' => 'off',
               'http_protocol_options' => 'Strict LenientMethods Allow0.9',
-              'keepalive'                   => 'on',
-              'keepalive_timeout'           => 100,
-              'max_keepalive_requests'      => 1000,
-              'protocols'                   => ['h2', 'http/1.1'],
-              'protocols_honor_order'       => true,
-              'auth_oidc'                   => true,
-              'oidc_settings'               => { 'ProviderMetadataURL'       => 'https://login.example.com/.well-known/openid-configuration',
-                                                 'ClientID'                  => 'test',
-                                                 'RedirectURI'               => 'https://login.example.com/redirect_uri',
-                                                 'ProviderTokenEndpointAuth' => 'client_secret_basic',
-                                                 'RemoteUserClaim'           => 'sub',
-                                                 'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
-                                                 'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
-              'mdomain'                     => 'example.com example.net auto',
-              'userdir'                     => 'disabled',
+              'keepalive' => 'on',
+              'keepalive_timeout' => 100,
+              'max_keepalive_requests' => 1000,
+              'protocols' => ['h2', 'http/1.1'],
+              'protocols_honor_order' => true,
+              'auth_oidc' => true,
+              'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
+                                   'ClientID' => 'test',
+                                   'RedirectURI' => 'https://login.example.com/redirect_uri',
+                                   'ProviderTokenEndpointAuth' => 'client_secret_basic',
+                                   'RemoteUserClaim' => 'sub',
+                                   'ClientSecret' => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                   'CryptoPassphrase' => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+              'mdomain' => 'example.com example.net auto',
+              'userdir' => 'disabled',
             }
           end
 
@@ -575,9 +575,9 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::mod::wsgi') }
           it {
             is_expected.to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
-                                                                            'mode'    => '0644',
+                                                                            'mode' => '0644',
                                                                             'require' => 'Package[httpd]',
-                                                                            'notify'  => 'Class[Apache::Service]')
+                                                                            'notify' => 'Class[Apache::Service]')
           }
           if os_facts[:os]['release']['major'].to_i >= 18 && os_facts[:os]['name'] == 'Ubuntu'
             it {
@@ -907,24 +907,24 @@ describe 'apache::vhost', type: :define do
         context 'vhost with proxy_add_headers true' do
           let :params do
             {
-              'docroot'                     => '/var/www/foo',
-              'manage_docroot'              => false,
-              'virtual_docroot'             => true,
+              'docroot' => '/var/www/foo',
+              'manage_docroot' => false,
+              'virtual_docroot' => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => 8080,
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'add_listen'                  => false,
-              'serveradmin'                 => 'foo@localhost',
-              'priority'                    => 30,
-              'default_vhost'               => true,
-              'servername'                  => 'example.com',
-              'serveraliases'               => ['test-example.com'],
-              'options'                     => ['MultiView'],
-              'override'                    => ['All'],
-              'directoryindex'              => 'index.html',
-              'vhost_name'                  => 'test',
-              'proxy_add_headers'           => true,
+              'port' => 8080,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'add_listen' => false,
+              'serveradmin' => 'foo@localhost',
+              'priority' => 30,
+              'default_vhost' => true,
+              'servername' => 'example.com',
+              'serveraliases' => ['test-example.com'],
+              'options' => ['MultiView'],
+              'override' => ['All'],
+              'directoryindex' => 'index.html',
+              'vhost_name' => 'test',
+              'proxy_add_headers' => true,
             }
           end
 
@@ -934,24 +934,24 @@ describe 'apache::vhost', type: :define do
         context 'vhost with proxy_add_headers false' do
           let :params do
             {
-              'docroot'                     => '/var/www/foo',
-              'manage_docroot'              => false,
-              'virtual_docroot'             => true,
+              'docroot' => '/var/www/foo',
+              'manage_docroot' => false,
+              'virtual_docroot' => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => 8080,
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'add_listen'                  => false,
-              'serveradmin'                 => 'foo@localhost',
-              'priority'                    => 30,
-              'default_vhost'               => true,
-              'servername'                  => 'example.com',
-              'serveraliases'               => ['test-example.com'],
-              'options'                     => ['MultiView'],
-              'override'                    => ['All'],
-              'directoryindex'              => 'index.html',
-              'vhost_name'                  => 'test',
-              'proxy_add_headers'           => false,
+              'port' => 8080,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'add_listen' => false,
+              'serveradmin' => 'foo@localhost',
+              'priority' => 30,
+              'default_vhost' => true,
+              'servername' => 'example.com',
+              'serveraliases' => ['test-example.com'],
+              'options' => ['MultiView'],
+              'override' => ['All'],
+              'directoryindex' => 'index.html',
+              'vhost_name' => 'test',
+              'proxy_add_headers' => false,
             }
           end
 
@@ -961,23 +961,23 @@ describe 'apache::vhost', type: :define do
         context 'vhost without proxy' do
           let :params do
             {
-              'docroot'                     => '/var/www/foo',
-              'manage_docroot'              => false,
-              'virtual_docroot'             => true,
+              'docroot' => '/var/www/foo',
+              'manage_docroot' => false,
+              'virtual_docroot' => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => 8080,
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'add_listen'                  => false,
-              'serveradmin'                 => 'foo@localhost',
-              'priority'                    => 30,
-              'default_vhost'               => true,
-              'servername'                  => 'example.com',
-              'serveraliases'               => ['test-example.com'],
-              'options'                     => ['MultiView'],
-              'override'                    => ['All'],
-              'directoryindex'              => 'index.html',
-              'vhost_name'                  => 'test',
+              'port' => 8080,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'add_listen' => false,
+              'serveradmin' => 'foo@localhost',
+              'priority' => 30,
+              'default_vhost' => true,
+              'servername' => 'example.com',
+              'serveraliases' => ['test-example.com'],
+              'options' => ['MultiView'],
+              'override' => ['All'],
+              'directoryindex' => 'index.html',
+              'vhost_name' => 'test',
             }
           end
 
@@ -987,24 +987,24 @@ describe 'apache::vhost', type: :define do
         context 'vhost without proxy_add_headers' do
           let :params do
             {
-              'docroot'                     => '/var/www/foo',
-              'manage_docroot'              => false,
-              'virtual_docroot'             => true,
+              'docroot' => '/var/www/foo',
+              'manage_docroot' => false,
+              'virtual_docroot' => true,
               'virtual_use_default_docroot' => false,
-              'port'                        => 8080,
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'add_listen'                  => false,
-              'serveradmin'                 => 'foo@localhost',
-              'priority'                    => 30,
-              'default_vhost'               => true,
-              'servername'                  => 'example.com',
-              'serveraliases'               => ['test-example.com'],
-              'options'                     => ['MultiView'],
-              'override'                    => ['All'],
-              'directoryindex'              => 'index.html',
-              'vhost_name'                  => 'test',
-              'proxy_preserve_host'         => true,
+              'port' => 8080,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'add_listen' => false,
+              'serveradmin' => 'foo@localhost',
+              'priority' => 30,
+              'default_vhost' => true,
+              'servername' => 'example.com',
+              'serveraliases' => ['test-example.com'],
+              'options' => ['MultiView'],
+              'override' => ['All'],
+              'directoryindex' => 'index.html',
+              'vhost_name' => 'test',
+              'proxy_preserve_host' => true,
             }
           end
 
@@ -1014,14 +1014,14 @@ describe 'apache::vhost', type: :define do
         context 'vhost with scheme and port in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => 80,
-              'ip'                            => '127.0.0.1',
-              'ip_based'                      => true,
-              'servername'                    => 'https://www.example.com:443',
-              'docroot'                       => '/var/www/html',
-              'add_listen'                    => true,
-              'ensure'                        => 'present',
-              'use_servername_for_filenames'  => true
+              'port' => 80,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'servername' => 'https://www.example.com:443',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
+              'use_servername_for_filenames' => true
             }
           end
 
@@ -1038,14 +1038,14 @@ describe 'apache::vhost', type: :define do
         context 'vhost with scheme in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => 80,
-              'ip'                            => '127.0.0.1',
-              'ip_based'                      => true,
-              'servername'                    => 'https://www.example.com',
-              'docroot'                       => '/var/www/html',
-              'add_listen'                    => true,
-              'ensure'                        => 'present',
-              'use_servername_for_filenames'  => true
+              'port' => 80,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'servername' => 'https://www.example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
+              'use_servername_for_filenames' => true
             }
           end
 
@@ -1062,14 +1062,14 @@ describe 'apache::vhost', type: :define do
         context 'vhost with port in servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => 80,
-              'ip'                            => '127.0.0.1',
-              'ip_based'                      => true,
-              'servername'                    => 'www.example.com:443',
-              'docroot'                       => '/var/www/html',
-              'add_listen'                    => true,
-              'ensure'                        => 'present',
-              'use_servername_for_filenames'  => true
+              'port' => 80,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'servername' => 'www.example.com:443',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
+              'use_servername_for_filenames' => true
             }
           end
 
@@ -1086,14 +1086,14 @@ describe 'apache::vhost', type: :define do
         context 'vhost with servername and use_servername_for_filenames' do
           let :params do
             {
-              'port'                          => 80,
-              'ip'                            => '127.0.0.1',
-              'ip_based'                      => true,
-              'servername'                    => 'www.example.com',
-              'docroot'                       => '/var/www/html',
-              'add_listen'                    => true,
-              'ensure'                        => 'present',
-              'use_servername_for_filenames'  => true
+              'port' => 80,
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'servername' => 'www.example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
+              'use_servername_for_filenames' => true
             }
           end
 
@@ -1110,13 +1110,13 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ip addresses' do
           let :params do
             {
-              'port'                        => 80,
-              'ip'                          => ['127.0.0.1', '::1'],
-              'ip_based'                    => true,
-              'servername'                  => 'example.com',
-              'docroot'                     => '/var/www/html',
-              'add_listen'                  => true,
-              'ensure'                      => 'present',
+              'port' => 80,
+              'ip' => ['127.0.0.1', '::1'],
+              'ip_based' => true,
+              'servername' => 'example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
             }
           end
 
@@ -1135,13 +1135,13 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ports' do
           let :params do
             {
-              'port'                        => [80, 8080],
-              'ip'                          => '127.0.0.1',
-              'ip_based'                    => true,
-              'servername'                  => 'example.com',
-              'docroot'                     => '/var/www/html',
-              'add_listen'                  => true,
-              'ensure'                      => 'present',
+              'port' => [80, 8080],
+              'ip' => '127.0.0.1',
+              'ip_based' => true,
+              'servername' => 'example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
             }
           end
 
@@ -1160,13 +1160,13 @@ describe 'apache::vhost', type: :define do
         context 'vhost with multiple ip addresses, multiple ports' do
           let :params do
             {
-              'port'                        => [80, 8080],
-              'ip'                          => ['127.0.0.1', '::1'],
-              'ip_based'                    => true,
-              'servername'                  => 'example.com',
-              'docroot'                     => '/var/www/html',
-              'add_listen'                  => true,
-              'ensure'                      => 'present',
+              'port' => [80, 8080],
+              'ip' => ['127.0.0.1', '::1'],
+              'ip_based' => true,
+              'servername' => 'example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
             }
           end
 
@@ -1189,13 +1189,13 @@ describe 'apache::vhost', type: :define do
         context 'vhost with ipv6 address' do
           let :params do
             {
-              'port'                        => 80,
-              'ip'                          => '::1',
-              'ip_based'                    => true,
-              'servername'                  => 'example.com',
-              'docroot'                     => '/var/www/html',
-              'add_listen'                  => true,
-              'ensure'                      => 'present',
+              'port' => 80,
+              'ip' => '::1',
+              'ip_based' => true,
+              'servername' => 'example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
             }
           end
 
@@ -1212,13 +1212,13 @@ describe 'apache::vhost', type: :define do
         context 'vhost with wildcard ip address' do
           let :params do
             {
-              'port'                        => 80,
-              'ip'                          => '*',
-              'ip_based'                    => true,
-              'servername'                  => 'example.com',
-              'docroot'                     => '/var/www/html',
-              'add_listen'                  => true,
-              'ensure'                      => 'present',
+              'port' => 80,
+              'ip' => '*',
+              'ip_based' => true,
+              'servername' => 'example.com',
+              'docroot' => '/var/www/html',
+              'add_listen' => true,
+              'ensure' => 'present',
             }
           end
 
@@ -1235,7 +1235,7 @@ describe 'apache::vhost', type: :define do
         context 'vhost with backwards compatible virtual_docroot' do
           let :params do
             {
-              'docroot'         => '/var/www/html',
+              'docroot' => '/var/www/html',
               'virtual_docroot' => '/var/www/sites/%0',
             }
           end
@@ -1255,9 +1255,9 @@ describe 'apache::vhost', type: :define do
         context 'vhost with virtual_docroot and docroot' do
           let :params do
             {
-              'docroot'                     => '/var/www/html',
+              'docroot' => '/var/www/html',
               'virtual_use_default_docroot' => true,
-              'virtual_docroot'             => '/var/www/sites/%0',
+              'virtual_docroot' => '/var/www/sites/%0',
             }
           end
 
@@ -1277,7 +1277,7 @@ describe 'apache::vhost', type: :define do
         context 'modsec_audit_log' do
           let :params do
             {
-              'docroot'          => '/rspec/docroot',
+              'docroot' => '/rspec/docroot',
               'modsec_audit_log' => true,
             }
           end
@@ -1292,7 +1292,7 @@ describe 'apache::vhost', type: :define do
         context 'modsec_audit_log_file' do
           let :params do
             {
-              'docroot'               => '/rspec/docroot',
+              'docroot' => '/rspec/docroot',
               'modsec_audit_log_file' => 'foo.log',
             }
           end
@@ -1308,8 +1308,8 @@ describe 'apache::vhost', type: :define do
         context 'modsec_anomaly_threshold' do
           let :params do
             {
-              'docroot'                           => '/rspec/docroot',
-              'modsec_inbound_anomaly_threshold'  => 10_000,
+              'docroot' => '/rspec/docroot',
+              'modsec_inbound_anomaly_threshold' => 10_000,
               'modsec_outbound_anomaly_threshold' => 10_000,
             }
           end
@@ -1334,7 +1334,7 @@ describe 'apache::vhost', type: :define do
         context 'modsec_allowed_methods' do
           let :params do
             {
-              'docroot'                => '/rspec/docroot',
+              'docroot' => '/rspec/docroot',
               'modsec_allowed_methods' => 'GET HEAD POST OPTIONS',
             }
           end
@@ -1361,7 +1361,7 @@ describe 'apache::vhost', type: :define do
               'aliases' => [
                 {
                   'alias' => '/alias',
-                  'path'  => '/rspec/docroot',
+                  'path' => '/rspec/docroot',
                 },
               ],
             }
@@ -1375,9 +1375,9 @@ describe 'apache::vhost', type: :define do
               'docroot' => '/rspec/docroot',
               'proxy_pass_match' => [
                 {
-                  'path'     => '.*',
-                  'url'      => 'http://backend-a/',
-                  'params'   => { 'timeout' => 300 },
+                  'path' => '.*',
+                  'url' => 'http://backend-a/',
+                  'params' => { 'timeout' => 300 },
                 },
               ],
             }
@@ -1393,7 +1393,7 @@ describe 'apache::vhost', type: :define do
         context 'proxy_dest_match and no proxy_dest_reverse_match' do
           let :params do
             {
-              'docroot'          => '/rspec/docroot',
+              'docroot' => '/rspec/docroot',
               'proxy_dest_match' => '/',
             }
           end
@@ -1406,8 +1406,8 @@ describe 'apache::vhost', type: :define do
         context 'proxy_dest_match and proxy_dest_reverse_match' do
           let :params do
             {
-              'docroot'                  => '/rspec/docroot',
-              'proxy_dest_match'         => '/',
+              'docroot' => '/rspec/docroot',
+              'proxy_dest_match' => '/',
               'proxy_dest_reverse_match' => 'http://localhost:8180',
             }
           end
@@ -1421,12 +1421,12 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'access_log_pipe' => '/dev/null',
-              'error_log_pipe'  => '/dev/null',
-              'docroot'         => '/var/www/foo',
-              'ensure'          => 'absent',
-              'manage_docroot'  => true,
-              'logroot'         => '/tmp/logroot',
-              'logroot_ensure'  => 'absent',
+              'error_log_pipe' => '/dev/null',
+              'docroot' => '/var/www/foo',
+              'ensure' => 'absent',
+              'manage_docroot' => true,
+              'logroot' => '/tmp/logroot',
+              'logroot_ensure' => 'absent',
             }
           end
 
@@ -1487,8 +1487,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_application_group should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_application_group'     => '%{GLOBAL}',
+              'docroot' => '/rspec/docroot',
+              'wsgi_application_group' => '%{GLOBAL}',
             }
           end
 
@@ -1497,7 +1497,7 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_daemon_process should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
+              'docroot' => '/rspec/docroot',
               'wsgi_daemon_process' => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
             }
           end
@@ -1507,8 +1507,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_import_script on its own should not set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_import_script'         => '/var/www/demo.wsgi',
+              'docroot' => '/rspec/docroot',
+              'wsgi_import_script' => '/var/www/demo.wsgi',
             }
           end
 
@@ -1519,8 +1519,8 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/rspec/docroot',
               'wsgi_import_script_options' => {
-                'process-group'           => 'wsgi',
-                'application-group'       => '%{GLOBAL}',
+                'process-group' => 'wsgi',
+                'application-group' => '%{GLOBAL}',
               },
             }
           end
@@ -1530,11 +1530,11 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_import_script and wsgi_import_script_options should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                     => '/rspec/docroot',
-              'wsgi_import_script'          => '/var/www/demo.wsgi',
-              'wsgi_import_script_options'  => {
-                'process-group'           => 'wsgi',
-                'application-group'       => '%{GLOBAL}',
+              'docroot' => '/rspec/docroot',
+              'wsgi_import_script' => '/var/www/demo.wsgi',
+              'wsgi_import_script_options' => {
+                'process-group' => 'wsgi',
+                'application-group' => '%{GLOBAL}',
               },
             }
           end
@@ -1544,8 +1544,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_process_group should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_daemon_process'        => 'wsgi',
+              'docroot' => '/rspec/docroot',
+              'wsgi_daemon_process' => 'wsgi',
             }
           end
 
@@ -1554,8 +1554,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_script_aliases with non-empty aliases should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_script_aliases'        => {
+              'docroot' => '/rspec/docroot',
+              'wsgi_script_aliases' => {
                 '/' => '/var/www/demo.wsgi',
               },
             }
@@ -1566,8 +1566,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_script_aliases with empty aliases should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_script_aliases'        => {},
+              'docroot' => '/rspec/docroot',
+              'wsgi_script_aliases' => {},
             }
           end
 
@@ -1576,8 +1576,8 @@ describe 'apache::vhost', type: :define do
         context 'wsgi_pass_authorization should set apache::mod::wsgi' do
           let :params do
             {
-              'docroot'                    => '/rspec/docroot',
-              'wsgi_pass_authorization'    => 'On',
+              'docroot' => '/rspec/docroot',
+              'wsgi_pass_authorization' => 'On',
             }
           end
 
@@ -1586,8 +1586,8 @@ describe 'apache::vhost', type: :define do
         context 'when not setting nor managing the docroot' do
           let :params do
             {
-              'docroot'                     => false,
-              'manage_docroot'              => false,
+              'docroot' => false,
+              'manage_docroot' => false,
             }
           end
 
@@ -1597,8 +1597,8 @@ describe 'apache::vhost', type: :define do
         context 'ssl_proxyengine without ssl' do
           let :params do
             {
-              'docroot'         => '/rspec/docroot',
-              'ssl'             => false,
+              'docroot' => '/rspec/docroot',
+              'ssl' => false,
               'ssl_proxyengine' => true,
             }
           end
@@ -1610,9 +1610,9 @@ describe 'apache::vhost', type: :define do
         context 'ssl_proxy_protocol without ssl_proxyengine' do
           let :params do
             {
-              'docroot'            => '/rspec/docroot',
-              'ssl'                => true,
-              'ssl_proxyengine'    => false,
+              'docroot' => '/rspec/docroot',
+              'ssl' => true,
+              'ssl_proxyengine' => false,
               'ssl_proxy_protocol' => 'TLSv1.2',
             }
           end
@@ -1624,8 +1624,8 @@ describe 'apache::vhost', type: :define do
         context 'ssl_honorcipherorder' do
           let :params do
             {
-              'docroot'            => '/rspec/docroot',
-              'ssl'                => true,
+              'docroot' => '/rspec/docroot',
+              'ssl' => true,
             }
           end
 
@@ -1671,7 +1671,7 @@ describe 'apache::vhost', type: :define do
           context 'single log file' do
             let(:params) do
               {
-                'docroot'         => '/rspec/docroot',
+                'docroot' => '/rspec/docroot',
                 'access_log_file' => 'my_log_file',
               }
             end
@@ -1685,8 +1685,8 @@ describe 'apache::vhost', type: :define do
           context 'single log file with environment' do
             let(:params) do
               {
-                'docroot'            => '/rspec/docroot',
-                'access_log_file'    => 'my_log_file',
+                'docroot' => '/rspec/docroot',
+                'access_log_file' => 'my_log_file',
                 'access_log_env_var' => 'prod',
               }
             end
@@ -1700,7 +1700,7 @@ describe 'apache::vhost', type: :define do
           context 'multiple log files' do
             let(:params) do
               {
-                'docroot'     => '/rspec/docroot',
+                'docroot' => '/rspec/docroot',
                 'access_logs' => [
                   { 'file' => '/tmp/log1', 'env' => 'dev' },
                   { 'file' => 'log2' },
@@ -1730,7 +1730,7 @@ describe 'apache::vhost', type: :define do
           context 'single log format directive as a string' do
             let(:params) do
               {
-                'docroot'          => '/rspec/docroot',
+                'docroot' => '/rspec/docroot',
                 'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
               }
             end
@@ -1745,7 +1745,7 @@ describe 'apache::vhost', type: :define do
           context 'multiple log format directives' do
             let(:params) do
               {
-                'docroot'          => '/rspec/docroot',
+                'docroot' => '/rspec/docroot',
                 'error_log_format' => [
                   '[%{uc}t] [%-m:%-l] [R:%L] [C:%{C}L] %7F: %E: %M',
                   { '[%{uc}t] [R:%L] Request %k on C:%{c}L pid:%P tid:%T' => 'request' },
@@ -1880,10 +1880,10 @@ describe 'apache::vhost', type: :define do
           context 'default of require all granted' do
             let :params do
               {
-                'docroot'         => '/var/www/foo',
-                'directories'     => [
+                'docroot' => '/var/www/foo',
+                'directories' => [
                   {
-                    'path'     => '/var/www/foo/files',
+                    'path' => '/var/www/foo/files',
                     'provider' => 'files',
                   },
                 ],
@@ -1908,11 +1908,11 @@ describe 'apache::vhost', type: :define do
           context 'require unmanaged' do
             let :params do
               {
-                'docroot'         => '/var/www/foo',
-                'directories'     => [
+                'docroot' => '/var/www/foo',
+                'directories' => [
                   {
-                    'path'     => '/var/www/foo',
-                    'require'  => 'unmanaged',
+                    'path' => '/var/www/foo',
+                    'require' => 'unmanaged',
                   },
                 ],
 
@@ -1948,12 +1948,12 @@ describe 'apache::vhost', type: :define do
               default_params.merge(
                 'auth_oidc' => true,
                 'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
-                                     'ClientID'                  => 'test',
-                                     'RedirectURI'               => '/some/valid/relative/uri',
+                                     'ClientID' => 'test',
+                                     'RedirectURI' => '/some/valid/relative/uri',
                                      'ProviderTokenEndpointAuth' => 'client_secret_basic',
-                                     'RemoteUserClaim'           => 'sub',
-                                     'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
-                                     'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+                                     'RemoteUserClaim' => 'sub',
+                                     'ClientSecret' => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                     'CryptoPassphrase' => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               )
             end
 
@@ -1970,12 +1970,12 @@ describe 'apache::vhost', type: :define do
               default_params.merge(
                 'auth_oidc' => true,
                 'oidc_settings' => { 'ProviderMetadataURL' => 'https://login.example.com/.well-known/openid-configuration',
-                                     'ClientID'                  => 'test',
-                                     'RedirectURI'               => 'invalid_uri',
+                                     'ClientID' => 'test',
+                                     'RedirectURI' => 'invalid_uri',
                                      'ProviderTokenEndpointAuth' => 'client_secret_basic',
-                                     'RemoteUserClaim'           => 'sub',
-                                     'ClientSecret'              => 'aae053a9-4abf-4824-8956-e94b2af335c8',
-                                     'CryptoPassphrase'          => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
+                                     'RemoteUserClaim' => 'sub',
+                                     'ClientSecret' => 'aae053a9-4abf-4824-8956-e94b2af335c8',
+                                     'CryptoPassphrase' => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               )
             end
 

@@ -29,7 +29,7 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.not_to contain_apache__mod('event') }
     it {
       is_expected.to contain_file('/etc/httpd/conf.modules.d/prefork.load').with('ensure' => 'file',
-                                                                         'content' => "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n")
+                                                                                 'content' => "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n")
     }
   end
   context 'on a FreeBSD OS' do

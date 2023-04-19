@@ -26,12 +26,12 @@ describe 'apache::mod::jk', type: :class do
           'worker_a' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment'          => 'This is worker A',
+            'comment' => 'This is worker A',
           },
           'worker_b' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment'          => 'This is worker B',
+            'comment' => 'This is worker B',
           },
           'worker_maintain' => 40,
           'worker_lists' => ['worker_a,worker_b'],
