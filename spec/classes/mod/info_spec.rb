@@ -33,9 +33,9 @@ def general_info_specs_apache24
     end
 
     expected = "<Location /server-info>\n    " \
-        "SetHandler server-info\n    " \
-        "Require ip 10.10.1.2 192.168.1.2 127.0.0.1\n" \
-        "</Location>\n"
+               "SetHandler server-info\n    " \
+               "Require ip 10.10.1.2 192.168.1.2 127.0.0.1\n" \
+               "</Location>\n"
     it {
       is_expected.to contain_file('info.conf').with_content(expected)
     }

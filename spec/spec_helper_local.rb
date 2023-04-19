@@ -29,7 +29,7 @@ if ENV['COVERAGE'] == 'yes'
   end
 end
 
-shared_examples :compile, compile: true do
+shared_examples 'compile', compile: true do
   it { is_expected.to compile.with_all_deps }
 end
 

@@ -22,7 +22,7 @@ describe 'apache::vhost', type: :define do
         }
       end
 
-      context "on #{os} " do
+      context "on #{os}" do
         let :facts do
           os_facts
         end
