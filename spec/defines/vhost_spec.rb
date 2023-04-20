@@ -1814,7 +1814,7 @@ describe 'apache::vhost', type: :define do
               )
             }
           end
-        end # access logs
+        end
 
         describe 'error logs format' do
           context 'single log format directive as a string' do
@@ -1855,7 +1855,7 @@ describe 'apache::vhost', type: :define do
                 .with_content(%r{^\s+ErrorLogFormat connection "\[%\{uc\}t\] \[C:%\{c\}L\] local\\ %a remote\\ %A"$})
             }
           end
-        end # error logs format
+        end
 
         describe 'validation' do
           let(:params) do

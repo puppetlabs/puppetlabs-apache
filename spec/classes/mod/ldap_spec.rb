@@ -52,7 +52,7 @@ describe 'apache::mod::ldap', type: :class do
         "</Location>\n"
       it { is_expected.to contain_file('ldap.conf').with_content(%r{#{expected_ldap_path_re}}m) }
     end
-  end # Debian
+  end
 
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
@@ -93,5 +93,5 @@ describe 'apache::mod::ldap', type: :class do
 
       it { is_expected.to contain_package('httpd24-mod_ldap') }
     end
-  end # Redhat
+  end
 end

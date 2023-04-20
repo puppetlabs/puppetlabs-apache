@@ -91,7 +91,7 @@ RSpec/FilePath:
     - 'spec/classes/mod/proxy_wstunnel.rb'
 
 # Offense count: 16
-# This cop supports safe autocorrection (--autocorrect).
+# This cop supports safe autocorrection.
 RSpec/LetBeforeExamples:
   Exclude:
     - 'spec/classes/mod/auth_kerb_spec.rb'
@@ -158,52 +158,6 @@ RSpec/StubbedMock:
     - 'spec/util/apache_mod_platform_compatibility_spec.rb'
 
 # Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: MinBranchesCount.
-Style/CaseLikeIf:
-  Exclude:
-    - 'spec/classes/mod/status_spec.rb'
-
-# Offense count: 12
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CommentedKeyword:
-  Exclude:
-    - 'spec/classes/mod/authnz_ldap_spec.rb'
-    - 'spec/classes/mod/authnz_pam_spec.rb'
-    - 'spec/classes/mod/intercept_form_submit_spec.rb'
-    - 'spec/classes/mod/ldap_spec.rb'
-    - 'spec/classes/mod/lookup_identity.rb'
-    - 'spec/defines/vhost_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - 'spec/type_aliases/modproxy_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'tasks/init.rb'
-
-# Offense count: 1
 Style/MixinUsage:
   Exclude:
     - 'spec/spec_helper.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'spec/classes/mod/status_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Mode.
-Style/StringConcatenation:
-  Exclude:
-    - 'lib/puppet/functions/apache/pw_hash.rb'

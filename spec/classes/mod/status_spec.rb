@@ -3,24 +3,25 @@
 require 'spec_helper'
 
 def require_directives(requires)
-  if requires == :undef
+  case requires
+  when :undef
     "    Require ip 127.0.0.1 ::1\n"
-  elsif requires.is_a?(String)
+  when String
     if ['', 'unmanaged'].include? requires.downcase
       ''
     else
       "    Require #{requires}\n"
     end
-  elsif requires.is_a?(Array)
-    requires.map { |req| "    Require #{req}\n" }.join('')
-  elsif requires.is_a?(Hash)
+  when Array
+    requires.map { |req| "    Require #{req}\n" }.join
+  when Hash
     if requires.key?(:enforce)
  \
       "    <Require#{requires[:enforce].capitalize}>\n" + \
-        requires[:requires].map { |req| "        Require #{req}\n" }.join('') + \
+        requires[:requires].map { |req| "        Require #{req}\n" }.join + \
         "    </Require#{requires[:enforce].capitalize}>\n"
     else
-      requires[:requires].map { |req| "    Require #{req}\n" }.join('')
+      requires[:requires].map { |req| "    Require #{req}\n" }.join
     end
   end
 end

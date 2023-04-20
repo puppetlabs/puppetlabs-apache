@@ -23,7 +23,7 @@ def service(action, service_name)
   { status: "#{action} successful" }
 end
 
-params = JSON.parse(STDIN.read)
+params = JSON.parse($stdin.read)
 action = params['action']
 service_name = params['service_name']
 
