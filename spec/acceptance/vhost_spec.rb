@@ -125,7 +125,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ProxyPreserveHost On' }
       it { is_expected.to contain 'ProxyErrorOverride On' }
       it { is_expected.not_to contain 'ProxyAddHeaders' }
-      it { is_expected.not_to contain "<Proxy \*>" }
+      it { is_expected.not_to contain '<Proxy *>' }
     end
   end
 
@@ -153,7 +153,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ProxyPreserveHost On' }
       it { is_expected.to contain 'ProxyErrorOverride On' }
       it { is_expected.not_to contain 'ProxyAddHeaders' }
-      it { is_expected.not_to contain "<Proxy \*>" }
+      it { is_expected.not_to contain '<Proxy *>' }
     end
   end
 
@@ -276,9 +276,9 @@ describe 'apache::vhost define' do
       class { 'apache': }
 
       if versioncmp('#{apache_hash['version']}', '2.4') >= 0 {
-        $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
+        $_files_match_directory = { 'path' => '(.swp|.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
       } else {
-        $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
+        $_files_match_directory = { 'path' => '(.swp|.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
       }
 
       $_directories = [
@@ -785,14 +785,14 @@ describe 'apache::vhost define' do
       apache::vhost { 'test.setenv_setenvif':
         docroot  => '/tmp',
         setenv   => ['TEST /test'],
-        setenvif => ['Request_URI "\.gif$" object_is_image=gif']
+        setenvif => ['Request_URI ".gif$" object_is_image=gif']
       }
       apache::vhost { 'test.rewrite':
         docroot          => '/tmp',
         rewrites => [
           { comment => 'test',
             rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
-            rewrite_rule => ['^index\.html$ welcome.html'],
+            rewrite_rule => ['^index.html$ welcome.html'],
             rewrite_map  => ['lc int:tolower'],
           }
         ],

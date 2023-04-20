@@ -60,12 +60,12 @@ class ApacheModPlatformCompatibility
   def print_parsing_errors
     return if @manifest_errors.empty?
 
-    $stderr.puts "The following errors were encountered when trying to parse the 'Unsupported platforms' tag(s) in 'manifests/mod':\n"
+    warn "The following errors were encountered when trying to parse the 'Unsupported platforms' tag(s) in 'manifests/mod':\n"
     @manifest_errors.each do |manifest_error|
-      $stderr.puts " * #{manifest_error.manifest} (line #{manifest_error.line_num}): #{ERROR_MSG[manifest_error.error_type]} #{manifest_error.error_detail}"
+      warn " * #{manifest_error.manifest} (line #{manifest_error.line_num}): #{ERROR_MSG[manifest_error.error_type]} #{manifest_error.error_detail}"
     end
     File.readlines('util/_resources/tag_format_help_msg.txt').each do |line|
-      $stderr.puts line
+      warn line
     end
   end
 
