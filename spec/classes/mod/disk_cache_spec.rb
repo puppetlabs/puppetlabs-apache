@@ -8,7 +8,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     let(:params) do
       {
-        cache_ignore_headers: 'Set-Cookie',
+        cache_ignore_headers: 'Set-Cookie'
       }
     end
 
@@ -63,7 +63,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     let(:params) do
       {
-        cache_ignore_headers: 'Set-Cookie',
+        cache_ignore_headers: 'Set-Cookie'
       }
     end
 
@@ -115,7 +115,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     let(:params) do
       {
-        cache_ignore_headers: 'Set-Cookie',
+        cache_ignore_headers: 'Set-Cookie'
       }
     end
 

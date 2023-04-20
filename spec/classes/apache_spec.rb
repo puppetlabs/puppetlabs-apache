@@ -68,7 +68,7 @@ describe 'apache', type: :class do
     context 'with use_optional_includes' do
       let :params do
         {
-          use_optional_includes: true,
+          use_optional_includes: true
         }
       end
 
@@ -78,7 +78,7 @@ describe 'apache', type: :class do
     context 'with serveradmin' do
       let(:params) do
         {
-          serveradmin: 'admin@example.com',
+          serveradmin: 'admin@example.com'
         }
       end
 
@@ -168,7 +168,7 @@ describe 'apache', type: :class do
       let :params do
         { log_formats: {
           'vhost_common' => '%v %h %l %u %t "%r" %>s %b',
-          'vhost_combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"',
+          'vhost_combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"'
         } }
       end
 
@@ -180,7 +180,7 @@ describe 'apache', type: :class do
       let :params do
         { log_formats: {
           'common' => '%v %h %l %u %t "%r" %>s %b',
-          'combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"',
+          'combined' => '%v %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"'
         } }
       end
 
@@ -260,7 +260,7 @@ describe 'apache', type: :class do
         {
           vhost_dir: '/etc/httpd/site.d',
           confd_dir: '/etc/httpd/conf.d',
-          mod_dir: '/etc/httpd/mod.d',
+          mod_dir: '/etc/httpd/mod.d'
         }
       end
 
@@ -311,7 +311,7 @@ describe 'apache', type: :class do
           vhost_dir: '/etc/httpd/site.d',
           confd_dir: '/etc/httpd/conf.d',
           mod_dir: '/etc/httpd/mod.d',
-          use_optional_includes: true,
+          use_optional_includes: true
         }
       end
 
@@ -323,7 +323,7 @@ describe 'apache', type: :class do
           vhost_dir: '/etc/httpd/site.d',
           confd_dir: '/etc/httpd/conf.d',
           mod_dir: '/etc/httpd/mod.d',
-          allow_encoded_slashes: 'nodecode',
+          allow_encoded_slashes: 'nodecode'
         }
       end
 
@@ -336,7 +336,7 @@ describe 'apache', type: :class do
           vhost_dir: '/etc/httpd/site.d',
           confd_dir: '/etc/httpd/conf.d',
           mod_dir: '/etc/httpd/mod.d',
-          default_charset: 'none',
+          default_charset: 'none'
         }
       end
 
@@ -608,7 +608,7 @@ describe 'apache', type: :class do
     context 'with a custom apache_name parameter' do
       let :params do
         {
-          apache_name: 'httpd24-httpd',
+          apache_name: 'httpd24-httpd'
         }
       end
 
@@ -622,7 +622,7 @@ describe 'apache', type: :class do
     context 'with a custom file_mode parameter' do
       let :params do
         {
-          file_mode: '0640',
+          file_mode: '0640'
         }
       end
 
@@ -635,7 +635,7 @@ describe 'apache', type: :class do
     context 'with a custom root_directory_options parameter' do
       let :params do
         {
-          root_directory_options: ['-Indexes', '-FollowSymLinks'],
+          root_directory_options: ['-Indexes', '-FollowSymLinks']
         }
       end
 
@@ -644,7 +644,7 @@ describe 'apache', type: :class do
     context 'with a custom root_directory_secured parameter' do
       let :params do
         {
-          root_directory_secured: true,
+          root_directory_secured: true
         }
       end
 
@@ -658,7 +658,7 @@ describe 'apache', type: :class do
     context 'without default non-ssl vhost' do
       let :params do
         {
-          default_vhost: false,
+          default_vhost: false
         }
       end
 
@@ -668,7 +668,7 @@ describe 'apache', type: :class do
     context 'with default ssl vhost' do
       let :params do
         {
-          default_ssl_vhost: true,
+          default_ssl_vhost: true
         }
       end
 

@@ -17,7 +17,7 @@ describe 'apache::mod::expires', type: :class do
     end
     let :params do
       {
-        'expires_default' => 'access plus 1 month',
+        'expires_default' => 'access plus 1 month'
       }
     end
 
@@ -40,7 +40,7 @@ describe 'apache::mod::expires', type: :class do
         'expires_by_type' => [
           { 'text/json' => 'mod plus 1 day' },
           { 'text/html' => 'access plus 1 year' },
-        ],
+        ]
       }
     end
 

@@ -72,7 +72,7 @@ describe 'apache::mod::worker', type: :class do
           threadsperchild: 15,
           maxrequestsperchild: 16,
           threadlimit: 17,
-          listenbacklog: 8,
+          listenbacklog: 8
         }
       end
 

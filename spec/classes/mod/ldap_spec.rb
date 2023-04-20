@@ -33,7 +33,7 @@ describe 'apache::mod::ldap', type: :class do
           ldap_cache_ttl: 600,
           ldap_opcache_entries: 1024,
           ldap_opcache_ttl: 600,
-          ldap_path: '/custom-ldap-status',
+          ldap_path: '/custom-ldap-status'
         }
       end
 
@@ -75,7 +75,7 @@ describe 'apache::mod::ldap', type: :class do
       let(:params) do
         {
           ldap_trusted_global_cert_file: 'ca.pem',
-          ldap_trusted_global_cert_type: 'CA_DER',
+          ldap_trusted_global_cert_type: 'CA_DER'
         }
       end
 

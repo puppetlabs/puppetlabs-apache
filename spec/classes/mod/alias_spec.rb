@@ -30,7 +30,7 @@ describe 'apache::mod::alias', type: :class do
       end
       let :params do
         {
-          'icons_options' => 'foo',
+          'icons_options' => 'foo'
         }
       end
 
@@ -45,7 +45,7 @@ describe 'apache::mod::alias', type: :class do
       end
       let :params do
         {
-          'icons_prefix' => 'apache-icons',
+          'icons_prefix' => 'apache-icons'
         }
       end
 
@@ -60,7 +60,7 @@ describe 'apache::mod::alias', type: :class do
       end
       let :params do
         {
-          'icons_path' => false,
+          'icons_path' => false
         }
       end
 

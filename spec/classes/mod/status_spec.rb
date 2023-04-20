@@ -69,7 +69,7 @@ describe 'apache::mod::status', type: :class do
         let :params do
           {
             extended_status: 'Off',
-            status_path: '/custom-status',
+            status_path: '/custom-status'
           }
         end
 
@@ -130,21 +130,21 @@ describe 'apache::mod::status', type: :class do
         requires: [
           'ip 10.1',
           'host somehost',
-        ],
+        ]
       },
       enforce: {
         enforce: 'all',
         requires: [
           'ip 127.0.0.1',
           'host localhost',
-        ],
-      },
+        ]
+      }
     }
     valid_requires.each do |req_key, req_value|
       context "with default params and #{req_key} requires" do
         let :params do
           {
-            requires: req_value,
+            requires: req_value
           }
         end
 

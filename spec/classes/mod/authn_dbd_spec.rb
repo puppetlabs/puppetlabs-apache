@@ -6,7 +6,7 @@ describe 'apache::mod::authn_dbd', type: :class do
   context 'default params' do
     let :params do
       {
-        authn_dbd_params: 'host=db_host port=3306 user=apache password=###### dbname=apache_auth',
+        authn_dbd_params: 'host=db_host port=3306 user=apache password=###### dbname=apache_auth'
       }
     end
 
@@ -18,7 +18,7 @@ describe 'apache::mod::authn_dbd', type: :class do
       {
         authn_dbd_params: 'host=db_host port=3306 user=apache password=###### dbname=apache_auth',
         authn_dbd_alias: 'db_authn',
-        authn_dbd_query: 'SELECT password FROM authn WHERE username = %s',
+        authn_dbd_query: 'SELECT password FROM authn WHERE username = %s'
       }
     end
 

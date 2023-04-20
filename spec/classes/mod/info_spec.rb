@@ -15,7 +15,7 @@ def general_info_specs_apache24
   context 'passing restrict_access => false' do
     let :params do
       {
-        restrict_access: false,
+        restrict_access: false
       }
     end
 
@@ -44,7 +44,7 @@ def general_info_specs_apache24
     let :params do
       {
         restrict_access: false,
-        allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1'],
+        allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1']
       }
     end
 

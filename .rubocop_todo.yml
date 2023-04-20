@@ -265,10 +265,3 @@ Style/StringConcatenation:
 Style/TernaryParentheses:
   Exclude:
     - 'spec/defines/vhost_spec.rb'
-
-# Offense count: 259
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Enabled: false

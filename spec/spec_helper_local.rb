@@ -67,12 +67,12 @@ shared_context 'Fedora 28' do
         family: 'Redhat',
         release: {
           major: '28',
-          full: '28',
-        },
+          full: '28'
+        }
       },
       identity: {
-        uid: 'root',
-      },
+        uid: 'root'
+      }
     }
   end
 end
@@ -86,12 +86,12 @@ shared_context 'FreeBSD 9' do
         name: 'FreeBSD',
         family: 'FreeBSD',
         release: {
-          full: '9',
-        },
+          full: '9'
+        }
       },
       identity: {
-        uid: 'root',
-      },
+        uid: 'root'
+      }
     }
   end
 end
@@ -105,12 +105,12 @@ shared_context 'FreeBSD 10' do
         name: 'FreeBSD',
         family: 'FreeBSD',
         release: {
-          full: '10',
-        },
+          full: '10'
+        }
       },
       identity: {
-        uid: 'root',
-      },
+        uid: 'root'
+      }
     }
   end
 end
@@ -125,12 +125,12 @@ shared_context 'Gentoo' do
         family: 'Gentoo',
         release: {
           major: '2.7',
-          full: '2.7',
-        },
+          full: '2.7'
+        }
       },
       identity: {
-        uid: 'root',
-      },
+        uid: 'root'
+      }
     }
   end
 end
@@ -142,9 +142,9 @@ shared_context 'Darwin' do
         family: 'Darwin',
         name: 'Darwin',
         release: {
-          full: '13.1.0',
-        },
-      },
+          full: '13.1.0'
+        }
+      }
     }
   end
 end
@@ -158,12 +158,12 @@ shared_context 'Unsupported OS' do
         name: 'Magic',
         family: 'Magic',
         release: {
-          full: '0',
-        },
+          full: '0'
+        }
       },
       identity: {
-        uid: 'root',
-      },
+        uid: 'root'
+      }
     }
   end
 end

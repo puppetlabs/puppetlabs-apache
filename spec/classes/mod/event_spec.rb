@@ -40,7 +40,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: 7,
           listenbacklog: 8,
           maxrequestworkers: 9,
-          maxconnectionsperchild: 10,
+          maxconnectionsperchild: 10
         }
       end
 
@@ -66,7 +66,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: 7,
           listenbacklog: 8,
           maxrequestworkers: :undef,
-          maxconnectionsperchild: :undef,
+          maxconnectionsperchild: :undef
         }
       end
 
@@ -92,7 +92,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: false,
           listenbacklog: false,
           maxrequestworkers: false,
-          maxconnectionsperchild: false,
+          maxconnectionsperchild: false
         }
       end
 

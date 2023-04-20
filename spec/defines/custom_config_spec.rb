@@ -15,7 +15,7 @@ describe 'apache::custom_config', type: :define do
   context 'defaults with content' do
     let :params do
       {
-        'content' => '# Test',
+        'content' => '# Test'
       }
     end
 
@@ -43,7 +43,7 @@ describe 'apache::custom_config', type: :define do
         'confdir' => '/dne',
         'priority' => 30,
         'source' => 'puppet:///modules/apache/test',
-        'verify_command' => ['/bin/true'],
+        'verify_command' => ['/bin/true']
       }
     end
 
@@ -66,7 +66,7 @@ describe 'apache::custom_config', type: :define do
     let :params do
       {
         'content' => '# test',
-        'verify_config' => false,
+        'verify_config' => false
       }
     end
 
@@ -77,7 +77,7 @@ describe 'apache::custom_config', type: :define do
   context 'ensure => absent' do
     let :params do
       {
-        'ensure' => 'absent',
+        'ensure' => 'absent'
       }
     end
 
@@ -90,7 +90,7 @@ describe 'apache::custom_config', type: :define do
       let :params do
         {
           'content' => 'foo',
-          'source' => 'bar',
+          'source' => 'bar'
         }
       end
 

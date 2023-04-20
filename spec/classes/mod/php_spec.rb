@@ -161,7 +161,7 @@ describe 'apache::mod::php', type: :class do
               end
               let :params do
                 {
-                  extensions: ['.php', '.php5'],
+                  extensions: ['.php', '.php5']
                 }
               end
 
@@ -306,7 +306,7 @@ describe 'apache::mod::php', type: :class do
           let :params do
             {
               template: 'apache/mod/php5.conf.erb',
-              content: 'somecontent',
+              content: 'somecontent'
             }
           end
 
@@ -320,7 +320,7 @@ describe 'apache::mod::php', type: :class do
           let :params do
             {
               template: 'apache/mod/php5.conf.erb',
-              source: 'some-path',
+              source: 'some-path'
             }
           end
 
@@ -334,7 +334,7 @@ describe 'apache::mod::php', type: :class do
           let :params do
             {
               content: 'somecontent',
-              source: 'some-path',
+              source: 'some-path'
             }
           end
 

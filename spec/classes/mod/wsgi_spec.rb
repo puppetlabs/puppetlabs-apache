@@ -63,7 +63,7 @@ describe 'apache::mod::wsgi', type: :class do
       let :params do
         {
           package_name: 'mod_wsgi_package',
-          mod_path: '/foo/bar/baz',
+          mod_path: '/foo/bar/baz'
         }
       end
 
@@ -78,7 +78,7 @@ describe 'apache::mod::wsgi', type: :class do
       let :params do
         {
           package_name: 'mod_wsgi_package',
-          mod_path: 'wsgi_mod_name.so',
+          mod_path: 'wsgi_mod_name.so'
         }
       end
 
@@ -91,7 +91,7 @@ describe 'apache::mod::wsgi', type: :class do
     describe 'with package_name but no mod_path' do
       let :params do
         {
-          mod_path: '/foo/bar/baz',
+          mod_path: '/foo/bar/baz'
         }
       end
 
@@ -100,7 +100,7 @@ describe 'apache::mod::wsgi', type: :class do
     describe 'with mod_path but no package_name' do
       let :params do
         {
-          package_name: '/foo/bar/baz',
+          package_name: '/foo/bar/baz'
         }
       end
 

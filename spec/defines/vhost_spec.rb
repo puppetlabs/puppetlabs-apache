@@ -18,7 +18,7 @@ describe 'apache::vhost', type: :define do
       let :default_params do
         {
           docroot: '/rspec/docroot',
-          port: 84,
+          port: 84
         }
       end
 
@@ -89,7 +89,7 @@ describe 'apache::vhost', type: :define do
               'aliases' => [
                 {
                   'alias' => '/image',
-                  'path' => '/rspec/image',
+                  'path' => '/rspec/image'
                 },
               ],
               'access_log' => false,
@@ -101,17 +101,17 @@ describe 'apache::vhost', type: :define do
                 {
                   'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require' => ['valid-user', 'all denied'],
+                  'require' => ['valid-user', 'all denied']
                 },
                 {
                   'path' => '/var/www/files',
                   'provider' => 'files',
-                  'additional_includes' => ['/custom/path/includes', '/custom/path/another_includes'],
+                  'additional_includes' => ['/custom/path/includes', '/custom/path/another_includes']
                 },
                 {
                   'path' => '/var/www/files',
                   'provider' => 'files',
-                  'require' => 'all granted',
+                  'require' => 'all granted'
                 },
                 {
                   'path' => '/var/www/files',
@@ -119,8 +119,8 @@ describe 'apache::vhost', type: :define do
                   'require' =>
                   {
                     'enforce' => 'all',
-                    'requires' => ['all-valid1', 'all-valid2'],
-                  },
+                    'requires' => ['all-valid1', 'all-valid2']
+                  }
                 },
                 {
                   'path' => '/var/www/files',
@@ -128,8 +128,8 @@ describe 'apache::vhost', type: :define do
                   'require' =>
                   {
                     'enforce' => 'none',
-                    'requires' => ['none-valid1', 'none-valid2'],
-                  },
+                    'requires' => ['none-valid1', 'none-valid2']
+                  }
                 },
                 {
                   'path' => '/var/www/files',
@@ -137,12 +137,12 @@ describe 'apache::vhost', type: :define do
                   'require' =>
                   {
                     'enforce' => 'any',
-                    'requires' => ['any-valid1', 'any-valid2'],
-                  },
+                    'requires' => ['any-valid1', 'any-valid2']
+                  }
                 },
                 {
                   'path' => '*',
-                  'provider' => 'proxy',
+                  'provider' => 'proxy'
                 },
                 { 'path' => '/var/www/files/indexed_directory',
                   'directoryindex' => 'disabled',
@@ -175,7 +175,7 @@ describe 'apache::vhost', type: :define do
                   'h2_push_resource' => [
                     '/foo.css',
                     '/foo.js',
-                  ],
+                  ]
                 },
                 {
                   'path' => '/',
@@ -184,7 +184,7 @@ describe 'apache::vhost', type: :define do
                   'auth_basic_fake' => 'demo demopass',
                   'auth_user_file' => '/path/to/authz_user_file',
                   'auth_group_file' => '/path/to/authz_group_file',
-                  'setenv' => ['SPECIAL_PATH /foo/bin'],
+                  'setenv' => ['SPECIAL_PATH /foo/bin']
                 },
                 {
                   'path' => '/proxy',
@@ -195,10 +195,10 @@ describe 'apache::vhost', type: :define do
                       'keywords' => ['noquery', 'interpolate'],
                       'params' => {
                         'retry' => 0,
-                        'timeout' => 5,
-                      },
+                        'timeout' => 5
+                      }
                     },
-                  ],
+                  ]
                 },
                 {
                   'path' => '^/proxy',
@@ -209,10 +209,10 @@ describe 'apache::vhost', type: :define do
                       'keywords' => ['noquery', 'interpolate'],
                       'params' => {
                         'retry' => 0,
-                        'timeout' => 5,
-                      },
+                        'timeout' => 5
+                      }
                     },
-                  ],
+                  ]
                 },
                 {
                   'path' => '/var/www/node-app/public',
@@ -269,14 +269,14 @@ describe 'apache::vhost', type: :define do
                     'cred_store' => {
                       'ccache' => ['/path/to/directory'],
                       'client_keytab' => ['/path/to/example.keytab'],
-                      'keytab' => ['/path/to/example.keytab'],
+                      'keytab' => ['/path/to/example.keytab']
                     },
                     'deleg_ccache_dir' => '/path/to/directory',
                     'deleg_ccache_env_var' => 'KRB5CCNAME',
                     'deleg_ccache_perms' => {
                       'mode' => '0600',
                       'uid' => 'example-user',
-                      'gid' => 'example-group',
+                      'gid' => 'example-group'
                     },
                     'deleg_ccache_unique' => true,
                     'impersonate' => true,
@@ -290,15 +290,15 @@ describe 'apache::vhost', type: :define do
                     'signal_persistent_auth' => true,
                     'ssl_only' => true,
                     'use_s4u2_proxy' => true,
-                    'use_sessions' => true,
-                  },
+                    'use_sessions' => true
+                  }
                 },
                 {
                   'path' => '/private_1',
                   'provider' => 'location',
                   'ssl_options' => ['+ExportCertData', '+StdEnvVars'],
                   'ssl_verify_client' => 'optional',
-                  'ssl_verify_depth' => 10,
+                  'ssl_verify_depth' => 10
                 },
               ],
               'error_log' => false,
@@ -311,11 +311,11 @@ describe 'apache::vhost', type: :define do
               'scriptaliases' => [
                 {
                   'alias' => '/myscript',
-                  'path' => '/usr/share/myscript',
+                  'path' => '/usr/share/myscript'
                 },
                 {
                   'aliasmatch' => '^/foo(.*)',
-                  'path' => '/usr/share/fooscripts$1',
+                  'path' => '/usr/share/fooscripts$1'
                 },
               ],
               'limitreqfieldsize' => 8190,
@@ -333,18 +333,18 @@ describe 'apache::vhost', type: :define do
                   'reverse_cookies' => [
                     {
                       'path' => '/a',
-                      'url' => 'http://backend-a/',
+                      'url' => 'http://backend-a/'
                     },
                     {
                       'domain' => 'foo',
-                      'url' => 'http://foo',
+                      'url' => 'http://foo'
                     },
                   ],
                   'params' => {
                     'retry' => 0,
-                    'timeout' => 5,
+                    'timeout' => 5
                   },
-                  'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
+                  'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1']
                 },
               ],
               'proxy_pass_match' => [
@@ -356,9 +356,9 @@ describe 'apache::vhost', type: :define do
                   'no_proxy_uris_match' => ['/a/foomatch'],
                   'params' => {
                     'retry' => 0,
-                    'timeout' => 5,
+                    'timeout' => 5
                   },
-                  'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1'],
+                  'setenv' => ['proxy-nokeepalive 1', 'force-proxy-request-1.0 1']
                 },
               ],
               'proxy_requests' => false,
@@ -379,7 +379,7 @@ describe 'apache::vhost', type: :define do
               'request_headers' => ['append MirrorID "mirror 12"'],
               'rewrites' => [
                 {
-                  'rewrite_rule' => ['^index.html$ rewrites.html'],
+                  'rewrite_rule' => ['^index.html$ rewrites.html']
                 },
               ],
               'filters' => [
@@ -404,25 +404,25 @@ describe 'apache::vhost', type: :define do
               'wsgi_daemon_process_options' => {
                 'processes' => 2,
                 'threads' => 15,
-                'display-name' => '%{GROUP}',
+                'display-name' => '%{GROUP}'
               },
               'wsgi_import_script' => '/var/www/demo.wsgi',
               'wsgi_import_script_options' => {
                 'process-group' => 'wsgi',
-                'application-group' => '%{GLOBAL}',
+                'application-group' => '%{GLOBAL}'
               },
               'wsgi_process_group' => 'wsgi',
               'wsgi_script_aliases' => {
-                '/' => '/var/www/demo.wsgi',
+                '/' => '/var/www/demo.wsgi'
               },
               'wsgi_script_aliases_match' => {
-                '^/test/(^[/*)' => '/var/www/demo.wsgi',
+                '^/test/(^[/*)' => '/var/www/demo.wsgi'
               },
               'wsgi_pass_authorization' => 'On',
               'custom_fragment' => '#custom string',
               'itk' => {
                 'user' => 'someuser',
-                'group' => 'somegroup',
+                'group' => 'somegroup'
               },
               'wsgi_chunked_request' => 'On',
               'action' => 'foo',
@@ -526,7 +526,7 @@ describe 'apache::vhost', type: :define do
                                    'ClientSecret' => 'aae053a9-4abf-4824-8956-e94b2af335c8',
                                    'CryptoPassphrase' => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               'mdomain' => 'example.com example.net auto',
-              'userdir' => 'disabled',
+              'userdir' => 'disabled'
             }
           end
 
@@ -924,7 +924,7 @@ describe 'apache::vhost', type: :define do
               'override' => ['All'],
               'directoryindex' => 'index.html',
               'vhost_name' => 'test',
-              'proxy_add_headers' => true,
+              'proxy_add_headers' => true
             }
           end
 
@@ -951,7 +951,7 @@ describe 'apache::vhost', type: :define do
               'override' => ['All'],
               'directoryindex' => 'index.html',
               'vhost_name' => 'test',
-              'proxy_add_headers' => false,
+              'proxy_add_headers' => false
             }
           end
 
@@ -977,7 +977,7 @@ describe 'apache::vhost', type: :define do
               'options' => ['MultiView'],
               'override' => ['All'],
               'directoryindex' => 'index.html',
-              'vhost_name' => 'test',
+              'vhost_name' => 'test'
             }
           end
 
@@ -1004,7 +1004,7 @@ describe 'apache::vhost', type: :define do
               'override' => ['All'],
               'directoryindex' => 'index.html',
               'vhost_name' => 'test',
-              'proxy_preserve_host' => true,
+              'proxy_preserve_host' => true
             }
           end
 
@@ -1116,7 +1116,7 @@ describe 'apache::vhost', type: :define do
               'servername' => 'example.com',
               'docroot' => '/var/www/html',
               'add_listen' => true,
-              'ensure' => 'present',
+              'ensure' => 'present'
             }
           end
 
@@ -1141,7 +1141,7 @@ describe 'apache::vhost', type: :define do
               'servername' => 'example.com',
               'docroot' => '/var/www/html',
               'add_listen' => true,
-              'ensure' => 'present',
+              'ensure' => 'present'
             }
           end
 
@@ -1166,7 +1166,7 @@ describe 'apache::vhost', type: :define do
               'servername' => 'example.com',
               'docroot' => '/var/www/html',
               'add_listen' => true,
-              'ensure' => 'present',
+              'ensure' => 'present'
             }
           end
 
@@ -1195,7 +1195,7 @@ describe 'apache::vhost', type: :define do
               'servername' => 'example.com',
               'docroot' => '/var/www/html',
               'add_listen' => true,
-              'ensure' => 'present',
+              'ensure' => 'present'
             }
           end
 
@@ -1218,7 +1218,7 @@ describe 'apache::vhost', type: :define do
               'servername' => 'example.com',
               'docroot' => '/var/www/html',
               'add_listen' => true,
-              'ensure' => 'present',
+              'ensure' => 'present'
             }
           end
 
@@ -1236,7 +1236,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/var/www/html',
-              'virtual_docroot' => '/var/www/sites/%0',
+              'virtual_docroot' => '/var/www/sites/%0'
             }
           end
 
@@ -1257,7 +1257,7 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/var/www/html',
               'virtual_use_default_docroot' => true,
-              'virtual_docroot' => '/var/www/sites/%0',
+              'virtual_docroot' => '/var/www/sites/%0'
             }
           end
 
@@ -1278,7 +1278,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'modsec_audit_log' => true,
+              'modsec_audit_log' => true
             }
           end
 
@@ -1293,7 +1293,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'modsec_audit_log_file' => 'foo.log',
+              'modsec_audit_log_file' => 'foo.log'
             }
           end
 
@@ -1310,7 +1310,7 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/rspec/docroot',
               'modsec_inbound_anomaly_threshold' => 10_000,
-              'modsec_outbound_anomaly_threshold' => 10_000,
+              'modsec_outbound_anomaly_threshold' => 10_000
             }
           end
 
@@ -1335,7 +1335,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'modsec_allowed_methods' => 'GET HEAD POST OPTIONS',
+              'modsec_allowed_methods' => 'GET HEAD POST OPTIONS'
             }
           end
 
@@ -1361,9 +1361,9 @@ describe 'apache::vhost', type: :define do
               'aliases' => [
                 {
                   'alias' => '/alias',
-                  'path' => '/rspec/docroot',
+                  'path' => '/rspec/docroot'
                 },
-              ],
+              ]
             }
           end
 
@@ -1377,9 +1377,9 @@ describe 'apache::vhost', type: :define do
                 {
                   'path' => '.*',
                   'url' => 'http://backend-a/',
-                  'params' => { 'timeout' => 300 },
+                  'params' => { 'timeout' => 300 }
                 },
-              ],
+              ]
             }
           end
 
@@ -1394,7 +1394,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'proxy_dest_match' => '/',
+              'proxy_dest_match' => '/'
             }
           end
 
@@ -1408,7 +1408,7 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/rspec/docroot',
               'proxy_dest_match' => '/',
-              'proxy_dest_reverse_match' => 'http://localhost:8180',
+              'proxy_dest_reverse_match' => 'http://localhost:8180'
             }
           end
 
@@ -1426,7 +1426,7 @@ describe 'apache::vhost', type: :define do
               'ensure' => 'absent',
               'manage_docroot' => true,
               'logroot' => '/tmp/logroot',
-              'logroot_ensure' => 'absent',
+              'logroot_ensure' => 'absent'
             }
           end
 
@@ -1488,7 +1488,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_application_group' => '%{GLOBAL}',
+              'wsgi_application_group' => '%{GLOBAL}'
             }
           end
 
@@ -1498,7 +1498,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_daemon_process' => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} },
+              'wsgi_daemon_process' => { 'foo' => { 'python-home' => '/usr' }, 'bar' => {} }
             }
           end
 
@@ -1508,7 +1508,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_import_script' => '/var/www/demo.wsgi',
+              'wsgi_import_script' => '/var/www/demo.wsgi'
             }
           end
 
@@ -1520,8 +1520,8 @@ describe 'apache::vhost', type: :define do
               'docroot' => '/rspec/docroot',
               'wsgi_import_script_options' => {
                 'process-group' => 'wsgi',
-                'application-group' => '%{GLOBAL}',
-              },
+                'application-group' => '%{GLOBAL}'
+              }
             }
           end
 
@@ -1534,8 +1534,8 @@ describe 'apache::vhost', type: :define do
               'wsgi_import_script' => '/var/www/demo.wsgi',
               'wsgi_import_script_options' => {
                 'process-group' => 'wsgi',
-                'application-group' => '%{GLOBAL}',
-              },
+                'application-group' => '%{GLOBAL}'
+              }
             }
           end
 
@@ -1545,7 +1545,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_daemon_process' => 'wsgi',
+              'wsgi_daemon_process' => 'wsgi'
             }
           end
 
@@ -1556,8 +1556,8 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/rspec/docroot',
               'wsgi_script_aliases' => {
-                '/' => '/var/www/demo.wsgi',
-              },
+                '/' => '/var/www/demo.wsgi'
+              }
             }
           end
 
@@ -1567,7 +1567,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_script_aliases' => {},
+              'wsgi_script_aliases' => {}
             }
           end
 
@@ -1577,7 +1577,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'wsgi_pass_authorization' => 'On',
+              'wsgi_pass_authorization' => 'On'
             }
           end
 
@@ -1587,7 +1587,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => false,
-              'manage_docroot' => false,
+              'manage_docroot' => false
             }
           end
 
@@ -1599,7 +1599,7 @@ describe 'apache::vhost', type: :define do
             {
               'docroot' => '/rspec/docroot',
               'ssl' => false,
-              'ssl_proxyengine' => true,
+              'ssl_proxyengine' => true
             }
           end
 
@@ -1613,7 +1613,7 @@ describe 'apache::vhost', type: :define do
               'docroot' => '/rspec/docroot',
               'ssl' => true,
               'ssl_proxyengine' => false,
-              'ssl_proxy_protocol' => 'TLSv1.2',
+              'ssl_proxy_protocol' => 'TLSv1.2'
             }
           end
 
@@ -1625,7 +1625,7 @@ describe 'apache::vhost', type: :define do
           let :params do
             {
               'docroot' => '/rspec/docroot',
-              'ssl' => true,
+              'ssl' => true
             }
           end
 
@@ -1672,7 +1672,7 @@ describe 'apache::vhost', type: :define do
             let(:params) do
               {
                 'docroot' => '/rspec/docroot',
-                'access_log_file' => 'my_log_file',
+                'access_log_file' => 'my_log_file'
               }
             end
 
@@ -1687,7 +1687,7 @@ describe 'apache::vhost', type: :define do
               {
                 'docroot' => '/rspec/docroot',
                 'access_log_file' => 'my_log_file',
-                'access_log_env_var' => 'prod',
+                'access_log_env_var' => 'prod'
               }
             end
 
@@ -1705,7 +1705,7 @@ describe 'apache::vhost', type: :define do
                   { 'file' => '/tmp/log1', 'env' => 'dev' },
                   { 'file' => 'log2' },
                   { 'syslog' => 'syslog', 'format' => '%h %l' },
-                ],
+                ]
               }
             end
 
@@ -1731,7 +1731,7 @@ describe 'apache::vhost', type: :define do
             let(:params) do
               {
                 'docroot' => '/rspec/docroot',
-                'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
+                'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i']
               }
             end
 
@@ -1752,7 +1752,7 @@ describe 'apache::vhost', type: :define do
                   { "[%{uc}t] [R:%L] UA:'%+{User-Agent}i'" => 'request' },
                   { "[%{uc}t] [R:%L] Referer:'%+{Referer}i'" => 'request' },
                   { '[%{uc}t] [C:%{c}L] local\ %a remote\ %A' => 'connection' },
-                ],
+                ]
               }
             end
 
@@ -1769,7 +1769,7 @@ describe 'apache::vhost', type: :define do
         describe 'validation' do
           let(:params) do
             {
-              'docroot' => '/rspec/docroot',
+              'docroot' => '/rspec/docroot'
             }
           end
 
@@ -1884,9 +1884,9 @@ describe 'apache::vhost', type: :define do
                 'directories' => [
                   {
                     'path' => '/var/www/foo/files',
-                    'provider' => 'files',
+                    'provider' => 'files'
                   },
-                ],
+                ]
 
               }
             end
@@ -1912,9 +1912,9 @@ describe 'apache::vhost', type: :define do
                 'directories' => [
                   {
                     'path' => '/var/www/foo',
-                    'require' => 'unmanaged',
+                    'require' => 'unmanaged'
                   },
-                ],
+                ]
 
               }
             end

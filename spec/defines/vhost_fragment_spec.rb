@@ -15,7 +15,7 @@ describe 'apache::vhost::fragment' do
           {
             vhost: 'default',
             port: 80,
-            priority: 15,
+            priority: 15
           }
         end
 
@@ -47,7 +47,7 @@ describe 'apache::vhost::fragment' do
         let(:params) do
           {
             vhost: 'custom',
-            content: '# Foo',
+            content: '# Foo'
           }
         end
 

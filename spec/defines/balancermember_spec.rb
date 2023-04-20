@@ -24,7 +24,7 @@ describe 'apache::balancermember', type: :define do
       {
         options: [],
         url: 'http://127.0.0.1:8080/',
-        balancer_cluster: 'balancer-internal',
+        balancer_cluster: 'balancer-internal'
       }
     end
 
@@ -44,7 +44,7 @@ describe 'apache::balancermember', type: :define do
       {
         options: [],
         url: 'http://127.0.0.1:8080/',
-        balancer_cluster: 'balancername',
+        balancer_cluster: 'balancername'
       }
     end
 

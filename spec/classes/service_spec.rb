@@ -101,7 +101,7 @@ describe 'apache::service', type: :class do
       {
         'service_ensure' => 'running',
         'service_name' => 'httpd',
-        'service_manage' => false,
+        'service_manage' => false
       }
     end
 

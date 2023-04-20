@@ -60,7 +60,7 @@ describe 'apache::mod::itk', type: :class do
 
       let :params do
         {
-          enablecapabilities: false,
+          enablecapabilities: false
         }
       end
 
@@ -83,7 +83,7 @@ describe 'apache::mod::itk', type: :class do
     context 'with enablecapabilities set' do
       let :params do
         {
-          enablecapabilities: true,
+          enablecapabilities: true
         }
       end
 

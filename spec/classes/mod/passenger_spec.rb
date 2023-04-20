@@ -107,7 +107,7 @@ describe 'apache::mod::passenger', type: :class do
             'rails_ruby' => { type: 'String', pass_opt: :RailsRuby },
             'rails_spawn_method' => { type: 'String', pass_opt: :RailsSpawnMethod },
             'rails_user_switching' => { type: 'String', pass_opt: :RailsUserSwitching },
-            'wsgi_auto_detect' => { type: 'String', pass_opt: :WsgiAutoDetect },
+            'wsgi_auto_detect' => { type: 'String', pass_opt: :WsgiAutoDetect }
           }
           passenger_config_options.each do |config_option, config_hash|
             puppetized_config_option = config_option
@@ -179,7 +179,7 @@ describe 'apache::mod::passenger', type: :class do
                   let :expected_value do
                     {
                       true => 'On',
-                      false => 'Off',
+                      false => 'Off'
                     }[valid_value]
                   end
 
@@ -216,7 +216,7 @@ describe 'apache::mod::passenger', type: :class do
             let :params do
               {
                 passenger_installed_version: '4.0.0',
-                passenger_instance_registry_dir: '/some/path/to/nowhere',
+                passenger_instance_registry_dir: '/some/path/to/nowhere'
               }
             end
 
@@ -227,7 +227,7 @@ describe 'apache::mod::passenger', type: :class do
             let :params do
               {
                 passenger_installed_version: '5.0.0',
-                rails_autodetect: 'on',
+                rails_autodetect: 'on'
               }
             end
 
@@ -238,7 +238,7 @@ describe 'apache::mod::passenger', type: :class do
             let :params do
               {
                 passenger_installed_version: '5.0.0',
-                rails_ruby: '/some/path/to/ruby',
+                rails_ruby: '/some/path/to/ruby'
               }
             end
 

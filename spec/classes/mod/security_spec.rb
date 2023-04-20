@@ -90,7 +90,7 @@ describe 'apache::mod::security', type: :class do
                 secrequestbodyaccess: 'Off',
                 secresponsebodyaccess: 'On',
                 secrequestbodylimitaction: 'ProcessPartial',
-                secresponsebodylimitaction: 'Reject',
+                secresponsebodylimitaction: 'Reject'
               }
             end
 
@@ -113,7 +113,7 @@ describe 'apache::mod::security', type: :class do
           describe 'with other modsec parameters' do
             let :params do
               {
-                manage_security_crs: false,
+                manage_security_crs: false
               }
             end
 
@@ -122,7 +122,7 @@ describe 'apache::mod::security', type: :class do
           describe 'with custom parameters' do
             let :params do
               {
-                custom_rules: false,
+                custom_rules: false
               }
             end
 
@@ -134,7 +134,7 @@ describe 'apache::mod::security', type: :class do
             let :params do
               {
                 custom_rules: true,
-                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"'],
+                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"']
               }
             end
 
@@ -155,7 +155,7 @@ describe 'apache::mod::security', type: :class do
                 enable_dos_protection: true,
                 dos_burst_time_slice: 30,
                 dos_counter_threshold: 120,
-                dos_block_timeout: 300,
+                dos_block_timeout: 300
               }
             end
 
@@ -201,7 +201,7 @@ describe 'apache::mod::security', type: :class do
             let :params do
               {
                 paranoia_level: 2,
-                executing_paranoia_level: 1,
+                executing_paranoia_level: 1
               }
             end
 
@@ -281,7 +281,7 @@ describe 'apache::mod::security', type: :class do
                 secrequestbodyaccess: 'Off',
                 secresponsebodyaccess: 'On',
                 secrequestbodylimitaction: 'ProcessPartial',
-                secresponsebodylimitaction: 'Reject',
+                secresponsebodylimitaction: 'Reject'
               }
             end
 
@@ -307,7 +307,7 @@ describe 'apache::mod::security', type: :class do
           describe 'with custom parameters' do
             let :params do
               {
-                custom_rules: false,
+                custom_rules: false
               }
             end
 
@@ -320,7 +320,7 @@ describe 'apache::mod::security', type: :class do
             let :params do
               {
                 custom_rules: true,
-                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"'],
+                custom_rules_set: ['REMOTE_ADDR "^127.0.0.1" "id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"']
               }
             end
 
@@ -336,7 +336,7 @@ describe 'apache::mod::security', type: :class do
           describe 'with mod security version' do
             let :params do
               {
-                version: 2,
+                version: 2
               }
             end
 
@@ -356,7 +356,7 @@ describe 'apache::mod::security', type: :class do
                 enable_dos_protection: true,
                 dos_burst_time_slice: 30,
                 dos_counter_threshold: 120,
-                dos_block_timeout: 300,
+                dos_block_timeout: 300
               }
             end
 
@@ -384,7 +384,7 @@ describe 'apache::mod::security', type: :class do
             let :params do
               {
                 paranoia_level: 2,
-                executing_paranoia_level: 1,
+                executing_paranoia_level: 1
               }
             end
 

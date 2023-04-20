@@ -24,7 +24,7 @@ describe 'apache::mod::watchdog', type: :class do
       context 'with custom configuration' do
         let(:params) do
           {
-            watchdog_interval: 5,
+            watchdog_interval: 5
           }
         end
 

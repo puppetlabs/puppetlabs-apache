@@ -23,7 +23,7 @@ describe 'apache::mod::dumpio', type: :class do
     context 'with dumpio_input set to On' do
       let :params do
         {
-          dump_io_input: 'On',
+          dump_io_input: 'On'
         }
       end
 
@@ -33,7 +33,7 @@ describe 'apache::mod::dumpio', type: :class do
     context 'with dumpio_ouput set to On' do
       let :params do
         {
-          dump_io_output: 'On',
+          dump_io_output: 'On'
         }
       end
 

@@ -9,7 +9,7 @@ describe 'apache::mod::lbmethod_byrequests', type: :class do
     context 'with Apache version >= 2.4' do
       let :params do
         {
-          apache_version: '2.4',
+          apache_version: '2.4'
         }
       end
 
@@ -26,7 +26,7 @@ describe 'apache::mod::lbmethod_byrequests', type: :class do
     context 'with Apache version >= 2.4' do
       let :params do
         {
-          apache_version: '2.4',
+          apache_version: '2.4'
         }
       end
 

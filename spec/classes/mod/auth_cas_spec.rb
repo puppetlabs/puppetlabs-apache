@@ -8,7 +8,7 @@ describe 'apache::mod::auth_cas', type: :class do
       {
         cas_login_url: 'https://cas.example.com/login',
         cas_validate_url: 'https://cas.example.com/validate',
-        cas_cookie_path: '/var/cache/apache2/mod_auth_cas/',
+        cas_cookie_path: '/var/cache/apache2/mod_auth_cas/'
       }
     end
 
@@ -21,7 +21,7 @@ describe 'apache::mod::auth_cas', type: :class do
         cas_login_url: 'https://cas.example.com/login',
         cas_validate_url: 'https://cas.example.com/validate',
         cas_timeout: 1234,
-        cas_idle_timeout: 4321,
+        cas_idle_timeout: 4321
       }
     end
 

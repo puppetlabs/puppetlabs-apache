@@ -21,7 +21,7 @@ describe 'apache::balancer', type: :define do
     describe 'accept a target parameter and use it' do
       let :params do
         {
-          target: '/tmp/myapp.conf',
+          target: '/tmp/myapp.conf'
         }
       end
 
@@ -32,7 +32,7 @@ describe 'apache::balancer', type: :define do
     describe 'accept an options parameter and use it' do
       let :params do
         {
-          options: ['timeout=0', 'nonce=none'],
+          options: ['timeout=0', 'nonce=none']
         }
       end
 
@@ -59,8 +59,8 @@ describe 'apache::balancer', type: :define do
     let :params do
       {
         proxy_set: {
-          'lbmethod' => 'bytraffic',
-        },
+          'lbmethod' => 'bytraffic'
+        }
       }
     end
 

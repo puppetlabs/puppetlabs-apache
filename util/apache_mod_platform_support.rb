@@ -23,7 +23,7 @@ require 'json'
 class ApacheModPlatformCompatibility
   ERROR_MSG = {
     tag_parse: 'OS and version information in incorrect format:',
-    os_parse: 'OS name is not present in metadata.json:',
+    os_parse: 'OS name is not present in metadata.json:'
   }.freeze
 
   def initialize

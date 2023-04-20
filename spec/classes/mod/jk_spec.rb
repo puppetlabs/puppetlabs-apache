@@ -26,16 +26,16 @@ describe 'apache::mod::jk', type: :class do
           'worker_a' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment' => 'This is worker A',
+            'comment' => 'This is worker A'
           },
           'worker_b' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment' => 'This is worker B',
+            'comment' => 'This is worker B'
           },
           'worker_maintain' => 40,
-          'worker_lists' => ['worker_a,worker_b'],
-        },
+          'worker_lists' => ['worker_a,worker_b']
+        }
       }
     end
 
@@ -73,7 +73,7 @@ describe 'apache::mod::jk', type: :class do
       end
       let(:params) do
         {
-          logroot: '/var/log/apache2',
+          logroot: '/var/log/apache2'
         }
       end
       let(:mod_dir) { mod_dir }
@@ -97,7 +97,7 @@ describe 'apache::mod::jk', type: :class do
     end
     let(:params) do
       {
-        logroot: '/var/log/httpd',
+        logroot: '/var/log/httpd'
       }
     end
 
@@ -140,26 +140,26 @@ describe 'apache::mod::jk', type: :class do
           shm_file: :undef,
           log_file: :undef,
           shm_path: '/var/log/httpd/jk-runtime-status',
-          log_path: '/var/log/httpd/mod_jk.log',
+          log_path: '/var/log/httpd/mod_jk.log'
         },
         relative: {
           shm_file: 'shm_file',
           log_file: 'log_file',
           shm_path: '/var/log/httpd/shm_file',
-          log_path: '/var/log/httpd/log_file',
+          log_path: '/var/log/httpd/log_file'
         },
         absolute: {
           shm_file: '/run/shm_file',
           log_file: '/tmp/log_file',
           shm_path: '/run/shm_file',
-          log_path: '/tmp/log_file',
+          log_path: '/tmp/log_file'
         },
         pipe: {
           shm_file: :undef,
           log_file: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
           shm_path: '/var/log/httpd/jk-runtime-status',
-          log_path: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
-        },
+          log_path: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+        }
       }.each do |option, paths|
         context "#{option} shm_file and log_file paths" do
           let(:params) do

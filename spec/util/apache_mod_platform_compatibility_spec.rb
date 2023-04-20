@@ -18,7 +18,7 @@ describe ApacheModPlatformCompatibility do
     'scientific' => [6, 7],
     'debian' => [8, 9, 10],
     'sles' => [11, 12, 15],
-    'ubuntu' => [14, 16, 18],
+    'ubuntu' => [14, 16, 18]
   }
 
   context 'when initialized' do

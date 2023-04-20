@@ -8,7 +8,7 @@ describe 'apache::vhost::custom', type: :define do
   end
   let(:params) do
     {
-      content: 'foobar',
+      content: 'foobar'
     }
   end
 

@@ -15,7 +15,7 @@ describe 'apache::vhost::proxy' do
           {
             vhost: 'default',
             port: 80,
-            priority: 15,
+            priority: 15
           }
         end
 
@@ -29,7 +29,7 @@ describe 'apache::vhost::proxy' do
               proxy_pass: [
                 {
                   path: '/',
-                  url: 'http://localhost:8080/',
+                  url: 'http://localhost:8080/'
                 },
               ],
             )

@@ -16,7 +16,7 @@ describe 'apache::mod::dav_svn', type: :class do
       describe 'with parameters' do
         let :params do
           {
-            'authz_svn_enabled' => true,
+            'authz_svn_enabled' => true
           }
         end
 
@@ -37,7 +37,7 @@ describe 'apache::mod::dav_svn', type: :class do
       describe 'with parameters' do
         let :params do
           {
-            'authz_svn_enabled' => true,
+            'authz_svn_enabled' => true
           }
         end
 
@@ -59,7 +59,7 @@ describe 'apache::mod::dav_svn', type: :class do
       describe 'with parameters' do
         let :params do
           {
-            'authz_svn_enabled' => true,
+            'authz_svn_enabled' => true
           }
         end
 
@@ -81,7 +81,7 @@ describe 'apache::mod::dav_svn', type: :class do
       describe 'with parameters' do
         let :params do
           {
-            'authz_svn_enabled' => true,
+            'authz_svn_enabled' => true
           }
         end
 

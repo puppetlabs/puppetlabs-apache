@@ -19,7 +19,7 @@ describe 'apache::mod::userdir', type: :class do
     context 'with dir set to something' do
       let :params do
         {
-          dir: 'hi',
+          dir: 'hi'
         }
       end
 
@@ -29,7 +29,7 @@ describe 'apache::mod::userdir', type: :class do
     context 'with home set to something' do
       let :params do
         {
-          home: '/u',
+          home: '/u'
         }
       end
 
@@ -39,7 +39,7 @@ describe 'apache::mod::userdir', type: :class do
     context 'with path set to something' do
       let :params do
         {
-          path: '/home/*/*/public_html',
+          path: '/home/*/*/public_html'
         }
       end
 
@@ -50,7 +50,7 @@ describe 'apache::mod::userdir', type: :class do
       let :params do
         {
           path: '/home/*/*/public_html',
-          userdir: 'public_html',
+          userdir: 'public_html'
         }
       end
 
@@ -60,7 +60,7 @@ describe 'apache::mod::userdir', type: :class do
     context 'with unmanaged_path set to true' do
       let :params do
         {
-          unmanaged_path: true,
+          unmanaged_path: true
         }
       end
 
@@ -70,7 +70,7 @@ describe 'apache::mod::userdir', type: :class do
     context 'with custom_fragment set to something' do
       let :params do
         {
-          custom_fragment: 'custom_test_string',
+          custom_fragment: 'custom_test_string'
         }
       end
 

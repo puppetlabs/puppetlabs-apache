@@ -48,7 +48,7 @@ describe 'apache::mod::http2', type: :class do
           h2_tls_cool_down_secs: 0,
           h2_tls_warm_up_size: 0,
           h2_upgrade: false,
-          h2_window_size: 128_000,
+          h2_window_size: 128_000
         }
       end
 

@@ -47,7 +47,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
       {
         manager: true,
         allow_from: ['10.10.10.10', '11.11.11.11'],
-        manager_path: '/custom-manager',
+        manager_path: '/custom-manager'
       }
     end
 
