@@ -187,8 +187,8 @@ describe 'apache', type: :class do
         } }
       end
 
-      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common\n} }
-      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" vhost_combined\n} }
+      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^LogFormat "%v %h %l %u %t "%r" %>s %b" vhost_common\n} }
+      it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^LogFormat "%v %h %l %u %t "%r" %>s %b "%\{Referer\}i" "%\{User-agent\}i"" vhost_combined\n} }
     end
 
     describe 'Override existing LogFormats When parameter log_formats is a hash' do
@@ -200,13 +200,13 @@ describe 'apache', type: :class do
       end
 
       expected = [
-        %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" common\n},
-        %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b" common\n},
-        %r{^LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n},
+        %r{^LogFormat "%v %h %l %u %t "%r" %>s %b" common\n},
+        %r{^LogFormat "%v %h %l %u %t "%r" %>s %b" common\n},
+        %r{^LogFormat "%v %h %l %u %t "%r" %>s %b "%\{Referer\}i" "%\{User-agent\}i"" combined\n},
       ]
       unexpected = [
-        %r{^LogFormat "%h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n},
-        %r{^LogFormat "%h %l %u %t \"%r\" %>s %b \"%\{Referer\}i\" \"%\{User-agent\}i\"" combined\n},
+        %r{^LogFormat "%h %l %u %t "%r" %>s %b "%\{Referer\}i" "%\{User-agent\}i"" combined\n},
+        %r{^LogFormat "%h %l %u %t "%r" %>s %b "%\{Referer\}i" "%\{User-agent\}i"" combined\n},
       ]
       it 'Expected to contain' do
         expected.each do |reg|

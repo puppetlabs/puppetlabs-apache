@@ -399,7 +399,7 @@ describe 'apache::mod::passenger', type: :class do
             { mod_path: '/usr/lib/foo/mod_foo.so' }
           end
 
-          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/foo\/mod_foo\.so$}) }
+          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module /usr/lib/foo/mod_foo\.so$}) }
         end
 
         describe "with mod_lib_path => '/usr/lib/foo'" do
@@ -407,7 +407,7 @@ describe 'apache::mod::passenger', type: :class do
             { mod_lib_path: '/usr/lib/foo' }
           end
 
-          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/foo\/mod_passenger\.so$}) }
+          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module /usr/lib/foo/mod_passenger\.so$}) }
         end
 
         describe "with mod_lib => 'mod_foo.so'" do
@@ -415,7 +415,7 @@ describe 'apache::mod::passenger', type: :class do
             { mod_lib: 'mod_foo.so' }
           end
 
-          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/apache2\/modules\/mod_foo\.so$}) }
+          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module /usr/lib/apache2/modules/mod_foo\.so$}) }
         end
 
         describe "with mod_id => 'mod_foo'" do
@@ -423,7 +423,7 @@ describe 'apache::mod::passenger', type: :class do
             { mod_id: 'mod_foo' }
           end
 
-          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule mod_foo \/usr\/lib\/apache2\/modules\/mod_passenger\.so$}) }
+          it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule mod_foo /usr/lib/apache2/modules/mod_passenger\.so$}) }
         end
 
         context 'with defaults' do
@@ -459,7 +459,7 @@ describe 'apache::mod::passenger', type: :class do
                   { passenger_root: '/usr/lib/example' }
                 end
 
-                it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRoot "\/usr\/lib\/example"$}) }
+                it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRoot "/usr/lib/example"$}) }
               end
 
               describe 'with passenger_ruby => /usr/lib/example/ruby' do
@@ -467,7 +467,7 @@ describe 'apache::mod::passenger', type: :class do
                   { passenger_ruby: '/usr/lib/example/ruby' }
                 end
 
-                it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRuby "\/usr\/lib\/example\/ruby"$}) }
+                it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRuby "/usr/lib/example/ruby"$}) }
               end
             end
           when '7'

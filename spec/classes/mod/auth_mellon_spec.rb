@@ -29,8 +29,8 @@ describe 'apache::mod::auth_mellon', type: :class do
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheEntrySize\s+2010$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"\/tmp\/junk"$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"\/tmp\/post"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"/tmp/junk"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"/tmp/post"$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostTTL\s+5$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostSize\s+8$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostCount\s+10$}) }
@@ -61,8 +61,8 @@ describe 'apache::mod::auth_mellon', type: :class do
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheEntrySize\s+2010$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"\/tmp\/junk"$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"\/tmp\/post"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"/tmp/junk"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"/tmp/post"$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostTTL\s+5$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostSize\s+8$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostCount\s+10$}) }

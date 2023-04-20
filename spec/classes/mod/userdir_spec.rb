@@ -25,7 +25,7 @@ describe 'apache::mod::userdir', type: :class do
       end
 
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/hi$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/home/\*/hi\"\>$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/home/\*/hi">$}) }
     end
 
     context 'with home set to something' do
@@ -36,7 +36,7 @@ describe 'apache::mod::userdir', type: :class do
       end
 
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/u/\*/public_html$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/u/\*/public_html"\>$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/u/\*/public_html">$}) }
     end
 
     context 'with path set to something' do
@@ -47,7 +47,7 @@ describe 'apache::mod::userdir', type: :class do
       end
 
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/\*/public_html$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/home/\*/\*/public_html\"\>$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/home/\*/\*/public_html">$}) }
     end
 
     context 'with userdir set to something' do
@@ -59,7 +59,7 @@ describe 'apache::mod::userdir', type: :class do
       end
 
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+public_html$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*\<Directory\s+\"/home/\*/\*/public_html\"\>$}) }
+      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/home/\*/\*/public_html">$}) }
     end
 
     context 'with unmanaged_path set to true' do
@@ -70,7 +70,7 @@ describe 'apache::mod::userdir', type: :class do
       end
 
       it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/public_html$}) }
-      it { is_expected.not_to contain_file('userdir.conf').with_content(%r{^\s*\<Directory }) }
+      it { is_expected.not_to contain_file('userdir.conf').with_content(%r{^\s*<Directory }) }
     end
 
     context 'with custom_fragment set to something' do

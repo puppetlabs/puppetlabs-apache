@@ -10,21 +10,21 @@ describe 'apache::mod::alias', type: :class do
       include_examples 'Debian 11'
 
       it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/share\/apache2\/icons\/"}) }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/share/apache2/icons/"}) }
     end
 
     context 'on a RedHat 7-based OS', :compile do
       include_examples 'RedHat 7'
 
       it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/share\/httpd\/icons\/"}) }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/share/httpd/icons/"}) }
     end
 
     context 'on a RedHat 8-based OS', :compile do
       include_examples 'RedHat 8'
 
       it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/share\/httpd\/icons\/"}) }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/share/httpd/icons/"}) }
     end
 
     context 'with icons options', :compile do
@@ -56,7 +56,7 @@ describe 'apache::mod::alias', type: :class do
       include_examples 'RedHat 7'
 
       it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/apache-icons\/ "\/usr\/share\/httpd\/icons\/"}) }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /apache-icons/ "/usr/share/httpd/icons/"}) }
     end
 
     context 'with icons path as false', :compile do
@@ -79,7 +79,7 @@ describe 'apache::mod::alias', type: :class do
       include_examples 'FreeBSD 10'
 
       it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias \/icons\/ "\/usr\/local\/www\/apache24\/icons\/"}) }
+      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/local/www/apache24/icons/"}) }
     end
   end
 end

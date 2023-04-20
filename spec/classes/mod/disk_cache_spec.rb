@@ -26,7 +26,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     it {
       is_expected.to contain_file('disk_cache.conf')
-        .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+        .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
     context 'with $default_cache_enable = false' do
@@ -39,7 +39,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 
@@ -53,7 +53,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 
@@ -84,7 +84,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     it {
       is_expected.to contain_file('disk_cache.conf')
-        .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+        .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
     context 'with $default_cache_enable = false' do
@@ -97,7 +97,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 
@@ -111,7 +111,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 
@@ -145,7 +145,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     it {
       is_expected.to contain_file('disk_cache.conf')
-        .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
+        .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
     context 'with $default_cache_enable = false' do
@@ -158,7 +158,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 
@@ -172,7 +172,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it {
         is_expected.to contain_file('disk_cache.conf')
-          .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
+          .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
 

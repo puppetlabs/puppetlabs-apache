@@ -208,7 +208,7 @@ describe 'apache::mod::ssl', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLPassPhraseDialog exec:\/path\/to\/program$}) }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLPassPhraseDialog exec:/path/to/program$}) }
     end
 
     context 'setting ssl_random_seed_bytes' do

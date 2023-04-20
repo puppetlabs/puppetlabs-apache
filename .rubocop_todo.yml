@@ -202,21 +202,6 @@ Style/RedundantArgument:
   Exclude:
     - 'spec/classes/mod/status_spec.rb'
 
-# Offense count: 247
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'spec/classes/apache_spec.rb'
-    - 'spec/classes/mod/alias_spec.rb'
-    - 'spec/classes/mod/auth_mellon_spec.rb'
-    - 'spec/classes/mod/disk_cache_spec.rb'
-    - 'spec/classes/mod/passenger_spec.rb'
-    - 'spec/classes/mod/security_spec.rb'
-    - 'spec/classes/mod/ssl_spec.rb'
-    - 'spec/classes/mod/userdir_spec.rb'
-    - 'spec/classes/mod/wsgi_spec.rb'
-    - 'spec/defines/vhost_spec.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Mode.

@@ -616,8 +616,8 @@ describe 'apache::vhost', type: :define do
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories')
               .with_content(%r{^\s+<Proxy "\*">$})
-              .with_content(%r{^\s+Include\s'\/custom\/path\/includes'$})
-              .with_content(%r{^\s+Include\s'\/custom\/path\/another_includes'$})
+              .with_content(%r{^\s+Include\s'/custom/path/includes'$})
+              .with_content(%r{^\s+Include\s'/custom/path/another_includes'$})
               .with_content(%r{^\s+H2CopyFiles\sOn$})
               .with_content(%r{^\s+H2PushResource\s/foo.css$})
               .with_content(%r{^\s+H2PushResource\s/foo.js$})
@@ -625,15 +625,15 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+Require all denied$})
               .with_content(%r{^\s+Require all granted$})
               .with_content(%r{^\s+<RequireAll>$})
-              .with_content(%r{^\s+<\/RequireAll>$})
+              .with_content(%r{^\s+</RequireAll>$})
               .with_content(%r{^\s+Require all-valid1$})
               .with_content(%r{^\s+Require all-valid2$})
               .with_content(%r{^\s+<RequireNone>$})
-              .with_content(%r{^\s+<\/RequireNone>$})
+              .with_content(%r{^\s+</RequireNone>$})
               .with_content(%r{^\s+Require none-valid1$})
               .with_content(%r{^\s+Require none-valid2$})
               .with_content(%r{^\s+<RequireAny>$})
-              .with_content(%r{^\s+<\/RequireAny>$})
+              .with_content(%r{^\s+</RequireAny>$})
               .with_content(%r{^\s+Require any-valid1$})
               .with_content(%r{^\s+Require any-valid2$})
               .with_content(%r{^\s+LDAPReferrals off$})
@@ -641,14 +641,14 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$})
               .with_content(%r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$})
               .with_content(%r{^\s+IndexOptions\sFancyIndexing$})
-              .with_content(%r{^\s+IndexStyleSheet\s'\/styles\/style\.css'$})
+              .with_content(%r{^\s+IndexStyleSheet\s'/styles/style\.css'$})
               .with_content(%r{^\s+DirectoryIndex\sdisabled$})
               .with_content(%r{^\s+SetOutputFilter\soutput_filter$})
               .with_content(%r{^\s+SetInputFilter\sinput_filter$})
               .with_content(%r{^\s+<Limit GET HEAD>$})
-              .with_content(%r{\s+<Limit GET HEAD>\s*Require valid-user\s*<\/Limit>}m)
+              .with_content(%r{\s+<Limit GET HEAD>\s*Require valid-user\s*</Limit>}m)
               .with_content(%r{^\s+<LimitExcept GET HEAD>$})
-              .with_content(%r{\s+<LimitExcept GET HEAD>\s*Require valid-user\s*<\/LimitExcept>}m)
+              .with_content(%r{\s+<LimitExcept GET HEAD>\s*Require valid-user\s*</LimitExcept>}m)
               .with_content(%r{^\s+Dav\sfilesystem$})
               .with_content(%r{^\s+DavDepthInfinity\sOn$})
               .with_content(%r{^\s+DavMinTimeout\s600$})
@@ -745,8 +745,8 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{noquery interpolate})
               .with_content(%r{ProxyPreserveHost On})
               .with_content(%r{ProxyAddHeaders On})
-              .with_content(%r{ProxyPassReverseCookiePath\s+\/a\s+http:\/\/})
-              .with_content(%r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo})
+              .with_content(%r{ProxyPassReverseCookiePath\s+/a\s+http://})
+              .with_content(%r{ProxyPassReverseCookieDomain\s+foo\s+http://foo})
           }
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
@@ -811,8 +811,8 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-jk_mounts')
-              .with_content(%r{^\s+JkMount\s+\/\*\s+tcnode1$})
-              .with_content(%r{^\s+JkUnMount\s+\/\*\.jpg\s+tcnode1$})
+              .with_content(%r{^\s+JkMount\s+/\*\s+tcnode1$})
+              .with_content(%r{^\s+JkUnMount\s+/\*\.jpg\s+tcnode1$})
           }
 
           it {
@@ -820,7 +820,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+KrbMethodNegotiate\soff$})
               .with_content(%r{^\s+KrbAuthoritative\soff$})
               .with_content(%r{^\s+KrbAuthRealms\sEXAMPLE.ORG\sEXAMPLE.NET$})
-              .with_content(%r{^\s+Krb5Keytab\s\/tmp\/keytab5$})
+              .with_content(%r{^\s+Krb5Keytab\s/tmp/keytab5$})
               .with_content(%r{^\s+KrbLocalUserMapping\soff$})
               .with_content(%r{^\s+KrbServiceName\sHTTP$})
               .with_content(%r{^\s+KrbSaveCredentials\soff$})
@@ -914,9 +914,9 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc')
-              .with_content(%r{^\s+OIDCProviderMetadataURL\shttps:\/\/login.example.com\/\.well-known\/openid-configuration$})
+              .with_content(%r{^\s+OIDCProviderMetadataURL\shttps://login.example.com/\.well-known/openid-configuration$})
               .with_content(%r{^\s+OIDCClientID\stest$})
-              .with_content(%r{^\s+OIDCRedirectURI\shttps:\/\/login\.example.com\/redirect_uri$})
+              .with_content(%r{^\s+OIDCRedirectURI\shttps://login\.example.com/redirect_uri$})
               .with_content(%r{^\s+OIDCProviderTokenEndpointAuth\sclient_secret_basic$})
               .with_content(%r{^\s+OIDCRemoteUserClaim\ssub$})
               .with_content(%r{^\s+OIDCClientSecret\saae053a9-4abf-4824-8956-e94b2af335c8$})
@@ -1061,7 +1061,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+ServerName https:\/\/www\.example\.com:443$},
+              content: %r{^\s+ServerName https://www\.example\.com:443$},
             )
           }
 
@@ -1088,7 +1088,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{^\s+ServerName https:\/\/www\.example\.com$},
+              content: %r{^\s+ServerName https://www\.example\.com$},
             )
           }
 
@@ -1168,7 +1168,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 \[::1\]:80>[.\/m]*$},
+              content: %r{[./m]*<VirtualHost 127.0.0.1:80 \[::1\]:80>[./m]*$},
             )
           }
 
@@ -1195,7 +1195,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080>[.\/m]*$},
+              content: %r{[./m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080>[./m]*$},
             )
           }
 
@@ -1222,7 +1222,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080 \[::1\]:80 \[::1\]:8080>[.\/m]*$},
+              content: %r{[./m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080 \[::1\]:80 \[::1\]:8080>[./m]*$},
             )
           }
 
@@ -1253,7 +1253,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{[.\/m]*<VirtualHost \[::1\]:80>[.\/m]*$},
+              content: %r{[./m]*<VirtualHost \[::1\]:80>[./m]*$},
             )
           }
 
@@ -1278,7 +1278,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
-              content: %r{[.\/m]*<VirtualHost \*:80>[.\/m]*$},
+              content: %r{[./m]*<VirtualHost \*:80>[./m]*$},
             )
           }
 
@@ -1345,7 +1345,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
-              content: %r{^\s*SecAuditLog "\/var\/log\/#{apache_name}\/rspec\.example\.com_security\.log"$},
+              content: %r{^\s*SecAuditLog "/var/log/#{apache_name}/rspec\.example\.com_security\.log"$},
             )
           }
         end
@@ -1362,7 +1362,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
-              content: %r{\s*SecAuditLog "\/var\/log\/#{apache_name}\/foo.log"$},
+              content: %r{\s*SecAuditLog "/var/log/#{apache_name}/foo.log"$},
             )
           }
         end
@@ -1382,7 +1382,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{
                 ^\s+SecAction\ \\\n
-                \s+\"id:900110,\\\n
+                \s+"id:900110,\\\n
                 \s+phase:1,\\\n
                 \s+nolog,\\\n
                 \s+pass,\\\n
@@ -1408,7 +1408,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{
               ^\s+SecAction\ \\\n
-              \s+\"id:900200,\\\n
+              \s+"id:900200,\\\n
               \s+phase:1,\\\n
               \s+nolog,\\\n\s+pass,\\\n
               \s+t:none,\\\n
@@ -1450,7 +1450,7 @@ describe 'apache::vhost', type: :define do
 
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(
-              %r{ProxyPassMatch .* http:\/\/backend-a\/ timeout=300},
+              %r{ProxyPassMatch .* http://backend-a/ timeout=300},
             ).with_content(%r{## Proxy rules})
           }
         end
@@ -1798,13 +1798,13 @@ describe 'apache::vhost', type: :define do
 
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
-                content: %r{^\s+CustomLog "\/tmp\/log1"\s+combined\s+env=dev$},
+                content: %r{^\s+CustomLog "/tmp/log1"\s+combined\s+env=dev$},
               )
             }
 
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
-                content: %r{^\s+CustomLog "\/var\/log\/#{apache_name}\/log2"\s+combined\s*$},
+                content: %r{^\s+CustomLog "/var/log/#{apache_name}/log2"\s+combined\s*$},
               )
             }
 

@@ -40,7 +40,7 @@ describe 'apache::mod::wsgi', type: :class do
         { wsgi_socket_prefix: 'run/wsgi' }
       end
 
-      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGISocketPrefix run\/wsgi$}) }
+      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGISocketPrefix run/wsgi$}) }
     end
 
     describe 'with custom WSGIPythonHome' do
@@ -48,7 +48,7 @@ describe 'apache::mod::wsgi', type: :class do
         { wsgi_python_home: '/path/to/virtenv' }
       end
 
-      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIPythonHome "\/path\/to\/virtenv"$}) }
+      it { is_expected.to contain_file('wsgi.conf').with_content(%r{^  WSGIPythonHome "/path/to/virtenv"$}) }
     end
 
     describe 'with custom WSGIApplicationGroup' do
