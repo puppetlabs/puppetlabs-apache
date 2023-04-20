@@ -17,11 +17,11 @@ describe 'apache::mod::passenger', type: :class do
           it { is_expected.to contain_package('libapache2-mod-passenger') }
 
           it {
-            is_expected.to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
+            expect(subject).to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
           }
 
           it {
-            is_expected.to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
+            expect(subject).to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
           }
 
           passenger_config_options = {
@@ -208,11 +208,11 @@ describe 'apache::mod::passenger', type: :class do
         it { is_expected.to contain_package('libapache2-mod-passenger') }
 
         it {
-          is_expected.to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
+          expect(subject).to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
         }
 
         it {
-          is_expected.to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
+          expect(subject).to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
         }
 
         context 'passenger config with passenger_installed_version set', test: true do
@@ -441,14 +441,14 @@ describe 'apache::mod::passenger', type: :class do
               it { is_expected.to contain_package('mod_passenger') }
 
               it {
-                is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
+                expect(subject).to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
 
               it { is_expected.to contain_file('passenger_package.conf').without_content }
               it { is_expected.to contain_file('passenger_package.conf').without_source }
 
               it {
-                is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.d/zpassenger.load')
+                expect(subject).to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.d/zpassenger.load')
               }
 
               it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRoot}) }
@@ -474,22 +474,22 @@ describe 'apache::mod::passenger', type: :class do
 
             context 'on EL7' do
               it {
-                is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
+                expect(subject).to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
 
               it {
-                is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
+                expect(subject).to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
               }
             end
           when '8'
 
             context 'on EL8' do
               it {
-                is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
+                expect(subject).to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
 
               it {
-                is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
+                expect(subject).to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
               }
             end
           end

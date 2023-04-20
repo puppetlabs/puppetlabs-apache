@@ -20,7 +20,7 @@ describe 'apache::custom_config', type: :define do
     end
 
     it {
-      is_expected.to contain_exec('syntax verification for rspec')
+      expect(subject).to contain_exec('syntax verification for rspec')
         .with('refreshonly' => 'true', 'command' => ['/usr/sbin/apachectl', '-t'])
         .that_subscribes_to('File[apache_rspec]')
         .that_notifies('Class[Apache::Service]')
@@ -28,13 +28,13 @@ describe 'apache::custom_config', type: :define do
     }
 
     it {
-      is_expected.to contain_exec('remove rspec if invalid')
+      expect(subject).to contain_exec('remove rspec if invalid')
         .with('unless' => [['/usr/sbin/apachectl', '-t']], 'refreshonly' => 'true')
         .that_subscribes_to('File[apache_rspec]')
     }
 
     it {
-      is_expected.to contain_file('apache_rspec')
+      expect(subject).to contain_file('apache_rspec')
         .with('ensure' => 'present', 'content' => '# Test')
         .that_requires('Package[httpd]')
     }
@@ -51,16 +51,16 @@ describe 'apache::custom_config', type: :define do
     end
 
     it {
-      is_expected.to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
+      expect(subject).to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
     }
 
     it {
-      is_expected.to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
-                                                                  'unless' => [['/bin/true']])
+      expect(subject).to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
+                                                                      'unless' => [['/bin/true']])
     }
 
     it {
-      is_expected.to contain_file('apache_rspec')
+      expect(subject).to contain_file('apache_rspec')
         .that_requires('Package[httpd]')
         .with('path' => '/dne/30-rspec.conf',
               'ensure' => 'present',

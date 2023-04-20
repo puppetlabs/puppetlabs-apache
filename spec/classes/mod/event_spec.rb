@@ -110,8 +110,8 @@ describe 'apache::mod::event', type: :class do
     end
 
     it {
-      is_expected.to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
-                                                                                 'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
+      expect(subject).to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
+                                                                                     'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
     }
 
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.load').with_ensure('link') }
@@ -127,8 +127,8 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.to contain_file('/etc/httpd/conf.modules.d/event.conf').with_ensure('file') }
 
     it {
-      is_expected.to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
-                                                                               'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
+      expect(subject).to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
+                                                                                   'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
     }
   end
 end

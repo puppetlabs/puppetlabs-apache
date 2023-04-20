@@ -10,7 +10,7 @@ describe 'apache::mod::wsgi', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_class('apache::mod::wsgi').with(
+      expect(subject).to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }
@@ -76,8 +76,8 @@ describe 'apache::mod::wsgi', type: :class do
       end
 
       it {
-        is_expected.to contain_apache__mod('wsgi').with('package' => 'mod_wsgi_package',
-                                                        'path' => '/foo/bar/baz')
+        expect(subject).to contain_apache__mod('wsgi').with('package' => 'mod_wsgi_package',
+                                                            'path' => '/foo/bar/baz')
       }
 
       it { is_expected.to contain_package('mod_wsgi_package') }
@@ -93,8 +93,8 @@ describe 'apache::mod::wsgi', type: :class do
       end
 
       it {
-        is_expected.to contain_apache__mod('wsgi').with('path' => 'modules/wsgi_mod_name.so',
-                                                        'package' => 'mod_wsgi_package')
+        expect(subject).to contain_apache__mod('wsgi').with('path' => 'modules/wsgi_mod_name.so',
+                                                            'package' => 'mod_wsgi_package')
       }
 
       it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module modules/wsgi_mod_name.so}) }
@@ -127,7 +127,7 @@ describe 'apache::mod::wsgi', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_class('apache::mod::wsgi').with(
+      expect(subject).to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }
@@ -141,7 +141,7 @@ describe 'apache::mod::wsgi', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_class('apache::mod::wsgi').with(
+      expect(subject).to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }

@@ -21,7 +21,7 @@ def general_info_specs_apache24
     end
 
     it {
-      is_expected.to contain_file('info.conf').with_content(
+      expect(subject).to contain_file('info.conf').with_content(
         "<Location /server-info>\n    " \
         "SetHandler server-info\n" \
         "</Location>\n",
@@ -39,7 +39,7 @@ def general_info_specs_apache24
                "Require ip 10.10.1.2 192.168.1.2 127.0.0.1\n" \
                "</Location>\n"
     it {
-      is_expected.to contain_file('info.conf').with_content(expected)
+      expect(subject).to contain_file('info.conf').with_content(expected)
     }
   end
 
@@ -52,7 +52,7 @@ def general_info_specs_apache24
     end
 
     it {
-      is_expected.to contain_file('info.conf').with_content(
+      expect(subject).to contain_file('info.conf').with_content(
         "<Location /server-info>\n    " \
         "SetHandler server-info\n" \
         "</Location>\n",
@@ -71,13 +71,13 @@ describe 'apache::mod::info', type: :class do
     general_info_specs_apache24
 
     it {
-      is_expected.to contain_file('info.conf').with(ensure: 'file',
-                                                    path: '/etc/apache2/mods-available/info.conf')
+      expect(subject).to contain_file('info.conf').with(ensure: 'file',
+                                                        path: '/etc/apache2/mods-available/info.conf')
     }
 
     it {
-      is_expected.to contain_file('info.conf symlink').with(ensure: 'link',
-                                                            path: '/etc/apache2/mods-enabled/info.conf')
+      expect(subject).to contain_file('info.conf symlink').with(ensure: 'link',
+                                                                path: '/etc/apache2/mods-enabled/info.conf')
     }
   end
 
@@ -88,8 +88,8 @@ describe 'apache::mod::info', type: :class do
     general_info_specs_apache24
 
     it {
-      is_expected.to contain_file('info.conf').with(ensure: 'file',
-                                                    path: '/etc/httpd/conf.modules.d/info.conf')
+      expect(subject).to contain_file('info.conf').with(ensure: 'file',
+                                                        path: '/etc/httpd/conf.modules.d/info.conf')
     }
   end
 
@@ -100,8 +100,8 @@ describe 'apache::mod::info', type: :class do
     general_info_specs_apache24
 
     it {
-      is_expected.to contain_file('info.conf').with(ensure: 'file',
-                                                    path: '/usr/local/etc/apache24/Modules/info.conf')
+      expect(subject).to contain_file('info.conf').with(ensure: 'file',
+                                                        path: '/usr/local/etc/apache24/Modules/info.conf')
     }
   end
 
@@ -112,8 +112,8 @@ describe 'apache::mod::info', type: :class do
     general_info_specs_apache24
 
     it {
-      is_expected.to contain_file('info.conf').with(ensure: 'file',
-                                                    path: '/etc/apache2/modules.d/info.conf')
+      expect(subject).to contain_file('info.conf').with(ensure: 'file',
+                                                        path: '/etc/apache2/modules.d/info.conf')
     }
   end
 end

@@ -27,7 +27,7 @@ describe 'apache::balancer', type: :define do
       end
 
       it {
-        is_expected.to contain_concat('apache_balancer_myapp').with(path: '/tmp/myapp.conf')
+        expect(subject).to contain_concat('apache_balancer_myapp').with(path: '/tmp/myapp.conf')
       }
     end
 
@@ -39,7 +39,7 @@ describe 'apache::balancer', type: :define do
       end
 
       it {
-        is_expected.to contain_concat__fragment('00-myapp-header').with_content(
+        expect(subject).to contain_concat__fragment('00-myapp-header').with_content(
           %r{^<Proxy balancer://myapp timeout=0 nonce=none>$},
         )
       }
@@ -54,7 +54,7 @@ describe 'apache::balancer', type: :define do
     end
 
     it {
-      is_expected.to contain_concat('apache_balancer_myapp').with(path: '/junk/path/balancer_myapp.conf')
+      expect(subject).to contain_concat('apache_balancer_myapp').with(path: '/junk/path/balancer_myapp.conf')
     }
   end
 

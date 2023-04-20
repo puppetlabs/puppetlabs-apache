@@ -27,7 +27,7 @@ describe 'apache::mod::expires', type: :class do
     it { is_expected.to contain_apache__mod('expires') }
 
     it {
-      is_expected.to contain_file('expires.conf').with_content(
+      expect(subject).to contain_file('expires.conf').with_content(
         "ExpiresActive On\n" \
         "ExpiresDefault \"access plus 1 month\"\n",
       )
@@ -52,7 +52,7 @@ describe 'apache::mod::expires', type: :class do
     it { is_expected.to contain_apache__mod('expires') }
 
     it {
-      is_expected.to contain_file('expires.conf').with_content(
+      expect(subject).to contain_file('expires.conf').with_content(
         "ExpiresActive On\n" \
         "ExpiresByType text/json \"mod plus 1 day\"\n" \
         "ExpiresByType text/html \"access plus 1 year\"\n",

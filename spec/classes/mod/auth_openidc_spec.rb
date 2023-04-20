@@ -35,7 +35,7 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.to contain_package('mod_auth_openidc') }
 
       it do
-        is_expected.to contain_package('dnf-module-mod_auth_openidc')
+        expect(subject).to contain_package('dnf-module-mod_auth_openidc')
           .with_ensure('present')
           .with_name('mod_auth_openidc')
           .that_comes_before('Package[mod_auth_openidc]')

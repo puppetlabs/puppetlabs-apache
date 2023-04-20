@@ -50,7 +50,7 @@ describe 'apache::balancermember', type: :define do
     end
 
     it {
-      is_expected.to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with(target: 'apache_balancer_balancername')
+      expect(subject).to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with(target: 'apache_balancer_balancername')
     }
   end
 end

@@ -12,7 +12,7 @@ describe 'apache::mod::dir', type: :class do
         it { is_expected.to contain_apache__mod('dir') }
 
         it do
-          is_expected.to contain_file('dir.conf')
+          expect(subject).to contain_file('dir.conf')
             .with_content(%r{^DirectoryIndex })
             .with_content(%r{ index\.html })
             .with_content(%r{ index\.html\.var })

@@ -12,7 +12,7 @@ describe 'apache::mod::rpaf', type: :class do
     it { is_expected.to contain_package('libapache2-mod-rpaf') }
 
     it {
-      is_expected.to contain_file('rpaf.conf').with('path' => '/etc/apache2/mods-available/rpaf.conf')
+      expect(subject).to contain_file('rpaf.conf').with('path' => '/etc/apache2/mods-available/rpaf.conf')
     }
 
     it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFenable On$}) }
@@ -50,7 +50,7 @@ describe 'apache::mod::rpaf', type: :class do
     it { is_expected.to contain_package('www/mod_rpaf2') }
 
     it {
-      is_expected.to contain_file('rpaf.conf').with('path' => '/usr/local/etc/apache24/Modules/rpaf.conf')
+      expect(subject).to contain_file('rpaf.conf').with('path' => '/usr/local/etc/apache24/Modules/rpaf.conf')
     }
 
     it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFenable On$}) }
@@ -88,7 +88,7 @@ describe 'apache::mod::rpaf', type: :class do
     it { is_expected.to contain_package('www-apache/mod_rpaf') }
 
     it {
-      is_expected.to contain_file('rpaf.conf').with('path' => '/etc/apache2/modules.d/rpaf.conf')
+      expect(subject).to contain_file('rpaf.conf').with('path' => '/etc/apache2/modules.d/rpaf.conf')
     }
 
     it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFenable On$}) }

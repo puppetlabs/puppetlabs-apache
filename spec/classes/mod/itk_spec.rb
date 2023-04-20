@@ -21,8 +21,8 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        is_expected.to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
-                                                                                 'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
+        expect(subject).to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
+                                                                                     'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
       }
 
       it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.load').with_ensure('link') }
@@ -51,8 +51,8 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
-                                                                               'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
+        expect(subject).to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
+                                                                                   'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
       }
     end
 

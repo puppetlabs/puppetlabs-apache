@@ -19,7 +19,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_package('mod_ssl') }
 
       it {
-        is_expected.to contain_file('ssl.conf')
+        expect(subject).to contain_file('ssl.conf')
           .with_path('/etc/httpd/conf.modules.d/ssl.conf')
           .without_content(%r{SSLProtocol})
           .with_content(%r{^  SSLCipherSuite PROFILE=SYSTEM$})

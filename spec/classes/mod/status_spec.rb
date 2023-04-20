@@ -38,7 +38,7 @@ shared_examples 'status_conf_spec_require' do |requires, extended_status, status
     "ProxyStatus On\n" \
     "</IfModule>\n"
   it('status conf require') do
-    is_expected.to contain_file('status.conf').with_content(expected)
+    expect(subject).to contain_file('status.conf').with_content(expected)
   end
 end
 
@@ -55,13 +55,13 @@ describe 'apache::mod::status', type: :class do
         include_examples 'status_conf_spec_require', 'ip 127.0.0.1 ::1', 'On', '/server-status'
 
         it {
-          is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                          path: '/etc/apache2/mods-available/status.conf')
+          expect(subject).to contain_file('status.conf').with(ensure: 'file',
+                                                              path: '/etc/apache2/mods-available/status.conf')
         }
 
         it {
-          is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                  path: '/etc/apache2/mods-enabled/status.conf')
+          expect(subject).to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                      path: '/etc/apache2/mods-enabled/status.conf')
         }
       end
 
@@ -86,7 +86,7 @@ describe 'apache::mod::status', type: :class do
           end
 
           it 'expects to succeed regular expression validation' do
-            is_expected.to compile
+            expect(subject).to compile
           end
         end
       end
@@ -98,7 +98,7 @@ describe 'apache::mod::status', type: :class do
           end
 
           it 'expects to fail regular expression validation' do
-            is_expected.to compile.and_raise_error(%r{extended_status})
+            expect(subject).to compile.and_raise_error(%r{extended_status})
           end
         end
       end
@@ -156,13 +156,13 @@ describe 'apache::mod::status', type: :class do
           include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
           it {
-            is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                            path: '/etc/apache2/mods-available/status.conf')
+            expect(subject).to contain_file('status.conf').with(ensure: 'file',
+                                                                path: '/etc/apache2/mods-available/status.conf')
           }
 
           it {
-            is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                    path: '/etc/apache2/mods-enabled/status.conf')
+            expect(subject).to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                        path: '/etc/apache2/mods-enabled/status.conf')
           }
         end
 

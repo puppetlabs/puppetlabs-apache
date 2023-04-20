@@ -11,7 +11,7 @@ describe 'apache::mod::fcgid', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => nil)
+      expect(subject).to contain_apache__mod('fcgid').with('loadfile_name' => nil)
     }
 
     it { is_expected.to contain_package('libapache2-mod-fcgid') }
@@ -24,7 +24,7 @@ describe 'apache::mod::fcgid', type: :class do
       it { is_expected.to contain_class('apache::params') }
 
       it {
-        is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
+        expect(subject).to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
       }
 
       it { is_expected.to contain_package('mod_fcgid') }
@@ -37,7 +37,7 @@ describe 'apache::mod::fcgid', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
+      expect(subject).to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
     }
 
     it { is_expected.to contain_package('www/mod_fcgid') }
@@ -49,7 +49,7 @@ describe 'apache::mod::fcgid', type: :class do
     it { is_expected.to contain_class('apache::params') }
 
     it {
-      is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => nil)
+      expect(subject).to contain_apache__mod('fcgid').with('loadfile_name' => nil)
     }
 
     it { is_expected.to contain_package('www-apache/mod_fcgid') }

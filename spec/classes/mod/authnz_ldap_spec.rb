@@ -26,7 +26,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
       let(:params) { { verify_server_cert: 'wrong' } }
 
       it 'raises an error' do
-        is_expected.to compile.and_raise_error(%r{parameter 'verify_server_cert' expects a Boolean value, got String})
+        expect(subject).to compile.and_raise_error(%r{parameter 'verify_server_cert' expects a Boolean value, got String})
       end
     end
   end # Debian
@@ -64,7 +64,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
           let(:params) { { verify_server_cert: 'wrong' } }
 
           it 'raises an error' do
-            is_expected.to compile.and_raise_error(%r{parameter 'verify_server_cert' expects a Boolean value, got String})
+            expect(subject).to compile.and_raise_error(%r{parameter 'verify_server_cert' expects a Boolean value, got String})
           end
         end
 

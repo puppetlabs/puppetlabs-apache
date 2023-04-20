@@ -13,21 +13,21 @@ describe 'apache::mod::security', type: :class do
       when 'Suse'
         context 'on Suse based systems' do
           it {
-            is_expected.to contain_file('security.conf')
+            expect(subject).to contain_file('security.conf')
               .with_content(%r{^\s+SecTmpDir /var/lib/mod_security$})
           }
         end
       when 'RedHat'
         context 'on RedHat based systems' do
           it {
-            is_expected.to contain_apache__mod('security').with(
+            expect(subject).to contain_apache__mod('security').with(
               id: 'security2_module',
               lib: 'mod_security2.so',
             )
           }
 
           it {
-            is_expected.to contain_apache__mod('unique_id').with(
+            expect(subject).to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
               lib: 'mod_unique_id.so',
             )
@@ -37,14 +37,14 @@ describe 'apache::mod::security', type: :class do
 
           if (facts[:os]['release']['major'].to_i > 6 && facts[:os]['release']['major'].to_i <= 7) || (facts[:os]['release']['major'].to_i >= 8)
             it {
-              is_expected.to contain_file('security.conf').with(
+              expect(subject).to contain_file('security.conf').with(
                 path: '/etc/httpd/conf.modules.d/security.conf',
               )
             }
           end
 
           it {
-            is_expected.to contain_file('security.conf')
+            expect(subject).to contain_file('security.conf')
               .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})
               .with_content(%r{^\s+SecAuditLogParts ABIJDEFHZ$})
               .with_content(%r{^\s+SecAuditLogType Serial$})
@@ -54,21 +54,21 @@ describe 'apache::mod::security', type: :class do
           }
 
           it {
-            is_expected.to contain_file('/etc/httpd/modsecurity.d').with(
+            expect(subject).to contain_file('/etc/httpd/modsecurity.d').with(
               ensure: 'directory', path: '/etc/httpd/modsecurity.d',
               owner: 'root', group: 'root', mode: '0755'
             )
           }
 
           it {
-            is_expected.to contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
+            expect(subject).to contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
               ensure: 'directory', path: '/etc/httpd/modsecurity.d/activated_rules',
               owner: 'apache', group: 'apache'
             )
           }
 
           it {
-            is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
+            expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
               path: '/etc/httpd/modsecurity.d/security_crs.conf',
             )
           }
@@ -76,7 +76,7 @@ describe 'apache::mod::security', type: :class do
           it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
 
           it {
-            is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+            expect(subject).to contain_file('modsecurity_35_bad_robots.data').with(
               path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
               target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
             )
@@ -111,7 +111,7 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
 
             it {
-              is_expected.to contain_file('bar.conf').with(
+              expect(subject).to contain_file('bar.conf').with(
                 path: '/etc/httpd/modsecurity.d/activated_rules/bar.conf',
                 target: '/tmp/foo/bar.conf',
               )
@@ -136,7 +136,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.not_to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf')
+              expect(subject).not_to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf')
             }
           end
 
@@ -149,7 +149,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules').with(
+              expect(subject).to contain_file('/etc/httpd/modsecurity.d/custom_rules').with(
                 ensure: 'directory', path: '/etc/httpd/modsecurity.d/custom_rules',
                 owner: 'apache', group: 'apache'
               )
@@ -172,7 +172,7 @@ describe 'apache::mod::security', type: :class do
 
             if facts[:os]['release']['major'].to_i < 8 && facts[:os]['family'] == 'RedHat'
               it {
-                is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                   %r{
                     ^SecAction\ \\\n
                     \ \ "id:'900001',\ \\\n
@@ -188,11 +188,11 @@ describe 'apache::mod::security', type: :class do
               }
             else
               it {
-                is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                   %r{^SecAction \\\n\s+"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
-                is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                   %r{^SecAction \\\n\s+"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=2"$}
-                is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                   %r{
                     ^SecAction\ \\\n
                     \s+"id:900700,\\\n
@@ -217,21 +217,21 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
+              expect(subject).to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
             }
           end
         end
       when 'Debian'
         context 'on Debian based systems' do
           it {
-            is_expected.to contain_apache__mod('security').with(
+            expect(subject).to contain_apache__mod('security').with(
               id: 'security2_module',
               lib: 'mod_security2.so',
             )
           }
 
           it {
-            is_expected.to contain_apache__mod('unique_id').with(
+            expect(subject).to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
               lib: 'mod_unique_id.so',
             )
@@ -240,13 +240,13 @@ describe 'apache::mod::security', type: :class do
           it { is_expected.to contain_package('modsecurity-crs') }
 
           it {
-            is_expected.to contain_file('security.conf').with(
+            expect(subject).to contain_file('security.conf').with(
               path: '/etc/apache2/mods-available/security.conf',
             )
           }
 
           it {
-            is_expected.to contain_file('security.conf')
+            expect(subject).to contain_file('security.conf')
               .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})
               .with_content(%r{^\s+SecAuditLogParts ABIJDEFHZ$})
               .with_content(%r{^\s+SecAuditLogType Serial$})
@@ -256,21 +256,21 @@ describe 'apache::mod::security', type: :class do
           }
 
           it {
-            is_expected.to contain_file('/etc/modsecurity').with(
+            expect(subject).to contain_file('/etc/modsecurity').with(
               ensure: 'directory', path: '/etc/modsecurity',
               owner: 'root', group: 'root', mode: '0755'
             )
           }
 
           it {
-            is_expected.to contain_file('/etc/modsecurity/activated_rules').with(
+            expect(subject).to contain_file('/etc/modsecurity/activated_rules').with(
               ensure: 'directory', path: '/etc/modsecurity/activated_rules',
               owner: 'www-data', group: 'www-data'
             )
           }
 
           it {
-            is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with(
+            expect(subject).to contain_file('/etc/modsecurity/security_crs.conf').with(
               path: '/etc/modsecurity/security_crs.conf',
             )
           }
@@ -280,7 +280,7 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
 
             it {
-              is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+              expect(subject).to contain_file('modsecurity_35_bad_robots.data').with(
                 path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
                 target: '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
               )
@@ -317,7 +317,7 @@ describe 'apache::mod::security', type: :class do
               it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
 
               it {
-                is_expected.to contain_file('bar.conf').with(
+                expect(subject).to contain_file('bar.conf').with(
                   path: '/etc/modsecurity/activated_rules/bar.conf',
                   target: '/tmp/foo/bar.conf',
                 )
@@ -333,7 +333,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.not_to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf')
+              expect(subject).not_to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf')
             }
           end
 
@@ -346,7 +346,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.to contain_file('/etc/modsecurity/custom_rules').with(
+              expect(subject).to contain_file('/etc/modsecurity/custom_rules').with(
                 ensure: 'directory', path: '/etc/modsecurity/custom_rules',
                 owner: 'www-data', group: 'www-data'
               )
@@ -365,7 +365,7 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_apache__mod('security2') }
 
             it {
-              is_expected.to contain_file('security.conf').with(
+              expect(subject).to contain_file('security.conf').with(
                 path: '/etc/apache2/mods-available/security2.conf',
               )
             }
@@ -384,11 +384,11 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+              expect(subject).to contain_file('/etc/modsecurity/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
-              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+              expect(subject).to contain_file('/etc/modsecurity/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=1"$}
-              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+              expect(subject).to contain_file('/etc/modsecurity/security_crs.conf').with_content \
                 %r{
                   ^SecAction\ \\\n
                   \s+"id:900700,\\\n
@@ -412,7 +412,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it {
-              is_expected.to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
+              expect(subject).to compile.and_raise_error(%r{Executing paranoia level cannot be lower than paranoia level})
             }
           end
         end
