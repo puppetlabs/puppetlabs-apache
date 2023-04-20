@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v9.1.3](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.3) - 2023-04-20
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.2...v9.1.3)
+
+### Fixed
+
+- #2391 Allow Sensitive type in addition to String type [#2392](https://github.com/puppetlabs/puppetlabs-apache/pull/2392) ([dpavlotzky](https://github.com/dpavlotzky))
+
+
 ## [v9.1.2](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.2) (2023-02-10)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.1...v9.1.2)
