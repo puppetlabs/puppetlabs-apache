@@ -11,6 +11,7 @@ describe 'apache::mod::shib', type: :class do
       it { is_expected.to contain_apache__mod('shib2').with_id('mod_shib') }
     end
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 

@@ -34,6 +34,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__listen(params[:port]) }
         end
+
         context 'set everything!' do
           let :params do
             {
@@ -930,6 +931,7 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+
         context 'vhost with proxy_add_headers true' do
           let :params do
             {
@@ -957,6 +959,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders On}) }
         end
+
         context 'vhost with proxy_add_headers false' do
           let :params do
             {
@@ -984,6 +987,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders Off}) }
         end
+
         context 'vhost without proxy' do
           let :params do
             {
@@ -1010,6 +1014,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy') }
         end
+
         context 'vhost without proxy_add_headers' do
           let :params do
             {
@@ -1037,6 +1042,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-proxy').with_content(%r{ProxyAddHeaders}) }
         end
+
         context 'vhost with scheme and port in servername and use_servername_for_filenames' do
           let :params do
             {
@@ -1063,6 +1069,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat('25-www.example.com.conf')
           }
         end
+
         context 'vhost with scheme in servername and use_servername_for_filenames' do
           let :params do
             {
@@ -1089,6 +1096,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat('25-www.example.com.conf')
           }
         end
+
         context 'vhost with port in servername and use_servername_for_filenames' do
           let :params do
             {
@@ -1115,6 +1123,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat('25-www.example.com.conf')
           }
         end
+
         context 'vhost with servername and use_servername_for_filenames' do
           let :params do
             {
@@ -1141,6 +1150,7 @@ describe 'apache::vhost', type: :define do
             is_expected.to contain_concat('25-www.example.com.conf')
           }
         end
+
         context 'vhost with multiple ip addresses' do
           let :params do
             {
@@ -1298,6 +1308,7 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+
         context 'vhost with virtual_docroot and docroot' do
           let :params do
             {
@@ -1338,6 +1349,7 @@ describe 'apache::vhost', type: :define do
             )
           }
         end
+
         context 'modsec_audit_log_file' do
           let :params do
             {
@@ -1421,6 +1433,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::alias') }
         end
+
         context 'proxy_pass_match' do
           let :params do
             {
@@ -1539,6 +1552,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-limits') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-file_footer') }
         end
+
         context 'wsgi_application_group should set apache::mod::wsgi' do
           let :params do
             {
@@ -1549,6 +1563,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_daemon_process should set apache::mod::wsgi' do
           let :params do
             {
@@ -1559,6 +1574,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_import_script on its own should not set apache::mod::wsgi' do
           let :params do
             {
@@ -1569,6 +1585,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.not_to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_import_script_options on its own should not set apache::mod::wsgi' do
           let :params do
             {
@@ -1582,6 +1599,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.not_to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_import_script and wsgi_import_script_options should set apache::mod::wsgi' do
           let :params do
             {
@@ -1596,6 +1614,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_process_group should set apache::mod::wsgi' do
           let :params do
             {
@@ -1606,6 +1625,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_script_aliases with non-empty aliases should set apache::mod::wsgi' do
           let :params do
             {
@@ -1618,6 +1638,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_script_aliases with empty aliases should set apache::mod::wsgi' do
           let :params do
             {
@@ -1628,6 +1649,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.not_to contain_class('apache::mod::wsgi') }
         end
+
         context 'wsgi_pass_authorization should set apache::mod::wsgi' do
           let :params do
             {
@@ -1638,6 +1660,7 @@ describe 'apache::vhost', type: :define do
 
           it { is_expected.to contain_class('apache::mod::wsgi') }
         end
+
         context 'when not setting nor managing the docroot' do
           let :params do
             {
@@ -1649,6 +1672,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-docroot') }
         end
+
         context 'ssl_proxyengine without ssl' do
           let :params do
             {
@@ -1662,6 +1686,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-ssl') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-sslproxy') }
         end
+
         context 'ssl_proxy_protocol without ssl_proxyengine' do
           let :params do
             {
@@ -1676,6 +1701,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-ssl') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-sslproxy') }
         end
+
         context 'ssl_honorcipherorder' do
           let :params do
             {
@@ -1697,6 +1723,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
           end
+
           context 'ssl_honorcipherorder true' do
             let :params do
               super().merge({ 'ssl_honorcipherorder' => true })
@@ -1705,6 +1732,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+On$}) }
           end
+
           context 'ssl_honorcipherorder off' do
             let :params do
               super().merge({ 'ssl_honorcipherorder' => 'off' })
@@ -1713,6 +1741,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
           end
+
           context 'ssl_honorcipherorder false' do
             let :params do
               super().merge({ 'ssl_honorcipherorder' => false })
@@ -1722,6 +1751,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to contain_concat__fragment('rspec.example.com-ssl').with_content(%r{^\s*SSLHonorCipherOrder\s+Off$}) }
           end
         end
+
         describe 'access logs' do
           context 'single log file' do
             let(:params) do
@@ -1737,6 +1767,7 @@ describe 'apache::vhost', type: :define do
               )
             }
           end
+
           context 'single log file with environment' do
             let(:params) do
               {
@@ -1752,6 +1783,7 @@ describe 'apache::vhost', type: :define do
               )
             }
           end
+
           context 'multiple log files' do
             let(:params) do
               {
@@ -1783,6 +1815,7 @@ describe 'apache::vhost', type: :define do
             }
           end
         end # access logs
+
         describe 'error logs format' do
           context 'single log format directive as a string' do
             let(:params) do
@@ -1823,6 +1856,7 @@ describe 'apache::vhost', type: :define do
             }
           end
         end # error logs format
+
         describe 'validation' do
           let(:params) do
             {
@@ -1849,6 +1883,7 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'empty rewrites' do
             let(:params) do
               super().merge(
@@ -1862,6 +1897,7 @@ describe 'apache::vhost', type: :define do
               is_expected.not_to contain_concat__fragment('rspec.example.com-rewrite')
             }
           end
+
           context 'empty rewrites_with_rewrite_inherit' do
             let(:params) do
               super().merge(
@@ -1877,6 +1913,7 @@ describe 'apache::vhost', type: :define do
                 .with_content(%r{^\s+RewriteRule \^index\.html\$ welcome.html$})
             }
           end
+
           context 'empty rewrites_without_rewrite_inherit' do
             let(:params) do
               super().merge(
@@ -1904,6 +1941,7 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'access_log_file and access_log_pipe' do
             let :params do
               super().merge(
@@ -1914,6 +1952,7 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'error_log_file and error_log_pipe' do
             let :params do
               super().merge(
@@ -1924,16 +1963,19 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'bad custom_fragment' do
             let(:params) { super().merge('custom_fragment' => true) }
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'bad access_logs' do
             let(:params) { super().merge('access_logs' => '/var/log/somewhere') }
 
             it { is_expected.to raise_error(Puppet::Error) }
           end
+
           context 'default of require all granted' do
             let :params do
               {
@@ -1986,6 +2028,7 @@ describe 'apache::vhost', type: :define do
               )
             }
           end
+
           describe 'redirectmatch_*' do
             let(:params) { super().merge(port: 84) }
 
@@ -1995,12 +2038,14 @@ describe 'apache::vhost', type: :define do
               it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
               it { is_expected.to contain_class('apache::mod::alias') }
             end
+
             context 'none' do
               it { is_expected.not_to contain_concat__fragment('rspec.example.com-redirect') }
               it { is_expected.not_to contain_class('apache::mod::alias') }
             end
           end
         end
+
         context 'oidc_settings RedirectURL' do
           describe 'with VALID relative URI' do
             let :params do
@@ -2042,6 +2087,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.not_to compile }
           end
         end
+
         context 'mdomain' do
           let :params do
             default_params.merge(

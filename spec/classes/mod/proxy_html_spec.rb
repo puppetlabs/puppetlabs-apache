@@ -16,6 +16,7 @@ describe 'apache::mod::proxy_html', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: loadfiles) }
     end
+
     include_examples 'Debian 11'
 
     context 'on i386' do
@@ -25,6 +26,7 @@ describe 'apache::mod::proxy_html', type: :class do
 
       it_behaves_like 'debian', ['/usr/lib/i386-linux-gnu/libxml2.so.2']
     end
+
     context 'on x64' do
       let(:facts) { override_facts(super(), os: { architecture: 'x86_64' }) }
 
@@ -42,6 +44,7 @@ describe 'apache::mod::proxy_html', type: :class do
     it { is_expected.to contain_package('mod_proxy_html') }
     it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
   end
+
   context 'on a FreeBSD OS', :compile do
     include_examples 'FreeBSD 9'
 
@@ -49,6 +52,7 @@ describe 'apache::mod::proxy_html', type: :class do
     it { is_expected.to contain_apache__mod('proxy_html').with(loadfiles: nil) }
     it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
   end
+
   context 'on a Gentoo OS', :compile do
     include_examples 'Gentoo'
 

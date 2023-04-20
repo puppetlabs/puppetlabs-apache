@@ -39,6 +39,7 @@ describe 'apache::custom_config', type: :define do
         .that_requires('Package[httpd]')
     }
   end
+
   context 'set everything with source' do
     let :params do
       {
@@ -66,6 +67,7 @@ describe 'apache::custom_config', type: :define do
               'source' => 'puppet:///modules/apache/test')
     }
   end
+
   context 'verify_config => false' do
     let :params do
       {
@@ -78,6 +80,7 @@ describe 'apache::custom_config', type: :define do
     it { is_expected.not_to contain_exec('remove rspec if invalid') }
     it { is_expected.to contain_file('apache_rspec').that_notifies('Class[Apache::Service]') }
   end
+
   context 'ensure => absent' do
     let :params do
       {
@@ -89,6 +92,7 @@ describe 'apache::custom_config', type: :define do
     it { is_expected.not_to contain_exec('remove rspec if invalid') }
     it { is_expected.to contain_file('apache_rspec').with('ensure' => 'absent') }
   end
+
   describe 'validation' do
     context 'both content and source' do
       let :params do

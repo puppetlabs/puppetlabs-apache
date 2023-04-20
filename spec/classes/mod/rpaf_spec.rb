@@ -24,6 +24,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFsethostname On$}) }
     end
+
     describe 'with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_ips: ['10.42.17.8', '10.42.18.99'] }
@@ -31,6 +32,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFproxy_ips 10.42.17.8 10.42.18.99$}) }
     end
+
     describe 'with header => X-Real-IP' do
       let :params do
         { header: 'X-Real-IP' }
@@ -39,6 +41,7 @@ describe 'apache::mod::rpaf', type: :class do
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFheader X-Real-IP$}) }
     end
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -59,6 +62,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFsethostname On$}) }
     end
+
     describe 'with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_ips: ['10.42.17.8', '10.42.18.99'] }
@@ -66,6 +70,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFproxy_ips 10.42.17.8 10.42.18.99$}) }
     end
+
     describe 'with header => X-Real-IP' do
       let :params do
         { header: 'X-Real-IP' }
@@ -74,6 +79,7 @@ describe 'apache::mod::rpaf', type: :class do
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFheader X-Real-IP$}) }
     end
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
@@ -94,6 +100,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFsethostname On$}) }
     end
+
     describe 'with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_ips: ['10.42.17.8', '10.42.18.99'] }
@@ -101,6 +108,7 @@ describe 'apache::mod::rpaf', type: :class do
 
       it { is_expected.to contain_file('rpaf.conf').with_content(%r{^RPAFproxy_ips 10.42.17.8 10.42.18.99$}) }
     end
+
     describe 'with header => X-Real-IP' do
       let :params do
         { header: 'X-Real-IP' }

@@ -12,6 +12,7 @@ def general_info_specs_apache24
                "</Location>\n"
     it { is_expected.to contain_file('info.conf').with_content(expected) }
   end
+
   context 'passing restrict_access => false' do
     let :params do
       {
@@ -27,6 +28,7 @@ def general_info_specs_apache24
       )
     }
   end
+
   context "passing allow_from => ['10.10.1.2', '192.168.1.2', '127.0.0.1']" do
     let :params do
       { allow_from: ['10.10.1.2', '192.168.1.2', '127.0.0.1'] }
@@ -40,6 +42,7 @@ def general_info_specs_apache24
       is_expected.to contain_file('info.conf').with_content(expected)
     }
   end
+
   context 'passing both restrict_access and allow_from' do
     let :params do
       {

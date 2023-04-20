@@ -37,6 +37,7 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASTimeout 1234}) }
       it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASIdleTimeout 4321}) }
     end
+
     context 'on a RedHat OS', :compile do
       include_examples 'RedHat 8'
 

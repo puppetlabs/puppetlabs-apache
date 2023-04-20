@@ -27,6 +27,7 @@ describe 'apache::mod::itk', type: :class do
 
       it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.load').with_ensure('link') }
     end
+
     context 'with enablecapabilities not set' do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
@@ -54,6 +55,7 @@ describe 'apache::mod::itk', type: :class do
                                                                                'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
       }
     end
+
     context 'with enablecapabilities set' do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
@@ -68,6 +70,7 @@ describe 'apache::mod::itk', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.conf').with_content(%r{EnableCapabilities  Off}) }
     end
   end
+
   context 'on a FreeBSD OS' do
     let :pre_condition do
       'class { "apache": mpm_module => false, }'

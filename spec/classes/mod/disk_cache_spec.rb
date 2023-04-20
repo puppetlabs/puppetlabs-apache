@@ -42,6 +42,7 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = true' do
       let(:params) { { 'default_cache_enable' => true } }
 
@@ -55,6 +56,7 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/apache2\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = foo' do
       let(:params) { { 'default_cache_enable' => 'foo' } }
 
@@ -98,6 +100,7 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = true' do
       let(:params) { { 'default_cache_enable' => true } }
 
@@ -111,12 +114,14 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/httpd\/proxy\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = foo' do
       let(:params) { { 'default_cache_enable' => 'foo' } }
 
       it { is_expected.not_to compile }
     end
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 10'
 
@@ -156,6 +161,7 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = true' do
       let(:params) { { 'default_cache_enable' => true } }
 
@@ -169,6 +175,7 @@ describe 'apache::mod::disk_cache', type: :class do
           .with(content: %r{CacheEnable disk \/\nCacheRoot \"\/var\/cache\/mod_cache_disk\"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
+
     context 'with $default_cache_enable = foo' do
       let(:params) { { 'default_cache_enable' => 'foo' } }
 

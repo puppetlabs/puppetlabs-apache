@@ -11,6 +11,7 @@ describe 'apache::mod::expires', type: :class do
     it { is_expected.to contain_apache__mod('expires') }
     it { is_expected.to contain_file('expires.conf').with(content: %r{ExpiresActive On\n}) }
   end
+
   context 'with expires default', :compile do
     let :pre_condition do
       'class { apache: default_mods => false }'
@@ -32,6 +33,7 @@ describe 'apache::mod::expires', type: :class do
       )
     }
   end
+
   context 'with expires by type', :compile do
     let :pre_condition do
       'class { apache: default_mods => false }'

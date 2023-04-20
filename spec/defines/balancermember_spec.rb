@@ -30,6 +30,7 @@ describe 'apache::balancermember', type: :define do
 
     it { is_expected.to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/') }
   end
+
   describe 'allows balancermember with a different target' do
     let :pre_condition do
       'include apache

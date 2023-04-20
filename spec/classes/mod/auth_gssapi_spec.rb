@@ -14,6 +14,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('libapache2-mod-auth-gssapi') }
     end
+
     context 'on a RedHat OS', :compile do
       include_examples 'RedHat 8'
 
@@ -22,6 +23,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('mod_auth_gssapi') }
     end
+
     context 'on a FreeBSD OS', :compile do
       include_examples 'FreeBSD 9'
 
@@ -30,6 +32,7 @@ describe 'apache::mod::auth_gssapi', type: :class do
       it { is_expected.to contain_apache__mod('auth_gssapi') }
       it { is_expected.to contain_package('www/mod_auth_gssapi') }
     end
+
     context 'on a Gentoo OS', :compile do
       include_examples 'Gentoo'
 

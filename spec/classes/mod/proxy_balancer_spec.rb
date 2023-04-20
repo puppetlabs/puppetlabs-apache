@@ -41,6 +41,7 @@ describe 'apache::mod::proxy_balancer', type: :class do
       it { is_expected.not_to contain_file('proxy_balancer.conf symlink') }
     end
   end
+
   context "default configuration with custom parameters $manager => true, $allow_from => ['10.10.10.10','11.11.11.11'], $status_path => '/custom-manager' on a Debian OS" do
     include_examples 'Debian 11'
     let :params do

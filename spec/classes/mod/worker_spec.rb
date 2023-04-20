@@ -19,6 +19,7 @@ describe 'apache::mod::worker', type: :class do
                                                                                   'content' => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n")
     }
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -31,6 +32,7 @@ describe 'apache::mod::worker', type: :class do
                                                                                 'content' => "LoadModule mpm_worker_module modules/mod_mpm_worker.so\n")
     }
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -38,6 +40,7 @@ describe 'apache::mod::worker', type: :class do
     it { is_expected.not_to contain_apache__mod('worker') }
     it { is_expected.to contain_file('/usr/local/etc/apache24/Modules/worker.conf').with_ensure('file') }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 

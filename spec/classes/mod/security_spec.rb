@@ -117,6 +117,7 @@ describe 'apache::mod::security', type: :class do
               )
             }
           end
+
           describe 'with other modsec parameters' do
             let :params do
               {
@@ -126,6 +127,7 @@ describe 'apache::mod::security', type: :class do
 
             it { is_expected.not_to contain_file('/etc/httpd/modsecurity.d/security_crs.conf') }
           end
+
           describe 'with custom parameters' do
             let :params do
               {
@@ -137,6 +139,7 @@ describe 'apache::mod::security', type: :class do
               is_expected.not_to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf')
             }
           end
+
           describe 'with parameters' do
             let :params do
               {

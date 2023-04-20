@@ -15,6 +15,7 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.to contain_package('libapache2-mod-auth-openidc') }
       it { is_expected.not_to contain_package('dnf-module-mod_auth_openidc') }
     end
+
     context 'on RedHat 7', :compile do
       include_examples 'RedHat 7'
 
@@ -24,6 +25,7 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.to contain_package('mod_auth_openidc') }
       it { is_expected.not_to contain_package('dnf-module-mod_auth_openidc') }
     end
+
     context 'on RedHat 8', :compile do
       include_examples 'RedHat 8'
 
@@ -39,6 +41,7 @@ describe 'apache::mod::auth_openidc', type: :class do
           .that_comes_before('Package[mod_auth_openidc]')
       end
     end
+
     context 'on a FreeBSD OS', :compile do
       include_examples 'FreeBSD 9'
 
@@ -49,6 +52,7 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.not_to contain_package('dnf-module-mod_auth_openidc') }
     end
   end
+
   context 'overriding mod_packages' do
     context 'on a RedHat OS', :compile do
       include_examples 'RedHat 8'

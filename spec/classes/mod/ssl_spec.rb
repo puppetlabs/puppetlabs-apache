@@ -72,6 +72,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.not_to contain_package('libapache2-mod-ssl') }
     it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv3}) }
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -94,6 +95,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/lib/apache2/ssl_scache\(512000\)"$}) }
   end
+
   # Template config doesn't vary by distro
   context 'on all distros' do
     include_examples 'RedHat 8'
@@ -148,6 +150,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression Off$}) }
       it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets (Off|On)$}) }
     end
+
     context 'with ssl_compression set to true' do
       let :params do
         {
@@ -177,6 +180,7 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLUseStapling On$}) }
     end
+
     context 'with ssl_stapling_return_errors set to true' do
       let :params do
         {
@@ -186,6 +190,7 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLStaplingReturnResponderErrors On$}) }
     end
+
     context 'with stapling_cache' do
       let :params do
         {
@@ -235,6 +240,7 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  Mutex posixsem$}) }
     end
+
     context 'setting ssl_sessioncache' do
       let :params do
         {
@@ -244,6 +250,7 @@ describe 'apache::mod::ssl', type: :class do
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/tmp/customsessioncache\(51200\)"$}) }
     end
+
     context 'setting ssl_proxy_protocol' do
       let :params do
         {

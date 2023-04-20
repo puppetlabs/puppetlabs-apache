@@ -653,6 +653,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerName test.server' }
@@ -677,6 +678,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'ServerName' }
@@ -872,27 +874,33 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AssignUserId nobody nobody' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.custom_fragment.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#weird test string' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/test.without_priority_prefix.conf") do
       it { is_expected.to be_file }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protocol.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
       it { is_expected.to contain 'SSLUserName  *SSL_CLIENT_S_DN_CN' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.block.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.setenv_setenvif.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SetEnv TEST /test' }
       it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.rewrite.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#test' }
@@ -900,32 +908,39 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
       it { is_expected.to contain 'RewriteMap lc int:tolower' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.request_headers.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'append MirrorID "mirror 12"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.redirect.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Redirect permanent /images http://test.server/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.no_proxy_uris.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        http://test2/test !' }
       it { is_expected.to contain 'ProxyPass        / http://test2/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        / http://testproxy/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.aliases.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_logs.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
@@ -933,26 +948,32 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
       it { is_expected.to contain 'CustomLog "syslog" combined' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_log_env_var.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" combined env=admin' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_log_format.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" "%h %l"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.logroot.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '  CustomLog "/tmp' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.override.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AllowOverride All' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.options.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.empty_options.conf") do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'Options' }
@@ -981,6 +1002,7 @@ describe 'apache::vhost define' do
         it { is_expected.to contain '  CustomLog "/tmp/test.servername_access.log' }
       end
     end
+
     describe 'when the $use_servername_for_filenames parameter is NOT defined' do
       pp = <<-MANIFEST
           class { 'apache': }

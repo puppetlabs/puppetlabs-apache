@@ -18,6 +18,7 @@ describe 'apache::vhost::custom', type: :define do
 
       it { is_expected.to compile }
     end
+
     context 'on Debian based systems' do
       include_examples 'Debian 11'
 
@@ -37,6 +38,7 @@ describe 'apache::vhost::custom', type: :define do
         )
       }
     end
+
     context 'on FreeBSD systems' do
       include_examples 'FreeBSD 9'
 
@@ -48,6 +50,7 @@ describe 'apache::vhost::custom', type: :define do
         )
       }
     end
+
     context 'on Gentoo systems' do
       include_examples 'Gentoo'
 

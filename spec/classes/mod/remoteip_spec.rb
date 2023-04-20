@@ -20,6 +20,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPHeader X-Forwarded-For$}) }
     end
+
     describe 'with internal_proxy => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { internal_proxy: ['10.42.17.8', '10.42.18.99'] }
@@ -28,6 +29,7 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.18.99$}) }
     end
+
     describe 'with IPv4 CIDR in internal_proxy => [ 192.168.1.0/24 ]' do
       let :params do
         { internal_proxy: ['192.168.1.0/24'] }
@@ -35,6 +37,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 192.168.1.0/24$}) }
     end
+
     describe 'with IPv6 CIDR in internal_proxy => [ fd00:fd00:fd00:2000::/64 ]' do
       let :params do
         { internal_proxy: ['fd00:fd00:fd00:2000::/64'] }
@@ -42,6 +45,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy fd00:fd00:fd00:2000::/64$}) }
     end
+
     describe 'with proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_ips: ['10.42.17.8', '10.42.18.99'] }
@@ -50,6 +54,7 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 10.42.18.99$}) }
     end
+
     describe 'with IPv4 CIDR in proxy_ips => [ 192.168.1.0/24 ]' do
       let :params do
         { proxy_ips: ['192.168.1.0/24'] }
@@ -57,6 +62,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy 192.168.1.0/24$}) }
     end
+
     describe 'with IPv6 CIDR in proxy_ips => [ fd00:fd00:fd00:2000::/64 ]' do
       let :params do
         { proxy_ips: ['fd00:fd00:fd00:2000::/64'] }
@@ -64,6 +70,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPInternalProxy fd00:fd00:fd00:2000::/64$}) }
     end
+
     describe 'with trusted_proxy => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { trusted_proxy: ['10.42.17.8', '10.42.18.99'] }
@@ -72,6 +79,7 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.18.99$}) }
     end
+
     describe 'with trusted_proxy_ips => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { trusted_proxy: ['10.42.17.8', '10.42.18.99'] }
@@ -80,6 +88,7 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPTrustedProxy 10.42.18.99$}) }
     end
+
     describe 'with proxy_protocol_exceptions => [ 10.42.17.8, 10.42.18.99 ]' do
       let :params do
         { proxy_protocol_exceptions: ['10.42.17.8', '10.42.18.99'] }
@@ -88,6 +97,7 @@ describe 'apache::mod::remoteip', type: :class do
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPProxyProtocolExceptions 10.42.17.8$}) }
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPProxyProtocolExceptions 10.42.18.99$}) }
     end
+
     describe 'with IPv4 CIDR in proxy_protocol_exceptions => [ 192.168.1.0/24 ]' do
       let :params do
         { proxy_protocol_exceptions: ['192.168.1.0/24'] }
@@ -95,6 +105,7 @@ describe 'apache::mod::remoteip', type: :class do
 
       it { is_expected.to contain_file('remoteip.conf').with_content(%r{^RemoteIPProxyProtocolExceptions 192.168.1.0/24$}) }
     end
+
     describe 'with IPv6 CIDR in proxy_protocol_exceptions => [ fd00:fd00:fd00:2000::/64 ]' do
       let :params do
         { proxy_protocol_exceptions: ['fd00:fd00:fd00:2000::/64'] }

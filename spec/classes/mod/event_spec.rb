@@ -14,6 +14,7 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.not_to contain_apache__mod('event') }
     it { is_expected.to contain_file('/usr/local/etc/apache24/Modules/event.conf').with_ensure('file') }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
@@ -21,6 +22,7 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.not_to contain_apache__mod('event') }
     it { is_expected.to contain_file('/etc/apache2/modules.d/event.conf').with_ensure('file') }
   end
+
   context 'on a Debian OS' do
     include_examples 'Debian 11'
 
@@ -114,6 +116,7 @@ describe 'apache::mod::event', type: :class do
 
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.load').with_ensure('link') }
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 

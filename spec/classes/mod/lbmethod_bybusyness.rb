@@ -20,6 +20,7 @@ describe 'apache::mod::lbmethod_byrequests', type: :class do
       }
     end
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 6'
 

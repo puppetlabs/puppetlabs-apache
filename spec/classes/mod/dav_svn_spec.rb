@@ -28,6 +28,7 @@ describe 'apache::mod::dav_svn', type: :class do
         it { is_expected.to contain_file('dav_svn_authz_svn.load').with_content(%r{LoadModule authz_svn_module}) }
       end
     end
+
     context 'on a RedHat OS' do
       include_examples 'RedHat 8'
 
@@ -50,6 +51,7 @@ describe 'apache::mod::dav_svn', type: :class do
         it { is_expected.to contain_file('dav_svn_authz_svn.load').with_content(%r{LoadModule authz_svn_module}) }
       end
     end
+
     context 'on a FreeBSD OS' do
       include_examples 'FreeBSD 9'
 
@@ -72,6 +74,7 @@ describe 'apache::mod::dav_svn', type: :class do
         it { is_expected.to contain_file('dav_svn_authz_svn.load').with_content(%r{LoadModule authz_svn_module}) }
       end
     end
+
     context 'on a Gentoo OS', :compile do
       include_examples 'Gentoo'
 

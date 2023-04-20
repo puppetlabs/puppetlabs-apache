@@ -22,6 +22,7 @@ describe 'apache::mod::dir', type: :class do
             .with_content(%r{ index\.xhtml$})
         end
       end
+
       context "passing indexes => ['example.txt','fearsome.aspx']" do
         let :params do
           { indexes: ['example.txt', 'fearsome.aspx'] }

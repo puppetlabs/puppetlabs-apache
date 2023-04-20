@@ -169,6 +169,7 @@ describe 'apache', type: :class do
       it { is_expected.not_to contain_user('www-data') }
       it { is_expected.to contain_file('/etc/apache2/apache2.conf').with_content %r{^User www-data\n} }
     end
+
     describe "Don't create group resource when parameter manage_group is false" do
       let :params do
         { manage_group: false }
@@ -328,6 +329,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.conf"$} }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Include "/etc/httpd/mod\.d/\*\.load"$} }
     end
+
     describe 'Alternate confd/mod/vhosts directory' do
       let :params do
         {
@@ -340,6 +342,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^IncludeOptional "/etc/httpd/conf\.d/\*\.conf"$} }
     end
+
     describe 'Alternate confd/mod/vhosts directory when specifying slash encoding behaviour' do
       let :params do
         {
@@ -403,6 +406,7 @@ describe 'apache', type: :class do
         end
       end
     end
+
     describe 'Alternate mpm_modules when declaring mpm_module => prefork' do
       let :params do
         { mpm_module: 'prefork' }
@@ -414,6 +418,7 @@ describe 'apache', type: :class do
       it { is_expected.not_to contain_class('apache::mod::peruser') }
       it { is_expected.not_to contain_class('apache::mod::worker') }
     end
+
     describe 'Alternate mpm_modules when declaring mpm_module => worker' do
       let :params do
         { mpm_module: 'worker' }
@@ -433,6 +438,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^# Security\n} }
     end
+
     describe 'different templates for httpd.conf with non-default' do
       let :params do
         { conf_template: 'site_apache/fake.conf.erb' }
@@ -449,6 +455,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_apache__mod('authz_host') }
       it { is_expected.not_to contain_apache__mod('env') }
     end
+
     describe 'default mods custom' do
       let :params do
         { default_mods: ['info', 'alias', 'mime', 'env', 'setenv', 'expires'] }
@@ -459,6 +466,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_class('apache::mod::info') }
       it { is_expected.to contain_class('apache::mod::mime') }
     end
+
     describe "Don't create user resource when parameter manage_user is false" do
       let :params do
         { manage_user: false }
@@ -467,6 +475,7 @@ describe 'apache', type: :class do
       it { is_expected.not_to contain_user('apache') }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^User apache\n} }
     end
+
     describe "Don't create group resource when parameter manage_group is false" do
       let :params do
         { manage_group: false }
@@ -487,6 +496,7 @@ describe 'apache', type: :class do
         }.to raise_error(Puppet::PreformattedError, %r{Evaluation Error: Error while evaluating a Resource Statement, Class\[Apache\]: parameter 'sendfile' expects a match for Enum\['Off', 'On', 'off', 'on'\]}) # rubocop:disable Layout/LineLength
       end
     end
+
     describe 'sendfile On' do
       let :params do
         { sendfile: 'On' }
@@ -494,6 +504,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^EnableSendfile On\n} }
     end
+
     describe 'sendfile Off' do
       let :params do
         { sendfile: 'Off' }
@@ -513,6 +524,7 @@ describe 'apache', type: :class do
         }.to raise_error(Puppet::Error, %r{Evaluation Error})
       end
     end
+
     describe 'hostname_lookups On' do
       let :params do
         { hostname_lookups: 'On' }
@@ -520,6 +532,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups On\n} }
     end
+
     describe 'hostname_lookups Off' do
       let :params do
         { hostname_lookups: 'Off' }
@@ -536,6 +549,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^HostnameLookups Double\n} }
     end
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 10'
 
@@ -601,6 +615,7 @@ describe 'apache', type: :class do
       }
     end
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
@@ -636,6 +651,7 @@ describe 'apache', type: :class do
       ).that_notifies('Class[Apache::Service]')
     }
   end
+
   context 'on all OSes' do
     include_examples 'RedHat 8'
 
@@ -653,6 +669,7 @@ describe 'apache', type: :class do
         ).that_notifies('Class[Apache::Service]')
       }
     end
+
     context 'with a custom file_mode parameter' do
       let :params do
         {
@@ -666,6 +683,7 @@ describe 'apache', type: :class do
         )
       }
     end
+
     context 'with a custom root_directory_options parameter' do
       let :params do
         {
@@ -675,6 +693,7 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options -Indexes -FollowSymLinks} }
     end
+
     context 'with a custom root_directory_secured parameter' do
       let :params do
         {
@@ -684,11 +703,13 @@ describe 'apache', type: :class do
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options FollowSymLinks\n\s+AllowOverride None\n\s+Require all denied} }
     end
+
     context 'default vhost defaults' do
       it { is_expected.to contain_apache__vhost('default').with_ensure('present') }
       it { is_expected.to contain_apache__vhost('default-ssl').with_ensure('absent') }
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{Options FollowSymLinks} }
     end
+
     context 'without default non-ssl vhost' do
       let :params do
         {
@@ -699,6 +720,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_apache__vhost('default').with_ensure('absent') }
       it { is_expected.not_to contain_file('/var/www/html') }
     end
+
     context 'with default ssl vhost' do
       let :params do
         {
@@ -710,6 +732,7 @@ describe 'apache', type: :class do
       it { is_expected.to contain_file('/var/www/html') }
     end
   end
+
   context 'with unsupported osfamily' do
     include_examples 'Darwin'
 

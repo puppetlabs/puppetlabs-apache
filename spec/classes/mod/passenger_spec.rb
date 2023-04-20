@@ -257,6 +257,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRoot "/usr/lib/example"}) }
         end
+
         describe 'with passenger_ruby => /usr/lib/example/ruby' do
           let :params do
             { passenger_ruby: '/usr/lib/example/ruby' }
@@ -264,6 +265,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/lib/example/ruby"}) }
         end
+
         describe 'with passenger_default_ruby => /usr/lib/example/ruby1.9.3' do
           let :params do
             { passenger_ruby: '/usr/lib/example/ruby1.9.3' }
@@ -271,6 +273,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{PassengerRuby "/usr/lib/example/ruby1.9.3"}) }
         end
+
         describe 'with passenger_high_performance => on' do
           let :params do
             { passenger_high_performance: 'on' }
@@ -278,6 +281,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerHighPerformance on$}) }
         end
+
         describe 'with passenger_pool_idle_time => 1200' do
           let :params do
             { passenger_pool_idle_time: 1200 }
@@ -285,6 +289,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerPoolIdleTime 1200$}) }
         end
+
         describe 'with passenger_max_request_queue_size => 100' do
           let :params do
             { passenger_max_request_queue_size: 100 }
@@ -300,6 +305,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerMaxRequests 20$}) }
         end
+
         describe 'with passenger_spawn_method => direct' do
           let :params do
             { passenger_spawn_method: 'direct' }
@@ -307,6 +313,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerSpawnMethod direct$}) }
         end
+
         describe 'with passenger_stat_throttle_rate => 10' do
           let :params do
             { passenger_stat_throttle_rate: 10 }
@@ -314,6 +321,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerStatThrottleRate 10$}) }
         end
+
         describe 'with passenger_max_pool_size => 16' do
           let :params do
             { passenger_max_pool_size: 16 }
@@ -321,6 +329,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerMaxPoolSize 16$}) }
         end
+
         describe 'with passenger_min_instances => 5' do
           let :params do
             { passenger_min_instances: 5 }
@@ -328,6 +337,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerMinInstances 5$}) }
         end
+
         describe 'with passenger_max_instances_per_app => 8' do
           let :params do
             { passenger_max_instances_per_app: 8 }
@@ -335,6 +345,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerMaxInstancesPerApp 8$}) }
         end
+
         describe 'with rack_autodetect => on' do
           let :params do
             { rack_autodetect: 'on' }
@@ -342,6 +353,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  RackAutoDetect on$}) }
         end
+
         describe 'with rails_autodetect => on' do
           let :params do
             { rails_autodetect: 'on' }
@@ -349,6 +361,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  RailsAutoDetect on$}) }
         end
+
         describe 'with passenger_use_global_queue => on' do
           let :params do
             { passenger_use_global_queue: 'on' }
@@ -356,6 +369,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerUseGlobalQueue on$}) }
         end
+
         describe "with passenger_app_env => 'foo'" do
           let :params do
             { passenger_app_env: 'foo' }
@@ -363,6 +377,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerAppEnv foo$}) }
         end
+
         describe "with passenger_log_file => '/var/log/apache2/passenger.log'" do
           let :params do
             { passenger_log_file: '/var/log/apache2/passenger.log' }
@@ -370,6 +385,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerLogFile "/var/log/apache2/passenger.log"$}) }
         end
+
         describe 'with passenger_log_level => 3' do
           let :params do
             { passenger_log_level: 3 }
@@ -377,6 +393,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerLogLevel 3$}) }
         end
+
         describe "with mod_path => '/usr/lib/foo/mod_foo.so'" do
           let :params do
             { mod_path: '/usr/lib/foo/mod_foo.so' }
@@ -384,6 +401,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/foo\/mod_foo\.so$}) }
         end
+
         describe "with mod_lib_path => '/usr/lib/foo'" do
           let :params do
             { mod_lib_path: '/usr/lib/foo' }
@@ -391,6 +409,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/foo\/mod_passenger\.so$}) }
         end
+
         describe "with mod_lib => 'mod_foo.so'" do
           let :params do
             { mod_lib: 'mod_foo.so' }
@@ -398,6 +417,7 @@ describe 'apache::mod::passenger', type: :class do
 
           it { is_expected.to contain_file('zpassenger.load').with_content(%r{^LoadModule passenger_module \/usr\/lib\/apache2\/modules\/mod_foo\.so$}) }
         end
+
         describe "with mod_id => 'mod_foo'" do
           let :params do
             { mod_id: 'mod_foo' }
@@ -441,6 +461,7 @@ describe 'apache::mod::passenger', type: :class do
 
                 it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerRoot "\/usr\/lib\/example"$}) }
               end
+
               describe 'with passenger_ruby => /usr/lib/example/ruby' do
                 let :params do
                   { passenger_ruby: '/usr/lib/example/ruby' }
