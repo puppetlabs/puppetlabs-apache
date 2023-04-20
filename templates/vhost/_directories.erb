@@ -299,38 +299,23 @@
     AuthLDAPGroupAttribute <%= groupattr %>
       <%- end -%>
     <%- end -%>
-    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'off' -%>
-    AuthLDAPGroupAttributeIsDN Off
-    <%- end -%>
-    <%- if directory['auth_ldap_group_attribute_is_dn'] == 'on' -%>
-    AuthLDAPGroupAttributeIsDN On
+    <%- unless directory['auth_ldap_group_attribute_is_dn'].nil? -%>
+    AuthLDAPGroupAttributeIsDN <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_group_attribute_is_dn'] ]) %>
     <%- end -%>
     <%- if directory['auth_ldap_initial_bind_pattern'] -%>
     AuthLDAPInitialBindPattern <%= directory['auth_ldap_initial_bind_pattern'] %>
     <%- end -%>
-    <%- if directory['auth_ldap_bind_as_user'] == 'off' -%>
-    AuthLDAPInitialBindAsUser Off
+    <%- unless directory['auth_ldap_bind_as_user'].nil? -%>
+    AuthLDAPInitialBindAsUser <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_bind_as_user'] ]) %>
     <%- end -%>
-    <%- if directory['auth_ldap_bind_as_user'] == 'on' -%>
-    AuthLDAPInitialBindAsUser On
+    <%- unless directory['auth_ldap_compare_as_user'].nil? -%>
+    AuthLDAPCompareAsUser <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_compare_as_user'] ]) %>
     <%- end -%>
-    <%- if directory['auth_ldap_compare_as_user'] == 'off' -%>
-    AuthLDAPCompareAsUser Off
+    <%- unless directory['auth_ldap_search_as_user'].nil? -%>
+    AuthLDAPSearchAsUser <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_search_as_user'] ]) %>
     <%- end -%>
-    <%- if directory['auth_ldap_compare_as_user'] == 'on' -%>
-    AuthLDAPCompareAsUser On
-    <%- end -%>
-    <%- if directory['auth_ldap_search_as_user'] == 'off' -%>
-    AuthLDAPSearchAsUser Off
-    <%- end -%>
-    <%- if directory['auth_ldap_search_as_user'] == 'on' -%>
-    AuthLDAPSearchAsUser On
-    <%- end -%>
-    <%- if directory['auth_ldap_bind_authoritative'] == 'off' -%>
-    AuthLDAPBindAuthoritative Off
-    <%- end -%>
-    <%- if directory['auth_ldap_bind_authoritative'] == 'on' -%>
-    AuthLDAPBindAuthoritative On
+    <%- unless directory['auth_ldap_bind_authoritative'].nil? -%>
+    AuthLDAPBindAuthoritative <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_bind_authoritative'] ]) %>
     <%- end -%>
     <%- if directory['auth_ldap_authorize_prefix'] -%>
     AuthLDAPAuthorizePrefix <%= directory['auth_ldap_authorize_prefix'] %>
@@ -338,11 +323,8 @@
     <%- if directory['auth_ldap_charset_config'] -%>
     AuthLDAPCharsetConfig <%= directory['auth_ldap_charset_config'] %>
     <%- end -%>
-    <%- if directory['auth_ldap_compare_dn_on_server'] == 'off' -%>
-    AuthLDAPCompareDNOnServer Off
-    <%- end -%>
-    <%- if directory['auth_ldap_compare_dn_on_server'] == 'on' -%>
-    AuthLDAPCompareDNOnServer On
+    <%- unless directory['auth_ldap_compare_dn_on_server'].nil? -%>
+    AuthLDAPCompareDNOnServer <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_compare_dn_on_server'] ]) %>
     <%- end -%>
     <%- if directory['auth_ldap_dereference_aliases'] -%>
     AuthLDAPDereferenceAliases <%= directory['auth_ldap_dereference_aliases'] %>
@@ -353,11 +335,8 @@
     <%- if directory['auth_ldap_remote_user_attribute'] -%>
     AuthLDAPRemoteUserAttribute <%= directory['auth_ldap_remote_user_attribute'] %>
     <%- end -%>
-    <%- if directory['auth_ldap_remote_user_is_dn'] == 'off' -%>
-    AuthLDAPRemoteUserIsDN Off
-    <%- end -%>
-    <%- if directory['auth_ldap_remote_user_is_dn'] == 'on' -%>
-    AuthLDAPRemoteUserIsDN On
+    <%- unless directory['auth_ldap_remote_user_is_dn'].nil? -%>
+    AuthLDAPRemoteUserIsDN <%= scope.call_function('apache::bool2httpd', [ directory['auth_ldap_remote_user_is_dn'] ]) %>
     <%- end -%>
     <%- if directory['auth_ldap_sub_group_attribute'] -%>
     AuthLDAPSubGroupAttribute <%= directory['auth_ldap_sub_group_attribute'] %>
