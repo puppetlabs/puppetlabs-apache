@@ -8,6 +8,7 @@ describe 'apache::mod::remoteip', type: :class do
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('remoteip') }
+
     it {
       is_expected.to contain_file('remoteip.conf').with('path' => '/etc/apache2/mods-available/remoteip.conf')
     }

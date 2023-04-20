@@ -71,6 +71,7 @@ describe 'apache::mod::info', type: :class do
       is_expected.to contain_file('info.conf').with(ensure: 'file',
                                                     path: '/etc/apache2/mods-available/info.conf')
     }
+
     it {
       is_expected.to contain_file('info.conf symlink').with(ensure: 'link',
                                                             path: '/etc/apache2/mods-enabled/info.conf')

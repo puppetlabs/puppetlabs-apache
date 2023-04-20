@@ -26,11 +26,13 @@ describe 'apache::custom_config', type: :define do
         .that_notifies('Class[Apache::Service]')
         .that_comes_before('Exec[remove rspec if invalid]')
     }
+
     it {
       is_expected.to contain_exec('remove rspec if invalid')
         .with('unless' => [['/usr/sbin/apachectl', '-t']], 'refreshonly' => 'true')
         .that_subscribes_to('File[apache_rspec]')
     }
+
     it {
       is_expected.to contain_file('apache_rspec')
         .with('ensure' => 'present', 'content' => '# Test')
@@ -50,10 +52,12 @@ describe 'apache::custom_config', type: :define do
     it {
       is_expected.to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
     }
+
     it {
       is_expected.to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
                                                                   'unless' => [['/bin/true']])
     }
+
     it {
       is_expected.to contain_file('apache_rspec')
         .that_requires('Package[httpd]')

@@ -13,6 +13,7 @@ describe 'apache::mod::dav_svn', type: :class do
       it { is_expected.to contain_apache__mod('dav_svn') }
       it { is_expected.to contain_package('libapache2-mod-svn') }
       it { is_expected.to contain_file('dav_svn.load').with_content(%r{LoadModule dav_svn_module}) }
+
       describe 'with parameters' do
         let :params do
           {
@@ -34,6 +35,7 @@ describe 'apache::mod::dav_svn', type: :class do
       it { is_expected.to contain_apache__mod('dav_svn') }
       it { is_expected.to contain_package('mod_dav_svn') }
       it { is_expected.to contain_file('dav_svn.load').with_content(%r{LoadModule dav_svn_module}) }
+
       describe 'with parameters' do
         let :params do
           {

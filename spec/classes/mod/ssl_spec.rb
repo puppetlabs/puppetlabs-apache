@@ -17,6 +17,7 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('mod_ssl') }
+
       it {
         is_expected.to contain_file('ssl.conf')
           .with_path('/etc/httpd/conf.modules.d/ssl.conf')

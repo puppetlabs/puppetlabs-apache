@@ -24,6 +24,7 @@ describe 'apache::mod::expires', type: :class do
     include_examples 'RedHat 7'
 
     it { is_expected.to contain_apache__mod('expires') }
+
     it {
       is_expected.to contain_file('expires.conf').with_content(
         "ExpiresActive On\n" \
@@ -47,6 +48,7 @@ describe 'apache::mod::expires', type: :class do
     include_examples 'RedHat 7'
 
     it { is_expected.to contain_apache__mod('expires') }
+
     it {
       is_expected.to contain_file('expires.conf').with_content(
         "ExpiresActive On\n" \

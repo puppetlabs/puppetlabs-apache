@@ -23,6 +23,7 @@ describe 'apache ssl' do
 
     describe file("#{apache_hash['mod_ssl_dir']}/ssl.conf") do
       it { is_expected.to be_file }
+
       if os[:family].include?('redhat') && os[:release].to_i >= 8
         it { is_expected.not_to contain 'SSLProtocol' }
       elsif ['debian', 'ubuntu'].include?(os[:family])
@@ -40,6 +41,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLCACertificateFile    "/tmp/ssl_ca"' }
       it { is_expected.to contain 'SSLCARevocationPath     "/tmp/ssl_crl_path"' }
       it { is_expected.to contain 'SSLCARevocationFile     "/tmp/ssl_crl"' }
+
       if apache_hash['version'] == '2.4'
         it { is_expected.to contain 'SSLCARevocationCheck    chain' }
       else
@@ -107,6 +109,7 @@ describe 'apache ssl' do
       it { is_expected.to contain 'SSLVerifyClient         require' }
       it { is_expected.to contain 'SSLVerifyDepth          1' }
       it { is_expected.to contain 'SSLOptions test test1' }
+
       if apache_hash['version'] == '2.4'
         it { is_expected.to contain 'SSLCARevocationCheck    chain flag' }
       else

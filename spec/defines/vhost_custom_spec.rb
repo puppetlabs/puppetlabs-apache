@@ -28,6 +28,7 @@ describe 'apache::vhost::custom', type: :define do
           path: '/etc/apache2/sites-available/25-rspec.example.com.conf',
         )
       }
+
       it {
         is_expected.to contain_file('25-rspec.example.com.conf symlink').with(
           ensure: 'link',

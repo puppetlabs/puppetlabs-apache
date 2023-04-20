@@ -533,29 +533,35 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.not_to contain_file('/var/www/foo') }
           it { is_expected.to contain_class('apache::mod::ssl') }
+
           it {
             is_expected.to contain_file('ssl.conf').with(
               content: %r{^\s+SSLHonorCipherOrder On$},
             )
           }
+
           it {
             is_expected.to contain_file('ssl.conf').with(
               content: %r{^\s+SSLPassPhraseDialog builtin$},
             )
           }
+
           it {
             is_expected.to contain_file('ssl.conf').with(
               content: %r{^\s+SSLSessionCacheTimeout 300$},
             )
           }
+
           it { is_expected.to contain_file('rspec.example.com_ssl_cert') }
           it { is_expected.to contain_file('rspec.example.com_ssl_key') }
           it { is_expected.to contain_file('rspec.example.com_ssl_chain') }
           it { is_expected.to contain_file('rspec.example.com_ssl_foo.crl') }
+
           it {
             is_expected.to contain_file('/var/www/logs').with('ensure' => 'directory',
                                                               'mode' => '0600')
           }
+
           it { is_expected.to contain_class('apache::mod::alias') }
           it { is_expected.to contain_class('apache::mod::auth_basic') }
           it { is_expected.to contain_class('apache::mod::authn_file') }
@@ -573,12 +579,14 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::mod::suexec') }
           it { is_expected.to contain_class('apache::mod::vhost_alias') }
           it { is_expected.to contain_class('apache::mod::wsgi') }
+
           it {
             is_expected.to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
                                                                             'mode' => '0644',
                                                                             'require' => 'Package[httpd]',
                                                                             'notify' => 'Class[Apache::Service]')
           }
+
           if os_facts[:os]['release']['major'].to_i >= 18 && os_facts[:os]['name'] == 'Ubuntu'
             it {
               is_expected.to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
@@ -592,14 +600,18 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+LimitRequestLine 8190$})
               .with_content(%r{^\s+LimitRequestBody 0$})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-docroot') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-aliases').with(
               content: %r{^\s+Alias /image "/rspec/image"$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-directories')
               .with_content(%r{^\s+<Proxy "\*">$})
@@ -709,16 +721,20 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+SSLVerifyClient\soptional$})
               .with_content(%r{^\s+SSLVerifyDepth\s10$})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-logging')
               .with_content(%r{^\s+ErrorLogFormat "\[%t\] \[%l\] %7F: %E: \[client\\ %a\] %M% ,\\ referer\\ %\{Referer\}i"$})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-serversignature') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-access_log') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-action') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-block') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-error_document') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-proxy')
               .with_content(%r{retry=0})
@@ -731,7 +747,9 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{ProxyPassReverseCookiePath\s+\/a\s+http:\/\/})
               .with_content(%r{ProxyPassReverseCookieDomain\s+foo\s+http:\/\/foo})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-redirect') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-rewrite')
               .with_content(%r{^\s+RewriteEngine On$})
@@ -739,20 +757,24 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+RewriteBase /})
               .with_content(%r{^\s+RewriteRule \^index\.html\$ rewrites.html$})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-setenv')
               .with_content(%r{SetEnv FOO=/bin/true})
               .with_content(%r{SetEnvIf Request_URI "\\.gif\$" object_is_image=gif})
               .with_content(%r{SetEnvIfNoCase REMOTE_ADDR \^127.0.0.1 localhost=true})
           }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-ssl')
               .with_content(%r{^\s+SSLOpenSSLConfCmd\s+DHParameters "foo.pem"$})
               .with_content(%r{^\s+SSLHonorCipherOrder\s+Off$})
               .with_content(%r{^\s+SSLUserName\s+SSL_CLIENT_S_DN_CN$})
           }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-sslproxy')
               .with_content(%r{^\s+SSLProxyEngine On$})
@@ -762,13 +784,16 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+SSLProxyCipherSuite\s+HIGH$})
               .with_content(%r{^\s+SSLProxyProtocol\s+TLSv1.2$})
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-php_admin') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-header') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-filters').with(
               content: %r{^\s+FilterDeclare COMPRESS$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-requestheader') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-wsgi') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-custom_fragment') }
@@ -898,6 +923,7 @@ describe 'apache::vhost', type: :define do
           }
 
           it { is_expected.to contain_class('apache::mod::md') }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^MDomain example\.com example\.net auto$},
@@ -1026,11 +1052,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+ServerName https:\/\/www\.example\.com:443$},
             )
           }
+
           it {
             is_expected.to contain_concat('25-www.example.com.conf')
           }
@@ -1050,11 +1078,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+ServerName https:\/\/www\.example\.com$},
             )
           }
+
           it {
             is_expected.to contain_concat('25-www.example.com.conf')
           }
@@ -1074,11 +1104,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+ServerName www\.example\.com:443$},
             )
           }
+
           it {
             is_expected.to contain_concat('25-www.example.com.conf')
           }
@@ -1098,11 +1130,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^\s+ServerName www\.example\.com$},
             )
           }
+
           it {
             is_expected.to contain_concat('25-www.example.com.conf')
           }
@@ -1121,11 +1155,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 \[::1\]:80>[.\/m]*$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
           it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
@@ -1146,11 +1182,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080>[.\/m]*$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:8080') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
@@ -1171,11 +1209,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{[.\/m]*<VirtualHost 127.0.0.1:80 127.0.0.1:8080 \[::1\]:80 \[::1\]:8080>[.\/m]*$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:80') }
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:8080') }
           it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
@@ -1200,11 +1240,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{[.\/m]*<VirtualHost \[::1\]:80>[.\/m]*$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('Listen [::1]:80') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost [::1]:80') }
         end
@@ -1223,11 +1265,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{[.\/m]*<VirtualHost \*:80>[.\/m]*$},
             )
           }
+
           it { is_expected.to contain_concat__fragment('Listen *:80') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost *:80') }
         end
@@ -1241,11 +1285,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
             )
           }
+
           it {
             is_expected.not_to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+DocumentRoot "/var/www/html"$},
@@ -1262,11 +1308,13 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+VirtualDocumentRoot "/var/www/sites/%0"$},
             )
           }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-docroot').with(
               content: %r{^\s+DocumentRoot "/var/www/html"$},
@@ -1283,6 +1331,7 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{^\s*SecAuditLog "\/var\/log\/#{apache_name}\/rspec\.example\.com_security\.log"$},
@@ -1298,6 +1347,7 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{\s*SecAuditLog "\/var\/log\/#{apache_name}\/foo.log"$},
@@ -1315,6 +1365,7 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{
@@ -1340,6 +1391,7 @@ describe 'apache::vhost', type: :define do
           end
 
           it { is_expected.to compile }
+
           it {
             is_expected.to contain_concat__fragment('rspec.example.com-security').with(
               content: %r{
@@ -1447,12 +1499,15 @@ describe 'apache::vhost', type: :define do
           it { is_expected.not_to contain_file('rspec.example.com_ssl_chain') }
           it { is_expected.not_to contain_file('rspec.example.com_ssl_foo.crl') }
           it { is_expected.to contain_file('/var/www/foo') }
+
           it {
             is_expected.to contain_file('/tmp/logroot').with('ensure' => 'absent')
           }
+
           it {
             is_expected.to contain_concat('25-rspec.example.com.conf').with('ensure' => 'absent')
           }
+
           it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-docroot') }
           it { is_expected.not_to contain_concat__fragment('rspec.example.com-aliases') }
@@ -1714,11 +1769,13 @@ describe 'apache::vhost', type: :define do
                 content: %r{^\s+CustomLog "\/tmp\/log1"\s+combined\s+env=dev$},
               )
             }
+
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
                 content: %r{^\s+CustomLog "\/var\/log\/#{apache_name}\/log2"\s+combined\s*$},
               )
             }
+
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-access_log').with(
                 content: %r{^\s+CustomLog "syslog" "%h %l"\s*$},
@@ -1893,6 +1950,7 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+
             if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i > 6) ||
                (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i > 11)
               it {
@@ -1921,6 +1979,7 @@ describe 'apache::vhost', type: :define do
 
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
+
             it {
               is_expected.not_to contain_concat__fragment('rspec.example.com-directories').with(
                 content: %r{^\s+Require all granted$},
@@ -1958,6 +2017,7 @@ describe 'apache::vhost', type: :define do
             end
 
             it { is_expected.to compile }
+
             it {
               is_expected.to contain_concat__fragment('rspec.example.com-auth_oidc').with(
                 content: %r{^\s+OIDCRedirectURI\s/some/valid/relative/uri$},

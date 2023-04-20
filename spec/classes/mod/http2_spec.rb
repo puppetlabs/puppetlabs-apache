@@ -9,6 +9,7 @@ describe 'apache::mod::http2', type: :class do
     include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::mod::http2') }
+
     context 'with default values' do
       let(:expected_content) do
         <<~EOT

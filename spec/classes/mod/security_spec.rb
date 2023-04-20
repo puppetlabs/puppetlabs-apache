@@ -25,6 +25,7 @@ describe 'apache::mod::security', type: :class do
               lib: 'mod_security2.so',
             )
           }
+
           it {
             is_expected.to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
@@ -51,24 +52,29 @@ describe 'apache::mod::security', type: :class do
               .with_content(%r{^\s+SecAuditLog /var/log/httpd/modsec_audit.log$})
               .with_content(%r{^\s+SecTmpDir /var/lib/mod_security$})
           }
+
           it {
             is_expected.to contain_file('/etc/httpd/modsecurity.d').with(
               ensure: 'directory', path: '/etc/httpd/modsecurity.d',
               owner: 'root', group: 'root', mode: '0755'
             )
           }
+
           it {
             is_expected.to contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
               ensure: 'directory', path: '/etc/httpd/modsecurity.d/activated_rules',
               owner: 'apache', group: 'apache'
             )
           }
+
           it {
             is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
               path: '/etc/httpd/modsecurity.d/security_crs.conf',
             )
           }
+
           it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
+
           it {
             is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
               path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
@@ -103,6 +109,7 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
+
             it {
               is_expected.to contain_file('bar.conf').with(
                 path: '/etc/httpd/modsecurity.d/activated_rules/bar.conf',
@@ -144,6 +151,7 @@ describe 'apache::mod::security', type: :class do
                 owner: 'apache', group: 'apache'
               )
             }
+
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
           end
 
@@ -218,18 +226,22 @@ describe 'apache::mod::security', type: :class do
               lib: 'mod_security2.so',
             )
           }
+
           it {
             is_expected.to contain_apache__mod('unique_id').with(
               id: 'unique_id_module',
               lib: 'mod_unique_id.so',
             )
           }
+
           it { is_expected.to contain_package('modsecurity-crs') }
+
           it {
             is_expected.to contain_file('security.conf').with(
               path: '/etc/apache2/mods-available/security.conf',
             )
           }
+
           it {
             is_expected.to contain_file('security.conf')
               .with_content(%r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$})
@@ -239,26 +251,31 @@ describe 'apache::mod::security', type: :class do
               .with_content(%r{^\s+SecAuditLog /var/log/apache2/modsec_audit.log$})
               .with_content(%r{^\s+SecTmpDir /var/cache/modsecurity$})
           }
+
           it {
             is_expected.to contain_file('/etc/modsecurity').with(
               ensure: 'directory', path: '/etc/modsecurity',
               owner: 'root', group: 'root', mode: '0755'
             )
           }
+
           it {
             is_expected.to contain_file('/etc/modsecurity/activated_rules').with(
               ensure: 'directory', path: '/etc/modsecurity/activated_rules',
               owner: 'www-data', group: 'www-data'
             )
           }
+
           it {
             is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with(
               path: '/etc/modsecurity/security_crs.conf',
             )
           }
+
           if (facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu') ||
              (facts[:os]['release']['major'].to_i < 9 && facts[:os]['name'] == 'Debian')
             it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
+
             it {
               is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
                 path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
@@ -295,6 +312,7 @@ describe 'apache::mod::security', type: :class do
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
               it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
+
               it {
                 is_expected.to contain_file('bar.conf').with(
                   path: '/etc/modsecurity/activated_rules/bar.conf',
@@ -330,6 +348,7 @@ describe 'apache::mod::security', type: :class do
                 owner: 'www-data', group: 'www-data'
               )
             }
+
             it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
           end
 
@@ -341,6 +360,7 @@ describe 'apache::mod::security', type: :class do
             end
 
             it { is_expected.to contain_apache__mod('security2') }
+
             it {
               is_expected.to contain_file('security.conf').with(
                 path: '/etc/apache2/mods-available/security2.conf',

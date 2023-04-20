@@ -315,6 +315,7 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stderr' do
         result = run_shell('/usr/bin/curl -sSf files.example.net:80/index.html.bak', expect_failures: true)
         expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 403})
@@ -369,14 +370,17 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stdout foo' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/foo/').stdout).to eq("Hello Foo\n")
       end
+
       it 'answers to files.example.net #stderr' do
         result = run_shell('/usr/bin/curl -sSf files.example.net:80/private.html', expect_failures: true)
         expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 403})
         expect(result.exit_code).to eq 22
       end
+
       it 'answers to files.example.net #stdout bar' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/bar/bar.html').stdout).to eq("Hello Bar\n")
       end
@@ -411,6 +415,7 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stdout regex' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/server-status?auto').stdout).to match(%r{Scoreboard: })
       end
@@ -576,6 +581,7 @@ describe 'apache::vhost define' do
         expect(r.stdout).to eq("Hello from localhost\n")
       end
     end
+
     it 'gets a response from the back end #exit_code' do
       run_shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
         expect(r.exit_code).to eq(0)
@@ -621,6 +627,7 @@ describe 'apache::vhost define' do
         expect(r.stdout).to eq("Hello from localhost\n")
       end
     end
+
     it 'gets a response from the back end #exit_code' do
       run_shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
         expect(r.exit_code).to eq(0)
@@ -967,6 +974,7 @@ describe 'apache::vhost define' do
       it 'applies cleanly' do
         _result = apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain '  ErrorLog "/tmp/test.servername_error.log' }
@@ -986,6 +994,7 @@ describe 'apache::vhost define' do
       it 'applies cleanly' do
         _result = apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain '  ErrorLog "/tmp/test.server_error.log' }
@@ -1147,6 +1156,7 @@ describe 'apache::vhost define' do
       it 'import_script applies cleanly' do
         apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
@@ -1212,6 +1222,7 @@ describe 'apache::vhost define' do
     it 'applies cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ShibCompatValidUser On' }
@@ -1241,6 +1252,7 @@ describe 'apache::vhost define' do
     it 'applys cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'OIDCProviderMetadataURL https://login.example.com/.well-known/openid-configuration' }

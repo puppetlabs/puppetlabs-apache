@@ -22,12 +22,14 @@ describe 'apache::mod::proxy_html', type: :class do
       let(:facts) { override_facts(super(), os: { hardware: 'i386' }) }
 
       it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
+
       it_behaves_like 'debian', ['/usr/lib/i386-linux-gnu/libxml2.so.2']
     end
     context 'on x64' do
       let(:facts) { override_facts(super(), os: { architecture: 'x86_64' }) }
 
       it { is_expected.to contain_apache__mod('xml2enc').with(loadfiles: nil) }
+
       it_behaves_like 'debian', ['/usr/lib/x86_64-linux-gnu/libxml2.so.2']
     end
   end

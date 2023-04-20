@@ -8,11 +8,13 @@ describe 'apache::mod::wsgi', type: :class do
     include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }
+
     it { is_expected.to contain_package('libapache2-mod-wsgi-py3') }
   end
   context 'on a RedHat OS' do
@@ -71,6 +73,7 @@ describe 'apache::mod::wsgi', type: :class do
         is_expected.to contain_apache__mod('wsgi').with('package' => 'mod_wsgi_package',
                                                         'path' => '/foo/bar/baz')
       }
+
       it { is_expected.to contain_package('mod_wsgi_package') }
       it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module /foo/bar/baz}) }
     end
@@ -86,6 +89,7 @@ describe 'apache::mod::wsgi', type: :class do
         is_expected.to contain_apache__mod('wsgi').with('path' => 'modules/wsgi_mod_name.so',
                                                         'package' => 'mod_wsgi_package')
       }
+
       it { is_expected.to contain_file('wsgi.load').with_content(%r{LoadModule wsgi_module modules/wsgi_mod_name.so}) }
     end
     describe 'with package_name but no mod_path' do
@@ -111,22 +115,26 @@ describe 'apache::mod::wsgi', type: :class do
     include_examples 'FreeBSD 9'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }
+
     it { is_expected.to contain_package('www/mod_wsgi') }
   end
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_class('apache::mod::wsgi').with(
         'wsgi_socket_prefix' => nil,
       )
     }
+
     it { is_expected.to contain_package('www-apache/mod_wsgi') }
   end
   context 'overriding mod_libs' do

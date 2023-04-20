@@ -10,6 +10,7 @@ describe 'apache::mod::dir', type: :class do
       context 'passing no parameters' do
         it { is_expected.to contain_class('apache::params') }
         it { is_expected.to contain_apache__mod('dir') }
+
         it do
           is_expected.to contain_file('dir.conf')
             .with_content(%r{^DirectoryIndex })

@@ -63,6 +63,7 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_package('mod_auth_cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/httpd/conf.modules.d/auth_cas.conf') }
       it { is_expected.to contain_file('/var/cache/mod_auth_cas/').with_owner('apache') }
+
       it {
         is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASRootProxiedAs http://test.server$})
         is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASCookiePath /my/cas/path$})

@@ -24,6 +24,7 @@ describe 'apache::mod::php', type: :class do
             context 'on stretch' do
               it { is_expected.to contain_apache__mod('php7.0') }
               it { is_expected.to contain_package('libapache2-mod-php7.0') }
+
               it {
                 is_expected.to contain_file('php7.0.load').with(
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n",
@@ -34,6 +35,7 @@ describe 'apache::mod::php', type: :class do
             context 'on buster' do
               it { is_expected.to contain_apache__mod('php7.3') }
               it { is_expected.to contain_package('libapache2-mod-php7.3') }
+
               it {
                 is_expected.to contain_file('php7.3.load').with(
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.3.so\n",
@@ -47,6 +49,7 @@ describe 'apache::mod::php', type: :class do
 
                 it { is_expected.to contain_apache__mod('php8.0') }
                 it { is_expected.to contain_package('libapache2-mod-php8.0') }
+
                 it {
                   is_expected.to contain_file('php8.0.load').with(
                     content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
@@ -58,6 +61,7 @@ describe 'apache::mod::php', type: :class do
             context 'on bullseye' do
               it { is_expected.to contain_apache__mod('php7.4') }
               it { is_expected.to contain_package('libapache2-mod-php7.4') }
+
               it {
                 is_expected.to contain_file('php7.4.load').with(
                   content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.4.so\n",
@@ -71,6 +75,7 @@ describe 'apache::mod::php', type: :class do
 
                 it { is_expected.to contain_apache__mod('php8.0') }
                 it { is_expected.to contain_package('libapache2-mod-php8.0') }
+
                 it {
                   is_expected.to contain_file('php8.0.load').with(
                     content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so\n",
@@ -105,6 +110,7 @@ describe 'apache::mod::php', type: :class do
 
               it { is_expected.to contain_class('apache::params') }
               it { is_expected.to contain_package('php') }
+
               if facts[:os]['release']['major'].to_i < 8
                 it { is_expected.to contain_apache__mod('php5') }
                 it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }
@@ -144,6 +150,7 @@ describe 'apache::mod::php', type: :class do
               end
 
               it { is_expected.to contain_package('php') }
+
               if facts[:os]['release']['major'].to_i < 8
                 it { is_expected.to contain_apache__mod('php5') }
                 it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module alternative-path\n") }
@@ -187,6 +194,7 @@ describe 'apache::mod::php', type: :class do
               it { is_expected.to contain_class('apache::params') }
               it { is_expected.to contain_class('apache::mod::prefork') }
               it { is_expected.to contain_package('php') }
+
               if facts[:os]['release']['major'].to_i < 8
                 it { is_expected.to contain_apache__mod('php5') }
                 it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }
@@ -206,6 +214,7 @@ describe 'apache::mod::php', type: :class do
               it { is_expected.to contain_class('apache::params') }
               it { is_expected.to contain_class('apache::mod::itk') }
               it { is_expected.to contain_package('php') }
+
               if facts[:os]['release']['major'].to_i < 8
                 it { is_expected.to contain_apache__mod('php5') }
                 it { is_expected.to contain_file('php5.load').with(content: "LoadModule php5_module modules/libphp5.so\n") }

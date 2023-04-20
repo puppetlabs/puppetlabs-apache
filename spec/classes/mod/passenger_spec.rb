@@ -15,9 +15,11 @@ describe 'apache::mod::passenger', type: :class do
           it { is_expected.to contain_class('apache::params') }
           it { is_expected.to contain_apache__mod('passenger') }
           it { is_expected.to contain_package('libapache2-mod-passenger') }
+
           it {
             is_expected.to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
           }
+
           it {
             is_expected.to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
           }
@@ -204,9 +206,11 @@ describe 'apache::mod::passenger', type: :class do
         it { is_expected.to contain_class('apache::params') }
         it { is_expected.to contain_apache__mod('passenger') }
         it { is_expected.to contain_package('libapache2-mod-passenger') }
+
         it {
           is_expected.to contain_file('zpassenger.load').with('path' => '/etc/apache2/mods-available/zpassenger.load')
         }
+
         it {
           is_expected.to contain_file('passenger.conf').with('path' => '/etc/apache2/mods-available/passenger.conf')
         }
@@ -415,16 +419,21 @@ describe 'apache::mod::passenger', type: :class do
               it { is_expected.to contain_class('apache::params') }
               it { is_expected.to contain_apache__mod('passenger') }
               it { is_expected.to contain_package('mod_passenger') }
+
               it {
                 is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
+
               it { is_expected.to contain_file('passenger_package.conf').without_content }
               it { is_expected.to contain_file('passenger_package.conf').without_source }
+
               it {
                 is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.d/zpassenger.load')
               }
+
               it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRoot}) }
               it { is_expected.to contain_file('passenger.conf').without_content(%r{PassengerRuby}) }
+
               describe "with passenger_root => '/usr/lib/example'" do
                 let :params do
                   { passenger_root: '/usr/lib/example' }
@@ -446,6 +455,7 @@ describe 'apache::mod::passenger', type: :class do
               it {
                 is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
+
               it {
                 is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
               }
@@ -456,6 +466,7 @@ describe 'apache::mod::passenger', type: :class do
               it {
                 is_expected.to contain_file('passenger_package.conf').with('path' => '/etc/httpd/conf.d/passenger.conf')
               }
+
               it {
                 is_expected.to contain_file('zpassenger.load').with('path' => '/etc/httpd/conf.modules.d/zpassenger.load')
               }

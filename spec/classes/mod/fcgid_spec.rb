@@ -9,9 +9,11 @@ describe 'apache::mod::fcgid', type: :class do
     include_examples 'Debian 11'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => nil)
     }
+
     it { is_expected.to contain_package('libapache2-mod-fcgid') }
   end
 
@@ -20,9 +22,11 @@ describe 'apache::mod::fcgid', type: :class do
 
     describe 'without parameters' do
       it { is_expected.to contain_class('apache::params') }
+
       it {
         is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
       }
+
       it { is_expected.to contain_package('mod_fcgid') }
     end
   end
@@ -31,9 +35,11 @@ describe 'apache::mod::fcgid', type: :class do
     include_examples 'FreeBSD 10'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => 'unixd_fcgid.load')
     }
+
     it { is_expected.to contain_package('www/mod_fcgid') }
   end
 
@@ -41,9 +47,11 @@ describe 'apache::mod::fcgid', type: :class do
     include_examples 'Gentoo'
 
     it { is_expected.to contain_class('apache::params') }
+
     it {
       is_expected.to contain_apache__mod('fcgid').with('loadfile_name' => nil)
     }
+
     it { is_expected.to contain_package('www-apache/mod_fcgid') }
   end
 end

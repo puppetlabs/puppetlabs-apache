@@ -111,6 +111,7 @@ describe 'apache::mod::event', type: :class do
       is_expected.to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
                                                                                  'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
     }
+
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.load').with_ensure('link') }
   end
   context 'on a RedHat OS' do

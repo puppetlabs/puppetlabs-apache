@@ -20,6 +20,7 @@ describe 'apache::security::rule_link', type: :define do
       end
 
       it { is_expected.to compile.with_all_deps }
+
       case facts[:os]['family']
       when 'RedHat'
         it {

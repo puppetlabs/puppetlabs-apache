@@ -25,6 +25,7 @@ describe 'apache::mod::mime_magic', type: :class do
       is_expected.to contain_file('mime_magic.conf').with(ensure: 'file',
                                                           path: '/etc/apache2/mods-available/mime_magic.conf')
     }
+
     it {
       is_expected.to contain_file('mime_magic.conf symlink').with(ensure: 'link',
                                                                   path: '/etc/apache2/mods-enabled/mime_magic.conf')

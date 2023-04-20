@@ -27,9 +27,11 @@ describe ApacheModPlatformCompatibility do
       it 'returns an empty hash when given garbage line' do
         expect(ampc.process_line('foobar')).to eq({})
       end
+
       it 'returns a hash with type: :unsupported_platform_declaration and extracted value' do
         expect(ampc.process_line('# @note Unsupported platforms: foobar')).to eq(type: :unsupported_platform_declaration, value: 'foobar')
       end
+
       it 'returns a hash with type: :class_declaration and extracted value' do
         expect(ampc.process_line(foobar_class)).to eq(type: :class_declaration, value: foobar_mod)
       end
@@ -40,27 +42,35 @@ describe ApacheModPlatformCompatibility do
       it 'handles single OS with single Version' do
         expect(ampc.extract_os_ver_pairs('Debian: 5')).to eq('debian' => [5])
       end
+
       it 'handles single OS with multiple Versions' do
         expect(ampc.extract_os_ver_pairs('Debian: 5, 6, 7')).to eq('debian' => [5, 6, 7])
       end
+
       it 'handles multiple OSs with multiple Versions' do
         expect(ampc.extract_os_ver_pairs('Debian: 5, 6, 7; CentOS: 5,6,7')).to eq('debian' => [5, 6, 7], 'centos' => [5, 6, 7])
       end
+
       it 'handles Versions in \d+\.\d+ format' do
         expect(ampc.extract_os_ver_pairs('Ubuntu: 18.04, 20.04')).to eq('ubuntu' => [18, 20])
       end
+
       it 'handles Versions with "SP"' do
         expect(ampc.extract_os_ver_pairs('SLES: 11 SP1, 12')).to eq('sles' => [11, 12])
       end
+
       it 'returns an empty Hash when given data in an entirely invalid format' do
         expect(ampc.extract_os_ver_pairs('foobar')).to eq({})
       end
+
       it 'returns an empty Hash when given data with incorrect OS/Version group separator' do
         expect(ampc.extract_os_ver_pairs('Ubuntu#18.04, 20.04')).to eq({})
       end
+
       it 'returns an empty Hash when given data with incorrect OS + Version separator' do
         expect(ampc.extract_os_ver_pairs('CentOS:7,8#Debian:10,11')).to eq({})
       end
+
       it 'returns an empty Hash when given data with incorrect Version separator' do
         expect(ampc.extract_os_ver_pairs('CentOS:5@6')).to eq({})
       end
@@ -74,6 +84,7 @@ describe ApacheModPlatformCompatibility do
         ampc.register_unsupported_platforms(foobar_pp, 1, foobar_mod, 'debian' => [8])
         expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(false)
       end
+
       it 'registers multiple valid unsupported platforms' do
         expect(ampc).to receive(:valid_os?).with('debian').and_return(true)
         expect(ampc).to receive(:valid_os?).with('ubuntu').and_return(true)
@@ -84,6 +95,7 @@ describe ApacheModPlatformCompatibility do
         ampc.register_running_platform(family: 'ubuntu', release: '14.04', arch: 'x86_64')
         expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(false)
       end
+
       it 'registers an :os_parse error when given an invalid platform' do
         expect(ampc).to receive(:valid_os?).with(foobar_linux).and_return(false)
         expect(ampc).to receive(:register_error).with(foobar_pp, 1, :os_parse, foobar_linux)
@@ -130,16 +142,19 @@ describe ApacheModPlatformCompatibility do
         ampc.register_unsupported_platforms(foobar_pp, 1, foobar_mod, 'ubuntu' => [0])
         expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(false)
       end
+
       it 'returns false when running on an OS with one specific version incompatible' do
         ampc.register_running_platform(ubuntu_14_04_os)
         ampc.register_unsupported_platforms(foobar_pp, 1, foobar_mod, 'ubuntu' => [14])
         expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(false)
       end
+
       it 'returns true when running on an OS with no versions marked as incompatible' do
         ampc.register_running_platform(ubuntu_14_04_os)
         ampc.register_unsupported_platforms(foobar_pp, 1, foobar_mod, 'debian' => [6, 7])
         expect(ampc.mod_supported_on_platform?(foobar_mod)).to be(true)
       end
+
       it 'returns true when running on an OS version not marked as incompatible' do
         ampc.register_running_platform(ubuntu_14_04_os)
         ampc.register_unsupported_platforms(foobar_pp, 1, foobar_mod, 'ubuntu' => [16, 18])

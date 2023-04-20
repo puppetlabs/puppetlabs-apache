@@ -31,6 +31,7 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.to contain_class('apache::mod::authz_user') }
       it { is_expected.to contain_apache__mod('auth_openidc') }
       it { is_expected.to contain_package('mod_auth_openidc') }
+
       it do
         is_expected.to contain_package('dnf-module-mod_auth_openidc')
           .with_ensure('present')

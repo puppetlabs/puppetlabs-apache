@@ -9,6 +9,7 @@ describe 'apache::mod::negotiation', type: :class do
 
     context 'default params' do
       it { is_expected.to contain_class('apache') }
+
       it do
         is_expected.to contain_file('negotiation.conf').with(ensure: 'file',
                                                              content: 'LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW

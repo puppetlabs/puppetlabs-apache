@@ -46,6 +46,7 @@ describe 'apache::mod::deflate', type: :class do
         is_expected.to contain_file('deflate.conf').with(ensure: 'file',
                                                          path: '/etc/apache2/mods-available/deflate.conf')
       }
+
       it {
         is_expected.to contain_file('deflate.conf symlink').with(ensure: 'link',
                                                                  path: '/etc/apache2/mods-enabled/deflate.conf')

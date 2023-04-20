@@ -24,6 +24,7 @@ describe 'apache::mod::itk', type: :class do
         is_expected.to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
                                                                                  'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
       }
+
       it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.load').with_ensure('link') }
     end
     context 'with enablecapabilities not set' do
