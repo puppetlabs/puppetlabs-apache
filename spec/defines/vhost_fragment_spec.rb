@@ -15,7 +15,7 @@ describe 'apache::vhost::fragment' do
           {
             vhost: 'default',
             port: 80,
-            priority: 15,
+            priority: 15
           }
         end
 
@@ -23,9 +23,9 @@ describe 'apache::vhost::fragment' do
           let(:params) { super().merge(content: '# Foo') }
 
           it 'creates a vhost concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('15-default-80.conf')
-            is_expected.to create_concat__fragment('default-myfragment')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('15-default-80.conf')
+            expect(subject).to create_concat__fragment('default-myfragment')
               .with_target('15-default-80.conf')
               .with_order(900)
               .with_content('# Foo')
@@ -36,9 +36,9 @@ describe 'apache::vhost::fragment' do
           let(:params) { super().merge(content: '') }
 
           it 'does not create a vhost concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('15-default-80.conf')
-            is_expected.not_to contain_concat__fragment('default-myfragment')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('15-default-80.conf')
+            expect(subject).not_to contain_concat__fragment('default-myfragment')
           end
         end
       end
@@ -47,7 +47,7 @@ describe 'apache::vhost::fragment' do
         let(:params) do
           {
             vhost: 'custom',
-            content: '# Foo',
+            content: '# Foo'
           }
         end
 
@@ -64,9 +64,9 @@ describe 'apache::vhost::fragment' do
           end
 
           it 'creates a vhost concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('custom.conf')
-            is_expected.to create_concat__fragment('custom-myfragment')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('custom.conf')
+            expect(subject).to create_concat__fragment('custom-myfragment')
               .with_target('custom.conf')
               .with_order(900)
               .with_content('# Foo')
@@ -86,9 +86,9 @@ describe 'apache::vhost::fragment' do
           end
 
           it 'creates a vhost concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('42-custom.conf')
-            is_expected.to create_concat__fragment('custom-myfragment')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('42-custom.conf')
+            expect(subject).to create_concat__fragment('custom-myfragment')
               .with_target('42-custom.conf')
               .with_order(900)
               .with_content('# Foo')
@@ -106,9 +106,9 @@ describe 'apache::vhost::fragment' do
           end
 
           it 'creates a vhost concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('25-custom.conf')
-            is_expected.to create_concat__fragment('custom-myfragment')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('25-custom.conf')
+            expect(subject).to create_concat__fragment('custom-myfragment')
               .with_target('25-custom.conf')
               .with_order(900)
               .with_content('# Foo')

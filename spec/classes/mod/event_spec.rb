@@ -14,6 +14,7 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.not_to contain_apache__mod('event') }
     it { is_expected.to contain_file('/usr/local/etc/apache24/Modules/event.conf').with_ensure('file') }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
@@ -21,6 +22,7 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.not_to contain_apache__mod('event') }
     it { is_expected.to contain_file('/etc/apache2/modules.d/event.conf').with_ensure('file') }
   end
+
   context 'on a Debian OS' do
     include_examples 'Debian 11'
 
@@ -40,7 +42,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: 7,
           listenbacklog: 8,
           maxrequestworkers: 9,
-          maxconnectionsperchild: 10,
+          maxconnectionsperchild: 10
         }
       end
 
@@ -66,7 +68,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: 7,
           listenbacklog: 8,
           maxrequestworkers: :undef,
-          maxconnectionsperchild: :undef,
+          maxconnectionsperchild: :undef
         }
       end
 
@@ -92,7 +94,7 @@ describe 'apache::mod::event', type: :class do
           threadlimit: false,
           listenbacklog: false,
           maxrequestworkers: false,
-          maxconnectionsperchild: false,
+          maxconnectionsperchild: false
         }
       end
 
@@ -108,11 +110,13 @@ describe 'apache::mod::event', type: :class do
     end
 
     it {
-      is_expected.to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
-                                                                                 'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
+      expect(subject).to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
+                                                                                     'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
     }
+
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.load').with_ensure('link') }
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -123,8 +127,8 @@ describe 'apache::mod::event', type: :class do
     it { is_expected.to contain_file('/etc/httpd/conf.modules.d/event.conf').with_ensure('file') }
 
     it {
-      is_expected.to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
-                                                                       'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
+      expect(subject).to contain_file('/etc/httpd/conf.modules.d/event.load').with('ensure' => 'file',
+                                                                                   'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n")
     }
   end
 end

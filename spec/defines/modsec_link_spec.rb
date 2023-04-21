@@ -14,23 +14,24 @@ describe 'apache::security::rule_link', type: :define do
   end
 
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
 
       it { is_expected.to compile.with_all_deps }
+
       case facts[:os]['family']
       when 'RedHat'
         it {
-          is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+          expect(subject).to contain_file('modsecurity_35_bad_robots.data').with(
             path: '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
             target: '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
           )
         }
       when 'Debian'
         it {
-          is_expected.to contain_file('modsecurity_35_bad_robots.data').with(
+          expect(subject).to contain_file('modsecurity_35_bad_robots.data').with(
             path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
             target: '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
           )

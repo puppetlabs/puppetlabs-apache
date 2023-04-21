@@ -16,6 +16,7 @@ describe 'apache parameters' do
       end
     end
   end
+
   describe 'default_confd_files => true' do
     it 'copies conf.d files' do
       pp = "class { 'apache': default_confd_files => true }"
@@ -137,6 +138,7 @@ describe 'apache parameters' do
     describe file("#{apache_hash['confd_dir']}/test.conf") do
       it { is_expected.to be_file }
     end
+
     describe file("#{apache_hash['confd_dir']}.vhosts/test.conf") do
       it { is_expected.to be_file }
     end
@@ -161,6 +163,7 @@ describe 'apache parameters' do
       describe file("#{apache_hash['confd_dir']}/test.conf") do
         it { is_expected.not_to be_file }
       end
+
       describe file("#{apache_hash['confd_dir']}.vhosts/test.conf") do
         it { is_expected.not_to be_file }
       end
@@ -364,8 +367,8 @@ describe 'apache parameters' do
       pp = <<-MANIFEST
           class { 'apache':
             log_formats => {
-              'vhost_common'   => '%v %h %l %u %t \\\"%r\\\" %>s %b',
-              'vhost_combined' => '%v %h %l %u %t \\\"%r\\\" %>s %b \\\"%{Referer}i\\\" \\\"%{User-agent}i\\\"',
+              'vhost_common'   => '%v %h %l %u %t \\"%r\\" %>s %b',
+              'vhost_combined' => '%v %h %l %u %t \\"%r\\" %>s %b \\"%{Referer}i\\" \\"%{User-agent}i\\"',
             }
           }
       MANIFEST

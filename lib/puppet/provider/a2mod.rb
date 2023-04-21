@@ -6,9 +6,7 @@ class Puppet::Provider::A2mod < Puppet::Provider
   def self.prefetch(mods)
     instances.each do |prov|
       mod = mods[prov.name]
-      if mod
-        mod.provider = prov
-      end
+      mod.provider = prov if mod
     end
   end
 
@@ -29,9 +27,7 @@ class Puppet::Provider::A2mod < Puppet::Provider
   # Returns the properties of the given mod if it exists.
   def query
     self.class.instances.each do |mod|
-      if mod.name == name || mod.name.downcase == name
-        return mod.properties
-      end
+      return mod.properties if mod.name == name || mod.name.downcase == name
     end
     nil
   end

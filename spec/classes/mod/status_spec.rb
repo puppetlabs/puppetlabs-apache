@@ -3,42 +3,43 @@
 require 'spec_helper'
 
 def require_directives(requires)
-  if requires == :undef
+  case requires
+  when :undef
     "    Require ip 127.0.0.1 ::1\n"
-  elsif requires.is_a?(String)
+  when String
     if ['', 'unmanaged'].include? requires.downcase
       ''
     else
       "    Require #{requires}\n"
     end
-  elsif requires.is_a?(Array)
-    requires.map { |req| "    Require #{req}\n" }.join('')
-  elsif requires.is_a?(Hash)
+  when Array
+    requires.map { |req| "    Require #{req}\n" }.join
+  when Hash
     if requires.key?(:enforce)
-      \
+ \
       "    <Require#{requires[:enforce].capitalize}>\n" + \
-        requires[:requires].map { |req| "        Require #{req}\n" }.join('') + \
+        requires[:requires].map { |req| "        Require #{req}\n" }.join + \
         "    </Require#{requires[:enforce].capitalize}>\n"
     else
-      requires[:requires].map { |req| "    Require #{req}\n" }.join('')
+      requires[:requires].map { |req| "    Require #{req}\n" }.join
     end
   end
 end
 
 shared_examples 'status_conf_spec_require' do |requires, extended_status, status_path|
   expected =
-    "<Location #{status_path}>\n"\
-    "    SetHandler server-status\n"\
-    "#{require_directives(requires)}"\
-    "</Location>\n"\
-    "ExtendedStatus #{extended_status}\n"\
-    "\n"\
-    "<IfModule mod_proxy.c>\n"\
-    "    # Show Proxy LoadBalancer status in mod_status\n"\
-    "    ProxyStatus On\n"\
+    "<Location #{status_path}>\n    " \
+    "SetHandler server-status\n" \
+    "#{require_directives(requires)}" \
+    "</Location>\n" \
+    "ExtendedStatus #{extended_status}\n" \
+    "\n" \
+    "<IfModule mod_proxy.c>\n    " \
+    "# Show Proxy LoadBalancer status in mod_status\n    " \
+    "ProxyStatus On\n" \
     "</IfModule>\n"
   it('status conf require') do
-    is_expected.to contain_file('status.conf').with_content(expected)
+    expect(subject).to contain_file('status.conf').with_content(expected)
   end
 end
 
@@ -55,13 +56,13 @@ describe 'apache::mod::status', type: :class do
         include_examples 'status_conf_spec_require', 'ip 127.0.0.1 ::1', 'On', '/server-status'
 
         it {
-          is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                          path: '/etc/apache2/mods-available/status.conf')
+          expect(subject).to contain_file('status.conf').with(ensure: 'file',
+                                                              path: '/etc/apache2/mods-available/status.conf')
         }
 
         it {
-          is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                  path: '/etc/apache2/mods-enabled/status.conf')
+          expect(subject).to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                      path: '/etc/apache2/mods-enabled/status.conf')
         }
       end
 
@@ -69,7 +70,7 @@ describe 'apache::mod::status', type: :class do
         let :params do
           {
             extended_status: 'Off',
-            status_path: '/custom-status',
+            status_path: '/custom-status'
           }
         end
 
@@ -86,7 +87,7 @@ describe 'apache::mod::status', type: :class do
           end
 
           it 'expects to succeed regular expression validation' do
-            is_expected.to compile
+            expect(subject).to compile
           end
         end
       end
@@ -98,7 +99,7 @@ describe 'apache::mod::status', type: :class do
           end
 
           it 'expects to fail regular expression validation' do
-            is_expected.to compile.and_raise_error(%r{extended_status})
+            expect(subject).to compile.and_raise_error(%r{extended_status})
           end
         end
       end
@@ -130,21 +131,21 @@ describe 'apache::mod::status', type: :class do
         requires: [
           'ip 10.1',
           'host somehost',
-        ],
+        ]
       },
       enforce: {
         enforce: 'all',
         requires: [
           'ip 127.0.0.1',
           'host localhost',
-        ],
-      },
+        ]
+      }
     }
     valid_requires.each do |req_key, req_value|
       context "with default params and #{req_key} requires" do
         let :params do
           {
-            requires: req_value,
+            requires: req_value
           }
         end
 
@@ -156,13 +157,13 @@ describe 'apache::mod::status', type: :class do
           include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
 
           it {
-            is_expected.to contain_file('status.conf').with(ensure: 'file',
-                                                            path: '/etc/apache2/mods-available/status.conf')
+            expect(subject).to contain_file('status.conf').with(ensure: 'file',
+                                                                path: '/etc/apache2/mods-available/status.conf')
           }
 
           it {
-            is_expected.to contain_file('status.conf symlink').with(ensure: 'link',
-                                                                    path: '/etc/apache2/mods-enabled/status.conf')
+            expect(subject).to contain_file('status.conf symlink').with(ensure: 'link',
+                                                                        path: '/etc/apache2/mods-enabled/status.conf')
           }
         end
 

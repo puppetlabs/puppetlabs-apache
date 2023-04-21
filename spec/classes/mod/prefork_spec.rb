@@ -16,22 +16,26 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.conf').with_ensure('link') }
 
     it {
-      is_expected.to contain_file('/etc/apache2/mods-available/prefork.load').with('ensure' => 'file',
-                                                                                   'content' => "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n")
+      expect(subject).to contain_file('/etc/apache2/mods-available/prefork.load').with('ensure' => 'file',
+                                                                                       'content' => "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n")
     }
+
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.load').with_ensure('link') }
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('prefork') }
     it { is_expected.not_to contain_apache__mod('event') }
+
     it {
-      is_expected.to contain_file('/etc/httpd/conf.modules.d/prefork.load').with('ensure' => 'file',
-                                                                         'content' => "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n")
+      expect(subject).to contain_file('/etc/httpd/conf.modules.d/prefork.load').with('ensure' => 'file',
+                                                                                     'content' => "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so\n")
     }
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -39,6 +43,7 @@ describe 'apache::mod::prefork', type: :class do
     it { is_expected.not_to contain_apache__mod('prefork') }
     it { is_expected.to contain_file('/usr/local/etc/apache24/Modules/prefork.conf').with_ensure('file') }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 

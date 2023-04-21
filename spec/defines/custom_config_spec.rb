@@ -15,58 +15,64 @@ describe 'apache::custom_config', type: :define do
   context 'defaults with content' do
     let :params do
       {
-        'content' => '# Test',
+        'content' => '# Test'
       }
     end
 
     it {
-      is_expected.to contain_exec('syntax verification for rspec')
+      expect(subject).to contain_exec('syntax verification for rspec')
         .with('refreshonly' => 'true', 'command' => ['/usr/sbin/apachectl', '-t'])
         .that_subscribes_to('File[apache_rspec]')
         .that_notifies('Class[Apache::Service]')
         .that_comes_before('Exec[remove rspec if invalid]')
     }
+
     it {
-      is_expected.to contain_exec('remove rspec if invalid')
+      expect(subject).to contain_exec('remove rspec if invalid')
         .with('unless' => [['/usr/sbin/apachectl', '-t']], 'refreshonly' => 'true')
         .that_subscribes_to('File[apache_rspec]')
     }
+
     it {
-      is_expected.to contain_file('apache_rspec')
+      expect(subject).to contain_file('apache_rspec')
         .with('ensure' => 'present', 'content' => '# Test')
         .that_requires('Package[httpd]')
     }
   end
+
   context 'set everything with source' do
     let :params do
       {
-        'confdir'        => '/dne',
-        'priority'       => 30,
-        'source'         => 'puppet:///modules/apache/test',
-        'verify_command' => ['/bin/true'],
+        'confdir' => '/dne',
+        'priority' => 30,
+        'source' => 'puppet:///modules/apache/test',
+        'verify_command' => ['/bin/true']
       }
     end
 
     it {
-      is_expected.to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
+      expect(subject).to contain_exec('syntax verification for rspec').with('command' => ['/bin/true'])
     }
+
     it {
-      is_expected.to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
-                                                                  'unless' => [['/bin/true']])
+      expect(subject).to contain_exec('remove rspec if invalid').with('command' => ['/bin/rm', '/dne/30-rspec.conf'],
+                                                                      'unless' => [['/bin/true']])
     }
+
     it {
-      is_expected.to contain_file('apache_rspec')
+      expect(subject).to contain_file('apache_rspec')
         .that_requires('Package[httpd]')
         .with('path' => '/dne/30-rspec.conf',
               'ensure' => 'present',
               'source' => 'puppet:///modules/apache/test')
     }
   end
+
   context 'verify_config => false' do
     let :params do
       {
-        'content'       => '# test',
-        'verify_config' => false,
+        'content' => '# test',
+        'verify_config' => false
       }
     end
 
@@ -74,10 +80,11 @@ describe 'apache::custom_config', type: :define do
     it { is_expected.not_to contain_exec('remove rspec if invalid') }
     it { is_expected.to contain_file('apache_rspec').that_notifies('Class[Apache::Service]') }
   end
+
   context 'ensure => absent' do
     let :params do
       {
-        'ensure' => 'absent',
+        'ensure' => 'absent'
       }
     end
 
@@ -85,12 +92,13 @@ describe 'apache::custom_config', type: :define do
     it { is_expected.not_to contain_exec('remove rspec if invalid') }
     it { is_expected.to contain_file('apache_rspec').with('ensure' => 'absent') }
   end
+
   describe 'validation' do
     context 'both content and source' do
       let :params do
         {
           'content' => 'foo',
-          'source'  => 'bar',
+          'source' => 'bar'
         }
       end
 

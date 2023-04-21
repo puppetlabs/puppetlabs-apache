@@ -11,6 +11,7 @@ describe 'apache::mod::ext_filter', type: :class do
       it { is_expected.to contain_apache__mod('ext_filter') }
       it { is_expected.not_to contain_file('ext_filter.conf') }
     end
+
     describe 'with parameters' do
       let :params do
         { ext_filter_define: { 'filtA' => 'input=A output=B',
@@ -21,6 +22,7 @@ describe 'apache::mod::ext_filter', type: :class do
       it { is_expected.to contain_file('ext_filter.conf').with_content(%r{^ExtFilterDefine\s+filtB\s+input=C cmd="C"$}) }
     end
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -28,6 +30,7 @@ describe 'apache::mod::ext_filter', type: :class do
       it { is_expected.to contain_apache__mod('ext_filter') }
       it { is_expected.not_to contain_file('ext_filter.conf') }
     end
+
     describe 'with parameters' do
       let :params do
         { ext_filter_define: { 'filtA' => 'input=A output=B',

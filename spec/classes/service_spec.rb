@@ -11,10 +11,10 @@ describe 'apache::service', type: :class do
     include_examples 'Debian 11'
 
     it {
-      is_expected.to contain_service('httpd').with(
-        'name'      => 'apache2',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+      expect(subject).to contain_service('httpd').with(
+        'name' => 'apache2',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
 
@@ -22,7 +22,7 @@ describe 'apache::service', type: :class do
       let(:params) { { service_name: 'foo' } }
 
       it {
-        is_expected.to contain_service('httpd').with(
+        expect(subject).to contain_service('httpd').with(
           'name' => 'foo',
         )
       }
@@ -32,10 +32,10 @@ describe 'apache::service', type: :class do
       let(:params) { { service_enable: true } }
 
       it {
-        is_expected.to contain_service('httpd').with(
-          'name'      => 'apache2',
-          'ensure'    => 'running',
-          'enable'    => 'true',
+        expect(subject).to contain_service('httpd').with(
+          'name' => 'apache2',
+          'ensure' => 'running',
+          'enable' => 'true',
         )
       }
     end
@@ -44,10 +44,10 @@ describe 'apache::service', type: :class do
       let(:params) { { service_enable: false } }
 
       it {
-        is_expected.to contain_service('httpd').with(
-          'name'      => 'apache2',
-          'ensure'    => 'running',
-          'enable'    => 'false',
+        expect(subject).to contain_service('httpd').with(
+          'name' => 'apache2',
+          'ensure' => 'running',
+          'enable' => 'false',
         )
       }
     end
@@ -56,9 +56,9 @@ describe 'apache::service', type: :class do
       let(:params) { { service_ensure: 'running' } }
 
       it {
-        is_expected.to contain_service('httpd').with(
-          'ensure'    => 'running',
-          'enable'    => 'true',
+        expect(subject).to contain_service('httpd').with(
+          'ensure' => 'running',
+          'enable' => 'true',
         )
       }
     end
@@ -67,9 +67,9 @@ describe 'apache::service', type: :class do
       let(:params) { { service_ensure: 'stopped' } }
 
       it {
-        is_expected.to contain_service('httpd').with(
-          'ensure'    => 'stopped',
-          'enable'    => 'true',
+        expect(subject).to contain_service('httpd').with(
+          'ensure' => 'stopped',
+          'enable' => 'true',
         )
       }
     end
@@ -88,7 +88,7 @@ describe 'apache::service', type: :class do
       let(:params) { { service_restart: '/usr/sbin/apachectl graceful' } }
 
       it {
-        is_expected.to contain_service('httpd').with(
+        expect(subject).to contain_service('httpd').with(
           'restart' => '/usr/sbin/apachectl graceful',
         )
       }
@@ -100,8 +100,8 @@ describe 'apache::service', type: :class do
     let(:params) do
       {
         'service_ensure' => 'running',
-        'service_name'   => 'httpd',
-        'service_manage' => false,
+        'service_name' => 'httpd',
+        'service_manage' => false
       }
     end
 
@@ -112,10 +112,10 @@ describe 'apache::service', type: :class do
     include_examples 'FreeBSD 9'
 
     it {
-      is_expected.to contain_service('httpd').with(
-        'name'      => 'apache24',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+      expect(subject).to contain_service('httpd').with(
+        'name' => 'apache24',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
   end
@@ -124,10 +124,10 @@ describe 'apache::service', type: :class do
     include_examples 'Gentoo'
 
     it {
-      is_expected.to contain_service('httpd').with(
-        'name'      => 'apache2',
-        'ensure'    => 'running',
-        'enable'    => 'true',
+      expect(subject).to contain_service('httpd').with(
+        'name' => 'apache2',
+        'ensure' => 'running',
+        'enable' => 'true',
       )
     }
   end

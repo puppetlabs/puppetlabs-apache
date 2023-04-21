@@ -12,7 +12,7 @@ describe 'apache::mod::lookup_identity', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('libapache2-mod-lookup-identity') }
       it { is_expected.to contain_apache__mod('lookup_identity') }
-    end # Debian
+    end
 
     context 'on a RedHat OS' do
       include_examples 'RedHat 8'
@@ -20,6 +20,6 @@ describe 'apache::mod::lookup_identity', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_lookup_identity') }
       it { is_expected.to contain_apache__mod('lookup_identity') }
-    end # Redhat
+    end
   end
 end

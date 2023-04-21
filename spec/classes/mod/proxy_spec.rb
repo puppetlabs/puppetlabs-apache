@@ -13,6 +13,7 @@ describe 'apache::mod::proxy', type: :class do
 
       it { is_expected.to contain_file('proxy.conf').with_content(%r{ProxyRequests Off}) }
       it { is_expected.to contain_file('proxy.conf').without_content(%r{ProxyTimeout}) }
+
       context 'with parameters set' do
         let(:params) do
           { proxy_timeout: 12_345 }

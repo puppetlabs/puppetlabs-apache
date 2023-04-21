@@ -17,8 +17,9 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.to contain_class('apache::params') }
       it { is_expected.to contain_apache__mod('ssl') }
       it { is_expected.to contain_package('mod_ssl') }
+
       it {
-        is_expected.to contain_file('ssl.conf')
+        expect(subject).to contain_file('ssl.conf')
           .with_path('/etc/httpd/conf.modules.d/ssl.conf')
           .without_content(%r{SSLProtocol})
           .with_content(%r{^  SSLCipherSuite PROFILE=SYSTEM$})
@@ -28,7 +29,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'with ssl_proxy_cipher_suite' do
         let(:params) do
           {
-            ssl_proxy_cipher_suite: 'HIGH',
+            ssl_proxy_cipher_suite: 'HIGH'
           }
         end
 
@@ -38,7 +39,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'with empty ssl_protocol' do
         let(:params) do
           {
-            ssl_protocol: [],
+            ssl_protocol: []
           }
         end
 
@@ -71,6 +72,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.not_to contain_package('libapache2-mod-ssl') }
     it { is_expected.to contain_file('ssl.conf').with_content(%r{SSLProtocol all -SSLv3}) }
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -93,6 +95,7 @@ describe 'apache::mod::ssl', type: :class do
     it { is_expected.to contain_apache__mod('ssl') }
     it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/var/lib/apache2/ssl_scache\(512000\)"$}) }
   end
+
   # Template config doesn't vary by distro
   context 'on all distros' do
     include_examples 'RedHat 8'
@@ -104,7 +107,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_cert' do
       let :params do
         {
-          ssl_cert: '/etc/pki/some/path/localhost.crt',
+          ssl_cert: '/etc/pki/some/path/localhost.crt'
         }
       end
 
@@ -114,7 +117,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_key' do
       let :params do
         {
-          ssl_key: '/etc/pki/some/path/localhost.key',
+          ssl_key: '/etc/pki/some/path/localhost.key'
         }
       end
 
@@ -124,7 +127,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_ca to a path' do
       let :params do
         {
-          ssl_ca: '/etc/pki/some/path/ca.crt',
+          ssl_ca: '/etc/pki/some/path/ca.crt'
         }
       end
 
@@ -135,7 +138,7 @@ describe 'apache::mod::ssl', type: :class do
       let :params do
         {
           ssl_cert: '/etc/pki/some/path/localhost.crt',
-          ssl_reload_on_change: true,
+          ssl_reload_on_change: true
         }
       end
 
@@ -147,10 +150,11 @@ describe 'apache::mod::ssl', type: :class do
       it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLCompression Off$}) }
       it { is_expected.not_to contain_file('ssl.conf').with_content(%r{^  SSLSessionTickets (Off|On)$}) }
     end
+
     context 'with ssl_compression set to true' do
       let :params do
         {
-          ssl_compression: true,
+          ssl_compression: true
         }
       end
 
@@ -160,7 +164,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'with ssl_sessiontickets set to false' do
       let :params do
         {
-          ssl_sessiontickets: false,
+          ssl_sessiontickets: false
         }
       end
 
@@ -170,25 +174,27 @@ describe 'apache::mod::ssl', type: :class do
     context 'with ssl_stapling set to true' do
       let :params do
         {
-          ssl_stapling: true,
+          ssl_stapling: true
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLUseStapling On$}) }
     end
+
     context 'with ssl_stapling_return_errors set to true' do
       let :params do
         {
-          ssl_stapling_return_errors: true,
+          ssl_stapling_return_errors: true
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLStaplingReturnResponderErrors On$}) }
     end
+
     context 'with stapling_cache' do
       let :params do
         {
-          stapling_cache: '/tmp/customstaplingcache(51200)',
+          stapling_cache: '/tmp/customstaplingcache(51200)'
         }
       end
 
@@ -198,17 +204,17 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_pass_phrase_dialog' do
       let :params do
         {
-          ssl_pass_phrase_dialog: 'exec:/path/to/program',
+          ssl_pass_phrase_dialog: 'exec:/path/to/program'
         }
       end
 
-      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLPassPhraseDialog exec:\/path\/to\/program$}) }
+      it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLPassPhraseDialog exec:/path/to/program$}) }
     end
 
     context 'setting ssl_random_seed_bytes' do
       let :params do
         {
-          ssl_random_seed_bytes: 1024,
+          ssl_random_seed_bytes: 1024
         }
       end
 
@@ -218,7 +224,7 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_openssl_conf_cmd' do
       let :params do
         {
-          ssl_openssl_conf_cmd: 'DHParameters "foo.pem"',
+          ssl_openssl_conf_cmd: 'DHParameters "foo.pem"'
         }
       end
 
@@ -228,25 +234,27 @@ describe 'apache::mod::ssl', type: :class do
     context 'setting ssl_mutex' do
       let :params do
         {
-          ssl_mutex: 'posixsem',
+          ssl_mutex: 'posixsem'
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  Mutex posixsem$}) }
     end
+
     context 'setting ssl_sessioncache' do
       let :params do
         {
-          ssl_sessioncache: '/tmp/customsessioncache(51200)',
+          ssl_sessioncache: '/tmp/customsessioncache(51200)'
         }
       end
 
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLSessionCache "shmcb:/tmp/customsessioncache\(51200\)"$}) }
     end
+
     context 'setting ssl_proxy_protocol' do
       let :params do
         {
-          ssl_proxy_protocol: ['-ALL', '+TLSv1'],
+          ssl_proxy_protocol: ['-ALL', '+TLSv1']
         }
       end
 
@@ -261,7 +269,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'force on' do
         let :params do
           {
-            ssl_honorcipherorder: true,
+            ssl_honorcipherorder: true
           }
         end
 
@@ -271,7 +279,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'force off' do
         let :params do
           {
-            ssl_honorcipherorder: false,
+            ssl_honorcipherorder: false
           }
         end
 
@@ -281,7 +289,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'set on' do
         let :params do
           {
-            ssl_honorcipherorder: 'on',
+            ssl_honorcipherorder: 'on'
           }
         end
 
@@ -291,7 +299,7 @@ describe 'apache::mod::ssl', type: :class do
       context 'set off' do
         let :params do
           {
-            ssl_honorcipherorder: 'off',
+            ssl_honorcipherorder: 'off'
           }
         end
 

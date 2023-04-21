@@ -12,6 +12,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-40,minrate=500\nRequestReadTimeout body=10,minrate=500$}) }
     end
+
     context "passing timeouts => ['header=20-60,minrate=600', 'body=60,minrate=600']" do
       let :params do
         { timeouts: ['header=20-60,minrate=600', 'body=60,minrate=600'] }
@@ -21,6 +22,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600\nRequestReadTimeout body=60,minrate=600$}) }
     end
+
     context "passing timeouts => 'header=20-60,minrate=600'" do
       let :params do
         { timeouts: 'header=20-60,minrate=600' }
@@ -31,6 +33,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600$}) }
     end
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -39,6 +42,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-40,minrate=500\nRequestReadTimeout body=10,minrate=500$}) }
     end
+
     context "passing timeouts => ['header=20-60,minrate=600', 'body=60,minrate=600']" do
       let :params do
         { timeouts: ['header=20-60,minrate=600', 'body=60,minrate=600'] }
@@ -48,6 +52,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600\nRequestReadTimeout body=60,minrate=600$}) }
     end
+
     context "passing timeouts => 'header=20-60,minrate=600'" do
       let :params do
         { timeouts: 'header=20-60,minrate=600' }
@@ -58,6 +63,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600$}) }
     end
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -66,6 +72,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-40,minrate=500\nRequestReadTimeout body=10,minrate=500$}) }
     end
+
     context "passing timeouts => ['header=20-60,minrate=600', 'body=60,minrate=600']" do
       let :params do
         { timeouts: ['header=20-60,minrate=600', 'body=60,minrate=600'] }
@@ -75,6 +82,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600\nRequestReadTimeout body=60,minrate=600$}) }
     end
+
     context "passing timeouts => 'header=20-60,minrate=600'" do
       let :params do
         { timeouts: 'header=20-60,minrate=600' }
@@ -85,6 +93,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600$}) }
     end
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 
@@ -93,6 +102,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-40,minrate=500\nRequestReadTimeout body=10,minrate=500$}) }
     end
+
     context "passing timeouts => ['header=20-60,minrate=600', 'body=60,minrate=600']" do
       let :params do
         { timeouts: ['header=20-60,minrate=600', 'body=60,minrate=600'] }
@@ -102,6 +112,7 @@ describe 'apache::mod::reqtimeout', type: :class do
       it { is_expected.to contain_apache__mod('reqtimeout') }
       it { is_expected.to contain_file('reqtimeout.conf').with_content(%r{^RequestReadTimeout header=20-60,minrate=600\nRequestReadTimeout body=60,minrate=600$}) }
     end
+
     context "passing timeouts => 'header=20-60,minrate=600'" do
       let :params do
         { timeouts: 'header=20-60,minrate=600' }

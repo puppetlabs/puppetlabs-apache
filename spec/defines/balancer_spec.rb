@@ -18,31 +18,34 @@ describe 'apache::balancer', type: :define do
       it { is_expected.to contain_concat('apache_balancer_myapp') }
       it { is_expected.to contain_concat__fragment('00-myapp-header').with_content(%r{^<Proxy balancer://myapp>$}) }
     end
+
     describe 'accept a target parameter and use it' do
       let :params do
         {
-          target: '/tmp/myapp.conf',
+          target: '/tmp/myapp.conf'
         }
       end
 
       it {
-        is_expected.to contain_concat('apache_balancer_myapp').with(path: '/tmp/myapp.conf')
+        expect(subject).to contain_concat('apache_balancer_myapp').with(path: '/tmp/myapp.conf')
       }
     end
+
     describe 'accept an options parameter and use it' do
       let :params do
         {
-          options: ['timeout=0', 'nonce=none'],
+          options: ['timeout=0', 'nonce=none']
         }
       end
 
       it {
-        is_expected.to contain_concat__fragment('00-myapp-header').with_content(
+        expect(subject).to contain_concat__fragment('00-myapp-header').with_content(
           %r{^<Proxy balancer://myapp timeout=0 nonce=none>$},
         )
       }
     end
   end
+
   describe 'apache pre_condition with conf_dir set' do
     let :pre_condition do
       'class{"apache":
@@ -51,7 +54,7 @@ describe 'apache::balancer', type: :define do
     end
 
     it {
-      is_expected.to contain_concat('apache_balancer_myapp').with(path: '/junk/path/balancer_myapp.conf')
+      expect(subject).to contain_concat('apache_balancer_myapp').with(path: '/junk/path/balancer_myapp.conf')
     }
   end
 
@@ -59,8 +62,8 @@ describe 'apache::balancer', type: :define do
     let :params do
       {
         proxy_set: {
-          'lbmethod' => 'bytraffic',
-        },
+          'lbmethod' => 'bytraffic'
+        }
       }
     end
 

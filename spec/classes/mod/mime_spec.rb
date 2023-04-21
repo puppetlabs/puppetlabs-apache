@@ -7,10 +7,10 @@ def general_mime_specs
   it { is_expected.to contain_apache__mod('mime') }
 
   it do
-    is_expected.to contain_file('mime.conf').with_content(%r{AddHandler type-map var})
-    is_expected.to contain_file('mime.conf').with_content(%r{ddOutputFilter INCLUDES .shtml})
-    is_expected.to contain_file('mime.conf').with_content(%r{AddType text/html .shtml})
-    is_expected.to contain_file('mime.conf').with_content(%r{AddType application/x-compress .Z})
+    expect(subject).to contain_file('mime.conf').with_content(%r{AddHandler type-map var})
+    expect(subject).to contain_file('mime.conf').with_content(%r{ddOutputFilter INCLUDES .shtml})
+    expect(subject).to contain_file('mime.conf').with_content(%r{AddType text/html .shtml})
+    expect(subject).to contain_file('mime.conf').with_content(%r{AddType application/x-compress .Z})
   end
 end
 

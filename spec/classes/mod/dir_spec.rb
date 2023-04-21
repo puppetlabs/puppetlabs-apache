@@ -10,8 +10,9 @@ describe 'apache::mod::dir', type: :class do
       context 'passing no parameters' do
         it { is_expected.to contain_class('apache::params') }
         it { is_expected.to contain_apache__mod('dir') }
+
         it do
-          is_expected.to contain_file('dir.conf')
+          expect(subject).to contain_file('dir.conf')
             .with_content(%r{^DirectoryIndex })
             .with_content(%r{ index\.html })
             .with_content(%r{ index\.html\.var })
@@ -21,6 +22,7 @@ describe 'apache::mod::dir', type: :class do
             .with_content(%r{ index\.xhtml$})
         end
       end
+
       context "passing indexes => ['example.txt','fearsome.aspx']" do
         let :params do
           { indexes: ['example.txt', 'fearsome.aspx'] }

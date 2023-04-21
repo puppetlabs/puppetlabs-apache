@@ -20,20 +20,22 @@ describe 'apache::mod::dumpio', type: :class do
       it { is_expected.to contain_file('dumpio.conf').with_content(%r{^\s*DumpIOInput\s+"Off"$}) }
       it { is_expected.to contain_file('dumpio.conf').with_content(%r{^\s*DumpIOOutput\s+"Off"$}) }
     end
+
     context 'with dumpio_input set to On' do
       let :params do
         {
-          dump_io_input: 'On',
+          dump_io_input: 'On'
         }
       end
 
       it { is_expected.to contain_file('dumpio.conf').with_content(%r{^\s*DumpIOInput\s+"On"$}) }
       it { is_expected.to contain_file('dumpio.conf').with_content(%r{^\s*DumpIOOutput\s+"Off"$}) }
     end
+
     context 'with dumpio_ouput set to On' do
       let :params do
         {
-          dump_io_output: 'On',
+          dump_io_output: 'On'
         }
       end
 

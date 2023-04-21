@@ -18,12 +18,12 @@ describe 'apache::mod::authnz_ldap', if: mod_supported_on_platform?('apache::mod
       }
       class { 'apache': }
       class { 'apache::mod::authnz_ldap': }
-      MANIFEST
+           MANIFEST
          else
            <<-MANIFEST
         class { 'apache': }
         class { 'apache::mod::authnz_ldap': }
-        MANIFEST
+           MANIFEST
          end
 
     it 'succeeds in installing the mod_authnz_ldap module' do

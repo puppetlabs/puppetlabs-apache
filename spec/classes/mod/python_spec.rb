@@ -12,6 +12,7 @@ describe 'apache::mod::python', type: :class do
     it { is_expected.to contain_apache__mod('python') }
     it { is_expected.to contain_package('libapache2-mod-python') }
   end
+
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -28,6 +29,7 @@ describe 'apache::mod::python', type: :class do
       it { is_expected.to contain_file('FooBar').with_path('/etc/httpd/conf.modules.d/FooBar') }
     end
   end
+
   context 'on a FreeBSD OS' do
     include_examples 'FreeBSD 9'
 
@@ -35,6 +37,7 @@ describe 'apache::mod::python', type: :class do
     it { is_expected.to contain_apache__mod('python') }
     it { is_expected.to contain_package('www/mod_python3') }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 

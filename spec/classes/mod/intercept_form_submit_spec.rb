@@ -12,7 +12,7 @@ describe 'apache::mod::intercept_form_submit', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('libapache2-mod-intercept-form-submit') }
       it { is_expected.to contain_apache__mod('intercept_form_submit') }
-    end # Debian
+    end
 
     context 'on a RedHat OS' do
       include_examples 'RedHat 8'
@@ -20,6 +20,6 @@ describe 'apache::mod::intercept_form_submit', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_intercept_form_submit') }
       it { is_expected.to contain_apache__mod('intercept_form_submit') }
-    end # Redhat
+    end
   end
 end

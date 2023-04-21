@@ -26,34 +26,35 @@ describe 'apache::mod::jk', type: :class do
           'worker_a' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment'          => 'This is worker A',
+            'comment' => 'This is worker A'
           },
           'worker_b' => {
             'type' => 'ajp13',
             'socket_keepalive' => 'true',
-            'comment'          => 'This is worker B',
+            'comment' => 'This is worker B'
           },
           'worker_maintain' => 40,
-          'worker_lists' => ['worker_a,worker_b'],
-        },
+          'worker_lists' => ['worker_a,worker_b']
+        }
       }
     end
 
     it { is_expected.to compile }
     it { is_expected.to compile.with_all_deps }
-    expected_content = "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-                       "# Any manual changes will be overwritten\n"\
-                       "\n"\
-                       "worker.list = worker_a,worker_b\n"\
-                       "\n"\
-                       "worker.maintain = 40\n"\
-                       "\n"\
-                       "# This is worker A\n"\
-                       "worker.worker_a.socket_keepalive=true\n"\
-                       "worker.worker_a.type=ajp13\n"\
-                       "\n"\
-                       "# This is worker B\n"\
-                       "worker.worker_b.socket_keepalive=true\n"\
+
+    expected_content = "# This file is generated automatically by Puppet - DO NOT EDIT\n" \
+                       "# Any manual changes will be overwritten\n" \
+                       "\n" \
+                       "worker.list = worker_a,worker_b\n" \
+                       "\n" \
+                       "worker.maintain = 40\n" \
+                       "\n" \
+                       "# This is worker A\n" \
+                       "worker.worker_a.socket_keepalive=true\n" \
+                       "worker.worker_a.type=ajp13\n" \
+                       "\n" \
+                       "# This is worker B\n" \
+                       "worker.worker_b.socket_keepalive=true\n" \
                        "worker.worker_b.type=ajp13\n"
     it { is_expected.to contain_file("#{mod_dir}/workers.properties").with_content(expected_content) }
   end
@@ -73,7 +74,7 @@ describe 'apache::mod::jk', type: :class do
       end
       let(:params) do
         {
-          logroot: '/var/log/apache2',
+          logroot: '/var/log/apache2'
         }
       end
       let(:mod_dir) { mod_dir }
@@ -84,6 +85,7 @@ describe 'apache::mod::jk', type: :class do
       it_behaves_like 'specific workers_file', mod_dir
       it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
       it { is_expected.to contain_package('libapache2-mod-jk') }
+
       it {
         verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
       }
@@ -97,7 +99,7 @@ describe 'apache::mod::jk', type: :class do
     end
     let(:params) do
       {
-        logroot: '/var/log/httpd',
+        logroot: '/var/log/httpd'
       }
     end
 
@@ -112,6 +114,7 @@ describe 'apache::mod::jk', type: :class do
         it_behaves_like 'minimal resources', mod_dir
         it_behaves_like 'specific workers_file', mod_dir
         it { is_expected.to contain_apache__listen("#{default_ip}:#{default_port}") }
+
         it {
           verify_contents(catalogue, 'jk.conf', ['<IfModule jk_module>', '</IfModule>'])
         }
@@ -140,26 +143,26 @@ describe 'apache::mod::jk', type: :class do
           shm_file: :undef,
           log_file: :undef,
           shm_path: '/var/log/httpd/jk-runtime-status',
-          log_path: '/var/log/httpd/mod_jk.log',
+          log_path: '/var/log/httpd/mod_jk.log'
         },
         relative: {
           shm_file: 'shm_file',
           log_file: 'log_file',
           shm_path: '/var/log/httpd/shm_file',
-          log_path: '/var/log/httpd/log_file',
+          log_path: '/var/log/httpd/log_file'
         },
         absolute: {
           shm_file: '/run/shm_file',
           log_file: '/tmp/log_file',
           shm_path: '/run/shm_file',
-          log_path: '/tmp/log_file',
+          log_path: '/tmp/log_file'
         },
         pipe: {
           shm_file: :undef,
           log_file: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
           shm_path: '/var/log/httpd/jk-runtime-status',
-          log_path: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"',
-        },
+          log_path: '"|rotatelogs /var/log/httpd/mod_jk.log.%Y%m%d 86400 -180"'
+        }
       }.each do |option, paths|
         context "#{option} shm_file and log_file paths" do
           let(:params) do
@@ -169,12 +172,12 @@ describe 'apache::mod::jk', type: :class do
             )
           end
 
-          expected = "# This file is generated automatically by Puppet - DO NOT EDIT\n"\
-                     "# Any manual changes will be overwritten\n"\
-                     "\n"\
-                     "<IfModule jk_module>\n"\
-                     "  JkShmFile #{paths[:shm_path]}\n"\
-                     "  JkLogFile #{paths[:log_path]}\n"\
+          expected = "# This file is generated automatically by Puppet - DO NOT EDIT\n" \
+                     "# Any manual changes will be overwritten\n" \
+                     "\n" \
+                     "<IfModule jk_module>\n  " \
+                     "JkShmFile #{paths[:shm_path]}\n  " \
+                     "JkLogFile #{paths[:log_path]}\n" \
                      "</IfModule>\n"
           it { is_expected.to contain_file('jk.conf').with_content(expected) }
         end

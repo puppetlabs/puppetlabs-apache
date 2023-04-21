@@ -21,11 +21,13 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        is_expected.to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
-                                                                                 'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
+        expect(subject).to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
+                                                                                     'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
       }
+
       it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.load').with_ensure('link') }
     end
+
     context 'with enablecapabilities not set' do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
@@ -49,10 +51,11 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
-                                                                       'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
+        expect(subject).to contain_file('/etc/httpd/conf.modules.d/itk.load').with('ensure' => 'file',
+                                                                                   'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n")
       }
     end
+
     context 'with enablecapabilities set' do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
@@ -60,13 +63,14 @@ describe 'apache::mod::itk', type: :class do
 
       let :params do
         {
-          enablecapabilities: false,
+          enablecapabilities: false
         }
       end
 
       it { is_expected.to contain_file('/etc/httpd/conf.modules.d/itk.conf').with_content(%r{EnableCapabilities  Off}) }
     end
   end
+
   context 'on a FreeBSD OS' do
     let :pre_condition do
       'class { "apache": mpm_module => false, }'
@@ -83,7 +87,7 @@ describe 'apache::mod::itk', type: :class do
     context 'with enablecapabilities set' do
       let :params do
         {
-          enablecapabilities: true,
+          enablecapabilities: true
         }
       end
 

@@ -15,7 +15,7 @@ describe 'apache::vhost::proxy' do
           {
             vhost: 'default',
             port: 80,
-            priority: 15,
+            priority: 15
           }
         end
 
@@ -29,16 +29,16 @@ describe 'apache::vhost::proxy' do
               proxy_pass: [
                 {
                   path: '/',
-                  url: 'http://localhost:8080/',
+                  url: 'http://localhost:8080/'
                 },
               ],
             )
           end
 
           it 'creates a concat fragment' do
-            is_expected.to compile.with_all_deps
-            is_expected.to contain_concat('15-default-80.conf')
-            is_expected.to create_concat__fragment('default-myproxy-proxy')
+            expect(subject).to compile.with_all_deps
+            expect(subject).to contain_concat('15-default-80.conf')
+            expect(subject).to create_concat__fragment('default-myproxy-proxy')
               .with_target('15-default-80.conf')
               .with_order(170)
               .with_content(

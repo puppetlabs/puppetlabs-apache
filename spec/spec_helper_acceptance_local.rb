@@ -29,13 +29,9 @@ end
 
 RSpec.configure do |c|
   # IPv6 is not enabled by default in the new travis-ci Trusty environment (see https://github.com/travis-ci/travis-ci/issues/8891 )
-  if ENV['CI'] == 'true'
-    c.filter_run_excluding ipv6: true
-  end
+  c.filter_run_excluding ipv6: true if ENV['CI'] == 'true'
   c.before :suite do
-    if %r{redhat|oracle}.match?(os[:family])
-      LitmusHelper.instance.run_shell('puppet module install puppet/epel')
-    end
+    LitmusHelper.instance.run_shell('puppet module install puppet/epel') if %r{redhat|oracle}.match?(os[:family])
 
     LitmusHelper.instance.apply_manifest(File.read(File.join(__dir__, 'setup_acceptance_node.pp')))
   end
@@ -151,5 +147,6 @@ end
 
 def mod_supported_on_platform?(mod)
   return false if ENV['DISABLE_MOD_TEST_EXCLUSION']
+
   ApacheModTestFilterHelper.instance.mod_supported_on_platform?(mod)
 end

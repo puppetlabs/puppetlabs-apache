@@ -13,8 +13,9 @@ describe 'apache::mod::auth_mellon', type: :class do
       it { is_expected.to contain_apache__mod('auth_mellon') }
       it { is_expected.to contain_package('libapache2-mod-auth-mellon') }
       it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/apache2/mods-available/auth_mellon.conf') }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content("MellonPostDirectory \"\/var\/cache\/apache2\/mod_auth_mellon\/\"\n") }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content("MellonPostDirectory \"/var/cache/apache2/mod_auth_mellon/\"\n") }
     end
+
     describe 'with parameters' do
       let :params do
         { mellon_cache_size: 200,
@@ -28,13 +29,14 @@ describe 'apache::mod::auth_mellon', type: :class do
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheEntrySize\s+2010$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"\/tmp\/junk"$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"\/tmp\/post"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"/tmp/junk"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"/tmp/post"$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostTTL\s+5$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostSize\s+8$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostCount\s+10$}) }
     end
   end
+
   context 'default configuration with parameters on a RedHat OS' do
     include_examples 'RedHat 8'
 
@@ -45,6 +47,7 @@ describe 'apache::mod::auth_mellon', type: :class do
       it { is_expected.to contain_file('auth_mellon.conf').with_path('/etc/httpd/conf.modules.d/auth_mellon.conf') }
       it { is_expected.to contain_file('auth_mellon.conf').with_content("MellonCacheSize 100\nMellonLockFile \"/run/mod_auth_mellon/lock\"\n") }
     end
+
     describe 'with parameters' do
       let :params do
         { mellon_cache_size: 200,
@@ -58,8 +61,8 @@ describe 'apache::mod::auth_mellon', type: :class do
 
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheSize\s+200$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonCacheEntrySize\s+2010$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"\/tmp\/junk"$}) }
-      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"\/tmp\/post"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonLockFile\s+"/tmp/junk"$}) }
+      it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostDirectory\s+"/tmp/post"$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostTTL\s+5$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostSize\s+8$}) }
       it { is_expected.to contain_file('auth_mellon.conf').with_content(%r{^MellonPostCount\s+10$}) }

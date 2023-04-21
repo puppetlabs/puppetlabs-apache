@@ -12,6 +12,7 @@ describe 'apache::mod::peruser', type: :class do
 
     it { is_expected.to compile.and_raise_error(%r{Unsupported osfamily FreeBSD}) }
   end
+
   context 'on a Gentoo OS' do
     include_examples 'Gentoo'
 

@@ -39,7 +39,7 @@ describe 'apache::mod::md', type: :class do
             'md_stapling_keep_response' => { type: 'Duration', pass_opt: 'MDStaplingKeepResponse' },
             'md_stapling_renew_window' => { type: 'Duration', pass_opt: 'MDStaplingRenewWindow' },
             'md_store_dir' => { type: 'Path', pass_opt: 'MDStoreDir' },
-            'md_warn_window' => { type: 'Duration', pass_opt: 'MDWarnWindow' },
+            'md_warn_window' => { type: 'Duration', pass_opt: 'MDWarnWindow' }
           }
 
           md_options.each do |config_option, config_hash|

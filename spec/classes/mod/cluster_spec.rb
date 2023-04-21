@@ -11,7 +11,7 @@ describe 'apache::mod::cluster', type: :class do
         allowed_network: '172.17.0',
         balancer_name: 'mycluster',
         ip: '172.17.0.1',
-        version: '1.3.0',
+        version: '1.3.0'
       }
     end
 
@@ -34,7 +34,7 @@ describe 'apache::mod::cluster', type: :class do
         allowed_network: '172.17.0',
         balancer_name: 'mycluster',
         ip: '172.17.0.1',
-        version: '1.3.1',
+        version: '1.3.1'
       }
     end
 

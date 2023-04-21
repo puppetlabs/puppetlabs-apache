@@ -24,12 +24,13 @@ describe 'apache::balancermember', type: :define do
       {
         options: [],
         url: 'http://127.0.0.1:8080/',
-        balancer_cluster: 'balancer-internal',
+        balancer_cluster: 'balancer-internal'
       }
     end
 
     it { is_expected.to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/') }
   end
+
   describe 'allows balancermember with a different target' do
     let :pre_condition do
       'include apache
@@ -44,12 +45,12 @@ describe 'apache::balancermember', type: :define do
       {
         options: [],
         url: 'http://127.0.0.1:8080/',
-        balancer_cluster: 'balancername',
+        balancer_cluster: 'balancername'
       }
     end
 
     it {
-      is_expected.to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with(target: 'apache_balancer_balancername')
+      expect(subject).to contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with(target: 'apache_balancer_balancername')
     }
   end
 end

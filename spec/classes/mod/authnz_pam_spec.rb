@@ -12,7 +12,7 @@ describe 'apache::mod::authnz_pam', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('libapache2-mod-authnz-pam') }
       it { is_expected.to contain_apache__mod('authnz_pam') }
-    end # Debian
+    end
 
     context 'on a RedHat OS' do
       include_examples 'RedHat 8'
@@ -20,6 +20,6 @@ describe 'apache::mod::authnz_pam', type: :class do
       it { is_expected.to contain_class('apache') }
       it { is_expected.to contain_package('mod_authnz_pam') }
       it { is_expected.to contain_apache__mod('authnz_pam') }
-    end # Redhat
+    end
   end
 end

@@ -20,6 +20,7 @@ describe 'apache::pw_hash' do
     describe 'apache_pw_hash', type: :puppet_function do
       it_behaves_like 'apache::pw_hash function'
     end
+
     describe 'apache::apache_pw_hash', type: :puppet_function do
       it_behaves_like 'apache::pw_hash function'
     end

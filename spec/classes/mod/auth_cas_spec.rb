@@ -8,7 +8,7 @@ describe 'apache::mod::auth_cas', type: :class do
       {
         cas_login_url: 'https://cas.example.com/login',
         cas_validate_url: 'https://cas.example.com/validate',
-        cas_cookie_path: '/var/cache/apache2/mod_auth_cas/',
+        cas_cookie_path: '/var/cache/apache2/mod_auth_cas/'
       }
     end
 
@@ -21,7 +21,7 @@ describe 'apache::mod::auth_cas', type: :class do
         cas_login_url: 'https://cas.example.com/login',
         cas_validate_url: 'https://cas.example.com/validate',
         cas_timeout: 1234,
-        cas_idle_timeout: 4321,
+        cas_idle_timeout: 4321
       }
     end
 
@@ -37,6 +37,7 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASTimeout 1234}) }
       it { is_expected.to contain_file('auth_cas.conf').with_content(%r{CASIdleTimeout 4321}) }
     end
+
     context 'on a RedHat OS', :compile do
       include_examples 'RedHat 8'
 
@@ -63,9 +64,10 @@ describe 'apache::mod::auth_cas', type: :class do
       it { is_expected.to contain_package('mod_auth_cas') }
       it { is_expected.to contain_file('auth_cas.conf').with_path('/etc/httpd/conf.modules.d/auth_cas.conf') }
       it { is_expected.to contain_file('/var/cache/mod_auth_cas/').with_owner('apache') }
+
       it {
-        is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASRootProxiedAs http://test.server$})
-        is_expected.to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASCookiePath /my/cas/path$})
+        expect(subject).to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASRootProxiedAs http://test.server$})
+        expect(subject).to contain_concat__fragment('test.server-auth_cas').with(content: %r{^\s+CASCookiePath /my/cas/path$})
       }
     end
   end

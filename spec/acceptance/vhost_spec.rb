@@ -10,11 +10,11 @@ describe 'apache::vhost define' do
         default_ssl_vhost => false,
         service_ensure => stopped,
       }
-      if ($::osfamily == 'Suse' and $::operatingsystemrelease < '15') {
+      if ($facts['os']['family'] == 'Suse' and $facts['os']['release']['major'] < '15') {
         exec { '/usr/bin/gensslcert':
           require => Class['apache'],
         }
-      } elsif ($::osfamily == 'Suse' and $::operatingsystemrelease >= '15') {
+      } elsif ($facts['os']['family'] == 'Suse' and $facts['os']['release']['major'] >= '15') {
         # In SLES 15, if not given a name, gensslcert defaults the name to be the hostname
         exec { '/usr/bin/gensslcert -n default':
           require => Class['apache'],
@@ -125,7 +125,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ProxyPreserveHost On' }
       it { is_expected.to contain 'ProxyErrorOverride On' }
       it { is_expected.not_to contain 'ProxyAddHeaders' }
-      it { is_expected.not_to contain "<Proxy \*>" }
+      it { is_expected.not_to contain '<Proxy *>' }
     end
   end
 
@@ -153,7 +153,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'ProxyPreserveHost On' }
       it { is_expected.to contain 'ProxyErrorOverride On' }
       it { is_expected.not_to contain 'ProxyAddHeaders' }
-      it { is_expected.not_to contain "<Proxy \*>" }
+      it { is_expected.not_to contain '<Proxy *>' }
     end
   end
 
@@ -276,9 +276,9 @@ describe 'apache::vhost define' do
       class { 'apache': }
 
       if versioncmp('#{apache_hash['version']}', '2.4') >= 0 {
-        $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
+        $_files_match_directory = { 'path' => '(.swp|.bak|~)$', 'provider' => 'filesmatch', 'require' => 'all denied', }
       } else {
-        $_files_match_directory = { 'path' => '(\.swp|\.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
+        $_files_match_directory = { 'path' => '(.swp|.bak|~)$', 'provider' => 'filesmatch', 'deny' => 'from all', }
       }
 
       $_directories = [
@@ -299,7 +299,7 @@ describe 'apache::vhost define' do
         content => "Hello World\\n",
       }
       host { 'files.example.net': ip => '127.0.0.1', }
-    MANIFEST
+      MANIFEST
     end
 
     describe 'readme example, adapted' do
@@ -315,6 +315,7 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stderr' do
         result = run_shell('/usr/bin/curl -sSf files.example.net:80/index.html.bak', expect_failures: true)
         expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 403})
@@ -369,14 +370,17 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stdout foo' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/foo/').stdout).to eq("Hello Foo\n")
       end
+
       it 'answers to files.example.net #stderr' do
         result = run_shell('/usr/bin/curl -sSf files.example.net:80/private.html', expect_failures: true)
         expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 403})
         expect(result.exit_code).to eq 22
       end
+
       it 'answers to files.example.net #stdout bar' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/bar/bar.html').stdout).to eq("Hello Bar\n")
       end
@@ -411,6 +415,7 @@ describe 'apache::vhost define' do
       it 'answers to files.example.net #stdout' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/index.html').stdout).to eq("Hello World\n")
       end
+
       it 'answers to files.example.net #stdout regex' do
         expect(run_shell('/usr/bin/curl -sSf files.example.net:80/server-status?auto').stdout).to match(%r{Scoreboard: })
       end
@@ -576,6 +581,7 @@ describe 'apache::vhost define' do
         expect(r.stdout).to eq("Hello from localhost\n")
       end
     end
+
     it 'gets a response from the back end #exit_code' do
       run_shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
         expect(r.exit_code).to eq(0)
@@ -621,6 +627,7 @@ describe 'apache::vhost define' do
         expect(r.stdout).to eq("Hello from localhost\n")
       end
     end
+
     it 'gets a response from the back end #exit_code' do
       run_shell('/usr/bin/curl --max-redirs 0 proxy.example.com:80') do |r|
         expect(r.exit_code).to eq(0)
@@ -646,6 +653,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ServerName test.server' }
@@ -670,6 +678,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'NameVirtualHost test.server' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'ServerName' }
@@ -776,14 +785,14 @@ describe 'apache::vhost define' do
       apache::vhost { 'test.setenv_setenvif':
         docroot  => '/tmp',
         setenv   => ['TEST /test'],
-        setenvif => ['Request_URI "\.gif$" object_is_image=gif']
+        setenvif => ['Request_URI ".gif$" object_is_image=gif']
       }
       apache::vhost { 'test.rewrite':
         docroot          => '/tmp',
         rewrites => [
           { comment => 'test',
             rewrite_cond => '%{HTTP_USER_AGENT} ^Lynx/ [OR]',
-            rewrite_rule => ['^index\.html$ welcome.html'],
+            rewrite_rule => ['^index.html$ welcome.html'],
             rewrite_map  => ['lc int:tolower'],
           }
         ],
@@ -865,27 +874,33 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AssignUserId nobody nobody' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.custom_fragment.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#weird test string' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/test.without_priority_prefix.conf") do
       it { is_expected.to be_file }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.ssl_protocol.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SSLProtocol  *All -SSLv2' }
       it { is_expected.to contain 'SSLUserName  *SSL_CLIENT_S_DN_CN' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.block.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.setenv_setenvif.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'SetEnv TEST /test' }
       it { is_expected.to contain 'SetEnvIf Request_URI "\.gif$" object_is_image=gif' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.rewrite.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '#test' }
@@ -893,32 +908,39 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'RewriteRule ^index.html$ welcome.html' }
       it { is_expected.to contain 'RewriteMap lc int:tolower' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.request_headers.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'append MirrorID "mirror 12"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.redirect.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Redirect permanent /images http://test.server/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.no_proxy_uris.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        http://test2/test !' }
       it { is_expected.to contain 'ProxyPass        / http://test2/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        / http://testproxy/' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.aliases.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Alias /image "/ftp/pub/image"' }
       it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_logs.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "/tmp/log1" combined' }
@@ -926,26 +948,32 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'CustomLog "/var/tmp/log3" "%h %l"' }
       it { is_expected.to contain 'CustomLog "syslog" combined' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_log_env_var.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" combined env=admin' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.access_log_format.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'CustomLog "syslog" "%h %l"' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.logroot.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain '  CustomLog "/tmp' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.override.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'AllowOverride All' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.options.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'Options Indexes FollowSymLinks ExecCGI' }
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.empty_options.conf") do
       it { is_expected.to be_file }
       it { is_expected.not_to contain 'Options' }
@@ -967,12 +995,14 @@ describe 'apache::vhost define' do
       it 'applies cleanly' do
         _result = apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.servername.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain '  ErrorLog "/tmp/test.servername_error.log' }
         it { is_expected.to contain '  CustomLog "/tmp/test.servername_access.log' }
       end
     end
+
     describe 'when the $use_servername_for_filenames parameter is NOT defined' do
       pp = <<-MANIFEST
           class { 'apache': }
@@ -986,6 +1016,7 @@ describe 'apache::vhost define' do
       it 'applies cleanly' do
         _result = apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain '  ErrorLog "/tmp/test.server_error.log' }
@@ -1135,7 +1166,6 @@ describe 'apache::vhost define' do
         docroot                     => '/tmp',
         wsgi_application_group      => '%{GLOBAL}',
         wsgi_daemon_process         => { 'wsgi' => { 'python-home' => '/usr' }, 'foo' => {} },
-        wsgi_daemon_process_options => {processes => 2},
         wsgi_import_script          => '/test1',
         wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
         wsgi_process_group          => 'nobody',
@@ -1148,6 +1178,7 @@ describe 'apache::vhost define' do
       it 'import_script applies cleanly' do
         apply_manifest(pp, catch_failures: true)
       end
+
       describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
         it { is_expected.to be_file }
         it { is_expected.to contain 'WSGIApplicationGroup %{GLOBAL}' }
@@ -1213,6 +1244,7 @@ describe 'apache::vhost define' do
     it 'applies cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ShibCompatValidUser On' }
@@ -1242,6 +1274,7 @@ describe 'apache::vhost define' do
     it 'applys cleanly' do
       apply_manifest(pp, catch_failures: true)
     end
+
     describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'OIDCProviderMetadataURL https://login.example.com/.well-known/openid-configuration' }

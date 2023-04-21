@@ -28,13 +28,13 @@ describe 'apache::mod::itk class', if: service_name && mod_supported_on_platform
               mpm_module => 'prefork',
             }
             class { 'apache::mod::itk': }
-          MANIFEST
+        MANIFEST
       when :itk_only
         <<-MANIFEST
             class { 'apache':
               mpm_module => 'itk',
             }
-          MANIFEST
+        MANIFEST
       end
     end
 

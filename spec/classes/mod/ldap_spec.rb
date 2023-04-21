@@ -33,7 +33,7 @@ describe 'apache::mod::ldap', type: :class do
           ldap_cache_ttl: 600,
           ldap_opcache_entries: 1024,
           ldap_opcache_ttl: 600,
-          ldap_path: '/custom-ldap-status',
+          ldap_path: '/custom-ldap-status'
         }
       end
 
@@ -46,13 +46,13 @@ describe 'apache::mod::ldap', type: :class do
       it { is_expected.to contain_file('ldap.conf').with_content(%r{^LDAPOpCacheTTL 600$}) }
 
       expected_ldap_path_re =
-        "<Location /custom-ldap-status>\n"\
-        "\s*SetHandler ldap-status\n"\
-        ".*\n"\
+        "<Location /custom-ldap-status>\n" \
+        "\s*SetHandler ldap-status\n" \
+        ".*\n" \
         "</Location>\n"
       it { is_expected.to contain_file('ldap.conf').with_content(%r{#{expected_ldap_path_re}}m) }
     end
-  end # Debian
+  end
 
   context 'on a RedHat OS' do
     include_examples 'RedHat 8'
@@ -75,7 +75,7 @@ describe 'apache::mod::ldap', type: :class do
       let(:params) do
         {
           ldap_trusted_global_cert_file: 'ca.pem',
-          ldap_trusted_global_cert_type: 'CA_DER',
+          ldap_trusted_global_cert_type: 'CA_DER'
         }
       end
 
@@ -93,5 +93,5 @@ describe 'apache::mod::ldap', type: :class do
 
       it { is_expected.to contain_package('httpd24-mod_ldap') }
     end
-  end # Redhat
+  end
 end
