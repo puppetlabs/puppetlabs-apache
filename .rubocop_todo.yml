@@ -156,8 +156,3 @@ RSpec/RepeatedExampleGroupDescription:
 RSpec/StubbedMock:
   Exclude:
     - 'spec/util/apache_mod_platform_compatibility_spec.rb'
-
-# Offense count: 1
-Style/MixinUsage:
-  Exclude:
-    - 'spec/spec_helper.rb'
