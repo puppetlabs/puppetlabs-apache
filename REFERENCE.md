@@ -6665,7 +6665,7 @@ Installs and configures `mod_status`.
 ```puppet
 # Simple usage allowing access from localhost and a private subnet
 class { 'apache::mod::status':
-  $requires => 'ip 127.0.0.1 ::1 10.10.10.10/24',
+  requires => 'ip 127.0.0.1 ::1 10.10.10.10/24',
 }
 ```
 
@@ -7281,7 +7281,7 @@ Default value: `$apache::confd_dir`
 
 ##### <a name="-apache--custom_config--content"></a>`content`
 
-Data type: `Optional[String]`
+Data type: `Optional[Variant[Sensitive, String]]`
 
 Sets the configuration file's content. The `content` and `source` parameters are exclusive
 of each other.
