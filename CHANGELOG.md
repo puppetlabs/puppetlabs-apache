@@ -2,14 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v9.1.3](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.3) - 2023-04-20
+## [v10.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.0.0) (2023-04-21)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.3...v10.0.0)
+
+### Changed
+
+- \(CONT-772\) Puppet 8 support / Drop Puppet 6 [\#2405](https://github.com/puppetlabs/puppetlabs-apache/pull/2405) ([LukasAud](https://github.com/LukasAud))
+
+## [v9.1.3](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.3) (2023-04-20)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v9.1.2...v9.1.3)
 
 ### Fixed
 
-- #2391 Allow Sensitive type in addition to String type [#2392](https://github.com/puppetlabs/puppetlabs-apache/pull/2392) ([dpavlotzky](https://github.com/dpavlotzky))
-
+- \#2391 Allow Sensitive type in addition to String type [\#2392](https://github.com/puppetlabs/puppetlabs-apache/pull/2392) ([dpavlotzky](https://github.com/dpavlotzky))
 
 ## [v9.1.2](https://github.com/puppetlabs/puppetlabs-apache/tree/v9.1.2) (2023-02-10)
 
@@ -65,6 +72,10 @@ All notable changes to this project will be documented in this file. The format 
 - Drop deprecated a2mod type/providers [\#2350](https://github.com/puppetlabs/puppetlabs-apache/pull/2350) ([bastelfreak](https://github.com/bastelfreak))
 - Drop Apache 2.2 support [\#2329](https://github.com/puppetlabs/puppetlabs-apache/pull/2329) ([ekohl](https://github.com/ekohl))
 
+### Fixed
+
+- fix mod\_proxy\_html on FreeBSD [\#2355](https://github.com/puppetlabs/puppetlabs-apache/pull/2355) ([fraenki](https://github.com/fraenki))
+
 ## [v8.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.6.0) (2022-12-14)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v8.5.0...v8.6.0)
@@ -72,10 +83,6 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - Parameterize SecRequestBodyLimitAction and SecResponseBodyLimitAction [\#2353](https://github.com/puppetlabs/puppetlabs-apache/pull/2353) ([Vincevrp](https://github.com/Vincevrp))
-
-### Fixed
-
-- fix mod\_proxy\_html on FreeBSD [\#2355](https://github.com/puppetlabs/puppetlabs-apache/pull/2355) ([fraenki](https://github.com/fraenki))
 
 ## [v8.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.5.0) (2022-12-06)
 
@@ -357,6 +364,7 @@ All notable changes to this project will be documented in this file. The format 
 
 - \(fix\) Convert unnecessary multi line warnings to single lines [\#2104](https://github.com/puppetlabs/puppetlabs-apache/pull/2104) ([rj667](https://github.com/rj667))
 - Fix bool2httpd function call for older ruby versions [\#2102](https://github.com/puppetlabs/puppetlabs-apache/pull/2102) ([carabasdaniel](https://github.com/carabasdaniel))
+- Use Ruby 2.7 compatible string matching [\#2060](https://github.com/puppetlabs/puppetlabs-apache/pull/2060) ([ekohl](https://github.com/ekohl))
 
 ## [v5.7.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.7.0) (2020-11-24)
 
@@ -389,7 +397,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - make apache::mod::fcgid redhat 8 compatible [\#2071](https://github.com/puppetlabs/puppetlabs-apache/pull/2071) ([creativefre](https://github.com/creativefre))
 - pdksync - \(feat\) - Removal of inappropriate terminology [\#2062](https://github.com/puppetlabs/puppetlabs-apache/pull/2062) ([pmcmaw](https://github.com/pmcmaw))
-- Use Ruby 2.7 compatible string matching [\#2060](https://github.com/puppetlabs/puppetlabs-apache/pull/2060) ([ekohl](https://github.com/ekohl))
 - Use python3-mod\_wsgi instead of mod\_wsgi on CentOS8 [\#2052](https://github.com/puppetlabs/puppetlabs-apache/pull/2052) ([kajinamit](https://github.com/kajinamit))
 
 ## [v5.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v5.5.0) (2020-07-03)
@@ -545,7 +552,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - \(MODULES-5990\) - conf-enabled defaulted to undef [\#1869](https://github.com/puppetlabs/puppetlabs-apache/pull/1869) ([david22swan](https://github.com/david22swan))
 - pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#1866](https://github.com/puppetlabs/puppetlabs-apache/pull/1866) ([tphoney](https://github.com/tphoney))
-- \(FM-7605\) - Disabling conf\_enabled on Ubuntu 18.04  by default as it conflicts with Shibboleth causing errors with apache2. [\#1856](https://github.com/puppetlabs/puppetlabs-apache/pull/1856) ([david22swan](https://github.com/david22swan))
 
 ## [3.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/3.5.0) (2018-12-17)
 
@@ -560,6 +566,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
+- \(FM-7605\) - Disabling conf\_enabled on Ubuntu 18.04  by default as it conflicts with Shibboleth causing errors with apache2. [\#1856](https://github.com/puppetlabs/puppetlabs-apache/pull/1856) ([david22swan](https://github.com/david22swan))
 - \(MODULES-8429\) Update GPG key for phusion passenger [\#1848](https://github.com/puppetlabs/puppetlabs-apache/pull/1848) ([abottchen](https://github.com/abottchen))
 - Fix default vhost priority in readme [\#1843](https://github.com/puppetlabs/puppetlabs-apache/pull/1843) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
 - fix apache::mod::jk example typo and add link for more info [\#1812](https://github.com/puppetlabs/puppetlabs-apache/pull/1812) ([xorpaul](https://github.com/xorpaul))
@@ -588,7 +595,6 @@ All notable changes to this project will be documented in this file. The format 
 - pdksync - \(MODULES-7705\) - Bumping stdlib dependency from \< 5.0.0 to \< 6.0.0 [\#1821](https://github.com/puppetlabs/puppetlabs-apache/pull/1821) ([pmcmaw](https://github.com/pmcmaw))
 - Add support for ProxyTimeout [\#1805](https://github.com/puppetlabs/puppetlabs-apache/pull/1805) ([agoodno](https://github.com/agoodno))
 - \(MODULES-7343\) - Allow overrides by adding mod\_libs in apache class [\#1800](https://github.com/puppetlabs/puppetlabs-apache/pull/1800) ([karelyatin](https://github.com/karelyatin))
-- Rework passenger VHost and Directories [\#1778](https://github.com/puppetlabs/puppetlabs-apache/pull/1778) ([smortex](https://github.com/smortex))
 
 ### Fixed
 
