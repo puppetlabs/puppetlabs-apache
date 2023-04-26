@@ -81,9 +81,9 @@ class apache::mod::php (
   $mod_packages = $apache::mod_packages
   if $package_name {
     $_package_name = $package_name
-  } elsif has_key($mod_packages, $mod) { # 2.6 compatibility hack
+  } elsif $mod in $mod_packages { # 2.6 compatibility hack
     $_package_name = $mod_packages[$mod]
-  } elsif has_key($mod_packages, 'phpXXX') { # 2.6 compatibility hack
+  } elsif 'phpXXX' in $mod_packages { # 2.6 compatibility hack
     $_package_name = regsubst($mod_packages['phpXXX'], 'XXX', $php_version)
   } else {
     $_package_name = undef
