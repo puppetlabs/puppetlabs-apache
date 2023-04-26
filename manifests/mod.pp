@@ -54,7 +54,7 @@ define apache::mod (
   $mod_libs = $apache::mod_libs
   if $lib {
     $_lib = $lib
-  } elsif has_key($mod_libs, $mod) { # 2.6 compatibility hack
+  } elsif $mod in $mod_libs { # 2.6 compatibility hack
     $_lib = $mod_libs[$mod]
   } else {
     $_lib = "mod_${mod}.so"
@@ -83,7 +83,7 @@ define apache::mod (
   $mod_packages = $apache::mod_packages
   if $package {
     $_package = $package
-  } elsif has_key($mod_packages, $mod) { # 2.6 compatibility hack
+  } elsif $mod in $mod_packages { # 2.6 compatibility hack
     $_package = $mod_packages[$mod]
   } else {
     $_package = undef
