@@ -2604,7 +2604,18 @@ define apache::vhost (
     concat::fragment { "${name}-auth_kerb":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
-      content => template('apache/vhost/_auth_kerb.erb'),
+      content => stdlib::deferrable_epp('apache/vhost/_auth_kerb.epp', {
+          'auth_kerb'              => $auth_kerb,
+          'krb_method_negotiate'   => $krb_method_negotiate,
+          'krb_method_k5passwd'    => Deferred('sprintf', [$krb_method_k5passwd]),
+          'krb_authoritative'      => $krb_authoritative,
+          'krb_auth_realms'        => $krb_auth_realms,
+          'krb_5keytab'            => $krb_5keytab,
+          'krb_local_user_mapping' => $krb_local_user_mapping,
+          'krb_verify_kdc'         => $krb_verify_kdc,
+          'krb_servicename'        => $krb_servicename,
+          'krb_save_credentials'   => $krb_save_credentials,
+      }),
     }
   }
 
@@ -2849,7 +2860,10 @@ define apache::vhost (
     concat::fragment { "${name}-auth_oidc":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
-      content => template('apache/vhost/_auth_oidc.erb'),
+      content => stdlib::deferrable_epp('apache/vhost/_auth_oidc.epp', {
+          'auth_oidc'     => $auth_oidc,
+          'oidc_settings' => $oidc_settings,
+      }),
     }
   }
 
