@@ -31,7 +31,7 @@
 #
 class apache::mod::status (
   Optional[Variant[String, Array, Hash]] $requires = undef,
-  Enum['On', 'Off', 'on', 'off'] $extended_status  = 'On',
+  Apache::OnOff $extended_status                   = 'On',
   String $status_path                              = '/server-status',
 ) inherits apache::params {
   include apache

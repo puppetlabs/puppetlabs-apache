@@ -96,7 +96,7 @@ class apache::mod::ssl (
   Optional[Stdlib::Absolutepath] $ssl_key                   = undef,
   Optional[Stdlib::Absolutepath] $ssl_ca                    = undef,
   String $ssl_cipher                                        = $apache::params::ssl_cipher,
-  Variant[Boolean, Enum['on', 'off']] $ssl_honorcipherorder = true,
+  Variant[Boolean, Apache::OnOff] $ssl_honorcipherorder     = true,
   Array[String] $ssl_protocol                               = $apache::params::ssl_protocol,
   Array $ssl_proxy_protocol                                 = [],
   Optional[String[1]] $ssl_proxy_cipher_suite               = $apache::params::ssl_proxy_cipher_suite,
@@ -119,7 +119,9 @@ class apache::mod::ssl (
   } else {
     $_ssl_honorcipherorder = $ssl_honorcipherorder ? {
       'on'    => true,
+      'On'    => true,
       'off'   => false,
+      'Off'   => false,
       default => true,
     }
   }

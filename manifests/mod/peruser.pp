@@ -29,7 +29,7 @@ class apache::mod::peruser (
   Integer $maxrequestsperchild = 1000,
   Integer $idletimeout         = 120,
   Integer $expiretimeout       = 120,
-  Enum['On', 'Off'] $keepalive = 'Off',
+  Apache::OnOff $keepalive     = 'Off',
 ) {
   include apache
   case $facts['os']['family'] {
