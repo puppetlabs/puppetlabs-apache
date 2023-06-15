@@ -21,6 +21,7 @@ describe 'Apache::LogLevel' do
     [],
     ['info'],
     'thisiswarning',
+    'errorerror',
   ].each do |invalid_value|
     it { is_expected.not_to allow_value(invalid_value) }
   end
