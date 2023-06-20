@@ -13,7 +13,11 @@
   SSLProtocol             <%= [@ssl_protocol].flatten.compact.join(' ') %>
   <%- end -%>
   <%- if @ssl_cipher -%>
+  <%- if @ssl_cipher.kind_of?(String) -%>
   SSLCipherSuite          <%= @ssl_cipher %>
+  <%- else -%>
+  SSLCipherSuite          <%= @ssl_cipher.flatten.compact.join(':') %>
+  <%- end -%>
   <%- end -%>
   <%- if not @ssl_honorcipherorder.nil? -%>
   SSLHonorCipherOrder     <%= scope.call_function('apache::bool2httpd', [@_ssl_honorcipherorder]) %>
