@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v10.1.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.1.1) - 2023-06-21
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.1.0...v10.1.1)
+
+### Fixed
+
+- puppetlabs/concat: Allow 9.x [#2426](https://github.com/puppetlabs/puppetlabs-apache/pull/2426) ([bastelfreak](https://github.com/bastelfreak))
+- fix ssl_ciphers array behavior [#2421](https://github.com/puppetlabs/puppetlabs-apache/pull/2421) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+
 ## [v10.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.1.0) - 2023-06-15
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.0.0...v10.1.0)
