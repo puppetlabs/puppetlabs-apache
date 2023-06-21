@@ -1195,7 +1195,7 @@ describe 'apache::vhost define' do
 
   describe 'additional_includes' do
     pp = <<-MANIFEST
-      if $facts['osfamily'] == 'RedHat' and $facts['selinux'] {
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['selinux']['enabled'] {
         exec { 'set_apache_defaults':
           command => 'semanage fcontext --add -t httpd_sys_content_t "/apache_spec/docroot(/.*)?"',
           unless  => 'semanage fcontext --list | grep /apache_spec/docroot | grep httpd_sys_content_t',
