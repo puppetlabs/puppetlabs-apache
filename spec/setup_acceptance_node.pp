@@ -18,7 +18,7 @@ case $facts['os']['family'] {
       }
     }
 
-    if $facts['selinux'] {
+    if $facts['os']['selinux']['enabled'] {
       $semanage_package = $facts['os']['release']['major'] ? {
         '6'     => 'policycoreutils-python',
         '7'     => 'policycoreutils-python',

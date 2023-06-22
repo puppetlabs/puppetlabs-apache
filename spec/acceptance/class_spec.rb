@@ -27,7 +27,7 @@ describe 'apache class' do
   context 'custom site/mod dir parameters' do
     let(:pp) do
       <<-MANIFEST
-        if $facts['osfamily'] == 'RedHat' and $facts['selinux'] {
+        if $facts['os']['family'] == 'RedHat' and $facts['os']['selinux']['enabled'] {
           exec { 'set_apache_defaults':
             command => 'semanage fcontext --add -t httpd_config_t "/apache_spec/apache_custom(/.*)?"',
             unless  => 'semanage fcontext --list | grep /apache_spec/apache_custom | grep httpd_config_t',
