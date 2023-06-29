@@ -2303,6 +2303,21 @@ define apache::vhost (
 
       if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
         include apache::mod::proxy_http
+
+        # To match processing in templates/vhost/_directories.erb
+        if $directory['proxy_pass_match'] {
+          Array($directory['proxy_pass_match']).each |$proxy| {
+            if $proxy['url'] =~ /"h2c?:\/\// {
+              include apache::mod::proxy_http2
+            }
+          }
+        } elsif $directory['proxy_pass'] {
+          Array($directory['proxy_pass']).each |$proxy| {
+            if $proxy['url'] =~ /"h2c?:\/\// {
+              include apache::mod::proxy_http2
+            }
+          }
+        }
       }
 
       if 'request_headers' in $directory {
@@ -2452,6 +2467,16 @@ define apache::vhost (
   # - $no_proxy_uris
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host or ($proxy_add_headers =~ NotUndef)) and $ensure == 'present' {
     include apache::mod::proxy_http
+
+    # To match processing in templates/vhost/_proxy.erb
+    if $proxy_dest =~ Pattern[/^h2c?:\/\//] or $proxy_dest_match =~ Pattern[/^h2c?:\/\//] {
+      include apache::mod::proxy_http2
+    }
+    [$proxy_pass, $proxy_pass_match].flatten.each |$proxy| {
+      if $proxy and $proxy['url'] =~ Pattern[/^h2c?:\/\//] {
+        include apache::mod::proxy_http2
+      }
+    }
 
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
