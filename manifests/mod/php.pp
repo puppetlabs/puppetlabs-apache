@@ -106,6 +106,12 @@ class apache::mod::php (
   }
 
   if $facts['os']['name'] == 'SLES' {
+    if $_package_name == 'apache2-mod_php7' and versioncmp($facts['os']['release']['major'], '15') >= 0 {
+      exec { 'enable legacy repos':
+        command     => 'SUSEConnect --product sle-module-legacy/15.4/x86_64',
+        refreshonly => true
+      }
+    }
     ::apache::mod { $mod:
       package        => $_package_name,
       package_ensure => $package_ensure,
