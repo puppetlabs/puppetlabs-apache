@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v10.1.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.1.1) - 2023-06-30
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.1.0...v10.1.1)
+
+### Added
+
+- Add mod_proxy_http2 support [#2393](https://github.com/puppetlabs/puppetlabs-apache/pull/2393) ([ekohl](https://github.com/ekohl))
+
+### Fixed
+
+- puppetlabs/concat: Allow 9.x [#2426](https://github.com/puppetlabs/puppetlabs-apache/pull/2426) ([bastelfreak](https://github.com/bastelfreak))
+- fix ssl_ciphers array behavior [#2421](https://github.com/puppetlabs/puppetlabs-apache/pull/2421) ([SimonHoenscheid](https://github.com/SimonHoenscheid))
+
 ## [v10.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.1.0) - 2023-06-15
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.0.0...v10.1.0)
@@ -657,10 +670,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix case of setting apache::mpm_module to false [#1720](https://github.com/puppetlabs/puppetlabs-apache/pull/1720) ([edestecd](https://github.com/edestecd))
 - remoteip: Notify apache::service instead of service['httpd'] [#1684](https://github.com/puppetlabs/puppetlabs-apache/pull/1684) ([sergiik](https://github.com/sergiik))
 
-### Other
-
-- MODULES-6224: rename apache mod ldap file [#1733](https://github.com/puppetlabs/puppetlabs-apache/pull/1733) ([cedef](https://github.com/cedef))
-
 ## [2.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/2.3.0) - 2017-10-11
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/2.2.0...2.3.0)
@@ -718,11 +727,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Add WSGIRestrictEmbedded to apache::mod::wsgi [#1614](https://github.com/puppetlabs/puppetlabs-apache/pull/1614) ([dsavineau](https://github.com/dsavineau))
 - Enable configuring CA file in ssl.conf [#1612](https://github.com/puppetlabs/puppetlabs-apache/pull/1612) ([JAORMX](https://github.com/JAORMX))
 - MODULES-4737 - Additional class params for mod ssl [#1611](https://github.com/puppetlabs/puppetlabs-apache/pull/1611) ([cedef](https://github.com/cedef))
+- Added supplementary_groups to the user resource [#1608](https://github.com/puppetlabs/puppetlabs-apache/pull/1608) ([chgarling](https://github.com/chgarling))
 - [msync] 786266 Implement puppet-module-gems, a45803 Remove metadata.json from locales config [#1606](https://github.com/puppetlabs/puppetlabs-apache/pull/1606) ([wilson208](https://github.com/wilson208))
 - Limit except support [#1605](https://github.com/puppetlabs/puppetlabs-apache/pull/1605) ([ffapitalle](https://github.com/ffapitalle))
 - (FM-6116) - Adding POT file for metadata.json [#1604](https://github.com/puppetlabs/puppetlabs-apache/pull/1604) ([pmcmaw](https://github.com/pmcmaw))
 - [MODULES-4528] Replace Puppet.version.to_f version comparison from spec_helper.rb [#1603](https://github.com/puppetlabs/puppetlabs-apache/pull/1603) ([wilson208](https://github.com/wilson208))
 - Add param for AllowOverride in the userdir.conf template [#1602](https://github.com/puppetlabs/puppetlabs-apache/pull/1602) ([dstepe](https://github.com/dstepe))
+- Modules-4500 Add optional "AdvertiseFrequency" directive in cluster.conf template [#1601](https://github.com/puppetlabs/puppetlabs-apache/pull/1601) ([EmersonPrado](https://github.com/EmersonPrado))
 - The base tag also needs link rewriting [#1599](https://github.com/puppetlabs/puppetlabs-apache/pull/1599) ([tobixen](https://github.com/tobixen))
 - MODULES-4391 add SSLProxyVerifyDepth and SSLProxyCACertificateFile directives [#1596](https://github.com/puppetlabs/puppetlabs-apache/pull/1596) ([hex2a](https://github.com/hex2a))
 - add parser function apache_pw_hash [#1592](https://github.com/puppetlabs/puppetlabs-apache/pull/1592) ([aptituz](https://github.com/aptituz))
@@ -740,6 +751,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
+- Ensure that ProxyPreserveHost is set even when ProxyPass (etc) are not. [#1639](https://github.com/puppetlabs/puppetlabs-apache/pull/1639) ([tpdownes](https://github.com/tpdownes))
 - When absolute path is specified for access_log_file/error_log_file, don't prepend logbase [#1633](https://github.com/puppetlabs/puppetlabs-apache/pull/1633) ([ca-asm](https://github.com/ca-asm))
 - Fix single quoted string [#1623](https://github.com/puppetlabs/puppetlabs-apache/pull/1623) ([lordbink](https://github.com/lordbink))
 - fixed apache group for SUSE/SLES Systems (checked for SLES11/12) [#1613](https://github.com/puppetlabs/puppetlabs-apache/pull/1613) ([pseiler](https://github.com/pseiler))
@@ -747,12 +759,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix alignement in vhost.conf [#1607](https://github.com/puppetlabs/puppetlabs-apache/pull/1607) ([sathieu](https://github.com/sathieu))
 - [apache::mod::cgi] Fix: ordering constraint for mod_cgi [#1585](https://github.com/puppetlabs/puppetlabs-apache/pull/1585) ([punycode](https://github.com/punycode))
 - Fix vhost template [#1552](https://github.com/puppetlabs/puppetlabs-apache/pull/1552) ([iamspido](https://github.com/iamspido))
-
-### Other
-
-- Ensure that ProxyPreserveHost is set even when ProxyPass (etc) are not. [#1639](https://github.com/puppetlabs/puppetlabs-apache/pull/1639) ([tpdownes](https://github.com/tpdownes))
-- Added supplementary_groups to the user resource [#1608](https://github.com/puppetlabs/puppetlabs-apache/pull/1608) ([chgarling](https://github.com/chgarling))
-- Modules-4500 Add optional "AdvertiseFrequency" directive in cluster.conf template [#1601](https://github.com/puppetlabs/puppetlabs-apache/pull/1601) ([EmersonPrado](https://github.com/EmersonPrado))
 
 ## [1.11.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.11.0) - 2016-12-19
 
@@ -799,6 +805,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Add apache::mod::proxy_wstunnel [#1462](https://github.com/puppetlabs/puppetlabs-apache/pull/1462) ([sathieu](https://github.com/sathieu))
 - add additional directories options for LDAP Auth [#1443](https://github.com/puppetlabs/puppetlabs-apache/pull/1443) ([zivis](https://github.com/zivis))
 - Update _block.erb [#1441](https://github.com/puppetlabs/puppetlabs-apache/pull/1441) ([jostmart](https://github.com/jostmart))
+- Support the newer mod_auth_cas config options [#1436](https://github.com/puppetlabs/puppetlabs-apache/pull/1436) ([pcfens](https://github.com/pcfens))
 - Wrap mod_security directives in an IfModule [#1423](https://github.com/puppetlabs/puppetlabs-apache/pull/1423) ([kimor79](https://github.com/kimor79))
 
 ### Fixed
@@ -810,6 +817,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (MODULES-3972) fixes version errors and small fix for suse ssl [#1557](https://github.com/puppetlabs/puppetlabs-apache/pull/1557) ([eputnam](https://github.com/eputnam))
 - Don't fail if first element of  is not an hash before flattening [#1555](https://github.com/puppetlabs/puppetlabs-apache/pull/1555) ([sathieu](https://github.com/sathieu))
 - [MODULES-3548] SLES 12 fix  [#1545](https://github.com/puppetlabs/puppetlabs-apache/pull/1545) ([HelenCampbell](https://github.com/HelenCampbell))
+- Move ssl.conf to main conf directory on EL7 [#1543](https://github.com/puppetlabs/puppetlabs-apache/pull/1543) ([stbenjam](https://github.com/stbenjam))
 - Do not set ssl_certs_dir on FreeBSD [#1538](https://github.com/puppetlabs/puppetlabs-apache/pull/1538) ([smortex](https://github.com/smortex))
 - [MODULES-3882] Don't write empty servername for vhost to template [#1526](https://github.com/puppetlabs/puppetlabs-apache/pull/1526) ([JAORMX](https://github.com/JAORMX))
 - Bug - Port numbers must be quoted [#1525](https://github.com/puppetlabs/puppetlabs-apache/pull/1525) ([blackknight36](https://github.com/blackknight36))
@@ -820,11 +828,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - variety of xenial fixes [#1477](https://github.com/puppetlabs/puppetlabs-apache/pull/1477) ([tphoney](https://github.com/tphoney))
 - fix and make 2.4 require docu more readable [#1466](https://github.com/puppetlabs/puppetlabs-apache/pull/1466) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
 - apache::balancer now respects apache::confd_dir [#1463](https://github.com/puppetlabs/puppetlabs-apache/pull/1463) ([traylenator](https://github.com/traylenator))
-
-### Other
-
-- Move ssl.conf to main conf directory on EL7 [#1543](https://github.com/puppetlabs/puppetlabs-apache/pull/1543) ([stbenjam](https://github.com/stbenjam))
-- Support the newer mod_auth_cas config options [#1436](https://github.com/puppetlabs/puppetlabs-apache/pull/1436) ([pcfens](https://github.com/pcfens))
 
 ## [1.10.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.10.0) - 2016-05-19
 
@@ -847,9 +850,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - mod_event: do not set parameters twice [#1445](https://github.com/puppetlabs/puppetlabs-apache/pull/1445) ([timogoebel](https://github.com/timogoebel))
 - setting options-hash in proxy_pass or proxy_match leads to syntax errors in Apache [#1444](https://github.com/puppetlabs/puppetlabs-apache/pull/1444) ([zivis](https://github.com/zivis))
 - Fixed trailing slash in lib_path on Suse [#1429](https://github.com/puppetlabs/puppetlabs-apache/pull/1429) ([OpenCoreCH](https://github.com/OpenCoreCH))
-
-### Other
-
 - Add simple <Limit> support + ProxyAddHeaders [#1427](https://github.com/puppetlabs/puppetlabs-apache/pull/1427) ([costela](https://github.com/costela))
 
 ## [1.9.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.9.0) - 2016-04-21
@@ -867,20 +867,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Add parameter passanger_log_level [#1420](https://github.com/puppetlabs/puppetlabs-apache/pull/1420) ([samuelb](https://github.com/samuelb))
 - add passenger_high_performance on the vhost level [#1419](https://github.com/puppetlabs/puppetlabs-apache/pull/1419) ([timogoebel](https://github.com/timogoebel))
 - Adding SSLProxyCheckPeerExpire support [#1418](https://github.com/puppetlabs/puppetlabs-apache/pull/1418) ([jasonhancock](https://github.com/jasonhancock))
+- (MODULES-3218) add auth_merging for directory enteries [#1412](https://github.com/puppetlabs/puppetlabs-apache/pull/1412) ([pyther](https://github.com/pyther))
 - MODULES-3212: add parallel_spec option [#1410](https://github.com/puppetlabs/puppetlabs-apache/pull/1410) ([jlambert121](https://github.com/jlambert121))
 - MODULES-1352 : Better support for Apache 2.4 style require directives implementation [#1408](https://github.com/puppetlabs/puppetlabs-apache/pull/1408) ([witjoh](https://github.com/witjoh))
 - Added vhost options SecRuleRemoveByTag and SecRuleRemoveByMsg [#1407](https://github.com/puppetlabs/puppetlabs-apache/pull/1407) ([FlatKey](https://github.com/FlatKey))
 - Configurability of Collaborative Detection Threshold Levels for OWASP Core Rule Set [#1405](https://github.com/puppetlabs/puppetlabs-apache/pull/1405) ([FlatKey](https://github.com/FlatKey))
+- Configurability of Collaborative Detection Severity Levels for OWASP Core Rule Set [#1404](https://github.com/puppetlabs/puppetlabs-apache/pull/1404) ([FlatKey](https://github.com/FlatKey))
 - Configurability of SecDefaultAction for OWASP Core Rule Set [#1403](https://github.com/puppetlabs/puppetlabs-apache/pull/1403) ([FlatKey](https://github.com/FlatKey))
 - MODULES-2179: Implement SetEnvIfNoCase [#1402](https://github.com/puppetlabs/puppetlabs-apache/pull/1402) ([jlambert121](https://github.com/jlambert121))
 - Load mod_xml2enc on Apache >= 2.4 on Debian [#1401](https://github.com/puppetlabs/puppetlabs-apache/pull/1401) ([sathieu](https://github.com/sathieu))
 - Take igalic's suggestion to use bool2httpd [#1400](https://github.com/puppetlabs/puppetlabs-apache/pull/1400) ([tpdownes](https://github.com/tpdownes))
 - Move all ensure parameters from concat::fragment to concat [#1396](https://github.com/puppetlabs/puppetlabs-apache/pull/1396) ([domcleal](https://github.com/domcleal))
 - mod_ssl requires mod_mime for AddType directives [#1394](https://github.com/puppetlabs/puppetlabs-apache/pull/1394) ([sathieu](https://github.com/sathieu))
+- Allow configuring mod_security's SecAuditLogParts [#1392](https://github.com/puppetlabs/puppetlabs-apache/pull/1392) ([stig](https://github.com/stig))
 - (#3139) Add support for PassengerUser [#1391](https://github.com/puppetlabs/puppetlabs-apache/pull/1391) ([Reamer](https://github.com/Reamer))
 - add support for SSLProxyProtocol directive [#1390](https://github.com/puppetlabs/puppetlabs-apache/pull/1390) ([saimonn](https://github.com/saimonn))
 - Add mellon_sp_metadata_file parameter for directory entries [#1389](https://github.com/puppetlabs/puppetlabs-apache/pull/1389) ([jokajak](https://github.com/jokajak))
 - Manage mod dir before things that depend on mods [#1388](https://github.com/puppetlabs/puppetlabs-apache/pull/1388) ([cmurphy](https://github.com/cmurphy))
+- add support for fcgi [#1387](https://github.com/puppetlabs/puppetlabs-apache/pull/1387) ([mlhess](https://github.com/mlhess))
 - apache::balancer: Add a target parameter to write to a custom path [#1386](https://github.com/puppetlabs/puppetlabs-apache/pull/1386) ([roidelapluie](https://github.com/roidelapluie))
 - Add JkMount/JkUnmount directives to vhost [#1384](https://github.com/puppetlabs/puppetlabs-apache/pull/1384) ([smoeding](https://github.com/smoeding))
 - Remove SSLv3 [#1383](https://github.com/puppetlabs/puppetlabs-apache/pull/1383) ([ghoneycutt](https://github.com/ghoneycutt))
@@ -901,15 +905,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix in custom fact "apache_version" for OracleLinux. [#1416](https://github.com/puppetlabs/puppetlabs-apache/pull/1416) ([Reamer](https://github.com/Reamer))
 - MODULES-3211: fix broken strict_variable tests [#1414](https://github.com/puppetlabs/puppetlabs-apache/pull/1414) ([jonnytdevops](https://github.com/jonnytdevops))
 - MODULES-3211: fix broken strict_variable tests [#1409](https://github.com/puppetlabs/puppetlabs-apache/pull/1409) ([jlambert121](https://github.com/jlambert121))
-- Fix broken internal link for virtual hosts configuration [#1369](https://github.com/puppetlabs/puppetlabs-apache/pull/1369) ([gerhardsam](https://github.com/gerhardsam))
-
-### Other
-
-- (MODULES-3218) add auth_merging for directory enteries [#1412](https://github.com/puppetlabs/puppetlabs-apache/pull/1412) ([pyther](https://github.com/pyther))
-- Configurability of Collaborative Detection Severity Levels for OWASP Core Rule Set [#1404](https://github.com/puppetlabs/puppetlabs-apache/pull/1404) ([FlatKey](https://github.com/FlatKey))
 - Fix MODULES-3158 (any string interpreted as SSLCompression on) [#1398](https://github.com/puppetlabs/puppetlabs-apache/pull/1398) ([tpdownes](https://github.com/tpdownes))
-- Allow configuring mod_security's SecAuditLogParts [#1392](https://github.com/puppetlabs/puppetlabs-apache/pull/1392) ([stig](https://github.com/stig))
-- add support for fcgi [#1387](https://github.com/puppetlabs/puppetlabs-apache/pull/1387) ([mlhess](https://github.com/mlhess))
+- Fix broken internal link for virtual hosts configuration [#1369](https://github.com/puppetlabs/puppetlabs-apache/pull/1369) ([gerhardsam](https://github.com/gerhardsam))
 
 ## [1.8.1](https://github.com/puppetlabs/puppetlabs-apache/tree/1.8.1) - 2016-02-08
 
@@ -935,10 +932,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix fcgid.conf on Debian [#1331](https://github.com/puppetlabs/puppetlabs-apache/pull/1331) ([sathieu](https://github.com/sathieu))
 - MODULES-2958 : correct CustomLog syslog entry [#1322](https://github.com/puppetlabs/puppetlabs-apache/pull/1322) ([BigAl](https://github.com/BigAl))
 
-### Other
-
-- add parameter root_directory_options [#1339](https://github.com/puppetlabs/puppetlabs-apache/pull/1339) ([timogoebel](https://github.com/timogoebel))
-
 ## [1.8.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.8.0) - 2016-01-25
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/1.7.1...1.8.0)
@@ -950,6 +943,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - MODULES-2956: Enable options within location block on proxy_match [#1317](https://github.com/puppetlabs/puppetlabs-apache/pull/1317) ([jlambert121](https://github.com/jlambert121))
 - Support itk on redhat [#1316](https://github.com/puppetlabs/puppetlabs-apache/pull/1316) ([edestecd](https://github.com/edestecd))
 - SSLProxyVerify [#1311](https://github.com/puppetlabs/puppetlabs-apache/pull/1311) ([occelebi](https://github.com/occelebi))
+- Support the mod_proxy ProxPassReverseCookieDomain directive   [#1309](https://github.com/puppetlabs/puppetlabs-apache/pull/1309) ([occelebi](https://github.com/occelebi))
 - Add X-Forwarded-For into log_formats defaults [#1308](https://github.com/puppetlabs/puppetlabs-apache/pull/1308) ([mpolenchuk](https://github.com/mpolenchuk))
 - Put headers and request headers before proxy [#1306](https://github.com/puppetlabs/puppetlabs-apache/pull/1306) ([quixoten](https://github.com/quixoten))
 - EL7 uses conf.modules.d directory for modules. [#1305](https://github.com/puppetlabs/puppetlabs-apache/pull/1305) ([jasonhancock](https://github.com/jasonhancock))
@@ -968,10 +962,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - enable setting LimitRequestFieldSize globally as it does not actually… [#1293](https://github.com/puppetlabs/puppetlabs-apache/pull/1293) ([KlavsKlavsen](https://github.com/KlavsKlavsen))
 - Fixes paths and packages for the shib2 module on Debian [#1292](https://github.com/puppetlabs/puppetlabs-apache/pull/1292) ([cholyoak](https://github.com/cholyoak))
 - Add ::apache::vhost::custom [#1271](https://github.com/puppetlabs/puppetlabs-apache/pull/1271) ([pabelanger](https://github.com/pabelanger))
-
-### Other
-
-- Support the mod_proxy ProxPassReverseCookieDomain directive   [#1309](https://github.com/puppetlabs/puppetlabs-apache/pull/1309) ([occelebi](https://github.com/occelebi))
 
 ## [1.7.1](https://github.com/puppetlabs/puppetlabs-apache/tree/1.7.1) - 2015-12-04
 
@@ -1021,10 +1011,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - also install mod_authn_alias as default mod in debian for apache < 2.4 [#1205](https://github.com/puppetlabs/puppetlabs-apache/pull/1205) ([zivis](https://github.com/zivis))
 - Add an option to configure PassengerLogFile [#1194](https://github.com/puppetlabs/puppetlabs-apache/pull/1194) ([igalic](https://github.com/igalic))
 - (MODULES-2458) Support for mod_auth_mellon. [#1189](https://github.com/puppetlabs/puppetlabs-apache/pull/1189) ([traylenator](https://github.com/traylenator))
+- Client auth for reverse proxy [#1188](https://github.com/puppetlabs/puppetlabs-apache/pull/1188) ([holtwilkins](https://github.com/holtwilkins))
 - Add ListenBacklog for mod worker (MODULES-2432) [#1185](https://github.com/puppetlabs/puppetlabs-apache/pull/1185) ([mwhahaha](https://github.com/mwhahaha))
 - (MODULES-2419) - Add mod_auth_kerb parameters to vhost [#1183](https://github.com/puppetlabs/puppetlabs-apache/pull/1183) ([traylenator](https://github.com/traylenator))
 - Support the mod_proxy ProxyPassReverseCookiePath directive [#1180](https://github.com/puppetlabs/puppetlabs-apache/pull/1180) ([roidelapluie](https://github.com/roidelapluie))
 - Adding use_optional_includes parameter to vhost define. [#1162](https://github.com/puppetlabs/puppetlabs-apache/pull/1162) ([cropalato](https://github.com/cropalato))
+- Add support for user modifiable installation of mod_systemd and pidfile locations: [#1159](https://github.com/puppetlabs/puppetlabs-apache/pull/1159) ([vamegh](https://github.com/vamegh))
 - mod_passenger: Allow setting PassengerSpawnMethod [#1158](https://github.com/puppetlabs/puppetlabs-apache/pull/1158) ([wubr](https://github.com/wubr))
 - Feature/master/passengerbaseuri [#1152](https://github.com/puppetlabs/puppetlabs-apache/pull/1152) ([aronymous](https://github.com/aronymous))
 
@@ -1050,11 +1042,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix _proxy.erb for SetEnv within ProxyMatch. [#1156](https://github.com/puppetlabs/puppetlabs-apache/pull/1156) ([dconry](https://github.com/dconry))
 - mod::alias should be included when the aliases parameter is used [#1155](https://github.com/puppetlabs/puppetlabs-apache/pull/1155) ([pcfens](https://github.com/pcfens))
 - Fix: missing package for mod_geoip on Debian systems [#1148](https://github.com/puppetlabs/puppetlabs-apache/pull/1148) ([olivierHa](https://github.com/olivierHa))
-
-### Other
-
-- Client auth for reverse proxy [#1188](https://github.com/puppetlabs/puppetlabs-apache/pull/1188) ([holtwilkins](https://github.com/holtwilkins))
-- Add support for user modifiable installation of mod_systemd and pidfile locations: [#1159](https://github.com/puppetlabs/puppetlabs-apache/pull/1159) ([vamegh](https://github.com/vamegh))
 
 ## [1.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.6.0) - 2015-07-30
 
@@ -1087,6 +1074,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Updated travisci file to remove allow_failures for Puppet 4 [#1135](https://github.com/puppetlabs/puppetlabs-apache/pull/1135) ([jonnytdevops](https://github.com/jonnytdevops))
 - Add changelog for 1.5.0 relesase [#1132](https://github.com/puppetlabs/puppetlabs-apache/pull/1132) ([hunner](https://github.com/hunner))
 - Support puppetlabs-concat 2.x [#1126](https://github.com/puppetlabs/puppetlabs-apache/pull/1126) ([domcleal](https://github.com/domcleal))
+- Added the ability to define the IndexStyleSheet setting for a directory [#1124](https://github.com/puppetlabs/puppetlabs-apache/pull/1124) ([genebean](https://github.com/genebean))
 - Add basic initial support for SLES 11 [#1121](https://github.com/puppetlabs/puppetlabs-apache/pull/1121) ([carroarmato0](https://github.com/carroarmato0))
 - Modulesync updates [#1117](https://github.com/puppetlabs/puppetlabs-apache/pull/1117) ([underscorgan](https://github.com/underscorgan))
 - MODULES-1968 - Update the template to warn if using deprecated options [#1113](https://github.com/puppetlabs/puppetlabs-apache/pull/1113) ([underscorgan](https://github.com/underscorgan))
@@ -1097,10 +1085,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fixes acceptance tests [#1141](https://github.com/puppetlabs/puppetlabs-apache/pull/1141) ([bmjen](https://github.com/bmjen))
 - Incorrect date in the changelog [#1134](https://github.com/puppetlabs/puppetlabs-apache/pull/1134) ([underscorgan](https://github.com/underscorgan))
 - Do not offload overriding LogFormats to httpd [#1096](https://github.com/puppetlabs/puppetlabs-apache/pull/1096) ([igalic](https://github.com/igalic))
-
-### Other
-
-- Added the ability to define the IndexStyleSheet setting for a directory [#1124](https://github.com/puppetlabs/puppetlabs-apache/pull/1124) ([genebean](https://github.com/genebean))
 
 ## [1.4.1](https://github.com/puppetlabs/puppetlabs-apache/tree/1.4.1) - 2015-04-28
 
@@ -1117,19 +1101,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Make Options directive configurable for mod userdir [#1077](https://github.com/puppetlabs/puppetlabs-apache/pull/1077) ([frenkel](https://github.com/frenkel))
 - allow acess to userdirs again [#1071](https://github.com/puppetlabs/puppetlabs-apache/pull/1071) ([niklas](https://github.com/niklas))
 - add parameters to configure expires globally [#1063](https://github.com/puppetlabs/puppetlabs-apache/pull/1063) ([igalic](https://github.com/igalic))
+- make $lib_path configurable [#1057](https://github.com/puppetlabs/puppetlabs-apache/pull/1057) ([fraenki](https://github.com/fraenki))
 
 ### Fixed
 
 - (MODULES-1874) Fix proxy_connect module on apache >= 2.2 [#1093](https://github.com/puppetlabs/puppetlabs-apache/pull/1093) ([ckaenzig](https://github.com/ckaenzig))
 - Fix remoteip unit test for rspec-puppet 2 [#1091](https://github.com/puppetlabs/puppetlabs-apache/pull/1091) ([cmurphy](https://github.com/cmurphy))
+- Fixed setting multiple env_var in a location block for proxy pass. [#1086](https://github.com/puppetlabs/puppetlabs-apache/pull/1086) ([btreecat](https://github.com/btreecat))
 - fix typo [#1082](https://github.com/puppetlabs/puppetlabs-apache/pull/1082) ([kgeis](https://github.com/kgeis))
 - Fixes/apache name [#1070](https://github.com/puppetlabs/puppetlabs-apache/pull/1070) ([stevenpost](https://github.com/stevenpost))
 - Remoteip module [#1065](https://github.com/puppetlabs/puppetlabs-apache/pull/1065) ([igalic](https://github.com/igalic))
-
-### Other
-
-- Fixed setting multiple env_var in a location block for proxy pass. [#1086](https://github.com/puppetlabs/puppetlabs-apache/pull/1086) ([btreecat](https://github.com/btreecat))
-- make $lib_path configurable [#1057](https://github.com/puppetlabs/puppetlabs-apache/pull/1057) ([fraenki](https://github.com/fraenki))
 
 ## [1.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.4.0) - 2015-03-17
 
@@ -1167,15 +1148,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (#1391) Correct Debian jessie mod_prefork dev package name [#1042](https://github.com/puppetlabs/puppetlabs-apache/pull/1042) ([sathieu](https://github.com/sathieu))
 - Fixes #880 - (MODULES-1391) Correct Ubuntu Trusty mod_prefork package name [#1041](https://github.com/puppetlabs/puppetlabs-apache/pull/1041) ([underscorgan](https://github.com/underscorgan))
 - Fixed default mpm_event config warning [#1039](https://github.com/puppetlabs/puppetlabs-apache/pull/1039) ([HT43-bqxFqB](https://github.com/HT43-bqxFqB))
+- MODULES-1784 check for deprecated options and fail when they are unsupported [#1036](https://github.com/puppetlabs/puppetlabs-apache/pull/1036) ([roman-mueller](https://github.com/roman-mueller))
 - fix bug in scriptalias code that keeps scriptalias from beeing included in default vhost [#1035](https://github.com/puppetlabs/puppetlabs-apache/pull/1035) ([haraldsk](https://github.com/haraldsk))
 - Fixed an order of operations issue in the test that caused some weird behavior when apache would delay or not restart and added a check with timeout to ensure proper wait [#1032](https://github.com/puppetlabs/puppetlabs-apache/pull/1032) ([cyberious](https://github.com/cyberious))
 - SuPHP acceptance fixes?, chasing the test bug that is timing [#1031](https://github.com/puppetlabs/puppetlabs-apache/pull/1031) ([cyberious](https://github.com/cyberious))
 - ssl.pp: Fixed indent. [#1026](https://github.com/puppetlabs/puppetlabs-apache/pull/1026) ([jpds-zz](https://github.com/jpds-zz))
 - our templates are horrible, we should fix it [#1025](https://github.com/puppetlabs/puppetlabs-apache/pull/1025) ([igalic](https://github.com/igalic))
-
-### Other
-
-- MODULES-1784 check for deprecated options and fail when they are unsupported [#1036](https://github.com/puppetlabs/puppetlabs-apache/pull/1036) ([roman-mueller](https://github.com/roman-mueller))
 
 ## [1.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.3.0) - 2015-02-17
 
@@ -1186,6 +1164,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Concat started using a new fact [#1012](https://github.com/puppetlabs/puppetlabs-apache/pull/1012) ([underscorgan](https://github.com/underscorgan))
 - (MODULES-1719) Add parameter for SSLRandomSeed bytes [#1007](https://github.com/puppetlabs/puppetlabs-apache/pull/1007) ([hunner](https://github.com/hunner))
 - MODULES-1744: use bool2httpd for server_signature and trace_enable [#1006](https://github.com/puppetlabs/puppetlabs-apache/pull/1006) ([jlambert121](https://github.com/jlambert121))
+- ssl.pp: Allow setting of SSLRandomSeed option. [#1001](https://github.com/puppetlabs/puppetlabs-apache/pull/1001) ([jpds-zz](https://github.com/jpds-zz))
 - add configuration options to mod_security [#997](https://github.com/puppetlabs/puppetlabs-apache/pull/997) ([jlambert121](https://github.com/jlambert121))
 - MODULES-1696: ensure mod::setenvif is included if needed [#995](https://github.com/puppetlabs/puppetlabs-apache/pull/995) ([jlambert121](https://github.com/jlambert121))
 - MODULES-1680 - sort php_* hashes for idempotency [#994](https://github.com/puppetlabs/puppetlabs-apache/pull/994) ([underscorgan](https://github.com/underscorgan))
@@ -1231,10 +1210,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Modules 825 - apache2.4 - mod_itk dependency fix  [#944](https://github.com/puppetlabs/puppetlabs-apache/pull/944) ([valeriominetti](https://github.com/valeriominetti))
 - MODULES-1384 - idempotency for wsgi_script_aliases [#936](https://github.com/puppetlabs/puppetlabs-apache/pull/936) ([underscorgan](https://github.com/underscorgan))
 - MODULES-1403 - fix doc bug [#935](https://github.com/puppetlabs/puppetlabs-apache/pull/935) ([underscorgan](https://github.com/underscorgan))
-
-### Other
-
-- ssl.pp: Allow setting of SSLRandomSeed option. [#1001](https://github.com/puppetlabs/puppetlabs-apache/pull/1001) ([jpds-zz](https://github.com/jpds-zz))
 
 ## [1.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.2.0) - 2014-11-11
 
@@ -1367,14 +1342,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - order proxy_set option so it doesn't change between runs [#701](https://github.com/puppetlabs/puppetlabs-apache/pull/701) ([tjikkun](https://github.com/tjikkun))
 - fix missing comma in sample config [#683](https://github.com/puppetlabs/puppetlabs-apache/pull/683) ([sdague](https://github.com/sdague))
 - fix missing ensure on concat::fragment resources [#681](https://github.com/puppetlabs/puppetlabs-apache/pull/681) ([jfroche](https://github.com/jfroche))
+- mod_proxy_html failing in Debian [#673](https://github.com/puppetlabs/puppetlabs-apache/pull/673) ([carlossg](https://github.com/carlossg))
 - Apache version in Ubuntu 13.10 is 2.4 [#672](https://github.com/puppetlabs/puppetlabs-apache/pull/672) ([carlossg](https://github.com/carlossg))
 - lint fixes [#671](https://github.com/puppetlabs/puppetlabs-apache/pull/671) ([carlossg](https://github.com/carlossg))
 - Include mod wsgi when wsgi_daemon_process is given [#664](https://github.com/puppetlabs/puppetlabs-apache/pull/664) ([ekohl](https://github.com/ekohl))
 - apache::mod::mime does not compile due to wrong file dependency [#627](https://github.com/puppetlabs/puppetlabs-apache/pull/627) ([carlossg](https://github.com/carlossg))
-
-### Other
-
-- mod_proxy_html failing in Debian [#673](https://github.com/puppetlabs/puppetlabs-apache/pull/673) ([carlossg](https://github.com/carlossg))
 
 ## [1.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/1.0.1) - 2014-03-04
 
@@ -1413,9 +1385,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Lint fixes [#614](https://github.com/puppetlabs/puppetlabs-apache/pull/614) ([justinstoller](https://github.com/justinstoller))
 - Proxy pass reverse fix [#613](https://github.com/puppetlabs/puppetlabs-apache/pull/613) ([dteirney](https://github.com/dteirney))
 - templates/vhost/_proxy.erb misconfigures ProxyPassReverse [#602](https://github.com/puppetlabs/puppetlabs-apache/pull/602) ([jrwilk01](https://github.com/jrwilk01))
-
-### Other
-
 - Added in mod_actions to the repo so it may be used. [#591](https://github.com/puppetlabs/puppetlabs-apache/pull/591) ([typhonius](https://github.com/typhonius))
 
 ## [0.11.0](https://github.com/puppetlabs/puppetlabs-apache/tree/0.11.0) - 2014-02-05
@@ -1514,6 +1483,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
+- No implicit <Directory> entry for ScriptAlias path [#488](https://github.com/puppetlabs/puppetlabs-apache/pull/488) ([antaflos](https://github.com/antaflos))
 - Add support for AliasMatch directives [#483](https://github.com/puppetlabs/puppetlabs-apache/pull/483) ([antaflos](https://github.com/antaflos))
 - Fix directory fragment not setting AllowOverride [#455](https://github.com/puppetlabs/puppetlabs-apache/pull/455) ([Aethylred](https://github.com/Aethylred))
 - Revert unnecessary `$default_ssl_vhost` validation change. [#453](https://github.com/puppetlabs/puppetlabs-apache/pull/453) ([dbeckham](https://github.com/dbeckham))
@@ -1529,10 +1499,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Fix invalid variable name in itk mod [#362](https://github.com/puppetlabs/puppetlabs-apache/pull/362) ([blkperl](https://github.com/blkperl))
 - Fix for issue #358. Including apache::mod::proxy and apache::mod::proxy_h... [#360](https://github.com/puppetlabs/puppetlabs-apache/pull/360) ([bmurtagh](https://github.com/bmurtagh))
 - fix exception types in some specs [#350](https://github.com/puppetlabs/puppetlabs-apache/pull/350) ([ptomulik](https://github.com/ptomulik))
-
-### Other
-
-- No implicit <Directory> entry for ScriptAlias path [#488](https://github.com/puppetlabs/puppetlabs-apache/pull/488) ([antaflos](https://github.com/antaflos))
 
 ## [0.9.0](https://github.com/puppetlabs/puppetlabs-apache/tree/0.9.0) - 2013-09-06
 
