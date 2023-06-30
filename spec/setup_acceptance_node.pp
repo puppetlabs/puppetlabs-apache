@@ -5,6 +5,15 @@ package { 'curl':
 
 case $facts['os']['family'] {
   'SLES', 'SUSE': {
+    # Enable legacy repo to install net-tools-deprecated package
+    # If SUSE OS major version is >= 15 and minor version is > 3
+    if (versioncmp($facts['os']['release']['major'], '15') >= 0 and versioncmp($facts['os']['release']['minor'], '3') == 1) {
+      exec { 'enable legacy repos':
+        path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
+        command => 'SUSEConnect --product sle-module-legacy/15.4/x86_64',
+        unless  => 'SUSEConnect --status-text | grep sle-module-legacy/15.4/x86_64',
+      }
+    }
     # needed for netstat, for serverspec checks
     package { 'net-tools-deprecated':
       ensure => 'latest',
