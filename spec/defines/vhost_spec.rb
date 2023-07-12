@@ -301,6 +301,21 @@ describe 'apache::vhost', type: :define do
                   'ssl_verify_client' => 'optional',
                   'ssl_verify_depth' => 10
                 },
+                {
+                  'path' => '/private_2',
+                  'provider' => 'location',
+                  'mellon_enable' => 'auth',
+                  'mellon_sp_private_key_file' => '/etc/httpd/mellon/example.com_mellon.key',
+                  'mellon_sp_cert_file' => '/etc/httpd/mellon/example.com_mellon.crt',
+                  'mellon_sp_metadata_file' => '/etc/httpd/mellon/example.com_sp_mellon.xml',
+                  'mellon_idp_metadata_file' => '/etc/httpd/mellon/example.com_idp_mellon.xml',
+                  'mellon_set_env' => { 'isMemberOf' => 'urn:oid:1.3.6.1.4.1.5923.1.5.1.1' },
+                  'mellon_set_env_no_prefix' => { 'isMemberOf' => 'urn:oid:1.3.6.1.4.1.5923.1.5.1.1' },
+                  'mellon_user' => 'urn:oid:0.9.2342.19200300.100.1.1',
+                  'mellon_saml_response_dump' => 'Off',
+                  'mellon_cond' => ['isMemberOf "cn=example-access,ou=Groups,o=example,o=com" [MAP]'],
+                  'mellon_session_length' => '300'
+                },
               ],
               'error_log' => false,
               'error_log_file' => 'httpd_error_log',
@@ -721,6 +736,16 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+GssapiUseSessions\sOn$})
               .with_content(%r{^\s+SSLVerifyClient\soptional$})
               .with_content(%r{^\s+SSLVerifyDepth\s10$})
+              .with_content(%r{^\s+MellonEnable\s"auth"$})
+              .with_content(%r{^\s+MellonSPPrivateKeyFile\s"/etc/httpd/mellon/example\.com_mellon\.key"$})
+              .with_content(%r{^\s+MellonSPCertFile\s"/etc/httpd/mellon/example\.com_mellon\.crt"$})
+              .with_content(%r{^\s+MellonSPMetadataFile\s"/etc/httpd/mellon/example\.com_sp_mellon\.xml"$})
+              .with_content(%r{^\s+MellonIDPMetadataFile\s"/etc/httpd/mellon/example\.com_idp_mellon\.xml"$})
+              .with_content(%r{^\s+MellonSetEnv\s"isMemberOf"\s"urn:oid:1\.3\.6\.1\.4\.1\.5923\.1\.5\.1\.1"$})
+              .with_content(%r{^\s+MellonSetEnvNoPrefix\s"isMemberOf"\s"urn:oid:1\.3\.6\.1\.4\.1\.5923\.1\.5\.1\.1"$})
+              .with_content(%r{^\s+MellonUser\s"urn:oid:0\.9\.2342\.19200300\.100\.1\.1"$})
+              .with_content(%r{^\s+MellonCond\sisMemberOf\s"cn=example-access,ou=Groups,o=example,o=com"\s\[MAP\]$})
+              .with_content(%r{^\s+MellonSessionLength\s"300"$})
           }
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
