@@ -628,6 +628,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('rspec.example.com-itk') }
           it { is_expected.to contain_concat__fragment('rspec.example.com-fallbackresource') }
 
+          # rubocop:disable RSpec/ExampleLength
           it {
             expect(subject).to contain_concat__fragment('rspec.example.com-directories')
               .with_content(%r{^\s+<Proxy "\*">$})
@@ -747,6 +748,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+MellonCond\sisMemberOf\s"cn=example-access,ou=Groups,o=example,o=com"\s\[MAP\]$})
               .with_content(%r{^\s+MellonSessionLength\s"300"$})
           }
+          # rubocop:enable RSpec/ExampleLength
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
 
