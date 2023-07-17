@@ -9,11 +9,11 @@ require 'rspec-puppet-facts'
 
 require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_local.rb'))
 
-include RspecPuppetFacts
+include RspecPuppetFacts # rubocop:disable Style/MixinUsage
 
 default_facts = {
   puppetversion: Puppet.version,
-  facterversion: Facter.version,
+  facterversion: Facter.version
 }
 
 default_fact_files = [
