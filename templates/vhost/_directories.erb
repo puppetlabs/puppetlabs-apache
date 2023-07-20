@@ -428,6 +428,11 @@
       <%- if directory['mellon_idp_metadata_file'] -%>
     MellonIDPMetadataFile "<%= directory['mellon_idp_metadata_file'] %>"
       <%- end -%>
+      <%- if directory['mellon_set_env'] -%>
+        <%- directory['mellon_set_env'].each do |key, value| -%>
+    MellonSetEnv "<%= key %>" "<%= value %>"
+        <%- end -%>
+      <%- end -%>
       <%- if directory['mellon_set_env_no_prefix'] -%>
         <%- directory['mellon_set_env_no_prefix'].each do |key, value| -%>
     MellonSetEnvNoPrefix "<%= key %>" "<%= value %>"
