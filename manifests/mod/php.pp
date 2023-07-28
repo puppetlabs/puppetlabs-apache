@@ -111,8 +111,8 @@ class apache::mod::php (
     if ($_package_name == 'apache2-mod_php7' and versioncmp($facts['os']['release']['major'], '15') >= 0 and versioncmp($facts['os']['release']['minor'], '3') == 1) {
       exec { 'enable legacy repos':
         path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-        command => 'SUSEConnect --product sle-module-legacy/15.4/x86_64',
-        unless  => 'SUSEConnect --status-text | grep sle-module-legacy/15.4/x86_64',
+        command => 'SUSEConnect --product sle-module-legacy/15.5/x86_64',
+        unless  => 'SUSEConnect --status-text | grep sle-module-legacy/15.5/x86_64',
       }
     }
 
