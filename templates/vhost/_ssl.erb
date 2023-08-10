@@ -15,6 +15,10 @@
   <%- if @ssl_cipher -%>
   <%- if @ssl_cipher.kind_of?(String) -%>
   SSLCipherSuite          <%= @ssl_cipher %>
+  <%- elsif @ssl_cipher.kind_of?(Hash) -%>
+    <%- @ssl_cipher.map do |protocol, cipher| -%>
+  SSLCipherSuite <%= protocol %> <%= cipher%>
+    <%- end -%>
   <%- else -%>
   SSLCipherSuite          <%= @ssl_cipher.flatten.compact.join(':') %>
   <%- end -%>
