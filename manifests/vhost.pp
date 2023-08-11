@@ -1719,7 +1719,7 @@ define apache::vhost (
   Optional[Stdlib::Absolutepath] $ssl_certs_dir                                       = $apache::params::ssl_certs_dir,
   Boolean $ssl_reload_on_change                                                       = $apache::default_ssl_reload_on_change,
   Optional[Variant[Array[String], String]] $ssl_protocol                              = undef,
-  Optional[Variant[Array[String], String, Hash[String[1], String[1]]]] $ssl_cipher   = undef,
+  Optional[Variant[Array[String], String[1], Hash[String[1], String[1]]]] $ssl_cipher = undef,
   Variant[Boolean, Apache::OnOff, Undef] $ssl_honorcipherorder                        = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client  = undef,
   Optional[Integer] $ssl_verify_depth                                                 = undef,
