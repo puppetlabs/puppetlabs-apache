@@ -433,7 +433,7 @@ describe 'apache', type: :class do
 
     describe 'different templates for httpd.conf with default' do
       let :params do
-        { conf_template: 'apache/httpd.conf.erb' }
+        { conf_template: 'apache/httpd.conf.epp' }
       end
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^# Security\n} }
@@ -441,7 +441,7 @@ describe 'apache', type: :class do
 
     describe 'different templates for httpd.conf with non-default' do
       let :params do
-        { conf_template: 'site_apache/fake.conf.erb' }
+        { conf_template: 'site_apache/fake.conf.epp' }
       end
 
       it { is_expected.to contain_file('/etc/httpd/conf/httpd.conf').with_content %r{^Fake template for rspec.$} }

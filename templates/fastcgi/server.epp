@@ -1,0 +1,24 @@
+<%
+  $timeout_updated = " -idle-timeout #{$timeout}"
+
+  if $flush {
+    $flush_updated = " -flush"
+  } else {
+    $flush_updated = ""
+  }    
+  if $socket {
+    $host_or_socket = " -socket #{$socket}"
+  } else {
+    $host_or_socket = " -host #{$host}"
+  }    
+  if $pass_header and !$pass_header.empty {
+    $pass_header_updated = " -pass-header #{$pass_header}"
+  } else {
+    $pass_header_updated = ""
+  }
+    
+  $options = $timeout_updated + $flush_updated + $host_or_socket + $pass_header_updated
+-%>
+FastCGIExternalServer <%= $faux_path %><%= $options %>
+Alias <%= $fcgi_alias %> <%= $faux_path %>
+Action <%= $file_type %> <%= $fcgi_alias %>

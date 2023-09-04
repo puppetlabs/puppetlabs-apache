@@ -95,7 +95,7 @@ class apache::params inherits apache::version {
     $mod_libs             = {
       'nss' => 'libmodnss.so',
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -231,7 +231,7 @@ class apache::params inherits apache::version {
         default => 'mod_wsgi_python3.so',
       },
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -383,7 +383,7 @@ class apache::params inherits apache::version {
     $mod_libs             = {
       'shib2' => $shib2_lib,
     }
-    $conf_template          = 'apache/httpd.conf.erb'
+    $conf_template          = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive              = 'On'
     $keepalive_timeout      = 15
@@ -492,7 +492,7 @@ class apache::params inherits apache::version {
     }
     $mod_libs         = {
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -558,7 +558,7 @@ class apache::params inherits apache::version {
     }
     $mod_libs         = {
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -633,7 +633,7 @@ class apache::params inherits apache::version {
       'security'       => '/usr/lib64/apache2/mod_security2.so',
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
     }
-    $conf_template          = 'apache/httpd.conf.erb'
+    $conf_template          = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive              = 'On'
     $keepalive_timeout      = 15
