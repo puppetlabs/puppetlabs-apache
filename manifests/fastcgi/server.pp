@@ -48,13 +48,24 @@ define apache::fastcgi::server (
     $socket = $host
   }
 
+  $parameters = {
+    'timeout'     => $timeout,
+    'flush'       => $flush,
+    'socket'      => $socket,
+    'host'        => $host,
+    'pass_header' => $pass_header,
+    'faux_path'   => $faux_path,
+    'fcgi_alias'  => $fcgi_alias,
+    'file_type'   => $file_type,
+  }
+
   file { "fastcgi-pool-${name}.conf":
     ensure  => file,
     path    => "${apache::confd_dir}/fastcgi-pool-${name}.conf",
     owner   => 'root',
     group   => $apache::params::root_group,
     mode    => $apache::file_mode,
-    content => template('apache/fastcgi/server.erb'),
+    content => epp('apache/fastcgi/server.epp', $parameters),
     require => Exec["mkdir ${apache::confd_dir}"],
     before  => File[$apache::confd_dir],
     notify  => Class['apache::service'],

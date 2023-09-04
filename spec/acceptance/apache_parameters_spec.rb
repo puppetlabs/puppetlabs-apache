@@ -11,7 +11,7 @@ describe 'apache parameters' do
     end
 
     if os[:family] == 'freebsd'
-      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.epp") do
         it { is_expected.not_to be_file }
       end
     end
@@ -24,7 +24,7 @@ describe 'apache parameters' do
     end
 
     if os[:family] == 'freebsd'
-      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.epp") do
         it { is_expected.to be_file }
       end
     end
@@ -310,9 +310,9 @@ describe 'apache parameters' do
   describe 'conf_template' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': conf_template => 'another/test.conf.erb', service_ensure => stopped }"
+        pp = "class { 'apache': conf_template => 'another/test.conf.epp', service_ensure => stopped }"
         run_shell('mkdir -p /etc/puppetlabs/code/environments/production/modules/another/templates')
-        run_shell("echo 'testcontent' >>  /etc/puppetlabs/code/environments/production/modules/another/templates/test.conf.erb")
+        run_shell("echo 'testcontent' >>  /etc/puppetlabs/code/environments/production/modules/another/templates/test.conf.epp")
         apply_manifest(pp, catch_failures: true)
       end
     end

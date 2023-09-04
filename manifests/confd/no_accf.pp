@@ -7,7 +7,7 @@ class apache::confd::no_accf {
   file { 'no-accf.conf':
     ensure  => 'file',
     path    => "${apache::confd_dir}/no-accf.conf",
-    content => template('apache/confd/no-accf.conf.erb'),
+    content => epp('apache/confd/no-accf.conf.epp'),
     require => Exec["mkdir ${apache::confd_dir}"],
     before  => File[$apache::confd_dir],
   }
