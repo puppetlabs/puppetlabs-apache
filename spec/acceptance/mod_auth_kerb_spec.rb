@@ -3,7 +3,6 @@
 require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 describe 'apache::vhost define auth kerb' do
-
   context 'new vhost on port 80' do
     pp = <<-MANIFEST
       class { 'apache': }
@@ -28,7 +27,4 @@ describe 'apache::vhost define auth kerb' do
       it { is_expected.to contain 'ServerName first.example.com' }
     end
   end
-
-
-
 end
