@@ -96,11 +96,6 @@
 #   the `aliases` parameter. As described in the `mod_alias` documentation, add more specific 
 #   `alias`, `aliasmatch`, `scriptalias` or `scriptaliasmatch` parameters before the more 
 #   general ones to avoid shadowing.<BR />
-#   > **Note**: Use the `aliases` parameter instead of the `scriptaliases` parameter because 
-#   you can precisely control the order of various alias directives. Defining `ScriptAliases` 
-#   using the `scriptaliases` parameter means *all* `ScriptAlias` directives will come after 
-#   *all* `Alias` directives, which can lead to `Alias` directives shadowing `ScriptAlias` 
-#   directives. This often causes problems; for example, this could cause problems with Nagios.<BR />
 #   If `apache::mod::passenger` is loaded and `PassengerHighPerformance` is `true`, the `Alias` 
 #   directive might not be able to honor the `PassengerEnabled => off` statement. See 
 #   [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
@@ -813,6 +808,26 @@
 #   to only allow the spawning of application processes with UIDs equal to, or higher than, this 
 #   specified value on LVE-enabled kernels.
 #
+# @param passenger_dump_config_manifest
+#   Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
+#   to dump the configuration manifest to a file.
+#
+# @param passenger_admin_panel_url
+#   Sets [PassengerAdminPanelUrl](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelurl),
+#   to specify the URL of the Passenger admin panel.
+#
+# @param passenger_admin_panel_auth_type
+#   Sets [PassengerAdminPanelAuthType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelauthtype),
+#   to specify the authentication type for the Passenger admin panel.
+#
+# @param passenger_admin_panel_username
+#   Sets [PassengerAdminPanelUsername](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelusername),
+#   to specify the username for the Passenger admin panel.
+#
+# @param passenger_admin_panel_password
+#   Sets [PassengerAdminPanelPassword](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelpassword),
+#   to specify the password for the Passenger admin panel.
+#
 # @param php_values
 #   Allows per-virtual host setting [`php_value`s](http://php.net/manual/en/configuration.changes.php). 
 #   These flags or values can be overwritten by a user or an application.
@@ -1094,34 +1109,6 @@
 # @param scriptalias
 #   Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as 
 #   '/usr/scripts'.
-#
-# @param scriptaliases
-#   > **Note**: This parameter is deprecated in favor of the `aliases` parameter.<br />
-#   Passes an array of hashes to the virtual host to create either ScriptAlias or 
-#   ScriptAliasMatch statements per the `mod_alias` documentation.
-#   ``` puppet
-#   scriptaliases => [
-#     {
-#       alias => '/myscript',
-#       path  => '/usr/share/myscript',
-#     },
-#     {
-#       aliasmatch => '^/foo(.*)',
-#       path       => '/usr/share/fooscripts$1',
-#     },
-#     {
-#       aliasmatch => '^/bar/(.*)',
-#       path       => '/usr/share/bar/wrapper.sh/$1',
-#     },
-#     {
-#       alias => '/neatscript',
-#       path  => '/usr/share/neatscript',
-#     },
-#   ]
-#   ```
-#   The ScriptAlias and ScriptAliasMatch directives are created in the order specified. 
-#   As with [Alias and AliasMatch](#aliases) directives, specify more specific aliases 
-#   before more general ones to avoid shadowing.
 #
 # @param serveradmin
 #   Specifies the email address Apache displays when it renders one of its error pages.
@@ -2233,83 +2220,91 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $comment
-  # - $nvh_addr_port
-  # - $servername
-  # - $serveradmin
-  # - $protocols
-  # - $protocols_honor_order
-  # - $mdomain
+  $file_header_params = {
+    'comment'               => $comment,
+    'nvh_addr_port'         => $nvh_addr_port,
+    'mdomain'               => $mdomain,
+    'servername'            => $servername,
+    'define'                => $define,
+    'protocols'             => $protocols,
+    'protocols_honor_order' => $protocols_honor_order,
+    'limitreqfieldsize'     => $limitreqfieldsize,
+    'limitreqfields'        => $limitreqfields,
+    'limitreqline'          => $limitreqline,
+    'limitreqbody'          => $limitreqbody,
+    'serveradmin'           => $serveradmin,
+  }
+
   concat::fragment { "${name}-apache-header":
     target  => "${priority_real}${filename}.conf",
     order   => 0,
-    content => template('apache/vhost/_file_header.erb'),
+    content => epp('apache/vhost/_file_header.epp', $file_header_params),
   }
 
-  # Template uses:
-  # - $virtual_docroot
-  # - $virtual_use_default_docroot
-  # - $docroot
   if $docroot and $ensure == 'present' {
     if $virtual_docroot {
       include apache::mod::vhost_alias
     }
 
+    $docroot_params = {
+      'virtual_docroot'             => $virtual_docroot,
+      'docroot'                     => $docroot,
+      'virtual_use_default_docroot' => $virtual_use_default_docroot,
+    }
+
     concat::fragment { "${name}-docroot":
       target  => "${priority_real}${filename}.conf",
       order   => 10,
-      content => template('apache/vhost/_docroot.erb'),
+      content => epp('apache/vhost/_docroot.epp', $docroot_params),
     }
   }
 
-  # Template uses:
-  # - $aliases
   if ! empty($aliases) and $ensure == 'present' {
     include apache::mod::alias
-
+    $aliases_params = {
+      'aliases' => $aliases,
+    }
     concat::fragment { "${name}-aliases":
       target  => "${priority_real}${filename}.conf",
       order   => 20,
-      content => template('apache/vhost/_aliases.erb'),
+      content => epp('apache/vhost/_aliases.epp', $aliases_params),
     }
   }
 
-  # Template uses:
-  # - $itk
-  # - $::kernelversion
   if $itk and ! empty($itk) {
+    $itk_params = {
+      'itk'           => $itk,
+      'kernelversion' => $facts['kernelversion'],
+    }
     concat::fragment { "${name}-itk":
       target  => "${priority_real}${filename}.conf",
       order   => 30,
-      content => template('apache/vhost/_itk.erb'),
+      content => epp('apache/vhost/_itk.epp', $itk_params),
     }
   }
 
-  # Template uses:
-  # - $fallbackresource
   if $fallbackresource {
+    $fall_back_res_params = {
+      'fallbackresource' => $fallbackresource,
+    }
     concat::fragment { "${name}-fallbackresource":
       target  => "${priority_real}${filename}.conf",
       order   => 40,
-      content => template('apache/vhost/_fallbackresource.erb'),
+      content => epp('apache/vhost/_fallbackresource.epp', $fall_back_res_params),
     }
   }
 
-  # Template uses:
-  # - $allow_encoded_slashes
   if $allow_encoded_slashes {
+    $allow_encoded_slashes_params = {
+      'allow_encoded_slashes' => $allow_encoded_slashes,
+    }
     concat::fragment { "${name}-allow_encoded_slashes":
       target  => "${priority_real}${filename}.conf",
       order   => 50,
-      content => template('apache/vhost/_allow_encoded_slashes.erb'),
+      content => epp('apache/vhost/_allow_encoded_slashes.epp', $allow_encoded_slashes_params),
     }
   }
 
-  # Template uses:
-  # - $_directories
-  # - $docroot
-  # - $shibboleth_enabled
   if $_directories and ! empty($_directories) and $ensure == 'present' {
     $_directories.each |Hash $directory| {
       if 'auth_basic_authoritative' in $directory or 'auth_basic_fake' in $directory or 'auth_basic_provider' in $directory {
@@ -2360,6 +2355,11 @@ define apache::vhost (
       }
     }
 
+    # Template uses:
+    # - $_directories
+    # - $docroot
+    # - $shibboleth_enabled
+    # - $cas_enabled
     concat::fragment { "${name}-directories":
       target  => "${priority_real}${filename}.conf",
       order   => 60,
@@ -2377,17 +2377,17 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $error_log
-  # - $error_log_format
-  # - $log_level
-  # - $error_log_destination
-  # - $log_level
   if $error_log or $log_level {
+    $logging_params = {
+      'error_log'             => $error_log,
+      'log_level'             => $log_level,
+      'error_log_destination' => $error_log_destination,
+      'error_log_format'      => $error_log_format,
+    }
     concat::fragment { "${name}-logging":
       target  => "${priority_real}${filename}.conf",
       order   => 80,
-      content => template('apache/vhost/_logging.erb'),
+      content => epp('apache/vhost/_logging.epp', $logging_params),
     }
   }
 
@@ -2395,7 +2395,7 @@ define apache::vhost (
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}${filename}.conf",
     order   => 90,
-    content => template('apache/vhost/_serversignature.erb'),
+    content => "  ServerSignature Off\n",
   }
 
   # Template uses:
@@ -2412,13 +2412,11 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $action
   if $action {
     concat::fragment { "${name}-action":
       target  => "${priority_real}${filename}.conf",
       order   => 110,
-      content => template('apache/vhost/_action.erb'),
+      content => epp('apache/vhost/_action.epp', { 'action' => $action }),
     }
   }
 
@@ -2442,46 +2440,44 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $headers
   if ! empty($headers) and $ensure == 'present' {
     include apache::mod::headers
 
     concat::fragment { "${name}-header":
       target  => "${priority_real}${filename}.conf",
       order   => 140,
-      content => template('apache/vhost/_header.erb'),
+      content => epp('apache/vhost/_header.epp', { 'headers' => $headers }),
     }
   }
 
-  # Template uses:
-  # - $request_headers
   if ! empty($request_headers) and $ensure == 'present' {
     include apache::mod::headers
 
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}${filename}.conf",
       order   => 150,
-      content => template('apache/vhost/_requestheader.erb'),
+      content => epp('apache/vhost/_requestheader.epp', { 'request_headers' => $request_headers }),
     }
   }
 
-  # Template uses:
-  # - $ssl_proxyengine
-  # - $ssl_proxy_verify
-  # - $ssl_proxy_verify_depth
-  # - $ssl_proxy_ca_cert
-  # - $ssl_proxy_check_peer_cn
-  # - $ssl_proxy_check_peer_name
-  # - $ssl_proxy_check_peer_expire
-  # - $ssl_proxy_machine_cert
-  # - $ssl_proxy_machine_cert_chain
-  # - $ssl_proxy_protocol
   if $ssl_proxyengine {
+    $ssl_proxy_params = {
+      'ssl_proxyengine'              => $ssl_proxyengine,
+      'ssl_proxy_verify'             => $ssl_proxy_verify,
+      'ssl_proxy_verify_depth'       => $ssl_proxy_verify_depth,
+      'ssl_proxy_ca_cert'            => $ssl_proxy_ca_cert,
+      'ssl_proxy_check_peer_cn'      => $ssl_proxy_check_peer_cn,
+      'ssl_proxy_check_peer_name'    => $ssl_proxy_check_peer_name,
+      'ssl_proxy_check_peer_expire'  => $ssl_proxy_check_peer_expire,
+      'ssl_proxy_machine_cert'       => $ssl_proxy_machine_cert,
+      'ssl_proxy_machine_cert_chain' => $ssl_proxy_machine_cert_chain,
+      'ssl_proxy_cipher_suite'       => $ssl_proxy_cipher_suite,
+      'ssl_proxy_protocol'           => $ssl_proxy_protocol,
+    }
     concat::fragment { "${name}-sslproxy":
       target  => "${priority_real}${filename}.conf",
       order   => 160,
-      content => template('apache/vhost/_sslproxy.erb'),
+      content => epp('apache/vhost/_sslproxy.epp', $ssl_proxy_params),
     }
   }
 
@@ -2504,7 +2500,6 @@ define apache::vhost (
         include apache::mod::proxy_http2
       }
     }
-
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 170,
@@ -2544,7 +2539,6 @@ define apache::vhost (
   # - $rewrite_map
   if (! empty($rewrites) or $rewrite_rule or $rewrite_inherit) and $ensure == 'present' {
     include apache::mod::rewrite
-
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}${filename}.conf",
       order   => 190,
@@ -2552,32 +2546,27 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $scriptaliases
-  # - $scriptalias
   if ($scriptalias or !empty($scriptaliases)) and $ensure == 'present' {
     include apache::mod::alias
-
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
-      content => template('apache/vhost/_scriptalias.erb'),
+      content => epp('apache/vhost/_scriptalias.epp', { 'scriptaliases' => $scriptaliases, 'scriptalias' => $scriptalias }),
     }
   }
 
-  # Template uses:
-  # - $serveraliases
   if ! empty($serveraliases) and $ensure == 'present' {
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}${filename}.conf",
       order   => 210,
-      content => template('apache/vhost/_serveralias.erb'),
+      content => epp('apache/vhost/_serveralias.epp', { 'serveraliases' => $serveraliases }),
     }
   }
 
   # Template uses:
   # - $setenv
   # - $setenvif
+  # - $setenvifnocase
   $use_env_mod = !empty($setenv)
   $use_setenvif_mod = !empty($setenvif) or !empty($setenvifnocase)
   if ($use_env_mod or $use_setenvif_mod) and $ensure == 'present' {
@@ -2616,7 +2605,6 @@ define apache::vhost (
   # - $mdomain
   if $ssl and $ensure == 'present' {
     include apache::mod::ssl
-
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
@@ -2642,14 +2630,6 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $auth_kerb
-  # - $krb_method_negotiate
-  # - $krb_method_k5passwd
-  # - $krb_authoritative
-  # - $krb_auth_realms
-  # - $krb_5keytab
-  # - $krb_local_user_mapping
   if $auth_kerb and $ensure == 'present' {
     include apache::mod::auth_kerb
 
@@ -2693,57 +2673,76 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $wsgi_application_group
-  # - $wsgi_daemon_process
-  # - $wsgi_daemon_process_options
-  # - $wsgi_import_script
-  # - $wsgi_import_script_options
-  # - $wsgi_process_group
-  # - $wsgi_script_aliases
-  # - $wsgi_pass_authorization
   if $wsgi_daemon_process_options {
     deprecation('apache::vhost::wsgi_daemon_process_options', 'This parameter is deprecated. Please add values inside Hash `wsgi_daemon_process`.')
   }
   if ($wsgi_application_group or $wsgi_daemon_process or ($wsgi_import_script and $wsgi_import_script_options) or $wsgi_process_group or ($wsgi_script_aliases and ! empty($wsgi_script_aliases)) or $wsgi_pass_authorization) and $ensure == 'present' {
     include apache::mod::wsgi
+    $wsgi_params = {
+      'wsgi_application_group' => $wsgi_application_group,
+      'wsgi_daemon_process' => $wsgi_daemon_process,
+      'wsgi_import_script' => $wsgi_import_script,
+      'wsgi_process_group' => $wsgi_process_group,
+      'wsgi_daemon_process_options'=> $wsgi_daemon_process_options,
+      'wsgi_import_script_options' => $wsgi_import_script_options,
+      'wsgi_script_aliases' => $wsgi_script_aliases,
+      'wsgi_pass_authorization' => $wsgi_pass_authorization,
+      'wsgi_chunked_request' => $wsgi_chunked_request,
+      'wsgi_script_aliases_match' => $wsgi_script_aliases_match,
+    }
 
     concat::fragment { "${name}-wsgi":
       target  => "${priority_real}${filename}.conf",
       order   => 260,
-      content => template('apache/vhost/_wsgi.erb'),
+      content => epp('apache/vhost/_wsgi.epp', $wsgi_params),
     }
   }
 
-  # Template uses:
-  # - $custom_fragment
   if $custom_fragment {
+    $custom_fragment_params = {
+      'custom_fragment' => $custom_fragment,
+    }
     concat::fragment { "${name}-custom_fragment":
       target  => "${priority_real}${filename}.conf",
       order   => 270,
-      content => template('apache/vhost/_custom_fragment.erb'),
+      content => epp('apache/vhost/_custom_fragment.epp', $custom_fragment_params),
     }
   }
 
-  # Template uses:
-  # - $suexec_user_group
   if $suexec_user_group and $ensure == 'present' {
     include apache::mod::suexec
 
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
-      content => template('apache/vhost/_suexec.erb'),
+      content => "SuexecUserGroup ${suexec_user_group}",
     }
   }
 
   if ('h2' in $protocols or 'h2c' in $protocols or $h2_copy_files != undef or $h2_direct != undef or $h2_early_hints != undef or $h2_max_session_streams != undef or $h2_modern_tls_only != undef or $h2_push != undef or $h2_push_diary_size != undef or $h2_push_priority != [] or $h2_push_resource != [] or $h2_serialize_headers != undef or $h2_stream_max_mem_size != undef or $h2_tls_cool_down_secs != undef or $h2_tls_warm_up_size != undef or $h2_upgrade != undef or $h2_window_size != undef) and $ensure == 'present' {
     include apache::mod::http2
+    $http2_params = {
+      'h2_copy_files'          => $h2_copy_files,
+      'h2_direct'              => $h2_direct,
+      'h2_early_hints'         => $h2_early_hints,
+      'h2_max_session_streams' => $h2_max_session_streams,
+      'h2_modern_tls_only'     => $h2_modern_tls_only,
+      'h2_push'                => $h2_push,
+      'h2_push_diary_size'     => $h2_push_diary_size,
+      'h2_push_priority'       => $h2_push_priority,
+      'h2_push_resource'       => $h2_push_resource,
+      'h2_serialize_headers'   => $h2_serialize_headers,
+      'h2_stream_max_mem_size' => $h2_stream_max_mem_size,
+      'h2_tls_cool_down_secs'  => $h2_tls_cool_down_secs,
+      'h2_tls_warm_up_size'    => $h2_tls_warm_up_size,
+      'h2_upgrade'             => $h2_upgrade,
+      'h2_window_size'         => $h2_window_size,
+    }
 
     concat::fragment { "${name}-http2":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
-      content => template('apache/vhost/_http2.erb'),
+      content => epp('apache/vhost/_http2.epp', $http2_params),
     }
   }
 
@@ -2759,153 +2758,171 @@ define apache::vhost (
     concat::fragment { "${name}-userdir":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
-      content => template('apache/vhost/_userdir.erb'),
+      content => epp('apache/vhost/_userdir.epp', { 'userdir' => $userdir }),
     }
   }
 
-  # Template uses:
-  # - $passenger_enabled
-  # - $passenger_start_timeout
-  # - $passenger_ruby
-  # - $passenger_python
-  # - $passenger_nodejs
-  # - $passenger_meteor_app_settings
-  # - $passenger_app_env
-  # - $passenger_app_root
-  # - $passenger_app_group_name
-  # - $passenger_app_start_command
-  # - $passenger_app_type
-  # - $passenger_startup_file
-  # - $passenger_restart_dir
-  # - $passenger_spawn_method
-  # - $passenger_load_shell_envvars
-  # - $passenger_preload_bundler
-  # - $passenger_rolling_restarts
-  # - $passenger_resist_deployment_errors
-  # - $passenger_min_instances
-  # - $passenger_max_instances
-  # - $passenger_max_preloader_idle_time
-  # - $passenger_force_max_concurrent_requests_per_process
-  # - $passenger_concurrency_model
-  # - $passenger_thread_count
-  # - $passenger_high_performance
-  # - $passenger_max_request_queue_size
-  # - $passenger_max_request_queue_time
-  # - $passenger_user
-  # - $passenger_group
-  # - $passenger_friendly_error_pages
-  # - $passenger_buffer_upload
-  # - $passenger_buffer_response
-  # - $passenger_allow_encoded_slashes
-  # - $passenger_lve_min_uid
-  # - $passenger_base_uri
-  # - $passenger_error_override
-  # - $passenger_sticky_sessions
-  # - $passenger_sticky_sessions_cookie_name
-  # - $passenger_sticky_sessions_cookie_attributes
-  # - $passenger_app_log_file
-  # - $passenger_debugger
-  # - $passenger_max_requests
-  # - $passenger_max_request_time
-  # - $passenger_memory_limit
   if ($passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef) and $ensure == 'present' {
     include apache::mod::passenger
+    $passenger_params = {
+      'passenger_enabled'                                   => $passenger_enabled,
+      'passenger_base_uri'                                  => $passenger_base_uri,
+      'passenger_ruby'                                      => $passenger_ruby,
+      'passenger_python'                                    => $passenger_python,
+      'passenger_nodejs'                                    => $passenger_nodejs,
+      'passenger_meteor_app_settings'                       => $passenger_meteor_app_settings,
+      'passenger_app_env'                                   => $passenger_app_env,
+      'passenger_app_root'                                  => $passenger_app_root,
+      'passenger_app_group_name'                            => $passenger_app_group_name,
+      'passenger_app_start_command'                         => $passenger_app_start_command,
+      'passenger_app_type'                                  => $passenger_app_type,
+      'passenger_startup_file'                              => $passenger_startup_file,
+      'passenger_restart_dir'                               => $passenger_restart_dir,
+      'passenger_spawn_method'                              => $passenger_spawn_method,
+      'passenger_load_shell_envvars'                        => $passenger_load_shell_envvars,
+      'passenger_preload_bundler'                           => $passenger_preload_bundler,
+      'passenger_rolling_restarts'                          => $passenger_rolling_restarts,
+      'passenger_resist_deployment_errors'                  => $passenger_resist_deployment_errors,
+      'passenger_user'                                      => $passenger_user,
+      'passenger_group'                                     => $passenger_group,
+      'passenger_friendly_error_pages'                      => $passenger_friendly_error_pages,
+      'passenger_min_instances'                             => $passenger_min_instances,
+      'passenger_max_instances'                             => $passenger_max_instances,
+      'passenger_max_preloader_idle_time'                   => $passenger_max_preloader_idle_time,
+      'passenger_force_max_concurrent_requests_per_process' => $passenger_force_max_concurrent_requests_per_process,
+      'passenger_start_timeout'                             => $passenger_start_timeout,
+      'passenger_concurrency_model'                         => $passenger_concurrency_model,
+      'passenger_thread_count'                              => $passenger_thread_count,
+      'passenger_max_requests'                              => $passenger_max_requests,
+      'passenger_max_request_time'                          => $passenger_max_request_time,
+      'passenger_memory_limit'                              => $passenger_memory_limit,
+      'passenger_stat_throttle_rate'                        => $passenger_stat_throttle_rate,
+      'passenger_high_performance'                          => $passenger_high_performance,
+      'passenger_buffer_upload'                             => $passenger_buffer_upload,
+      'passenger_buffer_response'                           => $passenger_buffer_response,
+      'passenger_error_override'                            => $passenger_error_override,
+      'passenger_max_request_queue_size'                    => $passenger_max_request_queue_size,
+      'passenger_max_request_queue_time'                    => $passenger_max_request_queue_time,
+      'passenger_sticky_sessions'                           => $passenger_sticky_sessions,
+      'passenger_sticky_sessions_cookie_name'               => $passenger_sticky_sessions_cookie_name,
+      'passenger_sticky_sessions_cookie_attributes'         => $passenger_sticky_sessions_cookie_attributes,
+      'passenger_allow_encoded_slashes'                     => $passenger_allow_encoded_slashes,
+      'passenger_app_log_file'                              => $passenger_app_log_file,
+      'passenger_debugger'                                  => $passenger_debugger,
+      'passenger_lve_min_uid'                               => $passenger_lve_min_uid,
+    }
 
     concat::fragment { "${name}-passenger":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
-      content => template('apache/vhost/_passenger.erb'),
+      content => epp('apache/vhost/_passenger.epp', $passenger_params),
     }
   }
 
-  # Template uses:
-  # - $add_default_charset
   if $add_default_charset {
+    $charsets_params = {
+      'add_default_charset' => $add_default_charset,
+    }
     concat::fragment { "${name}-charsets":
       target  => "${priority_real}${filename}.conf",
       order   => 310,
-      content => template('apache/vhost/_charsets.erb'),
+      content => epp('apache/vhost/_charsets.epp', $charsets_params),
     }
   }
 
-  # Template uses:
-  # - $modsec_disable_vhost
-  # - $modsec_disable_ids
-  # - $modsec_disable_ips
-  # - $modsec_disable_msgs
-  # - $modsec_disable_tags
-  # - $modsec_body_limit
-  # - $modsec_audit_log_destination
-  # - $modsec_inbound_anomaly_threshold
-  # - $modsec_outbound_anomaly_threshold
-  # - $modsec_allowed_methods
   if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
+    $security_params = {
+      'modsec_disable_vhost'              => $modsec_disable_vhost,
+      'modsec_audit_log_destination'      => $modsec_audit_log_destination,
+      '_modsec_disable_ids'               => $modsec_disable_ids,
+      'modsec_disable_ips'                => $modsec_disable_ips,
+      '_modsec_disable_msgs'              => $modsec_disable_msgs,
+      '_modsec_disable_tags'              => $modsec_disable_tags,
+      'modsec_body_limit'                 => $modsec_body_limit,
+      'modsec_inbound_anomaly_threshold'  => $modsec_inbound_anomaly_threshold,
+      'modsec_outbound_anomaly_threshold' => $modsec_outbound_anomaly_threshold,
+      'modsec_allowed_methods'            => $modsec_allowed_methods,
+    }
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb'),
+      content => epp('apache/vhost/_security.epp', $security_params),
     }
   }
 
-  # Template uses:
-  # - $filters
   if ! empty($filters) and $ensure == 'present' {
     include apache::mod::filter
 
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
-      content => template('apache/vhost/_filters.erb'),
+      content => epp('apache/vhost/_filters.epp', { 'filters' => $filters }),
     }
   }
 
-  # Template uses:
-  # - $jk_mounts
   if !empty($jk_mounts) and $ensure == 'present' {
     include apache::mod::jk
 
     concat::fragment { "${name}-jk_mounts":
       target  => "${priority_real}${filename}.conf",
       order   => 340,
-      content => template('apache/vhost/_jk_mounts.erb'),
+      content => epp('apache/vhost/_jk_mounts.epp', { 'jk_mounts' => $jk_mounts }),
     }
   }
 
-  # Template uses:
-  # - $keepalive
-  # - $keepalive_timeout
-  # - $max_keepalive_requests
   if $keepalive or $keepalive_timeout or $max_keepalive_requests {
+    $keep_alive_params = {
+      'keepalive' => $keepalive,
+      'keepalive_timeout' => $keepalive_timeout,
+      'max_keepalive_requests' => $max_keepalive_requests,
+    }
     concat::fragment { "${name}-keepalive_options":
       target  => "${priority_real}${filename}.conf",
       order   => 350,
-      content => template('apache/vhost/_keepalive_options.erb'),
+      content => epp('apache/vhost/_keepalive_options.epp', $keep_alive_params),
     }
   }
 
-  # Template uses:
-  # - $cas_*
   if $cas_enabled {
+    $auth_cas_params = {
+      'cas_enabled'               => $cas_enabled,
+      'cas_cookie_path'           => $cas_cookie_path,
+      'cas_login_url'             => $cas_login_url,
+      'cas_validate_url'          => $cas_validate_url,
+      'cas_version'               => $apache::mod::auth_cas::cas_version,
+      'cas_debug'                 => $apache::mod::auth_cas::cas_debug,
+      'cas_certificate_path'      => $apache::mod::auth_cas::cas_certificate_path,
+      'cas_proxy_validate_url'    => $apache::mod::auth_cas::cas_proxy_validate_url,
+      'cas_validate_depth'        => $apache::mod::auth_cas::cas_validate_depth,
+      'cas_root_proxied_as'       => $cas_root_proxied_as,
+      'cas_cookie_entropy'        => $apache::mod::auth_cas::cas_cookie_entropy,
+      'cas_timeout'               => $apache::mod::auth_cas::cas_timeout,
+      'cas_idle_timeout'          => $apache::mod::auth_cas::cas_idle_timeout,
+      'cas_cache_clean_interval'  => $apache::mod::auth_cas::cas_cache_clean_interval,
+      'cas_cookie_domain'         => $apache::mod::auth_cas::cas_cookie_domain,
+      'cas_cookie_http_only'      => $apache::mod::auth_cas::cas_cookie_http_only,
+      'cas_authoritative'         => $apache::mod::auth_cas::cas_authoritative,
+      'cas_sso_enabled'           => $cas_sso_enabled,
+      'cas_validate_saml'         => $cas_validate_saml,
+      'cas_attribute_prefix'      => $cas_attribute_prefix,
+      'cas_attribute_delimiter'   => $cas_attribute_delimiter,
+      'cas_scrub_request_headers' => $cas_scrub_request_headers,
+    }
     concat::fragment { "${name}-auth_cas":
       target  => "${priority_real}${filename}.conf",
       order   => 350,
-      content => template('apache/vhost/_auth_cas.erb'),
+      content => epp('apache/vhost/_auth_cas.epp', $auth_cas_params),
     }
   }
 
-  # Template uses:
-  # - $http_protocol_options
   if $http_protocol_options {
     concat::fragment { "${name}-http_protocol_options":
       target  => "${priority_real}${filename}.conf",
       order   => 350,
-      content => template('apache/vhost/_http_protocol_options.erb'),
+      content => epp('apache/vhost/_http_protocol_options.epp', { 'http_protocol_options' => $http_protocol_options }),
     }
   }
 
-  # Template uses:
-  # - $auth_oidc
-  # - $oidc_settings
   if $auth_oidc and $ensure == 'present' {
     include apache::mod::auth_openidc
 
@@ -2919,29 +2936,30 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $shib_compat_valid_user
   if $shibboleth_enabled {
     concat::fragment { "${name}-shibboleth":
       target  => "${priority_real}${filename}.conf",
       order   => 370,
-      content => template('apache/vhost/_shib.erb'),
+      content => epp('apache/vhost/_shib.epp', { 'shib_compat_valid_user' => $shib_compat_valid_user }),
     }
   }
 
-  # - $use_canonical_name
   if $use_canonical_name {
     concat::fragment { "${name}-use_canonical_name":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
-      content => template('apache/vhost/_use_canonical_name.erb'),
+      content => "UseCanonicalName ${use_canonical_name}",
     }
   }
 
   # Template uses no variables
+  $file_footer_params = {
+    'define'              => $define,
+    'passenger_pre_start' => $passenger_pre_start,
+  }
   concat::fragment { "${name}-file_footer":
     target  => "${priority_real}${filename}.conf",
     order   => 999,
-    content => template('apache/vhost/_file_footer.erb'),
+    content => epp('apache/vhost/_file_footer.epp', $file_footer_params),
   }
 }

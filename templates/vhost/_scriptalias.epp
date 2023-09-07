@@ -1,0 +1,15 @@
+<%- $aliases = $scriptaliases -%>
+  ## Script alias directives
+<%# Combine scriptalias and scriptaliases into a single data structure -%>
+<%# for backward compatibility and ease of implementation -%>
+<%-  if $scriptalias { $aliases1 = $aliases << { 'alias' => '/cgi-bin', 'path' => $scriptalias } } -%>
+<%-  else { $aliases1 = $scriptaliases } -%>
+<%- $aliases1.each |$salias| { -%>
+  <%- if $salias['path'] != '' { -%>
+    <%- if $salias['alias'] and $salias['alias'] != '' { -%>
+  ScriptAlias <%= $salias['alias'] %> "<%= $salias['path'] %>"
+    <%- } elsif $salias["aliasmatch"] and $salias["aliasmatch"] != '' { -%>
+  ScriptAliasMatch <%= $salias['aliasmatch'] %> "<%= $salias['path'] %>"
+    <%- } -%>
+  <%- } -%>
+<%- } -%>

@@ -1,0 +1,35 @@
+<% if $ssl_proxyengine { -%>
+
+  # SSL Proxy directives
+  SSLProxyEngine On
+  <%- if $ssl_proxy_verify { -%>
+  SSLProxyVerify <%= $ssl_proxy_verify %>
+  <%- } -%>
+  <%- if $ssl_proxy_verify_depth { -%>
+  SSLProxyVerifyDepth <%= $ssl_proxy_verify_depth %>
+  <%- } -%>
+  <%- if $ssl_proxy_ca_cert { -%>
+  SSLProxyCACertificateFile "<%= $ssl_proxy_ca_cert %>"
+  <%- } -%>
+  <%- if $ssl_proxy_check_peer_cn { -%>
+  SSLProxyCheckPeerCN     <%= $ssl_proxy_check_peer_cn %>
+  <%- } -%>
+  <%- if $ssl_proxy_check_peer_name { -%>
+  SSLProxyCheckPeerName   <%= $ssl_proxy_check_peer_name %>
+  <%- } -%>
+  <%- if $ssl_proxy_check_peer_expire { -%>
+  SSLProxyCheckPeerExpire   <%= $ssl_proxy_check_peer_expire %>
+  <%- } -%>
+  <%- if $ssl_proxy_machine_cert { -%>
+  SSLProxyMachineCertificateFile "<%= $ssl_proxy_machine_cert %>"
+  <%- } -%>
+  <%- if $ssl_proxy_machine_cert_chain { -%>
+  SSLProxyMachineCertificateChainFile "<%= $ssl_proxy_machine_cert_chain %>"
+  <%- } -%>
+  <%- if $ssl_proxy_cipher_suite { -%>
+  SSLProxyCipherSuite <%= $ssl_proxy_cipher_suite %>
+  <%- } -%>
+  <%- if $ssl_proxy_protocol { -%>
+  SSLProxyProtocol  <%= join([$ssl_proxy_protocol].flatten().filter |$v| { $v },' ') %>
+  <%- } -%>
+<% } -%>

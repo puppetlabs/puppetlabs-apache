@@ -1,0 +1,8 @@
+<% unless $request_headers.empty { -%>
+
+  ## Request header rules
+  ## as per http://httpd.apache.org/docs/2.4/mod/mod_headers.html#requestheader
+  <%- $request_headers.each |$request_statement| { -%>
+  RequestHeader <%= $request_statement %>
+  <%- } -%>
+<% } -%>

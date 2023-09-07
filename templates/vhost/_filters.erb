@@ -1,8 +1,0 @@
-<% unless @filters.empty? -%>
-
-  ## Filter module rules
-  ## as per http://httpd.apache.org/docs/2.2/mod/mod_filter.html
-  <%- @filters.each do |filter| -%>
-  <%= filter %>
-  <%- end -%>
-<% end -%>
