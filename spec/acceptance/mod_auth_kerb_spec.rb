@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper_acceptance'
-apache_hash = apache_settings_hash
 describe 'apache::vhost define auth kerb' do
   context 'new vhost on port 80' do
     pp = <<-MANIFEST
