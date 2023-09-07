@@ -12,11 +12,19 @@ describe 'apache::vhost define auth kerb' do
       }
 
       apache::vhost { 'first.example.com':
-        port    => 80,
-        docroot => '/var/www/first',
-        require => File['/var/www'],
         auth_kerb => true,
         ssl  => true,
+        krb_method_negotiate   => 'on',
+        krb_auth_realms        => ['EXAMPLE.ORG'],
+        krb_local_user_mapping => 'on',
+        directories            => [
+          {
+            path         => '/var/www/html',
+            auth_name    => 'Kerberos Login',
+            auth_type    => 'Kerberos',
+            auth_require => 'valid-user',
+          },
+        ],
       }
     MANIFEST
     it 'configures an apache vhost' do
