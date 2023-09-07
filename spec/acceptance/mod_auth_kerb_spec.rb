@@ -13,7 +13,6 @@ describe 'apache::vhost define auth kerb' do
 
       apache::vhost { 'first.example.com':
         auth_kerb => true,
-        ssl  => true,
         docroot => '/var/www/first',
         krb_method_negotiate   => 'on',
         krb_auth_realms        => ['EXAMPLE.ORG'],
