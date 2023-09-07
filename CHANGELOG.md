@@ -314,7 +314,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 
-- The default disk_cache.conf.erb caches everything.  [#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
+- The default disk_cache.conf.epp caches everything.  [#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
 
 ## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) - 2021-05-24
 
@@ -995,7 +995,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (MODULES-2764) Enclose IPv6 addresses in square brackets [#1248](https://github.com/puppetlabs/puppetlabs-apache/pull/1248) ([Benedikt1992](https://github.com/Benedikt1992))
 - (MODULES-2757) Adding if around ServerName in template [#1237](https://github.com/puppetlabs/puppetlabs-apache/pull/1237) ([damonconway](https://github.com/damonconway))
 - (MODULES-2651) Default document root update for Ubuntu 14.04 and Debian 8 [#1235](https://github.com/puppetlabs/puppetlabs-apache/pull/1235) ([abednarik](https://github.com/abednarik))
-- Update mime.conf.erb to support dynamic AddHandler AddType AddOutputF… [#1232](https://github.com/puppetlabs/puppetlabs-apache/pull/1232) ([prabin5](https://github.com/prabin5))
+- Update mime.conf.epp to support dynamic AddHandler AddType AddOutputF… [#1232](https://github.com/puppetlabs/puppetlabs-apache/pull/1232) ([prabin5](https://github.com/prabin5))
 - #2544 Allow multiple IP addresses per vhost [#1229](https://github.com/puppetlabs/puppetlabs-apache/pull/1229) ([Benedikt1992](https://github.com/Benedikt1992))
 - RewriteLock support [#1228](https://github.com/puppetlabs/puppetlabs-apache/pull/1228) ([wickedOne](https://github.com/wickedOne))
 - (MODULES-2120) Allow empty docroot [#1224](https://github.com/puppetlabs/puppetlabs-apache/pull/1224) ([DavidS](https://github.com/DavidS))

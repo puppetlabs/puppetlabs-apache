@@ -1,0 +1,25 @@
+<Location <%= $ldap_path %>>
+    SetHandler ldap-status
+    Require ip 127.0.0.1 ::1
+</Location>
+<% if $ldap_trusted_global_cert_file { -%>
+LDAPTrustedGlobalCert <%= $ldap_trusted_global_cert_type %> <%= $ldap_trusted_global_cert_file %>
+<% } -%>
+<% if $ldap_trusted_mode { -%>
+LDAPTrustedMode <%= $ldap_trusted_mode %>
+<% } -%>
+<%- if $ldap_shared_cache_size { -%>
+LDAPSharedCacheSize <%= $ldap_shared_cache_size %>
+<%- } -%>
+<%- if $ldap_cache_entries { -%>
+LDAPCacheEntries <%= $ldap_cache_entries %>
+<%- } -%>
+<%- if $ldap_cache_ttl { -%>
+LDAPCacheTTL <%= $ldap_cache_ttl %>
+<%- } -%>
+<%- if $ldap_opcache_entries { -%>
+LDAPOpCacheEntries <%= $ldap_opcache_entries %>
+<%- } -%>
+<%- if $ldap_opcache_ttl { -%>
+LDAPOpCacheTTL <%= $ldap_opcache_ttl %>
+<%- } -%>

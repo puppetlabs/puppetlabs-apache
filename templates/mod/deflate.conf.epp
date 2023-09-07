@@ -1,0 +1,7 @@
+<%- $types.sort.each |$type| { -%>
+AddOutputFilterByType DEFLATE <%= $type %>
+<%- } -%>
+
+<%- Array($notes).sort.each |$values| { -%>
+DeflateFilterNote <%= $values[0] %> <%= $values[1] %>
+<%- } -%>

@@ -33,12 +33,18 @@ class apache::mod::info (
     ::apache::mod { 'info': }
   }
 
+  $parameters = {
+    'info_path'       => $info_path,
+    'restrict_access' => $restrict_access,
+    'allow_from'      => $allow_from,
+  }
+
   # Template uses $allow_from
   file { 'info.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/info.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/info.conf.erb'),
+    content => epp('apache/mod/info.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

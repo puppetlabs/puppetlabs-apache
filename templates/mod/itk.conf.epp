@@ -1,0 +1,11 @@
+<IfModule mpm_itk_module>
+  StartServers        <%= $startservers %>
+  MinSpareServers     <%= $minspareservers %>
+  MaxSpareServers     <%= $maxspareservers %>
+  ServerLimit         <%= $serverlimit %>
+  MaxClients          <%= $maxclients %>
+  MaxRequestsPerChild <%= $maxrequestsperchild %>
+  <%- if $enablecapabilities != undef { -%>
+  EnableCapabilities  <%= apache::bool2httpd($enablecapabilities) %>
+  <%- } -%>
+</IfModule>

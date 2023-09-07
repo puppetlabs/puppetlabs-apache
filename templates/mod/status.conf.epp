@@ -1,0 +1,14 @@
+<Location <%= $status_path %>>
+    SetHandler server-status
+    <%# From Puppet 4.2 up, replace: -%>
+    <%# "scope.function_template(["apache/mod/<Template>"])" -%>
+    <%# with: -%>
+    <%# "scope.call_function('template', ["apache/mod/<Template>"])" -%>
+<%= epp("apache/mod/_require.epp") -%>
+</Location>
+ExtendedStatus <%= $extended_status %>
+
+<IfModule mod_proxy.c>
+    # Show Proxy LoadBalancer status in mod_status
+    ProxyStatus On
+</IfModule>

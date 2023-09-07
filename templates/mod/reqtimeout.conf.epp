@@ -1,0 +1,8 @@
+<% if type($timeouts, 'generalized') == String { -%>
+RequestReadTimeout <%= $timeouts -%>  
+<% } else { -%>
+  <%- $timeouts.each |$timeout| { -%>
+RequestReadTimeout <%= $timeout %>
+  <%- } -%>
+<% } -%>
+

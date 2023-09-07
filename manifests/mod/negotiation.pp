@@ -20,11 +20,16 @@ class apache::mod::negotiation (
 
   ::apache::mod { 'negotiation': }
   # Template uses no variables
+  $parameters = {
+    'language_priority'       => $language_priority,
+    'force_language_priority' => $force_language_priority,
+  }
+
   file { 'negotiation.conf':
     ensure  => file,
     mode    => $apache::file_mode,
     path    => "${apache::mod_dir}/negotiation.conf",
-    content => template('apache/mod/negotiation.conf.erb'),
+    content => epp('apache/mod/negotiation.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

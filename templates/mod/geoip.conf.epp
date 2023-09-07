@@ -1,0 +1,25 @@
+GeoIPEnable <%= apache::bool2httpd($enable) %>
+
+<%- if $db_file and !($db_file in [ false, 'false', '' ]) { -%>
+    <%- if String(type($db_file, 'generalized')).index('Array') == 0 { -%>
+      <%- Array($db_file).each |$file| { -%>
+GeoIPDBFile <%= $file %> <%= $flag %>
+      <%- } -%>
+    <%- } else { -%>
+GeoIPDBFile <%= $db_file %> <%= $flag %>
+    <%- } -%>
+<%- } -%>
+GeoIPOutput <%= $output %>
+<% if $enable_utf8 != undef { -%>
+GeoIPEnableUTF8 <%= apache::bool2httpd($enable_utf8) %>
+<% } -%>
+<% if $scan_proxy_headers != undef { -%>
+GeoIPScanProxyHeaders <%= apache::bool2httpd($scan_proxy_headers) %>
+<% } -%>
+<% if $scan_proxy_header_field != undef { -%>
+GeoIPScanProxyHeaderField <%= $scan_proxy_header_field %>
+<% } -%>
+<% if $use_last_xforwarededfor_ip != undef { -%>
+GeoIPUseLastXForwardedForIP <%= apache::bool2httpd($use_last_xforwarededfor_ip) %>
+<% } -%>
+

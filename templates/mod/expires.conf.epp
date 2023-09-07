@@ -1,0 +1,11 @@
+ExpiresActive <%= apache::bool2httpd($expires_active) %>
+<%- if $expires_default != undef and !($expires_default.empty) { -%>
+ExpiresDefault "<%= $expires_default %>"
+<%- } -%>
+<%- if $expires_by_type != undef and !($expires_by_type.empty) { -%>
+<%-   $expires_by_type.flatten.each |$line| { -%>
+<%-     $line.map |$type, $seconds| { -%>
+ExpiresByType <%= $type %> "<%= $seconds -%>"
+<%-     } -%>
+<%-   } -%>
+<%- } -%>

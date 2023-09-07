@@ -12,7 +12,7 @@ class apache::mod::autoindex (
   include apache
   ::apache::mod { 'autoindex': }
 
-  # Determine icon filename suffix for autoindex.conf.erb
+  # Determine icon filename suffix for autoindex.conf.epp
   case $facts['os']['name'] {
     'Debian', 'Ubuntu': {
       $icon_suffix = '-20x22'
@@ -26,7 +26,7 @@ class apache::mod::autoindex (
     ensure  => file,
     path    => "${apache::mod_dir}/autoindex.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/autoindex.conf.erb'),
+    content => epp('apache/mod/autoindex.conf.epp', { 'icons_prefix' => $icons_prefix, 'icon_suffix' => $icon_suffix, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

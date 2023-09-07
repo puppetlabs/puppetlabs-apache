@@ -1,0 +1,167 @@
+# This file is generated automatically by Puppet - DO NOT EDIT
+# Any manual changes will be overwritten
+
+<IfModule jk_module>
+  <%- if $workers_file { -%>
+  JkWorkersFile <%= $workers_file %>
+  <%- } -%>
+  <%- if $worker_property { -%>
+  <%- Array($worker_property).sort.each |$property_and_value| { -%>
+  JkWorkerProperty <%= $property_and_value[0] %>=<%= $property_and_value[1] %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $shm_path { -%>
+  JkShmFile <%= $shm_path %>
+  <%- } -%>
+  <%- if $shm_size { -%>
+  JkShmSize <%= $shm_size %>
+  <%- } -%>
+  <%- if $mount_file { -%>
+  JkMountFile <%= $mount_file %>
+  <%- } -%>
+  <%- if $mount_file_reload { -%>
+  JkMountFileReload <%= $mount_file_reload %>
+  <%- } -%>
+  <%- if $mount { -%>
+  <%- Array($mount).sort.each |$url_prefix_and_worker_name| { -%>
+  JkMount <%= $url_prefix_and_worker_name[0] %> <%= $url_prefix_and_worker_name[1] %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $un_mount { -%>
+  <%- Array($un_mount).sort.each |$url_prefix_and_worker_name| { -%>
+  JkUnMount <%= $url_prefix_and_worker_name[0] %> <%= $url_prefix_and_worker_name[1] %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $auto_alias { -%>
+  JkAutoAlias <%= $auto_alias %>
+  <%- } -%>
+  <%- if $mount_copy { -%>
+  JkMountCopy <%= $mount_copy %>
+  <%- } -%>
+  <%- if $worker_indicator { -%>
+  JkWorkerIndicator <%= $worker_indicator %>
+  <%- } -%>
+  <%- if $watchdog_interval { -%>
+  JkWatchdogInterval <%= $watchdog_interval %>
+  <%- } -%>
+  <%- if $log_path { -%>
+  JkLogFile <%= $log_path %>
+  <%- } -%>
+  <%- if $log_level { -%>
+  JkLogLevel <%= $log_level %>
+  <%- } -%>
+  <%- if $log_stamp_format { -%>
+  JkLogStampFormat <%= $log_stamp_format %>
+  <%- } -%>
+  <%- if $request_log_format { -%>
+  JkRequestLogFormat <%= $request_log_format %>
+  <%- } -%>
+  <%- if $extract_ssl { -%>
+  JkExtractSSL <%= $extract_ssl %>
+  <%- } -%>
+  <%- if $https_indicator { -%>
+  JkHTTPSIndicator <%= $https_indicator %>
+  <%- } -%>
+  <%- if $sslprotocol_indicator { -%>
+  JkSSLPROTOCOLIndicator <%= $sslprotocol_indicator %>
+  <%- } -%>
+  <%- if $certs_indicator { -%>
+  JkCERTSIndicator <%= $certs_indicator %>
+  <%- } -%>
+  <%- if $cipher_indicator { -%>
+  JkCIPHERIndicator <%= $cipher_indicator %>
+  <%- } -%>
+  <%- if $certchain_prefix { -%>
+  JkCERTCHAINPrefix <%= $certchain_prefix %>
+  <%- } -%>
+  <%- if $session_indicator { -%>
+  JkSESSIONIndicator <%= $session_indicator %>
+  <%- } -%>
+  <%- if $keysize_indicator { -%>
+  JkKEYSIZEIndicator <%= $keysize_indicator %>
+  <%- } -%>
+  <%- if $local_name_indicator { -%>
+  JkLocalNameIndicator <%= $local_name_indicator %>
+  <%- } -%>
+  <%- if $ignore_cl_indicator { -%>
+  JkIgnoreCLIndicator <%= $ignore_cl_indicator %>
+  <%- } -%>
+  <%- if $local_addr_indicator { -%>
+  JkLocalAddrIndicator <%= $local_addr_indicator %>
+  <%- } -%>
+  <%- if $local_port_indicator { -%>
+  JkLocalPortIndicator <%= $local_port_indicator %>
+  <%- } -%>
+  <%- if $remote_host_indicator { -%>
+  JkRemoteHostIndicator <%= $remote_host_indicator %>
+  <%- } -%>
+  <%- if $remote_addr_indicator { -%>
+  JkRemoteAddrIndicator <%= $remote_addr_indicator %>
+  <%- } -%>
+  <%- if $remote_port_indicator { -%>
+  JkRemotePortIndicator <%= $remote_port_indicator %>
+  <%- } -%>
+  <%- if $remote_user_indicator { -%>
+  JkRemoteUserIndicator <%= $remote_user_indicator %>
+  <%- } -%>
+  <%- if $auth_type_indicator { -%>
+  JkAuthTypeIndicator <%= $auth_type_indicator %>
+  <%- } -%>
+  <%- if $options { -%>
+  <%- $options.sort.each |$fwd_option| { -%>
+  JkOptions <%= $fwd_option %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $env_var { -%>
+  <%- Array($env_var).sort.each |$variable_and_value| { -%>
+  JkEnvVar <%= $variable_and_value[0] %><% if !$variable_and_value[1].empty { %> value<% } -%>
+  <%- } -%>
+  <%- } -%>
+  <%- if $strip_session { -%>
+  JkStripSession <%= $strip_session %>
+  <%- } -%>
+  <%# -%>
+  <%# Global locations for mod_jk are defined in array location_list -%>
+  <%# Each array item is a hash with quoted* property name as key -%>
+  <%# and value as value itself -%>
+  <%# You can define a comment in a special 'comment' key -%>
+  <%# -%>
+  <%# Example: -%>
+  <%# <Location /jkstatus/> -%>
+  <%#   # Configures jkstatus -%>
+  <%#   JkMount status -%>
+  <%#   Order deny,allow -%>
+  <%#   Deny from all -%>
+  <%#   Allow from 127.0.0.1 -%>
+  <%# </Location> -%>
+  <%# -%>
+  <%# Is defined as: -%>
+  <%# location_list = [ -%>
+  <%#   { -%>
+  <%#     'Location'   => '/jkstatus/', -%>
+  <%#     'Comment'    => 'Configures jkstatus', -%>
+  <%#     'JkMount'    => 'status', -%>
+  <%#     'Order'      => 'deny,allow', -%>
+  <%#     'Deny from'  => 'all', -%>
+  <%#     'Allow from' => '127.0.0.1', -%>
+  <%#   }, -%>
+  <%# ] -%>
+  <%# * Keys must be quoted to allow arbitrary case and/or multi-word keys -%>
+  <%# (BTW, note the case of 'Location' and 'Comment' keys) -%>
+  <%# -%>
+  <%- if $location_list { -%>
+  <%- $location_list.each |$location_tag| { -%>
+
+  <Location <%= $location_tag['Location'] %>>
+    <%- if $location_tag['Comment'] { -%>
+    # <%= $location_tag['Comment'] %>
+    <%- } -%>
+    <%- $location_tag.each |$property, $value| { -%>
+    <%- if $property != 'Comment' and $property != 'Location' { -%>
+    <%= $property %> <%= $value %>
+    <%- } -%>
+    <%- } -%>
+  </Location>
+  <%- } -%>
+  <%- } -%>
+</IfModule>

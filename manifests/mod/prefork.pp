@@ -67,9 +67,21 @@ class apache::mod::prefork (
   # - $maxrequestworkers
   # - $maxrequestsperchild
   # - $maxconnectionsperchild
+  $parameters = {
+    'startservers'            => $startservers,
+    'minspareservers'         => $minspareservers,
+    'maxspareservers'         => $maxspareservers,
+    'serverlimit'             => $serverlimit,
+    'maxrequestworkers'       => $maxrequestworkers,
+    'maxclients'              => $maxclients,
+    'maxconnectionsperchild'  => $maxconnectionsperchild,
+    'maxrequestsperchild'     => $maxrequestsperchild,
+    'listenbacklog'           => $listenbacklog,
+  }
+
   file { "${apache::mod_dir}/prefork.conf":
     ensure  => file,
-    content => template('apache/mod/prefork.conf.erb'),
+    content => epp('apache/mod/prefork.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

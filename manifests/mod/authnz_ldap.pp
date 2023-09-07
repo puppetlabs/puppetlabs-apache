@@ -25,7 +25,7 @@ class apache::mod::authnz_ldap (
     ensure  => file,
     path    => "${apache::mod_dir}/authnz_ldap.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/authnz_ldap.conf.erb'),
+    content => epp('apache/mod/authnz_ldap.conf.epp', { 'verify_server_cert' => $verify_server_cert, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

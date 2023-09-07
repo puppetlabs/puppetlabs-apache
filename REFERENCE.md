@@ -5983,7 +5983,7 @@ Data type: `String`
 
 Path to template to use for configuring mod_rpaf.
 
-Default value: `'apache/mod/rpaf.conf.erb'`
+Default value: `'apache/mod/rpaf.conf.epp'`
 
 ### <a name="apache--mod--security"></a>`apache::mod::security`
 

@@ -78,9 +78,21 @@ class apache::mod::worker (
   # - $serverlimit
   # - $threadLimit
   # - $listenbacklog
+  $parameters = {
+    'serverlimit'         => $serverlimit,
+    'startservers'        => $startservers,
+    'threadlimit'         => $threadlimit,
+    'minsparethreads'     => $minsparethreads,
+    'maxsparethreads'     => $maxsparethreads,
+    'threadsperchild'     => $threadsperchild,
+    'maxrequestsperchild' => $maxrequestsperchild,
+    'listenbacklog'       => $listenbacklog,
+    'maxrequestworkers'   => $maxrequestworkers,
+  }
+
   file { "${apache::mod_dir}/worker.conf":
     ensure  => file,
-    content => template('apache/mod/worker.conf.erb'),
+    content => epp('apache/mod/worker.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

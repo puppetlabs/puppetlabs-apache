@@ -45,13 +45,24 @@ class apache::mod::authn_dbd (
     include apache::mod::authn_core
   }
 
+  $parameters = {
+    'authn_dbd_dbdriver'  => $authn_dbd_dbdriver,
+    'authn_dbd_params'    => $authn_dbd_params,
+    'authn_dbd_min'       => $authn_dbd_min,
+    'authn_dbd_max'       => $authn_dbd_max,
+    'authn_dbd_keep'      => $authn_dbd_keep,
+    'authn_dbd_exptime'   => $authn_dbd_exptime,
+    'authn_dbd_alias'     => $authn_dbd_alias,
+    'authn_dbd_query'     => $authn_dbd_query,
+  }
+
   # Template uses
   # - All variables beginning with authn_dbd
   file { 'authn_dbd.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/authn_dbd.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/authn_dbd.conf.erb'),
+    content => epp('apache/mod/authn_dbd.conf.epp', $parameters),
     require => [Exec["mkdir ${apache::mod_dir}"],],
     before  => File[$apache::mod_dir],
     notify  => Class['Apache::Service'],

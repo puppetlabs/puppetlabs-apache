@@ -41,12 +41,18 @@ class apache::mod::disk_cache (
 
   Class['apache::mod::cache'] -> Class['apache::mod::disk_cache']
 
+  $parameters = {
+    'default_cache_enable'  => $default_cache_enable,
+    '_cache_root'           => $_cache_root,
+    'cache_ignore_headers'  => $cache_ignore_headers,
+  }
+
   # Template uses $_cache_root
   file { 'disk_cache.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/disk_cache.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/disk_cache.conf.erb'),
+    content => epp('apache/mod/disk_cache.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

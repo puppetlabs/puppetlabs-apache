@@ -62,12 +62,22 @@ class apache::mod::userdir (
 
   ::apache::mod { 'userdir': }
 
+  $parameters = {
+    'disable_root'    => $disable_root,
+    '_userdir'        => $_userdir,
+    'unmanaged_path'  => $unmanaged_path,
+    '_path'           => $_path,
+    'overrides'       => $overrides,
+    'options'         => $options,
+    'custom_fragment' => $custom_fragment,
+  }
+
   # Template uses $home, $dir, $disable_root
   file { 'userdir.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/userdir.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/userdir.conf.erb'),
+    content => epp('apache/mod/userdir.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

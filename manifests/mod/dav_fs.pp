@@ -19,7 +19,7 @@ class apache::mod::dav_fs {
     ensure  => file,
     path    => "${apache::mod_dir}/dav_fs.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/dav_fs.conf.erb'),
+    content => epp('apache/mod/dav_fs.conf.epp', { 'dav_lock' => $dav_lock }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

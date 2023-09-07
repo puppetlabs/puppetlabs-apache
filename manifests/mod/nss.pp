@@ -33,11 +33,19 @@ class apache::mod::nss (
   # $error_log
   # $http_dir
   # passwd_file
+  $parameters = {
+    'port'          => $port,
+    'passwd_file'   => $passwd_file,
+    'error_log'     => $error_log,
+    'transfer_log'  => $transfer_log,
+    'httpd_dir'     => $httpd_dir,
+  }
+
   file { 'nss.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/nss.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/nss.conf.erb'),
+    content => epp('apache/mod/nss.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

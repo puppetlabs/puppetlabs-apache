@@ -73,10 +73,22 @@ class apache::mod::peruser (
       # - $expiretimeout
       # - $keepalive
       # - $mod_dir
+      $parameters = {
+        'minspareprocessors'  => $minspareprocessors,
+        'minprocessors'       => $minprocessors,
+        'maxprocessors'       => $maxprocessors,
+        'maxclients'          => $maxclients,
+        'maxrequestsperchild' => $maxrequestsperchild,
+        'idletimeout'         => $idletimeout,
+        'expiretimeout'       => $expiretimeout,
+        'keepalive'           => $keepalive,
+        'mod_dir'             => $mod_dir,
+      }
+
       file { "${apache::mod_dir}/peruser.conf":
         ensure  => file,
         mode    => $apache::file_mode,
-        content => template('apache/mod/peruser.conf.erb'),
+        content => epp('apache/mod/peruser.conf.epp', $parameters),
         require => Exec["mkdir ${apache::mod_dir}"],
         before  => File[$apache::mod_dir],
         notify  => Class['apache::service'],

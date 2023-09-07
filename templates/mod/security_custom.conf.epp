@@ -1,0 +1,6 @@
+# This file is managed by puppet, any direct modification will be overwritten.
+<% if $custom_rules_set and !($custom_rules_set.empty) { -%>
+<% $custom_rules_set.each |$secrule| { -%>
+SecRule <%= $secrule %>
+<% } -%>
+<% } -%>

@@ -85,9 +85,30 @@ class apache::mod::http2 (
   include apache
   apache::mod { 'http2': }
 
+  $parameters = {
+    'h2_copy_files'               => $h2_copy_files,
+    'h2_direct'                   => $h2_direct,
+    'h2_early_hints'              => $h2_early_hints,
+    'h2_max_session_streams'      => $h2_max_session_streams,
+    'h2_max_worker_idle_seconds'  => $h2_max_worker_idle_seconds,
+    'h2_max_workers'              => $h2_max_workers,
+    'h2_min_workers'              => $h2_min_workers,
+    'h2_modern_tls_only'          => $h2_modern_tls_only,
+    'h2_push'                     => $h2_push,
+    'h2_push_diary_size'          => $h2_push_diary_size,
+    'h2_push_priority'            => $h2_push_priority,
+    'h2_push_resource'            => $h2_push_resource,
+    'h2_serialize_headers'        => $h2_serialize_headers,
+    'h2_stream_max_mem_size'      => $h2_stream_max_mem_size,
+    'h2_tls_cool_down_secs'       => $h2_tls_cool_down_secs,
+    'h2_tls_warm_up_size'         => $h2_tls_warm_up_size,
+    'h2_upgrade'                  => $h2_upgrade,
+    'h2_window_size'              => $h2_window_size,
+  }
+
   file { 'http2.conf':
     ensure  => file,
-    content => template('apache/mod/http2.conf.erb'),
+    content => epp('apache/mod/http2.conf.epp', $parameters),
     mode    => $apache::file_mode,
     path    => "${apache::mod_dir}/http2.conf",
     owner   => $apache::params::user,

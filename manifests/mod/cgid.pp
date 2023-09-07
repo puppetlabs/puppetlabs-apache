@@ -38,7 +38,7 @@ class apache::mod::cgid {
       ensure  => file,
       path    => "${apache::mod_dir}/cgid.conf",
       mode    => $apache::file_mode,
-      content => template('apache/mod/cgid.conf.erb'),
+      content => epp('apache/mod/cgid.conf.epp', { 'cgisock_path' => $cgisock_path }),
       require => Exec["mkdir ${apache::mod_dir}"],
       before  => File[$apache::mod_dir],
       notify  => Class['apache::service'],

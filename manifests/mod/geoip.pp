@@ -49,11 +49,22 @@ class apache::mod::geoip (
   # - scan_proxy_headers
   # - scan_proxy_header_field
   # - use_last_xforwarededfor_ip
+  $parameters = {
+    'enable'                      => $enable,
+    'db_file'                     => $db_file,
+    'flag'                        => $flag,
+    'output'                      => $output,
+    'enable_utf8'                 => $enable_utf8,
+    'scan_proxy_headers'          => $scan_proxy_headers,
+    'scan_proxy_header_field'     => $scan_proxy_header_field,
+    'use_last_xforwarededfor_ip'  => $use_last_xforwarededfor_ip,
+  }
+
   file { 'geoip.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/geoip.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/geoip.conf.erb'),
+    content => epp('apache/mod/geoip.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
