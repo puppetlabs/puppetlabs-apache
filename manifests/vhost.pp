@@ -2368,7 +2368,7 @@ define apache::vhost (
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}${filename}.conf",
     order   => 90,
-    content => "  ServerSignature Off",
+    content => '  ServerSignature Off',
   }
 
   # Template uses:
