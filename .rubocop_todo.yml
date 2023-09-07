@@ -11,6 +11,7 @@
 Lint/DuplicateBranch:
   Exclude:
     - 'spec/acceptance/mod_php_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
     - 'spec/spec_helper_acceptance_local.rb'
 
 # Offense count: 5
@@ -39,6 +40,7 @@ Metrics/PerceivedComplexity:
 Naming/HeredocDelimiterNaming:
   Exclude:
     - 'spec/classes/mod/http2_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 3
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
@@ -47,6 +49,7 @@ Naming/MethodParameterName:
   Exclude:
     - 'spec/spec_helper_acceptance_local.rb'
     - 'util/apache_mod_platform_support.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: MinSize.
@@ -54,6 +57,7 @@ Performance/CollectionLiteralInLoop:
   Exclude:
     - 'spec/classes/mod/passenger_spec.rb'
     - 'spec/defines/vhost_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -61,6 +65,7 @@ RSpec/BeEq:
   Exclude:
     - 'spec/functions/bool2httpd_spec.rb'
     - 'spec/functions/pw_hash_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 393
 # Configuration parameters: Prefixes, AllowedPatterns.
@@ -89,6 +94,7 @@ RSpec/FilePath:
     - 'spec/classes/mod/lbmethod_heartbeat.rb'
     - 'spec/classes/mod/lookup_identity.rb'
     - 'spec/classes/mod/proxy_wstunnel.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 16
 # This cop supports safe autocorrection.
@@ -103,6 +109,7 @@ RSpec/LetBeforeExamples:
     - 'spec/classes/mod/ssl_spec.rb'
     - 'spec/classes/mod/wsgi_spec.rb'
     - 'spec/classes/service_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 17
 RSpec/MultipleExpectations:
@@ -143,6 +150,7 @@ RSpec/RepeatedExampleGroupBody:
     - 'spec/acceptance/vhost_spec.rb'
     - 'spec/classes/mod/remoteip_spec.rb'
     - 'spec/functions/pw_hash_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 18
 RSpec/RepeatedExampleGroupDescription:
@@ -151,6 +159,7 @@ RSpec/RepeatedExampleGroupDescription:
     - 'spec/acceptance/vhost_spec.rb'
     - 'spec/classes/apache_spec.rb'
     - 'spec/classes/mod/security_spec.rb'
+    - 'spec/acceptance/mod_auth_kerb_spec.rb'
 
 # Offense count: 4
 RSpec/StubbedMock:
