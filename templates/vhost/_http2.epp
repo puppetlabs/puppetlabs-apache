@@ -1,0 +1,45 @@
+<% if $h2_copy_files != undef { -%>
+  H2CopyFiles <%= apache::bool2httpd($h2_copy_files) %>
+<% } -%>
+<% if $h2_direct != undef { -%>
+  H2Direct <%= apache::bool2httpd($h2_direct) %>
+<% } -%>
+<% if $h2_early_hints != undef {-%>
+  H2EarlyHints <%= apache::bool2httpd($h2_early_hints) %>
+<% } -%>
+<% if $h2_max_session_streams != undef { -%>
+  H2MaxSessionStreams <%= $h2_max_session_streams %>
+<% } -%>
+<%- if $h2_modern_tls_only != undef { -%>
+  H2ModernTLSOnly <%= apache::bool2httpd($h2_modern_tls_only) %>
+<%- } -%>
+<%- if $h2_push != undef { -%>
+  H2Push <%= apache::bool2httpd($h2_push) %>
+<%- } -%>
+<%- if $h2_push_diary_size != undef { -%>
+  H2PushDiarySize <%= $h2_push_diary_size %>
+<%- } -%>
+<%- $h2_push_priority.each |$expr| { -%>
+  H2PushPriority <%= $expr %>
+<%- } -%>
+<%- $h2_push_resource.each |$expr| { -%>
+  H2PushResource <%= $expr %>
+<%- } -%>
+<% if $h2_serialize_headers != undef  { -%>
+  H2SerializeHeaders <%= apache::bool2httpd($h2_serialize_headers) %>
+<% } -%>
+<% if $h2_stream_max_mem_size != undef { -%>
+  H2StreamMaxMemSize <%= $h2_stream_max_mem_size %>
+<% } -%>
+<%- if $h2_tls_cool_down_secs != undef { -%>
+  H2TLSCoolDownSecs <%= $h2_tls_cool_down_secs %>
+<%- } -%>
+<%- if $h2_tls_warm_up_size != undef { -%>
+  H2TLSWarmUpSize <%= $h2_tls_warm_up_size %>
+<%- } -%>
+<% if $h2_upgrade != undef { -%>
+  H2Upgrade <%= apache::bool2httpd($h2_upgrade) %>
+<% } -%>
+<% if $h2_window_size != undef { -%>
+  H2WindowSize <%= $h2_window_size %>
+<% } -%>
