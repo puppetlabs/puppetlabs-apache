@@ -16,6 +16,7 @@ describe 'apache::vhost define auth kerb' do
         docroot => '/var/www/first',
         require => File['/var/www'],
         auth_kerb => true,
+        ssl  => true,
       }
     MANIFEST
     it 'configures an apache vhost' do
