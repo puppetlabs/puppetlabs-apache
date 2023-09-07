@@ -1,0 +1,65 @@
+<% if $cas_enabled {-%>
+  <%- if $cas_cookie_path {-%>
+  CASCookiePath <%= $cas_cookie_path %>
+  <%- } -%>
+  <%- if $cas_login_url {-%>
+  CASLoginURL <%= $cas_login_url %>
+  <%- } -%>
+  <%- if $cas_validate_url {-%>
+  CASValidateURL <%= $cas_validate_url %>
+  <%- } -%>
+  <%- if $cas_version {-%>
+  CASVersion <%= $cas_version %>
+  <%- } -%>
+  <%- if $cas_debug {-%>
+  CASDebug <%= $cas_debug %>
+  <%- } -%>
+  <%- if $cas_certificate_path {-%>
+  CASCertificatePath <%= $cas_certificate_path %>
+  <%- } -%>
+  <%- if $cas_proxy_validate_url {-%>
+  CASProxyValidateURL <%= $cas_proxy_validate_url %>
+  <%- } -%>
+  <%- if $cas_validate_depth {-%>
+  CASValidateDepth <%= $cas_validate_depth %>
+  <%- } -%>
+  <%- if $cas_root_proxied_as {-%>
+  CASRootProxiedAs <%= $cas_root_proxied_as %>
+  <%- } -%>
+  <%- if $cas_cookie_entropy {-%>
+  CASCookieEntropy <%= $cas_cookie_entropy %>
+  <%- } -%>
+  <%- if $cas_timeout {-%>
+  CASTimeout <%= $cas_timeout %>
+  <%- } -%>
+  <%- if $cas_idle_timeout {-%>
+  CASIdleTimeout <%= $cas_idle_timeout %>
+  <%- } -%>
+  <%- if $cas_cache_clean_interval {-%>
+  CASCacheCleanInterval <%= $cas_cache_clean_interval %>
+  <%- } -%>
+  <%- if $cas_cookie_domain {-%>
+  CASCookieDomain <%= $cas_cookie_domain %>
+  <%- } -%>
+  <%- if $cas_cookie_http_only {-%>
+  CASCookieHttpOnly <%= $cas_cookie_http_only %>
+  <%- } -%>
+  <%- if $cas_authoritative {-%>
+  CASAuthoritative <%= $cas_authoritative %>
+  <%- } -%>
+  <%- if $cas_sso_enabled {-%>
+  CASSSOEnabled On
+  <%- } -%>
+  <%- if $cas_validate_saml {-%>
+  CASValidateSAML On
+  <%- } -%>
+  <%- if $cas_attribute_prefix {-%>
+  CASAttributePrefix <%= $cas_attribute_prefix %>
+  <%- } -%>
+  <%- if $cas_attribute_delimiter {-%>
+  CASAttributeDelimiter <%= $cas_attribute_delimiter %>
+  <%- } -%>
+  <%- if $cas_scrub_request_headers {-%>
+  CASScrubRequestHeaders On
+  <%- } -%>
+<%- } -%>

@@ -1,0 +1,9 @@
+<%- if $keepalive {-%>
+  KeepAlive <%= $keepalive %>
+<%- } -%>
+<%- if $keepalive_timeout {-%>
+  KeepAliveTimeout <%= $keepalive_timeout %>
+<%- } -%>
+<%- if $max_keepalive_requests {-%>
+  MaxKeepAliveRequests <%= $max_keepalive_requests %>
+<%- } -%>

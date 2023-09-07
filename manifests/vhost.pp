@@ -2368,7 +2368,7 @@ define apache::vhost (
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}${filename}.conf",
     order   => 90,
-    content => template('apache/vhost/_serversignature.erb'),
+    content => "  ServerSignature Off",
   }
 
   # Template uses:
@@ -2391,7 +2391,7 @@ define apache::vhost (
     concat::fragment { "${name}-action":
       target  => "${priority_real}${filename}.conf",
       order   => 110,
-      content => template('apache/vhost/_action.erb'),
+      content => "Action ${action}  /cgi-bin virtual",
     }
   }
 

@@ -1,0 +1,21 @@
+<% $_access_logs.each |$log| {-%>
+<%    if log['env'] { $env ||= "env=#{$log['env']}" } -%>
+<%   $env ||= '' -%>
+<%    if $log['format'] { $format ||= "\"#{$log['format']}\"" }-%>
+<%   $format ||= 'combined' -%>
+<%   if log['file'] {-%>
+<%     if log['file'].chars.first == '/' {-%>
+<%       $destination = "#{log['file']}" -%>
+<%}     else {-%>
+<%       $destination = "#{@logroot}/#{log['file']}" -%>
+<%     } -%>
+<%}   elsif log['syslog'] {-%>
+<%     $destination = log['syslog'] -%>
+<%}   elsif log['pipe'] {-%>
+<%     $destination = log['pipe'] -%>
+<%}   else {-%>
+<% if $ssl {$destination ||= "#{$logroot}/#{$filename}_access_ssl.log"}  -%>
+<%     $destination ||= "#{$logroot}/#{$filename}_access.log" -%>
+<%   } -%>
+  CustomLog "<%= destination %>" <%= format %> <%= env %>
+<% } -%>
