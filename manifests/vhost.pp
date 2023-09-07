@@ -2706,7 +2706,7 @@ define apache::vhost (
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
-      content => template('apache/vhost/_suexec.erb'),
+      content => "SuexecUserGroup ${suexec_user_group}",
     }
   }
 
@@ -2907,7 +2907,7 @@ define apache::vhost (
     concat::fragment { "${name}-use_canonical_name":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
-      content => template('apache/vhost/_use_canonical_name.erb'),
+      content => "UseCanonicalName ${use_canonical_name}",
     }
   }
 
