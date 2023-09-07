@@ -1,0 +1,61 @@
+<IfModule mod_security2.c>
+<% if $modsec_disable_vhost {-%>
+  SecRuleEngine Off
+<% } -%>
+<% if $modsec_audit_log_destination {-%>
+  SecAuditLog "<%= $modsec_audit_log_destination %>"
+<% } -%>
+<% if $_modsec_disable_ids =~ Hash {-%>
+<%   $_modsec_disable_ids.each |$location, $rules| {-%>
+  <LocationMatch <%= $location %>>
+<%     Array($rules).each |$rule| {-%>
+    SecRuleRemoveById <%= $rule %>
+<%     } -%>
+  </LocationMatch>
+<%   } -%>
+<% } -%>
+<% unless $modsec_disable_ips.empty {%>
+  SecRule REMOTE_ADDR "<%= join($modsec_disable_ips, ',') %>" "nolog,allow,id:1234123455"
+  SecAction  "phase:2,pass,nolog,id:1234123456"
+<% } -%>
+<% if $_modsec_disable_msgs =~ Hash {-%>
+<%   $_modsec_disable_msgs.each |$location, $rules| {-%>
+  <LocationMatch <%= $location %>>
+<%     Array($rules).each |$rule| {-%>
+    SecRuleRemoveByMsg "<%= $rule %>"
+<%     } -%>
+  </LocationMatch>
+<%   } -%>
+<% } -%>
+<% if $_modsec_disable_tags =~ Hash {-%>
+<%   $_modsec_disable_tags.each |$location, $rules| {-%>
+  <LocationMatch <%= $location %>>
+<%     Array($rules).each |$rule| {-%>
+    SecRuleRemoveByTag "<%= $rule %>"
+<%     } -%>
+  </LocationMatch>
+<%   } -%>
+<% } -%>
+<% if $modsec_body_limit {-%>
+  SecRequestBodyLimit <%= $modsec_body_limit %>
+<% } -%>
+<% if $modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold {-%>
+  SecAction \
+   "id:900110,\
+    phase:1,\
+    nolog,\
+    pass,\
+    t:none,\
+    setvar:tx.inbound_anomaly_score_threshold=<%= $modsec_inbound_anomaly_threshold -%>, \
+    setvar:tx.outbound_anomaly_score_threshold=<%= $modsec_outbound_anomaly_threshold -%>"
+<% } -%>
+<% if $modsec_allowed_methods {-%>
+  SecAction \
+   "id:900200,\
+    phase:1,\
+    nolog,\
+    pass,\
+    t:none,\
+    setvar:'tx.allowed_methods=<%= $modsec_allowed_methods -%>'"
+<% } -%>
+</IfModule>

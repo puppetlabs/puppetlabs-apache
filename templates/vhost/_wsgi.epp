@@ -1,0 +1,50 @@
+<% if $wsgi_application_group or $wsgi_daemon_process or $wsgi_import_script or $wsgi_process_group { -%>
+
+  ## WSGI configuration
+<% } -%>
+<% if $wsgi_application_group { -%>
+  WSGIApplicationGroup <%= $wsgi_application_group %>
+<% } -%>
+<% if $wsgi_daemon_process =~ String and $wsgi_daemon_process_options { -%>
+  WSGIDaemonProcess <%= $wsgi_daemon_process %> <%= join(sort($wsgi_daemon_process_options.map |$k,$v| { "$k=$v" }), ' ') %>
+<%} elsif $wsgi_daemon_process =~ String and !$wsgi_daemon_process_options { -%>
+  WSGIDaemonProcess <%= $wsgi_daemon_process %>
+<%} elsif $wsgi_daemon_process =~ Hash { -%>
+  <%- $wsgi_daemon_process.each |$key, $val| { -%>
+    <%- if $val.empty { -%>
+  WSGIDaemonProcess <%= $key %>
+    <%-} else { -%>
+  WSGIDaemonProcess <%= $key %> <%= join(sort($val.map |$k,$v| { "$k=$v"}), ' ') %>
+<% } -%>
+<% } -%>
+<% } -%>
+<% if $wsgi_import_script and $wsgi_import_script_options { -%>
+  WSGIImportScript <%= $wsgi_import_script %> <%= join(sort($wsgi_import_script_options.map |$k,$v| { "$k=$v" }), ' ') %>
+<% } -%>
+<% if $wsgi_process_group { -%>
+  WSGIProcessGroup <%= $wsgi_process_group %>
+<% } -%>
+<% if $wsgi_script_aliases_match and ! $wsgi_script_aliases_match.empty { -%>
+  <%- $wsgi_script_aliases_match.each |$key, $value| { -%>
+    <%- if $key != '' and $value != ''{ -%>
+  WSGIScriptAliasMatch <%= $key %> "<%= $value %>"
+    <%- } -%>
+  <%- } -%>
+<% } -%>
+<% if $wsgi_script_aliases and ! $wsgi_script_aliases.empty { -%>
+  <%- $wsgi_script_aliases.each |$key, $value| { -%>
+    <%- if $key != '' and $value != ''{ -%>
+      <%- if $value =~ Array { -%>
+  WSGIScriptAlias <%= $key %> <%= join($value, ' ') %>
+      <%-} else { -%>
+  WSGIScriptAlias <%= $key %> "<%= $value %>"
+      <%- } -%>
+    <%- } -%>
+  <%- } -%>
+<% } -%>
+<% if $wsgi_pass_authorization { -%>
+  WSGIPassAuthorization <%= $wsgi_pass_authorization %>
+<% } -%>
+<% if $wsgi_chunked_request { -%>
+  WSGIChunkedRequest <%= $wsgi_chunked_request %>
+<% } -%>
