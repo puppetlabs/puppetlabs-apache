@@ -33,8 +33,8 @@ describe 'apache::vhost define auth kerb' do
     end
 
     describe file("#{apache_hash['vhost_dir']}/25-first.example.com.conf") do
-      # it { is_expected.to contain '<VirtualHost \*:80>' }
-      # it { is_expected.to contain 'ServerName first.example.com' }
+      it { is_expected.to contain '<VirtualHost \*:80>' }
+      it { is_expected.to contain 'ServerName first.example.com' }
     end
   end
 end
