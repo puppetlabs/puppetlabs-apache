@@ -1,0 +1,10 @@
+<% unless $jk_mounts.empty { -%>
+
+  <%- $jk_mounts.each |$jk| { -%>
+    <%- if $jk['mount'] != undef and $jk['worker'] != undef { -%>
+  JkMount   <%= $jk['mount'] %> <%= $jk['worker'] %>
+    <%-} elsif $jk['unmount'] != undef and $jk['worker'] != undef { -%>
+  JkUnMount <%= $jk['unmount'] %> <%= $jk['worker'] %>
+    <%- } -%>
+  <%- } -%>
+<% } -%>

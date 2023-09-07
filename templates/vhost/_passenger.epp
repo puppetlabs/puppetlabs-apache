@@ -1,0 +1,144 @@
+<%# 1 - Essentials -%>
+<%# 2 - Deployment options -%>
+<% unless $passenger_enabled == undef { -%>
+  PassengerEnabled <%= apache::bool2httpd($passenger_enabled) %>
+<% } -%>
+<% if $passenger_base_uri { -%>
+  PassengerBaseURI <%= $passenger_base_uri %>
+<% } -%>
+<%# 3 - Application loading options -%>
+<% if $passenger_ruby { -%>
+  PassengerRuby <%= $passenger_ruby %>
+<% } -%>
+<% if $passenger_python { -%>
+  PassengerPython <%= $passenger_python %>
+<% } -%>
+<% if $passenger_nodejs { -%>
+  PassengerNodejs <%= $passenger_nodejs %>
+<% } -%>
+<% if $passenger_meteor_app_settings { -%>
+  PassengerMeteorAppSettings <%= $passenger_meteor_app_settings %>
+<% } -%>
+<% if $passenger_app_env { -%>
+  PassengerAppEnv <%= $passenger_app_env %>
+<% } -%>
+<% if $passenger_app_root { -%>
+  PassengerAppRoot <%= $passenger_app_root %>
+<% } -%>
+<% if $passenger_app_group_name { -%>
+  PassengerAppGroupName <%= $passenger_app_group_name %>
+<% } -%>
+<% if $passenger_app_start_command { -%>
+  PassengerAppStartCommand <%= $passenger_app_start_command %>
+<% } -%>
+<% if $passenger_app_type { -%>
+  PassengerAppType <%= $passenger_app_type %>
+<% } -%>
+<% if $passenger_startup_file { -%>
+  PassengerStartupFile <%= $passenger_startup_file %>
+<% } -%>
+<% if $passenger_restart_dir { -%>
+  PassengerRestartDir <%= $passenger_restart_dir %>
+<% } -%>
+<% if $passenger_spawn_method { -%>
+  PassengerSpawnMethod <%= $passenger_spawn_method %>
+<% } -%>
+<% unless $passenger_load_shell_envvars == undef { -%>
+  PassengerLoadShellEnvvars <%= apache::bool2httpd($passenger_load_shell_envvars) %>
+<% } -%>
+<% unless $passenger_preload_bundler == undef { -%>
+  PassengerPreloadBundler <%= apache::bool2httpd($passenger_preload_bundler) %>
+<% } -%>
+<% unless $passenger_rolling_restarts == undef { -%>
+  PassengerRollingRestarts <%= apache::bool2httpd($passenger_rolling_restarts) %>
+<% } -%>
+<% unless $passenger_resist_deployment_errors == undef { -%>
+  PassengerResistDeploymentErrors <%= apache::bool2httpd($passenger_resist_deployment_errors) %>
+<% } -%>
+<%# 4 - Security options -%>
+<% if $passenger_user {-%>
+  PassengerUser <%= $passenger_user %>
+<% } -%>
+<% if $passenger_group {-%>
+  PassengerGroup <%= $passenger_group %>
+<% } -%>
+<% unless $passenger_friendly_error_pages == undef { -%>
+  PassengerFriendlyErrorPages <%= apache::bool2httpd($passenger_friendly_error_pages) %>
+<% } -%>
+<%# 5 - Resource control and optimization options -%>
+<% if $passenger_min_instances { -%>
+  PassengerMinInstances <%= $passenger_min_instances %>
+<% } -%>
+<% if $passenger_max_instances { -%>
+  PassengerMaxInstances <%= $passenger_max_instances %>
+<% } -%>
+<% if $passenger_max_preloader_idle_time { -%>
+  PassengerMaxPreloaderIdleTime <%= $passenger_max_preloader_idle_time %>
+<% } -%>
+<% if $passenger_force_max_concurrent_requests_per_process { -%>
+  PassengerForceMaxConcurrentRequestsPerProcess <%= $passenger_force_max_concurrent_requests_per_process %>
+<% } -%>
+<% if $passenger_start_timeout { -%>
+  PassengerStartTimeout <%= $passenger_start_timeout %>
+<% } -%>
+<% if $passenger_concurrency_model { -%>
+  PassengerConcurrencyModel <%= $passenger_concurrency_model %>
+<% } -%>
+<% if $passenger_thread_count { -%>
+  PassengerThreadCount <%= $passenger_thread_count %>
+<% } -%>
+<% if $passenger_max_requests { -%>
+  PassengerMaxRequests <%= $passenger_max_requests %>
+<% } -%>
+<% if $passenger_max_request_time { -%>
+  PassengerMaxRequestTime <%= $passenger_max_request_time %>
+<% } -%>
+<% if $passenger_memory_limit { -%>
+  PassengerMemoryLimit <%= $passenger_memory_limit %>
+<% } -%>
+<% if $passenger_stat_throttle_rate { -%>
+  PassengerStatThrottleRate <%= $passenger_stat_throttle_rate %>
+<% } -%>
+<% unless $passenger_high_performance == undef { -%>
+  PassengerHighPerformance <%= apache::bool2httpd($passenger_high_performance) %>
+<% } -%>
+<%# 6 - Connection handling options -%>
+<% unless $passenger_buffer_upload == undef { -%>
+  PassengerBufferUpload <%= apache::bool2httpd($passenger_buffer_upload) %>
+<% } -%>
+<% unless $passenger_buffer_response == undef { -%>
+  PassengerBufferResponse <%= apache::bool2httpd($passenger_buffer_response) %>
+<% } -%>
+<% unless $passenger_error_override == undef { -%>
+  PassengerErrorOverride <%= apache::bool2httpd($passenger_error_override) %>
+<% } -%>
+<% if $passenger_max_request_queue_size { -%>
+  PassengerMaxRequestQueueSize <%= $passenger_max_request_queue_size %>
+<% } -%>
+<% if $passenger_max_request_queue_time { -%>
+  PassengerMaxRequestQueueTime <%= $passenger_max_request_queue_time %>
+<% } -%>
+<% unless $passenger_sticky_sessions == undef { -%>
+  PassengerStickySessions <%= apache::bool2httpd($passenger_sticky_sessions) %>
+<% } -%>
+<% if $passenger_sticky_sessions_cookie_name { -%>
+  PassengerStickySessionsCookieName <%= $passenger_sticky_sessions_cookie_name %>
+<% } -%>
+<% if $passenger_sticky_sessions_cookie_attributes { -%>
+  PassengerStickySessionsCookieAttributes <%= $passenger_sticky_sessions_cookie_attributes %>
+<% } -%>
+<%# 7 - Compatibility options -%>
+<% unless $passenger_allow_encoded_slashes == undef { -%>
+  PassengerAllowEncodedSlashes <%= apache::bool2httpd($passenger_allow_encoded_slashes) %>
+<% } -%>
+<% if $passenger_app_log_file { -%>
+  PassengerAppLogFile <%= $passenger_app_log_file %>
+<% } -%>
+<%# 8 - Logging and debugging options -%>
+<% unless $passenger_debugger == undef { -%>
+  PassengerDebugger <%= apache::bool2httpd($passenger_debugger) %>
+<% } -%>
+<%# 9 - Advanced options -%>
+<% if $passenger_lve_min_uid { -%>
+  PassengerLveMinUid <%= $passenger_lve_min_uid %>
+<% } -%>

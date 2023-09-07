@@ -1,0 +1,29 @@
+<% if $itk and ! $itk.empty { -%>
+
+  ## ITK statement
+  <IfModule mpm_itk_module>
+     <%- if $itk["user"] and $itk["group"] { -%>
+     AssignUserId <%= $itk["user"] %> <%= $itk["group"] %>
+     <%- } -%>
+     <%- if $itk["assignuseridexpr"] { -%>
+     AssignUserIdExpr <%= $itk["assignuseridexpr"] %>
+     <%- } -%>
+     <%- if $itk["assigngroupidexpr"] { -%>
+     AssignGroupIdExpr <%= $itk["assigngroupidexpr"] %>
+     <%- } -%>
+     <%- if $itk["maxclientvhost"] { -%>
+     MaxClientsVHost <%= $itk["maxclientvhost"] %>
+     <%- } -%>
+     <%- if $itk["nice"] { -%>
+     NiceValue <%= $itk["nice"] %>
+     <%- } -%>
+     <%- if $kernelversion >= '3.5.0' { -%>
+       <%- if $itk["limituidrange"] { -%>
+     LimitUIDRange <%= $itk["limituidrange"] %>
+       <%- } -%>
+       <%- if $itk["limitgidrange"] { -%>
+     LimitGIDRange <%= $itk["limitgidrange"] %>
+       <%- } -%>
+     <%- } -%>
+  </IfModule>
+<% } -%>
