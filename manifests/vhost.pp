@@ -2354,7 +2354,8 @@ define apache::vhost (
   # - $additional_includes
   if $additional_includes and ! empty($additional_includes) {
     $addition_includes_params = {
-      'additional_includes' => $additional_includes,
+      'additional_includes'   => $additional_includes,
+      'use_optional_includes' => $use_optional_includes,
     }
     concat::fragment { "${name}-additional_includes":
       target  => "${priority_real}${filename}.conf",
