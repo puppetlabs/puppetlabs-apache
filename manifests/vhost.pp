@@ -2229,10 +2229,16 @@ define apache::vhost (
       include apache::mod::vhost_alias
     }
 
+    $docroot_params = {
+      'virtual_docroot' => $virtual_docroot,
+      'docroot' => $docroot,
+      'virtual_use_default_docroot' => $virtual_use_default_docroot,
+    }
+
     concat::fragment { "${name}-docroot":
       target  => "${priority_real}${filename}.conf",
       order   => 10,
-      content => template('apache/vhost/_docroot.erb'),
+      content => epp('apache/vhost/_docroot.epp', $docroot_params),
     }
   }
 
@@ -2347,10 +2353,14 @@ define apache::vhost (
   # Template uses:
   # - $additional_includes
   if $additional_includes and ! empty($additional_includes) {
+
+    $addition_includes_params = {
+      'additional_includes' => $additional_includes,
+    }
     concat::fragment { "${name}-additional_includes":
       target  => "${priority_real}${filename}.conf",
       order   => 70,
-      content => template('apache/vhost/_additional_includes.erb'),
+      content => epp('apache/vhost/_additional_includes.epp', $addition_includes_params),
     }
   }
 
@@ -2395,7 +2405,7 @@ define apache::vhost (
     concat::fragment { "${name}-action":
       target  => "${priority_real}${filename}.conf",
       order   => 110,
-      content => template('apache/vhost/_action.erb'),
+      content => epp('apache/vhost/_action.epp', { 'action' => $action }),
     }
   }
 
@@ -2699,10 +2709,14 @@ define apache::vhost (
   # Template uses:
   # - $custom_fragment
   if $custom_fragment {
+
+    $custom_fragment_params = {
+      'custom_fragment' => $custom_fragment,
+    }
     concat::fragment { "${name}-custom_fragment":
       target  => "${priority_real}${filename}.conf",
       order   => 270,
-      content => template('apache/vhost/_custom_fragment.erb'),
+      content => epp('apache/vhost/_custom_fragment.epp', $custom_fragment_params),
     }
   }
 
@@ -2803,10 +2817,15 @@ define apache::vhost (
   # Template uses:
   # - $add_default_charset
   if $add_default_charset {
+
+    $charsets_params = {
+      'add_default_charset' => $add_default_charset,
+    }
+
     concat::fragment { "${name}-charsets":
       target  => "${priority_real}${filename}.conf",
       order   => 310,
-      content => template('apache/vhost/_charsets.erb'),
+      content => epp('apache/vhost/_charsets.epp', $charsets_params),
     }
   }
 

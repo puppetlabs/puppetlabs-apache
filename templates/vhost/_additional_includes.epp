@@ -1,0 +1,9 @@
+<% []+$additional_includes.each |$include| {-%>
+
+  ## Load additional static includes
+<%- if $use_optional_includes {-%>
+  IncludeOptional "<%= $include %>"
+<%-} else {-%>
+  Include "<%= $include %>"
+<%- } -%>
+<% } -%>
