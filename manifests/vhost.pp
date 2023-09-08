@@ -2241,10 +2241,14 @@ define apache::vhost (
   if ! empty($aliases) and $ensure == 'present' {
     include apache::mod::alias
 
+    $aliases_params = {
+      'aliases' => $aliases,
+    }
+
     concat::fragment { "${name}-aliases":
       target  => "${priority_real}${filename}.conf",
       order   => 20,
-      content => template('apache/vhost/_aliases.erb'),
+      content => epp('apache/vhost/_aliases.epp'),
     }
   }
 
@@ -2432,10 +2436,14 @@ define apache::vhost (
   if ! empty($request_headers) and $ensure == 'present' {
     include apache::mod::headers
 
+    $request_headers_params = {
+      'request_headers' => $request_headers,
+    }
+
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}${filename}.conf",
       order   => 150,
-      content => template('apache/vhost/_requestheader.erb'),
+      content => epp('apache/vhost/_requestheader.epp', $request_headers_params),
     }
   }
 
@@ -2728,11 +2736,12 @@ define apache::vhost (
   # - $userdir
   if $userdir and $ensure == 'present' {
     include apache::mod::userdir
+    $userdir_params = { 'userdir' => $userdir, }
 
     concat::fragment { "${name}-userdir":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
-      content => template('apache/vhost/_userdir.erb'),
+      content => epp('apache/vhost/_userdir.epp', $userdir_params),
     }
   }
 
