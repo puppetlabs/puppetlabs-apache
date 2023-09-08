@@ -1,3 +1,0 @@
-  <%- [$userdir].flatten.each|$userdir| {-%>
-  UserDir <%= $userdir %>
-  <%- } -%>

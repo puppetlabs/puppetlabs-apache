@@ -2238,7 +2238,7 @@ define apache::vhost (
     concat::fragment { "${name}-docroot":
       target  => "${priority_real}${filename}.conf",
       order   => 10,
-      content => epp('apache/vhost/_docroot.epp', $docroot_params),
+      content => template('apache/vhost/_docroot.erb'),
     }
   }
 
@@ -2254,7 +2254,7 @@ define apache::vhost (
     concat::fragment { "${name}-aliases":
       target  => "${priority_real}${filename}.conf",
       order   => 20,
-      content => epp('apache/vhost/_aliases.epp', $aliases_params),
+      content => template('apache/vhost/_aliases.erb'),
     }
   }
 
@@ -2278,7 +2278,7 @@ define apache::vhost (
     concat::fragment { "${name}-fallbackresource":
       target  => "${priority_real}${filename}.conf",
       order   => 40,
-      content => epp('apache/vhost/_fallbackresource.epp', $fallbackresource_params),
+      content => template('apache/vhost/_fallbackresource.erb'),
     }
   }
 
@@ -2363,7 +2363,7 @@ define apache::vhost (
     concat::fragment { "${name}-additional_includes":
       target  => "${priority_real}${filename}.conf",
       order   => 70,
-      content => epp('apache/vhost/_additional_includes.epp', $addition_includes_params),
+      content => template('apache/vhost/_additional_includes.erb'),
     }
   }
 
@@ -2408,7 +2408,7 @@ define apache::vhost (
     concat::fragment { "${name}-action":
       target  => "${priority_real}${filename}.conf",
       order   => 110,
-      content => epp('apache/vhost/_action.epp', { 'action' => $action }),
+      content => template('apache/vhost/_action.erb'),
     }
   }
 
@@ -2431,7 +2431,7 @@ define apache::vhost (
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}${filename}.conf",
       order   => 130,
-      content => epp('apache/vhost/_error_document.epp', $error_documents_params),
+      content => template('apache/vhost/_error_document.erb'),
     }
   }
 
@@ -2459,7 +2459,7 @@ define apache::vhost (
     concat::fragment { "${name}-requestheader":
       target  => "${priority_real}${filename}.conf",
       order   => 150,
-      content => epp('apache/vhost/_requestheader.epp', $request_headers_params),
+      content => template('apache/vhost/_requestheader.erb'),
     }
   }
 
@@ -2721,7 +2721,7 @@ define apache::vhost (
     concat::fragment { "${name}-custom_fragment":
       target  => "${priority_real}${filename}.conf",
       order   => 270,
-      content => epp('apache/vhost/_custom_fragment.epp', $custom_fragment_params),
+      content => template('apache/vhost/_custom_fragment.erb'),
     }
   }
 
@@ -2760,7 +2760,7 @@ define apache::vhost (
     concat::fragment { "${name}-userdir":
       target  => "${priority_real}${filename}.conf",
       order   => 300,
-      content => epp('apache/vhost/_userdir.epp', $userdir_params),
+      content => template('apache/vhost/_userdir.erb'),
     }
   }
 
@@ -2829,7 +2829,7 @@ define apache::vhost (
     concat::fragment { "${name}-charsets":
       target  => "${priority_real}${filename}.conf",
       order   => 310,
-      content => epp('apache/vhost/_charsets.epp', $charsets_params),
+      content => template('apache/vhost/_charsets.erb'),
     }
   }
 
@@ -2863,7 +2863,7 @@ define apache::vhost (
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
-      content => epp('apache/vhost/_filters.epp', $filter_params),
+      content => template('apache/vhost/_filters.erb'),
     }
   }
 
