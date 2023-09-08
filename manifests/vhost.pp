@@ -2706,7 +2706,7 @@ define apache::vhost (
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
-      content => template('apache/vhost/_suexec.erb'),
+      content => epp('apache/vhost/_suexec.epp',{'suexec_user_group'=> $suexec_user_group}),
     }
   }
 
@@ -2895,10 +2895,13 @@ define apache::vhost (
   # Template uses:
   # - $shib_compat_valid_user
   if $shibboleth_enabled {
+    $shib_params = {
+      'shib_compat_valid_user' => $shib_compat_valid_user
+    }
     concat::fragment { "${name}-shibboleth":
       target  => "${priority_real}${filename}.conf",
       order   => 370,
-      content => template('apache/vhost/_shib.erb'),
+      content => epp('apache/vhost/_shib.epp',$shib_params),
     }
   }
 
