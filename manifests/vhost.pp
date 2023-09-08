@@ -2353,7 +2353,6 @@ define apache::vhost (
   # Template uses:
   # - $additional_includes
   if $additional_includes and ! empty($additional_includes) {
-
     $addition_includes_params = {
       'additional_includes' => $additional_includes,
     }
@@ -2709,7 +2708,6 @@ define apache::vhost (
   # Template uses:
   # - $custom_fragment
   if $custom_fragment {
-
     $custom_fragment_params = {
       'custom_fragment' => $custom_fragment,
     }
@@ -2817,7 +2815,6 @@ define apache::vhost (
   # Template uses:
   # - $add_default_charset
   if $add_default_charset {
-
     $charsets_params = {
       'add_default_charset' => $add_default_charset,
     }
