@@ -2272,10 +2272,13 @@ define apache::vhost (
   # Template uses:
   # - $fallbackresource
   if $fallbackresource {
+    $fallbackresource_params = {
+      'fallbackresource' => $fallbackresource,
+    }
     concat::fragment { "${name}-fallbackresource":
       target  => "${priority_real}${filename}.conf",
       order   => 40,
-      content => template('apache/vhost/_fallbackresource.erb'),
+      content => epp('apache/vhost/_fallbackresource.epp', $fallbackresource_params),
     }
   }
 
@@ -2422,10 +2425,13 @@ define apache::vhost (
   # Template uses:
   # - $error_documents
   if $error_documents and ! empty($error_documents) {
+    $error_documents_params = {
+      'error_documents' => $error_documents,
+    }
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}${filename}.conf",
       order   => 130,
-      content => template('apache/vhost/_error_document.erb'),
+      content => epp('apache/vhost/_error_document.epp', $error_documents_params),
     }
   }
 
@@ -2850,11 +2856,14 @@ define apache::vhost (
   # - $filters
   if ! empty($filters) and $ensure == 'present' {
     include apache::mod::filter
+    $filter_params = {
+      'filters' => $filters,
+    }
 
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
-      content => template('apache/vhost/_filters.erb'),
+      content => epp('apache/vhost/_filters.epp', $filter_params),
     }
   }
 
