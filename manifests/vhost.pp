@@ -2896,7 +2896,7 @@ define apache::vhost (
   # - $shib_compat_valid_user
   if $shibboleth_enabled {
     $shib_params = {
-      'shib_compat_valid_user' => $shib_compat_valid_user
+      'shib_compat_valid_user' => $shib_compat_valid_user,
     }
     concat::fragment { "${name}-shibboleth":
       target  => "${priority_real}${filename}.conf",
