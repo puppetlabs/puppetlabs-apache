@@ -2254,7 +2254,7 @@ define apache::vhost (
     concat::fragment { "${name}-aliases":
       target  => "${priority_real}${filename}.conf",
       order   => 20,
-      content => epp('apache/vhost/_aliases.epp'),
+      content => epp('apache/vhost/_aliases.epp', $aliases_params),
     }
   }
 

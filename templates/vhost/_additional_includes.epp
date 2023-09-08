@@ -1,4 +1,4 @@
-<% []+$additional_includes.each |$include| {-%>
+<% $additional_includes.each |$include| {-%>
 
   ## Load additional static includes
 <%- if $use_optional_includes {-%>
