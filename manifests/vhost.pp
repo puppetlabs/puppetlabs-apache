@@ -2706,7 +2706,7 @@ define apache::vhost (
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
-      content => epp('apache/vhost/_suexec.epp',{'suexec_user_group'=> $suexec_user_group}),
+      content => epp('apache/vhost/_suexec.epp', { 'suexec_user_group' => $suexec_user_group }),
     }
   }
 
