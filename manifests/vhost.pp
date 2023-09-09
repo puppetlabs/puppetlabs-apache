@@ -2278,7 +2278,7 @@ define apache::vhost (
     concat::fragment { "${name}-fallbackresource":
       target  => "${priority_real}${filename}.conf",
       order   => 40,
-      content => template('apache/vhost/_fallbackresource.erb'),
+      content => epp('apache/vhost/_fallbackresource.epp', $fallbackresource_params),
     }
   }
 
@@ -2431,7 +2431,7 @@ define apache::vhost (
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}${filename}.conf",
       order   => 130,
-      content => template('apache/vhost/_error_document.erb'),
+      content => epp('apache/vhost/_error_document.epp', $error_documents_params),
     }
   }
 
@@ -2863,7 +2863,7 @@ define apache::vhost (
     concat::fragment { "${name}-filters":
       target  => "${priority_real}${filename}.conf",
       order   => 330,
-      content => template('apache/vhost/_filters.erb'),
+      content => epp('apache/vhost/_filters.epp', $filter_params),
     }
   }
 
