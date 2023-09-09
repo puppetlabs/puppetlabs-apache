@@ -1,8 +1,0 @@
-
-  ## Vhost docroot
-<% if $virtual_docroot {-%>
-  VirtualDocumentRoot "<%= $virtual_docroot %>"
-<% } -%>
-<% if $docroot and ((! $virtual_docroot) or $virtual_use_default_docroot) {-%>
-  DocumentRoot "<%= $docroot %>"
-<% } -%>

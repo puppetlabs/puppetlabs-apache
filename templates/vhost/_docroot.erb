@@ -1,0 +1,8 @@
+
+  ## Vhost docroot
+<% if @virtual_docroot -%>
+  VirtualDocumentRoot "<%= @virtual_docroot %>"
+<% end -%>
+<% if @docroot and ((not @virtual_docroot) or @virtual_use_default_docroot) -%>
+  DocumentRoot "<%= @docroot %>"
+<% end -%>
