@@ -23,9 +23,7 @@ Puppet::Functions.create_function(:'apache::error_document') do
     error_doc += ''
     if (error_documents) && (!error_documents.empty?)
       [error_documents].flatten.compact.each do |error_document|
-        if (error_document['error_code'] != '') && (error_document['document'] != '')
-          error_doc = "ErrorDocument  #{error_document['error_code']} #{error_document['document']}"
-        end
+        error_doc = "ErrorDocument  #{error_document['error_code']} #{error_document['document']}" if error_document['error_code'] != '' && error_document['document'] != ''
       end
     end
 
