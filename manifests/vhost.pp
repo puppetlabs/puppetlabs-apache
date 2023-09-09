@@ -2431,7 +2431,7 @@ define apache::vhost (
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}${filename}.conf",
       order   => 130,
-      content => epp('apache/vhost/_error_document.epp', $error_documents_params),
+      content => apache::error_document($error_documents),
     }
   }
 
