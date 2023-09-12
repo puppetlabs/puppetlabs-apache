@@ -51,12 +51,12 @@
 #
 class apache::mod::remoteip (
   String                                                     $header                    = 'X-Forwarded-For',
-  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $internal_proxy            = undef,
-  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $proxy_ips                 = undef,
+  Optional[Array[Stdlib::IP::Address]]                       $internal_proxy            = undef,
+  Optional[Array[Stdlib::IP::Address]]                       $proxy_ips                 = undef,
   Optional[Stdlib::Absolutepath]                             $internal_proxy_list       = undef,
   Optional[String]                                           $proxies_header            = undef,
   Boolean                                                    $proxy_protocol            = false,
-  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $proxy_protocol_exceptions = undef,
+  Optional[Array[Stdlib::IP::Address]]                       $proxy_protocol_exceptions = undef,
   Optional[Array[Stdlib::Host]]                              $trusted_proxy             = undef,
   Optional[Array[Stdlib::Host]]                              $trusted_proxy_ips         = undef,
   Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
