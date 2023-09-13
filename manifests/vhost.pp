@@ -1455,6 +1455,33 @@
 #   }
 #   ```
 #
+# lint:ignore:parameter_documentation
+# @param authz_core
+# lint:endignore
+#   Specifies mod_authz_core parameters for particular directories in a virtual host directory
+#   ```puppet
+#   apache::vhost { 'sample.example.net':
+#     docroot     => '/path/to/directory',
+#     directories => [
+#       { path        => '/path/to/different/dir',
+#         authz_core  => {
+#           require_all => {
+#             'require_any' => {
+#               'require' => ['user superadmin'],
+#               'require_all' => {
+#                 'require' => ['group admins', 'ldap-group "cn=Administrators,o=Airius"'],
+#               },
+#             },
+#             'require_none' => {
+#               'require' => ['group temps', 'ldap-group "cn=Temporary Employees,o=Airius"']
+#             }
+#           }
+#         }
+#       },
+#     ],
+#   }
+#   ```
+#
 # @param ssl
 #   Enables SSL for the virtual host. SSL virtual hosts only respond to HTTPS queries.
 #
