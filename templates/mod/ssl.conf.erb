@@ -33,7 +33,13 @@
   SSLStaplingReturnResponderErrors <%= scope.call_function('apache::bool2httpd', [@ssl_stapling_return_errors]) %>
   <%- end -%>
   SSLStaplingCache "shmcb:<%= @_stapling_cache %>"
+  <%- if @ssl_cipher.kind_of?(Hash) -%>
+    <%- @ssl_cipher.map do |protocol, cipher| -%>
+  SSLCipherSuite <%= protocol %> <%= cipher %>
+    <%- end -%>
+  <%- else -%>
   SSLCipherSuite <%= @ssl_cipher %>
+  <%- end -%>
 <% if not @ssl_protocol.empty? -%>
   SSLProtocol <%= @ssl_protocol.compact.join(' ') %>
 <% end -%>

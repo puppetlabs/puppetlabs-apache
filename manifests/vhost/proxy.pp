@@ -124,6 +124,16 @@ define apache::vhost::proxy (
   include apache::mod::proxy
   include apache::mod::proxy_http
 
+  # To match processing in templates/vhost/_proxy.erb
+  if $proxy_dest =~ Pattern[/^h2c?:\/\//] or $proxy_dest_match =~ Pattern[/^h2c?:\/\//] {
+    include apache::mod::proxy_http2
+  }
+  [$proxy_pass, $proxy_pass_match].flatten.each |$proxy| {
+    if $proxy and $proxy['url'] =~ Pattern[/^h2c?:\/\//] {
+      include apache::mod::proxy_http2
+    }
+  }
+
   unless $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match {
     fail('At least one of proxy_dest, proxy_pass, proxy_pass_match or proxy_dest_match must be given')
   }

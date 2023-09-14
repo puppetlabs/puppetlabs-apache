@@ -1719,16 +1719,16 @@ define apache::vhost (
   Optional[Stdlib::Absolutepath] $ssl_certs_dir                                       = $apache::params::ssl_certs_dir,
   Boolean $ssl_reload_on_change                                                       = $apache::default_ssl_reload_on_change,
   Optional[Variant[Array[String], String]] $ssl_protocol                              = undef,
-  Optional[Variant[Array[String], String]] $ssl_cipher                                = undef,
-  Variant[Boolean, Enum['on', 'On', 'off', 'Off'], Undef] $ssl_honorcipherorder       = undef,
+  Optional[Variant[Array[String[1]], String[1], Hash[String[1], String[1]]]] $ssl_cipher = undef,
+  Variant[Boolean, Apache::OnOff, Undef] $ssl_honorcipherorder                        = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_verify_client  = undef,
   Optional[Integer] $ssl_verify_depth                                                 = undef,
   Optional[Enum['none', 'optional', 'require', 'optional_no_ca']] $ssl_proxy_verify   = undef,
   Optional[Integer[0]] $ssl_proxy_verify_depth                                        = undef,
   Optional[Stdlib::Absolutepath] $ssl_proxy_ca_cert                                   = undef,
-  Optional[Enum['on', 'off']] $ssl_proxy_check_peer_cn                                = undef,
-  Optional[Enum['on', 'off']] $ssl_proxy_check_peer_name                              = undef,
-  Optional[Enum['on', 'off']] $ssl_proxy_check_peer_expire                            = undef,
+  Optional[Apache::OnOff] $ssl_proxy_check_peer_cn                                    = undef,
+  Optional[Apache::OnOff] $ssl_proxy_check_peer_name                                  = undef,
+  Optional[Apache::OnOff] $ssl_proxy_check_peer_expire                                = undef,
   Optional[Stdlib::Absolutepath] $ssl_proxy_machine_cert                              = undef,
   Optional[Stdlib::Absolutepath] $ssl_proxy_machine_cert_chain                        = undef,
   Optional[String] $ssl_proxy_cipher_suite                                            = undef,
@@ -1738,7 +1738,7 @@ define apache::vhost (
   Boolean $ssl_proxyengine                                                            = false,
   Optional[Boolean] $ssl_stapling                                                     = undef,
   Optional[Integer] $ssl_stapling_timeout                                             = undef,
-  Optional[Enum['on', 'off']] $ssl_stapling_return_errors                             = undef,
+  Optional[Apache::OnOff] $ssl_stapling_return_errors                                 = undef,
   Optional[String] $ssl_user_name                                                     = undef,
   Optional[Apache::Vhost::Priority] $priority                                         = undef,
   Boolean $default_vhost                                                              = false,
@@ -1831,14 +1831,14 @@ define apache::vhost (
   Optional[String] $wsgi_process_group                                                = undef,
   Optional[Hash] $wsgi_script_aliases_match                                           = undef,
   Optional[Hash] $wsgi_script_aliases                                                 = undef,
-  Optional[Enum['on', 'off', 'On', 'Off']] $wsgi_pass_authorization                   = undef,
-  Optional[Enum['On', 'Off']] $wsgi_chunked_request                                   = undef,
+  Optional[Apache::OnOff] $wsgi_pass_authorization                                    = undef,
+  Optional[Apache::OnOff] $wsgi_chunked_request                                       = undef,
   Optional[String] $custom_fragment                                                   = undef,
   Optional[Hash] $itk                                                                 = undef,
   Optional[String] $action                                                            = undef,
   Variant[Array[String], String] $additional_includes                                 = [],
   Boolean $use_optional_includes                                                      = $apache::use_optional_includes,
-  Optional[Enum['on', 'off', 'nodecode']] $allow_encoded_slashes                      = undef,
+  Optional[Variant[Apache::OnOff, Enum['nodecode']]] $allow_encoded_slashes           = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                             = undef,
 
   Optional[Boolean] $h2_copy_files                                                    = undef,
@@ -1915,16 +1915,16 @@ define apache::vhost (
   Optional[String] $modsec_allowed_methods                                            = undef,
   Array[Hash] $jk_mounts                                                              = [],
   Boolean $auth_kerb                                                                  = false,
-  Enum['on', 'off'] $krb_method_negotiate                                             = 'on',
-  Enum['on', 'off'] $krb_method_k5passwd                                              = 'on',
-  Enum['on', 'off'] $krb_authoritative                                                = 'on',
+  Apache::OnOff $krb_method_negotiate                                                 = 'on',
+  Apache::OnOff $krb_method_k5passwd                                                  = 'on',
+  Apache::OnOff $krb_authoritative                                                    = 'on',
   Array[String] $krb_auth_realms                                                      = [],
   Optional[String] $krb_5keytab                                                       = undef,
-  Optional[Enum['on', 'off']] $krb_local_user_mapping                                 = undef,
-  Enum['on', 'off'] $krb_verify_kdc                                                   = 'on',
+  Optional[Apache::OnOff] $krb_local_user_mapping                                     = undef,
+  Apache::OnOff $krb_verify_kdc                                                       = 'on',
   String $krb_servicename                                                             = 'HTTP',
-  Enum['on', 'off'] $krb_save_credentials                                             = 'off',
-  Optional[Enum['on', 'off']] $keepalive                                              = undef,
+  Apache::OnOff $krb_save_credentials                                                 = 'off',
+  Optional[Apache::OnOff] $keepalive                                                  = undef,
   Optional[Variant[Integer, String]] $keepalive_timeout                               = undef,
   Optional[Variant[Integer, String]] $max_keepalive_requests                          = undef,
   Optional[String] $cas_attribute_prefix                                              = undef,
@@ -1937,7 +1937,7 @@ define apache::vhost (
   Boolean $cas_validate_saml                                                          = false,
   Optional[String] $cas_cookie_path                                                   = undef,
   Optional[String] $shib_compat_valid_user                                            = undef,
-  Optional[Enum['On', 'on', 'Off', 'off', 'DNS', 'dns']] $use_canonical_name          = undef,
+  Optional[Variant[Apache::OnOff, Enum['DNS', 'dns']]] $use_canonical_name            = undef,
   Optional[Variant[String, Array[String]]] $comment                                   = undef,
   Hash $define                                                                        = {},
   Boolean $auth_oidc                                                                  = false,
@@ -2303,6 +2303,21 @@ define apache::vhost (
 
       if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
         include apache::mod::proxy_http
+
+        # To match processing in templates/vhost/_directories.erb
+        if $directory['proxy_pass_match'] {
+          Array($directory['proxy_pass_match']).each |$proxy| {
+            if $proxy['url'] =~ /"h2c?:\/\// {
+              include apache::mod::proxy_http2
+            }
+          }
+        } elsif $directory['proxy_pass'] {
+          Array($directory['proxy_pass']).each |$proxy| {
+            if $proxy['url'] =~ /"h2c?:\/\// {
+              include apache::mod::proxy_http2
+            }
+          }
+        }
       }
 
       if 'request_headers' in $directory {
@@ -2452,6 +2467,16 @@ define apache::vhost (
   # - $no_proxy_uris
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host or ($proxy_add_headers =~ NotUndef)) and $ensure == 'present' {
     include apache::mod::proxy_http
+
+    # To match processing in templates/vhost/_proxy.erb
+    if $proxy_dest =~ Pattern[/^h2c?:\/\//] or $proxy_dest_match =~ Pattern[/^h2c?:\/\//] {
+      include apache::mod::proxy_http2
+    }
+    [$proxy_pass, $proxy_pass_match].flatten.each |$proxy| {
+      if $proxy and $proxy['url'] =~ Pattern[/^h2c?:\/\//] {
+        include apache::mod::proxy_http2
+      }
+    }
 
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
@@ -2604,7 +2629,18 @@ define apache::vhost (
     concat::fragment { "${name}-auth_kerb":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
-      content => template('apache/vhost/_auth_kerb.erb'),
+      content => stdlib::deferrable_epp('apache/vhost/_auth_kerb.epp', {
+          'auth_kerb'              => $auth_kerb,
+          'krb_method_negotiate'   => $krb_method_negotiate,
+          'krb_method_k5passwd'    => Deferred('sprintf', [$krb_method_k5passwd]),
+          'krb_authoritative'      => $krb_authoritative,
+          'krb_auth_realms'        => $krb_auth_realms,
+          'krb_5keytab'            => $krb_5keytab,
+          'krb_local_user_mapping' => $krb_local_user_mapping,
+          'krb_verify_kdc'         => $krb_verify_kdc,
+          'krb_servicename'        => $krb_servicename,
+          'krb_save_credentials'   => $krb_save_credentials,
+      }),
     }
   }
 
@@ -2849,7 +2885,10 @@ define apache::vhost (
     concat::fragment { "${name}-auth_oidc":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
-      content => template('apache/vhost/_auth_oidc.erb'),
+      content => stdlib::deferrable_epp('apache/vhost/_auth_oidc.epp', {
+          'auth_oidc'     => $auth_oidc,
+          'oidc_settings' => $oidc_settings,
+      }),
     }
   }
 

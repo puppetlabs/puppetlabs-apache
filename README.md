@@ -236,6 +236,7 @@
 [`ssl`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl
 [`ssl_cert`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_cert
 [`ssl_compression`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_compression
+[`ssl_cipher`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_compression
 [`ssl_key`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#ssl_key
 [`StartServers`]: https://httpd.apache.org/docs/current/mod/mpm_common.html#startservers
 [supported operating system]: https://forge.puppet.com/supported#puppet-supported-modules-compatibility-matrix
@@ -654,6 +655,22 @@ class { 'apache::mod::ssl': }
 ``` puppet
 class { 'apache::mod::ssl':
   ssl_compression => true,
+}
+```
+
+You can pass the SSL Ciphers to override the default ciphers.
+```puppet
+class { 'apache::mod::ssl':
+  ssl_cipher => 'PROFILE=SYSTEM',
+}
+```
+
+You can also pass the different [`ssl_cipher`][] for different SSL protocols. This allows you to fine-tune the ciphers based on the specific SSL/TLS protocol version being used. 
+```puppet
+class { 'apache::mod::ssl':
+  ssl_cipher => {
+    'TLSv1.1' => 'RSA:!EXP:!NULL:+HIGH:+MEDIUM'
+  },
 }
 ```
 

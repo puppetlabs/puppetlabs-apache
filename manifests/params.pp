@@ -95,7 +95,7 @@ class apache::params inherits apache::version {
     $mod_libs             = {
       'nss' => 'libmodnss.so',
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -116,33 +116,40 @@ class apache::params inherits apache::version {
     $mellon_post_directory = undef
     $modsec_version       = 1
     $modsec_crs_package   = 'mod_security_crs'
-    $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    $modsec_default_rules = [
-      'base_rules/modsecurity_35_bad_robots.data',
-      'base_rules/modsecurity_35_scanners.data',
-      'base_rules/modsecurity_40_generic_attacks.data',
-      'base_rules/modsecurity_50_outbound.data',
-      'base_rules/modsecurity_50_outbound_malware.data',
-      'base_rules/modsecurity_crs_20_protocol_violations.conf',
-      'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
-      'base_rules/modsecurity_crs_23_request_limits.conf',
-      'base_rules/modsecurity_crs_30_http_policy.conf',
-      'base_rules/modsecurity_crs_35_bad_robots.conf',
-      'base_rules/modsecurity_crs_40_generic_attacks.conf',
-      'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
-      'base_rules/modsecurity_crs_41_xss_attacks.conf',
-      'base_rules/modsecurity_crs_42_tight_security.conf',
-      'base_rules/modsecurity_crs_45_trojans.conf',
-      'base_rules/modsecurity_crs_47_common_exceptions.conf',
-      'base_rules/modsecurity_crs_49_inbound_blocking.conf',
-      'base_rules/modsecurity_crs_50_outbound.conf',
-      'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf',
-    ]
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+      $modsec_crs_path      = '/usr/lib/modsecurity.d'
+      $modsec_default_rules = [
+        'base_rules/modsecurity_35_bad_robots.data',
+        'base_rules/modsecurity_35_scanners.data',
+        'base_rules/modsecurity_40_generic_attacks.data',
+        'base_rules/modsecurity_50_outbound.data',
+        'base_rules/modsecurity_50_outbound_malware.data',
+        'base_rules/modsecurity_crs_20_protocol_violations.conf',
+        'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
+        'base_rules/modsecurity_crs_23_request_limits.conf',
+        'base_rules/modsecurity_crs_30_http_policy.conf',
+        'base_rules/modsecurity_crs_35_bad_robots.conf',
+        'base_rules/modsecurity_crs_40_generic_attacks.conf',
+        'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
+        'base_rules/modsecurity_crs_41_xss_attacks.conf',
+        'base_rules/modsecurity_crs_42_tight_security.conf',
+        'base_rules/modsecurity_crs_45_trojans.conf',
+        'base_rules/modsecurity_crs_47_common_exceptions.conf',
+        'base_rules/modsecurity_crs_49_inbound_blocking.conf',
+        'base_rules/modsecurity_crs_50_outbound.conf',
+        'base_rules/modsecurity_crs_59_outbound_blocking.conf',
+        'base_rules/modsecurity_crs_60_correlation.conf',
+      ]
+    } else {
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = [
+        'rules/crawlers-user-agents.data',
+      ]
+    }
     $error_log           = 'error_log'
     $scriptalias         = "${httpd_root}/var/www/cgi-bin"
     $access_log_file     = 'access_log'
@@ -231,7 +238,7 @@ class apache::params inherits apache::version {
         default => 'mod_wsgi_python3.so',
       },
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -252,33 +259,91 @@ class apache::params inherits apache::version {
     $mellon_post_directory = undef
     $modsec_version       = 1
     $modsec_crs_package   = 'mod_security_crs'
-    $modsec_crs_path      = '/usr/lib/modsecurity.d'
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    $modsec_default_rules = [
-      'base_rules/modsecurity_35_bad_robots.data',
-      'base_rules/modsecurity_35_scanners.data',
-      'base_rules/modsecurity_40_generic_attacks.data',
-      'base_rules/modsecurity_50_outbound.data',
-      'base_rules/modsecurity_50_outbound_malware.data',
-      'base_rules/modsecurity_crs_20_protocol_violations.conf',
-      'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
-      'base_rules/modsecurity_crs_23_request_limits.conf',
-      'base_rules/modsecurity_crs_30_http_policy.conf',
-      'base_rules/modsecurity_crs_35_bad_robots.conf',
-      'base_rules/modsecurity_crs_40_generic_attacks.conf',
-      'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
-      'base_rules/modsecurity_crs_41_xss_attacks.conf',
-      'base_rules/modsecurity_crs_42_tight_security.conf',
-      'base_rules/modsecurity_crs_45_trojans.conf',
-      'base_rules/modsecurity_crs_47_common_exceptions.conf',
-      'base_rules/modsecurity_crs_49_inbound_blocking.conf',
-      'base_rules/modsecurity_crs_50_outbound.conf',
-      'base_rules/modsecurity_crs_59_outbound_blocking.conf',
-      'base_rules/modsecurity_crs_60_correlation.conf',
-    ]
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+      $modsec_crs_path      = '/usr/lib/modsecurity.d'
+      $modsec_default_rules = [
+        'base_rules/modsecurity_35_bad_robots.data',
+        'base_rules/modsecurity_35_scanners.data',
+        'base_rules/modsecurity_40_generic_attacks.data',
+        'base_rules/modsecurity_50_outbound.data',
+        'base_rules/modsecurity_50_outbound_malware.data',
+        'base_rules/modsecurity_crs_20_protocol_violations.conf',
+        'base_rules/modsecurity_crs_21_protocol_anomalies.conf',
+        'base_rules/modsecurity_crs_23_request_limits.conf',
+        'base_rules/modsecurity_crs_30_http_policy.conf',
+        'base_rules/modsecurity_crs_35_bad_robots.conf',
+        'base_rules/modsecurity_crs_40_generic_attacks.conf',
+        'base_rules/modsecurity_crs_41_sql_injection_attacks.conf',
+        'base_rules/modsecurity_crs_41_xss_attacks.conf',
+        'base_rules/modsecurity_crs_42_tight_security.conf',
+        'base_rules/modsecurity_crs_45_trojans.conf',
+        'base_rules/modsecurity_crs_47_common_exceptions.conf',
+        'base_rules/modsecurity_crs_49_inbound_blocking.conf',
+        'base_rules/modsecurity_crs_50_outbound.conf',
+        'base_rules/modsecurity_crs_59_outbound_blocking.conf',
+        'base_rules/modsecurity_crs_60_correlation.conf',
+      ]
+    } else {
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = [
+        'rules/crawlers-user-agents.data',
+        'rules/iis-errors.data',
+        'rules/java-classes.data',
+        'rules/java-code-leakages.data',
+        'rules/java-errors.data',
+        'rules/lfi-os-files.data',
+        'rules/php-config-directives.data',
+        'rules/php-errors.data',
+        'rules/php-function-names-933150.data',
+        'rules/php-function-names-933151.data',
+        'rules/php-variables.data',
+        'rules/REQUEST-901-INITIALIZATION.conf',
+        'rules/REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf',
+        'rules/REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf',
+        'rules/REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf',
+        'rules/REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf',
+        'rules/REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf',
+        'rules/REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf',
+        'rules/REQUEST-905-COMMON-EXCEPTIONS.conf',
+        'rules/REQUEST-910-IP-REPUTATION.conf',
+        'rules/REQUEST-911-METHOD-ENFORCEMENT.conf',
+        'rules/REQUEST-912-DOS-PROTECTION.conf',
+        'rules/REQUEST-913-SCANNER-DETECTION.conf',
+        'rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf',
+        'rules/REQUEST-921-PROTOCOL-ATTACK.conf',
+        'rules/REQUEST-922-MULTIPART-ATTACK.conf',
+        'rules/REQUEST-930-APPLICATION-ATTACK-LFI.conf',
+        'rules/REQUEST-931-APPLICATION-ATTACK-RFI.conf',
+        'rules/REQUEST-932-APPLICATION-ATTACK-RCE.conf',
+        'rules/REQUEST-933-APPLICATION-ATTACK-PHP.conf',
+        'rules/REQUEST-934-APPLICATION-ATTACK-NODEJS.conf',
+        'rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf',
+        'rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf',
+        'rules/REQUEST-943-APPLICATION-ATTACK-SESSION-FIXATION.conf',
+        'rules/REQUEST-944-APPLICATION-ATTACK-JAVA.conf',
+        'rules/REQUEST-949-BLOCKING-EVALUATION.conf',
+        'rules/RESPONSE-950-DATA-LEAKAGES.conf',
+        'rules/RESPONSE-951-DATA-LEAKAGES-SQL.conf',
+        'rules/RESPONSE-952-DATA-LEAKAGES-JAVA.conf',
+        'rules/RESPONSE-953-DATA-LEAKAGES-PHP.conf',
+        'rules/RESPONSE-954-DATA-LEAKAGES-IIS.conf',
+        'rules/RESPONSE-959-BLOCKING-EVALUATION.conf',
+        'rules/RESPONSE-980-CORRELATION.conf',
+        'rules/restricted-files.data',
+        'rules/restricted-upload.data',
+        'rules/scanners-headers.data',
+        'rules/scanners-urls.data',
+        'rules/scanners-user-agents.data',
+        'rules/scripting-user-agents.data',
+        'rules/sql-errors.data',
+        'rules/unix-shell.data',
+        'rules/windows-powershell-commands.data',
+      ]
+    }
     $error_log           = 'error_log'
     $scriptalias         = '/var/www/cgi-bin'
     $access_log_file     = 'access_log'
@@ -408,7 +473,7 @@ class apache::params inherits apache::version {
     $mod_libs             = {
       'shib2' => $shib2_lib,
     }
-    $conf_template          = 'apache/httpd.conf.erb'
+    $conf_template          = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive              = 'On'
     $keepalive_timeout      = 15
@@ -517,7 +582,7 @@ class apache::params inherits apache::version {
     }
     $mod_libs         = {
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -583,7 +648,7 @@ class apache::params inherits apache::version {
     }
     $mod_libs         = {
     }
-    $conf_template        = 'apache/httpd.conf.erb'
+    $conf_template        = 'apache/httpd.conf.epp'
     $http_protocol_options = undef
     $keepalive            = 'On'
     $keepalive_timeout    = 15
@@ -658,7 +723,7 @@ class apache::params inherits apache::version {
       'security'       => '/usr/lib64/apache2/mod_security2.so',
       'php53'          => '/usr/lib64/apache2/mod_php5.so',
     }
-    $conf_template          = 'apache/httpd.conf.erb'
+    $conf_template          = 'apache/httpd.conf.epp'
     $http_protocol_options  = undef
     $keepalive              = 'On'
     $keepalive_timeout      = 15

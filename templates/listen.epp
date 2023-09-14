@@ -3,4 +3,4 @@
   - <ipv4>:<port>
   - [<ipv6]:<port>
 -%>
-Listen <%= @listen_addr_port %>
+Listen <%= $listen_addr_port %>

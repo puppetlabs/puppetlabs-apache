@@ -11,7 +11,7 @@ describe 'apache parameters' do
     end
 
     if os[:family] == 'freebsd'
-      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.epp") do
         it { is_expected.not_to be_file }
       end
     end
@@ -24,7 +24,7 @@ describe 'apache parameters' do
     end
 
     if os[:family] == 'freebsd'
-      describe file("#{apache_hash['confd_dir']}/no-accf.conf.erb") do
+      describe file("#{apache_hash['confd_dir']}/no-accf.conf.epp") do
         it { is_expected.to be_file }
       end
     end
@@ -310,9 +310,9 @@ describe 'apache parameters' do
   describe 'conf_template' do
     describe 'setup' do
       it 'applies cleanly' do
-        pp = "class { 'apache': conf_template => 'another/test.conf.erb', service_ensure => stopped }"
+        pp = "class { 'apache': conf_template => 'another/test.conf.epp', service_ensure => stopped }"
         run_shell('mkdir -p /etc/puppetlabs/code/environments/production/modules/another/templates')
-        run_shell("echo 'testcontent' >>  /etc/puppetlabs/code/environments/production/modules/another/templates/test.conf.erb")
+        run_shell("echo 'testcontent' >>  /etc/puppetlabs/code/environments/production/modules/another/templates/test.conf.epp")
         apply_manifest(pp, catch_failures: true)
       end
     end
@@ -431,7 +431,7 @@ describe 'apache parameters' do
   describe 'logging' do
     describe 'setup' do
       pp = <<-MANIFEST
-          if $facts['osfamily'] == 'RedHat' and $facts['selinux'] {
+          if $facts['os']['family'] == 'RedHat' and $facts['os']['selinux']['enabled'] {
             exec { 'set_apache_defaults':
               command => 'semanage fcontext -a -t httpd_log_t "/apache_spec/logs(/.*)?"',
               unless  => 'semanage fcontext --list | grep /apache_spec/logs | grep httpd_log_t',

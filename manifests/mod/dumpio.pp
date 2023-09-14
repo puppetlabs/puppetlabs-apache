@@ -20,8 +20,8 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_dumpio.html for additional documentation.
 #
 class apache::mod::dumpio (
-  Enum['Off', 'On', 'off', 'on'] $dump_io_input  = 'Off',
-  Enum['Off', 'On', 'off', 'on'] $dump_io_output = 'Off',
+  Apache::OnOff $dump_io_input  = 'Off',
+  Apache::OnOff $dump_io_output = 'Off',
 ) {
   include apache
 

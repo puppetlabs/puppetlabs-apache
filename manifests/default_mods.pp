@@ -125,6 +125,7 @@ class apache::default_mods (
     include apache::mod::negotiation
     include apache::mod::setenvif
     include apache::mod::auth_basic
+    include apache::mod::log_forensic
 
     # filter is needed by mod_deflate
     include apache::mod::filter

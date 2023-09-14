@@ -45,6 +45,20 @@ describe 'apache::mod::ssl', type: :class do
 
         it { is_expected.to contain_file('ssl.conf').without_content(%r{SSLProtocol}) }
       end
+
+      context 'ciphers with ssl_protocol' do
+        let(:params) do
+          {
+            ssl_cipher: {
+              'TLSv1.1' => 'RSA:!EXP:!NULL:+HIGH:+MEDIUM',
+              'TLSv1.2' => 'RSA:!EXP:!NULL:+HIGH:+MEDIUM:-LOW'
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('ssl.conf').without_content(%r{  SSLCipherSuite TLSv1.1 RSA:!EXP:!NULL:+HIGH:+MEDIUM}) }
+        it { is_expected.to contain_file('ssl.conf').without_content(%r{  SSLCipherSuite TLSv1.2 RSA:!EXP:!NULL:+HIGH:+MEDIUM:-LOW}) }
+      end
     end
 
     context '7 OS with custom directories for PR#1635' do
