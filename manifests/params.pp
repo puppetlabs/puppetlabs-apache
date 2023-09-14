@@ -382,60 +382,85 @@ class apache::params inherits apache::version {
       '22.04' => '8.1', # Ubuntu Jammy
       default => '7.2', # Ubuntu Bionic, Cosmic and Disco
     }
-    if (($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '22.04') < 0) or
-    ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '11') < 0)) {
-      $mod_packages = {
-        'apreq2'                => 'libapache2-mod-apreq2',
-        'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_kerb'             => 'libapache2-mod-auth-kerb',
-        'auth_openidc'          => 'libapache2-mod-auth-openidc',
-        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
-        'auth_mellon'           => 'libapache2-mod-auth-mellon',
-        'authnz_pam'            => 'libapache2-mod-authnz-pam',
-        'dav_svn'               => 'libapache2-mod-svn',
-        'fcgid'                 => 'libapache2-mod-fcgid',
-        'geoip'                 => 'libapache2-mod-geoip',
-        'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
-        'jk'                    => 'libapache2-mod-jk',
-        'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'nss'                   => 'libapache2-mod-nss',
-        'pagespeed'             => 'mod-pagespeed-stable',
-        'passenger'             => 'libapache2-mod-passenger',
-        'perl'                  => 'libapache2-mod-perl2',
-        'phpXXX'                => 'libapache2-mod-phpXXX',
-        'python'                => 'libapache2-mod-python',
-        'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-mod-security2',
-        'shib2'                 => 'libapache2-mod-shib2',
-        'wsgi'                  => 'libapache2-mod-wsgi',
-        'xsendfile'             => 'libapache2-mod-xsendfile',
+    $_base_mod_packages = {
+      'apreq2'                => 'libapache2-mod-apreq2',
+      'auth_cas'              => 'libapache2-mod-auth-cas',
+      'auth_openidc'          => 'libapache2-mod-auth-openidc',
+      'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
+      'auth_mellon'           => 'libapache2-mod-auth-mellon',
+      'authnz_pam'            => 'libapache2-mod-authnz-pam',
+      'dav_svn'               => 'libapache2-mod-svn',
+      'fcgid'                 => 'libapache2-mod-fcgid',
+      'geoip'                 => 'libapache2-mod-geoip',
+      'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
+      'jk'                    => 'libapache2-mod-jk',
+      'lookup_identity'       => 'libapache2-mod-lookup-identity',
+      'pagespeed'             => 'mod-pagespeed-stable',
+      'passenger'             => 'libapache2-mod-passenger',
+      'perl'                  => 'libapache2-mod-perl2',
+      'phpXXX'                => 'libapache2-mod-phpXXX',
+      'python'                => 'libapache2-mod-python',
+      'rpaf'                  => 'libapache2-mod-rpaf',
+      'security'              => 'libapache2-mod-security2',
+      'xsendfile'             => 'libapache2-mod-xsendfile',
+    }
+    $_os_mod_packages = case $facts['os']['name'] {
+      'Debian': {
+        case $facts['os']['release']['major'] {
+          '9': {
+            {
+              'auth_kerb' => 'libapache2-mod-auth-kerb',
+              'nss'       => 'libapache2-mod-nss',
+              'shib2'     => 'libapache2-mod-shib2',
+              'wsgi'      => 'libapache2-mod-wsgi',
+            }
+          }
+          '10': {
+            {
+              'auth_kerb' => 'libapache2-mod-auth-kerb',
+              'shib2'     => 'libapache2-mod-shib2',
+              'wsgi'      => 'libapache2-mod-wsgi',
+            }
+          }
+          default: {
+            {
+              'shib2' => 'libapache2-mod-shib',
+              'wsgi'  => 'libapache2-mod-wsgi-py3',
+            }
+          }
+        }
       }
-    } else {
-      $mod_packages = {
-        'apreq2'                => 'libapache2-mod-apreq2',
-        'auth_cas'              => 'libapache2-mod-auth-cas',
-        'auth_openidc'          => 'libapache2-mod-auth-openidc',
-        'auth_gssapi'           => 'libapache2-mod-auth-gssapi',
-        'auth_mellon'           => 'libapache2-mod-auth-mellon',
-        'authnz_pam'            => 'libapache2-mod-authnz-pam',
-        'dav_svn'               => 'libapache2-mod-svn',
-        'fcgid'                 => 'libapache2-mod-fcgid',
-        'geoip'                 => 'libapache2-mod-geoip',
-        'intercept_form_submit' => 'libapache2-mod-intercept-form-submit',
-        'jk'                    => 'libapache2-mod-jk',
-        'lookup_identity'       => 'libapache2-mod-lookup-identity',
-        'pagespeed'             => 'mod-pagespeed-stable',
-        'passenger'             => 'libapache2-mod-passenger',
-        'perl'                  => 'libapache2-mod-perl2',
-        'phpXXX'                => 'libapache2-mod-phpXXX',
-        'python'                => 'libapache2-mod-python',
-        'rpaf'                  => 'libapache2-mod-rpaf',
-        'security'              => 'libapache2-mod-security2',
-        'shib2'                 => 'libapache2-mod-shib',
-        'wsgi'                  => 'libapache2-mod-wsgi-py3',
-        'xsendfile'             => 'libapache2-mod-xsendfile',
+      'Ubuntu': {
+        case $facts['os']['release']['major'] {
+          '18.04': {
+            {
+              'auth_kerb' => 'libapache2-mod-auth-kerb',
+              'nss'       => 'libapache2-mod-nss',
+              'shib2'     => 'libapache2-mod-shib2',
+              'wsgi'      => 'libapache2-mod-wsgi',
+            }
+          }
+          '20.04': {
+            {
+              'auth_kerb' => 'libapache2-mod-auth-kerb',
+              'shib2'     => 'libapache2-mod-shib2',
+              'wsgi'      => 'libapache2-mod-wsgi',
+            }
+          }
+          default: {
+            {
+              'auth_kerb' => 'libapache2-mod-auth-kerb',
+              'shib2'     => 'libapache2-mod-shib',
+              'wsgi'      => 'libapache2-mod-wsgi-py3',
+            }
+          }
+        }
+      }
+      default: {
+        {}
       }
     }
+    $mod_packages = $_base_mod_packages + $_os_mod_packages
 
     $error_log           = 'error.log'
     $scriptalias         = '/usr/lib/cgi-bin'
