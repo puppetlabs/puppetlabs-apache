@@ -95,7 +95,7 @@ class apache::mod::ssl (
   Optional[Stdlib::Absolutepath] $ssl_cert                  = undef,
   Optional[Stdlib::Absolutepath] $ssl_key                   = undef,
   Optional[Stdlib::Absolutepath] $ssl_ca                    = undef,
-  String $ssl_cipher                                        = $apache::params::ssl_cipher,
+  Variant[String[1], Hash[String[1], String[1]]] $ssl_cipher   = $apache::params::ssl_cipher,
   Variant[Boolean, Apache::OnOff] $ssl_honorcipherorder     = true,
   Array[String] $ssl_protocol                               = $apache::params::ssl_protocol,
   Array $ssl_proxy_protocol                                 = [],

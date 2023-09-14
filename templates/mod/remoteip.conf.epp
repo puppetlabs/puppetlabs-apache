@@ -1,10 +1,10 @@
 <%- |
   String                                                     $header,
-  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $internal_proxy            = undef,
+  Optional[Array[Stdlib::Host]]                              $internal_proxy            = undef,
   Optional[Stdlib::Absolutepath]                             $internal_proxy_list       = undef,
   Optional[String]                                           $proxies_header            = undef,
   Boolean                                                    $proxy_protocol            = undef,
-  Optional[Array[Variant[Stdlib::Host,Stdlib::IP::Address]]] $proxy_protocol_exceptions = undef,
+  Optional[Array[Stdlib::Host]]                              $proxy_protocol_exceptions = undef,
   Optional[Array[Stdlib::IP::Address]]                       $trusted_proxy             = undef,
   Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
 | -%>
@@ -14,7 +14,7 @@ RemoteIPHeader <%= $header %>
 <%- if $internal_proxy { -%>
 # Declare client intranet IP addresses trusted to present
 # the RemoteIPHeader value
-<%-   [$internal_proxy].flatten.each |$proxy| { -%>
+<%-   $internal_proxy.each |$proxy| { -%>
 RemoteIPInternalProxy <%= $proxy %>
 <%-   } -%>
 <%- } -%>
@@ -33,7 +33,7 @@ RemoteIPProxyProtocol On
 <%- } -%>
 
 <%- if $proxy_protocol_exceptions { -%>
-<%-   [$proxy_protocol_exceptions].flatten.each |$exception| { -%>
+<%-   $proxy_protocol_exceptions.each |$exception| { -%>
 RemoteIPProxyProtocolExceptions <%= $exception %>
 <%-   } -%>
 <%- } -%>
@@ -41,7 +41,7 @@ RemoteIPProxyProtocolExceptions <%= $exception %>
 <%- if $trusted_proxy { -%>
 # Declare client intranet IP addresses trusted to present
 # the RemoteIPHeader value
-  <%- [$trusted_proxy].flatten.each |$proxy| { -%>
+  <%- $trusted_proxy.each |$proxy| { -%>
 RemoteIPTrustedProxy <%= $proxy %>
   <%- } -%>
 <%- } -%>
