@@ -459,7 +459,7 @@
 class apache (
   String $apache_name                                                        = $apache::params::apache_name,
   String $service_name                                                       = $apache::params::service_name,
-  Variant[Array, Boolean] $default_mods                                      = true,
+  Variant[Array[String[1]], Boolean] $default_mods                           = true,
   Boolean $default_vhost                                                     = true,
   Optional[String] $default_charset                                          = undef,
   Boolean $default_confd_files                                               = true,
@@ -727,7 +727,7 @@ class apache (
   }
   concat::fragment { 'Apache ports header':
     target  => $ports_file,
-    content => template('apache/ports_header.erb'),
+    content => epp('apache/ports_header.epp'),
   }
 
   if $apache::conf_dir and $apache::params::conf_file {
@@ -782,10 +782,57 @@ class apache (
     # - $server_signature
     # - $trace_enable
     # - $root_directory_secured
+    $parameters = {
+      'server_tokens'           => $server_tokens,
+      'server_signature'        => $server_signature,
+      'trace_enable'            => $trace_enable,
+      'servername'              => $servername,
+      'server_root'             => $server_root,
+      'serveradmin'             => $serveradmin,
+      'pidfile'                 => $pidfile,
+      'timeout'                 => $timeout,
+      'keepalive'               => $keepalive,
+      'max_keepalive_requests'  => $max_keepalive_requests,
+      'keepalive_timeout'       => $keepalive_timeout,
+      'limitreqfieldsize'       => $limitreqfieldsize,
+      'limitreqfields'          => $limitreqfields,
+      'limitreqline'            => $limitreqline,
+      'http_protocol_options'   => $http_protocol_options,
+      'protocols'               => $protocols,
+      'protocols_honor_order'   => $protocols_honor_order,
+      'user'                    => $user,
+      'group'                   => $group,
+      'root_directory_options'  => $root_directory_options,
+      'root_directory_secured'  => $root_directory_secured,
+      'default_charset'         => $default_charset,
+      'hostname_lookups'        => $hostname_lookups,
+      'error_log'               => $error_log,
+      'logroot'                 => $logroot,
+      'log_level'               => $log_level,
+      'sendfile'                => $sendfile,
+      'allow_encoded_slashes'   => $allow_encoded_slashes,
+      'file_e_tag'              => $file_e_tag,
+      'use_canonical_name'      => $use_canonical_name,
+      'apxs_workaround'         => $apxs_workaround,
+      'mod_load_dir'            => $mod_load_dir,
+      'confd_dir'               => $confd_dir,
+      'vhost_load_dir'          => $vhost_load_dir,
+      'vhost_include_pattern'   => $vhost_include_pattern,
+      'ports_file'              => $ports_file,
+      'log_formats'             => $log_formats,
+      'conf_enabled'            => $conf_enabled,
+      'ldap_verify_server_cert' => $ldap_verify_server_cert,
+      'ldap_trusted_mode'       => $ldap_trusted_mode,
+      'error_documents'         => $error_documents,
+      'error_documents_path'    => $error_documents_path,
+    }
+
+    notice $conf_template
+
     file { "${apache::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       mode    => $apache::file_mode,
-      content => template($conf_template),
+      content => epp($conf_template, $parameters),
       notify  => Class['Apache::Service'],
       require => [Package['httpd'], Concat[$ports_file]],
     }

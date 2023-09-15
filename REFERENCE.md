@@ -346,7 +346,7 @@ Default value: `true`
 
 ##### <a name="-apache--default_mods"></a>`default_mods`
 
-Data type: `Variant[Array, Boolean]`
+Data type: `Variant[Array[String[1]], Boolean]`
 
 Determines whether to configure and enable a set of default Apache modules depending on
 your operating system.<br />
@@ -356,7 +356,14 @@ on your operating system, and you can declare any other modules separately using
 If `true`, Puppet installs additional modules, depending on the operating system and
 the value of the `mpm_module` parameter. Because these lists of
 modules can change frequently, consult the Puppet module's code for up-to-date lists.<br />
-If this parameter contains an array, Puppet instead enables all passed Apache modules.
+If this parameter contains an array, Puppet will enable all the Apache modules passed in it.
+Passing the values as an array of strings provides the flexibility to override the default mods and install modules defined in `$default_mods`.
+For example, with array of string:<br />
+```puppet
+class { 'apache':
+  default_mods => ['cache', 'info', 'mime_magic']
+}
+```
 
 Default value: `true`
 
