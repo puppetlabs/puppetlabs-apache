@@ -459,7 +459,7 @@
 class apache (
   String $apache_name                                                        = $apache::params::apache_name,
   String $service_name                                                       = $apache::params::service_name,
-  Variant[Array, Boolean] $default_mods                                      = true,
+  Variant[Array[String[1]], Boolean] $default_mods                           = true,
   Boolean $default_vhost                                                     = true,
   Optional[String] $default_charset                                          = undef,
   Boolean $default_confd_files                                               = true,
