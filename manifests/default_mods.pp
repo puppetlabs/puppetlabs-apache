@@ -48,6 +48,7 @@ class apache::default_mods (
         include apache::mod::authn_core
         include apache::mod::cache
         include apache::mod::ext_filter
+        include apache::mod::include
         include apache::mod::mime
         include apache::mod::mime_magic
         include apache::mod::rewrite
@@ -61,7 +62,6 @@ class apache::default_mods (
         ::apache::mod { 'authz_dbm': }
         ::apache::mod { 'authz_owner': }
         ::apache::mod { 'expires': }
-        ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'substitute': }
         ::apache::mod { 'usertrack': }
@@ -73,6 +73,7 @@ class apache::default_mods (
         include apache::mod::disk_cache
         include apache::mod::filter
         include apache::mod::headers
+        include apache::mod::include
         include apache::mod::info
         include apache::mod::mime_magic
         include apache::mod::reqtimeout
@@ -95,7 +96,6 @@ class apache::default_mods (
         ::apache::mod { 'expires': }
         ::apache::mod { 'file_cache': }
         ::apache::mod { 'imagemap': }
-        ::apache::mod { 'include': }
         ::apache::mod { 'logio': }
         ::apache::mod { 'request': }
         ::apache::mod { 'session': }
@@ -116,6 +116,7 @@ class apache::default_mods (
     }
     include apache::mod::alias
     include apache::mod::authn_file
+    include apache::mod::authz_core
     include apache::mod::autoindex
     include apache::mod::dav
     include apache::mod::dav_fs
@@ -127,14 +128,6 @@ class apache::default_mods (
     include apache::mod::auth_basic
     include apache::mod::log_forensic
 
-    # filter is needed by mod_deflate
-    include apache::mod::filter
-
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
-
     # lots of stuff seems to break without access_compat
     ::apache::mod { 'access_compat': }
 
@@ -144,20 +137,8 @@ class apache::default_mods (
   } elsif $mods {
     ::apache::default_mods::load { $mods: }
 
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
-
-    # filter is needed by mod_deflate
-    include apache::mod::filter
+    include apache::mod::authz_core
   } else {
-    # authz_core is needed for 'Require' directive
-    ::apache::mod { 'authz_core':
-      id => 'authz_core_module',
-    }
-
-    # filter is needed by mod_deflate
-    include apache::mod::filter
+    include apache::mod::authz_core
   }
 }

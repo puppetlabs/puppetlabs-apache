@@ -5,6 +5,7 @@ require 'spec_helper'
 # This function is called inside the OS specific contexts
 def general_deflate_specs
   it { is_expected.to contain_apache__mod('deflate') }
+  it { is_expected.to contain_class('apache::mod::filter') }
 
   expected = "AddOutputFilterByType DEFLATE application/rss+xml\n" \
              "AddOutputFilterByType DEFLATE application/x-javascript\n" \

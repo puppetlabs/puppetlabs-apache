@@ -24,6 +24,8 @@ class apache::mod::deflate (
   }
 ) {
   include apache
+  include apache::mod::filter
+
   ::apache::mod { 'deflate': }
 
   file { 'deflate.conf':
