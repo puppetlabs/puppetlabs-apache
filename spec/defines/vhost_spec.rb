@@ -2020,8 +2020,7 @@ describe 'apache::vhost', type: :define do
             it { is_expected.to compile }
             it { is_expected.to contain_concat('25-rspec.example.com.conf') }
 
-            if (os_facts[:os]['family'] == 'RedHat' && os_facts[:os]['release']['major'].to_i > 6) ||
-               (os_facts[:os]['name'] == 'SLES' && os_facts[:os]['release']['major'].to_i > 11)
+            if os_facts[:os]['family'] == 'RedHat' || os_facts[:os]['name'] == 'SLES'
               it {
                 expect(subject).to contain_concat__fragment('rspec.example.com-directories').with(
                   content: %r{^\s+Require all granted$},
