@@ -12,10 +12,10 @@ describe ApacheModPlatformCompatibility do
   foobar_linux = 'foobar_linux'
 
   expected_compatible_platform_versions = {
-    'redhat' => [6, 7, 8],
-    'centos' => [6, 7, 8],
-    'oraclelinux' => [6, 7],
-    'scientific' => [6, 7],
+    'redhat' => [7, 8],
+    'centos' => [7, 8],
+    'oraclelinux' => [7],
+    'scientific' => [7],
     'debian' => [8, 9, 10],
     'sles' => [11, 12, 15],
     'ubuntu' => [14, 16, 18]
