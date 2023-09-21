@@ -1325,6 +1325,83 @@
 #   Any handlers you do not set in these hashes are considered `undefined` within Puppet and 
 #   are not added to the virtual host, resulting in the module using their default values.
 #
+#   The `directories` param can accepts the different authentication ways, including `gssapi`, `Basic (authz_core)`, 
+#   and others.
+#
+#     * `gssapi` - Specifies mod_auth_gssapi parameters for particular directories in a virtual host directory
+#       TODO: check, if this Documentation is obsolete
+#
+#       ```puppet
+#       apache::vhost { 'sample.example.net':
+#         docroot     => '/path/to/directory',
+#         directories => [
+#           { path   => '/path/to/different/dir',
+#             gssapi => {
+#               acceptor_name            => '{HOSTNAME}',
+#               allowed_mech             => ['krb5', 'iakerb', 'ntlmssp'],
+#               authname                 => 'Kerberos 5',
+#               authtype                 => 'GSSAPI',
+#               basic_auth               => true,
+#               basic_auth_mech          => ['krb5', 'iakerb', 'ntlmssp'],
+#               basic_ticket_timeout     => 300,
+#               connection_bound         => true,
+#               cred_store               => {
+#                 ccache        => ['/path/to/directory'],
+#                 client_keytab => ['/path/to/example.keytab'],
+#                 keytab        => ['/path/to/example.keytab'],
+#               },
+#               deleg_ccache_dir         => '/path/to/directory',
+#               deleg_ccache_env_var     => 'KRB5CCNAME',
+#               deleg_ccache_perms       => {
+#                 mode => '0600',
+#                 uid  => 'example-user',
+#                 gid  => 'example-group',
+#               },
+#               deleg_ccache_unique      => true,
+#               impersonate              => true,
+#               local_name               => true,
+#               name_attributes          => 'json',
+#               negotiate_once           => true,
+#               publish_errors           => true,
+#               publish_mech             => true,
+#               required_name_attributes =>	'auth-indicators=high',
+#               session_key              => 'file:/path/to/example.key',
+#               signal_persistent_auth   => true,
+#               ssl_only                 => true,
+#               use_s4u2_proxy           => true,
+#               use_sessions             => true,
+#             }
+#           },
+#         ],
+#       }
+#       ```
+#
+#     * `Basic` - Specifies mod_authz_core parameters for particular directories in a virtual host directory
+#       ```puppet
+#       apache::vhost { 'sample.example.net':
+#         docroot     => '/path/to/directory',
+#         directories => [
+#           {
+#             path        => '/path/to/different/dir',
+#             auth_type => 'Basic',
+#             authz_core  => {
+#               require_all => {
+#                 'require_any' => {
+#                   'require' => ['user superadmin'],
+#                   'require_all' => {
+#                     'require' => ['group admins', 'ldap-group "cn=Administrators,o=Airius"'],
+#                   },
+#                 },
+#                 'require_none' => {
+#                   'require' => ['group temps', 'ldap-group "cn=Temporary Employees,o=Airius"']
+#                 }
+#               }
+#             }
+#           },
+#         ],
+#       }
+#       ```
+#
 # @param custom_fragment
 #   Pass a string of custom configuration directives to be placed at the end of the directory 
 #   configuration.
@@ -1400,56 +1477,6 @@
 #     directories => [
 #       { path  => '/path/to/different/dir',
 #         additional_includes => ['/custom/path/includes', '/custom/path/another_includes',],
-#       },
-#     ],
-#   }
-#   ```
-#
-# TODO: check, if this Documentation is obsolete
-# lint:ignore:parameter_documentation
-# @param gssapi
-# lint:endignore
-#   Specfies mod_auth_gssapi parameters for particular directories in a virtual host directory
-#   ```puppet
-#   apache::vhost { 'sample.example.net':
-#     docroot     => '/path/to/directory',
-#     directories => [
-#       { path   => '/path/to/different/dir',
-#         gssapi => {
-#           acceptor_name            => '{HOSTNAME}',
-#           allowed_mech             => ['krb5', 'iakerb', 'ntlmssp'],
-#           authname                 => 'Kerberos 5',
-#           authtype                 => 'GSSAPI',
-#           basic_auth               => true,
-#           basic_auth_mech          => ['krb5', 'iakerb', 'ntlmssp'],
-#           basic_ticket_timeout     => 300,
-#           connection_bound         => true,
-#           cred_store               => {
-#             ccache        => ['/path/to/directory'],
-#             client_keytab => ['/path/to/example.keytab'],
-#             keytab        => ['/path/to/example.keytab'],
-#           },
-#           deleg_ccache_dir         => '/path/to/directory',
-#           deleg_ccache_env_var     => 'KRB5CCNAME',
-#           deleg_ccache_perms       => {
-#             mode => '0600',
-#             uid  => 'example-user',
-#             gid  => 'example-group',
-#           },
-#           deleg_ccache_unique      => true,
-#           impersonate              => true,
-#           local_name               => true,
-#           name_attributes          => 'json',
-#           negotiate_once           => true,
-#           publish_errors           => true,
-#           publish_mech             => true,
-#           required_name_attributes =>	'auth-indicators=high',
-#           session_key              => 'file:/path/to/example.key',
-#           signal_persistent_auth   => true,
-#           ssl_only                 => true,
-#           use_s4u2_proxy           => true,
-#           use_sessions             => true,
-#         }
 #       },
 #     ],
 #   }

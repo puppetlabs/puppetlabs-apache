@@ -39,6 +39,7 @@
 [`apache::mod::auth_mellon`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauth_mellon
 [`apache::mod::authn_dbd`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauthn_dbd
 [`apache::mod::authnz_ldap`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauthnz_ldap
+[`apache::mod::authz_core`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodauthz_core
 [`apache::mod::cluster`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemodcluster
 [`apache::mod::data]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoddata
 [`apache::mod::disk_cache`]: https://forge.puppet.com/modules/puppetlabs/apache/reference#apachemoddisk_cache
@@ -157,6 +158,7 @@
 [`mod_authnz_external`]: https://github.com/phokz/mod-auth-external
 [`mod_auth_dbd`]: http://httpd.apache.org/docs/current/mod/mod_authn_dbd.html
 [`mod_auth_mellon`]: https://github.com/UNINETT/mod_auth_mellon
+[`mod_authz_core`]: https://httpd.apache.org/docs/current/mod/mod_authz_core.html
 [`mod_dbd`]: http://httpd.apache.org/docs/current/mod/mod_dbd.html
 [`mod_disk_cache`]: https://httpd.apache.org/docs/2.2/mod/mod_disk_cache.html
 [`mod_dumpio`]: https://httpd.apache.org/docs/2.4/mod/mod_dumpio.html
