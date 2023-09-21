@@ -1,0 +1,6 @@
+<IfModule mod_fcgid.c>
+<% $sorted_keys = $options.keys.sort -%>
+<% $sorted_keys.each |$key| { -%>
+  <%= $key %> <%= $options[$key] %>
+<% } -%>
+</IfModule>

@@ -1,0 +1,1 @@
+LDAPVerifyServerCert <%= apache::bool2httpd($verify_server_cert) %>

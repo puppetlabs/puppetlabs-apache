@@ -75,11 +75,24 @@ class apache::mod::cluster (
     ::apache::mod { 'slotmem': }
   }
 
+  $parameters = {
+    'ip'                      => $ip,
+    'port'                    => $port,
+    'allowed_network'         => $allowed_network,
+    'keep_alive_timeout'      => $keep_alive_timeout,
+    'max_keep_alive_requests' => $max_keep_alive_requests,
+    'enable_mcpm_receive'     => $enable_mcpm_receive,
+    'balancer_name'           => $balancer_name,
+    'server_advertise'        => $server_advertise,
+    'advertise_frequency'     => $advertise_frequency,
+    'manager_allowed_network' => $manager_allowed_network,
+  }
+
   file { 'cluster.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/cluster.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/cluster.conf.erb'),
+    content => epp('apache/mod/cluster.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

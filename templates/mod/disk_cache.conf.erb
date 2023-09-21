@@ -1,9 +1,0 @@
-<% if @default_cache_enable -%>
-CacheEnable disk /
-<% end -%>
-CacheRoot "<%= @_cache_root %>"
-CacheDirLevels 2
-CacheDirLength 1
-<% if @cache_ignore_headers -%>
-CacheIgnoreHeaders <%= @cache_ignore_headers -%>
-<% end -%>

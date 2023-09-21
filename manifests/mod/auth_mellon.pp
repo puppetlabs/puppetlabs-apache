@@ -39,11 +39,21 @@ class apache::mod::auth_mellon (
 
   # Template uses
   # - All variables beginning with mellon_
+  $parameters = {
+    'mellon_cache_size'       => $mellon_cache_size,
+    'mellon_cache_entry_size' => $mellon_cache_entry_size,
+    'mellon_lock_file'        => $mellon_lock_file,
+    'mellon_post_directory'   => $mellon_post_directory,
+    'mellon_post_ttl'         => $mellon_post_ttl,
+    'mellon_post_size'        => $mellon_post_size,
+    'mellon_post_count'       => $mellon_post_count,
+  }
+
   file { 'auth_mellon.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/auth_mellon.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/auth_mellon.conf.erb'),
+    content => epp('apache/mod/auth_mellon.conf.epp', $parameters),
     require => [Exec["mkdir ${apache::mod_dir}"],],
     before  => File[$apache::mod_dir],
     notify  => Class['Apache::Service'],

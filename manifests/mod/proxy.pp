@@ -34,12 +34,21 @@ class apache::mod::proxy (
   ::apache::mod { 'proxy':
     package => $package_name,
   }
+
+  $parameters = {
+    'proxy_requests'      => $proxy_requests,
+    'allow_from'          => $allow_from,
+    'proxy_via'           => $proxy_via,
+    'proxy_timeout'       => $proxy_timeout,
+    'proxy_iobuffersize'  => $proxy_iobuffersize,
+  }
+
   # Template uses $proxy_requests
   file { 'proxy.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/proxy.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/proxy.conf.erb'),
+    content => epp('apache/mod/proxy.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

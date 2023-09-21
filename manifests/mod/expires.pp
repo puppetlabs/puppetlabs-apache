@@ -26,11 +26,17 @@ class apache::mod::expires (
   # $expires_active
   # $expires_default
   # $expires_by_type
+  $parameters = {
+    'expires_active'  => $expires_active,
+    'expires_default' => $expires_default,
+    'expires_by_type' => $expires_by_type,
+  }
+
   file { 'expires.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/expires.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/expires.conf.erb'),
+    content => epp('apache/mod/expires.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

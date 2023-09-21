@@ -1,0 +1,33 @@
+<% $_requires = if $requires { %>$requires<% } else {%>$requires_defaults<%} %>
+<% if type($_requires, 'generalized') == String { %>
+  <%- if !($_requires.downcase in ['', 'unmanaged']) { -%>
+    Require <%= $_requires %>
+  <%- } -%>
+<% }elsif String(type($_requires, 'generalized')).index('Array') == 0 { -%>
+  <%- $_requires.each |$req| { -%>
+    Require <%= $req %>
+  <%- } -%>
+<% }elsif String(type($_requires, 'generalized')).index('Hash') == 0 { -%>
+  <%- if $_requires['enforce'] and $_requires['enforce'].downcase in ['all', 'none', 'any'] { -%>
+    <%- $enforce_str = "Require${_requires['enforce'].capitalize}>\n" -%>
+    <%- $enforce_open = "    <${enforce_str}" -%>
+    <%- $enforce_close = "    </${enforce_str}" -%>
+    <%- $indentation = '    ' -%>
+  <%- } else { -%>
+    <%- if $_requires['enforce'] { -%>
+      <%- scope.function_warning(["Class #{@title}: Require can only be overwritten with all, none or any."]) -%>
+    <%- } -%>
+    <%- $enforce_open = '' -%>
+    <%- $enforce_close = '' -%>
+    <%- $indentation = '' -%>
+  <%- } -%>
+  <%- if $_requires['requires'] and String(type($_requires['requires'], 'generalized')).index('Array') == 0 { -%>
+<%# %><%= $enforce_open -%>
+      <%- $_requires['requires'].each |$req| { -%>
+<%# %>    <%= $indentation -%>Require <%= $req %>
+      <%- } -%>
+<%# %><%= $enforce_close -%>
+  <%- } else { -%>
+    <%- scope.function_warning(["Class #{@title}: Require hash must have a key named \"requires\" with array value"]) -%>
+  <%- } -%>
+<% } -%>

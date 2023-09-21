@@ -69,10 +69,20 @@ class apache::mod::itk (
   # - $serverlimit
   # - $maxclients
   # - $maxrequestsperchild
+  $parameters = {
+    'startservers'        => $startservers,
+    'minspareservers'     => $minspareservers,
+    'maxspareservers'     => $maxspareservers,
+    'serverlimit'         => $serverlimit,
+    'maxclients'          => $maxclients,
+    'maxrequestsperchild' => $maxrequestsperchild,
+    'enablecapabilities'  => $enablecapabilities,
+  }
+
   file { "${apache::mod_dir}/itk.conf":
     ensure  => file,
     mode    => $apache::file_mode,
-    content => template('apache/mod/itk.conf.erb'),
+    content => epp('apache/mod/itk.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

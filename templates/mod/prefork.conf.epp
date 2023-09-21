@@ -1,0 +1,17 @@
+<IfModule mpm_prefork_module>
+  StartServers        <%= $startservers %>
+  MinSpareServers     <%= $minspareservers %>
+  MaxSpareServers     <%= $maxspareservers %>
+  ServerLimit         <%= $serverlimit %>
+  <%- if $maxrequestworkers { -%>
+  MaxRequestWorkers      <%= $maxrequestworkers %>
+  <%- }elsif $maxclients { -%>
+  MaxClients             <%= $maxclients %>
+  <%- } -%>
+  <%- if $maxconnectionsperchild { -%>
+  MaxConnectionsPerChild <%= $maxconnectionsperchild %>
+  <%- }elsif $maxrequestsperchild { -%>
+  MaxRequestsPerChild    <%= $maxrequestsperchild %>
+  <%- } -%>
+  ListenBacklog       <%= $listenbacklog %>
+</IfModule>

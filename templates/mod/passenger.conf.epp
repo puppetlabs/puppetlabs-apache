@@ -1,0 +1,262 @@
+# The Passenger Apache module configuration file is being
+# managed by Puppet and changes will be overwritten.
+<IfModule mod_passenger.c>
+  <%- if $passenger_allow_encoded_slashes { -%>
+  PassengerAllowEncodedSlashes <%= $passenger_allow_encoded_slashes %>
+  <%- } -%>
+  <%- if $passenger_anonymous_telemetry_proxy { -%>
+  PassengerAnonymousTelemetryProxy <%= $passenger_anonymous_telemetry_proxy %>
+  <%- } -%>
+  <%- if $passenger_app_env { -%>
+  PassengerAppEnv <%= $passenger_app_env %>
+  <%- } -%>
+  <%- if $passenger_app_group_name { -%>
+  PassengerAppGroupName <%= $passenger_app_group_name %>
+  <%- } -%>
+  <%- if $passenger_app_root { -%>
+  PassengerAppRoot "<%= $passenger_app_root %>"
+  <%- } -%>
+  <%- if $passenger_app_type { -%>
+  PassengerAppType <%= $passenger_app_type %>
+  <%- } -%>
+  <%- if $passenger_base_uri { -%>
+  PassengerBaseURI <%= $passenger_base_uri %>
+  <%- } -%>
+  <%- if $passenger_buffer_response { -%>
+  PassengerBufferResponse <%= $passenger_buffer_response %>
+  <%- } -%>
+  <%- if $passenger_buffer_upload { -%>
+  PassengerBufferUpload <%= $passenger_buffer_upload %>
+  <%- } -%>
+  <%- if $passenger_concurrency_model { -%>
+  PassengerConcurrencyModel <%= $passenger_concurrency_model %>
+  <%- } -%>
+  <%- if $passenger_data_buffer_dir { -%>
+  PassengerDataBufferDir "<%= $passenger_data_buffer_dir %>"
+  <%- } -%>
+  <%- if $passenger_debug_log_file { -%>
+  PassengerDebugLogFile <%= $passenger_debug_log_file %>
+  <%- } -%>
+  <%- if $passenger_debugger { -%>
+  PassengerDebugger <%= $passenger_debugger %>
+  <%- } -%>
+  <%- if $passenger_default_group { -%>
+  PassengerDefaultGroup <%= $passenger_default_group %>
+  <%- } -%>
+  <%- if $passenger_default_ruby { -%>
+  PassengerDefaultRuby "<%= $passenger_default_ruby %>"
+  <%- } -%>
+  <%- if $passenger_default_user { -%>
+  PassengerDefaultUser <%= $passenger_default_user %>
+  <%- } -%>
+  <%- if $passenger_disable_anonymous_telemetry != undef { -%>
+  PassengerDisableAnonymousTelemetry <%= apache::bool2httpd($passenger_disable_anonymous_telemetry) %>
+  <%- } -%>
+  <%- if $passenger_disable_log_prefix != undef { -%>
+  PassengerDisableLogPrefix <%= apache::bool2httpd($passenger_disable_log_prefix) %>
+  <%- } -%>
+  <%- if $passenger_disable_security_update_check { -%>
+  PassengerDisableSecurityUpdateCheck <%= $passenger_disable_security_update_check %>
+  <%- } -%>
+  <%- if $passenger_enabled { -%>
+  PassengerEnabled <%= $passenger_enabled %>
+  <%- } -%>
+  <%- if $passenger_error_override { -%>
+  PassengerErrorOverride <%= $passenger_error_override %>
+  <%- } -%>
+  <%- if $passenger_file_descriptor_log_file { -%>
+  PassengerFileDescriptorLogFile "<%= $passenger_file_descriptor_log_file %>"
+  <%- } -%>
+  <%- if $passenger_fly_with { -%>
+  PassengerFlyWith "<%= $passenger_fly_with %>"
+  <%- } -%>
+  <%- if $passenger_force_max_concurrent_requests_per_process { -%>
+  PassengerForceMaxConcurrentRequestsPerProcess <%= $passenger_force_max_concurrent_requests_per_process %>
+  <%- } -%>
+  <%- if $passenger_friendly_error_pages { -%>
+  PassengerFriendlyErrorPages <%= $passenger_friendly_error_pages %>
+  <%- } -%>
+  <%- if $passenger_group { -%>
+  PassengerGroup <%= $passenger_group %>
+  <%- } -%>
+  <%- if $passenger_high_performance { -%>
+  PassengerHighPerformance <%= $passenger_high_performance %>
+  <%- } -%>
+  <%- if $passenger_instance_registry_dir { -%>
+  PassengerInstanceRegistryDir "<%= $passenger_instance_registry_dir %>"
+  <%- } -%>
+  <%- if $passenger_load_shell_envvars { -%>
+  PassengerLoadShellEnvvars <%= $passenger_load_shell_envvars %>
+  <%- } -%>
+  <%- if $passenger_preload_bundler != undef { -%>
+  PassengerPreloadBundler <%= apache::bool2httpd($passenger_preload_bundler) %>
+  <%- } -%>
+  <%- if $passenger_log_file { -%>
+  PassengerLogFile "<%= $passenger_log_file %>"
+  <%- } -%>
+  <%- if $passenger_log_level { -%>
+  PassengerLogLevel <%= $passenger_log_level %>
+  <%- } -%>
+  <%- if $passenger_lve_min_uid { -%>
+  PassengerLveMinUid <%= $passenger_lve_min_uid %>
+  <%- } -%>
+  <%- if $passenger_max_instances { -%>
+  PassengerMaxInstances <%= $passenger_max_instances %>
+  <%- } -%>
+  <%- if $passenger_max_instances_per_app { -%>
+  PassengerMaxInstancesPerApp <%= $passenger_max_instances_per_app %>
+  <%- } -%>
+  <%- if $passenger_max_pool_size { -%>
+  PassengerMaxPoolSize <%= $passenger_max_pool_size %>
+  <%- } -%>
+  <%- if $passenger_max_preloader_idle_time { -%>
+  PassengerMaxPreloaderIdleTime <%= $passenger_max_preloader_idle_time %>
+  <%- } -%>
+  <%- if $passenger_max_request_queue_size { -%>
+  PassengerMaxRequestQueueSize <%= $passenger_max_request_queue_size %>
+  <%- } -%>
+  <%- if $passenger_max_request_time { -%>
+  PassengerMaxRequestTime <%= $passenger_max_request_time %>
+  <%- } -%>
+  <%- if $passenger_max_requests { -%>
+  PassengerMaxRequests <%= $passenger_max_requests %>
+  <%- } -%>
+  <%- if $passenger_memory_limit { -%>
+  PassengerMemoryLimit <%= $passenger_memory_limit %>
+  <%- } -%>
+  <%- if $passenger_meteor_app_settings { -%>
+  PassengerMeteorAppSettings "<%= $passenger_meteor_app_settings %>"
+  <%- } -%>
+  <%- if $passenger_min_instances { -%>
+  PassengerMinInstances <%= $passenger_min_instances %>
+  <%- } -%>
+  <%- if $passenger_nodejs { -%>
+  PassengerNodejs "<%= $passenger_nodejs %>"
+  <%- } -%>
+  <%- if $passenger_pool_idle_time { -%>
+  PassengerPoolIdleTime <%= $passenger_pool_idle_time %>
+  <%- } -%>
+  <%- if $passenger_pre_start { -%>
+    <%- [$passenger_pre_start].flatten.filter |$item| { $item != undef }.each |$passenger_pre_start| { -%>
+  PassengerPreStart <%= $passenger_pre_start %>
+    <%- } -%>
+  <%- } -%>
+  <%- if $passenger_python { -%>
+  PassengerPython "<%= $passenger_python %>"
+  <%- } -%>
+  <%- if $passenger_resist_deployment_errors { -%>
+  PassengerResistDeploymentErrors <%= $passenger_resist_deployment_errors %>
+  <%- } -%>
+  <%- if $passenger_resolve_symlinks_in_document_root { -%>
+  PassengerResolveSymlinksInDocumentRoot <%= $passenger_resolve_symlinks_in_document_root %>
+  <%- } -%>
+  <%- if $passenger_response_buffer_high_watermark { -%>
+  PassengerResponseBufferHighWatermark <%= $passenger_response_buffer_high_watermark %>
+  <%- } -%>
+  <%- if $passenger_restart_dir { -%>
+  PassengerRestartDir "<%= $passenger_restart_dir %>"
+  <%- } -%>
+  <%- if $passenger_rolling_restarts { -%>
+  PassengerRollingRestarts <%= $passenger_rolling_restarts %>
+  <%- } -%>
+  <%- if $passenger_root { -%>
+  PassengerRoot "<%= $passenger_root %>"
+  <%- } -%>
+  <%- if $passenger_ruby { -%>
+  PassengerRuby "<%= $passenger_ruby %>"
+  <%- } -%>
+  <%- if $passenger_security_update_check_proxy { -%>
+  PassengerSecurityUpdateCheckProxy <%= $passenger_security_update_check_proxy %>
+  <%- } -%>
+  <%- if $passenger_show_version_in_header { -%>
+  PassengerShowVersionInHeader <%= $passenger_show_version_in_header %>
+  <%- } -%>
+  <%- if $passenger_socket_backlog { -%>
+  PassengerSocketBacklog <%= $passenger_socket_backlog %>
+  <%- } -%>
+  <%- if $passenger_spawn_dir { -%>
+  PassengerSpawnDir "<%= $passenger_spawn_dir %>"
+  <%- } -%>
+  <%- if $passenger_spawn_method { -%>
+  PassengerSpawnMethod <%= $passenger_spawn_method %>
+  <%- } -%>
+  <%- if $passenger_start_timeout { -%>
+  PassengerStartTimeout <%= $passenger_start_timeout %>
+  <%- } -%>
+  <%- if $passenger_startup_file { -%>
+  PassengerStartupFile "<%= $passenger_startup_file %>"
+  <%- } -%>
+  <%- if $passenger_stat_throttle_rate { -%>
+  PassengerStatThrottleRate <%= $passenger_stat_throttle_rate %>
+  <%- } -%>
+  <%- if $passenger_sticky_sessions { -%>
+  PassengerStickySessions <%= $passenger_sticky_sessions %>
+  <%- } -%>
+  <%- if $passenger_sticky_sessions_cookie_name { -%>
+  PassengerStickySessionsCookieName <%= $passenger_sticky_sessions_cookie_name %>
+  <%- } -%>
+  <%- if $passenger_sticky_sessions_cookie_attributes { -%>
+  PassengerStickySessionsCookieAttributes "<%= $passenger_sticky_sessions_cookie_attributes %>"
+  <%- } -%>
+  <%- if $passenger_thread_count { -%>
+  PassengerThreadCount <%= $passenger_thread_count %>
+  <%- } -%>
+  <%- if $passenger_use_global_queue { -%>
+  PassengerUseGlobalQueue <%= $passenger_use_global_queue %>
+  <%- } -%>
+  <%- if $passenger_user { -%>
+  PassengerUser <%= $passenger_user %>
+  <%- } -%>
+  <%- if $passenger_user_switching { -%>
+  PassengerUserSwitching <%= $passenger_user_switching %>
+  <%- } -%>
+  <%- if $rack_auto_detect { -%>
+  RackAutoDetect <%= $rack_auto_detect %>
+  <%- } -%>
+  <%- if $rack_base_uri { -%>
+  RackBaseURI <%= $rack_base_uri %>
+  <%- } -%>
+  <%- if $rack_env { -%>
+  RackEnv <%= $rack_env %>
+  <%- } -%>
+  <%- if $rails_allow_mod_rewrite { -%>
+  RailsAllowModRewrite <%= $rails_allow_mod_rewrite %>
+  <%- } -%>
+  <%- if $rails_app_spawner_idle_time { -%>
+  RailsAppSpawnerIdleTime <%= $rails_app_spawner_idle_time %>
+  <%- } -%>
+  <%- if $rails_auto_detect { -%>
+  RailsAutoDetect <%= $rails_auto_detect %>
+  <%- } -%>
+  <%- if $rails_base_uri { -%>
+  RailsBaseURI <%= $rails_base_uri %>
+  <%- } -%>
+  <%- if $rails_default_user { -%>
+  RailsDefaultUser <%= $rails_default_user %>
+  <%- } -%>
+  <%- if $rails_env { -%>
+  RailsEnv <%= $rails_env %>
+  <%- } -%>
+  <%- if $rails_framework_spawner_idle_time { -%>
+  RailsFrameworkSpawnerIdleTime <%= $rails_framework_spawner_idle_time %>
+  <%- } -%>
+  <%- if $rails_ruby { -%>
+  RailsRuby <%= $rails_ruby %>
+  <%- } -%>
+  <%- if $rails_spawn_method { -%>
+  RailsSpawnMethod <%= $rails_spawn_method %>
+  <%- } -%>
+  <%- if $rails_user_switching { -%>
+  RailsUserSwitching <%= $rails_user_switching %>
+  <%- } -%>
+  <%- if $wsgi_auto_detect { -%>
+  WsgiAutoDetect <%= $wsgi_auto_detect %>
+  <%- } -%>
+  <%- if $rails_autodetect { -%>
+  RailsAutoDetect <%= $rails_autodetect %>
+  <%- } -%>
+  <%- if $rack_autodetect { -%>
+  RackAutoDetect <%= $rack_autodetect %>
+  <%- } -%>
+
+</IfModule>

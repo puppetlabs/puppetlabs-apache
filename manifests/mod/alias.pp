@@ -28,12 +28,18 @@ class apache::mod::alias (
   apache::mod { 'alias': }
 
   # Template uses $icons_path
+  $parameters = {
+    'icons_prefix'  => $icons_prefix,
+    'icons_path'    => $icons_path,
+    'icons_options' => $icons_options,
+  }
+
   if $icons_path {
     file { 'alias.conf':
       ensure  => file,
       path    => "${apache::mod_dir}/alias.conf",
       mode    => $apache::file_mode,
-      content => template('apache/mod/alias.conf.erb'),
+      content => epp('apache/mod/alias.conf.epp', $parameters),
       require => Exec["mkdir ${apache::mod_dir}"],
       before  => File[$apache::mod_dir],
       notify  => Class['apache::service'],

@@ -62,11 +62,20 @@ class apache::mod::wsgi (
   # - $wsgi_socket_prefix
   # - $wsgi_python_path
   # - $wsgi_python_home
+  $parameters = {
+    'wsgi_restrict_embedded'  => $wsgi_restrict_embedded,
+    'wsgi_socket_prefix'      => $wsgi_socket_prefix,
+    'wsgi_python_home'        => $wsgi_python_home,
+    'wsgi_python_path'        => $wsgi_python_path,
+    'wsgi_application_group'  => $wsgi_application_group,
+    'wsgi_python_optimize'    => $wsgi_python_optimize,
+  }
+
   file { 'wsgi.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/wsgi.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/wsgi.conf.erb'),
+    content => epp('apache/mod/wsgi.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

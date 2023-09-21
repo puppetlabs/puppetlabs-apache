@@ -313,13 +313,13 @@ class apache::mod::jk (
   Hash $env_var                                 = {},
   Optional[String] $strip_session               = undef,
   # Location list
-  # See comments in template mod/jk.conf.erb
+  # See comments in template mod/jk.conf.epp
   Array $location_list                          = [],
   # Workers file content
-  # See comments in template mod/jk/workers.properties.erb
+  # See comments in template mod/jk/workers.properties.epp
   Hash $workers_file_content                    = {},
   # Mount file content
-  # See comments in template mod/jk/uriworkermap.properties.erb
+  # See comments in template mod/jk/uriworkermap.properties.epp
   Hash $mount_file_content                      = {},
 ) {
   # Provides important variables
@@ -369,11 +369,51 @@ class apache::mod::jk (
     default     => "${log_dir}/${log_file}",
   }
 
+  $parameters = {
+    'workers_file'          => $workers_file,
+    'worker_property'       => $worker_property,
+    'shm_path'              => $shm_path,
+    'shm_size'              => $shm_size,
+    'mount_file'            => $mount_file,
+    'mount_file_reload'     => $mount_file_reload,
+    'mount'                 => $mount,
+    'un_mount'              => $un_mount,
+    'auto_alias'            => $auto_alias,
+    'mount_copy'            => $mount_copy,
+    'worker_indicator'      => $worker_indicator,
+    'watchdog_interval'     => $watchdog_interval,
+    'log_path'              => $log_path,
+    'log_level'             => $log_level,
+    'log_stamp_format'      => $log_stamp_format,
+    'request_log_format'    => $request_log_format,
+    'extract_ssl'           => $extract_ssl,
+    'https_indicator'       => $https_indicator,
+    'sslprotocol_indicator' => $sslprotocol_indicator,
+    'certs_indicator'       => $certs_indicator,
+    'cipher_indicator'      => $cipher_indicator,
+    'certchain_prefix'      => $certchain_prefix,
+    'session_indicator'     => $session_indicator,
+    'keysize_indicator'     => $keysize_indicator,
+    'local_name_indicator'  => $local_name_indicator,
+    'ignore_cl_indicator'   => $ignore_cl_indicator,
+    'local_addr_indicator'  => $local_addr_indicator,
+    'local_port_indicator'  => $local_port_indicator,
+    'remote_host_indicator' => $remote_host_indicator,
+    'remote_addr_indicator' => $remote_addr_indicator,
+    'remote_port_indicator' => $remote_port_indicator,
+    'remote_user_indicator' => $remote_user_indicator,
+    'auth_type_indicator'   => $auth_type_indicator,
+    'options'               => $options,
+    'env_var'               => $env_var,
+    'strip_session'         => $strip_session,
+    'location_list'         => $location_list,
+  }
+
   # Main config file
   $mod_dir = $apache::mod_dir
   file { 'jk.conf':
     path    => "${mod_dir}/jk.conf",
-    content => template('apache/mod/jk.conf.erb'),
+    content => epp('apache/mod/jk.conf.epp', $parameters),
     require => [
       Exec["mkdir ${mod_dir}"],
       File[$mod_dir],
@@ -387,7 +427,7 @@ class apache::mod::jk (
       default => "${apache::httpd_dir}/${workers_file}",
     }
     file { $workers_path:
-      content => template('apache/mod/jk/workers.properties.erb'),
+      content => epp('apache/mod/jk/workers.properties.epp', { 'workers_file_content' => $workers_file_content, }),
       require => Package['httpd'],
     }
   }
@@ -399,7 +439,7 @@ class apache::mod::jk (
       default => "${apache::httpd_dir}/${mount_file}",
     }
     file { $mount_path:
-      content => template('apache/mod/jk/uriworkermap.properties.erb'),
+      content => epp('apache/mod/jk/uriworkermap.properties.epp', { 'mount_file_content' => $mount_file_content, }),
       require => Package['httpd'],
     }
   }

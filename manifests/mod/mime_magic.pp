@@ -17,7 +17,7 @@ class apache::mod::mime_magic (
     ensure  => file,
     path    => "${apache::mod_dir}/mime_magic.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/mime_magic.conf.erb'),
+    content => epp('apache/mod/mime_magic.conf.epp', { '_magic_file' => $_magic_file, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

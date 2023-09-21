@@ -30,7 +30,7 @@ class apache::mod::dumpio (
     ensure  => file,
     path    => "${apache::mod_dir}/dumpio.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/dumpio.conf.erb'),
+    content => epp('apache/mod/dumpio.conf.epp', { 'dump_io_input' => $dump_io_input, 'dump_io_output' => $dump_io_output, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

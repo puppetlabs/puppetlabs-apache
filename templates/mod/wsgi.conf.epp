@@ -1,0 +1,22 @@
+# The WSGI Apache module configuration file is being
+# managed by Puppet an changes will be overwritten.
+<IfModule mod_wsgi.c>
+  <%- if $wsgi_restrict_embedded { -%>
+  WSGIRestrictEmbedded <%= apache::bool2httpd($wsgi_restrict_embedded) %>
+  <%- } -%>
+  <%- if $wsgi_socket_prefix { -%>
+  WSGISocketPrefix <%= $wsgi_socket_prefix %>
+  <%- } -%>
+  <%- if $wsgi_python_home { -%>
+  WSGIPythonHome "<%= $wsgi_python_home %>"
+  <%- } -%>
+  <%- if $wsgi_python_path { -%>
+  WSGIPythonPath "<%= $wsgi_python_path %>"
+  <%- } -%>
+  <%- if $wsgi_application_group { -%>
+  WSGIApplicationGroup "<%= $wsgi_application_group %>"
+  <%- } -%>
+  <%- if $wsgi_python_optimize { -%>
+  WSGIPythonOptimize <%= $wsgi_python_optimize %>
+  <%- } -%>
+</IfModule>

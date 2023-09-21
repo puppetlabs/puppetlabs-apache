@@ -189,11 +189,35 @@ class apache::mod::ssl (
   # $ssl_mutex
   # $ssl_random_seed_bytes
   # $ssl_sessioncachetimeout
+  $parameters = {
+    'ssl_random_seed_bytes'       => $ssl_random_seed_bytes,
+    'ssl_pass_phrase_dialog'      => $ssl_pass_phrase_dialog,
+    'ssl_sessioncache'            => $ssl_sessioncache,
+    'ssl_sessioncachetimeout'     => $ssl_sessioncachetimeout,
+    'ssl_mutex'                   => $ssl_mutex,
+    'ssl_compression'             => $ssl_compression,
+    'ssl_sessiontickets'          => $ssl_sessiontickets,
+    'ssl_cryptodevice'            => $ssl_cryptodevice,
+    '_ssl_honorcipherorder'       => $_ssl_honorcipherorder,
+    'ssl_cert'                    => $ssl_cert,
+    'ssl_key'                     => $ssl_key,
+    'ssl_ca'                      => $ssl_ca,
+    'ssl_stapling'                => $ssl_stapling,
+    'ssl_stapling_return_errors'  => $ssl_stapling_return_errors,
+    '_stapling_cache'             => $_stapling_cache,
+    'ssl_cipher'                  => $ssl_cipher,
+    'ssl_protocol'                => $ssl_protocol,
+    'ssl_proxy_protocol'          => $ssl_proxy_protocol,
+    'ssl_proxy_cipher_suite'      => $ssl_proxy_cipher_suite,
+    'ssl_options'                 => $ssl_options,
+    'ssl_openssl_conf_cmd'        => $ssl_openssl_conf_cmd,
+  }
+
   file { 'ssl.conf':
     ensure  => file,
     path    => $apache::_ssl_file,
     mode    => $apache::file_mode,
-    content => template('apache/mod/ssl.conf.erb'),
+    content => epp('apache/mod/ssl.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

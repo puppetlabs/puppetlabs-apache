@@ -1,0 +1,32 @@
+#
+# Proxy Server directives. Uncomment the following lines to
+# enable the proxy server:
+#
+<IfModule mod_proxy.c>
+  # Do not enable proxying with ProxyRequests until you have secured your
+  # server.  Open proxy servers are dangerous both to your network and to the
+  # Internet at large.
+  ProxyRequests <%= $proxy_requests %>
+
+  <% if $proxy_requests != 'Off' or ( $allow_from and ! $allow_from.empty ) { -%>
+  <Proxy *>
+    <%- if String(type($allow_from, 'generalized')).index('Array') == 0 { -%>
+    Require ip <%= $allow_from.join(" ") %>
+    <%- } else { -%>
+    Require ip <%= $allow_from %>
+    <%- } -%>
+  </Proxy>
+  <% } -%>
+
+  # Enable/disable the handling of HTTP/1.1 "Via:" headers.
+  # ("Full" adds the server version; "Block" removes all outgoing Via: headers)
+  # Set to one of: Off | On | Full | Block
+  ProxyVia <%= $proxy_via %>
+
+  <%- if $proxy_timeout { -%>
+  ProxyTimeout <%= $proxy_timeout %>
+  <%- } -%>
+  <%- if $proxy_iobuffersize { -%>
+  ProxyIOBufferSize <%= $proxy_iobuffersize %>
+  <%- } -%>
+</IfModule>

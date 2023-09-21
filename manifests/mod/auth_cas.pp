@@ -126,13 +126,38 @@ class apache::mod::auth_cas (
     group  => $apache::group,
   }
 
+  $parameters = {
+    'cas_cookie_path'           => $cas_cookie_path,
+    'cas_login_url'             => $cas_login_url,
+    'cas_validate_url'          => $cas_validate_url,
+    'cas_version'               => $cas_version,
+    'cas_debug'                 => $cas_debug,
+    'cas_certificate_path'      => $cas_certificate_path,
+    'cas_proxy_validate_url'    => $cas_proxy_validate_url,
+    'cas_validate_server'       => $cas_validate_server,
+    'cas_validate_depth'        => $cas_validate_depth,
+    'cas_root_proxied_as'       => $cas_root_proxied_as,
+    'cas_cookie_entropy'        => $cas_cookie_entropy,
+    'cas_timeout'               => $cas_timeout,
+    'cas_idle_timeout'          => $cas_idle_timeout,
+    'cas_cache_clean_interval'  => $cas_cache_clean_interval,
+    'cas_cookie_domain'         => $cas_cookie_domain,
+    'cas_cookie_http_only'      => $cas_cookie_http_only,
+    'cas_authoritative'         => $cas_authoritative,
+    'cas_sso_enabled'           => $cas_sso_enabled,
+    'cas_validate_saml'         => $cas_validate_saml,
+    'cas_attribute_prefix'      => $cas_attribute_prefix,
+    'cas_attribute_delimiter'   => $cas_attribute_delimiter,
+    'cas_scrub_request_headers' => $cas_scrub_request_headers,
+  }
+
   # Template uses
   # - All variables beginning with cas_
   file { 'auth_cas.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/auth_cas.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/auth_cas.conf.erb'),
+    content => epp('apache/mod/auth_cas.conf.epp', $parameters),
     require => [Exec["mkdir ${apache::mod_dir}"],],
     before  => File[$apache::mod_dir],
     notify  => Class['Apache::Service'],

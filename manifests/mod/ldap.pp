@@ -61,11 +61,24 @@ class apache::mod::ldap (
   ::apache::mod { 'ldap':
     package => $package_name,
   }
+
+  $parameters = {
+    'ldap_path'                     => $ldap_path,
+    'ldap_trusted_global_cert_file' => $ldap_trusted_global_cert_file,
+    'ldap_trusted_global_cert_type' => $ldap_trusted_global_cert_type,
+    'ldap_trusted_mode'             => $ldap_trusted_mode,
+    'ldap_shared_cache_size'        => $ldap_shared_cache_size,
+    'ldap_cache_entries'            => $ldap_cache_entries,
+    'ldap_cache_ttl'                => $ldap_cache_ttl,
+    'ldap_opcache_entries'          => $ldap_opcache_entries,
+    'ldap_opcache_ttl'              => $ldap_opcache_ttl,
+  }
+
   file { 'ldap.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/ldap.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/ldap.conf.erb'),
+    content => epp('apache/mod/ldap.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

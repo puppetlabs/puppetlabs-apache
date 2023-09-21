@@ -1956,7 +1956,7 @@ class{ 'apache::mod::auth_mellon':
 
 ##### クラス: `apache::mod::authn_dbd`
 
-`mod_authn_dbd`をインストールし、`authn_dbd.conf.erb`テンプレートを使用して設定を生成します。オプションで、AuthnProviderAliasを作成します。
+`mod_authn_dbd`をインストールし、`authn_dbd.conf.epp`テンプレートを使用して設定を生成します。オプションで、AuthnProviderAliasを作成します。
 
 ``` puppet
 class { 'apache::mod::authn_dbd':
@@ -1997,7 +1997,7 @@ class { 'apache::mod::authn_dbd':
 
 ##### クラス: `apache::mod::authnz_ldap`
 
-`mod_authnz_ldap`をインストールし、`authnz_ldap.conf.erb`テンプレートを使用して設定を生成します。
+`mod_authnz_ldap`をインストールし、`authnz_ldap.conf.epp`テンプレートを使用して設定を生成します。
 
 **パラメータ**:　
 
@@ -2074,7 +2074,7 @@ class { '::apache::mod::cluster':
 
 ##### クラス: `apache::mod::expires`
 
-[`mod_expires`][]をインストールし、`expires.conf.erb`を使用して設定を生成します。
+[`mod_expires`][]をインストールし、`expires.conf.epp`を使用して設定を生成します。
 
 **パラメータ**:　
 
@@ -2289,7 +2289,7 @@ class { '::apache::mod::jk':
 }
 ```
 
-詳細については、[templates/mod/jk/workers.properties.erb](templates/mod/jk/workers.properties.erb)を参照してください。
+詳細については、[templates/mod/jk/workers.properties.epp](templates/mod/jk/workers.properties.epp)を参照してください。
 
 **`apache::mod::jk`**内のパラメータ:
 
@@ -2682,7 +2682,7 @@ NSS暗号化ライブラリを使用するApacheのSSLプロバイダ。
 
 ##### クラス: `apache::mod::proxy`
 
-I`mod_proxy`をインストールし、`proxy.conf.erb`テンプレートを使用して設定を生成します。
+I`mod_proxy`をインストールし、`proxy.conf.epp`テンプレートを使用して設定を生成します。
 
 **`apache::mod::proxy`内のパラメータ**:
 
@@ -2766,7 +2766,7 @@ Apacheモジュール`mod_rewrite`をインストールして有効にします�
 
 ##### クラス: `apache::mod::ssl`
 
-[Apache SSL機能][`mod_ssl`]をインストールし、`ssl.conf.erb`テンプレートを使用して設定を生成します。ほとんどのオペレーティングシステムでは、この`ssl.conf`はモジュール設定ディレクトリに置かれています。Red Hatベースのオペレーティングシステムでは、このファイルは`/etc/httpd/conf.d`にあります。これは、RPMが設定を保存するのと同じロケーションです。
+[Apache SSL機能][`mod_ssl`]をインストールし、`ssl.conf.epp`テンプレートを使用して設定を生成します。ほとんどのオペレーティングシステムでは、この`ssl.conf`はモジュール設定ディレクトリに置かれています。Red Hatベースのオペレーティングシステムでは、このファイルは`/etc/httpd/conf.d`にあります。これは、RPMが設定を保存するのと同じロケーションです。
 
 バーチャルホストでSSLを使用するには、`::apache`の[`default_ssl_vhost`][]パラメータを`true`に設定する**か**、[`apache::vhost`][]の[`ssl`][]パラメータを`true`に設定する必要があります。
 

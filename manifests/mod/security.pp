@@ -240,9 +240,29 @@ class apache::mod::security (
   # - secresponsebodyaccess
   # - secrequestbodylimitaction
   # - secresponsebodylimitaction
+  $security_conf_parameters = {
+    'modsec_secruleengine'        => $modsec_secruleengine,
+    'secrequestbodyaccess'        => $secrequestbodyaccess,
+    'custom_rules'                => $custom_rules,
+    'modsec_dir'                  => $modsec_dir,
+    'secrequestbodylimit'         => $secrequestbodylimit,
+    'secrequestbodynofileslimit'  => $secrequestbodynofileslimit,
+    'secrequestbodyinmemorylimit' => $secrequestbodyinmemorylimit,
+    'secrequestbodylimitaction'   => $secrequestbodylimitaction,
+    'secpcrematchlimit'           => $secpcrematchlimit,
+    'secpcrematchlimitrecursion'  => $secpcrematchlimitrecursion,
+    'secresponsebodyaccess'       => $secresponsebodyaccess,
+    'secresponsebodylimitaction'  => $secresponsebodylimitaction,
+    'audit_log_relevant_status'   => $audit_log_relevant_status,
+    'audit_log_parts'             => $audit_log_parts,
+    'audit_log_type'              => $audit_log_type,
+    'audit_log_storage_dir'       => $audit_log_storage_dir,
+    'logroot'                     => $logroot,
+  }
+
   file { 'security.conf':
     ensure  => file,
-    content => template('apache/mod/security.conf.erb'),
+    content => epp('apache/mod/security.conf.epp', $security_conf_parameters),
     mode    => $apache::file_mode,
     path    => "${apache::mod_dir}/${mod_conf_name}",
     owner   => $apache::params::user,
@@ -289,7 +309,7 @@ class apache::mod::security (
       owner   => $apache::params::user,
       group   => $apache::params::group,
       mode    => $apache::file_mode,
-      content => template('apache/mod/security_custom.conf.erb'),
+      content => epp('apache/mod/security_custom.conf.epp', { 'custom_rules_set'  => $custom_rules_set, }),
       require => File["${modsec_dir}/custom_rules"],
       notify  => Class['apache::service'],
     }
@@ -315,6 +335,27 @@ class apache::mod::security (
     # - $dos_burst_time_slice
     # - $dos_counter_threshold
     # - $dos_block_timeout
+    $security_crs_parameters = {
+      '_secdefaultaction'           => $_secdefaultaction,
+      'critical_anomaly_score'      => $critical_anomaly_score,
+      'error_anomaly_score'         => $error_anomaly_score,
+      'warning_anomaly_score'       => $warning_anomaly_score,
+      'notice_anomaly_score'        => $notice_anomaly_score,
+      'inbound_anomaly_threshold'   => $inbound_anomaly_threshold,
+      'outbound_anomaly_threshold'  => $outbound_anomaly_threshold,
+      'secrequestmaxnumargs'        => $secrequestmaxnumargs,
+      'allowed_methods'             => $allowed_methods,
+      'content_types'               => $content_types,
+      'restricted_extensions'       => $restricted_extensions,
+      'restricted_headers'          => $restricted_headers,
+      'paranoia_level'              => $paranoia_level,
+      'executing_paranoia_level'    => $executing_paranoia_level,
+      'enable_dos_protection'       => $enable_dos_protection,
+      'dos_burst_time_slice'        => $dos_burst_time_slice,
+      'dos_counter_threshold'       => $dos_counter_threshold,
+      'dos_block_timeout'           => $dos_block_timeout,
+    }
+
     file { "${modsec_dir}/security_crs.conf":
       ensure  => file,
       content => template('apache/mod/security_crs.conf.erb'),

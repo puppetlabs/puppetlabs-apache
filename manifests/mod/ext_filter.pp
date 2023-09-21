@@ -29,7 +29,7 @@ class apache::mod::ext_filter (
       ensure  => file,
       path    => "${apache::mod_dir}/ext_filter.conf",
       mode    => $apache::file_mode,
-      content => template('apache/mod/ext_filter.conf.erb'),
+      content => epp('apache/mod/ext_filter.conf.epp', { 'ext_filter_define' => $ext_filter_define, }),
       require => [Exec["mkdir ${apache::mod_dir}"],],
       before  => File[$apache::mod_dir],
       notify  => Class['Apache::Service'],

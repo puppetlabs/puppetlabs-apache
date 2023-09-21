@@ -21,11 +21,16 @@ class apache::mod::mime (
   $_mime_types_additional = pick($mime_types_additional, $apache::mime_types_additional)
   apache::mod { 'mime': }
   # Template uses $_mime_types_config
+  $parameters = {
+    'mime_types_config'      => $mime_types_config,
+    '_mime_types_additional' => $_mime_types_additional,
+  }
+
   file { 'mime.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/mime.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/mime.conf.erb'),
+    content => epp('apache/mod/mime.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

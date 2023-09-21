@@ -1,0 +1,29 @@
+<IfModule mpm_event_module>
+  <%- if $serverlimit { -%>
+  ServerLimit            <%= $serverlimit %>
+  <%- } -%>
+  <%- if $startservers { -%>
+  StartServers           <%= $startservers %>
+  <%- } -%>
+  <%- if $maxrequestworkers { -%>
+  MaxRequestWorkers      <%= $maxrequestworkers %>
+  <%- } -%>
+  <%- if $minsparethreads { -%>
+  MinSpareThreads        <%= $minsparethreads %>
+  <%- } -%>
+  <%- if $maxsparethreads { -%>
+  MaxSpareThreads        <%= $maxsparethreads %>
+  <%- } -%>
+  <%- if $threadsperchild { -%>
+  ThreadsPerChild        <%= $threadsperchild %>
+  <%- } -%>
+  <%- if $maxconnectionsperchild { -%>
+  MaxConnectionsPerChild <%= $maxconnectionsperchild %>
+  <%- } -%>
+  <%- if $threadlimit { -%>
+  ThreadLimit            <%= $threadlimit %>
+  <%- } -%>
+  <%- if $listenbacklog { -%>
+  ListenBacklog          <%= $listenbacklog %>
+  <%- } -%>
+</IfModule>

@@ -1,0 +1,7 @@
+<% if $loadfiles { -%>
+<% Array($loadfiles).each |$loadfile| { -%>
+LoadFile <%= $loadfile %>
+<% } -%>
+
+<% } -%>
+LoadModule <%= $_id %> <%= $_path %>

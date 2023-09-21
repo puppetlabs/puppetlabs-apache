@@ -11,7 +11,7 @@ class apache::mod::setenvif {
     ensure  => file,
     path    => "${apache::mod_dir}/setenvif.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/setenvif.conf.erb'),
+    content => epp('apache/mod/setenvif.conf.epp'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

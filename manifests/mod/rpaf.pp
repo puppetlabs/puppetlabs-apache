@@ -19,7 +19,7 @@ class apache::mod::rpaf (
   Variant[Boolean, String] $sethostname = true,
   Array[Stdlib::IP::Address] $proxy_ips = ['127.0.0.1'],
   String $header                        = 'X-Forwarded-For',
-  String $template                      = 'apache/mod/rpaf.conf.erb'
+  String $template                      = 'apache/mod/rpaf.conf.epp'
 ) {
   include apache
   ::apache::mod { 'rpaf': }
@@ -28,11 +28,17 @@ class apache::mod::rpaf (
   # - $sethostname
   # - $proxy_ips
   # - $header
+  $parameters = {
+    'sethostname' => $sethostname,
+    'proxy_ips'   => $proxy_ips,
+    'header'      => $header,
+  }
+
   file { 'rpaf.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/rpaf.conf",
     mode    => $apache::file_mode,
-    content => template($template),
+    content => epp($template, $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

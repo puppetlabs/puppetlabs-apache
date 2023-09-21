@@ -74,10 +74,22 @@ class apache::mod::event (
   # - $maxsparethreads
   # - $threadsperchild
   # - $serverlimit
+  $parameters = {
+    'serverlimit'             => $serverlimit,
+    'startservers'            => $startservers,
+    'maxrequestworkers'       => $maxrequestworkers,
+    'minsparethreads'         => $minsparethreads,
+    'maxsparethreads'         => $maxsparethreads,
+    'threadsperchild'         => $threadsperchild,
+    'maxconnectionsperchild'  => $maxconnectionsperchild,
+    'threadlimit'             => $threadlimit,
+    'listenbacklog'           => $listenbacklog,
+  }
+
   file { "${apache::mod_dir}/event.conf":
     ensure  => file,
     mode    => $apache::file_mode,
-    content => template('apache/mod/event.conf.erb'),
+    content => epp('apache/mod/event.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

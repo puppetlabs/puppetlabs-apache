@@ -1,0 +1,6 @@
+<Location <%= $info_path %>>
+    SetHandler server-info
+<%- if $restrict_access { -%>
+    Require ip <%= Array($allow_from).join(" ") %>
+<%- } -%>
+</Location>

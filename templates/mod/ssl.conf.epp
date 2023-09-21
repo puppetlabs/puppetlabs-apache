@@ -1,0 +1,58 @@
+<IfModule mod_ssl.c>
+  SSLRandomSeed startup builtin
+  SSLRandomSeed startup file:/dev/urandom <%= $ssl_random_seed_bytes %>
+  SSLRandomSeed connect builtin
+  SSLRandomSeed connect file:/dev/urandom <%= $ssl_random_seed_bytes %>
+
+  AddType application/x-x509-ca-cert .crt
+  AddType application/x-pkcs7-crl    .crl
+
+  SSLPassPhraseDialog <%= $ssl_pass_phrase_dialog %>
+  SSLSessionCache "shmcb:<%= $ssl_sessioncache %>"
+  SSLSessionCacheTimeout <%= $ssl_sessioncachetimeout %>
+  Mutex <%= $ssl_mutex %>
+  <%- if $ssl_compression { -%>
+  SSLCompression <%= apache::bool2httpd($ssl_compression) %>
+  <%- } -%>
+  <%- if $ssl_sessiontickets != undef { -%>
+  SSLSessionTickets <%= apache::bool2httpd($ssl_sessiontickets) %>
+  <%- } -%>
+  SSLCryptoDevice <%= $ssl_cryptodevice %>
+  SSLHonorCipherOrder <%= apache::bool2httpd($_ssl_honorcipherorder) %>
+  <%- if $ssl_cert { -%>
+  SSLCertificateFile      "<%= $ssl_cert %>"
+  <%- } -%>
+  <%- if $ssl_key { -%>
+  SSLCertificateKeyFile   "<%= $ssl_key %>"
+  <%- } -%>
+  <%- if $ssl_ca { -%>
+  SSLCACertificateFile    "<%= $ssl_ca %>"
+  <%- } -%>
+  SSLUseStapling <%= apache::bool2httpd($ssl_stapling) %>
+  <%- if $ssl_stapling_return_errors { -%>
+  SSLStaplingReturnResponderErrors <%= apache::bool2httpd($ssl_stapling_return_errors) %>
+  <%- } -%>
+  SSLStaplingCache "shmcb:<%= $_stapling_cache %>"
+  <%- if String(type($ssl_cipher, 'generalized')).index('Hash') == 0 { -%>
+    <%- $ssl_cipher.map |$protocol, $cipher| { -%>
+  SSLCipherSuite <%= $protocol %> <%= $cipher %>
+    <%- } -%>
+  <%- } else { -%>
+  SSLCipherSuite <%= $ssl_cipher %>
+  <%- } -%>
+<% if !($ssl_protocol.empty) { -%>
+  SSLProtocol <%= $ssl_protocol.filter |$item| { $item != undef }.join(' ') %>
+<% } -%>
+<% if !($ssl_proxy_protocol.empty) { -%>
+  SSLProxyProtocol <%= $ssl_proxy_protocol.filter |$item| { $item != undef }.join(' ') %>
+<% } -%>
+<% if $ssl_proxy_cipher_suite { -%>
+  SSLProxyCipherSuite <%= $ssl_proxy_cipher_suite %>
+<% } -%>
+<% if $ssl_options { -%>
+  SSLOptions <%= $ssl_options.filter |$item| { $item != undef }.join(' ') %>
+<% } -%>
+<%- if $ssl_openssl_conf_cmd { -%>
+  SSLOpenSSLConfCmd <%= $ssl_openssl_conf_cmd %>
+<%- } -%>
+</IfModule>
