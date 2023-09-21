@@ -544,6 +544,9 @@
     <%- if directory['custom_fragment'] -%>
     <%= directory['custom_fragment'] %>
     <%- end -%>
+    <%- if directory['authz_core'] -%>
+      <%= scope.call_function('epp',["apache/vhost/_authz_core.epp", 'authz_core_config' => scope.call_function('apache::authz_core_config', directory['authz_core'])]) -%>
+    <%- end -%>
     <%- if directory['gssapi'] -%>
       <%= scope.call_function('epp',["apache/vhost/_gssapi.epp", directory['gssapi']]) -%>
     <%- end -%>

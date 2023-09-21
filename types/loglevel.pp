@@ -24,4 +24,4 @@
 # * `trace8`
 #
 # @see https://httpd.apache.org/docs/current/mod/core.html#loglevel
-type Apache::LogLevel = Pattern[/(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])/]
+type Apache::LogLevel = Pattern[/\A([a-z_\.]+:)?(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8])(\s+([a-z_\.]+:)?(emerg|alert|crit|error|warn|notice|info|debug|trace[1-8]))*\Z/]
