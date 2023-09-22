@@ -1,14 +1,2 @@
-<%- aliases = @scriptaliases -%>
   ## Script alias directives
-<%# Combine scriptalias and scriptaliases into a single data structure -%>
-<%# for backward compatibility and ease of implementation -%>
-<%- aliases << { 'alias' => '/cgi-bin', 'path' => @scriptalias } if @scriptalias -%>
-<%- aliases.each do |salias| -%>
-  <%- if salias["path"] != '' -%>
-    <%- if salias["alias"] and salias["alias"] != '' -%>
-  ScriptAlias <%= salias['alias'] %> "<%= salias['path'] %>"
-    <%- elsif salias["aliasmatch"] and salias["aliasmatch"] != '' -%>
-  ScriptAliasMatch <%= salias['aliasmatch'] %> "<%= salias['path'] %>"
-    <%- end -%>
-  <%- end -%>
-<%- end -%>
+  ScriptAlias /cgi-bin "<%= @scriptalias %>"

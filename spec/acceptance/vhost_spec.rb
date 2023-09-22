@@ -816,10 +816,6 @@ describe 'apache::vhost define' do
         docroot    => '/tmp',
         proxy_dest => 'http://testproxy',
       }
-      apache::vhost { 'test.scriptaliases':
-        docroot    => '/tmp',
-        scriptaliases => [{ alias => '/myscript', path  => '/usr/share/myscript', }],
-      }
       apache::vhost { 'test.aliases':
         docroot    => '/tmp',
         aliases => [
@@ -928,11 +924,6 @@ describe 'apache::vhost define' do
     describe file("#{apache_hash['vhost_dir']}/25-test.proxy.conf") do
       it { is_expected.to be_file }
       it { is_expected.to contain 'ProxyPass        / http://testproxy/' }
-    end
-
-    describe file("#{apache_hash['vhost_dir']}/25-test.scriptaliases.conf") do
-      it { is_expected.to be_file }
-      it { is_expected.to contain 'ScriptAlias /myscript "/usr/share/myscript"' }
     end
 
     describe file("#{apache_hash['vhost_dir']}/25-test.aliases.conf") do

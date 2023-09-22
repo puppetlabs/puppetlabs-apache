@@ -96,11 +96,6 @@
 #   the `aliases` parameter. As described in the `mod_alias` documentation, add more specific 
 #   `alias`, `aliasmatch`, `scriptalias` or `scriptaliasmatch` parameters before the more 
 #   general ones to avoid shadowing.<BR />
-#   > **Note**: Use the `aliases` parameter instead of the `scriptaliases` parameter because 
-#   you can precisely control the order of various alias directives. Defining `ScriptAliases` 
-#   using the `scriptaliases` parameter means *all* `ScriptAlias` directives will come after 
-#   *all* `Alias` directives, which can lead to `Alias` directives shadowing `ScriptAlias` 
-#   directives. This often causes problems; for example, this could cause problems with Nagios.<BR />
 #   If `apache::mod::passenger` is loaded and `PassengerHighPerformance` is `true`, the `Alias` 
 #   directive might not be able to honor the `PassengerEnabled => off` statement. See 
 #   [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
@@ -1095,34 +1090,6 @@
 #   Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as 
 #   '/usr/scripts'.
 #
-# @param scriptaliases
-#   > **Note**: This parameter is deprecated in favor of the `aliases` parameter.<br />
-#   Passes an array of hashes to the virtual host to create either ScriptAlias or 
-#   ScriptAliasMatch statements per the `mod_alias` documentation.
-#   ``` puppet
-#   scriptaliases => [
-#     {
-#       alias => '/myscript',
-#       path  => '/usr/share/myscript',
-#     },
-#     {
-#       aliasmatch => '^/foo(.*)',
-#       path       => '/usr/share/fooscripts$1',
-#     },
-#     {
-#       aliasmatch => '^/bar/(.*)',
-#       path       => '/usr/share/bar/wrapper.sh/$1',
-#     },
-#     {
-#       alias => '/neatscript',
-#       path  => '/usr/share/neatscript',
-#     },
-#   ]
-#   ```
-#   The ScriptAlias and ScriptAliasMatch directives are created in the order specified. 
-#   As with [Alias and AliasMatch](#aliases) directives, specify more specific aliases 
-#   before more general ones to avoid shadowing.
-#
 # @param serveradmin
 #   Specifies the email address Apache displays when it renders one of its error pages.
 #
@@ -1811,7 +1778,6 @@ define apache::vhost (
   Variant[Array[Hash], String] $error_documents                                       = [],
   Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]] $fallbackresource         = undef,
   Optional[String] $scriptalias                                                       = undef,
-  Array[Hash] $scriptaliases                                                          = [],
   Optional[Integer] $limitreqfieldsize                                                = undef,
   Optional[Integer] $limitreqfields                                                   = undef,
   Optional[Integer] $limitreqline                                                     = undef,
@@ -2552,9 +2518,8 @@ define apache::vhost (
   }
 
   # Template uses:
-  # - $scriptaliases
   # - $scriptalias
-  if ($scriptalias or !empty($scriptaliases)) and $ensure == 'present' {
+  if $scriptalias and $ensure == 'present' {
     include apache::mod::alias
 
     concat::fragment { "${name}-scriptalias":
