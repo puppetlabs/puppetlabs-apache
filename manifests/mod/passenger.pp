@@ -24,6 +24,19 @@
 # @param mod_path
 #   Specifies a path to the module. Do not manually set this parameter without a special reason.
 #
+# @param passenger_admin_panel_url
+#   Specifies a Fuse Panel URL that the Passenger to to enable monitoring, administering, analysis and troubleshooting of this Passenger instance and apps.
+#
+# @param passenger_admin_panel_auth_type
+#   Specifies the authentication type to use for the Fuse Panel. Currently it support only basic type of authentiction.
+#   Ref : https://www.phusionpassenger.com/library/config/apache/reference/#passengeradminpanelauthtype
+#
+# @param passenger_admin_panel_username
+#   The username that Passenger should use when connecting to the Fuse Panel with basic authentication.
+#
+# @param passenger_admin_panel_password
+#   The password that Passenger should use when connecting to the Fuse Panel with basic authentication.
+#
 # @param passenger_allow_encoded_slashes
 #   Toggle whether URLs with encoded slashes (%2f) can be used (by default Apache does not support this).
 #
@@ -40,6 +53,9 @@
 #
 # @param passenger_app_group_name
 #   Sets the name of the application group that the current application should belong to.
+#
+# @param passenger_app_log_file
+#   File path to application specifile log file. By default passenger will write all application log messages to the Passenger log file.
 #
 # @param passenger_app_root
 #   Path to the application root which allows access independent from the DocumentRoot.
@@ -96,6 +112,9 @@
 #
 # @param passenger_enabled
 #   Toggles whether Passenger should be enabled for that particular context.
+#
+# @param passenger_dump_config_manifest
+#   Dumps the configuration manifest to the given file.
 #
 # @param passenger_error_override
 #   Toggles whether Apache will intercept and handle responses with HTTP status codes of 400 and higher. 
@@ -164,6 +183,10 @@
 #
 # @param passenger_max_requests
 #   The maximum number of requests an application process will process. 
+#
+# @param passenger_max_request_queue_time
+#   The maximum amount of time, in seconds, that a request may be queued before Passenger will return an error. 
+#   This option specifies the maximum time a request may spend in that queue. If a request in the queue reaches this specified limit, then Passenger will send a "504 Gateway Timeout" error for that request. 
 #
 # @param passenger_memory_limit
 #   The maximum amount of memory that an application process may use, in megabytes.
@@ -291,6 +314,12 @@ class apache::mod::passenger (
   Optional[String] $mod_package                                                              = undef,
   Optional[String] $mod_package_ensure                                                       = undef,
   Optional[String] $mod_path                                                                 = undef,
+  Optional[Integer] $passenger_max_request_queue_time                                        = undef,
+  Optional[String] $passenger_admin_panel_url                                                = undef,
+  Optional[Enum['basic']] $passenger_admin_panel_auth_type                                   = undef,
+  Optional[String] $passenger_admin_panel_username                                           = undef,
+  Optional[String] $passenger_admin_panel_password                                           = undef,
+  Optional[String] $passenger_app_log_file                                                   = undef,
   Optional[Apache::OnOff] $passenger_allow_encoded_slashes                                   = undef,
   Optional[String] $passenger_anonymous_telemetry_proxy                                      = undef,
   Optional[String] $passenger_app_env                                                        = undef,
@@ -313,6 +342,7 @@ class apache::mod::passenger (
   Optional[Boolean] $passenger_disable_log_prefix                                            = undef,
   Optional[Apache::OnOff] $passenger_disable_security_update_check                           = undef,
   Optional[Apache::OnOff] $passenger_enabled                                                 = undef,
+  Optional[String] $passenger_dump_config_manifest                                           = undef,
   Optional[Apache::OnOff] $passenger_error_override                                          = undef,
   Optional[String] $passenger_file_descriptor_log_file                                       = undef,
   Optional[String] $passenger_fly_with                                                       = undef,
@@ -524,6 +554,46 @@ class apache::mod::passenger (
         fail("Passenger config option :: passenger_sticky_sessions_cookie_attributes is not introduced until version 6.0.5 :: ${passenger_installed_version} is the version reported")
       }
     }
+    if $passenger_max_request_queue_time {
+      if (versioncmp($passenger_installed_version, '5.1.12') < 0) {
+        fail("Passenger config option :: passenger_base_uri is not introduced until version 5.1.12 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_admin_panel_url {
+      if (versioncmp($passenger_installed_version, '5.2.2') < 0) {
+        fail("Passenger config option :: passenger_admin_panel_url is not introduced until version 5.2.2 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_admin_panel_auth_type {
+      if (versioncmp($passenger_installed_version, '5.2.2') < 0) {
+        fail("Passenger config option :: passenger_admin_panel_auth_type is not introduced until version 5.2.2 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_admin_panel_username {
+      if (versioncmp($passenger_installed_version, '5.2.2') < 0) {
+        fail("Passenger config option :: passenger_admin_panel_username is not introduced until version 5.2.2 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_admin_panel_password {
+      if (versioncmp($passenger_installed_version, '5.2.2') < 0) {
+        fail("Passenger config option :: passenger_admin_panel_password is not introduced until version 5.2.2 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_dump_config_manifest {
+      if (versioncmp($passenger_installed_version, '5.2.2') < 0) {
+        fail("Passenger config option :: passenger_dump_config_manifest is not introduced until version 5.2.2 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_app_log_file {
+      if (versioncmp($passenger_installed_version, '5.3.0') < 0) {
+        fail("Passenger config option :: passenger_app_log_file is not introduced until version 5.3.0 :: ${passenger_installed_version} is the version reported")
+      }
+    }
+    if $passenger_resist_deployment_errors {
+      if (versioncmp($passenger_installed_version, '5.2.0') > 0) {
+        fail('REMOVED PASSENGER OPTION :: passenger_resist_deployment_errors :: -- no message on the current passenger reference webpage -- ')
+      }
+    }
   }
   # Managed by the package, but declare it to avoid purging
   if $passenger_conf_package_file {
@@ -648,12 +718,24 @@ class apache::mod::passenger (
   # - $passenger_thread_count : since 4.0.0.
   # - $passenger_user : since 4.0.0.
   # - $passenger_user_switching : since 3.0.0.
+  # - $passenger_dump_config_manifest : since 5.2.2
+  # - $passenger_admin_panel_url : since 5.2.2
+  # - $passenger_admin_panel_auth_type : since 5.2.2
+  # - $passenger_admin_panel_username : since 5.2.2
+  # - $passenger_admin_panel_password : since 5.2.2
+  # - $passenger_app_log_file : since 5.3.0
+  # - $passenger_max_request_queue_time : since 5.1.12
 
   $parameters = {
+    'passenger_admin_panel_url'                           => $passenger_admin_panel_url,
+    'passenger_admin_panel_auth_type'                     => $passenger_admin_panel_auth_type,
+    'passenger_admin_panel_username'                      => $passenger_admin_panel_username,
+    'passenger_admin_panel_password'                      => $passenger_admin_panel_password,
     'passenger_allow_encoded_slashes'                     => $passenger_allow_encoded_slashes,
     'passenger_anonymous_telemetry_proxy'                 => $passenger_anonymous_telemetry_proxy,
     'passenger_app_env'                                   => $passenger_app_env,
     'passenger_app_group_name'                            => $passenger_app_group_name,
+    'passenger_app_log_file'                              => $passenger_app_log_file,
     'passenger_app_root'                                  => $passenger_app_root,
     'passenger_app_type'                                  => $passenger_app_type,
     'passenger_base_uri'                                  => $passenger_base_uri,
@@ -681,6 +763,7 @@ class apache::mod::passenger (
     'passenger_load_shell_envvars'                        => $passenger_load_shell_envvars,
     'passenger_preload_bundler'                           => $passenger_preload_bundler,
     'passenger_log_file'                                  => $passenger_log_file,
+    'passenger_dump_config_manifest'                      => $passenger_dump_config_manifest,
     'passenger_log_level'                                 => $passenger_log_level,
     'passenger_lve_min_uid'                               => $passenger_lve_min_uid,
     'passenger_max_instances'                             => $passenger_max_instances,
@@ -688,6 +771,7 @@ class apache::mod::passenger (
     'passenger_max_pool_size'                             => $passenger_max_pool_size,
     'passenger_max_preloader_idle_time'                   => $passenger_max_preloader_idle_time,
     'passenger_max_request_queue_size'                    => $passenger_max_request_queue_size,
+    'passenger_max_request_queue_time'                    => $passenger_max_request_queue_time,
     'passenger_max_request_time'                          => $passenger_max_request_time,
     'passenger_max_requests'                              => $passenger_max_requests,
     'passenger_memory_limit'                              => $passenger_memory_limit,
