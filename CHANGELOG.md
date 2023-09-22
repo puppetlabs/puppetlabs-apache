@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v11.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v11.0.0) - 2023-09-22
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.1.1...v11.0.0)
+
+### Added
+
+- (CAT-1417) Nested require support for authz_core mod [#2460](https://github.com/puppetlabs/puppetlabs-apache/pull/2460) ([Ramesh7](https://github.com/Ramesh7))
+- Simplify data types and array handling [#2457](https://github.com/puppetlabs/puppetlabs-apache/pull/2457) ([ekohl](https://github.com/ekohl))
+- CAT-1285 - RHEL-8 mode security CRS fix [#2452](https://github.com/puppetlabs/puppetlabs-apache/pull/2452) ([Ramesh7](https://github.com/Ramesh7))
+- (CAT-1283) - Enable forensic module [#2442](https://github.com/puppetlabs/puppetlabs-apache/pull/2442) ([Ramesh7](https://github.com/Ramesh7))
+- (CAT-1281) - Support to add cipher with respective ssl protocol [#2440](https://github.com/puppetlabs/puppetlabs-apache/pull/2440) ([Ramesh7](https://github.com/Ramesh7))
+- feat: add Debian12 Compability [#2439](https://github.com/puppetlabs/puppetlabs-apache/pull/2439) ([Robnarok](https://github.com/Robnarok))
+- Add MellonSetEnv support [#2423](https://github.com/puppetlabs/puppetlabs-apache/pull/2423) ([ic248](https://github.com/ic248))
+- Add the missing mod_authnz_ldap parameters [#2404](https://github.com/puppetlabs/puppetlabs-apache/pull/2404) ([chutzimir](https://github.com/chutzimir))
+
+### Changed
+- (CAT-1449) - Remove deprecated parameters for scriptaliases & passenger [#2470](https://github.com/puppetlabs/puppetlabs-apache/pull/2470) ([Ramesh7](https://github.com/Ramesh7))
+- Remove deprecated classes [#2466](https://github.com/puppetlabs/puppetlabs-apache/pull/2466) ([ekohl](https://github.com/ekohl))
+- Remove deprecated parameters from mod::userdir [#2465](https://github.com/puppetlabs/puppetlabs-apache/pull/2465) ([ekohl](https://github.com/ekohl))
+- (CAT-1424)-Removal of redhat/scientific/oraclelinux 6 for apache module [#2462](https://github.com/puppetlabs/puppetlabs-apache/pull/2462) ([praj1001](https://github.com/praj1001))
+
+### Fixed
+
+- (CAT-1308) Making mod list more restrictive and minor improvements in documentation for default mods override [#2459](https://github.com/puppetlabs/puppetlabs-apache/pull/2459) ([Ramesh7](https://github.com/Ramesh7))
+- (CAT-1346) erb_to_epp conversion for mod directory [#2453](https://github.com/puppetlabs/puppetlabs-apache/pull/2453) ([praj1001](https://github.com/praj1001))
+- (CAT-1348)-Conversion of erb to epp templates except mod or vhost dir… [#2449](https://github.com/puppetlabs/puppetlabs-apache/pull/2449) ([praj1001](https://github.com/praj1001))
+- Raise Puppet lower bound to >= 7.9.0 [#2444](https://github.com/puppetlabs/puppetlabs-apache/pull/2444) ([ekohl](https://github.com/ekohl))
+- (CAT-1261)-update_SUSE_repo_name [#2437](https://github.com/puppetlabs/puppetlabs-apache/pull/2437) ([praj1001](https://github.com/praj1001))
+- Add required package for kerberos auth on jammy [#2403](https://github.com/puppetlabs/puppetlabs-apache/pull/2403) ([chrisongthb](https://github.com/chrisongthb))
+- strickter loglevel syntax verification [#2397](https://github.com/puppetlabs/puppetlabs-apache/pull/2397) ([igt-marcin-wasilewski](https://github.com/igt-marcin-wasilewski))
+
 ## [v10.1.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v10.1.1) - 2023-06-30
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.1.0...v10.1.1)
@@ -314,7 +345,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 
-- The default disk_cache.conf.epp caches everything.  [#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
+- The default disk_cache.conf.erb caches everything.  [#2142](https://github.com/puppetlabs/puppetlabs-apache/pull/2142) ([Pawa2NR](https://github.com/Pawa2NR))
 
 ## [v6.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v6.2.0) - 2021-05-24
 
@@ -664,7 +695,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-- Actually create CASScrubRequestHeaders setting in _auth_cas.erb [#1730](https://github.com/puppetlabs/puppetlabs-apache/pull/1730) ([](https://github.com/))
 - Fix typos [#1728](https://github.com/puppetlabs/puppetlabs-apache/pull/1728) ([hfm](https://github.com/hfm))
 - [MODULES-5644] Package name is libapache2-mpm-itk for Debian 9 [#1724](https://github.com/puppetlabs/puppetlabs-apache/pull/1724) ([zivis](https://github.com/zivis))
 - Fix case of setting apache::mpm_module to false [#1720](https://github.com/puppetlabs/puppetlabs-apache/pull/1720) ([edestecd](https://github.com/edestecd))
@@ -877,6 +907,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - MODULES-2179: Implement SetEnvIfNoCase [#1402](https://github.com/puppetlabs/puppetlabs-apache/pull/1402) ([jlambert121](https://github.com/jlambert121))
 - Load mod_xml2enc on Apache >= 2.4 on Debian [#1401](https://github.com/puppetlabs/puppetlabs-apache/pull/1401) ([sathieu](https://github.com/sathieu))
 - Take igalic's suggestion to use bool2httpd [#1400](https://github.com/puppetlabs/puppetlabs-apache/pull/1400) ([tpdownes](https://github.com/tpdownes))
+- Added vhost option fastcgi_idle_timeout [#1399](https://github.com/puppetlabs/puppetlabs-apache/pull/1399) ([michakrause](https://github.com/michakrause))
 - Move all ensure parameters from concat::fragment to concat [#1396](https://github.com/puppetlabs/puppetlabs-apache/pull/1396) ([domcleal](https://github.com/domcleal))
 - mod_ssl requires mod_mime for AddType directives [#1394](https://github.com/puppetlabs/puppetlabs-apache/pull/1394) ([sathieu](https://github.com/sathieu))
 - Allow configuring mod_security's SecAuditLogParts [#1392](https://github.com/puppetlabs/puppetlabs-apache/pull/1392) ([stig](https://github.com/stig))
@@ -995,7 +1026,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (MODULES-2764) Enclose IPv6 addresses in square brackets [#1248](https://github.com/puppetlabs/puppetlabs-apache/pull/1248) ([Benedikt1992](https://github.com/Benedikt1992))
 - (MODULES-2757) Adding if around ServerName in template [#1237](https://github.com/puppetlabs/puppetlabs-apache/pull/1237) ([damonconway](https://github.com/damonconway))
 - (MODULES-2651) Default document root update for Ubuntu 14.04 and Debian 8 [#1235](https://github.com/puppetlabs/puppetlabs-apache/pull/1235) ([abednarik](https://github.com/abednarik))
-- Update mime.conf.epp to support dynamic AddHandler AddType AddOutputF… [#1232](https://github.com/puppetlabs/puppetlabs-apache/pull/1232) ([prabin5](https://github.com/prabin5))
+- Update mime.conf.erb to support dynamic AddHandler AddType AddOutputF… [#1232](https://github.com/puppetlabs/puppetlabs-apache/pull/1232) ([prabin5](https://github.com/prabin5))
 - #2544 Allow multiple IP addresses per vhost [#1229](https://github.com/puppetlabs/puppetlabs-apache/pull/1229) ([Benedikt1992](https://github.com/Benedikt1992))
 - RewriteLock support [#1228](https://github.com/puppetlabs/puppetlabs-apache/pull/1228) ([wickedOne](https://github.com/wickedOne))
 - (MODULES-2120) Allow empty docroot [#1224](https://github.com/puppetlabs/puppetlabs-apache/pull/1224) ([DavidS](https://github.com/DavidS))
@@ -1051,6 +1082,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 - [#puppethack] Adding ability to enable/disable the secruleengine through a parameter [#1168](https://github.com/puppetlabs/puppetlabs-apache/pull/1168) ([igalic](https://github.com/igalic))
 - add possibility to set icons_path to false so no alias will be set for it [#1160](https://github.com/puppetlabs/puppetlabs-apache/pull/1160) ([tjikkun](https://github.com/tjikkun))
+- apache::vhost filter support [#1143](https://github.com/puppetlabs/puppetlabs-apache/pull/1143) ([BIAndrews](https://github.com/BIAndrews))
+- Add the ability to specify GeoIPScanProxyHeaderField for mod_geoip [#1128](https://github.com/puppetlabs/puppetlabs-apache/pull/1128) ([dgarbus](https://github.com/dgarbus))
 - Add ssl_openssl_conf_cmd param (apache::mod::ssl and apache::vhost) [#1127](https://github.com/puppetlabs/puppetlabs-apache/pull/1127) ([tmuellerleile](https://github.com/tmuellerleile))
 
 ### Fixed
@@ -1058,11 +1091,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - fixes timing of mod_security tests for aio [#1165](https://github.com/puppetlabs/puppetlabs-apache/pull/1165) ([bmjen](https://github.com/bmjen))
 - Debian 7 acceptance test fix [#1161](https://github.com/puppetlabs/puppetlabs-apache/pull/1161) ([bmjen](https://github.com/bmjen))
 - Fix test condition for proxy directives. [#1145](https://github.com/puppetlabs/puppetlabs-apache/pull/1145) ([jonnytdevops](https://github.com/jonnytdevops))
-
-### Other
-
-- apache::vhost filter support [#1143](https://github.com/puppetlabs/puppetlabs-apache/pull/1143) ([BIAndrews](https://github.com/BIAndrews))
-- Add the ability to specify GeoIPScanProxyHeaderField for mod_geoip [#1128](https://github.com/puppetlabs/puppetlabs-apache/pull/1128) ([dgarbus](https://github.com/dgarbus))
 
 ## [1.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/1.5.0) - 2015-06-16
 
