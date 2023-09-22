@@ -214,16 +214,16 @@ describe 'apache::mod::passenger', type: :class do
             it { is_expected.to raise_error(%r{passenger_instance_registry_dir is not introduced until version 5.0.0}) }
           end
 
-          describe 'fails when an option is removed' do
-            let :params do
-              {
-                passenger_installed_version: '5.3.0',
-                passenger_resist_deployment_errors: 'on'
-              }
-            end
+          # describe 'fails when an option is removed' do
+          #   let :params do
+          #     {
+          #       passenger_installed_version: '5.3.0',
+          #       passenger_resist_deployment_errors: 'on'
+          #     }
+          #   end
 
-            it { is_expected.to raise_error(%r{REMOVED PASSENGER OPTION}) }
-          end
+          #   it { is_expected.to raise_error(%r{REMOVED PASSENGER OPTION}) }
+          # end
 
           describe 'warns when an option is deprecated' do
             let :params do

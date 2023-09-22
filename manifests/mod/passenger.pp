@@ -646,7 +646,6 @@ class apache::mod::passenger (
   # - $passenger_sticky_sessions : since 4.0.45.
   # - $passenger_sticky_sessions_cookie_name : since 4.0.45.
   # - $passenger_thread_count : since 4.0.0.
-  # - $passenger_use_global_queue : since 2.0.4.Deprecated in 4.0.0.
   # - $passenger_user : since 4.0.0.
   # - $passenger_user_switching : since 3.0.0.
 
