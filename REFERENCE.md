@@ -38,7 +38,6 @@
 * [`apache::mod::dav_svn`](#apache--mod--dav_svn): Installs and configures `mod_dav_svn`.
 * [`apache::mod::dbd`](#apache--mod--dbd): Installs `mod_dbd`.
 * [`apache::mod::deflate`](#apache--mod--deflate): Installs and configures `mod_deflate`.
-* [`apache::mod::dev`](#apache--mod--dev): Installs `mod_dev`.
 * [`apache::mod::dir`](#apache--mod--dir): Installs and configures `mod_dir`.
 * [`apache::mod::disk_cache`](#apache--mod--disk_cache): Installs and configures `mod_disk_cache`.
 * [`apache::mod::dumpio`](#apache--mod--dumpio): Installs and configures `mod_dumpio`.
@@ -122,11 +121,7 @@ pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet
 * `apache::mod::ssl::reload`: Manages the puppet_ssl folder for ssl file copies, which is needed to track changes for reloading service on changes
 * `apache::package`: Installs an Apache MPM.
 * `apache::params`: This class manages Apache parameters
-* `apache::php`: This class installs PHP for Apache.
-* `apache::proxy`: This class enabled the proxy module for Apache.
-* `apache::python`: This class installs Python for Apache
 * `apache::service`: Installs and configures Apache service.
-* `apache::ssl`: This class installs Apache SSL capabilities
 * `apache::version`: Try to automatically detect the version by OS
 
 ### Defined types
@@ -2053,12 +2048,6 @@ Default value:
     'Ratio'  => 'ratio',
   }
 ```
-
-### <a name="apache--mod--dev"></a>`apache::mod::dev`
-
-Installs `mod_dev`.
-
-* **Note** This module is deprecated. Please use `apache::dev`.
 
 ### <a name="apache--mod--dir"></a>`apache::mod::dir`
 
@@ -6761,8 +6750,6 @@ Installs and configures `mod_userdir`.
 
 The following parameters are available in the `apache::mod::userdir` class:
 
-* [`home`](#-apache--mod--userdir--home)
-* [`dir`](#-apache--mod--userdir--dir)
 * [`userdir`](#-apache--mod--userdir--userdir)
 * [`disable_root`](#-apache--mod--userdir--disable_root)
 * [`path`](#-apache--mod--userdir--path)
@@ -6770,22 +6757,6 @@ The following parameters are available in the `apache::mod::userdir` class:
 * [`options`](#-apache--mod--userdir--options)
 * [`unmanaged_path`](#-apache--mod--userdir--unmanaged_path)
 * [`custom_fragment`](#-apache--mod--userdir--custom_fragment)
-
-##### <a name="-apache--mod--userdir--home"></a>`home`
-
-Data type: `Optional[String]`
-
-*Deprecated* Path to system home directory.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--userdir--dir"></a>`dir`
-
-Data type: `Optional[String]`
-
-*Deprecated* Path from user's home directory to public directory.
-
-Default value: `undef`
 
 ##### <a name="-apache--mod--userdir--userdir"></a>`userdir`
 
