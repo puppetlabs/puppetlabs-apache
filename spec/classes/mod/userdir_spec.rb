@@ -17,28 +17,6 @@ describe 'apache::mod::userdir', type: :class do
       it { is_expected.to compile }
     end
 
-    context 'with dir set to something' do
-      let :params do
-        {
-          dir: 'hi'
-        }
-      end
-
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/home/\*/hi$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/home/\*/hi">$}) }
-    end
-
-    context 'with home set to something' do
-      let :params do
-        {
-          home: '/u'
-        }
-      end
-
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*UserDir\s+/u/\*/public_html$}) }
-      it { is_expected.to contain_file('userdir.conf').with_content(%r{^\s*<Directory\s+"/u/\*/public_html">$}) }
-    end
-
     context 'with path set to something' do
       let :params do
         {

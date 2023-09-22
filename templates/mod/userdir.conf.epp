@@ -2,10 +2,10 @@
 <% if $disable_root { -%>
   UserDir disabled root
 <% } -%>
-  UserDir <%= $_userdir %>
+  UserDir <%= $userdir %>
 
 <%- if !$unmanaged_path { -%>
-  <Directory "<%= $_path %>">
+  <Directory "<%= $path %>">
     AllowOverride <%= $overrides.join(' ') %>
     Options <%= $options.join(' ') %>
     <Limit GET POST OPTIONS>
