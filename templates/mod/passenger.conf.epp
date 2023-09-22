@@ -210,29 +210,8 @@
   <%- if $passenger_user_switching { -%>
   PassengerUserSwitching <%= $passenger_user_switching %>
   <%- } -%>
-  <%- if $rack_auto_detect { -%>
-  RackAutoDetect <%= $rack_auto_detect %>
-  <%- } -%>
-  <%- if $rack_base_uri { -%>
-  RackBaseURI <%= $rack_base_uri %>
-  <%- } -%>
   <%- if $rack_env { -%>
   RackEnv <%= $rack_env %>
-  <%- } -%>
-  <%- if $rails_allow_mod_rewrite { -%>
-  RailsAllowModRewrite <%= $rails_allow_mod_rewrite %>
-  <%- } -%>
-  <%- if $rails_app_spawner_idle_time { -%>
-  RailsAppSpawnerIdleTime <%= $rails_app_spawner_idle_time %>
-  <%- } -%>
-  <%- if $rails_auto_detect { -%>
-  RailsAutoDetect <%= $rails_auto_detect %>
-  <%- } -%>
-  <%- if $rails_base_uri { -%>
-  RailsBaseURI <%= $rails_base_uri %>
-  <%- } -%>
-  <%- if $rails_default_user { -%>
-  RailsDefaultUser <%= $rails_default_user %>
   <%- } -%>
   <%- if $rails_env { -%>
   RailsEnv <%= $rails_env %>
@@ -240,23 +219,4 @@
   <%- if $rails_framework_spawner_idle_time { -%>
   RailsFrameworkSpawnerIdleTime <%= $rails_framework_spawner_idle_time %>
   <%- } -%>
-  <%- if $rails_ruby { -%>
-  RailsRuby <%= $rails_ruby %>
-  <%- } -%>
-  <%- if $rails_spawn_method { -%>
-  RailsSpawnMethod <%= $rails_spawn_method %>
-  <%- } -%>
-  <%- if $rails_user_switching { -%>
-  RailsUserSwitching <%= $rails_user_switching %>
-  <%- } -%>
-  <%- if $wsgi_auto_detect { -%>
-  WsgiAutoDetect <%= $wsgi_auto_detect %>
-  <%- } -%>
-  <%- if $rails_autodetect { -%>
-  RailsAutoDetect <%= $rails_autodetect %>
-  <%- } -%>
-  <%- if $rack_autodetect { -%>
-  RackAutoDetect <%= $rack_autodetect %>
-  <%- } -%>
-
 </IfModule>

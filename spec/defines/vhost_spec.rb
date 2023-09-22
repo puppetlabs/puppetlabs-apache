@@ -324,16 +324,6 @@ describe 'apache::vhost', type: :define do
               'error_documents' => 'true',
               'fallbackresource' => '/index.php',
               'scriptalias' => '/usr/lib/cgi-bin',
-              'scriptaliases' => [
-                {
-                  'alias' => '/myscript',
-                  'path' => '/usr/share/myscript'
-                },
-                {
-                  'aliasmatch' => '^/foo(.*)',
-                  'path' => '/usr/share/fooscripts$1'
-                },
-              ],
               'limitreqfieldsize' => 8190,
               'limitreqfields' => 100,
               'limitreqline' => 8190,

@@ -75,6 +75,7 @@ mod-pagespeed-stable package. The module does however require that the package b
 or be installable using the system's default package provider.  You should ensure that this
 pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet run to fail.
 * [`apache::mod::passenger`](#apache--mod--passenger): Installs `mod_pasenger`.
+> **Note**: This module support Passenger 4.0.0 and higher.
 * [`apache::mod::perl`](#apache--mod--perl): Installs `mod_perl`.
 * [`apache::mod::peruser`](#apache--mod--peruser): Installs `mod_peruser`.
 * [`apache::mod::php`](#apache--mod--php): Installs `mod_php`.
@@ -217,7 +218,6 @@ The following parameters are available in the `apache` class:
 * [`default_ssl_key`](#-apache--default_ssl_key)
 * [`default_ssl_reload_on_change`](#-apache--default_ssl_reload_on_change)
 * [`default_ssl_vhost`](#-apache--default_ssl_vhost)
-* [`default_type`](#-apache--default_type)
 * [`default_vhost`](#-apache--default_vhost)
 * [`dev_packages`](#-apache--dev_packages)
 * [`docroot`](#-apache--docroot)
@@ -279,7 +279,6 @@ The following parameters are available in the `apache` class:
 * [`limitreqfieldsize`](#-apache--limitreqfieldsize)
 * [`limitreqline`](#-apache--limitreqline)
 * [`ip`](#-apache--ip)
-* [`purge_vdir`](#-apache--purge_vdir)
 * [`conf_enabled`](#-apache--conf_enabled)
 * [`vhost_enable_dir`](#-apache--vhost_enable_dir)
 * [`manage_vhost_enable_dir`](#-apache--manage_vhost_enable_dir)
@@ -462,16 +461,6 @@ apache::vhost { 'default-ssl':
 **Note**: SSL virtual hosts only respond to HTTPS queries.
 
 Default value: `false`
-
-##### <a name="-apache--default_type"></a>`default_type`
-
-Data type: `String`
-
-_Apache 2.2 only_. Sets the MIME `content-type` sent if the server cannot otherwise
-determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and
-newer, and is only for backwards compatibility in configuration files.
-
-Default value: `'none'`
 
 ##### <a name="-apache--default_vhost"></a>`default_vhost`
 
@@ -1089,15 +1078,6 @@ Data type: `Optional[String]`
 Specifies the ip address
 
 Default value: `undef`
-
-##### <a name="-apache--purge_vdir"></a>`purge_vdir`
-
-Data type: `Boolean`
-
-Removes all other Apache configs and virtual hosts.<br />
-> **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
-
-Default value: `false`
 
 ##### <a name="-apache--conf_enabled"></a>`conf_enabled`
 
@@ -4515,22 +4495,9 @@ The following parameters are available in the `apache::mod::passenger` class:
 * [`passenger_use_global_queue`](#-apache--mod--passenger--passenger_use_global_queue)
 * [`passenger_user`](#-apache--mod--passenger--passenger_user)
 * [`passenger_user_switching`](#-apache--mod--passenger--passenger_user_switching)
-* [`rack_auto_detect`](#-apache--mod--passenger--rack_auto_detect)
-* [`rack_autodetect`](#-apache--mod--passenger--rack_autodetect)
-* [`rack_base_uri`](#-apache--mod--passenger--rack_base_uri)
 * [`rack_env`](#-apache--mod--passenger--rack_env)
-* [`rails_allow_mod_rewrite`](#-apache--mod--passenger--rails_allow_mod_rewrite)
-* [`rails_app_spawner_idle_time`](#-apache--mod--passenger--rails_app_spawner_idle_time)
-* [`rails_auto_detect`](#-apache--mod--passenger--rails_auto_detect)
-* [`rails_autodetect`](#-apache--mod--passenger--rails_autodetect)
-* [`rails_base_uri`](#-apache--mod--passenger--rails_base_uri)
-* [`rails_default_user`](#-apache--mod--passenger--rails_default_user)
 * [`rails_env`](#-apache--mod--passenger--rails_env)
 * [`rails_framework_spawner_idle_time`](#-apache--mod--passenger--rails_framework_spawner_idle_time)
-* [`rails_ruby`](#-apache--mod--passenger--rails_ruby)
-* [`rails_spawn_method`](#-apache--mod--passenger--rails_spawn_method)
-* [`rails_user_switching`](#-apache--mod--passenger--rails_user_switching)
-* [`wsgi_auto_detect`](#-apache--mod--passenger--wsgi_auto_detect)
 
 ##### <a name="-apache--mod--passenger--manage_repo"></a>`manage_repo`
 
@@ -5179,83 +5146,11 @@ Toggles whether to attempt to enable user account sandboxing, also known as user
 
 Default value: `undef`
 
-##### <a name="-apache--mod--passenger--rack_auto_detect"></a>`rack_auto_detect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rack_autodetect"></a>`rack_autodetect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rack_base_uri"></a>`rack_base_uri`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerBaseURI.
-
-Default value: `undef`
-
 ##### <a name="-apache--mod--passenger--rack_env"></a>`rack_env`
 
 Data type: `Optional[String]`
 
 Alias for PassengerAppEnv.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_allow_mod_rewrite"></a>`rails_allow_mod_rewrite`
-
-Data type: `Optional[String]`
-
-This option doesn't do anything anymore since version 4.0.0.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_app_spawner_idle_time"></a>`rails_app_spawner_idle_time`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0, and replaced with PassengerMaxPreloaderIdleTime.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_auto_detect"></a>`rails_auto_detect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_autodetect"></a>`rails_autodetect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_base_uri"></a>`rails_base_uri`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerBaseURI.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_default_user"></a>`rails_default_user`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerDefaultUser
 
 Default value: `undef`
 
@@ -5273,38 +5168,6 @@ Data type: `Optional[String]`
 
 This option is no longer available in version 4.0.0. There is no alternative because framework spawning has been removed
 altogether. You should use smart spawning instead.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_ruby"></a>`rails_ruby`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerRuby.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_spawn_method"></a>`rails_spawn_method`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerSpawnMethod.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--rails_user_switching"></a>`rails_user_switching`
-
-Data type: `Optional[String]`
-
-Deprecated in 3.0.0 in favor of PassengerUserSwitching.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--passenger--wsgi_auto_detect"></a>`wsgi_auto_detect`
-
-Data type: `Optional[String]`
-
-This option has been removed in version 4.0.0 as part of an optimization. You should use PassengerEnabled instead.
 
 Default value: `undef`
 
@@ -7753,7 +7616,6 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`rewrite_cond`](#-apache--vhost--rewrite_cond)
 * [`rewrite_inherit`](#-apache--vhost--rewrite_inherit)
 * [`scriptalias`](#-apache--vhost--scriptalias)
-* [`scriptaliases`](#-apache--vhost--scriptaliases)
 * [`serveradmin`](#-apache--vhost--serveradmin)
 * [`serveraliases`](#-apache--vhost--serveraliases)
 * [`servername`](#-apache--vhost--servername)
@@ -7947,11 +7809,6 @@ a corresponding context, such as `<Directory /path/to/directory>` or
 the `aliases` parameter. As described in the `mod_alias` documentation, add more specific
 `alias`, `aliasmatch`, `scriptalias` or `scriptaliasmatch` parameters before the more
 general ones to avoid shadowing.<BR />
-> **Note**: Use the `aliases` parameter instead of the `scriptaliases` parameter because
-you can precisely control the order of various alias directives. Defining `ScriptAliases`
-using the `scriptaliases` parameter means *all* `ScriptAlias` directives will come after
-*all* `Alias` directives, which can lead to `Alias` directives shadowing `ScriptAlias`
-directives. This often causes problems; for example, this could cause problems with Nagios.<BR />
 If `apache::mod::passenger` is loaded and `PassengerHighPerformance` is `true`, the `Alias`
 directive might not be able to honor the `PassengerEnabled => off` statement. See
 [this article](http://www.conandalton.net/2010/06/passengerenabled-off-not-working.html) for details.
@@ -9760,39 +9617,6 @@ Defines a directory of CGI scripts to be aliased to the path '/cgi-bin', such as
 '/usr/scripts'.
 
 Default value: `undef`
-
-##### <a name="-apache--vhost--scriptaliases"></a>`scriptaliases`
-
-Data type: `Array[Hash]`
-
-> **Note**: This parameter is deprecated in favor of the `aliases` parameter.<br />
-Passes an array of hashes to the virtual host to create either ScriptAlias or
-ScriptAliasMatch statements per the `mod_alias` documentation.
-``` puppet
-scriptaliases => [
-  {
-    alias => '/myscript',
-    path  => '/usr/share/myscript',
-  },
-  {
-    aliasmatch => '^/foo(.*)',
-    path       => '/usr/share/fooscripts$1',
-  },
-  {
-    aliasmatch => '^/bar/(.*)',
-    path       => '/usr/share/bar/wrapper.sh/$1',
-  },
-  {
-    alias => '/neatscript',
-    path  => '/usr/share/neatscript',
-  },
-]
-```
-The ScriptAlias and ScriptAliasMatch directives are created in the order specified.
-As with [Alias and AliasMatch](#aliases) directives, specify more specific aliases
-before more general ones to avoid shadowing.
-
-Default value: `[]`
 
 ##### <a name="-apache--vhost--serveradmin"></a>`serveradmin`
 

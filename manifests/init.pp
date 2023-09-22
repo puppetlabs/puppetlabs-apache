@@ -105,11 +105,6 @@
 #   ```
 #   **Note**: SSL virtual hosts only respond to HTTPS queries.
 #
-# @param default_type
-#   _Apache 2.2 only_. Sets the MIME `content-type` sent if the server cannot otherwise 
-#   determine an appropriate `content-type`. This directive is deprecated in Apache 2.4 and 
-#   newer, and is only for backwards compatibility in configuration files.
-#
 # @param default_vhost
 #   Configures a default virtual host when the class is declared.<br />
 #   To configure customized virtual hosts, set this parameter's 
@@ -423,10 +418,6 @@
 #
 # @param ip
 #   Specifies the ip address
-#
-# @param purge_vdir
-#   Removes all other Apache configs and virtual hosts.<br />
-#   > **Note**: This parameter is deprecated in favor of the `purge_configs` parameter.<br />
 # 
 # @param conf_enabled
 #   Whether the additional config files in `/etc/apache2/conf-enabled` should be managed.
@@ -472,7 +463,6 @@ class apache (
   Optional[Stdlib::Absolutepath] $default_ssl_crl                            = undef,
   Optional[String] $default_ssl_crl_check                                    = undef,
   Boolean $default_ssl_reload_on_change                                      = false,
-  String $default_type                                                       = 'none',
   Optional[Variant[Array, String]] $dev_packages                             = $apache::params::dev_packages,
   Optional[String] $ip                                                       = undef,
   Boolean $service_enable                                                    = true,
@@ -481,7 +471,6 @@ class apache (
   Optional[String] $service_restart                                          = undef,
   Boolean $purge_configs                                                     = true,
   Optional[Boolean] $purge_vhost_dir                                         = undef,
-  Boolean $purge_vdir                                                        = false,
   Optional[String[1]] $serveradmin                                           = undef,
   Apache::OnOff $sendfile                                                    = 'On',
   Optional[Apache::OnOff] $ldap_verify_server_cert                           = undef,
@@ -599,17 +588,9 @@ class apache (
     service_restart => $service_restart,
   }
 
-  # Deprecated backwards-compatibility
-  if $purge_vdir {
-    warning('Class[\'apache\'] parameter purge_vdir is deprecated in favor of purge_configs')
-    $purge_confd = $purge_vdir
-  } else {
-    $purge_confd = $purge_configs
-  }
-
   # Set purge vhostd appropriately
   if $purge_vhost_dir == undef {
-    $purge_vhostd = $purge_confd
+    $purge_vhostd = $purge_configs
   } else {
     $purge_vhostd = $purge_vhost_dir
   }
@@ -627,8 +608,8 @@ class apache (
   file { $confd_dir:
     ensure  => directory,
     recurse => true,
-    purge   => $purge_confd,
-    force   => $purge_confd,
+    purge   => $purge_configs,
+    force   => $purge_configs,
     notify  => Class['Apache::Service'],
     require => Package['httpd'],
   }
@@ -637,8 +618,8 @@ class apache (
     file { $conf_enabled:
       ensure  => directory,
       recurse => true,
-      purge   => $purge_confd,
-      force   => $purge_confd,
+      purge   => $purge_configs,
+      force   => $purge_configs,
       notify  => Class['Apache::Service'],
       require => Package['httpd'],
     }

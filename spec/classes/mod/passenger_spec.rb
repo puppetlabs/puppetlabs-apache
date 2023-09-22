@@ -94,22 +94,9 @@ describe 'apache::mod::passenger', type: :class do
             'passenger_use_global_queue' => { type: 'String', pass_opt: :PassengerUseGlobalQueue },
             'passenger_user' => { type: 'String', pass_opt: :PassengerUser },
             'passenger_user_switching' => { type: 'OnOff', pass_opt: :PassengerUserSwitching },
-            'rack_auto_detect' => { type: 'String', pass_opt: :RackAutoDetect },
-            'rack_autodetect' => { type: 'String', pass_opt: :RackAutoDetect },
-            'rack_base_uri' => { type: 'String', pass_opt: :RackBaseURI },
             'rack_env' => { type: 'String', pass_opt: :RackEnv },
-            'rails_allow_mod_rewrite' => { type: 'String', pass_opt: :RailsAllowModRewrite },
-            'rails_app_spawner_idle_time' => { type: 'String', pass_opt: :RailsAppSpawnerIdleTime },
-            'rails_auto_detect' => { type: 'String', pass_opt: :RailsAutoDetect },
-            'rails_autodetect' => { type: 'String', pass_opt: :RailsAutoDetect },
-            'rails_base_uri' => { type: 'String', pass_opt: :RailsBaseURI },
-            'rails_default_user' => { type: 'String', pass_opt: :RailsDefaultUser },
             'rails_env' => { type: 'String', pass_opt: :RailsEnv },
-            'rails_framework_spawner_idle_time' => { type: 'String', pass_opt: :RailsFrameworkSpawnerIdleTime },
-            'rails_ruby' => { type: 'String', pass_opt: :RailsRuby },
-            'rails_spawn_method' => { type: 'String', pass_opt: :RailsSpawnMethod },
-            'rails_user_switching' => { type: 'String', pass_opt: :RailsUserSwitching },
-            'wsgi_auto_detect' => { type: 'String', pass_opt: :WsgiAutoDetect }
+            'rails_framework_spawner_idle_time' => { type: 'String', pass_opt: :RailsFrameworkSpawnerIdleTime }
           }
           passenger_config_options.each do |config_option, config_hash|
             puppetized_config_option = config_option
@@ -230,8 +217,8 @@ describe 'apache::mod::passenger', type: :class do
           describe 'fails when an option is removed' do
             let :params do
               {
-                passenger_installed_version: '5.0.0',
-                rails_autodetect: 'on'
+                passenger_installed_version: '5.3.0',
+                passenger_resist_deployment_errors: 'on'
               }
             end
 
@@ -241,8 +228,8 @@ describe 'apache::mod::passenger', type: :class do
           describe 'warns when an option is deprecated' do
             let :params do
               {
-                passenger_installed_version: '5.0.0',
-                rails_ruby: '/some/path/to/ruby'
+                passenger_installed_version: '5.1.0',
+                passenger_debug_log_file: '/some/path/to/log'
               }
             end
 
@@ -344,22 +331,6 @@ describe 'apache::mod::passenger', type: :class do
           end
 
           it { is_expected.to contain_file('passenger.conf').with_content(%r{^  PassengerMaxInstancesPerApp 8$}) }
-        end
-
-        describe 'with rack_autodetect => on' do
-          let :params do
-            { rack_autodetect: 'on' }
-          end
-
-          it { is_expected.to contain_file('passenger.conf').with_content(%r{^  RackAutoDetect on$}) }
-        end
-
-        describe 'with rails_autodetect => on' do
-          let :params do
-            { rails_autodetect: 'on' }
-          end
-
-          it { is_expected.to contain_file('passenger.conf').with_content(%r{^  RailsAutoDetect on$}) }
         end
 
         describe 'with passenger_use_global_queue => on' do
