@@ -2391,11 +2391,10 @@ define apache::vhost (
     }
   }
 
-  # Template uses no variables
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}${filename}.conf",
     order   => 90,
-    content => template('apache/vhost/_serversignature.erb'),
+    content => "  ServerSignature Off\n",
   }
 
   # Template uses:
@@ -2938,7 +2937,9 @@ define apache::vhost (
     }
   }
 
-  # Template uses no variables
+  # Template uses:
+  # - $define
+  # - $passenger_pre_start
   concat::fragment { "${name}-file_footer":
     target  => "${priority_real}${filename}.conf",
     order   => 999,
