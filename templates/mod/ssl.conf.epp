@@ -29,7 +29,7 @@
   SSLCACertificateFile    "<%= $ssl_ca %>"
   <%- } -%>
   SSLUseStapling <%= apache::bool2httpd($ssl_stapling) %>
-  <%- if $ssl_stapling_return_errors { -%>
+  <%- if $ssl_stapling_return_errors != undef { -%>
   SSLStaplingReturnResponderErrors <%= apache::bool2httpd($ssl_stapling_return_errors) %>
   <%- } -%>
   SSLStaplingCache "shmcb:<%= $_stapling_cache %>"
