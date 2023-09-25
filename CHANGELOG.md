@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v11.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v11.0.0) - 2023-09-22
+## [v11.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v11.1.0) - 2023-09-25
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v11.0.0...v11.1.0)
+
+### Added
+
+- (CAT-1450) - Added new parameters for passenger mod [#2471](https://github.com/puppetlabs/puppetlabs-apache/pull/2471) ([Ramesh7](https://github.com/Ramesh7))
+
+### Fixed
+
+- (CAT-1451) - Fixing nil check fix for SSL config [#2473](https://github.com/puppetlabs/puppetlabs-apache/pull/2473) ([Ramesh7](https://github.com/Ramesh7))
+
+## [v11.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v11.0.0) - 2023-09-23
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v10.1.1...v11.0.0)
 
