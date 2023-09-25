@@ -4423,10 +4423,15 @@ The following parameters are available in the `apache::mod::passenger` class:
 * [`mod_package`](#-apache--mod--passenger--mod_package)
 * [`mod_package_ensure`](#-apache--mod--passenger--mod_package_ensure)
 * [`mod_path`](#-apache--mod--passenger--mod_path)
+* [`passenger_admin_panel_url`](#-apache--mod--passenger--passenger_admin_panel_url)
+* [`passenger_admin_panel_auth_type`](#-apache--mod--passenger--passenger_admin_panel_auth_type)
+* [`passenger_admin_panel_username`](#-apache--mod--passenger--passenger_admin_panel_username)
+* [`passenger_admin_panel_password`](#-apache--mod--passenger--passenger_admin_panel_password)
 * [`passenger_allow_encoded_slashes`](#-apache--mod--passenger--passenger_allow_encoded_slashes)
 * [`passenger_anonymous_telemetry_proxy`](#-apache--mod--passenger--passenger_anonymous_telemetry_proxy)
 * [`passenger_app_env`](#-apache--mod--passenger--passenger_app_env)
 * [`passenger_app_group_name`](#-apache--mod--passenger--passenger_app_group_name)
+* [`passenger_app_log_file`](#-apache--mod--passenger--passenger_app_log_file)
 * [`passenger_app_root`](#-apache--mod--passenger--passenger_app_root)
 * [`passenger_app_type`](#-apache--mod--passenger--passenger_app_type)
 * [`passenger_base_uri`](#-apache--mod--passenger--passenger_base_uri)
@@ -4445,6 +4450,7 @@ The following parameters are available in the `apache::mod::passenger` class:
 * [`passenger_disable_log_prefix`](#-apache--mod--passenger--passenger_disable_log_prefix)
 * [`passenger_disable_security_update_check`](#-apache--mod--passenger--passenger_disable_security_update_check)
 * [`passenger_enabled`](#-apache--mod--passenger--passenger_enabled)
+* [`passenger_dump_config_manifest`](#-apache--mod--passenger--passenger_dump_config_manifest)
 * [`passenger_error_override`](#-apache--mod--passenger--passenger_error_override)
 * [`passenger_file_descriptor_log_file`](#-apache--mod--passenger--passenger_file_descriptor_log_file)
 * [`passenger_fly_with`](#-apache--mod--passenger--passenger_fly_with)
@@ -4466,6 +4472,7 @@ The following parameters are available in the `apache::mod::passenger` class:
 * [`passenger_max_request_queue_size`](#-apache--mod--passenger--passenger_max_request_queue_size)
 * [`passenger_max_request_time`](#-apache--mod--passenger--passenger_max_request_time)
 * [`passenger_max_requests`](#-apache--mod--passenger--passenger_max_requests)
+* [`passenger_max_request_queue_time`](#-apache--mod--passenger--passenger_max_request_queue_time)
 * [`passenger_memory_limit`](#-apache--mod--passenger--passenger_memory_limit)
 * [`passenger_meteor_app_settings`](#-apache--mod--passenger--passenger_meteor_app_settings)
 * [`passenger_min_instances`](#-apache--mod--passenger--passenger_min_instances)
@@ -4556,6 +4563,39 @@ Specifies a path to the module. Do not manually set this parameter without a spe
 
 Default value: `undef`
 
+##### <a name="-apache--mod--passenger--passenger_admin_panel_url"></a>`passenger_admin_panel_url`
+
+Data type: `Optional[String]`
+
+Specifies a Fuse Panel URL that the Passenger to to enable monitoring, administering, analysis and troubleshooting of this Passenger instance and apps.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_admin_panel_auth_type"></a>`passenger_admin_panel_auth_type`
+
+Data type: `Optional[Enum['basic']]`
+
+Specifies the authentication type to use for the Fuse Panel. Currently it support only basic type of authentiction.
+Ref : https://www.phusionpassenger.com/library/config/apache/reference/#passengeradminpanelauthtype
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_admin_panel_username"></a>`passenger_admin_panel_username`
+
+Data type: `Optional[String]`
+
+The username that Passenger should use when connecting to the Fuse Panel with basic authentication.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_admin_panel_password"></a>`passenger_admin_panel_password`
+
+Data type: `Optional[String]`
+
+The password that Passenger should use when connecting to the Fuse Panel with basic authentication.
+
+Default value: `undef`
+
 ##### <a name="-apache--mod--passenger--passenger_allow_encoded_slashes"></a>`passenger_allow_encoded_slashes`
 
 Data type: `Optional[Apache::OnOff]`
@@ -4590,6 +4630,14 @@ Default value: `undef`
 Data type: `Optional[String]`
 
 Sets the name of the application group that the current application should belong to.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_app_log_file"></a>`passenger_app_log_file`
+
+Data type: `Optional[String]`
+
+File path to application specifile log file. By default passenger will write all application log messages to the Passenger log file.
 
 Default value: `undef`
 
@@ -4736,6 +4784,14 @@ Default value: `undef`
 Data type: `Optional[Apache::OnOff]`
 
 Toggles whether Passenger should be enabled for that particular context.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_dump_config_manifest"></a>`passenger_dump_config_manifest`
+
+Data type: `Optional[String]`
+
+Dumps the configuration manifest to the given file.
 
 Default value: `undef`
 
@@ -4909,6 +4965,15 @@ Default value: `undef`
 Data type: `Optional[Integer]`
 
 The maximum number of requests an application process will process.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--passenger--passenger_max_request_queue_time"></a>`passenger_max_request_queue_time`
+
+Data type: `Optional[Integer]`
+
+The maximum amount of time, in seconds, that a request may be queued before Passenger will return an error.
+This option specifies the maximum time a request may spend in that queue. If a request in the queue reaches this specified limit, then Passenger will send a "504 Gateway Timeout" error for that request.
 
 Default value: `undef`
 
@@ -7590,6 +7655,11 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`passenger_app_log_file`](#-apache--vhost--passenger_app_log_file)
 * [`passenger_debugger`](#-apache--vhost--passenger_debugger)
 * [`passenger_lve_min_uid`](#-apache--vhost--passenger_lve_min_uid)
+* [`passenger_dump_config_manifest`](#-apache--vhost--passenger_dump_config_manifest)
+* [`passenger_admin_panel_url`](#-apache--vhost--passenger_admin_panel_url)
+* [`passenger_admin_panel_auth_type`](#-apache--vhost--passenger_admin_panel_auth_type)
+* [`passenger_admin_panel_username`](#-apache--vhost--passenger_admin_panel_username)
+* [`passenger_admin_panel_password`](#-apache--vhost--passenger_admin_panel_password)
 * [`php_values`](#-apache--vhost--php_values)
 * [`php_flags`](#-apache--vhost--php_flags)
 * [`php_admin_values`](#-apache--vhost--php_admin_values)
@@ -9203,6 +9273,51 @@ Data type: `Optional[Integer]`
 Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
 to only allow the spawning of application processes with UIDs equal to, or higher than, this
 specified value on LVE-enabled kernels.
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--passenger_dump_config_manifest"></a>`passenger_dump_config_manifest`
+
+Data type: `Optional[String]`
+
+Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
+to dump the configuration manifest to a file.
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--passenger_admin_panel_url"></a>`passenger_admin_panel_url`
+
+Data type: `Optional[String]`
+
+Sets [PassengerAdminPanelUrl](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelurl),
+to specify the URL of the Passenger admin panel.
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--passenger_admin_panel_auth_type"></a>`passenger_admin_panel_auth_type`
+
+Data type: `Optional[Enum['basic']]`
+
+Sets [PassengerAdminPanelAuthType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelauthtype),
+to specify the authentication type for the Passenger admin panel.
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--passenger_admin_panel_username"></a>`passenger_admin_panel_username`
+
+Data type: `Optional[String]`
+
+Sets [PassengerAdminPanelUsername](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelusername),
+to specify the username for the Passenger admin panel.
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--passenger_admin_panel_password"></a>`passenger_admin_panel_password`
+
+Data type: `Optional[String]`
+
+Sets [PassengerAdminPanelPassword](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelpassword),
+to specify the password for the Passenger admin panel.
 
 Default value: `undef`
 

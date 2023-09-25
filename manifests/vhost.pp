@@ -808,6 +808,26 @@
 #   to only allow the spawning of application processes with UIDs equal to, or higher than, this 
 #   specified value on LVE-enabled kernels.
 #
+# @param passenger_dump_config_manifest
+#   Sets [PassengerLveMinUid](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengerlveminuid),
+#   to dump the configuration manifest to a file.
+#
+# @param passenger_admin_panel_url
+#   Sets [PassengerAdminPanelUrl](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelurl),
+#   to specify the URL of the Passenger admin panel.
+#
+# @param passenger_admin_panel_auth_type
+#   Sets [PassengerAdminPanelAuthType](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelauthtype),
+#   to specify the authentication type for the Passenger admin panel.
+#
+# @param passenger_admin_panel_username
+#   Sets [PassengerAdminPanelUsername](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelusername),
+#   to specify the username for the Passenger admin panel.
+#
+# @param passenger_admin_panel_password
+#   Sets [PassengerAdminPanelPassword](https://www.phusionpassenger.com/docs/references/config_reference/apache/#passengeradminpanelpassword),
+#   to specify the password for the Passenger admin panel.
+#
 # @param php_values
 #   Allows per-virtual host setting [`php_value`s](http://php.net/manual/en/configuration.changes.php). 
 #   These flags or values can be overwritten by a user or an application.
@@ -1896,6 +1916,11 @@ define apache::vhost (
   Optional[String] $passenger_app_log_file                                            = undef,
   Optional[Boolean] $passenger_debugger                                               = undef,
   Optional[Integer] $passenger_lve_min_uid                                            = undef,
+  Optional[String] $passenger_admin_panel_url                                         = undef,
+  Optional[Enum['basic']] $passenger_admin_panel_auth_type                            = undef,
+  Optional[String] $passenger_admin_panel_username                                    = undef,
+  Optional[String] $passenger_admin_panel_password                                    = undef,
+  Optional[String] $passenger_dump_config_manifest                                    = undef,
   Optional[String] $add_default_charset                                               = undef,
   Boolean $modsec_disable_vhost                                                       = false,
   Optional[Variant[Hash, Array]] $modsec_disable_ids                                  = undef,
@@ -2772,7 +2797,8 @@ define apache::vhost (
   # - $passenger_max_requests
   # - $passenger_max_request_time
   # - $passenger_memory_limit
-  if ($passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef) and $ensure == 'present' {
+  # - $passenger_dump_config_manifest
+  if ($passenger_enabled != undef or $passenger_start_timeout != undef or $passenger_ruby != undef or $passenger_python != undef or $passenger_nodejs != undef or $passenger_meteor_app_settings != undef or $passenger_app_env != undef or $passenger_app_root != undef or $passenger_app_group_name != undef or $passenger_app_start_command != undef or $passenger_app_type != undef or $passenger_startup_file != undef or $passenger_restart_dir != undef or $passenger_spawn_method != undef or $passenger_load_shell_envvars != undef or $passenger_preload_bundler != undef or $passenger_rolling_restarts != undef or $passenger_resist_deployment_errors != undef or $passenger_min_instances != undef or $passenger_max_instances != undef or $passenger_max_preloader_idle_time != undef or $passenger_force_max_concurrent_requests_per_process != undef or $passenger_concurrency_model != undef or $passenger_thread_count != undef or $passenger_high_performance != undef or $passenger_max_request_queue_size != undef or $passenger_max_request_queue_time != undef or $passenger_user != undef or $passenger_group != undef or $passenger_friendly_error_pages != undef or $passenger_buffer_upload != undef or $passenger_buffer_response != undef or $passenger_allow_encoded_slashes != undef or $passenger_lve_min_uid != undef or $passenger_base_uri != undef or $passenger_error_override != undef or $passenger_sticky_sessions != undef or $passenger_sticky_sessions_cookie_name != undef or $passenger_sticky_sessions_cookie_attributes != undef or $passenger_app_log_file != undef or $passenger_debugger != undef or $passenger_max_requests != undef or $passenger_max_request_time != undef or $passenger_memory_limit != undef or $passenger_dump_config_manifest != undef) and $ensure == 'present' {
     include apache::mod::passenger
 
     concat::fragment { "${name}-passenger":

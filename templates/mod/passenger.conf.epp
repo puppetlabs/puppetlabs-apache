@@ -7,11 +7,26 @@
   <%- if $passenger_anonymous_telemetry_proxy { -%>
   PassengerAnonymousTelemetryProxy <%= $passenger_anonymous_telemetry_proxy %>
   <%- } -%>
+  <%- if $passenger_admin_panel_url { -%>
+  PassengerAdminPanelUrl <%= $passenger_admin_panel_url %>
+  <%- } -%>
+  <%- if $passenger_admin_panel_auth_type { -%>
+  PassengerAdminPanelAuthType <%= $passenger_admin_panel_auth_type %>
+  <%- } -%>
+  <%- if $passenger_admin_panel_username { -%>
+  PassengerAdminPanelUsername <%= $passenger_admin_panel_username %>
+  <%- } -%>
+  <%- if $passenger_admin_panel_password { -%>
+  PassengerAdminPanelPassword <%= $passenger_admin_panel_password %>
+  <%- } -%>
   <%- if $passenger_app_env { -%>
   PassengerAppEnv <%= $passenger_app_env %>
   <%- } -%>
   <%- if $passenger_app_group_name { -%>
   PassengerAppGroupName <%= $passenger_app_group_name %>
+  <%- } -%>
+  <%- if $passenger_app_log_file { -%>
+  PassengerAppLogFile <%= $passenger_app_log_file %>
   <%- } -%>
   <%- if $passenger_app_root { -%>
   PassengerAppRoot "<%= $passenger_app_root %>"
@@ -57,6 +72,9 @@
   <%- } -%>
   <%- if $passenger_disable_security_update_check { -%>
   PassengerDisableSecurityUpdateCheck <%= $passenger_disable_security_update_check %>
+  <%- } -%>
+  <%- if $passenger_dump_config_manifest { -%>
+  PassengerDumpConfigManifest <%= $passenger_dump_config_manifest %>
   <%- } -%>
   <%- if $passenger_enabled { -%>
   PassengerEnabled <%= $passenger_enabled %>
@@ -117,6 +135,9 @@
   <%- } -%>
   <%- if $passenger_max_request_time { -%>
   PassengerMaxRequestTime <%= $passenger_max_request_time %>
+  <%- } -%>
+  <%- if $passenger_max_request_queue_time { -%>
+  PassengerMaxRequestQueueTime <%= $passenger_max_request_queue_time %>
   <%- } -%>
   <%- if $passenger_max_requests { -%>
   PassengerMaxRequests <%= $passenger_max_requests %>
