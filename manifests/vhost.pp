@@ -3022,6 +3022,6 @@ define apache::vhost (
   concat::fragment { "${name}-file_footer":
     target  => "${priority_real}${filename}.conf",
     order   => 999,
-    content => epp('apache/vhost/_file_footer.epp', $file_footer_params),
+    content => template('apache/vhost/_file_footer.erb'),
   }
 }
