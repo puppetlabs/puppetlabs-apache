@@ -2560,7 +2560,7 @@ define apache::vhost (
     concat::fragment { "${name}-scriptalias":
       target  => "${priority_real}${filename}.conf",
       order   => 200,
-      content => epp('apache/vhost/_scriptalias.epp', { 'scriptalias' => $scriptalias }),
+      content => template('apache/vhost/_scriptalias.erb'),
     }
   }
 

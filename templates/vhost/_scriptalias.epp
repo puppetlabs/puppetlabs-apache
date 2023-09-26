@@ -1,2 +1,0 @@
- ## Script alias directives
-  ScriptAlias /cgi-bin "<%= $scriptalias %>"
