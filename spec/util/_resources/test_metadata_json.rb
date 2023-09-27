@@ -8,7 +8,7 @@ METADATA_JSON = '{
   "license": "Apache-2.0",
   "source": "https://github.com/puppetlabs/puppetlabs-apache",
   "project_page": "https://github.com/puppetlabs/puppetlabs-apache",
-  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "issues_url": "https://github.com/puppetlabs/puppetlabs-apache/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
