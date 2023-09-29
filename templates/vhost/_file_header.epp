@@ -1,0 +1,43 @@
+# ************************************
+# Vhost template in module puppetlabs-apache
+# Managed by Puppet
+# ************************************
+<%= [$comment].flatten.map |$c| { "# ${c}" }.join("\n") -%>
+<%- if $mdomain { -%>
+
+  <%- if $mdomain =~ String { -%>
+
+MDomain <%= $mdomain %>
+  <%-} else {-%>
+MDomain <%= $servername %>
+  <%- } -%>
+<% } -%>
+
+<VirtualHost <%= [$nvh_addr_port].flatten().filter |$value| { $value }.join(' ') %>>
+<% $define.each | $k, $v| { -%>
+  Define <%= $k %> <%= $v %>
+<% } -%>
+<% if $servername and !$servername.empty { -%>
+  ServerName <%= $servername %>
+<% } -%>
+<% if $serveradmin { -%>
+  ServerAdmin <%= $serveradmin %>
+<% } -%>
+<%- unless $protocols.empty { -%>
+  Protocols <%= join($protocols, ' ') %>
+<%- } -%>
+<%- unless $protocols_honor_order == undef { -%>
+  ProtocolsHonorOrder <%= apache::bool2httpd($protocols_honor_order) %>
+<%- } -%>
+<% if $limitreqfieldsize { -%>
+  LimitRequestFieldSize <%= $limitreqfieldsize %>
+<% } -%>
+<% if $limitreqfields { -%>
+  LimitRequestFields <%= $limitreqfields %>
+<% } -%>
+<% if $limitreqline { -%>
+  LimitRequestLine <%= $limitreqline %>
+<% } -%>
+<% if $limitreqbody { -%>
+  LimitRequestBody <%= $limitreqbody %>
+<% } %>
