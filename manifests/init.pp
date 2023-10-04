@@ -808,8 +808,6 @@ class apache (
       'error_documents_path'    => $error_documents_path,
     }
 
-    notice $conf_template
-
     file { "${apache::conf_dir}/${apache::params::conf_file}":
       ensure  => file,
       mode    => $apache::file_mode,
