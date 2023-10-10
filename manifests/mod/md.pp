@@ -31,7 +31,7 @@
 #
 # @param md_challenge_dns01
 #   Define a program to be called when the `dns-01` challenge needs to be
-#   setup/torn down. 
+#   setup/torn down.
 #
 # @param md_contact_email
 #   The ACME protocol requires you to give a contact url when you sign up.
@@ -91,7 +91,7 @@
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_md.html for additional documentation.
 #
-# @note Unsupported platforms: CentOS: 6, 7; Debian: 8, 9; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
+# @note Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
 class apache::mod::md (
   Optional[String]                                          $md_activation_delay       = undef,
   Optional[Apache::OnOff]                                   $md_base_server            = undef,

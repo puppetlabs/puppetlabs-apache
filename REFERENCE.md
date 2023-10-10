@@ -1214,7 +1214,7 @@ Default value: `$apache::params::icons_prefix`
 
 Installs `mod_apreq2`.
 
-* **Note** Unsupported platforms: CentOS: all; Debian: 8; OracleLinux: all; RedHat: all; Scientific: all; SLES: all; Ubuntu: all
+* **Note** Unsupported platforms: CentOS: all; OracleLinux: all; RedHat: all; Scientific: all; SLES: all; Ubuntu: all
 
 * **See also**
   * http://httpd.apache.org/apreq/docs/libapreq2/group__mod__apreq2.html
@@ -3602,7 +3602,7 @@ Installs `mod_macro`.
 
 Installs and configures `mod_md`.
 
-* **Note** Unsupported platforms: CentOS: 6, 7; Debian: 8, 9; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
+* **Note** Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
 
 * **See also**
   * https://httpd.apache.org/docs/current/mod/mod_md.html

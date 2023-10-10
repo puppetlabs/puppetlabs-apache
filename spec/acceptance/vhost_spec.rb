@@ -1221,8 +1221,7 @@ describe 'apache::vhost define' do
     end
   end
 
-  describe 'shibboleth parameters', if: (os[:family] == 'debian' && os[:release] != '7') do
-    # Debian 7 is too old for ShibCompatValidUser
+  describe 'shibboleth parameters', if: (os[:family] == 'debian') do
     pp = <<-MANIFEST
       class { 'apache': }
       class { 'apache::mod::shib': }
