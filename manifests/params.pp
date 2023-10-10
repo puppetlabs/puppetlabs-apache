@@ -375,7 +375,6 @@ class apache::params inherits apache::version {
     $default_ssl_key     = '/etc/ssl/private/ssl-cert-snakeoil.key'
     $ssl_sessioncache    = "\${APACHE_RUN_DIR}/ssl_scache(512000)"
     $php_version = $facts['os']['release']['major'] ? {
-      '9'     => '7.0', # Debian Stretch
       '10'    => '7.3', # Debian Buster
       '11'    => '7.4', # Debian Bullseye
       '12'    => '8.2', # Debian Bookworm
@@ -408,14 +407,6 @@ class apache::params inherits apache::version {
     $_os_mod_packages = case $facts['os']['name'] {
       'Debian': {
         case $facts['os']['release']['major'] {
-          '9': {
-            {
-              'auth_kerb' => 'libapache2-mod-auth-kerb',
-              'nss'       => 'libapache2-mod-nss',
-              'shib2'     => 'libapache2-mod-shib2',
-              'wsgi'      => 'libapache2-mod-wsgi',
-            }
-          }
           '10': {
             {
               'auth_kerb' => 'libapache2-mod-auth-kerb',
@@ -466,7 +457,7 @@ class apache::params inherits apache::version {
     $error_log           = 'error.log'
     $scriptalias         = '/usr/lib/cgi-bin'
     $access_log_file     = 'access.log'
-    if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '19.04') < 0) or ($facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '10') < 0) {
+    if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '19.04') < 0) {
       $shib2_lib = 'mod_shib2.so'
     } else {
       $shib2_lib = 'mod_shib.so'

@@ -286,8 +286,7 @@ describe 'apache::mod::security', type: :class do
             )
           }
 
-          if (facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu') ||
-             (facts[:os]['release']['major'].to_i < 9 && facts[:os]['name'] == 'Debian')
+          if facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu'
             it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
 
             it {
@@ -316,8 +315,7 @@ describe 'apache::mod::security', type: :class do
               }
             end
 
-            if (facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu') ||
-               (facts[:os]['release']['major'].to_i < 9 && facts[:os]['name'] == 'Debian')
+            if facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu'
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
               it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
