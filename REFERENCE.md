@@ -6573,10 +6573,6 @@ Default value: `undef`
 Data type: `String`
 
 Configures mutex mechanism and lock file directory for all or specified mutexes.
-Default based on the OS and/or Apache version:
-- RedHat/FreeBSD/Suse/Gentoo: 'default'.
-- Debian/Ubuntu + Apache >= 2.4: 'default'.
-- Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 
 Default value: `'default'`
 
