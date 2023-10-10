@@ -67,10 +67,6 @@
 #
 # @param ssl_mutex
 #   Configures mutex mechanism and lock file directory for all or specified mutexes.
-#   Default based on the OS and/or Apache version:
-#   - RedHat/FreeBSD/Suse/Gentoo: 'default'.
-#   - Debian/Ubuntu + Apache >= 2.4: 'default'.
-#   - Debian/Ubuntu + Apache < 2.4: 'file:${APACHE_RUN_DIR}/ssl_mutex'.
 #
 # @param ssl_reload_on_change
 #   Enable reloading of apache if the content of ssl files have changed. It only affects ssl files configured here and not vhost ones.
