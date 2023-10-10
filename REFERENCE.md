@@ -3602,7 +3602,7 @@ Installs `mod_macro`.
 
 Installs and configures `mod_md`.
 
-* **Note** Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
+* **Note** Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 18
 
 * **See also**
   * https://httpd.apache.org/docs/current/mod/mod_md.html

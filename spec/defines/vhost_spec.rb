@@ -593,7 +593,7 @@ describe 'apache::vhost', type: :define do
                                                                                 'notify' => 'Class[Apache::Service]')
           }
 
-          if os_facts[:os]['release']['major'].to_i >= 18 && os_facts[:os]['name'] == 'Ubuntu'
+          if os_facts[:os]['name'] == 'Ubuntu'
             it {
               expect(subject).to contain_file('30-rspec.example.com.conf symlink').with('ensure' => 'link',
                                                                                         'path' => "/etc/#{apache_name}/sites-enabled/30-rspec.example.com.conf")

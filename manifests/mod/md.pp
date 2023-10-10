@@ -91,7 +91,7 @@
 #
 # @see https://httpd.apache.org/docs/current/mod/mod_md.html for additional documentation.
 #
-# @note Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 14, 16, 18
+# @note Unsupported platforms: CentOS: 6, 7; OracleLinux: all; RedHat: 6, 7; Scientific: all; SLES: all; Ubuntu: 18
 class apache::mod::md (
   Optional[String]                                          $md_activation_delay       = undef,
   Optional[Apache::OnOff]                                   $md_base_server            = undef,
