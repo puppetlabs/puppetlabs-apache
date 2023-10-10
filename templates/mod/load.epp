@@ -4,4 +4,6 @@ LoadFile <%= $loadfile %>
 <% } -%>
 
 <% } -%>
+<IfModule <%= $_id %> >
 LoadModule <%= $_id %> <%= $_path %>
+</IfModule>
