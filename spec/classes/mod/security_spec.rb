@@ -286,54 +286,6 @@ describe 'apache::mod::security', type: :class do
             )
           }
 
-          if facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu'
-            it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
-
-            it {
-              expect(subject).to contain_file('modsecurity_35_bad_robots.data').with(
-                path: '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
-                target: '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
-              )
-            }
-          end
-
-          describe 'with parameters' do
-            let :params do
-              {
-                activated_rules: [
-                  '/tmp/foo/bar.conf',
-                ],
-                audit_log_relevant_status: '^(?:5|4(?!01|04))',
-                audit_log_parts: 'ABCDZ',
-                audit_log_type: 'Concurrent',
-                audit_log_storage_dir: '/var/log/httpd/audit',
-                secdefaultaction: 'deny,status:406,nolog,auditlog',
-                secrequestbodyaccess: 'Off',
-                secresponsebodyaccess: 'On',
-                secrequestbodylimitaction: 'ProcessPartial',
-                secresponsebodylimitaction: 'Reject'
-              }
-            end
-
-            if facts[:os]['release']['major'].to_i < 18 && facts[:os]['name'] == 'Ubuntu'
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
-              it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
-              it { is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
-
-              it {
-                expect(subject).to contain_file('bar.conf').with(
-                  path: '/etc/modsecurity/activated_rules/bar.conf',
-                  target: '/tmp/foo/bar.conf',
-                )
-              }
-            end
-          end
-
           describe 'with custom parameters' do
             let :params do
               {
