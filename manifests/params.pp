@@ -588,6 +588,7 @@ class apache::params inherits apache::version {
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
     $vhost_dir           = "${httpd_dir}/vhosts.d"
+    $vhost_enable_dir    = undef
     $conf_file           = 'httpd.conf'
     $ports_file          = "${conf_dir}/listen.conf"
     $pidfile             = '/var/run/httpd2.pid'
