@@ -566,7 +566,7 @@ class apache::params inherits apache::version {
     $mime_support_package = 'app-misc/mime-types'
     $mime_types_config    = '/etc/mime.types'
     $wsgi_socket_prefix   = undef
-    $docroot              = '/var/www/localhost/htdocs'
+    $docroot              = '/srv/www/localhost/htdocs'
     $alias_icons_path     = '/usr/share/apache2/icons'
     $error_documents_path = '/usr/share/apache2/error'
     $pidfile              = '/var/run/apache2.pid'
@@ -587,10 +587,9 @@ class apache::params inherits apache::version {
     $puppet_ssl_dir      = "${httpd_dir}/puppet_ssl"
     $mod_dir             = "${httpd_dir}/mods-available"
     $mod_enable_dir      = "${httpd_dir}/mods-enabled"
-    $vhost_dir           = "${httpd_dir}/sites-available"
-    $vhost_enable_dir    = "${httpd_dir}/sites-enabled"
+    $vhost_dir           = "${httpd_dir}/vhosts.d"
     $conf_file           = 'httpd.conf'
-    $ports_file          = "${conf_dir}/ports.conf"
+    $ports_file          = "${conf_dir}/listen.conf"
     $pidfile             = '/var/run/httpd2.pid'
     $logroot             = '/var/log/apache2'
     $logroot_mode        = undef
