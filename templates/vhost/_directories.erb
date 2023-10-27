@@ -45,6 +45,9 @@
       <%- elsif provider == 'Directory' -%>
     AllowOverride None
       <%- end -%>
+      <%- if directory['allow_override_list'] -%>
+    AllowOverrideList <%= Array(directory['allow_override_list']).join(' ') %>
+      <%- end -%>
     <%- end -%>
     <%- scope.lookupvar('_template_scope')[:item] = directory -%>
 <%= scope.function_template(["apache/vhost/_require.erb"]) -%>
