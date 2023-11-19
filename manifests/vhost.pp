@@ -2713,7 +2713,7 @@ define apache::vhost (
     concat::fragment { "${name}-suexec":
       target  => "${priority_real}${filename}.conf",
       order   => 290,
-      content => "SuexecUserGroup ${suexec_user_group}",
+      content => "  SuexecUserGroup ${suexec_user_group}\n",
     }
   }
 
