@@ -274,7 +274,8 @@
     - [Load balancing with exported and non-exported resources][Load balancing examples]
 4. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
 5. [Limitations - OS compatibility, etc.][Limitations]
-6. [Development - Guide for contributing to the module][Development]
+6. [License](#license)
+7. [Development - Guide for contributing to the module][Development]
     
 <a id="module-description"></a>
 ## Module description
@@ -831,6 +832,11 @@ apache::vhost { 'test.server':
 See [here](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/considerations_in_adopting_rhel_8/index#selinux-python3_security) for more details.
 
 You must set the contexts using `semanage fcontext` instead of `chcon` because Puppet's `file` resources reset the values' context in the database if the resource doesn't specify it.
+
+<a id="license"></a> 
+## License
+
+This codebase is licensed under the Apache2.0 licensing, however due to the nature of the codebase the open source dependencies may also use a combination of [AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html), [BSD-2](https://opensource.org/license/bsd-2-claus), [BSD-3](https://opensource.org/license/bsd-3-claus), [GPL2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html), [LGPL](https://opensource.org/license/lgpl-3-0/), [MIT](https://opensource.org/license/mit/) and [MPL](https://opensource.org/license/mpl-2-0/) Licensing.
 
 <a id="development"></a> 
 ## Development
