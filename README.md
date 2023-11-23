@@ -274,7 +274,8 @@
     - [Load balancing with exported and non-exported resources][Load balancing examples]
 4. [Reference - An under-the-hood peek at what the module is doing and how][Reference]
 5. [Limitations - OS compatibility, etc.][Limitations]
-6. [Development - Guide for contributing to the module][Development]
+6. [License][License]
+7. [Development - Guide for contributing to the module][Development]
     
 <a id="module-description"></a>
 ## Module description
@@ -859,6 +860,10 @@ COVERAGE=yes bundle exec rake parallel_spec
 
 Acceptance tests for this module leverage [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
 To run the acceptance tests follow the instructions [here](https://puppetlabs.github.io/litmus/Running-acceptance-tests.html). You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
+
+## License
+
+This codebase is licensed under the Apache2.0 licensing, however due to the nature of the codebase the open source dependencies may also use a combination of [AGPL](https://opensource.org/license/agpl-v3/), [BSD-2](https://opensource.org/license/bsd-2-clause/), [BSD-3](https://opensource.org/license/bsd-3-clause/), [GPL2.0](https://opensource.org/license/gpl-2-0/), [LGPL](https://opensource.org/license/lgpl-3-0/), [MIT](https://opensource.org/license/mit/) and [MPL](https://opensource.org/license/mpl-2-0/) Licensing.
 
 ### Development Support
 If you run into an issue with this module, or if you would like to request a feature, please [file a ticket](https://github.com/puppetlabs/puppetlabs-apache/issues).
