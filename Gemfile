@@ -23,7 +23,6 @@ group :development do
   gem "voxpupuli-puppet-lint-plugins", '~> 5.0', require: false
   gem "facterdb", '~> 1.18',                     require: false
   gem "metadata-json-lint", '~> 3.0',            require: false
-  gem "puppetlabs_spec_helper", '~> 6.0',        require: false
   gem "rspec-puppet-facts", '~> 2.0',            require: false
   gem "codecov", '~> 0.2',                       require: false
   gem "dependency_checker", '~> 1.0.0',          require: false
@@ -40,6 +39,10 @@ end
 group :system_tests do
   gem "puppet_litmus", '~> 1.0', require: false, platforms: [:ruby, :x64_mingw]
   gem "serverspec", '~> 2.41',   require: false
+end
+group :release_prep do
+  gem "puppet-strings", '~> 4.0',         require: false
+  gem "puppetlabs_spec_helper", '~> 7.0', require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
