@@ -1,3 +1,4 @@
+---
 fixtures:
   repositories:
     concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
