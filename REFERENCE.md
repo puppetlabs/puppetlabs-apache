@@ -9985,7 +9985,7 @@ Default value: `undef`
 
 ##### <a name="-apache--vhost--directories"></a>`directories`
 
-Data type: `Optional[Array[Hash]]`
+Data type: `Array[Hash]`
 
 The `directories` parameter within the `apache::vhost` class passes an array of hashes
 to the virtual host to create [Directory](https://httpd.apache.org/docs/current/mod/core.html#directory),
@@ -10111,7 +10111,7 @@ and others.
     }
     ```
 
-Default value: `undef`
+Default value: `[]`
 
 ##### <a name="-apache--vhost--custom_fragment"></a>`custom_fragment`
 
