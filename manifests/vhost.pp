@@ -1778,7 +1778,7 @@ define apache::vhost (
   Boolean $use_servername_for_filenames                                               = false,
   Boolean $use_port_for_filenames                                                     = false,
   Array[Hash[String[1], String[1]]] $aliases                                          = [],
-  Optional[Array[Hash]] $directories                                                  = undef,
+  Array[Hash] $directories                                                            = [],
   Boolean $error_log                                                                  = true,
   Optional[String] $error_log_file                                                    = undef,
   Optional[String] $error_log_pipe                                                    = undef,
@@ -2152,7 +2152,7 @@ define apache::vhost (
   }
 
   ## Create a default directory list if none defined
-  if $directories {
+  if !empty($directories) {
     $_directories = $directories
   } elsif $docroot {
     $_directories = [
@@ -2166,7 +2166,7 @@ define apache::vhost (
       },
     ]
   } else {
-    $_directories = undef
+    $_directories = []
   }
 
   ## Create a global LocationMatch if locations aren't defined
@@ -2309,7 +2309,7 @@ define apache::vhost (
     }
   }
 
-  if $_directories and ! empty($_directories) and $ensure == 'present' {
+  if $ensure == 'present' {
     $_directories.each |Hash $directory| {
       if 'auth_basic_authoritative' in $directory or 'auth_basic_fake' in $directory or 'auth_basic_provider' in $directory {
         include apache::mod::auth_basic
@@ -2364,10 +2364,12 @@ define apache::vhost (
     # - $docroot
     # - $shibboleth_enabled
     # - $cas_enabled
-    concat::fragment { "${name}-directories":
-      target  => "${priority_real}${filename}.conf",
-      order   => 60,
-      content => template('apache/vhost/_directories.erb'),
+    unless empty($_directories) {
+      concat::fragment { "${name}-directories":
+        target  => "${priority_real}${filename}.conf",
+        order   => 60,
+        content => template('apache/vhost/_directories.erb'),
+      }
     }
   }
 
