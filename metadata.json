@@ -88,6 +88,6 @@
   ],
   "description": "Module for Apache configuration",
   "pdk-version": "3.0.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates.git#main",
-  "template-ref": "heads/main-0-g01c6a19"
+  "template-url": "https://github.com/puppetlabs/pdk-templates.git#maint-remove-github-changelog-gem-footprint",
+  "template-ref": "remotes/origin/maint-remove-github-changelog-gem-footprint-0-g2a3b530"
 }
