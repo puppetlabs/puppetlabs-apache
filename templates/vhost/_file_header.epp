@@ -40,4 +40,4 @@ MDomain <%= $servername %>
 <% } -%>
 <% if $limitreqbody { -%>
   LimitRequestBody <%= $limitreqbody %>
-<% } %>
+<% } -%>
