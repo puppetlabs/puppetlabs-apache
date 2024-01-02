@@ -5720,13 +5720,11 @@ The following parameters are available in the `apache::mod::remoteip` class:
 
 * [`header`](#-apache--mod--remoteip--header)
 * [`internal_proxy`](#-apache--mod--remoteip--internal_proxy)
-* [`proxy_ips`](#-apache--mod--remoteip--proxy_ips)
 * [`internal_proxy_list`](#-apache--mod--remoteip--internal_proxy_list)
 * [`proxies_header`](#-apache--mod--remoteip--proxies_header)
 * [`proxy_protocol`](#-apache--mod--remoteip--proxy_protocol)
 * [`proxy_protocol_exceptions`](#-apache--mod--remoteip--proxy_protocol_exceptions)
 * [`trusted_proxy`](#-apache--mod--remoteip--trusted_proxy)
-* [`trusted_proxy_ips`](#-apache--mod--remoteip--trusted_proxy_ips)
 * [`trusted_proxy_list`](#-apache--mod--remoteip--trusted_proxy_list)
 
 ##### <a name="-apache--mod--remoteip--header"></a>`header`
@@ -5739,22 +5737,14 @@ Default value: `'X-Forwarded-For'`
 
 ##### <a name="-apache--mod--remoteip--internal_proxy"></a>`internal_proxy`
 
-Data type: `Optional[Array[Stdlib::Host]]`
+Data type: `Array[Stdlib::Host]`
 
 A list of IP addresses, IP blocks or hostname that are trusted to set a
-valid value inside specified header. Unlike the `$trusted_proxy_ips`
+valid value inside specified header. Unlike the `$trusted_proxy`
 parameter, any IP address (including private addresses) presented by these
 proxies will trusted by `mod_remoteip`.
 
-Default value: `undef`
-
-##### <a name="-apache--mod--remoteip--proxy_ips"></a>`proxy_ips`
-
-Data type: `Optional[Array[Stdlib::Host]]`
-
-*Deprecated*: use `$internal_proxy` instead.
-
-Default value: `undef`
+Default value: `['127.0.0.1']`
 
 ##### <a name="-apache--mod--remoteip--internal_proxy_list"></a>`internal_proxy_list`
 
@@ -5802,14 +5792,6 @@ A list of IP addresses, IP blocks or hostname that are trusted to set a
 valid value inside the specified header. Unlike the `$proxy_ips` parameter,
 any private IP presented by these proxies will be disgarded by
 `mod_remoteip`.
-
-Default value: `undef`
-
-##### <a name="-apache--mod--remoteip--trusted_proxy_ips"></a>`trusted_proxy_ips`
-
-Data type: `Optional[Array[Stdlib::Host]]`
-
-*Deprecated*: use `$trusted_proxy` instead.
 
 Default value: `undef`
 
