@@ -2946,7 +2946,7 @@ define apache::vhost (
     concat::fragment { "${name}-use_canonical_name":
       target  => "${priority_real}${filename}.conf",
       order   => 360,
-      content => "UseCanonicalName ${use_canonical_name}",
+      content => "  UseCanonicalName ${use_canonical_name}\n",
     }
   }
 
