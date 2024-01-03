@@ -1,16 +1,13 @@
+---
 fixtures:
   repositories:
     concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
     facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
     portage: "https://github.com/gentoo/puppet-portage.git"
     provision: 'https://github.com/puppetlabs/provision.git'
-    puppet_agent:
-      repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
-      ref: v4.13.0
+    puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    yumrepo_core: 
-      repo: "https://github.com/puppetlabs/puppetlabs-yumrepo_core.git"
-      puppet_version: '>= 6.0.0'
+    yumrepo_core: "https://github.com/puppetlabs/puppetlabs-yumrepo_core.git"
   symlinks:
     apache: "#{source_dir}"
     site_apache: "#{source_dir}/spec/fixtures/site_apache"
