@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v12.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.0.0) - 2023-12-31
+## [v12.0.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.0.1) - 2024-01-03
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.0.0...v12.0.1)
+
+### Fixed
+
+- Fix use_canonical_name directive [#2515](https://github.com/puppetlabs/puppetlabs-apache/pull/2515) ([pebtron](https://github.com/pebtron))
+- Fix extra newline at end of headers [#2514](https://github.com/puppetlabs/puppetlabs-apache/pull/2514) ([smortex](https://github.com/smortex))
+
+## [v12.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.0.0) - 2024-01-01
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v11.1.0...v12.0.0)
 
