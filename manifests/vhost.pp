@@ -2559,7 +2559,7 @@ define apache::vhost (
     concat::fragment { "${name}-serveralias":
       target  => "${priority_real}${filename}.conf",
       order   => 210,
-      content => epp('apache/vhost/_serveralias.epp', { 'serveraliases' => $serveraliases }),
+      content => epp('apache/vhost/_serveralias.epp', { 'serveraliases' => [$serveraliases].flatten }),
     }
   }
 
