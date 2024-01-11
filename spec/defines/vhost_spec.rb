@@ -776,7 +776,7 @@ describe 'apache::vhost', type: :define do
           }
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-scriptalias') }
-          it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias') }
+          it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias').with_content(%r{^  ServerAlias test-example\.com$}) }
 
           it {
             expect(subject).to contain_concat__fragment('rspec.example.com-setenv')
@@ -1219,6 +1219,28 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_concat__fragment('Listen 127.0.0.1:8080') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost 127.0.0.1:80') }
           it { is_expected.not_to contain_concat__fragment('NameVirtualHost 127.0.0.1:8080') }
+        end
+
+        describe 'serveraliases parameter' do
+          let(:params) { default_params.merge(serveraliases: serveraliases) }
+
+          context 'with a string' do
+            let(:serveraliases) { 'alias.example.com' }
+
+            it { is_expected.to compile.with_all_deps }
+            it { is_expected.to contain_concat__fragment('rspec.example.com-serveralias').with_content(%r{^  ServerAlias alias\.example\.com$}) }
+          end
+
+          context 'with an array' do
+            let(:serveraliases) { ['alias1.example.com', 'alias2.example.com'] }
+
+            it { is_expected.to compile.with_all_deps }
+            it do
+              expect(subject).to contain_concat__fragment('rspec.example.com-serveralias')
+                .with_content(%r{^  ServerAlias alias1\.example\.com$})
+                .with_content(%r{^  ServerAlias alias2\.example\.com$})
+            end
+          end
         end
 
         context 'vhost with multiple ip addresses, multiple ports' do
