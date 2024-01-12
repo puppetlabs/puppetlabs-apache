@@ -21,11 +21,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
     it { is_expected.to compile }
     it { is_expected.to contain_class('apache::mod::disk_cache') }
-    it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+    it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
     it { is_expected.to contain_apache__mod('cache_disk') }
 
     it {
-      expect(subject).to contain_file('disk_cache.conf')
+      expect(subject).to contain_file('cache_disk.conf')
         .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
@@ -34,11 +34,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
@@ -48,11 +48,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/apache2/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
@@ -83,7 +83,7 @@ describe 'apache::mod::disk_cache', type: :class do
     it { is_expected.to contain_apache__mod('cache_disk') }
 
     it {
-      expect(subject).to contain_file('disk_cache.conf')
+      expect(subject).to contain_file('cache_disk.conf')
         .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
@@ -92,11 +92,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
@@ -106,11 +106,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
@@ -140,11 +140,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
     it { is_expected.to compile }
     it { is_expected.to contain_class('apache::mod::disk_cache') }
-    it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+    it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
     it { is_expected.to contain_apache__mod('cache_disk') }
 
     it {
-      expect(subject).to contain_file('disk_cache.conf')
+      expect(subject).to contain_file('cache_disk.conf')
         .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\nCacheIgnoreHeaders Set-Cookie})
     }
 
@@ -153,11 +153,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end
@@ -167,11 +167,11 @@ describe 'apache::mod::disk_cache', type: :class do
 
       it { is_expected.to compile }
       it { is_expected.to contain_class('apache::mod::disk_cache') }
-      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Disk_cache]') }
+      it { is_expected.to contain_class('apache::mod::cache').that_comes_before('Class[Apache::Mod::Cache_disk]') }
       it { is_expected.to contain_apache__mod('cache_disk') }
 
       it {
-        expect(subject).to contain_file('disk_cache.conf')
+        expect(subject).to contain_file('cache_disk.conf')
           .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"\nCacheDirLevels 2\nCacheDirLength 1\n})
       }
     end

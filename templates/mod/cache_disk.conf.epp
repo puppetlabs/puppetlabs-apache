@@ -1,0 +1,26 @@
+<% |
+  Optional[String] $cache_root          = undef,
+  Array[String] $cache_enable           = [],
+  Optional[Integer] $cache_dir_length   = undef,
+  Optional[Integer] $cache_dir_levels   = undef,
+  Optional[Integer] $cache_max_filesize = undef,
+  Optional[String] $cache_ignore_headers = undef,
+| -%>
+<%- if $cache_enable { -%>
+  <%- $cache_enable.each |$enable| { -%>
+CacheEnable disk <%= $enable %>
+  <%- } -%>
+<%- } -%>
+CacheRoot "<%= $cache_root %>"
+<%- if $cache_dir_levels { -%>
+CacheDirLevels <%= $cache_dir_levels %>
+<%- } -%>
+<%- if $cache_dir_length { -%>
+CacheDirLength <%= $cache_dir_length %>
+<%- } -%>
+<%- if $cache_max_filesize { -%>
+CacheMaxFileSize <%= $cache_max_filesize %>
+<%- } -%>
+<%- if $cache_ignore_headers { -%>
+CacheIgnoreHeaders <%= $cache_ignore_headers -%>
+<%- } -%>

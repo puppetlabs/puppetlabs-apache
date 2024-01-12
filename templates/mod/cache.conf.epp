@@ -1,0 +1,30 @@
+<% |
+  Optional[String] $cache_ignore_headers                               = undef,
+  Optional[Integer] $cache_default_expire                              = undef,
+  Optional[Integer] $cache_max_expire                                  = undef,
+  Optional[Enum['off', 'on', 'Off', 'On']] $cache_ignore_no_lastmod    = undef,
+  Optional[Enum['off', 'on', 'Off', 'On']] $cache_header               = undef,
+  Optional[Enum['off', 'on', 'Off', 'On']] $cache_lock                 = undef,
+  Optional[Enum['off', 'on', 'Off', 'On']] $cache_ignore_cache_control = undef,
+| -%>
+<%- if $cache_default_expire { -%>
+CacheDefaultExpire <%= $cache_default_expire %>
+<%- } -%>
+<%- if $cache_max_expire { -%>
+CacheMaxExpire <%= $cache_max_expire %>
+<%- } -%>
+<%- if $cache_ignore_no_lastmod { -%>
+CacheIgnoreNoLastMod <%= $cache_ignore_no_lastmod %>
+<%- } -%>
+<%- if $cache_header { -%>
+CacheHeader <%= $cache_header %>
+<%- } -%>
+<%- if $cache_lock { -%>
+CacheLock <%= $cache_lock %>
+<%- } -%>
+<%- if $cache_ignore_cache_control { -%>
+CacheIgnoreCacheControl <%= $cache_ignore_cache_control %>
+<%- } -%>
+<%- if $cache_ignore_headers { -%>
+CacheIgnoreHeaders <%= $cache_ignore_headers -%>
+<%- } -%>
