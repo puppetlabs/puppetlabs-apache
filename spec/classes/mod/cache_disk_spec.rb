@@ -31,13 +31,13 @@ describe 'apache::mod::cache_disk', type: :class do
     describe 'with multiple cache_enable parameters' do
       let(:params) do
         {
-          cache_enable: %w[/ /something],
+          cache_enable: ['/', '/something'],
         }
       end
 
       it {
         expect(subject).to contain_file('cache_disk.conf')
-                             .with(content: %r{CacheEnable disk /\nCacheEnable disk /something\nCacheRoot "/var/cache/apache2/mod_cache_disk"})
+          .with(content: %r{CacheEnable disk /\nCacheEnable disk /something\nCacheRoot "/var/cache/apache2/mod_cache_disk"})
       }
     end
 
@@ -51,7 +51,7 @@ describe 'apache::mod::cache_disk', type: :class do
 
       it {
         expect(subject).to contain_file('cache_disk.conf')
-                             .with(content: %r{#{default_config}\nCacheDirLength 2})
+          .with(content: %r{#{default_config}\nCacheDirLength 2})
       }
     end
 
@@ -65,7 +65,7 @@ describe 'apache::mod::cache_disk', type: :class do
 
       it {
         expect(subject).to contain_file('cache_disk.conf')
-                             .with(content: %r{#{default_config}\nCacheDirLevels 2})
+          .with(content: %r{#{default_config}\nCacheDirLevels 2})
       }
     end
   end
@@ -90,7 +90,7 @@ describe 'apache::mod::cache_disk', type: :class do
 
     it {
       expect(subject).to contain_file('cache_disk.conf')
-                           .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"})
+        .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/httpd/proxy"})
     }
   end
 
@@ -114,7 +114,7 @@ describe 'apache::mod::cache_disk', type: :class do
 
     it {
       expect(subject).to contain_file('cache_disk.conf')
-                           .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"})
+        .with(content: %r{CacheEnable disk /\nCacheRoot "/var/cache/mod_cache_disk"})
     }
   end
 end

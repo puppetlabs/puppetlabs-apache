@@ -12,7 +12,7 @@ describe 'apache::mod::cache', type: :class do
 
     it {
       expect(subject).to contain_file('cache.conf')
-                           .with(content: '')
+        .with(content: '')
     }
 
     describe 'with cache_ignore_headers' do
@@ -24,7 +24,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheIgnoreHeaders Set-Cookie})
+          .with(content: %r{CacheIgnoreHeaders Set-Cookie})
       }
     end
 
@@ -37,7 +37,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheDefaultExpire 2000})
+          .with(content: %r{CacheDefaultExpire 2000})
       }
     end
 
@@ -50,7 +50,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheMaxExpire 2000})
+          .with(content: %r{CacheMaxExpire 2000})
       }
     end
 
@@ -63,7 +63,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheIgnoreNoLastMod On})
+          .with(content: %r{CacheIgnoreNoLastMod On})
       }
     end
 
@@ -76,7 +76,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheHeader On})
+          .with(content: %r{CacheHeader On})
       }
     end
 
@@ -89,7 +89,7 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheLock On})
+          .with(content: %r{CacheLock On})
       }
     end
 
@@ -102,9 +102,8 @@ describe 'apache::mod::cache', type: :class do
 
       it {
         expect(subject).to contain_file('cache.conf')
-                             .with(content: %r{CacheIgnoreCacheControl On})
+          .with(content: %r{CacheIgnoreCacheControl On})
       }
     end
-
   end
 end
