@@ -34,7 +34,7 @@
 # @note
 #   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
 #
-# @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html for additional documentation on version 2.4.
+# @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html
 #
 class apache::mod::cache_disk (
   Optional[Stdlib::Absolutepath] $cache_root              = undef,
