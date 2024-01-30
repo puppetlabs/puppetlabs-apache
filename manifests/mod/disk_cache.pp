@@ -31,7 +31,7 @@ class apache::mod::disk_cache (
   class { 'apache::mod::cache_disk':
     cache_root              => $cache_root,
     cache_enable            => ['/'],
-    cache_ignore_headers    => $cache_ignore_headers,
+    cache_ignore_headers    => $cache_ignore_headers.split(' '),
     cache_dir_length        => 1,
     cache_dir_levels        => 2,
     configuration_file_name => 'cache_disk.conf'
