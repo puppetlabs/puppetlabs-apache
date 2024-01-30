@@ -11,11 +11,11 @@
 #   Default depends on the Apache version and operating system:
 #   - Debian: /var/cache/apache2/mod_cache_disk
 #   - FreeBSD: /var/cache/mod_cache_disk
-#   - Red Hat, Apache 2.4: /var/cache/httpd/proxy
+#   - Red Hat: /var/cache/httpd/proxy
 #
 # @param cache_enable
 #   Defines an array of directories to cache, the default is none
-
+#
 # @param cache_dir_length
 #   The number of characters in subdirectory names
 #
@@ -30,9 +30,6 @@
 #
 # @param configuration_file_name
 #   DEPRECATED Name of module configuration file (used for the compatibility layer for disk_cache)
-#
-# @note
-#   Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
 #
 # @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html
 #
