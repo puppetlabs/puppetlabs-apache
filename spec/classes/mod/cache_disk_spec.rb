@@ -26,10 +26,7 @@ describe 'apache::mod::cache_disk', type: :class do
 
     default_config = %r{CacheEnable disk /\nCacheRoot "/var/cache/apache2/mod_cache_disk"}
 
-    it {
-      expect(subject).to contain_file('cache_disk.conf')
-                           .with(content: default_config)
-    }
+    it { is_expected.to contain_file('cache_disk.conf').with(content: default_config) }
 
     describe 'with multiple cache_enable parameters' do
       let(:params) do
