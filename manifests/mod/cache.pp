@@ -25,16 +25,16 @@
 # @see https://httpd.apache.org/docs/current/mod/mod_cache.html for additional documentation.
 #
 class apache::mod::cache (
-  Optional[String] $cache_ignore_headers                               = undef,
-  Optional[Integer] $cache_default_expire                              = undef,
-  Optional[Integer] $cache_max_expire                                  = undef,
-  Optional[Enum['off', 'on', 'Off', 'On']] $cache_ignore_no_lastmod    = undef,
-  Optional[Enum['off', 'on', 'Off', 'On']] $cache_header               = undef,
-  Optional[Enum['off', 'on', 'Off', 'On']] $cache_lock                 = undef,
-  Optional[Enum['off', 'on', 'Off', 'On']] $cache_ignore_cache_control = undef,
+  Array[String[1]] $cache_ignore_headers              = [],
+  Optional[Integer] $cache_default_expire             = undef,
+  Optional[Integer] $cache_max_expire                 = undef,
+  Optional[Apache::OnOff] $cache_ignore_no_lastmod    = undef,
+  Optional[Apache::OnOff] $cache_header               = undef,
+  Optional[Apache::OnOff] $cache_lock                 = undef,
+  Optional[Apache::OnOff] $cache_ignore_cache_control = undef,
 ) {
   include apache
-  ::apache::mod { 'cache': }
+  apache::mod { 'cache': }
 
   $_configuration_file_name = 'cache.conf'
 

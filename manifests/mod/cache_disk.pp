@@ -37,7 +37,7 @@
 # @see https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html for additional documentation on version 2.4.
 #
 class apache::mod::cache_disk (
-  Optional[String] $cache_root              = undef,
+  Optional[Stdlib::Absolutepath] $cache_root              = undef,
   Array[String] $cache_enable               = [],
   Optional[Integer] $cache_dir_length       = undef,
   Optional[Integer] $cache_dir_levels       = undef,
