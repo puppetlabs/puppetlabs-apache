@@ -59,10 +59,7 @@ class apache::mod::cache_disk (
     },
     default => $cache_root,
   }
-  $_configuration_file_name = $configuration_file_name ? {
-    undef   => 'cache_disk.conf',
-    default => $configuration_file_name
-  }
+  $_configuration_file_name = pick($configuration_file_name, 'cache_disk.conf')
   $_class_name = 'apache::mod::cache_disk'
 
   apache::mod { 'cache_disk': }
