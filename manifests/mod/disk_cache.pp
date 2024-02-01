@@ -1,6 +1,6 @@
 # @summary
 #   Installs and configures `mod_disk_cache`.
-# 
+#
 # @param cache_root
 #   Defines the name of the directory on the disk to contain cache files.
 #   Default depends on the Apache version and operating system:
@@ -28,10 +28,15 @@ class apache::mod::disk_cache (
 ) {
   deprecation('apache::mod::disk_cache', 'This class is deprecated; please use apache::mod::cache_disk')
 
+  $_cache_ignore_headers = $cache_ignore_headers ? {
+    undef   => [],
+    default => $cache_ignore_headers.split(' ')
+  }
+
   class { 'apache::mod::cache_disk':
     cache_root              => $cache_root,
     cache_enable            => ['/'],
-    cache_ignore_headers    => $cache_ignore_headers.split(' '),
+    cache_ignore_headers    => $_cache_ignore_headers,
     cache_dir_length        => 1,
     cache_dir_levels        => 2,
     configuration_file_name => 'cache_disk.conf'
