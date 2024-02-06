@@ -25,6 +25,6 @@ CacheLock <%= $cache_lock %>
 <%- if $cache_ignore_cache_control { -%>
 CacheIgnoreCacheControl <%= $cache_ignore_cache_control %>
 <%- } -%>
-<%- if $cache_ignore_headers { -%>
-CacheIgnoreHeaders <%= $cache_ignore_headers.join(' ') %>
+<%- if ! empty($cache_ignore_headers) { -%>
+CacheIgnoreHeaders <%= $cache_ignore_headers.sort.join(' ') %>
 <%- } -%>

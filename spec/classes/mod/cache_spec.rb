@@ -18,13 +18,26 @@ describe 'apache::mod::cache', type: :class do
     describe 'with cache_ignore_headers' do
       let(:params) do
         {
-          cache_ignore_headers: 'Set-Cookie',
+          cache_ignore_headers: ['Set-Cookie'],
         }
       end
 
       it {
         expect(subject).to contain_file('cache.conf')
           .with(content: %r{CacheIgnoreHeaders Set-Cookie})
+      }
+    end
+
+    describe 'with cache_ignore_headers' do
+      let(:params) do
+        {
+          cache_ignore_headers: ['Set-Cookie', 'X-Forwarded-For', 'Cross-Origin-Embedder-Policy', 'Expires', 'Access-Control-Allow-Headers'],
+        }
+      end
+
+      it {
+        expect(subject).to contain_file('cache.conf')
+          .with(content: %r{CacheIgnoreHeaders Access-Control-Allow-Headers Cross-Origin-Embedder-Policy Expires Set-Cookie X-Forwarded-For})
       }
     end
 

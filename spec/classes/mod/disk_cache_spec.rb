@@ -14,7 +14,7 @@ describe 'apache::mod::disk_cache', type: :class do
 
     let :pre_condition do
       'class{ "apache":
-        default_mods   => ["cache"],
+        default_mods   => ["cache", "disk_cache"],
         mod_dir        => "/tmp/junk",
        }'
     end
