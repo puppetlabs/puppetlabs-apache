@@ -8,14 +8,14 @@ on:
     
 jobs:
   Spec:
-    uses: "puppetlabs/cat-github-actions/.github/workflows/module_ci.yml@main"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/module_ci.yml@Updating-BUNDLE_WITHOUT"
     with:
       runs_on: "ubuntu-20.04"
     secrets: "inherit"
 
   Acceptance:
     needs: Spec
-    uses: "puppetlabs/cat-github-actions/.github/workflows/module_acceptance.yml@main"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/module_acceptance.yml@Updating-BUNDLE_WITHOUT"
     with:
       runs_on: "ubuntu-20.04"
     secrets: "inherit"
