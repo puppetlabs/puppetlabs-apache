@@ -18,17 +18,11 @@ BrowserMatch "JDK/1\.0" force-response-1.0
 BrowserMatch "Microsoft Data Access Internet Publishing Provider" redirect-carefully
 BrowserMatch "MS FrontPage" redirect-carefully
 BrowserMatch "^WebDrive" redirect-carefully
-BrowserMatch "^WebDAVFS/1.[0123]" redirect-carefully
+BrowserMatch "^WebDAVFS/1.[012]" redirect-carefully
 BrowserMatch "^gnome-vfs/1.0" redirect-carefully
 BrowserMatch "^gvfs/1" redirect-carefully
 BrowserMatch "^XML Spy" redirect-carefully
 BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 BrowserMatch " Konqueror/4" redirect-carefully
-
-<IfModule mod_ssl.c>
-  BrowserMatch "MSIE [2-6]" \
-    nokeepalive ssl-unclean-shutdown \
-    downgrade-1.0 force-response-1.0
-  # MSIE 7 and newer should be able to use keepalive
-  BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-</IfModule>
+BrowserMatch " Konqueror/5" redirect-carefully
+BrowserMatch " dolphin/" redirect-carefully
