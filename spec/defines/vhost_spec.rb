@@ -139,7 +139,8 @@ describe 'apache::vhost', type: :define do
                   {
                     'enforce' => 'any',
                     'requires' => ['any-valid1', 'any-valid2']
-                  }
+                  },
+                  'enable_sendfile' => 'On',
                 },
                 {
                   'path' => '*',
@@ -641,6 +642,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+</RequireAny>$})
               .with_content(%r{^\s+Require any-valid1$})
               .with_content(%r{^\s+Require any-valid2$})
+              .with_content(%r{^\s+EnableSendfile On$})
               .with_content(%r{^\s+LDAPReferrals off$})
               .with_content(%r{^\s+ProxyPass http://backend-b/ retry=0 timeout=5 noquery interpolate$})
               .with_content(%r{^\s+ProxyPassMatch http://backend-b/ retry=0 timeout=5 noquery interpolate$})

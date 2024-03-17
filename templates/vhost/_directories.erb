@@ -19,8 +19,11 @@
       <%- path = directory['path'] -%>
 
   <<%= provider %> "<%= path %>">
-      <%- if directory['headers'] -%>
-        <%- Array(directory['headers']).each do |header| -%>
+    <%- if directory['enable_sendfile'] -%>
+    EnableSendfile <%= directory['enable_sendfile'] %>
+    <%- end -%>
+    <%- if directory['headers'] -%>
+      <%- Array(directory['headers']).each do |header| -%>
     Header <%= header %>
       <%- end -%>
     <%- end -%>
