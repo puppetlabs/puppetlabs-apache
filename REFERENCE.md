@@ -156,12 +156,9 @@ outside of the defaults.
 
 ### Functions
 
-* [`apache::apache_pw_hash`](#apache--apache_pw_hash): DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
 * [`apache::authz_core_config`](#apache--authz_core_config): Function to generate the authz_core configuration directives.
 * [`apache::bool2httpd`](#apache--bool2httpd): Transform a supposed boolean to On or Off. Passes all other values through.
 * [`apache::pw_hash`](#apache--pw_hash): Hashes a password in a format suitable for htpasswd files read by apache.
-* [`apache_pw_hash`](#apache_pw_hash): DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-* [`bool2httpd`](#bool2httpd): DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
 
 ### Data types
 
@@ -11033,24 +11030,6 @@ Default value: `false`
 
 ## Functions
 
-### <a name="apache--apache_pw_hash"></a>`apache::apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache::apache_pw_hash(Any *$args)`
-
-The apache::apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
 ### <a name="apache--authz_core_config"></a>`apache::authz_core_config`
 
 Type: Ruby 4.x API
@@ -11211,42 +11190,6 @@ Returns: `String` Returns the hash of the input that was given.
 Data type: `String[1]`
 
 The input that is to be hashed.
-
-### <a name="apache_pw_hash"></a>`apache_pw_hash`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the namespaced function [`apache::pw_hash`](#apachepw_hash) instead.
-
-#### `apache_pw_hash(Any *$args)`
-
-The apache_pw_hash function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
-
-### <a name="bool2httpd"></a>`bool2httpd`
-
-Type: Ruby 4.x API
-
-DEPRECATED.  Use the namespaced function [`apache::bool2httpd`](#apachebool2httpd) instead.
-
-#### `bool2httpd(Any *$args)`
-
-The bool2httpd function.
-
-Returns: `Any`
-
-##### `*args`
-
-Data type: `Any`
-
-
 
 ## Data types
 
