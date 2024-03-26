@@ -238,6 +238,9 @@
 # @param ensure
 #   Specifies if the virtual host is present or absent.<br />
 #
+# @param show_diff
+#   Specifies whether to set the show_diff parameter for the file resource.
+#
 # @param fallbackresource
 #   Sets the [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource) 
 #   directive, which specifies an action to take for any URL that doesn't map to anything in 
@@ -1836,6 +1839,7 @@ define apache::vhost (
   Variant[Array[String], String] $setenvifnocase                                      = [],
   Variant[Array[String], String] $block                                               = [],
   Enum['absent', 'present'] $ensure                                                   = 'present',
+  Boolean $show_diff                                                                  = true,
   Optional[String] $wsgi_application_group                                            = undef,
   Optional[Variant[String, Hash]] $wsgi_daemon_process                                = undef,
   Optional[Hash] $wsgi_daemon_process_options                                         = undef,
@@ -2195,14 +2199,15 @@ define apache::vhost (
   }
 
   concat { "${priority_real}${filename}.conf":
-    ensure  => $ensure,
-    path    => "${apache::vhost_dir}/${priority_real}${filename}.conf",
-    owner   => 'root',
-    group   => $apache::params::root_group,
-    mode    => $apache::file_mode,
-    order   => 'numeric',
-    require => Package['httpd'],
-    notify  => Class['apache::service'],
+    ensure    => $ensure,
+    path      => "${apache::vhost_dir}/${priority_real}${filename}.conf",
+    owner     => 'root',
+    group     => $apache::params::root_group,
+    mode      => $apache::file_mode,
+    show_diff => $show_diff,
+    order     => 'numeric',
+    require   => Package['httpd'],
+    notify    => Class['apache::service'],
   }
   # NOTE(pabelanger): This code is duplicated in ::apache::vhost::custom and
   # needs to be converted into something generic.
