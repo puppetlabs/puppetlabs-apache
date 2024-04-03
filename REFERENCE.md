@@ -3887,7 +3887,7 @@ The following parameters are available in the `apache::mod::mime` class:
 
 ##### <a name="-apache--mod--mime--mime_support_package"></a>`mime_support_package`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 Name of the MIME package to be installed.
 
@@ -7544,6 +7544,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`error_log_format`](#-apache--vhost--error_log_format)
 * [`error_documents`](#-apache--vhost--error_documents)
 * [`ensure`](#-apache--vhost--ensure)
+* [`show_diff`](#-apache--vhost--show_diff)
 * [`fallbackresource`](#-apache--vhost--fallbackresource)
 * [`filters`](#-apache--vhost--filters)
 * [`h2_copy_files`](#-apache--vhost--h2_copy_files)
@@ -8157,6 +8158,14 @@ Data type: `Enum['absent', 'present']`
 Specifies if the virtual host is present or absent.<br />
 
 Default value: `'present'`
+
+##### <a name="-apache--vhost--show_diff"></a>`show_diff`
+
+Data type: `Boolean`
+
+Specifies whether to set the show_diff parameter for the file resource.
+
+Default value: `true`
 
 ##### <a name="-apache--vhost--fallbackresource"></a>`fallbackresource`
 
