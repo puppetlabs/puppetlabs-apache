@@ -333,7 +333,7 @@ describe 'apache::vhost', type: :define do
                       }
                     }
                   }
-                }
+                },
               ],
               'error_log' => false,
               'error_log_file' => 'httpd_error_log',
