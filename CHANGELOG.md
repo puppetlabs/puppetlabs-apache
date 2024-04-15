@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v12.0.3](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.0.3) - 2024-03-01
+## [v12.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.1.0) - 2024-04-03
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.0.3...v12.1.0)
+
+### Added
+
+- vhost: Allow customizing show_diff [#2536](https://github.com/puppetlabs/puppetlabs-apache/pull/2536) ([kajinamit](https://github.com/kajinamit))
+
+### Fixed
+
+- Stop managing mime support package on Debian [#2526](https://github.com/puppetlabs/puppetlabs-apache/pull/2526) ([jcharaoui](https://github.com/jcharaoui))
+
+## [v12.0.3](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.0.3) - 2024-03-02
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.0.2...v12.0.3)
 

@@ -108,5 +108,6 @@ type Apache::OIDCSettings = Struct[
     Optional['BlackListedClaims']                       => String,
     Optional['WhiteListedClaims']                       => String,
     Optional['RefreshAccessTokenBeforeExpiry']          => Pattern[/^[0-9]+(\slogout_on_error)?$/],
+    Optional['XForwardedHeaders']                       => String,
   }
 ]

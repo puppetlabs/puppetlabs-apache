@@ -589,6 +589,7 @@ describe 'apache::vhost', type: :define do
           it {
             expect(subject).to contain_concat('30-rspec.example.com.conf').with('owner' => 'root',
                                                                                 'mode' => '0644',
+                                                                                'show_diff' => true,
                                                                                 'require' => 'Package[httpd]',
                                                                                 'notify' => 'Class[Apache::Service]')
           }
@@ -1527,6 +1528,7 @@ describe 'apache::vhost', type: :define do
               'error_log_pipe' => '/dev/null',
               'docroot' => '/var/www/foo',
               'ensure' => 'absent',
+              'show_diff' => false,
               'manage_docroot' => true,
               'logroot' => '/tmp/logroot',
               'logroot_ensure' => 'absent'
@@ -1556,7 +1558,8 @@ describe 'apache::vhost', type: :define do
           }
 
           it {
-            expect(subject).to contain_concat('25-rspec.example.com.conf').with('ensure' => 'absent')
+            expect(subject).to contain_concat('25-rspec.example.com.conf').with('ensure' => 'absent',
+                                                                                'show_diff' => false)
           }
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-apache-header') }
