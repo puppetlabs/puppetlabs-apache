@@ -316,6 +316,24 @@ describe 'apache::vhost', type: :define do
                   'mellon_cond' => ['isMemberOf "cn=example-access,ou=Groups,o=example,o=com" [MAP]'],
                   'mellon_session_length' => '300'
                 },
+                {
+                  'path' => '/secure',
+                  'provider' => 'location',
+                  'auth_type' => 'Basic',
+                  'authz_core' => {
+                    'require_all' => {
+                      'require_any' => {
+                        'require' => ['user superadmin'],
+                        'require_all' => {
+                          'require' => ['group admins', 'ldap-group "cn=Administrators,o=Airius"'],
+                        },
+                      },
+                      'require_none' => {
+                        'require' => ['group temps', 'ldap-group "cn=Temporary Employees,o=Airius"']
+                      }
+                    }
+                  }
+                },
               ],
               'error_log' => false,
               'error_log_file' => 'httpd_error_log',
@@ -630,6 +648,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+Require valid-user$})
               .with_content(%r{^\s+Require all denied$})
               .with_content(%r{^\s+Require all granted$})
+              .with_content(%r{^\s+Require user superadmin$})
               .with_content(%r{^\s+<RequireAll>$})
               .with_content(%r{^\s+</RequireAll>$})
               .with_content(%r{^\s+Require all-valid1$})

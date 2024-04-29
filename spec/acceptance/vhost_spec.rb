@@ -452,6 +452,25 @@ describe 'apache::vhost define' do
               auth_require => 'valid-user',
               satisfy => 'Any',
             },
+            {
+              path => '/var/www/files/authz',
+              auth_type => 'Basic',
+              auth_name => 'Basic Auth',
+              authz_core => {
+                require_all => {
+                  require_any => {
+                    require => [
+                      '127.0.0.1'
+                      '10.10.10.10'
+                    ],
+                    require_all => {
+                      auth_user_file => ['/var/www/htpasswd'],
+                      require => ['valid-user'],
+                    },
+                  },
+                }
+              }
+            },
           ],
         }
         file { '/var/www/files/foo':
@@ -463,6 +482,9 @@ describe 'apache::vhost define' do
         file { '/var/www/files/baz':
           ensure => directory,
         }
+        file { '/var/www/files/authz':
+          ensure => directory,
+        }
         file { '/var/www/files/foo/index.html':
           ensure  => file,
           content => "Hello World\\n",
@@ -472,6 +494,10 @@ describe 'apache::vhost define' do
           content => "Hello World\\n",
         }
         file { '/var/www/files/baz/index.html':
+          ensure  => file,
+          content => "Hello World\\n",
+        }
+        file { '/var/www/files/authz/index.html':
           ensure  => file,
           content => "Hello World\\n",
         }
@@ -499,6 +525,10 @@ describe 'apache::vhost define' do
           expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 401})
           expect(result.exit_code).to eq 22
           expect(run_shell('/usr/bin/curl -sSf -u login:password files.example.net:80/baz/index.html').stdout).to eq("Hello World\n")
+          result = run_shell('/usr/bin/curl -sSf files.example.net:80/authz/index.html', expect_failures: true)
+          expect(result.stderr).to match(%r{curl: \(22\) The requested URL returned error: 401})
+          expect(result.exit_code).to eq 22
+          expect(run_shell('/usr/bin/curl -sSf -u login:password files.example.net:80/authz/index.html').stdout).to eq("Hello World\n")
         end
       end
     end
