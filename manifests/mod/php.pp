@@ -32,7 +32,7 @@ class apache::mod::php (
   Optional[String] $path         = undef,
   Array $extensions              = ['.php'],
   Optional[String] $content      = undef,
-  String $template               = 'apache/mod/php.conf.erb',
+  String $template               = 'apache/mod/php.conf.epp',
   Optional[String] $source       = undef,
   Optional[String] $root_group   = $apache::params::root_group,
   Optional[String] $php_version  = $apache::params::php_version,
@@ -63,9 +63,9 @@ class apache::mod::php (
     fail('apache::mod::php requires apache::mod::prefork or apache::mod::itk; please enable mpm_module => \'prefork\' or mpm_module => \'itk\' on Class[\'apache\']')
   }
 
-  if $source and ($content or $template != 'apache/mod/php.conf.erb') {
+  if $source and ($content or $template != 'apache/mod/php.conf.epp') {
     warning('source and content or template parameters are provided. source parameter will be used')
-  } elsif $content and $template != 'apache/mod/php.conf.erb' {
+  } elsif $content and $template != 'apache/mod/php.conf.epp' {
     warning('content and template parameters are provided. content parameter will be used')
   }
 

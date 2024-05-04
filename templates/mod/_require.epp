@@ -1,5 +1,5 @@
-<% $_requires = if $requires { %>$requires<% } else {%>$requires_defaults<%} %>
-<% if type($_requires, 'generalized') == String { %>
+<% $_requires = if $requires { $requires } else { $requires_defaults} -%>
+<% if type($_requires, 'generalized') == String { -%>
   <%- if !($_requires.downcase in ['', 'unmanaged']) { -%>
     Require <%= $_requires %>
   <%- } -%>

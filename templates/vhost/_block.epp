@@ -1,10 +1,10 @@
-<% if @block and ! @block.empty? -%>
+<% if $block and !$block.empty { -%>
 
   ## Block access statements
-<% if @block.include? 'scm' -%>
+  <%- if 'scm' in $block { -%>
   # Block access to SCM directories.
   <DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>
     Require all denied
   </DirectoryMatch>
-<% end -%>
-<% end -%>
+  <%- } -%>
+<% } -%>

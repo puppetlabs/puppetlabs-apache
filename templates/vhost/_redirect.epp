@@ -1,0 +1,35 @@
+<% if $redirect_source and $redirect_dest { -%>
+<% $redirect_dest_a   = [$redirect_dest].flatten -%>
+<% $redirect_source_a = [$redirect_source].flatten -%>
+<% $redirect_status_a = [$redirect_status].flatten -%>
+
+  ## Redirect rules
+  <%- $redirect_source_a.each |$i, $source| { -%>
+<% $dest = pick($redirect_dest_a[$i], $redirect_dest_a[0]) -%>
+<% $status = pick($redirect_status_a[$i], $redirect_status_a[0]) -%>
+  Redirect <%= $status %> <%= $source %> <%= $dest %>
+  <%- } -%>
+<% } -%>
+<%- if $redirectmatch_status and $redirectmatch_regexp and $redirectmatch_dest { -%>
+<% $redirectmatch_status_a = [$redirectmatch_status].flatten -%>
+<% $redirectmatch_regexp_a = [$redirectmatch_regexp].flatten -%>
+<% $redirectmatch_dest_a = [$redirectmatch_dest].flatten -%>
+
+  ## RedirectMatch rules
+  <%- $redirectmatch_status_a.each |$i, $_status| { -%>
+<% $status = pick($redirectmatch_status_a[$i], $redirectmatch_status_a[0]) -%>
+<% $regexp = pick($redirectmatch_regexp_a[$i], $redirectmatch_regexp_a[0]) -%>
+<% $dest = pick($redirectmatch_dest_a[$i], $redirectmatch_dest_a[0]) -%>
+  RedirectMatch <%= $status %> <%= $regexp %> <%= $dest %>
+  <%- } -%>
+<%- } elsif $redirectmatch_regexp and $redirectmatch_dest { -%>
+<% $redirectmatch_regexp_a = [$redirectmatch_regexp].flatten -%>
+<% $redirectmatch_dest_a = [$redirectmatch_dest].flatten -%>
+
+  ## RedirectMatch rules
+  <%- $redirectmatch_regexp_a.each |$i, $_status| { -%>
+<% $regexp = pick($redirectmatch_regexp_a[$i], $redirectmatch_regexp_a[0]) -%>
+<% $dest = pick($redirectmatch_dest_a[$i], $redirectmatch_dest_a[0]) -%>
+  RedirectMatch <%= $regexp %> <%= $dest %>
+  <%- } -%>
+<% } -%>
