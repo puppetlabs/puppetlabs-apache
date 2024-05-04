@@ -1798,7 +1798,7 @@ define apache::vhost (
   Optional[Variant[String, Boolean]] $modsec_audit_log                                = undef,
   Optional[String] $modsec_audit_log_file                                             = undef,
   Optional[String] $modsec_audit_log_pipe                                             = undef,
-  Variant[Array[Hash], String] $error_documents                                       = [],
+  Array[Apache::Errordocument] $error_documents                                       = [],
   Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]] $fallbackresource         = undef,
   Optional[String] $scriptalias                                                       = undef,
   Optional[Integer] $limitreqfieldsize                                                = undef,
