@@ -71,7 +71,10 @@ class apache::mod::php (
 
   $manage_content = $source ? {
     undef   => $content ? {
-      undef   => template($template),
+      undef   => $template ? {
+        /\.epp\z/ => epp($template, { 'extensions' => $extensions }),
+        default   => template($template),
+      },
       default => $content,
     },
     default => undef,
