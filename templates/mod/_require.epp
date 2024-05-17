@@ -1,12 +1,12 @@
-<% if type($requires, 'generalized') == String { -%>
+<% if $requires =~ String { -%>
   <%- if !($requires.downcase in ['', 'unmanaged']) { -%>
     Require <%= $requires %>
   <%- } -%>
-<% }elsif String(type($requires, 'generalized')).index('Array') == 0 { -%>
+<% } elsif $requires =~ Array { -%>
   <%- $requires.each |$req| { -%>
     Require <%= $req %>
   <%- } -%>
-<% }elsif String(type($requires, 'generalized')).index('Hash') == 0 { -%>
+<% } elsif $requires =~ Hash { -%>
   <%- if $requires['enforce'] and $requires['enforce'].downcase in ['all', 'none', 'any'] { -%>
     <%- $enforce_str = "Require${requires['enforce'].capitalize}>\n" -%>
     <%- $enforce_open = "    <${enforce_str}" -%>
@@ -20,7 +20,7 @@
     <%- $enforce_close = '' -%>
     <%- $indentation = '' -%>
   <%- } -%>
-  <%- if $requires['requires'] and String(type($requires['requires'], 'generalized')).index('Array') == 0 { -%>
+  <%- if $requires['requires'] and $requires['requires'] =~ Array { -%>
 <%# %><%= $enforce_open -%>
       <%- $requires['requires'].each |$req| { -%>
 <%# %>    <%= $indentation -%>Require <%= $req %>
