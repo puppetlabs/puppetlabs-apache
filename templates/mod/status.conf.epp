@@ -1,6 +1,6 @@
 <Location <%= $status_path %>>
     SetHandler server-status
-<%= epp("apache/mod/_require.epp", { 'requires' => $requires, 'requires_defaults' => $requires_defaults }) -%>
+<%= epp("apache/mod/_require.epp", { 'requires' => $requires }) -%>
 </Location>
 ExtendedStatus <%= $extended_status %>
 

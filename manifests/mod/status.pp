@@ -42,8 +42,7 @@ class apache::mod::status (
   $status_params = {
     'extended_status'   => $extended_status,
     'status_path'       => $status_path,
-    'requires'          => $requires,
-    'requires_defaults' => $requires_defaults,
+    'requires'          => $requires.lest || { $requires_defaults },
   }
   file { 'status.conf':
     ensure  => file,
