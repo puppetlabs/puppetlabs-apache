@@ -33,7 +33,7 @@
   SSLStaplingReturnResponderErrors <%= apache::bool2httpd($ssl_stapling_return_errors) %>
   <%- } -%>
   SSLStaplingCache "shmcb:<%= $_stapling_cache %>"
-  <%- if String(type($ssl_cipher, 'generalized')).index('Hash') == 0 { -%>
+  <%- if $ssl_cipher =~ Hash { -%>
     <%- $ssl_cipher.map |$protocol, $cipher| { -%>
   SSLCipherSuite <%= $protocol %> <%= $cipher %>
     <%- } -%>
