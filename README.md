@@ -509,8 +509,8 @@ apache::vhost { 'wsgi.example.com':
   wsgi_application_group      => '%{GLOBAL}',
   wsgi_daemon_process         => {
     'wsgi' => {
-      processes    => '2',
-      threads      => '15',
+      processes    => 2,
+      threads      => 15,
       display-name => '%{GROUP}',
     },
     'foo' => {},
