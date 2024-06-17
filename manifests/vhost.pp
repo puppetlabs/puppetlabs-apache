@@ -1203,7 +1203,7 @@
 #   ```
 #
 # @param wsgi_daemon_process_options
-#   Depricated, move to wsgi_daemon_process
+#   Deprecated, move to wsgi_daemon_process
 #   Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
 #   wsgi_daemon_process, wsgi_process_group, 
 #   wsgi_script_aliases and wsgi_pass_authorization.<br />
