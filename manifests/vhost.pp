@@ -1191,8 +1191,8 @@
 #     docroot                     => '/var/www/pythonapp',
 #     wsgi_daemon_process         => {
 #       'wsgi' => {
-#         processes    => '2',
-#         threads      => '15',
+#         processes    => 2,
+#         threads      => 15,
 #         display-name => '%{GROUP}',
 #       },
 #       'foo' => {},
