@@ -28,8 +28,8 @@ describe 'apache::mod::event', type: :class do
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('event') }
-    it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file') }
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.conf').with_ensure('link') }
+    it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file') }
+    it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_event.conf').with_ensure('link') }
 
     context 'Test mpm_event new params' do
       let :params do
@@ -46,15 +46,15 @@ describe 'apache::mod::event', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ServerLimit\s*0}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*StartServers\s*1}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MinSpareThreads\s*3}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MaxSpareThreads\s*4}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ThreadsPerChild\s*5}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ThreadLimit\s*7}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ListenBacklog\s*8}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MaxRequestWorkers\s*9}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MaxConnectionsPerChild\s*10}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ServerLimit\s*0}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*StartServers\s*1}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MinSpareThreads\s*3}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MaxSpareThreads\s*4}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ThreadsPerChild\s*5}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ThreadLimit\s*7}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ListenBacklog\s*8}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MaxRequestWorkers\s*9}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MaxConnectionsPerChild\s*10}) }
     end
 
     context 'Test mpm_event old style params' do
@@ -72,15 +72,15 @@ describe 'apache::mod::event', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ServerLimit\s*0}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*StartServers\s*1}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MinSpareThreads\s*3}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*MaxSpareThreads\s*4}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ThreadsPerChild\s*5}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ThreadLimit\s*7}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').with_content(%r{^\s*ListenBacklog\s*8}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxRequestWorkers}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxConnectionsPerChild}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ServerLimit\s*0}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*StartServers\s*1}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MinSpareThreads\s*3}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*MaxSpareThreads\s*4}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ThreadsPerChild\s*5}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ThreadLimit\s*7}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').with_content(%r{^\s*ListenBacklog\s*8}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MaxRequestWorkers}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MaxConnectionsPerChild}) }
     end
 
     context 'Test mpm_event false params' do
@@ -98,23 +98,23 @@ describe 'apache::mod::event', type: :class do
         }
       end
 
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*ServerLimit}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*StartServers}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MinSpareThreads}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxSpareThreads}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*ThreadsPerChild}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*ThreadLimit}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*ListenBacklog}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxRequestWorkers}) }
-      it { is_expected.to contain_file('/etc/apache2/mods-available/event.conf').with_ensure('file').without_content(%r{^\s*MaxConnectionsPerChild}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*ServerLimit}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*StartServers}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MinSpareThreads}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MaxSpareThreads}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*ThreadsPerChild}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*ThreadLimit}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*ListenBacklog}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MaxRequestWorkers}) }
+      it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_event.conf').with_ensure('file').without_content(%r{^\s*MaxConnectionsPerChild}) }
     end
 
     it {
-      expect(subject).to contain_file('/etc/apache2/mods-available/event.load').with('ensure' => 'file',
-                                                                                     'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
+      expect(subject).to contain_file('/etc/apache2/mods-available/mpm_event.load').with('ensure' => 'file',
+                                                                                     'content' => "# Conflicts: mpm_worker mpm_prefork\nLoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
     }
 
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/event.load').with_ensure('link') }
+    it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_event.load').with_ensure('link') }
   end
 
   context 'on a RedHat OS' do
