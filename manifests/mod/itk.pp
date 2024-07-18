@@ -79,7 +79,12 @@ class apache::mod::itk (
     'enablecapabilities'  => $enablecapabilities,
   }
 
-  file { "${apache::mod_dir}/itk.conf":
+  $itkconffile = $facts['os']['family'] ? {
+    'Debian' => "${apache::mod_dir}/mpm_itk.conf",
+    default  => "${apache::mod_dir}/itk.conf",
+  }
+
+  file { $itkconffile:
     ensure  => file,
     mode    => $apache::file_mode,
     content => epp('apache/mod/itk.conf.epp', $parameters),
