@@ -9,6 +9,10 @@ describe 'apache::mod::worker', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Conflicts: mpm_event mpm_prefork\n"\
+      "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('worker') }
@@ -16,7 +20,7 @@ describe 'apache::mod::worker', type: :class do
 
     it {
       expect(subject).to contain_file('/etc/apache2/mods-available/mpm_worker.load').with('ensure' => 'file',
-                                                                                      'content' => "# Conflicts: mpm_event mpm_prefork\nLoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n")
+                                                                                      'content' => loadcontent)
     }
   end
 
