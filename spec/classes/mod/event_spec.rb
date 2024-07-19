@@ -25,6 +25,10 @@ describe 'apache::mod::event', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Conflicts: mpm_worker mpm_prefork\n"\
+      "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('event') }
@@ -111,7 +115,7 @@ describe 'apache::mod::event', type: :class do
 
     it {
       expect(subject).to contain_file('/etc/apache2/mods-available/mpm_event.load').with('ensure' => 'file',
-                                                                                     'content' => "# Conflicts: mpm_worker mpm_prefork\nLoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n")
+                                                                                     'content' => loadcontent)
     }
 
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_event.load').with_ensure('link') }

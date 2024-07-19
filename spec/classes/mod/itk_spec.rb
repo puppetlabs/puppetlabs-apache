@@ -9,6 +9,10 @@ describe 'apache::mod::itk', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Depends: mpm_prefork\n"\
+      "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }
@@ -22,7 +26,7 @@ describe 'apache::mod::itk', type: :class do
 
       it {
         expect(subject).to contain_file('/etc/apache2/mods-available/mpm_itk.load').with('ensure' => 'file',
-                                                                                     'content' => "# Depends: mpm_prefork\nLoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
+                                                                                     'content' => loadcontent)
       }
 
       it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_itk.load').with_ensure('link') }

@@ -9,6 +9,10 @@ describe 'apache::mod::prefork', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Conflicts: mpm_event mpm_worker\n"\
+      "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('prefork') }
@@ -17,7 +21,7 @@ describe 'apache::mod::prefork', type: :class do
 
     it {
       expect(subject).to contain_file('/etc/apache2/mods-available/mpm_prefork.load').with('ensure' => 'file',
-                                                                                       'content' => "# Conflicts: mpm_event mpm_worker\nLoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n")
+                                                                                       'content' => loadcontent)
     }
 
     it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_prefork.load').with_ensure('link') }
