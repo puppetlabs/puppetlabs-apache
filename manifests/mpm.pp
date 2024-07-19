@@ -43,12 +43,7 @@ define apache::mpm (
   }
 
   case $facts['os']['family'] {
-    'Debian', 'Suse': {
-      $mpm_filename = $facts['os']['family'] ? {
-        'Debian' => "mpm_${mpm}",
-        default  => $mpm,
-      }
-
+    'Debian': {
       file {
         default:
           ensure  => link,
@@ -56,54 +51,68 @@ define apache::mpm (
           before  => File[$apache::mod_enable_dir],
           notify  => Class['apache::service'],
           ;
-        "${apache::mod_enable_dir}/${mpm_filename}.conf":
-          target  => "../mods-available/${mpm_filename}.conf",
+        "${apache::mod_enable_dir}/mpm_${mpm}.conf":
+          target  => "../mods-available/mpm_${mpm}.conf",
           ;
-        "${apache::mod_enable_dir}/${mpm_filename}.load":
-          target  => "../mods-available/${mpm_filename}.load",
+        "${apache::mod_enable_dir}/mpm_${mpm}.load":
+          target  => "../mods-available/mpm_${mpm}.load",
           ;
       }
 
-      if $facts['os']['family'] == 'Debian' {
-        if $mpm == 'itk' {
-          file { "${lib_path}/mod_mpm_itk.so":
-            ensure  => link,
-            target  => "${lib_path}/mpm_itk.so",
-            require => Package['httpd'],
-            before  => Class['apache::service'],
-          }
-
-          package { 'libapache2-mpm-itk':
-            ensure => present,
-            before => [
-              Class['apache::service'],
-              File[$apache::mod_enable_dir],
-            ],
-          }
+      if $mpm == 'itk' {
+        file { "${lib_path}/mod_mpm_itk.so":
+          ensure  => link,
+          target  => "${lib_path}/mpm_itk.so",
+          require => Package['httpd'],
+          before  => Class['apache::service'],
         }
 
-        unless $mpm in ['itk', 'prefork'] {
-          include apache::mpm::disable_mpm_prefork
-        }
-
-        if $mpm != 'worker' {
-          include apache::mpm::disable_mpm_worker
-        }
-
-        if $mpm != 'event' {
-          include apache::mpm::disable_mpm_event
-        }
-      } else {
-        if $mpm == 'itk' {
-          file { "${lib_path}/mod_mpm_itk.so":
-            ensure => link,
-            target => "${lib_path}/mpm_itk.so",
-          }
-        }
-
-        package { "apache2-${mpm}":
+        package { 'libapache2-mpm-itk':
           ensure => present,
+          before => [
+            Class['apache::service'],
+            File[$apache::mod_enable_dir],
+          ],
         }
+      }
+
+      unless $mpm in ['itk', 'prefork'] {
+        include apache::mpm::disable_mpm_prefork
+      }
+
+      if $mpm != 'worker' {
+        include apache::mpm::disable_mpm_worker
+      }
+
+      if $mpm != 'event' {
+        include apache::mpm::disable_mpm_event
+      }
+    }
+    'Suse': {
+      file {
+        default:
+          ensure  => link,
+          require => Exec["mkdir ${apache::mod_enable_dir}"],
+          before  => File[$apache::mod_enable_dir],
+          notify  => Class['apache::service'],
+          ;
+        "${apache::mod_enable_dir}/${mpm}.conf":
+          target  => "${mod_dir}/${mpm}.conf",
+          ;
+        "${apache::mod_enable_dir}/${mpm}.load":
+          target  => "${mod_dir}/${mpm}.load",
+          ;
+      }
+
+      if $mpm == 'itk' {
+        file { "${lib_path}/mod_mpm_itk.so":
+          ensure => link,
+          target => "${lib_path}/mpm_itk.so",
+        }
+      }
+
+      package { "apache2-${mpm}":
+        ensure => present,
       }
     }
     'FreeBSD': {
