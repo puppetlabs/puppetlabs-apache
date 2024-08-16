@@ -2171,12 +2171,12 @@ describe 'apache::vhost', type: :define do
                 'enabled bob',
               ],
             )
+          end
 
-            it {
-              expect(subject).to contain_concat__fragment('rspec.example.com-apache-userdir')
-                .with(content: %r{^\s+UserDir disabled$})
-                .with(content: %r{^\s+UUserDir enabled bob$})
-            }
+          it do
+            expect(subject).to contain_concat__fragment('rspec.example.com-userdir')
+              .with(content: %r{^\s+UserDir disabled$})
+              .with(content: %r{^\s+UserDir enabled bob$})
           end
         end
       end
