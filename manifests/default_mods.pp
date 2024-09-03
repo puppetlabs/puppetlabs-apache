@@ -16,7 +16,7 @@ class apache::default_mods (
       if $facts['os']['name'] != 'Amazon' and $use_systemd {
         ::apache::mod { 'systemd': }
       }
-      if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['full'] == '2') {
+      if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['major'] =~ /^(2|2023)$/) {
         ::apache::mod { 'systemd': }
       }
       ::apache::mod { 'unixd': }
