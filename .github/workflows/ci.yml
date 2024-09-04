@@ -15,7 +15,7 @@ jobs:
 
   Acceptance:
     needs: Spec
-    uses: "puppetlabs/cat-github-actions/.github/workflows/module_acceptance.yml@main"
+    uses: "puppetlabs/cat-github-actions/.github/workflows/module_acceptance.yml@debugging-session"
     with:
       runs_on: "ubuntu-20.04"
     secrets: "inherit"
