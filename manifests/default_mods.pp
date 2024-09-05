@@ -13,10 +13,7 @@ class apache::default_mods (
   case $facts['os']['family'] {
     'RedHat': {
       ::apache::mod { 'log_config': }
-      if $facts['os']['name'] != 'Amazon' and $use_systemd {
-        ::apache::mod { 'systemd': }
-      }
-      if ($facts['os']['name'] == 'Amazon' and $facts['os']['release']['major'] =~ /^(2|2023)$/) {
+      if $use_systemd {
         ::apache::mod { 'systemd': }
       }
       ::apache::mod { 'unixd': }
