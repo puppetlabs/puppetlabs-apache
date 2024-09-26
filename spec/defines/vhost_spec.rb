@@ -335,6 +335,10 @@ describe 'apache::vhost', type: :define do
                     }
                   }
                 },
+                {
+                  'path' => '/expires',
+                  'expires_active' => true,
+                },
               ],
               'error_log' => false,
               'error_log_file' => 'httpd_error_log',
@@ -593,6 +597,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::mod::authz_groupfile') }
           it { is_expected.to contain_class('apache::mod::auth_gssapi') }
           it { is_expected.to contain_class('apache::mod::env') }
+          it { is_expected.to contain_class('apache::mod::expires') }
           it { is_expected.to contain_class('apache::mod::filter') }
           it { is_expected.to contain_class('apache::mod::headers') }
           it { is_expected.to contain_class('apache::mod::mime') }
