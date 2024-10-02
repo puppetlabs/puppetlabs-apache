@@ -11374,7 +11374,7 @@ Struct[{
     Optional['Cookie']                                     => String[1],
     Optional['CookieDomain']                               => String[1],
     Optional['CookiePath']                                 => String[1],
-    Optional['SessionCookieChunkSize']                     => Intege[-1],
+    Optional['SessionCookieChunkSize']                     => Integer[-1],
     Optional['CookieHTTPOnly']                             => Apache::OnOff,
     Optional['CookieSameSite']                             => Apache::OnOff,
     Optional['PassCookies']                                => String[1],
