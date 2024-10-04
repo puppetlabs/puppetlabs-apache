@@ -21,17 +21,6 @@ describe 'apache::mod::php', type: :class do
           end
 
           case facts[:os]['release']['major']
-          when '9'
-            context 'on stretch' do
-              it { is_expected.to contain_apache__mod('php7.0') }
-              it { is_expected.to contain_package('libapache2-mod-php7.0') }
-
-              it {
-                expect(subject).to contain_file('php7.0.load').with(
-                  content: "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n",
-                )
-              }
-            end
           when '10'
             context 'on buster' do
               it { is_expected.to contain_apache__mod('php7.3') }
@@ -290,12 +279,9 @@ describe 'apache::mod::php', type: :class do
       end
 
       # all the following tests are for legacy php/apache versions. They don't work on modern ubuntu and redhat 8
-      next if (facts[:os]['release']['major'].to_i >= 15 && facts[:os]['name'] == 'SLES')  ||
-              (facts[:os]['family'] == 'Debian')                                           ||
-              (facts[:os]['release']['major'].to_i >= 8 && (facts[:os]['name'] == 'RedHat' || facts[:os]['name'] == 'CentOS' ||
-                                                            facts[:os]['name'] == 'Rocky'  || facts[:os]['name'] == 'AlmaLinux'))
-
-      describe 'OS independent tests' do
+      skip_os = ['Debian', 'RedHat']
+      describe 'OS independent tests',
+               unless: skip_os.include?(facts[:os]['family'] && facts[:os]['release']['major'].to_i > 7) || (facts[:os]['release']['major'].to_i >= 15 && facts[:os]['name'] == 'SLES') do
         context 'with content param' do
           let :params do
             { content: 'somecontent' }
