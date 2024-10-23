@@ -91,7 +91,7 @@ describe 'apache::mod::php', type: :class do
 
               it {
                 expect(subject).to contain_file('php8.2.load').with(
-                  content: "LoadModule php8_module /usr/lib/apache2/modules/libphp8.2.so\n",
+                  content: "LoadModule php_module /usr/lib/apache2/modules/libphp8.2.so\n",
                 )
               }
             end
