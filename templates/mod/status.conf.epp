@@ -1,10 +1,6 @@
 <Location <%= $status_path %>>
     SetHandler server-status
-    <%# From Puppet 4.2 up, replace: -%>
-    <%# "scope.function_template(["apache/mod/<Template>"])" -%>
-    <%# with: -%>
-    <%# "scope.call_function('template', ["apache/mod/<Template>"])" -%>
-<%= epp("apache/mod/_require.epp") -%>
+<%= epp("apache/mod/_require.epp", { 'requires' => $requires }) -%>
 </Location>
 ExtendedStatus <%= $extended_status %>
 
