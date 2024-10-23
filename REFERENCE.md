@@ -29,6 +29,7 @@
 * [`apache::mod::authz_user`](#apache--mod--authz_user): Installs `mod_authz_user`
 * [`apache::mod::autoindex`](#apache--mod--autoindex): Installs `mod_autoindex`
 * [`apache::mod::cache`](#apache--mod--cache): Installs `mod_cache`
+* [`apache::mod::cache_disk`](#apache--mod--cache_disk): Installs and configures `mod_cache_disk`.
 * [`apache::mod::cgi`](#apache--mod--cgi): Installs `mod_cgi`.
 * [`apache::mod::cgid`](#apache--mod--cgid): Installs `mod_cgid`.
 * [`apache::mod::cluster`](#apache--mod--cluster): Installs `mod_cluster`.
@@ -1791,6 +1792,153 @@ Installs `mod_cache`
   * https://httpd.apache.org/docs/current/mod/mod_cache.html
     * for additional documentation.
 
+#### Parameters
+
+The following parameters are available in the `apache::mod::cache` class:
+
+* [`cache_ignore_headers`](#-apache--mod--cache--cache_ignore_headers)
+* [`cache_default_expire`](#-apache--mod--cache--cache_default_expire)
+* [`cache_max_expire`](#-apache--mod--cache--cache_max_expire)
+* [`cache_ignore_no_lastmod`](#-apache--mod--cache--cache_ignore_no_lastmod)
+* [`cache_header`](#-apache--mod--cache--cache_header)
+* [`cache_lock`](#-apache--mod--cache--cache_lock)
+* [`cache_ignore_cache_control`](#-apache--mod--cache--cache_ignore_cache_control)
+
+##### <a name="-apache--mod--cache--cache_ignore_headers"></a>`cache_ignore_headers`
+
+Data type: `Array[String[1]]`
+
+Specifies HTTP header(s) that should not be stored in the cache.
+
+Default value: `[]`
+
+##### <a name="-apache--mod--cache--cache_default_expire"></a>`cache_default_expire`
+
+Data type: `Optional[Integer]`
+
+The default duration to cache a document when no expiry date is specified.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache--cache_max_expire"></a>`cache_max_expire`
+
+Data type: `Optional[Integer]`
+
+The maximum time in seconds to cache a document
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache--cache_ignore_no_lastmod"></a>`cache_ignore_no_lastmod`
+
+Data type: `Optional[Apache::OnOff]`
+
+Ignore the fact that a response has no Last Modified header.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache--cache_header"></a>`cache_header`
+
+Data type: `Optional[Apache::OnOff]`
+
+Add an X-Cache header to the response.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache--cache_lock"></a>`cache_lock`
+
+Data type: `Optional[Apache::OnOff]`
+
+Enable the thundering herd lock.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache--cache_ignore_cache_control"></a>`cache_ignore_cache_control`
+
+Data type: `Optional[Apache::OnOff]`
+
+Ignore request to not serve cached content to client
+
+Default value: `undef`
+
+### <a name="apache--mod--cache_disk"></a>`apache::mod::cache_disk`
+
+Installs and configures `mod_cache_disk`.
+
+* **See also**
+  * https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html
+
+#### Parameters
+
+The following parameters are available in the `apache::mod::cache_disk` class:
+
+* [`cache_root`](#-apache--mod--cache_disk--cache_root)
+* [`cache_enable`](#-apache--mod--cache_disk--cache_enable)
+* [`cache_dir_length`](#-apache--mod--cache_disk--cache_dir_length)
+* [`cache_dir_levels`](#-apache--mod--cache_disk--cache_dir_levels)
+* [`cache_max_filesize`](#-apache--mod--cache_disk--cache_max_filesize)
+* [`cache_ignore_headers`](#-apache--mod--cache_disk--cache_ignore_headers)
+* [`configuration_file_name`](#-apache--mod--cache_disk--configuration_file_name)
+
+##### <a name="-apache--mod--cache_disk--cache_root"></a>`cache_root`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Defines the name of the directory on the disk to contain cache files.
+Default depends on the Apache version and operating system:
+- Debian: /var/cache/apache2/mod_cache_disk
+- FreeBSD: /var/cache/mod_cache_disk
+- Red Hat: /var/cache/httpd/proxy
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache_disk--cache_enable"></a>`cache_enable`
+
+Data type: `Array[String]`
+
+Defines an array of directories to cache, the default is none
+
+Default value: `[]`
+
+##### <a name="-apache--mod--cache_disk--cache_dir_length"></a>`cache_dir_length`
+
+Data type: `Optional[Integer]`
+
+The number of characters in subdirectory names
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache_disk--cache_dir_levels"></a>`cache_dir_levels`
+
+Data type: `Optional[Integer]`
+
+The number of levels of subdirectories in the cache.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache_disk--cache_max_filesize"></a>`cache_max_filesize`
+
+Data type: `Optional[Integer]`
+
+The maximum size (in bytes) of a document to be placed in the cache
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache_disk--cache_ignore_headers"></a>`cache_ignore_headers`
+
+Data type: `Optional[String]`
+
+DEPRECATED Ignore request to not serve cached content to client (included for compatibility reasons to support disk_cache)
+
+Default value: `undef`
+
+##### <a name="-apache--mod--cache_disk--configuration_file_name"></a>`configuration_file_name`
+
+Data type: `Optional[String]`
+
+DEPRECATED Name of module configuration file (used for the compatibility layer for disk_cache)
+
+Default value: `undef`
+
 ### <a name="apache--mod--cgi"></a>`apache::mod::cgi`
 
 Installs `mod_cgi`.
@@ -2078,11 +2226,12 @@ Default value:
 
 Installs and configures `mod_disk_cache`.
 
-* **Note** On Apache 2.4, mod_cache_disk installed.
+* **Note** Apache 2.2, mod_disk_cache installed. On Apache 2.4, mod_cache_disk installed.
+This class is deprecated, use mode_cache_disk instead
 
 * **See also**
   * https://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html
-    * for additional documentation.
+    * for additional documentation on version 2.4.
 
 #### Parameters
 
@@ -2100,7 +2249,6 @@ Defines the name of the directory on the disk to contain cache files.
 Default depends on the Apache version and operating system:
 - Debian: /var/cache/apache2/mod_cache_disk
 - FreeBSD: /var/cache/mod_cache_disk
-- Red Hat: /var/cache/httpd/proxy
 
 Default value: `undef`
 
