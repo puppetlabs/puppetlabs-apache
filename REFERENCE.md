@@ -11473,7 +11473,7 @@ Struct[{
     Optional['Scope']                                      => Pattern[/^\"?[A-Za-z0-9\-\._\s]+\"?$/],
     Optional['AuthRequestParams']                          => Pattern[/^[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+(&[A-Za-z0-9\-\._%]+=[A-Za-z0-9\-\._%]+)*$/],
     Optional['SSLValidateServer']                          => Apache::OnOff ,
-    Optional['UserInfoRefreshInterval']                    => Pattern[/^[0-9]+(\s+(logout_on_error|authenticate_on_error|502_on_error))?$/],
+    Optional['UserInfoRefreshInterval']                    => Variant[Integer[-1], Pattern[/^[0-9]+(\s+(logout_on_error|authenticate_on_error|502_on_error))?$/]],
     Optional['JWKSRefreshInterval']                        => Integer[-1],
     Optional['UserInfoTokenMethod']                        => Enum['authz_header', 'post_param'],
     Optional['ProviderAuthRequestMethod']                  => Enum['GET', 'POST', 'PAR'],
