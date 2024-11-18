@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v12.2.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.2.1) - 2024-11-18
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.2.0...v12.2.1)
+
+### Fixed
+
+- Update types/oidcsettings UserInfoRefreshInterval to allow Integers again [#2578](https://github.com/puppetlabs/puppetlabs-apache/pull/2578) ([gcoxmoz](https://github.com/gcoxmoz))
+
 ## [v12.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.2.0) - 2024-10-23
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.1.0...v12.2.0)
