@@ -1,0 +1,8 @@
+<%- |
+  Boolean $proxy_protocol,
+  Array[Stdlib::Host] $proxy_protocol_exceptions,
+| -%>
+  RemoteIPProxyProtocol <%= apache::bool2httpd($proxy_protocol) %>
+<% $proxy_protocol_exceptions.each |$exception| { -%>
+  RemoteIPProxyProtocolExceptions <%= $exception %>
+<% } -%>
