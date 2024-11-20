@@ -1705,6 +1705,11 @@
 # @param userdir
 #   Instances of apache::mod::userdir
 #
+# @param proxy_protocol
+#   Enable or disable PROXY protocol handling
+#
+# @param proxy_protocol_exceptions
+#   Disable processing of PROXY header for certain hosts or networks
 define apache::vhost (
   Variant[Stdlib::Absolutepath, Boolean] $docroot,
   Boolean $manage_docroot                                                             = true,
@@ -1966,6 +1971,8 @@ define apache::vhost (
   Apache::OIDCSettings $oidc_settings                                                 = {},
   Optional[Variant[Boolean, String]] $mdomain                                         = undef,
   Optional[Variant[String[1], Array[String[1]]]] $userdir                             = undef,
+  Optional[Boolean] $proxy_protocol                                                   = undef,
+  Array[Stdlib::Host] $proxy_protocol_exceptions                                      = [],
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -2952,6 +2959,21 @@ define apache::vhost (
       target  => "${priority_real}${filename}.conf",
       order   => 360,
       content => "  UseCanonicalName ${use_canonical_name}\n",
+    }
+  }
+
+  if $proxy_protocol != undef {
+    include apache::mod::remoteip
+
+    $proxy_protocol_params = {
+      proxy_protocol            => $proxy_protocol,
+      proxy_protocol_exceptions => $proxy_protocol_exceptions,
+    }
+
+    concat::fragment { "${name}-proxy_protocol":
+      target  => "${priority_real}${filename}.conf",
+      order   => 400,
+      content => epp('apache/vhost/_proxy_protocol.epp', $proxy_protocol_params),
     }
   }
 
