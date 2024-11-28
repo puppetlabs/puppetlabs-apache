@@ -35,7 +35,6 @@
 #
 # @param audit_log_format
 #   Defines what format the logs should be written in. Accepts `Native` and `JSON`.
-#   Default value: Native
 # 
 # @param audit_log_storage_dir
 #   Defines the directory where concurrent audit log entries are to be stored. This directive is only needed when concurrent audit logging is used.
