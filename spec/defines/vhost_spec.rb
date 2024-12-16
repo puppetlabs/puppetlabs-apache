@@ -551,7 +551,9 @@ describe 'apache::vhost', type: :define do
                                    'ClientSecret' => 'aae053a9-4abf-4824-8956-e94b2af335c8',
                                    'CryptoPassphrase' => '4ad1bb46-9979-450e-ae58-c696967df3cd' },
               'mdomain' => 'example.com example.net auto',
-              'userdir' => 'disabled'
+              'userdir' => 'disabled',
+              'proxy_protocol' => true,
+              'proxy_protocol_exceptions' => ['127.0.0.1', '10.0.0.0/8'],
             }
           end
 
@@ -967,6 +969,13 @@ describe 'apache::vhost', type: :define do
             expect(subject).to contain_concat__fragment('rspec.example.com-apache-header').with(
               content: %r{^MDomain example\.com example\.net auto$},
             )
+          }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-proxy_protocol')
+              .with_content(%r{^\s+RemoteIPProxyProtocol On$})
+              .with_content(%r{^\s+RemoteIPProxyProtocolExceptions 127\.0\.0\.1$})
+              .with_content(%r{^\s+RemoteIPProxyProtocolExceptions 10\.0\.0\.0/8$})
           }
         end
 
