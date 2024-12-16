@@ -1155,10 +1155,12 @@ describe 'apache::vhost define' do
             { rewrite_rule => [ '^index\\.php$ - [L]' ] },
             { rewrite_cond => [
               '%{REQUEST_FILENAME} !-f',
-              '%{REQUEST_FILENAME} !-d',                                                                                             ],                                                                                                                     rewrite_rule => [ '. /index.php [L]' ],                                                                              }
+              '%{REQUEST_FILENAME} !-d', ],
+              rewrite_rule => [ '. /index.php [L]' ],
+            }
             ],
           },
-          ],
+        ],
       }
     MANIFEST
     it 'applies cleanly' do
