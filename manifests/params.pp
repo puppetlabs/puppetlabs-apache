@@ -36,6 +36,7 @@ class apache::params inherits apache::version {
 
   $modsec_audit_log_parts = 'ABIJDEFHZ'
   $modsec_audit_log_type = 'Serial'
+  $modsec_audit_log_format = 'Native'
   $modsec_custom_rules = false
   $modsec_custom_rules_set = undef
 
