@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v12.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.0) - 2024-12-16
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.2.0...v12.3.0)
+
+### Added
+
+- (CAT-2100) Add Debian 12 support [#2572](https://github.com/puppetlabs/puppetlabs-apache/pull/2572) ([shubhamshinde360](https://github.com/shubhamshinde360))
+
+### Fixed
+
+- (CAT-2158) Upgrade rexml to address CVE-2024-49761 [#2579](https://github.com/puppetlabs/puppetlabs-apache/pull/2579) ([amitkarsale](https://github.com/amitkarsale))
+- Update types/oidcsettings UserInfoRefreshInterval to allow Integers again [#2578](https://github.com/puppetlabs/puppetlabs-apache/pull/2578) ([gcoxmoz](https://github.com/gcoxmoz))
+
 ## [v12.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.2.0) - 2024-10-23
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.1.0...v12.2.0)
@@ -17,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
+- Fix apache2-mod_php7 not found for SLES-15 [#2568](https://github.com/puppetlabs/puppetlabs-apache/pull/2568) ([Harvey2504](https://github.com/Harvey2504))
 - Add missing brackets for function call [#2540](https://github.com/puppetlabs/puppetlabs-apache/pull/2540) ([gerlingsm](https://github.com/gerlingsm))
 
 ## [v12.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.1.0) - 2024-04-03
