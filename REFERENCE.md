@@ -6199,9 +6199,9 @@ Default value: `$apache::params::modsec_audit_log_type`
 
 Data type: `Enum['Native', 'JSON']`
 
-Defines what format the logs should be written in. Accepts `Native` and `JSON`.
+Defines what format the logs should be written in.
 
-Default value: `$apache::params::modsec_audit_log_format`
+Default value: `'Native'`
 
 ##### <a name="-apache--mod--security--audit_log_storage_dir"></a>`audit_log_storage_dir`
 
