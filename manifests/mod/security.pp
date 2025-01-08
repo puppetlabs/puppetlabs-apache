@@ -32,6 +32,9 @@
 # 
 # @param audit_log_type
 #   Defines the type of audit logging mechanism to be used.
+#
+# @param audit_log_format
+#   Defines what format the logs should be written in.
 # 
 # @param audit_log_storage_dir
 #   Defines the directory where concurrent audit log entries are to be stored. This directive is only needed when concurrent audit logging is used.
@@ -143,6 +146,7 @@ class apache::mod::security (
   String $audit_log_relevant_status                            = '^(?:5|4(?!04))',
   String $audit_log_parts                                      = $apache::params::modsec_audit_log_parts,
   String $audit_log_type                                       = $apache::params::modsec_audit_log_type,
+  Enum['Native', 'JSON'] $audit_log_format                     = 'Native',
   Optional[Stdlib::Absolutepath] $audit_log_storage_dir        = undef,
   Integer $secpcrematchlimit                                   = $apache::params::secpcrematchlimit,
   Integer $secpcrematchlimitrecursion                          = $apache::params::secpcrematchlimitrecursion,
@@ -256,6 +260,7 @@ class apache::mod::security (
     'audit_log_relevant_status'   => $audit_log_relevant_status,
     'audit_log_parts'             => $audit_log_parts,
     'audit_log_type'              => $audit_log_type,
+    'audit_log_format'            => $audit_log_format,
     'audit_log_storage_dir'       => $audit_log_storage_dir,
     'logroot'                     => $logroot,
   }

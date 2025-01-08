@@ -6075,6 +6075,7 @@ The following parameters are available in the `apache::mod::security` class:
 * [`audit_log_relevant_status`](#-apache--mod--security--audit_log_relevant_status)
 * [`audit_log_parts`](#-apache--mod--security--audit_log_parts)
 * [`audit_log_type`](#-apache--mod--security--audit_log_type)
+* [`audit_log_format`](#-apache--mod--security--audit_log_format)
 * [`audit_log_storage_dir`](#-apache--mod--security--audit_log_storage_dir)
 * [`secpcrematchlimit`](#-apache--mod--security--secpcrematchlimit)
 * [`secpcrematchlimitrecursion`](#-apache--mod--security--secpcrematchlimitrecursion)
@@ -6193,6 +6194,14 @@ Data type: `String`
 Defines the type of audit logging mechanism to be used.
 
 Default value: `$apache::params::modsec_audit_log_type`
+
+##### <a name="-apache--mod--security--audit_log_format"></a>`audit_log_format`
+
+Data type: `Enum['Native', 'JSON']`
+
+Defines what format the logs should be written in.
+
+Default value: `'Native'`
 
 ##### <a name="-apache--mod--security--audit_log_storage_dir"></a>`audit_log_storage_dir`
 
