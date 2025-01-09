@@ -44,7 +44,7 @@
     SecResponseBodyMimeType text/plain text/html text/xml
     SecResponseBodyLimit 524288
     SecResponseBodyLimitAction <%= $secresponsebodylimitaction %>
-    SecDebugLogLevel 0
+    SecDebugLogLevel <%= $debug_log_level %>
     SecAuditEngine RelevantOnly
     SecAuditLogRelevantStatus "<%= $audit_log_relevant_status %>"
     SecAuditLogParts <%= $audit_log_parts %>

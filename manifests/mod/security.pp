@@ -23,6 +23,9 @@
 # @param modsec_secruleengine
 #   Configures the rules engine.
 # 
+# @param debug_log_level
+#   Configures the debug log level.
+#
 # @param audit_log_relevant_status
 #   Configures which response status code is to be considered relevant for the purpose of audit logging.
 # 
@@ -143,6 +146,7 @@ class apache::mod::security (
   Optional[Array[String]] $custom_rules_set                    = $apache::params::modsec_custom_rules_set,
   Stdlib::Absolutepath $modsec_dir                             = $apache::params::modsec_dir,
   String $modsec_secruleengine                                 = $apache::params::modsec_secruleengine,
+  Integer[0, 9] $debug_log_level                              = 0,
   String $audit_log_relevant_status                            = '^(?:5|4(?!04))',
   String $audit_log_parts                                      = $apache::params::modsec_audit_log_parts,
   String $audit_log_type                                       = $apache::params::modsec_audit_log_type,
@@ -262,6 +266,7 @@ class apache::mod::security (
     'audit_log_type'              => $audit_log_type,
     'audit_log_format'            => $audit_log_format,
     'audit_log_storage_dir'       => $audit_log_storage_dir,
+    'debug_log_level'             => $debug_log_level,
     'logroot'                     => $logroot,
   }
 

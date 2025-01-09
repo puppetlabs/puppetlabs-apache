@@ -104,6 +104,7 @@ describe 'apache::mod::security', type: :class do
                 audit_log_type: 'Concurrent',
                 audit_log_format: 'JSON',
                 audit_log_storage_dir: '/var/log/httpd/audit',
+                debug_log_level: 3,
                 secdefaultaction: 'deny,status:406,nolog,auditlog',
                 secrequestbodyaccess: 'Off',
                 secresponsebodyaccess: 'On',
@@ -118,6 +119,7 @@ describe 'apache::mod::security', type: :class do
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogFormat JSON$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecAuditLogStorageDir /var/log/httpd/audit$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyAccess Off$} }
+            it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecDebugLogLevel 3$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyAccess On$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecRequestBodyLimitAction ProcessPartial$} }
             it { is_expected.to contain_file('security.conf').with_content %r{^\s+SecResponseBodyLimitAction Reject$} }
