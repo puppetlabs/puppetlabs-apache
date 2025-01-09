@@ -966,7 +966,7 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::mod::md') }
 
           it {
-            expect(subject).to contain_concat__fragment('rspec.example.com-apache-header').with(
+            expect(subject).to contain_file('example.com-mod_md').with(
               content: %r{^MDomain example\.com example\.net auto$},
             )
           }
@@ -2166,7 +2166,7 @@ describe 'apache::vhost', type: :define do
           end
 
           it {
-            expect(subject).to contain_concat__fragment('rspec.example.com-apache-header').with(
+            expect(subject).to contain_file('rspec.example.com-mod_md').with(
               content: %r{^MDomain rspec.example.com$},
             )
           }
