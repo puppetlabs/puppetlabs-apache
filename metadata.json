@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-apache",
-  "version": "12.1.0",
+  "version": "12.3.0",
   "author": "puppetlabs",
   "summary": "Installs, configures, and manages Apache virtual hosts, web services, and modules.",
   "license": "Apache-2.0",
@@ -49,7 +49,8 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "10",
-        "11"
+        "11",
+        "12"
       ]
     },
     {
@@ -87,7 +88,7 @@
     }
   ],
   "description": "Module for Apache configuration",
-  "pdk-version": "3.0.0",
+  "pdk-version": "3.2.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates.git#main",
-  "template-ref": "heads/main-0-g79a2f93"
+  "template-ref": "tags/3.2.0.4-0-g5d17ec1"
 }

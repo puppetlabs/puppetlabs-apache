@@ -49,6 +49,9 @@
     SecAuditLogRelevantStatus "<%= $audit_log_relevant_status %>"
     SecAuditLogParts <%= $audit_log_parts %>
     SecAuditLogType <%= $audit_log_type %>
+    <%- if $audit_log_format == 'JSON' { -%>
+    SecAuditLogFormat JSON
+    <%- } -%>
     <%- if $audit_log_storage_dir { -%>
     SecAuditLogStorageDir <%= $audit_log_storage_dir %>
     <%- } -%>
