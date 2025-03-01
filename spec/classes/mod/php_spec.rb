@@ -310,7 +310,7 @@ describe 'apache::mod::php', type: :class do
 
         context 'with template param' do
           let :params do
-            { template: 'apache/mod/php.conf.erb' }
+            { template: 'apache/mod/php.conf.epp' }
           end
 
           it {

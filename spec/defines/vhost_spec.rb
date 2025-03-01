@@ -340,7 +340,12 @@ describe 'apache::vhost', type: :define do
               'error_log_file' => 'httpd_error_log',
               'error_log_syslog' => true,
               'error_log_format' => ['[%t] [%l] %7F: %E: [client\ %a] %M% ,\ referer\ %{Referer}i'],
-              'error_documents' => 'true',
+              'error_documents' => [
+                {
+                  'error_code' => '500',
+                  'document' => '/server-error.html',
+                },
+              ],
               'fallbackresource' => '/index.php',
               'scriptalias' => '/usr/lib/cgi-bin',
               'limitreqfieldsize' => 8190,

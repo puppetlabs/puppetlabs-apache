@@ -124,7 +124,7 @@ define apache::vhost::proxy (
   include apache::mod::proxy
   include apache::mod::proxy_http
 
-  # To match processing in templates/vhost/_proxy.erb
+  # To match processing in templates/vhost/_proxy.epp
   if $proxy_dest =~ Pattern[/^h2c?:\/\//] or $proxy_dest_match =~ Pattern[/^h2c?:\/\//] {
     include apache::mod::proxy_http2
   }
@@ -138,11 +138,25 @@ define apache::vhost::proxy (
     fail('At least one of proxy_dest, proxy_pass, proxy_pass_match or proxy_dest_match must be given')
   }
 
+  $proxy_params = {
+    'proxy_dest'               => $proxy_dest,
+    'proxy_pass'               => $proxy_pass,
+    'proxy_pass_match'         => $proxy_pass_match,
+    'proxy_dest_match'         => $proxy_dest_match,
+    'proxy_add_headers'        => $proxy_add_headers,
+    'proxy_requests'           => $proxy_requests,
+    'proxy_preserve_host'      => $proxy_preserve_host,
+    'proxy_error_override'     => $proxy_error_override,
+    'no_proxy_uris'            => $no_proxy_uris,
+    'no_proxy_uris_match'      => $no_proxy_uris_match,
+    'proxy_dest_reverse_match' => $proxy_dest_reverse_match,
+  }
+
   apache::vhost::fragment { "${name}-proxy":
     vhost    => $vhost,
     port     => $port,
     priority => $priority,
     order    => $order,
-    content  => template('apache/vhost/_proxy.erb'),
+    content  => epp('apache/vhost/_proxy.epp', $proxy_params),
   }
 }
