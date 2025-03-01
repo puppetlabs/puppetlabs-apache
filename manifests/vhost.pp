@@ -2358,7 +2358,7 @@ define apache::vhost (
         }
       }
 
-      if 'request_headers' in $directory {
+      if 'request_headers' in $directory or 'headers' in $directory {
         include apache::mod::headers
       }
 
