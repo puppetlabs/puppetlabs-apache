@@ -5,18 +5,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v12.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.0) - 2024-12-16
+## [v12.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.0) - 2025-03-05
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.2.0...v12.3.0)
 
 ### Added
 
+- Allow configuring RemoteIPProxyProtocol at VHost level [#2582](https://github.com/puppetlabs/puppetlabs-apache/pull/2582) ([smortex](https://github.com/smortex))
 - (CAT-2100) Add Debian 12 support [#2572](https://github.com/puppetlabs/puppetlabs-apache/pull/2572) ([shubhamshinde360](https://github.com/shubhamshinde360))
+- Feature: Allow to set the verbosity of the debug [#2523](https://github.com/puppetlabs/puppetlabs-apache/pull/2523) ([JGodin-C2C](https://github.com/JGodin-C2C))
 
 ### Fixed
 
 - (CAT-2158) Upgrade rexml to address CVE-2024-49761 [#2579](https://github.com/puppetlabs/puppetlabs-apache/pull/2579) ([amitkarsale](https://github.com/amitkarsale))
 - Update types/oidcsettings UserInfoRefreshInterval to allow Integers again [#2578](https://github.com/puppetlabs/puppetlabs-apache/pull/2578) ([gcoxmoz](https://github.com/gcoxmoz))
+
+### Other
+
+- Fix mod_headers load for headers in directory #2590 [#2591](https://github.com/puppetlabs/puppetlabs-apache/pull/2591) ([uoe-pjackson](https://github.com/uoe-pjackson))
+- Adding ModSecurity parameter for audit log format. [#2583](https://github.com/puppetlabs/puppetlabs-apache/pull/2583) ([Tamerz](https://github.com/Tamerz))
 
 ## [v12.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.2.0) - 2024-10-23
 
@@ -118,7 +125,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - (CAT-1283) - Enable forensic module [#2442](https://github.com/puppetlabs/puppetlabs-apache/pull/2442) ([Ramesh7](https://github.com/Ramesh7))
 - (CAT-1281) - Support to add cipher with respective ssl protocol [#2440](https://github.com/puppetlabs/puppetlabs-apache/pull/2440) ([Ramesh7](https://github.com/Ramesh7))
 - feat: add Debian12 Compability [#2439](https://github.com/puppetlabs/puppetlabs-apache/pull/2439) ([Robnarok](https://github.com/Robnarok))
-- Add MellonSetEnv support [#2423](https://github.com/puppetlabs/puppetlabs-apache/pull/2423) ([ic248](https://github.com/ic248))
+- Add MellonSetEnv support [#2423](https://github.com/puppetlabs/puppetlabs-apache/pull/2423) ([](https://github.com/))
 - Add the missing mod_authnz_ldap parameters [#2404](https://github.com/puppetlabs/puppetlabs-apache/pull/2404) ([chutzimir](https://github.com/chutzimir))
 
 ### Fixed
@@ -667,7 +674,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-- (MODULES-9014) Improve SSLSessionTickets handling [#1923](https://github.com/puppetlabs/puppetlabs-apache/pull/1923) ([FredericLespez](https://github.com/FredericLespez))
+- (MODULES-9014) Improve SSLSessionTickets handling [#1923](https://github.com/puppetlabs/puppetlabs-apache/pull/1923) ([FredL69](https://github.com/FredL69))
 - (MODULES-8931) Fix stahnma/epel failures [#1914](https://github.com/puppetlabs/puppetlabs-apache/pull/1914) ([eimlav](https://github.com/eimlav))
 - Fix wsgi_daemon_process to support hash data type [#1884](https://github.com/puppetlabs/puppetlabs-apache/pull/1884) ([mdechiaro](https://github.com/mdechiaro))
 
