@@ -202,6 +202,7 @@ class apache::params inherits apache::version {
       'authnz_pam'            => 'mod_authnz_pam',
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
+      'http2'                 => 'mod_http2',
       'intercept_form_submit' => 'mod_intercept_form_submit',
       'ldap'                  => 'mod_ldap',
       'lookup_identity'       => 'mod_lookup_identity',
