@@ -94,7 +94,7 @@ class apache::mod::prefork (
     }
     'Suse': {
       ::apache::mpm { 'prefork':
-        lib_path       => '/usr/lib64/apache2-prefork',
+        lib_path => '/usr/lib64/apache2-prefork',
       }
     }
     'Gentoo': {
