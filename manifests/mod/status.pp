@@ -39,12 +39,16 @@ class apache::mod::status (
 
   $requires_defaults = 'ip 127.0.0.1 ::1'
 
-  # Template uses $extended_status, $status_path
+  $status_params = {
+    'extended_status'   => $extended_status,
+    'status_path'       => $status_path,
+    'requires'          => $requires.lest || { $requires_defaults },
+  }
   file { 'status.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/status.conf",
     mode    => $apache::file_mode,
-    content => template('apache/mod/status.conf.erb'),
+    content => epp('apache/mod/status.conf.epp', $status_params),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],
