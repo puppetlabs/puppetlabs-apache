@@ -85,4 +85,11 @@ describe 'apache::mod::http2', type: :class do
       it { is_expected.to contain_file('http2.conf').with(content: expected_content) }
     end
   end
+
+  context 'on Red Hat 8' do
+    include_examples 'RedHat 8' do
+      it { is_expected.to contain_class('apache::mod::http2') }
+      it { is_expected.to contain_package('mod_http2') }
+    end
+  end
 end
