@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v12.3.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.1) - 2025-03-31
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.3.0...v12.3.1)
+
+### Fixed
+
+- Install mod_http2 on EL if required [#2593](https://github.com/puppetlabs/puppetlabs-apache/pull/2593) ([ekohl](https://github.com/ekohl))
+
 ## [v12.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.0) - 2025-03-05
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.2.0...v12.3.0)
