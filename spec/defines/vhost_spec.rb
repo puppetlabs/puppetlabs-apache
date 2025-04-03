@@ -2205,6 +2205,23 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.to contain_class('apache::mod::dir') }
         end
+
+        context 'mod_expires is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'expires_active' => 'On',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::expires') }
+        end
       end
     end
   end
