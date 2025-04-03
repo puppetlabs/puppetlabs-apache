@@ -2258,6 +2258,23 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to contain_class('apache::mod::dav') }
           it { is_expected.to contain_class('apache::mod::dav_svn') }
         end
+
+        context 'mod_autoindex is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'index_options' => ['FancyIndexing'],
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::autoindex') }
+        end
       end
     end
   end
