@@ -2340,6 +2340,10 @@ define apache::vhost (
         include apache::mod::dir
       }
 
+      if 'expires_active' in $directory {
+        include apache::mod::expires
+      }
+
       if 'gssapi' in $directory {
         include apache::mod::auth_gssapi
       }
