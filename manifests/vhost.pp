@@ -2336,6 +2336,15 @@ define apache::vhost (
         include apache::mod::authz_groupfile
       }
 
+      if 'dav' in $directory {
+        include apache::mod::dav
+        if $directory['dav'] == 'On' {
+          include apache::mod::dav_fs
+        } elsif $directory['dav'] == 'svn' {
+          include apache::mod::dav_svn
+        }
+      }
+
       if 'directoryindex' in $directory {
         include apache::mod::dir
       }

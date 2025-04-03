@@ -2222,6 +2222,42 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.to contain_class('apache::mod::expires') }
         end
+
+        context 'mod_dav is included when on' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'dav' => 'On',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dav') }
+          it { is_expected.to contain_class('apache::mod::dav_fs') }
+        end
+
+        context 'mod_dav is included when set to svn' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'dav' => 'svn',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dav') }
+          it { is_expected.to contain_class('apache::mod::dav_svn') }
+        end
       end
     end
   end
