@@ -2300,6 +2300,7 @@ define apache::vhost (
   }
 
   if $fallbackresource {
+    include apache::mod::dir
     $fall_back_res_params = {
       'fallbackresource' => $fallbackresource,
     }
@@ -2333,6 +2334,10 @@ define apache::vhost (
 
       if 'auth_group_file' in $directory {
         include apache::mod::authz_groupfile
+      }
+
+      if 'directoryindex' in $directory {
+        include apache::mod::dir
       }
 
       if 'gssapi' in $directory {
