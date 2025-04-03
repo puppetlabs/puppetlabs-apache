@@ -2357,6 +2357,10 @@ define apache::vhost (
         include apache::mod::auth_gssapi
       }
 
+      if 'index_options' in $directory or 'index_order_default' in $directory or 'index_style_sheet' in $directory {
+        include apache::mod::autoindex
+      }
+
       if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
         include apache::mod::proxy_http
 
