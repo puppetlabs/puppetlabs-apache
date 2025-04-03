@@ -2188,6 +2188,23 @@ describe 'apache::vhost', type: :define do
             }
           end
         end
+
+        context 'mod_dir is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'directoryindex' => 'index.php',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dir') }
+        end
       end
     end
   end
