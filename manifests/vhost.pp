@@ -2336,6 +2336,24 @@ define apache::vhost (
         include apache::mod::authz_groupfile
       }
 
+      if 'options' in $directory {
+        if !('-ExecCGI' in $directory['options']) {
+          if 'ExecCGI' in $directory['options'] {
+            case $apache::mpm_module {
+              'prefork': {
+                include apache::mod::cgi
+              }
+              'worker': {
+                include apache::mod::cgid
+              }
+              default: {
+                # do nothing
+              }
+            }
+          }
+        }
+      }
+
       if 'dav' in $directory {
         include apache::mod::dav
         if $directory['dav'] == 'On' {

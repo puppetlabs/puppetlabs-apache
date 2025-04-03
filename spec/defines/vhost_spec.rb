@@ -2275,6 +2275,70 @@ describe 'apache::vhost', type: :define do
           it { is_expected.to compile }
           it { is_expected.to contain_class('apache::mod::autoindex') }
         end
+
+        context 'mod_cgi is included when requested by array' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => ['ExecCGI'],
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          if os_facts[:os]['family'] == 'Debian'
+            it { is_expected.not_to contain_class('apache::mod::cgi') }
+            it { is_expected.to contain_class('apache::mod::cgid') }
+          else
+            it { is_expected.to contain_class('apache::mod::cgi') }
+            it { is_expected.not_to contain_class('apache::mod::cgid') }
+          end
+        end
+
+        context 'mod_cgi is included when requested by string' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => 'Indexes ExecCGI',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          if os_facts[:os]['family'] == 'Debian'
+            it { is_expected.not_to contain_class('apache::mod::cgi') }
+            it { is_expected.to contain_class('apache::mod::cgid') }
+          else
+            it { is_expected.to contain_class('apache::mod::cgi') }
+            it { is_expected.not_to contain_class('apache::mod::cgid') }
+          end
+        end
+
+        context 'mod_cgi is not included when unrequested' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => '+Indexes -ExecCGI',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.not_to contain_class('apache::mod::cgi') }
+          it { is_expected.not_to contain_class('apache::mod::cgid') }
+        end
       end
     end
   end
