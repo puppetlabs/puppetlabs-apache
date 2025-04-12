@@ -79,7 +79,12 @@ class apache::mod::prefork (
     'listenbacklog'           => $listenbacklog,
   }
 
-  file { "${apache::mod_dir}/prefork.conf":
+  $preforkconffile = $facts['os']['family'] ? {
+    'Debian' => "${apache::mod_dir}/mpm_prefork.conf",
+    default  => "${apache::mod_dir}/prefork.conf",
+  }
+
+  file { $preforkconffile:
     ensure  => file,
     content => epp('apache/mod/prefork.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
