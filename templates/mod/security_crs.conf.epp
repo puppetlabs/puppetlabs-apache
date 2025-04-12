@@ -154,6 +154,24 @@ SecAction \
   "id:'900004', \
   phase:1, \
   t:none, \
+  <%-
+    # We are here in a section that in only evaluated on RedHat 7 and older.
+    #
+    # The apache::mod::security class does not have an $anomaly_score_blocking
+    # parameter, the ERP template was therefore using an undefined variable,
+    # interpreted as `nil` and which resulted in an empty string.
+    #
+    # With the conversion to EPP, Puppet now raise an error when an undefined
+    # variable is used.  In order to unbreak the test suite, we set this
+    # variable to "on" statically bellow.  Maybe this is not what you want and
+    # a proper fix is welcome.  The fact that RedHat 7 reach EOL in a few weeks
+    # at the time this comment is written, I refrained for a proper fix because
+    # nobody complained it was broken, and consequently this whole code seems
+    # not to be used.  We will be happy to see it vanish when support for
+    # RedHat 7 will be removed.
+    warning("Congratulation!  You use a code path that has always been broken, check the code for fixing this!")
+    $anomaly_score_blocking = 'on'
+  -%>
   setvar:tx.anomaly_score_blocking=<%= $anomaly_score_blocking -%>, \
   nolog, \
   pass"

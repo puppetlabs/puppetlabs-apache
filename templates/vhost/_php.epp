@@ -1,0 +1,16 @@
+<% if $php_values and !$php_values.empty { -%>
+  <%- $php_values.stdlib::sort_by |$m| { $m[0] }.each |$key, $value| { -%>
+    <%- if $value =~ String { -%>
+  php_value <%= $key %> "<%= $value %>"
+    <%- } else { -%>
+  php_value <%= $key %> <%= $value %>
+    <%- } -%>
+  <%- } -%>
+<% } -%>
+<% if $php_flags and !$php_flags.empty { -%>
+  <%- $php_flags.stdlib::sort_by |$m| { $m[0] }.each |$key, $flag| { -%>
+    <%# normalize flag -%>
+    <%- if $flag.downcase =~ /true|yes|on|1/ { $_flag = 'on' } else { $_flag = 'off' } -%>
+  php_flag <%= $key %> <%= $_flag %>
+  <%- } -%>
+<% } -%>

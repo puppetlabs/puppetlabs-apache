@@ -78,7 +78,7 @@ ModPagespeedMessageBufferSize <%= $message_buffer_size %>
     SetHandler mod_pagespeed_message
 </Location>
 
-<% if String(type($additional_configuration, 'generalized')).index('Array') == 0 { -%>
+<% if $additional_configuration =~ Array { -%>
 <%= $additional_configuration.join("\n") %>
 <% } else { -%>
 <% $additional_configuration.each |$key, $value| { -%>
