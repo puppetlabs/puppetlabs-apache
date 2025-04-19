@@ -2356,10 +2356,10 @@ define apache::vhost (
 
       if 'dav' in $directory {
         include apache::mod::dav
-        if $directory['dav'] == 'On' {
-          include apache::mod::dav_fs
-        } elsif $directory['dav'] == 'svn' {
+        if $directory['dav'] == 'svn' {
           include apache::mod::dav_svn
+        } elsif apache::bool2httpd($directory['dav']) == 'On' {
+          include apache::mod::dav_fs
         }
       }
 
