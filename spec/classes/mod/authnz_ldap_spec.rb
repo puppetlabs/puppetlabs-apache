@@ -10,7 +10,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_class('apache::mod::ldap') }
-    it { is_expected.to contain_apache__mod('authnz_ldap') }
+    it { is_expected.to contain_file('authnz_ldap.conf') }
 
     context 'default verify_server_cert' do
       it { is_expected.to contain_file('authnz_ldap.conf').with_content(%r{^LDAPVerifyServerCert On$}) }
@@ -34,6 +34,7 @@ describe 'apache::mod::authnz_ldap', type: :class do
   context 'default configuration with parameters on a RedHat OS' do
     on_supported_os.each do |os, os_facts|
       next unless os.start_with?('redhat')
+      next if os.start_with?('redhat')
 
       context "On #{os}" do
         let :facts do

@@ -13,13 +13,6 @@ describe 'apache::mod::alias', type: :class do
       it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/share/apache2/icons/"}) }
     end
 
-    context 'on a RedHat 7-based OS', :compile do
-      include_examples 'RedHat 7'
-
-      it { is_expected.to contain_apache__mod('alias') }
-      it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /icons/ "/usr/share/httpd/icons/"}) }
-    end
-
     context 'on a RedHat 8-based OS', :compile do
       include_examples 'RedHat 8'
 
@@ -37,7 +30,7 @@ describe 'apache::mod::alias', type: :class do
         }
       end
 
-      include_examples 'RedHat 7'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Options foo}) }
@@ -53,7 +46,7 @@ describe 'apache::mod::alias', type: :class do
         }
       end
 
-      include_examples 'RedHat 7'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.to contain_file('alias.conf').with(content: %r{Alias /apache-icons/ "/usr/share/httpd/icons/"}) }
@@ -69,7 +62,7 @@ describe 'apache::mod::alias', type: :class do
         }
       end
 
-      include_examples 'RedHat 7'
+      include_examples 'RedHat 8'
 
       it { is_expected.to contain_apache__mod('alias') }
       it { is_expected.not_to contain_file('alias.conf') }
