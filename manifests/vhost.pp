@@ -2337,18 +2337,16 @@ define apache::vhost (
       }
 
       if 'options' in $directory {
-        if !('-ExecCGI' in $directory['options']) {
-          if 'ExecCGI' in $directory['options'] {
-            case $apache::mpm_module {
-              'prefork': {
-                include apache::mod::cgi
-              }
-              'worker': {
-                include apache::mod::cgid
-              }
-              default: {
-                # do nothing
-              }
+        if !('-ExecCGI' in $directory['options']) and 'ExecCGI' in $directory['options'] {
+          case $apache::mpm_module {
+            'prefork': {
+              include apache::mod::cgi
+            }
+            'worker': {
+              include apache::mod::cgid
+            }
+            default: {
+              # do nothing
             }
           }
         }
