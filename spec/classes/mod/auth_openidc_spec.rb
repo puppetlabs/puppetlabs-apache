@@ -16,16 +16,6 @@ describe 'apache::mod::auth_openidc', type: :class do
       it { is_expected.not_to contain_package('dnf-module-mod_auth_openidc') }
     end
 
-    context 'on RedHat 7', :compile do
-      include_examples 'RedHat 7'
-
-      it { is_expected.to contain_class('apache::mod::authn_core') }
-      it { is_expected.to contain_class('apache::mod::authz_user') }
-      it { is_expected.to contain_apache__mod('auth_openidc') }
-      it { is_expected.to contain_package('mod_auth_openidc') }
-      it { is_expected.not_to contain_package('dnf-module-mod_auth_openidc') }
-    end
-
     context 'on RedHat 8', :compile do
       include_examples 'RedHat 8'
 

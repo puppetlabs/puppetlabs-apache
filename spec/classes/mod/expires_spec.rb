@@ -22,7 +22,7 @@ describe 'apache::mod::expires', type: :class do
       }
     end
 
-    include_examples 'RedHat 7'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_apache__mod('expires') }
 
@@ -47,7 +47,7 @@ describe 'apache::mod::expires', type: :class do
       }
     end
 
-    include_examples 'RedHat 7'
+    include_examples 'RedHat 8'
 
     it { is_expected.to contain_apache__mod('expires') }
 
