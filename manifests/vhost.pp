@@ -2369,6 +2369,10 @@ define apache::vhost (
       if 'setenv' in $directory {
         include apache::mod::env
       }
+
+      if 'expires_active' in $directory or 'expires_default' in $directory or 'expires_by_type' in $directory {
+        include apache::mod::expires
+      }
     }
 
     # Template uses:
