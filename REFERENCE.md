@@ -10025,8 +10025,7 @@ Default value: `false`
 Data type: `Optional[Variant[String, Hash]]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process_options, wsgi_process_group,
-wsgi_script_aliases and wsgi_pass_authorization.<br />
+wsgi_process_group, wsgi_script_aliases and wsgi_pass_authorization.<br />
 A hash that sets the name of the WSGI daemon, accepting
 [certain keys](http://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIDaemonProcess.html).<br />
 An example virtual host configuration with WSGI:
@@ -10034,11 +10033,12 @@ An example virtual host configuration with WSGI:
 apache::vhost { 'wsgi.example.com':
   port                        => 80,
   docroot                     => '/var/www/pythonapp',
-  wsgi_daemon_process         => 'wsgi',
-  wsgi_daemon_process_options =>
-    { processes    => 2,
-      threads      => 15,
-      display-name => '%{GROUP}',
+  wsgi_daemon_process         =>
+    { 'wsgi'  =>
+      { processes    => 2,
+        threads      => 15,
+        display-name => '%{GROUP}'
+      }
     },
   wsgi_process_group          => 'wsgi',
   wsgi_script_aliases         => { '/' => '/var/www/demo.wsgi' },
@@ -10052,10 +10052,7 @@ Default value: `undef`
 
 Data type: `Optional[Hash]`
 
-Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_process_group,
-wsgi_script_aliases and wsgi_pass_authorization.<br />
-Sets the group ID that the virtual host runs under.
+DEPRECATED: Please add values inside Hash `wsgi_daemon_process`.
 
 Default value: `undef`
 
@@ -10064,7 +10061,7 @@ Default value: `undef`
 Data type: `Optional[String]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 This parameter defines the [`WSGIApplicationGroup directive`](https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIApplicationGroup.html),
 thus allowing you to specify which application group the WSGI application belongs to,
@@ -10078,7 +10075,7 @@ Default value: `undef`
 Data type: `Optional[String]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 This parameter defines the [`WSGIImportScript directive`](https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIImportScript.html),
 which can be used in order to specify a script file to be loaded upon a process starting.
@@ -10090,7 +10087,7 @@ Default value: `undef`
 Data type: `Optional[Hash]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 This parameter defines the [`WSGIImportScript directive`](https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIImportScript.html),
 which can be used in order to specify a script file to be loaded upon a process starting.<br />
@@ -10103,7 +10100,7 @@ Default value: `undef`
 Data type: `Optional[Apache::OnOff]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 This parameter defines the [`WSGIChunkedRequest directive`](https://modwsgi.readthedocs.io/en/develop/configuration-directives/WSGIChunkedRequest.html),
 allowing you to enable support for chunked request content.<br />
@@ -10117,7 +10114,7 @@ Default value: `undef`
 Data type: `Optional[String]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options,
+wsgi_daemon_process,
 wsgi_script_aliases and wsgi_pass_authorization.<br />
 Requires a hash of web paths to filesystem `.wsgi paths/`.
 
@@ -10128,7 +10125,7 @@ Default value: `undef`
 Data type: `Optional[Hash]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
 For more information, see mod_wsgi's [WSGIPassAuthorization documentation](https://modwsgi.readthedocs.org/en/latest/configuration-directives/WSGIPassAuthorization.html).
@@ -10140,7 +10137,7 @@ Default value: `undef`
 Data type: `Optional[Hash]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group,
+wsgi_daemon_process, wsgi_process_group,
 and wsgi_pass_authorization.<br />
 Uses the WSGI application to handle authorization instead of Apache when set to `On`.<br />
 This directive is similar to `wsgi_script_aliases`, but makes use of regular expressions
@@ -10154,7 +10151,7 @@ Default value: `undef`
 Data type: `Optional[Apache::OnOff]`
 
 Sets up a virtual host with [WSGI](https://github.com/GrahamDumpleton/mod_wsgi) alongside
-wsgi_daemon_process, wsgi_daemon_process_options, wsgi_process_group and
+wsgi_daemon_process, wsgi_process_group and
 wsgi_script_aliases.<br />
 Enables support for chunked requests.
 
