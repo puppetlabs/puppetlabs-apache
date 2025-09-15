@@ -1,4 +1,10 @@
 # This file is managed by puppet, any direct modification will be overwritten.
+<% if $custom_actions_set and !($custom_actions_set.empty) { -%>
+<% $custom_actions_set.each |$secaction| { -%>
+SecAction <%= $secaction %>
+<% } -%>
+<% } -%>
+
 <% if $custom_rules_set and !($custom_rules_set.empty) { -%>
 <% $custom_rules_set.each |$secrule| { -%>
 SecRule <%= $secrule %>
