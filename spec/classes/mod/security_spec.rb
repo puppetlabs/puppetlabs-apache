@@ -188,7 +188,7 @@ describe 'apache::mod::security', type: :class do
               )
             }
 
-            it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*id:199999,phase:1,pass,nolog,t:none,initcol:global=global$} }
+            it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,pass,nolog,t:none,initcol:global=global"$} }
           end
 
           describe 'with CRS parameters' do
@@ -362,7 +362,7 @@ describe 'apache::mod::security', type: :class do
               )
             }
 
-            it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*id:199999,phase:1,pass,nolog,t:none,initcol:global=global$} }
+            it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*"id:199999,phase:1,pass,nolog,t:none,initcol:global=global"$} }
           end
 
           describe 'with absolute path to activated rule' do

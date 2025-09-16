@@ -1,7 +1,7 @@
 # This file is managed by puppet, any direct modification will be overwritten.
 <% if $custom_actions_set and !($custom_actions_set.empty) { -%>
 <% $custom_actions_set.each |$secaction| { -%>
-SecAction <%= $secaction %>
+SecAction "<%= $secaction %>"
 <% } -%>
 <% } -%>
 
