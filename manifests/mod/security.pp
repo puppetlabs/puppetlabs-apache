@@ -16,9 +16,9 @@
 # @param custom_rules
 # 
 # @param custom_rules_set
-#   Custom SecRule rules to be included
+#   Custom `SecRule` rules to be included
 # @param custom_actions_set
-#   Custom SecAction rules to be included
+#   Custom `SecAction` rules to be included
 # @param modsec_dir
 #   Defines the path where Puppet installs the modsec configuration and activated rules links.
 # 

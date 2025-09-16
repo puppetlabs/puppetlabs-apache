@@ -6070,6 +6070,7 @@ The following parameters are available in the `apache::mod::security` class:
 * [`activated_rules`](#-apache--mod--security--activated_rules)
 * [`custom_rules`](#-apache--mod--security--custom_rules)
 * [`custom_rules_set`](#-apache--mod--security--custom_rules_set)
+* [`custom_actions_set`](#-apache--mod--security--custom_actions_set)
 * [`modsec_dir`](#-apache--mod--security--modsec_dir)
 * [`modsec_secruleengine`](#-apache--mod--security--modsec_secruleengine)
 * [`debug_log_level`](#-apache--mod--security--debug_log_level)
@@ -6151,9 +6152,17 @@ Default value: `$apache::params::modsec_custom_rules`
 
 Data type: `Optional[Array[String]]`
 
-
+Custom `SecRule` rules to be included
 
 Default value: `$apache::params::modsec_custom_rules_set`
+
+##### <a name="-apache--mod--security--custom_actions_set"></a>`custom_actions_set`
+
+Data type: `Optional[Array[String]]`
+
+Custom `SecAction` rules to be included
+
+Default value: `undef`
 
 ##### <a name="-apache--mod--security--modsec_dir"></a>`modsec_dir`
 
