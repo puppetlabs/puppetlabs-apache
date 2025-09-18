@@ -10,11 +10,7 @@
 
   <% if $proxy_requests != 'Off' or ( $allow_from and ! $allow_from.empty ) { -%>
   <Proxy *>
-    <%- if String(type($allow_from, 'generalized')).index('Array') == 0 { -%>
-    Require ip <%= $allow_from.join(" ") %>
-    <%- } else { -%>
-    Require ip <%= $allow_from %>
-    <%- } -%>
+    Require ip <%= [$allow_from].flatten.join(' ') %>
   </Proxy>
   <% } -%>
 

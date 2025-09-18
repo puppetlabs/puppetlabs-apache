@@ -1,0 +1,90 @@
+<% if $proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_add_headers != undef { -%>
+
+  ## Proxy rules
+  ProxyRequests <%= apache::bool2httpd($proxy_requests) %>
+<%- } -%>
+  ProxyPreserveHost <%= apache::bool2httpd($proxy_preserve_host) %>
+<%- if $proxy_add_headers != undef { -%>
+  ProxyAddHeaders <%= apache::bool2httpd($proxy_add_headers) %>
+<%- } -%>
+<% if $proxy_error_override { -%>
+  ProxyErrorOverride On
+<%- } -%>
+<%- [$proxy_pass].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$proxy| { -%>
+  <%- [$proxy['no_proxy_uris']].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$uri| { -%>
+  ProxyPass <%= $uri %> !
+  <%- } -%>
+  <%- [$proxy['no_proxy_uris_match']].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$uri| { -%>
+  ProxyPassMatch <%= $uri %> !
+  <%- } -%>
+  ProxyPass <%= $proxy['path'] %> <%= $proxy['url'] -%>
+  <%- if $proxy['params'] { -%>
+    <%- $proxy['params'].stdlib::sort_by |$m| { $m[0] }.each |$key, $value| { %> <%= $key %>=<%= $value -%>
+    <%- } -%>
+  <%- } -%>
+  <%- if $proxy['keywords'] { %> <%= $proxy['keywords'].join(' ') -%>
+  <%- } %>
+  <%- if $proxy['reverse_cookies'] { -%>
+    <%- [$proxy['reverse_cookies']].flatten.each |$reverse_cookies| { -%>
+      <%- if $reverse_cookies['path'] { -%>
+  ProxyPassReverseCookiePath <%= $reverse_cookies['path'] %> <%= $reverse_cookies['url'] %>
+      <%- } -%>
+      <%- if $reverse_cookies['domain'] { -%>
+  ProxyPassReverseCookieDomain <%= $reverse_cookies['domain'] %> <%= $reverse_cookies['url'] %>
+      <%- } -%>
+    <%- } -%>
+  <%- } -%>
+  <%- if $proxy['reverse_urls'] { -%>
+    <%- [$proxy['reverse_urls']].flatten.each |$reverse_url| { -%>
+  ProxyPassReverse <%= $proxy['path'] %> <%= $reverse_url %>
+    <%- } -%>
+  <%- } else { -%>
+  ProxyPassReverse <%= $proxy['path'] %> <%= $proxy['url'] %>
+  <%- } -%>
+  <%- if $proxy['setenv'] { -%>
+    <%- [$proxy['setenv']].flatten.each |$setenv_var| { -%>
+  SetEnv <%= $setenv_var %>
+    <%- } -%>
+  <%- } -%>
+<% } -%>
+<% [$proxy_pass_match].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$proxy| { %>
+  <%- [$proxy['no_proxy_uris']].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$uri| { -%>
+  ProxyPass <%= $uri %> !
+  <%- } -%>
+  <%- [$proxy['no_proxy_uris_match']].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$uri| { -%>
+  ProxyPassMatch <%= $uri %> !
+  <%- } -%>
+  ProxyPassMatch <%= $proxy['path'] %> <%= $proxy['url'] -%>
+  <%- if $proxy['params'] { -%>
+    <%- $proxy['params'].stdlib::sort_by |$m| { $m[0] }.each |$key, $value| { %> <%= $key %>=<%= $value -%>
+    <%- } -%>
+  <%- } -%>
+  <%- if $proxy['keywords'] { %> <%= $proxy['keywords'].join(' ') -%>
+  <%- } %>
+  <%- if $proxy['reverse_urls'] { -%>
+    <%- [$proxy['reverse_urls']].flatten.each |$reverse_url| { -%>
+  ProxyPassReverse <%= $proxy['path'] %> <%= $reverse_url %>
+    <%- } -%>
+  <%- } else { -%>
+  ProxyPassReverse <%= $proxy['path'] %> <%= $proxy['url'] %>
+  <%- } -%>
+  <%- if $proxy['setenv'] { -%>
+    <%- [$proxy['setenv']].flatten.each |$setenv_var| { -%>
+  SetEnv <%= $setenv_var %>
+    <%- } -%>
+  <%- } -%>
+<% } -%>
+<% if $proxy_dest { -%>
+<%- [$no_proxy_uris].flatten.filter |$m| { $m }.filter |$m| { $m }.each |$uri| { -%>
+  ProxyPass        <%= $uri %> !
+<% } -%>
+  ProxyPass        / <%= $proxy_dest %>/
+  ProxyPassReverse / <%= $proxy_dest %>/
+<% } -%>
+<% if $proxy_dest_match { -%>
+<%- [$no_proxy_uris_match].flatten.each |$uri| { -%>
+  ProxyPassMatch   <%= $uri %> !
+<% } -%>
+  ProxyPassMatch   / <%= $proxy_dest_match %>/
+  ProxyPassReverse / <%= $proxy_dest_reverse_match %>/
+<% } -%>
