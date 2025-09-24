@@ -1,0 +1,68 @@
+<% if $ssl { -%>
+
+  ## SSL directives
+  SSLEngine on
+  <%- unless $mdomain { -%>
+  SSLCertificateFile      "<%= $ssl_cert %>"
+  SSLCertificateKeyFile   "<%= $ssl_key %>"
+  <%- } -%>
+  <%- if $ssl_chain { -%>
+  SSLCertificateChainFile "<%= $ssl_chain %>"
+  <%- } -%>
+  <%- if $ssl_protocol { -%>
+  SSLProtocol             <%= [$ssl_protocol].flatten.join(' ') %>
+  <%- } -%>
+  <%- if $ssl_cipher { -%>
+  <%- if $ssl_cipher =~ String { -%>
+  SSLCipherSuite          <%= $ssl_cipher %>
+  <%- } elsif $ssl_cipher =~ Hash { -%>
+    <%- $ssl_cipher.map |$protocol, $cipher| { -%>
+  SSLCipherSuite <%= $protocol %> <%= $cipher%>
+    <%- } -%>
+  <%- } else { -%>
+  SSLCipherSuite          <%= $ssl_cipher.flatten.join(':') %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $ssl_honorcipherorder != undef { -%>
+  SSLHonorCipherOrder     <%= apache::bool2httpd($ssl_honorcipherorder) %>
+  <%- } -%>
+  <%- if $ssl_verify_client { -%>
+  SSLVerifyClient         <%= $ssl_verify_client %>
+  <%- if $ssl_verify_depth { -%>
+  SSLVerifyDepth          <%= $ssl_verify_depth %>
+  <%- } -%>
+  <%- } -%>
+  <%- if $ssl_certs_dir and $ssl_certs_dir != '' { -%>
+  SSLCACertificatePath    "<%= $ssl_certs_dir %>"
+  <%- } -%>
+  <%- if $ssl_ca { -%>
+  SSLCACertificateFile    "<%= $ssl_ca %>"
+  <%- } -%>
+  <%- if $ssl_crl_path { -%>
+  SSLCARevocationPath     "<%= $ssl_crl_path %>"
+  <%- } -%>
+  <%- if $ssl_crl { -%>
+  SSLCARevocationFile     "<%= $ssl_crl %>"
+  <%- } -%>
+  <%- if $ssl_crl_check { -%>
+  SSLCARevocationCheck    <%= $ssl_crl_check %>
+  <%- } -%>
+  <%- if $ssl_options { -%>
+  SSLOptions <%= [$ssl_options].flatten.join(' ') %>
+  <%- } -%>
+  <%- if $ssl_openssl_conf_cmd { -%>
+  SSLOpenSSLConfCmd       <%= $ssl_openssl_conf_cmd %>
+  <%- } -%>
+  <%- if $ssl_stapling != undef { -%>
+  SSLUseStapling <%= apache::bool2httpd($ssl_stapling) %>
+  <%- } -%>
+  <%- if $ssl_stapling_timeout { -%>
+  SSLStaplingResponderTimeout <%= $ssl_stapling_timeout %>
+  <%- } -%>
+  <%- if $ssl_stapling_return_errors != undef { -%>
+  SSLStaplingReturnResponderErrors <%= apache::bool2httpd($ssl_stapling_return_errors) %>
+  <%- } -%>
+  <%- if $ssl_user_name { -%>
+  SSLUserName             <%= $ssl_user_name %>
+  <%- } -%>
+<% } -%>

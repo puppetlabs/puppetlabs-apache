@@ -1803,7 +1803,7 @@ define apache::vhost (
   Optional[Variant[String, Boolean]] $modsec_audit_log                                = undef,
   Optional[String] $modsec_audit_log_file                                             = undef,
   Optional[String] $modsec_audit_log_pipe                                             = undef,
-  Variant[Array[Hash], String] $error_documents                                       = [],
+  Array[Apache::Errordocument] $error_documents                                       = [],
   Optional[Variant[Stdlib::Absolutepath, Enum['disabled']]] $fallbackresource         = undef,
   Optional[String] $scriptalias                                                       = undef,
   Optional[Integer] $limitreqfieldsize                                                = undef,
@@ -2342,7 +2342,7 @@ define apache::vhost (
       if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
         include apache::mod::proxy_http
 
-        # To match processing in templates/vhost/_directories.erb
+        # To match processing in templates/vhost/_directories.epp
         if $directory['proxy_pass_match'] {
           Array($directory['proxy_pass_match']).each |$proxy| {
             if $proxy['url'] =~ /"h2c?:\/\// {
@@ -2371,28 +2371,26 @@ define apache::vhost (
       }
     }
 
-    # Template uses:
-    # - $_directories
-    # - $docroot
-    # - $shibboleth_enabled
-    # - $cas_enabled
     unless empty($_directories) {
+      $directory_params = {
+        'docroot'            => $docroot,
+        'directories'        => $_directories,
+        'shibboleth_enabled' => $shibboleth_enabled,
+        'cas_enabled'        => $cas_enabled,
+      }
       concat::fragment { "${name}-directories":
         target  => "${priority_real}${filename}.conf",
         order   => 60,
-        content => template('apache/vhost/_directories.erb'),
+        content => epp('apache/vhost/_directories.epp', $directory_params),
       }
     }
   }
 
-  # Template uses:
-  # - $additional_includes
-  # - $use_optional_includes
   if $additional_includes and ! empty($additional_includes) {
     concat::fragment { "${name}-additional_includes":
       target  => "${priority_real}${filename}.conf",
       order   => 70,
-      content => template('apache/vhost/_additional_includes.erb'),
+      content => epp('apache/vhost/_additional_includes.epp', { 'additional_includes' => $additional_includes, 'use_optional_includes' => $use_optional_includes }),
     }
   }
 
@@ -2410,24 +2408,17 @@ define apache::vhost (
     }
   }
 
-  # Template uses no variables
   concat::fragment { "${name}-serversignature":
     target  => "${priority_real}${filename}.conf",
     order   => 90,
     content => "  ServerSignature Off\n",
   }
 
-  # Template uses:
-  # - $_access_logs
-  # - $_access_log_env_var
-  # - $access_log_destination
-  # - $_access_log_format
-  # - $_access_log_env_var
   if !empty($_access_logs) {
     concat::fragment { "${name}-access_log":
       target  => "${priority_real}${filename}.conf",
       order   => 100,
-      content => template('apache/vhost/_access_log.erb'),
+      content => epp('apache/vhost/_access_log.epp', { 'access_logs' => $_access_logs, 'logroot' => $logroot, 'ssl' => $ssl, 'filename' => $filename }),
     }
   }
 
@@ -2439,23 +2430,19 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $block
   if $block and ! empty($block) {
     concat::fragment { "${name}-block":
       target  => "${priority_real}${filename}.conf",
       order   => 120,
-      content => template('apache/vhost/_block.erb'),
+      content => epp('apache/vhost/_block.epp', { 'block' => $block }),
     }
   }
 
-  # Template uses:
-  # - $error_documents
   if $error_documents and ! empty($error_documents) {
     concat::fragment { "${name}-error_document":
       target  => "${priority_real}${filename}.conf",
       order   => 130,
-      content => template('apache/vhost/_error_document.erb'),
+      content => epp('apache/vhost/_error_document.epp', { 'error_documents' => $error_documents }),
     }
   }
 
@@ -2503,7 +2490,7 @@ define apache::vhost (
   if ($proxy_dest or $proxy_pass or $proxy_pass_match or $proxy_dest_match or $proxy_preserve_host or ($proxy_add_headers =~ NotUndef)) and $ensure == 'present' {
     include apache::mod::proxy_http
 
-    # To match processing in templates/vhost/_proxy.erb
+    # To match processing in templates/vhost/_proxy.epp
     if $proxy_dest =~ Pattern[/^h2c?:\/\//] or $proxy_dest_match =~ Pattern[/^h2c?:\/\//] {
       include apache::mod::proxy_http2
     }
@@ -2512,49 +2499,57 @@ define apache::vhost (
         include apache::mod::proxy_http2
       }
     }
+    $proxy_params = {
+      'proxy_dest'               => $proxy_dest,
+      'proxy_pass'               => $proxy_pass,
+      'proxy_pass_match'         => $proxy_pass_match,
+      'proxy_dest_match'         => $proxy_dest_match,
+      'proxy_add_headers'        => $proxy_add_headers,
+      'proxy_requests'           => $proxy_requests,
+      'proxy_preserve_host'      => $proxy_preserve_host,
+      'proxy_error_override'     => $proxy_error_override,
+      'no_proxy_uris'            => $no_proxy_uris,
+      'no_proxy_uris_match'      => $no_proxy_uris_match,
+      'proxy_dest_reverse_match' => $proxy_dest_reverse_match,
+    }
     concat::fragment { "${name}-proxy":
       target  => "${priority_real}${filename}.conf",
       order   => 170,
-      content => template('apache/vhost/_proxy.erb'),
+      content => epp('apache/vhost/_proxy.epp', $proxy_params),
     }
   }
 
-  # Template uses:
-  # - $redirect_source
-  # - $redirect_dest
-  # - $redirect_status
-  # - $redirect_dest_a
-  # - $redirect_source_a
-  # - $redirect_status_a
-  # - $redirectmatch_status
-  # - $redirectmatch_regexp
-  # - $redirectmatch_dest
-  # - $redirectmatch_status_a
-  # - $redirectmatch_regexp_a
-  # - $redirectmatch_dest
   if (($redirect_source and $redirect_dest) or ($redirectmatch_regexp and $redirectmatch_dest)) and $ensure == 'present' {
+    $redirect_params = {
+      'redirect_source'      => $redirect_source,
+      'redirect_dest'        => $redirect_dest,
+      'redirect_status'      => $redirect_status,
+      'redirectmatch_regexp' => $redirectmatch_regexp,
+      'redirectmatch_dest'   => $redirectmatch_dest,
+      'redirectmatch_status' => $redirectmatch_status,
+    }
     include apache::mod::alias
 
     concat::fragment { "${name}-redirect":
       target  => "${priority_real}${filename}.conf",
       order   => 180,
-      content => template('apache/vhost/_redirect.erb'),
+      content => epp('apache/vhost/_redirect.epp', $redirect_params),
     }
   }
 
-  # Template uses:
-  # - $rewrites
-  # - $rewrite_inherit
-  # - $rewrite_base
-  # - $rewrite_rule
-  # - $rewrite_cond
-  # - $rewrite_map
   if (! empty($rewrites) or $rewrite_rule or $rewrite_inherit) and $ensure == 'present' {
     include apache::mod::rewrite
+    $rewrite_params = {
+      'rewrites'        => $rewrites,
+      'rewrite_inherit' => $rewrite_inherit,
+      'rewrite_base'    => $rewrite_base,
+      'rewrite_rule'    => $rewrite_rule,
+      'rewrite_cond'    => $rewrite_cond,
+    }
     concat::fragment { "${name}-rewrite":
       target  => "${priority_real}${filename}.conf",
       order   => 190,
-      content => template('apache/vhost/_rewrite.erb'),
+      content => epp('apache/vhost/_rewrite.epp', $rewrite_params),
     }
   }
 
@@ -2575,10 +2570,6 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $setenv
-  # - $setenvif
-  # - $setenvifnocase
   $use_env_mod = !empty($setenv)
   $use_setenvif_mod = !empty($setenvif) or !empty($setenvifnocase)
   if ($use_env_mod or $use_setenvif_mod) and $ensure == 'present' {
@@ -2589,38 +2580,47 @@ define apache::vhost (
       include apache::mod::setenvif
     }
 
+    $setenv_params = {
+      'setenv'         => $setenv,
+      'setenvif'       => $setenvif,
+      'setenvifnocase' => $setenvifnocase,
+    }
     concat::fragment { "${name}-setenv":
       target  => "${priority_real}${filename}.conf",
       order   => 220,
-      content => template('apache/vhost/_setenv.erb'),
+      content => epp('apache/vhost/_setenv.epp', $setenv_params),
     }
   }
 
-  # Template uses:
-  # - $ssl
-  # - $ssl_cert
-  # - $ssl_key
-  # - $ssl_chain
-  # - $ssl_certs_dir
-  # - $ssl_ca
-  # - $ssl_crl_path
-  # - $ssl_crl
-  # - $ssl_crl_check
-  # - $ssl_protocol
-  # - $ssl_cipher
-  # - $_ssl_honorcipherorder
-  # - $ssl_verify_client
-  # - $ssl_verify_depth
-  # - $ssl_options
-  # - $ssl_openssl_conf_cmd
-  # - $ssl_stapling
-  # - $mdomain
   if $ssl and $ensure == 'present' {
     include apache::mod::ssl
+    $ssl_params = {
+      'ssl'                        => $ssl,
+      'ssl_cert'                   => $ssl_cert,
+      'ssl_key'                    => $ssl_key,
+      'ssl_chain'                  => $ssl_chain,
+      'ssl_certs_dir'              => $ssl_certs_dir,
+      'ssl_ca'                     => $ssl_ca,
+      'ssl_crl_path'               => $ssl_crl_path,
+      'ssl_crl'                    => $ssl_crl,
+      'ssl_crl_check'              => $ssl_crl_check,
+      'ssl_protocol'               => $ssl_protocol,
+      'ssl_cipher'                 => $ssl_cipher,
+      'ssl_honorcipherorder'       => $_ssl_honorcipherorder,
+      'ssl_verify_client'          => $ssl_verify_client,
+      'ssl_verify_depth'           => $ssl_verify_depth,
+      'ssl_options'                => $ssl_options,
+      'ssl_openssl_conf_cmd'       => $ssl_openssl_conf_cmd,
+      'ssl_stapling'               => $ssl_stapling,
+      'ssl_stapling_timeout'       => $ssl_stapling_timeout,
+      'ssl_stapling_return_errors' => $ssl_stapling_return_errors,
+      'ssl_user_name'              => $ssl_user_name,
+      'mdomain'                    => $mdomain,
+    }
     concat::fragment { "${name}-ssl":
       target  => "${priority_real}${filename}.conf",
       order   => 230,
-      content => template('apache/vhost/_ssl.erb'),
+      content => epp('apache/vhost/_ssl.epp', $ssl_params),
     }
 
     if $ssl_reload_on_change {
@@ -2663,25 +2663,27 @@ define apache::vhost (
     }
   }
 
-  # Template uses:
-  # - $php_values
-  # - $php_flags
   if ($php_values and ! empty($php_values)) or ($php_flags and ! empty($php_flags)) {
+    $php_params = {
+      'php_values' => $php_values,
+      'php_flags'  => $php_flags,
+    }
     concat::fragment { "${name}-php":
       target  => "${priority_real}${filename}.conf",
       order   => 240,
-      content => template('apache/vhost/_php.erb'),
+      content => epp('apache/vhost/_php.epp', $php_params),
     }
   }
 
-  # Template uses:
-  # - $php_admin_values
-  # - $php_admin_flags
   if ($php_admin_values and ! empty($php_admin_values)) or ($php_admin_flags and ! empty($php_admin_flags)) {
+    $php_admin_params = {
+      'php_admin_values' => $php_admin_values,
+      'php_admin_flags'  => $php_admin_flags,
+    }
     concat::fragment { "${name}-php_admin":
       target  => "${priority_real}${filename}.conf",
       order   => 250,
-      content => template('apache/vhost/_php_admin.erb'),
+      content => epp('apache/vhost/_php_admin.epp', $php_admin_params),
     }
   }
 

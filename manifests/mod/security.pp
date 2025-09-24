@@ -326,49 +326,30 @@ class apache::mod::security (
   }
 
   if $manage_security_crs {
-    # Template uses:
-    # - $_secdefaultaction
-    # - $critical_anomaly_score
-    # - $error_anomaly_score
-    # - $warning_anomaly_score
-    # - $notice_anomaly_score
-    # - $inbound_anomaly_threshold
-    # - $outbound_anomaly_threshold
-    # - $paranoia_level
-    # - $executing_paranoia_level
-    # - $allowed_methods
-    # - $content_types
-    # - $restricted_extensions
-    # - $restricted_headers
-    # - $secrequestmaxnumargs
-    # - $enable_dos_protection
-    # - $dos_burst_time_slice
-    # - $dos_counter_threshold
-    # - $dos_block_timeout
     $security_crs_parameters = {
-      '_secdefaultaction'           => $_secdefaultaction,
-      'critical_anomaly_score'      => $critical_anomaly_score,
-      'error_anomaly_score'         => $error_anomaly_score,
-      'warning_anomaly_score'       => $warning_anomaly_score,
-      'notice_anomaly_score'        => $notice_anomaly_score,
-      'inbound_anomaly_threshold'   => $inbound_anomaly_threshold,
-      'outbound_anomaly_threshold'  => $outbound_anomaly_threshold,
-      'secrequestmaxnumargs'        => $secrequestmaxnumargs,
-      'allowed_methods'             => $allowed_methods,
-      'content_types'               => $content_types,
-      'restricted_extensions'       => $restricted_extensions,
-      'restricted_headers'          => $restricted_headers,
-      'paranoia_level'              => $paranoia_level,
-      'executing_paranoia_level'    => $executing_paranoia_level,
-      'enable_dos_protection'       => $enable_dos_protection,
-      'dos_burst_time_slice'        => $dos_burst_time_slice,
-      'dos_counter_threshold'       => $dos_counter_threshold,
-      'dos_block_timeout'           => $dos_block_timeout,
+      '_secdefaultaction'          => $_secdefaultaction,
+      'critical_anomaly_score'     => $critical_anomaly_score,
+      'error_anomaly_score'        => $error_anomaly_score,
+      'warning_anomaly_score'      => $warning_anomaly_score,
+      'notice_anomaly_score'       => $notice_anomaly_score,
+      'inbound_anomaly_threshold'  => $inbound_anomaly_threshold,
+      'outbound_anomaly_threshold' => $outbound_anomaly_threshold,
+      'secrequestmaxnumargs'       => $secrequestmaxnumargs,
+      'allowed_methods'            => $allowed_methods,
+      'content_types'              => $content_types,
+      'restricted_extensions'      => $restricted_extensions,
+      'restricted_headers'         => $restricted_headers,
+      'paranoia_level'             => $paranoia_level,
+      'executing_paranoia_level'   => $executing_paranoia_level,
+      'enable_dos_protection'      => $enable_dos_protection,
+      'dos_burst_time_slice'       => $dos_burst_time_slice,
+      'dos_counter_threshold'      => $dos_counter_threshold,
+      'dos_block_timeout'          => $dos_block_timeout,
     }
 
     file { "${modsec_dir}/security_crs.conf":
       ensure  => file,
-      content => template('apache/mod/security_crs.conf.erb'),
+      content => epp('apache/mod/security_crs.conf.epp', $security_crs_parameters),
       require => File[$modsec_dir],
       notify  => Class['apache::service'],
     }

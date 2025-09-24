@@ -1,0 +1,9 @@
+
+  ## Load additional static includes
+<% [$additional_includes].flatten.each |$include| { -%>
+  <%- if $use_optional_includes { -%>
+  IncludeOptional "<%= $include %>"
+  <%- } else { -%>
+  Include "<%= $include %>"
+  <%- } -%>
+<% } -%>

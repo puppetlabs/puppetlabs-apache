@@ -1,8 +1,4 @@
-<% if type($timeouts, 'generalized') == String { -%>
-RequestReadTimeout <%= $timeouts -%>  
-<% } else { -%>
-  <%- $timeouts.each |$timeout| { -%>
+<%- [$timeouts].flatten.each |$timeout| { -%>
 RequestReadTimeout <%= $timeout %>
-  <%- } -%>
 <% } -%>
 
