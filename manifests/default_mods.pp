@@ -68,7 +68,6 @@ class apache::default_mods (
         include apache::mod::authn_core
         include apache::mod::filter
         include apache::mod::headers
-        include apache::mod::info
         include apache::mod::mime_magic
         include apache::mod::reqtimeout
         include apache::mod::rewrite
