@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v13.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.0.0) - 2025-09-24
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.3.1...v13.0.0)
+
+### Changed
+
+- (MODULES-11606) Remove apache::mod::info as a default module for FreeBSD [#2610](https://github.com/puppetlabs/puppetlabs-apache/pull/2610) ([shubhamshinde360](https://github.com/shubhamshinde360))
+- (CAT-2360) Prepare module for Puppetcore / Drop Support for Puppet 7 [#2600](https://github.com/puppetlabs/puppetlabs-apache/pull/2600) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- (MAINT) Remove enforced Ubuntu runner from ci [#2606](https://github.com/puppetlabs/puppetlabs-apache/pull/2606) ([LukasAud](https://github.com/LukasAud))
+
+### Other
+
+- (CAT-2296) Update github runner image to ubuntu-24.04 [#2599](https://github.com/puppetlabs/puppetlabs-apache/pull/2599) ([shubhamshinde360](https://github.com/shubhamshinde360))
+
 ## [v12.3.1](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.3.1) - 2025-03-31
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.3.0...v12.3.1)
@@ -31,7 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Other
 
 - Fix mod_headers load for headers in directory #2590 [#2591](https://github.com/puppetlabs/puppetlabs-apache/pull/2591) ([uoe-pjackson](https://github.com/uoe-pjackson))
-- Adding ModSecurity parameter for audit log format. [#2583](https://github.com/puppetlabs/puppetlabs-apache/pull/2583) ([Tamerz](https://github.com/Tamerz))
+- Adding ModSecurity parameter for audit log format. [#2583](https://github.com/puppetlabs/puppetlabs-apache/pull/2583) ([tamerz](https://github.com/tamerz))
 
 ## [v12.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v12.2.0) - 2024-10-23
 
@@ -280,7 +297,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 
 - Declare minimum Puppet version to be 6.24.0 [#2342](https://github.com/puppetlabs/puppetlabs-apache/pull/2342) ([ekohl](https://github.com/ekohl))
-- Fix RedHat + PHP 8 libphp file [#2333](https://github.com/puppetlabs/puppetlabs-apache/pull/2333) ([polatsinan](https://github.com/polatsinan))
+- Fix RedHat + PHP 8 libphp file [#2333](https://github.com/puppetlabs/puppetlabs-apache/pull/2333) ([cinpol](https://github.com/cinpol))
 
 ## [v8.3.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v8.3.0) - 2022-10-28
 
@@ -529,7 +546,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 - (MODULES-10887) Set `use_servername_for_filenames` for defaults [#2103](https://github.com/puppetlabs/puppetlabs-apache/pull/2103) ([towo](https://github.com/towo))
 - pdksync - (feat) Add support for Puppet 7 [#2101](https://github.com/puppetlabs/puppetlabs-apache/pull/2101) ([daianamezdrea](https://github.com/daianamezdrea))
-- (feat) Add support for apreq2 MOD on Debian 9, 10 [#2085](https://github.com/puppetlabs/puppetlabs-apache/pull/2085) ([TigerKriika](https://github.com/TigerKriika))
+- (feat) Add support for apreq2 MOD on Debian 9, 10 [#2085](https://github.com/puppetlabs/puppetlabs-apache/pull/2085) ([TigerKirika](https://github.com/TigerKirika))
 
 ### Fixed
 
