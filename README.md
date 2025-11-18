@@ -278,7 +278,7 @@
 5. [Limitations - OS compatibility, etc.][Limitations]
 6. [License][License]
 7. [Development - Guide for contributing to the module][Development]
-    
+
 <a id="module-description"></a>
 ## Module description
 
@@ -670,7 +670,7 @@ class { 'apache::mod::ssl':
 }
 ```
 
-You can also pass the different [`ssl_cipher`][] for different SSL protocols. This allows you to fine-tune the ciphers based on the specific SSL/TLS protocol version being used. 
+You can also pass the different [`ssl_cipher`][] for different SSL protocols. This allows you to fine-tune the ciphers based on the specific SSL/TLS protocol version being used.
 ```puppet
 class { 'apache::mod::ssl':
   ssl_cipher => {
@@ -693,7 +693,7 @@ apache::mod { 'mod_authnz_external': }
 
 There are several optional parameters you can specify when defining Apache modules this way. See the [defined type's reference][`apache::mod`] for details.
 
-<a id="load-balancing-examples"></a> 
+<a id="load-balancing-examples"></a>
 ### Load balancing examples
 
 Apache supports load balancing across groups of servers through the [`mod_proxy`][] Apache module. Puppet supports configuring Apache load balancing groups (also known as balancer clusters) through the [`apache::balancer`][] and [`apache::balancermember`][] defined types.
@@ -741,7 +741,7 @@ apache::balancer { 'puppet01':
 
 Load balancing scheduler algorithms (`lbmethod`) are listed [in mod_proxy_balancer documentation](https://httpd.apache.org/docs/current/mod/mod_proxy_balancer.html).
 
-<a id="reference"></a> 
+<a id="reference"></a>
 ## Reference
 
 For information on classes, types and functions see the [REFERENCE.md](https://github.com/puppetlabs/puppetlabs-apache/blob/main/REFERENCE.md)
@@ -835,7 +835,7 @@ See [here](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linu
 
 You must set the contexts using `semanage fcontext` instead of `chcon` because Puppet's `file` resources reset the values' context in the database if the resource doesn't specify it.
 
-<a id="development"></a> 
+<a id="development"></a>
 ## Development
 
 ### Testing
@@ -863,7 +863,7 @@ COVERAGE=yes bundle exec rake parallel_spec
 Acceptance tests for this module leverage [puppet_litmus](https://github.com/puppetlabs/puppet_litmus).
 To run the acceptance tests follow the instructions [here](https://puppetlabs.github.io/litmus/Running-acceptance-tests.html). You can also find a tutorial and walkthrough of using Litmus and the PDK on [YouTube](https://www.youtube.com/watch?v=FYfR7ZEGHoE).
 
-<a id="license"></a> 
+<a id="license"></a>
 ## License
 
 This codebase is licensed under the Apache2.0 licensing, however due to the nature of the codebase the open source dependencies may also use a combination of [AGPL](https://opensource.org/license/agpl-v3/), [BSD-2](https://opensource.org/license/bsd-2-clause/), [BSD-3](https://opensource.org/license/bsd-3-clause/), [GPL2.0](https://opensource.org/license/gpl-2-0/), [LGPL](https://opensource.org/license/lgpl-3-0/), [MIT](https://opensource.org/license/mit/) and [MPL](https://opensource.org/license/mpl-2-0/) Licensing.
@@ -918,7 +918,7 @@ Please be aware of the following format guidelines for the tag:
   - E.g. `RedHat` OR `redhat`, not: `Red Hat Enterprise Linux`, `RHEL`, or `Red Hat`
 
 If the tag is incorrectly formatted, a warning will be printed out at the end of the test run, indicating what tag(s) could not be parsed.
-This will not halt the execution of other tests.  
+This will not halt the execution of other tests.
 
 Once the class is tagged, it is possible to exclude a test for that particular [Apache MOD][Apache Modules] using RSpec's filtering and a helper method:
 ```ruby
