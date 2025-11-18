@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v13.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.1.0) - 2025-11-18
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.0.0...v13.1.0)
+
+### Added
+
+- Add Debian 13 support [#2603](https://github.com/puppetlabs/puppetlabs-apache/pull/2603) ([weaselp](https://github.com/weaselp))
+
 ## [v13.0.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.0.0) - 2025-09-24
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v12.3.1...v13.0.0)
