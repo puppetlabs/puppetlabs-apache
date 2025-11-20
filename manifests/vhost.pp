@@ -2181,28 +2181,22 @@ define apache::vhost (
   }
 
   ## Create a global LocationMatch if locations aren't defined
-  if $modsec_disable_ids {
-    if $modsec_disable_ids =~ Array {
-      $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
-    } else {
-      $_modsec_disable_ids = $modsec_disable_ids
-    }
+  if $modsec_disable_ids =~ Array {
+    $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
+  } else {
+    $_modsec_disable_ids = $modsec_disable_ids
   }
 
-  if $modsec_disable_msgs {
-    if $modsec_disable_msgs =~ Array {
-      $_modsec_disable_msgs = { '.*' => $modsec_disable_msgs }
-    } else {
-      $_modsec_disable_msgs = $modsec_disable_msgs
-    }
+  if $modsec_disable_msgs =~ Array {
+    $_modsec_disable_msgs = { '.*' => $modsec_disable_msgs }
+  } else {
+    $_modsec_disable_msgs = $modsec_disable_msgs
   }
 
-  if $modsec_disable_tags {
-    if $modsec_disable_tags =~ Array {
-      $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
-    } else {
-      $_modsec_disable_tags = $modsec_disable_tags
-    }
+  if $modsec_disable_tags =~ Array {
+    $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
+  } else {
+    $_modsec_disable_tags = $modsec_disable_tags
   }
 
   concat { "${priority_real}${filename}.conf":
@@ -2840,14 +2834,14 @@ define apache::vhost (
     }
   }
 
-  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
+  if $modsec_disable_vhost or $_modsec_disable_ids or !empty($modsec_disable_ips) or $_modsec_disable_msgs or $_modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
     $security_params = {
       'modsec_disable_vhost'              => $modsec_disable_vhost,
       'modsec_audit_log_destination'      => $modsec_audit_log_destination,
-      '_modsec_disable_ids'               => $modsec_disable_ids,
+      '_modsec_disable_ids'               => $_modsec_disable_ids,
       'modsec_disable_ips'                => $modsec_disable_ips,
-      '_modsec_disable_msgs'              => $modsec_disable_msgs,
-      '_modsec_disable_tags'              => $modsec_disable_tags,
+      '_modsec_disable_msgs'              => $_modsec_disable_msgs,
+      '_modsec_disable_tags'              => $_modsec_disable_tags,
       'modsec_body_limit'                 => $modsec_body_limit,
       'modsec_inbound_anomaly_threshold'  => $modsec_inbound_anomaly_threshold,
       'modsec_outbound_anomaly_threshold' => $modsec_outbound_anomaly_threshold,
