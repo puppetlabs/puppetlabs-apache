@@ -16,6 +16,12 @@ MDCertificateAuthority <%= $apache::mod::md::md_certificate_authority %>
 <% if $apache::mod::md::md_certificate_check { -%>
 MDCertificateCheck <%= $apache::mod::md::md_certificate_check %>
 <% } -%>
+<% if $apache::mod::md::md_certificate_file { -%>
+MDCertificateFile "<%= $apache::mod::md::md_certificate_file %>"
+<% } -%>
+<% if $apache::mod::md::md_certificate_key_file { -%>
+MDCertificateKeyFile "<%= $apache::mod::md::md_certificate_key_file %>"
+<% } -%>
 <% if $apache::mod::md::md_certificate_monitor { -%>
 MDCertificateMonitor <%= $apache::mod::md::md_certificate_monitor %>
 <% } -%>
@@ -28,11 +34,26 @@ MDCertificateStatus <%= $apache::mod::md::md_certificate_status %>
 <% if $apache::mod::md::md_challenge_dns01 { -%>
 MDChallengeDns01 "<%= $apache::mod::md::md_challenge_dns01 %>"
 <% } -%>
+<% if $apache::mod::md::md_challenge_dns01_version { -%>
+MDChallengeDns01Version <%= $apache::mod::md::md_challenge_dns01_version %>
+<% } -%>
+<% if $apache::mod::md::md_check_interval { -%>
+MDCheckInterval <%= $apache::mod::md::md_check_interval %>
+<% } -%>
 <% if $apache::mod::md::md_contact_email { -%>
 MDContactEmail <%= $apache::mod::md::md_contact_email %>
 <% } -%>
+<% if $apache::mod::md::md_external_account_binding { -%>
+MDExternalAccountBinding "<%= $apache::mod::md::md_external_account_binding %>"
+<% } -%>
 <% if $apache::mod::md::md_http_proxy { -%>
 MDHttpProxy <%= $apache::mod::md::md_http_proxy %>
+<% } -%>
+<% if $apache::mod::md::md_initial_delay { -%>
+MDInitialDelay <%= $apache::mod::md::md_initial_delay %>
+<% } -%>
+<% if $apache::mod::md::md_match_names { -%>
+MDMatchNames <%= $apache::mod::md::md_match_names %>
 <% } -%>
 <% if $apache::mod::md::md_members { -%>
 MDMembers <%= $apache::mod::md::md_members %>
@@ -52,14 +73,29 @@ MDPortMap <%= $apache::mod::md::md_port_map %>
 <% if $apache::mod::md::md_private_keys { -%>
 MDPrivateKeys <%= $apache::mod::md::md_private_keys %>
 <% } -%>
+<% if $apache::mod::md::md_profile { -%>
+MDProfile <%= $apache::mod::md::md_profile %>
+<% } -%>
+<% if $apache::mod::md::md_profile_mandatory { -%>
+MDProfileMandatory <%= $apache::mod::md::md_profile_mandatory %>
+<% } -%>
 <% if $apache::mod::md::md_renew_mode { -%>
 MDRenewMode <%= $apache::mod::md::md_renew_mode %>
+<% } -%>
+<% if $apache::mod::md::md_renew_via_ari { -%>
+MDRenewViaARI <%= $apache::mod::md::md_renew_via_ari %>
 <% } -%>
 <% if $apache::mod::md::md_renew_window { -%>
 MDRenewWindow <%= $apache::mod::md::md_renew_window %>
 <% } -%>
 <% if $apache::mod::md::md_require_https { -%>
 MDRequireHttps <%= $apache::mod::md::md_require_https %>
+<% } -%>
+<% if $apache::mod::md::md_retry_delay { -%>
+MDRetryDelay <%= $apache::mod::md::md_retry_delay %>
+<% } -%>
+<% if $apache::mod::md::md_retry_failover { -%>
+MDRetryFailover <%= $apache::mod::md::md_retry_failover %>
 <% } -%>
 <% if $apache::mod::md::md_server_status { -%>
 MDServerStatus <%= $apache::mod::md::md_server_status %>
@@ -78,6 +114,9 @@ MDStaplingRenewWindow <%= $apache::mod::md::md_stapling_renew_window %>
 <% } -%>
 <% if $apache::mod::md::md_store_dir { -%>
 MDStoreDir "<%= $apache::mod::md::md_store_dir %>"
+<% } -%>
+<% if $apache::mod::md::md_store_locks { -%>
+MDStoreLocks "<%= $apache::mod::md::md_store_locks %>"
 <% } -%>
 <% if $apache::mod::md::md_warn_window { -%>
 MDWarnWindow <%= $apache::mod::md::md_warn_window %>
