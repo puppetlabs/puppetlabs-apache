@@ -20,6 +20,12 @@
 # @param md_certificate_check
 #   -
 #
+# @param md_certificate_file
+#   Specify a static certificate file for the MD.
+#
+# @param md_certificate_key_file
+#   Specify a static private key for for the static cerrtificate.
+#
 # @param md_certificate_monitor
 #   The URL of a certificate log monitor.
 #
@@ -33,11 +39,26 @@
 #   Define a program to be called when the `dns-01` challenge needs to be
 #   setup/torn down.
 #
+# @param md_challenge_dns01_version
+#   Set the type of arguments to call MDChallengeDns01 with
+#
+# @param md_check_interval
+#   Determines how often certificates are checked
+#
 # @param md_contact_email
 #   The ACME protocol requires you to give a contact url when you sign up.
 #
+# @param md_external_account_binding
+#   Set the external account binding keyid and hmac values to use at CA
+#
 # @param md_http_proxy
 #   Define a proxy for outgoing connections.
+#
+# @param md_initial_delay
+#   How long to delay the first certificate check.
+#
+# @param md_match_names
+#   Determines how DNS names are matched to vhosts
 #
 # @param md_members
 #   Control if the alias domain names are automatically added.
@@ -57,8 +78,17 @@
 # @param md_private_keys
 #   Set type and size of the private keys generated.
 #
+# @param md_profile
+#   Use a specific ACME profile from the CA
+#
+# @param md_profile_mandatory
+#   Control if an MDProfile is mandatory.
+#
 # @param md_renew_mode
 #   Controls if certificates shall be renewed.
+#
+# @param md_renew_via_ari
+#   usage of the ACME ARI extension (rfc9773).
 #
 # @param md_renew_window
 #   Control when a certificate will be renewed.
@@ -66,6 +96,12 @@
 # @param md_require_https
 #   Redirects http: traffic to https: for Managed Domains.
 #   An http: Virtual Host must nevertheless be setup for that domain.
+#
+# @param md_retry_delay
+#   Time length for first retry, doubled on every consecutive error.
+#
+# @param md_retry_failover
+#   The number of errors before a failover to another CA is triggered
 #
 # @param md_server_status
 #   Control if Managed Domain information is added to server-status.
@@ -85,6 +121,9 @@
 # @param md_store_dir
 #   Path on the local file system to store the Managed Domains data.
 #
+# @param md_store_locks
+#   Configure locking of store for updates
+#
 # @param md_warn_window
 #  Define the time window when you want to be warned about an expiring
 #  certificate.
@@ -99,27 +138,40 @@ class apache::mod::md (
   Optional[Enum['accepted']]                                $md_certificate_agreement  = undef,
   Optional[Stdlib::HTTPUrl]                                 $md_certificate_authority  = undef,
   Optional[String]                                          $md_certificate_check      = undef, # undocumented
+  Optional[Stdlib::Absolutepath]                            $md_certificate_file       = undef,
+  Optional[Stdlib::Absolutepath]                            $md_certificate_key_file   = undef,
   Optional[String]                                          $md_certificate_monitor    = undef,
   Optional[Enum['ACME']]                                    $md_certificate_protocol   = undef,
   Optional[Apache::OnOff]                                   $md_certificate_status     = undef,
   Optional[Stdlib::Absolutepath]                            $md_challenge_dns01        = undef,
+  Optional[Integer[1,2]]                                    $md_challenge_dns01_version = undef,
+  Optional[String]                                          $md_check_interval         = undef,
   Optional[String]                                          $md_contact_email          = undef,
+  Optional[String]                                          $md_external_account_binding = undef,
   Optional[Stdlib::HTTPUrl]                                 $md_http_proxy             = undef,
+  Optional[String]                                          $md_initial_delay          = undef,
+  Optional[String]                                          $md_match_names            = undef,
   Optional[Enum['auto', 'manual']]                          $md_members                = undef,
   Optional[Stdlib::Absolutepath]                            $md_message_cmd            = undef,
   Optional[Apache::OnOff]                                   $md_must_staple            = undef,
   Optional[Stdlib::Absolutepath]                            $md_notify_cmd             = undef,
   Optional[String]                                          $md_port_map               = undef,
   Optional[String]                                          $md_private_keys           = undef,
+  Optional[String]                                          $md_profile                = undef,
+  Optional[Apache::OnOff]                                   $md_profile_mandatory      = undef,
   Optional[Enum['always', 'auto', 'manual']]                $md_renew_mode             = undef,
+  Optional[Apache::OnOff]                                   $md_renew_via_ari          = undef,
   Optional[String]                                          $md_renew_window           = undef,
   Optional[Enum['off', 'permanent', 'temporary']]           $md_require_https          = undef,
+  Optional[String]                                          $md_retry_delay            = undef,
+  Optional[Integer[0]]                                      $md_retry_failover         = undef,
   Optional[Apache::OnOff]                                   $md_server_status          = undef,
   Optional[Apache::OnOff]                                   $md_staple_others          = undef,
   Optional[Apache::OnOff]                                   $md_stapling               = undef,
   Optional[String]                                          $md_stapling_keep_response = undef,
   Optional[String]                                          $md_stapling_renew_window  = undef,
   Optional[Stdlib::Absolutepath]                            $md_store_dir              = undef,
+  Optional[String]                                          $md_store_locks            = undef,
   Optional[String]                                          $md_warn_window            = undef,
 ) {
   include apache
