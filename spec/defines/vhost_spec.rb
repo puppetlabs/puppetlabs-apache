@@ -318,6 +318,15 @@ describe 'apache::vhost', type: :define do
                   'mellon_session_length' => '300'
                 },
                 {
+                  'path' => '/secure-pam',
+                  'provider' => 'location',
+                  'auth_type' => 'Basic',
+                  'auth_basic_provider' => 'PAM',
+                  'auth_name' => 'my pam authentication',
+                  'require' => 'valid-user',
+                  'auth_pam_service' => 'my-pam-config',
+                },
+                {
                   'path' => '/secure',
                   'provider' => 'location',
                   'auth_type' => 'Basic',
@@ -760,6 +769,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+MellonUser\s"urn:oid:0\.9\.2342\.19200300\.100\.1\.1"$})
               .with_content(%r{^\s+MellonCond\sisMemberOf\s"cn=example-access,ou=Groups,o=example,o=com"\s\[MAP\]$})
               .with_content(%r{^\s+MellonSessionLength\s"300"$})
+              .with_content(%r{^\s+AuthPAMService\smy-pam-config$})
           }
           # rubocop:enable RSpec/ExampleLength
 
