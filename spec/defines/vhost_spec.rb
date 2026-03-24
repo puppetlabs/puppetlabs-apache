@@ -1417,6 +1417,82 @@ describe 'apache::vhost', type: :define do
               content: %r{^\s*SecAuditLog "/var/log/#{apache_name}/rspec\.example\.com_security\.log"$},
             )
           }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-security')
+              .without_content(%r{^\s*SecRuleEngine\s})
+          }
+        end
+
+        context 'modsec_rule_engine On' do
+          let :params do
+            {
+              'docroot' => '/rspec/docroot',
+              'modsec_rule_engine' => 'On'
+            }
+          end
+
+          it { is_expected.to compile }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-security').with(
+              content: %r{^\s*SecRuleEngine On$},
+            )
+          }
+        end
+
+        context 'modsec_rule_engine DetectionOnly' do
+          let :params do
+            {
+              'docroot' => '/rspec/docroot',
+              'modsec_rule_engine' => 'DetectionOnly'
+            }
+          end
+
+          it { is_expected.to compile }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-security').with(
+              content: %r{^\s*SecRuleEngine DetectionOnly$},
+            )
+          }
+        end
+
+        context 'modsec_rule_engine Off' do
+          let :params do
+            {
+              'docroot' => '/rspec/docroot',
+              'modsec_rule_engine' => 'Off',
+              'modsec_audit_log' => true,
+              'modsec_allowed_methods' => 'GET HEAD POST OPTIONS'
+            }
+          end
+
+          it { is_expected.to compile }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-security')
+              .with_content(%r{^\s*SecRuleEngine Off$})
+              .without_content(%r{^\s*SecAuditLog\s})
+              .without_content(%r{^\s*SecAction\s})
+          }
+        end
+
+        context 'legacy modsec_disable_vhost' do
+          let :params do
+            {
+              'docroot' => '/rspec/docroot',
+              'modsec_disable_vhost' => true
+            }
+          end
+
+          it { is_expected.to compile }
+
+          it {
+            expect(subject).to contain_concat__fragment('rspec.example.com-security').with(
+              content: %r{^\s*SecRuleEngine Off$},
+            )
+          }
         end
 
         context 'modsec_audit_log_file' do
