@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe 'apache::mod::cluster', type: :class do
-  context 'on a RedHat OS Release 7 with mod version = 1.3.0' do
-    include_examples 'RedHat 7'
+  context 'on a RedHat OS Release 8 with mod version = 1.3.0' do
+    include_examples 'RedHat 8'
 
     let(:params) do
       {
@@ -26,8 +26,8 @@ describe 'apache::mod::cluster', type: :class do
     it { is_expected.to contain_file('cluster.conf') }
   end
 
-  context 'on a RedHat OS Release 7 with mod version > 1.3.0' do
-    include_examples 'RedHat 7'
+  context 'on a RedHat OS Release 8 with mod version > 1.3.0' do
+    include_examples 'RedHat 8'
 
     let(:params) do
       {

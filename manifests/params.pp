@@ -202,6 +202,7 @@ class apache::params inherits apache::version {
       'authnz_pam'            => 'mod_authnz_pam',
       'fcgid'                 => 'mod_fcgid',
       'geoip'                 => 'mod_geoip',
+      'http2'                 => 'mod_http2',
       'intercept_form_submit' => 'mod_intercept_form_submit',
       'ldap'                  => 'mod_ldap',
       'lookup_identity'       => 'mod_lookup_identity',
@@ -378,6 +379,7 @@ class apache::params inherits apache::version {
       '10'    => '7.3', # Debian Buster
       '11'    => '7.4', # Debian Bullseye
       '12'    => '8.2', # Debian Bookworm
+      '13'    => '8.4', # Debian Trixie
       '20.04' => '7.4', # Ubuntu Foccal Fossal
       '22.04' => '8.1', # Ubuntu Jammy
       '24.04' => '8.3', # Ubuntu Noble

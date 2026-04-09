@@ -26,14 +26,15 @@ describe 'apache::mod::php class', if: mod_supported_on_platform?('apache::mod::
     end
 
     if os[:family] == 'debian' && os[:release] =~ %r{^9\.}
+
       describe file("#{apache_hash['mod_dir']}/php7.0.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
-    elsif os[:family] == 'debian' && os[:release] =~ %r{^10\.}
+    elsif os[:family] == 'debian' && os[:release] =~ %r{^10}
       describe file("#{apache_hash['mod_dir']}/php7.3.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end
-    elsif os[:family] == 'debian' && os[:release] =~ %r{^11\.}
+    elsif os[:family] == 'debian' && os[:release] =~ %r{^11}
       describe file("#{apache_hash['mod_dir']}/php7.4.conf") do
         it { is_expected.to contain 'DirectoryIndex index.php' }
       end

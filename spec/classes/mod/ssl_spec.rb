@@ -60,22 +60,6 @@ describe 'apache::mod::ssl', type: :class do
         it { is_expected.to contain_file('ssl.conf').without_content(%r{  SSLCipherSuite TLSv1.2 RSA:!EXP:!NULL:+HIGH:+MEDIUM:-LOW}) }
       end
     end
-
-    context '7 OS with custom directories for PR#1635' do
-      include_examples 'RedHat 7'
-      let :pre_condition do
-        "class { 'apache':
-          confd_dir           => '/etc/httpd/conf.puppet.d',
-          default_mods        => false,
-          default_vhost       => false,
-          mod_dir             => '/etc/httpd/conf.modules.puppet.d',
-          vhost_dir           => '/etc/httpd/conf.puppet.d',
-        }"
-      end
-
-      it { is_expected.to contain_package('mod_ssl') }
-      it { is_expected.to contain_file('ssl.conf').with_path('/etc/httpd/conf.puppet.d/ssl.conf') }
-    end
   end
 
   context 'on a Debian OS' do

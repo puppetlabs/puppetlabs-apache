@@ -167,16 +167,6 @@ describe 'apache::mod::status', type: :class do
           }
         end
 
-        context 'on a RedHat 7 OS' do
-          include_examples 'RedHat 7'
-
-          it { is_expected.to contain_apache__mod('status') }
-
-          include_examples 'status_conf_spec_require', req_value, 'On', '/server-status'
-
-          it { is_expected.to contain_file('status.conf').with_path('/etc/httpd/conf.modules.d/status.conf') }
-        end
-
         context 'on a RedHat 8 OS' do
           include_examples 'RedHat 8'
 
