@@ -2300,6 +2300,7 @@ define apache::vhost (
   }
 
   if $fallbackresource {
+    include apache::mod::dir
     $fall_back_res_params = {
       'fallbackresource' => $fallbackresource,
     }
@@ -2335,8 +2336,45 @@ define apache::vhost (
         include apache::mod::authz_groupfile
       }
 
+      if 'options' in $directory {
+        if !('-ExecCGI' in $directory['options']) and 'ExecCGI' in $directory['options'] {
+          case $apache::mpm_module {
+            'prefork': {
+              include apache::mod::cgi
+            }
+            'worker': {
+              include apache::mod::cgid
+            }
+            default: {
+              # do nothing
+            }
+          }
+        }
+      }
+
+      if 'dav' in $directory {
+        include apache::mod::dav
+        if $directory['dav'] == 'svn' {
+          include apache::mod::dav_svn
+        } elsif apache::bool2httpd($directory['dav']) == 'On' {
+          include apache::mod::dav_fs
+        }
+      }
+
+      if 'directoryindex' in $directory {
+        include apache::mod::dir
+      }
+
+      if 'expires_active' in $directory {
+        include apache::mod::expires
+      }
+
       if 'gssapi' in $directory {
         include apache::mod::auth_gssapi
+      }
+
+      if 'index_options' in $directory or 'index_order_default' in $directory or 'index_style_sheet' in $directory {
+        include apache::mod::autoindex
       }
 
       if $directory['provider'] and $directory['provider'] =~ 'location' and ('proxy_pass' in $directory or 'proxy_pass_match' in $directory) {
