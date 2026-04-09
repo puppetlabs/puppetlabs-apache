@@ -1253,7 +1253,7 @@ describe 'apache::vhost', type: :define do
         end
 
         describe 'serveraliases parameter' do
-          let(:params) { default_params.merge(serveraliases: serveraliases) }
+          let(:params) { default_params.merge(serveraliases:) }
 
           context 'with a string' do
             let(:serveraliases) { 'alias.example.com' }

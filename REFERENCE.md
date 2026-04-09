@@ -6072,6 +6072,7 @@ The following parameters are available in the `apache::mod::security` class:
 * [`custom_rules_set`](#-apache--mod--security--custom_rules_set)
 * [`modsec_dir`](#-apache--mod--security--modsec_dir)
 * [`modsec_secruleengine`](#-apache--mod--security--modsec_secruleengine)
+* [`debug_log_level`](#-apache--mod--security--debug_log_level)
 * [`audit_log_relevant_status`](#-apache--mod--security--audit_log_relevant_status)
 * [`audit_log_parts`](#-apache--mod--security--audit_log_parts)
 * [`audit_log_type`](#-apache--mod--security--audit_log_type)
@@ -6169,6 +6170,14 @@ Data type: `String`
 Configures the rules engine.
 
 Default value: `$apache::params::modsec_secruleengine`
+
+##### <a name="-apache--mod--security--debug_log_level"></a>`debug_log_level`
+
+Data type: `Integer[0, 9]`
+
+Configures the debug log level.
+
+Default value: `0`
 
 ##### <a name="-apache--mod--security--audit_log_relevant_status"></a>`audit_log_relevant_status`
 
@@ -7910,6 +7919,8 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`mdomain`](#-apache--vhost--mdomain)
 * [`proxy_requests`](#-apache--vhost--proxy_requests)
 * [`userdir`](#-apache--vhost--userdir)
+* [`proxy_protocol`](#-apache--vhost--proxy_protocol)
+* [`proxy_protocol_exceptions`](#-apache--vhost--proxy_protocol_exceptions)
 
 ##### <a name="-apache--vhost--access_log"></a>`access_log`
 
@@ -10837,6 +10848,22 @@ Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 Instances of apache::mod::userdir
 
 Default value: `undef`
+
+##### <a name="-apache--vhost--proxy_protocol"></a>`proxy_protocol`
+
+Data type: `Optional[Boolean]`
+
+Enable or disable PROXY protocol handling
+
+Default value: `undef`
+
+##### <a name="-apache--vhost--proxy_protocol_exceptions"></a>`proxy_protocol_exceptions`
+
+Data type: `Array[Stdlib::Host]`
+
+Disable processing of PROXY header for certain hosts or networks
+
+Default value: `[]`
 
 ### <a name="apache--vhost--custom"></a>`apache::vhost::custom`
 

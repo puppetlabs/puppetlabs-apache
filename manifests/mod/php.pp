@@ -106,14 +106,21 @@ class apache::mod::php (
   }
 
   if $facts['os']['name'] == 'SLES' {
-    # Enable legacy repo to install apache2-mod_php7 package
-    # if SUSE OS major version is >= 15 and minor version is > 3
-    if ($_package_name == 'apache2-mod_php7' and versioncmp($facts['os']['release']['major'], '15') >= 0 and versioncmp($facts['os']['release']['minor'], '3') == 1) {
-      exec { 'enable legacy repos':
-        path    => '/bin:/usr/bin/:/sbin:/usr/sbin',
-        command => "SUSEConnect --product sle-module-legacy/${facts['os']['release']['major']}.${facts['os']['release']['minor']}/x86_64",
-        unless  => "SUSEConnect --status-text | grep sle-module-legacy/${facts['os']['release']['major']}.${facts['os']['release']['minor']}/x86_64",
-      }
+    # TEMPORARY FIX: Configure fallback repo for unregistered SLES systems
+    # GCP BYOS images have zero repos configured, SUSEConnect doesn't work
+    # Use version-appropriate repos: Leap 42.3 for SLES 12 (PHP 5), Leap 15.6 for SLES 15 (PHP 7)
+    if versioncmp($facts['os']['release']['major'], '15') >= 0 {
+      $repo_url = 'http://download.opensuse.org/distribution/leap/15.6/repo/oss/'
+    } else {
+      # SLES 12 needs older repo with PHP 5 support
+      $repo_url = 'http://download.opensuse.org/distribution/leap/42.3/repo/oss/'
+    }
+
+    exec { 'Configure zypper repo for SLES mod_php':
+      path      => '/bin:/usr/bin:/sbin:/usr/sbin',
+      command   => "zypper --non-interactive --gpg-auto-import-keys ar ${repo_url} opensuse-leap-fallback && zypper --non-interactive --gpg-auto-import-keys refresh",
+      unless    => "zypper lr 2>/dev/null | grep -q 'opensuse-leap-fallback\\|http'",
+      logoutput => true,
     }
 
     ::apache::mod { $mod:
@@ -122,6 +129,7 @@ class apache::mod::php (
       lib            => "mod_${mod}.so",
       id             => $_module_id,
       path           => "${apache::lib_path}/mod_${mod}.so",
+      require        => Exec['Configure zypper repo for SLES mod_php'],
     }
   } else {
     ::apache::mod { $mod:

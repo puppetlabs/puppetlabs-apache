@@ -17,8 +17,8 @@ describe 'apache::mod::fcgid', type: :class do
     it { is_expected.to contain_package('libapache2-mod-fcgid') }
   end
 
-  context 'on RHEL7' do
-    include_examples 'RedHat 7'
+  context 'on RHEL8' do
+    include_examples 'RedHat 8'
 
     describe 'without parameters' do
       it { is_expected.to contain_class('apache::params') }
