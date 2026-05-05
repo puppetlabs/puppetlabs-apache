@@ -45,6 +45,7 @@ class apache::mod::nss (
     ensure  => file,
     path    => "${apache::mod_dir}/nss.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/nss.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

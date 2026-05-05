@@ -110,6 +110,7 @@ class apache::mod::http2 (
     ensure  => file,
     content => epp('apache/mod/http2.conf.epp', $parameters),
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     path    => "${apache::mod_dir}/http2.conf",
     owner   => $apache::params::user,
     group   => $apache::params::group,

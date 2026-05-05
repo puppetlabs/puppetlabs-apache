@@ -51,6 +51,7 @@ class apache::mod::userdir (
     ensure  => file,
     path    => "${apache::mod_dir}/userdir.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/userdir.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

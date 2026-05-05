@@ -57,6 +57,7 @@ class apache::mod::fcgid (
     ensure  => file,
     path    => "${apache::mod_dir}/${conf_name}",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/fcgid.conf.epp', { 'options'  => $options, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

@@ -126,6 +126,7 @@ define apache::mod (
     owner   => 'root',
     group   => $apache::params::root_group,
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/load.epp', $parameters),
     require => [
       Package['httpd'],
@@ -144,6 +145,7 @@ define apache::mod (
       owner   => 'root',
       group   => $apache::params::root_group,
       mode    => $apache::file_mode,
+      seltype => 'httpd_config_t',
       require => [
         File[$_loadfile_name],
         Exec["mkdir ${enable_dir}"],
@@ -162,6 +164,7 @@ define apache::mod (
         owner   => 'root',
         group   => $apache::params::root_group,
         mode    => $apache::file_mode,
+        seltype => 'httpd_config_t',
         require => [
           File["${mod}.conf"],
           Exec["mkdir ${enable_dir}"],
@@ -179,6 +182,7 @@ define apache::mod (
       owner   => 'root',
       group   => $apache::params::root_group,
       mode    => $apache::file_mode,
+      seltype => 'httpd_config_t',
       require => [
         File[$_loadfile_name],
         Exec["mkdir ${enable_dir}"],
@@ -197,6 +201,7 @@ define apache::mod (
         owner   => 'root',
         group   => $apache::params::root_group,
         mode    => $apache::file_mode,
+        seltype => 'httpd_config_t',
         require => [
           File["${mod}.conf"],
           Exec["mkdir ${enable_dir}"],

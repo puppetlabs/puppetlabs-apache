@@ -152,6 +152,7 @@ class apache::mod::php (
     owner   => 'root',
     group   => $root_group,
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => $manage_content,
     source  => $source,
     require => [

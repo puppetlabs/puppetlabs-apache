@@ -75,6 +75,7 @@ class apache::mod::wsgi (
     ensure  => file,
     path    => "${apache::mod_dir}/wsgi.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/wsgi.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

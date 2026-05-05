@@ -811,6 +811,7 @@ class apache::mod::passenger (
   file { 'passenger.conf':
     ensure  => file,
     path    => "${apache::mod_dir}/${passenger_conf_file}",
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/passenger.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

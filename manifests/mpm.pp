@@ -20,6 +20,7 @@ define apache::mpm (
     file { "${mod_dir}/${mpm}.load":
       ensure  => file,
       path    => "${mod_dir}/${mpm}.load",
+      seltype => 'httpd_config_t',
       content => '',
       require => [
         Package['httpd'],
@@ -32,6 +33,7 @@ define apache::mpm (
     file { "${mod_dir}/${mpm}.load":
       ensure  => file,
       path    => "${mod_dir}/${mpm}.load",
+      seltype => 'httpd_config_t',
       content => "LoadModule ${_id} ${_path}\n",
       require => [
         Package['httpd'],

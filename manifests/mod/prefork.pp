@@ -82,6 +82,7 @@ class apache::mod::prefork (
   file { "${apache::mod_dir}/prefork.conf":
     ensure  => file,
     content => epp('apache/mod/prefork.conf.epp', $parameters),
+    seltype => 'httpd_config_t',
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

@@ -39,6 +39,7 @@ class apache::mod::alias (
       ensure  => file,
       path    => "${apache::mod_dir}/alias.conf",
       mode    => $apache::file_mode,
+      seltype => 'httpd_config_t',
       content => epp('apache/mod/alias.conf.epp', $parameters),
       require => Exec["mkdir ${apache::mod_dir}"],
       before  => File[$apache::mod_dir],

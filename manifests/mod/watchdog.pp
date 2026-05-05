@@ -22,6 +22,7 @@ class apache::mod::watchdog (
       ensure  => file,
       path    => "${apache::mod_dir}/watchdog.conf",
       mode    => $apache::file_mode,
+      seltype => 'httpd_config_t',
       content => "WatchdogInterval ${watchdog_interval}\n",
       require => Exec["mkdir ${apache::mod_dir}"],
       before  => File[$apache::mod_dir],

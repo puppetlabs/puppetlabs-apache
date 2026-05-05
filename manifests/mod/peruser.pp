@@ -88,6 +88,7 @@ class apache::mod::peruser (
       file { "${apache::mod_dir}/peruser.conf":
         ensure  => file,
         mode    => $apache::file_mode,
+        seltype => 'httpd_config_t',
         content => epp('apache/mod/peruser.conf.epp', $parameters),
         require => Exec["mkdir ${apache::mod_dir}"],
         before  => File[$apache::mod_dir],

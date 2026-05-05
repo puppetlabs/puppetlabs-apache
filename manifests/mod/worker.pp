@@ -93,6 +93,7 @@ class apache::mod::worker (
   file { "${apache::mod_dir}/worker.conf":
     ensure  => file,
     content => epp('apache/mod/worker.conf.epp', $parameters),
+    seltype => 'httpd_config_t',
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
     notify  => Class['apache::service'],

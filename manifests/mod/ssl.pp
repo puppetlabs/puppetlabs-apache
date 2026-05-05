@@ -213,6 +213,7 @@ class apache::mod::ssl (
     ensure  => file,
     path    => $apache::_ssl_file,
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/ssl.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

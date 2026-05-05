@@ -28,6 +28,7 @@ class apache::mod::negotiation (
   file { 'negotiation.conf':
     ensure  => file,
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     path    => "${apache::mod_dir}/negotiation.conf",
     content => epp('apache/mod/negotiation.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],

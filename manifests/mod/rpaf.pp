@@ -38,6 +38,7 @@ class apache::mod::rpaf (
     ensure  => file,
     path    => "${apache::mod_dir}/rpaf.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp($template, $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

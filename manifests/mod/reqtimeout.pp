@@ -16,6 +16,7 @@ class apache::mod::reqtimeout (
     ensure  => file,
     path    => "${apache::mod_dir}/reqtimeout.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/reqtimeout.conf.epp', { 'timeouts'  => $timeouts, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

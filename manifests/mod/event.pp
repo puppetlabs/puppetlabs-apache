@@ -89,6 +89,7 @@ class apache::mod::event (
   file { "${apache::mod_dir}/event.conf":
     ensure  => file,
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/event.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

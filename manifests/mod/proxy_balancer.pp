@@ -27,6 +27,7 @@ class apache::mod::proxy_balancer (
       ensure  => file,
       path    => "${apache::mod_dir}/proxy_balancer.conf",
       mode    => $apache::file_mode,
+      seltype => 'httpd_config_t',
       content => epp('apache/mod/proxy_balancer.conf.epp', { 'manager_path' => $manager_path, 'allow_from'  => $allow_from, }),
       require => Exec["mkdir ${apache::mod_dir}"],
       before  => File[$apache::mod_dir],

@@ -26,6 +26,7 @@ class apache::mod::autoindex (
     ensure  => file,
     path    => "${apache::mod_dir}/autoindex.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/autoindex.conf.epp', { 'icons_prefix' => $icons_prefix, 'icon_suffix' => $icon_suffix, }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

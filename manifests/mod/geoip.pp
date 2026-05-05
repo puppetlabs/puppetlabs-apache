@@ -64,6 +64,7 @@ class apache::mod::geoip (
     ensure  => file,
     path    => "${apache::mod_dir}/geoip.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/geoip.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

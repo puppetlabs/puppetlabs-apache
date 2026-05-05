@@ -50,6 +50,7 @@ class apache::mod::proxy_html {
     ensure  => file,
     path    => "${apache::mod_dir}/proxy_html.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/proxy_html.conf.epp'),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

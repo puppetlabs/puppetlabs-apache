@@ -96,6 +96,7 @@ class apache::mod::remoteip (
     ensure  => file,
     path    => "${apache::mod_dir}/remoteip.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/remoteip.conf.epp', $template_parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],

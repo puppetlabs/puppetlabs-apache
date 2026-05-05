@@ -32,6 +32,7 @@ class apache::mod::dir (
     ensure  => file,
     path    => "${apache::mod_dir}/dir.conf",
     mode    => $apache::file_mode,
+    seltype => 'httpd_config_t',
     content => epp('apache/mod/dir.conf.epp', { 'indexes' => $indexes }),
     require => Exec["mkdir ${apache::mod_dir}"],
     before  => File[$apache::mod_dir],
