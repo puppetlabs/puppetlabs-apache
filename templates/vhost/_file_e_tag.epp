@@ -1,0 +1,4 @@
+<%- if $file_e_tag { -%>
+
+  FileETag <%= $file_e_tag %>
+<%- } -%>
