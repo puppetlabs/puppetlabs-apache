@@ -18,27 +18,40 @@ describe 'apache::mod::md', type: :class do
             'md_certificate_agreement' => { type: 'MDCertificateAgreement', pass_opt: 'MDCertificateAgreement' },
             'md_certificate_authority' => { type: 'URL', pass_opt: 'MDCertificateAuthority' },
             'md_certificate_check' => { type: 'String', pass_opt: 'MDCertificateCheck' },
+            'md_certificate_file' => { type: 'Path', pass_opt: 'MDCertificateFile' },
+            'md_certificate_key_file' => { type: 'Path', pass_opt: 'MDCertificateKeyFile' },
             'md_certificate_monitor' => { type: 'URL', pass_opt: 'MDCertificateMonitor' },
             'md_certificate_protocol' => { type: 'MDCertificateProtocol', pass_opt: 'MDCertificateProtocol' },
             'md_certificate_status' => { type: 'OnOff', pass_opt: 'MDCertificateStatus' },
             'md_challenge_dns01' => { type: 'Path', pass_opt: 'MDChallengeDns01' },
+            'md_challenge_dns01_version' => { type: 'Dns01Version', pass_opt: 'MDChallengeDns01Version' },
+            'md_check_interval' => { type: 'Duration', pass_opt: 'MDCheckInterval' },
             'md_contact_email' => { type: 'EMail', pass_opt: 'MDContactEmail' },
+            'md_external_account_binding' => { type: 'Path', pass_opt: 'MDExternalAccountBinding' },
             'md_http_proxy' => { type: 'URL', pass_opt: 'MDHttpProxy' },
+            'md_initial_delay' => { type: 'Duration', pass_opt: 'MDInitialDelay' },
+            'md_match_names' => { type: 'String', pass_opt: 'MDMatchNames' },
             'md_members' => { type: 'MDMembers', pass_opt: 'MDMembers' },
             'md_message_cmd' => { type: 'Path', pass_opt: 'MDMessageCmd' },
             'md_must_staple' => { type: 'OnOff', pass_opt: 'MDMustStaple' },
             'md_notify_cmd' => { type: 'Path', pass_opt: 'MDNotifyCmd' },
             'md_port_map' => { type: 'String', pass_opt: 'MDPortMap' },
             'md_private_keys' => { type: 'String', pass_opt: 'MDPrivateKeys' },
+            'md_profile' => { type: 'String', pass_opt: 'MDProfile' },
+            'md_profile_mandatory' => { type: 'OnOff', pass_opt: 'MDProfileMandatory' },
             'md_renew_mode' => { type: 'MDRenewMode', pass_opt: 'MDRenewMode' },
+            'md_renew_via_ari' => { type: 'OnOff', pass_opt: 'MDRenewViaARI' },
             'md_renew_window' => { type: 'Duration', pass_opt: 'MDRenewWindow' },
             'md_require_https' => { type: 'MDRequireHttps', pass_opt: 'MDRequireHttps' },
+            'md_retry_delay' => { type: 'Duration', pass_opt: 'MDRetryDelay' },
+            'md_retry_failover' => { type: 'Integer', pass_opt: 'MDRetryFailover' },
             'md_server_status' => { type: 'OnOff', pass_opt: 'MDServerStatus' },
             'md_staple_others' => { type: 'OnOff', pass_opt: 'MDStapleOthers' },
             'md_stapling' => { type: 'OnOff', pass_opt: 'MDStapling' },
             'md_stapling_keep_response' => { type: 'Duration', pass_opt: 'MDStaplingKeepResponse' },
             'md_stapling_renew_window' => { type: 'Duration', pass_opt: 'MDStaplingRenewWindow' },
             'md_store_dir' => { type: 'Path', pass_opt: 'MDStoreDir' },
+            'md_store_locks' => { type: 'Path', pass_opt: 'MDStoreLocks' },
             'md_warn_window' => { type: 'Duration', pass_opt: 'MDWarnWindow' }
           }
 
@@ -58,6 +71,17 @@ describe 'apache::mod::md', type: :class do
               end
             when 'EMail'
               valid_config_values = ['root@example.com']
+              valid_config_values.each do |valid_value|
+                describe "with #{puppetized_config_option} => #{valid_value}" do
+                  let :params do
+                    { puppetized_config_option.to_sym => valid_value }
+                  end
+
+                  it { is_expected.to contain_file('md.conf').with_content(%r{^#{config_hash[:pass_opt]} #{valid_value}$}) }
+                end
+              end
+            when 'Dns01Version'
+              valid_config_values = [1, 2]
               valid_config_values.each do |valid_value|
                 describe "with #{puppetized_config_option} => #{valid_value}" do
                   let :params do
@@ -126,6 +150,17 @@ describe 'apache::mod::md', type: :class do
               valid_config_values = ['off', 'temporary', 'permanent']
               valid_config_values.each do |valid_value|
                 describe "with #{puppetized_config_option} => '#{valid_value}'" do
+                  let :params do
+                    { puppetized_config_option.to_sym => valid_value }
+                  end
+
+                  it { is_expected.to contain_file('md.conf').with_content(%r{^#{config_hash[:pass_opt]} #{valid_value}$}) }
+                end
+              end
+            when 'Integer'
+              valid_config_values = [42]
+              valid_config_values.each do |valid_value|
+                describe "with #{puppetized_config_option} => #{valid_value}" do
                   let :params do
                     { puppetized_config_option.to_sym => valid_value }
                   end
