@@ -1,0 +1,29 @@
+<% $access_logs.each |$log| { -%>
+  <%-
+    $env = $log['env'] ? {
+      String[1] => "env=${log['env']}",
+      default   => '',
+    }
+    $format = $log['format'] ? {
+      String[1] => "\"${log['format']}\"",
+      default   => 'combined',
+    }
+    if $log['file'] {
+      $destination = $log['file'] ? {
+        /\A\//  => $log['file'],
+        default => "${logroot}/${log['file']}"
+      }
+    } elsif $log['syslog'] {
+      $destination = $log['syslog']
+    } elsif $log['pipe'] {
+      $destination = $log['pipe']
+    } else {
+      $destination = if $ssl {
+        "${logroot}/${filename}_access_ssl.log"
+      } else {
+        "${logroot}/${filename}_access.log"
+      }
+    }
+  -%>
+  CustomLog "<%= $destination %>" <%= $format %> <%= $env %>
+<% } -%>

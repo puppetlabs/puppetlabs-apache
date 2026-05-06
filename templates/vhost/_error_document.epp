@@ -1,0 +1,3 @@
+<% $error_documents.each |$error_document| { -%>
+  ErrorDocument <%= $error_document["error_code"] %> <%= $error_document["document"] %>
+<% } -%>
