@@ -31,8 +31,13 @@ RSpec.configure do |c|
   # IPv6 is not enabled by default in the new travis-ci Trusty environment (see https://github.com/travis-ci/travis-ci/issues/8891 )
   c.filter_run_excluding ipv6: true if ENV['CI'] == 'true'
   c.before :suite do
-    # Pin to epel 5.x which is known to work - newer versions have file() function issues
-    LitmusHelper.instance.run_shell('puppet module install puppet/epel --version 5.0.0') if %r{redhat|oracle}.match?(os[:family])
+    if %r{redhat|oracle}.match?(os[:family])
+      # Pin to epel 5.x which is known to work - newer versions have file() function issues.
+      # RHEL 10 requires epel 6.x because the EPEL-10 GPG key (RPM-GPG-KEY-EPEL-10)
+      # is not shipped in 5.x. See https://github.com/voxpupuli/puppet-epel/pull/173.
+      epel_version = os[:release].to_i >= 10 ? '6.0.0' : '5.0.0'
+      LitmusHelper.instance.run_shell("puppet module install puppet/epel --version #{epel_version}")
+    end
 
     LitmusHelper.instance.apply_manifest(File.read(File.join(__dir__, 'setup_acceptance_node.pp')))
   end
