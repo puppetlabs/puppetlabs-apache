@@ -35,7 +35,7 @@ RSpec.configure do |c|
       # Pin to epel 5.x which is known to work - newer versions have file() function issues.
       # RHEL 10 requires epel 6.x because the EPEL-10 GPG key (RPM-GPG-KEY-EPEL-10)
       # is not shipped in 5.x. See https://github.com/voxpupuli/puppet-epel/pull/173.
-      epel_version = os[:release].to_i >= 10 ? '6.0.0' : '5.0.0'
+      epel_version = (os[:release].to_i >= 10) ? '6.0.0' : '5.0.0'
       LitmusHelper.instance.run_shell("puppet module install puppet/epel --version #{epel_version}")
     end
 
