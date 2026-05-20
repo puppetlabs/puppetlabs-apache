@@ -25,7 +25,7 @@
 #
 # @param libphp_prefix
 #
-# @note Unsupported platforms: RedHat: 9
+# @note Unsupported platforms: RedHat: 9, 10
 class apache::mod::php (
   Optional[String] $package_name = undef,
   String $package_ensure         = 'present',
