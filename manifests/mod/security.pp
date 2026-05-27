@@ -16,7 +16,9 @@
 # @param custom_rules
 # 
 # @param custom_rules_set
-#
+#   Custom `SecRule` rules to be included
+# @param custom_actions_set
+#   Custom `SecAction` rules to be included
 # @param modsec_dir
 #   Defines the path where Puppet installs the modsec configuration and activated rules links.
 # 
@@ -144,6 +146,7 @@ class apache::mod::security (
   Array[String] $activated_rules                               = $apache::params::modsec_default_rules,
   Boolean $custom_rules                                        = $apache::params::modsec_custom_rules,
   Optional[Array[String]] $custom_rules_set                    = $apache::params::modsec_custom_rules_set,
+  Optional[Array[String]] $custom_actions_set                  = undef,
   Stdlib::Absolutepath $modsec_dir                             = $apache::params::modsec_dir,
   String $modsec_secruleengine                                 = $apache::params::modsec_secruleengine,
   Integer[0, 9] $debug_log_level                              = 0,
@@ -319,7 +322,7 @@ class apache::mod::security (
       owner   => $apache::params::user,
       group   => $apache::params::group,
       mode    => $apache::file_mode,
-      content => epp('apache/mod/security_custom.conf.epp', { 'custom_rules_set'  => $custom_rules_set, }),
+      content => epp('apache/mod/security_custom.conf.epp', { 'custom_rules_set'  => $custom_rules_set, 'custom_actions_set' => $custom_actions_set, }),
       require => File["${modsec_dir}/custom_rules"],
       notify  => Class['apache::service'],
     }
@@ -373,7 +376,7 @@ class apache::mod::security (
       notify  => Class['apache::service'],
     }
 
-    unless $facts['os']['name'] == 'SLES' or $facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu' {
+    unless $facts['os']['name'] == 'SLES' {
       apache::security::rule_link { $activated_rules: }
     }
   }

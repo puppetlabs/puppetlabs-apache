@@ -155,7 +155,7 @@ describe 'apache::mod::security', type: :class do
             }
           end
 
-          describe 'with parameters' do
+          describe 'with custom rules' do
             let :params do
               {
                 custom_rules: true,
@@ -171,6 +171,24 @@ describe 'apache::mod::security', type: :class do
             }
 
             it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
+          end
+
+          describe 'with custom actions' do
+            let :params do
+              {
+                custom_rules: true,
+                custom_actions_set: ['id:199999,phase:1,pass,nolog,t:none,initcol:global=global']
+              }
+            end
+
+            it {
+              expect(subject).to contain_file('/etc/httpd/modsecurity.d/custom_rules').with(
+                ensure: 'directory', path: '/etc/httpd/modsecurity.d/custom_rules',
+                owner: 'apache', group: 'apache'
+              )
+            }
+
+            it { is_expected.to contain_file('/etc/httpd/modsecurity.d/custom_rules/custom_01_rules.conf').with_content %r{^\s*.*"id:199999,phase:1,pass,nolog,t:none,initcol:global=global"$} }
           end
 
           describe 'with CRS parameters' do
@@ -284,6 +302,15 @@ describe 'apache::mod::security', type: :class do
             )
           }
 
+          it { is_expected.to contain_apache__security__rule_link('rules/crawlers-user-agents.data') }
+
+          it {
+            expect(subject).to contain_file('crawlers-user-agents.data').with(
+              path: '/etc/modsecurity/activated_rules/crawlers-user-agents.data',
+              target: '/usr/share/modsecurity-crs/rules/crawlers-user-agents.data',
+            )
+          }
+
           it {
             expect(subject).to contain_file('/etc/modsecurity/security_crs.conf').with(
               path: '/etc/modsecurity/security_crs.conf',
@@ -302,7 +329,7 @@ describe 'apache::mod::security', type: :class do
             }
           end
 
-          describe 'with parameters' do
+          describe 'with custom rules' do
             let :params do
               {
                 custom_rules: true,
@@ -318,6 +345,56 @@ describe 'apache::mod::security', type: :class do
             }
 
             it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*"id:199999,phase:1,nolog,allow,ctl:ruleEngine=off"$} }
+          end
+
+          describe 'with custom actions' do
+            let :params do
+              {
+                custom_rules: true,
+                custom_actions_set: ['id:199999,phase:1,pass,nolog,t:none,initcol:global=global']
+              }
+            end
+
+            it {
+              expect(subject).to contain_file('/etc/modsecurity/custom_rules').with(
+                ensure: 'directory', path: '/etc/modsecurity/custom_rules',
+                owner: 'www-data', group: 'www-data'
+              )
+            }
+
+            it { is_expected.to contain_file('/etc/modsecurity/custom_rules/custom_01_rules.conf').with_content %r{\s*.*"id:199999,phase:1,pass,nolog,t:none,initcol:global=global"$} }
+          end
+
+          describe 'with absolute path to activated rule' do
+            let :params do
+              {
+                activated_rules: ['/tmp/foo/bar.conf']
+              }
+            end
+
+            it { is_expected.to contain_apache__security__rule_link('/tmp/foo/bar.conf') }
+
+            it {
+              expect(subject).to contain_file('bar.conf').with(
+                path: '/etc/modsecurity/activated_rules/bar.conf',
+                target: '/tmp/foo/bar.conf',
+              )
+            }
+          end
+          describe 'with relative path to activated rule' do
+            let :params do
+              {
+                activated_rules: ['rules/bar.conf']
+              }
+            end
+
+            it { is_expected.to contain_apache__security__rule_link('rules/bar.conf') }
+            it {
+              expect(subject).to contain_file('bar.conf').with(
+                path: '/etc/modsecurity/activated_rules/bar.conf',
+                target: '/usr/share/modsecurity-crs/rules/bar.conf',
+              )
+            }
           end
 
           describe 'with mod security version' do
