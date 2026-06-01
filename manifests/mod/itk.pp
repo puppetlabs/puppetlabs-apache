@@ -25,7 +25,7 @@
 #   capabilities, such as NFS.
 #
 # @see http://mpm-itk.sesse.net for additional documentation.
-# @note Unsupported platforms: CentOS: 8; RedHat: 8, 9; SLES: all
+# @note Unsupported platforms: CentOS: 8; RedHat: 8, 9, 10; SLES: all
 class apache::mod::itk (
   Integer $startservers                                  = 8,
   Integer $minspareservers                               = 5,

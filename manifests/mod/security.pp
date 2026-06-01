@@ -137,6 +137,7 @@
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
 # @see https://coreruleset.org/docs/ for addional documentation
 #
+# @note Unsupported platforms: RedHat: 10
 class apache::mod::security (
   Stdlib::Absolutepath $logroot                                = $apache::params::logroot,
   Integer $version                                             = $apache::params::modsec_version,
