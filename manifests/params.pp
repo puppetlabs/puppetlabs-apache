@@ -115,12 +115,23 @@ class apache::params inherits apache::version {
     $mellon_cache_size    = 100
     $mellon_post_directory = undef
     $modsec_version       = 1
-    $modsec_crs_package   = 'mod_security_crs'
+    # EL10 base/EPEL ships the ModSecurity engine but not the mod_security_crs
+    # package, so install the engine only and leave CRS unmanaged there.
+    $modsec_crs_package   = $facts['os']['release']['major'] ? {
+      '10'    => undef, # RedHat 10 doesn't ship mod_security_crs (CRS tracked separately)
+      default => 'mod_security_crs',
+    }
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '10') >= 0 {
+      # Engine-only on EL10: no CRS package, so no rules are activated. The path
+      # is kept at the EL8+ default since it is only referenced when rules are
+      # activated (none here).
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = []
+    } elsif $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
       $modsec_crs_path      = '/usr/lib/modsecurity.d'
       $modsec_default_rules = [
         'base_rules/modsecurity_35_bad_robots.data',
@@ -260,12 +271,23 @@ class apache::params inherits apache::version {
     $mellon_cache_size    = 100
     $mellon_post_directory = undef
     $modsec_version       = 1
-    $modsec_crs_package   = 'mod_security_crs'
+    # EL10 base/EPEL ships the ModSecurity engine but not the mod_security_crs
+    # package, so install the engine only and leave CRS unmanaged there.
+    $modsec_crs_package   = $facts['os']['release']['major'] ? {
+      '10'    => undef, # RedHat 10 doesn't ship mod_security_crs (CRS tracked separately)
+      default => 'mod_security_crs',
+    }
     $modsec_dir           = '/etc/httpd/modsecurity.d'
     $secpcrematchlimit = 1500
     $secpcrematchlimitrecursion = 1500
     $modsec_secruleengine = 'On'
-    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
+    if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '10') >= 0 {
+      # Engine-only on EL10: no CRS package, so no rules are activated. The path
+      # is kept at the EL8+ default since it is only referenced when rules are
+      # activated (none here).
+      $modsec_crs_path      = '/usr/share/mod_modsecurity_crs'
+      $modsec_default_rules = []
+    } elsif $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '7') <= 0 {
       $modsec_crs_path      = '/usr/lib/modsecurity.d'
       $modsec_default_rules = [
         'base_rules/modsecurity_35_bad_robots.data',

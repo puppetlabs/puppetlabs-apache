@@ -33,7 +33,12 @@ describe 'apache::mod::security', type: :class do
             )
           }
 
-          it { is_expected.to contain_package('mod_security_crs') }
+          if facts[:os]['release']['major'].to_i >= 10
+            # EL10 ships the engine via EPEL but not the mod_security_crs package.
+            it { is_expected.not_to contain_package('mod_security_crs') }
+          else
+            it { is_expected.to contain_package('mod_security_crs') }
+          end
 
           if (facts[:os]['release']['major'].to_i > 6 && facts[:os]['release']['major'].to_i <= 7) || (facts[:os]['release']['major'].to_i >= 8)
             it {
@@ -73,7 +78,10 @@ describe 'apache::mod::security', type: :class do
             )
           }
 
-          if facts[:os]['release']['major'].to_i <= 7
+          if facts[:os]['release']['major'].to_i >= 10
+            # EL10 is engine-only (no CRS package), so no rules are activated.
+            it { is_expected.not_to contain_apache__security__rule_link('rules/crawlers-user-agents.data') }
+          elsif facts[:os]['release']['major'].to_i <= 7
             it { is_expected.to contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
 
             it {
@@ -383,5 +391,51 @@ describe 'apache::mod::security', type: :class do
         end
       end
     end
+  end
+
+  # FacterDB does not yet ship a RedHat-named EL10 factset, so on_supported_os
+  # cannot generate a redhat-10 context. Exercise the engine-only EL10 path
+  # explicitly with hardcoded facts.
+  context 'on RedHat 10 (engine-only via EPEL)' do
+    let :facts do
+      {
+        os: {
+          'architecture' => 'x86_64',
+          'family'       => 'RedHat',
+          'hardware'     => 'x86_64',
+          'name'         => 'RedHat',
+          'release'      => { 'full' => '10.0', 'major' => '10' },
+          'selinux'      => { 'enabled' => false },
+        },
+      }
+    end
+
+    it { is_expected.to compile.with_all_deps }
+
+    it {
+      expect(subject).to contain_apache__mod('security').with(
+        id: 'security2_module',
+        lib: 'mod_security2.so',
+      )
+    }
+
+    it {
+      expect(subject).to contain_apache__mod('unique_id').with(
+        id: 'unique_id_module',
+        lib: 'mod_unique_id.so',
+      )
+    }
+
+    # EL10 ships the engine via EPEL but not the mod_security_crs package, so
+    # the CRS package must not be managed and no rules are activated.
+    it { is_expected.not_to contain_package('mod_security_crs') }
+    it { is_expected.not_to contain_apache__security__rule_link('rules/crawlers-user-agents.data') }
+
+    # The engine config is still written.
+    it {
+      expect(subject).to contain_file('security.conf').with(
+        path: '/etc/httpd/conf.modules.d/security.conf',
+      )
+    }
   end
 end
