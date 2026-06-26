@@ -137,7 +137,10 @@
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
 # @see https://coreruleset.org/docs/ for addional documentation
 #
-# @note Unsupported platforms: RedHat: 10
+# @note On RHEL/EL 10 the ModSecurity engine is provided by EPEL (enable EPEL
+#   yourself; this module does not manage it). The OWASP CRS package
+#   (`mod_security_crs`) is not available on EL10, so the class manages the
+#   engine only there and does not install or activate CRS rules.
 class apache::mod::security (
   Stdlib::Absolutepath $logroot                                = $apache::params::logroot,
   Integer $version                                             = $apache::params::modsec_version,
