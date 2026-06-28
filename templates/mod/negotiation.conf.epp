@@ -1,12 +1,2 @@
-<% if String(type($language_priority, 'generalized')).index('Array') == 0 { -%>
-  <%- $language_priority_updated = $language_priority.join(' ') -%>
-<% } else { -%>
-  <%- $language_priority_updated = $language_priority -%>
-<% } -%>
-<% if String(type($force_language_priority, 'generalized')).index('Array') == 0 { -%>
-  <%- $force_language_priority_updated = $force_language_priority.join(' ') -%>
-<% } else { -%>
-  <%- $force_language_priority_updated = $force_language_priority -%>
-<% } -%>
-LanguagePriority <%= $language_priority_updated %>
-ForceLanguagePriority <%= $force_language_priority_updated %>
+LanguagePriority <%= [$language_priority].flatten.join(' ') %>
+ForceLanguagePriority <%= [$force_language_priority].flatten.join(' ') %>

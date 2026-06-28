@@ -1,0 +1,47 @@
+<%- if $rewrite_inherit or !$rewrites.empty { -%>
+  ## Rewrite rules
+  RewriteEngine On
+  <%- if $rewrite_inherit { -%>
+  RewriteOptions Inherit
+  <%- } -%>
+  <%- if $rewrite_base { -%>
+  RewriteBase <%= $rewrite_base %>
+  <%- } -%>
+
+  <%- $rewrites.each |$rewrite_details| { -%>
+    <%- if $rewrite_details['comment'] { -%>
+  #<%= $rewrite_details['comment'] %>
+    <%- } -%>
+    <%- if $rewrite_details['rewrite_base'] { -%>
+  RewriteBase <%= $rewrite_details['rewrite_base'] %>
+    <%- } -%>
+    <%- if $rewrite_details['rewrite_cond'] { -%>
+      <%- [$rewrite_details['rewrite_cond']].flatten.each |$cond| { -%>
+  RewriteCond <%= $cond %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $rewrite_details['rewrite_map'] { -%>
+      <%- [$rewrite_details['rewrite_map']].flatten.each |$map| { -%>
+  RewriteMap <%= $map %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $rewrite_details['rewrite_rule'] { -%>
+      <%- [$rewrite_details['rewrite_rule']].flatten.each |$rule| { -%>
+  RewriteRule <%= $rule %>
+      <%- } -%>
+
+    <%- } -%>
+  <%- } -%>
+<%- } -%>
+<%# reverse compatibility -%>
+<% if $rewrite_rule and $rewrites.empty { -%>
+  ## Rewrite rules
+  RewriteEngine On
+  <%- if $rewrite_base { -%>
+  RewriteBase <%= $rewrite_base %>
+  <%- } -%>
+    <%- $rewrite_cond.each |$cond| { -%>
+  RewriteCond <%= $cond %>
+  <%- } -%>
+  RewriteRule <%= $rewrite_rule %>
+<%- } -%>

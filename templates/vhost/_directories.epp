@@ -1,0 +1,559 @@
+
+  <%- if $docroot { -%>
+  ## Directories, there should at least be a declaration for <%= $docroot %>
+  <%- } else { -%>
+  ## Directories
+  <%- } -%>
+  <%- $directories.each |$directory| { -%>
+    <%- if $directory['path'] and $directory['path'] != '' { -%>
+      <%- if $directory['provider'] and $directory['provider'].match('(directory|location|files|proxy)') { -%>
+        <%- if $directory['provider'] =~ /^(.*)match$/ { -%>
+          <%- $provider = "${1.capitalize}Match" -%>
+        <%- } else { -%>
+          <%- $provider = $directory['provider'].capitalize -%>
+        <%- } -%>
+      <%- } else { -%>
+        <%- $provider = 'Directory' -%>
+      <%- } -%>
+      <%- $path = $directory['path'] -%>
+
+  <<%= $provider %> "<%= $path %>">
+    <%- if $directory['enable_sendfile'] { -%>
+    EnableSendfile <%= $directory['enable_sendfile'] %>
+    <%- } -%>
+    <%- if $directory['headers'] { -%>
+      <%- [$directory['headers']].flatten.each |$header| { -%>
+    Header <%= $header %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['geoip_enable'] != undef { -%>
+    GeoIPEnable <%= apache::bool2httpd($directory['geoip_enable']) %>
+    <%- } -%>
+    <%- if $directory['options'] and ![$directory['options']].flatten.empty { -%>
+    Options <%= [$directory['options']].flatten.join(' ') %>
+    <%- } -%>
+    <%- if $provider == 'Directory' { -%>
+      <%- if $directory['index_options'] { -%>
+    IndexOptions <%= [$directory['index_options']].flatten.join(' ') %>
+      <%- } -%>
+      <%- if $directory['index_order_default'] { -%>
+    IndexOrderDefault <%= [$directory['index_order_default']].flatten.join(' ') %>
+      <%- } -%>
+      <%- if $directory['index_style_sheet'] { -%>
+    IndexStyleSheet '<%= $directory['index_style_sheet'] %>'
+      <%- } -%>
+      <%- if $directory['allow_override'] { -%>
+    AllowOverride <%= [$directory['allow_override']].flatten.join(' ') %>
+      <%- } elsif $provider == 'Directory' { -%>
+    AllowOverride None
+      <%- } -%>
+      <%- if $directory['allow_override_list'] { -%>
+    AllowOverrideList <%= [$directory['allow_override_list']].flatten.join(' ') %>
+      <%- } -%>
+    <%- } -%>
+<%= epp("apache/vhost/_require.epp", { 'item' => $directory }) -%>
+    <%- if $directory['limit'] and $directory['limit'] != '' { -%>
+      <%- [$directory['limit']].flatten.each |$lim| { -%>
+    <Limit <%= $lim['methods'] %>>
+    <%= epp("apache/vhost/_require.epp", { 'item' => $lim }) -%>
+    </Limit>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['limit_except'] and $directory['limit_except'] != '' { -%>
+      <%- [$directory['limit_except']].flatten.each |$lim| { -%>
+    <LimitExcept <%= $lim['methods'] %>>
+    <%= epp("apache/vhost/_require.epp", { 'item' => $lim }) -%>
+    </LimitExcept>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['addhandlers'] and ! $directory['addhandlers'].empty { -%>
+      <%- [$directory['addhandlers']].flatten.each |$addhandler| { -%>
+    <FilesMatch ".+(<%= [$addhandler['extensions']].flatten.regexpescape.join('|') %>)$">
+        SetHandler <%= $addhandler['handler'] %>
+    </FilesMatch>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['sethandler'] and $directory['sethandler'] != '' { -%>
+    SetHandler <%= $directory['sethandler'] %>
+    <%- } -%>
+    <%- if $directory['h2_copy_files'] != undef { -%>
+    H2CopyFiles <%= apache::bool2httpd($directory['h2_copy_files']) %>
+    <%- } -%>
+    <%- if $directory['h2_push_resource'] and ! $directory['h2_push_resource'].empty { -%>
+      <%- [$directory['h2_push_resource']].flatten.each |$h2_push_resource| { -%>
+    H2PushResource <%= $h2_push_resource %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['passenger_enabled'] != undef { -%>
+    PassengerEnabled <%= apache::bool2httpd($directory['passenger_enabled']) %>
+    <%- } -%>
+    <%- if $directory['passenger_base_uri'] and ! $directory['passenger_base_uri'].empty { -%>
+    PassengerBaseURI <%= $directory['passenger_base_uri'] %>
+    <%- } -%>
+    <%- if $directory['passenger_ruby'] and ! $directory['passenger_ruby'].empty { -%>
+    PassengerRuby <%= $directory['passenger_ruby'] %>
+    <%- } -%>
+    <%- if $directory['passenger_python'] and ! $directory['passenger_python'].empty { -%>
+    PassengerPython <%= $directory['passenger_python'] %>
+    <%- } -%>
+    <%- if $directory['passenger_nodejs'] and ! $directory['passenger_nodejs'].empty { -%>
+    PassengerNodejs <%= $directory['passenger_nodejs'] %>
+    <%- } -%>
+    <%- if $directory['passenger_meteor_app_settings'] and ! $directory['passenger_meteor_app_settings'].empty { -%>
+    PassengerMeteorAppSettings <%= $directory['passenger_meteor_app_settings'] %>
+    <%- } -%>
+    <%- if $directory['passenger_app_env'] and ! $directory['passenger_app_env'].empty { -%>
+    PassengerAppEnv <%= $directory['passenger_app_env'] %>
+    <%- } -%>
+    <%- if $directory['passenger_app_root'] and ! $directory['passenger_app_root'].empty { -%>
+    PassengerAppRoot <%= $directory['passenger_app_root'] %>
+    <%- } -%>
+    <%- if $directory['passenger_app_group_name'] and ! $directory['passenger_app_group_name'].empty { -%>
+    PassengerAppGroupName <%= $directory['passenger_app_group_name'] %>
+    <%- } -%>
+    <%- if $directory['passenger_app_type'] and ! $directory['passenger_app_type'].empty { -%>
+    PassengerAppType <%= $directory['passenger_app_type'] %>
+    <%- } -%>
+    <%- if $directory['passenger_startup_file'] and ! $directory['passenger_startup_file'].empty { -%>
+    PassengerStartupFile <%= $directory['passenger_startup_file'] %>
+    <%- } -%>
+    <%- if $directory['passenger_restart_dir'] and ! $directory['passenger_restart_dir'].empty { -%>
+    PassengerRestartDir <%= $directory['passenger_restart_dir'] %>
+    <%- } -%>
+    <%- if $directory['passenger_load_shell_envvars'] != undef { -%>
+    PassengerLoadShellEnvvars <%= apache::bool2httpd($directory['passenger_load_shell_envvars']) %>
+    <%- } -%>
+    <%- if $directory['passenger_preload_bundler'] != undef { -%>
+    PassengerPreloadBundler <%= apache::bool2httpd($directory['passenger_preload_bundler']) %>
+    <%- } -%>
+    <%- if $directory['passenger_rolling_restarts'] != undef { -%>
+    PassengerRollingRestarts <%= apache::bool2httpd($directory['passenger_rolling_restarts']) %>
+    <%- } -%>
+    <%- if $directory['passenger_resist_deployment_errors'] != undef { -%>
+    PassengerResistDeploymentErrors <%= apache::bool2httpd($directory['passenger_resist_deployment_errors']) %>
+    <%- } -%>
+    <%- if $directory['passenger_user'] and ! $directory['passenger_user'].empty { -%>
+    PassengerUser <%= $directory['passenger_user'] %>
+    <%- } -%>
+    <%- if $directory['passenger_group'] and ! $directory['passenger_group'].empty { -%>
+    PassengerGroup <%= $directory['passenger_group'] %>
+    <%- } -%>
+    <%- if $directory['passenger_friendly_error_pages'] != undef { -%>
+    PassengerFriendlyErrorPages <%= apache::bool2httpd($directory['passenger_friendly_error_pages']) %>
+    <%- } -%>
+    <%- if $directory['passenger_min_instances'] != undef { -%>
+    PassengerMinInstances <%= $directory['passenger_min_instances'] %>
+    <%- } -%>
+    <%- if $directory['passenger_max_instances'] != undef { -%>
+    PassengerMaxInstances <%= $directory['passenger_max_instances'] %>
+    <%- } -%>
+    <%- if $directory['passenger_force_max_concurrent_requests_per_process'] != undef { -%>
+    PassengerForceMaxConcurrentRequestsPerProcess <%= $directory['passenger_force_max_concurrent_requests_per_process'] %>
+    <%- } -%>
+    <%- if $directory['passenger_start_timeout'] != undef { -%>
+    PassengerStartTimeout <%= $directory['passenger_start_timeout'] %>
+    <%- } -%>
+    <%- if $directory['passenger_concurrency_model'] and ! $directory['passenger_concurrency_model'].empty { -%>
+    PassengerConcurrencyModel <%= $directory['passenger_concurrency_model'] %>
+    <%- } -%>
+    <%- if $directory['passenger_thread_count'] != undef { -%>
+    PassengerThreadCount <%= $directory['passenger_thread_count'] %>
+    <%- } -%>
+    <%- if $directory['passenger_max_requests'] != undef { -%>
+    PassengerMaxRequests <%= $directory['passenger_max_requests'] %>
+    <%- } -%>
+    <%- if $directory['passenger_max_request_time'] != undef { -%>
+    PassengerMaxRequestTime <%= $directory['passenger_max_request_time'] %>
+    <%- } -%>
+    <%- if $directory['passenger_memory_limit'] != undef { -%>
+    PassengerMemoryLimit <%= $directory['passenger_memory_limit'] %>
+    <%- } -%>
+    <%- if $directory['passenger_high_performance'] != undef { -%>
+    PassengerHighPerformance <%= apache::bool2httpd($directory['passenger_high_performance']) %>
+    <%- } -%>
+    <%- if $directory['passenger_buffer_upload'] != undef { -%>
+    PassengerBufferUpload <%= apache::bool2httpd($directory['passenger_buffer_upload']) %>
+    <%- } -%>
+    <%- if $directory['passenger_buffer_response'] != undef { -%>
+    PassengerBufferResponse <%= apache::bool2httpd($directory['passenger_buffer_response']) %>
+    <%- } -%>
+    <%- if $directory['passenger_error_override'] != undef { -%>
+    PassengerErrorOverride <%= apache::bool2httpd($directory['passenger_error_override']) %>
+    <%- } -%>
+    <%- if $directory['passenger_max_request_queue_size'] != undef { -%>
+    PassengerMaxRequestQueueSize <%= $directory['passenger_max_request_queue_size'] %>
+    <%- } -%>
+    <%- if $directory['passenger_max_request_queue_time'] != undef { -%>
+    PassengerMaxRequestQueueTime <%= $directory['passenger_max_request_queue_time'] %>
+    <%- } -%>
+    <%- if $directory['passenger_sticky_sessions'] != undef { -%>
+    PassengerStickySessions <%= apache::bool2httpd($directory['passenger_sticky_sessions']) %>
+    <%- } -%>
+    <%- if $directory['passenger_sticky_sessions_cookie_name'] and ! $directory['passenger_sticky_sessions_cookie_name'].empty { -%>
+    PassengerStickySessionsCookieName <%= $directory['passenger_sticky_sessions_cookie_name'] %>
+    <%- } -%>
+    <%- if $directory['passenger_allow_encoded_slashes'] != undef { -%>
+    PassengerAllowEncodedSlashes <%= apache::bool2httpd($directory['passenger_allow_encoded_slashes']) %>
+    <%- } -%>
+    <%- if $directory['passenger_debugger'] != undef { -%>
+    PassengerDebugger <%= apache::bool2httpd($directory['passenger_debugger']) %>
+    <%- } -%>
+    <%- if $directory['php_flags'] and ! $directory['php_flags'].empty { -%>
+      <%- $directory['php_flags'].sort.each |$flag, $value| { -%>
+        <%- $_value = if $value.downcase =~ /true|yes|on|1/ { 'on' } else { 'off' } -%>
+    php_flag <%= "${flag} ${_value}" %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['php_values'] and ! $directory['php_values'].empty { -%>
+      <%- $directory['php_values'].sort.each |$key, $value| { -%>
+    php_value <%= "${key} ${value}" %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['php_admin_flags'] and ! $directory['php_admin_flags'].empty { -%>
+      <%- $directory['php_admin_flags'].sort.each |$flag, $value| { -%>
+        <%- $_value = if $value.downcase =~ /true|yes|on|1/ { 'on' } else { 'off' } -%>
+    php_admin_flag <%= "${flag} ${_value}" %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['php_admin_values'] and ! $directory['php_admin_values'].empty { -%>
+      <%- $directory['php_admin_values'].sort.each |$key, $value| { -%>
+    php_admin_value <%= "${key} ${value}" %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['directoryindex'] and $directory['directoryindex'] != '' { -%>
+    DirectoryIndex <%= $directory['directoryindex'] %>
+    <%- } -%>
+    <%- if $directory['additional_includes'] and ! $directory['additional_includes'].empty { -%>
+      <%- $directory['additional_includes'].each |$include| { -%>
+    Include '<%= "${include}" %>'
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['error_documents'] and ! $directory['error_documents'].empty { -%>
+      <%- [$directory['error_documents']].flatten.each |$error_document| { -%>
+    ErrorDocument <%= error_document['error_code'] %> <%= error_document['document'] %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['dav'] { -%>
+    Dav <%= $directory['dav'] %>
+    <%- if $directory['dav_depth_infinity'] { -%>
+    DavDepthInfinity <%= apache::bool2httpd($directory['dav_depth_infinity']) %>
+    <%- } -%>
+    <%- if $directory['dav_min_timeout'] { -%>
+    DavMinTimeout <%= $directory['dav_min_timeout'] %>
+    <%- } -%>
+    <%- } -%>
+    <%- if $directory['auth_type'] { -%>
+    AuthType <%= $directory['auth_type'] %>
+    <%- } -%>
+    <%- if $directory['auth_name'] { -%>
+    AuthName "<%= $directory['auth_name'] %>"
+    <%- } -%>
+    <%- if $directory['auth_digest_algorithm'] { -%>
+    AuthDigestAlgorithm <%= $directory['auth_digest_algorithm'] %>
+    <%- } -%>
+    <%- if $directory['auth_digest_domain'] { -%>
+    AuthDigestDomain <%= [$directory['auth_digest_domain']].flatten.join(' ') %>
+    <%- } -%>
+    <%- if $directory['auth_digest_nonce_lifetime'] { -%>
+    AuthDigestNonceLifetime <%= $directory['auth_digest_nonce_lifetime'] %>
+    <%- } -%>
+    <%- if $directory['auth_digest_provider'] { -%>
+    AuthDigestProvider <%= $directory['auth_digest_provider'] %>
+    <%- } -%>
+    <%- if $directory['auth_digest_qop'] { -%>
+    AuthDigestQop <%= $directory['auth_digest_qop'] %>
+    <%- } -%>
+    <%- if $directory['auth_digest_shmem_size'] { -%>
+    AuthDigestShmemSize <%= $directory['auth_digest_shmem_size'] %>
+    <%- } -%>
+    <%- if $directory['auth_basic_authoritative'] { -%>
+    AuthBasicAuthoritative <%= $directory['auth_basic_authoritative'] %>
+    <%- } -%>
+    <%- if $directory['auth_basic_fake'] { -%>
+    AuthBasicFake <%= $directory['auth_basic_fake'] %>
+    <%- } -%>
+    <%- if $directory['auth_basic_provider'] { -%>
+    AuthBasicProvider <%= $directory['auth_basic_provider'] %>
+    <%- } -%>
+    <%- if $directory['auth_user_file'] { -%>
+    AuthUserFile <%= $directory['auth_user_file'] %>
+    <%- } -%>
+    <%- if $directory['auth_group_file'] { -%>
+    AuthGroupFile <%= $directory['auth_group_file'] %>
+    <%- } -%>
+    <%- if $directory['auth_merging'] { -%>
+    AuthMerging <%= $directory['auth_merging'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_referrals'] { -%>
+    LDAPReferrals <%= $directory['auth_ldap_referrals'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_url'] { -%>
+    AuthLDAPURL <%= $directory['auth_ldap_url'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_bind_dn'] { -%>
+    AuthLDAPBindDN <%= $directory['auth_ldap_bind_dn'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_bind_password'] { -%>
+    AuthLDAPBindPassword <%= $directory['auth_ldap_bind_password'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_group_attribute'] { -%>
+      <%- [$directory['auth_ldap_group_attribute']].flatten.each |$groupattr| { -%>
+    AuthLDAPGroupAttribute <%= $groupattr %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['auth_ldap_group_attribute_is_dn'] != undef { -%>
+    AuthLDAPGroupAttributeIsDN <%= apache::bool2httpd( $directory['auth_ldap_group_attribute_is_dn'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_initial_bind_pattern'] { -%>
+    AuthLDAPInitialBindPattern <%= $directory['auth_ldap_initial_bind_pattern'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_bind_as_user'] != undef { -%>
+    AuthLDAPInitialBindAsUser <%= apache::bool2httpd( $directory['auth_ldap_bind_as_user'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_compare_as_user'] != undef { -%>
+    AuthLDAPCompareAsUser <%= apache::bool2httpd( $directory['auth_ldap_compare_as_user'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_search_as_user'] != undef { -%>
+    AuthLDAPSearchAsUser <%= apache::bool2httpd( $directory['auth_ldap_search_as_user'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_bind_authoritative'] != undef { -%>
+    AuthLDAPBindAuthoritative <%= apache::bool2httpd( $directory['auth_ldap_bind_authoritative'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_authorize_prefix'] { -%>
+    AuthLDAPAuthorizePrefix <%= $directory['auth_ldap_authorize_prefix'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_charset_config'] { -%>
+    AuthLDAPCharsetConfig <%= $directory['auth_ldap_charset_config'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_compare_dn_on_server'] != undef { -%>
+    AuthLDAPCompareDNOnServer <%= apache::bool2httpd( $directory['auth_ldap_compare_dn_on_server'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_dereference_aliases'] { -%>
+    AuthLDAPDereferenceAliases <%= $directory['auth_ldap_dereference_aliases'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_max_sub_group_depth'] { -%>
+    AuthLDAPMaxSubGroupDepth <%= $directory['auth_ldap_max_sub_group_depth'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_remote_user_attribute'] { -%>
+    AuthLDAPRemoteUserAttribute <%= $directory['auth_ldap_remote_user_attribute'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_remote_user_is_dn'] != undef { -%>
+    AuthLDAPRemoteUserIsDN <%= apache::bool2httpd( $directory['auth_ldap_remote_user_is_dn'] ) %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_sub_group_attribute'] { -%>
+    AuthLDAPSubGroupAttribute <%= $directory['auth_ldap_sub_group_attribute'] %>
+    <%- } -%>
+    <%- if $directory['auth_ldap_sub_group_class'] { -%>
+    AuthLDAPSubGroupClass <%= $directory['auth_ldap_sub_group_class'] %>
+    <%- } -%>
+    <%- if $directory['fallbackresource'] { -%>
+    FallbackResource <%= $directory['fallbackresource'] %>
+    <%- } -%>
+    <%- if $directory['expires_active'] { -%>
+    ExpiresActive <%= $directory['expires_active'] %>
+    <%- } -%>
+    <%- if $directory['expires_default'] { -%>
+    ExpiresDefault "<%= $directory['expires_default'] %>"
+    <%- } -%>
+    <%- if $directory['expires_by_type'] { -%>
+    <%- [$directory['expires_by_type']].flatten.each |$rule| { -%>
+    ExpiresByType <%= $rule %>
+    <%- } -%>
+    <%- } -%>
+    <%- if $directory['ext_filter_options'] { -%>
+    ExtFilterOptions <%= $directory['ext_filter_options'] %>
+    <%- } -%>
+    <%- if $directory['force_type'] { -%>
+    ForceType <%= $directory['force_type'] %>
+    <%- } -%>
+    <%- if $directory['add_charset'] { -%>
+    AddCharset <%= $directory['add_charset'] %>
+    <%- } -%>
+    <%- if $directory['ssl_options'] { -%>
+    SSLOptions <%= [$directory['ssl_options']].flatten.join(' ') %>
+    <%- } -%>
+    <%- if $directory['ssl_verify_client'] and $directory['ssl_verify_client'].match('(none|optional|require|optional_no_ca)') { -%>
+    SSLVerifyClient <%= $directory['ssl_verify_client'] %>
+    <%- if $directory['ssl_verify_depth'] { -%>
+    SSLVerifyDepth <%= $directory['ssl_verify_depth'] %>
+    <%- } -%>
+    <%- } -%>
+    <%- if $directory['fcgiwrapper'] { -%>
+    FcgidWrapper <%= $directory['fcgiwrapper']['command'] %> <%= $directory['fcgiwrapper']['suffix'] %> <%= $directory['fcgiwrapper']['virtual'] %>
+    <%- } -%>
+    <%- if $directory['rewrites'] { -%>
+    # Rewrite rules
+    RewriteEngine On
+      <%- $directory['rewrites'].flatten.each |$rewrite_details| { -%>
+        <%- if $rewrite_details['comment'] { -%>
+    #<%= $rewrite_details['comment'] %>
+        <%- } -%>
+        <%- if $rewrite_details['rewrite_base'] { -%>
+    RewriteBase <%= $rewrite_details['rewrite_base'] %>
+        <%- } -%>
+        <%- if $rewrite_details['rewrite_cond'] { -%>
+          <%- [$rewrite_details['rewrite_cond']].flatten.each |$commands| { -%>
+            <%- [$commands].flatten.each |$command| { -%>
+    RewriteCond <%= $command %>
+            <%- } -%>
+          <%- } -%>
+        <%- } -%>
+        <%- if $rewrite_details['rewrite_rule'] { -%>
+          <%- [$rewrite_details['rewrite_rule']].flatten.each |$commands| { -%>
+            <%- [$commands].flatten.each |$command| { -%>
+    RewriteRule <%= $command %>
+            <%- } -%>
+          <%- } -%>
+        <%- } -%>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['setenv'] { -%>
+      <%- [$directory['setenv']].flatten.each |$setenv| { -%>
+    SetEnv <%= $setenv %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['set_output_filter'] { -%>
+    SetOutputFilter <%= $directory['set_output_filter'] %>
+    <%- } -%>
+    <%- if $directory['set_input_filter'] { -%>
+    SetInputFilter <%= $directory['set_input_filter'] %>
+    <%- } -%>
+    <%- if $shibboleth_enabled { -%>
+      <%- if $directory['shib_require_session'] and ! $directory['shib_require_session'].empty { -%>
+    ShibRequireSession <%= $directory['shib_require_session'] %>
+      <%- } -%>
+      <%- if $directory['shib_request_settings'] and ! $directory['shib_request_settings'].empty { -%>
+        <%- $directory['shib_request_settings'].each |$key, $value| { -%>
+    ShibRequestSetting <%= $key %> <%= $value %>
+        <%- } -%>
+      <%- } -%>
+      <%- if $directory['shib_use_headers'] and ! $directory['shib_use_headers'].empty { -%>
+    ShibUseHeaders <%= $directory['shib_use_headers'] %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $cas_enabled { -%>
+      <%- if $directory['cas_scope'] { -%>
+    CASScope <%= $directory['cas_scope'] %>
+      <%- } -%>
+      <%- if $directory['cas_renew'] { -%>
+    CASRenew <%= $directory['cas_renew'] %>
+      <%- } -%>
+      <%- if $directory['cas_gateway'] { -%>
+    CASGateway <%= $directory['cas_gateway'] %>
+      <%- } -%>
+      <%- if $directory['cas_cookie'] { -%>
+    CASCookie <%= $directory['cas_cookie'] %>
+      <%- } -%>
+      <%- if $directory['cas_secure_cookie'] { -%>
+    CASSecureCookie <%= $directory['cas_secure_cookie'] %>
+      <%- } -%>
+      <%- if $directory['cas_gateway_cookie'] { -%>
+    CASGatewayCookie <%= $directory['cas_gateway_cookie'] %>
+      <%- } -%>
+      <%- if $directory['cas_authn_header'] { -%>
+    CASAuthNHeader <%= $directory['cas_authn_header'] %>
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['mellon_enable'] { -%>
+    MellonEnable "<%= $directory['mellon_enable'] %>"
+      <%- if $directory['mellon_endpoint_path'] { -%>
+    MellonEndpointPath "<%= $directory['mellon_endpoint_path'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_sp_private_key_file'] { -%>
+    MellonSPPrivateKeyFile "<%= $directory['mellon_sp_private_key_file'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_sp_cert_file'] { -%>
+    MellonSPCertFile "<%= $directory['mellon_sp_cert_file'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_sp_metadata_file'] { -%>
+    MellonSPMetadataFile "<%= $directory['mellon_sp_metadata_file'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_idp_metadata_file'] { -%>
+    MellonIDPMetadataFile "<%= $directory['mellon_idp_metadata_file'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_set_env'] { -%>
+        <%- $directory['mellon_set_env'].each |$key, $value| { -%>
+    MellonSetEnv "<%= $key %>" "<%= $value %>"
+        <%- } -%>
+      <%- } -%>
+      <%- if $directory['mellon_set_env_no_prefix'] { -%>
+        <%- $directory['mellon_set_env_no_prefix'].each |$key, $value| { -%>
+    MellonSetEnvNoPrefix "<%= $key %>" "<%= $value %>"
+        <%- } -%>
+      <%- } -%>
+      <%- if $directory['mellon_user'] { -%>
+    MellonUser "<%= $directory['mellon_user'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_saml_response_dump'] { -%>
+    MellonSamlResponseDump "<%= $directory['mellon_saml_response_dump'] %>"
+      <%- } -%>
+      <%- if $directory['mellon_cond'] { -%>
+        <%- [$directory['mellon_cond']].flatten.each |$cond| { -%>
+    MellonCond <%= $cond %>
+         <%- } -%>
+      <%- } -%>
+      <%- if $directory['mellon_session_length'] { -%>
+    MellonSessionLength "<%= $directory['mellon_session_length'] %>"
+      <%- } -%>
+    <%- } -%>
+    <%- if $directory['request_headers'] and ! $directory['request_headers'].empty { -%>
+      ## Request Header rules
+      <%- [$directory['request_headers']].flatten.each |$request_statement| { -%>
+        <%- if $request_statement != '' { -%>
+            RequestHeader <%= $request_statement %>
+        <%- } -%>
+      <%- } -%>
+    <%- } -%>
+    <%- if ($directory['proxy_pass'] or $directory['proxy_pass_match']) and $directory['provider'] and $directory['provider'].match('location') { -%>
+      <%# In a Location container, only one of ProxyPass or ProxyPassMatch are allowed, so only need to handle on case at a time -%>
+         <%- if $directory['proxy_pass_match'] {
+               $proxy_pass = 'ProxyPassMatch'
+               $directory_proxy_pass = $directory['proxy_pass_match']
+             } else {
+               $proxy_pass = 'ProxyPass'
+               $directory_proxy_pass = $directory['proxy_pass']
+             } -%>
+      <%- $directory_proxy_pass.flatten.each |$proxy| { -%>
+    <%= $proxy_pass %> <%= $proxy['url'] -%>
+        <%- if $proxy['params'] { -%>
+          <%- $proxy['params'].stdlib::sort_by |$m| { $m[0] }.each |$key, $value| { %> <%= $key %>=<%= $value -%>
+          <%- } -%>
+        <%- } -%>
+        <%- if $proxy['keywords'] { %> <%= $proxy['keywords'].join(' ') -%>
+        <%- } %>
+        <%- if $proxy['reverse_cookies'] != undef { -%>
+          <%- [$proxy['reverse_cookies']].flatten.each |$reverse_cookies| { -%>
+            <%- if $reverse_cookies['path'] { -%>
+    ProxyPassReverseCookiePath <%= $reverse_cookies['path'] %> <%= $reverse_cookies['url'] %>
+            <%- } -%>
+            <%- if $reverse_cookies['domain'] { -%>
+    ProxyPassReverseCookieDomain <%= $reverse_cookies['domain'] %> <%= $reverse_cookies['url'] %>
+            <%- } -%>
+          <%- } -%>
+        <%- } -%>
+        <%- if $proxy['reverse_urls'] == undef { -%>
+    ProxyPassReverse <%= $proxy['url'] %>
+        <%- } else { -%>
+          <%- [$proxy['reverse_urls']].flatten.each |$reverse_url| { -%>
+    ProxyPassReverse <%= $reverse_url %>
+          <%- } -%>
+        <%- } -%>
+        <%- if $proxy['setenv'] { -%>
+          <%- [$proxy['setenv']].flatten.each |$setenv_var| { -%>
+    SetEnv <%= $setenv_var %>
+          <%- } -%>
+        <%- } -%>
+      <% } -%>
+    <%- } -%>
+    <%- if $directory['custom_fragment'] { -%>
+    <%= $directory['custom_fragment'] %>
+    <%- } -%>
+    <%- if $directory['authz_core'] { -%>
+      <%= epp("apache/vhost/_authz_core.epp", 'authz_core_config' => apache::authz_core_config($directory['authz_core'])) -%>
+    <%- } -%>
+    <%- if $directory['gssapi'] { -%>
+      <%= epp("apache/vhost/_gssapi.epp", $directory['gssapi']) -%>
+    <%- } -%>
+  </<%= $provider %>>
+    <%- } -%>
+  <%- } -%>

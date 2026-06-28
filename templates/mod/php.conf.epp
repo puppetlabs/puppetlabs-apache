@@ -6,7 +6,7 @@
 #
 # Cause the PHP interpreter to handle files with a .php extension.
 #
-<FilesMatch ".+(<%= @extensions.flatten.compact.collect { |s| Regexp.escape(s) }.join('|') %>)$">
+<FilesMatch ".+(<%= $extensions.regexpescape.join('|') %>)$">
     SetHandler application/x-httpd-php
 </FilesMatch>
 

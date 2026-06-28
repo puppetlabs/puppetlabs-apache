@@ -1,12 +1,8 @@
 GeoIPEnable <%= apache::bool2httpd($enable) %>
 
 <%- if $db_file and !($db_file in [ false, 'false', '' ]) { -%>
-    <%- if String(type($db_file, 'generalized')).index('Array') == 0 { -%>
-      <%- Array($db_file).each |$file| { -%>
+    <%- [$db_file].flatten.each |$file| { -%>
 GeoIPDBFile <%= $file %> <%= $flag %>
-      <%- } -%>
-    <%- } else { -%>
-GeoIPDBFile <%= $db_file %> <%= $flag %>
     <%- } -%>
 <%- } -%>
 GeoIPOutput <%= $output %>

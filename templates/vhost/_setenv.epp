@@ -1,0 +1,17 @@
+<% unless $setenv.empty { -%>
+
+  ## SetEnv/SetEnvIf for environment variables
+  <%- [$setenv].flatten.each |$envvar| { -%>
+  SetEnv <%= $envvar %>
+  <%- } -%>
+<% } -%>
+<% unless $setenvif.empty { -%>
+  <%- [$setenvif].flatten.each |$envifvar| { -%>
+  SetEnvIf <%= $envifvar %>
+  <%- } -%>
+<% } -%>
+<% unless $setenvifnocase.empty { -%>
+  <%- [$setenvifnocase].each |$envifncvar| { -%>
+  SetEnvIfNoCase <%= $envifncvar %>
+  <%- } -%>
+<% } -%>

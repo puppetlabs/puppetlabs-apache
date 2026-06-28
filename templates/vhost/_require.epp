@@ -1,0 +1,22 @@
+<%- if $item['require'] and !($item['require'] =~ String and ($item['require'] == '' or $item['require'].downcase =~ /unmanaged/)) { -%>
+    <%- if $item['require'] =~ Hash { -%>
+      <%- if $item['require']['enforce'].downcase in ['all', 'none', 'any'] { -%>
+    <Require<%= $item['require']['enforce'].capitalize %>>
+        <%- [$item['require']['requires']].flatten.each |$req| { -%>
+      Require <%= $req.strip %>
+        <%- } -%>
+    </Require<%= $item['require']['enforce'].capitalize %>>
+      <%- } else { -%>
+        <%- warning("Apache::Vhost: Require can only overwritten with all, none or any.") -%>
+      <%- } -%>
+    <%- } else {-%>
+      <%- [$item['require']].flatten.each |$req| { -%>
+    Require <%= $req %>
+      <%- } -%>
+    <%- } -%>
+<%- } -%>
+<%- if $item['auth_require'] { -%>
+    Require <%= $item['auth_require'] %>
+<%- } elsif !$item['require'] or $item['require'] == '' { -%>
+    Require all granted
+<%- } -%>
