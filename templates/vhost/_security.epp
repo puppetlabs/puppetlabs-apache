@@ -1,7 +1,5 @@
 <IfModule mod_security2.c>
-<% if $modsec_disable_vhost {-%>
-  SecRuleEngine Off
-<% } -%>
+  SecRuleEngine <%= apache::bool2httpd(!$modsec_disable_vhost) %>
 <% if $modsec_audit_log_destination {-%>
   SecAuditLog "<%= $modsec_audit_log_destination %>"
 <% } -%>
