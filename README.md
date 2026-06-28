@@ -509,11 +509,13 @@ apache::vhost { 'wsgi.example.com':
   port                        => 80,
   docroot                     => '/var/www/pythonapp',
   wsgi_application_group      => '%{GLOBAL}',
-  wsgi_daemon_process         => 'wsgi',
-  wsgi_daemon_process_options => {
-    processes    => 2,
-    threads      => 15,
-    display-name => '%{GROUP}',
+  wsgi_daemon_process         => {
+    'wsgi' => {
+      processes    => 2,
+      threads      => 15,
+      display-name => '%{GROUP}',
+    },
+    'foo' => {},
   },
   wsgi_import_script          => '/var/www/demo.wsgi',
   wsgi_import_script_options  => {
