@@ -2902,7 +2902,7 @@ Installs `mod_intercept_form_submit`.
 
 Installs MPM `mod_itk`.
 
-* **Note** Unsupported platforms: CentOS: 8; RedHat: 8, 9; SLES: all
+* **Note** Unsupported platforms: CentOS: 8; RedHat: 8, 9, 10; SLES: all
 
 * **See also**
   * http://mpm-itk.sesse.net
@@ -3766,27 +3766,40 @@ The following parameters are available in the `apache::mod::md` class:
 * [`md_certificate_agreement`](#-apache--mod--md--md_certificate_agreement)
 * [`md_certificate_authority`](#-apache--mod--md--md_certificate_authority)
 * [`md_certificate_check`](#-apache--mod--md--md_certificate_check)
+* [`md_certificate_file`](#-apache--mod--md--md_certificate_file)
+* [`md_certificate_key_file`](#-apache--mod--md--md_certificate_key_file)
 * [`md_certificate_monitor`](#-apache--mod--md--md_certificate_monitor)
 * [`md_certificate_protocol`](#-apache--mod--md--md_certificate_protocol)
 * [`md_certificate_status`](#-apache--mod--md--md_certificate_status)
 * [`md_challenge_dns01`](#-apache--mod--md--md_challenge_dns01)
+* [`md_challenge_dns01_version`](#-apache--mod--md--md_challenge_dns01_version)
+* [`md_check_interval`](#-apache--mod--md--md_check_interval)
 * [`md_contact_email`](#-apache--mod--md--md_contact_email)
+* [`md_external_account_binding`](#-apache--mod--md--md_external_account_binding)
 * [`md_http_proxy`](#-apache--mod--md--md_http_proxy)
+* [`md_initial_delay`](#-apache--mod--md--md_initial_delay)
+* [`md_match_names`](#-apache--mod--md--md_match_names)
 * [`md_members`](#-apache--mod--md--md_members)
 * [`md_message_cmd`](#-apache--mod--md--md_message_cmd)
 * [`md_must_staple`](#-apache--mod--md--md_must_staple)
 * [`md_notify_cmd`](#-apache--mod--md--md_notify_cmd)
 * [`md_port_map`](#-apache--mod--md--md_port_map)
 * [`md_private_keys`](#-apache--mod--md--md_private_keys)
+* [`md_profile`](#-apache--mod--md--md_profile)
+* [`md_profile_mandatory`](#-apache--mod--md--md_profile_mandatory)
 * [`md_renew_mode`](#-apache--mod--md--md_renew_mode)
+* [`md_renew_via_ari`](#-apache--mod--md--md_renew_via_ari)
 * [`md_renew_window`](#-apache--mod--md--md_renew_window)
 * [`md_require_https`](#-apache--mod--md--md_require_https)
+* [`md_retry_delay`](#-apache--mod--md--md_retry_delay)
+* [`md_retry_failover`](#-apache--mod--md--md_retry_failover)
 * [`md_server_status`](#-apache--mod--md--md_server_status)
 * [`md_staple_others`](#-apache--mod--md--md_staple_others)
 * [`md_stapling`](#-apache--mod--md--md_stapling)
 * [`md_stapling_keep_response`](#-apache--mod--md--md_stapling_keep_response)
 * [`md_stapling_renew_window`](#-apache--mod--md--md_stapling_renew_window)
 * [`md_store_dir`](#-apache--mod--md--md_store_dir)
+* [`md_store_locks`](#-apache--mod--md--md_store_locks)
 * [`md_warn_window`](#-apache--mod--md--md_warn_window)
 
 ##### <a name="-apache--mod--md--md_activation_delay"></a>`md_activation_delay`
@@ -3838,6 +3851,22 @@ Data type: `Optional[String]`
 
 Default value: `undef`
 
+##### <a name="-apache--mod--md--md_certificate_file"></a>`md_certificate_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specify a static certificate file for the MD.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_certificate_key_file"></a>`md_certificate_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+Specify a static private key for for the static cerrtificate.
+
+Default value: `undef`
+
 ##### <a name="-apache--mod--md--md_certificate_monitor"></a>`md_certificate_monitor`
 
 Data type: `Optional[String]`
@@ -3871,6 +3900,22 @@ setup/torn down.
 
 Default value: `undef`
 
+##### <a name="-apache--mod--md--md_challenge_dns01_version"></a>`md_challenge_dns01_version`
+
+Data type: `Optional[Integer[1,2]]`
+
+Set the type of arguments to call MDChallengeDns01 with
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_check_interval"></a>`md_check_interval`
+
+Data type: `Optional[String]`
+
+Determines how often certificates are checked
+
+Default value: `undef`
+
 ##### <a name="-apache--mod--md--md_contact_email"></a>`md_contact_email`
 
 Data type: `Optional[String]`
@@ -3879,11 +3924,35 @@ The ACME protocol requires you to give a contact url when you sign up.
 
 Default value: `undef`
 
+##### <a name="-apache--mod--md--md_external_account_binding"></a>`md_external_account_binding`
+
+Data type: `Optional[String]`
+
+Set the external account binding keyid and hmac values to use at CA
+
+Default value: `undef`
+
 ##### <a name="-apache--mod--md--md_http_proxy"></a>`md_http_proxy`
 
 Data type: `Optional[Stdlib::HTTPUrl]`
 
 Define a proxy for outgoing connections.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_initial_delay"></a>`md_initial_delay`
+
+Data type: `Optional[String]`
+
+How long to delay the first certificate check.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_match_names"></a>`md_match_names`
+
+Data type: `Optional[String]`
+
+Determines how DNS names are matched to vhosts
 
 Default value: `undef`
 
@@ -3935,11 +4004,35 @@ Set type and size of the private keys generated.
 
 Default value: `undef`
 
+##### <a name="-apache--mod--md--md_profile"></a>`md_profile`
+
+Data type: `Optional[String]`
+
+Use a specific ACME profile from the CA
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_profile_mandatory"></a>`md_profile_mandatory`
+
+Data type: `Optional[Apache::OnOff]`
+
+Control if an MDProfile is mandatory.
+
+Default value: `undef`
+
 ##### <a name="-apache--mod--md--md_renew_mode"></a>`md_renew_mode`
 
 Data type: `Optional[Enum['always', 'auto', 'manual']]`
 
 Controls if certificates shall be renewed.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_renew_via_ari"></a>`md_renew_via_ari`
+
+Data type: `Optional[Apache::OnOff]`
+
+usage of the ACME ARI extension (rfc9773).
 
 Default value: `undef`
 
@@ -3957,6 +4050,22 @@ Data type: `Optional[Enum['off', 'permanent', 'temporary']]`
 
 Redirects http: traffic to https: for Managed Domains.
 An http: Virtual Host must nevertheless be setup for that domain.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_retry_delay"></a>`md_retry_delay`
+
+Data type: `Optional[String]`
+
+Time length for first retry, doubled on every consecutive error.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_retry_failover"></a>`md_retry_failover`
+
+Data type: `Optional[Integer[0]]`
+
+The number of errors before a failover to another CA is triggered
 
 Default value: `undef`
 
@@ -4005,6 +4114,14 @@ Default value: `undef`
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path on the local file system to store the Managed Domains data.
+
+Default value: `undef`
+
+##### <a name="-apache--mod--md--md_store_locks"></a>`md_store_locks`
+
+Data type: `Optional[String]`
+
+Configure locking of store for updates
 
 Default value: `undef`
 
@@ -5477,7 +5594,7 @@ Default value: `'Off'`
 
 Installs `mod_php`.
 
-* **Note** Unsupported platforms: RedHat: 9
+* **Note** Unsupported platforms: RedHat: 9, 10
 
 #### Parameters
 
@@ -6053,6 +6170,11 @@ Default value: `'apache/mod/rpaf.conf.epp'`
 ### <a name="apache--mod--security"></a>`apache::mod::security`
 
 Installs and configures `mod_security`.
+
+* **Note** On RHEL/EL 10 the ModSecurity engine is provided by EPEL (enable EPEL
+yourself; this module does not manage it). The OWASP CRS package
+(`mod_security_crs`) is not available on EL10, so the class manages the
+engine only there and does not install or activate CRS rules.
 
 * **See also**
   * https://github.com/SpiderLabs/ModSecurity/wiki

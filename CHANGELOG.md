@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v13.2.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.2.0) - 2026-06-28
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.1.0...v13.2.0)
+
+### Added
+
+- Add missing parameters to mod_md [#2621](https://github.com/puppetlabs/puppetlabs-apache/pull/2621) ([smortex](https://github.com/smortex))
+
+### Other
+
+- (MODULES-11851) Restore ModSecurity engine on RHEL 10 via EPEL [#2635](https://github.com/puppetlabs/puppetlabs-apache/pull/2635) ([SugatD](https://github.com/SugatD))
+- (MODULES-11840) Allow puppetlabs/stdlib 10.x [#2632](https://github.com/puppetlabs/puppetlabs-apache/pull/2632) ([imaqsood](https://github.com/imaqsood))
+- puppetlabs/concat: Allow 10.x [#2630](https://github.com/puppetlabs/puppetlabs-apache/pull/2630) ([bastelfreak](https://github.com/bastelfreak))
+- (MODULES-11739) Add RHEL 10 support [#2629](https://github.com/puppetlabs/puppetlabs-apache/pull/2629) ([SugatD](https://github.com/SugatD))
+- Configure Mend for GitHub.com [#2587](https://github.com/puppetlabs/puppetlabs-apache/pull/2587) ([mend-for-github-com](https://github.com/mend-for-github-com))
+
 ## [v13.1.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.1.0) - 2025-11-18
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.0.0...v13.1.0)
