@@ -2188,6 +2188,157 @@ describe 'apache::vhost', type: :define do
             }
           end
         end
+
+        context 'mod_dir is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'directoryindex' => 'index.php',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dir') }
+        end
+
+        context 'mod_expires is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'expires_active' => 'On',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::expires') }
+        end
+
+        context 'mod_dav is included when on' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'dav' => 'On',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dav') }
+          it { is_expected.to contain_class('apache::mod::dav_fs') }
+        end
+
+        context 'mod_dav is included when set to svn' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'dav' => 'svn',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::dav') }
+          it { is_expected.to contain_class('apache::mod::dav_svn') }
+        end
+
+        context 'mod_autoindex is included when needed' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'index_options' => ['FancyIndexing'],
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.to contain_class('apache::mod::autoindex') }
+        end
+
+        context 'mod_cgi is included when requested by array' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => ['ExecCGI'],
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          if os_facts[:os]['family'] == 'Debian'
+            it { is_expected.not_to contain_class('apache::mod::cgi') }
+            it { is_expected.to contain_class('apache::mod::cgid') }
+          else
+            it { is_expected.to contain_class('apache::mod::cgi') }
+            it { is_expected.not_to contain_class('apache::mod::cgid') }
+          end
+        end
+
+        context 'mod_cgi is included when requested by string' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => 'Indexes ExecCGI',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          if os_facts[:os]['family'] == 'Debian'
+            it { is_expected.not_to contain_class('apache::mod::cgi') }
+            it { is_expected.to contain_class('apache::mod::cgid') }
+          else
+            it { is_expected.to contain_class('apache::mod::cgi') }
+            it { is_expected.not_to contain_class('apache::mod::cgid') }
+          end
+        end
+
+        context 'mod_cgi is not included when unrequested' do
+          let :params do
+            {
+              'docroot' => '/var/www/foo',
+              'directories' => [
+                {
+                  'options' => '+Indexes -ExecCGI',
+                },
+              ]
+
+            }
+          end
+
+          it { is_expected.to compile }
+          it { is_expected.not_to contain_class('apache::mod::cgi') }
+          it { is_expected.not_to contain_class('apache::mod::cgid') }
+        end
       end
     end
   end
