@@ -239,6 +239,9 @@
     <%- end -%>
     <%- if directory['dav'] -%>
     Dav <%= directory['dav'] %>
+    <%- if directory['svn_parent_path'] -%>
+    SVNParentPath <%= directory['svn_parent_path'] %>
+    <%- end -%>
     <%- if directory['dav_depth_infinity'] -%>
     DavDepthInfinity <%= scope.call_function('apache::bool2httpd', [directory['dav_depth_infinity']]) %>
     <%- end -%>
