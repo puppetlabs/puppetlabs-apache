@@ -806,4 +806,19 @@ class apache::params inherits apache::version {
     $ssl_cipher = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'
     $ssl_proxy_cipher_suite = undef
   }
+
+  # OWASP CRS acquisition mode (see apache::mod::security).
+  # EL10 has no mod_security_crs package, so default to engine-only there
+  # (CRS is opt-in via the archive/path modes). Every other platform keeps
+  # the existing package-based behaviour, so nothing changes for them.
+  if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '10') >= 0 {
+    $modsec_crs_source = 'none'
+  } else {
+    $modsec_crs_source = 'package'
+  }
+  # No module-shipped default version/URL: the archive source is user-pinned
+  # (e.g. an internal mirror) to keep us off the CRS version/CVE treadmill.
+  $modsec_crs_archive_source        = undef
+  $modsec_crs_archive_checksum      = undef
+  $modsec_crs_archive_checksum_type = 'sha256'
 }

@@ -1,0 +1,9 @@
+<%- | Stdlib::Absolutepath $crs_dir | -%>
+# Managed by Puppet (apache::mod::security, crs_source => archive|path).
+#
+# OWASP Core Rule Set v4 on-disk layout. Unlike the v2/v3 package model
+# (per-rule symlinks under activated_rules/), v4 is loaded as a self-contained
+# directory: the setup file first, then every rule file in filename order
+# (CRS numbers its files so the wildcard include resolves the correct order).
+IncludeOptional <%= $crs_dir %>/crs-setup.conf
+IncludeOptional <%= $crs_dir %>/rules/*.conf

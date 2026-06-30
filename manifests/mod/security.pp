@@ -8,8 +8,29 @@
 #   Configures the location of audit and debug logs.
 # 
 # @param crs_package
-#   Name of package that installs CRS rules.
-# 
+#   Name of package that installs CRS rules. Only used when `crs_source` is `package`.
+#
+# @param crs_source
+#   How the OWASP Core Rule Set is obtained:
+#   * `package` - install `crs_package` and activate rules via per-rule symlinks (v2/v3 layout). Default on EL7/8/9.
+#   * `archive` - download the CRS v4 tarball via `puppet/archive` from `crs_archive_source` (e.g. an internal mirror) and wire the v4 includes.
+#   * `path`    - use a pre-staged CRS v4 directory given by `crs_path` (no download); only wires the v4 includes.
+#   * `none`    - engine only, no CRS managed. Default on EL10.
+#
+# @param crs_archive_source
+#   Source URL or path for the CRS v4 tarball when `crs_source` is `archive`. No module default
+#   (user-pinned, e.g. an internal mirror) to avoid a version/CVE maintenance treadmill. Required for `archive`.
+#
+# @param crs_archive_checksum
+#   Checksum of the CRS v4 tarball for verification when `crs_source` is `archive`.
+#
+# @param crs_archive_checksum_type
+#   Checksum algorithm for `crs_archive_checksum` (e.g. `sha256`).
+#
+# @param crs_path
+#   Absolute path to the CRS v4 directory. Required for `crs_source => path` (pre-staged files);
+#   for `crs_source => archive` it overrides the extraction directory (default `${modsec_dir}/coreruleset`).
+#
 # @param activated_rules
 #   An array of rules from the modsec_crs_path or absolute to activate via symlinks.
 #
@@ -139,12 +160,20 @@
 #
 # @note On RHEL/EL 10 the ModSecurity engine is provided by EPEL (enable EPEL
 #   yourself; this module does not manage it). The OWASP CRS package
-#   (`mod_security_crs`) is not available on EL10, so the class manages the
-#   engine only there and does not install or activate CRS rules.
+#   (`mod_security_crs`) is not available on EL10, so `crs_source` defaults to
+#   `none` (engine only). CRS v4 can be opted into there via `crs_source =>
+#   'archive'` (downloaded from `crs_archive_source`, e.g. an internal mirror)
+#   or `crs_source => 'path'` (a pre-staged directory). EL7/8/9 keep the
+#   package-based default unchanged.
 class apache::mod::security (
   Stdlib::Absolutepath $logroot                                = $apache::params::logroot,
   Integer $version                                             = $apache::params::modsec_version,
   Optional[String] $crs_package                                = $apache::params::modsec_crs_package,
+  Enum['package', 'archive', 'path', 'none'] $crs_source       = $apache::params::modsec_crs_source,
+  Optional[String[1]] $crs_archive_source                      = $apache::params::modsec_crs_archive_source,
+  Optional[String[1]] $crs_archive_checksum                    = $apache::params::modsec_crs_archive_checksum,
+  String[1] $crs_archive_checksum_type                         = $apache::params::modsec_crs_archive_checksum_type,
+  Optional[Stdlib::Absolutepath] $crs_path                     = undef,
   Array[String] $activated_rules                               = $apache::params::modsec_default_rules,
   Boolean $custom_rules                                        = $apache::params::modsec_custom_rules,
   Optional[Array[String]] $custom_rules_set                    = $apache::params::modsec_custom_rules_set,
@@ -227,14 +256,63 @@ class apache::mod::security (
     lib => 'mod_unique_id.so',
   }
 
-  if $crs_package {
-    package { $crs_package:
-      ensure => 'installed',
-      before => [
-        File[$apache::confd_dir],
-        File[$modsec_dir],
-      ],
+  # Effective on-disk CRS v4 directory (used by archive/path modes). Kept
+  # outside $modsec_dir, which is managed with purge => true and would
+  # otherwise remove the extracted rule tree.
+  $_crs_dir = $crs_path ? {
+    undef   => '/usr/share/coreruleset',
+    default => $crs_path,
+  }
+
+  # CRS acquisition. The activation wiring is selected later by the same
+  # $crs_source: `package` keeps the legacy per-rule symlinks (v2/v3 layout),
+  # while `archive`/`path` use the v4 include layout.
+  case $crs_source {
+    'package': {
+      if $crs_package {
+        package { $crs_package:
+          ensure => 'installed',
+          before => [
+            File[$apache::confd_dir],
+            File[$modsec_dir],
+          ],
+        }
+      }
     }
+    'archive': {
+      if ! $crs_archive_source {
+        fail('apache::mod::security: crs_source => "archive" requires crs_archive_source (URL/path to the CRS v4 tarball, e.g. an internal mirror).')
+      }
+      # TODO: CRS tarballs extract to a versioned top-level dir
+      # (coreruleset-x.y.z/). Confirm whether to point $crs_path at that
+      # subdir or normalise the layout after extraction.
+      file { $_crs_dir:
+        ensure => directory,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
+      }
+
+      archive { 'coreruleset.tar.gz':
+        ensure        => present,
+        path          => '/var/cache/coreruleset.tar.gz',
+        source        => $crs_archive_source,
+        checksum      => $crs_archive_checksum,
+        checksum_type => $crs_archive_checksum_type,
+        extract       => true,
+        extract_path  => $_crs_dir,
+        creates       => "${_crs_dir}/crs-setup.conf",
+        cleanup       => true,
+        require       => File[$_crs_dir],
+      }
+    }
+    'path': {
+      if ! $crs_path {
+        fail('apache::mod::security: crs_source => "path" requires crs_path (absolute path to a pre-staged CRS v4 directory).')
+      }
+    }
+    'none': {}
+    default: {}
   }
 
   # Template uses:
@@ -329,7 +407,9 @@ class apache::mod::security (
     }
   }
 
-  if $manage_security_crs {
+  if $manage_security_crs and $crs_source == 'package' {
+    # Legacy CRS v2/v3 layout: a tuning conf plus per-rule symlinks under
+    # activated_rules/. Unchanged behaviour for EL7/8/9 package installs.
     # Template uses:
     # - $_secdefaultaction
     # - $critical_anomaly_score
@@ -379,6 +459,18 @@ class apache::mod::security (
 
     unless $facts['os']['name'] == 'SLES' or $facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu' {
       apache::security::rule_link { $activated_rules: }
+    }
+  }
+
+  if $manage_security_crs and $crs_source in ['archive', 'path'] {
+    # CRS v4 layout: load crs-setup.conf then rules/*.conf from the CRS
+    # directory. Dropped into $modsec_dir so the existing
+    # `IncludeOptional ${modsec_dir}/*.conf` in security.conf picks it up.
+    file { "${modsec_dir}/security_crs_v4.conf":
+      ensure  => file,
+      content => epp('apache/mod/security_crs_v4.conf.epp', { 'crs_dir' => $_crs_dir }),
+      require => File[$modsec_dir],
+      notify  => Class['apache::service'],
     }
   }
 }

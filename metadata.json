@@ -15,6 +15,10 @@
     {
       "name": "puppetlabs/concat",
       "version_requirement": ">= 2.2.1 < 11.0.0"
+    },
+    {
+      "name": "puppetlabs/archive",
+      "version_requirement": ">= 4.0.0 < 8.0.0"
     }
   ],
   "operatingsystem_support": [
