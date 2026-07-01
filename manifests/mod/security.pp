@@ -27,9 +27,14 @@
 # @param crs_archive_checksum_type
 #   Checksum algorithm for `crs_archive_checksum` (e.g. `sha256`).
 #
+# @param crs_version
+#   The pinned CRS version (e.g. `4.27.0`), required for `crs_source => archive`. It fixes the
+#   extracted `coreruleset-<version>` directory name so the include paths are deterministic.
+#
 # @param crs_path
-#   Absolute path to the CRS v4 directory. Required for `crs_source => path` (pre-staged files);
-#   for `crs_source => archive` it overrides the extraction directory (default `${modsec_dir}/coreruleset`).
+#   For `crs_source => path`: absolute path to the pre-staged CRS v4 directory (contains
+#   `crs-setup.conf` and `rules/`). For `crs_source => archive`: overrides the extraction base
+#   directory (default `/usr/share`); the ruleset then lives at `<crs_path>/coreruleset-<crs_version>`.
 #
 # @param activated_rules
 #   An array of rules from the modsec_crs_path or absolute to activate via symlinks.
@@ -173,6 +178,7 @@ class apache::mod::security (
   Optional[String[1]] $crs_archive_source                      = $apache::params::modsec_crs_archive_source,
   Optional[String[1]] $crs_archive_checksum                    = $apache::params::modsec_crs_archive_checksum,
   String[1] $crs_archive_checksum_type                         = $apache::params::modsec_crs_archive_checksum_type,
+  Optional[String[1]] $crs_version                             = undef,
   Optional[Stdlib::Absolutepath] $crs_path                     = undef,
   Array[String] $activated_rules                               = $apache::params::modsec_default_rules,
   Boolean $custom_rules                                        = $apache::params::modsec_custom_rules,
@@ -256,12 +262,19 @@ class apache::mod::security (
     lib => 'mod_unique_id.so',
   }
 
-  # Effective on-disk CRS v4 directory (used by archive/path modes). Kept
-  # outside $modsec_dir, which is managed with purge => true and would
-  # otherwise remove the extracted rule tree.
-  $_crs_dir = $crs_path ? {
-    undef   => '/usr/share/coreruleset',
+  # Effective on-disk CRS v4 directory used in the include wiring. Kept outside
+  # $modsec_dir, which is managed with purge => true and would otherwise remove
+  # the extracted rule tree.
+  # - path:    $crs_path is the ready CRS directory (contains crs-setup.conf + rules/).
+  # - archive: CRS tarballs unpack to a versioned dir, so the ruleset lives at
+  #            <base>/coreruleset-<crs_version> under the extraction base.
+  $_crs_extract_base = $crs_path ? {
+    undef   => '/usr/share',
     default => $crs_path,
+  }
+  $_crs_dir = $crs_source ? {
+    'archive' => "${_crs_extract_base}/coreruleset-${crs_version}",
+    default   => $crs_path,
   }
 
   # CRS acquisition. The activation wiring is selected later by the same
@@ -283,16 +296,16 @@ class apache::mod::security (
       if ! $crs_archive_source {
         fail('apache::mod::security: crs_source => "archive" requires crs_archive_source (URL/path to the CRS v4 tarball, e.g. an internal mirror).')
       }
-      # TODO: CRS tarballs extract to a versioned top-level dir
-      # (coreruleset-x.y.z/). Confirm whether to point $crs_path at that
-      # subdir or normalise the layout after extraction.
-      file { $_crs_dir:
-        ensure => directory,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0755',
+      if ! $crs_version {
+        fail('apache::mod::security: crs_source => "archive" requires crs_version (the pinned CRS version, e.g. "4.27.0"); it fixes the extracted coreruleset-<version> directory name.')
       }
 
+      file { $_crs_extract_base:
+        ensure => directory,
+      }
+
+      # Both the release "-minimal" asset and the source archive unpack to a
+      # versioned top-level dir, coreruleset-<crs_version>/.
       archive { 'coreruleset.tar.gz':
         ensure        => present,
         path          => '/var/cache/coreruleset.tar.gz',
@@ -300,10 +313,19 @@ class apache::mod::security (
         checksum      => $crs_archive_checksum,
         checksum_type => $crs_archive_checksum_type,
         extract       => true,
-        extract_path  => $_crs_dir,
-        creates       => "${_crs_dir}/crs-setup.conf",
+        extract_path  => $_crs_extract_base,
+        creates       => "${_crs_dir}/crs-setup.conf.example",
         cleanup       => true,
-        require       => File[$_crs_dir],
+        require       => File[$_crs_extract_base],
+      }
+
+      # CRS ships crs-setup.conf.example; create the active crs-setup.conf from
+      # it once. The creates guard prevents clobbering later user edits.
+      exec { 'apache-crs-setup-conf':
+        command => "/bin/cp ${_crs_dir}/crs-setup.conf.example ${_crs_dir}/crs-setup.conf",
+        creates => "${_crs_dir}/crs-setup.conf",
+        require => Archive['coreruleset.tar.gz'],
+        notify  => Class['apache::service'],
       }
     }
     'path': {

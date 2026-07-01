@@ -463,17 +463,26 @@ describe 'apache::mod::security', type: :class do
 
     context "crs_source => 'archive'" do
       context 'without crs_archive_source' do
-        let(:params) { { crs_source: 'archive' } }
+        let(:params) { { crs_source: 'archive', crs_version: '4.27.0' } }
 
         it { is_expected.to compile.and_raise_error(%r{crs_archive_source}) }
       end
 
-      context 'with crs_archive_source' do
+      context 'without crs_version' do
+        let(:params) do
+          { crs_source: 'archive', crs_archive_source: 'https://mirror.internal.example/crs.tar.gz' }
+        end
+
+        it { is_expected.to compile.and_raise_error(%r{crs_version}) }
+      end
+
+      context 'with crs_archive_source and crs_version' do
         let(:params) do
           {
             crs_source: 'archive',
-            crs_archive_source: 'https://mirror.internal.example/crs/coreruleset-4.10.0.tar.gz',
+            crs_archive_source: 'https://mirror.internal.example/crs/coreruleset-4.27.0-minimal.tar.gz',
             crs_archive_checksum: 'abc123',
+            crs_version: '4.27.0',
           }
         end
 
@@ -481,18 +490,21 @@ describe 'apache::mod::security', type: :class do
 
         it {
           expect(subject).to contain_archive('coreruleset.tar.gz').with(
-            source: 'https://mirror.internal.example/crs/coreruleset-4.10.0.tar.gz',
+            source: 'https://mirror.internal.example/crs/coreruleset-4.27.0-minimal.tar.gz',
             checksum: 'abc123',
             checksum_type: 'sha256',
             extract: true,
-            extract_path: '/usr/share/coreruleset',
+            extract_path: '/usr/share',
+            creates: '/usr/share/coreruleset-4.27.0/crs-setup.conf.example',
           )
         }
 
+        it { is_expected.to contain_exec('apache-crs-setup-conf').with_creates('/usr/share/coreruleset-4.27.0/crs-setup.conf') }
+
         it {
           expect(subject).to contain_file('/etc/httpd/modsecurity.d/security_crs_v4.conf')
-            .with_content(%r{IncludeOptional /usr/share/coreruleset/crs-setup\.conf})
-            .with_content(%r{IncludeOptional /usr/share/coreruleset/rules/\*\.conf})
+            .with_content(%r{IncludeOptional /usr/share/coreruleset-4\.27\.0/crs-setup\.conf})
+            .with_content(%r{IncludeOptional /usr/share/coreruleset-4\.27\.0/rules/\*\.conf})
         }
       end
     end
