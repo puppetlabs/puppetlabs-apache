@@ -8,8 +8,34 @@
 #   Configures the location of audit and debug logs.
 # 
 # @param crs_package
-#   Name of package that installs CRS rules.
-# 
+#   Name of package that installs CRS rules. Only used when `crs_source` is `package`.
+#
+# @param crs_source
+#   How the OWASP Core Rule Set is obtained:
+#   * `package` - install `crs_package` and activate rules via per-rule symlinks (v2/v3 layout). Default on EL7/8/9.
+#   * `archive` - download the CRS v4 tarball via `puppet/archive` from `crs_archive_source` (e.g. an internal mirror) and wire the v4 includes.
+#   * `path`    - use a pre-staged CRS v4 directory given by `crs_path` (no download); only wires the v4 includes.
+#   * `none`    - engine only, no CRS managed. Default on EL10.
+#
+# @param crs_archive_source
+#   Source URL or path for the CRS v4 tarball when `crs_source` is `archive`. No module default
+#   (user-pinned, e.g. an internal mirror) to avoid a version/CVE maintenance treadmill. Required for `archive`.
+#
+# @param crs_archive_checksum
+#   Checksum of the CRS v4 tarball for verification when `crs_source` is `archive`.
+#
+# @param crs_archive_checksum_type
+#   Checksum algorithm for `crs_archive_checksum` (e.g. `sha256`).
+#
+# @param crs_version
+#   The pinned CRS version (e.g. `4.27.0`), required for `crs_source => archive`. It fixes the
+#   extracted `coreruleset-<version>` directory name so the include paths are deterministic.
+#
+# @param crs_path
+#   For `crs_source => path`: absolute path to the pre-staged CRS v4 directory (contains
+#   `crs-setup.conf` and `rules/`). For `crs_source => archive`: overrides the extraction base
+#   directory (default `/usr/share`); the ruleset then lives at `<crs_path>/coreruleset-<crs_version>`.
+#
 # @param activated_rules
 #   An array of rules from the modsec_crs_path or absolute to activate via symlinks.
 #
@@ -139,12 +165,21 @@
 #
 # @note On RHEL/EL 10 the ModSecurity engine is provided by EPEL (enable EPEL
 #   yourself; this module does not manage it). The OWASP CRS package
-#   (`mod_security_crs`) is not available on EL10, so the class manages the
-#   engine only there and does not install or activate CRS rules.
+#   (`mod_security_crs`) is not available on EL10, so `crs_source` defaults to
+#   `none` (engine only). CRS v4 can be opted into there via `crs_source =>
+#   'archive'` (downloaded from `crs_archive_source`, e.g. an internal mirror)
+#   or `crs_source => 'path'` (a pre-staged directory). EL7/8/9 keep the
+#   package-based default unchanged.
 class apache::mod::security (
   Stdlib::Absolutepath $logroot                                = $apache::params::logroot,
   Integer $version                                             = $apache::params::modsec_version,
   Optional[String] $crs_package                                = $apache::params::modsec_crs_package,
+  Enum['package', 'archive', 'path', 'none'] $crs_source       = $apache::params::modsec_crs_source,
+  Optional[String[1]] $crs_archive_source                      = $apache::params::modsec_crs_archive_source,
+  Optional[String[1]] $crs_archive_checksum                    = $apache::params::modsec_crs_archive_checksum,
+  String[1] $crs_archive_checksum_type                         = $apache::params::modsec_crs_archive_checksum_type,
+  Optional[String[1]] $crs_version                             = undef,
+  Optional[Stdlib::Absolutepath] $crs_path                     = undef,
   Array[String] $activated_rules                               = $apache::params::modsec_default_rules,
   Boolean $custom_rules                                        = $apache::params::modsec_custom_rules,
   Optional[Array[String]] $custom_rules_set                    = $apache::params::modsec_custom_rules_set,
@@ -227,14 +262,79 @@ class apache::mod::security (
     lib => 'mod_unique_id.so',
   }
 
-  if $crs_package {
-    package { $crs_package:
-      ensure => 'installed',
-      before => [
-        File[$apache::confd_dir],
-        File[$modsec_dir],
-      ],
+  # Effective on-disk CRS v4 directory used in the include wiring. Kept outside
+  # $modsec_dir, which is managed with purge => true and would otherwise remove
+  # the extracted rule tree.
+  # - path:    $crs_path is the ready CRS directory (contains crs-setup.conf + rules/).
+  # - archive: CRS tarballs unpack to a versioned dir, so the ruleset lives at
+  #            <base>/coreruleset-<crs_version> under the extraction base.
+  $_crs_extract_base = $crs_path ? {
+    undef   => '/usr/share',
+    default => $crs_path,
+  }
+  $_crs_dir = $crs_source ? {
+    'archive' => "${_crs_extract_base}/coreruleset-${crs_version}",
+    default   => $crs_path,
+  }
+
+  # CRS acquisition. The activation wiring is selected later by the same
+  # $crs_source: `package` keeps the legacy per-rule symlinks (v2/v3 layout),
+  # while `archive`/`path` use the v4 include layout.
+  case $crs_source {
+    'package': {
+      if $crs_package {
+        package { $crs_package:
+          ensure => 'installed',
+          before => [
+            File[$apache::confd_dir],
+            File[$modsec_dir],
+          ],
+        }
+      }
     }
+    'archive': {
+      if ! $crs_archive_source {
+        fail('apache::mod::security: crs_source => "archive" requires crs_archive_source (URL/path to the CRS v4 tarball, e.g. an internal mirror).')
+      }
+      if ! $crs_version {
+        fail('apache::mod::security: crs_source => "archive" requires crs_version (the pinned CRS version, e.g. "4.27.0"); it fixes the extracted coreruleset-<version> directory name.')
+      }
+
+      file { $_crs_extract_base:
+        ensure => directory,
+      }
+
+      # Both the release "-minimal" asset and the source archive unpack to a
+      # versioned top-level dir, coreruleset-<crs_version>/.
+      archive { 'coreruleset.tar.gz':
+        ensure        => present,
+        path          => '/var/cache/coreruleset.tar.gz',
+        source        => $crs_archive_source,
+        checksum      => $crs_archive_checksum,
+        checksum_type => $crs_archive_checksum_type,
+        extract       => true,
+        extract_path  => $_crs_extract_base,
+        creates       => "${_crs_dir}/crs-setup.conf.example",
+        cleanup       => true,
+        require       => File[$_crs_extract_base],
+      }
+
+      # CRS ships crs-setup.conf.example; create the active crs-setup.conf from
+      # it once. The creates guard prevents clobbering later user edits.
+      exec { 'apache-crs-setup-conf':
+        command => "/bin/cp ${_crs_dir}/crs-setup.conf.example ${_crs_dir}/crs-setup.conf",
+        creates => "${_crs_dir}/crs-setup.conf",
+        require => Archive['coreruleset.tar.gz'],
+        notify  => Class['apache::service'],
+      }
+    }
+    'path': {
+      if ! $crs_path {
+        fail('apache::mod::security: crs_source => "path" requires crs_path (absolute path to a pre-staged CRS v4 directory).')
+      }
+    }
+    'none': {}
+    default: {}
   }
 
   # Template uses:
@@ -329,7 +429,9 @@ class apache::mod::security (
     }
   }
 
-  if $manage_security_crs {
+  if $manage_security_crs and $crs_source == 'package' {
+    # Legacy CRS v2/v3 layout: a tuning conf plus per-rule symlinks under
+    # activated_rules/. Unchanged behaviour for EL7/8/9 package installs.
     # Template uses:
     # - $_secdefaultaction
     # - $critical_anomaly_score
@@ -379,6 +481,18 @@ class apache::mod::security (
 
     unless $facts['os']['name'] == 'SLES' or $facts['os']['name'] == 'Debian' or $facts['os']['name'] == 'Ubuntu' {
       apache::security::rule_link { $activated_rules: }
+    }
+  }
+
+  if $manage_security_crs and $crs_source in ['archive', 'path'] {
+    # CRS v4 layout: load crs-setup.conf then rules/*.conf from the CRS
+    # directory. Dropped into $modsec_dir so the existing
+    # `IncludeOptional ${modsec_dir}/*.conf` in security.conf picks it up.
+    file { "${modsec_dir}/security_crs_v4.conf":
+      ensure  => file,
+      content => epp('apache/mod/security_crs_v4.conf.epp', { 'crs_dir' => $_crs_dir }),
+      require => File[$modsec_dir],
+      notify  => Class['apache::service'],
     }
   }
 }

@@ -1,6 +1,7 @@
 ---
 fixtures:
   repositories:
+    archive: "https://github.com/voxpupuli/puppet-archive.git"
     concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
     facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
     portage: "https://github.com/gentoo/puppet-portage.git"
