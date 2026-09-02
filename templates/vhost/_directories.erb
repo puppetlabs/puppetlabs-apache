@@ -43,6 +43,9 @@
       <%- if directory['index_style_sheet'] -%>
     IndexStyleSheet '<%= directory['index_style_sheet'] %>'
       <%- end -%>
+      <%- if directory['index_head_insert'] -%>
+    IndexHeadInsert '<%= Array(directory['index_head_insert']).join(' ') %>'
+      <%- end -%>
       <%- if directory['allow_override'] -%>
     AllowOverride <%= Array(directory['allow_override']).join(' ') %>
       <%- elsif provider == 'Directory' -%>
