@@ -8,12 +8,9 @@
 #
 # @param internal_proxy
 #   A list of IP addresses, IP blocks or hostname that are trusted to set a
-#   valid value inside specified header. Unlike the `$trusted_proxy_ips`
+#   valid value inside specified header. Unlike the `$trusted_proxy`
 #   parameter, any IP address (including private addresses) presented by these
 #   proxies will trusted by `mod_remoteip`.
-#
-# @param proxy_ips
-#   *Deprecated*: use `$internal_proxy` instead.
 #
 # @param internal_proxy_list
 #   The path to a file containing a list of IP addresses, IP blocks or hostname
@@ -39,9 +36,6 @@
 #   any private IP presented by these proxies will be disgarded by
 #   `mod_remoteip`.
 #
-# @param trusted_proxy_ips
-#   *Deprecated*: use `$trusted_proxy` instead.
-#
 # @param trusted_proxy_list
 #   The path to a file containing a list of IP addresses, IP blocks or hostname
 #   that are trusted to set a valid value inside the specified header. See
@@ -51,44 +45,26 @@
 #
 class apache::mod::remoteip (
   String                                                     $header                    = 'X-Forwarded-For',
-  Optional[Array[Stdlib::Host]]                              $internal_proxy            = undef,
-  Optional[Array[Stdlib::Host]]                              $proxy_ips                 = undef,
+  Array[Stdlib::Host]                                        $internal_proxy            = ['127.0.0.1'],
   Optional[Stdlib::Absolutepath]                             $internal_proxy_list       = undef,
   Optional[String]                                           $proxies_header            = undef,
   Boolean                                                    $proxy_protocol            = false,
   Optional[Array[Stdlib::Host]]                              $proxy_protocol_exceptions = undef,
   Optional[Array[Stdlib::Host]]                              $trusted_proxy             = undef,
-  Optional[Array[Stdlib::Host]]                              $trusted_proxy_ips         = undef,
   Optional[Stdlib::Absolutepath]                             $trusted_proxy_list        = undef,
 ) {
   include apache
-
-  if $proxy_ips {
-    deprecation('apache::mod::remoteip::proxy_ips', 'This parameter is deprecated, please use `internal_proxy`.')
-    $_internal_proxy = $proxy_ips
-  } elsif $internal_proxy {
-    $_internal_proxy = $internal_proxy
-  } else {
-    $_internal_proxy = ['127.0.0.1']
-  }
-
-  if $trusted_proxy_ips {
-    deprecation('apache::mod::remoteip::trusted_proxy_ips', 'This parameter is deprecated, please use `trusted_proxy`.')
-    $_trusted_proxy = $trusted_proxy_ips
-  } else {
-    $_trusted_proxy = $trusted_proxy
-  }
 
   ::apache::mod { 'remoteip': }
 
   $template_parameters = {
     header                    => $header,
-    internal_proxy            => $_internal_proxy,
+    internal_proxy            => $internal_proxy,
     internal_proxy_list       => $internal_proxy_list,
     proxies_header            => $proxies_header,
     proxy_protocol            => $proxy_protocol,
     proxy_protocol_exceptions => $proxy_protocol_exceptions,
-    trusted_proxy             => $_trusted_proxy,
+    trusted_proxy             => $trusted_proxy,
     trusted_proxy_list        => $trusted_proxy_list,
   }
 
