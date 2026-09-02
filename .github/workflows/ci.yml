@@ -5,15 +5,31 @@ on:
     branches:
       - "main"
   workflow_dispatch:
-    
+
 jobs:
   Spec:
     uses: "puppetlabs/cat-github-actions/.github/workflows/module_ci.yml@main"
+    with:
+      runs_on: "ubuntu-24.04"
+      ruby_version: "3.2"
+      # puppet_litmus -> bolt 4.x -> faraday-patron -> patron builds a libcurl native extension;
+      # the runner has no libcurl headers, so install them before bundle (Puppet 9 lane, Ruby 4).
+      additional_packages: "libcurl4-openssl-dev"
     secrets: "inherit"
 
   Acceptance:
     needs: Spec
     uses: "puppetlabs/cat-github-actions/.github/workflows/module_acceptance.yml@main"
     with:
-      flags: "--nightly --platform-exclude centos-7 --platform-exclude oraclelinux-7 --platform-exclude scientific-7 --platform-exclude almalinux-8"
+      ruby_version: "3.2"
+      flags: >-
+        --nightly
+        --platform-exclude centos-7
+        --platform-exclude oraclelinux-7
+        --platform-exclude scientific-7
+        --platform-exclude almalinux-8
+        --collection-platform-exclude 9:redhat-7
+        --collection-platform-exclude 9:debian-10
+        --collection-platform-exclude 9:ubuntu-18.04
+        --collection-platform-exclude 9:ubuntu-20.04
     secrets: "inherit"

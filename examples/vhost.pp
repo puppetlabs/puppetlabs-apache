@@ -151,7 +151,7 @@ apache::vhost { 'sixteenth.example.com non-ssl':
       comment      => 'redirect non-SSL traffic to SSL site',
       rewrite_cond => ['%{HTTPS} off'],
       rewrite_rule => ['(.*) https://%{HTTP_HOST}%{REQUEST_URI}'],
-    }
+    },
   ],
 }
 
@@ -165,7 +165,7 @@ apache::vhost { 'sixteenth.example.com non-ssl':
       rewrite_cond => ['%{REQUEST_URI} [A-Z]'],
       rewrite_map  => ['lc int:tolower'],
       rewrite_rule => ["(.*) \${lc:\$1} [R=301,L]"],
-    }
+    },
   ],
 }
 

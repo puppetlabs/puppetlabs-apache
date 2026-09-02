@@ -783,7 +783,9 @@ class apache::params inherits apache::version {
   }
 
   if $facts['os']['name'] == 'SLES' {
-    $verify_command = ['/usr/sbin/apache2ctl', '-t']
+    # SUSE's apache2 package ships no apache2ctl/apachectl; start_apache2 is the
+    # SUSE wrapper and passes '-t' through to httpd for a config syntax check.
+    $verify_command = ['/usr/sbin/start_apache2', '-t']
   } elsif $facts['os']['name'] == 'FreeBSD' {
     $verify_command = ['/usr/local/sbin/apachectl', '-t']
   } elsif ($apache::version::scl_httpd_version) {

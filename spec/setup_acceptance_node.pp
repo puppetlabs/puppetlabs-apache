@@ -27,6 +27,13 @@ case $facts['os']['family'] {
       ensure  => 'latest',
       require => Exec['Configure zypper repo for SLES'],
     }
+
+    # gensslcert (used by the vhost acceptance tests to generate a self-signed
+    # cert) lives in apache2-utils on SLES 15, which apache2 doesn't pull in.
+    package { 'apache2-utils':
+      ensure  => 'latest',
+      require => Exec['Configure zypper repo for SLES'],
+    }
   }
   'RedHat': {
     # Make sure selinux is disabled so the tests work.
@@ -59,6 +66,17 @@ case $facts['os']['family'] {
       # Ensure ipv6 is enabled on our Debian 11 Docker boxes
       exec { 'sysctl -w net.ipv6.conf.all.disable_ipv6=0':
         path => $facts['path'],
+      }
+    }
+
+    if $facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '13') >= 0 {
+      # On Debian 13 (trixie) under the litmus docker+systemd provisioner the
+      # container can come up with /run/lock (where /var/lock points) not yet
+      # created, so apachectl's `mktemp /var/lock/apache2.XXXX` fails and apache2
+      # never starts. Ensure the lock dir exists before the tests run.
+      file { '/run/lock':
+        ensure => directory,
+        mode   => '1777',
       }
     }
   }

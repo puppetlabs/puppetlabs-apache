@@ -1,15 +1,29 @@
-source ENV['GEM_SOURCE'] || 'https://rubygems.org'
+# frozen_string_literal: true
 
-def location_for(place_or_version, fake_version = nil)
-  git_url_regex = %r{\A(?<url>(https?|git)[:@][^#]*)(#(?<branch>.*))?}
-  file_url_regex = %r{\Afile:\/\/(?<path>.*)}
+# For puppetcore, set GEM_SOURCE_PUPPETCORE = 'https://rubygems-puppetcore.puppet.com'
+gemsource_default = ENV['GEM_SOURCE'] || 'https://rubygems.org'
+gemsource_puppetcore = if ENV['PUPPET_FORGE_TOKEN']
+  'https://rubygems-puppetcore.puppet.com'
+else
+  ENV['GEM_SOURCE_PUPPETCORE'] || gemsource_default
+end
+source gemsource_default
 
-  if place_or_version && (git_url = place_or_version.match(git_url_regex))
-    [fake_version, { git: git_url[:url], branch: git_url[:branch], require: false }].compact
-  elsif place_or_version && (file_url = place_or_version.match(file_url_regex))
-    ['>= 0', { path: File.expand_path(file_url[:path]), require: false }]
+def location_for(place_or_constraint, fake_constraint = nil, opts = {})
+  git_url_regex  = /\A(?<url>(?:https?|git)[:@][^#]*)(?:#(?<branch>.*))?/
+  file_url_regex = %r{\Afile://(?<path>.*)}
+
+  if place_or_constraint && (git_url = place_or_constraint.match(git_url_regex))
+    # Git source → ignore :source, keep fake_constraint
+    [fake_constraint, { git: git_url[:url], branch: git_url[:branch], require: false }].compact
+
+  elsif place_or_constraint && (file_url = place_or_constraint.match(file_url_regex))
+    # File source → ignore :source, keep fake_constraint or default >= 0
+    [fake_constraint || '>= 0', { path: File.expand_path(file_url[:path]), require: false }]
+
   else
-    [place_or_version, { require: false }]
+    # Plain version constraint → merge opts (including :source if provided)
+    [place_or_constraint, { require: false }.merge(opts)]
   end
 end
 
@@ -18,7 +32,7 @@ group :development do
   gem "json", '= 2.6.3',                         require: false if Gem::Requirement.create(['>= 3.2.0', '< 4.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "racc", '~> 1.4.0',                        require: false if Gem::Requirement.create(['>= 2.7.0', '< 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "deep_merge", '~> 1.2.2',                  require: false
-  gem "voxpupuli-puppet-lint-plugins", '~> 5.0', require: false
+  gem "voxpupuli-puppet-lint-plugins", '~> 7.0', require: false
   gem "facterdb", '~> 2.1',                      require: false if Gem::Requirement.create(['< 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "facterdb", '~> 3.0',                      require: false if Gem::Requirement.create(['>= 3.0.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem "metadata-json-lint", '~> 4.0',            require: false
@@ -38,7 +52,7 @@ group :development do
 end
 group :development, :release_prep do
   gem "puppet-strings", '~> 4.0',         require: false
-  gem "puppetlabs_spec_helper", '~> 8.0', require: false
+  gem "puppetlabs_spec_helper", '~> 9.0', require: false
   gem "puppet-blacksmith", '~> 7.0',      require: false
 end
 group :system_tests do
@@ -53,16 +67,8 @@ puppet_version = ENV.fetch('PUPPET_GEM_VERSION', nil)
 facter_version = ENV.fetch('FACTER_GEM_VERSION', nil)
 hiera_version = ENV.fetch('HIERA_GEM_VERSION', nil)
 
-# If PUPPET_FORGE_TOKEN is set then use authenticated source for both puppet and facter, since facter is a transitive dependency of puppet
-# Otherwise, do as before and use location_for to fetch gems from the default source
-if !ENV['PUPPET_FORGE_TOKEN'].to_s.empty?
-  gems['puppet'] = ['~> 8.11', { require: false, source: 'https://rubygems-puppetcore.puppet.com' }]
-  gems['facter'] = ['~> 4.11', { require: false, source: 'https://rubygems-puppetcore.puppet.com' }]
-else
-  gems['puppet'] = location_for(puppet_version)
-  gems['facter'] = location_for(facter_version) if facter_version
-end
-
+gems['puppet'] = location_for(puppet_version, nil, { source: gemsource_puppetcore })
+gems['facter'] = location_for(facter_version, nil, { source: gemsource_puppetcore })
 gems['hiera'] = location_for(hiera_version) if hiera_version
 
 gems.each do |gem_name, gem_params|

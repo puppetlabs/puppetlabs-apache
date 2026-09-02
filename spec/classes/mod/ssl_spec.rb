@@ -87,7 +87,7 @@ describe 'apache::mod::ssl', type: :class do
   end
 
   context 'on a Suse OS' do
-    include_examples 'SLES 12'
+    include_examples 'SLES 15'
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.to contain_apache__mod('ssl') }

@@ -41,8 +41,8 @@ shared_context 'Debian 11' do
   let(:facts) { on_supported_os['debian-11-x86_64'] }
 end
 
-shared_context 'Ubuntu 18.04' do
-  let(:facts) { on_supported_os['ubuntu-18.04-x86_64'] }
+shared_context 'Ubuntu 22.04' do
+  let(:facts) { on_supported_os['ubuntu-22.04-x86_64'] }
 end
 
 shared_context 'RedHat 8' do
@@ -160,8 +160,8 @@ shared_context 'Unsupported OS' do
   end
 end
 
-shared_context 'SLES 12' do
-  let(:facts) { on_supported_os['sles-12-x86_64'] }
+shared_context 'SLES 15' do
+  let(:facts) { on_supported_os['sles-15-x86_64'] }
 end
 
 # Override facts
