@@ -10626,7 +10626,7 @@ Default value: `undef`
 
 ##### <a name="-apache--vhost--ssl_honorcipherorder"></a>`ssl_honorcipherorder`
 
-Data type: `Variant[Boolean, Apache::OnOff, Undef]`
+Data type: `Optional[Variant[Boolean, Apache::OnOff]]`
 
 Sets [SSLHonorCipherOrder](https://httpd.apache.org/docs/current/mod/mod_ssl.html#sslhonorcipherorder),
 to cause Apache to use the server's preferred order of ciphers rather than the client's
