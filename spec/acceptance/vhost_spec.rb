@@ -1306,4 +1306,23 @@ describe 'apache::vhost define' do
       it { is_expected.to contain 'OIDCCryptoPassphrase 4ad1bb46-9979-450e-ae58-c696967df3cd' }
     end
   end
+
+  describe 'file_e_tag' do
+    pp = <<-MANIFEST
+      class { 'apache': }
+      apache::vhost { 'test.server':
+        port       => 80,
+        docroot    => '/var/www/html',
+        file_e_tag => 'None',
+      }
+    MANIFEST
+    it 'applies cleanly' do
+      apply_manifest(pp, catch_failures: true)
+    end
+
+    describe file("#{apache_hash['vhost_dir']}/25-test.server.conf") do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'FileETag None' }
+    end
+  end
 end
