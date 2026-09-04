@@ -9,11 +9,15 @@ describe 'apache::mod::itk', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Depends: mpm_prefork\n"\
+      "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('itk') }
-    it { is_expected.to contain_file('/etc/apache2/mods-available/itk.conf').with_ensure('file') }
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.conf').with_ensure('link') }
+    it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_itk.conf').with_ensure('file') }
+    it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_itk.conf').with_ensure('link') }
 
     context 'with prefork mpm' do
       let :pre_condition do
@@ -21,11 +25,11 @@ describe 'apache::mod::itk', type: :class do
       end
 
       it {
-        expect(subject).to contain_file('/etc/apache2/mods-available/itk.load').with('ensure' => 'file',
-                                                                                     'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n")
+        expect(subject).to contain_file('/etc/apache2/mods-available/mpm_itk.load').with('ensure' => 'file',
+                                                                                     'content' => loadcontent)
       }
 
-      it { is_expected.to contain_file('/etc/apache2/mods-enabled/itk.load').with_ensure('link') }
+      it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_itk.load').with_ensure('link') }
     end
 
     context 'with enablecapabilities not set' do
@@ -33,7 +37,7 @@ describe 'apache::mod::itk', type: :class do
         'class { "apache": mpm_module => prefork, }'
       end
 
-      it { is_expected.not_to contain_file('/etc/apache2/mods-available/itk.conf').with_content(%r{EnableCapabilities}) }
+      it { is_expected.not_to contain_file('/etc/apache2/mods-available/mpm_itk.conf').with_content(%r{EnableCapabilities}) }
     end
   end
 
