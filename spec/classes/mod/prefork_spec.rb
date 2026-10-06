@@ -9,18 +9,22 @@ describe 'apache::mod::prefork', type: :class do
 
   context 'on a Debian OS' do
     include_examples 'Debian 11'
+    let(:loadcontent) do
+      "# Conflicts: mpm_event mpm_worker\n"\
+      "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n"
+    end
 
     it { is_expected.to contain_class('apache::params') }
     it { is_expected.not_to contain_apache__mod('prefork') }
-    it { is_expected.to contain_file('/etc/apache2/mods-available/prefork.conf').with_ensure('file') }
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.conf').with_ensure('link') }
+    it { is_expected.to contain_file('/etc/apache2/mods-available/mpm_prefork.conf').with_ensure('file') }
+    it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_prefork.conf').with_ensure('link') }
 
     it {
-      expect(subject).to contain_file('/etc/apache2/mods-available/prefork.load').with('ensure' => 'file',
-                                                                                       'content' => "LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so\n")
+      expect(subject).to contain_file('/etc/apache2/mods-available/mpm_prefork.load').with('ensure' => 'file',
+                                                                                       'content' => loadcontent)
     }
 
-    it { is_expected.to contain_file('/etc/apache2/mods-enabled/prefork.load').with_ensure('link') }
+    it { is_expected.to contain_file('/etc/apache2/mods-enabled/mpm_prefork.load').with_ensure('link') }
   end
 
   context 'on a RedHat OS' do
