@@ -2239,7 +2239,6 @@ define apache::vhost (
   $file_header_params = {
     'comment'               => $comment,
     'nvh_addr_port'         => $nvh_addr_port,
-    'mdomain'               => $mdomain,
     'servername'            => $servername,
     'define'                => $define,
     'protocols'             => $protocols,
@@ -2255,6 +2254,19 @@ define apache::vhost (
     target  => "${priority_real}${filename}.conf",
     order   => 0,
     content => epp('apache/vhost/_file_header.epp', $file_header_params),
+  }
+
+  if $mdomain {
+    # Multiple VHosts can configure the same domain on different ports.
+    # Apache will fail if multile MDomain directive are set, so ensure we define it only for the first virutal host of each domain.
+    ensure_resource('file', "${servername}-mod_md", {
+        ensure  => file,
+        path    => "${apache::confd_dir}/mdomain-${servername}.conf",
+        mode    => $apache::file_mode,
+        content => epp('apache/mdomain.epp', { mdomain => $mdomain, servername => $servername }),
+        require => File[$apache::confd_dir],
+        notify  => Class['apache::service'],
+    })
   }
 
   if $docroot and $ensure == 'present' {
