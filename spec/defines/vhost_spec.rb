@@ -150,7 +150,8 @@ describe 'apache::vhost', type: :define do
                   'directoryindex' => 'disabled',
                   'options' => ['Indexes', 'FollowSymLinks', 'MultiViews'],
                   'index_options' => ['FancyIndexing'],
-                  'index_style_sheet' => '/styles/style.css' },
+                  'index_style_sheet' => '/styles/style.css',
+                  'index_head_insert' => ['<base target=_blank>'] },
                 { 'path' => '/var/www/files/output_filtered',
                   'set_output_filter' => 'output_filter' },
                 { 'path' => '/var/www/files/input_filtered',
@@ -671,6 +672,7 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+Options\sIndexes\sFollowSymLinks\sMultiViews$})
               .with_content(%r{^\s+IndexOptions\sFancyIndexing$})
               .with_content(%r{^\s+IndexStyleSheet\s'/styles/style\.css'$})
+              .with_content(%r{^\s+IndexHeadInsert\s'<base target=_blank>'$})
               .with_content(%r{^\s+DirectoryIndex\sdisabled$})
               .with_content(%r{^\s+SetOutputFilter\soutput_filter$})
               .with_content(%r{^\s+SetInputFilter\sinput_filter$})
