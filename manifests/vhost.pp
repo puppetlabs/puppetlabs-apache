@@ -1710,6 +1710,10 @@
 #
 # @param proxy_protocol_exceptions
 #   Disable processing of PROXY header for certain hosts or networks
+#
+# @param modsec_rule_engine
+#   Configures the rules engine.
+#
 define apache::vhost (
   Variant[Stdlib::Absolutepath, Boolean] $docroot,
   Boolean $manage_docroot                                                             = true,
@@ -1973,6 +1977,7 @@ define apache::vhost (
   Optional[Variant[String[1], Array[String[1]]]] $userdir                             = undef,
   Optional[Boolean] $proxy_protocol                                                   = undef,
   Array[Stdlib::Host] $proxy_protocol_exceptions                                      = [],
+  Optional[Enum['On', 'Off', 'DetectionOnly']] $modsec_rule_engine                    = undef,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -2181,28 +2186,19 @@ define apache::vhost (
   }
 
   ## Create a global LocationMatch if locations aren't defined
-  if $modsec_disable_ids {
-    if $modsec_disable_ids =~ Array {
-      $_modsec_disable_ids = { '.*' => $modsec_disable_ids }
-    } else {
-      $_modsec_disable_ids = $modsec_disable_ids
-    }
+  $_modsec_disable_ids = $modsec_disable_ids ? {
+    Array   => { '.*' => $modsec_disable_ids },
+    default => $modsec_disable_ids,
   }
 
-  if $modsec_disable_msgs {
-    if $modsec_disable_msgs =~ Array {
-      $_modsec_disable_msgs = { '.*' => $modsec_disable_msgs }
-    } else {
-      $_modsec_disable_msgs = $modsec_disable_msgs
-    }
+  $_modsec_disable_msgs = $modsec_disable_msgs ? {
+    Array   => { '.*' => $modsec_disable_msgs },
+    default => $modsec_disable_msgs,
   }
 
-  if $modsec_disable_tags {
-    if $modsec_disable_tags =~ Array {
-      $_modsec_disable_tags = { '.*' => $modsec_disable_tags }
-    } else {
-      $_modsec_disable_tags = $modsec_disable_tags
-    }
+  $_modsec_disable_tags = $modsec_disable_tags ? {
+    Array   => { '.*' => $modsec_disable_tags },
+    default => $modsec_disable_tags,
   }
 
   concat { "${priority_real}${filename}.conf":
@@ -2840,19 +2836,33 @@ define apache::vhost (
     }
   }
 
-  if $modsec_disable_vhost or $modsec_disable_ids or !empty($modsec_disable_ips) or $modsec_disable_msgs or $modsec_disable_tags or $modsec_audit_log_destination or ($modsec_inbound_anomaly_threshold and $modsec_outbound_anomaly_threshold) or $modsec_allowed_methods {
-    $security_params = {
-      'modsec_disable_vhost'              => $modsec_disable_vhost,
-      'modsec_audit_log_destination'      => $modsec_audit_log_destination,
-      '_modsec_disable_ids'               => $modsec_disable_ids,
-      'modsec_disable_ips'                => $modsec_disable_ips,
-      '_modsec_disable_msgs'              => $modsec_disable_msgs,
-      '_modsec_disable_tags'              => $modsec_disable_tags,
-      'modsec_body_limit'                 => $modsec_body_limit,
-      'modsec_inbound_anomaly_threshold'  => $modsec_inbound_anomaly_threshold,
-      'modsec_outbound_anomaly_threshold' => $modsec_outbound_anomaly_threshold,
-      'modsec_allowed_methods'            => $modsec_allowed_methods,
-    }
+  if $modsec_disable_vhost and $modsec_rule_engine == undef {
+    warning('modsec_disable_vhost is deprecated, use modsec_rule_engine => Off instead')
+  }
+
+  $_modsec_rule_engine = $modsec_rule_engine ? {
+    undef   => $modsec_disable_vhost ? {
+      true    => 'Off',
+      default => 'On',
+    },
+    default => $modsec_rule_engine,
+  }
+
+  $modsec_enabled = ($modsec_rule_engine != undef or $modsec_disable_vhost or $modsec_audit_log_destination != undef or $modsec_disable_ids != undef or !empty($modsec_disable_ips) or $modsec_disable_msgs != undef or $modsec_disable_tags != undef or $modsec_body_limit != undef or $modsec_inbound_anomaly_threshold != undef or $modsec_outbound_anomaly_threshold != undef or $modsec_allowed_methods != undef)
+
+  $security_params = {
+    '_modsec_rule_engine'               => $_modsec_rule_engine,
+    'modsec_audit_log_destination'      => $modsec_audit_log_destination,
+    '_modsec_disable_ids'               => $_modsec_disable_ids,
+    'modsec_disable_ips'                => $modsec_disable_ips,
+    '_modsec_disable_msgs'              => $_modsec_disable_msgs,
+    '_modsec_disable_tags'              => $_modsec_disable_tags,
+    'modsec_body_limit'                 => $modsec_body_limit,
+    'modsec_inbound_anomaly_threshold'  => $modsec_inbound_anomaly_threshold,
+    'modsec_outbound_anomaly_threshold' => $modsec_outbound_anomaly_threshold,
+    'modsec_allowed_methods'            => $modsec_allowed_methods,
+  }
+  if $modsec_enabled {
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
