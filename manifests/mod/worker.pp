@@ -90,7 +90,12 @@ class apache::mod::worker (
     'maxrequestworkers'   => $maxrequestworkers,
   }
 
-  file { "${apache::mod_dir}/worker.conf":
+  $workerconffile = $facts['os']['family'] ? {
+    'Debian' => "${apache::mod_dir}/mpm_worker.conf",
+    default  => "${apache::mod_dir}/worker.conf",
+  }
+
+  file { $workerconffile:
     ensure  => file,
     content => epp('apache/mod/worker.conf.epp', $parameters),
     require => Exec["mkdir ${apache::mod_dir}"],
