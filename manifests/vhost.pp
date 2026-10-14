@@ -106,6 +106,10 @@
 #   default setting omits the declaration from the server configuration and selects the 
 #   Apache default setting of `Off`.
 #
+# @param file_e_tag
+#   Sets the server default for the `FileETag` declaration, which modifies the response header
+#   field for static files.
+#
 # @param block
 #   Specifies the list of things to which Apache blocks access. Valid options are: `scm` (which 
 #   blocks web access to `.svn`), `.git`, and `.bzr` directories.
@@ -1861,6 +1865,7 @@ define apache::vhost (
   Variant[Array[String], String] $additional_includes                                 = [],
   Boolean $use_optional_includes                                                      = $apache::use_optional_includes,
   Optional[Variant[Apache::OnOff, Enum['nodecode']]] $allow_encoded_slashes           = undef,
+  Optional[String] $file_e_tag                                                        = undef,
   Optional[Pattern[/^[\w-]+ [\w-]+$/]] $suexec_user_group                             = undef,
 
   Optional[Boolean] $h2_copy_files                                                    = undef,
@@ -2974,6 +2979,17 @@ define apache::vhost (
       target  => "${priority_real}${filename}.conf",
       order   => 400,
       content => epp('apache/vhost/_proxy_protocol.epp', $proxy_protocol_params),
+    }
+  }
+
+  if $file_e_tag {
+    $file_e_tag_params = {
+      'file_e_tag' => $file_e_tag,
+    }
+    concat::fragment { "${name}-file_e_tag":
+      target  => "${priority_real}${filename}.conf",
+      order   => 410,
+      content => epp('apache/vhost/_file_e_tag.epp', $file_e_tag_params),
     }
   }
 
