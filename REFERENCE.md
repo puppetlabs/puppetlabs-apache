@@ -6352,7 +6352,7 @@ Default value: `$apache::params::modsec_dir`
 
 ##### <a name="-apache--mod--security--modsec_secruleengine"></a>`modsec_secruleengine`
 
-Data type: `String`
+Data type: `Enum['On', 'Off', 'DetectionOnly']`
 
 Configures the rules engine.
 
@@ -8108,6 +8108,7 @@ The following parameters are available in the `apache::vhost` defined type:
 * [`userdir`](#-apache--vhost--userdir)
 * [`proxy_protocol`](#-apache--vhost--proxy_protocol)
 * [`proxy_protocol_exceptions`](#-apache--vhost--proxy_protocol_exceptions)
+* [`modsec_rule_engine`](#-apache--vhost--modsec_rule_engine)
 
 ##### <a name="-apache--vhost--access_log"></a>`access_log`
 
@@ -8983,7 +8984,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-Disables `mod_security` on a virtual host. Only valid if `apache::mod::security` is included.
+Deprecated. Disables `mod_security` on a virtual host. Use `modsec_rule_engine => 'Off'` instead.
+Only valid if `apache::mod::security` is included.
 
 Default value: `false`
 
@@ -11051,6 +11053,15 @@ Data type: `Array[Stdlib::Host]`
 Disable processing of PROXY header for certain hosts or networks
 
 Default value: `[]`
+
+##### <a name="-apache--vhost--modsec_rule_engine"></a>`modsec_rule_engine`
+
+Data type: `Optional[Enum['On', 'Off', 'DetectionOnly']]`
+
+Configures the ModSecurity rules engine for this virtual host. When unset, the virtual host
+inherits the global `apache::mod::security::modsec_secruleengine` setting.
+
+Default value: `undef`
 
 ### <a name="apache--vhost--custom"></a>`apache::vhost::custom`
 
