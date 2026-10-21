@@ -4,23 +4,38 @@ require 'spec_helper_acceptance'
 apache_hash = apache_settings_hash
 
 describe 'apache::mod::security class', if: mod_supported_on_platform?('apache::mod::security') do
-  # On SLES 12 the apache2 systemd restart intermittently hangs when mod_security2
-  # is (re)loaded in the same run, so the Service refresh reports
-  # "Systemd restart for apache2 failed" (exit 6). It is an environmental flake:
-  # the generated config is valid (apache starts cleanly on a plain start) and a
-  # re-apply brings the service back up. Retry the apply on that specific failure
-  # so the known flake doesn't fail the suite; any other failure is raised at once.
+  # When apache fails to (re)start, Puppet's systemd provider attaches
+  # `journalctl -n 50 --since '5 minutes ago'`, which on SLES 12's systemd prints
+  # the oldest 50 lines of that window, so the failed start itself is cut off.
+  # Errors raised after the config is parsed (e.g. mod_unique_id's AH01564 when
+  # the hostname doesn't resolve) only go to the apache error log anyway. Add
+  # what's needed to diagnose the failure to the error.
   def apply_mod_security_manifest(pp)
-    attempts = 0
-    begin
-      attempts += 1
-      apply_manifest(pp, catch_failures: true)
-    rescue RuntimeError => e
-      raise e unless e.message.include?('Systemd restart for apache2 failed') && attempts < 3
+    apply_manifest(pp, catch_failures: true)
+  rescue RuntimeError => e
+    raise unless e.message.match?(%r{Systemd (re)?start for apache2 failed})
 
-      sleep 5
-      retry
+    raise e.class, "#{e.message}\n#{apache_start_diagnostics}", e.backtrace
+  end
+
+  def apache_start_diagnostics
+    commands = [
+      'hostname',
+      'getent ahostsv4 "$(hostname)"',
+      'cat /etc/hosts /etc/resolv.conf',
+      'systemctl status apache2 --no-pager -l',
+      'journalctl -u apache2 --no-pager -n 30',
+      'tail -n 30 /var/log/apache2/error.log',
+      'ss -ltnp',
+    ]
+    # Never let a diagnostic command hide the original failure.
+    diagnostics = commands.map do |command|
+      result = run_shell(command, expect_failures: true)
+      "====== #{command} (exit #{result.exit_code})\n#{result.stdout}#{result.stderr}"
+    rescue StandardError => e
+      "====== #{command} (diagnostic failed: #{e.message})"
     end
+    diagnostics.join("\n")
   end
 
   context 'default mod security config' do
