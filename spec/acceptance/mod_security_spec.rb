@@ -38,6 +38,29 @@ describe 'apache::mod::security class', if: mod_supported_on_platform?('apache::
     diagnostics.join("\n")
   end
 
+  # EXPERIMENT ONLY (MODULES-11990): record name-resolution state on every run,
+  # pass or fail, so it can be correlated with the start failures. Do not merge.
+  def resolution_probe(stage)
+    commands = [
+      'hostname; uname -n',
+      'grep ^hosts: /etc/nsswitch.conf',
+      'getent ahostsv4 "$(hostname)"',
+      'getent ahosts "$(hostname)"',
+      'cat /etc/hosts /etc/resolv.conf',
+      'ls -l --time-style=full-iso /etc/hosts /etc/resolv.conf; date -u',
+      '/opt/puppetlabs/bin/facter networking.hostname networking.fqdn',
+      'rpm -q apache2 libapr1 glibc',
+    ]
+    output = commands.map { |command|
+      result = run_shell(command, expect_failures: true)
+      "== #{command} (exit #{result.exit_code})\n#{result.stdout}#{result.stderr}"
+    }.join("\n")
+    puts "MODULES-11990-PROBE #{stage} BEGIN\n#{output}\nMODULES-11990-PROBE #{stage} END"
+  end
+
+  before(:all) { resolution_probe('before') }
+  after(:all) { resolution_probe('after') }
+
   context 'default mod security config' do
     pp = <<-MANIFEST
         class { 'apache': }
