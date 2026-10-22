@@ -34,6 +34,21 @@ case $facts['os']['family'] {
       ensure  => 'latest',
       require => Exec['Configure zypper repo for SLES'],
     }
+
+    if versioncmp($facts['os']['release']['major'], '15') < 0 {
+      # The Leap 42.3 repo ships httpd 2.4.23, whose mod_unique_id (loaded by
+      # apache::mod::security) refuses to start apache (AH01564) when the
+      # node's own hostname doesn't resolve. CI strips the `search` line from
+      # /etc/resolv.conf on the provisioned VM, so that lookup is unreliable;
+      # pin the hostname in /etc/hosts so it doesn't depend on DNS. Name the
+      # entry after the FQDN so it stays the canonical name and the fqdn fact
+      # (and with it the default ServerName) doesn't flip between runs.
+      host { $facts['networking']['fqdn']:
+        ensure       => present,
+        ip           => pick($facts['networking']['ip'], '127.0.0.1'),
+        host_aliases => [$facts['networking']['hostname']] - [$facts['networking']['fqdn']],
+      }
+    }
   }
   'RedHat': {
     # Make sure selinux is disabled so the tests work.
