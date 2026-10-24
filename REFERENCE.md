@@ -134,8 +134,6 @@ pre-requisite is met or declaring `apache::mod::pagespeed` will cause the puppet
 directory.
 * [`apache::balancermember`](#apache--balancermember): Defines members of `mod_proxy_balancer`
 * [`apache::custom_config`](#apache--custom_config): Adds a custom configuration file to the Apache server's `conf.d` directory.
-* [`apache::fastcgi::server`](#apache--fastcgi--server): Defines one or more external FastCGI servers to handle specific file types. Use this
-defined type with `mod_fastcgi`.
 * [`apache::listen`](#apache--listen): Adds `Listen` directives to `ports.conf` that define the
 Apache server's or a virtual host's listening address and port.
 * [`apache::mod`](#apache--mod): Installs packages for an Apache module that doesn't have a corresponding
@@ -7646,87 +7644,6 @@ Data type: `Boolean`
 show_diff property for configuration file resource
 
 Default value: `true`
-
-### <a name="apache--fastcgi--server"></a>`apache::fastcgi::server`
-
-Defines one or more external FastCGI servers to handle specific file types. Use this
-defined type with `mod_fastcgi`.
-
-#### Parameters
-
-The following parameters are available in the `apache::fastcgi::server` defined type:
-
-* [`host`](#-apache--fastcgi--server--host)
-* [`timeout`](#-apache--fastcgi--server--timeout)
-* [`flush`](#-apache--fastcgi--server--flush)
-* [`faux_path`](#-apache--fastcgi--server--faux_path)
-* [`fcgi_alias`](#-apache--fastcgi--server--fcgi_alias)
-* [`file_type`](#-apache--fastcgi--server--file_type)
-* [`pass_header`](#-apache--fastcgi--server--pass_header)
-
-##### <a name="-apache--fastcgi--server--host"></a>`host`
-
-Data type: `String`
-
-Determines the FastCGI's hostname or IP address and TCP port number (1-65535).
-
-Default value: `'127.0.0.1:9000'`
-
-##### <a name="-apache--fastcgi--server--timeout"></a>`timeout`
-
-Data type: `Integer`
-
-Sets the number of seconds a [FastCGI](http://www.fastcgi.com/) application can be inactive before aborting the
-request and logging the event at the error LogLevel. The inactivity timer applies only as
-long as a connection is pending with the FastCGI application. If a request is queued to an
-application, but the application doesn't respond by writing and flushing within this period,
-the request is aborted. If communication is complete with the application but incomplete with
-the client (the response is buffered), the timeout does not apply.
-
-Default value: `15`
-
-##### <a name="-apache--fastcgi--server--flush"></a>`flush`
-
-Data type: `Boolean`
-
-Forces `mod_fastcgi` to write to the client as data is received from the
-application. By default, `mod_fastcgi` buffers data in order to free the application
-as quickly as possible.
-
-Default value: `false`
-
-##### <a name="-apache--fastcgi--server--faux_path"></a>`faux_path`
-
-Data type: `Stdlib::Absolutepath`
-
-Apache has FastCGI handle URIs that resolve to this filename. The path set in this
-parameter does not have to exist in the local filesystem.
-
-Default value: `"/var/www/${name}.fcgi"`
-
-##### <a name="-apache--fastcgi--server--fcgi_alias"></a>`fcgi_alias`
-
-Data type: `Stdlib::Unixpath`
-
-Internally links actions with the FastCGI server. This alias must be unique.
-
-Default value: `"/${name}.fcgi"`
-
-##### <a name="-apache--fastcgi--server--file_type"></a>`file_type`
-
-Data type: `String`
-
-Sets the MIME `content-type` of the file to be processed by the FastCGI server.
-
-Default value: `'application/x-httpd-php'`
-
-##### <a name="-apache--fastcgi--server--pass_header"></a>`pass_header`
-
-Data type: `Optional[String]`
-
-Sets a header for the server
-
-Default value: `undef`
 
 ### <a name="apache--listen"></a>`apache::listen`
 
