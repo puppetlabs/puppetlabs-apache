@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v13.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.5.0) - 2026-10-27
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.4.0...v13.5.0)
+
+### Added
+
+- (MODULES-11996) Allow puppet/archive 9.x [#2657](https://github.com/puppetlabs/puppetlabs-apache/pull/2657) ([imaqsood](https://github.com/imaqsood))
+- feat(apache::vhost): refactor ModSecurity configuration handling [#2627](https://github.com/puppetlabs/puppetlabs-apache/pull/2627) ([bovy89](https://github.com/bovy89))
+
+### Fixed
+
+- (MODULES-11990) Fix SLES 12 mod_security apache start failures in acceptance [#2659](https://github.com/puppetlabs/puppetlabs-apache/pull/2659) ([imaqsood](https://github.com/imaqsood))
+- (MODULES-11979) Enable and correct spec files for lbmethods [#2653](https://github.com/puppetlabs/puppetlabs-apache/pull/2653) ([imaqsood](https://github.com/imaqsood))
+- Remove mod_log_forensic from apache::default_mods (#2573) [#2601](https://github.com/puppetlabs/puppetlabs-apache/pull/2601) ([stdietrich](https://github.com/stdietrich))
+
 ## [v13.4.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.4.0) - 2026-09-02
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.3.0...v13.4.0)
