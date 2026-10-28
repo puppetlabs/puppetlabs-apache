@@ -14,7 +14,6 @@
 [Apacheモジュールのインストール]: #installing-apache-modules
 [任意モジュールのインストール]: #installing-arbitrary-modules
 [固有モジュールのインストール]: #installing-specific-modules
-[FastCGIサーバの設定]: #configuring-fastcgi-servers-to-handle-php-files
 [ロードバランシングの例]: #load-balancing-examples
 [apacheの影響]: #what-the-apache-module-affects
 
@@ -41,7 +40,6 @@
 [`apache_version`]: #apache_version
 [`apache::balancer`]: #defined-type-apachebalancer
 [`apache::balancermember`]: #defined-type-apachebalancermember
-[`apache::fastcgi::server`]: #defined-type-apachefastcgiserver
 [`apache::mod`]: #defined-type-apachemod
 [`apache::mod::<MODULE NAME>`]: #classes-apachemodmodule-name
 [`apache::mod::alias`]: #class-apachemodalias
@@ -120,7 +118,6 @@
 [`ExtendedStatus`]: https://httpd.apache.org/docs/current/mod/core.html#extendedstatus
 
 [Facter]: http://docs.puppet.com/facter/
-[FastCGI]: http://www.fastcgi.com/
 [FallbackResource]: https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource
 [`fallbackresource`]: #fallbackresource
 [`FileETag`]: https://httpd.apache.org/docs/current/mod/core.html#fileetag
@@ -287,7 +284,6 @@
     - [Apacheの使用を始める - インストール][Apacheの使用を始める]
 3. [使用方法 - 設定に使用できるクラスと定義タイプ][使用方法]
     - [バーチャルホストの設定 - 使用開始に役立つ例][バーチャルホストの設定]
-    - [PHPファイルを処理するFastCGIサーバの設定][FastCGIサーバの設定]
     - [エクスポートおよび非エクスポートリソースのロードバランシング][ロードバランシングの例]
 4. [リファレンス - モジュールの機能と動作について][リファレンス]
     - [パブリッククラス][]
@@ -726,32 +722,6 @@ apache::mod { 'mod_authnz_external': }
 
 この方法でApacheモジュールを定義する際には、いくつかのオプションパラメータを指定できます。詳細については、[定義タイプのリファレンス][`apache::mod`]を参照してください。
 
-<a id="configuring-fastcgi-servers-to-handle-php-files"></a>
-### PHPファイルを処理するFastCGIサーバの設定
-
-[`apache::fastcgi::server`][]定義タイプを追加すれば、 [FastCGI][]サーバで特定のファイルに関するリクエストを処理することができます。以下の例では、PHPリクエストを処理するFastCGIサーバをポート9000の127.0.0.1 (ローカルホスト)で定義しています。
-
-``` puppet
-apache::fastcgi::server { 'php':
-  host       => '127.0.0.1:9000',
-  timeout    => 15,
-  flush      => false,
-  faux_path  => '/var/www/php.fcgi',
-  fcgi_alias => '/php.fcgi',
-  file_type  => 'application/x-httpd-php'
-}
-```
-
-[`custom_fragment`][]パラメータを使えば、指定したファイルタイプがFastCGIサーバで処理されるように、バーチャルホストを設定することができます。
-
-``` puppet
-apache::vhost { 'www':
-  ...
-  custom_fragment => 'AddType application/x-httpd-php .php'
-  ...
-}
-```
-
 <a id="load-balancing-examples"></a> 
 ### ロードバランシングの例
 
@@ -820,7 +790,6 @@ apache::balancer { 'puppet01':
     - [定義タイプ: apache::balancer](#defined-type-apachebalancer)
     - [定義タイプ: apache::balancermember](#defined-type-apachebalancermember)
     - [定義タイプ: apache::custom_config](#defined-type-apachecustom_config)
-    - [定義タイプ: apache::fastcgi::server](#defined-type-fastcgi-server)
     - [定義タイプ: apache::listen](#defined-type-apachelisten)
     - [定義タイプ: apache::mod](#defined-type-apachemod)
     - [定義タイプ: apache::namevirtualhost](#defined-type-apachenamevirtualhost)
@@ -3246,48 +3215,6 @@ Apacheサービスに通知する前に設定ファイルのバリデーショ�
 
 デフォルト値: `true`。
 
-#### 定義タイプ: `apache::fastcgi::server`
-
-特定のファイルタイプを処理する1つまたは複数の外部FastCGIサーバを定義します。この定義タイプは、[`mod_fastcgi`][FastCGI]とともに使用します。
-
-**パラメータ**　
-
-##### `host`
-
-FastCGIのホスト名またはIPアドレスおよびTCPポート番号(1-65535)を決定します。
-
-デフォルト値: '127.0.0.1:9000'。
-
-##### `timeout`
-
-リクエストが中止され、エラーLogLevelにイベントが記録されるまでに、[FastCGI][]アプリケーションが非アクティブの状態で待機する秒数を設定します。この非アクティブタイマーは、FastCGIアプリケーションとの接続が待機中の場合のみ適用されます。アプリケーションの待ち行列に入ったリクエストに対して時間内に記述やフラッシュによる応答がないと、リクエストは中止されます。アプリケーションとの通信は完了したものの、クライアントとの通信が完了しなかった(応答がバッファリングされた)場合は、タイムアウトは適用されません。
-
-デフォルト値: 15。
-
-##### `flush`
-
-アプリケーションから受信したデータを、強制的に[`mod_fastcgi`][FastCGI]がクライアントに書き込みます。デフォルトでは、アプリケーションをできるだけ早くフリーな状態にするために、`mod_fastcgi`はデータをバッファリングします。 
-
-デフォルト値: `false`。
-
-##### `faux_path`
-
-Apacheには、このファイル名を決定するURIを処理する[FastCGI][]があります。このパラメータで設定されたパスは、ローカルのファイルシステムに存在する必要はありません。
-
-デフォルト値: "/var/www/${name}.fcgi"。
-
-##### `alias`
-
-FastCGIサーバとアクションを内部でリンクします。このエイリアスは一意である必要があります。
-
-デフォルト値: "/${name}.fcgi"。
-
-##### `file_type`
-
-FastCGIサーバにより処理するファイルの[MIME `content-type`][]を設定します。
-
-デフォルト値: 'application/x-httpd-php'。
-
 #### 定義タイプ: `apache::listen`
 
 Apacheサーバまたはバーチャルホストのリッスンするアドレスとポートを定義する、Apache設定ディレクトリの`ports.conf`に、[`Listen`][]ディレクティブを追加します。[`apache::vhost`][]クラスはこの定義タイプを使用します。タイトルは `<PORT>`、`<IPV4>:<PORT>`、または`<IPV6>:<PORT>`の形式をとります。
@@ -3676,12 +3603,6 @@ apache::vhost { 'sample.example.net':
 ##### `fallbackresource`
 
 [FallbackResource](https://httpd.apache.org/docs/current/mod/mod_dir.html#fallbackresource)ディレクティブを設定します。このディレクティブは、ファイルシステム内のどこにもマッピングされていないURLに対してどのようなアクションをとるか指定します。指定されていない場合は'HTTP 404 (Not Found)'が返されます。値は'/'で始めるか、'disabled'とする必要があります。
-
-デフォルト値: `undef`。
-
-##### `fastcgi_idle_timeout`
-
-fastcgiを使用する場合に、このオプションにより、サーバ応答のタイムアウトを設定します。
 
 デフォルト値: `undef`。
 
@@ -5525,72 +5446,6 @@ apache::vhost { 'sample.example.net':
 このパラメータはApache 2.4以上にのみ適用され、それ以前のバージョンでは無視されます。　
 
 デフォルト値: なし。　
-
-#### 定義タイプ: FastCGIサーバ
-
-このタイプは、mod\_fastcgiとともに使用します。特定のファイルタイプを扱う1つまたは複数の外部FastCGIサーバを定義することができます。
-
-** 注意 ** Ubuntu 10.04+では、マルチバースリポジトリを手動で有効にする必要があります。
-
-例:
-
-``` puppet
-apache::fastcgi::server { 'php':
-  host        => '127.0.0.1:9000',
-  timeout     => 15,
-  flush       => `false`,
-  faux_path   => '/var/www/php.fcgi',
-  fcgi_alias  => '/php.fcgi',
-  file_type   => 'application/x-httpd-php',
-  pass_header => ''
-}
-```
-
-その後、バーチャルホスト内で、上で指定したfastcgiサーバで扱う特定のファイルタイプを設定することができます。
-
-``` puppet
-apache::vhost { 'www':
-  ...
-  custom_fragment => 'AddType application/x-httpd-php .php'
-  ...
-}
-```
-
-##### `host`
-
-FastCGIサーバのホスト名またはIPアドレスおよびTCPポート番号(1-65535)。
-
-unixソケットを渡すこともできます。
-
-``` puppet
-apache::fastcgi::server { 'php':
-  host        => '/var/run/fcgi.sock',
-}
-```
-
-##### `timeout`
-
-リクエストが中止され、(エラーLogLevel)にイベントが記録されるまでに、FastCGIアプリケーションが非アクティブの状態で待機する秒数。この非アクティブタイマーは、FastCGIアプリケーションとの接続が待機中の場合のみ適用されます。アプリケーションの待ち行列に入ったリクエストに対して、時間内に記述やフラッシュによる応答がないと、リクエストは中止されます。アプリケーションとの通信が完了したものの、クライアントとの通信が完了しなかった(応答がバッファリングされた)場合は、タイムアウトは適用されません。
-
-##### `flush`
-
-アプリケーションから受信したデータを、強制的にクライアントに書き込みます。デフォルトでは、アプリケーションをできるだけ早くフリーな状態にするために、`mod_fastcgi`はデータをバッファリングします。 
-
-##### `faux_path`
-
-ローカルファイルシステムに存在する必要はありません。Apacheがこのファイル名に解読するURIは、この外部FastCGIアプリケーションにより処理されます。
-
-##### `alias`
-
-一意のエイリアス。 アクションとFastCGIサーバをリンクさせるために内部で用いられます。
-
-##### `file_type`
-
-FastCGIサーバにより処理するファイルのMIMEタイプ。
-
-##### `pass_header`
-
-リクエスト環境で渡されるHTTPリクエストヘッダの名前。このオプションにより、通常はCGI環境で利用できないヘッダコンテンツ(認証など)が利用できるようになります。
 
 #### 定義タイプ: `apache::vhost::custom`
 
