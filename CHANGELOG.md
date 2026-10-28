@@ -5,12 +5,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [Unreleased]
-
-### Fixed
-
-- (MODULES-12060) Remove broken apache::fastcgi::server [#2660](https://github.com/puppetlabs/puppetlabs-apache/pull/2660) ([jst-cyr](https://github.com/jst-cyr))
-
 ## [v13.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.5.0) - 2026-10-27
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.4.0...v13.5.0)
