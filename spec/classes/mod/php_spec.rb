@@ -245,6 +245,18 @@ describe 'apache::mod::php', type: :class do
             end
           end
         end
+      when 'Suse'
+        describe 'on a SLES OS' do
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.not_to contain_exec('Configure zypper repo for SLES mod_php') }
+
+          it 'does not manage any zypper repo' do
+            zypper_execs = catalogue.resources.select do |r|
+              r.type == 'Exec' && r[:command].to_s.include?('zypper')
+            end
+            expect(zypper_execs).to be_empty
+          end
+        end
       when 'FreeBSD'
         describe 'on a FreeBSD OS' do
           context 'with mpm_module => prefork' do
