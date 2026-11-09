@@ -531,7 +531,7 @@ class apache (
   String $error_log                                                          = $apache::params::error_log,
   String $scriptalias                                                        = $apache::params::scriptalias,
   String $access_log_file                                                    = $apache::params::access_log_file,
-  Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                            = [],
+  Array[Enum['h2', 'h2c', 'http/1.1', 'acme-tls/1']] $protocols              = [],
   Optional[Boolean] $protocols_honor_order                                   = undef,
 ) inherits apache::params {
   if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
@@ -837,6 +837,9 @@ class apache (
 
     if 'h2' in $protocols or 'h2c' in $protocols {
       include apache::mod::http2
+    }
+    if 'acme-tls/1' in $protocols {
+      include apache::mod::md
     }
 
     $default_vhost_ensure = $default_vhost ? {

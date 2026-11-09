@@ -772,7 +772,7 @@ Default value: `$apache::params::ports_file`
 
 ##### <a name="-apache--protocols"></a>`protocols`
 
-Data type: `Array[Enum['h2', 'h2c', 'http/1.1']]`
+Data type: `Array[Enum['h2', 'h2c', 'http/1.1', 'acme-tls/1']]`
 
 Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols)
 directive, which lists available protocols for the server.
@@ -9666,7 +9666,7 @@ Default value: `undef`
 
 ##### <a name="-apache--vhost--protocols"></a>`protocols`
 
-Data type: `Array[Enum['h2', 'h2c', 'http/1.1']]`
+Data type: `Array[Enum['h2', 'h2c', 'http/1.1', 'acme-tls/1']]`
 
 Sets the [Protocols](https://httpd.apache.org/docs/current/en/mod/core.html#protocols)
 directive, which lists available protocols for the virutal host.

@@ -1733,7 +1733,7 @@ define apache::vhost (
   String $docroot_owner                                                               = 'root',
   String $docroot_group                                                               = $apache::params::root_group,
   Optional[Stdlib::Filemode] $docroot_mode                                            = undef,
-  Array[Enum['h2', 'h2c', 'http/1.1']] $protocols                                     = [],
+  Array[Enum['h2', 'h2c', 'http/1.1', 'acme-tls/1']] $protocols                       = [],
   Optional[Boolean] $protocols_honor_order                                            = undef,
   Optional[String] $serveradmin                                                       = undef,
   Boolean $ssl                                                                        = false,
@@ -2747,6 +2747,9 @@ define apache::vhost (
       'h2_tls_warm_up_size'    => $h2_tls_warm_up_size,
       'h2_upgrade'             => $h2_upgrade,
       'h2_window_size'         => $h2_window_size,
+    }
+    if 'acme-tls/1' in $protocols {
+      include apache::mod::md
     }
 
     concat::fragment { "${name}-http2":
