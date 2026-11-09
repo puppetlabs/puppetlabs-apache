@@ -86,7 +86,12 @@ class apache::mod::event (
     'listenbacklog'           => $listenbacklog,
   }
 
-  file { "${apache::mod_dir}/event.conf":
+  $eventconffile = $facts['os']['family'] ? {
+    'Debian' => "${apache::mod_dir}/mpm_event.conf",
+    default  => "${apache::mod_dir}/event.conf",
+  }
+
+  file { $eventconffile:
     ensure  => file,
     mode    => $apache::file_mode,
     content => epp('apache/mod/event.conf.epp', $parameters),

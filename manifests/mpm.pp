@@ -15,49 +15,48 @@ define apache::mpm (
   $_path = "${lib_path}/${_lib}"
   $_id   = "mpm_${mpm}_module"
 
-  if $facts['os']['family'] == 'Suse' {
-    #mpms on Suse 12 don't use .so libraries so create a placeholder load file
-    file { "${mod_dir}/${mpm}.load":
-      ensure  => file,
-      path    => "${mod_dir}/${mpm}.load",
-      content => '',
-      require => [
-        Package['httpd'],
-        Exec["mkdir ${mod_dir}"],
-      ],
-      before  => File[$mod_dir],
-      notify  => Class['apache::service'],
+  if $facts['os']['family'] == 'Debian' {
+    $mpm_modules = ['mpm_event', 'mpm_worker', 'mpm_prefork'] - "mpm_${mpm}"
+    $mpmloadfile = "${mod_dir}/mpm_${mpm}.load"
+    $mpmloadcontent = $mpm ? {
+      /(event|prefork|worker)/ => "# Conflicts: ${join($mpm_modules, ' ')}\nLoadModule ${_id} ${_path}\n",
+      'itk'                    => "# Depends: mpm_prefork\nLoadModule ${_id} ${_path}\n",
     }
   } else {
-    file { "${mod_dir}/${mpm}.load":
-      ensure  => file,
-      path    => "${mod_dir}/${mpm}.load",
-      content => "LoadModule ${_id} ${_path}\n",
-      require => [
-        Package['httpd'],
-        Exec["mkdir ${mod_dir}"],
-      ],
-      before  => File[$mod_dir],
-      notify  => Class['apache::service'],
+    $mpmloadfile = "${mod_dir}/${mpm}.load"
+    $mpmloadcontent = $facts['os']['family'] ? {
+      'Suse'  => '',
+      default => "LoadModule ${_id} ${_path}\n"
     }
+  }
+
+  file { $mpmloadfile:
+    ensure  => file,
+    path    => $mpmloadfile,
+    content => $mpmloadcontent,
+    require => [
+      Package['httpd'],
+      Exec["mkdir ${mod_dir}"],
+    ],
+    before  => File[$mod_dir],
+    notify  => Class['apache::service'],
   }
 
   case $facts['os']['family'] {
     'Debian': {
-      file { "${apache::mod_enable_dir}/${mpm}.conf":
-        ensure  => link,
-        target  => "${apache::mod_dir}/${mpm}.conf",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Class['apache::service'],
-      }
-
-      file { "${apache::mod_enable_dir}/${mpm}.load":
-        ensure  => link,
-        target  => "${apache::mod_dir}/${mpm}.load",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Class['apache::service'],
+      file {
+        default:
+          ensure  => link,
+          require => Exec["mkdir ${apache::mod_enable_dir}"],
+          before  => File[$apache::mod_enable_dir],
+          notify  => Class['apache::service'],
+          ;
+        "${apache::mod_enable_dir}/mpm_${mpm}.conf":
+          target  => "../mods-available/mpm_${mpm}.conf",
+          ;
+        "${apache::mod_enable_dir}/mpm_${mpm}.load":
+          target  => "../mods-available/mpm_${mpm}.load",
+          ;
       }
 
       if $mpm == 'itk' {
@@ -67,9 +66,7 @@ define apache::mpm (
           require => Package['httpd'],
           before  => Class['apache::service'],
         }
-      }
 
-      if $mpm == 'itk' {
         package { 'libapache2-mpm-itk':
           ensure => present,
           before => [
@@ -91,33 +88,20 @@ define apache::mpm (
         include apache::mpm::disable_mpm_event
       }
     }
-
-    'FreeBSD': {
-      class { 'apache::package':
-        mpm_module => $mpm,
-      }
-    }
-    'Gentoo': {
-      # so we don't fail
-    }
-    'RedHat': {
-      # so we don't fail
-    }
     'Suse': {
-      file { "${apache::mod_enable_dir}/${mpm}.conf":
-        ensure  => link,
-        target  => "${apache::mod_dir}/${mpm}.conf",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Class['apache::service'],
-      }
-
-      file { "${apache::mod_enable_dir}/${mpm}.load":
-        ensure  => link,
-        target  => "${apache::mod_dir}/${mpm}.load",
-        require => Exec["mkdir ${apache::mod_enable_dir}"],
-        before  => File[$apache::mod_enable_dir],
-        notify  => Class['apache::service'],
+      file {
+        default:
+          ensure  => link,
+          require => Exec["mkdir ${apache::mod_enable_dir}"],
+          before  => File[$apache::mod_enable_dir],
+          notify  => Class['apache::service'],
+          ;
+        "${apache::mod_enable_dir}/${mpm}.conf":
+          target  => "${mod_dir}/${mpm}.conf",
+          ;
+        "${apache::mod_enable_dir}/${mpm}.load":
+          target  => "${mod_dir}/${mpm}.load",
+          ;
       }
 
       if $mpm == 'itk' {
@@ -130,6 +114,14 @@ define apache::mpm (
       package { "apache2-${mpm}":
         ensure => present,
       }
+    }
+    'FreeBSD': {
+      class { 'apache::package':
+        mpm_module => $mpm,
+      }
+    }
+    'Gentoo', 'RedHat': {
+      # so we don't fail
     }
     default: {
       fail("Unsupported osfamily ${$facts['os']['family']}")
