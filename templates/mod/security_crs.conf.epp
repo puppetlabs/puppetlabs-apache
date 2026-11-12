@@ -885,13 +885,13 @@ SecAction \
 # Used in DoS protection rule. See section "Anti-Automation / DoS Protection".
 # Default: /.jpg/ /.jpeg/ /.png/ /.gif/ /.js/ /.css/ /.ico/ /.svg/ /.webp/
 # Uncomment this rule to change the default.
-#SecAction \
-# "id:900260,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:'tx.static_extensions=/.jpg/ /.jpeg/ /.png/ /.gif/ /.js/ /.css/ /.ico/ /.svg/ /.webp/'"
+SecAction \
+ "id:900260,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:'tx.static_extensions=<%= $static_extensions -%>'"
 
 # Content-Types charsets that a client is allowed to send in a request.
 # Default: utf-8|iso-8859-1|iso-8859-15|windows-1252
