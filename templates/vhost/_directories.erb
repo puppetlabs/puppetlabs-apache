@@ -350,6 +350,9 @@
     <%- if directory['auth_ldap_sub_group_class'] -%>
     AuthLDAPSubGroupClass <%= directory['auth_ldap_sub_group_class'] %>
     <%- end -%>
+    <%- if directory['auth_pam_service'] -%>
+    AuthPAMService <%= directory['auth_pam_service'] %>
+    <%- end -%>
     <%- if directory['fallbackresource'] -%>
     FallbackResource <%= directory['fallbackresource'] %>
     <%- end -%>
