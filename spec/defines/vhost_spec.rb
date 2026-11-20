@@ -761,7 +761,6 @@ describe 'apache::vhost', type: :define do
               .with_content(%r{^\s+MellonCond\sisMemberOf\s"cn=example-access,ou=Groups,o=example,o=com"\s\[MAP\]$})
               .with_content(%r{^\s+MellonSessionLength\s"300"$})
           }
-          # rubocop:enable RSpec/ExampleLength
 
           it { is_expected.to contain_concat__fragment('rspec.example.com-additional_includes') }
 
