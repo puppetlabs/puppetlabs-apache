@@ -23,13 +23,14 @@ spec/spec_helper.rb:
 .github/workflows/release.yml:
   unmanaged: false
 Rakefile:
-  changelog_max_issues: 500
-  extras:
-    "FastGettext.default_text_domain = 'default-text-domain'"
-.travis.yml:
-  delete: true
-changelog_since_tag: "3.2.0"
-Rakefile:
   extra_disabled_lint_checks:
     - anchor_resource
     - 140chars
+    # strict_indent is disabled because its expected indentation changed incompatibly
+    # between puppet-lint-strict_indent-check 3.x (Puppet 7/8 lane, Ruby 3.1) and 5.x
+    # (Puppet 9 lane, Ruby 3.4+): the two lanes demand opposite indentation for nested
+    # hashes, so no single manifest layout can satisfy both. See MODULES-11700.
+    - strict_indent
+.travis.yml:
+  delete: true
+changelog_since_tag: "3.2.0"
