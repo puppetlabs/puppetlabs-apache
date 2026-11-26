@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v13.6.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.6.0) - 2026-11-25
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.5.0...v13.6.0)
+
+### Added
+
+- Add support for Ubuntu 24.04 [#2585](https://github.com/puppetlabs/puppetlabs-apache/pull/2585) ([fetzerms](https://github.com/fetzerms))
+
+### Fixed
+
+- (MODULES-12075) apache::mod::php adds an EOL openSUSE repo with auto-trusted keys on customer SLES nodes [#2663](https://github.com/puppetlabs/puppetlabs-apache/pull/2663) ([imaqsood](https://github.com/imaqsood))
+- (MODULES-12060) Remove broken apache::fastcgi::server [#2660](https://github.com/puppetlabs/puppetlabs-apache/pull/2660) ([jst-cyr](https://github.com/jst-cyr))
+
 ## [v13.5.0](https://github.com/puppetlabs/puppetlabs-apache/tree/v13.5.0) - 2026-10-27
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-apache/compare/v13.4.0...v13.5.0)
