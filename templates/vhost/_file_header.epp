@@ -3,15 +3,6 @@
 # Managed by Puppet
 # ************************************
 <%= [$comment].flatten.map |$c| { "# ${c}" }.join("\n") -%>
-<%- if $mdomain { -%>
-
-  <%- if $mdomain =~ String { -%>
-
-MDomain <%= $mdomain %>
-  <%-} else {-%>
-MDomain <%= $servername %>
-  <%- } -%>
-<% } -%>
 
 <VirtualHost <%= [$nvh_addr_port].flatten().filter |$value| { $value }.join(' ') %>>
 <% $define.each | $k, $v| { -%>

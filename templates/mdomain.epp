@@ -1,0 +1,11 @@
+<%- |
+  Variant[Boolean, String[1]] $mdomain,
+  String[1]                   $servername,
+| -%>
+<%- if $mdomain { -%>
+  <%- if $mdomain =~ String { -%>
+MDomain <%= $mdomain %>
+  <%-} else {-%>
+MDomain <%= $servername %>
+  <%- } -%>
+<% } -%>
