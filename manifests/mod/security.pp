@@ -85,6 +85,9 @@
 # 
 # @param restricted_headers
 #   A list of restricted headers separated by slashes and spaces.
+#
+# @param static_extensions
+#   A space-separated list of file extensions considered static files.
 # 
 # @param secdefaultaction
 #   Defines the default list of actions, which will be inherited by the rules in the same configuration context.
@@ -197,6 +200,7 @@ class apache::mod::security (
   String $content_types                                        = 'application/x-www-form-urlencoded|multipart/form-data|text/xml|application/xml|application/x-amf',
   String $restricted_extensions                                = '.asa/ .asax/ .ascx/ .axd/ .backup/ .bak/ .bat/ .cdx/ .cer/ .cfg/ .cmd/ .com/ .config/ .conf/ .cs/ .csproj/ .csr/ .dat/ .db/ .dbf/ .dll/ .dos/ .htr/ .htw/ .ida/ .idc/ .idq/ .inc/ .ini/ .key/ .licx/ .lnk/ .log/ .mdb/ .old/ .pass/ .pdb/ .pol/ .printer/ .pwd/ .resources/ .resx/ .sql/ .sys/ .vb/ .vbs/ .vbproj/ .vsdisco/ .webinfo/ .xsd/ .xsx/',
   String $restricted_headers                                   = '/Proxy-Connection/ /Lock-Token/ /Content-Range/ /Translate/ /via/ /if/',
+  String $static_extensions                                    = '/.jpg/ /.jpeg/ /.png/ /.gif/ /.js/ /.css/ /.ico/ /.svg/ /.webp/',
   String $secdefaultaction                                     = 'deny',
   Integer $inbound_anomaly_threshold                           = 5,
   Integer $outbound_anomaly_threshold                          = 4,
@@ -449,6 +453,7 @@ class apache::mod::security (
     # - $content_types
     # - $restricted_extensions
     # - $restricted_headers
+    # - $static_extensions
     # - $secrequestmaxnumargs
     # - $enable_dos_protection
     # - $dos_burst_time_slice
@@ -467,6 +472,7 @@ class apache::mod::security (
       'content_types'               => $content_types,
       'restricted_extensions'       => $restricted_extensions,
       'restricted_headers'          => $restricted_headers,
+      'static_extensions'           => $static_extensions,
       'paranoia_level'              => $paranoia_level,
       'executing_paranoia_level'    => $executing_paranoia_level,
       'enable_dos_protection'       => $enable_dos_protection,
