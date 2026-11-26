@@ -10,6 +10,8 @@ class apache::mod::cgid {
     default: {
       if defined(Class['apache::mod::event']) {
         Class['apache::mod::event'] -> Class['apache::mod::cgid']
+      } elsif defined(Class['apache::mod::prefork']) {
+        Class['apache::mod::prefork'] -> Class['apache::mod::cgid']
       } else {
         Class['apache::mod::worker'] -> Class['apache::mod::cgid']
       }
