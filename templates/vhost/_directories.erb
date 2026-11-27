@@ -77,6 +77,9 @@
     </FilesMatch>
       <%- end -%>
     <%- end -%>
+    <%- unless directory['file_e_tag'].nil? -%>
+    FileETag <%= directory['file_e_tag'] %>
+    <%- end -%>
     <%- if directory['sethandler'] and directory['sethandler'] != '' -%>
     SetHandler <%= directory['sethandler'] %>
     <%- end -%>
