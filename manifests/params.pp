@@ -406,6 +406,7 @@ class apache::params inherits apache::version {
       '20.04' => '7.4', # Ubuntu Foccal Fossal
       '22.04' => '8.1', # Ubuntu Jammy
       '24.04' => '8.3', # Ubuntu Noble
+      '26.04' => '8.5', # Ubuntu Resolute Raccoon
       default => '7.2', # Ubuntu Bionic, Cosmic and Disco
     }
     $_base_mod_packages = {
